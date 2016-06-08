@@ -1,5 +1,5 @@
 //global vars
-var camera, scene, renderer;
+var camera, scene, renderer, raycaster, mouse, hoveredOver;
 var controls ;
 var tiles = [];
 
@@ -54,12 +54,25 @@ function setupSpace() {
 
 }//end setupSpace
 
+function setupHighlight() {
+	
+	//set up mouse functions
+	raycaster = new THREE.Raycaster();
+	mouse = new THREE.Vector2(), hoveredOver;
+	
+	//add mouse listener
+	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+    
+}; //end setupHighlight
+
 
 function initWorkspace() {
 
     setup();
     loadResources() ;
     setupSpace();
+    setupHighlight();
 
 }
 
