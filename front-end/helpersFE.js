@@ -17,6 +17,37 @@ function updateHUD() {
     document.getElementById("pos").innerHTML = text ;
 }
 
+function setUpBoard(board) {
+    
+    var tilesHigh = board.height;
+    var tilesWide = board.width;
+    
+    var tileHeight = 12;
+    var tileWidth = 18;
+    
+    for(var i = 0; i < board.map.length; i++){
+        
+        var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
+        
+        if(board.map[i].landType[1] == 0){
+            tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
+        } else {
+            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[board.map[i].landType[1]] });
+        }
+        
+        var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
+        newTile.position.x = board.map[i].column * tileWidth - (tileWidth * tilesWide)/2;
+        newTile.position.y = 0;
+        newTile.position.z = board.map[i].row * tileHeight - (tileHeight * tilesHigh)/2;
+        
+        board.map[i].graphics = newTile;
+        
+        scene.add(board.map[i].graphics);
+        
+    }
+    
+}
+
 
 function addBoard(board) {
     
