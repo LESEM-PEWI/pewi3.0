@@ -2,11 +2,10 @@
 var initData = [];
 
 //parseInitial takes the data from on server text file and fills global array
-function parseInitial() {
+function parseInitial(data) {
  
      //get data from invisible div on page
-    var text = document.getElementById("dataFile");
-    var strRawContents = text.contentWindow.document.body.childNodes[0].innerHTML;
+    var strRawContents = data;
     //split based on escape chars
     while (strRawContents.indexOf("\r") >= 0)
         strRawContents = strRawContents.replace("\r", "");
@@ -39,12 +38,18 @@ Math.log10 = function(n) {
 } //end log10
 
 //load the data from given fileString into the given board object
-function loadBoard(board) {
+function loadBoard(board, fileString) {
     
-    parseInitial();
-    //clear file from memory
-    //document.getElementById("dataFile").innerHTML = "";
-    //document.getElementById("dataFile").src = "" ;
+    $.ajax({
+        async: false,
+       type: "GET",
+       url: fileString,
+       dataType: "text",
+       contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+       success: function (data) {
+           parseInitial(data);
+       }
+    });
     
     propogateBoard(board) ;
     

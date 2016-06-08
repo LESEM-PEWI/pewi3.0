@@ -23,7 +23,7 @@ function addBoard(board) {
     var tilesHigh = board.height;
     var tilesWide = board.width;
     
-    console.log(board.height + " " + board.width);
+   // console.log(board.height + " " + board.width);
     
     var tileHeight = 12;
     var tileWidth = 18;
