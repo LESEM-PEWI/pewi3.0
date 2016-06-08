@@ -49,8 +49,11 @@ function setupSpace() {
     //add world elements here
     
     //addBoard() ;
+    var board2 = new GameBoard() ;
+    loadBoard(board2, "./data.txt");
+    addBoard(board2);
     
-    updateHUD() ;
+    //updateHUD() ;
 
 }//end setupSpace
 
@@ -80,7 +83,7 @@ function initWorkspace() {
 requestAnimationFrame(function animate() {
 
     renderer.render(scene, camera);
-    updateHUD() ;
+    
     requestAnimationFrame(animate);
 
 

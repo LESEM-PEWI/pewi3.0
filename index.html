@@ -7,6 +7,7 @@
 
 <script src="./lib/three.min.js"></script>
 <script src="./lib/controls.js"></script>
+<script src="./lib/jquery-1.12.4.min.js"></script>
 
 <script src="./front-end/loader.js"></script>
 <script src="./front-end/mainFE.js"></script>
@@ -20,16 +21,19 @@
 </head>
 	
 <body>
-
-<iframe id="dataFile" src="./data.txt" style="display: none;"></iframe>
-    
+ 
+<!--
 <div class="devConsole">
   <p>Development Controls</p>
   <button>---</button>
   <p>Camera Position</p>
   <p id="pos"></p>
 </div>
+-->
 
+<div class ="rightButtons">
+<button class="resultsButton">Results</button>
+</div>
 
 <script>
 
@@ -39,6 +43,7 @@ window.addEventListener('resize', onResize, false);
 //Start Graphical Front-End
 initWorkspace();
 
+<<<<<<< HEAD
 function init() {
     
     var board2 = new GameBoard() ;
@@ -54,6 +59,8 @@ function init() {
 
 window.onload = init;
 
+=======
+>>>>>>> 173c01bd09a7dd53fec0b9401f01576b358d123a
 
 </script>
 
