@@ -1,6 +1,7 @@
 //global vars
 var camera, scene, renderer;
 var controls ;
+var tiles = [];
 
 function setup() {
 
@@ -47,7 +48,7 @@ function setupSpace() {
     
     //add world elements here
     
-    addBoard() ;
+    //addBoard() ;
     
     updateHUD() ;
 

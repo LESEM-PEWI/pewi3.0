@@ -18,31 +18,38 @@ function updateHUD() {
 }
 
 
-function addBoard() {
+function addBoard(board) {
     
-    var tiles = [];
+    var tilesHigh = board.height;
+    var tilesWide = board.width;
     
-    var tilesHigh = 36;
-    var tilesWide = 23;
+    console.log(board.height + " " + board.width);
     
     var tileHeight = 12;
     var tileWidth = 18;
+
+    var tileIndex = 0 ;
+
+    var landUseArray = [] ;
+    for(var i = 0; i < board.map.length ; i++){
+        landUseArray.push(board.map[i].landType[1]) ;
+    }
 
     for (var j = 0; j < tilesHigh; j++) {
 
         for (var i = 0; i < tilesWide; i++) {
 
-            var r = Math.floor((Math.random() * 14));
+            //var r = Math.floor((Math.random() * 14));
 
             var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
          
             var tileMaterial;
          
-        if(r == 0){
+        if(landUseArray[tileIndex] == 0){
             tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
         } else {    
             tileMaterial = new THREE.MeshLambertMaterial({
-                map: textureArray[r]
+                map: textureArray[landUseArray[tileIndex]]
             });
         }
 
@@ -54,6 +61,8 @@ function addBoard() {
             tiles.push(newTile);
 
             scene.add(newTile);
+            
+            tileIndex ++ ;
 
         }
 

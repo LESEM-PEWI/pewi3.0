@@ -7,13 +7,21 @@
 
 <script src="./lib/three.min.js"></script>
 <script src="./lib/controls.js"></script>
+
 <script src="./front-end/loader.js"></script>
 <script src="./front-end/mainFE.js"></script>
 <script src="./front-end/helpersFE.js"></script>
 
+
+<script src="./back-end/helperMethods.js"></script>
+<script src="./back-end/helperObjects.js"></script>
+<script src="./back-end/mainBE.js"></script>
+
 </head>
 	
 <body>
+
+<iframe id="dataFile" src="./data.txt" style="display: none;"></iframe>
     
 <div class="devConsole">
   <p>Development Controls</p>
@@ -30,7 +38,23 @@ window.addEventListener('resize', onResize, false);
 
 //Start Graphical Front-End
 initWorkspace();
+
+function init() {
     
+    var board2 = new GameBoard() ;
+    loadBoard(board2);
+    //document.getElementById("dataFile").onload = function() {  alert(document.getElementById("dataFile").complete) ; loadBoard(board2);  }
+    //document.getElementById("dataFile").src = "./data.txt";
+   
+    alert(document.getElementById("dataFile").innerHTML.length)
+    
+    addBoard(board2);
+    
+}
+
+window.onload = init;
+
+
 </script>
 
 
