@@ -4,7 +4,7 @@ var controls ;
 var tiles = [];
 
 function setup() {
-
+     renderer = new THREE.WebGLRenderer();
     scene = new THREE.Scene();
     
     //camera
@@ -14,7 +14,7 @@ function setup() {
      scene.add(camera);
     
     //renderer
-    renderer = new THREE.WebGLRenderer();
+   
     
     //lighting
     var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1 );
