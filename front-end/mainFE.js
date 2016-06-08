@@ -1,5 +1,5 @@
 //global vars
-var camera, scene, renderer, raycaster, mouse, hoveredOver;
+var camera, scene, renderer, raycaster, mouse, hoveredOver, currentBoard;
 var controls ;
 var tiles = [];
 
@@ -50,8 +50,10 @@ function setupSpace() {
     
     //addBoard() ;
     var board2 = new GameBoard() ;
+    currentBoard = board2;
     loadBoard(board2, "./data.txt");
-    addBoard(board2);
+    setUpBoard(board2);
+
     
     //updateHUD() ;
 
@@ -76,7 +78,7 @@ function initWorkspace() {
     loadResources() ;
     setupSpace();
     setupHighlight();
-
+    
 }
 
 //update area, what to update when something changes

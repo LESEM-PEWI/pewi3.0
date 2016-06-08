@@ -17,6 +17,47 @@ function updateHUD() {
     document.getElementById("pos").innerHTML = text ;
 }
 
+function setUpBoard(board) {
+    
+    for(var i = 0; i < board.map.length; i++){
+        
+        addTile(board.map[i]);
+        
+    }
+    
+};
+
+function addTile(tile){
+    
+        var tilesWide = currentBoard.width;
+        var tilesHigh = currentBoard.height;
+    
+        var tileHeight = 12;
+        var tileWidth = 18;
+        
+        var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
+        
+        if(tile.landType[1] == 0){
+            tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
+        } else {
+            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[1]] });
+        }
+        
+        var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
+        newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide)/2;
+        newTile.position.y = 0;
+        newTile.position.z = tile.row * tileHeight - (tileHeight * tilesHigh)/2;
+        
+        newTile.mapID = tile.id - 1;
+        
+        tile.graphics = newTile;
+        
+        tiles.push(tile.graphics);
+        
+        scene.add(tile.graphics);
+    
+};
+
 
 function addBoard(board) {
     
@@ -114,18 +155,22 @@ function onDocumentMouseDown( event ) {
 	if ( intersects.length > 0 ) {
 	    
 		var intersect = intersects[ 0 ];
-
-	    cubeGeo = new THREE.BoxGeometry( 18, 12, 12 );
-	    
-		cubeMaterial = hoveredOver.material;
 		
-		var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
+		console.log(currentBoard.map[hoveredOver.mapID].landType[1]);
 		
-	    voxel.position.copy( hoveredOver.position );
-	    
-		voxel.position.y = voxel.position.y + 6;
+		if(currentBoard.map[hoveredOver.mapID].landType[1] != 0){
+		    
+		    currentBoard.map[hoveredOver.mapID].landType[1] = 1;
 		
-		scene.add( voxel );
+		    currentBoard.map[hoveredOver.mapID].update();
+		    
+    		scene.remove(hoveredOver);
+    		
+            addTile(currentBoard.map[hoveredOver.mapID]);
+            
+		}
+		
+		console.log(currentBoard.map[hoveredOver.mapID].landType[1]);
 			
 		renderer.render(scene, camera);
 	}
