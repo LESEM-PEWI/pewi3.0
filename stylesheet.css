@@ -1,0 +1,15 @@
+body {
+	background-color: #FFFFFF;
+	margin: 0;
+	overflow: hidden;
+	}
+	
+	
+.devConsole {
+    position: absolute;
+    background-color: rgba(159, 197, 209, 0.5);
+    right: 0px;
+    width: 200px;
+    height: 300px;
+    padding: 10px;
+}
