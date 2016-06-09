@@ -25,8 +25,8 @@ function loadResources() {
     
     textureArray = [textureClear, textureConventionalCorn, textureConservationCorn, textureConventionalSoybean, textureConservationSoybean,
                     textureAlfalfa, texturePermanentPasture, textureRotationalGrazing, textureGrassHay,
-                    texturePrairie, textureConservationForest, textureConventionalForest, textureShortWoody,
-                    textureHerbs, textureWetland, textureMixedFruitsVegetables];
+                    texturePrairie, textureConservationForest, textureConventionalForest, textureHerbs, textureShortWoody,
+                    textureWetland, textureMixedFruitsVegetables];
                     
     // materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/dawnmountain-xpos.png') }));
     // materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( './background_images/dawnmountain-xneg.png' ) }));

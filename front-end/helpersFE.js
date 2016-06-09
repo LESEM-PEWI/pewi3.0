@@ -17,11 +17,11 @@ function updateHUD() {
     document.getElementById("pos").innerHTML = text ;
 }
 
-function setUpBoard(board) {
+function displayBoard() {
     
-    for(var i = 0; i < board.map.length; i++){
+    for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
-        addTile(board.map[i]);
+        addTile(boardData[currentBoard].map[i]);
         
     }
     
@@ -29,18 +29,18 @@ function setUpBoard(board) {
 
 function addTile(tile){
     
-        var tilesWide = currentBoard.width;
-        var tilesHigh = currentBoard.height;
+        var tilesWide = boardData[currentBoard].width;
+        var tilesHigh = boardData[currentBoard].height;
     
         var tileHeight = 12;
         var tileWidth = 18;
         
         var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
         
-        if(tile.landType[1] == 0){
+        if(tile.landType[currentYear] == 0){
             tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
         } else {
-            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[1]] });
+            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]] });
         }
         
         var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
@@ -59,6 +59,7 @@ function addTile(tile){
 };
 
 
+//DEPRECATED--------------------------------------------------------------
 function addBoard(board) {
     
     var tilesHigh = board.height;
@@ -113,6 +114,7 @@ function addBoard(board) {
     }
     
 }//end addBoard()
+//END DEPRECATED----------------------------------------
 
 function onDocumentMouseMove( event ) {
     
@@ -156,22 +158,72 @@ function onDocumentMouseDown( event ) {
 	    
 		var intersect = intersects[ 0 ];
 		
-		console.log(currentBoard.map[hoveredOver.mapID].landType[1]);
+		//console.log(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear]);
 		
-		if(currentBoard.map[hoveredOver.mapID].landType[1] != 0){
+		if(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear] != 0){
 		    
-		    currentBoard.map[hoveredOver.mapID].landType[1] = 1;
+		    boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear] = painter ;
 		
-		    currentBoard.map[hoveredOver.mapID].update();
+		    boardData[currentBoard].map[hoveredOver.mapID].update();
 		    
     		scene.remove(hoveredOver);
     		
-            addTile(currentBoard.map[hoveredOver.mapID]);
+            addTile(boardData[currentBoard].map[hoveredOver.mapID]);
             
 		}
 		
-		console.log(currentBoard.map[hoveredOver.mapID].landType[1]);
+		//console.log(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear]);
 			
 		renderer.render(scene, camera);
 	}
+}//end onDocumentMouseDown(event)
+
+function paintChange(value) {
+    
+    //change current painter to regular
+    var string = "paint" + painter ;
+    document.getElementById(string).className = "landSelectorIcon" ;
+    
+    //change new paiter to current
+    string = "paint" + value ;
+    document.getElementById(string).className = "landSelectedIcon" ;
+    painter = value ;  
+  
+}
+
+function results() {
+    
+    //setup Screen Appropriately
+    if(document.getElementById("resultsButton").className != "resultsButton") roll(2) ;
+    if(document.getElementById("landUseConsole").className != "landUseConsoleRolled") roll(1) ;
+}
+
+function roll(value) {
+    
+    if(value==1){
+        
+    if( document.getElementById("landUseConsole").className == "landUseConsole"){
+     document.getElementById("landUseConsole").className = "landUseConsoleRolled" ;
+     document.getElementById("toolsButton").className = "toolsButtonRolled" ;
+    }
+    else{
+        document.getElementById("landUseConsole").className = "landUseConsole";
+        document.getElementById("toolsButton").className = "toolsButton" ;
+        
+    }
+    
+    }//left tollbox
+    
+    if(value==2){
+        
+        if( document.getElementById("resultsButton").className == "resultsButton"){
+            
+            document.getElementById("resultsButton").className = "resultsButtonRolled";
+        }
+        else{
+            document.getElementById("resultsButton").className = "resultsButton";
+        }
+        
+        
+    }//right resaults button
 }

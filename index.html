@@ -22,45 +22,46 @@
 	
 <body>
  
-<!--
+
 <div class="devConsole">
   <p>Development Controls</p>
   <button>---</button>
   <p>Camera Position</p>
   <p id="pos"></p>
 </div>
--->
 
-<div class ="rightButtons">
-<button class="resultsButton"><img class="buttonIcon" src="./imgs/resultsIcon.png">Results</button>
+
+<div id="left-elements" class="left-elements">
+
+<div id="landUseConsole" class ="landUseConsole">
+<img id="paint1" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="paintChange(1);">  
+<img id="paint2" class="landSelectorIcon" src="./imgs/conservationCorn.png" onclick="paintChange(2);">  
+<img id="paint3" class="landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="paintChange(3);">  
+<img id="paint4" class="landSelectorIcon" src="./imgs/conservationSoybean.png" onclick="paintChange(4);">  
+<img id="paint15" class="landSelectorIcon" src="./imgs/fruits.png" onclick="paintChange(15);">
+
+<img id="paint5" class="landSelectorIcon" src="./imgs/alfalfa.png" onclick="paintChange(5);">  
+<img id="paint8" class="landSelectorIcon" src="./imgs/grassHay.png" onclick="paintChange(8);">  
+<img id="paint12" class="landSelectorIcon" src="./imgs/herbaceous.png" onclick="paintChange(12);">  
+<img id="paint6" class="landSelectorIcon" src="./imgs/permanentPasture.png" onclick="paintChange(6);">
+<img id="paint7" class="landSelectorIcon" src="./imgs/rotationalGrazing.png" onclick="paintChange(7);">  
+
+<img id="paint14" class="landSelectorIcon" src="./imgs/wetland.png" onclick="paintChange(14);">
+<img id="paint9" class="landSelectorIcon" src="./imgs/prairie.png" onclick="paintChange(9);">
+<img id="paint11" class="landSelectorIcon" src="./imgs/conventionalForest.png" onclick="paintChange(11);">
+<img id="paint10" class="landSelectorIcon" src="./imgs/conservationForest.png" onclick="paintChange(10);">
+<img id="paint13" class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="paintChange(13);">
 </div>
 
-<div class ="landUseConsole">
-
-<img class="landSelectedIcon" src="./imgs/conventionalCorn.png">  
-<img class="landSelectorIcon" src="./imgs/conservationCorn.png">  
-<img class="landSelectorIcon" src="./imgs/conventionalSoybean.png">  
-<img class="landSelectorIcon" src="./imgs/conservationSoybean.png">  
-<img class="landSelectorIcon" src="./imgs/fruits.png">
-
-<img class="landSelectorIcon" src="./imgs/alfalfa.png">  
-<img class="landSelectorIcon" src="./imgs/grassHay.png">  
-<img class="landSelectorIcon" src="./imgs/herbaceous.png">  
-<img class="landSelectorIcon" src="./imgs/permanentPasture.png">
-<img class="landSelectorIcon" src="./imgs/rotationalGrazing.png">  
-
-<img class="landSelectorIcon" src="./imgs/wetland.png">
-<img class="landSelectorIcon" src="./imgs/prairie.png">
-<img class="landSelectorIcon" src="./imgs/conventionalForest.png">
-<img class="landSelectorIcon" src="./imgs/conservationForest.png">
-<img class="landSelectorIcon" src="./imgs/shortRotation.png">
+<div id="toolsButton" class="toolsButton" onclick="roll(1) ;"><img src="./imgs/pick.png"></div>
 
 </div>
+
+
+<div id="resultsButton" class="resultsButtonRolled" onmouseover="roll(2); " onmouseout="roll(2)" onclick="results() ;"><img src="./imgs/resultsIcon.png"></div>
+
 
 <script>
-
-//add Event Listeners
-window.addEventListener('resize', onResize, false);
 
 //Start Graphical Front-End
 initWorkspace();

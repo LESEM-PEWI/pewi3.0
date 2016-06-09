@@ -1,10 +1,17 @@
 //global vars
-var camera, scene, renderer, raycaster, mouse, hoveredOver, currentBoard;
+var camera, scene, renderer, raycaster, mouse, hoveredOver ;
 var controls ;
 var tiles = [];
+var painter = 1;
+var boardData = [] ;
+var currentBoard = -1 ;
+var currentYear = 1 ;
+
 
 function setup() {
-     renderer = new THREE.WebGLRenderer();
+    
+    //renderer
+    renderer = new THREE.WebGLRenderer();
     scene = new THREE.Scene();
     
     //camera
@@ -12,9 +19,6 @@ function setup() {
      var ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
      camera = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
      scene.add(camera);
-    
-    //renderer
-   
     
     //lighting
     var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1 );
@@ -30,10 +34,13 @@ function setup() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-
     //set up controls
     controls = new THREE.OrbitControls( camera, renderer.domElement );
     
+    //add resize listener
+    window.addEventListener('resize', onResize, false);
+
+    updateHUD();
 }
 
 function setupSpace() {
@@ -48,14 +55,13 @@ function setupSpace() {
     
     //add world elements here
     
-    //addBoard() ;
-    var board2 = new GameBoard() ;
-    currentBoard = board2;
-    loadBoard(board2, "./data.txt");
-    setUpBoard(board2);
+    //addBoard
+    var board1 = new GameBoard() ;
+    loadBoard(board1, "./data.txt");
 
-    
-    //updateHUD() ;
+    boardData.push(board1);
+    currentBoard++ ; //currentBoard now = 0
+    displayBoard() ;
 
 }//end setupSpace
 
@@ -85,7 +91,7 @@ function initWorkspace() {
 requestAnimationFrame(function animate() {
 
     renderer.render(scene, camera);
-    
+    updateHUD();
     requestAnimationFrame(animate);
 
 
