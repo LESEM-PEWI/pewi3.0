@@ -191,12 +191,30 @@ function paintChange(value) {
   
 }
 
-function results() {
+function resultsStart() {
     
     //setup Screen Appropriately
-    if(document.getElementById("resultsButton").className != "resultsButton") roll(2) ;
-    if(document.getElementById("landUseConsole").className != "landUseConsoleRolled") roll(1) ;
+    document.getElementById("resultsButton").onmouseout = "";
+    document.getElementById("resultsButton").onmouseover = "";
+    document.getElementById("resultsButton").onclick = function() {resultsEnd() ;}; 
+    if(document.getElementById("resultsButton").className != "resultsButton")   roll(2) ;
+    if(document.getElementById("landUseConsole").className != "landUseConsoleRolled")  roll(1) ;
+    
+
+    //functions that update results and display them appropriately
+    animateResults();
+
 }
+
+function resultsEnd() {
+    //reset view
+    roll(2) ;
+    document.getElementById("resultsButton").onmouseout = "roll(2); ";
+    document.getElementById("resultsButton").onmouseover = "roll(2); ";
+    document.getElementById("resultsButton").onclick = function() { resultsStart();} ;
+    
+}
+
 
 function roll(value) {
     
