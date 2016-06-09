@@ -62,9 +62,9 @@ function transitionToYear(year) {
     
     currentYear = year;
     
-    if(year > boardData[currentBoard].updatedToYear){
-        boardData[currentBoard].updatedToYear = year;
-        boardData[currentBoard].updatBoard();
+    if(year > boardData[currentBoard].calculatedToYear){
+        boardData[currentBoard].calculatedToYear = year;
+        boardData[currentBoard].updateBoard();
     }
     
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
@@ -342,7 +342,7 @@ function calculateResults() {
     Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
     
-    upToYear = boardData[currentBoard].calculatedToYear ;
+    var upToYear = boardData[currentBoard].calculatedToYear ;
     
     //document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = "WORKS";
     var nameArray = ["Conventional Corn", "Conservation Corn","Conventional Soybean", "conservation Soybean", 
