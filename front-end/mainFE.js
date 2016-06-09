@@ -6,6 +6,7 @@ var painter = 1;
 var boardData = [] ;
 var currentBoard = -1 ;
 var currentYear = 1 ;
+var modalUp = false ;
 
 
 function setup() {
@@ -40,7 +41,6 @@ function setup() {
     //add resize listener
     window.addEventListener('resize', onResize, false);
 
-    updateHUD();
 }
 
 function setupSpace() {
@@ -62,6 +62,7 @@ function setupSpace() {
     boardData.push(board1);
     currentBoard++ ; //currentBoard now = 0
     displayBoard() ;
+    boardData[currentBoard].updateBoard() ;
 
 }//end setupSpace
 
@@ -85,13 +86,14 @@ function initWorkspace() {
     setupSpace();
     setupHighlight();
     
+    
 }
 
 //update area, what to update when something changes
 requestAnimationFrame(function animate() {
 
     renderer.render(scene, camera);
-    updateHUD();
+
     requestAnimationFrame(animate);
 
 

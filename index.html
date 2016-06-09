@@ -22,14 +22,14 @@
 	
 <body>
  
-
+<!--
 <div class="devConsole">
   <p>Development Controls</p>
   <button>---</button>
   <p>Camera Position</p>
   <p id="pos"></p>
 </div>
-
+-->
 
 <div id="left-elements" class="left-elements">
 
@@ -58,7 +58,9 @@
 </div>
 
 
-<div id="resultsButton" class="resultsButtonRolled" onmouseover="roll(2); " onmouseout="roll(2)" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
+<div id="resultsButton" class="resultsButtonRolled" onmouseover="roll(2); " onmouseout="roll(2);" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
+
+<iframe id="resultsFrame" class="resultsFrameRolled" src="./results.html"></iframe>
 
 
 <script>
