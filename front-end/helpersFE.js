@@ -126,7 +126,7 @@ function onDocumentMouseMove( event ) {
 	
 	var intersects = raycaster.intersectObjects(tiles);
 	
-	if ( intersects.length > 0 ) {
+	if ( intersects.length > 0 && !modalUp) {
 
 		if ( hoveredOver != intersects[ 0 ].object ) {
 
@@ -154,7 +154,7 @@ function onDocumentDoubleClick( event ) {
 	
 	var intersects = raycaster.intersectObjects( tiles );
 	
-	if ( intersects.length > 0 ) {
+	if ( intersects.length > 0 && !modalUp) {
 	    
 		var intersect = intersects[ 0 ];
 		
@@ -191,28 +191,45 @@ function paintChange(value) {
   
 }
 
+var toolbarRolled = true ;
+
 function resultsStart() {
+   
+
     
     //setup Screen Appropriately
+    modalUp=true;
     document.getElementById("resultsButton").onmouseout = "";
     document.getElementById("resultsButton").onmouseover = "";
     document.getElementById("resultsButton").onclick = function() {resultsEnd() ;}; 
-    if(document.getElementById("resultsButton").className != "resultsButton")   roll(2) ;
-    if(document.getElementById("landUseConsole").className != "landUseConsoleRolled")  roll(1) ;
+
     if(document.getElementById("precipConsole").className != "precipConsoleRolled")  roll(3) ;
+    document.getElementById("toolsButton").onclick = "";
+    
+    document.getElementById("resultsButton").className = "resultsButtonFar" ;
+    if(document.getElementById("landUseConsole").className != "landUseConsoleRolled"){
+       roll(1) ;
+       toolbarRolled = false;
+    }
     
 
     //functions that update results and display them appropriately
+    calculateResults();
     animateResults();
 
 }
 
 function resultsEnd() {
-    //reset view
-    roll(2) ;
-    document.getElementById("resultsButton").onmouseout = "roll(2); ";
-    document.getElementById("resultsButton").onmouseover = "roll(2); ";
+    //reset functionality
+    document.getElementById("resultsFrame").className = "resultsFrameRolled" ;
+    document.getElementById("resultsButton").className = "resultsButtonRolled" ;
+    
+    if(!toolbarRolled) roll(1);
+    document.getElementById("resultsButton").onmouseout = function() {document.getElementById("resultsButton").className = "resultsButtonRolled"; } ;
+    document.getElementById("resultsButton").onmouseover = function() {roll(2); } ;
+    document.getElementById("toolsButton").onclick = function() {roll(1); } ;
     document.getElementById("resultsButton").onclick = function() { resultsStart();} ;
+    modalUp = false;
     
 }
 
@@ -224,11 +241,12 @@ function roll(value) {
     if( document.getElementById("landUseConsole").className == "landUseConsole"){
      document.getElementById("landUseConsole").className = "landUseConsoleRolled" ;
      document.getElementById("toolsButton").className = "toolsButtonRolled" ;
+     toolbarRolled = true;
     }
     else{
         document.getElementById("landUseConsole").className = "landUseConsole";
         document.getElementById("toolsButton").className = "toolsButton" ;
-        
+        toolbarRolled = false;
     }
     
     }//left tollbox
@@ -236,15 +254,15 @@ function roll(value) {
     if(value==2){
         
         if( document.getElementById("resultsButton").className == "resultsButton"){
-            
             document.getElementById("resultsButton").className = "resultsButtonRolled";
         }
-        else{
+        else if (document.getElementById("resultsButton").className == "resultsButtonRolled") {
             document.getElementById("resultsButton").className = "resultsButton";
         }
         
         
     }//right resaults button
+
     
     if(value==3){
         
@@ -278,5 +296,194 @@ function updatePrecip(year) {
     
     boardData[currentBoard].updateBoard();
     
+}
+
+function animateResults() {
+    
+ //todo, increased functionality
+  document.getElementById("resultsFrame").className = "resultsFrame" ;
+   
+}
+
+function calculateResults() {
+    
+    toMetricFactorArea = 2.471 ;
+    
+    Totals = new Results(boardData[currentBoard]);
+    Totals.update() ;
+    
+    //document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = "WORKS";
+    
+    var testArray = ["conventionalCorn","conservationCorn"];
+    
+    var string2 = "<table class='resultsTable'>";
+    
+    for(var l = 0 ; l< testArray.length ; l++ ){
+        
+        string2 += "<tr>"
+        
+        string2 += "<td>" + testArray[l] + "</td>"
+        
+        for(var y=1; y<=3;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l] + "LandUse";
+            string2 += ( Totals.landUseResults[y][tempString] / Totals.totalArea * 100  ) + "<br>" ;
+            
+            string2+= "</td>"
+        }//for each year
+        
+        string2 += "<td>percent</td>" ;
+        
+        for(var y=1; y<=3;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l] + "LandUse";
+            string2 += ( Totals.landUseResults[y][tempString] ) + "<br>" ;
+            
+            string2+= "</td>"
+        }//for each year
+        
+        string2 += "<td>acres</td>" ;
+        
+        for(var y=1; y<=3;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l] + "LandUse";
+            string2 += ( Totals.landUseResults[y][tempString]  / toMetricFactorArea ) + "<br>" ;
+            
+            string2+= "</td>"
+            
+        }//for each year
+        string2 += "<td>hectares</td></tr>" ;
+        
+        
+    }
+    
+    var string = "Precipitation:" + "<BR>" +
+    "Year 0: " + boardData[currentBoard].precipitation[0] + "<BR>" +
+    "Year 1: " + boardData[currentBoard].precipitation[1] + "<BR>" +
+    "Year 2: " + boardData[currentBoard].precipitation[2] + "<BR>" +
+    "Year 3: " + boardData[currentBoard].precipitation[3] + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Total Area: " + Totals.totalArea + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Carbon Sequestration: " + "<BR>" +
+    "Year 1: " + Totals.carbonSequestration[1] + "<BR>" +
+    "Year 2: " + Totals.carbonSequestration[2] + "<BR>" +
+    "Year 2: " + Totals.carbonSequestration[3] + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Erosion: " + "<BR>" +
+    "Year 1: " + Totals.grossErosion[1] + "<BR>" +
+    "Year 2: " + Totals.grossErosion[2] + "<BR>" +
+    "Year 3: " + Totals.grossErosion[3] + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Game Wildlife Points: " + "<BR>" +
+    "Year 1: " + Totals.gameWildlifePoints[1] + "<BR>" +
+    "Year 2: " + Totals.gameWildlifePoints[2] + "<BR>" +
+    "Year 3: " + Totals.gameWildlifePoints[3] + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Biodiversity: " + "<BR>" +
+    "Year 1: " + Totals.biodiversityPoints[1] + "<BR>" +
+    "Year 2: " + Totals.biodiversityPoints[2] + "<BR>" +
+    "Year 3: " + Totals.biodiversityPoints[3] + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Phosphorus Load: " + "<BR>" +
+    "Year 1: " + Totals.phosphorusLoad[1] + "<BR>" +
+    "Year 2: " + Totals.phosphorusLoad[2] + "<BR>" +
+    "Year 3: " + Totals.phosphorusLoad[3] + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Nitrate Load: " + "<BR>" +
+    "Year 1: " + Totals.nitrateConcentration[1] + "<BR>" +
+    "Year 2: " + Totals.nitrateConcentration[2] + "<BR>" +
+    "Year 3: " + Totals.nitrateConcentration[3] + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Sediment Delivery: " + "<BR>" +
+    "Year 1: " + Totals.sedimentDelivery[1] + "<BR>" +
+    "Year 2: " + Totals.sedimentDelivery[2] + "<BR>" +
+    "Year 3: " + Totals.sedimentDelivery[3] + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Yield Totals: " + "<BR>" +
+    "Corn: " + Totals.yieldResults[1].cornGrainYield + "<BR>" +
+    "Soy: " + Totals.yieldResults[1].soybeanYield + "<BR>" +
+    "Alfalfa: " + Totals.yieldResults[1].alfalfaHayYield + "<BR>" +
+    "Grass Hay: " + Totals.yieldResults[1].grassHayYield + "<BR>" +
+    "Wood: " + Totals.yieldResults[1].woodYield + "<BR>" +
+    "Cattle: " + Totals.yieldResults[1].cattleYield + "<BR>" +
+    "Herbs: " + Totals.yieldResults[1].herbaceousPerennialBiomassYield + "<BR>" +
+    "Short Woody: " + Totals.yieldResults[1].shortRotationWoodyBiomassYield + "<BR>" +
+    "Fruits + Veggies: " + Totals.yieldResults[1].mixedFruitsAndVegetablesYield + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Land Use Totals: " + "<BR>" +
+    "Conventional Corn: " + Totals.landUseResults[1].conventionalCornLandUse + "<BR>" +
+    "Conservation Corn: " + Totals.landUseResults[1].conservationCornLandUse + "<BR>" +
+    "Conventional Soybean: " + Totals.landUseResults[1].conventionalSoybeanLandUse + "<BR>" +
+    "Conservation Soybean: " + Totals.landUseResults[1].conservationSoybeanLandUse + "<BR>" +
+    "Alfalfa: " + Totals.landUseResults[1].alfalfaLandUse + "<BR>" +
+    "Permanent Pasture: " + Totals.landUseResults[1].permanentPastureLandUse + "<BR>" +
+    "Rotational Grazing: " + Totals.landUseResults[1].rotationalGrazingLandUse + "<BR>" +
+    "Grass Hay: " + Totals.landUseResults[1].grassHayLandUse + "<BR>" +
+    "Prairie: " + Totals.landUseResults[1].prairieLandUse + "<BR>" +
+    "Conservation Forest: " + Totals.landUseResults[1].conservationForestLandUse + "<BR>" +
+    "Conventional Forest: " + Totals.landUseResults[1].conventionalForestLandUse + "<BR>" +
+    "Herbaceous Perennial Bioenergy: " + Totals.landUseResults[1].herbaceousPerennialBioenergyLandUse + "<BR>" +
+    "Short Rotation Woody Bioenergy: " + Totals.landUseResults[1].shortRotationWoodyBioenergyLandUse + "<BR>" +
+    "Wetland: " + Totals.landUseResults[1].wetlandLandUse + "<BR>" +
+    "Mixed Fruits and Veggies: " + Totals.landUseResults[1].mixedFruitsVegetablesLandUse + "<BR>" +
+    "<BR>" + "<BR>" +
+    "<STRONG>" + "Scores (100): " + "</STRONG>" + "<BR>" + "<BR>" +
+    "Yield Score: " + "<BR>" +
+    "Corn: " + 100 * Totals.yieldResults[3].cornGrainYield / boardData[currentBoard].maximums.cornMax + "<BR>" +
+    "Soy: " + 100 * Totals.yieldResults[3].soybeanYield / boardData[currentBoard].maximums.soybeanMax + "<BR>" +
+    "Alfalfa: " + 100 * Totals.yieldResults[3].alfalfaHayYield / boardData[currentBoard].maximums.alfalfaMax + "<BR>" +
+    "Hay: " + 100 * Totals.yieldResults[3].grassHayYield / boardData[currentBoard].maximums.grassHayMax + "<BR>" +
+    "Wood: " + 100 * Totals.yieldResults[3].woodYield / boardData[currentBoard].maximums.woodMax + "<BR>" +
+    "Cattle: " + 100 * Totals.yieldResults[3].cattleYield / boardData[currentBoard].maximums.cattleMax + "<BR>" +
+    "Herbs: " + 100 * Totals.yieldResults[3].herbaceousPerennialBiomassYield / boardData[currentBoard].maximums.herbaceousPerennialBiomassMax + "<BR>" +
+    "Short Woody: " + 100 * Totals.yieldResults[3].shortRotationWoodyBiomassYield / boardData[currentBoard].maximums.shortRotationWoodyBiomassMax + "<BR>" +
+    "Fruits + Veggies: " + 100 * Totals.yieldResults[3].mixedFruitsAndVegetablesYield / boardData[currentBoard].maximums.mixedFruitsAndVegetablesMax + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Game Wildlife Score: " + "<BR>" +
+    "Year 1: " + Totals.gameWildlifePoints[1] * 10 + "<BR>" +
+    "Year 2: " + Totals.gameWildlifePoints[2] * 10 + "<BR>" +
+    "Year 3: " + Totals.gameWildlifePoints[3] * 10 + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Biodiversity Score: " + "<BR>" +
+    "Year 1: " + Totals.biodiversityPoints[1] * 10 + "<BR>" +
+    "Year 2: " + Totals.biodiversityPoints[2] * 10 + "<BR>" +
+    "Year 3: " + Totals.biodiversityPoints[3] * 10 + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Carbon Score: " + "<BR>" +
+    "Year 1: " + 100 * ((Totals.carbonSequestration[1] - boardData[currentBoard].minimums.carbonMin) / (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)) + "<BR>" +
+    "Year 2: " + 100 * ((Totals.carbonSequestration[2] - boardData[currentBoard].minimums.carbonMin) / (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)) + "<BR>" +
+    "Year 3: " + 100 * ((Totals.carbonSequestration[3] - boardData[currentBoard].minimums.carbonMin) / (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)) + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Erosion Score: " + "<BR>" +
+    "Year 1: " + 100 * ((boardData[currentBoard].maximums.erosionMax - Totals.grossErosion[1]) / (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) + "<BR>" +
+    "Year 2: " + 100 * ((boardData[currentBoard].maximums.erosionMax - Totals.grossErosion[2]) / (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) + "<BR>" +
+    "Year 3: " + 100 * ((boardData[currentBoard].maximums.erosionMax - Totals.grossErosion[3]) / (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) + "<BR>" +
+    "Erosion Min " + boardData[currentBoard].minimums.erosionMin + "<BR>" +
+    "Erosion Max: " + boardData[currentBoard].maximums.erosionMax + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Phosphorus Score: " + "<BR>" +
+    "Year 1: " + 100 * ((boardData[currentBoard].maximums.phosphorusMax - Totals.phosphorusLoad[1]) / (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) + "<BR>" +
+    "Year 2: " + 100 * ((boardData[currentBoard].maximums.phosphorusMax - Totals.phosphorusLoad[2]) / (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) + "<BR>" +
+    "Year 3: " + 100 * ((boardData[currentBoard].maximums.phosphorusMax - Totals.phosphorusLoad[3]) / (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) + "<BR>" +
+    "Phosphorus Min " + boardData[currentBoard].minimums.phosphorusMin + "<BR>" +
+    "Phosphorus Max: " + boardData[currentBoard].maximums.phosphorusMax + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Nitrate Score: " + "<BR>" +
+    "Year 1: " + 100 * ((boardData[currentBoard].maximums.nitrateMax - Totals.nitrateConcentration[1]) / (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) + "<BR>" +
+    "Year 2: " + 100 * ((boardData[currentBoard].maximums.nitrateMax - Totals.nitrateConcentration[2]) / (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) + "<BR>" +
+    "Year 3: " + 100 * ((boardData[currentBoard].maximums.nitrateMax - Totals.nitrateConcentration[3]) / (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) + "<BR>" +
+    "<BR>" + "<BR>" +
+    "Sediment Delivery Score: " + "<BR>" +
+    "Year 1: " + 100 * ((boardData[currentBoard].maximums.sedimentMax - Totals.sedimentDelivery[1]) / (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) + "<BR>" +
+    "Year 2: " + 100 * ((boardData[currentBoard].maximums.sedimentMax - Totals.sedimentDelivery[2]) / (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) + "<BR>" +
+    "Year 3: " + 100 * ((boardData[currentBoard].maximums.sedimentMax - Totals.sedimentDelivery[3]) / (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) + "<BR>" +
+    "Sediment Min: " + boardData[currentBoard].minimums.sedimentMin + "<BR>" +
+    "Sediment Max: " + boardData[currentBoard].maximums.sedimentMax + "<BR>"
+    
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = string2;
     
 }

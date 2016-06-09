@@ -76,8 +76,23 @@ body {
     height:40px;
     width:140px;
     
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
+}
+
+.resultsButtonFar {
+    position:absolute;
+    top:150px;
+    right:85%;
+    background-color: rgba(14,71,204,0.8) ;
+    
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    height:40px;
+    width:140px;
+    
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
 }
 
 .resultsButton:hover{
@@ -98,53 +113,14 @@ body {
     height:40px;
     width:140px;
     
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
 }
 
 .resultsButtonRolled:hover{
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
 }
 
-/*
-.resultsButton {
-    position: absolute;
-    top: 150px;
-    right: -154px;
-    padding-top: 100px;
-    background-color: #E39A12;  Orange 
-    text-align: left;
-    border: none;
-    color: black;
-    padding: 0px 40px;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 32px;
-    margin: 0px 2px;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s;  Safari 
-    transition-duration: 0.4s;
-    
-}
-
-.resultsButton:hover {
-    background-color: #FAAA16;
-    right: -2px;
-    display: inline;
- 
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-    vertical-align: middle;
-
-}
-
-.buttonIcon {
-
-}
-
-*/
 
 
 .left-Elements {
@@ -341,3 +317,44 @@ body {
     text-align:center;
 }
 
+.resultsFrameInvisible{
+    display:none;
+     
+}
+
+.resultsFrameRolled{
+    position:absolute;
+    width:70%;
+    height:80%;
+    right:-75%;
+    top: 10%;
+    background-color: white;
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
+    
+    
+}
+
+.resultsFrame{
+    position:absolute;
+    width:70%;
+    height:80%;
+    right:15%;
+    top: 10%;
+    background-color: white;
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
+    
+    
+}
+
+.resultsTable{
+    width:100%;
+    
+}
+
+td{
+    margin: 10px;
+    text-align: left;
+    
+}
