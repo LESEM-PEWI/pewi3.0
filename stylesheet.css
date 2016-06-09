@@ -358,3 +358,62 @@ td{
     text-align: left;
     
 }
+
+.year0Button {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    top: 400px;
+    right: 0px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.year1Button {
+    position: absolute;
+    background:url(./imgs/one.png) no-repeat center center;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    top: 450px;
+    right: 0px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.year2Button {
+    position: absolute;
+    background:url(./imgs/two.png) no-repeat center center;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    top: 500px;
+    right: 0px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.year3Button {
+    position: absolute;
+    background:url(./imgs/three.png) no-repeat center center;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    top: 550px;
+    right: 0px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}

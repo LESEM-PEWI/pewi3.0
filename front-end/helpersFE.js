@@ -58,6 +58,24 @@ function addTile(tile){
     
 };
 
+function transitionToYear(year) {
+    
+    currentYear = year;
+    
+    if(year > boardData[currentBoard].updatedToYear){
+        boardData[currentBoard].updatedToYear = year;
+        boardData[currentBoard].updatBoard();
+    }
+    
+    for(var i = 0; i < boardData[currentBoard].map.length; i++){
+        
+        scene.remove(tiles[i]);
+        addTile(boardData[currentBoard].map[i]);
+        
+    }
+    
+}
+
 
 //DEPRECATED--------------------------------------------------------------
 function addBoard(board) {
@@ -190,6 +208,18 @@ function paintChange(value) {
     painter = value ;  
   
 }
+
+function paintYear(value) {
+    
+    var string = onYear + "Image";
+    document.getElementById(string).className = "yearImage";
+    
+    string = value + "Image";
+    document.getElementById(string).className = "yearSelectedImage";
+    onYear = value;
+    
+}
+
 
 var toolbarRolled = true ;
 
