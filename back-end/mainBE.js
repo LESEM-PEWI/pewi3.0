@@ -1,14 +1,18 @@
 /*global initData*/
+/*global precip*/
 
 //propogateBoard() performs the essential initialization operations on the board
 // it also pushes tiles from initData into the game board map
 function propogateBoard(board) {
 
   //Loop through the years and assign precipitation levels
-  for (var y = 0; y < board.precipitation.length; y++) {
-    board.precipitation[y] = setPrecipitation();
+  for (var y = 0; y < 4; y++) {
+    var precipIndex = setPrecipitation();
+    board.precipitation[y] = precip[precipIndex];
+    var formIDs = ["year0Precip", "year1Precip", "year2Precip", "year3Precip"];
+    document.getElementById(formIDs[y]).options[precipIndex].selected = true;
   }
-
+  
   //overwrite the precipitation values, used for testing
   board.precipitation = [30.39, 34.34, 34.34, 28.18, 24.58, 45.1];
 

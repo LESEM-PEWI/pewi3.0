@@ -144,7 +144,7 @@ function onDocumentMouseMove( event ) {
 	
 }; //onDocumentMouseMove
 
-function onDocumentMouseDown( event ) {
+function onDocumentDoubleClick( event ) {
     
 	event.preventDefault();
 	
@@ -202,6 +202,8 @@ function resultsStart() {
     document.getElementById("resultsButton").onmouseout = "";
     document.getElementById("resultsButton").onmouseover = "";
     document.getElementById("resultsButton").onclick = function() {resultsEnd() ;}; 
+
+    if(document.getElementById("precipConsole").className != "precipConsoleRolled")  roll(3) ;
     document.getElementById("toolsButton").onclick = "";
     
     document.getElementById("resultsButton").className = "resultsButtonFar" ;
@@ -260,6 +262,40 @@ function roll(value) {
         
         
     }//right resaults button
+
+    
+    if(value==3){
+        
+        if(document.getElementById("precipConsole").className == "precipConsole"){
+           document.getElementById("precipConsole").className = "precipConsoleRolled";
+           document.getElementById("precipButton").className = "precipButtonRolled";
+        } else {
+            document.getElementById("precipConsole").className = "precipConsole";
+            document.getElementById("precipButton").className = "precipButton";
+        }
+        
+    }
+}
+
+function updatePrecip(year) {
+    
+    if(year == 0){
+        boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year0Precip").value)];
+    }
+    if(year == 1){
+        boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year1Precip").value)];
+    }
+    if(year == 2){
+        boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year2Precip").value)];
+    }
+    if(year == 3){
+        boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year3Precip").value)];
+    }
+    
+    console.log(boardData[currentBoard].precipitation);
+    
+    boardData[currentBoard].updateBoard();
+    
 }
 
 function animateResults() {
@@ -450,5 +486,4 @@ function calculateResults() {
     
     document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = string2;
     
-
 }

@@ -225,6 +225,98 @@ body {
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
 }
 
+.precipConsole {
+    position: absolute;
+    background-color: rgba(6, 153, 75, 0.4);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 12px;
+    left: 0px;
+    top: 650px;
+    width: 115px;
+    height: 260px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.precipConsoleRolled {
+    position: absolute;
+    background-color: rgba(6, 153, 75, 0.4);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 12px;
+    left: -115px;
+    top:650px;
+    width:115px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.precipButton {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    top: 650px;
+    left: 115px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.precipButtonRolled {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.9);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    top: 650px;
+    left: 0px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    
+}
+
+.precipButtonRolled:hover{
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+
+.precipButton:hover{
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+
+.style-select {
+    padding:3px;
+    margin: 8px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+    background: #3b3b3b;
+    color:#fff;
+    display:inline-block;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    text-align:center;
+}
+
+.precipTitle {
+    padding:3px;
+    margin: 4px;
+    color:#fff;
+    text-align:center;
+}
+
 .resultsFrameInvisible{
     display:none;
      

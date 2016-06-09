@@ -74,7 +74,7 @@ function setupHighlight() {
 	
 	//add mouse listener
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+	document.addEventListener( 'dblclick', onDocumentDoubleClick, false );
     
 }; //end setupHighlight
 
