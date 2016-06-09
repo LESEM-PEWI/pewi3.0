@@ -3,6 +3,7 @@ var camera, scene, renderer, raycaster, mouse, hoveredOver ;
 var controls ;
 var tiles = [];
 var painter = 1;
+var onYear = "year1";
 var boardData = [] ;
 var currentBoard = -1 ;
 var currentYear = 1 ;
