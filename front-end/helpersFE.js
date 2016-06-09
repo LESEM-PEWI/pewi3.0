@@ -312,45 +312,81 @@ function calculateResults() {
     Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
     
+    upToYear = boardData[currentBoard].calculatedToYear ;
+    
     //document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = "WORKS";
+    var nameArray = ["Conventional Corn", "Conservation Corn","Conventional Soybean", "conservation Soybean", 
+    "Mixed Fruits and Vegetables", "Permanent Pasture", "Rotational Grazing", "Grass Hay",
+    "Herbaceous Perennial Bioenergy", "Prairie", "Wetland","Alfalfa","Conventional Forest", 
+    "Conservation Forest", "Short Rotation Woody Bioenergy"] ;
+    var testArray = ["conventionalCorn","conservationCorn","conventionalSoybean",
+    "conservationSoybean","mixedFruitsVegetables","permanentPasture","rotationalGrazing","grassHay",
+    "herbaceousPerennialBioenergy", "prairie", "wetland","alfalfa","conventionalForest",
+    "conservationForest","shortRotationWoodyBioenergy"];
     
-    var testArray = ["conventionalCorn","conservationCorn"];
+    var string2 = "";
     
-    var string2 = "<table class='resultsTable'>";
+    string2 += "<table class='resultsTable'>";
     
     for(var l = 0 ; l< testArray.length ; l++ ){
         
+        
+        switch(l){
+            case 0:
+                string2 += "<tr class='tableHeading'><td><b>Annual Grain</b></td></tr>"
+                break;
+            case 2:
+                string2 += "<tr class='tableHeading'><td><b>Annual Legume</b></td></tr>"
+                break;
+            case 4:
+                string2 += "<tr class='tableHeading'><td><b>Mixed Fruits and Vegetables</b></td></tr>"
+                break;
+            case 5:
+                string2 += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>"
+                break;
+           case 7:
+                string2 += "<tr class='tableHeading'><td><b>Perrenial Herbaceous (non-pasture)</b></td></tr>"
+                break;
+            case 11:
+                string2 += "<tr class='tableHeading'><td><b>Perrenial Legume</b></td></tr>"
+                break;
+            case 12:
+                string2 += "<tr class='tableHeading'><td><b>Perrenial Wooded</b></td></tr>"
+                break;
+                        
+        }//end switch
+        
         string2 += "<tr>"
         
-        string2 += "<td>" + testArray[l] + "</td>"
+        string2 += "<td>" + nameArray[l] + "</td>"
         
-        for(var y=1; y<=3;y++){
+        for(var y=1; y<=upToYear;y++){
             string2+= "<td>"
             
             var tempString = testArray[l] + "LandUse";
-            string2 += ( Totals.landUseResults[y][tempString] / Totals.totalArea * 100  ) + "<br>" ;
+            string2 += ( Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10  )  / 10 ) + "<br>" ;
             
             string2+= "</td>"
         }//for each year
         
         string2 += "<td>percent</td>" ;
         
-        for(var y=1; y<=3;y++){
+        for(var y=1; y<=upToYear;y++){
             string2+= "<td>"
             
             var tempString = testArray[l] + "LandUse";
-            string2 += ( Totals.landUseResults[y][tempString] ) + "<br>" ;
+            string2 += ( Math.round(Totals.landUseResults[y][tempString] * 10) / 10 ) + "<br>" ;
             
             string2+= "</td>"
         }//for each year
         
         string2 += "<td>acres</td>" ;
         
-        for(var y=1; y<=3;y++){
+        for(var y=1; y<=upToYear;y++){
             string2+= "<td>"
             
             var tempString = testArray[l] + "LandUse";
-            string2 += ( Totals.landUseResults[y][tempString]  / toMetricFactorArea ) + "<br>" ;
+            string2 += ( Math.round(Totals.landUseResults[y][tempString]  / toMetricFactorArea *10 ) / 10 ) + "<br>" ;
             
             string2+= "</td>"
             
@@ -359,6 +395,8 @@ function calculateResults() {
         
         
     }
+    
+    string2 += "</table>" ;
     
     var string = "Precipitation:" + "<BR>" +
     "Year 0: " + boardData[currentBoard].precipitation[0] + "<BR>" +
