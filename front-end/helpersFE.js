@@ -144,7 +144,7 @@ function onDocumentMouseMove( event ) {
 	
 }; //onDocumentMouseMove
 
-function onDocumentMouseDown( event ) {
+function onDocumentDoubleClick( event ) {
     
 	event.preventDefault();
 	
@@ -199,6 +199,7 @@ function resultsStart() {
     document.getElementById("resultsButton").onclick = function() {resultsEnd() ;}; 
     if(document.getElementById("resultsButton").className != "resultsButton")   roll(2) ;
     if(document.getElementById("landUseConsole").className != "landUseConsoleRolled")  roll(1) ;
+    if(document.getElementById("precipConsole").className != "precipConsoleRolled")  roll(3) ;
     
 
     //functions that update results and display them appropriately
@@ -244,4 +245,38 @@ function roll(value) {
         
         
     }//right resaults button
+    
+    if(value==3){
+        
+        if(document.getElementById("precipConsole").className == "precipConsole"){
+           document.getElementById("precipConsole").className = "precipConsoleRolled";
+           document.getElementById("precipButton").className = "precipButtonRolled";
+        } else {
+            document.getElementById("precipConsole").className = "precipConsole";
+            document.getElementById("precipButton").className = "precipButton";
+        }
+        
+    }
+}
+
+function updatePrecip(year) {
+    
+    if(year == 0){
+        boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year0Precip").value)];
+    }
+    if(year == 1){
+        boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year1Precip").value)];
+    }
+    if(year == 2){
+        boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year2Precip").value)];
+    }
+    if(year == 3){
+        boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year3Precip").value)];
+    }
+    
+    console.log(boardData[currentBoard].precipitation);
+    
+    boardData[currentBoard].updateBoard();
+    
+    
 }

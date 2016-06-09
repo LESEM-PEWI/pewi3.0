@@ -1,6 +1,9 @@
 //global variable for initial board state, cleared after use
 var initData = [];
 
+//set of possible precipitation levels
+var precip = [24.58, 28.18, 30.39, 32.16, 34.34, 36.47, 45.10];
+
 //parseInitial takes the data from on server text file and fills global array
 function parseInitial(data) {
  
@@ -23,12 +26,9 @@ function parseInitial(data) {
 //setPrecipitation sets the precipitation for year 0 through year 3 in the watershed
 function setPrecipitation() {
 
-    //set of possible precipitation levels
-    var precip = [24.58, 28.18, 30.39, 32.16, 34.34, 36.47, 45.10];
-
     //randomly select precipitation value
     var r = Math.floor(Math.random() * precip.length);
-    return precip[r];
+    return r;
 } //end setPrecipitation()
 
 
