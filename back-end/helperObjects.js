@@ -1304,6 +1304,8 @@ function Results(board) {
 	this.carbonSequestrationScore = [0,0,0,0];
 	this.grossErosionScore = [0,0,0,0];
 	this.nitrateConcentrationScore = [0,0,0,0];
+	this.phosphorusLoadScore = [0,0,0,0] ;
+	this.sedimentDeliveryScore = [0,0,0,0] ;
 
 	//Function to sum the values of calculatedCarbonSequestration for each tile
 	this.sumCarbon = function() {
@@ -2024,8 +2026,8 @@ function Results(board) {
 			this.grossErosionScore[y] =  100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
 		
 			this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin)) ;
-			
-			
+			this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin)) ;
+			this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin))	;
 		}
 		
 		

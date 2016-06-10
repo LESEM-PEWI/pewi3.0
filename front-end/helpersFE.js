@@ -472,7 +472,7 @@ function calculateResults() {
         
     }
     
-    string2 += "</table><br><br>" ;
+    string2 += "</table><br><br><br><br>" ;
     
     
     //===================================================
@@ -480,15 +480,17 @@ function calculateResults() {
     
           
     nameArray =["Game Wildlife","Biodiversity","Carbon Sequestration", "Erosion Control / Gross Erosion",
-    "Nitrate Pollution Control <br> / In-Stream Concentration"];
-    testArray=["gameWildlifePoints","biodiversityPoints","carbonSequestration","grossErosion","nitrateConcentration"];
-    conversionArray=[1,1,0.90718474,0.98718474,1,1];
+    "Nitrate Pollution Control <br> / In-Stream Concentration","Phosphorus Pollution Control <br> / In-Stream Loading",
+    "Sediment Control <br> / In-Stream Delivery"];
+    testArray=["gameWildlifePoints","biodiversityPoints","carbonSequestration","grossErosion","nitrateConcentration",
+    "phosphorusLoad", "sedimentDelivery"];
+    conversionArray=[1,1,0.90718474,0.90718474,1,1,0.90718474, 0.90718474];
     
     string2 += "<table class='resultsTable'>";
     
     //add header row
     
-    string2 += "<tr class='tableHeading'> <th> Ecosystem Service Indicator / Measurement </th>" ;
+    string2 += "<tr class='tableHeading'> <th> Ecosystem Service Indicator <br> / Measurement </th>" ;
     
     for(var y = 1; y<= upToYear; y++){
         string2 += "<th>" ;
@@ -530,9 +532,6 @@ function calculateResults() {
             case 4:
                 string2 += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>"
                 break;
-            case 5:
-                string2 += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>"
-                break;
            case 7:
                 string2 += "<tr class='tableHeading'><td><b>Perrenial Herbaceous (non-pasture)</b></td></tr>"
                 break;
@@ -570,8 +569,9 @@ function calculateResults() {
         }//for each year
         
         if(l<2) string2 += "<td>pts</td>" ;
-        if(2<= l && l < 5) string2 +="<td>tons</td>" ;
-        
+        if(2<= l && l < 4) string2 +="<td>tons</td>" ;
+        if(4<= l && l < 5) string2 +="<td>ppm</td>" ;
+        if(5<= l && l < 8) string2 +="<td>tons</td>" ;
         
         for(var y=1; y<=upToYear;y++){
             string2+= "<td>"
@@ -584,8 +584,9 @@ function calculateResults() {
         }//for each year
         
         if(l< 2) string2 += "<td>pts</td>" ;
-        if(2 <= l && l <5) string2 +="<td>Mg</td>" ;
-
+        if(2 <= l && l <4) string2 +="<td>Mg</td>" ;
+        if(4<= l && l < 5) string2 +="<td>mg/L</td>" ;
+        if(5<= l && l < 8) string2 +="<td>Mg</td>" ;
     
     }
     
