@@ -78,6 +78,7 @@ function transitionToYear(year) {
 
 
 //DEPRECATED--------------------------------------------------------------
+//remove in future iteration
 function addBoard(board) {
     
     var tilesHigh = board.height;
@@ -271,11 +272,17 @@ function roll(value) {
     if( document.getElementById("landUseConsole").className == "landUseConsole"){
      document.getElementById("landUseConsole").className = "landUseConsoleRolled" ;
      document.getElementById("toolsButton").className = "toolsButtonRolled" ;
-     toolbarRolled = true;
+     document.getElementById("precipConsole").className = "precipConsoleRolled";
+     document.getElementById("precipButton").className = "precipButtonRolled";
+     document.getElementById("terrainButton").className = "terrainButtonRolled";
+      toolbarRolled = true;
     }
     else{
         document.getElementById("landUseConsole").className = "landUseConsole";
         document.getElementById("toolsButton").className = "toolsButton" ;
+        document.getElementById("precipConsole").className = "precipConsole";
+        document.getElementById("precipButton").className = "precipButton";
+        document.getElementById("terrainButton").className = "terrainButton";
         toolbarRolled = false;
     }
     
@@ -291,20 +298,9 @@ function roll(value) {
         }
         
         
-    }//right resaults button
+    }//right results button
 
     
-    if(value==3){
-        
-        if(document.getElementById("precipConsole").className == "precipConsole"){
-           document.getElementById("precipConsole").className = "precipConsoleRolled";
-           document.getElementById("precipButton").className = "precipButtonRolled";
-        } else {
-            document.getElementById("precipConsole").className = "precipConsole";
-            document.getElementById("precipButton").className = "precipButton";
-        }
-        
-    }
 }
 
 function updatePrecip(year) {
@@ -328,6 +324,26 @@ function updatePrecip(year) {
     
 }
 
+function switchConsoleTab(value){
+
+    if(value==1){
+        document.getElementById('terrainImg').className = "imgSelected" ;
+        document.getElementById('precipImg').className = "imgNotSelected" ;
+        
+        document.getElementById('painterTab').style.display = "block";
+        document.getElementById('precipTab').style.display = "none" ;
+    }
+    
+    if(value==2){
+        document.getElementById('terrainImg').className = "imgNotSelected" ;
+        document.getElementById('precipImg').className = "imgSelected" ;
+        document.getElementById('painterTab').style.display = "none";
+        document.getElementById('precipTab').style.display = "block" ;
+    }
+    
+}
+
+
 function animateResults() {
     
  //todo, increased functionality
@@ -345,10 +361,10 @@ function calculateResults() {
     var upToYear = boardData[currentBoard].calculatedToYear ;
     
     //document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = "WORKS";
-    var nameArray = ["Conventional Corn", "Conservation Corn","Conventional Soybean", "conservation Soybean", 
-    "Mixed Fruits and Vegetables", "Permanent Pasture", "Rotational Grazing", "Grass Hay",
-    "Herbaceous Perennial Bioenergy", "Prairie", "Wetland","Alfalfa","Conventional Forest", 
-    "Conservation Forest", "Short Rotation Woody Bioenergy"] ;
+    var nameArray = ["Conventional Corn Area", "Conservation Corn Area","Conventional Soybean Area", "Conservation Soybean Area", 
+    "Mixed Fruits and Vegetables Area", "Permanent Pasture Area", "Rotational Grazing Area", "Grass Hay Area",
+    "Herbaceous Perennial Bioenergy Area", "Prairie Area", "Wetland Area","Alfalfa Area","Conventional Forest Area", 
+    "Conservation Forest Area", "Short Rotation Woody Bioenergy Area"] ;
     var testArray = ["conventionalCorn","conservationCorn","conventionalSoybean",
     "conservationSoybean","mixedFruitsVegetables","permanentPasture","rotationalGrazing","grassHay",
     "herbaceousPerennialBioenergy", "prairie", "wetland","alfalfa","conventionalForest",
@@ -357,6 +373,36 @@ function calculateResults() {
     var string2 = "";
     
     string2 += "<table class='resultsTable'>";
+    
+    //add header row
+    
+    string2 += "<tr class='tableHeading'> <th> Land Use Category </th>" ;
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<th>" ;
+        string2 += "Y" + y ;
+        string2 += "</th>" ;
+    }
+    
+    string2 += "<th>Percentage</th>";
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<th>" ;
+        string2 += "Y" + y ;
+        string2 += "</th>" ;
+    }
+    
+     string2 += "<th>Units (English) </th>";
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<th>" ;
+        string2 += "Y" + y ;
+        string2 += "</th>" ;
+    }
+    
+    string2 += "<th>Units (Metric) </th>";
+    
+    string2 += "</tr>";
     
     for(var l = 0 ; l< testArray.length ; l++ ){
         
@@ -367,7 +413,7 @@ function calculateResults() {
                 break;
             case 2:
                 string2 += "<tr class='tableHeading'><td><b>Annual Legume</b></td></tr>"
-                break;
+                break;x
             case 4:
                 string2 += "<tr class='tableHeading'><td><b>Mixed Fruits and Vegetables</b></td></tr>"
                 break;
@@ -426,7 +472,130 @@ function calculateResults() {
         
     }
     
-    string2 += "</table>" ;
+    string2 += "</table><br><br>" ;
+    
+    
+    //===================================================
+    //update second table
+    
+          
+    nameArray =["Game Wildlife","Biodiversity","Carbon Sequestration", "Erosion Control / Gross Erosion",
+    "Nitrate Pollution Control <br> / In-Stream Concentration"];
+    testArray=["gameWildlifePoints","biodiversityPoints","carbonSequestration","grossErosion","nitrateConcentration"];
+    conversionArray=[1,1,0.90718474,0.98718474,1,1];
+    
+    string2 += "<table class='resultsTable'>";
+    
+    //add header row
+    
+    string2 += "<tr class='tableHeading'> <th> Ecosystem Service Indicator / Measurement </th>" ;
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<th>" ;
+        string2 += "Y" + y ;
+        string2 += "</th>" ;
+    }
+    
+    string2 += "<th>Score</th>";
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<th>" ;
+        string2 += "Y" + y ;
+        string2 += "</th>" ;
+    }
+    
+     string2 += "<th>Units (English) </th>";
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<th>" ;
+        string2 += "Y" + y ;
+        string2 += "</th>" ;
+    }
+    
+    string2 += "<th>Units (Metric) </th>";
+    
+    string2 += "</tr>";
+    
+    
+    for(var l = 0 ; l< testArray.length ; l++ ){
+        
+        
+        switch(l){
+            case 0:
+                string2 += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>"
+                break;
+            case 2:
+                string2 += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>"
+                break;x
+            case 4:
+                string2 += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>"
+                break;
+            case 5:
+                string2 += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>"
+                break;
+           case 7:
+                string2 += "<tr class='tableHeading'><td><b>Perrenial Herbaceous (non-pasture)</b></td></tr>"
+                break;
+            case 11:
+                string2 += "<tr class='tableHeading'><td><b>Perrenial Legume</b></td></tr>"
+                break;
+            case 12:
+                string2 += "<tr class='tableHeading'><td><b>Perrenial Wooded</b></td></tr>"
+                break;
+                        
+        }//end switch
+        
+        string2 += "<tr>"
+        
+        string2 += "<td>" + nameArray[l] + "</td>"
+        
+        for(var y=1; y<=upToYear;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l] + "Score";
+            string2 += ( Math.round(Totals[tempString][y] * 10  )  / 10 ) + "<br>" ;
+            
+            string2+= "</td>"
+        }//for each year
+        
+        string2 += "<td>(out of 100)</td>" ;
+        
+        for(var y=1; y<=upToYear;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l];
+            string2 += ( Math.round(Totals[tempString][y] * 10) / 10 ) + "<br>" ;
+            
+            string2+= "</td>"
+        }//for each year
+        
+        if(l<2) string2 += "<td>pts</td>" ;
+        if(2<= l && l < 5) string2 +="<td>tons</td>" ;
+        
+        
+        for(var y=1; y<=upToYear;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l];
+            string2 += ( Math.round(Totals[tempString][y] * conversionArray[l] * 10 ) / 10 ) + "<br>" ;
+            
+            string2+= "</td>"
+            
+        }//for each year
+        
+        if(l< 2) string2 += "<td>pts</td>" ;
+        if(2 <= l && l <5) string2 +="<td>Mg</td>" ;
+
+    
+    }
+    
+    //TODO
+    //NEED TO CHANGE THE WAY these things are stored in results so that it can be looped through
+    //ie each value has nameSCORE, and NAME so that an array of NAME can generate table (metric generated from english)
+    //this is especially a problem for dealing with the scores at the bottom, but a few hour fix only
+
+    string2 += "</table>";
+    
     
     var string = "Precipitation:" + "<BR>" +
     "Year 0: " + boardData[currentBoard].precipitation[0] + "<BR>" +

@@ -32,8 +32,13 @@
 -->
 
 <div id="left-elements" class="left-elements">
+  
+<div id="terrainButton" class="terrainButton" onclick="switchConsoleTab(1);"><img id ="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png"></div>  
+<div id="precipButton" class="precipButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png"></div>
 
 <div id="landUseConsole" class ="landUseConsole">
+ <div id="painterTab">
+
 <img id="paint1" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="paintChange(1);">  
 <img id="paint2" class="landSelectorIcon" src="./imgs/conservationCorn.png" onclick="paintChange(2);">  
 <img id="paint3" class="landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="paintChange(3);">  
@@ -53,18 +58,13 @@
 <img id="paint13" class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="paintChange(13);">
 </div>
 
-<div id="toolsButton" class="toolsButton" onclick="roll(1) ;"><img src="./imgs/pick.png"></div>
-
 </div>
 
-
-<div id="resultsButton" class="resultsButtonRolled" onmouseover="roll(2); " onmouseout="roll(2);" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
-
-<iframe id="resultsFrame" class="resultsFrameRolled" src="./results.html"></iframe>
-
+<div id="precipTab" style="display:none;">
 <div id="precipConsole" class="precipConsole">
   <form method="precipValues" action=" ">
   <div class="precipTitle">Precipitation</div>
+  
   <div class="style-select">
   Year 0:<select id="year0Precip" onChange="updatePrecip(0)">
     <option value=0>24.58</option>
@@ -111,8 +111,19 @@
   </div>
   </form>
 </div>
+</div>
 
-<div id="precipButton" class="precipButton" onclick="roll(3);"><img src="./imgs/precipIcon.png"></div>
+<div id="toolsButton" class="toolsButton" onclick="roll(1) ;"><img src="./imgs/pick.png"></div>
+</div>
+
+
+<div id="resultsButton" class="resultsButtonRolled" onmouseover="roll(2); " onmouseout="roll(2);" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
+
+<iframe id="resultsFrame" class="resultsFrameRolled" src="./results.html"></iframe>
+
+
+
+
 
 <div id="year0Button" class="year0Button" onclick="transitionToYear(0);"></div>
 <div id="year1Button" class="year1Button" onclick="transitionToYear(1);"></div>

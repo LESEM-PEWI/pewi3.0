@@ -48,9 +48,9 @@ function setupSpace() {
 
     //skybox
 
-    //for (var i = 0; i < 6; i++) materialArray[i].side = THREE.BackSide;
+    for (var i = 0; i < 6; i++) materialArray[i].side = THREE.BackSide;
     var skyboxMaterial = new THREE.MeshFaceMaterial( materialArray );
-    var skyboxGeom = new THREE.CubeGeometry( 5000, 5000, 5000, 1, 1, 1 );
+    skyboxGeom = new THREE.CubeGeometry( 5000, 5000, 5000, 1, 1, 1 );
     var skybox = new THREE.Mesh( skyboxGeom, skyboxMaterial );
     scene.add( skybox );
     

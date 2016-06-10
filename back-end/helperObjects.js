@@ -1297,6 +1297,13 @@ function Results(board) {
 	this.watershedPercent = Array(4); //nitrate percent levels per watershed for maps
 	this.strategicWetlandCells = Array(4);
 	this.grossErosionSeverity = Array(4);
+	
+	//score variables
+	this.gameWildlifePointsScore = [0,0,0,0];
+	this.biodiversityPointsScore = [0,0,0,0];
+	this.carbonSequestrationScore = [0,0,0,0];
+	this.grossErosionScore = [0,0,0,0];
+	this.nitrateConcentrationScore = [0,0,0,0];
 
 	//Function to sum the values of calculatedCarbonSequestration for each tile
 	this.sumCarbon = function() {
@@ -2006,6 +2013,26 @@ function Results(board) {
 		else if (erosion <= 0.5) return 1;
 	}; //end this.getGrossErosionSeverity
 
+
+	this.updateScores = function() {
+		
+		for(var y = 1; y<= board.calculatedToYear; y++){
+			
+			this.gameWildlifePointsScore[y] = this.gameWildlifePoints[y] * 10 ;
+			this.biodiversityPointsScore[y] = this.biodiversityPoints[y] * 10 ;
+			this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin)) ;
+			this.grossErosionScore[y] =  100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
+		
+			this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin)) ;
+			
+			
+		}
+		
+		
+	}
+
+
+
 	//================================================
 	//updates all the necessary values by going through updated tiles
 	//note that some calculations depend on results of other calculations so be careful about reorganizing
@@ -2026,6 +2053,9 @@ function Results(board) {
 
 		this.calculateGameWildLifePoints();
 		this.calculateBiodiversityPoints(); //Game Wildlife must come first as it alone calls sumFlagPercentages()
+		
+		this.updateScores();
+		
 	}; //end this.update()
 
 }; //end construction of results
