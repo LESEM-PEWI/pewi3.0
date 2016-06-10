@@ -1307,6 +1307,7 @@ function Results(board) {
 	this.phosphorusLoadScore = [0,0,0,0] ;
 	this.sedimentDeliveryScore = [0,0,0,0] ;
 
+
 	//Function to sum the values of calculatedCarbonSequestration for each tile
 	this.sumCarbon = function() {
 
@@ -1726,7 +1727,7 @@ function Results(board) {
 			cattleYield: 0,
 			herbaceousPerennialBiomassYield: 0,
 			shortRotationWoodyBiomassYield: 0,
-			mixedFruitsAndVegetablesYield: 0
+			mixedFruitsAndVegetablesYield: 0,
 		};
 		tempYieldResults[1] = {
 			cornGrainYield: 0,
@@ -1737,7 +1738,8 @@ function Results(board) {
 			cattleYield: 0,
 			herbaceousPerennialBiomassYield: 0,
 			shortRotationWoodyBiomassYield: 0,
-			mixedFruitsAndVegetablesYield: 0
+			mixedFruitsAndVegetablesYield: 0,
+			cornGrainYieldScore: 0
 		};
 		tempYieldResults[2] = {
 			cornGrainYield: 0,
@@ -2028,6 +2030,19 @@ function Results(board) {
 			this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin)) ;
 			this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin)) ;
 			this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin))	;
+	
+			this.yieldResults[y].cornGrainYieldScore = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax ;
+    		this.yieldResults[y].soybeanYieldScore = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax ;
+    		this.yieldResults[y].alfalfaHayYieldScore = 100 * this.yieldResults[y].alfalfaHayYield / board.maximums.alfalfaMax ;
+			this.yieldResults[y].grassHayYieldScore = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax ;
+    		this.yieldResults[y].woodYieldScore = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax ;
+    		this.yieldResults[y].cattleYieldScore = 100 * this.yieldResults[y].cattleYield / board.maximums.cattleMax ;
+    		this.yieldResults[y].herbaceousPerennialBiomassYieldScore = this.yieldResults[y].herbaceousPerennialBiomassYield / board.maximums.herbaceousPerennialBiomassMax ;
+    		this.yieldResults[y].shortRotationWoodyBiomassYieldScore = 100 * this.yieldResults[y].shortRotationWoodyBiomassYield / board.maximums.shortRotationWoodyBiomassMax ;
+    		this.yieldResults[y].mixedFruitsAndVegetablesYieldScore = 100 * this.yieldResults[y].mixedFruitsAndVegetablesYield / board.maximums.mixedFruitsAndVegetablesMax 
+	
+	
+	
 		}
 		
 		
