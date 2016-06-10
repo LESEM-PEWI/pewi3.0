@@ -2,12 +2,14 @@
 var camera, scene, renderer, raycaster, mouse, hoveredOver ;
 var controls ;
 var tiles = [];
+var riverPoints = [];
 var painter = 1;
 var onYear = "year1";
 var boardData = [] ;
 var currentBoard = -1 ;
 var currentYear = 1 ;
 var modalUp = false ;
+var isShiftDown = false;
 
 
 function setup() {
@@ -65,6 +67,38 @@ function setupSpace() {
     displayBoard() ;
     boardData[currentBoard].updateBoard() ;
 
+				// var closedSpline = new THREE.CatmullRomCurve3( [
+				// 	new THREE.Vector3( -60, -100,  60 ),
+				// 	new THREE.Vector3( -60,   20,  60 ),
+				// 	new THREE.Vector3( -60,  120,  60 ),
+				// 	new THREE.Vector3(  60,   20, -60 ),
+				// 	new THREE.Vector3(  60, -100, -60 )
+				// ] );
+				// closedSpline.type = 'catmullrom';
+				// closedSpline.closed = true;
+				// var extrudeSettings = {
+				// 	steps			: 100,
+				// 	bevelEnabled	: false,
+				// 	extrudePath		: closedSpline
+				// };
+				// var shape = new THREE.Shape( riverPoints );
+				// var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+				// var material = new THREE.MeshLambertMaterial( { color: 0xb00000, wireframe: false } );
+				// var mesh = new THREE.Mesh( geometry, material );
+				// scene.add( mesh );
+				
+				console.log(riverPoints);
+				
+				var curve = new THREE.CatmullRomCurve3(riverPoints);
+				var geometry = new THREE.Geometry();
+                geometry.vertices = curve.getPoints( 50 );
+                var material = new THREE.LineBasicMaterial( { color : 0x0000FF, width: 20 } );
+
+                //Create the final Object3d to add to the scene
+                var splineObject = new THREE.Line( geometry, material );
+                
+                scene.add(splineObject);    
+
 }//end setupSpace
 
 function setupHighlight() {
@@ -76,6 +110,8 @@ function setupHighlight() {
 	//add mouse listener
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	document.addEventListener( 'dblclick', onDocumentDoubleClick, false );
+	document.addEventListener( 'keydown', onDocumentKeyDown, false );
+	document.addEventListener( 'keyup', onDocumentKeyUp, false );
     
 }; //end setupHighlight
 

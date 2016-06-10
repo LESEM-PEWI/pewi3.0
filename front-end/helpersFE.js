@@ -43,6 +43,10 @@ function addTile(tile){
             tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]] });
         }
         
+        if(tile.streamNetwork == 1){
+            riverPoints.push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide)/2, 1, tile.row * tileHeight - (tileHeight * tilesHigh)/2));
+        }
+        
         var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
         newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide)/2;
         newTile.position.y = 0;
@@ -173,29 +177,62 @@ function onDocumentDoubleClick( event ) {
 	
 	var intersects = raycaster.intersectObjects( tiles );
 	
-	if ( intersects.length > 0 && !modalUp) {
-	    
-		var intersect = intersects[ 0 ];
-		
-		//console.log(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear]);
-		
-		if(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear] != 0){
-		    
-		    boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear] = painter ;
-		
-		    boardData[currentBoard].map[hoveredOver.mapID].update();
-		    
-    		scene.remove(hoveredOver);
-    		
-            addTile(boardData[currentBoard].map[hoveredOver.mapID]);
+	if( !isShiftDown ){
+	
+        if ( intersects.length > 0 && !modalUp) {
             
-		}
-		
-		//console.log(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear]);
-			
-		renderer.render(scene, camera);
+        	var intersect = intersects[ 0 ];
+        	
+        	//console.log(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear]);
+        	
+        	if(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear] != 0){
+        	    
+        	    boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear] = painter ;
+        	
+        	    boardData[currentBoard].map[hoveredOver.mapID].update();
+        	    
+        		scene.remove(hoveredOver);
+        		
+                addTile(boardData[currentBoard].map[hoveredOver.mapID]);
+                
+        	}
+        	
+        	//console.log(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear]);
+        	
+        }
+	
+	} else {
+	    
+	        for(var i = 0; i < boardData[currentBoard].map.length; i++){
+        
+                if(boardData[currentBoard].map[i].landType[currentYear] != 0){
+                    scene.remove(tiles[i]);
+                    boardData[currentBoard].map[i].landType[currentYear] = painter;
+                    boardData[currentBoard].map[i].update();
+                    addTile(boardData[currentBoard].map[i]);
+                }
+        
+            }
 	}
+	
+	renderer.render(scene, camera);
 }//end onDocumentMouseDown(event)
+
+function onDocumentKeyDown( event ){
+    
+    switch( event.keyCode ){
+        case 16: isShiftDown = true; break;
+    }
+
+}
+
+function onDocumentKeyUp( event ){
+    
+    switch( event.keyCode ){
+        case 16: isShiftDown = false; break;
+    }
+
+}
 
 function paintChange(value) {
     
