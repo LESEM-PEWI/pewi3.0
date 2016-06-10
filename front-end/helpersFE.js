@@ -343,6 +343,34 @@ function switchConsoleTab(value){
     
 }
 
+function switchYearTab(value){
+    
+    if(value==0){
+        document.getElementById('year1Image').className = "yearNotSelected" ;
+        document.getElementById('year2Image').className = "yearNotSelected" ;
+        document.getElementById('year3Image').className = "yearNotSelected" ;
+    }
+
+    if(value==1){
+        document.getElementById('year1Image').className = "yearSelected" ;
+        document.getElementById('year2Image').className = "yearNotSelected" ;
+        document.getElementById('year3Image').className = "yearNotSelected" ;
+    }
+    
+    if(value==2){
+        document.getElementById('year1Image').className = "yearNotSelected" ;
+        document.getElementById('year2Image').className = "yearSelected" ;
+        document.getElementById('year3Image').className = "yearNotSelected" ;
+    }
+    
+    if(value==3){
+        document.getElementById('year1Image').className = "yearNotSelected" ;
+        document.getElementById('year2Image').className = "yearNotSelected" ;
+        document.getElementById('year3Image').className = "yearSelected" ;
+    }
+    
+}
+
 
 function animateResults() {
     
