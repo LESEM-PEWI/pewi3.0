@@ -560,16 +560,6 @@ function calculateResults() {
             case 4:
                 string2 += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>"
                 break;
-           case 7:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Herbaceous (non-pasture)</b></td></tr>"
-                break;
-            case 11:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Legume</b></td></tr>"
-                break;
-            case 12:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Wooded</b></td></tr>"
-                break;
-                        
         }//end switch
         
         string2 += "<tr>"
@@ -615,140 +605,144 @@ function calculateResults() {
         if(2 <= l && l <4) string2 +="<td>Mg</td>" ;
         if(4<= l && l < 5) string2 +="<td>mg/L</td>" ;
         if(5<= l && l < 8) string2 +="<td>Mg</td>" ;
-    
     }
     
-    //TODO
-    //NEED TO CHANGE THE WAY these things are stored in results so that it can be looped through
-    //ie each value has nameSCORE, and NAME so that an array of NAME can generate table (metric generated from english)
-    //this is especially a problem for dealing with the scores at the bottom, but a few hour fix only
-
-    string2 += "</table>";
     
+    //Finally, add the yeild results to the table...
     
-    var string = "Precipitation:" + "<BR>" +
-    "Year 0: " + boardData[currentBoard].precipitation[0] + "<BR>" +
-    "Year 1: " + boardData[currentBoard].precipitation[1] + "<BR>" +
-    "Year 2: " + boardData[currentBoard].precipitation[2] + "<BR>" +
-    "Year 3: " + boardData[currentBoard].precipitation[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Total Area: " + Totals.totalArea + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Carbon Sequestration: " + "<BR>" +
-    "Year 1: " + Totals.carbonSequestration[1] + "<BR>" +
-    "Year 2: " + Totals.carbonSequestration[2] + "<BR>" +
-    "Year 2: " + Totals.carbonSequestration[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Erosion: " + "<BR>" +
-    "Year 1: " + Totals.grossErosion[1] + "<BR>" +
-    "Year 2: " + Totals.grossErosion[2] + "<BR>" +
-    "Year 3: " + Totals.grossErosion[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Game Wildlife Points: " + "<BR>" +
-    "Year 1: " + Totals.gameWildlifePoints[1] + "<BR>" +
-    "Year 2: " + Totals.gameWildlifePoints[2] + "<BR>" +
-    "Year 3: " + Totals.gameWildlifePoints[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Biodiversity: " + "<BR>" +
-    "Year 1: " + Totals.biodiversityPoints[1] + "<BR>" +
-    "Year 2: " + Totals.biodiversityPoints[2] + "<BR>" +
-    "Year 3: " + Totals.biodiversityPoints[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Phosphorus Load: " + "<BR>" +
-    "Year 1: " + Totals.phosphorusLoad[1] + "<BR>" +
-    "Year 2: " + Totals.phosphorusLoad[2] + "<BR>" +
-    "Year 3: " + Totals.phosphorusLoad[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Nitrate Load: " + "<BR>" +
-    "Year 1: " + Totals.nitrateConcentration[1] + "<BR>" +
-    "Year 2: " + Totals.nitrateConcentration[2] + "<BR>" +
-    "Year 3: " + Totals.nitrateConcentration[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Sediment Delivery: " + "<BR>" +
-    "Year 1: " + Totals.sedimentDelivery[1] + "<BR>" +
-    "Year 2: " + Totals.sedimentDelivery[2] + "<BR>" +
-    "Year 3: " + Totals.sedimentDelivery[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Yield Totals: " + "<BR>" +
-    "Corn: " + Totals.yieldResults[1].cornGrainYield + "<BR>" +
-    "Soy: " + Totals.yieldResults[1].soybeanYield + "<BR>" +
-    "Alfalfa: " + Totals.yieldResults[1].alfalfaHayYield + "<BR>" +
-    "Grass Hay: " + Totals.yieldResults[1].grassHayYield + "<BR>" +
-    "Wood: " + Totals.yieldResults[1].woodYield + "<BR>" +
-    "Cattle: " + Totals.yieldResults[1].cattleYield + "<BR>" +
-    "Herbs: " + Totals.yieldResults[1].herbaceousPerennialBiomassYield + "<BR>" +
-    "Short Woody: " + Totals.yieldResults[1].shortRotationWoodyBiomassYield + "<BR>" +
-    "Fruits + Veggies: " + Totals.yieldResults[1].mixedFruitsAndVegetablesYield + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Land Use Totals: " + "<BR>" +
-    "Conventional Corn: " + Totals.landUseResults[1].conventionalCornLandUse + "<BR>" +
-    "Conservation Corn: " + Totals.landUseResults[1].conservationCornLandUse + "<BR>" +
-    "Conventional Soybean: " + Totals.landUseResults[1].conventionalSoybeanLandUse + "<BR>" +
-    "Conservation Soybean: " + Totals.landUseResults[1].conservationSoybeanLandUse + "<BR>" +
-    "Alfalfa: " + Totals.landUseResults[1].alfalfaLandUse + "<BR>" +
-    "Permanent Pasture: " + Totals.landUseResults[1].permanentPastureLandUse + "<BR>" +
-    "Rotational Grazing: " + Totals.landUseResults[1].rotationalGrazingLandUse + "<BR>" +
-    "Grass Hay: " + Totals.landUseResults[1].grassHayLandUse + "<BR>" +
-    "Prairie: " + Totals.landUseResults[1].prairieLandUse + "<BR>" +
-    "Conservation Forest: " + Totals.landUseResults[1].conservationForestLandUse + "<BR>" +
-    "Conventional Forest: " + Totals.landUseResults[1].conventionalForestLandUse + "<BR>" +
-    "Herbaceous Perennial Bioenergy: " + Totals.landUseResults[1].herbaceousPerennialBioenergyLandUse + "<BR>" +
-    "Short Rotation Woody Bioenergy: " + Totals.landUseResults[1].shortRotationWoodyBioenergyLandUse + "<BR>" +
-    "Wetland: " + Totals.landUseResults[1].wetlandLandUse + "<BR>" +
-    "Mixed Fruits and Veggies: " + Totals.landUseResults[1].mixedFruitsVegetablesLandUse + "<BR>" +
-    "<BR>" + "<BR>" +
-    "<STRONG>" + "Scores (100): " + "</STRONG>" + "<BR>" + "<BR>" +
-    "Yield Score: " + "<BR>" +
-    "Corn: " + 100 * Totals.yieldResults[3].cornGrainYield / boardData[currentBoard].maximums.cornMax + "<BR>" +
-    "Soy: " + 100 * Totals.yieldResults[3].soybeanYield / boardData[currentBoard].maximums.soybeanMax + "<BR>" +
-    "Alfalfa: " + 100 * Totals.yieldResults[3].alfalfaHayYield / boardData[currentBoard].maximums.alfalfaMax + "<BR>" +
-    "Hay: " + 100 * Totals.yieldResults[3].grassHayYield / boardData[currentBoard].maximums.grassHayMax + "<BR>" +
-    "Wood: " + 100 * Totals.yieldResults[3].woodYield / boardData[currentBoard].maximums.woodMax + "<BR>" +
-    "Cattle: " + 100 * Totals.yieldResults[3].cattleYield / boardData[currentBoard].maximums.cattleMax + "<BR>" +
-    "Herbs: " + 100 * Totals.yieldResults[3].herbaceousPerennialBiomassYield / boardData[currentBoard].maximums.herbaceousPerennialBiomassMax + "<BR>" +
-    "Short Woody: " + 100 * Totals.yieldResults[3].shortRotationWoodyBiomassYield / boardData[currentBoard].maximums.shortRotationWoodyBiomassMax + "<BR>" +
-    "Fruits + Veggies: " + 100 * Totals.yieldResults[3].mixedFruitsAndVegetablesYield / boardData[currentBoard].maximums.mixedFruitsAndVegetablesMax + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Game Wildlife Score: " + "<BR>" +
-    "Year 1: " + Totals.gameWildlifePoints[1] * 10 + "<BR>" +
-    "Year 2: " + Totals.gameWildlifePoints[2] * 10 + "<BR>" +
-    "Year 3: " + Totals.gameWildlifePoints[3] * 10 + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Biodiversity Score: " + "<BR>" +
-    "Year 1: " + Totals.biodiversityPoints[1] * 10 + "<BR>" +
-    "Year 2: " + Totals.biodiversityPoints[2] * 10 + "<BR>" +
-    "Year 3: " + Totals.biodiversityPoints[3] * 10 + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Carbon Score: " + "<BR>" +
-    "Year 1: " + 100 * ((Totals.carbonSequestration[1] - boardData[currentBoard].minimums.carbonMin) / (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)) + "<BR>" +
-    "Year 2: " + 100 * ((Totals.carbonSequestration[2] - boardData[currentBoard].minimums.carbonMin) / (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)) + "<BR>" +
-    "Year 3: " + 100 * ((Totals.carbonSequestration[3] - boardData[currentBoard].minimums.carbonMin) / (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)) + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Erosion Score: " + "<BR>" +
-    "Year 1: " + 100 * ((boardData[currentBoard].maximums.erosionMax - Totals.grossErosion[1]) / (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) + "<BR>" +
-    "Year 2: " + 100 * ((boardData[currentBoard].maximums.erosionMax - Totals.grossErosion[2]) / (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) + "<BR>" +
-    "Year 3: " + 100 * ((boardData[currentBoard].maximums.erosionMax - Totals.grossErosion[3]) / (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) + "<BR>" +
-    "Erosion Min " + boardData[currentBoard].minimums.erosionMin + "<BR>" +
-    "Erosion Max: " + boardData[currentBoard].maximums.erosionMax + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Phosphorus Score: " + "<BR>" +
-    "Year 1: " + 100 * ((boardData[currentBoard].maximums.phosphorusMax - Totals.phosphorusLoad[1]) / (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) + "<BR>" +
-    "Year 2: " + 100 * ((boardData[currentBoard].maximums.phosphorusMax - Totals.phosphorusLoad[2]) / (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) + "<BR>" +
-    "Year 3: " + 100 * ((boardData[currentBoard].maximums.phosphorusMax - Totals.phosphorusLoad[3]) / (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) + "<BR>" +
-    "Phosphorus Min " + boardData[currentBoard].minimums.phosphorusMin + "<BR>" +
-    "Phosphorus Max: " + boardData[currentBoard].maximums.phosphorusMax + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Nitrate Score: " + "<BR>" +
-    "Year 1: " + 100 * ((boardData[currentBoard].maximums.nitrateMax - Totals.nitrateConcentration[1]) / (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) + "<BR>" +
-    "Year 2: " + 100 * ((boardData[currentBoard].maximums.nitrateMax - Totals.nitrateConcentration[2]) / (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) + "<BR>" +
-    "Year 3: " + 100 * ((boardData[currentBoard].maximums.nitrateMax - Totals.nitrateConcentration[3]) / (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Sediment Delivery Score: " + "<BR>" +
-    "Year 1: " + 100 * ((boardData[currentBoard].maximums.sedimentMax - Totals.sedimentDelivery[1]) / (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) + "<BR>" +
-    "Year 2: " + 100 * ((boardData[currentBoard].maximums.sedimentMax - Totals.sedimentDelivery[2]) / (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) + "<BR>" +
-    "Year 3: " + 100 * ((boardData[currentBoard].maximums.sedimentMax - Totals.sedimentDelivery[3]) / (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) + "<BR>" +
-    "Sediment Min: " + boardData[currentBoard].minimums.sedimentMin + "<BR>" +
-    "Sediment Max: " + boardData[currentBoard].maximums.sedimentMax + "<BR>"
+    nameArray =["Corn Grain", "Soybeans", "Mixed Fruits and Vegetables", "Cattle", "Alfalfa Hay","Grass Hay",
+    "Herbaceous Perennial Biomass", "Wood", "Short Rotation Woody Biomass"];
+            
+    testArray=["cornGrainYield","soybeanYield", "mixedFruitsAndVegetablesYield", "cattleYield",
+    "alfalfaHayYield","grassHayYield","herbaceousPerennialBiomassYield", "woodYield", "shortRotationWoodyBiomassYield"];
+    conversionArray=[0.0254, 0.0254, 0.90718474, 1, 0.90718474, 0.90718474,0.90718474,0.002359737, 0.90718474 ];
+    
+     for(var l = 0 ; l< testArray.length ; l++ ){
+        
+        
+        switch(l){
+            case 0:
+                string2 += "<tr class='tableHeading'><td><b>Yield</b></td></tr>"
+                break;
+        }//end switch
+        
+        string2 += "<tr>"
+        
+        string2 += "<td>" + nameArray[l] + "</td>"
+        
+        for(var y=1; y<=upToYear;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l] + "Score";
+            string2 += ( Math.round(Totals.yieldResults[y][tempString] * 10  )  / 10 ) + "<br>" ;
+            
+            string2+= "</td>"
+        }//for each year
+        
+        string2 += "<td>(out of 100)</td>" ;
+        
+        for(var y=1; y<=upToYear;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l];
+            string2 += ( Math.round(Totals.yieldResults[y][tempString] * 10) / 10 ) + "<br>" ;
+            
+            string2+= "</td>"
+        }//for each year
+       
+        if(l < 2 ) string2 += "<td>bu</td>" ;  
+        if(l == 2 ) string2 += "<td>tons</td>" ; 
+        if(l == 3) string2 += "<td>animals</td>" ;
+        if(4<= l && l < 7) string2 += "<td>tons</td>" ;
+        if(l == 7 ) string2 += "<td>board-ft</td>" ;
+        if(l == 8 ) string2 += "<td>tons</td>" ; 
+        
+        for(var y=1; y<=upToYear;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l];
+            string2 += ( Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10 ) / 10 ) + "<br>" ;
+            
+            string2+= "</td>"
+            
+        }//for each year
+        
+        if(l < 2 ) string2 += "<td>Mg</td>" ;  
+        if(l == 2) string2 += "<td>Mg</td>" ;  
+        if(l == 3) string2 += "<td>animals</td>" ;
+        if(4<= l && l < 7) string2 += "<td>Mg</td>" ;
+        if(l == 7 ) string2 += "<td>m^3</td>" ;
+        if(l == 8 ) string2 += "<td>Mg</td>" ; 
+    }
+    
+    string2 += "</table><br><br>";
+    
+    string2 += "<table class='resultsTable'>";
+    
+    //add header row
+    
+    string2 += "<tr class='tableHeading'> <th style='width:220px;'> Other Parameters </th>" ;
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<th>" ;
+        string2 += "Y" + y ;
+        string2 += "</th>" ;
+    }
+    
+    string2 += "<th> </th>";
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<th>" ;
+        string2 += "Y" + y ;
+        string2 += "</th>" ;
+    }
+    
+    string2 += "</tr>" ;
+    
+    string2 += "<tr><td>Precipitation</td>"
+    
+     for(var y = 1; y<= upToYear; y++){
+        string2 += "<td>" ;
+        string2 += boardData[currentBoard].precipitation[y] ;
+        string2 += "</td>" ;
+    }
+    
+    string2 += "<td>inches</td>";
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<td>" ;
+        string2 += Math.round(boardData[currentBoard].precipitation[y] *2.54 * 10) / 10;
+        string2 += "</td>" ;
+    }
+    
+    string2 += "<td>cm</td>";
+    
+    string2 += "</tr>" ;
+    
+    //THIS SECTION DOES NOT APPEAR TO BE WORKING, CHECK
+    
+    string2 += "<tr><td>Strategic Wetland Use</td>";
+    
+     for(var y = 1; y<= upToYear; y++){
+        string2 += "<td>" ;
+        string2 += Totals.strategicWetlandPercent[y] ;
+        string2 += "</td>" ;
+    }
+    
+    string2 += "<td>percent</td>";
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<td>" ;
+        string2 += Totals.strategicWetlandCells[y] ;
+        string2 += "</td>" ;
+    }
+    
+    string2 += "<td>cells (out of 20)</td>";
+    
+    string2 += "</tr>" ;
+    
+    string2 += "</table>" ;
+    
     
     document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = string2;
     
