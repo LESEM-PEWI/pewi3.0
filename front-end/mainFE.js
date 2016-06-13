@@ -86,9 +86,6 @@ function setupSpace() {
     var shape = new THREE.Shape( pts );
 	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
 				
-	var texture = new THREE.TextureLoader().load( "./imgs/waternormals.jpg" );
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
 	var material = new THREE.MeshLambertMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
 	var mesh = new THREE.Mesh( geometry, material );
 	scene.add( mesh );
