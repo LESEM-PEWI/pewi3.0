@@ -160,7 +160,7 @@ function onDocumentMouseMove( event ) {
 
 			hoveredOver = intersects[ 0 ].object;
 			hoveredOver.currentHex = hoveredOver.material.emissive.getHex();
-			hoveredOver.material.emissive.setHex( 0xff0000 );
+		    hoveredOver.material.emissive.setHex( 0x00ff00 );
 
 		}
 
@@ -315,6 +315,8 @@ function roll(value) {
      document.getElementById("precipConsole").className = "precipConsoleRolled";
      document.getElementById("precipButton").className = "precipButtonRolled";
      document.getElementById("terrainButton").className = "terrainButtonRolled";
+     document.getElementById("levelsConsole").className = "levelsConsoleRolled";
+     document.getElementById("levelsButton").className = "levelsButtonRolled";
       toolbarRolled = true;
     }
     else{
@@ -323,6 +325,8 @@ function roll(value) {
         document.getElementById("precipConsole").className = "precipConsole";
         document.getElementById("precipButton").className = "precipButton";
         document.getElementById("terrainButton").className = "terrainButton";
+        document.getElementById("levelsConsole").className = "levelsConsole";
+        document.getElementById("levelsButton").className = "levelsButton";
         toolbarRolled = false;
     }
     
@@ -369,16 +373,28 @@ function switchConsoleTab(value){
     if(value==1){
         document.getElementById('terrainImg').className = "imgSelected" ;
         document.getElementById('precipImg').className = "imgNotSelected" ;
-        
+        document.getElementById('levelsImg').className = "imgNotSelected";
         document.getElementById('painterTab').style.display = "block";
         document.getElementById('precipTab').style.display = "none" ;
+        document.getElementById('levelsTab').style.display = "none";
     }
     
     if(value==2){
         document.getElementById('terrainImg').className = "imgNotSelected" ;
         document.getElementById('precipImg').className = "imgSelected" ;
+        document.getElementById('levelsImg').className = "imgNotSelected";
         document.getElementById('painterTab').style.display = "none";
         document.getElementById('precipTab').style.display = "block" ;
+        document.getElementById('levelsTab').style.display = "none";
+    }
+    
+    if(value==3){
+        document.getElementById('terrainImg').className = "imgNotSelected" ;
+        document.getElementById('precipImg').className = "imgNotSelected" ;
+        document.getElementById('levelsImg').className = "imgSelected";
+        document.getElementById('painterTab').style.display = "none";
+        document.getElementById('precipTab').style.display = "none" ;
+        document.getElementById('levelsTab').style.display = "block";
     }
     
 }
@@ -410,6 +426,81 @@ function switchYearTab(value){
     }
     
 }
+
+function displayLevels(type){
+    
+    Totals = new Results(boardData[currentBoard]);
+    Totals.update() ;
+    
+    tilesCopy = [];
+    
+    for(var i = 0; i < tiles.length; i++){
+        
+                tiles[i].material.map = textureArray[0];
+	            tiles[i].material.emissive.setHex( getHighlightColor(type, tiles[i].mapID) );
+                
+    }
+    
+    renderer.render(scene, camera);
+    
+};
+
+function getHighlightColor(type, ID){
+    
+    if(type == "erosion"){
+        
+        var erosionSeverity = Totals.grossErosionSeverity[currentYear][ID];
+        
+        console.log(erosionSeverity);
+        
+        switch(erosionSeverity){
+            case 1:
+                return "0xe6bb00";
+            case 2:
+                return "0xc97b08";
+            case 3:
+                return "0xad490d";
+            case 4:
+                return "0x9a3010";
+            case 5:
+                return "0x871c12";
+        }
+        
+    }
+    
+    if(type == "nitrate"){
+        
+        var nitrateConcentration = Totals.nitrateContribution[currentYear][ID];
+        
+        if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return "0xe6bb00";
+        else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return "0xc97b08";
+        else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return "0xad490d";
+        else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return "0x9a3010";
+        else if (nitrateConcentration > 0.25) return "0x871c12";
+        
+    }
+    
+    if(type == "phosphorus"){
+        
+        var phosphorusRisk = Totals.phosphorusRiskAssessment[currentYear][ID];
+        
+        switch(phosphorusRisk){
+            case 1:
+                return "0xe6bb00";
+            case 2:
+                return "0xc97b08";
+            case 3:
+                return "0xad490d";
+            case 4:
+                return "0x9a3010";
+            case 5:
+                return "0x871c12";
+        }
+        
+    }
+    
+    
+};
 
 
 function animateResults() {

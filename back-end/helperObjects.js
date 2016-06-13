@@ -1297,6 +1297,8 @@ function Results(board) {
 	this.watershedPercent = Array(4); //nitrate percent levels per watershed for maps
 	this.strategicWetlandCells = Array(4);
 	this.grossErosionSeverity = Array(4);
+	this.phosphorusRiskAssessment = Array(4);
+	this.nitrateContribution = Array(4);
 	
 	//score variables
 	this.gameWildlifePointsScore = [0,0,0,0];
@@ -1978,9 +1980,25 @@ function Results(board) {
 			[],
 			[]
 		];
+		
+		var nitrateContribution = Array(4);
+		nitrateContribution = [
+			[],
+			[],
+			[],
+			[]
+		];
 
 		var grossErosionSeverity = Array(4);
 		grossErosionSeverity = [
+			[],
+			[],
+			[],
+			[]
+		];
+		
+		var phosphorusRisk = Array(4);
+		phosphorusRisk = [
 			[],
 			[],
 			[],
@@ -1992,19 +2010,24 @@ function Results(board) {
 			//For each watershed store nitrate percent contribution
 			for (var i = 0; i < this.subwatershedArea.length; i++) {
 
-				watershedPercent[y].push(this.subWatershedNitrate[y][i] * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y]);
+				watershedPercent[y].push(this.subWatershedNitrate[y][i]  / (this.subwatershedArea[i] / this.totalArea) * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y]);
 
 			}
 
 			//For each tile, store grossErosionRate and phosphorusRiskAssessment indices calculated by submethods
 			//TODO: Phosphorus Risk Assessment
 			for (var i = 0; i < board.map.length; i++) {
-				grossErosionSeverity[y].push(this.getGrossErosionSeverity(board.map[i].results[y].calculatedGrossErosionRate / board.map[i].area));
+				grossErosionSeverity[y].push(this.getGrossErosionSeverity(board.map[i].results[y].calculatedGrossErosionRate));
+				phosphorusRisk[y].push(this.getPhosphorusRiskAssessment(board.map[i].results[y].phosphorusDelivered / board.map[i].area));
+				nitrateContribution[y].push(watershedPercent[y][board.map[i].subwatershed]);
+				
 			}
 		}
 
 		this.watershedPercent = watershedPercent;
+		this.nitrateContribution = nitrateContribution;
 		this.grossErosionSeverity = grossErosionSeverity;
+		this.phosphorusRiskAssessment = phosphorusRisk;
 
 	}; //end this.mapIt
 
@@ -2016,6 +2039,16 @@ function Results(board) {
 		else if (erosion <= 2 && erosion > 0.5) return 2;
 		else if (erosion <= 0.5) return 1;
 	}; //end this.getGrossErosionSeverity
+	
+	//Helper method for mapIt function to calculate phosphorusRiskAssessment tile indicies
+	this.getPhosphorusRiskAssessment = function(pindex) {
+		if (pindex >= 0 && pindex <= 1) return 1;
+        else if (pindex > 1 && pindex <= 2) return 2;
+        else if (pindex > 2 && pindex <= 5) return 3;
+        else if (pindex > 5 && pindex <= 15) return 4;
+        else if (pindex > 15) return 5;
+        return "";
+	}
 
 
 	this.updateScores = function() {

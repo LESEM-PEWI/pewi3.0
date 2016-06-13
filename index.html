@@ -35,6 +35,7 @@
   
 <div id="terrainButton" class="terrainButton" onclick="switchConsoleTab(1);"><img id ="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png"></div>  
 <div id="precipButton" class="precipButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png"></div>
+<div id="levelsButton" class="levelsButton" onclick="switchConsoleTab(3);"><img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png"></div>
 
 <div id="landUseConsole" class ="landUseConsole">
  <div id="painterTab">
@@ -112,6 +113,16 @@
   </form>
 </div>
 </div>
+
+<div id="levelsTab" style="display:none;">
+<div id="levelsConsole" class="levelsConsole">
+<img id="nitrateIcon" class="levelsSelectorIcon" src="./imgs/N.png" onmouseover="displayLevels('nitrate');" onmouseout="transitionToYear(currentYear);">  
+<img id="erosionIcon" class="levelsSelectorIcon" src="./imgs/E.png" onmouseover="displayLevels('erosion');" onmouseout="transitionToYear(currentYear);">
+<img id="phoshorusIcon" class="levelsSelectorIcon" src="./imgs/P.png" onmouseover="displayLevels('phosphorus');" onmouseout="transitionToYear(currentYear);">
+
+</div>
+</div>
+
 
 <div id="toolsButton" class="toolsButton" onclick="roll(1) ;"><img src="./imgs/pick.png"></div>
 </div>

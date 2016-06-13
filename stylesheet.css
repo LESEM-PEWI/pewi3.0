@@ -489,3 +489,85 @@ td{
 .yearNotSelected {
     border-left: 0px solid #F0A61D;
 }
+
+.levelsButton {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.9);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 3px;
+    top: 340px;
+    left: 115px;
+    width:40px;
+    height:40px ;
+    transition-property: none;
+    transition-property: left;
+    border-right: 0px solid #F0A61D;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.levelsButtonRolled {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.9);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    left: -60px;
+    top: 340px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    
+}
+
+.levelsConsole {
+    position: absolute;
+    background-color: rgba(6, 153, 75, 0.4);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 12px;
+    left: 0px;
+    top: 150px;
+    width: 115px;
+    height: 260px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.levelsConsoleRolled {
+    position: absolute;
+    background-color: rgba(6, 153, 75, 0.4);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 12px;
+    left: -115px;
+    top:150px;
+    width:115px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.levelsButtonRolled:hover{
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+
+.levelsButton:hover{
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+
+.levelsSelectorIcon {
+    height:40px;
+    width:40px;
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-top: 40px;
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
