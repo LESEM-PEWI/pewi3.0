@@ -66,38 +66,33 @@ function setupSpace() {
     currentBoard++ ; //currentBoard now = 0
     displayBoard() ;
     boardData[currentBoard].updateBoard() ;
+    
 
-				// var closedSpline = new THREE.CatmullRomCurve3( [
-				// 	new THREE.Vector3( -60, -100,  60 ),
-				// 	new THREE.Vector3( -60,   20,  60 ),
-				// 	new THREE.Vector3( -60,  120,  60 ),
-				// 	new THREE.Vector3(  60,   20, -60 ),
-				// 	new THREE.Vector3(  60, -100, -60 )
-				// ] );
-				// closedSpline.type = 'catmullrom';
-				// closedSpline.closed = true;
-				// var extrudeSettings = {
-				// 	steps			: 100,
-				// 	bevelEnabled	: false,
-				// 	extrudePath		: closedSpline
-				// };
-				// var shape = new THREE.Shape( riverPoints );
-				// var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
-				// var material = new THREE.MeshLambertMaterial( { color: 0xb00000, wireframe: false } );
-				// var mesh = new THREE.Mesh( geometry, material );
-				// scene.add( mesh );
-				
-				console.log(riverPoints);
-				
-				var curve = new THREE.CatmullRomCurve3(riverPoints);
-				var geometry = new THREE.Geometry();
-                geometry.vertices = curve.getPoints( 50 );
-                var material = new THREE.LineBasicMaterial( { color : 0x0000FF, width: 20 } );
 
-                //Create the final Object3d to add to the scene
-                var splineObject = new THREE.Line( geometry, material );
-                
-                scene.add(splineObject);    
+	var closedSpline = new THREE.CatmullRomCurve3( riverPoints );
+	closedSpline.type = 'chordal';
+	closedSpline.closed = false;
+	var extrudeSettings = {
+		steps			: 500,
+		bevelEnabled	: false,
+		extrudePath		: closedSpline
+	};
+    var pts = [];
+	pts.push( new THREE.Vector2 (1,7.5 ));
+	pts.push (new THREE.Vector2 (0,7.5));
+	pts.push (new THREE.Vector2 (1,0));
+	pts.push (new THREE.Vector2 (0,0));
+
+    var shape = new THREE.Shape( pts );
+	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+				
+	var texture = new THREE.TextureLoader().load( "./imgs/waternormals.jpg" );
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+	var material = new THREE.MeshLambertMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
+	var mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
+
 
 }//end setupSpace
 

@@ -1,3 +1,5 @@
+var currentRow = -1;
+
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -43,8 +45,9 @@ function addTile(tile){
             tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]] });
         }
         
-        if(tile.streamNetwork == 1){
+        if(tile.streamNetwork == 1 && currentRow != tile.row){
             riverPoints.push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide)/2, 1, tile.row * tileHeight - (tileHeight * tilesHigh)/2));
+            currentRow = tile.row;
         }
         
         var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
