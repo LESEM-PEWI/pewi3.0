@@ -24,7 +24,7 @@ function displayBoard() {
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
         addTile(boardData[currentBoard].map[i]);
-        
+    
     }
     
 };
@@ -37,20 +37,65 @@ function addTile(tile){
         var tileHeight = 12;
         var tileWidth = 18;
         
-        var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
+        //var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
+        
+        var tileGeometry = new THREE.Geometry(); 
+        
+        var v1; var v2; var v3; var v4;
+        
+        var mapID = tile.id - 1;
+
+        var topN24 = boardData[currentBoard].map[mapID - 24] ? boardData[currentBoard].map[mapID - 24].topography : 0;
+        var topN23 = boardData[currentBoard].map[mapID - 23] ? boardData[currentBoard].map[mapID - 23].topography : 0;
+        var topN22 = boardData[currentBoard].map[mapID - 22] ? boardData[currentBoard].map[mapID - 22].topography : 0;
+        var topN1 = boardData[currentBoard].map[mapID - 1] ? boardData[currentBoard].map[mapID - 1].topography : 0;
+        var top1 = boardData[currentBoard].map[mapID + 1] ? boardData[currentBoard].map[mapID + 1].topography : 0;
+        var top22 = boardData[currentBoard].map[mapID + 22] ? boardData[currentBoard].map[mapID + 22].topography : 0;
+        var top23 = boardData[currentBoard].map[mapID + 23] ? boardData[currentBoard].map[mapID + 23].topography : 0;
+        var top24 = boardData[currentBoard].map[mapID + 24] ? boardData[currentBoard].map[mapID + 24].topography : 0;
+        
+        v1 = new THREE.Vector3(0,(topN24 + topN23 + topN1 + tile.topography)/4*10,0);
+        v2 = new THREE.Vector3(tileWidth,(topN23 + topN22 + top1 + tile.topography)/4*10,0);
+        v3 = new THREE.Vector3(tileWidth,(top24 + top23 + top1 + tile.topography)/4*10,tileHeight);
+        v4 = new THREE.Vector3(0,(top22 + top23 + topN1 + tile.topography)/4*10,tileHeight);
+
+        tileGeometry.vertices.push(v1);
+        tileGeometry.vertices.push(v2);
+        tileGeometry.vertices.push(v3);
+        tileGeometry.vertices.push(v4);
+        
+
+        //tileGeometry.faces.push( new THREE.Face3( 2, 1, 0 ) );
+        //tileGeometry.faces.push( new THREE.Face3( 3, 2, 0 ) );
+        
+        
+        var face = new THREE.Face3(2,1,0);
+        //face.normal.set(0,0,1); // normal
+        tileGeometry.faces.push(face);
+        //tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1,1),new THREE.Vector2(1,0),new THREE.Vector2(0,0)]); // uvs
+        tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(0,0),new THREE.Vector2(0,1),new THREE.Vector2(1,1)]); // uvs
+
+        face = new THREE.Face3(3,2,0);
+        //face.normal.set(0,0,1); // normal
+        tileGeometry.faces.push(face);
+        //tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(0,1),new THREE.Vector2(1,1),new THREE.Vector2(0,0)]); // uvs
+        tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1,0),new THREE.Vector2(0,0),new THREE.Vector2(1,1)]); // uvs
         
         if(tile.landType[currentYear] == 0){
             tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
         } else {
-            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]] });
+            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]], ambient: 0xFFFAD6, shading: THREE.FlatShading});
         }
         
         if(tile.streamNetwork == 1 && currentRow != tile.row){
             riverPoints.push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide)/2, 1, tile.row * tileHeight - (tileHeight * tilesHigh)/2));
             currentRow = tile.row;
         }
-        
+    
         var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
+        
+        newTile.receiveShadow = true;
+        
         newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide)/2;
         newTile.position.y = 0;
         newTile.position.z = tile.row * tileHeight - (tileHeight * tilesHigh)/2;
@@ -62,6 +107,8 @@ function addTile(tile){
         tiles.push(tile.graphics);
         
         scene.add(tile.graphics);
+        
+        renderer.render(scene, camera);
     
 };
 

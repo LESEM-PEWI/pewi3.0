@@ -78,10 +78,10 @@ function setupSpace() {
 		extrudePath		: closedSpline
 	};
     var pts = [];
-	pts.push( new THREE.Vector2 (1,7.5 ));
-	pts.push (new THREE.Vector2 (0,7.5));
-	pts.push (new THREE.Vector2 (1,0));
-	pts.push (new THREE.Vector2 (0,0));
+	pts.push( new THREE.Vector2 (-5,7.5 ));
+	pts.push (new THREE.Vector2 (-4,7.5));
+	pts.push (new THREE.Vector2 (-5,0));
+	pts.push (new THREE.Vector2 (-4,0));
 
     var shape = new THREE.Shape( pts );
 	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
