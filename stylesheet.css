@@ -568,6 +568,124 @@ td{
     width:40px;
     margin-left: 35px;
     margin-right: 35px;
-    margin-top: 40px;
+    margin-top: 5px;
+    margin-bottom: 10px;
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+
+.levelsText {
+    color: #fff;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.levelColor1 {
+    background-color: #e6bb00;
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.levelColor2 {
+    background-color: #c97b08;
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.levelColor3 {
+    background-color: #ad490d;
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.levelColor4 {
+    background-color: #9a3010;
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.levelColor5 {
+    background-color: #871c12;
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.levelsTextDetails {
+    white-space: nowrap;
+    color: #fff;
+    margin-left: 22px;
+}
+
+.nitrateDetailsList {
+    position: absolute;
+    top: 295px;
+    width: 115;
+    left: 0px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.nitrateDetailsListRolled {
+    position: absolute;
+    top: 295px;
+    width: 115;
+    left: -115px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.erosionDetailsList {
+    position: absolute;
+    top: 295px;
+    width: 115;
+    left: 0px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.erosionDetailsListRolled {
+    position: absolute;
+    top: 295px;
+    width: 115;
+    left: -115px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.phosphorusDetailsList {
+    position: absolute;
+    top: 295px;
+    width: 115;
+    left: 0px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.phosphorusDetailsListRolled {
+    position: absolute;
+    top: 295px;
+    width: 115;
+    left: -115px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
 }
