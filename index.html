@@ -116,10 +116,30 @@
 
 <div id="levelsTab" style="display:none;">
 <div id="levelsConsole" class="levelsConsole">
-<img id="nitrateIcon" class="levelsSelectorIcon" src="./imgs/N.png" onmouseover="displayLevels('nitrate');" onmouseout="transitionToYear(currentYear);">  
-<img id="erosionIcon" class="levelsSelectorIcon" src="./imgs/E.png" onmouseover="displayLevels('erosion');" onmouseout="transitionToYear(currentYear);">
-<img id="phoshorusIcon" class="levelsSelectorIcon" src="./imgs/P.png" onmouseover="displayLevels('phosphorus');" onmouseout="transitionToYear(currentYear);">
-
+<div  id="nitrateDetailsList" class="nitrateDetailsListRolled">
+<div class="levelColor1"><p class="levelsTextDetails">0 - 5 %</p></div>
+<div class="levelColor2"><p class="levelsTextDetails">5 - 10 %</p></div>
+<div class="levelColor3"><p class="levelsTextDetails">10 - 20 %</p></div>
+<div class="levelColor4"><p class="levelsTextDetails">10 - 25 %</p></div>
+<div class="levelColor5"><p class="levelsTextDetails">> 25 %</p></div>
+</div> 
+<div  id="erosionDetailsList" class="erosionDetailsListRolled">
+<div class="levelColor1"><p class="levelsTextDetails">< 0.5 tons/ac</p></div>
+<div class="levelColor2"><p class="levelsTextDetails">0.5-2 tons/ac</p></div>
+<div class="levelColor3"><p class="levelsTextDetails">2-3.5 tons/ac</p></div>
+<div class="levelColor4"><p class="levelsTextDetails">3.5-5 tons/ac</p></div>
+<div class="levelColor5"><p class="levelsTextDetails">> 5 tons/ac</p></div>
+</div> 
+<div  id="phosphorusDetailsList" class="phosphorusDetailsListRolled">
+<div class="levelColor1"><p class="levelsTextDetails">Very Low</p></div>
+<div class="levelColor2"><p class="levelsTextDetails">Low</p></div>
+<div class="levelColor3"><p class="levelsTextDetails">Medium</p></div>
+<div class="levelColor4"><p class="levelsTextDetails">High</p></div>
+<div class="levelColor5"><p class="levelsTextDetails">Very High</p></div>
+</div> 
+<p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p><img id="nitrateIcon" class="levelsSelectorIcon" src="./imgs/N.png" onmouseover="displayLevels('nitrate'); showLevelDetails(1);" onmouseout="transitionToYear(currentYear); showLevelDetails(-1);">  
+<p class="levelsText">Gross Erosion</p><img id="erosionIcon" class="levelsSelectorIcon" src="./imgs/E.png" onmouseover="displayLevels('erosion'); showLevelDetails(2);" onmouseout="transitionToYear(currentYear); showLevelDetails(-2);">
+<p class="levelsText">Phosphorus Index Risk Assessment</p><img id="phoshorusIcon" class="levelsSelectorIcon" src="./imgs/P.png" onmouseover="displayLevels('phosphorus'); showLevelDetails(3);" onmouseout="transitionToYear(currentYear); showLevelDetails(-3);">
 </div>
 </div>
 
