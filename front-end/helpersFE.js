@@ -70,19 +70,19 @@ function addTile(tile){
         
         
         var face = new THREE.Face3(2,1,0);
-        face.normal.set(0,0,1); // normal
+        face.normal.set(0,1,0); // normal
         tileGeometry.faces.push(face);
         tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(0,0),new THREE.Vector2(0,1),new THREE.Vector2(1,1)]); // uvs
 
         face = new THREE.Face3(3,2,0);
-        face.normal.set(0,0,1); // normal
+        face.normal.set(0,1,0); // normal
         tileGeometry.faces.push(face);
         tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1,0),new THREE.Vector2(0,0),new THREE.Vector2(1,1)]); // uvs
         
         if(tile.landType[currentYear] == 0){
             tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
         } else {
-            tileMaterial = new THREE.MeshPhongMaterial({ map: textureArray[tile.landType[currentYear]]});
+            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]]});
         }
         
         if(tile.streamNetwork == 1 && currentRow != tile.row){
@@ -93,6 +93,7 @@ function addTile(tile){
         var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
         
         newTile.receiveShadow = true;
+        newTile.castShadow = true;
         
         newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide)/2;
         newTile.position.y = 0;
@@ -203,7 +204,7 @@ function onDocumentMouseMove( event ) {
 
 			hoveredOver = intersects[ 0 ].object;
 			hoveredOver.currentHex = hoveredOver.material.emissive.getHex();
-		    hoveredOver.material.emissive.setHex( 0x00ff00 );
+		    hoveredOver.material.emissive.setHex( 0x7f7f7f );
 
 		}
 
@@ -713,6 +714,18 @@ function getHighlightColor(type, ID){
     
 };
 
+function contaminatedRiver(results) {
+    
+    //this is buggy -- still a work-in progress. Maybe the status of the river should be stored in the board for each year...
+    
+    if(results.phosphorusLoad[currentYear] > 1.5){
+        river.material.color.setHex("0x663300");
+    } else {
+        river.material.color.setHex("0x40a4df")
+    }
+    
+}
+
 
 function animateResults() {
     
@@ -727,6 +740,8 @@ function calculateResults() {
     
     Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
+    
+    contaminatedRiver(Totals);
     
     var upToYear = boardData[currentBoard].calculatedToYear ;
     
