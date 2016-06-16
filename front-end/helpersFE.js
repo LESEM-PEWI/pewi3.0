@@ -360,6 +360,8 @@ function roll(value) {
      document.getElementById("terrainButton").className = "terrainButtonRolled";
      document.getElementById("levelsConsole").className = "levelsConsoleRolled";
      document.getElementById("levelsButton").className = "levelsButtonRolled";
+     document.getElementById("featuresConsole").className = "featuresConsoleRolled";
+     document.getElementById("featuresButton").className = "featuresButtonRolled";
       toolbarRolled = true;
     }
     else{
@@ -370,6 +372,8 @@ function roll(value) {
         document.getElementById("terrainButton").className = "terrainButton";
         document.getElementById("levelsConsole").className = "levelsConsole";
         document.getElementById("levelsButton").className = "levelsButton";
+        document.getElementById("featuresConsole").className = "featuresConsole";
+        document.getElementById("featuresButton").className = "featuresButton";
         toolbarRolled = false;
     }
     
