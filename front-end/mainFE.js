@@ -28,6 +28,7 @@ function setup() {
     var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1 );
     hemiLight.position.set( 0, 30, 100);
     scene.add( hemiLight );
+    
 
 	 //set up camera
     camera.position.y = 320;
