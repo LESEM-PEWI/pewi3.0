@@ -70,21 +70,19 @@ function addTile(tile){
         
         
         var face = new THREE.Face3(2,1,0);
-        //face.normal.set(0,0,1); // normal
+        face.normal.set(0,0,1); // normal
         tileGeometry.faces.push(face);
-        //tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1,1),new THREE.Vector2(1,0),new THREE.Vector2(0,0)]); // uvs
         tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(0,0),new THREE.Vector2(0,1),new THREE.Vector2(1,1)]); // uvs
 
         face = new THREE.Face3(3,2,0);
-        //face.normal.set(0,0,1); // normal
+        face.normal.set(0,0,1); // normal
         tileGeometry.faces.push(face);
-        //tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(0,1),new THREE.Vector2(1,1),new THREE.Vector2(0,0)]); // uvs
         tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1,0),new THREE.Vector2(0,0),new THREE.Vector2(1,1)]); // uvs
         
         if(tile.landType[currentYear] == 0){
             tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
         } else {
-            tileMaterial = new THREE.MeshBasicMaterial({ map: textureArray[tile.landType[currentYear]]});
+            tileMaterial = new THREE.MeshPhongMaterial({ map: textureArray[tile.landType[currentYear]]});
         }
         
         if(tile.streamNetwork == 1 && currentRow != tile.row){
@@ -418,6 +416,22 @@ function showLevelDetails(value) {
         document.getElementById("phosphorusDetailsList").className = "phosphorusDetailsListRolled";
     }
     
+    if(value==4){
+        document.getElementById("floodFrequencyDetailsList").className = "floodFrequencyDetailsList";
+    }
+    
+    if(value==-4){
+        document.getElementById("floodFrequencyDetailsList").className = "floodFrequencyDetailsListRolled";
+    }
+    
+    if(value==5){
+        document.getElementById("drainageClassDetailsList").className = "drainageClassDetailsList";
+    }
+    
+    if(value==-5){
+        document.getElementById("drainageClassDetailsList").className = "drainageClassDetailsListRolled";
+    }
+    
 }
 
 function updatePrecip(year) {
@@ -447,27 +461,44 @@ function switchConsoleTab(value){
         document.getElementById('terrainImg').className = "imgSelected" ;
         document.getElementById('precipImg').className = "imgNotSelected" ;
         document.getElementById('levelsImg').className = "imgNotSelected";
+        document.getElementById('featuresImg').className = "imgNotSelected";
         document.getElementById('painterTab').style.display = "block";
         document.getElementById('precipTab').style.display = "none" ;
         document.getElementById('levelsTab').style.display = "none";
+        document.getElementById('featuresTab').style.display = "none";        
     }
     
     if(value==2){
         document.getElementById('terrainImg').className = "imgNotSelected" ;
         document.getElementById('precipImg').className = "imgSelected" ;
         document.getElementById('levelsImg').className = "imgNotSelected";
+        document.getElementById('featuresImg').className = "imgNotSelected";
         document.getElementById('painterTab').style.display = "none";
         document.getElementById('precipTab').style.display = "block" ;
         document.getElementById('levelsTab').style.display = "none";
+        document.getElementById('featuresTab').style.display = "none";
     }
     
     if(value==3){
         document.getElementById('terrainImg').className = "imgNotSelected" ;
         document.getElementById('precipImg').className = "imgNotSelected" ;
         document.getElementById('levelsImg').className = "imgSelected";
+        document.getElementById('featuresImg').className = "imgNotSelected";
         document.getElementById('painterTab').style.display = "none";
         document.getElementById('precipTab').style.display = "none" ;
         document.getElementById('levelsTab').style.display = "block";
+        document.getElementById('featuresTab').style.display = "none";
+    }
+    
+    if(value==4){
+        document.getElementById('terrainImg').className = "imgNotSelected";
+        document.getElementById('precipImg').className = "imgNotSelected" ;
+        document.getElementById('levelsImg').className = "imgNotSelected";
+        document.getElementById('featuresImg').className = "imgSelected";
+        document.getElementById('painterTab').style.display = "none";
+        document.getElementById('precipTab').style.display = "none" ;
+        document.getElementById('levelsTab').style.display = "none";
+        document.getElementById('featuresTab').style.display = "block";
     }
     
 }
@@ -511,7 +542,7 @@ function displayLevels(type){
         
                 tiles[i].material.map = textureArray[0];
 	            tiles[i].material.emissive.setHex( getHighlightColor(type, tiles[i].mapID) );
-                
+
     }
     
     renderer.render(scene, camera);
@@ -570,6 +601,109 @@ function getHighlightColor(type, ID){
                 return "0x871c12";
         }
         
+    }
+    
+    if(type == "flood"){
+        
+        var flood = Number(boardData[currentBoard].map[ID].floodFrequency);
+        
+        switch(flood){
+            case 0:
+                return "0xffffc9";
+            case 10:
+                return "0xffffc9";
+            case 20:
+                return "0xc7eab4";
+            case 30:
+                return "0x7fcebb";
+            case 40:
+                return "0x41b7c5";
+            case 50:
+                return "0x2f7eb7";
+        }
+    }
+    
+    if(type == "wetland"){
+        
+        if(boardData[currentBoard].map[ID].strategicWetland == 1){
+            return "0x2f7eb7";
+        } else {
+            return "0xffffc9";
+        }
+    }
+    
+    if(type == "subwatershed"){
+        
+        var watershed = Number(boardData[currentBoard].map[ID].subwatershed);
+        
+        switch(watershed){
+            case 1:
+                return "0x45aa98";
+            case 2:
+                return "0x127731";
+            case 3:
+                return "0x989836";
+            case 4:
+                return "0xcc6578";
+            case 5:
+                return "0xa84597";
+            case 6:
+                return "0xdbcb74";
+            case 7:
+                return "0x342286";
+            case 8:
+                return "0x862254";
+            case 9:
+                return "0x87ceee";
+            case 10:
+                return "0x097c2f";
+            case 11:
+                return "0x979936";
+            case 12:
+                return "0x47aa98";
+            case 13:
+                return "0xe3c972";
+            case 14:
+                return "0xcb657a";
+            case 15:
+                return "0x882252";
+            case 16:
+                return "0xaa4497";
+            case 17:
+                return "0x302486";
+            case 18:
+                return "0x76d1c4";
+            case 19:
+                return "0x3f9f91";
+            case 20:
+                return "0x187336";
+            case 21:
+                return "0x919246";
+        }
+    }
+    
+    if(type = "drainage"){
+        
+        var drainage = Number(boardData[currentBoard].map[ID].drainageClass);
+        
+        switch(drainage){
+            case 70:
+                return "0x0053b3";
+            case 60:
+                return "0x255d98";
+            case 50:
+                return "0x38638b";
+            case 45:
+                return "0x4b687e";
+            case 40:
+                return "0x5e6e71";
+            case 30:
+                return "0x837856";
+            case 10:
+                return "0xa9833c";
+            case 0:
+                return "0xbc892f";
+        }
     }
     
     

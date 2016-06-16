@@ -689,3 +689,186 @@ td{
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
+
+.featuresButton {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.9);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 3px;
+    top: 380px;
+    left: 115px;
+    width:40px;
+    height:40px ;
+    transition-property: none;
+    transition-property: left;
+    border-right: 0px solid #F0A61D;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.featuresButtonRolled {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.9);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    left: -60px;
+    top: 380px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    
+}
+
+.featuresConsole {
+    position: absolute;
+    background-color: rgba(6, 153, 75, 0.4);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 12px;
+    left: 0px;
+    top: 150px;
+    width: 115px;
+    height: 260px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.featuresConsoleRolled {
+    position: absolute;
+    background-color: rgba(6, 153, 75, 0.4);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 12px;
+    left: -115px;
+    top:150px;
+    width:115px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.featuresButtonRolled:hover{
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+
+.featuresButton:hover{
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+
+.featureSelectorIcon {
+    border-radius: 50% ;
+    height: 40px;
+    width: 40px;
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+   
+}
+
+.featureSelectorIcon:hover {
+    box-shadow: 0px 0px 5px 5px rgba(200,120,18,0.3), 0 17px 50px 0 rgba(227,154,18,0.2);
+}
+
+.featureSelectedIcon:hover {
+    box-shadow: 0px 0px 25px 0px rgba(20,80,214,0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
+}
+
+.featuresText {
+    color: #fff;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.floodFrequencyDetailsList {
+    position: absolute;
+    top: 350px;
+    width: 115;
+    left: 0px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.floodFrequencyDetailsListRolled {
+    position: absolute;
+    top: 350px;
+    width: 115;
+    left: -115px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.drainageClassDetailsList {
+    position: absolute;
+    top: 350px;
+    width: 115;
+    left: 0px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.drainageClassDetailsListRolled {
+    position: absolute;
+    top: 350px;
+    width: 115;
+    left: -115px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.floodColor1 {
+    background-color: #ffffc9;
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.floodColor2 {
+    background-color: #2f7eb7;
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.floodColorNone {
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.drainageColor1 {
+    background-color: #0053b3;
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.drainageColor2 {
+    background-color: #bc892f;
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}

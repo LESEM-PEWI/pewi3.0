@@ -36,6 +36,7 @@
 <div id="terrainButton" class="terrainButton" onclick="switchConsoleTab(1);"><img id ="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png"></div>  
 <div id="precipButton" class="precipButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png"></div>
 <div id="levelsButton" class="levelsButton" onclick="switchConsoleTab(3);"><img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png"></div>
+<div id="featuresButton" class="featuresButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
 
 <div id="landUseConsole" class ="landUseConsole">
  <div id="painterTab">
@@ -140,6 +141,25 @@
 <p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p><img id="nitrateIcon" class="levelsSelectorIcon" src="./imgs/N.png" onmouseover="displayLevels('nitrate'); showLevelDetails(1);" onmouseout="transitionToYear(currentYear); showLevelDetails(-1);">  
 <p class="levelsText">Gross Erosion</p><img id="erosionIcon" class="levelsSelectorIcon" src="./imgs/E.png" onmouseover="displayLevels('erosion'); showLevelDetails(2);" onmouseout="transitionToYear(currentYear); showLevelDetails(-2);">
 <p class="levelsText">Phosphorus Index Risk Assessment</p><img id="phoshorusIcon" class="levelsSelectorIcon" src="./imgs/P.png" onmouseover="displayLevels('phosphorus'); showLevelDetails(3);" onmouseout="transitionToYear(currentYear); showLevelDetails(-3);">
+</div>
+</div>
+
+<div id="featuresTab" style="display:none;">
+<div id="featuresConsole" class="featuresConsole">
+<p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon" src="./imgs/Icon_Flood_Frequency.svg" onmouseover="displayLevels('flood'); showLevelDetails(4);" onmouseout="transitionToYear(currentYear); showLevelDetails(-4);">  
+<p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon" src="./imgs/Icon_Strategic_Wetlands.svg" onmouseover="displayLevels('wetland');" onmouseout="transitionToYear(currentYear);">  
+<p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onmouseover="displayLevels('subwatershed');" onmouseout="transitionToYear(currentYear);">  
+<p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onmouseover="displayLevels('drainage'); showLevelDetails(5);" onmouseout="transitionToYear(currentYear); showLevelDetails(-5);">  
+<div  id="floodFrequencyDetailsList" class="floodFrequencyDetailsListRolled">
+<div class="floodColor1"><p class="levelsTextDetails">None</p></div>
+<div class="floodColorNone"><p class="levelsTextDetails">to</p></div>
+<div class="floodColor2"><p class="levelsTextDetails">Ponded</p></div>
+</div> 
+<div  id="drainageClassDetailsList" class="drainageClassDetailsListRolled">
+<div class="drainageColor1"><p class="levelsTextDetails">Poor</p></div>
+<div class="floodColorNone"><p class="levelsTextDetails">to</p></div>
+<div class="drainageColor2"><p class="levelsTextDetails">Excessive</p></div>
+</div> 
 </div>
 </div>
 
