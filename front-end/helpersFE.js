@@ -84,7 +84,7 @@ function addTile(tile){
         if(tile.landType[currentYear] == 0){
             tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
         } else {
-            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]], ambient: 0xFFFAD6, shading: THREE.FlatShading});
+            tileMaterial = new THREE.MeshBasicMaterial({ map: textureArray[tile.landType[currentYear]]});
         }
         
         if(tile.streamNetwork == 1 && currentRow != tile.row){
@@ -107,8 +107,6 @@ function addTile(tile){
         tiles.push(tile.graphics);
         
         scene.add(tile.graphics);
-        
-        renderer.render(scene, camera);
     
 };
 
