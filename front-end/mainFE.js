@@ -2,6 +2,7 @@
 var camera, scene, renderer, raycaster, mouse, hoveredOver ;
 var controls ;
 var tiles = [];
+var river;
 var riverPoints = [];
 var painter = 1;
 var onYear = "year1";
@@ -23,24 +24,45 @@ function setup() {
      var ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
      camera = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
      scene.add(camera);
-    
+
     //lighting
     var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1 );
     hemiLight.position.set( 0, 30, 100);
     scene.add( hemiLight );
-    
 
 	 //set up camera
     camera.position.y = 320;
     camera.position.z = 18;
     camera.rotation.x = -45 * Math.PI / 180;
+    
+    var spotLight = new THREE.SpotLight( 0xffffff, 0.1 );
+    
+    spotLight.position.set(0, 0, 0 );
+    spotLight.position = camera.position;
+	spotLight.castShadow = true;
+	spotLight.angle = -70 * Math.PI / 180;
+	spotLight.penumbra = 0.01;
+	spotLight.decay = 0;
+	spotLight.distance = 800;
+	spotLight.shadowDarkness = 0.5;
+	spotLight.shadow.mapSize.width = 2048;
+	spotLight.shadow.mapSize.height = 2048;
+	spotLight.shadow.camera.near = 1;
+	spotLight.shadow.camera.far = 500;
+	lightHelper = new THREE.SpotLightHelper( spotLight );
 
     //set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+    renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+	
+	camera.add(spotLight);
+	scene.add(lightHelper);
 
     //set up controls
     controls = new THREE.OrbitControls( camera, renderer.domElement );
+
     
     //add resize listener
     window.addEventListener('resize', onResize, false);
@@ -88,8 +110,8 @@ function setupSpace() {
 	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
 				
 	var material = new THREE.MeshLambertMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
-	var mesh = new THREE.Mesh( geometry, material );
-	scene.add( mesh );
+	river = new THREE.Mesh( geometry, material );
+	scene.add( river );
 
 
 }//end setupSpace
