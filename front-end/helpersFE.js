@@ -719,12 +719,87 @@ function contaminatedRiver() {
     
     //this is buggy -- still a work-in progress. Maybe the status of the river should be stored in the board for each year...
     
-    if(Totals.phosphorusLoad[currentYear] > 1.5){
+    if(Totals.phosphorusLoad[currentYear] > 1.6){
         river.material.color.setHex("0x663300");
     } else {
         river.material.color.setHex("0x40a4df")
     }
     
+}
+
+function writeFileToDownloadString(){
+    
+  var string = "";
+
+  string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
+
+  for(var i = 0; i < tiles.length; i++){
+
+    string = string + boardData[currentBoard].map[i].id + "," +
+    boardData[currentBoard].map[i].row + "," +
+    boardData[currentBoard].map[i].column + "," +
+    boardData[currentBoard].map[i].area + "," +
+    boardData[currentBoard].map[i].baseLandUseType + "," +
+    boardData[currentBoard].map[i].carbonMax + "," +
+    boardData[currentBoard].map[i].carbonMin + "," +
+    boardData[currentBoard].map[i].cattle + "," +
+    boardData[currentBoard].map[i].cornYield + "," +
+    boardData[currentBoard].map[i].drainageClass + "," +
+    boardData[currentBoard].map[i].erosion + "," +
+    boardData[currentBoard].map[i].floodFrequency + "," +
+    boardData[currentBoard].map[i].group + "," +
+    boardData[currentBoard].map[i].nitratesPPM + "," +
+    boardData[currentBoard].map[i].pIndex + "," +
+    boardData[currentBoard].map[i].sediment + "," +
+    boardData[currentBoard].map[i].soilType + "," +
+    boardData[currentBoard].map[i].soybeanYield + "," +
+    boardData[currentBoard].map[i].streamNetwork + "," +
+    boardData[currentBoard].map[i].subwatershed + "," +
+    boardData[currentBoard].map[i].timber + "," +
+    boardData[currentBoard].map[i].topography + "," +
+    boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
+    boardData[currentBoard].map[i].strategicWetland + "," +
+    boardData[currentBoard].map[i].landType[1] + "," +
+    boardData[currentBoard].map[i].landType[2] + "," +
+    boardData[currentBoard].map[i].landType[3] + "," +
+    boardData[currentBoard].precipitation[0] + "," + 
+    boardData[currentBoard].precipitation[1] + "," +
+    boardData[currentBoard].precipitation[2] + "," +
+    boardData[currentBoard].precipitation[3];
+
+    if(i < tiles.length - 1){
+      string = string + '\r\n';
+    } else {
+      //Do Nothing
+    }
+
+  }
+
+  return string;
+}
+
+function downloadClicked() {
+
+        var data = writeFileToDownloadString();
+
+        var fileName = "pewiMap";
+
+        var uri = 'data:text/csv;charset=UTF-8,' + escape(data);
+
+        var link = document.createElement("a");
+
+        link.href = uri;
+
+        link.style = "visibility:hidden";
+
+        link.download = fileName + ".csv";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+        
 }
 
 
