@@ -15,8 +15,9 @@ function parseInitial(data) {
     var arrLines = strRawContents.split("\n");
 
     //for each line in the file, split line by comma and push to the initData array
-    for (var i = 0; i < arrLines.length - 1; i++) {
+    for (var i = 1; i < arrLines.length - 1; i++) {
         var curLine = arrLines[i];
+        console.log(curLine);
         initData.push(curLine.split(","));
         
     } //end for : each line in the file
@@ -54,6 +55,6 @@ function loadBoard(board, fileString) {
     propogateBoard(board) ;
     
     //clear initData
-    initData = null ;
+    initData = [] ;
     
 }

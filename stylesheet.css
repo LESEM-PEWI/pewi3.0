@@ -885,6 +885,12 @@ td{
     top:5px;
 }
 
+#uploadButton {
+    position: absolute;
+    right: 82px;
+    top: 5px;
+}
+
 .upperButton {
     -webkit-transition-duration: 0.1s; /* Safari */
     transition-duration: 0.1s;
@@ -898,4 +904,9 @@ td{
     transition-duration: 0.1s;
     
     
+}
+
+.image-upload > input
+{
+    display: none;
 }

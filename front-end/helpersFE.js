@@ -258,8 +258,9 @@ function onDocumentDoubleClick( event ) {
                     boardData[currentBoard].map[i].update();
                     addTile(boardData[currentBoard].map[i]);
                 }
-        
+
             }
+	    
 	}
 	
 	renderer.render(scene, camera);
@@ -733,7 +734,7 @@ function writeFileToDownloadString(){
 
   string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
 
-  for(var i = 0; i < tiles.length; i++){
+  for(var i = 0; i < boardData[currentBoard].map.length; i++){
 
     string = string + boardData[currentBoard].map[i].id + "," +
     boardData[currentBoard].map[i].row + "," +
@@ -800,6 +801,44 @@ function downloadClicked() {
 
         document.body.removeChild(link);
         
+}
+
+function uploadClicked() {
+ 
+    var files;
+ 
+    $('#file-upload').bind('propertychange change', function (e) {
+        files = e.target.files;
+        console.log(files);
+    
+        if(files[0].name && !files[0].name.match(/\.csv/)){
+            alert("Incorrect File Type!");
+        }
+
+        var reader = new FileReader();
+        
+        reader.readAsText(files[0]);
+        
+        reader.onload = function(e){
+            
+            var boardFromFile = new GameBoard() ;  
+            parseInitial(reader.result);
+            propogateBoard(boardFromFile);
+            boardData.push(boardFromFile);
+
+            currentBoard++ ;
+            transitionToYear(1);
+            boardData[currentBoard].updateBoard() ;
+    
+            //update Results to point to correct board since currentBoard is updated
+            Totals = new Results(boardData[currentBoard]);
+            
+            //clear initData
+            initData = [] ;
+            
+        }
+    });
+    
 }
 
 
