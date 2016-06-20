@@ -103,7 +103,7 @@ function addTile(tile){
         
         tile.graphics = newTile;
         
-        tiles.push(tile.graphics);
+        tiles[mapID] = tile.graphics;
         
         scene.add(tile.graphics);
     
