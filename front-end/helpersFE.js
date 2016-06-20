@@ -1133,6 +1133,8 @@ function displayResults() {
         string2 += "</th>" ;
     }
     
+    string2 += "<th> </th>";
+    
     string2 += "</tr>" ;
     
     string2 += "<tr><td>Precipitation</td>"
