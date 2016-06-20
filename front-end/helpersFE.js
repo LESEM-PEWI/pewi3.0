@@ -1,3 +1,5 @@
+var currentRow = -1;
+
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -22,7 +24,7 @@ function displayBoard() {
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
         addTile(boardData[currentBoard].map[i]);
-        
+    
     }
     
 };
@@ -35,19 +37,64 @@ function addTile(tile){
         var tileHeight = 12;
         var tileWidth = 18;
         
-        var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
+        //var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
+        
+        var tileGeometry = new THREE.Geometry(); 
+        
+        var v1; var v2; var v3; var v4;
+        
+        var mapID = tile.id - 1;
+
+        var topN24 = boardData[currentBoard].map[mapID - 24] ? boardData[currentBoard].map[mapID - 24].topography : 0;
+        var topN23 = boardData[currentBoard].map[mapID - 23] ? boardData[currentBoard].map[mapID - 23].topography : 0;
+        var topN22 = boardData[currentBoard].map[mapID - 22] ? boardData[currentBoard].map[mapID - 22].topography : 0;
+        var topN1 = boardData[currentBoard].map[mapID - 1] ? boardData[currentBoard].map[mapID - 1].topography : 0;
+        var top1 = boardData[currentBoard].map[mapID + 1] ? boardData[currentBoard].map[mapID + 1].topography : 0;
+        var top22 = boardData[currentBoard].map[mapID + 22] ? boardData[currentBoard].map[mapID + 22].topography : 0;
+        var top23 = boardData[currentBoard].map[mapID + 23] ? boardData[currentBoard].map[mapID + 23].topography : 0;
+        var top24 = boardData[currentBoard].map[mapID + 24] ? boardData[currentBoard].map[mapID + 24].topography : 0;
+        
+        v1 = new THREE.Vector3(0,(topN24 + topN23 + topN1 + tile.topography)/4*10,0);
+        v2 = new THREE.Vector3(tileWidth,(topN23 + topN22 + top1 + tile.topography)/4*10,0);
+        v3 = new THREE.Vector3(tileWidth,(top24 + top23 + top1 + tile.topography)/4*10,tileHeight);
+        v4 = new THREE.Vector3(0,(top22 + top23 + topN1 + tile.topography)/4*10,tileHeight);
+
+        tileGeometry.vertices.push(v1);
+        tileGeometry.vertices.push(v2);
+        tileGeometry.vertices.push(v3);
+        tileGeometry.vertices.push(v4);
+        
+
+        //tileGeometry.faces.push( new THREE.Face3( 2, 1, 0 ) );
+        //tileGeometry.faces.push( new THREE.Face3( 3, 2, 0 ) );
+        
+        
+        var face = new THREE.Face3(2,1,0);
+        face.normal.set(0,1,0); // normal
+        tileGeometry.faces.push(face);
+        tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(0,0),new THREE.Vector2(0,1),new THREE.Vector2(1,1)]); // uvs
+
+        face = new THREE.Face3(3,2,0);
+        face.normal.set(0,1,0); // normal
+        tileGeometry.faces.push(face);
+        tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1,0),new THREE.Vector2(0,0),new THREE.Vector2(1,1)]); // uvs
         
         if(tile.landType[currentYear] == 0){
             tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
         } else {
-            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]] });
+            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]]});
         }
         
-        if(tile.streamNetwork == 1){
+        if(tile.streamNetwork == 1 && currentRow != tile.row){
             riverPoints.push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide)/2, 1, tile.row * tileHeight - (tileHeight * tilesHigh)/2));
+            currentRow = tile.row;
         }
-        
+    
         var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
+        
+        newTile.receiveShadow = true;
+        newTile.castShadow = true;
+        
         newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide)/2;
         newTile.position.y = 0;
         newTile.position.z = tile.row * tileHeight - (tileHeight * tilesHigh)/2;
@@ -157,7 +204,7 @@ function onDocumentMouseMove( event ) {
 
 			hoveredOver = intersects[ 0 ].object;
 			hoveredOver.currentHex = hoveredOver.material.emissive.getHex();
-			hoveredOver.material.emissive.setHex( 0xff0000 );
+		    hoveredOver.material.emissive.setHex( 0x7f7f7f );
 
 		}
 
@@ -283,6 +330,7 @@ function resultsStart() {
 
     //functions that update results and display them appropriately
     calculateResults();
+    displayResults();
     animateResults();
 
 }
@@ -312,6 +360,10 @@ function roll(value) {
      document.getElementById("precipConsole").className = "precipConsoleRolled";
      document.getElementById("precipButton").className = "precipButtonRolled";
      document.getElementById("terrainButton").className = "terrainButtonRolled";
+     document.getElementById("levelsConsole").className = "levelsConsoleRolled";
+     document.getElementById("levelsButton").className = "levelsButtonRolled";
+     document.getElementById("featuresConsole").className = "featuresConsoleRolled";
+     document.getElementById("featuresButton").className = "featuresButtonRolled";
       toolbarRolled = true;
     }
     else{
@@ -320,6 +372,10 @@ function roll(value) {
         document.getElementById("precipConsole").className = "precipConsole";
         document.getElementById("precipButton").className = "precipButton";
         document.getElementById("terrainButton").className = "terrainButton";
+        document.getElementById("levelsConsole").className = "levelsConsole";
+        document.getElementById("levelsButton").className = "levelsButton";
+        document.getElementById("featuresConsole").className = "featuresConsole";
+        document.getElementById("featuresButton").className = "featuresButton";
         toolbarRolled = false;
     }
     
@@ -337,6 +393,50 @@ function roll(value) {
         
     }//right results button
 
+    
+}
+
+function showLevelDetails(value) {
+    
+    if(value==1){
+        document.getElementById("nitrateDetailsList").className = "nitrateDetailsList";
+    }
+    
+    if(value==-1){
+        document.getElementById("nitrateDetailsList").className = "nitrateDetailsListRolled";
+    }
+    
+    if(value==2){
+        document.getElementById("erosionDetailsList").className = "erosionDetailsList";
+    }
+    
+    if(value==-2){
+        document.getElementById("erosionDetailsList").className = "erosionDetailsListRolled";
+    }
+    
+    if(value==3){
+        document.getElementById("phosphorusDetailsList").className = "phosphorusDetailsList";
+    }
+    
+    if(value==-3){
+        document.getElementById("phosphorusDetailsList").className = "phosphorusDetailsListRolled";
+    }
+    
+    if(value==4){
+        document.getElementById("floodFrequencyDetailsList").className = "floodFrequencyDetailsList";
+    }
+    
+    if(value==-4){
+        document.getElementById("floodFrequencyDetailsList").className = "floodFrequencyDetailsListRolled";
+    }
+    
+    if(value==5){
+        document.getElementById("drainageClassDetailsList").className = "drainageClassDetailsList";
+    }
+    
+    if(value==-5){
+        document.getElementById("drainageClassDetailsList").className = "drainageClassDetailsListRolled";
+    }
     
 }
 
@@ -366,16 +466,45 @@ function switchConsoleTab(value){
     if(value==1){
         document.getElementById('terrainImg').className = "imgSelected" ;
         document.getElementById('precipImg').className = "imgNotSelected" ;
-        
+        document.getElementById('levelsImg').className = "imgNotSelected";
+        document.getElementById('featuresImg').className = "imgNotSelected";
         document.getElementById('painterTab').style.display = "block";
         document.getElementById('precipTab').style.display = "none" ;
+        document.getElementById('levelsTab').style.display = "none";
+        document.getElementById('featuresTab').style.display = "none";        
     }
     
     if(value==2){
         document.getElementById('terrainImg').className = "imgNotSelected" ;
         document.getElementById('precipImg').className = "imgSelected" ;
+        document.getElementById('levelsImg').className = "imgNotSelected";
+        document.getElementById('featuresImg').className = "imgNotSelected";
         document.getElementById('painterTab').style.display = "none";
         document.getElementById('precipTab').style.display = "block" ;
+        document.getElementById('levelsTab').style.display = "none";
+        document.getElementById('featuresTab').style.display = "none";
+    }
+    
+    if(value==3){
+        document.getElementById('terrainImg').className = "imgNotSelected" ;
+        document.getElementById('precipImg').className = "imgNotSelected" ;
+        document.getElementById('levelsImg').className = "imgSelected";
+        document.getElementById('featuresImg').className = "imgNotSelected";
+        document.getElementById('painterTab').style.display = "none";
+        document.getElementById('precipTab').style.display = "none" ;
+        document.getElementById('levelsTab').style.display = "block";
+        document.getElementById('featuresTab').style.display = "none";
+    }
+    
+    if(value==4){
+        document.getElementById('terrainImg').className = "imgNotSelected";
+        document.getElementById('precipImg').className = "imgNotSelected" ;
+        document.getElementById('levelsImg').className = "imgNotSelected";
+        document.getElementById('featuresImg').className = "imgSelected";
+        document.getElementById('painterTab').style.display = "none";
+        document.getElementById('precipTab').style.display = "none" ;
+        document.getElementById('levelsTab').style.display = "none";
+        document.getElementById('featuresTab').style.display = "block";
     }
     
 }
@@ -408,6 +537,271 @@ function switchYearTab(value){
     
 }
 
+function displayLevels(type){
+    
+    //Totals = new Results(boardData[currentBoard]);
+    Totals.update() ;
+    
+    tilesCopy = [];
+    
+    for(var i = 0; i < tiles.length; i++){
+        
+                tiles[i].material.map = textureArray[0];
+	            tiles[i].material.emissive.setHex( getHighlightColor(type, tiles[i].mapID) );
+
+    }
+    
+    renderer.render(scene, camera);
+    
+};
+
+function getHighlightColor(type, ID){
+    
+    if(type == "erosion"){
+        
+        var erosionSeverity = Totals.grossErosionSeverity[currentYear][ID];
+        
+        console.log(erosionSeverity);
+        
+        switch(erosionSeverity){
+            case 1:
+                return "0xe6bb00";
+            case 2:
+                return "0xc97b08";
+            case 3:
+                return "0xad490d";
+            case 4:
+                return "0x9a3010";
+            case 5:
+                return "0x871c12";
+        }
+        
+    }
+    
+    if(type == "nitrate"){
+        
+        var nitrateConcentration = Totals.nitrateContribution[currentYear][ID];
+        
+        if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return "0xe6bb00";
+        else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return "0xc97b08";
+        else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return "0xad490d";
+        else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return "0x9a3010";
+        else if (nitrateConcentration > 0.25) return "0x871c12";
+        
+    }
+    
+    if(type == "phosphorus"){
+        
+        var phosphorusRisk = Totals.phosphorusRiskAssessment[currentYear][ID];
+        
+        switch(phosphorusRisk){
+            case 1:
+                return "0xe6bb00";
+            case 2:
+                return "0xc97b08";
+            case 3:
+                return "0xad490d";
+            case 4:
+                return "0x9a3010";
+            case 5:
+                return "0x871c12";
+        }
+        
+    }
+    
+    if(type == "flood"){
+        
+        var flood = Number(boardData[currentBoard].map[ID].floodFrequency);
+        
+        switch(flood){
+            case 0:
+                return "0xffffc9";
+            case 10:
+                return "0xffffc9";
+            case 20:
+                return "0xc7eab4";
+            case 30:
+                return "0x7fcebb";
+            case 40:
+                return "0x41b7c5";
+            case 50:
+                return "0x2f7eb7";
+        }
+    }
+    
+    if(type == "wetland"){
+        
+        if(boardData[currentBoard].map[ID].strategicWetland == 1){
+            return "0x2f7eb7";
+        } else {
+            return "0xffffc9";
+        }
+    }
+    
+    if(type == "subwatershed"){
+        
+        var watershed = Number(boardData[currentBoard].map[ID].subwatershed);
+        
+        switch(watershed){
+            case 1:
+                return "0x45aa98";
+            case 2:
+                return "0x127731";
+            case 3:
+                return "0x989836";
+            case 4:
+                return "0xcc6578";
+            case 5:
+                return "0xa84597";
+            case 6:
+                return "0xdbcb74";
+            case 7:
+                return "0x342286";
+            case 8:
+                return "0x862254";
+            case 9:
+                return "0x87ceee";
+            case 10:
+                return "0x097c2f";
+            case 11:
+                return "0x979936";
+            case 12:
+                return "0x47aa98";
+            case 13:
+                return "0xe3c972";
+            case 14:
+                return "0xcb657a";
+            case 15:
+                return "0x882252";
+            case 16:
+                return "0xaa4497";
+            case 17:
+                return "0x302486";
+            case 18:
+                return "0x76d1c4";
+            case 19:
+                return "0x3f9f91";
+            case 20:
+                return "0x187336";
+            case 21:
+                return "0x919246";
+        }
+    }
+    
+    if(type = "drainage"){
+        
+        var drainage = Number(boardData[currentBoard].map[ID].drainageClass);
+        
+        switch(drainage){
+            case 70:
+                return "0x0053b3";
+            case 60:
+                return "0x255d98";
+            case 50:
+                return "0x38638b";
+            case 45:
+                return "0x4b687e";
+            case 40:
+                return "0x5e6e71";
+            case 30:
+                return "0x837856";
+            case 10:
+                return "0xa9833c";
+            case 0:
+                return "0xbc892f";
+        }
+    }
+    
+    
+};
+
+function contaminatedRiver() {
+    
+    //this is buggy -- still a work-in progress. Maybe the status of the river should be stored in the board for each year...
+    
+    if(Totals.phosphorusLoad[currentYear] > 1.6){
+        river.material.color.setHex("0x663300");
+    } else {
+        river.material.color.setHex("0x40a4df")
+    }
+    
+}
+
+function writeFileToDownloadString(){
+    
+  var string = "";
+
+  string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
+
+  for(var i = 0; i < tiles.length; i++){
+
+    string = string + boardData[currentBoard].map[i].id + "," +
+    boardData[currentBoard].map[i].row + "," +
+    boardData[currentBoard].map[i].column + "," +
+    boardData[currentBoard].map[i].area + "," +
+    boardData[currentBoard].map[i].baseLandUseType + "," +
+    boardData[currentBoard].map[i].carbonMax + "," +
+    boardData[currentBoard].map[i].carbonMin + "," +
+    boardData[currentBoard].map[i].cattle + "," +
+    boardData[currentBoard].map[i].cornYield + "," +
+    boardData[currentBoard].map[i].drainageClass + "," +
+    boardData[currentBoard].map[i].erosion + "," +
+    boardData[currentBoard].map[i].floodFrequency + "," +
+    boardData[currentBoard].map[i].group + "," +
+    boardData[currentBoard].map[i].nitratesPPM + "," +
+    boardData[currentBoard].map[i].pIndex + "," +
+    boardData[currentBoard].map[i].sediment + "," +
+    boardData[currentBoard].map[i].soilType + "," +
+    boardData[currentBoard].map[i].soybeanYield + "," +
+    boardData[currentBoard].map[i].streamNetwork + "," +
+    boardData[currentBoard].map[i].subwatershed + "," +
+    boardData[currentBoard].map[i].timber + "," +
+    boardData[currentBoard].map[i].topography + "," +
+    boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
+    boardData[currentBoard].map[i].strategicWetland + "," +
+    boardData[currentBoard].map[i].landType[1] + "," +
+    boardData[currentBoard].map[i].landType[2] + "," +
+    boardData[currentBoard].map[i].landType[3] + "," +
+    boardData[currentBoard].precipitation[0] + "," + 
+    boardData[currentBoard].precipitation[1] + "," +
+    boardData[currentBoard].precipitation[2] + "," +
+    boardData[currentBoard].precipitation[3];
+
+    if(i < tiles.length - 1){
+      string = string + '\r\n';
+    } else {
+      //Do Nothing
+    }
+
+  }
+
+  return string;
+}
+
+function downloadClicked() {
+
+        var data = writeFileToDownloadString();
+
+        var fileName = "pewiMap";
+
+        var uri = 'data:text/csv;charset=UTF-8,' + escape(data);
+
+        var link = document.createElement("a");
+
+        link.href = uri;
+
+        link.style = "visibility:hidden";
+
+        link.download = fileName + ".csv";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+        
+}
+
 
 function animateResults() {
     
@@ -418,11 +812,16 @@ function animateResults() {
 
 function calculateResults() {
     
-    toMetricFactorArea = 2.471 ;
-    
-    Totals = new Results(boardData[currentBoard]);
+    //Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
     
+    //contaminatedRiver(Totals);
+    
+}
+
+function displayResults() {
+    
+    toMetricFactorArea = 2.471 ;
     var upToYear = boardData[currentBoard].calculatedToYear ;
     
     //document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = "WORKS";
@@ -537,7 +936,7 @@ function calculateResults() {
         
     }
     
-    string2 += "</table><br><br>" ;
+    string2 += "</table><br><br><br><br>" ;
     
     
     //===================================================
@@ -545,15 +944,17 @@ function calculateResults() {
     
           
     nameArray =["Game Wildlife","Biodiversity","Carbon Sequestration", "Erosion Control / Gross Erosion",
-    "Nitrate Pollution Control <br> / In-Stream Concentration"];
-    testArray=["gameWildlifePoints","biodiversityPoints","carbonSequestration","grossErosion","nitrateConcentration"];
-    conversionArray=[1,1,0.90718474,0.98718474,1,1];
+    "Nitrate Pollution Control <br> / In-Stream Concentration","Phosphorus Pollution Control <br> / In-Stream Loading",
+    "Sediment Control <br> / In-Stream Delivery"];
+    testArray=["gameWildlifePoints","biodiversityPoints","carbonSequestration","grossErosion","nitrateConcentration",
+    "phosphorusLoad", "sedimentDelivery"];
+    conversionArray=[1,1,0.90718474,0.90718474,1,1,0.90718474, 0.90718474];
     
     string2 += "<table class='resultsTable'>";
     
     //add header row
     
-    string2 += "<tr class='tableHeading'> <th> Ecosystem Service Indicator / Measurement </th>" ;
+    string2 += "<tr class='tableHeading'> <th> Ecosystem Service Indicator <br> / Measurement </th>" ;
     
     for(var y = 1; y<= upToYear; y++){
         string2 += "<th>" ;
@@ -595,19 +996,6 @@ function calculateResults() {
             case 4:
                 string2 += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>"
                 break;
-            case 5:
-                string2 += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>"
-                break;
-           case 7:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Herbaceous (non-pasture)</b></td></tr>"
-                break;
-            case 11:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Legume</b></td></tr>"
-                break;
-            case 12:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Wooded</b></td></tr>"
-                break;
-                        
         }//end switch
         
         string2 += "<tr>"
@@ -635,8 +1023,9 @@ function calculateResults() {
         }//for each year
         
         if(l<2) string2 += "<td>pts</td>" ;
-        if(2<= l && l < 5) string2 +="<td>tons</td>" ;
-        
+        if(2<= l && l < 4) string2 +="<td>tons</td>" ;
+        if(4<= l && l < 5) string2 +="<td>ppm</td>" ;
+        if(5<= l && l < 8) string2 +="<td>tons</td>" ;
         
         for(var y=1; y<=upToYear;y++){
             string2+= "<td>"
@@ -649,143 +1038,149 @@ function calculateResults() {
         }//for each year
         
         if(l< 2) string2 += "<td>pts</td>" ;
-        if(2 <= l && l <5) string2 +="<td>Mg</td>" ;
-
-    
+        if(2 <= l && l <4) string2 +="<td>Mg</td>" ;
+        if(4<= l && l < 5) string2 +="<td>mg/L</td>" ;
+        if(5<= l && l < 8) string2 +="<td>Mg</td>" ;
     }
     
-    //TODO
-    //NEED TO CHANGE THE WAY these things are stored in results so that it can be looped through
-    //ie each value has nameSCORE, and NAME so that an array of NAME can generate table (metric generated from english)
-    //this is especially a problem for dealing with the scores at the bottom, but a few hour fix only
-
-    string2 += "</table>";
     
+    //Finally, add the yeild results to the table...
     
-    var string = "Precipitation:" + "<BR>" +
-    "Year 0: " + boardData[currentBoard].precipitation[0] + "<BR>" +
-    "Year 1: " + boardData[currentBoard].precipitation[1] + "<BR>" +
-    "Year 2: " + boardData[currentBoard].precipitation[2] + "<BR>" +
-    "Year 3: " + boardData[currentBoard].precipitation[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Total Area: " + Totals.totalArea + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Carbon Sequestration: " + "<BR>" +
-    "Year 1: " + Totals.carbonSequestration[1] + "<BR>" +
-    "Year 2: " + Totals.carbonSequestration[2] + "<BR>" +
-    "Year 2: " + Totals.carbonSequestration[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Erosion: " + "<BR>" +
-    "Year 1: " + Totals.grossErosion[1] + "<BR>" +
-    "Year 2: " + Totals.grossErosion[2] + "<BR>" +
-    "Year 3: " + Totals.grossErosion[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Game Wildlife Points: " + "<BR>" +
-    "Year 1: " + Totals.gameWildlifePoints[1] + "<BR>" +
-    "Year 2: " + Totals.gameWildlifePoints[2] + "<BR>" +
-    "Year 3: " + Totals.gameWildlifePoints[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Biodiversity: " + "<BR>" +
-    "Year 1: " + Totals.biodiversityPoints[1] + "<BR>" +
-    "Year 2: " + Totals.biodiversityPoints[2] + "<BR>" +
-    "Year 3: " + Totals.biodiversityPoints[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Phosphorus Load: " + "<BR>" +
-    "Year 1: " + Totals.phosphorusLoad[1] + "<BR>" +
-    "Year 2: " + Totals.phosphorusLoad[2] + "<BR>" +
-    "Year 3: " + Totals.phosphorusLoad[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Nitrate Load: " + "<BR>" +
-    "Year 1: " + Totals.nitrateConcentration[1] + "<BR>" +
-    "Year 2: " + Totals.nitrateConcentration[2] + "<BR>" +
-    "Year 3: " + Totals.nitrateConcentration[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Sediment Delivery: " + "<BR>" +
-    "Year 1: " + Totals.sedimentDelivery[1] + "<BR>" +
-    "Year 2: " + Totals.sedimentDelivery[2] + "<BR>" +
-    "Year 3: " + Totals.sedimentDelivery[3] + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Yield Totals: " + "<BR>" +
-    "Corn: " + Totals.yieldResults[1].cornGrainYield + "<BR>" +
-    "Soy: " + Totals.yieldResults[1].soybeanYield + "<BR>" +
-    "Alfalfa: " + Totals.yieldResults[1].alfalfaHayYield + "<BR>" +
-    "Grass Hay: " + Totals.yieldResults[1].grassHayYield + "<BR>" +
-    "Wood: " + Totals.yieldResults[1].woodYield + "<BR>" +
-    "Cattle: " + Totals.yieldResults[1].cattleYield + "<BR>" +
-    "Herbs: " + Totals.yieldResults[1].herbaceousPerennialBiomassYield + "<BR>" +
-    "Short Woody: " + Totals.yieldResults[1].shortRotationWoodyBiomassYield + "<BR>" +
-    "Fruits + Veggies: " + Totals.yieldResults[1].mixedFruitsAndVegetablesYield + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Land Use Totals: " + "<BR>" +
-    "Conventional Corn: " + Totals.landUseResults[1].conventionalCornLandUse + "<BR>" +
-    "Conservation Corn: " + Totals.landUseResults[1].conservationCornLandUse + "<BR>" +
-    "Conventional Soybean: " + Totals.landUseResults[1].conventionalSoybeanLandUse + "<BR>" +
-    "Conservation Soybean: " + Totals.landUseResults[1].conservationSoybeanLandUse + "<BR>" +
-    "Alfalfa: " + Totals.landUseResults[1].alfalfaLandUse + "<BR>" +
-    "Permanent Pasture: " + Totals.landUseResults[1].permanentPastureLandUse + "<BR>" +
-    "Rotational Grazing: " + Totals.landUseResults[1].rotationalGrazingLandUse + "<BR>" +
-    "Grass Hay: " + Totals.landUseResults[1].grassHayLandUse + "<BR>" +
-    "Prairie: " + Totals.landUseResults[1].prairieLandUse + "<BR>" +
-    "Conservation Forest: " + Totals.landUseResults[1].conservationForestLandUse + "<BR>" +
-    "Conventional Forest: " + Totals.landUseResults[1].conventionalForestLandUse + "<BR>" +
-    "Herbaceous Perennial Bioenergy: " + Totals.landUseResults[1].herbaceousPerennialBioenergyLandUse + "<BR>" +
-    "Short Rotation Woody Bioenergy: " + Totals.landUseResults[1].shortRotationWoodyBioenergyLandUse + "<BR>" +
-    "Wetland: " + Totals.landUseResults[1].wetlandLandUse + "<BR>" +
-    "Mixed Fruits and Veggies: " + Totals.landUseResults[1].mixedFruitsVegetablesLandUse + "<BR>" +
-    "<BR>" + "<BR>" +
-    "<STRONG>" + "Scores (100): " + "</STRONG>" + "<BR>" + "<BR>" +
-    "Yield Score: " + "<BR>" +
-    "Corn: " + 100 * Totals.yieldResults[3].cornGrainYield / boardData[currentBoard].maximums.cornMax + "<BR>" +
-    "Soy: " + 100 * Totals.yieldResults[3].soybeanYield / boardData[currentBoard].maximums.soybeanMax + "<BR>" +
-    "Alfalfa: " + 100 * Totals.yieldResults[3].alfalfaHayYield / boardData[currentBoard].maximums.alfalfaMax + "<BR>" +
-    "Hay: " + 100 * Totals.yieldResults[3].grassHayYield / boardData[currentBoard].maximums.grassHayMax + "<BR>" +
-    "Wood: " + 100 * Totals.yieldResults[3].woodYield / boardData[currentBoard].maximums.woodMax + "<BR>" +
-    "Cattle: " + 100 * Totals.yieldResults[3].cattleYield / boardData[currentBoard].maximums.cattleMax + "<BR>" +
-    "Herbs: " + 100 * Totals.yieldResults[3].herbaceousPerennialBiomassYield / boardData[currentBoard].maximums.herbaceousPerennialBiomassMax + "<BR>" +
-    "Short Woody: " + 100 * Totals.yieldResults[3].shortRotationWoodyBiomassYield / boardData[currentBoard].maximums.shortRotationWoodyBiomassMax + "<BR>" +
-    "Fruits + Veggies: " + 100 * Totals.yieldResults[3].mixedFruitsAndVegetablesYield / boardData[currentBoard].maximums.mixedFruitsAndVegetablesMax + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Game Wildlife Score: " + "<BR>" +
-    "Year 1: " + Totals.gameWildlifePoints[1] * 10 + "<BR>" +
-    "Year 2: " + Totals.gameWildlifePoints[2] * 10 + "<BR>" +
-    "Year 3: " + Totals.gameWildlifePoints[3] * 10 + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Biodiversity Score: " + "<BR>" +
-    "Year 1: " + Totals.biodiversityPoints[1] * 10 + "<BR>" +
-    "Year 2: " + Totals.biodiversityPoints[2] * 10 + "<BR>" +
-    "Year 3: " + Totals.biodiversityPoints[3] * 10 + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Carbon Score: " + "<BR>" +
-    "Year 1: " + 100 * ((Totals.carbonSequestration[1] - boardData[currentBoard].minimums.carbonMin) / (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)) + "<BR>" +
-    "Year 2: " + 100 * ((Totals.carbonSequestration[2] - boardData[currentBoard].minimums.carbonMin) / (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)) + "<BR>" +
-    "Year 3: " + 100 * ((Totals.carbonSequestration[3] - boardData[currentBoard].minimums.carbonMin) / (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)) + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Erosion Score: " + "<BR>" +
-    "Year 1: " + 100 * ((boardData[currentBoard].maximums.erosionMax - Totals.grossErosion[1]) / (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) + "<BR>" +
-    "Year 2: " + 100 * ((boardData[currentBoard].maximums.erosionMax - Totals.grossErosion[2]) / (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) + "<BR>" +
-    "Year 3: " + 100 * ((boardData[currentBoard].maximums.erosionMax - Totals.grossErosion[3]) / (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) + "<BR>" +
-    "Erosion Min " + boardData[currentBoard].minimums.erosionMin + "<BR>" +
-    "Erosion Max: " + boardData[currentBoard].maximums.erosionMax + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Phosphorus Score: " + "<BR>" +
-    "Year 1: " + 100 * ((boardData[currentBoard].maximums.phosphorusMax - Totals.phosphorusLoad[1]) / (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) + "<BR>" +
-    "Year 2: " + 100 * ((boardData[currentBoard].maximums.phosphorusMax - Totals.phosphorusLoad[2]) / (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) + "<BR>" +
-    "Year 3: " + 100 * ((boardData[currentBoard].maximums.phosphorusMax - Totals.phosphorusLoad[3]) / (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) + "<BR>" +
-    "Phosphorus Min " + boardData[currentBoard].minimums.phosphorusMin + "<BR>" +
-    "Phosphorus Max: " + boardData[currentBoard].maximums.phosphorusMax + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Nitrate Score: " + "<BR>" +
-    "Year 1: " + 100 * ((boardData[currentBoard].maximums.nitrateMax - Totals.nitrateConcentration[1]) / (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) + "<BR>" +
-    "Year 2: " + 100 * ((boardData[currentBoard].maximums.nitrateMax - Totals.nitrateConcentration[2]) / (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) + "<BR>" +
-    "Year 3: " + 100 * ((boardData[currentBoard].maximums.nitrateMax - Totals.nitrateConcentration[3]) / (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) + "<BR>" +
-    "<BR>" + "<BR>" +
-    "Sediment Delivery Score: " + "<BR>" +
-    "Year 1: " + 100 * ((boardData[currentBoard].maximums.sedimentMax - Totals.sedimentDelivery[1]) / (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) + "<BR>" +
-    "Year 2: " + 100 * ((boardData[currentBoard].maximums.sedimentMax - Totals.sedimentDelivery[2]) / (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) + "<BR>" +
-    "Year 3: " + 100 * ((boardData[currentBoard].maximums.sedimentMax - Totals.sedimentDelivery[3]) / (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) + "<BR>" +
-    "Sediment Min: " + boardData[currentBoard].minimums.sedimentMin + "<BR>" +
-    "Sediment Max: " + boardData[currentBoard].maximums.sedimentMax + "<BR>"
+    nameArray =["Corn Grain", "Soybeans", "Mixed Fruits and Vegetables", "Cattle", "Alfalfa Hay","Grass Hay",
+    "Herbaceous Perennial Biomass", "Wood", "Short Rotation Woody Biomass"];
+            
+    testArray=["cornGrainYield","soybeanYield", "mixedFruitsAndVegetablesYield", "cattleYield",
+    "alfalfaHayYield","grassHayYield","herbaceousPerennialBiomassYield", "woodYield", "shortRotationWoodyBiomassYield"];
+    conversionArray=[0.0254, 0.0254, 0.90718474, 1, 0.90718474, 0.90718474,0.90718474,0.002359737, 0.90718474 ];
+    
+     for(var l = 0 ; l< testArray.length ; l++ ){
+        
+        
+        switch(l){
+            case 0:
+                string2 += "<tr class='tableHeading'><td><b>Yield</b></td></tr>"
+                break;
+        }//end switch
+        
+        string2 += "<tr>"
+        
+        string2 += "<td>" + nameArray[l] + "</td>"
+        
+        for(var y=1; y<=upToYear;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l] + "Score";
+            string2 += ( Math.round(Totals.yieldResults[y][tempString] * 10  )  / 10 ) + "<br>" ;
+            
+            string2+= "</td>"
+        }//for each year
+        
+        string2 += "<td>(out of 100)</td>" ;
+        
+        for(var y=1; y<=upToYear;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l];
+            string2 += ( Math.round(Totals.yieldResults[y][tempString] * 10) / 10 ) + "<br>" ;
+            
+            string2+= "</td>"
+        }//for each year
+       
+        if(l < 2 ) string2 += "<td>bu</td>" ;  
+        if(l == 2 ) string2 += "<td>tons</td>" ; 
+        if(l == 3) string2 += "<td>animals</td>" ;
+        if(4<= l && l < 7) string2 += "<td>tons</td>" ;
+        if(l == 7 ) string2 += "<td>board-ft</td>" ;
+        if(l == 8 ) string2 += "<td>tons</td>" ; 
+        
+        for(var y=1; y<=upToYear;y++){
+            string2+= "<td>"
+            
+            var tempString = testArray[l];
+            string2 += ( Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10 ) / 10 ) + "<br>" ;
+            
+            string2+= "</td>"
+            
+        }//for each year
+        
+        if(l < 2 ) string2 += "<td>Mg</td>" ;  
+        if(l == 2) string2 += "<td>Mg</td>" ;  
+        if(l == 3) string2 += "<td>animals</td>" ;
+        if(4<= l && l < 7) string2 += "<td>Mg</td>" ;
+        if(l == 7 ) string2 += "<td>m^3</td>" ;
+        if(l == 8 ) string2 += "<td>Mg</td>" ; 
+    }
+    
+    string2 += "</table><br><br>";
+    
+    string2 += "<table class='resultsTable'>";
+    
+    //add header row
+    
+    string2 += "<tr class='tableHeading'> <th style='width:220px;'> Other Parameters </th>" ;
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<th>" ;
+        string2 += "Y" + y ;
+        string2 += "</th>" ;
+    }
+    
+    string2 += "<th> </th>";
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<th>" ;
+        string2 += "Y" + y ;
+        string2 += "</th>" ;
+    }
+    
+    string2 += "</tr>" ;
+    
+    string2 += "<tr><td>Precipitation</td>"
+    
+     for(var y = 1; y<= upToYear; y++){
+        string2 += "<td>" ;
+        string2 += boardData[currentBoard].precipitation[y] ;
+        string2 += "</td>" ;
+    }
+    
+    string2 += "<td>inches</td>";
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<td>" ;
+        string2 += Math.round(boardData[currentBoard].precipitation[y] *2.54 * 10) / 10;
+        string2 += "</td>" ;
+    }
+    
+    string2 += "<td>cm</td>";
+    
+    string2 += "</tr>" ;
+    
+    //THIS SECTION DOES NOT APPEAR TO BE WORKING, CHECK
+    
+    string2 += "<tr><td>Strategic Wetland Use</td>";
+    
+     for(var y = 1; y<= upToYear; y++){
+        string2 += "<td>" ;
+        string2 += Totals.strategicWetlandPercent[y] ;
+        string2 += "</td>" ;
+    }
+    
+    string2 += "<td>percent</td>";
+    
+    for(var y = 1; y<= upToYear; y++){
+        string2 += "<td>" ;
+        string2 += Totals.strategicWetlandCells[y] ;
+        string2 += "</td>" ;
+    }
+    
+    string2 += "<td>cells (out of 20)</td>";
+    
+    string2 += "</tr>" ;
+    
+    string2 += "</table>" ;
+    
     
     document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = string2;
+    
     
 }

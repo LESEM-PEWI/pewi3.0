@@ -1,7 +1,9 @@
 //global vars
-var camera, scene, renderer, raycaster, mouse, hoveredOver ;
+var camera, scene, raycaster, mouse, hoveredOver ;
+var renderer = new THREE.WebGLRenderer();
 var controls ;
 var tiles = [];
+var river;
 var riverPoints = [];
 var painter = 1;
 var onYear = "year1";
@@ -10,12 +12,14 @@ var currentBoard = -1 ;
 var currentYear = 1 ;
 var modalUp = false ;
 var isShiftDown = false;
+var Totals ; //global current calculated results, NOTE, should be reassigned every time currentBoard is changed
+var counter = 0 ;
 
 
 function setup() {
     
-    //renderer
-    renderer = new THREE.WebGLRenderer();
+    
+    //scene
     scene = new THREE.Scene();
     
     //camera
@@ -23,23 +27,45 @@ function setup() {
      var ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
      camera = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
      scene.add(camera);
-    
+
     //lighting
     var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1 );
     hemiLight.position.set( 0, 30, 100);
     scene.add( hemiLight );
+    
+    var spotLight = new THREE.SpotLight( 0xffffff, 0.1 );
+    
+    spotLight.position.set(0, 0, 0 );
+    spotLight.position = camera.position;
+	spotLight.castShadow = true;
+	spotLight.angle = -70 * Math.PI / 180;
+	spotLight.penumbra = 0.01;
+	spotLight.decay = 0;
+	spotLight.distance = 800;
+	spotLight.shadowDarkness = 0.5;
+	spotLight.shadow.mapSize.width = 2048;
+	spotLight.shadow.mapSize.height = 2048;
+	spotLight.shadow.camera.near = 1;
+	spotLight.shadow.camera.far = 500;
+	lightHelper = new THREE.SpotLightHelper( spotLight );
 
-	 //set up camera
+     //set up camera
     camera.position.y = 320;
     camera.position.z = 18;
     camera.rotation.x = -45 * Math.PI / 180;
-
+    
     //set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+    renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+	
+	camera.add(spotLight);
+	scene.add(lightHelper);
 
     //set up controls
     controls = new THREE.OrbitControls( camera, renderer.domElement );
+
     
     //add resize listener
     window.addEventListener('resize', onResize, false);
@@ -66,38 +92,33 @@ function setupSpace() {
     currentBoard++ ; //currentBoard now = 0
     displayBoard() ;
     boardData[currentBoard].updateBoard() ;
+    
+    //update Results to point to correct board since currentBoard is updated
+    Totals = new Results(boardData[currentBoard]);
+    
 
-				// var closedSpline = new THREE.CatmullRomCurve3( [
-				// 	new THREE.Vector3( -60, -100,  60 ),
-				// 	new THREE.Vector3( -60,   20,  60 ),
-				// 	new THREE.Vector3( -60,  120,  60 ),
-				// 	new THREE.Vector3(  60,   20, -60 ),
-				// 	new THREE.Vector3(  60, -100, -60 )
-				// ] );
-				// closedSpline.type = 'catmullrom';
-				// closedSpline.closed = true;
-				// var extrudeSettings = {
-				// 	steps			: 100,
-				// 	bevelEnabled	: false,
-				// 	extrudePath		: closedSpline
-				// };
-				// var shape = new THREE.Shape( riverPoints );
-				// var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
-				// var material = new THREE.MeshLambertMaterial( { color: 0xb00000, wireframe: false } );
-				// var mesh = new THREE.Mesh( geometry, material );
-				// scene.add( mesh );
-				
-				console.log(riverPoints);
-				
-				var curve = new THREE.CatmullRomCurve3(riverPoints);
-				var geometry = new THREE.Geometry();
-                geometry.vertices = curve.getPoints( 50 );
-                var material = new THREE.LineBasicMaterial( { color : 0x0000FF, width: 20 } );
 
-                //Create the final Object3d to add to the scene
-                var splineObject = new THREE.Line( geometry, material );
-                
-                scene.add(splineObject);    
+	var closedSpline = new THREE.CatmullRomCurve3( riverPoints );
+	closedSpline.type = 'chordal';
+	closedSpline.closed = false;
+	var extrudeSettings = {
+		steps			: 500,
+		bevelEnabled	: false,
+		extrudePath		: closedSpline
+	};
+    var pts = [];
+	pts.push( new THREE.Vector2 (-5,7.5 ));
+	pts.push (new THREE.Vector2 (-4,7.5));
+	pts.push (new THREE.Vector2 (-5,0));
+	pts.push (new THREE.Vector2 (-4,0));
+
+    var shape = new THREE.Shape( pts );
+	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+				
+	var material = new THREE.MeshLambertMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
+	river = new THREE.Mesh( geometry, material );
+	scene.add( river );
+
 
 }//end setupSpace
 
@@ -130,9 +151,17 @@ function initWorkspace() {
 requestAnimationFrame(function animate() {
 
     renderer.render(scene, camera);
-
+    
+    //wait # update frames to check
+    if(counter > 50) {
+      gameDirector() ;
+      counter = 0;
+    }
+    counter += 1 ;
+    
+    
+    
     requestAnimationFrame(animate);
-
 
 }); //end request
 

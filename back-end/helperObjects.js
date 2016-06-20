@@ -1297,6 +1297,8 @@ function Results(board) {
 	this.watershedPercent = Array(4); //nitrate percent levels per watershed for maps
 	this.strategicWetlandCells = Array(4);
 	this.grossErosionSeverity = Array(4);
+	this.phosphorusRiskAssessment = Array(4);
+	this.nitrateContribution = Array(4);
 	
 	//score variables
 	this.gameWildlifePointsScore = [0,0,0,0];
@@ -1304,6 +1306,9 @@ function Results(board) {
 	this.carbonSequestrationScore = [0,0,0,0];
 	this.grossErosionScore = [0,0,0,0];
 	this.nitrateConcentrationScore = [0,0,0,0];
+	this.phosphorusLoadScore = [0,0,0,0] ;
+	this.sedimentDeliveryScore = [0,0,0,0] ;
+
 
 	//Function to sum the values of calculatedCarbonSequestration for each tile
 	this.sumCarbon = function() {
@@ -1724,7 +1729,7 @@ function Results(board) {
 			cattleYield: 0,
 			herbaceousPerennialBiomassYield: 0,
 			shortRotationWoodyBiomassYield: 0,
-			mixedFruitsAndVegetablesYield: 0
+			mixedFruitsAndVegetablesYield: 0,
 		};
 		tempYieldResults[1] = {
 			cornGrainYield: 0,
@@ -1735,7 +1740,8 @@ function Results(board) {
 			cattleYield: 0,
 			herbaceousPerennialBiomassYield: 0,
 			shortRotationWoodyBiomassYield: 0,
-			mixedFruitsAndVegetablesYield: 0
+			mixedFruitsAndVegetablesYield: 0,
+			cornGrainYieldScore: 0
 		};
 		tempYieldResults[2] = {
 			cornGrainYield: 0,
@@ -1819,7 +1825,7 @@ function Results(board) {
 				}
 
 			}
-			console.log(tempYieldResults[y]);
+			
 		}
 
 		this.yieldResults = tempYieldResults;
@@ -1974,9 +1980,25 @@ function Results(board) {
 			[],
 			[]
 		];
+		
+		var nitrateContribution = Array(4);
+		nitrateContribution = [
+			[],
+			[],
+			[],
+			[]
+		];
 
 		var grossErosionSeverity = Array(4);
 		grossErosionSeverity = [
+			[],
+			[],
+			[],
+			[]
+		];
+		
+		var phosphorusRisk = Array(4);
+		phosphorusRisk = [
 			[],
 			[],
 			[],
@@ -1988,19 +2010,24 @@ function Results(board) {
 			//For each watershed store nitrate percent contribution
 			for (var i = 0; i < this.subwatershedArea.length; i++) {
 
-				watershedPercent[y].push(this.subWatershedNitrate[y][i] * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y]);
+				watershedPercent[y].push(this.subWatershedNitrate[y][i]  / (this.subwatershedArea[i] / this.totalArea) * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y]);
 
 			}
 
 			//For each tile, store grossErosionRate and phosphorusRiskAssessment indices calculated by submethods
 			//TODO: Phosphorus Risk Assessment
 			for (var i = 0; i < board.map.length; i++) {
-				grossErosionSeverity[y].push(this.getGrossErosionSeverity(board.map[i].results[y].calculatedGrossErosionRate / board.map[i].area));
+				grossErosionSeverity[y].push(this.getGrossErosionSeverity(board.map[i].results[y].calculatedGrossErosionRate));
+				phosphorusRisk[y].push(this.getPhosphorusRiskAssessment(board.map[i].results[y].phosphorusDelivered / board.map[i].area));
+				nitrateContribution[y].push(watershedPercent[y][board.map[i].subwatershed]);
+				
 			}
 		}
 
 		this.watershedPercent = watershedPercent;
+		this.nitrateContribution = nitrateContribution;
 		this.grossErosionSeverity = grossErosionSeverity;
+		this.phosphorusRiskAssessment = phosphorusRisk;
 
 	}; //end this.mapIt
 
@@ -2012,6 +2039,16 @@ function Results(board) {
 		else if (erosion <= 2 && erosion > 0.5) return 2;
 		else if (erosion <= 0.5) return 1;
 	}; //end this.getGrossErosionSeverity
+	
+	//Helper method for mapIt function to calculate phosphorusRiskAssessment tile indicies
+	this.getPhosphorusRiskAssessment = function(pindex) {
+		if (pindex >= 0 && pindex <= 1) return 1;
+        else if (pindex > 1 && pindex <= 2) return 2;
+        else if (pindex > 2 && pindex <= 5) return 3;
+        else if (pindex > 5 && pindex <= 15) return 4;
+        else if (pindex > 15) return 5;
+        return "";
+	}
 
 
 	this.updateScores = function() {
@@ -2024,8 +2061,21 @@ function Results(board) {
 			this.grossErosionScore[y] =  100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
 		
 			this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin)) ;
-			
-			
+			this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin)) ;
+			this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin))	;
+	
+			this.yieldResults[y].cornGrainYieldScore = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax ;
+    		this.yieldResults[y].soybeanYieldScore = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax ;
+    		this.yieldResults[y].alfalfaHayYieldScore = 100 * this.yieldResults[y].alfalfaHayYield / board.maximums.alfalfaMax ;
+			this.yieldResults[y].grassHayYieldScore = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax ;
+    		this.yieldResults[y].woodYieldScore = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax ;
+    		this.yieldResults[y].cattleYieldScore = 100 * this.yieldResults[y].cattleYield / board.maximums.cattleMax ;
+    		this.yieldResults[y].herbaceousPerennialBiomassYieldScore = this.yieldResults[y].herbaceousPerennialBiomassYield / board.maximums.herbaceousPerennialBiomassMax ;
+    		this.yieldResults[y].shortRotationWoodyBiomassYieldScore = 100 * this.yieldResults[y].shortRotationWoodyBiomassYield / board.maximums.shortRotationWoodyBiomassMax ;
+    		this.yieldResults[y].mixedFruitsAndVegetablesYieldScore = 100 * this.yieldResults[y].mixedFruitsAndVegetablesYield / board.maximums.mixedFruitsAndVegetablesMax 
+	
+	
+	
 		}
 		
 		

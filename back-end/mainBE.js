@@ -14,7 +14,7 @@ function propogateBoard(board) {
   }
   
   //overwrite the precipitation values, used for testing
-  board.precipitation = [30.39, 34.34, 34.34, 28.18, 24.58, 45.1];
+  board.precipitation = [24.58, 30.39, 34.34, 28.18, 24.58, 45.1];
 
   //loop through initData array and assign values to Tiles
   for (var i = 0; i < initData.length; i++) {
