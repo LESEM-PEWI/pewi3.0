@@ -226,14 +226,6 @@ function Tile(tileArray, board) {
 			this.results[year].grasslandFlag = 0;
 		} //end elseif for grassland category
 
-		//wetland flag (not entirely necessary, see line for conservation forest flag)
-		if (this.landType[year] == LandUseType.wetland) {
-			this.results[year].wetlandFlag = 1;
-		}
-		else {
-			this.results[year].wetlandFlag = 0;
-		} //end elseif for wetland flag
-
 		//stream buffer flag
 		if (this.streamNetwork == 1) {
 			//if tile is a part of the stream network
@@ -1390,6 +1382,7 @@ function Results(board) {
 
 				subWatershedNitrate[board.map[i].subwatershed] += board.map[i].results[y].cropMultiplier;
 
+				
 				if ((board.map[i].landType[y] == LandUseType.wetland) && board.map[i].strategicWetland == 1) {
 
 					wetlandMultiplier[board.map[i].subwatershed] = 0.48;
@@ -1518,15 +1511,15 @@ function Results(board) {
 					tempAreaGrassland += board.map[i].area;
 				}
 
-				if (board.map[i].results[y].wetlandFlag) {
+				if (board.map[i].landType[y] == LandUseType.wetland) {
 					tempAreaWetland += board.map[i].area;
 				}
 
 				if (board.map[i].results[y].streamBufferFlag) {
 					tempCellsStreamBuffer += 1;
 				}
-
-				if (board.map[i].results[y].wetlandFlag && (Number(board.map[i].strategicWetland) == 1)) {
+				
+				if ((board.map[i].landType[y] == LandUseType.wetland) && board.map[i].strategicWetland == 1) {
 					tempCellsWetlandOnStrategic += 1;
 				}
 

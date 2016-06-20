@@ -1184,3 +1184,17 @@ function displayResults() {
     
     
 }
+
+function showCredits() {
+    
+    document.getElementById('creditsFrame').style.display = "block" ;
+    document.getElementById('closeCredits').style.display = "block" ;
+    
+}
+
+function closeCreditFrame() {
+
+    document.getElementById('creditsFrame').style.display = "none" ;
+    document.getElementById('closeCredits').style.display = "none" ;
+    
+}
