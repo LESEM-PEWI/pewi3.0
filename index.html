@@ -173,17 +173,22 @@
 
 <div id="resultsButton" class="resultsButtonRolled" onmouseover="roll(2); " onmouseout="roll(2);" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
 
-<iframe id="resultsFrame" class="resultsFrameRolled" src="./results.html"></iframe>
 
-<div id="creditsFrame">
+
+<iframe id="resultsFrame" class="resultsFrameRolled" src="./results.html"></iframe>
+<iframe id="creditsFrame" style="display:none;" src="./credits.html"></iframe>
+<img id="closeCredits" style="display:none;" src="./imgs/close_black.png" onclick="closeCreditFrame() ;">
+
+<div id="upperFrame">
 <div class="image-upload">
     <label for="file-upload">
         <img id="uploadButton" class="upperButton" width="40px" src="./imgs/upload.png" onclick="uploadClicked();"/>
     </label>
     <input id="file-upload" type="file"/>
 </div>
-<img id="downloadButton" class="upperButton" width="40px" src="./imgs/download.png" onclick="downloadClicked();">  
-<img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png">
+<img id="logoBase" src="./imgs/inGameLogo.png">  
+<img id="downloadButton" class="upperButton" width="40px" src="./imgs/download.png" id="download" onclick="downloadClicked();">  
+<img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png" onclick="showCredits();">
 </div>
 
 <div id="year0Button" class="year0Button" onclick="transitionToYear(0); switchYearTab(0);"></div>

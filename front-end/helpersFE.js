@@ -1172,6 +1172,8 @@ function displayResults() {
         string2 += "</th>" ;
     }
     
+    string2 += "<th> </th>";
+    
     string2 += "</tr>" ;
     
     string2 += "<tr><td>Precipitation</td>"
@@ -1221,5 +1223,19 @@ function displayResults() {
     
     document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = string2;
     
+    
+}
+
+function showCredits() {
+    
+    document.getElementById('creditsFrame').style.display = "block" ;
+    document.getElementById('closeCredits').style.display = "block" ;
+    
+}
+
+function closeCreditFrame() {
+
+    document.getElementById('creditsFrame').style.display = "none" ;
+    document.getElementById('closeCredits').style.display = "none" ;
     
 }

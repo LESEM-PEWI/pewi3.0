@@ -886,9 +886,16 @@ td{
 }
 
 #uploadButton {
-    position: absolute;
+
+    position: absolute ;
     right: 82px;
-    top: 5px;
+    top:5px;
+}
+
+#logoBase {
+    position: absolute ;
+    right: 122px;
+    top:5px;
 }
 
 .upperButton {
@@ -909,4 +916,34 @@ td{
 .image-upload > input
 {
     display: none;
+}
+
+#creditsFrame{
+    position:absolute;
+    width:50%;
+    height:60%;
+    right:25%;
+    top: 20%;
+    background-color: white;
+    border-radius:10px;
+}
+
+#closeCredits{
+    position:absolute;
+    width:40px;
+    height:40px;
+    right: 26%;
+    top: 21%;
+     -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+    
+}
+
+#closeCredits:hover{
+    width:35px;
+    height:35px;
+    margin-right:2px;
+    margin-top:2px;
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
 }
