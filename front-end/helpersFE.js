@@ -254,7 +254,6 @@ function onDocumentDoubleClick( event ) {
         
                 if(boardData[currentBoard].map[i].landType[currentYear] != 0){
                     scene.remove(tiles[i]);
-                    tiles[i] =
                     boardData[currentBoard].map[i].landType[currentYear] = painter;
                     boardData[currentBoard].map[i].update();
                     addTile(boardData[currentBoard].map[i]);
