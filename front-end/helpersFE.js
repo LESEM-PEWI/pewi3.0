@@ -719,7 +719,7 @@ function contaminatedRiver() {
     
     //this is buggy -- still a work-in progress. Maybe the status of the river should be stored in the board for each year...
     
-    if(Totals.phosphorusLoad[currentYear] > 1.6){
+    if(Totals.phosphorusLoad[currentYear] > 1.5){
         river.material.color.setHex("0x663300");
     } else {
         river.material.color.setHex("0x40a4df")
