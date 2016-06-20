@@ -330,6 +330,7 @@ function resultsStart() {
 
     //functions that update results and display them appropriately
     calculateResults();
+    displayResults();
     animateResults();
 
 }
@@ -538,7 +539,7 @@ function switchYearTab(value){
 
 function displayLevels(type){
     
-    Totals = new Results(boardData[currentBoard]);
+    //Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
     
     tilesCopy = [];
@@ -714,11 +715,11 @@ function getHighlightColor(type, ID){
     
 };
 
-function contaminatedRiver(results) {
+function contaminatedRiver() {
     
     //this is buggy -- still a work-in progress. Maybe the status of the river should be stored in the board for each year...
     
-    if(results.phosphorusLoad[currentYear] > 1.5){
+    if(Totals.phosphorusLoad[currentYear] > 1.5){
         river.material.color.setHex("0x663300");
     } else {
         river.material.color.setHex("0x40a4df")
@@ -736,13 +737,16 @@ function animateResults() {
 
 function calculateResults() {
     
-    toMetricFactorArea = 2.471 ;
-    
-    Totals = new Results(boardData[currentBoard]);
+    //Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
     
-    contaminatedRiver(Totals);
+    //contaminatedRiver(Totals);
     
+}
+
+function displayResults() {
+    
+    toMetricFactorArea = 2.471 ;
     var upToYear = boardData[currentBoard].calculatedToYear ;
     
     //document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = "WORKS";
@@ -1102,5 +1106,6 @@ function calculateResults() {
     
     
     document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = string2;
+    
     
 }

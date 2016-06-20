@@ -1825,7 +1825,7 @@ function Results(board) {
 				}
 
 			}
-			console.log(tempYieldResults[y]);
+			
 		}
 
 		this.yieldResults = tempYieldResults;

@@ -1,5 +1,6 @@
 //global vars
-var camera, scene, renderer, raycaster, mouse, hoveredOver ;
+var camera, scene, raycaster, mouse, hoveredOver ;
+var renderer = new THREE.WebGLRenderer();
 var controls ;
 var tiles = [];
 var river;
@@ -11,12 +12,14 @@ var currentBoard = -1 ;
 var currentYear = 1 ;
 var modalUp = false ;
 var isShiftDown = false;
+var Totals ; //global current calculated results, NOTE, should be reassigned every time currentBoard is changed
+var counter = 0 ;
 
 
 function setup() {
     
-    //renderer
-    renderer = new THREE.WebGLRenderer();
+    
+    //scene
     scene = new THREE.Scene();
     
     //camera
@@ -29,11 +32,6 @@ function setup() {
     var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1 );
     hemiLight.position.set( 0, 30, 100);
     scene.add( hemiLight );
-
-	 //set up camera
-    camera.position.y = 320;
-    camera.position.z = 18;
-    camera.rotation.x = -45 * Math.PI / 180;
     
     var spotLight = new THREE.SpotLight( 0xffffff, 0.1 );
     
@@ -51,6 +49,11 @@ function setup() {
 	spotLight.shadow.camera.far = 500;
 	lightHelper = new THREE.SpotLightHelper( spotLight );
 
+     //set up camera
+    camera.position.y = 320;
+    camera.position.z = 18;
+    camera.rotation.x = -45 * Math.PI / 180;
+    
     //set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
@@ -89,6 +92,9 @@ function setupSpace() {
     currentBoard++ ; //currentBoard now = 0
     displayBoard() ;
     boardData[currentBoard].updateBoard() ;
+    
+    //update Results to point to correct board since currentBoard is updated
+    Totals = new Results(boardData[currentBoard]);
     
 
 
@@ -145,9 +151,17 @@ function initWorkspace() {
 requestAnimationFrame(function animate() {
 
     renderer.render(scene, camera);
-
+    
+    //wait # update frames to check
+    if(counter > 50) {
+      gameDirector() ;
+      counter = 0;
+    }
+    counter += 1 ;
+    
+    
+    
     requestAnimationFrame(animate);
-
 
 }); //end request
 
