@@ -13,7 +13,7 @@ function gameDirector() {
         
     }
     
-    //if(level==1)
+    //if(level==1) ...
     
     //all features
     contaminatedRiver();
