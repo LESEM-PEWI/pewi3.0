@@ -456,7 +456,7 @@ function updatePrecip(year) {
         boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year3Precip").value)];
     }
     
-    console.log(boardData[currentBoard].precipitation);
+    //console.log(boardData[currentBoard].precipitation);
     
     boardData[currentBoard].updateBoard();
     
@@ -562,7 +562,7 @@ function getHighlightColor(type, ID){
         
         var erosionSeverity = Totals.grossErosionSeverity[currentYear][ID];
         
-        console.log(erosionSeverity);
+        //console.log(erosionSeverity);
         
         switch(erosionSeverity){
             case 1:
@@ -720,7 +720,7 @@ function contaminatedRiver() {
     
     //this is buggy -- still a work-in progress. Maybe the status of the river should be stored in the board for each year...
     
-    if(Totals.phosphorusLoad[currentYear] > 1.5){
+    if(Totals.phosphorusLoad[currentYear] > 1.7){
         river.material.color.setHex("0x663300");
     } else {
         river.material.color.setHex("0x40a4df")
@@ -809,7 +809,7 @@ function uploadClicked() {
  
     $('#file-upload').bind('propertychange change', function (e) {
         files = e.target.files;
-        console.log(files);
+        //console.log(files);
     
         if(files[0].name && !files[0].name.match(/\.csv/)){
             alert("Incorrect File Type!");
