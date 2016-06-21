@@ -947,3 +947,12 @@ td{
     -webkit-transition-duration: 0.1s; /* Safari */
     transition-duration: 0.1s;
 }
+
+#uploadDownloadFrame{
+    position:absolute;
+    width:100% ;
+    height:200px;
+  
+    top: 20%;
+    background-color: black;
+}
