@@ -801,11 +801,12 @@ function downloadClicked() {
 
         document.body.removeChild(link);
         
+        document.getElementById('uploadDownloadFrame').style.display = "none" ; 
 }
 
 function uploadClicked() {
  
-    var files;
+      var files;
  
     $('#file-upload').bind('propertychange change', function (e) {
         files = e.target.files;
@@ -838,6 +839,8 @@ function uploadClicked() {
             
         }
     });
+    
+     document.getElementById('uploadDownloadFrame').style.display = "none" ; 
     
 }
 
@@ -1242,11 +1245,6 @@ function closeCreditFrame() {
 
 function showUploadDownload() {
     
-    if(document.getElementById('uploadDownloadFrame').style.display == "none"){
-        document.getElementById('uploadDownloadFrame').style.display = "block" ;    
-    }
-    else{
-        document.getElementById('uploadDownloadFrame').style.display = "none" ; 
-    }
-    
+    document.getElementById('uploadDownloadFrame').style.display = "block" ;    
+
 }

@@ -85,8 +85,6 @@ td {
 }       
     
     
-
-    
 </style>
 </head>    
 <body>
@@ -96,7 +94,7 @@ td {
 <table>
 <tr>
 <td style="color:white; padding-top:20px"> <h1>Download</h1>    </td>    
-<td>   <img style="padding-bottom:10px;" id="downloadButton" class="upperButton" height="40px" src="./imgs/download.png" id="download" onclick="downloadClicked();">          </td>    
+<td>   <img style="padding-bottom:10px;" id="downloadButton" class="upperButton" height="40px" src="./imgs/download.png" id="download" onclick="parent.downloadClicked();">          </td>    
 </tr>    
     
 <tr>
@@ -104,7 +102,7 @@ td {
 <td>
     <div class="image-upload">
     <label for="file-upload">
-        <img style="padding-bottom:10px;" id="uploadButton" class="lowerButton" height="40px" src="./imgs/upload.png" onclick="uploadClicked(); "/>
+        <img style="padding-bottom:10px;" id="uploadButton" class="lowerButton" height="40px" src="./imgs/upload.png" onclick="parent.uploadClicked(); "/>
     </label>
     <input id="file-upload" type="file"/>
 </div>
