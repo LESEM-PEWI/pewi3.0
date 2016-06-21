@@ -747,33 +747,46 @@ function downloadClicked() {
 
         document.body.removeChild(link);
         
-        document.getElementById('uploadDownloadFrame').style.display = "none" ; 
-} //end downloadClicked
+        closeUploadDownloadFrame() ;
+}// end downloadClicked
 
-//uploadClicked allows the user to upload a .csv file to create a new map
-function uploadClicked() {
- 
-      var files;
- 
-    $('#file-upload').bind('propertychange change', function (e) {
-        files = e.target.files;
-        //console.log(files);
-    
-        if(files[0].name && !files[0].name.match(/\.csv/)){
-            alert("Incorrect File Type!");
-        }
+//uploadClicked enables the user to upload a .csv of board data
+function uploadClicked(e) {
 
-        var reader = new FileReader();
-        
-        reader.readAsText(files[0]);
-        
-        reader.onload = function(e){
-            
-            var boardFromFile = new GameBoard() ;  
-            parseInitial(reader.result);
-            propogateBoard(boardFromFile);
-            boardData.push(boardFromFile);
+    var files;
 
+
+    files = e.target.files;
+
+    if (files[0].name && !files[0].name.match(/\.csv/)) {
+        alert("Incorrect File Type!");
+    }
+
+    var reader = new FileReader();
+
+    reader.readAsText(files[0]);
+
+    reader.onload = function(e) {
+
+        var boardFromFile = new GameBoard();
+        parseInitial(reader.result);
+        propogateBoard(boardFromFile);
+        boardData.push(boardFromFile);
+
+        currentBoard++;
+        transitionToYear(1);
+        boardData[currentBoard].updateBoard();
+
+        //update Results to point to correct board since currentBoard is updated
+        Totals = new Results(boardData[currentBoard]);
+
+        //clear initData
+        initData = [];
+
+    }
+
+    //console.log(files);
+    closeUploadDownloadFrame();
             currentBoard++ ;
             transitionToYear(1);
             boardData[currentBoard].updateBoard() ;
@@ -783,13 +796,11 @@ function uploadClicked() {
             
             //clear initData
             initData = [] ;
-            
-        }
-    });
     
      document.getElementById('uploadDownloadFrame').style.display = "none" ; 
     
 } //end uploadClicked
+
 
 //animateResults
 function animateResults() {
@@ -1196,7 +1207,16 @@ function closeCreditFrame() {
 
 //showUploadDownload opens the credits iframe
 function showUploadDownload() {
-    
+    document.getElementById('closeUploadDownload').style.display = "block" ; 
     document.getElementById('uploadDownloadFrame').style.display = "block" ;    
 
+
 } //end showUploadDownload
+
+//closeUploadDownloadFrame closes the credits iframe
+function closeUploadDownloadFrame() {
+    document.getElementById('closeUploadDownload').style.display = "none" ; 
+    document.getElementById('uploadDownloadFrame').style.display = "none" ;    
+
+} //end closeUploadDownloadFrame
+

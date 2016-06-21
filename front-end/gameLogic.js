@@ -1,7 +1,6 @@
 //global
 var level = 0; //base sandbox level = 0
 
-
 //game director
 function gameDirector() {
     

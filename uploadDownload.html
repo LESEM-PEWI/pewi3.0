@@ -1,21 +1,11 @@
 <html>
 <head>
-<style>
+<script src="./lib/jquery-1.12.4.min.js"></script>
 
+<style>
 .image-upload > input
 {
     display: none;
-}
-    
-#downloadButton {
-   
-
-}
-
-#uploadButton {
-   
-    
-
 }
 
 h1 {
@@ -43,15 +33,16 @@ td {
     background: black;
     position:fixed;
     margin:5px;
+    margin-top:0px;
+    padding-left:0px;
     margin-left:-125px;
     width: 250px;
     left:50%;
 }
  
 .upperButton {
-
-    -webkit-transition-duration: 0.1s; /* Safari */
-    transition-duration: 0.1s;
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-duration: 0.2s;
     
     
 }
@@ -60,16 +51,16 @@ td {
     height:38px;
     margin-left:1px;
     border-bottom: 2px groove white;
-    -webkit-transition-duration: 0.1s; /* Safari */
-    transition-duration: 0.1s;
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-duration: 0.2s;
     
     
 }    
     
 .lowerButton {
 
-    -webkit-transition-duration: 0.1s; /* Safari */
-    transition-duration: 0.1s;
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-duration: 0.2s;
     
     
 }
@@ -78,14 +69,26 @@ td {
     height:38px;
     margin-left:1px;
     border-top: 2px groove white;
-    -webkit-transition-duration: 0.1s; /* Safari */
-    transition-duration: 0.1s;
-    
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-duration: 0.2s;
     
 }       
-    
-    
+
 </style>
+
+<script>
+    
+function bindListener() {
+    
+ $('#file-upload').bind('propertychange change', function (e) {
+        parent.uploadClicked(e) ;
+    });
+    
+    
+};    
+    
+</script>
+
 </head>    
 <body>
 
@@ -93,8 +96,8 @@ td {
 
 <table>
 <tr>
-<td style="color:white; padding-top:20px"> <h1>Download</h1>    </td>    
-<td>   <img style="padding-bottom:10px;" id="downloadButton" class="upperButton" height="40px" src="./imgs/download.png" id="download" onclick="parent.downloadClicked();">          </td>    
+<td style="color:white;"> <h1 style="margin-top:20px; ">Download</h1>    </td>    
+<td>   <img id="downloadButton" class="upperButton" height="40px" src="./imgs/download.png" id="download" onclick="parent.downloadClicked();">          </td>    
 </tr>    
     
 <tr>
@@ -102,10 +105,11 @@ td {
 <td>
     <div class="image-upload">
     <label for="file-upload">
-        <img style="padding-bottom:10px;" id="uploadButton" class="lowerButton" height="40px" src="./imgs/upload.png" onclick="parent.uploadClicked(); "/>
+        <img style="padding-bottom:10px;" id="uploadButton" class="lowerButton" height="40px" src="./imgs/upload.png" onclick="bindListener(); "/>
     </label>
-    <input id="file-upload" type="file"/>
+     <input id="file-upload" type="file"/>
 </div>
+
      </td>
 
 </tr>
