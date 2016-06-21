@@ -1242,6 +1242,11 @@ function closeCreditFrame() {
 
 function showUploadDownload() {
     
-    document.getElementById('uploadDownloadFrame').style.display = "block" ;
+    if(document.getElementById('uploadDownloadFrame').style.display == "none"){
+        document.getElementById('uploadDownloadFrame').style.display = "block" ;    
+    }
+    else{
+        document.getElementById('uploadDownloadFrame').style.display = "none" ; 
+    }
     
 }
