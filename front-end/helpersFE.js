@@ -801,47 +801,46 @@ function downloadClicked() {
 
         document.body.removeChild(link);
         
-        document.getElementById('uploadDownloadFrame').style.display = "none" ; 
+        closeUploadDownloadFrame() ;
 }
 
-function uploadClicked() {
- 
-      var files;
- 
-    $('#file-upload').bind('propertychange change', function (e) {
-        files = e.target.files;
-        //console.log(files);
-    
-        if(files[0].name && !files[0].name.match(/\.csv/)){
-            alert("Incorrect File Type!");
-        }
+function uploadClicked(e) {
 
-        var reader = new FileReader();
-        
-        reader.readAsText(files[0]);
-        
-        reader.onload = function(e){
-            
-            var boardFromFile = new GameBoard() ;  
-            parseInitial(reader.result);
-            propogateBoard(boardFromFile);
-            boardData.push(boardFromFile);
+    var files;
 
-            currentBoard++ ;
-            transitionToYear(1);
-            boardData[currentBoard].updateBoard() ;
-    
-            //update Results to point to correct board since currentBoard is updated
-            Totals = new Results(boardData[currentBoard]);
-            
-            //clear initData
-            initData = [] ;
-            
-        }
-    });
-    
-     document.getElementById('uploadDownloadFrame').style.display = "none" ; 
-    
+
+    files = e.target.files;
+
+    if (files[0].name && !files[0].name.match(/\.csv/)) {
+        alert("Incorrect File Type!");
+    }
+
+    var reader = new FileReader();
+
+    reader.readAsText(files[0]);
+
+    reader.onload = function(e) {
+
+        var boardFromFile = new GameBoard();
+        parseInitial(reader.result);
+        propogateBoard(boardFromFile);
+        boardData.push(boardFromFile);
+
+        currentBoard++;
+        transitionToYear(1);
+        boardData[currentBoard].updateBoard();
+
+        //update Results to point to correct board since currentBoard is updated
+        Totals = new Results(boardData[currentBoard]);
+
+        //clear initData
+        initData = [];
+
+    }
+
+    //console.log(files);
+    closeUploadDownloadFrame();
+
 }
 
 
@@ -1244,7 +1243,13 @@ function closeCreditFrame() {
 }
 
 function showUploadDownload() {
-    
+    document.getElementById('closeUploadDownload').style.display = "block" ; 
     document.getElementById('uploadDownloadFrame').style.display = "block" ;    
+
+}
+
+function closeUploadDownloadFrame() {
+    document.getElementById('closeUploadDownload').style.display = "none" ; 
+    document.getElementById('uploadDownloadFrame').style.display = "none" ;    
 
 }
