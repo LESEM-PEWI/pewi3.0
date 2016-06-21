@@ -1,0 +1,120 @@
+<html>
+<head>
+<style>
+
+.image-upload > input
+{
+    display: none;
+}
+    
+#downloadButton {
+   
+
+}
+
+#uploadButton {
+   
+    
+
+}
+
+h1 {
+    vertical-align: middle;
+    color:white;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    height:100%;
+}
+
+td {
+    text-align: left;
+    height:40px;
+    padding:10px;
+   
+}
+
+
+
+.holder {
+    background: black;
+    position:fixed;
+    margin:5px;
+    margin-left:-125px;
+    width: 250px;
+    left:50%;
+}
+ 
+.upperButton {
+
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+    
+    
+}
+
+.upperButton:hover {
+    height:38px;
+    margin-left:1px;
+    border-bottom: 2px groove white;
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+    
+    
+}    
+    
+.lowerButton {
+
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+    
+    
+}
+
+.lowerButton:hover {
+    height:38px;
+    margin-left:1px;
+    border-top: 2px groove white;
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+    
+    
+}       
+    
+    
+</style>
+</head>    
+<body>
+
+<div class="holder">
+
+<table>
+<tr>
+<td style="color:white; padding-top:20px"> <h1>Download</h1>    </td>    
+<td>   <img style="padding-bottom:10px;" id="downloadButton" class="upperButton" height="40px" src="./imgs/download.png" id="download" onclick="parent.downloadClicked();">          </td>    
+</tr>    
+    
+<tr>
+<td style="color:white; padding-top:20px "> <h1>Upload</h1>    </td>            
+<td>
+    <div class="image-upload">
+    <label for="file-upload">
+        <img style="padding-bottom:10px;" id="uploadButton" class="lowerButton" height="40px" src="./imgs/upload.png" onclick="parent.uploadClicked(); "/>
+    </label>
+    <input id="file-upload" type="file"/>
+</div>
+     </td>
+
+</tr>
+    
+    
+</table>
+
+</div>
+
+</body>    
+    
+</html>

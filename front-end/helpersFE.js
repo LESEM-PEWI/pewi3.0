@@ -1,24 +1,21 @@
 var currentRow = -1;
+var toolbarRolled = true ;
+/* global camera, scene, boardData,
+          renderer, currentBoard, THREE, 
+          currentYear, textureArray, riverPoints,
+          tiles, mouse, raycaster,
+          isShiftDown, modalUp, precip, 
+          painter, Totals, river,
+          Results, initData, hoveredOver*/
 
+//onResize dynamically adjusts to window size changes
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-  }
+} //end onResize
 
-function updateHUD() {
-    var text ;
-    text = "x: " + Math.floor(camera.position.x) ;
-    text += "  y: " + Math.floor(camera.position.y) ;
-    text += "  z: " + Math.floor(camera.position.z)  ;
-    text += "<br>";
-    text += "  rx: " + Math.floor(camera.rotation.x) ;
-    text += "  ry: " + Math.floor(camera.rotation.y) ;
-    text += "  rz: " + Math.floor(camera.rotation.z) ;
-    
-    document.getElementById("pos").innerHTML = text ;
-}
-
+//displayBoard initializes a board with graphics using addTile()
 function displayBoard() {
     
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
@@ -27,8 +24,9 @@ function displayBoard() {
     
     }
     
-};
+} //end displayBoard
 
+//addTile constructs the geometry of a tile and adds it to the scene
 function addTile(tile){
     
         var tilesWide = boardData[currentBoard].width;
@@ -39,7 +37,8 @@ function addTile(tile){
         
         //var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
         
-        var tileGeometry = new THREE.Geometry(); 
+        var tileGeometry = new THREE.Geometry();
+        var tileMaterial;
         
         var v1; var v2; var v3; var v4;
         
@@ -63,11 +62,6 @@ function addTile(tile){
         tileGeometry.vertices.push(v2);
         tileGeometry.vertices.push(v3);
         tileGeometry.vertices.push(v4);
-        
-
-        //tileGeometry.faces.push( new THREE.Face3( 2, 1, 0 ) );
-        //tileGeometry.faces.push( new THREE.Face3( 3, 2, 0 ) );
-        
         
         var face = new THREE.Face3(2,1,0);
         face.normal.set(0,1,0); // normal
@@ -107,8 +101,9 @@ function addTile(tile){
         
         scene.add(tile.graphics);
     
-};
+} //end addTile
 
+//transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
     
     currentYear = year;
@@ -125,67 +120,9 @@ function transitionToYear(year) {
         
     }
     
-}
+} //end transitionToYear
 
-
-//DEPRECATED--------------------------------------------------------------
-//remove in future iteration
-function addBoard(board) {
-    
-    var tilesHigh = board.height;
-    var tilesWide = board.width;
-    
-   // console.log(board.height + " " + board.width);
-    
-    var tileHeight = 12;
-    var tileWidth = 18;
-
-    var tileIndex = 0 ;
-
-    var landUseArray = [] ;
-    for(var i = 0; i < board.map.length ; i++){
-        landUseArray.push(board.map[i].landType[1]) ;
-    }
-
-    for (var j = 0; j < tilesHigh; j++) {
-
-        for (var i = 0; i < tilesWide; i++) {
-
-            //var r = Math.floor((Math.random() * 14));
-
-            var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
-         
-            var tileMaterial;
-         
-        if(landUseArray[tileIndex] == 0){
-            tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
-        } else {    
-            tileMaterial = new THREE.MeshLambertMaterial({
-                map: textureArray[landUseArray[tileIndex]]
-            });
-        }
-
-            var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
-            newTile.position.x = i * tileWidth - (tileWidth * tilesWide)/2;
-            newTile.position.y = 0;
-            newTile.position.z = j * tileHeight - (tileHeight * tilesHigh)/2;
-            
-            //Charlie
-            newTile.data = board.map[i];
-
-            tiles.push(newTile);
-
-            scene.add(newTile);
-            
-            tileIndex ++ ;
-
-        }
-
-    }
-    
-}//end addBoard()
-//END DEPRECATED----------------------------------------
-
+//onDocumentMouseMove follows the cursor and highlights corresponding tiles
 function onDocumentMouseMove( event ) {
     
 	event.preventDefault();
@@ -212,8 +149,10 @@ function onDocumentMouseMove( event ) {
 	
 	renderer.render(scene, camera);
 	
-}; //onDocumentMouseMove
+} //end onDocumentMouseMove
 
+//onDocumentDoubleClick changes landType to the painted (selected) landType on double-click
+//and will change map to a monoculture if shift is held down
 function onDocumentDoubleClick( event ) {
     
 	event.preventDefault();
@@ -266,22 +205,25 @@ function onDocumentDoubleClick( event ) {
 	renderer.render(scene, camera);
 }//end onDocumentMouseDown(event)
 
+//onDocumentKeyDown listens for the shift key held down
 function onDocumentKeyDown( event ){
     
     switch( event.keyCode ){
         case 16: isShiftDown = true; break;
     }
 
-}
+} //end onDocumentKeyDown
 
+//onDocumentKeyUp listens for the shift key released
 function onDocumentKeyUp( event ){
     
     switch( event.keyCode ){
         case 16: isShiftDown = false; break;
     }
 
-}
+} //end onDocumentKeyUp
 
+//paintChange changes the highlighted color of the selected painter and updates painter
 function paintChange(value) {
     
     //change current painter to regular
@@ -293,8 +235,9 @@ function paintChange(value) {
     document.getElementById(string).className = "landSelectedIcon" ;
     painter = value ;  
   
-}
+} //end paintChange
 
+//paintYear changes the year that is selected and highlighted
 function paintYear(value) {
     
     var string = onYear + "Image";
@@ -304,14 +247,10 @@ function paintYear(value) {
     document.getElementById(string).className = "yearSelectedImage";
     onYear = value;
     
-}
+} //end paintYear
 
-
-var toolbarRolled = true ;
-
+//resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
-   
-
     
     //setup Screen Appropriately
     modalUp=true;
@@ -334,8 +273,9 @@ function resultsStart() {
     displayResults();
     animateResults();
 
-}
+} //end resultsStart
 
+//resultsEnd hides the results and returns the menus to the screens
 function resultsEnd() {
     //reset functionality
     document.getElementById("resultsFrame").className = "resultsFrameRolled" ;
@@ -348,9 +288,9 @@ function resultsEnd() {
     document.getElementById("resultsButton").onclick = function() { resultsStart();} ;
     modalUp = false;
     
-}
+} //end resultsEnd
 
-
+//roll controls the display of the toolbars on the left
 function roll(value) {
     
     if(value==1){
@@ -395,8 +335,9 @@ function roll(value) {
     }//right results button
 
     
-}
+} //roll
 
+//showLevelDetails shows the legend for each of the highlight map functions
 function showLevelDetails(value) {
     
     if(value==1){
@@ -439,8 +380,9 @@ function showLevelDetails(value) {
         document.getElementById("drainageClassDetailsList").className = "drainageClassDetailsListRolled";
     }
     
-}
+} //showLevelDetails
 
+//updatePrecip updates the currentBoard with the precipitation values selected in the drop down boxes
 function updatePrecip(year) {
     
     if(year == 0){
@@ -456,12 +398,11 @@ function updatePrecip(year) {
         boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year3Precip").value)];
     }
     
-    console.log(boardData[currentBoard].precipitation);
-    
     boardData[currentBoard].updateBoard();
     
-}
+} //updatePrecip
 
+//switchConsoleTab updates the currently selected toolbar on the left
 function switchConsoleTab(value){
 
     if(value==1){
@@ -508,8 +449,9 @@ function switchConsoleTab(value){
         document.getElementById('featuresTab').style.display = "block";
     }
     
-}
+} //end switchConsoleTab
 
+//switchYearTab changes the highlighted year
 function switchYearTab(value){
     
     if(value==0){
@@ -536,8 +478,9 @@ function switchYearTab(value){
         document.getElementById('year3Image').className = "yearSelected" ;
     }
     
-}
+} //end switchYearTab
 
+//displayLevels highlight each tile using getHighlightColor method
 function displayLevels(type){
     
     //Totals = new Results(boardData[currentBoard]);
@@ -554,15 +497,16 @@ function displayLevels(type){
     
     renderer.render(scene, camera);
     
-};
+} //end displayLevels
 
+//getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
 function getHighlightColor(type, ID){
     
     if(type == "erosion"){
         
         var erosionSeverity = Totals.grossErosionSeverity[currentYear][ID];
         
-        console.log(erosionSeverity);
+        //console.log(erosionSeverity);
         
         switch(erosionSeverity){
             case 1:
@@ -689,7 +633,7 @@ function getHighlightColor(type, ID){
         }
     }
     
-    if(type = "drainage"){
+    if(type == "drainage"){
         
         var drainage = Number(boardData[currentBoard].map[ID].drainageClass);
         
@@ -712,22 +656,23 @@ function getHighlightColor(type, ID){
                 return "0xbc892f";
         }
     }
-    
-    
-};
 
+} //end getHighlightColor
+
+//contaminatedRiver changes the color of the river dependent on current phosphorus level
 function contaminatedRiver() {
     
     //this is buggy -- still a work-in progress. Maybe the status of the river should be stored in the board for each year...
     
-    if(Totals.phosphorusLoad[currentYear] > 1.5){
+    if(Totals.phosphorusLoad[currentYear] > 1.7){
         river.material.color.setHex("0x663300");
     } else {
         river.material.color.setHex("0x40a4df")
     }
     
-}
+} //end contaminatedRiver
 
+//writeFileToDownloadString creates a string in csv format that describes the current board
 function writeFileToDownloadString(){
     
   var string = "";
@@ -777,8 +722,9 @@ function writeFileToDownloadString(){
   }
 
   return string;
-}
+} //end writeFileToDownloadString
 
+//downloadClicked enables the user to download the currentBoard as a csv file
 function downloadClicked() {
 
         var data = writeFileToDownloadString();
@@ -801,15 +747,17 @@ function downloadClicked() {
 
         document.body.removeChild(link);
         
-}
+        document.getElementById('uploadDownloadFrame').style.display = "none" ; 
+} //end downloadClicked
 
+//uploadClicked allows the user to upload a .csv file to create a new map
 function uploadClicked() {
  
-    var files;
+      var files;
  
     $('#file-upload').bind('propertychange change', function (e) {
         files = e.target.files;
-        console.log(files);
+        //console.log(files);
     
         if(files[0].name && !files[0].name.match(/\.csv/)){
             alert("Incorrect File Type!");
@@ -839,16 +787,19 @@ function uploadClicked() {
         }
     });
     
-}
+     document.getElementById('uploadDownloadFrame').style.display = "none" ; 
+    
+} //end uploadClicked
 
-
+//animateResults
 function animateResults() {
     
  //todo, increased functionality
   document.getElementById("resultsFrame").className = "resultsFrame" ;
    
-}
+} //end animateResults
 
+//calculateResults triggers the results calculations by updating Totals
 function calculateResults() {
     
     //Totals = new Results(boardData[currentBoard]);
@@ -856,8 +807,9 @@ function calculateResults() {
     
     //contaminatedRiver(Totals);
     
-}
+} //end calculateResults
 
+//displayResults writes the html for the results iframe with updates results from Totals
 function displayResults() {
     
     toMetricFactorArea = 2.471 ;
@@ -912,62 +864,62 @@ function displayResults() {
         
         switch(l){
             case 0:
-                string2 += "<tr class='tableHeading'><td><b>Annual Grain</b></td></tr>"
+                string2 += "<tr class='tableHeading'><td><b>Annual Grain</b></td></tr>";
                 break;
             case 2:
-                string2 += "<tr class='tableHeading'><td><b>Annual Legume</b></td></tr>"
-                break;x
+                string2 += "<tr class='tableHeading'><td><b>Annual Legume</b></td></tr>";
+                break;
             case 4:
-                string2 += "<tr class='tableHeading'><td><b>Mixed Fruits and Vegetables</b></td></tr>"
+                string2 += "<tr class='tableHeading'><td><b>Mixed Fruits and Vegetables</b></td></tr>";
                 break;
             case 5:
-                string2 += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>"
+                string2 += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>";
                 break;
            case 7:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Herbaceous (non-pasture)</b></td></tr>"
+                string2 += "<tr class='tableHeading'><td><b>Perrenial Herbaceous (non-pasture)</b></td></tr>";
                 break;
             case 11:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Legume</b></td></tr>"
+                string2 += "<tr class='tableHeading'><td><b>Perrenial Legume</b></td></tr>";
                 break;
             case 12:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Wooded</b></td></tr>"
+                string2 += "<tr class='tableHeading'><td><b>Perrenial Wooded</b></td></tr>";
                 break;
                         
         }//end switch
         
-        string2 += "<tr>"
+        string2 += "<tr>";
         
-        string2 += "<td>" + nameArray[l] + "</td>"
+        string2 += "<td>" + nameArray[l] + "</td>";
         
         for(var y=1; y<=upToYear;y++){
-            string2+= "<td>"
+            string2+= "<td>";
             
             var tempString = testArray[l] + "LandUse";
             string2 += ( Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10  )  / 10 ) + "<br>" ;
             
-            string2+= "</td>"
+            string2+= "</td>";
         }//for each year
         
         string2 += "<td>percent</td>" ;
         
         for(var y=1; y<=upToYear;y++){
-            string2+= "<td>"
+            string2+= "<td>";
             
             var tempString = testArray[l] + "LandUse";
             string2 += ( Math.round(Totals.landUseResults[y][tempString] * 10) / 10 ) + "<br>" ;
             
-            string2+= "</td>"
+            string2+= "</td>";
         }//for each year
         
         string2 += "<td>acres</td>" ;
         
         for(var y=1; y<=upToYear;y++){
-            string2+= "<td>"
+            string2+= "<td>";
             
             var tempString = testArray[l] + "LandUse";
             string2 += ( Math.round(Totals.landUseResults[y][tempString]  / toMetricFactorArea *10 ) / 10 ) + "<br>" ;
             
-            string2+= "</td>"
+            string2+= "</td>";
             
         }//for each year
         string2 += "<td>hectares</td></tr>" ;
@@ -1027,38 +979,38 @@ function displayResults() {
         
         switch(l){
             case 0:
-                string2 += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>"
+                string2 += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
                 break;
             case 2:
-                string2 += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>"
-                break;x
+                string2 += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
+                break;
             case 4:
-                string2 += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>"
+                string2 += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
                 break;
         }//end switch
         
-        string2 += "<tr>"
+        string2 += "<tr>";
         
-        string2 += "<td>" + nameArray[l] + "</td>"
+        string2 += "<td>" + nameArray[l] + "</td>";
         
         for(var y=1; y<=upToYear;y++){
-            string2+= "<td>"
+            string2+= "<td>";
             
             var tempString = testArray[l] + "Score";
             string2 += ( Math.round(Totals[tempString][y] * 10  )  / 10 ) + "<br>" ;
             
-            string2+= "</td>"
+            string2+= "</td>";
         }//for each year
         
         string2 += "<td>(out of 100)</td>" ;
         
         for(var y=1; y<=upToYear;y++){
-            string2+= "<td>"
+            string2+= "<td>";
             
             var tempString = testArray[l];
             string2 += ( Math.round(Totals[tempString][y] * 10) / 10 ) + "<br>" ;
             
-            string2+= "</td>"
+            string2+= "</td>";
         }//for each year
         
         if(l<2) string2 += "<td>pts</td>" ;
@@ -1067,12 +1019,12 @@ function displayResults() {
         if(5<= l && l < 8) string2 +="<td>tons</td>" ;
         
         for(var y=1; y<=upToYear;y++){
-            string2+= "<td>"
+            string2+= "<td>";
             
             var tempString = testArray[l];
             string2 += ( Math.round(Totals[tempString][y] * conversionArray[l] * 10 ) / 10 ) + "<br>" ;
             
-            string2+= "</td>"
+            string2+= "</td>";
             
         }//for each year
         
@@ -1097,32 +1049,32 @@ function displayResults() {
         
         switch(l){
             case 0:
-                string2 += "<tr class='tableHeading'><td><b>Yield</b></td></tr>"
+                string2 += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
                 break;
         }//end switch
         
-        string2 += "<tr>"
+        string2 += "<tr>";
         
-        string2 += "<td>" + nameArray[l] + "</td>"
+        string2 += "<td>" + nameArray[l] + "</td>";
         
         for(var y=1; y<=upToYear;y++){
-            string2+= "<td>"
+            string2+= "<td>";
             
             var tempString = testArray[l] + "Score";
             string2 += ( Math.round(Totals.yieldResults[y][tempString] * 10  )  / 10 ) + "<br>" ;
             
-            string2+= "</td>"
+            string2+= "</td>";
         }//for each year
         
         string2 += "<td>(out of 100)</td>" ;
         
         for(var y=1; y<=upToYear;y++){
-            string2+= "<td>"
+            string2+= "<td>";
             
             var tempString = testArray[l];
             string2 += ( Math.round(Totals.yieldResults[y][tempString] * 10) / 10 ) + "<br>" ;
             
-            string2+= "</td>"
+            string2+= "</td>";
         }//for each year
        
         if(l < 2 ) string2 += "<td>bu</td>" ;  
@@ -1133,12 +1085,12 @@ function displayResults() {
         if(l == 8 ) string2 += "<td>tons</td>" ; 
         
         for(var y=1; y<=upToYear;y++){
-            string2+= "<td>"
+            string2+= "<td>";
             
             var tempString = testArray[l];
             string2 += ( Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10 ) / 10 ) + "<br>" ;
             
-            string2+= "</td>"
+            string2+= "</td>";
             
         }//for each year
         
@@ -1176,7 +1128,7 @@ function displayResults() {
     
     string2 += "</tr>" ;
     
-    string2 += "<tr><td>Precipitation</td>"
+    string2 += "<tr><td>Precipitation</td>";
     
      for(var y = 1; y<= upToYear; y++){
         string2 += "<td>" ;
@@ -1224,18 +1176,27 @@ function displayResults() {
     document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = string2;
     
     
-}
+} //end displayResults
 
+//showCredits opens the credits iframe
 function showCredits() {
     
     document.getElementById('creditsFrame').style.display = "block" ;
     document.getElementById('closeCredits').style.display = "block" ;
     
-}
+} //end showCredits
 
+//closeCreditFrame closes the credits iframe
 function closeCreditFrame() {
 
     document.getElementById('creditsFrame').style.display = "none" ;
     document.getElementById('closeCredits').style.display = "none" ;
     
-}
+} //end closeCreditFrame
+
+//showUploadDownload opens the credits iframe
+function showUploadDownload() {
+    
+    document.getElementById('uploadDownloadFrame').style.display = "block" ;    
+
+} //end showUploadDownload
