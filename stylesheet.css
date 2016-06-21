@@ -879,22 +879,16 @@ td{
     top:5px;
 }
 
-#downloadButton {
+#uploadDownloadButton {
+
     position: absolute ;
     right: 42px;
     top:5px;
 }
 
-#uploadButton {
-
-    position: absolute ;
-    right: 82px;
-    top:5px;
-}
-
 #logoBase {
     position: absolute ;
-    right: 122px;
+    right: 82px;
     top:5px;
 }
 
@@ -913,10 +907,6 @@ td{
     
 }
 
-.image-upload > input
-{
-    display: none;
-}
 
 #creditsFrame{
     position:absolute;

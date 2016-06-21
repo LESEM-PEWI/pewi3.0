@@ -1239,3 +1239,9 @@ function closeCreditFrame() {
     document.getElementById('closeCredits').style.display = "none" ;
     
 }
+
+function showUploadDownload() {
+    
+    document.getElementById('uploadDownloadFrame').style.display = "block" ;
+    
+}
