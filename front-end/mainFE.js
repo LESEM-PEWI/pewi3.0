@@ -14,10 +14,12 @@ var modalUp = false ;
 var isShiftDown = false;
 var Totals ; //global current calculated results, NOTE, should be reassigned every time currentBoard is changed
 var counter = 0 ;
-
+var stats ;
 
 function setup() {
     
+    stats = new Stats();
+    document.body.appendChild( stats.domElement ); 
     
     //scene
     scene = new THREE.Scene();
@@ -252,6 +254,7 @@ requestAnimationFrame(function animate() {
     
     
     requestAnimationFrame(animate);
+    stats.update() ;
 
 }); //end request
 
