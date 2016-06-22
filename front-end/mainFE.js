@@ -63,7 +63,6 @@ function setup() {
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	
 	camera.add(spotLight);
-	scene.add(lightHelper);
 
     //set up controls
     controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -100,7 +99,7 @@ function setupSpace() {
     
     //Charlie
     scene.remove(river);
-
+    
 	var closedSpline = new THREE.CatmullRomCurve3( riverPoints );
 	closedSpline.type = 'chordal';
 	closedSpline.closed = false;
@@ -118,7 +117,7 @@ function setupSpace() {
     var shape = new THREE.Shape( pts );
 	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
 				
-	var material = new THREE.MeshLambertMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
+	var material = new THREE.MeshBasicMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
 	river = new THREE.Mesh( geometry, material );
 	scene.add( river );
 
@@ -180,7 +179,7 @@ function setupRiver() {
     var shape = new THREE.Shape( pts );
 	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
 				
-	var material = new THREE.MeshLambertMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
+	var material = new THREE.MeshBasicMaterial( {wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
 	river = new THREE.Mesh( geometry, material );
 	scene.add( river );
 	

@@ -7,6 +7,14 @@ var toolbarRolled = true ;
           isShiftDown, modalUp, precip, 
           painter, Totals, river,
           Results, initData, hoveredOver*/
+var singleGeometry = new THREE.Geometry();
+var materials = [];
+var previousHover = null;
+var tileHeight = 12;
+var tileWidth = 18;
+var rowCutOffs = [] ; //y coor of top left corner of each tile
+var columnCutOffs = [] ;
+var meshArray = [];
 
 //onResize dynamically adjusts to window size changes
 function onResize() {
@@ -24,16 +32,132 @@ function displayBoard() {
     
     }
     
+    for(var i = 0; i < singleGeometry.faces.length; i+=2){
+        singleGeometry.faces[i].materialIndex = i/2;
+        singleGeometry.faces[i+1].materialIndex = i/2;
+    }
+    mesh = new THREE.Mesh(singleGeometry, new THREE.MeshFaceMaterial(materials));
+
+    scene.add(mesh);
+    
+    meshArray.push(mesh);
+    
+    calculateCutoffs();
+    
 } //end displayBoard
+
+function highlightTile(id) {
+    
+    if(previousHover != null){
+        materials[previousHover].emissive.setHex(0x000000);
+    }
+    
+    materials[id].emissive.setHex(0x7f7f7f);
+    
+    previousHover = id;
+    
+    reDisplayCurrentBoard();
+    
+}
+
+function changeLandTypeTile(id) {
+    
+    materials[id].map = textureArray[painter];
+    
+    boardData[currentBoard].map[id].landType[currentYear] = painter ;
+}
+
+function reDisplayCurrentBoard() {
+    
+    renderer.render(scene, camera);
+    
+}
+
+function getTileID(x,y){
+    
+    
+    var tilesWide = boardData[currentBoard].width;
+    var tilesHigh = boardData[currentBoard].height;
+    
+    //calculate which column the tile is in
+    var col = 0 ;
+    
+    if(x < columnCutOffs[0] || x > columnCutOffs[columnCutOffs.length - 1]){
+        col = 0 ;
+    }
+    else{
+        //rowCutOffs[row] corresponds to the right cutoff of row
+        while(x > columnCutOffs[col]){
+            col += 1 ;
+        }
+    }
+    
+     //calculate which row the tile is in
+    var row = 0 ;
+    
+    if(y > rowCutOffs[0] || y < rowCutOffs[rowCutOffs.length - 1]){
+        row = 0 ;
+    }
+    else{
+        while(y < rowCutOffs[row]){
+            row += 1 ;
+        }
+    }
+    
+    if(col==0 || row == 0){
+        return -1 ;
+    }
+    
+    console.log("row: " + row + " col: " + col);
+    
+    console.log("id: " + ((row-1) * tilesWide) + col - 1 );
+    
+    return ((row-1) * tilesWide) + col - 1 ;
+
+    
+}
+
+function calculateCutoffs() {
+    
+    var tilesWide = boardData[currentBoard].width;
+    var tilesHigh = boardData[currentBoard].height;
+    
+    var tempColumnCut = [] ;
+    var x ;
+    
+    x = - (tilesWide/2 - 1) * tileWidth ;
+    xmax = ((tilesWide/2 + 1) * tileWidth );
+    while(x <=  xmax ){
+        tempColumnCut.push(x);
+        x += tileWidth ;
+    }
+    
+    columnCutOffs = tempColumnCut ;
+
+    var tempRowCut = [] ;
+    var y ;
+    
+    y =  (tilesHigh/2 - 1) * tileHeight ;
+    ymax = (-(tilesHigh/2 + 1) * tileHeight);
+    while(y >=  ymax ){
+        tempRowCut.push(y);
+        y -= tileHeight ;
+    }
+    
+    rowCutOffs = tempRowCut ;
+    
+    console.log(columnCutOffs);
+    console.log(rowCutOffs);
+
+}
 
 //addTile constructs the geometry of a tile and adds it to the scene
 function addTile(tile){
     
+    //if(tile.landType[currentYear] != 0){
+    
         var tilesWide = boardData[currentBoard].width;
         var tilesHigh = boardData[currentBoard].height;
-    
-        var tileHeight = 12;
-        var tileWidth = 18;
         
         //var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
         
@@ -74,9 +198,11 @@ function addTile(tile){
         tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1,0),new THREE.Vector2(0,0),new THREE.Vector2(1,1)]); // uvs
         
         if(tile.landType[currentYear] == 0){
-            tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
+            tileMaterial = new THREE.MeshBasicMaterial({color: 0x000000, transparent: true, opacity: 0.0});
+            materials.push(new THREE.MeshBasicMaterial({color: 0x000000, transparent: true, opacity: 0.0}));
         } else {
             tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]]});
+            materials.push(new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]]}));
         }
         
         if(tile.streamNetwork == 1 && currentRow != tile.row){
@@ -86,8 +212,8 @@ function addTile(tile){
     
         var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
         
-        newTile.receiveShadow = true;
-        newTile.castShadow = true;
+        //newTile.receiveShadow = true;
+        //newTile.castShadow = true;
         
         newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide)/2;
         newTile.position.y = 0;
@@ -99,55 +225,47 @@ function addTile(tile){
         
         tiles[mapID] = tile.graphics;
         
-        scene.add(tile.graphics);
+        newTile.updateMatrix(); // as needed
+        singleGeometry.merge(newTile.geometry, newTile.matrix);
+        
+        //scene.add(tile.graphics);
+        
+    //}
     
 } //end addTile
 
 //transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
     
-    currentYear = year;
+      currentYear = year;
     
-    if(year > boardData[currentBoard].calculatedToYear){
-        boardData[currentBoard].calculatedToYear = year;
-        boardData[currentBoard].updateBoard();
-    }
+      if(year > boardData[currentBoard].calculatedToYear){
+          boardData[currentBoard].calculatedToYear = year;
+          boardData[currentBoard].updateBoard();
+      }
     
-    for(var i = 0; i < boardData[currentBoard].map.length; i++){
+      for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
-        scene.remove(tiles[i]);
-        addTile(boardData[currentBoard].map[i]);
+          scene.remove(tiles[i]);
+          addTile(boardData[currentBoard].map[i]);
         
     }
+
     
 } //end transitionToYear
 
 //onDocumentMouseMove follows the cursor and highlights corresponding tiles
 function onDocumentMouseMove( event ) {
     
-	event.preventDefault();
-	
-	mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1);
-	
-	raycaster.setFromCamera( mouse, camera );
-	
-	var intersects = raycaster.intersectObjects(tiles);
-	
-	if ( intersects.length > 0 && !modalUp) {
+ 	event.preventDefault();
 
-		if ( hoveredOver != intersects[ 0 ].object ) {
-
-			if ( hoveredOver ) hoveredOver.material.emissive.setHex( hoveredOver.currentHex );
-
-			hoveredOver = intersects[ 0 ].object;
-			hoveredOver.currentHex = hoveredOver.material.emissive.getHex();
-		    hoveredOver.material.emissive.setHex( 0x7f7f7f );
-
-		}
-
-	}
+ 	mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1);
 	
-	renderer.render(scene, camera);
+ 	raycaster.setFromCamera( mouse, camera );
+	
+ 	var intersects = raycaster.intersectObjects(meshArray);
+ 	
+    highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
 	
 } //end onDocumentMouseMove
 
@@ -155,35 +273,19 @@ function onDocumentMouseMove( event ) {
 //and will change map to a monoculture if shift is held down
 function onDocumentDoubleClick( event ) {
     
-	event.preventDefault();
+    event.preventDefault();
+
+ 	mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1);
 	
-	mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+ 	raycaster.setFromCamera( mouse, camera );
 	
-	raycaster.setFromCamera( mouse, camera );
-	
-	var intersects = raycaster.intersectObjects( tiles );
-	
-	if( !isShiftDown ){
+ 	var intersects = raycaster.intersectObjects(meshArray);
+    
+    if( !isShiftDown ){
 	
         if ( intersects.length > 0 && !modalUp) {
             
-        	var intersect = intersects[ 0 ];
-        	
-        	//console.log(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear]);
-        	
-        	if(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear] != 0){
-        	    
-        	    boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear] = painter ;
-        	
-        	    boardData[currentBoard].map[hoveredOver.mapID].update();
-        	    
-        		scene.remove(hoveredOver);
-        		
-                addTile(boardData[currentBoard].map[hoveredOver.mapID]);
-                
-        	}
-        	
-        	//console.log(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear]);
+            changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
         	
         }
 	
@@ -192,17 +294,17 @@ function onDocumentDoubleClick( event ) {
 	        for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
                 if(boardData[currentBoard].map[i].landType[currentYear] != 0){
-                    scene.remove(tiles[i]);
-                    boardData[currentBoard].map[i].landType[currentYear] = painter;
-                    boardData[currentBoard].map[i].update();
-                    addTile(boardData[currentBoard].map[i]);
+
+                    changeLandTypeTile(i);
+
                 }
 
             }
 	    
 	}
 	
-	renderer.render(scene, camera);
+	reDisplayCurrentBoard();
+
 }//end onDocumentMouseDown(event)
 
 //onDocumentKeyDown listens for the shift key held down
