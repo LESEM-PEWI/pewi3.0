@@ -44,14 +44,14 @@ function addTile(tile){
         
         var mapID = tile.id - 1;
 
-        var topN24 = boardData[currentBoard].map[mapID - 24] ? boardData[currentBoard].map[mapID - 24].topography : 0;
-        var topN23 = boardData[currentBoard].map[mapID - 23] ? boardData[currentBoard].map[mapID - 23].topography : 0;
-        var topN22 = boardData[currentBoard].map[mapID - 22] ? boardData[currentBoard].map[mapID - 22].topography : 0;
+        var topN24 = boardData[currentBoard].map[mapID - (tilesWide+1)] ? boardData[currentBoard].map[mapID - (tilesWide+1)].topography : 0;
+        var topN23 = boardData[currentBoard].map[mapID - (tilesWide)] ? boardData[currentBoard].map[mapID - (tilesWide)].topography : 0;
+        var topN22 = boardData[currentBoard].map[mapID - (tilesWide-1)] ? boardData[currentBoard].map[mapID - (tilesWide-1)].topography : 0;
         var topN1 = boardData[currentBoard].map[mapID - 1] ? boardData[currentBoard].map[mapID - 1].topography : 0;
         var top1 = boardData[currentBoard].map[mapID + 1] ? boardData[currentBoard].map[mapID + 1].topography : 0;
-        var top22 = boardData[currentBoard].map[mapID + 22] ? boardData[currentBoard].map[mapID + 22].topography : 0;
-        var top23 = boardData[currentBoard].map[mapID + 23] ? boardData[currentBoard].map[mapID + 23].topography : 0;
-        var top24 = boardData[currentBoard].map[mapID + 24] ? boardData[currentBoard].map[mapID + 24].topography : 0;
+        var top22 = boardData[currentBoard].map[mapID + (tilesWide-1)] ? boardData[currentBoard].map[mapID + (tilesWide-1)].topography : 0;
+        var top23 = boardData[currentBoard].map[mapID + (tilesWide)] ? boardData[currentBoard].map[mapID + (tilesWide)].topography : 0;
+        var top24 = boardData[currentBoard].map[mapID + (tilesWide+1)] ? boardData[currentBoard].map[mapID + (tilesWide+1)].topography : 0;
         
         v1 = new THREE.Vector3(0,(topN24 + topN23 + topN1 + tile.topography)/4*10,0);
         v2 = new THREE.Vector3(tileWidth,(topN23 + topN22 + top1 + tile.topography)/4*10,0);
@@ -768,19 +768,9 @@ function uploadClicked(e) {
     reader.readAsText(files[0]);
 
     reader.onload = function(e) {
-
-        var boardFromFile = new GameBoard();
-        parseInitial(reader.result);
-        propogateBoard(boardFromFile);
-        boardData.push(boardFromFile);
-
-        currentBoard++;
-        transitionToYear(1);
-        boardData[currentBoard].updateBoard();
-
-        //update Results to point to correct board since currentBoard is updated
-        Totals = new Results(boardData[currentBoard]);
-
+        
+        setupBoardFromUpload(reader.result);
+        
         //clear initData
         initData = [];
 
