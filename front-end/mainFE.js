@@ -59,10 +59,10 @@ function setup() {
     //set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-    renderer.shadowMap.enabled = true;
-	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    //renderer.shadowMap.enabled = true;
+	//renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	
-	camera.add(spotLight);
+	//camera.add(spotLight);
 
     //set up controls
     controls = new THREE.OrbitControls( camera, renderer.domElement );
