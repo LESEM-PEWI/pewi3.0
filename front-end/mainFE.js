@@ -3,7 +3,7 @@ var camera, scene, raycaster, mouse, hoveredOver ;
 var renderer = new THREE.WebGLRenderer();
 var controls ;
 var tiles = [];
-var river;
+var river = null;
 var riverPoints = [];
 var painter = 1;
 var onYear = "year1";
@@ -96,7 +96,8 @@ function setupSpace() {
     //update Results to point to correct board since currentBoard is updated
     Totals = new Results(boardData[currentBoard]);
     
-
+    //Charlie
+    scene.remove(river);
 
 	var closedSpline = new THREE.CatmullRomCurve3( riverPoints );
 	closedSpline.type = 'chordal';
@@ -121,6 +122,95 @@ function setupSpace() {
 
 
 }//end setupSpace
+
+function setupSkyBox() {
+    
+    //skybox
+
+    for (var i = 0; i < 6; i++) materialArray[i].side = THREE.BackSide;
+    var skyboxMaterial = new THREE.MeshFaceMaterial( materialArray );
+    skyboxGeom = new THREE.CubeGeometry( 5000, 5000, 5000, 1, 1, 1 );
+    var skybox = new THREE.Mesh( skyboxGeom, skyboxMaterial );
+    scene.add( skybox );
+    
+}
+
+function setupBoardFromFile(file) {
+    
+    //add world elements here
+    
+    //addBoard
+    var boardFromFile = new GameBoard() ;
+    loadBoard(boardFromFile, file);
+
+    boardData.push(boardFromFile);
+    currentBoard++ ; //currentBoard now = 0
+    displayBoard() ;
+    boardData[currentBoard].updateBoard() ;
+    
+    //update Results to point to correct board since currentBoard is updated
+    Totals = new Results(boardData[currentBoard]);
+    
+    setupRiver();
+    
+}
+
+function setupRiver() {
+    
+    if(river != null){
+        scene.remove(river);
+    }
+    
+	var closedSpline = new THREE.CatmullRomCurve3( riverPoints );
+	closedSpline.type = 'chordal';
+	closedSpline.closed = false;
+	var extrudeSettings = {
+		steps			: 500,
+		bevelEnabled	: false,
+		extrudePath		: closedSpline
+	};
+    var pts = [];
+	pts.push( new THREE.Vector2 (-5,7.5 ));
+	pts.push (new THREE.Vector2 (-4,7.5));
+	pts.push (new THREE.Vector2 (-5,0));
+	pts.push (new THREE.Vector2 (-4,0));
+
+    var shape = new THREE.Shape( pts );
+	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+				
+	var material = new THREE.MeshLambertMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
+	river = new THREE.Mesh( geometry, material );
+	scene.add( river );
+	
+}
+
+function setupBoardFromUpload(data) {
+    
+    //add world elements here
+    
+    //addBoard
+    var boardFromUpload = new GameBoard() ;
+    parseInitial(data);
+    propogateBoard(boardFromUpload);
+
+    boardData.push(boardFromUpload);
+    currentBoard++ ; //currentBoard now = 0
+    if(tiles.length != 0){
+        for(var i = 0; i < tiles.length; i++){
+            scene.remove(tiles[i]);
+        }
+        tiles = [];
+        riverPoints = [];
+    }
+    displayBoard();
+    boardData[currentBoard].updateBoard();
+    
+    //update Results to point to correct board since currentBoard is updated
+    Totals = new Results(boardData[currentBoard]);
+    
+    setupRiver();
+    
+}
 
 function setupHighlight() {
 	
