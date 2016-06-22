@@ -761,6 +761,7 @@ function uploadClicked(e) {
     if (files[0].name && !files[0].name.match(/\.csv/)) {
         alert("Incorrect File Type!");
     }
+    else{
 
     var reader = new FileReader();
 
@@ -784,20 +785,11 @@ function uploadClicked(e) {
         initData = [];
 
     }
-
+    }//end else
+    
     //console.log(files);
     closeUploadDownloadFrame();
-            currentBoard++ ;
-            transitionToYear(1);
-            boardData[currentBoard].updateBoard() ;
-    
-            //update Results to point to correct board since currentBoard is updated
-            Totals = new Results(boardData[currentBoard]);
-            
-            //clear initData
-            initData = [] ;
-    
-     document.getElementById('uploadDownloadFrame').style.display = "none" ; 
+
     
 } //end uploadClicked
 
