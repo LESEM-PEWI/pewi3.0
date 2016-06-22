@@ -234,6 +234,14 @@ function addTile(tile){
     
 } //end addTile
 
+function clearBoard(){
+    
+    scene.remove(singleGeometry);
+    singleGeometry = new THREE.Geometry();
+    materials = [];
+    
+}
+
 //transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
     
@@ -244,12 +252,8 @@ function transitionToYear(year) {
           boardData[currentBoard].updateBoard();
       }
     
-      for(var i = 0; i < boardData[currentBoard].map.length; i++){
-        
-          scene.remove(tiles[i]);
-          addTile(boardData[currentBoard].map[i]);
-        
-    }
+    clearBoard();
+    displayBoard();
 
     
 } //end transitionToYear
@@ -588,12 +592,14 @@ function displayLevels(type){
     //Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
     
-    tilesCopy = [];
-    
-    for(var i = 0; i < tiles.length; i++){
+    for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
-                tiles[i].material.map = textureArray[0];
-	            tiles[i].material.emissive.setHex( getHighlightColor(type, tiles[i].mapID) );
+        if(boardData[currentBoard].map[i].landType[currentYear] != 0){
+
+            materials[i].map = textureArray[0];
+            materials[i].emissive.setHex(getHighlightColor(type, i));
+
+        }
 
     }
     
