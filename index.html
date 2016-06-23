@@ -28,8 +28,8 @@
     <!-- BEGIN LEFT CONSOLE -->
 
     <!--console tabs -->
-    <div id="toolsButton" class="consoleButton" onclick="roll(1) ;"><img src="./imgs/pick.png">
-    </div>
+    
+    <div id="tabButtons" class="tabButtons">
     <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);"><img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png">
     </div>
     <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png">
@@ -38,9 +38,13 @@
     </div>
     <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png">
     </div>
-
+    </div>
+    
+    <div id="toolsButton" class="consoleButton" onclick="roll(1) ;"><img src="./imgs/pick.png">
+    </div>
+    
     <!-- console displays-->
-    <div id="leftConsole">
+    <div id="leftConsole" class="leftConsole">
         
         <div id="painterTab" class="consoleTab">
 
@@ -142,20 +146,22 @@
                 <div id="erosionDetailsList" class="erosionDetailsListRolled">
                     <div class="levelColor1">
                         <p class="levelsTextDetails">
-                            < 0.5 tons/ac</p>
+                            0.5</p>
                     </div>
+                    
                     <div class="levelColor2">
-                        <p class="levelsTextDetails">0.5-2 tons/ac</p>
+                        <p class="levelsTextDetails">0.5-2</p>
                     </div>
                     <div class="levelColor3">
-                        <p class="levelsTextDetails">2-3.5 tons/ac</p>
+                        <p class="levelsTextDetails">2-3.5</p>
                     </div>
                     <div class="levelColor4">
-                        <p class="levelsTextDetails">3.5-5 tons/ac</p>
+                        <p class="levelsTextDetails">3.5-5</p>
                     </div>
                     <div class="levelColor5">
-                        <p class="levelsTextDetails">> 5 tons/ac</p>
+                        <p class="levelsTextDetails">> 5 </p>
                     </div>
+                    <p class="levelsTextDetails">tons/acre</p>
                 </div>
                 <div id="phosphorusDetailsList" class="phosphorusDetailsListRolled">
                     <div class="levelColor1">

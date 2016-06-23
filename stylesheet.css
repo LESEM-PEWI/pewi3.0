@@ -1,3 +1,10 @@
+/**
+
+Palette:
+#F0A61D - orange
+
+**/
+
 /******CSS RESET*****/
 
 
@@ -70,7 +77,6 @@ body {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 12px;
     height:450px;
-    left: 0px;
     position: absolute;
     top:150px;
     width:123px;
@@ -79,13 +85,21 @@ body {
     transition-duration: 0.4s;
 }
 
+.leftConsole{
+    left: 0px;
+}
+
+.leftConsoleRolled{
+    left: -123px;
+}
+
 .consoleTab {
-    padding:4px;
     left:0px;
+    padding:4px;
 }
 
 /**left console buttons**/
-.consoleButton, consoleButtonRolled {
+.consoleButton {
     background-color: rgba(0, 0, 0, 0.9);
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
@@ -102,12 +116,24 @@ body {
     transition-duration: 0.4s;
 }
 
-.consoleButton {
-    left: 123px;
-}
-
 .consoleButton:hover {
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+
+.tabButtons, #toolsButton {
+    left: 123px;
+    position:absolute;
+
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.tabButtonsRolled {
+    left: -60px;
+    position:absolute;
+
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
 }
 
 #toolsButton {
@@ -132,7 +158,9 @@ body {
     top: 380px;
 }
 	
-/* bhaha ajahaj */	
+/**inner elements of left console**/
+
+
 	
 .resultsButton {
     position:absolute;

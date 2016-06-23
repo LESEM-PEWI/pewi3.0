@@ -66,7 +66,6 @@ function highlightTile(id) {
     document.getElementById("position").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
     }
     
-    reDisplayCurrentBoard();
 }
 
 //changeLandTypeTile changes the landType of a selected tile
@@ -397,38 +396,21 @@ function roll(value) {
 
         if (!toolbarRolled) {
 
-            var elements = document.getElementsByClassName("consoleButton");
-
-            for (var i = 0; i < elements.length; i++) {
-                if (elements[i].id == "toolsButton") {
-                    elements[i].style.left = "0px" ;
-                    elements[i].style.backgroundImage = "url('./imgs/consoleTexture.png')" ;
-                }
-                else {
-                    elements[i].style.left = "-60px";
-                }
-            }
-
-            document.getElementById('leftConsole').style.left = "-123px" ;
+            document.getElementById('toolsButton').style.left = "0px" ;
+            document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')" ;
             
-
+            document.getElementById('tabButtons').className = "tabButtonsRolled" ;
+            document.getElementById('leftConsole').className = "leftConsoleRolled" ;
+            
             toolbarRolled = true;
         }
         else {
 
-            var elements = document.getElementsByClassName("consoleButton");
-
-            for (var i = 0; i < elements.length; i++) {
-                if (elements[i].id == "toolsButton") {
-                    elements[i].style.left = "123px" ;
-                    elements[i].style.backgroundImage = "none";
-                }
-                else {
-                    elements[i].style.left = "123px" ;
-                }
-            }
-
-             document.getElementById('leftConsole').style.left = "0px" ;
+            document.getElementById('toolsButton').style.left = "123px" ;
+            document.getElementById('toolsButton').style.backgroundImage = "none" ;
+            
+            document.getElementById('tabButtons').className = "tabButtons" ;
+            document.getElementById('leftConsole').className = "leftConsole" ;
            
             toolbarRolled = false;
         }
@@ -585,8 +567,13 @@ function switchYearTab(value){
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(type){
     
+    //toggle off highlighting
+    
+    
     Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
+    
+    highlightTile(-1) ;
     
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
