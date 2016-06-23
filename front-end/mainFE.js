@@ -18,6 +18,14 @@ var stats ;
 
 function setup() {
     
+    //set up renderer
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+    renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+	
+    
+    //setup stats display
     stats = new Stats();
     document.body.appendChild( stats.domElement ); 
     
@@ -56,13 +64,7 @@ function setup() {
     camera.position.z = 18;
     camera.rotation.x = -45 * Math.PI / 180;
     
-    //set up renderer
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-    //renderer.shadowMap.enabled = true;
-	//renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-	
-	//camera.add(spotLight);
+    camera.add(spotLight);
 
     //set up controls
     controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -85,41 +87,7 @@ function setupSpace() {
     
     //add world elements here
     
-    //addBoard
-    var board1 = new GameBoard() ;
-    loadBoard(board1, "./data.txt");
-
-    boardData.push(board1);
-    currentBoard++ ; //currentBoard now = 0
-    displayBoard() ;
-    boardData[currentBoard].updateBoard() ;
-    
-    //update Results to point to correct board since currentBoard is updated
-    Totals = new Results(boardData[currentBoard]);
-    
-    //Charlie
-    scene.remove(river);
-    
-	var closedSpline = new THREE.CatmullRomCurve3( riverPoints );
-	closedSpline.type = 'chordal';
-	closedSpline.closed = false;
-	var extrudeSettings = {
-		steps			: 500,
-		bevelEnabled	: false,
-		extrudePath		: closedSpline
-	};
-    var pts = [];
-	pts.push( new THREE.Vector2 (-5,7.5 ));
-	pts.push (new THREE.Vector2 (-4,7.5));
-	pts.push (new THREE.Vector2 (-5,0));
-	pts.push (new THREE.Vector2 (-4,0));
-
-    var shape = new THREE.Shape( pts );
-	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
-				
-	var material = new THREE.MeshBasicMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
-	river = new THREE.Mesh( geometry, material );
-	scene.add( river );
+    setupBoardFromFile("./data.txt") ;
 
 
 }//end setupSpace
@@ -157,7 +125,7 @@ function setupBoardFromFile(file) {
 }
 
 function setupRiver() {
-    
+
     if(river != null){
         scene.remove(river);
     }
