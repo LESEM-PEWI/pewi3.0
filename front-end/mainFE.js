@@ -18,6 +18,14 @@ var stats ;
 //setup instantiates the camera, lights, controls, shadowmap, and renderer. Called once at the beginning of game
 function setup() {
     
+    //set up renderer
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+    renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+	
+    
+    //setup stats display
     stats = new Stats();
     document.body.appendChild( stats.domElement ); 
     
@@ -54,9 +62,13 @@ function setup() {
     camera.position.z = 18;
     camera.rotation.x = -45 * Math.PI / 180;
     
+<<<<<<< HEAD
     //set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+=======
+    camera.add(spotLight);
+>>>>>>> 6c8598eb37ef6e7ebd6ce80d8d8043871a72124b
 
     //set up controls
     controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -64,9 +76,14 @@ function setup() {
     //add resize listener
     window.addEventListener('resize', onResize, false);
     
+<<<<<<< HEAD
     setupSkyBox();
     
     setupHighlight();
+=======
+    setupBoardFromFile("./data.txt") ;
+
+>>>>>>> 6c8598eb37ef6e7ebd6ce80d8d8043871a72124b
 
 } //end setup
 
@@ -107,7 +124,7 @@ function setupBoardFromFile(file) {
 
 //setupRiver creates a new CatmullRomCurve3 object for the river from the points stored in the riverPoints array
 function setupRiver() {
-    
+
     if(river != null){
         scene.remove(river);
     }

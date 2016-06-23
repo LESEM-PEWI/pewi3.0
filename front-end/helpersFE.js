@@ -60,6 +60,7 @@ function highlightTile(id) {
     
     document.getElementById("position").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
     
+    reDisplayCurrentBoard();
 }
 
 //changeLandTypeTile changes the landType of a selected tile
@@ -74,6 +75,7 @@ function changeLandTypeTile(id) {
 
 function getTileID(x,y){
     
+    //x and y in terms of three.js 3d coordinates, not screen coordinates
     
     var tilesWide = boardData[currentBoard].width;
     var tilesHigh = boardData[currentBoard].height;
@@ -85,7 +87,6 @@ function getTileID(x,y){
         col = 0 ;
     }
     else{
-        //rowCutOffs[row] corresponds to the right cutoff of row
         while(x > columnCutOffs[col]){
             col += 1 ;
         }
@@ -107,13 +108,8 @@ function getTileID(x,y){
         return -1 ;
     }
     
-    console.log("row: " + row + " col: " + col);
-    
-    console.log("id: " + ((row-1) * tilesWide) + col - 1 );
-    
-    return ((row-1) * tilesWide) + col - 1 ;
+   return ((row-1) * tilesWide) + col - 1 ;
 
-    
 }
 
 function calculateCutoffs() {
@@ -144,9 +140,6 @@ function calculateCutoffs() {
     }
     
     rowCutOffs = tempRowCut ;
-    
-    console.log(columnCutOffs);
-    console.log(rowCutOffs);
 
 }
 
@@ -1224,8 +1217,6 @@ function displayResults() {
     string2 += "<td>cm</td>";
     
     string2 += "</tr>" ;
-    
-    //THIS SECTION DOES NOT APPEAR TO BE WORKING, CHECK
     
     string2 += "<tr><td>Strategic Wetland Use</td>";
     
