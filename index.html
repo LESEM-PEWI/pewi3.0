@@ -24,181 +24,227 @@
 </head>
 
 <body>
- 
-<!--
-<div class="devConsole">
-  <p>Development Controls</p>
-  <button>---</button>
-  <p>Camera Position</p>
-  <p id="pos"></p>
-</div>
--->
 
-<div id="left-elements" class="left-elements">
-  
-<div id="terrainButton" class="terrainButton" onclick="switchConsoleTab(1);"><img id ="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png"></div>  
-<div id="precipButton" class="precipButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png"></div>
-<div id="levelsButton" class="levelsButton" onclick="switchConsoleTab(3);"><img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png"></div>
-<div id="featuresButton" class="featuresButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
+    <!-- BEGIN LEFT CONSOLE -->
 
-<div id="landUseConsole" class ="landUseConsole">
+    <!--console tabs -->
 
-<div id="painterTab">
+    <div id="toolsButton" class="consoleButton" onclick="roll(1) ;"><img src="./imgs/pick.png">
+    </div>
+    
+    <div id="tabButtons" class="tabButtons">
+    <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);"><img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png">
+    </div>
+    <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png">
+    </div>
+    <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);"><img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png">
+    </div>
+    <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png">
+    </div>
+    </div>
+    
+    
+    
+    <!-- console displays-->
+    <div id="leftConsole" class="leftConsole">
+        
+        <div id="painterTab" class="consoleTab">
 
-<img id="paint1" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="paintChange(1);">  
-<img id="paint2" class="landSelectorIcon" src="./imgs/conservationCorn.png" onclick="paintChange(2);">  
-<img id="paint3" class="landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="paintChange(3);">  
-<img id="paint4" class="landSelectorIcon" src="./imgs/conservationSoybean.png" onclick="paintChange(4);">  
-<img id="paint15" class="landSelectorIcon" src="./imgs/fruits.png" onclick="paintChange(15);">
+            <img id="paint1" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="paintChange(1);">
+            <img id="paint2" class="landSelectorIcon" src="./imgs/conservationCorn.png" onclick="paintChange(2);">
+            <img id="paint3" class="landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="paintChange(3);">
+            <img id="paint4" class="landSelectorIcon" src="./imgs/conservationSoybean.png" onclick="paintChange(4);">
+            <img id="paint15" class="landSelectorIcon" src="./imgs/fruits.png" onclick="paintChange(15);">
 
-<img id="paint5" class="landSelectorIcon" src="./imgs/alfalfa.png" onclick="paintChange(5);">  
-<img id="paint8" class="landSelectorIcon" src="./imgs/grassHay.png" onclick="paintChange(8);">  
-<img id="paint12" class="landSelectorIcon" src="./imgs/herbaceous.png" onclick="paintChange(12);">  
-<img id="paint6" class="landSelectorIcon" src="./imgs/permanentPasture.png" onclick="paintChange(6);">
-<img id="paint7" class="landSelectorIcon" src="./imgs/rotationalGrazing.png" onclick="paintChange(7);">  
+            <img id="paint5" class="landSelectorIcon" src="./imgs/alfalfa.png" onclick="paintChange(5);">
+            <img id="paint8" class="landSelectorIcon" src="./imgs/grassHay.png" onclick="paintChange(8);">
+            <img id="paint12" class="landSelectorIcon" src="./imgs/herbaceous.png" onclick="paintChange(12);">
+            <img id="paint6" class="landSelectorIcon" src="./imgs/permanentPasture.png" onclick="paintChange(6);">
+            <img id="paint7" class="landSelectorIcon" src="./imgs/rotationalGrazing.png" onclick="paintChange(7);">
 
-<img id="paint14" class="landSelectorIcon" src="./imgs/wetland.png" onclick="paintChange(14);">
-<img id="paint9" class="landSelectorIcon" src="./imgs/prairie.png" onclick="paintChange(9);">
-<img id="paint11" class="landSelectorIcon" src="./imgs/conventionalForest.png" onclick="paintChange(11);">
-<img id="paint10" class="landSelectorIcon" src="./imgs/conservationForest.png" onclick="paintChange(10);">
-<img id="paint13" class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="paintChange(13);">
-</div>
-
-</div>
-
-<div id="precipTab" style="display:none;">
-<div id="precipConsole" class="precipConsole">
-  <form method="precipValues" action=" ">
-  <div class="precipTitle">Precipitation</div>
-  
-  <div class="style-select">
-  Year 0:<select id="year0Precip" onChange="updatePrecip(0)">
-    <option value=0>24.58</option>
-    <option value=1>28.18</option>
-    <option value=2>30.39</option>
-    <option value=3>32.16</option>
-    <option value=4>34.34</option>
-    <option value=5>36.47</option>
-    <option value=6>45.1</option>
-  </select>
-  </div>
-  <div class="style-select">
-  Year 1:<select id="year1Precip" onChange="updatePrecip(1)">
-    <option value=0>24.58</option>
-    <option value=1>28.18</option>
-    <option value=2>30.39</option>
-    <option value=3>32.16</option>
-    <option value=4>34.34</option>
-    <option value=5>36.47</option>
-    <option value=6>45.1</option>
-  </select>
-  </div>
-    <div class="style-select">
-  Year 2:<select id="year2Precip" onChange="updatePrecip(2)">
-    <option value=0>24.58</option>
-    <option value=1>28.18</option>
-    <option value=2>30.39</option>
-    <option value=3>32.16</option>
-    <option value=4>34.34</option>
-    <option value=5>36.47</option>
-    <option value=6>45.1</option>
-  </select>
-  </div>
-    <div class="style-select">
-  Year 3:<select id="year3Precip" onChange="updatePrecip(3)">
-    <option value=0>24.58</option>
-    <option value=1>28.18</option>
-    <option value=2>30.39</option>
-    <option value=3>32.16</option>
-    <option value=4>34.34</option>
-    <option value=5>36.47</option>
-    <option value=6>45.1</option>
-  </select>
-  </div>
-  </form>
-</div>
-</div>
-
-<div id="levelsTab" style="display:none;">
-<div id="levelsConsole" class="levelsConsole">
-<div  id="nitrateDetailsList" class="nitrateDetailsListRolled">
-<div class="levelColor1"><p class="levelsTextDetails">0 - 5 %</p></div>
-<div class="levelColor2"><p class="levelsTextDetails">5 - 10 %</p></div>
-<div class="levelColor3"><p class="levelsTextDetails">10 - 20 %</p></div>
-<div class="levelColor4"><p class="levelsTextDetails">10 - 25 %</p></div>
-<div class="levelColor5"><p class="levelsTextDetails">> 25 %</p></div>
-</div> 
-<div  id="erosionDetailsList" class="erosionDetailsListRolled">
-<div class="levelColor1"><p class="levelsTextDetails">< 0.5 tons/ac</p></div>
-<div class="levelColor2"><p class="levelsTextDetails">0.5-2 tons/ac</p></div>
-<div class="levelColor3"><p class="levelsTextDetails">2-3.5 tons/ac</p></div>
-<div class="levelColor4"><p class="levelsTextDetails">3.5-5 tons/ac</p></div>
-<div class="levelColor5"><p class="levelsTextDetails">> 5 tons/ac</p></div>
-</div> 
-<div  id="phosphorusDetailsList" class="phosphorusDetailsListRolled">
-<div class="levelColor1"><p class="levelsTextDetails">Very Low</p></div>
-<div class="levelColor2"><p class="levelsTextDetails">Low</p></div>
-<div class="levelColor3"><p class="levelsTextDetails">Medium</p></div>
-<div class="levelColor4"><p class="levelsTextDetails">High</p></div>
-<div class="levelColor5"><p class="levelsTextDetails">Very High</p></div>
-</div> 
-<p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p><img id="nitrateIcon" class="levelsSelectorIcon" src="./imgs/N.png" onmouseover="displayLevels('nitrate'); showLevelDetails(1);" onmouseout="transitionToYear(currentYear); showLevelDetails(-1);">  
-<p class="levelsText">Gross Erosion</p><img id="erosionIcon" class="levelsSelectorIcon" src="./imgs/E.png" onmouseover="displayLevels('erosion'); showLevelDetails(2);" onmouseout="transitionToYear(currentYear); showLevelDetails(-2);">
-<p class="levelsText">Phosphorus Index Risk Assessment</p><img id="phoshorusIcon" class="levelsSelectorIcon" src="./imgs/P.png" onmouseover="displayLevels('phosphorus'); showLevelDetails(3);" onmouseout="transitionToYear(currentYear); showLevelDetails(-3);">
-</div>
-</div>
-
-<div id="featuresTab" style="display:none;">
-<div id="featuresConsole" class="featuresConsole">
-<p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon" src="./imgs/Icon_Flood_Frequency.svg" onmouseover="displayLevels('flood'); showLevelDetails(4);" onmouseout="transitionToYear(currentYear); showLevelDetails(-4);">  
-<p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon" src="./imgs/Icon_Strategic_Wetlands.svg" onmouseover="displayLevels('wetland');" onmouseout="transitionToYear(currentYear);">  
-<p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onmouseover="displayLevels('subwatershed');" onmouseout="transitionToYear(currentYear);">  
-<p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onmouseover="displayLevels('drainage'); showLevelDetails(5);" onmouseout="transitionToYear(currentYear); showLevelDetails(-5);">  
-<div  id="floodFrequencyDetailsList" class="floodFrequencyDetailsListRolled">
-<div class="floodColor1"><p class="levelsTextDetails">None</p></div>
-<div class="floodColorNone"><p class="levelsTextDetails">to</p></div>
-<div class="floodColor2"><p class="levelsTextDetails">Ponded</p></div>
-</div> 
-<div  id="drainageClassDetailsList" class="drainageClassDetailsListRolled">
-<div class="drainageColor1"><p class="levelsTextDetails">Poor</p></div>
-<div class="floodColorNone"><p class="levelsTextDetails">to</p></div>
-<div class="drainageColor2"><p class="levelsTextDetails">Excessive</p></div>
-</div> 
-</div>
-</div>
+            <img id="paint14" class="landSelectorIcon" src="./imgs/wetland.png" onclick="paintChange(14);">
+            <img id="paint9" class="landSelectorIcon" src="./imgs/prairie.png" onclick="paintChange(9);">
+            <img id="paint11" class="landSelectorIcon" src="./imgs/conventionalForest.png" onclick="paintChange(11);">
+            <img id="paint10" class="landSelectorIcon" src="./imgs/conservationForest.png" onclick="paintChange(10);">
+            <img id="paint13" class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="paintChange(13);">
+        
+        </div>
 
 
-<div id="toolsButton" class="toolsButton" onclick="roll(1) ;"><img src="./imgs/pick.png"></div>
-</div>
+        <div id="precipTab" class="consoleTab" style="display:none;">
+                <form method="precipValues" action=" ">
+                    <div id="precipTitle">Precipitation</div>
+
+                    <div class="styled-select">
+                        Year 0:
+                        <select id="year0Precip" onChange="updatePrecip(0)">
+                            <option value=0>24.58</option>
+                            <option value=1>28.18</option>
+                            <option value=2>30.39</option>
+                            <option value=3>32.16</option>
+                            <option value=4>34.34</option>
+                            <option value=5>36.47</option>
+                            <option value=6>45.1</option>
+                        </select>
+                    </div>
+                    <div class="styled-select">
+                        Year 1:
+                        <select id="year1Precip" onChange="updatePrecip(1)">
+                            <option value=0>24.58</option>
+                            <option value=1>28.18</option>
+                            <option value=2>30.39</option>
+                            <option value=3>32.16</option>
+                            <option value=4>34.34</option>
+                            <option value=5>36.47</option>
+                            <option value=6>45.1</option>
+                        </select>
+                    </div>
+                    <div class="styled-select">
+                        Year 2:
+                        <select id="year2Precip" onChange="updatePrecip(2)">
+                            <option value=0>24.58</option>
+                            <option value=1>28.18</option>
+                            <option value=2>30.39</option>
+                            <option value=3>32.16</option>
+                            <option value=4>34.34</option>
+                            <option value=5>36.47</option>
+                            <option value=6>45.1</option>
+                        </select>
+                    </div>
+                    <div class="styled-select">
+                        Year 3:
+                        <select id="year3Precip" onChange="updatePrecip(3)">
+                            <option value=0>24.58</option>
+                            <option value=1>28.18</option>
+                            <option value=2>30.39</option>
+                            <option value=3>32.16</option>
+                            <option value=4>34.34</option>
+                            <option value=5>36.47</option>
+                            <option value=6>45.1</option>
+                        </select>
+                    </div>
+                </form>
+           
+        </div>
+
+        <div id="levelsTab" class="consoleTab" style="display:none;">
+               <div id="nitrateDetailsList" class="nitrateDetailsListRolled">
+                    <div class="levelColor1">
+                        <p class="levelsTextDetails">0 - 5 %</p>
+                    </div>
+                    <div class="levelColor2">
+                        <p class="levelsTextDetails">5 - 10 %</p>
+                    </div>
+                    <div class="levelColor3">
+                        <p class="levelsTextDetails">10 - 20 %</p>
+                    </div>
+                    <div class="levelColor4">
+                        <p class="levelsTextDetails">10 - 25 %</p>
+                    </div>
+                    <div class="levelColor5">
+                        <p class="levelsTextDetails">> 25 %</p>
+                    </div>
+                </div>
+                <div id="erosionDetailsList" class="erosionDetailsListRolled">
+                    <div class="levelColor1">
+                        <p class="levelsTextDetails"> >0.5 </p>
+                    </div>
+                    
+                    <div class="levelColor2">
+                        <p class="levelsTextDetails">0.5-2</p>
+                    </div>
+                    <div class="levelColor3">
+                        <p class="levelsTextDetails">2-3.5</p>
+                    </div>
+                    <div class="levelColor4">
+                        <p class="levelsTextDetails">3.5-5</p>
+                    </div>
+                    <div class="levelColor5">
+                        <p class="levelsTextDetails">> 5 </p>
+                    </div>
+                    <p class="levelsTextDetails">tons/acre</p>
+                </div>
+                <div id="phosphorusDetailsList" class="phosphorusDetailsListRolled">
+                    <div class="levelColor1">
+                        <p class="levelsTextDetails">Very Low</p>
+                    </div>
+                    <div class="levelColor2">
+                        <p class="levelsTextDetails">Low</p>
+                    </div>
+                    <div class="levelColor3">
+                        <p class="levelsTextDetails">Medium</p>
+                    </div>
+                    <div class="levelColor4">
+                        <p class="levelsTextDetails">High</p>
+                    </div>
+                    <div class="levelColor5">
+                        <p class="levelsTextDetails">Very High</p>
+                    </div>
+                </div>
+                <p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p><img id="nitrateIcon" class="levelsSelectorIcon" src="./imgs/N.png" onmouseover="displayLevels('nitrate'); showLevelDetails(1);" onmouseout="transitionToYear(currentYear); showLevelDetails(-1);">
+                <p class="levelsText">Gross Erosion</p><img id="erosionIcon" class="levelsSelectorIcon" src="./imgs/E.png" onmouseover="displayLevels('erosion'); showLevelDetails(2);" onmouseout="transitionToYear(currentYear); showLevelDetails(-2);">
+                <p class="levelsText">Phosphorus Index Risk Assessment</p><img id="phoshorusIcon" class="levelsSelectorIcon" src="./imgs/P.png" onmouseover="displayLevels('phosphorus'); showLevelDetails(3);" onmouseout="transitionToYear(currentYear); showLevelDetails(-3);">
+        </div>
+
+        <div id="featuresTab" class="consoleTab" style="display:none;">
+                <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon" src="./imgs/Icon_Flood_Frequency.svg" onmouseover="displayLevels('flood'); showLevelDetails(4);" onmouseout="transitionToYear(currentYear); showLevelDetails(-4);">
+                <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon" src="./imgs/Icon_Strategic_Wetlands.svg" onmouseover="displayLevels('wetland');" onmouseout="transitionToYear(currentYear);">
+                <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onmouseover="displayLevels('subwatershed');" onmouseout="transitionToYear(currentYear);">
+                <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onmouseover="displayLevels('drainage'); showLevelDetails(5);" onmouseout="transitionToYear(currentYear); showLevelDetails(-5);">
+                <div id="floodFrequencyDetailsList" class="floodFrequencyDetailsListRolled">
+                    <div class="floodColor1">
+                        <p class="levelsTextDetails">None</p>
+                    </div>
+                    <div class="floodColorNone">
+                        <p class="levelsTextDetails">to</p>
+                    </div>
+                    <div class="floodColor2">
+                        <p class="levelsTextDetails">Ponded</p>
+                    </div>
+                </div>
+                <div id="drainageClassDetailsList" class="drainageClassDetailsListRolled">
+                    <div class="drainageColor1">
+                        <p class="levelsTextDetails">Poor</p>
+                    </div>
+                    <div class="floodColorNone">
+                        <p class="levelsTextDetails">to</p>
+                    </div>
+                    <div class="drainageColor2">
+                        <p class="levelsTextDetails">Excessive</p>
+                    </div>
+                </div>
+            </div>
+     </div>
 
 
-<div id="resultsButton" class="resultsButtonRolled" onmouseover="roll(2); " onmouseout="roll(2);" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
+    <div id="resultsButton" class="resultsButtonRolled" onmouseover="roll(2); " onmouseout="roll(2);" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png">
+    </div>
 
 
-<iframe id="resultsFrame" class="resultsFrameRolled" src="./results.html"></iframe>
-<iframe id="creditsFrame" style="display:none;" src="./credits.html"></iframe>
-<img id="closeCredits" style="display:none;" src="./imgs/close_black.png" onclick="closeCreditFrame() ;">
-<iframe id="uploadDownloadFrame" style="display:none;" src="./uploadDownload.html"></iframe>
+    <iframe id="resultsFrame" class="resultsFrameRolled" src="./results.html"></iframe>
+    <iframe id="creditsFrame" style="display:none;" src="./credits.html"></iframe>
+    <img id="closeCredits" style="display:none;" src="./imgs/close_black.png" onclick="closeCreditFrame() ;">
+    <iframe id="uploadDownloadFrame" style="display:none;" src="./uploadDownload.html"></iframe>
 
-<img id="logoBase" src="./imgs/inGameLogo.png">  
-<img id="uploadDownloadButton" class="upperButton" width="40px" src="./imgs/load.png" onclick="showUploadDownload();">
-<img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png" onclick="showCredits();">
-<img id="closeUploadDownload" style="display:none;" src="./imgs/close_black.png" onclick="closeUploadDownloadFrame();">
-</div>
+    <img id="logoBase" src="./imgs/inGameLogo.png">
+    <img id="uploadDownloadButton" class="upperButton" width="40px" src="./imgs/load.png" onclick="showUploadDownload();">
+    <img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png" onclick="showCredits();">
+    <img id="closeUploadDownload" style="display:none;" src="./imgs/close_black.png" onclick="closeUploadDownloadFrame();">
 
-<div id="year0Button" class="year0Button" onclick="transitionToYear(0); switchYearTab(0);"></div>
-<div id="year1Button" class="year1Button" onclick="transitionToYear(1); switchYearTab(1);"><img id ="year1Image" class="yearSelected" src="./imgs/one.png"></div>
-<div id="year2Button" class="year2Button" onclick="transitionToYear(2); switchYearTab(2);"><img id ="year2Image" class="yearNotSelected" src="./imgs/two.png"></div>
-<div id="year3Button" class="year3Button" onclick="transitionToYear(3); switchYearTab(3);"><img id ="year3Image" class="yearNotSelected" src="./imgs/three.png"></div>
 
-<div id="bottomHUD" class="bottomHUD"><p id="currentInfo"></p></div>
+    <div id="year0Button" class="year0Button" onclick="transitionToYear(0); switchYearTab(0);"></div>
+    <div id="year1Button" class="year1Button" onclick="transitionToYear(1); switchYearTab(1);"><img id="year1Image" class="yearSelected" src="./imgs/one.png">
+    </div>
+    <div id="year2Button" class="year2Button" onclick="transitionToYear(2); switchYearTab(2);"><img id="year2Image" class="yearNotSelected" src="./imgs/two.png">
+    </div>
+    <div id="year3Button" class="year3Button" onclick="transitionToYear(3); switchYearTab(3);"><img id="year3Image" class="yearNotSelected" src="./imgs/three.png">
+    </div>
 
-<script>
+    <script>
+        //Start Graphical Front-End
+        initWorkspace();
+    </script>
 
-//Start Graphical Front-End
-initWorkspace();
-
-</script>
 
 </body>
 
