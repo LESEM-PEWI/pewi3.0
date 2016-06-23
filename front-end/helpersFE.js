@@ -1,12 +1,21 @@
 var currentRow = -1;
-var toolbarRolled = true ;
+var toolbarRolled = false ;
 /* global camera, scene, boardData,
           renderer, currentBoard, THREE, 
           currentYear, textureArray, riverPoints,
-          tiles, mouse, raycaster,
+          mouse, raycaster,
           isShiftDown, modalUp, precip, 
           painter, Totals, river,
           Results, initData, hoveredOver*/
+var meshGeometry = new THREE.Geometry();
+var meshMaterials = [];
+var previousHover = null;
+var tileHeight = 12;
+var tileWidth = 18;
+var rowCutOffs = [] ; //y coor of top left corner of each tile
+var columnCutOffs = [] ;
+var meshArray = [];
+var mesh = null;
 
 //onResize dynamically adjusts to window size changes
 function onResize() {
@@ -18,32 +27,141 @@ function onResize() {
 //displayBoard initializes a board with graphics using addTile()
 function displayBoard() {
     
-    for(var i = 0; i < boardData[currentBoard].map.length; i++){
-        
-        addTile(boardData[currentBoard].map[i]);
+    riverPoints = [] ;
     
+    //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
+    for(var i = 0; i < boardData[currentBoard].map.length; i++){
+        addTile(boardData[currentBoard].map[i]);
     }
     
+    for(var i = 0; i < meshGeometry.faces.length; i+=2){
+        meshGeometry.faces[i].materialIndex = i/2;
+        meshGeometry.faces[i+1].materialIndex = i/2;
+    }
+    
+    //create one mesh from the meshGeometry and meshMaterials objects
+    mesh = new THREE.Mesh(meshGeometry, new THREE.MeshFaceMaterial(meshMaterials));
+    scene.add(mesh);
+    
+    //calculate locations of tiles on grid for highlighting and landType changes
+    calculateCutoffs();
+    
 } //end displayBoard
+
+//highlightTile updates the tile that should be highlighted.
+function highlightTile(id) {
+    
+    //if a previous tile was selected for highlighting, unhighlight that tile
+    if(previousHover != null){
+        meshMaterials[previousHover].emissive.setHex(0x000000);
+    }
+    
+    //highlight the new tile 
+    //if not a tile
+    if(id != -1 ){
+    
+    meshMaterials[id].emissive.setHex(0x7f7f7f);
+    previousHover = id;
+    
+    document.getElementById("position").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
+    }
+    
+}
+
+//changeLandTypeTile changes the landType of a selected tile
+function changeLandTypeTile(id) {
+    
+    //change the materials of the faces in the meshMaterials array and update the boardData
+    meshMaterials[id].map = textureArray[painter];
+    boardData[currentBoard].map[id].landType[currentYear] = painter;
+    boardData[currentBoard].map[id].update(currentYear);
+    
+}
+
+function getTileID(x,y){
+    
+    //x and y in terms of three.js 3d coordinates, not screen coordinates
+    
+    var tilesWide = boardData[currentBoard].width;
+    var tilesHigh = boardData[currentBoard].height;
+    
+    //calculate which column the tile is in
+    var col = 0 ;
+    
+    if(x < columnCutOffs[0] || x > columnCutOffs[columnCutOffs.length - 1]){
+        col = 0 ;
+    }
+    else{
+        while(x > columnCutOffs[col]){
+            col += 1 ;
+        }
+    }
+    
+     //calculate which row the tile is in
+    var row = 0 ;
+    
+    if(y > rowCutOffs[0] || y < rowCutOffs[rowCutOffs.length - 1]){
+        row = 0 ;
+    }
+    else{
+        while(y < rowCutOffs[row]){
+            row += 1 ;
+        }
+    }
+    
+    if(col==0 || row == 0){
+        return -1 ;
+    }
+    
+   return ((row-1) * tilesWide) + col - 1 ;
+
+}
+
+function calculateCutoffs() {
+    
+    var tilesWide = boardData[currentBoard].width;
+    var tilesHigh = boardData[currentBoard].height;
+    
+    var tempColumnCut = [] ;
+    var x ;
+    
+    x = - (tilesWide/2 - 1) * tileWidth ;
+    xmax = ((tilesWide/2 + 1) * tileWidth );
+    while(x <=  xmax ){
+        tempColumnCut.push(x);
+        x += tileWidth ;
+    }
+    
+    columnCutOffs = tempColumnCut ;
+
+    var tempRowCut = [] ;
+    var y ;
+    
+    y =  (tilesHigh/2 - 1) * tileHeight ;
+    ymax = (-(tilesHigh/2 + 1) * tileHeight);
+    while(y >=  ymax ){
+        tempRowCut.push(y);
+        y -= tileHeight ;
+    }
+    
+    rowCutOffs = tempRowCut ;
+
+}
 
 //addTile constructs the geometry of a tile and adds it to the scene
 function addTile(tile){
     
         var tilesWide = boardData[currentBoard].width;
         var tilesHigh = boardData[currentBoard].height;
-    
-        var tileHeight = 12;
-        var tileWidth = 18;
-        
-        //var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
         
         var tileGeometry = new THREE.Geometry();
         var tileMaterial;
         
-        var v1; var v2; var v3; var v4;
+        var v1, v2, v3, v4;
         
         var mapID = tile.id - 1;
 
+        //Retrieve the topography of adjacent tiles
         var topN24 = boardData[currentBoard].map[mapID - (tilesWide+1)] ? boardData[currentBoard].map[mapID - (tilesWide+1)].topography : 0;
         var topN23 = boardData[currentBoard].map[mapID - (tilesWide)] ? boardData[currentBoard].map[mapID - (tilesWide)].topography : 0;
         var topN22 = boardData[currentBoard].map[mapID - (tilesWide-1)] ? boardData[currentBoard].map[mapID - (tilesWide-1)].topography : 0;
@@ -53,6 +171,7 @@ function addTile(tile){
         var top23 = boardData[currentBoard].map[mapID + (tilesWide)] ? boardData[currentBoard].map[mapID + (tilesWide)].topography : 0;
         var top24 = boardData[currentBoard].map[mapID + (tilesWide+1)] ? boardData[currentBoard].map[mapID + (tilesWide+1)].topography : 0;
         
+        //Calculate the heights of vertices by averaging topographies of adjacent tiles and create a vector for each corner
         v1 = new THREE.Vector3(0,(topN24 + topN23 + topN1 + tile.topography)/4*10,0);
         v2 = new THREE.Vector3(tileWidth,(topN23 + topN22 + top1 + tile.topography)/4*10,0);
         v3 = new THREE.Vector3(tileWidth,(top24 + top23 + top1 + tile.topography)/4*10,tileHeight);
@@ -63,6 +182,7 @@ function addTile(tile){
         tileGeometry.vertices.push(v3);
         tileGeometry.vertices.push(v4);
         
+        //Create two new faces (triangles) for the tile
         var face = new THREE.Face3(2,1,0);
         face.normal.set(0,1,0); // normal
         tileGeometry.faces.push(face);
@@ -73,117 +193,99 @@ function addTile(tile){
         tileGeometry.faces.push(face);
         tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1,0),new THREE.Vector2(0,0),new THREE.Vector2(1,1)]); // uvs
         
+        
         if(tile.landType[currentYear] == 0){
-            tileMaterial = new THREE.MeshLambertMaterial({color: 0x000000, transparent: true, opacity: 0.0});
+            tileMaterial = new THREE.MeshBasicMaterial({color: 0x000000, transparent: true, opacity: 0.0});
+            meshMaterials.push(tileMaterial);
         } else {
-            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]]});
+            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]], side: THREE.DoubleSide});
+            meshMaterials.push(tileMaterial);
         }
         
+        //if this tile is the first in its row that is a streamNetwork tile add it to the riverPoints array
         if(tile.streamNetwork == 1 && currentRow != tile.row){
             riverPoints.push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide)/2, 1, tile.row * tileHeight - (tileHeight * tilesHigh)/2));
             currentRow = tile.row;
         }
-    
+        
+        //create a new mesh from the two faces for the tile    
         var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
         
-        newTile.receiveShadow = true;
-        newTile.castShadow = true;
-        
+        //change the x and z position of the tile dependent on the row and column that it is in
         newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide)/2;
         newTile.position.y = 0;
         newTile.position.z = tile.row * tileHeight - (tileHeight * tilesHigh)/2;
         
-        newTile.mapID = tile.id - 1;
+        //add the mapID to the 
+        newTile.mapID = mapID;
         
-        tile.graphics = newTile;
-        
-        tiles[mapID] = tile.graphics;
-        
-        scene.add(tile.graphics);
+        //add the tile to the meshGeometry which contains all vertices/faces of the merged tiles 
+        newTile.updateMatrix();
+        meshGeometry.merge(newTile.geometry, newTile.matrix);
     
 } //end addTile
+
+
+//refreshBoard removes the current mesh and clears the objects that store its data, then calls displayBoard
+function refreshBoard(){
+    
+    if(mesh != null){
+        scene.remove(mesh);
+    }
+    
+    meshGeometry = new THREE.Geometry();
+    meshMaterials = [];
+    
+    displayBoard();
+    
+} //end refreshBoard
 
 //transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
     
-    currentYear = year;
+      currentYear = year;
     
-    if(year > boardData[currentBoard].calculatedToYear){
-        boardData[currentBoard].calculatedToYear = year;
-        boardData[currentBoard].updateBoard();
-    }
+      if(year > boardData[currentBoard].calculatedToYear){
+          boardData[currentBoard].calculatedToYear = year;
+          boardData[currentBoard].updateBoard();
+      }
     
-    for(var i = 0; i < boardData[currentBoard].map.length; i++){
-        
-        scene.remove(tiles[i]);
-        addTile(boardData[currentBoard].map[i]);
-        
-    }
-    
+    refreshBoard();
+
 } //end transitionToYear
 
 //onDocumentMouseMove follows the cursor and highlights corresponding tiles
 function onDocumentMouseMove( event ) {
     
-	event.preventDefault();
-	
-	mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1);
-	
-	raycaster.setFromCamera( mouse, camera );
-	
-	var intersects = raycaster.intersectObjects(tiles);
-	
-	if ( intersects.length > 0 && !modalUp) {
+ 	event.preventDefault();
 
-		if ( hoveredOver != intersects[ 0 ].object ) {
-
-			if ( hoveredOver ) hoveredOver.material.emissive.setHex( hoveredOver.currentHex );
-
-			hoveredOver = intersects[ 0 ].object;
-			hoveredOver.currentHex = hoveredOver.material.emissive.getHex();
-		    hoveredOver.material.emissive.setHex( 0x7f7f7f );
-
-		}
-
-	}
+ 	mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1);
 	
-	renderer.render(scene, camera);
+ 	raycaster.setFromCamera( mouse, camera );
 	
+ 	var intersects = raycaster.intersectObjects(scene.children);
+ 	if(intersects.length > 0 && !modalUp) {
+        highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+ 	}
 } //end onDocumentMouseMove
 
 //onDocumentDoubleClick changes landType to the painted (selected) landType on double-click
 //and will change map to a monoculture if shift is held down
 function onDocumentDoubleClick( event ) {
     
-	event.preventDefault();
+    event.preventDefault();
+
+ 	mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1);
 	
-	mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+ 	raycaster.setFromCamera( mouse, camera );
 	
-	raycaster.setFromCamera( mouse, camera );
-	
-	var intersects = raycaster.intersectObjects( tiles );
-	
-	if( !isShiftDown ){
+ 	var intersects = raycaster.intersectObjects(scene.children);
+    
+    if( !isShiftDown ){
 	
         if ( intersects.length > 0 && !modalUp) {
             
-        	var intersect = intersects[ 0 ];
-        	
-        	//console.log(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear]);
-        	
-        	if(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear] != 0){
-        	    
-        	    boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear] = painter ;
-        	
-        	    boardData[currentBoard].map[hoveredOver.mapID].update();
-        	    
-        		scene.remove(hoveredOver);
-        		
-                addTile(boardData[currentBoard].map[hoveredOver.mapID]);
-                
-        	}
-        	
-        	//console.log(boardData[currentBoard].map[hoveredOver.mapID].landType[currentYear]);
+            changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
         	
         }
 	
@@ -192,17 +294,15 @@ function onDocumentDoubleClick( event ) {
 	        for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
                 if(boardData[currentBoard].map[i].landType[currentYear] != 0){
-                    scene.remove(tiles[i]);
-                    boardData[currentBoard].map[i].landType[currentYear] = painter;
-                    boardData[currentBoard].map[i].update();
-                    addTile(boardData[currentBoard].map[i]);
+                    
+                    changeLandTypeTile(i);
+
                 }
 
             }
 	    
 	}
-	
-	renderer.render(scene, camera);
+
 }//end onDocumentMouseDown(event)
 
 //onDocumentKeyDown listens for the shift key held down
@@ -292,34 +392,29 @@ function resultsEnd() {
 
 //roll controls the display of the toolbars on the left
 function roll(value) {
-    
-    if(value==1){
+    if (value == 1) {
+
+        if (!toolbarRolled) {
+
+            document.getElementById('toolsButton').style.left = "0px" ;
+            document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')" ;
+            
+            document.getElementById('tabButtons').className = "tabButtonsRolled" ;
+            document.getElementById('leftConsole').className = "leftConsoleRolled" ;
+            
+            toolbarRolled = true;
+        }
+        else {
+
+            document.getElementById('toolsButton').style.left = "123px" ;
+            document.getElementById('toolsButton').style.backgroundImage = "none" ;
+            
+            document.getElementById('tabButtons').className = "tabButtons" ;
+            document.getElementById('leftConsole').className = "leftConsole" ;
+           
+            toolbarRolled = false;
+        }
         
-    if( document.getElementById("landUseConsole").className == "landUseConsole"){
-     document.getElementById("landUseConsole").className = "landUseConsoleRolled" ;
-     document.getElementById("toolsButton").className = "toolsButtonRolled" ;
-     document.getElementById("precipConsole").className = "precipConsoleRolled";
-     document.getElementById("precipButton").className = "precipButtonRolled";
-     document.getElementById("terrainButton").className = "terrainButtonRolled";
-     document.getElementById("levelsConsole").className = "levelsConsoleRolled";
-     document.getElementById("levelsButton").className = "levelsButtonRolled";
-     document.getElementById("featuresConsole").className = "featuresConsoleRolled";
-     document.getElementById("featuresButton").className = "featuresButtonRolled";
-      toolbarRolled = true;
-    }
-    else{
-        document.getElementById("landUseConsole").className = "landUseConsole";
-        document.getElementById("toolsButton").className = "toolsButton" ;
-        document.getElementById("precipConsole").className = "precipConsole";
-        document.getElementById("precipButton").className = "precipButton";
-        document.getElementById("terrainButton").className = "terrainButton";
-        document.getElementById("levelsConsole").className = "levelsConsole";
-        document.getElementById("levelsButton").className = "levelsButton";
-        document.getElementById("featuresConsole").className = "featuresConsole";
-        document.getElementById("featuresButton").className = "featuresButton";
-        toolbarRolled = false;
-    }
-    
     }//left tollbox
     
     if(value==2){
@@ -405,47 +500,36 @@ function updatePrecip(year) {
 //switchConsoleTab updates the currently selected toolbar on the left
 function switchConsoleTab(value){
 
+    var element = document.getElementsByClassName("imgSelected") ;
+    element[0].className = "imgNotSelected" ;
+    
+    var elements = document.getElementsByClassName("consoleTab");
+    
+     for (var i = 0; i < elements.length; i++) {
+          elements[i].style.display = "none" ;  
+     }
+    
     if(value==1){
+        
         document.getElementById('terrainImg').className = "imgSelected" ;
-        document.getElementById('precipImg').className = "imgNotSelected" ;
-        document.getElementById('levelsImg').className = "imgNotSelected";
-        document.getElementById('featuresImg').className = "imgNotSelected";
         document.getElementById('painterTab').style.display = "block";
-        document.getElementById('precipTab').style.display = "none" ;
-        document.getElementById('levelsTab').style.display = "none";
-        document.getElementById('featuresTab').style.display = "none";        
-    }
+     }
     
     if(value==2){
-        document.getElementById('terrainImg').className = "imgNotSelected" ;
+       
         document.getElementById('precipImg').className = "imgSelected" ;
-        document.getElementById('levelsImg').className = "imgNotSelected";
-        document.getElementById('featuresImg').className = "imgNotSelected";
-        document.getElementById('painterTab').style.display = "none";
         document.getElementById('precipTab').style.display = "block" ;
-        document.getElementById('levelsTab').style.display = "none";
-        document.getElementById('featuresTab').style.display = "none";
     }
     
     if(value==3){
-        document.getElementById('terrainImg').className = "imgNotSelected" ;
-        document.getElementById('precipImg').className = "imgNotSelected" ;
+        
         document.getElementById('levelsImg').className = "imgSelected";
-        document.getElementById('featuresImg').className = "imgNotSelected";
-        document.getElementById('painterTab').style.display = "none";
-        document.getElementById('precipTab').style.display = "none" ;
         document.getElementById('levelsTab').style.display = "block";
-        document.getElementById('featuresTab').style.display = "none";
     }
     
     if(value==4){
-        document.getElementById('terrainImg').className = "imgNotSelected";
-        document.getElementById('precipImg').className = "imgNotSelected" ;
-        document.getElementById('levelsImg').className = "imgNotSelected";
+
         document.getElementById('featuresImg').className = "imgSelected";
-        document.getElementById('painterTab').style.display = "none";
-        document.getElementById('precipTab').style.display = "none" ;
-        document.getElementById('levelsTab').style.display = "none";
         document.getElementById('featuresTab').style.display = "block";
     }
     
@@ -483,19 +567,24 @@ function switchYearTab(value){
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(type){
     
-    //Totals = new Results(boardData[currentBoard]);
+    //toggle off highlighting
+    
+    
+    Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
     
-    tilesCopy = [];
+    highlightTile(-1) ;
     
-    for(var i = 0; i < tiles.length; i++){
+    for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
-                tiles[i].material.map = textureArray[0];
-	            tiles[i].material.emissive.setHex( getHighlightColor(type, tiles[i].mapID) );
+        if(boardData[currentBoard].map[i].landType[currentYear] != 0){
+
+            meshMaterials[i].map = textureArray[0];
+            meshMaterials[i].emissive.setHex(getHighlightColor(type, i));
+
+        }
 
     }
-    
-    renderer.render(scene, camera);
     
 } //end displayLevels
 
@@ -713,7 +802,7 @@ function writeFileToDownloadString(){
     boardData[currentBoard].precipitation[2] + "," +
     boardData[currentBoard].precipitation[3];
 
-    if(i < tiles.length - 1){
+    if(i < boardData[currentBoard].map.length - 1){
       string = string + '\r\n';
     } else {
       //Do Nothing
@@ -728,59 +817,41 @@ function writeFileToDownloadString(){
 function downloadClicked() {
 
         var data = writeFileToDownloadString();
-
         var fileName = "pewiMap";
-
         var uri = 'data:text/csv;charset=UTF-8,' + escape(data);
-
         var link = document.createElement("a");
-
         link.href = uri;
-
         link.style = "visibility:hidden";
-
         link.download = fileName + ".csv";
-
+        
         document.body.appendChild(link);
-
         link.click();
-
         document.body.removeChild(link);
         
         closeUploadDownloadFrame() ;
+        
 }// end downloadClicked
 
 //uploadClicked enables the user to upload a .csv of board data
 function uploadClicked(e) {
 
     var files;
-
-
     files = e.target.files;
 
     if (files[0].name && !files[0].name.match(/\.csv/)) {
         alert("Incorrect File Type!");
-    }
-    else{
-
-    var reader = new FileReader();
-
-    reader.readAsText(files[0]);
-
-    reader.onload = function(e) {
-        
-        setupBoardFromUpload(reader.result);
-        
-        //clear initData
-        initData = [];
-
-    }
+    } else {
+        var reader = new FileReader();
+        reader.readAsText(files[0]);
+        reader.onload = function(e) {
+            setupBoardFromUpload(reader.result);
+            //clear initData
+            initData = [];
+        }
     }//end else
-    
-    //console.log(files);
+
     closeUploadDownloadFrame();
 
-    
 } //end uploadClicked
 
 
@@ -1140,8 +1211,6 @@ function displayResults() {
     string2 += "<td>cm</td>";
     
     string2 += "</tr>" ;
-    
-    //THIS SECTION DOES NOT APPEAR TO BE WORKING, CHECK
     
     string2 += "<tr><td>Strategic Wetland Use</td>";
     

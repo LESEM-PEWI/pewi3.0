@@ -2,7 +2,6 @@
 var camera, scene, raycaster, mouse, hoveredOver ;
 var renderer = new THREE.WebGLRenderer();
 var controls ;
-var tiles = [];
 var river = null;
 var riverPoints = [];
 var painter = 1;
@@ -16,8 +15,17 @@ var Totals ; //global current calculated results, NOTE, should be reassigned eve
 var counter = 0 ;
 var stats ;
 
+//setup instantiates the camera, lights, controls, shadowmap, and renderer. Called once at the beginning of game
 function setup() {
     
+    //set up renderer
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+    renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+	
+    
+    //setup stats display
     stats = new Stats();
     document.body.appendChild( stats.domElement ); 
     
@@ -36,7 +44,6 @@ function setup() {
     scene.add( hemiLight );
     
     var spotLight = new THREE.SpotLight( 0xffffff, 0.1 );
-    
     spotLight.position.set(0, 0, 0 );
     spotLight.position = camera.position;
 	spotLight.castShadow = true;
@@ -49,7 +56,6 @@ function setup() {
 	spotLight.shadow.mapSize.height = 2048;
 	spotLight.shadow.camera.near = 1;
 	spotLight.shadow.camera.far = 500;
-	lightHelper = new THREE.SpotLightHelper( spotLight );
 
      //set up camera
     camera.position.y = 320;
@@ -59,75 +65,22 @@ function setup() {
     //set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-    renderer.shadowMap.enabled = true;
-	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-	
-	camera.add(spotLight);
-	scene.add(lightHelper);
 
     //set up controls
     controls = new THREE.OrbitControls( camera, renderer.domElement );
-
     
     //add resize listener
     window.addEventListener('resize', onResize, false);
-
-}
-
-function setupSpace() {
-
-    //skybox
-
-    for (var i = 0; i < 6; i++) materialArray[i].side = THREE.BackSide;
-    var skyboxMaterial = new THREE.MeshFaceMaterial( materialArray );
-    skyboxGeom = new THREE.CubeGeometry( 5000, 5000, 5000, 1, 1, 1 );
-    var skybox = new THREE.Mesh( skyboxGeom, skyboxMaterial );
-    scene.add( skybox );
     
-    //add world elements here
+    setupSkyBox();
     
-    //addBoard
-    var board1 = new GameBoard() ;
-    loadBoard(board1, "./data.txt");
-
-    boardData.push(board1);
-    currentBoard++ ; //currentBoard now = 0
-    displayBoard() ;
-    boardData[currentBoard].updateBoard() ;
-    
-    //update Results to point to correct board since currentBoard is updated
-    Totals = new Results(boardData[currentBoard]);
-    
-    //Charlie
-    scene.remove(river);
-
-	var closedSpline = new THREE.CatmullRomCurve3( riverPoints );
-	closedSpline.type = 'chordal';
-	closedSpline.closed = false;
-	var extrudeSettings = {
-		steps			: 500,
-		bevelEnabled	: false,
-		extrudePath		: closedSpline
-	};
-    var pts = [];
-	pts.push( new THREE.Vector2 (-5,7.5 ));
-	pts.push (new THREE.Vector2 (-4,7.5));
-	pts.push (new THREE.Vector2 (-5,0));
-	pts.push (new THREE.Vector2 (-4,0));
-
-    var shape = new THREE.Shape( pts );
-	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
-				
-	var material = new THREE.MeshLambertMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
-	river = new THREE.Mesh( geometry, material );
-	scene.add( river );
+    setupHighlight();
 
 
-}//end setupSpace
+} //end setup
 
+//setupSkyBox instantiates the skybox background (HI-DEF Version)
 function setupSkyBox() {
-    
-    //skybox
 
     for (var i = 0; i < 6; i++) materialArray[i].side = THREE.BackSide;
     var skyboxMaterial = new THREE.MeshFaceMaterial( materialArray );
@@ -135,30 +88,36 @@ function setupSkyBox() {
     var skybox = new THREE.Mesh( skyboxGeom, skyboxMaterial );
     scene.add( skybox );
     
-}
+} //end setupSkyBox
 
+//setupBoardFromFile creates a new gameboard from a stored file and creates a river for the board
 function setupBoardFromFile(file) {
-    
-    //add world elements here
+
+    //remove points of previous board's river if present
+    if(riverPoints.length > 0){
+        riverPoints = [];
+    }
     
     //addBoard
     var boardFromFile = new GameBoard() ;
     loadBoard(boardFromFile, file);
 
     boardData.push(boardFromFile);
-    currentBoard++ ; //currentBoard now = 0
-    displayBoard() ;
+    currentBoard++ ;
     boardData[currentBoard].updateBoard() ;
+    
+    refreshBoard() ;
+    setupRiver();
     
     //update Results to point to correct board since currentBoard is updated
     Totals = new Results(boardData[currentBoard]);
     
-    setupRiver();
-    
-}
+} //end setupBoardFromFile
 
+//setupRiver creates a new CatmullRomCurve3 object for the river from the points stored in the riverPoints array
 function setupRiver() {
-    
+
+
     if(river != null){
         scene.remove(river);
     }
@@ -180,7 +139,7 @@ function setupRiver() {
     var shape = new THREE.Shape( pts );
 	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
 				
-	var material = new THREE.MeshLambertMaterial( {blending: THREE.NormalBlending, wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
+	var material = new THREE.MeshBasicMaterial( {wireframe: false, color: 0x40a4df, opacity: 0.75, transparent: true } );
 	river = new THREE.Mesh( geometry, material );
 	scene.add( river );
 	
@@ -188,7 +147,10 @@ function setupRiver() {
 
 function setupBoardFromUpload(data) {
     
-    //add world elements here
+    //remove points of previous board's river if present
+    if(riverPoints.length > 0){
+        riverPoints = [];
+    }
     
     //addBoard
     var boardFromUpload = new GameBoard() ;
@@ -197,26 +159,19 @@ function setupBoardFromUpload(data) {
 
     boardData.push(boardFromUpload);
     currentBoard++ ; //currentBoard now = 0
-    if(tiles.length != 0){
-        for(var i = 0; i < tiles.length; i++){
-            scene.remove(tiles[i]);
-        }
-        tiles = [];
-        riverPoints = [];
-    }
-    displayBoard();
     boardData[currentBoard].updateBoard();
+    
+    refreshBoard();
+    setupRiver();
     
     //update Results to point to correct board since currentBoard is updated
     Totals = new Results(boardData[currentBoard]);
-    
-    setupRiver();
     
 }
 
 function setupHighlight() {
 	
-	//set up mouse functions
+	//set up mouse functions and raycaster
 	raycaster = new THREE.Raycaster();
 	mouse = new THREE.Vector2(), hoveredOver;
 	
@@ -230,13 +185,11 @@ function setupHighlight() {
 
 
 function initWorkspace() {
-
+    
+    loadResources();
     setup();
-    loadResources() ;
-    setupSpace();
-    setupHighlight();
-    
-    
+    setupBoardFromFile("./data.txt");
+
 }
 
 //update area, what to update when something changes
