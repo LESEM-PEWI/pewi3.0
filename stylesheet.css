@@ -1,3 +1,6 @@
+/******CSS RESET*****/
+
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -28,6 +31,7 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
@@ -49,22 +53,95 @@ table {
 
 /*END CSS RESET */
 
+/******PAGINATION STYLING*****/
+
 body {
 	background-color: #FFFFFF;
-	margin: 0;
+	margin: 0px;
 	overflow: hidden;
-	}
-	
-
-.devConsole {
-    position: absolute;
-    background-color: rgba(159, 197, 209, 0.5);
-    right: 0px;
-    width: 200px;
-    height: 300px;
-    padding: 10px;
+	padding:0px;
 }
 
+/**left console**/
+.landUseConsole {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 12px;
+    left: 0px;
+    top:150px;
+    width:115px;
+    height:435px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.landUseConsoleRolled {
+    position: absolute;
+    background-color: rgba(6, 153, 75, 0.4);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 12px;
+    left: -115px;
+    top:150px;
+    width:115px;
+    height:435px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+	
+/**left console buttons**/
+.consoleButton, consoleButtonRolled {
+    background-color: rgba(0, 0, 0, 0.9);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-bottom-right-radius: 3px;
+    border-right: 0px solid #F0A61D;
+    border-top-right-radius: 0px;
+    height:40px;
+    position: absolute;
+    transition-property: none;
+    transition-property: left;
+    width:40px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.consoleButton {
+    left: 115px;
+}
+
+.consoleButton:hover {
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+    
+
+#toolsButton {
+    top: 150px;
+    background-image: none;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#terrainButton {
+    top: 260px;
+}
+
+#precipButton {
+    top: 300px;
+}
+
+#levelsButton {
+    top: 340px;
+}
+
+#featuresButton {
+    top: 380px;
+}
+	
 .resultsButton {
     position:absolute;
     top:150px;
@@ -123,45 +200,7 @@ body {
 
 
 
-.left-Elements {
-    position: absolute ;
-    left: 0px;
-    top:150px;
-    width:115px;
-    
-}
 
-.landUseConsole {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: 0px;
-    top:150px;
-    width:115px;
-    height:435px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-
-
-.landUseConsoleRolled {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: -115px;
-    top:150px;
-    width:115px;
-    height:435px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
 
 .landSelectorIcon {
     border-radius: 50% ;
@@ -188,44 +227,7 @@ body {
     box-shadow: 0px 0px 25px 0px rgba(20,80,214,0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
 }
 
-.toolsButton {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    top: 150px;
-    left: 115px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
 
-.toolsButtonRolled {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    top: 150px;
-    left: 0px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    
-}
-
-.toolsButtonRolled:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
-
-.toolsButton:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
 
 .precipConsole {
     position: absolute;
@@ -257,42 +259,6 @@ body {
     transition-duration: 0.4s;
 }
 
-.precipButton {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 3px;
-    top: 300px;
-    left: 115px;
-    width:40px;
-    height:40px ;
-    transition-property: none;
-    transition-property: left;
-    border-right: 0px solid #F0A61D;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.terrainButton {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 0px;
-    top: 260px;
-    left: 115px;
-    width:40px;
-    height:40px ;
-    transition-property: none;
-    transition-property: left;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
 .imgSelected {
     border-right: 2px solid #F0A61D;
 }
@@ -301,65 +267,6 @@ body {
     border-right: 0px solid #F0A61D;
 }
 
-.terrainButtonRolled {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    top: 260px;
-    left: -60px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.terrainButtonSelected {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    top: 256px;
-    left: 115px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-
-.terrainButton:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
-
-.precipButtonRolled {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    left: -60px;
-    top: 300px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    
-}
-
-.precipButtonRolled:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
-
-.precipButton:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
 
 .style-select {
     padding:3px;
@@ -490,40 +397,6 @@ td{
     border-left: 0px solid #F0A61D;
 }
 
-.levelsButton {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 3px;
-    top: 340px;
-    left: 115px;
-    width:40px;
-    height:40px ;
-    transition-property: none;
-    transition-property: left;
-    border-right: 0px solid #F0A61D;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.levelsButtonRolled {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    left: -60px;
-    top: 340px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    
-}
 
 .levelsConsole {
     position: absolute;
@@ -553,14 +426,6 @@ td{
     width:115px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
-}
-
-.levelsButtonRolled:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
-
-.levelsButton:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
 }
 
 .levelsSelectorIcon {
@@ -633,7 +498,7 @@ td{
 .nitrateDetailsList {
     position: absolute;
     top: 295px;
-    width: 115;
+    width: 115px;
     left: 0px;
     
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -643,7 +508,7 @@ td{
 .nitrateDetailsListRolled {
     position: absolute;
     top: 295px;
-    width: 115;
+    width: 115px;
     left: -115px;
     
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -653,7 +518,7 @@ td{
 .erosionDetailsList {
     position: absolute;
     top: 295px;
-    width: 115;
+    width: 115px;
     left: 0px;
     
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -663,7 +528,7 @@ td{
 .erosionDetailsListRolled {
     position: absolute;
     top: 295px;
-    width: 115;
+    width: 115px;
     left: -115px;
     
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -673,7 +538,7 @@ td{
 .phosphorusDetailsList {
     position: absolute;
     top: 295px;
-    width: 115;
+    width: 115px;
     left: 0px;
     
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -683,7 +548,7 @@ td{
 .phosphorusDetailsListRolled {
     position: absolute;
     top: 295px;
-    width: 115;
+    width: 115px;
     left: -115px;
     
     -webkit-transition-duration: 0.4s; /* Safari */

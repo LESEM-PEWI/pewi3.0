@@ -27,14 +27,7 @@ function onResize() {
 //displayBoard initializes a board with graphics using addTile()
 function displayBoard() {
     
-<<<<<<< HEAD
-    materials = [];
-    riverPoints = [];
-    singleGeometry = new THREE.Geometry();
-     
-=======
     //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
->>>>>>> origin/experimental
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
         addTile(boardData[currentBoard].map[i]);
     }
@@ -62,10 +55,14 @@ function highlightTile(id) {
     }
     
     //highlight the new tile 
+    //if not a tile
+    if(id != -1 ){
+    
     meshMaterials[id].emissive.setHex(0x7f7f7f);
     previousHover = id;
     
     document.getElementById("position").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
+    }
     
     reDisplayCurrentBoard();
 }
@@ -235,14 +232,8 @@ function refreshBoard(){
         scene.remove(mesh);
     }
     
-<<<<<<< HEAD
-    scene.remove(mesh) ;
-    singleGeometry = new THREE.Geometry();
-    materials = [];
-=======
     meshGeometry = new THREE.Geometry();
     meshMaterials = [];
->>>>>>> origin/experimental
     
     displayBoard();
     
@@ -272,9 +263,9 @@ function onDocumentMouseMove( event ) {
  	raycaster.setFromCamera( mouse, camera );
 	
  	var intersects = raycaster.intersectObjects(scene.children);
- 	
-    highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
-	
+ 	if(intersects.length > 0 && !modalUp) {
+        highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+ 	}
 } //end onDocumentMouseMove
 
 //onDocumentDoubleClick changes landType to the painted (selected) landType on double-click
@@ -404,27 +395,44 @@ function roll(value) {
     if(value==1){
         
     if( document.getElementById("landUseConsole").className == "landUseConsole"){
+     
+     var elements = document.getElementsByClassName("consoleButton");
+    
+     for (var i = 0; i < elements.length; i++) {
+        if(elements[i].id == "toolsButton"){
+            elements[i].style = "left: 0px; background-image: url('./imgs/consoleTexture.png');  background-repeat:repeat;";
+        } else{
+          elements[i].style = "left: -60px";  
+        } 
+     }
+     //document.getElementsByClassName("consoleButton").className = "consoleButtonRolled";
+        
      document.getElementById("landUseConsole").className = "landUseConsoleRolled" ;
-     document.getElementById("toolsButton").className = "toolsButtonRolled" ;
      document.getElementById("precipConsole").className = "precipConsoleRolled";
-     document.getElementById("precipButton").className = "precipButtonRolled";
-     document.getElementById("terrainButton").className = "terrainButtonRolled";
      document.getElementById("levelsConsole").className = "levelsConsoleRolled";
-     document.getElementById("levelsButton").className = "levelsButtonRolled";
      document.getElementById("featuresConsole").className = "featuresConsoleRolled";
-     document.getElementById("featuresButton").className = "featuresButtonRolled";
+
       toolbarRolled = true;
     }
     else{
+       
+        //document.getElementById("toolsButton").className = "toolsButton" ;
+       
+        var elements = document.getElementsByClassName("consoleButton");
+    
+        for (var i = 0; i < elements.length; i++) {
+            if(elements[i].id == "toolsButton"){
+                elements[i].style = "left: 115px; background-image:none;  background-repeat:repeat;";
+            } else{
+                 elements[i].style = "left: 115px";  
+             } 
+        }
+       
         document.getElementById("landUseConsole").className = "landUseConsole";
-        document.getElementById("toolsButton").className = "toolsButton" ;
         document.getElementById("precipConsole").className = "precipConsole";
-        document.getElementById("precipButton").className = "precipButton";
-        document.getElementById("terrainButton").className = "terrainButton";
         document.getElementById("levelsConsole").className = "levelsConsole";
-        document.getElementById("levelsButton").className = "levelsButton";
         document.getElementById("featuresConsole").className = "featuresConsole";
-        document.getElementById("featuresButton").className = "featuresButton";
+       
         toolbarRolled = false;
     }
     
