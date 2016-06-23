@@ -63,36 +63,27 @@ body {
 }
 
 /**left console**/
-.landUseConsole {
-    position: absolute;
+#leftConsole {
     background-color: rgba(0, 0, 0, 0.7);
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 12px;
+    height:450px;
     left: 0px;
+    position: absolute;
     top:150px;
-    width:115px;
-    height:435px;
+    width:123px;
+   
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
 
-.landUseConsoleRolled {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: -115px;
-    top:150px;
-    width:115px;
-    height:435px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
+.consoleTab {
+    padding:4px;
+    left:0px;
 }
-	
+
 /**left console buttons**/
 .consoleButton, consoleButtonRolled {
     background-color: rgba(0, 0, 0, 0.9);
@@ -112,13 +103,12 @@ body {
 }
 
 .consoleButton {
-    left: 115px;
+    left: 123px;
 }
 
 .consoleButton:hover {
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
 }
-    
 
 #toolsButton {
     top: 150px;
@@ -141,6 +131,8 @@ body {
 #featuresButton {
     top: 380px;
 }
+	
+/* bhaha ajahaj */	
 	
 .resultsButton {
     position:absolute;
@@ -225,38 +217,6 @@ body {
 
 .landSelectedIcon:hover {
     box-shadow: 0px 0px 25px 0px rgba(20,80,214,0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
-}
-
-
-
-.precipConsole {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: 0px;
-    top: 150px;
-    width: 115px;
-    height: 260px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.precipConsoleRolled {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: -115px;
-    top:150px;
-    width:115px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
 }
 
 .imgSelected {
@@ -398,36 +358,6 @@ td{
 }
 
 
-.levelsConsole {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: 0px;
-    top: 150px;
-    width: 115px;
-    height: 260px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.levelsConsoleRolled {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: -115px;
-    top:150px;
-    width:115px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
 .levelsSelectorIcon {
     height:40px;
     width:40px;
@@ -555,78 +485,6 @@ td{
     transition-duration: 0.4s;
 }
 
-.featuresButton {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 3px;
-    top: 380px;
-    left: 115px;
-    width:40px;
-    height:40px ;
-    transition-property: none;
-    transition-property: left;
-    border-right: 0px solid #F0A61D;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.featuresButtonRolled {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    left: -60px;
-    top: 380px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    
-}
-
-.featuresConsole {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: 0px;
-    top: 150px;
-    width: 115px;
-    height: 260px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.featuresConsoleRolled {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: -115px;
-    top:150px;
-    width:115px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.featuresButtonRolled:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
-
-.featuresButton:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
 
 .featureSelectorIcon {
     border-radius: 50% ;

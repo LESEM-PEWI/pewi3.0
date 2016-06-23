@@ -40,10 +40,9 @@
     </div>
 
     <!-- console displays-->
-
-    <div id="landUseConsole" class="landUseConsole">
-
-        <div id="painterTab">
+    <div id="leftConsole">
+        
+        <div id="painterTab" class="consoleTab">
 
             <img id="paint1" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="paintChange(1);">
             <img id="paint2" class="landSelectorIcon" src="./imgs/conservationCorn.png" onclick="paintChange(2);">
@@ -66,8 +65,7 @@
         </div>
 
 
-        <div id="precipTab" style="display:none;">
-            <div id="precipConsole" class="precipConsole">
+        <div id="precipTab" class="consoleTab" style="display:none;">
                 <form method="precipValues" action=" ">
                     <div class="precipTitle">Precipitation</div>
 
@@ -120,12 +118,11 @@
                         </select>
                     </div>
                 </form>
-            </div>
+           
         </div>
 
-        <div id="levelsTab" style="display:none;">
-            <div id="levelsConsole" class="levelsConsole">
-                <div id="nitrateDetailsList" class="nitrateDetailsListRolled">
+        <div id="levelsTab" class="consoleTab" style="display:none;">
+               <div id="nitrateDetailsList" class="nitrateDetailsListRolled">
                     <div class="levelColor1">
                         <p class="levelsTextDetails">0 - 5 %</p>
                     </div>
@@ -180,11 +177,9 @@
                 <p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p><img id="nitrateIcon" class="levelsSelectorIcon" src="./imgs/N.png" onmouseover="displayLevels('nitrate'); showLevelDetails(1);" onmouseout="transitionToYear(currentYear); showLevelDetails(-1);">
                 <p class="levelsText">Gross Erosion</p><img id="erosionIcon" class="levelsSelectorIcon" src="./imgs/E.png" onmouseover="displayLevels('erosion'); showLevelDetails(2);" onmouseout="transitionToYear(currentYear); showLevelDetails(-2);">
                 <p class="levelsText">Phosphorus Index Risk Assessment</p><img id="phoshorusIcon" class="levelsSelectorIcon" src="./imgs/P.png" onmouseover="displayLevels('phosphorus'); showLevelDetails(3);" onmouseout="transitionToYear(currentYear); showLevelDetails(-3);">
-            </div>
         </div>
 
-        <div id="featuresTab" style="display:none;">
-            <div id="featuresConsole" class="featuresConsole">
+        <div id="featuresTab" class="consoleTab" style="display:none;">
                 <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon" src="./imgs/Icon_Flood_Frequency.svg" onmouseover="displayLevels('flood'); showLevelDetails(4);" onmouseout="transitionToYear(currentYear); showLevelDetails(-4);">
                 <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon" src="./imgs/Icon_Strategic_Wetlands.svg" onmouseover="displayLevels('wetland');" onmouseout="transitionToYear(currentYear);">
                 <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onmouseover="displayLevels('subwatershed');" onmouseout="transitionToYear(currentYear);">
@@ -212,11 +207,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-    </div>
-
-
+     </div>
 
 
     <div id="resultsButton" class="resultsButtonRolled" onmouseover="roll(2); " onmouseout="roll(2);" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png">

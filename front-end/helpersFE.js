@@ -1,5 +1,5 @@
 var currentRow = -1;
-var toolbarRolled = true ;
+var toolbarRolled = false ;
 /* global camera, scene, boardData,
           renderer, currentBoard, THREE, 
           currentYear, textureArray, riverPoints,
@@ -391,51 +391,46 @@ function resultsEnd() {
 
 //roll controls the display of the toolbars on the left
 function roll(value) {
-    
-    if(value==1){
-        
-    if( document.getElementById("landUseConsole").className == "landUseConsole"){
-     
-     var elements = document.getElementsByClassName("consoleButton");
-    
-     for (var i = 0; i < elements.length; i++) {
-        if(elements[i].id == "toolsButton"){
-            elements[i].style = "left: 0px; background-image: url('./imgs/consoleTexture.png');  background-repeat:repeat;";
-        } else{
-          elements[i].style = "left: -60px";  
-        } 
-     }
-     //document.getElementsByClassName("consoleButton").className = "consoleButtonRolled";
-        
-     document.getElementById("landUseConsole").className = "landUseConsoleRolled" ;
-     document.getElementById("precipConsole").className = "precipConsoleRolled";
-     document.getElementById("levelsConsole").className = "levelsConsoleRolled";
-     document.getElementById("featuresConsole").className = "featuresConsoleRolled";
+    if (value == 1) {
 
-      toolbarRolled = true;
-    }
-    else{
-       
-        //document.getElementById("toolsButton").className = "toolsButton" ;
-       
-        var elements = document.getElementsByClassName("consoleButton");
-    
-        for (var i = 0; i < elements.length; i++) {
-            if(elements[i].id == "toolsButton"){
-                elements[i].style = "left: 115px; background-image:none;  background-repeat:repeat;";
-            } else{
-                 elements[i].style = "left: 115px";  
-             } 
+        if (!toolbarRolled) {
+
+            var elements = document.getElementsByClassName("consoleButton");
+
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].id == "toolsButton") {
+                    elements[i].style.left = "0px" ;
+                    elements[i].style.backgroundImage = "url('./imgs/consoleTexture.png')" ;
+                }
+                else {
+                    elements[i].style.left = "-60px";
+                }
+            }
+
+            document.getElementById('leftConsole').style.left = "-123px" ;
+            
+
+            toolbarRolled = true;
         }
-       
-        document.getElementById("landUseConsole").className = "landUseConsole";
-        document.getElementById("precipConsole").className = "precipConsole";
-        document.getElementById("levelsConsole").className = "levelsConsole";
-        document.getElementById("featuresConsole").className = "featuresConsole";
-       
-        toolbarRolled = false;
-    }
-    
+        else {
+
+            var elements = document.getElementsByClassName("consoleButton");
+
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].id == "toolsButton") {
+                    elements[i].style.left = "123px" ;
+                    elements[i].style.backgroundImage = "none";
+                }
+                else {
+                    elements[i].style.left = "123px" ;
+                }
+            }
+
+             document.getElementById('leftConsole').style.left = "0px" ;
+           
+            toolbarRolled = false;
+        }
+        
     }//left tollbox
     
     if(value==2){
@@ -521,47 +516,36 @@ function updatePrecip(year) {
 //switchConsoleTab updates the currently selected toolbar on the left
 function switchConsoleTab(value){
 
+    var element = document.getElementsByClassName("imgSelected") ;
+    element[0].className = "imgNotSelected" ;
+    
+    var elements = document.getElementsByClassName("consoleTab");
+    
+     for (var i = 0; i < elements.length; i++) {
+          elements[i].style.display = "none" ;  
+     }
+    
     if(value==1){
+        
         document.getElementById('terrainImg').className = "imgSelected" ;
-        document.getElementById('precipImg').className = "imgNotSelected" ;
-        document.getElementById('levelsImg').className = "imgNotSelected";
-        document.getElementById('featuresImg').className = "imgNotSelected";
         document.getElementById('painterTab').style.display = "block";
-        document.getElementById('precipTab').style.display = "none" ;
-        document.getElementById('levelsTab').style.display = "none";
-        document.getElementById('featuresTab').style.display = "none";        
-    }
+     }
     
     if(value==2){
-        document.getElementById('terrainImg').className = "imgNotSelected" ;
+       
         document.getElementById('precipImg').className = "imgSelected" ;
-        document.getElementById('levelsImg').className = "imgNotSelected";
-        document.getElementById('featuresImg').className = "imgNotSelected";
-        document.getElementById('painterTab').style.display = "none";
         document.getElementById('precipTab').style.display = "block" ;
-        document.getElementById('levelsTab').style.display = "none";
-        document.getElementById('featuresTab').style.display = "none";
     }
     
     if(value==3){
-        document.getElementById('terrainImg').className = "imgNotSelected" ;
-        document.getElementById('precipImg').className = "imgNotSelected" ;
+        
         document.getElementById('levelsImg').className = "imgSelected";
-        document.getElementById('featuresImg').className = "imgNotSelected";
-        document.getElementById('painterTab').style.display = "none";
-        document.getElementById('precipTab').style.display = "none" ;
         document.getElementById('levelsTab').style.display = "block";
-        document.getElementById('featuresTab').style.display = "none";
     }
     
     if(value==4){
-        document.getElementById('terrainImg').className = "imgNotSelected";
-        document.getElementById('precipImg').className = "imgNotSelected" ;
-        document.getElementById('levelsImg').className = "imgNotSelected";
+
         document.getElementById('featuresImg').className = "imgSelected";
-        document.getElementById('painterTab').style.display = "none";
-        document.getElementById('precipTab').style.display = "none" ;
-        document.getElementById('levelsTab').style.display = "none";
         document.getElementById('featuresTab').style.display = "block";
     }
     
