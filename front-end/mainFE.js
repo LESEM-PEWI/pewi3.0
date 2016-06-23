@@ -120,6 +120,7 @@ function setupBoardFromFile(file) {
 //setupRiver creates a new CatmullRomCurve3 object for the river from the points stored in the riverPoints array
 function setupRiver() {
 
+
     if(river != null){
         scene.remove(river);
     }
