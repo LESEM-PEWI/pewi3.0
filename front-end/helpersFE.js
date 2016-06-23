@@ -7,7 +7,7 @@ var toolbarRolled = true ;
           isShiftDown, modalUp, precip, 
           painter, Totals, river,
           Results, initData, hoveredOver*/
-var singleGeometry = new THREE.Geometry();
+var singleGeometry;
 var materials = [];
 var previousHover = null;
 var tileHeight = 12;
@@ -26,6 +26,8 @@ function onResize() {
 //displayBoard initializes a board with graphics using addTile()
 function displayBoard() {
     
+    singleGeometry = new THREE.Geometry();
+     
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
         addTile(boardData[currentBoard].map[i]);
@@ -36,11 +38,13 @@ function displayBoard() {
         singleGeometry.faces[i].materialIndex = i/2;
         singleGeometry.faces[i+1].materialIndex = i/2;
     }
+    
     mesh = new THREE.Mesh(singleGeometry, new THREE.MeshFaceMaterial(materials));
 
     scene.add(mesh);
     
-    meshArray.push(mesh);
+    //for raycasting
+    meshArray[0] = mesh ;
     
     calculateCutoffs();
     
@@ -51,20 +55,28 @@ function highlightTile(id) {
     if(previousHover != null){
         materials[previousHover].emissive.setHex(0x000000);
     }
-    
+   
+    if(id != -1 && boardData[currentBoard].map[id].landType[currentYear]){
+        
     materials[id].emissive.setHex(0x7f7f7f);
     
     previousHover = id;
     
-    reDisplayCurrentBoard();
+    }
     
+    reDisplayCurrentBoard();
 }
 
 function changeLandTypeTile(id) {
     
+    if(id != -1 && boardData[currentBoard].map[id].landType[currentYear]){
+    
     materials[id].map = textureArray[painter];
     
     boardData[currentBoard].map[id].landType[currentYear] = painter ;
+    
+    }
+    
 }
 
 function reDisplayCurrentBoard() {
@@ -75,6 +87,7 @@ function reDisplayCurrentBoard() {
 
 function getTileID(x,y){
     
+    //x and y in terms of three.js 3d coordinates, not screen coordinates
     
     var tilesWide = boardData[currentBoard].width;
     var tilesHigh = boardData[currentBoard].height;
@@ -86,7 +99,6 @@ function getTileID(x,y){
         col = 0 ;
     }
     else{
-        //rowCutOffs[row] corresponds to the right cutoff of row
         while(x > columnCutOffs[col]){
             col += 1 ;
         }
@@ -108,13 +120,8 @@ function getTileID(x,y){
         return -1 ;
     }
     
-    console.log("row: " + row + " col: " + col);
-    
-    console.log("id: " + ((row-1) * tilesWide) + col - 1 );
-    
-    return ((row-1) * tilesWide) + col - 1 ;
+   return ((row-1) * tilesWide) + col - 1 ;
 
-    
 }
 
 function calculateCutoffs() {
@@ -145,9 +152,6 @@ function calculateCutoffs() {
     }
     
     rowCutOffs = tempRowCut ;
-    
-    console.log(columnCutOffs);
-    console.log(rowCutOffs);
 
 }
 
@@ -210,6 +214,7 @@ function addTile(tile){
             currentRow = tile.row;
         }
     
+        
         var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
         
         //newTile.receiveShadow = true;
@@ -268,8 +273,12 @@ function onDocumentMouseMove( event ) {
  	raycaster.setFromCamera( mouse, camera );
 	
  	var intersects = raycaster.intersectObjects(meshArray);
- 	
-    highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+ 	if(intersects.length > 0 && !modalUp){
+        highlightTile( getTileID(intersects[0].point.x, -intersects[0].point.z) );
+ 	}
+ 	else{
+ 	    highlightTile(-1);
+ 	}
 	
 } //end onDocumentMouseMove
 
@@ -1248,8 +1257,6 @@ function displayResults() {
     string2 += "<td>cm</td>";
     
     string2 += "</tr>" ;
-    
-    //THIS SECTION DOES NOT APPEAR TO BE WORKING, CHECK
     
     string2 += "<tr><td>Strategic Wetland Use</td>";
     
