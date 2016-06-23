@@ -14,6 +14,7 @@ var isShiftDown = false;
 var Totals ; //global current calculated results, NOTE, should be reassigned every time currentBoard is changed
 var counter = 0 ;
 var stats ;
+var SCREEN_WIDTH, ASPECT, NEAR, FAR;
 
 //setup instantiates the camera, lights, controls, shadowmap, and renderer. Called once at the beginning of game
 function setup() {
@@ -33,8 +34,8 @@ function setup() {
     scene = new THREE.Scene();
     
     //camera
-     var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
-     var ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
+     SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+     ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
      camera = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
      scene.add(camera);
 
@@ -61,6 +62,8 @@ function setup() {
     camera.position.y = 320;
     camera.position.z = 18;
     camera.rotation.x = -45 * Math.PI / 180;
+    
+    console.log(camera.position.y + "camera.position" + " " + camera.rotation);
     
     //set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
