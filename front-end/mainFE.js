@@ -126,6 +126,7 @@ function setupBoardFromFile(file) {
 
 function setupRiver() {
 
+
     if(river != null){
         scene.remove(river);
     }

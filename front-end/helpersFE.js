@@ -26,6 +26,8 @@ function onResize() {
 //displayBoard initializes a board with graphics using addTile()
 function displayBoard() {
     
+    materials = [];
+    riverPoints = [];
     singleGeometry = new THREE.Geometry();
      
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
@@ -241,7 +243,7 @@ function addTile(tile){
 
 function clearBoard(){
     
-    scene.remove(singleGeometry);
+    scene.remove(mesh) ;
     singleGeometry = new THREE.Geometry();
     materials = [];
     
