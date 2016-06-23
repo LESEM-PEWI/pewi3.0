@@ -27,6 +27,8 @@ function onResize() {
 //displayBoard initializes a board with graphics using addTile()
 function displayBoard() {
     
+    riverPoints = [] ;
+    
     //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
         addTile(boardData[currentBoard].map[i]);
