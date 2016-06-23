@@ -1,3 +1,10 @@
+/**
+
+Palette:
+#F0A61D - orange
+
+**/
+
 /******CSS RESET*****/
 
 
@@ -63,38 +70,36 @@ body {
 }
 
 /**left console**/
-.landUseConsole {
-    position: absolute;
+#leftConsole {
     background-color: rgba(0, 0, 0, 0.7);
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 12px;
-    left: 0px;
+    height:450px;
+    position: absolute;
     top:150px;
-    width:115px;
-    height:435px;
+    width:123px;
+   
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
 
-.landUseConsoleRolled {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: -115px;
-    top:150px;
-    width:115px;
-    height:435px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
+.leftConsole{
+    left: 0px;
 }
-	
+
+.leftConsoleRolled{
+    left: -123px;
+}
+
+.consoleTab {
+    left:0px;
+    padding:4px;
+}
+
 /**left console buttons**/
-.consoleButton, consoleButtonRolled {
+.consoleButton {
     background-color: rgba(0, 0, 0, 0.9);
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
@@ -111,14 +116,25 @@ body {
     transition-duration: 0.4s;
 }
 
-.consoleButton {
-    left: 115px;
-}
-
 .consoleButton:hover {
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
 }
-    
+
+.tabButtons, #toolsButton {
+    left: 123px;
+    position:absolute;
+
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.tabButtonsRolled {
+    left: -60px;
+    position:absolute;
+
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
 
 #toolsButton {
     top: 150px;
@@ -142,73 +158,15 @@ body {
     top: 380px;
 }
 	
-.resultsButton {
-    position:absolute;
-    top:150px;
-    right:0px;
-    background-color: rgba(14,71,204,0.8) ;
-    
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-    height:40px;
-    width:140px;
-    
-    -webkit-transition-duration: 1s; /* Safari */
-    transition-duration: 1s;
-}
+/**inner elements of left console**/
 
-.resultsButtonFar {
-    position:absolute;
-    top:150px;
-    right:85%;
-    background-color: rgba(14,71,204,0.8) ;
-    
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-    height:40px;
-    width:140px;
-    
-    -webkit-transition-duration: 1s; /* Safari */
-    transition-duration: 1s;
-}
-
-.resultsButton:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
-
-
-.resultsButtonRolled {
-    position:absolute;
-    top:150px;
-    right:-100px;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    height:40px;
-    width:140px;
-    
-    -webkit-transition-duration: 1s; /* Safari */
-    transition-duration: 1s;
-}
-
-.resultsButtonRolled:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
-
-
-
-
-
-.landSelectorIcon {
+/*terrain selector*/
+.landSelectorIcon, .landSelectedIcon {
     border-radius: 50% ;
     height:40px;
     width:40px;
     margin: 6px ;
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-   
 }
 
 .landSelectorIcon:hover {
@@ -216,10 +174,6 @@ body {
 }
 
 .landSelectedIcon {
-    border-radius: 50% ;
-    height:40px;
-    width:40px;
-    margin: 6px ;
     box-shadow: 0px 0px 16px 5px rgba(14,71,204,0.5), 0 17px 50px 0 rgba(14,71,204,0.4);
 }
 
@@ -227,206 +181,61 @@ body {
     box-shadow: 0px 0px 25px 0px rgba(20,80,214,0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
 }
 
-
-
-.precipConsole {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: 0px;
-    top: 150px;
-    width: 115px;
-    height: 260px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.precipConsoleRolled {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: -115px;
-    top:150px;
-    width:115px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.imgSelected {
-    border-right: 2px solid #F0A61D;
-}
-
-.imgNotSelected {
-    border-right: 0px solid #F0A61D;
-}
-
-
-.style-select {
-    padding:3px;
-    margin: 8px;
-    -webkit-border-radius:4px;
-    -moz-border-radius:4px;
+/*precip selector*/
+.styled-select {
+    background: #3b3b3b;
+    border:none;    
     border-radius:4px;
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-    background: #3b3b3b;
     color:#fff;
-    display:inline-block;
-    border:none;
-    outline:none;
     cursor:pointer;
-    text-align:center;
-}
-
-.precipTitle {
+    display:inline-block;
+    margin: 8px;
+    outline:none;
     padding:3px;
-    margin: 4px;
+    text-align:center;
+    
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+}
+
+#precipTitle {
     color:#fff;
+    margin: 4px;
+    padding:3px;
     text-align:center;
 }
 
-.resultsFrameInvisible{
-    display:none;
-     
+/*levels map selector*/
+.levelColor1, .levelColor2, .levelColor3,
+.levelColor4, .levelColor5 {
+    height: 15px;
+    width: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
 
-.resultsFrameRolled{
-    position:absolute;
-    width:70%;
-    height:80%;
-    right:-75%;
-    top: 10%;
-    background-color: white;
-    -webkit-transition-duration: 1s; /* Safari */
-    transition-duration: 1s;
-    
-    
+.levelColor1 {
+    background-color: #e6bb00;
 }
 
-.resultsFrame{
-    position:absolute;
-    width:70%;
-    height:80%;
-    right:15%;
-    top: 10%;
-    background-color: white;
-    -webkit-transition-duration: 1s; /* Safari */
-    transition-duration: 1s;
-    
-    
+.levelColor2 {
+    background-color: #c97b08;
 }
 
-.resultsTable{
-    width:100%;
-    
+.levelColor3 {
+    background-color: #ad490d;
 }
 
-td{
-    margin: 10px;
-    text-align: left;
-    
+.levelColor4 {
+    background-color: #9a3010;
 }
 
-.year0Button {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    top: 400px;
-    right: 0px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
+.levelColor5 {
+    background-color: #871c12;
 }
 
-.year1Button {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    top: 450px;
-    right: 0px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.year2Button {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    top: 500px;
-    right: 0px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.year3Button {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    top: 550px;
-    right: 0px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.yearSelected {
-    border-left: 2px solid #F0A61D;
-}
-
-.yearNotSelected {
-    border-left: 0px solid #F0A61D;
-}
-
-
-.levelsConsole {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: 0px;
-    top: 150px;
-    width: 115px;
-    height: 260px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.levelsConsoleRolled {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: -115px;
-    top:150px;
-    width:115px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
 
 .levelsSelectorIcon {
     height:40px;
@@ -442,51 +251,6 @@ td{
     color: #fff;
     text-align: center;
     margin-top: 5px;
-}
-
-.levelColor1 {
-    background-color: #e6bb00;
-    height: 15px;
-    width: 15px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-}
-
-.levelColor2 {
-    background-color: #c97b08;
-    height: 15px;
-    width: 15px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-}
-
-.levelColor3 {
-    background-color: #ad490d;
-    height: 15px;
-    width: 15px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-}
-
-.levelColor4 {
-    background-color: #9a3010;
-    height: 15px;
-    width: 15px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-}
-
-.levelColor5 {
-    background-color: #871c12;
-    height: 15px;
-    width: 15px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    margin-left: 10px;
 }
 
 .levelsTextDetails {
@@ -555,78 +319,193 @@ td{
     transition-duration: 0.4s;
 }
 
-.featuresButton {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 3px;
-    top: 380px;
-    left: 115px;
-    width:40px;
-    height:40px ;
-    transition-property: none;
-    transition-property: left;
-    border-right: 0px solid #F0A61D;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
 
-.featuresButtonRolled {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    left: -60px;
-    top: 380px;
-    width:40px;
-    height:40px ;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    
-}
 
-.featuresConsole {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: 0px;
-    top: 150px;
-    width: 115px;
-    height: 260px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
 
-.featuresConsoleRolled {
-    position: absolute;
-    background-color: rgba(6, 153, 75, 0.4);
-    background-image: url('./imgs/consoleTexture.png');
-    background-repeat:repeat;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 12px;
-    left: -115px;
+
+
+
+
+
+
+
+
+
+
+
+	
+.resultsButton {
+    position:absolute;
     top:150px;
-    width:115px;
+    right:0px;
+    background-color: rgba(14,71,204,0.8) ;
+    
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    height:40px;
+    width:140px;
+    
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
+}
+
+.resultsButtonFar {
+    position:absolute;
+    top:150px;
+    right:85%;
+    background-color: rgba(14,71,204,0.8) ;
+    
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    height:40px;
+    width:140px;
+    
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
+}
+
+.resultsButton:hover{
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+
+
+.resultsButtonRolled {
+    position:absolute;
+    top:150px;
+    right:-100px;
+    background-color: rgba(0, 0, 0, 0.9);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    height:40px;
+    width:140px;
+    
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
+}
+
+.resultsButtonRolled:hover{
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
+
+
+
+
+
+
+
+.imgSelected {
+    border-right: 2px solid #F0A61D;
+}
+
+.imgNotSelected {
+    border-right: 0px solid #F0A61D;
+}
+
+
+
+
+.resultsFrameInvisible{
+    display:none;
+     
+}
+
+.resultsFrameRolled{
+    position:absolute;
+    width:70%;
+    height:80%;
+    right:-75%;
+    top: 10%;
+    background-color: white;
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
+    
+    
+}
+
+.resultsFrame{
+    position:absolute;
+    width:70%;
+    height:80%;
+    right:15%;
+    top: 10%;
+    background-color: white;
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
+    
+    
+}
+
+
+.year0Button {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    top: 400px;
+    right: 0px;
+    width:40px;
+    height:40px ;
+    
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
 
-.featuresButtonRolled:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+.year1Button {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    top: 450px;
+    right: 0px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
 }
 
-.featuresButton:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+.year2Button {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    top: 500px;
+    right: 0px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
 }
+
+.year3Button {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    top: 550px;
+    right: 0px;
+    width:40px;
+    height:40px ;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.yearSelected {
+    border-left: 2px solid #F0A61D;
+}
+
+.yearNotSelected {
+    border-left: 0px solid #F0A61D;
+}
+
+
+
+
 
 .featureSelectorIcon {
     border-radius: 50% ;

@@ -1,5 +1,5 @@
 var currentRow = -1;
-var toolbarRolled = true ;
+var toolbarRolled = false ;
 /* global camera, scene, boardData,
           renderer, currentBoard, THREE, 
           currentYear, textureArray, riverPoints,
@@ -26,6 +26,8 @@ function onResize() {
 
 //displayBoard initializes a board with graphics using addTile()
 function displayBoard() {
+    
+    riverPoints = [] ;
     
     //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
@@ -64,7 +66,6 @@ function highlightTile(id) {
     document.getElementById("position").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
     }
     
-    reDisplayCurrentBoard();
 }
 
 //changeLandTypeTile changes the landType of a selected tile
@@ -391,51 +392,29 @@ function resultsEnd() {
 
 //roll controls the display of the toolbars on the left
 function roll(value) {
-    
-    if(value==1){
-        
-    if( document.getElementById("landUseConsole").className == "landUseConsole"){
-     
-     var elements = document.getElementsByClassName("consoleButton");
-    
-     for (var i = 0; i < elements.length; i++) {
-        if(elements[i].id == "toolsButton"){
-            elements[i].style = "left: 0px; background-image: url('./imgs/consoleTexture.png');  background-repeat:repeat;";
-        } else{
-          elements[i].style = "left: -60px";  
-        } 
-     }
-     //document.getElementsByClassName("consoleButton").className = "consoleButtonRolled";
-        
-     document.getElementById("landUseConsole").className = "landUseConsoleRolled" ;
-     document.getElementById("precipConsole").className = "precipConsoleRolled";
-     document.getElementById("levelsConsole").className = "levelsConsoleRolled";
-     document.getElementById("featuresConsole").className = "featuresConsoleRolled";
+    if (value == 1) {
 
-      toolbarRolled = true;
-    }
-    else{
-       
-        //document.getElementById("toolsButton").className = "toolsButton" ;
-       
-        var elements = document.getElementsByClassName("consoleButton");
-    
-        for (var i = 0; i < elements.length; i++) {
-            if(elements[i].id == "toolsButton"){
-                elements[i].style = "left: 115px; background-image:none;  background-repeat:repeat;";
-            } else{
-                 elements[i].style = "left: 115px";  
-             } 
+        if (!toolbarRolled) {
+
+            document.getElementById('toolsButton').style.left = "0px" ;
+            document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')" ;
+            
+            document.getElementById('tabButtons').className = "tabButtonsRolled" ;
+            document.getElementById('leftConsole').className = "leftConsoleRolled" ;
+            
+            toolbarRolled = true;
         }
-       
-        document.getElementById("landUseConsole").className = "landUseConsole";
-        document.getElementById("precipConsole").className = "precipConsole";
-        document.getElementById("levelsConsole").className = "levelsConsole";
-        document.getElementById("featuresConsole").className = "featuresConsole";
-       
-        toolbarRolled = false;
-    }
-    
+        else {
+
+            document.getElementById('toolsButton').style.left = "123px" ;
+            document.getElementById('toolsButton').style.backgroundImage = "none" ;
+            
+            document.getElementById('tabButtons').className = "tabButtons" ;
+            document.getElementById('leftConsole').className = "leftConsole" ;
+           
+            toolbarRolled = false;
+        }
+        
     }//left tollbox
     
     if(value==2){
@@ -521,47 +500,36 @@ function updatePrecip(year) {
 //switchConsoleTab updates the currently selected toolbar on the left
 function switchConsoleTab(value){
 
+    var element = document.getElementsByClassName("imgSelected") ;
+    element[0].className = "imgNotSelected" ;
+    
+    var elements = document.getElementsByClassName("consoleTab");
+    
+     for (var i = 0; i < elements.length; i++) {
+          elements[i].style.display = "none" ;  
+     }
+    
     if(value==1){
+        
         document.getElementById('terrainImg').className = "imgSelected" ;
-        document.getElementById('precipImg').className = "imgNotSelected" ;
-        document.getElementById('levelsImg').className = "imgNotSelected";
-        document.getElementById('featuresImg').className = "imgNotSelected";
         document.getElementById('painterTab').style.display = "block";
-        document.getElementById('precipTab').style.display = "none" ;
-        document.getElementById('levelsTab').style.display = "none";
-        document.getElementById('featuresTab').style.display = "none";        
-    }
+     }
     
     if(value==2){
-        document.getElementById('terrainImg').className = "imgNotSelected" ;
+       
         document.getElementById('precipImg').className = "imgSelected" ;
-        document.getElementById('levelsImg').className = "imgNotSelected";
-        document.getElementById('featuresImg').className = "imgNotSelected";
-        document.getElementById('painterTab').style.display = "none";
         document.getElementById('precipTab').style.display = "block" ;
-        document.getElementById('levelsTab').style.display = "none";
-        document.getElementById('featuresTab').style.display = "none";
     }
     
     if(value==3){
-        document.getElementById('terrainImg').className = "imgNotSelected" ;
-        document.getElementById('precipImg').className = "imgNotSelected" ;
+        
         document.getElementById('levelsImg').className = "imgSelected";
-        document.getElementById('featuresImg').className = "imgNotSelected";
-        document.getElementById('painterTab').style.display = "none";
-        document.getElementById('precipTab').style.display = "none" ;
         document.getElementById('levelsTab').style.display = "block";
-        document.getElementById('featuresTab').style.display = "none";
     }
     
     if(value==4){
-        document.getElementById('terrainImg').className = "imgNotSelected";
-        document.getElementById('precipImg').className = "imgNotSelected" ;
-        document.getElementById('levelsImg').className = "imgNotSelected";
+
         document.getElementById('featuresImg').className = "imgSelected";
-        document.getElementById('painterTab').style.display = "none";
-        document.getElementById('precipTab').style.display = "none" ;
-        document.getElementById('levelsTab').style.display = "none";
         document.getElementById('featuresTab').style.display = "block";
     }
     
@@ -599,8 +567,13 @@ function switchYearTab(value){
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(type){
     
+    //toggle off highlighting
+    
+    
     Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
+    
+    highlightTile(-1) ;
     
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
