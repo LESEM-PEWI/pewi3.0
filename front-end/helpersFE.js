@@ -16,6 +16,7 @@ var rowCutOffs = [] ; //y coor of top left corner of each tile
 var columnCutOffs = [] ;
 var meshArray = [];
 var mesh = null;
+var tToggle = true;
 
 //onResize dynamically adjusts to window size changes
 function onResize() {
@@ -63,9 +64,9 @@ function highlightTile(id) {
     meshMaterials[id].emissive.setHex(0x7f7f7f);
     previousHover = id;
     
-    document.getElementById("position").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
-    }
-    
+    //document.getElementById("currentInfo").innerHTML = "Year: " + currentYear + "   Selected Land Type: " + LandUseType.getType(painter) + "   Higlighted Tile: " + LandUseType.getType(boardData[currentBoard].map[id].landType[currentYear]) + " " + boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
+    document.getElementById("currentInfo").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
+
 }
 
 //changeLandTypeTile changes the landType of a selected tile
@@ -172,10 +173,17 @@ function addTile(tile){
         var top24 = boardData[currentBoard].map[mapID + (tilesWide+1)] ? boardData[currentBoard].map[mapID + (tilesWide+1)].topography : 0;
         
         //Calculate the heights of vertices by averaging topographies of adjacent tiles and create a vector for each corner
-        v1 = new THREE.Vector3(0,(topN24 + topN23 + topN1 + tile.topography)/4*10,0);
-        v2 = new THREE.Vector3(tileWidth,(topN23 + topN22 + top1 + tile.topography)/4*10,0);
-        v3 = new THREE.Vector3(tileWidth,(top24 + top23 + top1 + tile.topography)/4*10,tileHeight);
-        v4 = new THREE.Vector3(0,(top22 + top23 + topN1 + tile.topography)/4*10,tileHeight);
+        if(tToggle){
+            v1 = new THREE.Vector3(0,(topN24 + topN23 + topN1 + tile.topography)/4*10,0);
+            v2 = new THREE.Vector3(tileWidth,(topN23 + topN22 + top1 + tile.topography)/4*10,0);
+            v3 = new THREE.Vector3(tileWidth,(top24 + top23 + top1 + tile.topography)/4*10,tileHeight);
+            v4 = new THREE.Vector3(0,(top22 + top23 + topN1 + tile.topography)/4*10,tileHeight);
+        } else {
+            v1 = new THREE.Vector3(0,0,0);
+            v2 = new THREE.Vector3(tileWidth,0,0);
+            v3 = new THREE.Vector3(tileWidth,0,tileHeight);
+            v4 = new THREE.Vector3(0,0,tileHeight); 
+        }
 
         tileGeometry.vertices.push(v1);
         tileGeometry.vertices.push(v2);
@@ -310,6 +318,14 @@ function onDocumentKeyDown( event ){
     
     switch( event.keyCode ){
         case 16: isShiftDown = true; break;
+        case 84: 
+            tToggle ? tToggle = false : tToggle = true; 
+            refreshBoard();
+            console.log(tToggle);
+            break;
+        case 82:
+            controls.reset();
+            break;
     }
 
 } //end onDocumentKeyDown
