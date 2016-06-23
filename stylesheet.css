@@ -211,9 +211,7 @@ body {
 .levelColor4, .levelColor5 {
     height: 15px;
     width: 15px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    margin-left: 10px;
+    margin: 10px 0px 10px 10px ;
 }
 
 .levelColor1 {
@@ -236,15 +234,21 @@ body {
     background-color: #871c12;
 }
 
+.levelDetailsList, .levelDetailsListRolled {
+    position: absolute;
+    top: 295px;
+    width: 115px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
 
-.levelsSelectorIcon {
-    height:40px;
-    width:40px;
-    margin-left: 35px;
-    margin-right: 35px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+.levelDetailsList{
+    left:0px;
+}
+
+.levelDetailsListRolled {
+    left: -115px;
 }
 
 .levelsText {
@@ -259,78 +263,17 @@ body {
     margin-left: 22px;
 }
 
-.nitrateDetailsList {
-    position: absolute;
-    top: 295px;
-    width: 115px;
-    left: 0px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
+/**++++++++++++++++++++++++++++++++stopped work here+++++++++++++++++++++++++**/
+
+.levelsSelectorIcon {
+    height:40px;
+    width:40px;
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
 }
-
-.nitrateDetailsListRolled {
-    position: absolute;
-    top: 295px;
-    width: 115px;
-    left: -115px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.erosionDetailsList {
-    position: absolute;
-    top: 295px;
-    width: 115px;
-    left: 0px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.erosionDetailsListRolled {
-    position: absolute;
-    top: 295px;
-    width: 115px;
-    left: -115px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.phosphorusDetailsList {
-    position: absolute;
-    top: 295px;
-    width: 115px;
-    left: 0px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-.phosphorusDetailsListRolled {
-    position: absolute;
-    top: 295px;
-    width: 115px;
-    left: -115px;
-    
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	

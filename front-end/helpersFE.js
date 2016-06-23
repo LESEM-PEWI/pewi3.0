@@ -436,29 +436,22 @@ function roll(value) {
 function showLevelDetails(value) {
     
     if(value==1){
-        document.getElementById("nitrateDetailsList").className = "nitrateDetailsList";
-    }
-    
-    if(value==-1){
-        document.getElementById("nitrateDetailsList").className = "nitrateDetailsListRolled";
+        document.getElementById("nitrateDetailsList").className = "levelDetailsList";
     }
     
     if(value==2){
-        document.getElementById("erosionDetailsList").className = "erosionDetailsList";
+        document.getElementById("erosionDetailsList").className = "levelDetailsList";
     }
     
-    if(value==-2){
-        document.getElementById("erosionDetailsList").className = "erosionDetailsListRolled";
+   if(value==3){
+        document.getElementById("phosphorusDetailsList").className = "levelDetailsList";
     }
     
-    if(value==3){
-        document.getElementById("phosphorusDetailsList").className = "phosphorusDetailsList";
+    if(value < 0 ){
+        var element = document.getElementsByClassName('levelDetailsList') ;
+        element[0].className = 'levelDetailsListRolled' ;
     }
-    
-    if(value==-3){
-        document.getElementById("phosphorusDetailsList").className = "phosphorusDetailsListRolled";
-    }
-    
+   
     if(value==4){
         document.getElementById("floodFrequencyDetailsList").className = "floodFrequencyDetailsList";
     }
