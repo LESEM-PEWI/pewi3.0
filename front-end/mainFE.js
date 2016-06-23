@@ -62,13 +62,9 @@ function setup() {
     camera.position.z = 18;
     camera.rotation.x = -45 * Math.PI / 180;
     
-<<<<<<< HEAD
     //set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-=======
-    camera.add(spotLight);
->>>>>>> 6c8598eb37ef6e7ebd6ce80d8d8043871a72124b
 
     //set up controls
     controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -76,14 +72,10 @@ function setup() {
     //add resize listener
     window.addEventListener('resize', onResize, false);
     
-<<<<<<< HEAD
     setupSkyBox();
     
     setupHighlight();
-=======
-    setupBoardFromFile("./data.txt") ;
 
->>>>>>> 6c8598eb37ef6e7ebd6ce80d8d8043871a72124b
 
 } //end setup
 
