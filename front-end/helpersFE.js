@@ -61,11 +61,13 @@ function highlightTile(id) {
     //if not a tile
     if(id != -1 ){
     
-    meshMaterials[id].emissive.setHex(0x7f7f7f);
-    previousHover = id;
+        meshMaterials[id].emissive.setHex(0x7f7f7f);
+        previousHover = id;
     
-    //document.getElementById("currentInfo").innerHTML = "Year: " + currentYear + "   Selected Land Type: " + LandUseType.getType(painter) + "   Higlighted Tile: " + LandUseType.getType(boardData[currentBoard].map[id].landType[currentYear]) + " " + boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
-    document.getElementById("currentInfo").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
+        //document.getElementById("currentInfo").innerHTML = "Year: " + currentYear + "   Selected Land Type: " + LandUseType.getType(painter) + "   Higlighted Tile: " + LandUseType.getType(boardData[currentBoard].map[id].landType[currentYear]) + " " + boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
+        document.getElementById("currentInfo").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
+    
+    }
 
 }
 
