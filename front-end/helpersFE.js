@@ -3,18 +3,19 @@ var toolbarRolled = true ;
 /* global camera, scene, boardData,
           renderer, currentBoard, THREE, 
           currentYear, textureArray, riverPoints,
-          tiles, mouse, raycaster,
+          mouse, raycaster,
           isShiftDown, modalUp, precip, 
           painter, Totals, river,
           Results, initData, hoveredOver*/
-var singleGeometry;
-var materials = [];
+var meshGeometry = new THREE.Geometry();
+var meshMaterials = [];
 var previousHover = null;
 var tileHeight = 12;
 var tileWidth = 18;
 var rowCutOffs = [] ; //y coor of top left corner of each tile
 var columnCutOffs = [] ;
 var meshArray = [];
+var mesh = null;
 
 //onResize dynamically adjusts to window size changes
 function onResize() {
@@ -26,64 +27,56 @@ function onResize() {
 //displayBoard initializes a board with graphics using addTile()
 function displayBoard() {
     
+<<<<<<< HEAD
     materials = [];
     riverPoints = [];
     singleGeometry = new THREE.Geometry();
      
+=======
+    //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
+>>>>>>> origin/experimental
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
-        
         addTile(boardData[currentBoard].map[i]);
-    
     }
     
-    for(var i = 0; i < singleGeometry.faces.length; i+=2){
-        singleGeometry.faces[i].materialIndex = i/2;
-        singleGeometry.faces[i+1].materialIndex = i/2;
+    for(var i = 0; i < meshGeometry.faces.length; i+=2){
+        meshGeometry.faces[i].materialIndex = i/2;
+        meshGeometry.faces[i+1].materialIndex = i/2;
     }
     
-    mesh = new THREE.Mesh(singleGeometry, new THREE.MeshFaceMaterial(materials));
-
+    //create one mesh from the meshGeometry and meshMaterials objects
+    mesh = new THREE.Mesh(meshGeometry, new THREE.MeshFaceMaterial(meshMaterials));
     scene.add(mesh);
     
-    //for raycasting
-    meshArray[0] = mesh ;
-    
+    //calculate locations of tiles on grid for highlighting and landType changes
     calculateCutoffs();
     
 } //end displayBoard
 
+//highlightTile updates the tile that should be highlighted.
 function highlightTile(id) {
     
+    //if a previous tile was selected for highlighting, unhighlight that tile
     if(previousHover != null){
-        materials[previousHover].emissive.setHex(0x000000);
+        meshMaterials[previousHover].emissive.setHex(0x000000);
     }
-   
-    if(id != -1 && boardData[currentBoard].map[id].landType[currentYear]){
-        
-    materials[id].emissive.setHex(0x7f7f7f);
     
+    //highlight the new tile 
+    meshMaterials[id].emissive.setHex(0x7f7f7f);
     previousHover = id;
     
-    }
+    document.getElementById("position").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
     
     reDisplayCurrentBoard();
 }
 
+//changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(id) {
     
-    if(id != -1 && boardData[currentBoard].map[id].landType[currentYear]){
-    
-    materials[id].map = textureArray[painter];
-    
-    boardData[currentBoard].map[id].landType[currentYear] = painter ;
-    
-    }
-    
-}
-
-function reDisplayCurrentBoard() {
-    
-    renderer.render(scene, camera);
+    //change the materials of the faces in the meshMaterials array and update the boardData
+    meshMaterials[id].map = textureArray[painter];
+    boardData[currentBoard].map[id].landType[currentYear] = painter;
+    boardData[currentBoard].map[id].update(currentYear);
     
 }
 
@@ -160,20 +153,17 @@ function calculateCutoffs() {
 //addTile constructs the geometry of a tile and adds it to the scene
 function addTile(tile){
     
-    //if(tile.landType[currentYear] != 0){
-    
         var tilesWide = boardData[currentBoard].width;
         var tilesHigh = boardData[currentBoard].height;
-        
-        //var tileGeometry = new THREE.BoxGeometry(tileWidth, 0, tileHeight);
         
         var tileGeometry = new THREE.Geometry();
         var tileMaterial;
         
-        var v1; var v2; var v3; var v4;
+        var v1, v2, v3, v4;
         
         var mapID = tile.id - 1;
 
+        //Retrieve the topography of adjacent tiles
         var topN24 = boardData[currentBoard].map[mapID - (tilesWide+1)] ? boardData[currentBoard].map[mapID - (tilesWide+1)].topography : 0;
         var topN23 = boardData[currentBoard].map[mapID - (tilesWide)] ? boardData[currentBoard].map[mapID - (tilesWide)].topography : 0;
         var topN22 = boardData[currentBoard].map[mapID - (tilesWide-1)] ? boardData[currentBoard].map[mapID - (tilesWide-1)].topography : 0;
@@ -183,6 +173,7 @@ function addTile(tile){
         var top23 = boardData[currentBoard].map[mapID + (tilesWide)] ? boardData[currentBoard].map[mapID + (tilesWide)].topography : 0;
         var top24 = boardData[currentBoard].map[mapID + (tilesWide+1)] ? boardData[currentBoard].map[mapID + (tilesWide+1)].topography : 0;
         
+        //Calculate the heights of vertices by averaging topographies of adjacent tiles and create a vector for each corner
         v1 = new THREE.Vector3(0,(topN24 + topN23 + topN1 + tile.topography)/4*10,0);
         v2 = new THREE.Vector3(tileWidth,(topN23 + topN22 + top1 + tile.topography)/4*10,0);
         v3 = new THREE.Vector3(tileWidth,(top24 + top23 + top1 + tile.topography)/4*10,tileHeight);
@@ -193,6 +184,7 @@ function addTile(tile){
         tileGeometry.vertices.push(v3);
         tileGeometry.vertices.push(v4);
         
+        //Create two new faces (triangles) for the tile
         var face = new THREE.Face3(2,1,0);
         face.normal.set(0,1,0); // normal
         tileGeometry.faces.push(face);
@@ -203,51 +195,58 @@ function addTile(tile){
         tileGeometry.faces.push(face);
         tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1,0),new THREE.Vector2(0,0),new THREE.Vector2(1,1)]); // uvs
         
+        
         if(tile.landType[currentYear] == 0){
             tileMaterial = new THREE.MeshBasicMaterial({color: 0x000000, transparent: true, opacity: 0.0});
-            materials.push(new THREE.MeshBasicMaterial({color: 0x000000, transparent: true, opacity: 0.0}));
+            meshMaterials.push(tileMaterial);
         } else {
-            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]]});
-            materials.push(new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]]}));
+            tileMaterial = new THREE.MeshLambertMaterial({ map: textureArray[tile.landType[currentYear]], side: THREE.DoubleSide});
+            meshMaterials.push(tileMaterial);
         }
         
+        //if this tile is the first in its row that is a streamNetwork tile add it to the riverPoints array
         if(tile.streamNetwork == 1 && currentRow != tile.row){
             riverPoints.push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide)/2, 1, tile.row * tileHeight - (tileHeight * tilesHigh)/2));
             currentRow = tile.row;
         }
-    
         
+        //create a new mesh from the two faces for the tile    
         var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
         
-        //newTile.receiveShadow = true;
-        //newTile.castShadow = true;
-        
+        //change the x and z position of the tile dependent on the row and column that it is in
         newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide)/2;
         newTile.position.y = 0;
         newTile.position.z = tile.row * tileHeight - (tileHeight * tilesHigh)/2;
         
-        newTile.mapID = tile.id - 1;
+        //add the mapID to the 
+        newTile.mapID = mapID;
         
-        tile.graphics = newTile;
-        
-        tiles[mapID] = tile.graphics;
-        
-        newTile.updateMatrix(); // as needed
-        singleGeometry.merge(newTile.geometry, newTile.matrix);
-        
-        //scene.add(tile.graphics);
-        
-    //}
+        //add the tile to the meshGeometry which contains all vertices/faces of the merged tiles 
+        newTile.updateMatrix();
+        meshGeometry.merge(newTile.geometry, newTile.matrix);
     
 } //end addTile
 
-function clearBoard(){
+
+//refreshBoard removes the current mesh and clears the objects that store its data, then calls displayBoard
+function refreshBoard(){
     
+    if(mesh != null){
+        scene.remove(mesh);
+    }
+    
+<<<<<<< HEAD
     scene.remove(mesh) ;
     singleGeometry = new THREE.Geometry();
     materials = [];
+=======
+    meshGeometry = new THREE.Geometry();
+    meshMaterials = [];
+>>>>>>> origin/experimental
     
-}
+    displayBoard();
+    
+} //end refreshBoard
 
 //transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
@@ -259,10 +258,8 @@ function transitionToYear(year) {
           boardData[currentBoard].updateBoard();
       }
     
-    clearBoard();
-    displayBoard();
+    refreshBoard();
 
-    
 } //end transitionToYear
 
 //onDocumentMouseMove follows the cursor and highlights corresponding tiles
@@ -274,13 +271,9 @@ function onDocumentMouseMove( event ) {
 	
  	raycaster.setFromCamera( mouse, camera );
 	
- 	var intersects = raycaster.intersectObjects(meshArray);
- 	if(intersects.length > 0 && !modalUp){
-        highlightTile( getTileID(intersects[0].point.x, -intersects[0].point.z) );
- 	}
- 	else{
- 	    highlightTile(-1);
- 	}
+ 	var intersects = raycaster.intersectObjects(scene.children);
+ 	
+    highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
 	
 } //end onDocumentMouseMove
 
@@ -294,7 +287,7 @@ function onDocumentDoubleClick( event ) {
 	
  	raycaster.setFromCamera( mouse, camera );
 	
- 	var intersects = raycaster.intersectObjects(meshArray);
+ 	var intersects = raycaster.intersectObjects(scene.children);
     
     if( !isShiftDown ){
 	
@@ -309,7 +302,7 @@ function onDocumentDoubleClick( event ) {
 	        for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
                 if(boardData[currentBoard].map[i].landType[currentYear] != 0){
-
+                    
                     changeLandTypeTile(i);
 
                 }
@@ -317,8 +310,6 @@ function onDocumentDoubleClick( event ) {
             }
 	    
 	}
-	
-	reDisplayCurrentBoard();
 
 }//end onDocumentMouseDown(event)
 
@@ -600,21 +591,19 @@ function switchYearTab(value){
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(type){
     
-    //Totals = new Results(boardData[currentBoard]);
+    Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
     
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
         if(boardData[currentBoard].map[i].landType[currentYear] != 0){
 
-            materials[i].map = textureArray[0];
-            materials[i].emissive.setHex(getHighlightColor(type, i));
+            meshMaterials[i].map = textureArray[0];
+            meshMaterials[i].emissive.setHex(getHighlightColor(type, i));
 
         }
 
     }
-    
-    renderer.render(scene, camera);
     
 } //end displayLevels
 
@@ -832,7 +821,7 @@ function writeFileToDownloadString(){
     boardData[currentBoard].precipitation[2] + "," +
     boardData[currentBoard].precipitation[3];
 
-    if(i < tiles.length - 1){
+    if(i < boardData[currentBoard].map.length - 1){
       string = string + '\r\n';
     } else {
       //Do Nothing
@@ -847,59 +836,41 @@ function writeFileToDownloadString(){
 function downloadClicked() {
 
         var data = writeFileToDownloadString();
-
         var fileName = "pewiMap";
-
         var uri = 'data:text/csv;charset=UTF-8,' + escape(data);
-
         var link = document.createElement("a");
-
         link.href = uri;
-
         link.style = "visibility:hidden";
-
         link.download = fileName + ".csv";
-
+        
         document.body.appendChild(link);
-
         link.click();
-
         document.body.removeChild(link);
         
         closeUploadDownloadFrame() ;
+        
 }// end downloadClicked
 
 //uploadClicked enables the user to upload a .csv of board data
 function uploadClicked(e) {
 
     var files;
-
-
     files = e.target.files;
 
     if (files[0].name && !files[0].name.match(/\.csv/)) {
         alert("Incorrect File Type!");
-    }
-    else{
-
-    var reader = new FileReader();
-
-    reader.readAsText(files[0]);
-
-    reader.onload = function(e) {
-        
-        setupBoardFromUpload(reader.result);
-        
-        //clear initData
-        initData = [];
-
-    }
+    } else {
+        var reader = new FileReader();
+        reader.readAsText(files[0]);
+        reader.onload = function(e) {
+            setupBoardFromUpload(reader.result);
+            //clear initData
+            initData = [];
+        }
     }//end else
-    
-    //console.log(files);
+
     closeUploadDownloadFrame();
 
-    
 } //end uploadClicked
 
 
