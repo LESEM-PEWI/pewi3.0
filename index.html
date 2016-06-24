@@ -147,22 +147,21 @@
                 </div>
                 <div id="erosionDetailsList" class="levelDetailsListRolled">
                     <div class="levelColor1">
-                        <p class="levelsTextDetails"> < 0.5 </p>
+                        <p class="levelsTextDetails"> < 0.5 mt/ac</p>
                     </div>
                     
                     <div class="levelColor2">
-                        <p class="levelsTextDetails">0.5-2</p>
+                        <p class="levelsTextDetails">0.5-2 mt/ac</p>
                     </div>
                     <div class="levelColor3">
-                        <p class="levelsTextDetails">2-3.5</p>
+                        <p class="levelsTextDetails">2-3.5 mt/ac</p>
                     </div>
                     <div class="levelColor4">
-                        <p class="levelsTextDetails">3.5-5</p>
+                        <p class="levelsTextDetails">3.5-5 mt/ac</p>
                     </div>
                     <div class="levelColor5">
-                        <p class="levelsTextDetails">> 5 </p>
+                        <p class="levelsTextDetails">> 5 mt/ac</p>
                     </div>
-                    <p class="levelsTextDetails">tons/acre</p>
                 </div>
                 <div id="phosphorusDetailsList" class="levelDetailsListRolled">
                     <div class="levelColor1">
@@ -187,11 +186,7 @@
         </div>
 
         <div id="featuresTab" class="consoleTab" style="display:none;">
-                <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon" src="./imgs/Icon_Flood_Frequency.svg" onmouseover="displayLevels('flood'); showLevelDetails(4);" onmouseout="transitionToYear(currentYear); showLevelDetails(-4);">
-                <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon" src="./imgs/Icon_Strategic_Wetlands.svg" onmouseover="displayLevels('wetland');" onmouseout="transitionToYear(currentYear);">
-                <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onmouseover="displayLevels('subwatershed');" onmouseout="transitionToYear(currentYear);">
-                <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onmouseover="displayLevels('drainage'); showLevelDetails(5);" onmouseout="transitionToYear(currentYear); showLevelDetails(-5);">
-                <div id="floodFrequencyDetailsList" class="floodFrequencyDetailsListRolled">
+               <div id="floodFrequencyDetailsList" class="physicalDetailsListRolled">
                     <div class="floodColor1">
                         <p class="levelsTextDetails">None</p>
                     </div>
@@ -202,7 +197,7 @@
                         <p class="levelsTextDetails">Ponded</p>
                     </div>
                 </div>
-                <div id="drainageClassDetailsList" class="drainageClassDetailsListRolled">
+                <div id="drainageClassDetailsList" class="physicalDetailsListRolled">
                     <div class="drainageColor1">
                         <p class="levelsTextDetails">Poor</p>
                     </div>
@@ -213,6 +208,10 @@
                         <p class="levelsTextDetails">Excessive</p>
                     </div>
                 </div>
+             <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon" src="./imgs/Icon_Flood_Frequency.svg" onmouseover="displayLevels('flood'); showLevelDetails(4);" onmouseout="transitionToYear(currentYear); showLevelDetails(-4);">
+             <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon" src="./imgs/Icon_Strategic_Wetlands.svg" onmouseover="displayLevels('wetland');" onmouseout="transitionToYear(currentYear);">
+             <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onmouseover="displayLevels('subwatershed');" onmouseout="transitionToYear(currentYear);">
+             <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onmouseover="displayLevels('drainage'); showLevelDetails(5);" onmouseout="transitionToYear(currentYear); showLevelDetails(-5);">
             </div>
      </div>
 

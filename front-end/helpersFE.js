@@ -17,6 +17,7 @@ var columnCutOffs = [] ;
 var meshArray = [];
 var mesh = null;
 var tToggle = true;
+var isLevelsMapped = false ;
 
 //onResize dynamically adjusts to window size changes
 function onResize() {
@@ -49,26 +50,32 @@ function displayBoard() {
     
 } //end displayBoard
 
+
 //highlightTile updates the tile that should be highlighted.
 function highlightTile(id) {
     
+    
     //if a previous tile was selected for highlighting, unhighlight that tile
-    if(previousHover != null){
+    if(previousHover != null && !isLevelsMapped){
         meshMaterials[previousHover].emissive.setHex(0x000000);
     }
     
     //highlight the new tile 
     //if not a tile
-    if(id != -1 ){
+    if(id != -1 && meshMaterials[id].emissive && !isLevelsMapped){
     
         meshMaterials[id].emissive.setHex(0x7f7f7f);
         previousHover = id;
     
         //document.getElementById("currentInfo").innerHTML = "Year: " + currentYear + "   Selected Land Type: " + LandUseType.getType(painter) + "   Higlighted Tile: " + LandUseType.getType(boardData[currentBoard].map[id].landType[currentYear]) + " " + boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
-        document.getElementById("currentInfo").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
-    
+         document.getElementById("currentInfo").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
     }
-
+    else{
+      document.getElementById("currentInfo").innerHTML = " ";
+    }
+    
+    
+    
 }
 
 //changeLandTypeTile changes the landType of a selected tile
@@ -264,6 +271,7 @@ function transitionToYear(year) {
 
 } //end transitionToYear
 
+
 //onDocumentMouseMove follows the cursor and highlights corresponding tiles
 function onDocumentMouseMove( event ) {
     
@@ -274,6 +282,11 @@ function onDocumentMouseMove( event ) {
  	raycaster.setFromCamera( mouse, camera );
 	
  	var intersects = raycaster.intersectObjects(scene.children);
+ 	
+ 	if(intersects.length < 1 ) {
+ 	   highlightTile(-1) ;
+ 	}
+ 	
  	if(intersects.length > 0 && !modalUp) {
         highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
  	}
@@ -424,7 +437,7 @@ function roll(value) {
         }
         else {
 
-            document.getElementById('toolsButton').style.left = "123px" ;
+            document.getElementById('toolsButton').style.left = "130px" ;
             document.getElementById('toolsButton').style.backgroundImage = "none" ;
             
             document.getElementById('tabButtons').className = "tabButtons" ;
@@ -465,25 +478,24 @@ function showLevelDetails(value) {
         document.getElementById("phosphorusDetailsList").className = "levelDetailsList";
     }
     
-    if(value < 0 ){
+    if(value > -4 && value < 0 ){
         var element = document.getElementsByClassName('levelDetailsList') ;
         element[0].className = 'levelDetailsListRolled' ;
+        isLevelsMapped = false ;
     }
    
     if(value==4){
-        document.getElementById("floodFrequencyDetailsList").className = "floodFrequencyDetailsList";
-    }
-    
-    if(value==-4){
-        document.getElementById("floodFrequencyDetailsList").className = "floodFrequencyDetailsListRolled";
+        document.getElementById("floodFrequencyDetailsList").className = "physicalDetailsList";
     }
     
     if(value==5){
-        document.getElementById("drainageClassDetailsList").className = "drainageClassDetailsList";
+        document.getElementById("drainageClassDetailsList").className = "physicalDetailsList";
     }
     
-    if(value==-5){
-        document.getElementById("drainageClassDetailsList").className = "drainageClassDetailsListRolled";
+    if(value < -3){
+        var element = document.getElementsByClassName('physicalDetailsList') ;
+        element[0].className = 'physicalDetailsListRolled' ;
+        isLevelsMapped = false ;
     }
     
 } //showLevelDetails
@@ -579,12 +591,11 @@ function switchYearTab(value){
 function displayLevels(type){
     
     //toggle off highlighting
-    
+    isLevelsMapped = true ;
+ 
     
     Totals = new Results(boardData[currentBoard]);
     Totals.update() ;
-    
-    highlightTile(-1) ;
     
     for(var i = 0; i < boardData[currentBoard].map.length; i++){
         
