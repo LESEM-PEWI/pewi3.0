@@ -203,7 +203,7 @@ requestAnimationFrame(function animate() {
     renderer.render(scene, camera);
     
     //wait # update frames to check
-    if(counter > 50) {
+    if(counter > 20) {
       gameDirector() ;
       counter = 0;
     }

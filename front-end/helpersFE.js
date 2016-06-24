@@ -871,6 +871,9 @@ function uploadClicked(e) {
     }//end else
 
     closeUploadDownloadFrame();
+    
+    //reset keylistening frame (ie give up focus on iframe)
+    document.activeElement.blur();
 
 } //end uploadClicked
 
