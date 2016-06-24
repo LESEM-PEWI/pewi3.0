@@ -139,13 +139,30 @@ function setupRiver() {
     var shape = new THREE.Shape(pts);
     var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
 
+    //noah test
+    var texture = THREE.ImageUtils.loadTexture('./imgs/water3.JPG');
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1, 1);
+
+    var mat3 = new THREE.MeshPhongMaterial({
+        color: 0x000066,
+        specular: 0xffffff,
+        shininess: 100,
+        map: texture,
+        transparent: true,
+        opacity: .8,
+        combine: THREE.MixOperation,
+        reflectivity: 0.2
+    })
+
+
     var material = new THREE.MeshBasicMaterial({
         wireframe: false,
         color: 0x40a4df,
         opacity: 0.75,
         transparent: true
     });
-    river = new THREE.Mesh(geometry, material);
+    river = new THREE.Mesh(geometry, mat3);
     scene.add(river);
 
 }
