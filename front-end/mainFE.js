@@ -170,6 +170,8 @@ function setupBoardFromUpload(data) {
     //update Results to point to correct board since currentBoard is updated
     Totals = new Results(boardData[currentBoard]);
     
+    
+    
 }
 
 function setupHighlight() {

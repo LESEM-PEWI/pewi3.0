@@ -14,7 +14,6 @@ var tileHeight = 12;
 var tileWidth = 18;
 var rowCutOffs = [] ; //y coor of top left corner of each tile
 var columnCutOffs = [] ;
-var meshArray = [];
 var mesh = null;
 var isShiftDown = false ;
 var tToggle = true;
