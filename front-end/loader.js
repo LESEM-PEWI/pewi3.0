@@ -28,13 +28,6 @@ function loadResources() {
                     texturePrairie, textureConservationForest, textureConventionalForest, textureHerbs, textureShortWoody,
                     textureWetland, textureMixedFruitsVegetables];
                     
-    // materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/dawnmountain-xpos.png') }));
-    // materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( './background_images/dawnmountain-xneg.png' ) }));
-    // materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( './background_images/dawnmountain-ypos.png' ) }));
-    // materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( './background_images/dawnmountain-yneg.png' ) }));
-    // materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( './background_images/dawnmountain-zpos.png' ) }));
-    // materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( './background_images/dawnmountain-zneg.png' ) }));
-
   materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/right.jpg'), side: THREE.BackSide }));
   materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/left.jpg'), side: THREE.BackSide }));
   materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/top.jpg'), side: THREE.BackSide }));
