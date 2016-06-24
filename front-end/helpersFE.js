@@ -16,6 +16,7 @@ var rowCutOffs = [] ; //y coor of top left corner of each tile
 var columnCutOffs = [] ;
 var meshArray = [];
 var mesh = null;
+var isShiftDown = false ;
 var tToggle = true;
 var isLevelsMapped = false ;
 
@@ -347,8 +348,9 @@ function onDocumentKeyDown( event ){
 
 //onDocumentKeyUp listens for the shift key released
 function onDocumentKeyUp( event ){
-    
+
     switch( event.keyCode ){
+        case 0: isShiftDown = false; break;
         case 16: isShiftDown = false; break;
     }
 
@@ -389,15 +391,16 @@ function resultsStart() {
     document.getElementById("resultsButton").onmouseover = "";
     document.getElementById("resultsButton").onclick = function() {resultsEnd() ;}; 
 
-    if(document.getElementById("precipConsole").className != "precipConsoleRolled")  roll(3) ;
     document.getElementById("toolsButton").onclick = "";
     
     document.getElementById("resultsButton").className = "resultsButtonFar" ;
-    if(document.getElementById("landUseConsole").className != "landUseConsoleRolled"){
+    
+    if(document.getElementById("leftConsole").className != "leftConsoleRolled"){
        roll(1) ;
        toolbarRolled = false;
     }
     
+    document.getElementById("closeResults").style.right = "16%" ;
 
     //functions that update results and display them appropriately
     calculateResults();
@@ -411,6 +414,7 @@ function resultsEnd() {
     //reset functionality
     document.getElementById("resultsFrame").className = "resultsFrameRolled" ;
     document.getElementById("resultsButton").className = "resultsButtonRolled" ;
+    document.getElementById("closeResults").style.right = "-75%" ;
     
     if(!toolbarRolled) roll(1);
     document.getElementById("resultsButton").onmouseout = function() {document.getElementById("resultsButton").className = "resultsButtonRolled"; } ;
@@ -561,29 +565,24 @@ function switchConsoleTab(value){
 //switchYearTab changes the highlighted year
 function switchYearTab(value){
     
-    if(value==0){
-        document.getElementById('year1Image').className = "yearNotSelected" ;
-        document.getElementById('year2Image').className = "yearNotSelected" ;
-        document.getElementById('year3Image').className = "yearNotSelected" ;
-    }
-
-    if(value==1){
+    var elements = document.getElementsByClassName("yearSelected");
+    
+     for (var i = 0; i < elements.length; i++) {
+          elements[i].className = "yearNotSelected" ;  
+     }
+    
+    switch(value) {
+      case 1:
         document.getElementById('year1Image').className = "yearSelected" ;
-        document.getElementById('year2Image').className = "yearNotSelected" ;
-        document.getElementById('year3Image').className = "yearNotSelected" ;
-    }
-    
-    if(value==2){
-        document.getElementById('year1Image').className = "yearNotSelected" ;
+        break;
+      case 2:
         document.getElementById('year2Image').className = "yearSelected" ;
-        document.getElementById('year3Image').className = "yearNotSelected" ;
-    }
-    
-    if(value==3){
-        document.getElementById('year1Image').className = "yearNotSelected" ;
-        document.getElementById('year2Image').className = "yearNotSelected" ;
+        break;
+      case 3:
         document.getElementById('year3Image').className = "yearSelected" ;
-    }
+        break;
+    };
+  
     
 } //end switchYearTab
 
