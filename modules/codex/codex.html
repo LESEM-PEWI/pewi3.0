@@ -1,0 +1,257 @@
+<html>
+    <head>
+     <script type="text/javascript" src="./libs/jquery-1.12.4.min.js"></script>   
+     <script type="text/javascript" src="./codexHelper.js"></script>   
+    </head>
+
+<style>
+
+body{
+    background-color: #323b39;
+    background-image: url("./concrete-wall-2.png");
+    background-repeat: repeat ;
+}
+
+#list{
+    background-color: green ;
+    height:0px;
+    overflow: hidden;
+    
+    -webkit-transition-duration: .5s; /* Safari */
+    transition-duration: .5s;
+}    
+
+
+#topicsHeader {
+     width:80%;
+     margin-left:10%;
+     height:40px;
+     background-color: rgba(30,87,153, .5);
+     border-bottom-left-radius: 10px;
+     border-bottom-right-radius: 10px;
+     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	color: #FFFFFF;
+	font-size: 24;
+	font-weight: bold;
+	text-align: center;
+	padding-top:5px;
+	margin-bottom:20px;
+}
+
+#indexHolder{
+    overflow: auto;
+    height:550px;
+}
+
+.subHolder {
+    overflow: hidden;
+    height: 0px;
+    display: block ;
+    visibility: hidden;
+     -webkit-transition-duration: .5s; /* Safari */
+    transition-duration: .5s;
+}
+
+.groupHeader{
+    padding-top:5px ;
+    padding-left:20px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    border-radius:5px;
+	color: #FFFFFF;
+	font-size: 24;
+	font-weight: bold;
+}
+
+.groupHeader:hover {
+    border: 2px solid gray;
+    background-color: rgba(192,192,192, .5);
+    
+}
+
+
+.groupElement{
+    padding-top:5px ;
+    padding-left:35px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    border-radius:0px;
+	color: #FFFFFF;
+	font-size: 24;
+	font-weight: bold;
+	background-color: rgba(30,87,153, .2);
+	height:30px;
+	margin:0px;
+} 
+
+.groupElement:hover{
+    border: 2px solid gray;
+    background-color: rgba(192,192,192, .5);
+}
+
+.selectedGroupHeader {
+padding-top:5px ;
+padding-left:20px;
+font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+color: #FFFFFF;
+font-size: 24;
+font-weight: bold;
+background-color: rgba(30,87,153, .8);
+    
+}
+
+.selectedGroupHeader:hover{
+    background-color: rgba(192,192,192, .5);
+}
+
+.selectedGroupElement {
+    padding-top:5px ;
+    padding-left:35px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    border-radius:5px;
+	color: #FFFFFF;
+	font-size: 24;
+	font-weight: bold;
+	border-radius: 0px;
+	background-color: rgba(30,87,153, 0.5);
+    
+}
+
+
+.holder {
+    text-align: right;
+}
+
+img {
+    width:100% ;
+    height:100% ;
+    border-radius:10px;
+    box-shadow: 0px -2px 25px 2px rgba(0,0,0,1);
+}
+
+#mainContainer{
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    margin-left:-450px;
+    margin-top: -350px;
+    
+    border-radius: 40px ;
+    
+    width:900px;
+    height:700px;
+    background-color: #259199;
+    background-image: url("./dark-mosaic.png");
+    background-repeat: repeat ;
+    
+    -webkit-box-shadow: 0px -2px 20px 8px rgba(0,0,0,1);
+    -moz-box-shadow: 0px -2px 20px 8px rgba(0,0,0,1);
+    box-shadow: 0px -2px 20px 8px rgba(0,0,0,1);
+}
+
+#leftContainer {
+    float: left;
+    background-color:orange;
+    margin: 50px 50px 50px 25px;
+    padding:0px;
+    width:300px;
+    height:600px;
+    cursor: default;
+    
+    
+background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(40,97,161,0.7) 3%, rgba(78,136,193,0.7) 15%, rgba(125,185,232,0.58) 30%, rgba(125,185,232,0) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(40,97,161,0.7) 3%,rgba(78,136,193,0.7) 15%,rgba(125,185,232,0.58) 30%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(30,87,153,1) 0%,rgba(40,97,161,0.7) 3%,rgba(78,136,193,0.7) 15%,rgba(125,185,232,0.58) 30%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=0 );
+
+}
+
+#rightContainer {
+    float: left;
+    margin:25px 25px 25px 0px;
+    padding:0px;
+    width:500px;
+    height:650px ;
+}
+
+#square1 {
+    margin:0px 0px 0px 0px ;
+    padding:0px;
+    background-color: rbga(0,0,0,0);
+    
+    width:500px;
+    height:300px;
+}
+
+#square2 {
+
+    margin-top: 50px;
+    background-color:  rgba(40,97,161,0);
+    background-image: url("./cornerDec.png");
+    background-repeat: no-repeat ;
+    width:500px;
+    height:300px;
+
+}
+
+#square2text {
+   
+    margin-top:30px;
+    padding-right:10px;
+    float:right;
+    height:270px;
+    width:465px;
+    
+    overflow:auto;
+
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    line-height: 130%;
+	color: #FFFFFF;
+	font-size: 24 ;
+	font-weight: bold;
+
+}
+
+
+</style>
+
+
+<body>
+
+<script>
+
+document.addEventListener('keydown', onDocumentKeyDown, false);    
+window.onload = init ;
+
+
+</script>
+
+<div id="mainContainer">
+    
+<div id="leftContainer">
+
+<div id="topicsHeader">TOPICS</div>
+
+<div id="indexHolder">
+</div>
+
+</div>
+
+<div id="rightContainer">
+
+<div id = "square1">
+<img src="./indexMain.png">
+</div>
+
+<div id = "square2">
+<p id="square2text">
+    
+</p>    
+</div>
+
+</div>
+
+</div>
+
+</body>    
+</html>

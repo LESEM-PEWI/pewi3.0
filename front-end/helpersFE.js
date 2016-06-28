@@ -350,6 +350,9 @@ function onDocumentKeyDown(event) {
             refreshBoard();
             console.log(tToggle);
             break;
+        case 73:
+            toggleIndex();
+            break ;
         case 82:
             controls.reset();
             break;
@@ -400,6 +403,9 @@ function paintYear(value) {
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
 
+    //if something else has precedence
+    if(!modalUp){
+    
     //setup Screen Appropriately
     modalUp = true;
     document.getElementById("resultsButton").onmouseout = "";
@@ -423,7 +429,8 @@ function resultsStart() {
     calculateResults();
     displayResults();
     animateResults();
-
+    }
+    
 } //end resultsStart
 
 //resultsEnd hides the results and returns the menus to the screens
@@ -1302,9 +1309,10 @@ function displayResults() {
 //showCredits opens the credits iframe
 function showCredits() {
 
+    if(!modalUp){
     document.getElementById('creditsFrame').style.display = "block";
     document.getElementById('closeCredits').style.display = "block";
-
+    }
 } //end showCredits
 
 //closeCreditFrame closes the credits iframe
@@ -1317,9 +1325,11 @@ function closeCreditFrame() {
 
 //showUploadDownload opens the credits iframe
 function showUploadDownload() {
+    
+    if(!modalUp){
     document.getElementById('closeUploadDownload').style.display = "block";
     document.getElementById('uploadDownloadFrame').style.display = "block";
-
+    }
 
 } //end showUploadDownload
 
@@ -1329,3 +1339,22 @@ function closeUploadDownloadFrame() {
     document.getElementById('uploadDownloadFrame').style.display = "none";
 
 } //end closeUploadDownloadFrame
+
+
+function toggleIndex() {
+    
+    if(document.getElementById('index').style.display != "block"){
+        closeCreditFrame();
+        closeUploadDownloadFrame() ;
+        if(document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd() ;
+        
+        modalUp = true ;
+        document.getElementById('index').style.display = "block";
+    }
+    else{
+        
+        modalUp = false ;
+        document.getElementById('index').style.display = "none" ;
+        document.activeElement.blur();
+    }
+}
