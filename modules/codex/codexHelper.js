@@ -244,8 +244,8 @@ function resizeSection(value,operation){
             string = string.slice(0,-1);
             string = string.slice(0,-1);
             
-            if(operation == 'expand') string = Number(string) + (35 * elementNum[value])  ;
-            if(operation == 'shrink') string = Number(string) - (35 * elementNum[value]) ;
+            if(operation == 'expand') string = Number(string) + elementHeight[value]  ;
+            if(operation == 'shrink') string = Number(string) - elementHeight[value] ;
             
             document.getElementById((i + "sub")).style.height = string + "px" ;
             elementHeight[i] = string ;
