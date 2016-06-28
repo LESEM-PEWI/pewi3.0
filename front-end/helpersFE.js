@@ -1,5 +1,5 @@
 var currentRow = -1;
-var toolbarRolled = false;
+var openBack;
 /* global camera, scene, boardData,
           renderer, currentBoard, THREE, 
           currentYear, textureArray, riverPoints,
@@ -418,9 +418,10 @@ function resultsStart() {
 
     document.getElementById("resultsButton").className = "resultsButtonFar";
 
-    if (document.getElementById("leftConsole").className != "leftConsoleRolled") {
-        roll(1);
-        toolbarRolled = false;
+    openBack = false ;
+    if (document.getElementById("leftConsole").className == "leftConsole") {
+        openBack = true ;
+        roll(1) ;
     }
 
     document.getElementById("closeResults").style.right = "16%";
@@ -440,7 +441,10 @@ function resultsEnd() {
     document.getElementById("resultsButton").className = "resultsButtonRolled";
     document.getElementById("closeResults").style.right = "-75%";
 
-    if (!toolbarRolled) roll(1);
+    if (openBack) {
+        roll(1) ;
+    }
+    
     document.getElementById("resultsButton").onmouseout = function() {
         document.getElementById("resultsButton").className = "resultsButtonRolled";
     };
@@ -461,7 +465,7 @@ function resultsEnd() {
 function roll(value) {
     if (value == 1) {
 
-        if (!toolbarRolled) {
+        if (document.getElementById('tabButtons').className == "tabButtons") {
 
             document.getElementById('toolsButton').style.left = "0px";
             document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')";
@@ -469,7 +473,7 @@ function roll(value) {
             document.getElementById('tabButtons').className = "tabButtonsRolled";
             document.getElementById('leftConsole').className = "leftConsoleRolled";
 
-            toolbarRolled = true;
+       
         }
         else {
 
@@ -479,7 +483,6 @@ function roll(value) {
             document.getElementById('tabButtons').className = "tabButtons";
             document.getElementById('leftConsole').className = "leftConsole";
 
-            toolbarRolled = false;
         }
 
     } //left tollbox
