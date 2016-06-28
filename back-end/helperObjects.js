@@ -28,7 +28,7 @@ var LandUseType = {
 	prairie: 9,
 	conservationForest: 10,
 	conventionalForest: 11,
-	herbaceousPerennialBioenergy: 12,
+	switchgrass: 12,
 	shortRotationWoodyBioenergy: 13,
 	wetland: 14,
 	mixedFruitsVegetables: 15,
@@ -61,7 +61,7 @@ var LandUseType = {
 				case 11:
 					return "conventionalForest";
 				case 12:
-					return "herbaceousPerennialBioenergy";
+					return "switchgrass";
 				case 13:
 					return "shortRotationWoodyBioenergy";
 				case 14:
@@ -198,7 +198,7 @@ function Tile(tileArray, board) {
 			this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
 			this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.wetland ||
 			this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean ||
-			this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.herbaceousPerennialBioenergy ||
+			this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass ||
 			this.landType[year] == LandUseType.shortRotationWoodyBioenergy) {
 				
 			this.results[year].nativeVegatationHDorLIFlag = 1;
@@ -217,7 +217,7 @@ function Tile(tileArray, board) {
 		} //end elseif for conservation forest
 
 		//flag grassland category
-		if (this.landType[year] == LandUseType.herbaceousPerennialBioenergy || this.landType[year] == LandUseType.prairie ||
+		if (this.landType[year] == LandUseType.switchgrass || this.landType[year] == LandUseType.prairie ||
 			this.landType[year] == LandUseType.rotationalGrazing) {
 				
 			this.results[year].grasslandFlag = 1;
@@ -231,7 +231,7 @@ function Tile(tileArray, board) {
 			//if tile is a part of the stream network
 			if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationForest ||
 				this.landType[year] == LandUseType.conservationSoybean || this.landType[year] == LandUseType.conventionalForest ||
-				this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.herbaceousPerennialBioenergy ||
+				this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass ||
 				this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
 				this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.shortRotationWoodyBioenergy ||
 				this.landType[year] == LandUseType.wetland) {
@@ -383,7 +383,7 @@ function Tile(tileArray, board) {
 					return 0.004;
 				case "conventionalForest":
 					return 0.004;
-				case "herbaceousPerennialBioenergy":
+				case "switchgrass":
 					return 0.001;
 				case "shortRotationWoodyBioenergy":
 					return 0.004;
@@ -771,7 +771,7 @@ function Tile(tileArray, board) {
 			else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
 				this.runoffCurveNumber[year] = 84;
 		}
-		else if (this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.herbaceousPerennialBioenergy) {
+		else if (this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass) {
 			if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 30;
 			else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
 					'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 58;
@@ -1093,7 +1093,7 @@ this.getYieldPrecipitationMultiplier = function(year) {
         if (board.precipitation[year] == 24.58 || board.precipitation[year] == 45.10) return 0.75;
         else if (board.precipitation[year] == 28.18 || board.precipitation[year] == 36.47) return 0.9;
         else if (board.precipitation[year] == 30.39 || board.precipitation[year] == 32.16 || board.precipitation[year] == 34.34) return 1;
-    } else if ((this.landType[year] > LandUseType.conservationSoybean && this.landType[year] < LandUseType.prairie) || this.landType[year] == LandUseType.herbaceousPerennialBioenergy) {
+    } else if ((this.landType[year] > LandUseType.conservationSoybean && this.landType[year] < LandUseType.prairie) || this.landType[year] == LandUseType.switchgrass) {
         if (board.precipitation[year] > 24.58 && board.precipitation[year] < 45.10) return 1;
         else return 0.95;
     } else if (this.landType[year] == LandUseType.mixedFruitsVegetables) {
@@ -1133,8 +1133,8 @@ this.getYieldPrecipitationMultiplier = function(year) {
 		  return 0.7 * this.getWoodYield();
         case "conventionalForest":
 		  return this.getWoodYield();
-        case "herbaceousPerennialBioenergy":
-		  return this.getHerbaceousPerennialBiomassYield();
+        case "switchgrass":
+		  return this.getSwitchgrassYield();
         case "shortRotationWoodyBioenergy":
           //shortRotationWoodyBioenergy is not dependent on soil type
 		  return 60.8608;
@@ -1170,14 +1170,14 @@ this.getYieldPrecipitationMultiplier = function(year) {
 		return yieldBaseRates[this.getSoilTypeYieldIndex(this.soilType)];
 	}; //end this.getWoodYield
 	
-	//return yield base rate for herbaceous perennial bioenergy
-	this.getHerbaceousPerennialBiomassYield = function() {
+	//return yield base rate for switchgrass (herbaceous perennial bioenergy)
+	this.getSwitchgrassYield = function() {
 		var yieldBaseRates = [(1+(2*(84-25)/(100-25))), (1+(2*(61-25)/(100-25))), (1+(2*(82-25)/(100-25))), (1+(2*(61-25)/(100-25))),
               (1+(2*(61-25)/(100-25))), (1+(2*(68-25)/(100-25))), (1+(2*(82-25)/(100-25))), (1+(2*(76-25)/(100-25))),
               (1+(2*(92-25)/(100-25))), (1+(2*(61-25)/(100-25))), (1+(2*(93-25)/(100-25))), (1+(2*(98-25)/(100-25))),
               (1+(2*(85-25)/(100-25))), 0];
         return yieldBaseRates[this.getSoilTypeYieldIndex(this.soilType)];
-	}; //end this.getHerbaceousPerennialBiomassYield
+	}; //end this.getSwitchgrassYield
 	
 	//return yield base rate for mixed fruits and vegetables dependent on soil type which determines soil texture
 	this.getMixedFruitsVegetablesYield = function() {
@@ -1720,7 +1720,7 @@ function Results(board) {
 			grassHayYield: 0,
 			woodYield: 0,
 			cattleYield: 0,
-			herbaceousPerennialBiomassYield: 0,
+			switchgrassYield: 0,
 			shortRotationWoodyBiomassYield: 0,
 			mixedFruitsAndVegetablesYield: 0,
 		};
@@ -1731,7 +1731,7 @@ function Results(board) {
 			grassHayYield: 0,
 			woodYield: 0,
 			cattleYield: 0,
-			herbaceousPerennialBiomassYield: 0,
+			switchgrassYield: 0,
 			shortRotationWoodyBiomassYield: 0,
 			mixedFruitsAndVegetablesYield: 0,
 			cornGrainYieldScore: 0
@@ -1743,7 +1743,7 @@ function Results(board) {
 			grassHayYield: 0,
 			woodYield: 0,
 			cattleYield: 0,
-			herbaceousPerennialBiomassYield: 0,
+			switchgrassYield: 0,
 			shortRotationWoodyBiomassYield: 0,
 			mixedFruitsAndVegetablesYield: 0
 		};
@@ -1754,7 +1754,7 @@ function Results(board) {
 			grassHayYield: 0,
 			woodYield: 0,
 			cattleYield: 0,
-			herbaceousPerennialBiomassYield: 0,
+			switchgrassYield: 0,
 			shortRotationWoodyBiomassYield: 0,
 			mixedFruitsAndVegetablesYield: 0
 		};
@@ -1803,8 +1803,8 @@ function Results(board) {
 					case "conventionalForest":
 						tempYieldResults[y].woodYield += yieldValueToStore;
 						break;
-					case "herbaceousPerennialBioenergy":
-						tempYieldResults[y].herbaceousPerennialBiomassYield += yieldValueToStore;
+					case "switchgrass":
+						tempYieldResults[y].switchgrassYield += yieldValueToStore;
 						break;
 					case "shortRotationWoodyBioenergy":
 						tempYieldResults[y].shortRotationWoodyBiomassYield += yieldValueToStore;
@@ -1838,7 +1838,7 @@ function Results(board) {
 			permanentPastureLandUse: 0,
 			rotationalGrazingLandUse: 0,
 			grassHayLandUse: 0,
-			herbaceousPerennialBioenergyLandUse: 0,
+			switchgrassLandUse: 0,
 			prairieLandUse: 0,
 			wetlandLandUse: 0,
 			alfalfaLandUse: 0,
@@ -1855,7 +1855,7 @@ function Results(board) {
 			permanentPastureLandUse: 0,
 			rotationalGrazingLandUse: 0,
 			grassHayLandUse: 0,
-			herbaceousPerennialBioenergyLandUse: 0,
+			switchgrassLandUse: 0,
 			prairieLandUse: 0,
 			wetlandLandUse: 0,
 			alfalfaLandUse: 0,
@@ -1872,7 +1872,7 @@ function Results(board) {
 			permanentPastureLandUse: 0,
 			rotationalGrazingLandUse: 0,
 			grassHayLandUse: 0,
-			herbaceousPerennialBioenergyLandUse: 0,
+			switchgrassLandUse: 0,
 			prairieLandUse: 0,
 			wetlandLandUse: 0,
 			alfalfaLandUse: 0,
@@ -1889,7 +1889,7 @@ function Results(board) {
 			permanentPastureLandUse: 0,
 			rotationalGrazingLandUse: 0,
 			grassHayLandUse: 0,
-			herbaceousPerennialBioenergyLandUse: 0,
+			switchgrassLandUse: 0,
 			prairieLandUse: 0,
 			wetlandLandUse: 0,
 			alfalfaLandUse: 0,
@@ -1940,8 +1940,8 @@ function Results(board) {
 					case "conventionalForest":
 						tempLandUseResults[y].conventionalForestLandUse += board.map[i].area;
 						break;
-					case "herbaceousPerennialBioenergy":
-						tempLandUseResults[y].herbaceousPerennialBioenergyLandUse += board.map[i].area;
+					case "switchgrass":
+						tempLandUseResults[y].switchgrassLandUse += board.map[i].area;
 						break;
 					case "shortRotationWoodyBioenergy":
 						tempLandUseResults[y].shortRotationWoodyBioenergyLandUse += board.map[i].area;
@@ -2063,7 +2063,7 @@ function Results(board) {
 			this.yieldResults[y].grassHayYieldScore = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax ;
     		this.yieldResults[y].woodYieldScore = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax ;
     		this.yieldResults[y].cattleYieldScore = 100 * this.yieldResults[y].cattleYield / board.maximums.cattleMax ;
-    		this.yieldResults[y].herbaceousPerennialBiomassYieldScore = this.yieldResults[y].herbaceousPerennialBiomassYield / board.maximums.herbaceousPerennialBiomassMax ;
+    		this.yieldResults[y].switchgrassYieldScore = 100 * this.yieldResults[y].switchgrassYield / board.maximums.switchgrassMax ;
     		this.yieldResults[y].shortRotationWoodyBiomassYieldScore = 100 * this.yieldResults[y].shortRotationWoodyBiomassYield / board.maximums.shortRotationWoodyBiomassMax ;
     		this.yieldResults[y].mixedFruitsAndVegetablesYieldScore = 100 * this.yieldResults[y].mixedFruitsAndVegetablesYield / board.maximums.mixedFruitsAndVegetablesMax 
 	
@@ -2165,7 +2165,7 @@ function GameBoard() {
 	this.calculateMaxMin = function() {
 		
 		var cornMax = 0; var soybeanMax = 0; var hayMax = 0; var woodMax = 0;
-		var cattleMax = 0; var herbMax = 0; var shortWoodyMax = 0; var mixedMax = 0;
+		var cattleMax = 0; var switchgrassMax = 0; var shortWoodyMax = 0; var mixedMax = 0;
 		var erosionMax = 0; var erosionMin = 0; var phosphorusMax = 0; var phosphorusMin = 0;
 		var sedimentMax = 0; var sedimentMin = 0;
 		
@@ -2179,7 +2179,7 @@ function GameBoard() {
 			hayMax += this.map[i].getHayYield() * this.map[i].area; 
 			woodMax += this.map[i].getWoodYield() * this.map[i].area;
 			cattleMax += this.map[i].getCattleSupported(5) * this.map[i].area;
-			herbMax += this.map[i].getHerbaceousPerennialBiomassYield() * this.map[i].area;
+			switchgrassMax += this.map[i].getSwitchgrassYield() * this.map[i].area;
 			shortWoodyMax += 60.8608 * this.map[i].area;
 			mixedMax += 7.34 * this.map[i].area * this.map[i].getMixedFruitsVegetablesYield();
 			
@@ -2213,7 +2213,7 @@ function GameBoard() {
 		this.maximums.grassHayMax = hayMax;
 		this.maximums.woodMax = woodMax;
 		this.maximums.cattleMax = cattleMax;
-		this.maximums.herbaceousPerennialBiomassMax = herbMax;
+		this.maximums.switchgrassMax = switchgrassMax;
 		this.maximums.shortRotationWoodyBiomassMax = shortWoodyMax;
 		this.maximums.mixedFruitsAndVegetablesMax = mixedMax;
 		

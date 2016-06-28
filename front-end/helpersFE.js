@@ -942,12 +942,12 @@ function displayResults() {
     //document.getElementById('resultsFrame').contentWindow.document.getElementById('contents').innerHTML = "WORKS";
     var nameArray = ["Conventional Corn Area", "Conservation Corn Area", "Conventional Soybean Area", "Conservation Soybean Area",
         "Mixed Fruits and Vegetables Area", "Permanent Pasture Area", "Rotational Grazing Area", "Grass Hay Area",
-        "Herbaceous Perennial Bioenergy Area", "Prairie Area", "Wetland Area", "Alfalfa Area", "Conventional Forest Area",
+        "Switchgrass Area", "Prairie Area", "Wetland Area", "Alfalfa Area", "Conventional Forest Area",
         "Conservation Forest Area", "Short Rotation Woody Bioenergy Area"
     ];
     var testArray = ["conventionalCorn", "conservationCorn", "conventionalSoybean",
         "conservationSoybean", "mixedFruitsVegetables", "permanentPasture", "rotationalGrazing", "grassHay",
-        "herbaceousPerennialBioenergy", "prairie", "wetland", "alfalfa", "conventionalForest",
+        "switchgrass", "prairie", "wetland", "alfalfa", "conventionalForest",
         "conservationForest", "shortRotationWoodyBioenergy"
     ];
 
@@ -1166,11 +1166,11 @@ function displayResults() {
     //Finally, add the yeild results to the table...
 
     nameArray = ["Corn Grain", "Soybeans", "Mixed Fruits and Vegetables", "Cattle", "Alfalfa Hay", "Grass Hay",
-        "Herbaceous Perennial Biomass", "Wood", "Short Rotation Woody Biomass"
+        "Switchgrass Biomass", "Wood", "Short Rotation Woody Biomass"
     ];
 
     testArray = ["cornGrainYield", "soybeanYield", "mixedFruitsAndVegetablesYield", "cattleYield",
-        "alfalfaHayYield", "grassHayYield", "herbaceousPerennialBiomassYield", "woodYield", "shortRotationWoodyBiomassYield"
+        "alfalfaHayYield", "grassHayYield", "switchgrassYield", "woodYield", "shortRotationWoodyBiomassYield"
     ];
     conversionArray = [0.0254, 0.0254, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474, 0.002359737, 0.90718474];
 

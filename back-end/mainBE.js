@@ -101,7 +101,7 @@ function display() {
     "Grass Hay: " + Totals.yieldResults[1].grassHayYield + "<BR>" +
     "Wood: " + Totals.yieldResults[1].woodYield + "<BR>" +
     "Cattle: " + Totals.yieldResults[1].cattleYield + "<BR>" +
-    "Herbs: " + Totals.yieldResults[1].herbaceousPerennialBiomassYield + "<BR>" +
+    "Switchgrass: " + Totals.yieldResults[1].switchgrassYield + "<BR>" +
     "Short Woody: " + Totals.yieldResults[1].shortRotationWoodyBiomassYield + "<BR>" +
     "Fruits + Veggies: " + Totals.yieldResults[1].mixedFruitsAndVegetablesYield + "<BR>" +
     "<BR>" + "<BR>" +
@@ -117,7 +117,7 @@ function display() {
     "Prairie: " + Totals.landUseResults[1].prairieLandUse + "<BR>" +
     "Conservation Forest: " + Totals.landUseResults[1].conservationForestLandUse + "<BR>" +
     "Conventional Forest: " + Totals.landUseResults[1].conventionalForestLandUse + "<BR>" +
-    "Herbaceous Perennial Bioenergy: " + Totals.landUseResults[1].herbaceousPerennialBioenergyLandUse + "<BR>" +
+    "Switchgrass (deprecated: Herbaceous Perennial Bioenergy): " + Totals.landUseResults[1].switchgrassLandUse + "<BR>" +
     "Short Rotation Woody Bioenergy: " + Totals.landUseResults[1].shortRotationWoodyBioenergyLandUse + "<BR>" +
     "Wetland: " + Totals.landUseResults[1].wetlandLandUse + "<BR>" +
     "Mixed Fruits and Veggies: " + Totals.landUseResults[1].mixedFruitsVegetablesLandUse + "<BR>" +
@@ -130,7 +130,7 @@ function display() {
     "Hay: " + 100 * Totals.yieldResults[3].grassHayYield / board1.maximums.grassHayMax + "<BR>" +
     "Wood: " + 100 * Totals.yieldResults[3].woodYield / board1.maximums.woodMax + "<BR>" +
     "Cattle: " + 100 * Totals.yieldResults[3].cattleYield / board1.maximums.cattleMax + "<BR>" +
-    "Herbs: " + 100 * Totals.yieldResults[3].herbaceousPerennialBiomassYield / board1.maximums.herbaceousPerennialBiomassMax + "<BR>" +
+    "Switchgrass: " + 100 * Totals.yieldResults[3].switchgrassYield / board1.maximums.switchgrassMax + "<BR>" +
     "Short Woody: " + 100 * Totals.yieldResults[3].shortRotationWoodyBiomassYield / board1.maximums.shortRotationWoodyBiomassMax + "<BR>" +
     "Fruits + Veggies: " + 100 * Totals.yieldResults[3].mixedFruitsAndVegetablesYield / board1.maximums.mixedFruitsAndVegetablesMax + "<BR>" +
     "<BR>" + "<BR>" +
