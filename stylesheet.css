@@ -560,6 +560,25 @@ body {
     position:absolute;
     top:20%;
     right:20%;
-    
-      
+}
+
+#loading {
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:black;
+}
+
+#loadingContainer {
+    position:absolute;
+    height:200px;
+    width:200px;
+    margin-top:-100px;
+    margin-left:-100px;
+    top:50%;
+    left:50%;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    line-height: 130%;
+	color: #FFFFFF;
+	font-weight: bold;
 }

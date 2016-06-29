@@ -12,6 +12,7 @@
     <script src="./lib/controls.js"></script>
     <script src="./lib/jquery-1.12.4.min.js"></script>
     <script src="./lib/stats.min.js"></script>
+    
 
     <script src="./front-end/loader.js"></script>
     <script src="./front-end/gameLogic.js"></script>
@@ -22,10 +23,19 @@
     <script src="./back-end/helperObjects.js"></script>
     <script src="./back-end/mainBE.js"></script>
 
+    
+
 </head>
 
 <body>
-
+ 
+     <script>
+     //preload loading screen     
+     var img1 = new Image();
+     img1.src = "./imgs/loader.gif" ;
+     </script>
+ 
+    <div id="page" style="visibility:hidden;">
     <!-- BEGIN LEFT CONSOLE -->
 
     <!--console tabs -->
@@ -51,23 +61,23 @@
 
         <div id="painterTab" class="consoleTab">
 
-            <img id="paint1" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="paintChange(1);">
-            <img id="paint2" class="landSelectorIcon" src="./imgs/conservationCorn.png" onclick="paintChange(2);">
-            <img id="paint3" class="landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="paintChange(3);">
-            <img id="paint4" class="landSelectorIcon" src="./imgs/conservationSoybean.png" onclick="paintChange(4);">
-            <img id="paint15" class="landSelectorIcon" src="./imgs/fruits.png" onclick="paintChange(15);">
+            <img id="paint1" onmouseover="showInfo('Conventional Corn');" onmouseout="clearInfo();" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="paintChange(1);">
+            <img id="paint2" onmouseover="showInfo('Conservation Corn');" onmouseout="clearInfo();" class="landSelectorIcon" src="./imgs/conservationCorn.png"  onclick="paintChange(2); ">
+            <img id="paint3" onmouseover="showInfo('Conventional Soybean');" onmouseout="clearInfo();" class="landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="paintChange(3);">
+            <img id="paint4" onmouseover="showInfo('Conservation Soybean');" onmouseout="clearInfo();" class="landSelectorIcon" src="./imgs/conservationSoybean.png" onclick="paintChange(4);">
+            <img id="paint15" onmouseover="showInfo('Mixed Fruits and Vegetables');" onmouseout="clearInfo();" class="landSelectorIcon" src="./imgs/fruits.png" onclick="paintChange(15);">
 
-            <img id="paint5" class="landSelectorIcon" src="./imgs/alfalfa.png" onclick="paintChange(5);">
-            <img id="paint8" class="landSelectorIcon" src="./imgs/grassHay.png" onclick="paintChange(8);">
-            <img id="paint12" class="landSelectorIcon" src="./imgs/herbaceous.png" onclick="paintChange(12);">
-            <img id="paint6" class="landSelectorIcon" src="./imgs/permanentPasture.png" onclick="paintChange(6);">
-            <img id="paint7" class="landSelectorIcon" src="./imgs/rotationalGrazing.png" onclick="paintChange(7);">
+            <img id="paint5" onmouseover="showInfo('Alfalfa');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/alfalfa.png" onclick="paintChange(5);">
+            <img id="paint8" onmouseover="showInfo('Grass Hay');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/grassHay.png" onclick="paintChange(8);">
+            <img id="paint12" onmouseover="showInfo('Switchgrass');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/herbaceous.png" onclick="paintChange(12);">
+            <img id="paint6" onmouseover="showInfo('Permanent Pasture');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/permanentPasture.png" onclick="paintChange(6);">
+            <img id="paint7" onmouseover="showInfo('Rotational Grazing');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/rotationalGrazing.png" onclick="paintChange(7);">
 
-            <img id="paint14" class="landSelectorIcon" src="./imgs/wetland.png" onclick="paintChange(14);">
-            <img id="paint9" class="landSelectorIcon" src="./imgs/prairie.png" onclick="paintChange(9);">
-            <img id="paint11" class="landSelectorIcon" src="./imgs/conventionalForest.png" onclick="paintChange(11);">
-            <img id="paint10" class="landSelectorIcon" src="./imgs/conservationForest.png" onclick="paintChange(10);">
-            <img id="paint13" class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="paintChange(13);">
+            <img id="paint14" onmouseover="showInfo('Wetland');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/wetland.png" onclick="paintChange(14);">
+            <img id="paint9" onmouseover="showInfo('Prairie');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/prairie.png" onclick="paintChange(9);">
+            <img id="paint11" onmouseover="showInfo('Conventional Forest');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/conventionalForest.png" onclick="paintChange(11);">
+            <img id="paint10" onmouseover="showInfo('Conservation Forest');" onmouseout="clearInfo();" class="landSelectorIcon"   class="landSelectorIcon" src="./imgs/conservationForest.png" onclick="paintChange(10);">
+            <img id="paint13" onmouseover="showInfo('Short Rotation Woody Bioenergy');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="paintChange(13);">
 
         </div>
 
@@ -245,9 +255,33 @@
         <p id="currentInfo">
     </div>
 
+    </div> <!-- end page div -->
+
+
+    <div id="loading" style="visibility:hidden;">
+    <div id="loadingContainer">
+        <center>
+        <img src="./imgs/inGameLogo.png">  
+        <br><br>
+        <img src="./imgs/loader.gif">  
+        </center>
+    </div>
+    </div>
+
+
+    <div id="startupSequence" style="position:absolute; padding:0px margin:0px; width:100%; height:100%;">
+    
+    <iframe id="startUpFrame" src="./htmlFrames/startup.html" style="width:100%; height:100%; padding:0px margin:0px;"></iframe>    
+        
+        
+        
+        
+    </div>
+
+
     <script>
         //Start Graphical Front-End
-        initWorkspace();
+        //initWorkspace();
     </script>
 
 

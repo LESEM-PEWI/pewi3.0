@@ -68,10 +68,12 @@ function highlightTile(id) {
         previousHover = id;
 
         //document.getElementById("currentInfo").innerHTML = "Year: " + currentYear + "   Selected Land Type: " + LandUseType.getType(painter) + "   Higlighted Tile: " + LandUseType.getType(boardData[currentBoard].map[id].landType[currentYear]) + " " + boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
-        document.getElementById("currentInfo").innerHTML = boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
+        showInfo(boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column) ;
     }
     else {
-        document.getElementById("currentInfo").innerHTML = " ";
+        //don't delete info in an html element, else clear
+        var line = document.getElementById('currentInfo').innerHTML ;
+        if(!isNaN(line[0])) clearInfo() ;
     }
 
 
@@ -1360,4 +1362,12 @@ function toggleIndex() {
         document.getElementById('index').style.display = "none" ;
         document.activeElement.blur();
     }
+}
+
+function showInfo(string){
+    document.getElementById("currentInfo").innerHTML = string ;
+}
+
+function clearInfo(){
+    document.getElementById("currentInfo").innerHTML = " ";
 }

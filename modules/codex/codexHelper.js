@@ -112,7 +112,9 @@ function establishHeader(i, line1, line2, line3, padding){
              
     dataHolder[i].square1 = line2 ;
              
-    dataHolder[i].square2 = line3 ;     
+    dataHolder[i].square2 = line3 ;  
+    
+    dataHolder[i].title = line1.slice(3) ;
     
     
     return tempString ;
@@ -136,6 +138,7 @@ function establishElement(i, line1, line2, line3, padding){
              
     dataHolder[i].square2 = line3 ;
 
+    dataHolder[i].title = line1.slice(3) ;
 
     return tempString
     
@@ -195,6 +198,8 @@ function arrangeDisplay(value) {
    
    var fileString = "./codexResources/text/" + dataHolder[value].square2 ;
    
+   document.getElementById('title').innerHTML = dataHolder[value].title.toUpperCase() ;
+   
    $.ajax({
        async: false,
        type: "GET",
@@ -214,6 +219,9 @@ function arrangeDisplay(value) {
     if(document.getElementById(value).className == 'groupElement'){
         document.getElementById(value).className = 'selectedGroupElement' ; 
     }
+    
+
+    
 }
 
 function resizeSection(value,operation){

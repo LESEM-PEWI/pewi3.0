@@ -13,7 +13,7 @@ var modalUp = false;
 var isShiftDown = false;
 var Totals; //global current calculated results, NOTE, should be reassigned every time currentBoard is changed
 var counter = 0;
-var stats;
+var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
 
 //setup instantiates the camera, lights, controls, shadowmap, and renderer. Called once at the beginning of game
@@ -26,7 +26,6 @@ function setup() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     //setup stats display
-    stats = new Stats();
     document.body.appendChild(stats.domElement);
 
     //scene
@@ -51,7 +50,6 @@ function setup() {
     spotLight.penumbra = 0.01;
     spotLight.decay = 0;
     spotLight.distance = 800;
-    spotLight.shadowDarkness = 0.5;
     spotLight.shadow.mapSize.width = 2048;
     spotLight.shadow.mapSize.height = 2048;
     spotLight.shadow.camera.near = 1;
@@ -78,6 +76,7 @@ function setup() {
 
     setupHighlight();
 
+    return 1 ;
 } //end setup
 
 //setupSkyBox instantiates the skybox background (HI-DEF Version)
@@ -113,6 +112,7 @@ function setupBoardFromFile(file) {
     //update Results to point to correct board since currentBoard is updated
     Totals = new Results(boardData[currentBoard]);
 
+    return 1 ;
 } //end setupBoardFromFile
 
 //setupRiver creates a new CatmullRomCurve3 object for the river from the points stored in the riverPoints array
@@ -191,13 +191,29 @@ function setupHighlight() {
 
 function initWorkspace() {
 
-    loadResources();
-    setup();
-    setupBoardFromFile("./data.txt");
-
-}
-
-//update area, what to update when something changes
+    document.getElementById('startupSequence').style.display = "none" ;
+    document.getElementById('loading').style.visibility = "visible" ;
+   
+   THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
+    
+       console.log("loaded " + loaded + " of " + total);
+    
+    };
+   
+   THREE.DefaultLoadingManager.onLoad = function (){
+       console.log("loaded") ;
+       document.getElementById('loading').style.display = "none" ;
+       document.getElementById('page').style.visibility = "visible" ;
+   }
+    
+    
+    var hold = loadResources() ;
+    hold = setup() ;
+    hold = setupBoardFromFile("./data.txt") ;
+    //loadResources();
+   //setup();
+    //setupBoardFromFile("./data.txt");
+    
 requestAnimationFrame(function animate() {
 
     renderer.render(scene, camera);
@@ -212,4 +228,10 @@ requestAnimationFrame(function animate() {
     requestAnimationFrame(animate);
     stats.update();
 
+
 }); //end request
+
+
+}
+
+
