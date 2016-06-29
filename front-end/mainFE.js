@@ -210,6 +210,9 @@ function initWorkspace() {
     var hold = loadResources() ;
     hold = setup() ;
     hold = setupBoardFromFile("./data.txt") ;
+    
+     document.activeElement.blur() ;
+     
     //loadResources();
    //setup();
     //setupBoardFromFile("./data.txt");

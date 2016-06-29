@@ -355,7 +355,7 @@ function onDocumentKeyDown(event) {
         case 73:
             toggleIndex();
             break ;
-        case 82:
+        case 69:
             controls.reset();
             break;
     }
@@ -471,6 +471,7 @@ function roll(value) {
 
             document.getElementById('toolsButton').style.left = "0px";
             document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')";
+            document.getElementById('pick').src = "./imgs/pickIn.png"
 
             document.getElementById('tabButtons').className = "tabButtonsRolled";
             document.getElementById('leftConsole').className = "leftConsoleRolled";
@@ -481,6 +482,7 @@ function roll(value) {
 
             document.getElementById('toolsButton').style.left = "130px";
             document.getElementById('toolsButton').style.backgroundImage = "none";
+            document.getElementById('pick').src = "./imgs/pickOut.png"
 
             document.getElementById('tabButtons').className = "tabButtons";
             document.getElementById('leftConsole').className = "leftConsole";
