@@ -28,7 +28,7 @@ top:50%;
 position:absolute;
 width:90px;
 margin-left:-45px;
-padding-left:8px;
+padding-left:4px;
 left:50%;
 top:50% ;
 opacity: 0.0;
@@ -40,15 +40,14 @@ transition-duration: 1.5s;
 .mainButton{
 position:absolute;
 width:150px;
-height:50px ;
+height:70px ;
 margin-left:-75px;
 color: white ;
 padding:5px;
-background: rgba(0,0,0,0);
-border: 1px solid white;
+border: 0px solid white;
 text-align:center;
 font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-line-height: 180%;
+line-height: 280%;
 color: #FFFFFF;
 font-size: 24 ;
 font-weight: bold;
@@ -56,35 +55,13 @@ cursor: all-scroll ;
 top:30% ;
 visibility: hidden ;
 opacity: 0;
+background-color: #008fb3;
 
 }
 
-.backEffect {
-position:absolute;
-margin:0px;
-padding:0px;
-margin-left:-75px;
-top:30% ;
-
-width:0px ;
-height:10px ;
-
-
-}
-
-#backEffect1 {
-left:20%;
-background:rgba(40,97,161,1);;
-}
-
-#backEffect2 {
-left:50%;
-background:rgba(40,97,161,1);;
-}
-
-#backEffect3 {
-left:80%;
-background:rgba(40,97,161,1);;
+.mainButton:hover {
+ top:29%;
+ background-color:  #00b8e6;
 }
 
 #button1
@@ -109,11 +86,11 @@ transition-duration: 4s;
 }
 
 #loadingTitle {
-font-family: 'Waiting for the Sunrise', cursive;
+font-family: 'Amatic SC', cursive;
 text-align:center;
-line-height: 180%;
+line-height: 150%;
 color: #FFFFFF;
-font-size: 23px ;
+font-size: 35px ;
 font-weight: bold;
 
 position:absolute;
@@ -130,20 +107,18 @@ border-bottom: 1px solid white ;
 
 </style>
 
-<link href='https://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
 <body>
 
 <div id="pewiTitle" style="background:black; visibility:hidden">
 <img src="./imgs/logo.png" />
 </div>
 
-<div id="backEffect1" class="backEffect"></div>
 <div id="button1" class="mainButton" onclick="startSandbox();" onmouseover="document.getElementById('backEffect1').style.width = '160px'" onmouseout="document.getElementById('backEffect1').style.width = '0px'">Sandbox</div>
 
-<div id="backEffect2" class="backEffect"></div>
 <div id="button2" class="mainButton" onmouseover="document.getElementById('backEffect2').style.width = '160px'" onmouseout="document.getElementById('backEffect2').style.width = '0px'">Play</div>
 
-<div id="backEffect3" class="backEffect"></div>
+
 <div id="button3" class="mainButton" onmouseover="document.getElementById('backEffect3').style.width = '160px'" onmouseout="document.getElementById('backEffect3').style.width = '0px'">Options</div>
 
 
@@ -155,7 +130,7 @@ loading
 </video>
 
 <div id="loadingTitle">
-People in Watersheds / Ecosystem Integration
+People in Ecosystems / Watershed Integration
 </div>
 
 </div>
@@ -181,6 +156,14 @@ function endFunction() {
  document.getElementById('button3').style.visibility = "visible";
  document.getElementById('button3').style.opacity = "1";
 
+ setTimeout(function() {
+  document.getElementById('button1').style.transitionDuration = ".4s" ;
+ document.getElementById('button2').style.transitionDuration = ".4s" ;
+ document.getElementById('button3').style.transitionDuration = ".4s" ;
+ 
+}, 100);
+ 
+ 
 }
 
 setTimeout(function() {
@@ -196,7 +179,18 @@ setTimeout(function() {
 
 function startSandbox() {
 
- parent.initWorkspace();
+ document.getElementById('button1').style.backgroundColor= "red" ;
+ document.getElementById('button1').style.top = "26%" ;
+ document.getElementById('button2').style.top = "-10%" ;
+ document.getElementById('button3').style.top = "-10%" ;
+ document.getElementById('pewiTitle').style.top = "-60%" ;
+ document.getElementById('button1').style.left = "50%" ;
+ setTimeout(function() {
+  
+   parent.initWorkspace();
+  
+ }, 1000);
+
 
  //ideally
  //parent function ends start sequence

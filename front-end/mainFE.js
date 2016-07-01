@@ -231,8 +231,7 @@ requestAnimationFrame(function animate() {
     requestAnimationFrame(animate);
     stats.update();
 
-
-}); //end request
+  }); //end request
 
 
 }
