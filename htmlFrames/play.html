@@ -3,8 +3,53 @@
 <head>
 <style>
 body {
-    background-color:blue;
+    background-color:black;
 }    
+
+.levelButton{
+position:absolute;
+width:300px;
+height:70px ;
+margin-left:-150px;
+color: white ;
+padding:5px;
+border: 0px solid white;
+text-align:center;
+font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+line-height: 280%;
+left:50%;
+color: #FFFFFF;
+font-size: 24 ;
+font-weight: bold;
+cursor: all-scroll ;
+background-color: #008fb3;
+
+}
+
+.levelButton:hover {
+ left:51%;
+ background-color:  #00b8e6;
+}
+
+#tutorial {
+    top: 12%;
+}
+
+#level1 {
+    top:24%;
+}
+
+#level2 {
+    top:36%;
+}
+
+#level3 {
+    top:48%;
+}
+
+#resume {
+    top:60%;
+}
     
     
 </style>        
@@ -12,6 +57,12 @@ body {
 </head>
     
 <body>
+    
+<div id="tutorial" class="levelButton">Tutorial</div>
+<div id="level1" class="levelButton">[Level 1]</div>
+<div id="level2" class="levelButton">[Level 2]</div>
+<div id="level3" class="levelButton">[Level 3]</div>
+<div id="resume" class="levelButton">Resume Game</div>
     
     
     
