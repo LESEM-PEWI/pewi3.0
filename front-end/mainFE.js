@@ -205,13 +205,10 @@ function initWorkspace() {
        document.getElementById('loading').style.display = "none" ;
        document.getElementById('page').style.visibility = "visible" ;
        
-      console.log(document.activeElement.id) ;
-        
       //work around for firefox..... see bug 554039
       document.getElementById('firefoxWorkaround').focus() ;
       //
-      console.log(document.activeElement.id) ;
-   }
+      }
     
     
     var hold = loadResources() ;
