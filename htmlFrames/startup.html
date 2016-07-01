@@ -114,12 +114,12 @@ border-bottom: 1px solid white ;
 <img src="./imgs/logo.png" />
 </div>
 
-<div id="button1" class="mainButton" onclick="startSandbox();" onmouseover="document.getElementById('backEffect1').style.width = '160px'" onmouseout="document.getElementById('backEffect1').style.width = '0px'">Sandbox</div>
+<div id="button1" class="mainButton" onclick="startSandbox();">Sandbox</div>
 
-<div id="button2" class="mainButton" onmouseover="document.getElementById('backEffect2').style.width = '160px'" onmouseout="document.getElementById('backEffect2').style.width = '0px'">Play</div>
+<div id="button2" class="mainButton">Play</div>
 
 
-<div id="button3" class="mainButton" onmouseover="document.getElementById('backEffect3').style.width = '160px'" onmouseout="document.getElementById('backEffect3').style.width = '0px'">Options</div>
+<div id="button3" class="mainButton">Options</div>
 
 
 
@@ -185,11 +185,12 @@ function startSandbox() {
  document.getElementById('button3').style.top = "-10%" ;
  document.getElementById('pewiTitle').style.top = "-60%" ;
  document.getElementById('button1').style.left = "50%" ;
+ 
  setTimeout(function() {
   
    parent.initWorkspace();
-  
- }, 1000);
+   
+ }, 500);
 
 
  //ideally

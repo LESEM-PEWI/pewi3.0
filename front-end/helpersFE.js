@@ -347,16 +347,23 @@ function onDocumentKeyDown(event) {
         case 16:
             isShiftDown = true;
             break;
+        //case t
         case 84:
             tToggle ? tToggle = false : tToggle = true;
             refreshBoard();
             console.log(tToggle);
             break;
+        //case i
         case 73:
             toggleIndex();
             break ;
+        //case e
         case 69:
             controls.reset();
+            break;
+        //case r
+        case 82:
+            randomizeBoard() ;
             break;
     }
 
@@ -1372,4 +1379,26 @@ function showInfo(string){
 
 function clearInfo(){
     document.getElementById("currentInfo").innerHTML = " ";
+}
+
+
+function randomizeBoard() {
+    
+    
+    var prevPainter = painter ;
+    
+    //for whole board
+    for(var i=0; i < boardData[currentBoard].map.length; i++){
+    
+    //if tile exists
+        if(boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none ){
+            
+            painter = getRandomInt(1,15) ;
+            changeLandTypeTile(i) ;
+        }
+    }
+    
+    painter = prevPainter ;
+// boardData[currentBoard].map[id].landType[currentYear] = painter;    
+    
 }

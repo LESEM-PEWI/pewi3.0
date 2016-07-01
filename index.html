@@ -13,27 +13,26 @@
     <script src="./lib/jquery-1.12.4.min.js"></script>
     <script src="./lib/stats.min.js"></script>
     
+    <script src="./back-end/helperMethods.js"></script>
+    <script src="./back-end/helperObjects.js"></script>
+    <script src="./back-end/mainBE.js"></script>
 
     <script src="./front-end/loader.js"></script>
     <script src="./front-end/gameLogic.js"></script>
     <script src="./front-end/mainFE.js"></script>
     <script src="./front-end/helpersFE.js"></script>
 
-    <script src="./back-end/helperMethods.js"></script>
-    <script src="./back-end/helperObjects.js"></script>
-    <script src="./back-end/mainBE.js"></script>
-
-    
-
 </head>
 
-<body>
+<body id="body">
  
      <script>
      //preload loading screen     
      var img1 = new Image();
      img1.src = "./imgs/loader.gif" ;
      </script>
+ 
+     <input id="firefoxWorkaround" style="position:absolute; cursor:default; background:rgba(0,0,0,0); margin:0px; padding:0px; height:0px; width:0px;"></input>
  
     <div id="page" style="visibility:hidden;">
     <!-- BEGIN LEFT CONSOLE -->

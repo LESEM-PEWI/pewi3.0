@@ -204,6 +204,13 @@ function initWorkspace() {
        console.log("loaded") ;
        document.getElementById('loading').style.display = "none" ;
        document.getElementById('page').style.visibility = "visible" ;
+       
+      console.log(document.activeElement.id) ;
+        
+      //work around for firefox..... see bug 554039
+      document.getElementById('firefoxWorkaround').focus() ;
+      //
+      console.log(document.activeElement.id) ;
    }
     
     
@@ -211,15 +218,15 @@ function initWorkspace() {
     hold = setup() ;
     hold = setupBoardFromFile("./data.txt") ;
     
-     document.activeElement.blur() ;
-     
+
+    
     //loadResources();
    //setup();
     //setupBoardFromFile("./data.txt");
     
 requestAnimationFrame(function animate() {
-
-    renderer.render(scene, camera);
+    
+   renderer.render(scene, camera);
 
     //wait # update frames to check
     if (counter > 20) {

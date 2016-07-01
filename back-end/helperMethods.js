@@ -57,3 +57,8 @@ function loadBoard(board, fileString) {
     initData = [] ;
     
 }
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
