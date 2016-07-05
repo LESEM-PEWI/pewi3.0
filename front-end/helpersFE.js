@@ -487,7 +487,7 @@ function roll(value) {
         }
         else {
 
-            document.getElementById('toolsButton').style.left = "130px";
+            document.getElementById('toolsButton').style.left = "135px";
             document.getElementById('toolsButton').style.backgroundImage = "none";
             document.getElementById('pick').src = "./imgs/pickOut.png"
 

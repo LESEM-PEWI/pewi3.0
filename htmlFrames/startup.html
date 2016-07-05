@@ -28,7 +28,7 @@ top:50%;
 position:absolute;
 width:90px;
 margin-left:-45px;
-padding-right:1px;
+padding-left:1px;
 left:50%;
 top:40% ;
 opacity: 0.0;
@@ -123,29 +123,15 @@ left:100px;
  
 }
 
-#logoImg {
- position:absolute;
- width:300px;
- margin-left:-150px;
- margin-top:-150px;
- top: 70%;
- left:50%;
- opacity:0;
- 
- -webkit-transition-duration: 2s; /* Safari */
-transition-duration: 2s;
-}
-
 </style>
 
 <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
 <body>
 
+
 <div id="pewiTitle" style="background:black; visibility:hidden">
 <img src="./imgs/logo.png" />
 </div>
-
-<img id="logoImg" src="./imgs/pewiLogoInvert.png" />
 
 <div id="button1" class="mainButton" onclick="startSandbox();">Sandbox</div>
 
@@ -157,7 +143,7 @@ transition-duration: 2s;
 
 
 <div id="container">
-<video id="startVideo" width="800" height="1500px" autoplay="autoplay" style="margin-top:-300px;">
+<video id="startVideo" width="800" height="1500px" autoplay="autoplay" style="margin-left:-18px; margin-top:-300px;">
 <source src="./imgs/start.webm" type="video/webm" />
 loading
 </video>
@@ -182,7 +168,6 @@ function endFunction() {
  document.getElementById('pewiTitle').style.visibility = "visible";
  document.getElementById('pewiTitle').style.opacity = "1";
  document.getElementById('pewiTitle').style.top = "10%";
- document.getElementById('logoImg').style.opacity = "1" ;
  
  document.getElementById('button1').style.visibility = "visible";
  document.getElementById('button1').style.opacity = "1";
