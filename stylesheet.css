@@ -284,7 +284,7 @@ body {
 }
 
 /*physical features map selector*/
-.floodColor1, .floodColor2, .floodColorNone,
+.floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone,
 .drainageColor1, .drainageColor2 {
     height: 15px;
     margin: 5px 0px 10px 10px;
@@ -296,6 +296,17 @@ body {
 }
 
 .floodColor2 {
+    background-color: #c7eab4;
+}
+
+.floodColor3 {
+    background-color: #7fcebb;
+}
+
+.floodColor4 {
+    background-color: #41b7c5;
+}
+.floodColor5 {
     background-color: #2f7eb7;
 }
 
@@ -310,7 +321,7 @@ body {
 .physicalDetailsList, .physicalDetailsListRolled {
     margin: 15px 0px 0px 0px ;
     position: absolute;
-    top: 350px;
+    top: 305px;
     width: 115;
     
     -webkit-transition-duration: 0.4s; /* Safari */
