@@ -281,7 +281,9 @@ function transitionToYear(year) {
         boardData[currentBoard].calculatedToYear = year;
         boardData[currentBoard].updateBoard();
     }
-
+    
+    displayLevels();
+    
     refreshBoard();
 
 } //end transitionToYear
@@ -612,8 +614,8 @@ function switchConsoleTab(value) {
 
         if(mapIsHighlighted){
             displayLevels();
-            var element = document.getElementsByClassName('physicalDetailsList');
-            element[0].className = 'physicalDetailsListRolled';
+            //var element = document.getElementsByClassName('physicalDetailsList');
+            //element[0].className = 'physicalDetailsListRolled';
         }
         
         document.getElementById('levelsImg').className = "imgSelected";
@@ -625,8 +627,8 @@ function switchConsoleTab(value) {
         
         if(mapIsHighlighted){
             displayLevels();
-            var element = document.getElementsByClassName('levelDetailsList');
-            element[0].className = 'levelDetailsListRolled';
+            //var element = document.getElementsByClassName('levelDetailsList');
+            //element[0].className = 'levelDetailsListRolled';
         }
 
         document.getElementById('featuresImg').className = "imgSelected";
@@ -665,7 +667,7 @@ function displayLevels(type) {
     
         if(!mapIsHighlighted){
             
-            //mapIsHighlighted = true;
+            mapIsHighlighted = true;
             
             Totals = new Results(boardData[currentBoard]);
             Totals.update();
@@ -684,69 +686,97 @@ function displayLevels(type) {
             switch(type){
                 case 'nitrate':
                     showLevelDetails(1);
-                    currentHighlightType = -1;
+                    currentHighlightType = 1;
                     break;
                 case 'erosion':
                     showLevelDetails(2);
-                    currentHighlightType = -2;
+                    currentHighlightType = 2;
                     break;
                 case 'phosphorus':
                     showLevelDetails(3);
-                    currentHighlightType = -3;
+                    currentHighlightType = 3;
                     break;
                 case 'flood':
                     showLevelDetails(4);
-                    currentHighlightType = -4;
+                    currentHighlightType = 4;
                     break;
                 case 'drainage':
                     showLevelDetails(5);
-                    currentHighlightType = -5;
+                    currentHighlightType = 5;
                     break;
                 case 'wetland':
                     showLevelDetails(6);
-                    currentHighlightType = -6;
+                    currentHighlightType = 6;
                     break;
                 case 'subwatershed':
                     showLevelDetails(7);
-                    currentHighlightType = -7;
+                    currentHighlightType = 7;
                     break;
             }
             
         } else {
             
-            //mapIsHighlighted = false;
-            
-            currentHighlightType = 0;
+            var newSelection = 0;
             
             switch(type){
                 case 'nitrate':
-                    showLevelDetails(-1);
+                    newSelection = 1;
                     break;
                 case 'erosion':
-                    showLevelDetails(-2);
+                    newSelection = 2;
                     break;
                 case 'phosphorus':
-                    showLevelDetails(-3);
+                    newSelection = 3;
                     break;
                 case 'flood':
-                    showLevelDetails(-4);
+                    newSelection = 4;
                     break;
                 case 'drainage':
-                    showLevelDetails(-5);
+                    newSelection = 5;
                     break;
                 case 'wetland':
-                    showLevelDetails(-6);
+                    newSelection = 6;
                     break;
                 case 'subwatershed':
-                    showLevelDetails(-7);
+                    newSelection = 7;
                     break;
             }
             
-            transitionToYear(currentYear);
+            
+            if(currentHighlightType == newSelection || newSelection == ''){
+                
+                mapIsHighlighted = false;
+                transitionToYear(currentYear);
+                showLevelDetails(-1 * currentHighlightType);
+                currentHighlightType = 0;
+            
+            } else {
+                
+                mapIsHighlighted = true;
+                
+                showLevelDetails(-1 * currentHighlightType);
+                
+                Totals = new Results(boardData[currentBoard]);
+                Totals.update();
+    
+                for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+    
+                    if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+    
+                        meshMaterials[i].map = textureArray[0];
+                        meshMaterials[i].emissive.setHex(getHighlightColor(type, i));
+    
+                    }
+    
+                }
+                
+                showLevelDetails(newSelection);
+                currentHighlightType = newSelection;
+                
+            }
+            
             
         }
-        
-        changeMapHighlighting();
 
 } //end displayLevels
 
