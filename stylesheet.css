@@ -82,7 +82,7 @@ body {
     height:450px;
     position: absolute;
     top:150px;
-    width:130px;
+    width:135px;
    
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
@@ -93,7 +93,7 @@ body {
 }
 
 .leftConsoleRolled{
-    left: -130px;
+    left: -135px;
 }
 
 .consoleTab {
@@ -124,7 +124,7 @@ body {
 }
 
 .tabButtons, #toolsButton {
-    left: 130px;
+    left: 135px;
     position:absolute;
 
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -177,6 +177,7 @@ body {
     height:40px;
     width:40px;
     margin: 6px ;
+    margin-left:10px;
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
 }
 
@@ -260,7 +261,7 @@ body {
 }
 
 .levelDetailsListRolled {
-    left: -130px;
+    left: -135px;
 }
 
 .levelsText {
@@ -321,7 +322,7 @@ body {
 }
 
 .physicalDetailsListRolled {
-    left:-130px;
+    left:-135px;
 }
 
 .featureSelectorIcon {
