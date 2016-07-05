@@ -28,7 +28,7 @@ top:50%;
 position:absolute;
 width:90px;
 margin-left:-45px;
-padding-left:4px;
+padding-right:1px;
 left:50%;
 top:40% ;
 opacity: 0.0;
@@ -74,15 +74,15 @@ transition-duration: 3s;
 #button2
 {
 left:50%;
--webkit-transition-duration: 3.5s; /* Safari */
-transition-duration: 3.5s;
+-webkit-transition-duration: 3.8s; /* Safari */
+transition-duration: 3.8s;
 }
 
 #button3
 {
 left:80%;
--webkit-transition-duration: 4s; /* Safari */
-transition-duration: 4s;
+-webkit-transition-duration: 4.6s; /* Safari */
+transition-duration: 4.6s;
 }
 
 #loadingTitle {
@@ -115,6 +115,27 @@ border-bottom: 1px solid white ;
  visibility: hidden;
 }
 
+#city {
+position:absolute;
+top:-150px;
+left:100px;
+
+ 
+}
+
+#logoImg {
+ position:absolute;
+ width:300px;
+ margin-left:-150px;
+ margin-top:-150px;
+ top: 70%;
+ left:50%;
+ opacity:0;
+ 
+ -webkit-transition-duration: 2s; /* Safari */
+transition-duration: 2s;
+}
+
 </style>
 
 <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
@@ -123,6 +144,8 @@ border-bottom: 1px solid white ;
 <div id="pewiTitle" style="background:black; visibility:hidden">
 <img src="./imgs/logo.png" />
 </div>
+
+<img id="logoImg" src="./imgs/pewiLogoInvert.png" />
 
 <div id="button1" class="mainButton" onclick="startSandbox();">Sandbox</div>
 
@@ -140,6 +163,7 @@ loading
 </video>
 
 <div id="loadingTitle">
+<img id="city" src="./imgs/citySilloute.png">
 People in Ecosystems / Watershed Integration
 </div>
 
@@ -158,7 +182,8 @@ function endFunction() {
  document.getElementById('pewiTitle').style.visibility = "visible";
  document.getElementById('pewiTitle').style.opacity = "1";
  document.getElementById('pewiTitle').style.top = "10%";
-
+ document.getElementById('logoImg').style.opacity = "1" ;
+ 
  document.getElementById('button1').style.visibility = "visible";
  document.getElementById('button1').style.opacity = "1";
  document.getElementById('button2').style.visibility = "visible";
