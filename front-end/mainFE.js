@@ -1,5 +1,5 @@
 //global vars
-var camera, scene, raycaster, mouse, hoveredOver;
+var camera, scene, raycaster, mouse, hoveredOver, bgScene, bgCam;
 var renderer = new THREE.WebGLRenderer();
 var controls;
 var river = null;
@@ -72,7 +72,12 @@ function setup() {
     //add resize listener
     window.addEventListener('resize', onResize, false);
 
-    setupSkyBox();
+    var r = Math.floor(Math.random() * 2);
+    if(r == 1){
+        setupStaticBackground();
+    } else {
+        setupSkyBox();
+    }
 
     setupHighlight();
 
@@ -89,6 +94,27 @@ function setupSkyBox() {
     scene.add(skybox);
 
 } //end setupSkyBox
+
+//setupStaticBackground uses the old pewi graphics as a background image
+function setupStaticBackground() {
+    
+    var r = Math.floor(Math.random() * oldPewiBackgrounds.length);
+    
+    var bg = new THREE.Mesh(
+    new THREE.PlaneGeometry(2, 2, 0),
+    new THREE.MeshBasicMaterial({map: oldPewiBackgrounds[r]})
+    );
+
+    // The bg plane shouldn't care about the z-buffer.
+    bg.material.depthTest = false;
+    bg.material.depthWrite = false;
+    
+    bgScene = new THREE.Scene();
+    bgCam = new THREE.Camera();
+    bgScene.add(bgCam);
+    bgScene.add(bg);
+    
+} //end setupStaticBackground
 
 //setupBoardFromFile creates a new gameboard from a stored file and creates a river for the board
 function setupBoardFromFile(file) {
@@ -226,7 +252,10 @@ function initWorkspace() {
     //setupBoardFromFile("./data.txt");
     
 requestAnimationFrame(function animate() {
-    
+
+   renderer.autoClear = false;
+   renderer.clear();
+   renderer.render(bgScene, bgCam);    
    renderer.render(scene, camera);
 
     //wait # update frames to check
