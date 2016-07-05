@@ -5,18 +5,141 @@
 body {
     background-color:green;
 }    
-    
-    
+
+.container {
+  position: absolute;
+}
+
+input {
+  position: absolute;
+  left: -9999px;
+}
+
+label {
+  text-align:center;
+  display: block;
+  position: relative;
+  margin: 20px;
+  padding: 15px 30px 15px 30px;
+  border: 3px solid #fff;
+  border-radius: 100px;
+  color: #fff;
+  background-color: #008fb3;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color .2s, box-shadow .2s;
+}
+
+label:hover, input:focus + label {
+  box-shadow: 0 0 20px rgba(0, 0, 0, .6);
+}
+
+input:checked + label {
+  background-color: #003d4d;
+}
+
+
+
 </style>        
         
 </head>
     
 <body>
     
+<!--
+  Checkbox Trickery with CSS:
+  http://codersblock.com/blog/checkbox-trickery-with-css/ 
+-->
+
+<div class="container">
+  
+<input id="precipButton" class="toggle" type="checkbox" >
+  <label for="precipButton">Precipitation Tab</label>
+  
+  
+  <input id="paint1" >
+  <label for="paint1" style = " background-color: #c7cfd1 ;"> - Conventional Corn -</label>
+  
+  <input id="paint2" class="toggle" type="checkbox" >
+  <label for="paint2">Conservation Corn</label>
+  
+  <input id="paint3" class="toggle" type="checkbox" >
+  <label for="paint3">Conventional Soybean</label>
+ 
+  
+  <input id="paint4" class="toggle" type="checkbox" >
+  <label for="paint4">Conservation Soybean</label>
+  
+  
+  <input id="paint15" class="toggle" type="checkbox" >
+  <label for="paint15">Mixed Fruits/Vegetables</label>
     
+    <input id="paint5" class="toggle" type="checkbox" >
+  <label for="paint5">Alfalfa</label>
+  
+    <input id="paint8" class="toggle" type="checkbox" >
+  <label for="paint8">Grass Hay</label>
+  
+    <input id="paint12" class="toggle" type="checkbox" >
+  <label for="paint12">Switchgrass</label>
+  
+    <input id="paint6" class="toggle" type="checkbox" >
+  <label for="paint6">Permanent Pasture</label>
+  
+    <input id="paint7" class="toggle" type="checkbox" >
+  <label for="paint7">Rotational Grazing</label>
+  
+    <input id="paint14" class="toggle" type="checkbox" >
+  <label for="paint14">Wetland</label>
+  
+  <input id="paint9" class="toggle" type="checkbox" >
+  <label for="paint9">Prairie</label>
+  
+  <input id="paint11" class="toggle" type="checkbox" >
+  <label for="paint11">Conventional Forest</label>
+  
+  <input id="paint10" class="toggle" type="checkbox" >
+  <label for="paint10">Conservation Forest</label>
+  
+  <input id="paint13" class="toggle" type="checkbox" >
+  <label for="paint13">Short Rotation Woody Bioenergy</label>
+  
+</div>
+
+<div style="float:right; top: 150px; width:100px; height:100px; background-color:red;" onclick="saveState() ;">exit</div>
     
 </body>    
     
+<script>
     
+function saveState() {
+
+
+
+var elements = document.getElementsByClassName('toggle') ;
+var tempString = "" ;
+
+if(elements) {
+  
+for(var i = 0; i < elements.length; i++){
+    if(elements[i].checked){
+        //console.log(elements[i].id) ;
+        tempString += elements[i].id + "\n"
+    }
+    
+}
+
+window.top.document.getElementById('visibleItems').innerHTML = tempString;  
+  
+parent.startSandbox() ;
+   
+
+}
+    
+}    
+    
+</script>    
     
 </html>

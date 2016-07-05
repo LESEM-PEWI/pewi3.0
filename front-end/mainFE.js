@@ -202,12 +202,16 @@ function initWorkspace() {
    
    THREE.DefaultLoadingManager.onLoad = function (){
        console.log("loaded") ;
+     
+       toggleVisibility() ;
+       
        document.getElementById('loading').style.display = "none" ;
        document.getElementById('page').style.visibility = "visible" ;
        
       //work around for firefox..... see bug 554039
       document.getElementById('firefoxWorkaround').focus() ;
       //
+     
       }
     
     
