@@ -17,7 +17,8 @@ var columnCutOffs = [];
 var mesh = null;
 var isShiftDown = false;
 var tToggle = true;
-var isLevelsMapped = false;
+var mapIsHighlighted = false;
+var hoverOverride = false;
 
 //onResize dynamically adjusts to window size changes
 function onResize() {
@@ -56,18 +57,20 @@ function highlightTile(id) {
 
 
     //if a previous tile was selected for highlighting, unhighlight that tile
-    if (previousHover != null && !isLevelsMapped) {
+    if (previousHover != null && !mapIsHighlighted) {
         meshMaterials[previousHover].emissive.setHex(0x000000);
     }
 
     //highlight the new tile 
     //if not a tile
-    if (id != -1 && meshMaterials[id].emissive && !isLevelsMapped) {
+    if (id != -1 && meshMaterials[id].emissive && !mapIsHighlighted) {
 
         meshMaterials[id].emissive.setHex(0x7f7f7f);
         previousHover = id;
 
         //document.getElementById("currentInfo").innerHTML = "Year: " + currentYear + "   Selected Land Type: " + LandUseType.getType(painter) + "   Higlighted Tile: " + LandUseType.getType(boardData[currentBoard].map[id].landType[currentYear]) + " " + boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
+        showInfo(boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column) ;
+    } else if(id != -1 && meshMaterials[id].emissive){
         showInfo(boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column) ;
     }
     else {
@@ -317,7 +320,7 @@ function onDocumentDoubleClick(event) {
 
     if (!isShiftDown) {
 
-        if (intersects.length > 0 && !modalUp) {
+        if (intersects.length > 0 && !modalUp && !mapIsHighlighted) {
 
             changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
 
@@ -349,9 +352,11 @@ function onDocumentKeyDown(event) {
             break;
         //case t
         case 84:
-            tToggle ? tToggle = false : tToggle = true;
-            refreshBoard();
-            console.log(tToggle);
+            if(modalUp != true && mapIsHighlighted != true){
+                tToggle ? tToggle = false : tToggle = true;
+                refreshBoard();
+                console.log(tToggle);
+            }
             break;
         //case i
         case 73:
@@ -363,7 +368,9 @@ function onDocumentKeyDown(event) {
             break;
         //case r
         case 82:
-            randomizeBoard() ;
+            if(modalUp != true && mapIsHighlighted != true){
+                randomizeBoard() ;
+            }
             break;
     }
 
@@ -531,7 +538,6 @@ function showLevelDetails(value) {
     if (value > -4 && value < 0) {
         var element = document.getElementsByClassName('levelDetailsList');
         element[0].className = 'levelDetailsListRolled';
-        isLevelsMapped = false;
     }
 
     if (value == 4) {
@@ -541,11 +547,18 @@ function showLevelDetails(value) {
     if (value == 5) {
         document.getElementById("drainageClassDetailsList").className = "physicalDetailsList";
     }
+    
+    if (value == 6) {
+        document.getElementById("wetlandClassDetailsList").className = "physicalDetailsList";
+    }
+
+    if (value == 7) {
+        document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
+    }
 
     if (value < -3) {
         var element = document.getElementsByClassName('physicalDetailsList');
         element[0].className = 'physicalDetailsListRolled';
-        isLevelsMapped = false;
     }
 
 } //showLevelDetails
@@ -634,26 +647,103 @@ function switchYearTab(value) {
 
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(type) {
-
-    //toggle off highlighting
-    isLevelsMapped = true;
-
-
-    Totals = new Results(boardData[currentBoard]);
-    Totals.update();
-
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
-        if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-
-            meshMaterials[i].map = textureArray[0];
-            meshMaterials[i].emissive.setHex(getHighlightColor(type, i));
-
+    
+        if(!mapIsHighlighted){
+            
+            //mapIsHighlighted = true;
+            
+            Totals = new Results(boardData[currentBoard]);
+            Totals.update();
+    
+            for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+    
+                if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+    
+                    meshMaterials[i].map = textureArray[0];
+                    meshMaterials[i].emissive.setHex(getHighlightColor(type, i));
+    
+                }
+    
+            }
+            
+            switch(type){
+                case 'nitrate':
+                    showLevelDetails(1);
+                    break;
+                case 'erosion':
+                    showLevelDetails(2);
+                    break;
+                case 'phosphorus':
+                    showLevelDetails(3);
+                    break;
+                case 'flood':
+                    showLevelDetails(4);
+                    break;
+                case 'drainage':
+                    showLevelDetails(5);
+                    break;
+                case 'wetland':
+                    showLevelDetails(6);
+                    break;
+                case 'subwatershed':
+                    showLevelDetails(7);
+                    break;
+            }
+            
+        } else {
+            
+            //mapIsHighlighted = false;
+            
+            switch(type){
+                case 'nitrate':
+                    showLevelDetails(-1);
+                    break;
+                case 'erosion':
+                    showLevelDetails(-2);
+                    break;
+                case 'phosphorus':
+                    showLevelDetails(-3);
+                    break;
+                case 'flood':
+                    showLevelDetails(-4);
+                    break;
+                case 'drainage':
+                    showLevelDetails(-5);
+                    break;
+                case 'wetland':
+                    showLevelDetails(-6);
+                    break;
+                case 'subwatershed':
+                    showLevelDetails(-7);
+                    break;
+            }
+            
+            transitionToYear(currentYear);
+            
         }
-
-    }
+        
+        changeMapHighlighting();
 
 } //end displayLevels
+
+function changeMapHighlighting(){
+    if(mapIsHighlighted){
+        mapIsHighlighted = false;
+    } else {
+        mapIsHighlighted = true;
+    }
+}
+
+//changeHoverOverride changes whether hover events are listened to facilitating prolonged map highlighting
+function changeHoverOverride(){
+    
+    if(hoverOverride){
+        hoverOverride = false;
+    } else {
+        hoverOverride = true;
+    }
+    
+} //end changeHoverOverride
 
 //getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
 function getHighlightColor(type, ID) {
