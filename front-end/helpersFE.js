@@ -611,12 +611,6 @@ function switchConsoleTab(value) {
     }
 
     if (value == 3) {
-
-        if(mapIsHighlighted){
-            displayLevels();
-            //var element = document.getElementsByClassName('physicalDetailsList');
-            //element[0].className = 'physicalDetailsListRolled';
-        }
         
         document.getElementById('levelsImg').className = "imgSelected";
         document.getElementById('levelsTab').style.display = "block";
@@ -624,16 +618,14 @@ function switchConsoleTab(value) {
     }
 
     if (value == 4) {
-        
-        if(mapIsHighlighted){
-            displayLevels();
-            //var element = document.getElementsByClassName('levelDetailsList');
-            //element[0].className = 'levelDetailsListRolled';
-        }
 
         document.getElementById('featuresImg').className = "imgSelected";
         document.getElementById('featuresTab').style.display = "block";
         
+    }
+    
+    if(mapIsHighlighted){
+        displayLevels();
     }
 
 } //end switchConsoleTab

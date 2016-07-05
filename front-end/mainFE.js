@@ -1,5 +1,6 @@
 //global vars
-var camera, scene, raycaster, mouse, hoveredOver, bgScene, bgCam;
+var camera, scene, raycaster, mouse, hoveredOver, bgCam;
+var bgScene = null;
 var renderer = new THREE.WebGLRenderer();
 var controls;
 var river = null;
@@ -78,7 +79,8 @@ function setup() {
     } else {
         setupSkyBox();
     }
-
+    
+    //setupAssistant();
     setupHighlight();
 
     return 1 ;
@@ -115,6 +117,29 @@ function setupStaticBackground() {
     bgScene.add(bg);
     
 } //end setupStaticBackground
+
+function setupAssistant() {
+
+var mtlLoader = new THREE.MTLLoader();
+var mtlLoader = new THREE.MTLLoader();
+mtlLoader.load( './Butterfly/Butterfly.mtl', function( butterflyMaterials ) {
+
+    //butterflyMaterials.preload();
+
+    var objLoader = new THREE.OBJLoader();
+    objLoader.setMaterials( butterflyMaterials );
+    objLoader.load( './Butterfly/Butterfly.obj', function ( object ) {
+
+        object.position.y = 95;
+        scene.add( object );
+
+    });
+
+});
+
+
+
+}
 
 //setupBoardFromFile creates a new gameboard from a stored file and creates a river for the board
 function setupBoardFromFile(file) {
@@ -255,7 +280,9 @@ requestAnimationFrame(function animate() {
 
    renderer.autoClear = false;
    renderer.clear();
-   renderer.render(bgScene, bgCam);    
+   if(bgScene != null){
+    renderer.render(bgScene, bgCam);
+   }
    renderer.render(scene, camera);
 
     //wait # update frames to check
