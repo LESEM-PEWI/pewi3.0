@@ -1,5 +1,6 @@
 var textureArray ;
 var materialArray = [];
+var oldPewiBackgrounds = [];
 
 function loadResources() {
 
@@ -34,6 +35,8 @@ function loadResources() {
   materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/bottom.jpg'), side: THREE.BackSide }));
   materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/front.jpg'), side: THREE.BackSide }));
   materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/back.jpg'), side: THREE.BackSide }));
+  
+    oldPewiBackgrounds = [textureLoader.load("./background_images/Background_Drought.png"), textureLoader.load("./background_images/Background_Normal.png"), textureLoader.load("./background_images/Background_Flood.png")];
 
   return 1 ;
 
