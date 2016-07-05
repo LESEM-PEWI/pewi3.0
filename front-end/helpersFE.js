@@ -19,6 +19,7 @@ var isShiftDown = false;
 var tToggle = true;
 var mapIsHighlighted = false;
 var hoverOverride = false;
+var currentHighlightType = 0;
 
 //onResize dynamically adjusts to window size changes
 function onResize() {
@@ -609,14 +610,28 @@ function switchConsoleTab(value) {
 
     if (value == 3) {
 
+        if(mapIsHighlighted){
+            displayLevels();
+            var element = document.getElementsByClassName('physicalDetailsList');
+            element[0].className = 'physicalDetailsListRolled';
+        }
+        
         document.getElementById('levelsImg').className = "imgSelected";
         document.getElementById('levelsTab').style.display = "block";
+        
     }
 
     if (value == 4) {
+        
+        if(mapIsHighlighted){
+            displayLevels();
+            var element = document.getElementsByClassName('levelDetailsList');
+            element[0].className = 'levelDetailsListRolled';
+        }
 
         document.getElementById('featuresImg').className = "imgSelected";
         document.getElementById('featuresTab').style.display = "block";
+        
     }
 
 } //end switchConsoleTab
@@ -669,30 +684,39 @@ function displayLevels(type) {
             switch(type){
                 case 'nitrate':
                     showLevelDetails(1);
+                    currentHighlightType = -1;
                     break;
                 case 'erosion':
                     showLevelDetails(2);
+                    currentHighlightType = -2;
                     break;
                 case 'phosphorus':
                     showLevelDetails(3);
+                    currentHighlightType = -3;
                     break;
                 case 'flood':
                     showLevelDetails(4);
+                    currentHighlightType = -4;
                     break;
                 case 'drainage':
                     showLevelDetails(5);
+                    currentHighlightType = -5;
                     break;
                 case 'wetland':
                     showLevelDetails(6);
+                    currentHighlightType = -6;
                     break;
                 case 'subwatershed':
                     showLevelDetails(7);
+                    currentHighlightType = -7;
                     break;
             }
             
         } else {
             
             //mapIsHighlighted = false;
+            
+            currentHighlightType = 0;
             
             switch(type){
                 case 'nitrate':
