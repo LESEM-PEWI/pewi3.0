@@ -3,11 +3,14 @@
 <head>
 <style>
 body {
-    background-color:green;
+    background-color:#000000;
 }    
 
 .container {
-  position: absolute;
+  position: relative;
+  margin:30px;
+  margin-top:0px;
+
 }
 
 input {
@@ -17,7 +20,8 @@ input {
 
 label {
   text-align:center;
-  display: block;
+  width:250px;
+  display: inline-block;
   position: relative;
   margin: 20px;
   padding: 15px 30px 15px 30px;
@@ -33,34 +37,83 @@ label {
 }
 
 label:hover, input:focus + label {
-  box-shadow: 0 0 20px rgba(0, 0, 0, .6);
+  box-shadow: 0 0 30px rgba(255, 255, 255, .7);
 }
 
 input:checked + label {
   background-color: #003d4d;
 }
 
+.header {
+font-family: 'Amatic SC', cursive;
+line-height: 100%;
+color: #FFFFFF;
+font-size: 35 ;
+font-weight: bold;
+padding:5px;
 
+}
+
+#header1{
+ width:600px;
+  margin-left: 45px;
+  margin-right:45px;
+  margin-top:15px;
+  
+}
+
+
+.levelButton{
+position:relative;
+float:left;
+width:300px;
+height:70px ;
+margin-left:55px;
+color: white ;
+padding:5px;
+border: 0px solid white;
+text-align:center;
+font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+line-height: 280%;
+color: #FFFFFF;
+
+font-size: 24 ;
+font-weight: bold;
+cursor: all-scroll ;
+background-color: #008fb3;
+
+}
+
+.levelButton:hover {
+ background-color:  #00b8e6;
+}
+
+#mainHolder {
+  margin-bottom:100px;
+  margin-right:15%;
+  margin-left:15%;
+}
 
 </style>        
         
 </head>
-    
+
+<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+
 <body>
     
 <!--
   Checkbox Trickery with CSS:
   http://codersblock.com/blog/checkbox-trickery-with-css/ 
 -->
+<div id="mainHolder">
+
+<div id="header1" class="header">Disable Land Use Types<br><hr></div>
 
 <div class="container">
   
-<input id="precipButton" class="toggle" type="checkbox" >
-  <label for="precipButton">Precipitation Tab</label>
-  
-  
   <input id="paint1" >
-  <label for="paint1" style = " background-color: #c7cfd1 ;"> - Conventional Corn -</label>
+  <label for="paint1" style = " background-color: #bfd4d9 ;"> - Conventional Corn -</label>
   
   <input id="paint2" class="toggle" type="checkbox" >
   <label for="paint2">Conservation Corn</label>
@@ -76,7 +129,7 @@ input:checked + label {
   <input id="paint15" class="toggle" type="checkbox" >
   <label for="paint15">Mixed Fruits/Vegetables</label>
     
-    <input id="paint5" class="toggle" type="checkbox" >
+  <input id="paint5" class="toggle" type="checkbox" >
   <label for="paint5">Alfalfa</label>
   
     <input id="paint8" class="toggle" type="checkbox" >
@@ -108,8 +161,12 @@ input:checked + label {
   
 </div>
 
-<div style="float:right; top: 150px; width:100px; height:100px; background-color:red;" onclick="saveState() ;">exit</div>
-    
+<div class="levelButton" onclick="saveState() ;">Save & Exit</div>
+  
+  
+</div>
+
+
 </body>    
     
 <script>
@@ -132,8 +189,7 @@ for(var i = 0; i < elements.length; i++){
 }
 
 window.top.document.getElementById('visibleItems').innerHTML = tempString;  
-  
-parent.startSandbox() ;
+parent.reset() ;
    
 
 }

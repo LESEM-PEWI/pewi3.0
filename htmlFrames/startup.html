@@ -164,6 +164,7 @@ document.getElementById('startVideo').addEventListener('ended', function() {
 }, false);
 
 function endFunction() {
+ 
  document.getElementById('container').style.display = "none";
  document.getElementById('pewiTitle').style.visibility = "visible";
  document.getElementById('pewiTitle').style.opacity = "1";
@@ -180,6 +181,7 @@ function endFunction() {
   document.getElementById('button1').style.transitionDuration = ".4s" ;
  document.getElementById('button2').style.transitionDuration = ".4s" ;
  document.getElementById('button3').style.transitionDuration = ".4s" ;
+ document.getElementById('pewiTitle').style.transitionDuration = ".4s" ;
  
 }, 100);
  
@@ -250,6 +252,26 @@ function startPlay() {
   
  }, 500) ;
 
+}
+
+function reset() {
+ 
+   document.getElementById('dialogue').src = "" ;
+  document.getElementById('dialogue').style.visibility = "hidden" ;
+  document.getElementById('button2').style.backgroundColor = " #008fb3" ;
+  document.getElementById('button3').style.backgroundColor = " #008fb3 " ;
+  
+  document.getElementById('button2').style.top = " 25% " ;
+  document.getElementById('button2').style.left = " 50% " ;
+  
+  document.getElementById('button3').style.top = " 25% " ;
+  document.getElementById('button3').style.left= " 80%" ;
+  
+  document.getElementById('button1').style.top = "25% " ;
+  
+  document.getElementById('pewiTitle').style.top = "10%";
+ 
+ 
 }
 
   

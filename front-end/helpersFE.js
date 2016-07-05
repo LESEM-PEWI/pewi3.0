@@ -1552,13 +1552,15 @@ function toggleVisibility() {
     var strRawContents = document.getElementById('visibleItems').innerHTML ;
     
     //split based on escape chars
-    while (strRawContents.indexOf("\r") >= 0)
+    while (strRawContents.indexOf("\r") >= 0) {
         strRawContents = strRawContents.replace("\r", "");
+    }
     var arrLines = strRawContents.split("\n");
 
     
     for(var i=0; i<arrLines.length - 1; i++){
         document.getElementById(arrLines[i]).style.display = "none" ;
     }
+    
         
 }
