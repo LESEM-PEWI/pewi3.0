@@ -1,6 +1,7 @@
 var textureArray ;
 var materialArray = [];
 var oldPewiBackgrounds = [];
+var butterflyMaterials = [];
 
 function loadResources() {
 
@@ -37,6 +38,11 @@ function loadResources() {
   materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/back.jpg'), side: THREE.BackSide }));
   
     oldPewiBackgrounds = [textureLoader.load("./background_images/Background_Drought.png"), textureLoader.load("./background_images/Background_Normal.png"), textureLoader.load("./background_images/Background_Flood.png")];
+
+  //butterflyMaterials.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./Butterfly/Texture/BUTTBODY.JPG')}));
+  //butterflyMaterials.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./Butterfly/Texture/BUTTFACE.JPG')}));
+  //butterflyMaterials.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./Butterfly/Texture/BUTTWIBA.JPG')}));
+  //butterflyMaterials.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./Butterfly/Texture/BUTTWIFR.JPG')}));
 
   return 1 ;
 
