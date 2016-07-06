@@ -1,1 +1,0 @@
-Wood yield for conventional and conservation forest land-cover assumes appropriate tree species selection for each location, and a 30% reduction factor due to variability in yield resulting from differing management practices. 
