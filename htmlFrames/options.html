@@ -215,8 +215,8 @@ margin: 20px;
 
 </div>
 
-<input id="year0" type="checkbox" checked >
-<label for="year0"> Year 0 </label>  
+<input id="year0" type="checkbox" class="toggle" >
+<label for="year0"> Year 0 On</label>  
 
 <input id="precip" type="checkbox" >
 <label for="precip">Changeable Precipitation</label>  
@@ -230,16 +230,16 @@ margin: 20px;
 
 <div class="container">
   
-<input id="skybox" type="checkbox" checked >
-<label for="skybox"> 3D Environment </label>  
+<input id="skybox" type="checkbox" class="toggle">
+<label for="skybox"> 3D Environment On </label>  
 </div>  
 
 <div id="header3" class="header">Developer Tools<br><hr></div>
 
 <div class="container">
   
-<input id="statistics" type="checkbox" checked >
-<label for="statistics"> Application Statistics </label>  
+<input id="statFrame" type="checkbox" class="toggle">
+<label for="statFrame"> Application Statistics On </label>  
 </div>  
 
   
@@ -257,6 +257,8 @@ var maxYear = 3 ; //for settings
     
 getState() ;    
     
+    
+    
 function saveState() {
 
 var elements = document.getElementsByClassName('toggle') ;
@@ -265,124 +267,61 @@ var tempString = "" ;
 if(elements) {
   
 for(var i = 0; i < elements.length; i++){
-    if(elements[i].checked){
+  
+  
+    switch(elements[i].id) {
+      case "year0":
+        if(elements[i].checked){
+        tempString += "year0On" + "\n";
+        }  
+        break;
+      case "statFrame":
+        if(elements[i].checked){
+        tempString += "statsOn" + "\n";
+        }  
+        break;
+      case "skybox":
+        if(elements[i].checked){
+          tempString += "skyboxOn" + "\n";
+        }  
+        break;
+      
+      default:
+        if(elements[i].checked){
         //console.log(elements[i].id) ;
         tempString += elements[i].id + "\n"
+        }  
+      
     }
-    
-}
-
-window.top.document.getElementById('visibleItems').innerHTML = tempString;  
-
-   
-
-}
-   
-tempString = "" ;
-
-if(!document.getElementById('skybox').checked)   {
-  tempString += "1";
-}
-   
-window.top.document.getElementById('backgroundStyle').innerHTML = tempString ;
   
-  
-tempString = "" ;
+}//end for toggle elements
 
-if(!document.getElementById('statistics').checked)   {
-  tempString += "1";
-}
-   
-window.top.document.getElementById('statsSetting').innerHTML = tempString ;
-    
-  
-tempString = "" ;
+    var yearNum = Number(document.getElementById('yearNumber').innerHTML) ;
 
-if(!document.getElementById('year0').checked)   {
-  tempString += "1\n";
-}
-else {
-  tempString += "0\n";
+    while(yearNum < maxYear ){
+      yearNum += 1 ;
+      var idName = "year" + yearNum + "Button";
+      tempString += idName + "\n" ;
+    }
+
+window.top.document.getElementById('parameters').innerHTML = tempString;  
+
 }
 
-tempString += document.getElementById('yearNumber').innerHTML + "\n" ;
-   
-window.top.document.getElementById('yearValues').innerHTML = tempString ;
-
-
-tempString = "" ;
-
-if(!document.getElementById('precip').checked)   {
-  tempString += "off";
-}
-   
-window.top.document.getElementById('precipChange').innerHTML = tempString ;
 
 
 
 parent.reset() ;    
     
-}  
+
+
+}
+
 
 
 function getState() {
   
 
-    var strRawContents = window.top.document.getElementById('visibleItems').innerHTML ;
-    
-    //console.log(strRawContents) ;
-    
-    //split based on escape chars
-    while (strRawContents.indexOf("\r") >= 0) {
-        strRawContents = strRawContents.replace("\r", "");
-    }
-    var arrLines = strRawContents.split("\n");
-
-    
-    for(var i=0; i<arrLines.length - 1; i++){
-       document.getElementById(arrLines[i]).checked = 1 ;
-    }
-    
-    if(window.top.document.getElementById('backgroundStyle').innerHTML == "1"){
-      document.getElementById('skybox').checked = 0 ;
-    }
-    else{
-      document.getElementById('skybox').checked = 1 ;
-    }
-    
-    if(window.top.document.getElementById('statsSetting').innerHTML == "1"){
-      document.getElementById('statistics').checked = 0 ;
-    }
-    else{
-      document.getElementById('statistics').checked = 1 ;
-    }
-    
-    
-     var strRawContents = window.top.document.getElementById('yearValues').innerHTML ;
-    
-    //console.log(strRawContents) ;
-    
-    //split based on escape chars
-    while (strRawContents.indexOf("\r") >= 0) {
-        strRawContents = strRawContents.replace("\r", "");
-    }
-     arrLines = strRawContents.split("\n");
-  
-    if(arrLines.length > 1){
-      if(arrLines[0] == "1") document.getElementById('year0').checked = 0 ;
-      
-      document.getElementById('yearNumber').innerHTML = arrLines[1] ;
-      changeYearValue(0) ;
-    }
-  
-  
-    if(window.top.document.getElementById('precipChange').innerHTML == "off"){
-      document.getElementById('precip').checked = 1 ;
-    }
-    else{
-      document.getElementById('precip').checked = 0 ;
-    }
-  
 }
 
     

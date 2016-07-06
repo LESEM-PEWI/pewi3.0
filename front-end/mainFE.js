@@ -16,6 +16,7 @@ var Totals; //global current calculated results, NOTE, should be reassigned ever
 var counter = 0;
 var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
+var skybox = false;
 
 //setup instantiates the camera, lights, controls, shadowmap, and renderer. Called once at the beginning of game
 function setup() {
@@ -25,9 +26,6 @@ function setup() {
     document.body.appendChild(renderer.domElement);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-    //setup stats display
-    if(document.getElementById('statsSetting').innerHTML == "1")    document.body.appendChild(stats.domElement);
 
     //scene
     scene = new THREE.Scene();
@@ -76,8 +74,7 @@ function setup() {
     //add resize listener
     window.addEventListener('resize', onResize, false);
 
-    var r = document.getElementById('backgroundStyle').innerHTML ;
-    if(r == '1'){
+    if(skybox){
         setupSkyBox();
     } else {
         setupStaticBackground();        
@@ -143,7 +140,7 @@ function setupAssistant() {
             object.rotation.z = (-Math.PI);
             object.rotation.x = (-Math.PI/2);
             object.rotation.y = (-Math.PI/8);
-            bgScene.add( object );
+            if(bgScene!=null) bgScene.add( object );
         
         });
 
@@ -267,8 +264,6 @@ function initWorkspace() {
    THREE.DefaultLoadingManager.onLoad = function (){
        console.log("loaded") ;
      
-       toggleVisibility() ;
-       
        document.getElementById('loading').style.display = "none" ;
        document.getElementById('page').style.visibility = "visible" ;
        
@@ -278,8 +273,12 @@ function initWorkspace() {
      
       }
     
+    //setup stats display
+    stats.domElement.id = 'statFrame' ;
+    document.body.appendChild(stats.domElement);
     
     var hold = loadResources() ;
+    toggleVisibility() ;
     hold = setup() ;
     hold = setupBoardFromFile("./data.txt") ;
     

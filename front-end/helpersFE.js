@@ -1548,7 +1548,11 @@ function randomizeBoard() {
 
 function toggleVisibility() {
     
-    var strRawContents = document.getElementById('visibleItems').innerHTML ;
+    //default off items
+    document.getElementById('statFrame').style.display = "none" ; 
+    document.getElementById('year0Button').style.display = "none" ;
+    
+    var strRawContents = document.getElementById('parameters').innerHTML ;
     
     //split based on escape chars
     while (strRawContents.indexOf("\r") >= 0) {
@@ -1556,28 +1560,35 @@ function toggleVisibility() {
     }
     var arrLines = strRawContents.split("\n");
 
-    
-    for(var i=0; i<arrLines.length - 1; i++){
-        document.getElementById(arrLines[i]).style.display = "none" ;
+    for(var i=0; i<arrLines.length; i++){
+        if(arrLines[i]){
+            console.log(arrLines[i]) ;
+            
+            //giant switch
+            switch(arrLines[i]){
+                case "skyboxOn":
+                    skybox = true ;
+                    break;
+                case "statsOn":
+                    document.getElementById('statFrame').style.display = "block" ;
+                    break;
+                case "year0On":
+                    document.getElementById('year0Button').style.display = "block" ;
+                    break;
+                default:
+                    document.getElementById(arrLines[i]).style.display = "none" ;    
+             
+                
+            }
+            
+            
+       
+       
+       
+       
+        }
     }
     
-    var strRawContents = document.getElementById('yearValues').innerHTML ;
     
-    //split based on escape chars
-    while (strRawContents.indexOf("\r") >= 0) {
-        strRawContents = strRawContents.replace("\r", "");
-    }
-    var arrLines = strRawContents.split("\n");    
     
-       if(!(arrLines[0]=="1")){
-        document.getElementById('year0Button').style.visibility = "hidden" ;
-    }    
-        
-    if(arrLines[1]=="1"){    
-         document.getElementById('year2Button').style.visibility = "hidden" ;
-          document.getElementById('year3Button').style.visibility = "hidden" ;
-    }
-    else if(arrLines[1]=="2"){
-         document.getElementById('year3Button').style.visibility = "hidden" ;
-    }
 }
