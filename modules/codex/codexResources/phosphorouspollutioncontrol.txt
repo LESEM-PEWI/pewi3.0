@@ -1,1 +1,0 @@
-Phosphorous transport from fields to surface water can threaten aquatic species and human economy due to aquatic eutrophication. In PEWI, Phosphorous Pollution Control is the indexed inverse of annual instream phosphorous loading, with high phosphorous runoff corresponding to low phosphorous pollution control, and vice versa.
