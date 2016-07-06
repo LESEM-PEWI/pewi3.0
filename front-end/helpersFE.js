@@ -737,10 +737,16 @@ function displayLevels(type) {
             
             if(currentHighlightType == newSelection || newSelection == ''){
                 
-                mapIsHighlighted = false;
-                transitionToYear(currentYear);
+                
+                
+                mapIsHighlighted = false; 
+                
+                refreshBoard();
                 showLevelDetails(-1 * currentHighlightType);
                 currentHighlightType = 0;
+                
+               
+                console.log(mapIsHighlighted) ;
             
             } else {
                 
