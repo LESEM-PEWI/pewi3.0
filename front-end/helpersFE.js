@@ -379,6 +379,14 @@ function onDocumentKeyDown(event) {
             console.log(camera.position) ;
             console.log(camera.rotation) ;
             console.log("-------------") ;
+            break;
+        //case b
+        case 66:
+            if(document.getElementById("popup").className == "popupHidden"){
+                document.getElementById("popup").className = "popup";
+            } else {
+                document.getElementById("popup").className = "popupHidden";
+            }
     }
 
 } //end onDocumentKeyDown
@@ -967,8 +975,9 @@ function contaminatedRiver() {
         river.material.color.setHex("0x663300");
     }
     else {
-        river.material.color.setHex("0x40a4df")
+        river.material.color.setHex("0x40a4df");
     }
+    
 
 } //end contaminatedRiver
 
@@ -1522,6 +1531,15 @@ function showInfo(string){
 
 function clearInfo(){
     document.getElementById("currentInfo").innerHTML = " ";
+}
+
+function updatePopup(string){
+    document.getElementById("popupText").innerHTML = string;
+    document.getElementById("popup").className = "popup";
+}
+
+function clearPopup(){
+    document.getElementById("popupText").innerHTML = " ";
 }
 
 
