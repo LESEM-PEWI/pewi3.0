@@ -62,23 +62,25 @@ color: #FFFFFF;
 font-size: 35 ;
 font-weight: bold;
 padding:5px;
+ width:600px;
+  margin-left: 45px;
+  margin-right:45px;
 
 }
 
 #header1{
- width:600px;
-  margin-left: 45px;
-  margin-right:45px;
   margin-top:15px;
   
 }
 
 
 .levelButton{
-position:relative;
 float:left;
+position:relative;
+display:inline-block;
 width:300px;
 height:50px ;
+margin-top: 50px;
 margin-left:55px;
 color: white ;
 padding:5px;
@@ -100,8 +102,7 @@ background-color: #008fb3;
 }
 
 #mainHolder {
-
-  margin-bottom:150px;
+  margin-bottom:200px;
   margin-right:15%;
   margin-left:15%;
 }
@@ -175,6 +176,15 @@ background-color: #008fb3;
   
 </div>
 
+
+<div id="header2" class="header">Toggle Background<br><hr></div>
+
+<div class="container">
+  
+<input id="skybox" type="checkbox" checked >
+<label for="skybox"> 3D Environment </label>  
+</div>  
+  
 <div id="exitButton" class="levelButton" onclick="saveState() ;">Save & Exit</div>
   
   
@@ -203,10 +213,21 @@ for(var i = 0; i < elements.length; i++){
 }
 
 window.top.document.getElementById('visibleItems').innerHTML = tempString;  
-parent.reset() ;
+
    
 
 }
+   
+tempString = "" ;
+
+if(!document.getElementById('skybox').checked)   {
+  tempString += "1";
+}
+   
+window.top.document.getElementById('backgroundStyle').innerHTML = tempString ;
+  
+  
+parent.reset() ;    
     
 }  
 
@@ -227,6 +248,13 @@ function getState() {
     
     for(var i=0; i<arrLines.length - 1; i++){
        document.getElementById(arrLines[i]).checked = 1 ;
+    }
+    
+    if(window.top.document.getElementById('backgroundStyle').innerHTML == "1"){
+      document.getElementById('skybox').checked = 0 ;
+    }
+    else{
+      document.getElementById('skybox').checked = 1 ;
     }
     
   

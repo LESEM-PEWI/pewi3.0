@@ -73,11 +73,11 @@ function setup() {
     //add resize listener
     window.addEventListener('resize', onResize, false);
 
-    var r = Math.floor(Math.random() * 2);
-    if(r == 1){
-        setupStaticBackground();
-    } else {
+    var r = document.getElementById('backgroundStyle').innerHTML ;
+    if(r == '1'){
         setupSkyBox();
+    } else {
+        setupStaticBackground();        
     }
     
     //setupAssistant();

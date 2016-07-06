@@ -358,7 +358,7 @@ function onDocumentKeyDown(event) {
             if(modalUp != true && mapIsHighlighted != true){
                 tToggle ? tToggle = false : tToggle = true;
                 refreshBoard();
-                console.log(tToggle);
+                //console.log(tToggle);
             }
             break;
         //case i
