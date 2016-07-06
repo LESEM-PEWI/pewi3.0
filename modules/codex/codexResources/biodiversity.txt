@@ -1,1 +1,0 @@
-The biodiversity indicator presents a relative measure of how well a landscape pattern maintains habitat suitability at the watershed scale for native species, based on landscape configuration and composition.
