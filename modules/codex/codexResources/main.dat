@@ -1,94 +1,165 @@
-# + Head 1
+# + Land Use
 <img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.1
+landuse.txt
+@ : Conventional Corn
 <iframe width="500" height="300" src="https://www.youtube.com/embed/pGJH_-S_MGs" frameborder="0" allowfullscreen></iframe>
-text1.txt
-# + Head 1.2
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.2
-<img src="./codexResources/imgs/test2.jpg" />
-text2.txt
-# + Head 1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.2
-<img src="./codexResources/imgs/test2.jpg" />
-text2.txt
+conventionalcorn.txt
+@ : Conventional Soy
+<img src="./codexResources/imgs/conventionalsoy.png" />
+conventionalsoy.txt
+@ : Conservation Corn
+<img src="./codexResources/imgs/conservationcorn.png" />
+conservationcorn.txt
+@ : Conservation Soy
+<img src="./codexResources/imgs/coservationsoy.png" />
+conservationsoy.txt
+@ : Alfalfa
+<img src="./codexResources/imgs/alfalfa.png" />
+alfalfa.txt
+@ : Fruit and Veg
+<img src="./codexResources/imgs/mixedfruitandvegetable.png" />
+mixedfruitandvegetable.txt
+@ : Grass Hay
+<img src="./codexResources/imgs/grasshay.png" />
+grasshay.txt
+@ : Switchgrass
+<img src="./codexResources/imgs/switchgrass.png" />
+switchgrass.txt
+@ : Permanent Pasture
+<img src="./codexResources/imgs/permanentpasture.png" />
+permanentpasture.txt
+@ : Rotational Grazing
+<img src="./codexResources/imgs/rotationalgrazing.png" />
+rotationalgrazing.txt
+@ : Wetland
+<img src="./codexResources/imgs/wetland.png" />
+wetland.txt
+@ : Prairie
+<img src="./codexResources/imgs/prairie.png" />
+prairie.txt
+@ : Conventional Forest
+<img src="./codexResources/imgs/conventionalforest.png" />
+conventionalforest.txt
+@ : Conservation Forest
+<img src="./codexResources/imgs/conservationforest.png" />
+conservationforest.txt
+@ : Short-Rotation Woody Bioenergy
+<img src="./codexResources/imgs/shortrotation.png" />
+shortrotation.txt
 $
+# + Physical Features
+<img src="./codexResources/imgs/test1.jpg” />
+physicalfeatures.txt
+@ : Topographic Relief
+<img src="./codexResources/imgs/test4.jpg" />
+topographicrelief.txt
+@ : Flood Frequency
+<img src="./codexResources/imgs/test4.jpg" />
+floodfrequency.txt
+@ : Strategic Wetlands
+<img src="./codexResources/imgs/test4.jpg" />
+strategicwetlands.txt
+@ : Subwatersheds
+<img src="./codexResources/imgs/test4.jpg" />
+subwatershedboundaries.txt
+@ : Drainage Class
+<img src="./codexResources/imgs/test4.jpg" />
+drainageclass.txt
 $
-@ : Sub 1.2
+# + Precipitation
+<img src="./codexResources/imgs/test1.jpg” />
+precipitation.txt
+@ : Dry
 <img src="./codexResources/imgs/test2.jpg" />
-text2.txt
-# + Head 1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.2
+dry.txt
+@ : Normal
 <img src="./codexResources/imgs/test2.jpg" />
-text2.txt
-$
-$
-# + Head 2
+normal.txt
+@ : Wet
 <img src="./codexResources/imgs/test3.jpg" />
-text3.txt
-@ : Sub 2.1
+wet.txt
+$
+# + Modules
+<img src="./codexResources/imgs/test1.jpg" />
+modules.txt
+# + Habitat
+<img src="./codexResources/imgs/test1.jpg" />
+habitat.txt
+@ : Biodiversity
+<img src="./codexResources/imgs/test1.jpg" />
+biodiversity.txt
+@ : Game Wildlife
+<img src="./codexResources/imgs/test1.jpg" />
+gamewildlife.txt
+$
+# + Soil Quality
+<img src="./codexResources/imgs/test2.jpg" />
+soilquality.txt
+@ : Carbon Sequestration
+<img src="./codexResources/imgs/test2.jpg" />
+carbonsequestration.txt
+@ : Erosion Control
+<img src="./codexResources/imgs/test2.jpg" />
+erosioncontrol.txt
+$
+# + Water Quality
 <img src="./codexResources/imgs/test3.jpg" />
-text3.txt
-$
-# + Head 1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-# + Head 1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.2
-<img src="./codexResources/imgs/test2.jpg" />
-text2.txt
-# + Head 1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.2
-<img src="./codexResources/imgs/test2.jpg" />
-text2.txt
-$
-$
-@ : Sub 1.2
-<img src="./codexResources/imgs/test2.jpg" />
-text2.txt
-# + Head 1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.1
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Sub 1.2
-<img src="./codexResources/imgs/test2.jpg" />
-text2.txt
-$
-$
-# + Head 2
+waterquality.txt
+@ : Nitrate Pollution Control
 <img src="./codexResources/imgs/test3.jpg" />
-text3.txt
-@ : Sub 2.1
+nitratepollutioncontrol.txt
+@ : Phosphorous Pollution Control
 <img src="./codexResources/imgs/test3.jpg" />
-text3.txt
+phosphorouspollutioncontrol.txt
+@ : Sediment Control
+<img src="./codexResources/imgs/test3.jpg" />
+sedimentcontrol.txt
+$
+# + Yield
+<img src="./codexResources/imgs/test3.jpg" />
+yield.txt
+@ : Alfalfa
+<img src="./codexResources/imgs/test3.jpg" />
+alfalfayield.txt
+@ : Cattle
+<img src="./codexResources/imgs/test3.jpg" />
+cattleyield.txt
+@ : Corn Grain
+<img src="./codexResources/imgs/test3.jpg" />
+cornyield.txt
+@ : Grass Hay
+<img src="./codexResources/imgs/test3.jpg" />
+hayyield.txt
+@ : Switchgrass
+<img src="./codexResources/imgs/test3.jpg" />
+switchgrassyield.txt
+@ : Mixed Fruit and Vegetable
+<img src="./codexResources/imgs/test3.jpg" />
+fruitvegyield.txt
+@ : Short-Rotation Woody Biomass
+<img src="./codexResources/imgs/test3.jpg" />
+shortrotationyield.txt
+@ : Soybeans
+<img src="./codexResources/imgs/test3.jpg" />
+soyyield.txt
+@ : Wood
+<img src="./codexResources/imgs/test3.jpg" />
+woodyield.txt
+$
+$
+@ : Management Practices
+<img src="./codexResources/imgs/test1.jpg" />
+text1.txt
+# + Data
+<img src="./codexResources/imgs/test1.jpg" />
+text1.txt
+@ : Scores
+<img src="./codexResources/imgs/test3.jpg" />
+text1.txt
+@ : Maps
+<img src="./codexResources/imgs/test3.jpg" />
+text1.txt
+@ : Results
+<img src="./codexResources/imgs/test3.jpg" />
+text1.txt
 $
