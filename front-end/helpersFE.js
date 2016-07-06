@@ -740,14 +740,10 @@ function displayLevels(type) {
                 
                 
                 mapIsHighlighted = false; 
-                
                 refreshBoard();
                 showLevelDetails(-1 * currentHighlightType);
                 currentHighlightType = 0;
                 
-               
-                console.log(mapIsHighlighted) ;
-            
             } else {
                 
                 mapIsHighlighted = true;
