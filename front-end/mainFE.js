@@ -80,7 +80,7 @@ function setup() {
         setupStaticBackground();        
     }
     
-    //setupAssistant();
+    setupAssistant();
     setupHighlight();
 
     return 1 ;
@@ -107,7 +107,6 @@ function setupStaticBackground() {
     new THREE.MeshBasicMaterial({map: oldPewiBackgrounds[r]})
     );
 
-    // The bg plane shouldn't care about the z-buffer.
     bg.material.depthTest = false;
     bg.material.depthWrite = false;
     
@@ -115,31 +114,39 @@ function setupStaticBackground() {
     bgCam = new THREE.Camera();
     bgScene.add(bgCam);
     bgScene.add(bg);
+	
+	var ambiLight = new THREE.AmbientLight(0x404040, 6.0);
+    bgScene.add(ambiLight);
     
 } //end setupStaticBackground
 
+//setupAssistant adds the butterfly to the scene
 function setupAssistant() {
 
-var mtlLoader = new THREE.MTLLoader();
-var mtlLoader = new THREE.MTLLoader();
-mtlLoader.load( './Butterfly/Butterfly.mtl', function( butterflyMaterials ) {
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setBaseUrl( './Butterfly/Texture/' );
+    mtlLoader.load( './Butterfly/Butterfly.mtl', function( butterflyMaterials ) {
 
     //butterflyMaterials.preload();
 
-    var objLoader = new THREE.OBJLoader();
-    objLoader.setMaterials( butterflyMaterials );
-    objLoader.load( './Butterfly/Butterfly.obj', function ( object ) {
+        var objLoader = new THREE.OBJLoader();
+        objLoader.setMaterials( butterflyMaterials );
+        objLoader.load( './Butterfly/Butterfly.obj', function ( object ) {
 
-        object.position.y = 95;
-        scene.add( object );
+            object.position.x = .935;
+            object.position.y = -.75;
+            object.position.z = 0;
+            object.scale.set(0.001, 0.001, 0.001);
+            object.rotation.z = (-Math.PI);
+            object.rotation.x = (-Math.PI/2);
+            object.rotation.y = (-Math.PI/8);
+            bgScene.add( object );
+        
+        });
 
     });
 
-});
-
-
-
-}
+} //end setupAssistant
 
 //setupBoardFromFile creates a new gameboard from a stored file and creates a river for the board
 function setupBoardFromFile(file) {
@@ -279,7 +286,6 @@ function initWorkspace() {
 requestAnimationFrame(function animate() {
 
    renderer.autoClear = false;
-   renderer.clear();
    if(bgScene != null){
     renderer.render(bgScene, bgCam);
    }
