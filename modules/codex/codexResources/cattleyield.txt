@@ -1,1 +1,0 @@
-In PEWI, Cattle yield in number of grazing cattle per grazing season, is based on PEWI Alfalfa Hay and Grass Hay yields and a calculation converting forage production to number of animals supported.
