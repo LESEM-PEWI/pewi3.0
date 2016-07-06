@@ -218,6 +218,8 @@ margin: 20px;
 <input id="year0" type="checkbox" checked >
 <label for="year0"> Year 0 </label>  
 
+<input id="precip" type="checkbox" >
+<label for="precip">Changeable Precipitation</label>  
 
 
 
@@ -308,6 +310,16 @@ tempString += document.getElementById('yearNumber').innerHTML + "\n" ;
 window.top.document.getElementById('yearValues').innerHTML = tempString ;
 
 
+tempString = "" ;
+
+if(!document.getElementById('precip').checked)   {
+  tempString += "off";
+}
+   
+window.top.document.getElementById('precipChange').innerHTML = tempString ;
+
+
+
 parent.reset() ;    
     
 }  
@@ -364,6 +376,12 @@ function getState() {
     }
   
   
+    if(window.top.document.getElementById('precipChange').innerHTML == "off"){
+      document.getElementById('precip').checked = 1 ;
+    }
+    else{
+      document.getElementById('precip').checked = 0 ;
+    }
   
 }
 
