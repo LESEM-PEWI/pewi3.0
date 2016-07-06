@@ -1,6 +1,7 @@
 <html>
     
 <head>
+    
 <style>
 
 * {
@@ -21,7 +22,7 @@ body {
 position:absolute;
 width:300px;
 height:70px ;
-margin-left:-150px;
+margin-left: -150px;
 color: white ;
 padding:5px;
 border: 0px solid white;
@@ -62,12 +63,24 @@ background-color: #008fb3;
     top:60%;
 }
     
-    
+#backButton {
+    position:absolute;
+    margin-left:10%;
+    margin-top:30px;
+    padding: 5px;
+}   
+
+#backButton:hover {
+    border-bottom: 2px solid white;
+}
+
 </style>        
         
 </head>
     
 <body>
+
+<img onclick="parent.reset()" id="backButton" src="./imgs/back.png">    
     
 <div id="tutorial" class="levelButton">Tutorial</div>
 <div id="level1" class="levelButton">[Level 1]</div>
