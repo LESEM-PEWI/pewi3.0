@@ -1,1 +1,0 @@
-The Erosion Control module is based on guidelines from the 2004 Iowa Phosphorous Index. Gross Erosion is the soil loss per year from ephemeral gully erosion, rill erosion, and interrill erosion; a high gross erosion corresponds to a low erosion control, and low gross erosion to a high erosion control.
