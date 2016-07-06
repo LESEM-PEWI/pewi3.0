@@ -45,6 +45,7 @@ label {
   cursor: pointer;
   user-select: none;
   transition: background-color .2s, box-shadow .2s;
+  font-size:20px;
 }
 
 label:hover, input:focus + label {
@@ -90,7 +91,7 @@ font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 line-height: 230%;
 color: #FFFFFF;
 
-font-size: 24 ;
+font-size: 24px ;
 font-weight: bold;
 cursor: all-scroll ;
 background-color: #008fb3;
@@ -107,7 +108,30 @@ background-color: #008fb3;
   margin-left:15%;
 }
 
+#years {
+  width:250px;
+  background-color: #008fb3 ;
+  border: 3px solid white;
+  display: inline-block;  
+padding:5px;
+text-align:center;
+font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+color: #FFFFFF;
+  font-size: 20px ;
+margin: 20px;
+  padding: 15px 30px 15px 30px;
+  
+}
 
+.math {
+  width:20px; 
+  cursor:default; 
+  display:inline-block;
+}
+
+.math:hover {
+  color: #990033;  
+}
 
 </style>        
         
@@ -177,7 +201,30 @@ background-color: #008fb3;
 </div>
 
 
-<div id="header2" class="header">Toggle Background<br><hr></div>
+<div id="header4" class="header">Other Options<br><hr></div>
+
+<div class="container">
+  
+<div id="years">
+<div style="cursor:default; display:inline-block;" id="title">Years to Show: </div> 
+
+<div style="cursor:default; display:inline-block;" id="yearNumber">3</div>
+<div id="subYear" style="margin-left:20px;" onclick="changeYearValue(-1)" class="math"><b>&ndash;</b></div>
+|
+<div id="addYear" style="visibility:hidden" onclick="changeYearValue(+1)" class="math"><b>+</b></div>
+
+</div>
+
+<input id="year0" type="checkbox" checked >
+<label for="year0"> Year 0 </label>  
+
+
+
+
+</div>  
+
+
+<div id="header2" class="header">Graphics Properties<br><hr></div>
 
 <div class="container">
   
@@ -185,7 +232,13 @@ background-color: #008fb3;
 <label for="skybox"> 3D Environment </label>  
 </div>  
 
+<div id="header3" class="header">Developer Tools<br><hr></div>
 
+<div class="container">
+  
+<input id="statistics" type="checkbox" checked >
+<label for="statistics"> Application Statistics </label>  
+</div>  
 
   
 <div id="exitButton" class="levelButton" onclick="saveState() ;">Save & Exit</div>
@@ -197,6 +250,8 @@ background-color: #008fb3;
 </body>    
     
 <script>
+    
+var maxYear = 3 ; //for settings    
     
 getState() ;    
     
@@ -230,6 +285,29 @@ if(!document.getElementById('skybox').checked)   {
 window.top.document.getElementById('backgroundStyle').innerHTML = tempString ;
   
   
+tempString = "" ;
+
+if(!document.getElementById('statistics').checked)   {
+  tempString += "1";
+}
+   
+window.top.document.getElementById('statsSetting').innerHTML = tempString ;
+    
+  
+tempString = "" ;
+
+if(!document.getElementById('year0').checked)   {
+  tempString += "1\n";
+}
+else {
+  tempString += "0\n";
+}
+
+tempString += document.getElementById('yearNumber').innerHTML + "\n" ;
+   
+window.top.document.getElementById('yearValues').innerHTML = tempString ;
+
+
 parent.reset() ;    
     
 }  
@@ -240,7 +318,7 @@ function getState() {
 
     var strRawContents = window.top.document.getElementById('visibleItems').innerHTML ;
     
-    console.log(strRawContents) ;
+    //console.log(strRawContents) ;
     
     //split based on escape chars
     while (strRawContents.indexOf("\r") >= 0) {
@@ -260,9 +338,59 @@ function getState() {
       document.getElementById('skybox').checked = 1 ;
     }
     
+    if(window.top.document.getElementById('statsSetting').innerHTML == "1"){
+      document.getElementById('statistics').checked = 0 ;
+    }
+    else{
+      document.getElementById('statistics').checked = 1 ;
+    }
+    
+    
+     var strRawContents = window.top.document.getElementById('yearValues').innerHTML ;
+    
+    //console.log(strRawContents) ;
+    
+    //split based on escape chars
+    while (strRawContents.indexOf("\r") >= 0) {
+        strRawContents = strRawContents.replace("\r", "");
+    }
+     arrLines = strRawContents.split("\n");
+  
+    if(arrLines.length > 1){
+      if(arrLines[0] == "1") document.getElementById('year0').checked = 0 ;
+      
+      document.getElementById('yearNumber').innerHTML = arrLines[1] ;
+      changeYearValue(0) ;
+    }
+  
+  
   
 }
+
     
+    
+function changeYearValue(value) {
+
+var number = Number(document.getElementById('yearNumber').innerHTML) ;
+
+number += value ;
+
+document.getElementById('addYear').style.visibility = "visible" ;
+document.getElementById('subYear').style.visibility = "visible" ;
+
+if(number == maxYear){
+  document.getElementById('addYear').style.visibility = "hidden" ;
+}
+else if(number == 1){
+  document.getElementById('subYear').style.visibility = "hidden" ;
+}
+
+
+document.getElementById('yearNumber').innerHTML  = number ;
+  
+} 
+
+
 </script>    
     
 </html>

@@ -27,7 +27,7 @@ function setup() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     //setup stats display
-    document.body.appendChild(stats.domElement);
+    if(document.getElementById('statsSetting').innerHTML == "1")    document.body.appendChild(stats.domElement);
 
     //scene
     scene = new THREE.Scene();
@@ -57,11 +57,14 @@ function setup() {
     spotLight.shadow.camera.far = 500;
 
     //set up camera
+    //T…E.Vector3 {x: 0.12870653357008163, y: 320.50583842108955, z: 11.644679046519663}
     camera.position.y = 320;
-    camera.position.z = 18;
-    camera.rotation.x = -45 * Math.PI / 180;
+    camera.position.z = 0;
+    camera.rotation.x = -1.570795331865673;
 
-    console.log(camera.position.y + "camera.position" + " " + camera.rotation);
+    
+    //console.log(camera.position);
+    //console.log(camera.rotation) ;
 
     //set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -222,6 +225,9 @@ function setupBoardFromUpload(data) {
 
     //update Results to point to correct board since currentBoard is updated
     Totals = new Results(boardData[currentBoard]);
+    
+
+    
 
 }
 
@@ -295,6 +301,8 @@ requestAnimationFrame(function animate() {
     requestAnimationFrame(animate);
     stats.update();
 
+    
+    
   }); //end request
 
 

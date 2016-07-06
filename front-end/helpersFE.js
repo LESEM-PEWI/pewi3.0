@@ -375,6 +375,10 @@ function onDocumentKeyDown(event) {
                 randomizeBoard() ;
             }
             break;
+        case 67:
+            console.log(camera.position) ;
+            console.log(camera.rotation) ;
+            console.log("-------------") ;
     }
 
 } //end onDocumentKeyDown
@@ -1063,6 +1067,7 @@ function uploadClicked(e) {
 
     //reset keylistening frame (ie give up focus on iframe)
     document.activeElement.blur();
+    
 
 } //end uploadClicked
 
@@ -1556,5 +1561,23 @@ function toggleVisibility() {
         document.getElementById(arrLines[i]).style.display = "none" ;
     }
     
+    var strRawContents = document.getElementById('yearValues').innerHTML ;
+    
+    //split based on escape chars
+    while (strRawContents.indexOf("\r") >= 0) {
+        strRawContents = strRawContents.replace("\r", "");
+    }
+    var arrLines = strRawContents.split("\n");    
+    
+       if(!(arrLines[0]=="1")){
+        document.getElementById('year0Button').style.visibility = "hidden" ;
+    }    
         
+    if(arrLines[1]=="1"){    
+         document.getElementById('year2Button').style.visibility = "hidden" ;
+          document.getElementById('year3Button').style.visibility = "hidden" ;
+    }
+    else if(arrLines[1]=="2"){
+         document.getElementById('year3Button').style.visibility = "hidden" ;
+    }
 }
