@@ -1,1 +1,0 @@
-This feature shows the elevation grade, or slope, of each pixel of PEWI. Land use covers perform differently under different elevations, and this tab can help explain output phenomena and inform location-specific land use choices.
