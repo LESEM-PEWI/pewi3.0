@@ -1,3 +1,18 @@
+# + Data
+<img src="./codexResources/imgs/test1.jpg" />
+text1.txt
+@ : Scores
+<img src="./codexResources/imgs/test3.jpg" />
+text1.txt
+@ : Maps
+<img src="./codexResources/imgs/test3.jpg" />
+text1.txt
+@ : Results
+<img src="./codexResources/imgs/test3.jpg" />
+text1.txt
+$
+
+
 # + Land Use
 <img src="./codexResources/imgs/test1.jpg" />
 landuse.txt
@@ -47,41 +62,18 @@ conservationforest.txt
 <img src="./codexResources/imgs/shortrotation.png" />
 shortrotation.txt
 $
-# + Physical Features
-<img src="./codexResources/imgs/test1.jpg” />
-physicalfeatures.txt
-@ : Topographic Relief
-<img src="./codexResources/imgs/test4.jpg" />
-topographicrelief.txt
-@ : Flood Frequency
-<img src="./codexResources/imgs/test4.jpg" />
-floodfrequency.txt
-@ : Strategic Wetlands
-<img src="./codexResources/imgs/test4.jpg" />
-strategicwetlands.txt
-@ : Subwatersheds
-<img src="./codexResources/imgs/test4.jpg" />
-subwatershedboundaries.txt
-@ : Drainage Class
-<img src="./codexResources/imgs/test4.jpg" />
-drainageclass.txt
-$
-# + Precipitation
-<img src="./codexResources/imgs/test1.jpg” />
-precipitation.txt
-@ : Dry
-<img src="./codexResources/imgs/test2.jpg" />
-dry.txt
-@ : Normal
-<img src="./codexResources/imgs/test2.jpg" />
-normal.txt
-@ : Wet
-<img src="./codexResources/imgs/test3.jpg" />
-wet.txt
-$
+
+
+@ : Management Practices
+<img src="./codexResources/imgs/test1.jpg" />
+text1.txt
+
+
+
 # + Modules
 <img src="./codexResources/imgs/test1.jpg" />
 modules.txt
+
 # + Habitat
 <img src="./codexResources/imgs/test1.jpg" />
 habitat.txt
@@ -92,6 +84,7 @@ biodiversity.txt
 <img src="./codexResources/imgs/test1.jpg" />
 gamewildlife.txt
 $
+
 # + Soil Quality
 <img src="./codexResources/imgs/test2.jpg" />
 soilquality.txt
@@ -102,6 +95,7 @@ carbonsequestration.txt
 <img src="./codexResources/imgs/test2.jpg" />
 erosioncontrol.txt
 $
+
 # + Water Quality
 <img src="./codexResources/imgs/test3.jpg" />
 waterquality.txt
@@ -115,6 +109,7 @@ phosphorouspollutioncontrol.txt
 <img src="./codexResources/imgs/test3.jpg" />
 sedimentcontrol.txt
 $
+
 # + Yield
 <img src="./codexResources/imgs/test3.jpg" />
 yield.txt
@@ -147,20 +142,39 @@ soyyield.txt
 woodyield.txt
 $
 $
-# : Management Practices
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
+
+# + Precipitation
+<img src="./codexResources/imgs/test1.jpg” />
+precipitation.txt
+@ : Dry
+<img src="./codexResources/imgs/test2.jpg" />
+dry.txt
+@ : Normal
+<img src="./codexResources/imgs/test2.jpg" />
+normal.txt
+@ : Wet
+<img src="./codexResources/imgs/test3.jpg" />
+wet.txt
 $
-# + Data
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Scores
-<img src="./codexResources/imgs/test3.jpg" />
-text1.txt
-@ : Maps
-<img src="./codexResources/imgs/test3.jpg" />
-text1.txt
-@ : Results
-<img src="./codexResources/imgs/test3.jpg" />
-text1.txt
+
+
+# + Physical Features
+<img src="./codexResources/imgs/test1.jpg” />
+physicalfeatures.txt
+@ : Topographic Relief
+<img src="./codexResources/imgs/test4.jpg" />
+topographicrelief.txt
+@ : Flood Frequency
+<img src="./codexResources/imgs/test4.jpg" />
+floodfrequency.txt
+@ : Strategic Wetlands
+<img src="./codexResources/imgs/test4.jpg" />
+strategicwetlands.txt
+@ : Subwatersheds
+<img src="./codexResources/imgs/test4.jpg" />
+subwatershedboundaries.txt
+@ : Drainage Class
+<img src="./codexResources/imgs/test4.jpg" />
+drainageclass.txt
 $
+

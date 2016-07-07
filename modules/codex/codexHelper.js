@@ -45,6 +45,8 @@ function setUp(data){
         
         var char = arrLines[i][0] ;
         
+        //console.log(arrLines[i]) ;
+        
         switch(char){
             case '#':
                 tableString += establishHeader(i,arrLines[i],arrLines[i+1],arrLines[i+2],padding);
@@ -80,6 +82,9 @@ function setUp(data){
                 tableString += '</div>' ;
                 padding -= 20 ;
                 i += 1 ;
+                break ;
+            default :
+                i+= 1;
         }
     
     //console.log(current);
@@ -146,9 +151,11 @@ function establishElement(i, line1, line2, line3, padding){
 
 function estalishHeights() {
     
+    heightConstant = 35 ;
+    
     for(var i=0; i < elementNum.length; i++){
         if(elementNum[i]){
-            elementHeight[i] = 35 * elementNum[i] ;
+            elementHeight[i] = heightConstant * elementNum[i] ;
         }
     }
     
@@ -159,7 +166,7 @@ function toggleChild(value) {
     
     var childString = value + "sub" ;
     
-    var heightString = (35 * elementNum[value]) + "px" ;
+    var heightString = (heightConstant * elementNum[value]) + "px" ;
     heightString = elementHeight[value] + "px" ;
 
     if(document.getElementById(value).className == "groupHeader") {
@@ -237,6 +244,7 @@ function resizeSection(value,operation){
    //find the number of open headers that are in parent
    while(i >= 0 && onwards){
     
+
        //if the element above is a open group header
        if(document.getElementById(i) && document.getElementById(i).className == "selectedGroupHeader") {
            
