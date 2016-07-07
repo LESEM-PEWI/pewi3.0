@@ -228,6 +228,19 @@ body {
     text-align:center;
 }
 
+#precipTab{
+    
+    color: white;
+    font-size: 18px;
+    
+}
+
+select {
+    font-size: 14px;
+    margin:5px;
+}
+
+
 /*levels map selector*/
 .levelColor1, .levelColor2, .levelColor3,
 .levelColor4, .levelColor5 {

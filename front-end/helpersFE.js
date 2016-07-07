@@ -20,6 +20,7 @@ var tToggle = true;
 var mapIsHighlighted = false;
 var hoverOverride = false;
 var currentHighlightType = 0;
+var immutablePrecip = false; 
 
 //onResize dynamically adjusts to window size changes
 function onResize() {
@@ -1496,6 +1497,10 @@ function showUploadDownload() {
     document.getElementById('closeUploadDownload').style.display = "block";
     document.getElementById('uploadDownloadFrame').style.display = "block";
     }
+    
+    if(mapIsHighlighted){
+        displayLevels();
+    }
 
 } //end showUploadDownload
 
@@ -1593,6 +1598,9 @@ function toggleVisibility() {
                 case "year0On":
                     document.getElementById('year0Button').style.display = "block" ;
                     break;
+                case "precipOff":
+                    immutablePrecip = true;
+                     break;
                 default:
                     document.getElementById(arrLines[i]).style.display = "none" ;    
              

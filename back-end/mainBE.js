@@ -9,12 +9,13 @@ function propogateBoard(board) {
   for (var y = 0; y < 4; y++) {
     var precipIndex = setPrecipitation();
     board.precipitation[y] = precip[precipIndex];
-    var formIDs = ["year0Precip", "year1Precip", "year2Precip", "year3Precip"];
-    document.getElementById(formIDs[y]).options[precipIndex].selected = true;
+    
+    board.precipitationIndex[y] = precipIndex ; //store precip indices
   }
   
   //overwrite the precipitation values, used for testing
   board.precipitation = [24.58, 30.39, 34.34, 28.18, 24.58, 45.1];
+  board.precipitationIndex = [0,2,4,1] ;
 
   //loop through initData array and assign values to Tiles
   for (var i = 0; i < initData.length; i++) {

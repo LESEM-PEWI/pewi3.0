@@ -2113,6 +2113,7 @@ function Results(board) {
 
 function GameBoard() {
 	this.precipitation = [0, 0, 0, 0, 24.58, 45.1];
+	this.precipitationIndex = [0,0,0,0] ;
 	this.map = Array();
 	this.calculatedToYear = 1;
 	this.watershedArea = 0;

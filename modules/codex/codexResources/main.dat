@@ -147,9 +147,10 @@ soyyield.txt
 woodyield.txt
 $
 $
-@ : Management Practices
+# : Management Practices
 <img src="./codexResources/imgs/test1.jpg" />
 text1.txt
+$
 # + Data
 <img src="./codexResources/imgs/test1.jpg" />
 text1.txt
