@@ -173,6 +173,8 @@ document.getElementById('startVideo').addEventListener('ended', function() {
  endFunction();
 }, false);
 
+createEnvironment();
+
 function endFunction() {
  
  document.getElementById('container').style.display = "none";
@@ -220,7 +222,8 @@ function startSandbox() {
  
  setTimeout(function() {
   
-   parent.initWorkspace();
+   //parent.initWorkspace();
+   parent.initWorkspace("./data.txt");
    
  }, 500);
 
@@ -257,6 +260,8 @@ function startPlay() {
  
  setTimeout(function() {
   
+  //parent.initWorkspace("./front-end/pewiNewMapUpload.csv");
+  
   document.getElementById('dialogue').src = "play.html" ; 
   document.getElementById('dialogue').style.visibility = "visible" ;
   
@@ -281,6 +286,15 @@ function reset() {
   
   document.getElementById('pewiTitle').style.top = "10%";
  
+ 
+}
+
+function createEnvironment(){
+ 
+ parent.createThreeFramework();
+ parent.initializeCamera();
+ parent.initializeLighting();
+ parent.setupHighlight();
  
 }
 

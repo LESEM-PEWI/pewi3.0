@@ -268,6 +268,10 @@ function refreshBoard() {
 
     meshGeometry = new THREE.Geometry();
     meshMaterials = [];
+    
+    mapIsHighlighted = false;
+    showLevelDetails(-1 * currentHighlightType);
+    currentHighlightType = 0;
 
     displayBoard();
 
@@ -282,10 +286,6 @@ function transitionToYear(year) {
         boardData[currentBoard].calculatedToYear = year;
         boardData[currentBoard].updateBoard();
     }
-    
-    mapIsHighlighted = false;
-    showLevelDetails(-1 * currentHighlightType);
-    currentHighlightType = 0;
     
     refreshBoard();
 
@@ -361,7 +361,6 @@ function onDocumentKeyDown(event) {
             if(modalUp != true && mapIsHighlighted != true){
                 tToggle ? tToggle = false : tToggle = true;
                 refreshBoard();
-                //console.log(tToggle);
             }
             break;
         //case i
@@ -553,11 +552,6 @@ function showLevelDetails(value) {
         document.getElementById("phosphorusDetailsList").className = "levelDetailsList";
     }
 
-    if (value > -4 && value < 0) {
-        var element = document.getElementsByClassName('levelDetailsList');
-        element[0].className = 'levelDetailsListRolled';
-    }
-
     if (value == 4) {
         document.getElementById("floodFrequencyDetailsList").className = "physicalDetailsList";
     }
@@ -572,6 +566,11 @@ function showLevelDetails(value) {
 
     if (value == 7) {
         document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
+    }
+    
+    if (value > -4 && value < 0) {
+        var element = document.getElementsByClassName('levelDetailsList');
+        element[0].className = 'levelDetailsListRolled';
     }
 
     if (value < -3) {
@@ -786,25 +785,6 @@ function displayLevels(type) {
 
 } //end displayLevels
 
-function changeMapHighlighting(){
-    if(mapIsHighlighted){
-        mapIsHighlighted = false;
-    } else {
-        mapIsHighlighted = true;
-    }
-}
-
-//changeHoverOverride changes whether hover events are listened to facilitating prolonged map highlighting
-function changeHoverOverride(){
-    
-    if(hoverOverride){
-        hoverOverride = false;
-    } else {
-        hoverOverride = true;
-    }
-    
-} //end changeHoverOverride
-
 //getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
 function getHighlightColor(type, ID) {
 
@@ -980,6 +960,23 @@ function contaminatedRiver() {
     
 
 } //end contaminatedRiver
+
+//achievementCheck
+function achievementCheck(){
+    
+ if(achievementDisplayed == -1){
+     console.log(achievementScripts[0]);
+     achievementDisplayed = 0;
+ }
+ else if(Totals["phosphorusLoadScore"][1] > achievementValues[1] && Totals["phosphorusLoadScore"][1] < achievementValues[2] && achievementDisplayed < 1){
+     console.log(achievementScripts[1]);
+     achievementDisplayed = 1;
+ } else if(Totals["phosphorusLoadScore"][1] > achievementValues[2] && achievementDisplayed < 2){
+     console.log(achievementScripts[2]);
+     achievementDisplayed = 2;
+ }
+    
+}
 
 //writeFileToDownloadString creates a string in csv format that describes the current board
 function writeFileToDownloadString() {
