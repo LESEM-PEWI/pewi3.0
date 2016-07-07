@@ -209,6 +209,8 @@ document.getElementById('startVideo').addEventListener('ended', function() {
  endFunction();
 }, false);
 
+createEnvironment();
+
 function endFunction() {
  
 
@@ -259,7 +261,8 @@ function startSandbox() {
  
  setTimeout(function() {
   
-   parent.initWorkspace();
+   //parent.initWorkspace();
+   parent.initWorkspace("./data.txt");
    
  }, 500);
 
@@ -280,6 +283,8 @@ function startPlay() {
  
  setTimeout(function() {
   
+  //parent.initWorkspace("./front-end/pewiNewMapUpload.csv");
+  
   document.getElementById('dialogue').src = "play.html" ; 
   document.getElementById('dialogue').style.visibility = "visible" ;
   
@@ -292,6 +297,15 @@ function reset() {
   document.getElementById('dialogue').src = "" ;
   document.getElementById('dialogue').style.visibility = "hidden" ;
   
+ 
+}
+
+function createEnvironment(){
+ 
+ parent.createThreeFramework();
+ parent.initializeCamera();
+ parent.initializeLighting();
+ parent.setupHighlight();
  
 }
 
