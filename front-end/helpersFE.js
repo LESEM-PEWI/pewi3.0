@@ -283,7 +283,9 @@ function transitionToYear(year) {
         boardData[currentBoard].updateBoard();
     }
     
-    displayLevels();
+    mapIsHighlighted = false;
+    showLevelDetails(-1 * currentHighlightType);
+    currentHighlightType = 0;
     
     refreshBoard();
 
@@ -747,10 +749,7 @@ function displayLevels(type) {
                     break;
             }
             
-            
-            if(currentHighlightType == newSelection || newSelection == ''){
-                
-                
+            if(currentHighlightType == newSelection || newSelection == 0){
                 
                 mapIsHighlighted = false; 
                 refreshBoard();
