@@ -143,7 +143,7 @@ border-bottom: 1px solid white ;
 }
 
 #dialogue {
- position:absolute;
+ position:fixed;
  top: 0px;
  left: 0px;
  padding: 0px;
@@ -220,7 +220,20 @@ document.getElementById('startVideo').addEventListener('ended', function() {
  endFunction();
 }, false);
 
+setTimeout(function() {
+
+ var vid = document.getElementById("startVideo");
+ if (!(Number(vid.currentTime) > 0)) {
+  endFunction();
+
+ }
+ 
+
+}, 2000);
+
+
 createEnvironment();
+
 
 function endFunction() {
  
@@ -231,7 +244,7 @@ function endFunction() {
  document.getElementById('pewiTitle').style.top = "5%" ;
  
  document.getElementById('contentsHolder').style.opacity = "1" ;
- document.getElementById('backImg').style.opacity = "1" ;
+ document.getElementById('backImg').style.opacity = ".7" ;
 
  
  document.getElementById('button1').style.visibility = "visible";
@@ -244,31 +257,33 @@ function endFunction() {
  
 
  setTimeout(function() {
- document.getElementById('backImg').style.transitionDuration = "90s" ; 
+ document.getElementById('backImg').style.transitionDuration = "100s" ; 
  document.getElementById('button1').style.transitionDuration = ".4s" ;
  document.getElementById('button2').style.transitionDuration = ".4s" ;
  document.getElementById('button3').style.transitionDuration = ".4s" ;
  document.getElementById('pewiTitle').style.transitionDuration = ".4s" ;
+ document.getElementById('contentsHolder').style.transitionDuration = ".4s" ;
  
- moveBackground() ;
- 
-}, 50);
+  moveBackground() ;
+  
+}, 10);
  
  
 }
 
-setTimeout(function() {
 
- var vid = document.getElementById("startVideo");
- if (!(Number(vid.currentTime) > 0)) {
-  endFunction();
-
- }
-
-}, 2000);
 
 
 function startSandbox() {
+ 
+ document.getElementById('button2').style.display = "none" ;
+ document.getElementById('button3').style.display = "none" ;
+ document.getElementById('button1').style.left = "50%" ;
+ document.getElementById('button1').style.backgroundColor = "#003d4d" ;
+ document.getElementById('contentsHolder').style.marginTop = "0px";
+ document.getElementById('contentsHolder').style.top = "0%";
+ document.getElementById('contentsHolder').style.height = "100%" ;
+ 
  
  setTimeout(function() {
   
@@ -281,21 +296,41 @@ function startSandbox() {
 
 function startOptions() {
  
+ document.getElementById('button1').style.display = "none" ;
+ document.getElementById('button2').style.display = "none" ;
+ document.getElementById('button3').style.left = "50%" ;
+ document.getElementById('button3').style.backgroundColor = "#003d4d" ;
+ document.getElementById('contentsHolder').style.marginTop = "0px";
+ document.getElementById('contentsHolder').style.top = "0%";
+ document.getElementById('contentsHolder').style.height = "100%" ;
+ 
  setTimeout(function() {
   
   document.getElementById('dialogue').src = "options.html" ;
   document.getElementById('dialogue').style.visibility = "visible" ;
-  
+ 
+  setTimeout(function() { resetElements() ; }, 100);
+
  }, 500);
  
 }
 
 function startPlay() {
  
+ document.getElementById('button1').style.display = "none" ;
+ document.getElementById('button3').style.display = "none" ;
+ document.getElementById('button2').style.top = "45%" ;
+ document.getElementById('button2').style.backgroundColor = "#003d4d" ;
+ document.getElementById('contentsHolder').style.marginTop = "0px";
+ document.getElementById('contentsHolder').style.top = "0%";
+ document.getElementById('contentsHolder').style.height = "100%" ;
+ 
  setTimeout(function() {
   
   //parent.initWorkspace("./front-end/pewiNewMapUpload.csv");
   
+  setTimeout(function() { resetElements() ; }, 200);
+    
   document.getElementById('dialogue').src = "play.html" ; 
   document.getElementById('dialogue').style.visibility = "visible" ;
   
@@ -303,11 +338,31 @@ function startPlay() {
 
 }
 
+function resetElements(){
+
+ document.getElementById('button1').style.display = "block" ;
+ document.getElementById('button2').style.display = "block" ;
+ document.getElementById('button3').style.display = "block" ;
+ document.getElementById('button1').style.backgroundColor = "rgb(0, 143, 179)" ;
+ document.getElementById('button2').style.backgroundColor = "rgb(0, 143, 179)" ;
+ document.getElementById('button3').style.backgroundColor = "rgb(0, 143, 179)" ;
+ document.getElementById('button1').style.left = "25%" ;
+ document.getElementById('button2').style.top = "50%" ;
+ document.getElementById('button3').style.left = "75%" ;
+ 
+}
+
+
 function reset() {
+ 
+  document.activeElement.blur() ;
  
   document.getElementById('dialogue').src = "" ;
   document.getElementById('dialogue').style.visibility = "hidden" ;
   
+  document.getElementById('contentsHolder').style.marginTop = "-200px";
+ document.getElementById('contentsHolder').style.top = "50%";
+ document.getElementById('contentsHolder').style.height = "400px" ;
  
 }
 

@@ -624,8 +624,9 @@ select {
     left:50%;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     line-height: 130%;
-	color: #FFFFFF;
-	font-weight: bold;
+    color: #FFFFFF;
+     padding-left:25px;
+    font-size: 22px ;
 }
 
 .popup {
