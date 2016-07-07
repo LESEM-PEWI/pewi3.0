@@ -306,6 +306,8 @@ for(var i = 0; i < elements.length; i++){
       yearNum += 1 ;
       var idName = "year" + yearNum + "Button";
       tempString += idName + "\n" ;
+      idName = "year" + yearNum + "PrecipContainer" ;
+      tempString += idName + "\n" ;
     }
 
 window.top.document.getElementById('parameters').innerHTML = tempString;  
@@ -325,6 +327,55 @@ parent.reset() ;
 
 function getState() {
   
+var strRawContents = window.top.document.getElementById('parameters').innerHTML ;
+    
+    //split based on escape chars
+    while (strRawContents.indexOf("\r") >= 0) {
+        strRawContents = strRawContents.replace("\r", "");
+    }
+    var arrLines = strRawContents.split("\n");
+ 
+  var yearCounter = 0 ;
+
+for(var i=0; i < arrLines.length; i++) {
+  
+  var string = arrLines[i] ;
+
+  
+  switch(string) {
+     case "year0On":
+         document.getElementById('year0').checked = 1 ;
+        break;
+      case "statsOn":
+         document.getElementById('statFrame').checked = 1 ;
+        break;
+      case "skyboxOn":
+        document.getElementById('skybox').checked = 1 ;
+        break;
+      case "precipOff":
+        document.getElementById('precip').checked = 1 ;
+        break;
+      case "":
+        break;
+    default:
+        
+        if(string.slice(0,4) == "year"){
+          //filter out the precip containers that have been generated off
+          if(string.length < 12){
+              yearCounter += 1 ;
+          }
+        }
+        else{
+            document.getElementById(string).checked = 1 ;
+        }
+    }
+  
+}
+
+document.getElementById('yearNumber').innerHTML = (3 - yearCounter) ;
+changeYearValue(0);
+
+
 
 }
 
