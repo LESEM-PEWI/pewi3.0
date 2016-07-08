@@ -629,10 +629,12 @@ select {
     font-size: 22px ;
 }
 
-.popup {
+.popup{
+  overflow-y:scroll;
+  overflow-x:hidden;
   width:320px;
   height:200px;
-  margin: 0 7% 7%;
+  margin: 0 6% 6%;
   text-align:center;
   font:20px/20px Arial, sans-serif;
   color:#fff;
@@ -641,52 +643,6 @@ select {
   padding: 10px;
   position:absolute;
   right:10px;
-    -webkit-animation-duration: 2s;
-  animation-duration: 2s;
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
-}
-
-/* creates the larger circle */
-.popup:before {
-  content:"";
-  position:absolute;
-  z-index:10;
-  bottom:-4%;
-  right:-4%;
-  width:20px;
-  height:20px;
-  border:5px solid rgba(14,71,204,1.0);
-  background:#fff;
-  /* css3 */
-  -webkit-border-radius:50px;
-  -moz-border-radius:50px;
-  border-radius:50px;
-  /* reduce the damage in FF3.0 */
-  display:block;
-    -webkit-animation-duration: 2s;
-  animation-duration: 2s;
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
-}
-
-/* creates the smaller circle */
-.popup:after {
-  content:"";
-  position:absolute;
-  z-index:10;
-  bottom:-8%;
-  right:-8%;
-  width:10px;
-  height:10px;
-  border:5px solid rgba(14,71,204,1.0);
-  background:#fff;
-  /* css3 */
-  -webkit-border-radius:25px;
-  -moz-border-radius:25px;
-  border-radius:25px;
-  /* reduce the damage in FF3.0 */
-  display:block;
     -webkit-animation-duration: 2s;
   animation-duration: 2s;
   -webkit-animation-name: fadeIn;

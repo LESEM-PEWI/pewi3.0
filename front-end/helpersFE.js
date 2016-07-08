@@ -963,19 +963,56 @@ function contaminatedRiver() {
 
 //achievementCheck
 function achievementCheck(){
+ 
+ var allDone = "none";
+ 
+ //check the current scores of each achievement
+ for(var i = 0; i < achievementValues.length; i++){
+     
+    //determine the script to print
+     
+    //print the initial script when the totals are less than any achievement
+    if(Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][1])){
+             if(achievementDisplayed < 0){
+                updatePopup(achievementScripts[i][0]);
+                achievementDisplayed = 1;
+             }
+             allDone = false;
+    //determine if a final value has been surpassed for each achievement
+    } else if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][achievementValues[i].length-1])){
+             if(allDone == "none" || allDone == true){
+                allDone = true;
+             }
+    //print scripts for subobjective achievements
+    } else {
+        if(achievementValues[i].length > 2){
+            
+            for(var j = 1; j < achievementValues[i].length; j++){
+         
+                if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][j]) && Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][j+1])) {
+                    if( achievementDisplayed < j+1){
+                        updatePopup(achievementScripts[i][j]);
+                        achievementDisplayed = j+1;
+                    }
+                    allDone = false;
+                }
+         
+            }
+     
+        }
     
- if(achievementDisplayed == -1){
-     console.log(achievementScripts[0]);
-     achievementDisplayed = 0;
+    }
+
  }
- else if(Totals["phosphorusLoadScore"][1] > achievementValues[1] && Totals["phosphorusLoadScore"][1] < achievementValues[2] && achievementDisplayed < 1){
-     console.log(achievementScripts[1]);
-     achievementDisplayed = 1;
- } else if(Totals["phosphorusLoadScore"][1] > achievementValues[2] && achievementDisplayed < 2){
-     console.log(achievementScripts[2]);
-     achievementDisplayed = 2;
+ 
+ //if all achievements have been completed, the level is complete
+ if(allDone == true){
+    if(achievementDisplayed < achievementValues[0].length){
+        updatePopup(achievementScripts[0][achievementScripts[0].length-1]);
+        achievementDisplayed = achievementValues[0].length;
+    }
  }
-    
+
 }
 
 //writeFileToDownloadString creates a string in csv format that describes the current board
@@ -1535,7 +1572,7 @@ function clearInfo(){
 }
 
 function updatePopup(string){
-    document.getElementById("popupText").innerHTML = string;
+    document.getElementById("popupText").innerHTML = string + "<br><br>" + document.getElementById("popupText").innerHTML;
     document.getElementById("popup").className = "popup";
 }
 
