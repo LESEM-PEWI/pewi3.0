@@ -389,6 +389,11 @@ function onDocumentKeyDown(event) {
             } else {
                 document.getElementById("popup").className = "popupHidden";
             }
+            break;
+        //case f
+        case 70:
+            launchFireworks();
+            break;
     }
 
 } //end onDocumentKeyDown
@@ -993,6 +998,7 @@ function achievementCheck(){
                     if( achievementDisplayed < j+1){
                         updatePopup(achievementScripts[i][j]);
                         achievementDisplayed = j+1;
+                        flyLark();
                     }
                     allDone = false;
                 }
@@ -1010,9 +1016,31 @@ function achievementCheck(){
     if(achievementDisplayed < achievementValues[0].length){
         updatePopup(achievementScripts[0][achievementScripts[0].length-1]);
         achievementDisplayed = achievementValues[0].length;
+        launchFireworks();
     }
  }
 
+}
+
+function launchFireworks(){
+    var r=10+parseInt(Math.random()*10);
+    for(var i=r; i--;){
+        setTimeout( function(){ 
+            displayFirework(); 
+        }, (i+1)*(1+parseInt(Math.random()*100)));
+    }
+}
+
+function displayFirework(){
+    createFirework(11,61,6,2,null,null,null,null,false,true); 
+    return 1;
+}
+
+function flyLark(){
+    if(document.getElementById("meadowlark").className == "meadowlarkfly"){
+        document.getElementById("meadowlark").className = "meadowlarkhidden";
+    }
+    document.getElementById("meadowlark").className = "meadowlarkfly";
 }
 
 //writeFileToDownloadString creates a string in csv format that describes the current board

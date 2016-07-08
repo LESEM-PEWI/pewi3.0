@@ -672,3 +672,34 @@ select {
   position:absolute;
   right:-600px;
 }
+
+.meadowlarkhidden {
+    text-decoration: none;
+    padding-right: 20px;
+    left: -50%;
+    top:40%;
+    position: absolute;
+}
+
+.meadowlarkfly {
+    text-decoration: none;
+    padding-right: 20px;
+    left: 150%;
+    top: 40%;
+    position: absolute;
+    -webkit-animation-duration: 20s;
+    animation-duration: 20s;
+    -webkit-animation-name: fly;
+    animation-name: fly;
+}
+
+@keyframes fly {
+    0% {
+        left: -50%;
+        top: 40%;
+    }
+    100% {
+        left: 150%;
+        top: 40%;
+    }
+}
