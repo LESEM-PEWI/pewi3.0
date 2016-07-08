@@ -2,6 +2,8 @@ var hideOptions = "";
 var achievementScripts = [];
 var achievementValues = [];
 var achievementDisplayed = -1;
+var achievementAccomplished = [];
+var yearToCheck = 0;
 
 //loadLevel is triggered by clicking a level button on the html page
 function loadLevel(level){
@@ -34,25 +36,42 @@ function parseLevelDetails(data) {
     var arrLines = strRawContents.split("\n");
 
     var curLine = arrLines[0];
-    //hideOptions = curLine.replace("*", "\n");
+    //parse id's of items to hide using the parameters div in index.html
     hideOptions = curLine.split("*").join("\n");
     document.getElementById("parameters").innerHTML = hideOptions;
     
-    achievementScripts.push(arrLines[1]);
-    
-    for(var i = 2; i < arrLines.length - 1; i++){
-        var tempArr = arrLines[i].split("*");
-        achievementValues.push(tempArr[0]);
-        for(var j = 1; j < tempArr.length; j++){
+    for(var i = 2; i < arrLines.length - 2; i++){
+        
+        var tempScripts = [];
+        var tempValues = [];
+        
+        //Add the start up script to tempScripts
+        tempScripts.push(arrLines[1]);
+        
+        //Parse the items in each line
+        var tempParsed = arrLines[i].split("*");
+        
+        //Add the name of the score being checked to the values array
+        tempValues.push(tempParsed[0]);
+        for(var j = 1; j < tempParsed.length; j++){
             if(j%2 != 0){
-                achievementValues.push(tempArr[j]);
+                tempValues.push(tempParsed[j]);
             } else {
-                achievementScripts.push(tempArr[j]);
+                tempScripts.push(tempParsed[j]);
             }
         }
-    }
+        
+        //Add the final script to tempScripts
+        tempScripts.push(arrLines[arrLines.length - 2]);
+        
+        //Determine which year is being checked
+        yearToCheck = arrLines[arrLines.length - 1];
+        
+        //Add tempScripts and tempValues to the achievements Arrays
+        achievementValues.push(tempValues);
+        achievementScripts.push(tempScripts);
     
-    achievementScripts.push(arrLines[arrLines.length - 1]);
+    }
     
     console.log(achievementValues);
     console.log(achievementScripts);

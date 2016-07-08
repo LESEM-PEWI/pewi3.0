@@ -1,4 +1,6 @@
 paint15*paint5*paint8*paint12*paint6*paint7*paint14*paint9*paint11*paint10*paint13
-In this level, start with conventional corn and soy land use covers. Then, add conservation corn and soy. Try to achieve a score of at least 90% for both phosphorus pollution control and erosion control.
-phosphorus*80*You're almost there! Try to achieve a score of at least 90% for both phosphorous pollution control and erosion control.*90
+In this level, start with conventional corn and soy land use covers. Then, add conservation corn and soy. Try to achieve a score of at least 86% for both phosphorus pollution control and erosion control.
+phosphorusLoadScore*80*You're almost there! Try to achieve a score of at least 86% for both phosphorous pollution control and erosion control.*86
+grossErosionScore*80*You're almost there! Try to achieve a score of at least 86% for both phosphorous pollution control and erosion control.*86
 Level 1.1 Complete!
+1
