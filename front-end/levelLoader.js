@@ -15,10 +15,10 @@ function loadLevel(level){
             initWorkspace('./front-end/pewiNewMapUpload.csv');
             break;
         case 2:
-            
+            initWorkspace('./data.txt');
             break;
         case 3:
-            
+            initWorkspace('./data.txt');
             break;
     }
     
