@@ -22,10 +22,11 @@ var hoverOverride = false;
 var currentHighlightType = 0;
 var immutablePrecip = false; 
 
-var gridPaint = {
+var painterTool = {
     status: 0,
     startTile: 0,
-    endTile: 0
+    endTile: 0,
+    hover: false
 } ;
 
 //onResize dynamically adjusts to window size changes
@@ -199,24 +200,17 @@ function getGrid(startTile, endTile) {
         startRow = temp ;
     }
     
-     console.log("==========");
-    console.log("starting r: " + startRow + " c: " + startCol) ;
-    console.log("ending r: " + endRow + " c: " + endCol) ;
-        
     //for each row
     for(var row=startRow ; row <= endRow ; row++){
-        console.log("row : " + row) ;
         //for applicable columns in the row
         for(var col=startCol; col <= endCol ; col++){
-            console.log("col : " + col) ;
-            console.log("calculated id : " + getTileIDFromRC(row,col)) ;
             var id = getTileIDFromRC(row,col) ;
             if (boardData[currentBoard].map[id - 1].landType[0] != 0 ){
                 tileArray.push(id) ;
             }
         }
     }
-    console.log(tileArray) ;
+    //console.log(tileArray) ;
     return tileArray ;
 }
 
@@ -390,7 +384,7 @@ function onDocumentMouseMove(event) {
     if (intersects.length < 1) {
 
         //if there's no intersection, then turn off the gridHighlighting
-        if (gridPaint.status == 2) {
+        if (painterTool.status == 2) {
             for (var i = 0; i < highlightedTiles.length; i++) {
                 meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
             }
@@ -402,10 +396,10 @@ function onDocumentMouseMove(event) {
 
     if (intersects.length > 0 && !modalUp) {
 
-        if (gridPaint.status == 2) {
+        if (painterTool.status == 2) {
             //highlight a grid
             var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-            var tilesToHighlight = getGridOutline(gridPaint.startTile, currentTile);
+            var tilesToHighlight = getGridOutline(painterTool.startTile, currentTile);
 
             //clear Previous highlighting
             for (var i = 0; i < highlightedTiles.length; i++) {
@@ -423,6 +417,9 @@ function onDocumentMouseMove(event) {
                 highlightedTiles = tilesToHighlight;
             }
 
+        }
+        else if(painterTool.status == 3){
+            changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z))
         }
         else {
             //just a normal highlighting
@@ -448,24 +445,24 @@ function onDocumentDoubleClick(event) {
 
     if (!isShiftDown) {
 
-        if (intersects.length > 0 && !modalUp && !mapIsHighlighted) {
+        if (intersects.length > 0 && !modalUp && !mapIsHighlighted && !painterTool.hover ) {
 
-            if (gridPaint.status > 0) {
+            if (painterTool.status > 0) {
                 //take care of grid painting
-                if (gridPaint.status == 1) {
+                if (painterTool.status == 1) {
                     //start grid painting option
 
-                    gridPaint.status = 2;
-                    gridPaint.startTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
+                    painterTool.status = 2;
+                    painterTool.startTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
                 }
-                else if (gridPaint.status == 2) {
-                    //end gridPaint.status function if
+                else if (painterTool.status == 2) {
+                    //end painterTool.status function if
                     var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
 
                     if (boardData[currentBoard].map[currentTile].landType[0] != 0) {
                         //then paint since it's an actual tile
-                        gridPaint.endTile = currentTile;
-                        var changedTiles = getGrid(gridPaint.startTile, gridPaint.endTile);
+                        painterTool.endTile = currentTile;
+                        var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
 
                         for (var i = 0; i < changedTiles.length; i++) {
                             changeLandTypeTile(changedTiles[i] - 1);
@@ -473,8 +470,8 @@ function onDocumentDoubleClick(event) {
 
                         //reset highlighting
                         refreshBoard();
-                        //reset gridPainting status
-                        gridPaint.status = 1;
+                        //reset painterTooling status
+                        painterTool.status = 1;
                     }
                 }
             }
@@ -545,11 +542,10 @@ function onDocumentKeyDown(event) {
             break;
         //case p
         case 80:
-            //gridPaint.status 0 indicates not ready
-            //gridPaint.status 1 indicates waiting for DoubleClick
-            //gridPaint.status 2 indicates grid drag activity
-            gridPaint.status = (gridPaint.status == 0) ? 1 : gridPaint.status ;
-            console.log("ready to DC, status=" + gridPaint.status) ;
+            if(painterTool.hover && painterTool.status != 3) {
+                painterTool.status = 3 ;
+                highlightTile(-1);
+            }
             break;
         //case f
         case 70:
@@ -571,8 +567,7 @@ function onDocumentKeyUp(event) {
             break;
         //case p
         case 80:
-           gridPaint.status = (gridPaint.status == 1) ? 0 : gridPaint.status ;
-           console.log("keyUp, status=" + gridPaint.status) ;
+          if(painterTool.status == 3 ) painterTool.status = 0 ;
     }
 
 } //end onDocumentKeyUp
@@ -1848,23 +1843,34 @@ function toggleVisibility() {
 }
 
 
-function gridPainterSelect(){
+function painterSelect(value){
    
-    console.log(document.getElementById('gridPaint').className) ;
+    var element = document.getElementsByClassName('painterIconSelected') ;
+    element[0].className = "painterIcon" ;
+    painterTool.hover = false;
     
-    if(!(document.getElementById('gridPaint').className == "featureSelectorIconSelected")){
-        //gridPainter is not selected, so select it
-        //gridPaint.status 0 indicates not ready
-        //gridPaint.status 1 indicates waiting for DoubleClick
-        //gridPaint.status 2 indicates grid drag activity
-        gridPaint.status = (gridPaint.status == 0) ? 1 : gridPaint.status ;
-        console.log("ready to DC, status=" + gridPaint.status) ;
-        document.getElementById('gridPaint').className = "featureSelectorIconSelected" ;
-    }
-    else{
-        gridPaint.status = (gridPaint.status == 1) ? 0 : gridPaint.status ;
-        console.log("keyUp, status=" + gridPaint.status) ;
-        document.getElementById('gridPaint').className = "featureSelectorIcon" ;   
+    if(value == 1){
+        document.getElementById('cellPaint').className = 'painterIconSelected' ;
+        if(painterTool.status == 2) refreshBoard() ;
+        painterTool.status = 0 ;
+        
+        
+    }else if(value == 2 ){
+        
+            //painterTooler is not selected, so select it
+            //painterTool.status 0 indicates not ready
+            //painterTool.status 1 indicates waiting for DoubleClick
+            //painterTool.status 2 indicates grid drag activity
+            painterTool.status = 1 ;
+            console.log("ready to DC, status=" + painterTool.status) ;
+            document.getElementById('gridPaint').className = "painterIconSelected" ;
+   
+    }else if(value == 3){
+        painterTool.status = 0 ;
+        if(painterTool.status == 2) refreshBoard() ;
+        
+        document.getElementById('hoverPaint').className = 'painterIconSelected' ;
+        painterTool.hover = true ;
     }
     
 }
