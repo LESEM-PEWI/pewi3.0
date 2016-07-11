@@ -16,6 +16,10 @@
     <script src="./lib/MTLLoader.js"></script>
     <script src="./lib/OBJMTLLoader.js"></script>
     
+    <link rel="stylesheet" type="text/css" href="./lib/fireworks.css" media="screen" />
+    <script type="text/javascript" src="./lib/soundmanager2-nodebug-jsmin.js"></script>
+    <script type="text/javascript" src="./lib/fireworks.js"></script>
+    
     <script src="./back-end/helperMethods.js"></script>
     <script src="./back-end/helperObjects.js"></script>
     <script src="./back-end/mainBE.js"></script>
@@ -34,6 +38,8 @@
      //preload loading screen     
      var img1 = new Image();
      img1.src = "./imgs/loader.gif" ;
+     var img2 = new Image();
+     img2.src ="./imgs/meadowlarkanimation.gif";
      </script>
  
     
@@ -270,7 +276,15 @@
     <div id="year3Button" class="yearButton" onclick="transitionToYear(3); switchYearTab(3);"><img id="year3Image" class="yearNotSelected" src="./imgs/three.png">
     </div>
     
-    <div id="popup" class="popupHidden"><p id="popupText">"Welcome to PEWI!"</p></div>
+    <div id="popup" class="popupHidden"><p id="popupText"></p></div>
+    
+    <div id="fireworks-template">
+        <div id="fw" class="firework"></div>
+        <div id="fp" class="fireworkParticle"><img src="./imgs/particles.gif" alt="" /></div>
+    </div>
+    <div id="fireContainer"></div>
+    
+    <img id="meadowlark" class="meadowlarkhidden" src="./imgs/meadowlarkanimation.gif"></div>
 
     <div id="bottomHUD" class="bottomHUD">
         <p id="currentInfo">

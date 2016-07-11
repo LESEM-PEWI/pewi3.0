@@ -541,6 +541,7 @@ function onDocumentKeyDown(event) {
             } else {
                 document.getElementById("popup").className = "popupHidden";
             }
+            break;
         //case p
         case 80:
             //gridPaint.status 0 indicates not ready
@@ -548,7 +549,11 @@ function onDocumentKeyDown(event) {
             //gridPaint.status 2 indicates grid drag activity
             gridPaint.status = (gridPaint.status == 0) ? 1 : gridPaint.status ;
             console.log("ready to DC, status=" + gridPaint.status) ;
-            
+            break;
+        //case f
+        case 70:
+            launchFireworks();
+            break;
     }
 
 } //end onDocumentKeyDown
@@ -1127,19 +1132,79 @@ function contaminatedRiver() {
 
 //achievementCheck
 function achievementCheck(){
+ 
+ var allDone = "none";
+ 
+ //check the current scores of each achievement
+ for(var i = 0; i < achievementValues.length; i++){
+     
+    //determine the script to print
+     
+    //print the initial script when the totals are less than any achievement
+    if(Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][1])){
+             if(achievementDisplayed < 0){
+                updatePopup(achievementScripts[i][0]);
+                achievementDisplayed = 1;
+             }
+             allDone = false;
+    //determine if a final value has been surpassed for each achievement
+    } else if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][achievementValues[i].length-1])){
+             if(allDone == "none" || allDone == true){
+                allDone = true;
+             }
+    //print scripts for subobjective achievements
+    } else {
+        if(achievementValues[i].length > 2){
+            
+            for(var j = 1; j < achievementValues[i].length; j++){
+         
+                if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][j]) && Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][j+1])) {
+                    if( achievementDisplayed < j+1){
+                        updatePopup(achievementScripts[i][j]);
+                        achievementDisplayed = j+1;
+                        flyLark();
+                    }
+                    allDone = false;
+                }
+         
+            }
+     
+        }
     
- if(achievementDisplayed == -1){
-     console.log(achievementScripts[0]);
-     achievementDisplayed = 0;
+    }
+
  }
- else if(Totals["phosphorusLoadScore"][1] > achievementValues[1] && Totals["phosphorusLoadScore"][1] < achievementValues[2] && achievementDisplayed < 1){
-     console.log(achievementScripts[1]);
-     achievementDisplayed = 1;
- } else if(Totals["phosphorusLoadScore"][1] > achievementValues[2] && achievementDisplayed < 2){
-     console.log(achievementScripts[2]);
-     achievementDisplayed = 2;
+ 
+ //if all achievements have been completed, the level is complete
+ if(allDone == true){
+    if(achievementDisplayed < achievementValues[0].length){
+        updatePopup(achievementScripts[0][achievementScripts[0].length-1]);
+        achievementDisplayed = achievementValues[0].length;
+        launchFireworks();
+    }
  }
-    
+
+}
+
+function launchFireworks(){
+    var r=10+parseInt(Math.random()*10);
+    for(var i=r; i--;){
+        setTimeout( function(){ 
+            displayFirework(); 
+        }, (i+1)*(1+parseInt(Math.random()*100)));
+    }
+}
+
+function displayFirework(){
+    createFirework(11,61,6,2,null,null,null,null,false,true); 
+    return 1;
+}
+
+function flyLark(){
+    if(document.getElementById("meadowlark").className == "meadowlarkfly"){
+        document.getElementById("meadowlark").className = "meadowlarkhidden";
+    }
+    document.getElementById("meadowlark").className = "meadowlarkfly";
 }
 
 //writeFileToDownloadString creates a string in csv format that describes the current board
@@ -1699,7 +1764,7 @@ function clearInfo(){
 }
 
 function updatePopup(string){
-    document.getElementById("popupText").innerHTML = string;
+    document.getElementById("popupText").innerHTML = string + "<br><br>" + document.getElementById("popupText").innerHTML;
     document.getElementById("popup").className = "popup";
 }
 
