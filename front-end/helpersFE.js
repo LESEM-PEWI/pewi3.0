@@ -473,7 +473,7 @@ function onDocumentDoubleClick(event) {
                         //reset highlighting
                         refreshBoard();
                         //reset gridPainting status
-                        gridPaint.status = 0;
+                        gridPaint.status = 1;
                     }
                 }
             }
@@ -786,25 +786,27 @@ function switchConsoleTab(value) {
         document.getElementById('terrainImg').className = "imgSelected";
         document.getElementById('painterTab').style.display = "block";
     }
-
-    if (value == 2) {
+    else if (value == 2) {
 
         document.getElementById('precipImg').className = "imgSelected";
         document.getElementById('precipTab').style.display = "block";
     }
-
-    if (value == 3) {
+    else if (value == 3) {
         
         document.getElementById('levelsImg').className = "imgSelected";
         document.getElementById('levelsTab').style.display = "block";
         
     }
-
-    if (value == 4) {
+    else if (value == 4) {
 
         document.getElementById('featuresImg').className = "imgSelected";
         document.getElementById('featuresTab').style.display = "block";
         
+    }
+    else if (value == 5) {
+        
+        document.getElementById('settingsImg').className = "imgSelected";
+        document.getElementById('settingsTab').style.display = "block";
     }
     
     if(mapIsHighlighted){
@@ -1841,5 +1843,25 @@ function toggleVisibility() {
     }
     
     
+    
+}
+
+
+function gridPainterSelect(){
+    
+    if(!(document.getElementById('settingsImg').class == "featureSelectorIconSelected")){
+        //gridPainter is not selected, so select it
+        //gridPaint.status 0 indicates not ready
+        //gridPaint.status 1 indicates waiting for DoubleClick
+        //gridPaint.status 2 indicates grid drag activity
+        gridPaint.status = (gridPaint.status == 0) ? 1 : gridPaint.status ;
+        console.log("ready to DC, status=" + gridPaint.status) ;
+        document.getElementById('gridPaint').className = "featureSelectorIconSelected" ;
+    }
+    else{
+        gridPaint.status = (gridPaint.status == 1) ? 0 : gridPaint.status ;
+        console.log("keyUp, status=" + gridPaint.status) ;
+        document.getElementById('settingsImg').className = "featureSelectorIcon" ;   
+    }
     
 }
