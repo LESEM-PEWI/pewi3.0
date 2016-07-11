@@ -318,7 +318,8 @@ function addTile(tile) {
     }
 
     //if this tile is the first in its row that is a streamNetwork tile add it to the riverPoints array
-    if (tile.streamNetwork == 1 && currentRow != tile.row) {
+    //if (tile.streamNetwork == 1 && currentRow != tile.row) {
+    if (tile.streamNetwork == 1){
         riverPoints.push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide) / 2, 1, tile.row * tileHeight - (tileHeight * tilesHigh) / 2));
         currentRow = tile.row;
     }
