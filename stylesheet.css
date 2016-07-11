@@ -313,11 +313,23 @@ select {
     white-space: nowrap;
 }
 
-.levelsSelectorIcon {
+.levelsSelectorIcon, .levelSelectorIconSelected {
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
     height:40px;
     margin: 5px 35px 10px 35px;
     width:40px;
+}
+
+.levelsSelectorIcon:hover {
+    box-shadow: 0px 0px 5px 5px rgba(200,120,18,0.3), 0 17px 50px 0 rgba(227,154,18,0.2);
+}
+
+.levelSelectorIconSelected{
+    box-shadow: 0px 0px 16px 5px rgba(14,71,204,0.5), 0 17px 50px 0 rgba(14,71,204,0.4);
+}
+
+.levelSelectorIconSelected:hover{
+    box-shadow: 0px 0px 25px 0px rgba(20,80,214,0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
 }
 
 /*physical features map selector*/
@@ -373,7 +385,7 @@ select {
     left:-135px;
 }
 
-.featureSelectorIcon, .painterIcon, .painterIconSelected {
+.featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
     border-radius: 50% ;
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
     height: 40px;
@@ -381,17 +393,20 @@ select {
     width: 40px;
 }
 
-.featureSelectorIcon:hover {
+.painterIcon:hover, .featureSelectorIcon:hover{
     box-shadow: 0px 0px 5px 5px rgba(200,120,18,0.3), 0 17px 50px 0 rgba(227,154,18,0.2);
 }
 
-.featureSelectedIcon:hover {
+.featureSelectorIconSelected:hover, .painterIconSelected:hover {
     box-shadow: 0px 0px 25px 0px rgba(20,80,214,0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
+} 
+
+.featureSelectorIconSelected {
+      box-shadow: 0px 0px 16px 5px rgba(14,71,204,0.5), 0 17px 50px 0 rgba(14,71,204,0.4);
 }
 
 .painterIconSelected{
-    border: 2px solid rgb(227,154,18) ;
-    width:36px;
+      box-shadow: 0px 0px 16px 5px rgba(14,71,204,0.5), 0 17px 50px 0 rgba(14,71,204,0.4);
 }
 
 .featuresText {

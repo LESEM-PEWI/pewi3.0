@@ -446,7 +446,7 @@ function onDocumentDoubleClick(event) {
     if (!isShiftDown) {
 
         if (intersects.length > 0 && !modalUp && !mapIsHighlighted && !painterTool.hover ) {
-
+ 
             if (painterTool.status > 0) {
                 //take care of grid painting
                 if (painterTool.status == 1) {
@@ -707,29 +707,36 @@ function showLevelDetails(value) {
 
     if (value == 1) {
         document.getElementById("nitrateDetailsList").className = "levelDetailsList";
+        document.getElementById('nitrateIcon').className = "levelSelectorIconSelected" ;
     }
 
     if (value == 2) {
         document.getElementById("erosionDetailsList").className = "levelDetailsList";
+        document.getElementById('erosionIcon').className = "levelSelectorIconSelected" ;
     }
 
     if (value == 3) {
         document.getElementById("phosphorusDetailsList").className = "levelDetailsList";
+        document.getElementById('phoshorusIcon').className = "levelSelectorIconSelected" ;
     }
 
     if (value == 4) {
+        document.getElementById('floodFrequency').className = "featureSelectorIconSelected" ;
         document.getElementById("floodFrequencyDetailsList").className = "physicalDetailsList";
     }
 
     if (value == 5) {
+        document.getElementById('drainageClass').className = "featureSelectorIconSelected" ;
         document.getElementById("drainageClassDetailsList").className = "physicalDetailsList";
     }
     
     if (value == 6) {
+        document.getElementById('strategicWetlands').className = "featureSelectorIconSelected" ;
         document.getElementById("wetlandClassDetailsList").className = "physicalDetailsList";
     }
 
     if (value == 7) {
+        document.getElementById('subwatershedBoundaries').className = "featureSelectorIconSelected" ;
         document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
     }
     
@@ -856,6 +863,11 @@ function displayLevels(type) {
     
             }
             
+            var element = document.getElementsByClassName('featureSelectorIconSelected') ;
+            if(element[0]) element[0].className = 'featureSelectorIcon' ;
+            element = document.getElementsByClassName('levelSelectorIconSelected') ;
+            if(element[0]) element[0].className = 'levelsSelectorIcon' ;
+            
             switch(type){
                 case 'nitrate':
                     showLevelDetails(1);
@@ -890,6 +902,11 @@ function displayLevels(type) {
         } else {
             
             var newSelection = 0;
+            
+            var element = document.getElementsByClassName('featureSelectorIconSelected') ;
+            if(element[0]) element[0].className = 'featureSelectorIcon' ;
+            element = document.getElementsByClassName('levelSelectorIconSelected') ;
+            if(element[0]) element[0].className = 'levelsSelectorIcon' ;
             
             switch(type){
                 case 'nitrate':
