@@ -22,6 +22,12 @@ var hoverOverride = false;
 var currentHighlightType = 0;
 var immutablePrecip = false; 
 
+var gridPaint = {
+    status: 0,
+    startTile: 0,
+    endTile: 0
+} ;
+
 //onResize dynamically adjusts to window size changes
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -130,7 +136,7 @@ function getTileID(x, y) {
         return -1;
     }
 
-    return ((row - 1) * tilesWide) + col - 1;
+   return (getTileIDFromRC(row, col) - 1);
 
 }
 
@@ -164,6 +170,82 @@ function calculateCutoffs() {
     rowCutOffs = tempRowCut;
 
 }
+
+function getTileIDFromRC(row, col){
+     var tilesWide = boardData[currentBoard].width;
+     return Number( ((row - 1) * tilesWide) + col ) ;
+}
+
+//returns an array of tiles in the rectangle bounded by startTile and endTile
+function getGrid(startTile, endTile) {
+    
+    var tileArray = [] ;
+    
+    var startCol = Number(boardData[currentBoard].map[startTile].column) ;
+    var endCol = Number(boardData[currentBoard].map[endTile].column) ;
+    var startRow = Number(boardData[currentBoard].map[startTile].row) ;
+    var endRow = Number(boardData[currentBoard].map[endTile].row) ;
+    
+    if(endCol < startCol) {
+        var temp = endCol ;
+        endCol = startCol ;
+        startCol = temp ;
+    }
+    
+    
+    if(endRow < startRow) {
+        var temp = endRow ;
+        endRow = startRow ;
+        startRow = temp ;
+    }
+    
+     console.log("==========");
+    console.log("starting r: " + startRow + " c: " + startCol) ;
+    console.log("ending r: " + endRow + " c: " + endCol) ;
+        
+    //for each row
+    for(var row=startRow ; row <= endRow ; row++){
+        console.log("row : " + row) ;
+        //for applicable columns in the row
+        for(var col=startCol; col <= endCol ; col++){
+            console.log("col : " + col) ;
+            console.log("calculated id : " + getTileIDFromRC(row,col)) ;
+            var id = getTileIDFromRC(row,col) ;
+            if (boardData[currentBoard].map[id - 1].landType[0] != 0 ){
+                tileArray.push(id) ;
+            }
+        }
+    }
+    console.log(tileArray) ;
+    return tileArray ;
+}
+
+function getGridOutline(startTile, endTile) {
+    
+    var tileArray = [] ;
+    
+    var startCol = Number(boardData[currentBoard].map[startTile].column) ;
+    var endCol = Number(boardData[currentBoard].map[endTile].column) ;
+    var startRow = Number(boardData[currentBoard].map[startTile].row) ;
+    var endRow = Number(boardData[currentBoard].map[endTile].row) ;
+    
+    tileArray.push(getTileIDFromRC(startRow,startCol)) ;
+    tileArray.push(getTileIDFromRC(endRow,endCol)) ;
+    
+    var temp = getTileIDFromRC(startRow,endCol);
+    if(temp != -1 ) tileArray.push(temp) ;
+    temp = getTileIDFromRC(endRow, startCol) ;
+    if(temp != -1 ) tileArray.push(temp) ;
+    
+    //check for bad tiles
+    var goodTiles = [] ;
+    for(var i=0; i < tileArray.length; i++){
+        if(boardData[currentBoard].map[tileArray[i] - 1].landType[0] != 0 ) goodTiles.push(tileArray[i]);
+    }
+    tileArray = goodTiles ;
+    
+    return tileArray ;
+}    
 
 //addTile constructs the geometry of a tile and adds it to the scene
 function addTile(tile) {
@@ -291,6 +373,7 @@ function transitionToYear(year) {
 
 } //end transitionToYear
 
+var highlightedTiles = [] ;
 
 //onDocumentMouseMove follows the cursor and highlights corresponding tiles
 function onDocumentMouseMove(event) {
@@ -304,11 +387,49 @@ function onDocumentMouseMove(event) {
     var intersects = raycaster.intersectObjects(scene.children);
 
     if (intersects.length < 1) {
+
+        //if there's no intersection, then turn off the gridHighlighting
+        if (gridPaint.status == 2) {
+            for (var i = 0; i < highlightedTiles.length; i++) {
+                meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
+            }
+        }
+            
+        //else, unhighlight previous
         highlightTile(-1);
     }
 
     if (intersects.length > 0 && !modalUp) {
-        highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+
+        if (gridPaint.status == 2) {
+            //highlight a grid
+            var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
+            var tilesToHighlight = getGridOutline(gridPaint.startTile, currentTile);
+
+            //clear Previous highlighting
+            for (var i = 0; i < highlightedTiles.length; i++) {
+                meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
+            }
+
+            if (currentTile && boardData[currentBoard].map[currentTile].landType[0] != 0) {
+
+                for (var i = 0; i < tilesToHighlight.length; i++) {
+                    highlightTile(tilesToHighlight[i] - 1);
+                    //prevent highlighting from overwritting...
+                    previousHover = null;
+                }
+
+                highlightedTiles = tilesToHighlight;
+            }
+
+        }
+        else {
+            //just a normal highlighting
+            highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+        }
+
+
+
     }
 } //end onDocumentMouseMove
 
@@ -328,7 +449,38 @@ function onDocumentDoubleClick(event) {
 
         if (intersects.length > 0 && !modalUp && !mapIsHighlighted) {
 
-            changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+            if (gridPaint.status > 0) {
+                //take care of grid painting
+                if (gridPaint.status == 1) {
+                    //start grid painting option
+
+                    gridPaint.status = 2;
+                    gridPaint.startTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
+                }
+                else if (gridPaint.status == 2) {
+                    //end gridPaint.status function if
+                    var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
+
+                    if (boardData[currentBoard].map[currentTile].landType[0] != 0) {
+                        //then paint since it's an actual tile
+                        gridPaint.endTile = currentTile;
+                        var changedTiles = getGrid(gridPaint.startTile, gridPaint.endTile);
+
+                        for (var i = 0; i < changedTiles.length; i++) {
+                            changeLandTypeTile(changedTiles[i] - 1);
+                        }
+
+                        //reset highlighting
+                        refreshBoard();
+                        //reset gridPainting status
+                        gridPaint.status = 0;
+                    }
+                }
+            }
+            else {
+                //just a normal tile change
+                changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+            }
 
         }
 
@@ -389,6 +541,14 @@ function onDocumentKeyDown(event) {
             } else {
                 document.getElementById("popup").className = "popupHidden";
             }
+        //case p
+        case 80:
+            //gridPaint.status 0 indicates not ready
+            //gridPaint.status 1 indicates waiting for DoubleClick
+            //gridPaint.status 2 indicates grid drag activity
+            gridPaint.status = (gridPaint.status == 0) ? 1 : gridPaint.status ;
+            console.log("ready to DC, status=" + gridPaint.status) ;
+            
     }
 
 } //end onDocumentKeyDown
@@ -403,6 +563,10 @@ function onDocumentKeyUp(event) {
         case 16:
             isShiftDown = false;
             break;
+        //case p
+        case 80:
+           gridPaint.status = (gridPaint.status == 1) ? 0 : gridPaint.status ;
+           console.log("keyUp, status=" + gridPaint.status) ;
     }
 
 } //end onDocumentKeyUp
