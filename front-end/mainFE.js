@@ -211,34 +211,6 @@ function setupStaticBackground() {
     
 } //end setupStaticBackground
 
-//setupAssistant adds the butterfly to the scene
-function setupAssistant() {
-
-    var mtlLoader = new THREE.MTLLoader();
-    mtlLoader.setBaseUrl( './Butterfly/Texture/' );
-    mtlLoader.load( './Butterfly/Butterfly.mtl', function( butterflyMaterials ) {
-
-    //butterflyMaterials.preload();
-
-        var objLoader = new THREE.OBJLoader();
-        objLoader.setMaterials( butterflyMaterials );
-        objLoader.load( './Butterfly/Butterfly.obj', function ( object ) {
-
-            object.position.x = .935;
-            object.position.y = -.75;
-            object.position.z = 0;
-            object.scale.set(0.001, 0.001, 0.001);
-            object.rotation.z = (-Math.PI);
-            object.rotation.x = (-Math.PI/2);
-            object.rotation.y = (-Math.PI/8);
-            if(bgScene!=null) bgScene.add( object );
-        
-        });
-
-    });
-
-} //end setupAssistant
-
 function switchBoards(newBoard){
     
     //remove points of previous board's river if present

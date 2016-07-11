@@ -689,7 +689,7 @@ select {
 .meadowlarkhidden {
     text-decoration: none;
     padding-right: 0px;
-    left: -42%;
+    left: -620px;
     top:40%;
     position: absolute;
 }
@@ -708,7 +708,7 @@ select {
 
 @keyframes fly {
     0% {
-        left: -32%;
+        left: -620px;
         top: 40%;
     }
     100% {
