@@ -1848,8 +1848,10 @@ function toggleVisibility() {
 
 
 function gridPainterSelect(){
+   
+    console.log(document.getElementById('gridPaint').className) ;
     
-    if(!(document.getElementById('settingsImg').class == "featureSelectorIconSelected")){
+    if(!(document.getElementById('gridPaint').className == "featureSelectorIconSelected")){
         //gridPainter is not selected, so select it
         //gridPaint.status 0 indicates not ready
         //gridPaint.status 1 indicates waiting for DoubleClick
@@ -1861,7 +1863,7 @@ function gridPainterSelect(){
     else{
         gridPaint.status = (gridPaint.status == 1) ? 0 : gridPaint.status ;
         console.log("keyUp, status=" + gridPaint.status) ;
-        document.getElementById('settingsImg').className = "featureSelectorIcon" ;   
+        document.getElementById('gridPaint').className = "featureSelectorIcon" ;   
     }
     
 }
