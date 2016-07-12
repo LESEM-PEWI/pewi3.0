@@ -66,13 +66,13 @@ function highlightTile(id) {
 
 
     //if a previous tile was selected for highlighting, unhighlight that tile
-    if (previousHover != null && !mapIsHighlighted) {
+    if (previousHover != null) {
         meshMaterials[previousHover].emissive.setHex(0x000000);
     }
 
     //highlight the new tile 
     //if not a tile
-    if (id != -1 && meshMaterials[id].emissive && !mapIsHighlighted) {
+    if (id != -1 && meshMaterials[id].emissive) {
 
         meshMaterials[id].emissive.setHex(0x7f7f7f);
         previousHover = id;
@@ -266,10 +266,10 @@ function addTile(tile) {
 
     //Calculate the heights of vertices by averaging topographies of adjacent tiles and create a vector for each corner
     if (tToggle) {
-        v1 = new THREE.Vector3(0, (topN24 + topN23 + topN1 + tile.topography) / 4 * 10, 0);
-        v2 = new THREE.Vector3(tileWidth, (topN23 + topN22 + top1 + tile.topography) / 4 * 10, 0);
-        v3 = new THREE.Vector3(tileWidth, (top24 + top23 + top1 + tile.topography) / 4 * 10, tileHeight);
-        v4 = new THREE.Vector3(0, (top22 + top23 + topN1 + tile.topography) / 4 * 10, tileHeight);
+        v1 = new THREE.Vector3(0, (topN24 + topN23 + topN1 + tile.topography) / 4 * 5, 0);
+        v2 = new THREE.Vector3(tileWidth, (topN23 + topN22 + top1 + tile.topography) / 4 * 5, 0);
+        v3 = new THREE.Vector3(tileWidth, (top24 + top23 + top1 + tile.topography) / 4 * 5, tileHeight);
+        v4 = new THREE.Vector3(0, (top22 + top23 + topN1 + tile.topography) / 4 * 5, tileHeight);
     }
     else {
         v1 = new THREE.Vector3(0, 0, 0);
@@ -312,10 +312,15 @@ function addTile(tile) {
     }
 
     //if this tile is the first in its row that is a streamNetwork tile add it to the riverPoints array
-    if (tile.streamNetwork == 1 && currentRow != tile.row) {
-    //if (tile.streamNetwork == 1){
-        riverPoints.push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide) / 2, 1, tile.row * tileHeight - (tileHeight * tilesHigh) / 2));
-        currentRow = tile.row;
+    if (tile.riverStreams != 0) {
+        var streams = tile.riverStreams.split("*");
+        for(var i = 0; i < streams.length; i++){
+            if(!riverPoints[Number(streams[i]) - 1]){
+                riverPoints[Number(streams[i]) - 1] = [];
+            }
+            riverPoints[Number(streams[i]) - 1].push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide) / 2 + tileWidth/2, 1, tile.row * tileHeight - (tileHeight * tilesHigh) / 2 + tileHeight));
+            //currentRow = tile.row;
+        }
     }
 
     //create a new mesh from the two faces for the tile    
@@ -446,9 +451,10 @@ function onDocumentMouseDown(event) {
 
     if (!isShiftDown) {
 
-        if (intersects.length > 0 && !modalUp && !mapIsHighlighted && !painterTool.hover ) {
+        if (intersects.length > 0 && !modalUp && !painterTool.hover ) {
  
             if (painterTool.status > 0) {
+
                 //take care of grid painting
                 if (painterTool.status == 1) {
                     //start grid painting option
@@ -468,17 +474,24 @@ function onDocumentMouseDown(event) {
                         for (var i = 0; i < changedTiles.length; i++) {
                             changeLandTypeTile(changedTiles[i] - 1);
                         }
-
+                        
                         //reset highlighting
                         refreshBoard();
+<<<<<<< HEAD
+                        //reset gridPainting status
+                        gridPaint.status = 0;
+                        
+=======
                         //reset painterTooling status
                         painterTool.status = 1;
+>>>>>>> origin/master
                     }
                 }
             }
             else {
                 //just a normal tile change
                 changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+
             }
 
         }
@@ -863,8 +876,7 @@ function displayLevels(type) {
     
                 if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
     
-                    meshMaterials[i].map = textureArray[0];
-                    meshMaterials[i].emissive.setHex(getHighlightColor(type, i));
+                    meshMaterials[i].map = highlightArray[getHighlightColor(type, i)];
     
                 }
     
@@ -959,8 +971,7 @@ function displayLevels(type) {
     
                     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
     
-                        meshMaterials[i].map = textureArray[0];
-                        meshMaterials[i].emissive.setHex(getHighlightColor(type, i));
+                        meshMaterials[i].map = highlightArray[getHighlightColor(type, i)];
     
                     }
     
@@ -987,15 +998,15 @@ function getHighlightColor(type, ID) {
 
         switch (erosionSeverity) {
             case 1:
-                return "0xe6bb00";
+                return 0;
             case 2:
-                return "0xc97b08";
+                return 1;
             case 3:
-                return "0xad490d";
+                return 2;
             case 4:
-                return "0x9a3010";
+                return 3;
             case 5:
-                return "0x871c12";
+                return 4;
         }
 
     }
@@ -1004,11 +1015,11 @@ function getHighlightColor(type, ID) {
 
         var nitrateConcentration = Totals.nitrateContribution[currentYear][ID];
 
-        if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return "0xe6bb00";
-        else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return "0xc97b08";
-        else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return "0xad490d";
-        else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return "0x9a3010";
-        else if (nitrateConcentration > 0.25) return "0x871c12";
+        if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return 0;
+        else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return 1;
+        else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return 2;
+        else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return 3;
+        else if (nitrateConcentration > 0.25) return 4;
 
     }
 
@@ -1018,15 +1029,15 @@ function getHighlightColor(type, ID) {
 
         switch (phosphorusRisk) {
             case 1:
-                return "0xe6bb00";
+                return 0;
             case 2:
-                return "0xc97b08";
+                return 1;
             case 3:
-                return "0xad490d";
+                return 2;
             case 4:
-                return "0x9a3010";
+                return 3;
             case 5:
-                return "0x871c12";
+                return 4;
         }
 
     }
@@ -1037,27 +1048,27 @@ function getHighlightColor(type, ID) {
 
         switch (flood) {
             case 0:
-                return "0xffffc9";
+                return 5;
             case 10:
-                return "0xffffc9";
+                return 5;
             case 20:
-                return "0xc7eab4";
+                return 6;
             case 30:
-                return "0x7fcebb";
+                return 7;
             case 40:
-                return "0x41b7c5";
+                return 8;
             case 50:
-                return "0x2f7eb7";
+                return 9;
         }
     }
 
     if (type == "wetland") {
 
         if (boardData[currentBoard].map[ID].strategicWetland == 1) {
-            return "0x2f7eb7";
+            return 9;
         }
         else {
-            return "0xffffc9";
+            return 5;
         }
     }
 
@@ -1067,47 +1078,47 @@ function getHighlightColor(type, ID) {
 
         switch (watershed) {
             case 1:
-                return "0x45aa98";
+                return 10;
             case 2:
-                return "0x127731";
+                return 11;
             case 3:
-                return "0x989836";
+                return 12;
             case 4:
-                return "0xcc6578";
+                return 13;
             case 5:
-                return "0xa84597";
+                return 14;
             case 6:
-                return "0xdbcb74";
+                return 15;
             case 7:
-                return "0x342286";
+                return 16;
             case 8:
-                return "0x862254";
+                return 17;
             case 9:
-                return "0x87ceee";
+                return 18;
             case 10:
-                return "0x097c2f";
+                return 19;
             case 11:
-                return "0x979936";
+                return 20;
             case 12:
-                return "0x47aa98";
+                return 21;
             case 13:
-                return "0xe3c972";
+                return 22;
             case 14:
-                return "0xcb657a";
+                return 23;
             case 15:
-                return "0x882252";
+                return 24;
             case 16:
-                return "0xaa4497";
+                return 25;
             case 17:
-                return "0x302486";
+                return 26;
             case 18:
-                return "0x76d1c4";
+                return 27;
             case 19:
-                return "0x3f9f91";
+                return 28;
             case 20:
-                return "0x187336";
+                return 29;
             case 21:
-                return "0x919246";
+                return 30;
         }
     }
 
@@ -1117,21 +1128,21 @@ function getHighlightColor(type, ID) {
 
         switch (drainage) {
             case 70:
-                return "0x0053b3";
+                return 31;
             case 60:
-                return "0x255d98";
+                return 32;
             case 50:
-                return "0x38638b";
+                return 33;
             case 45:
-                return "0x4b687e";
+                return 34;
             case 40:
-                return "0x5e6e71";
+                return 35;
             case 30:
-                return "0x837856";
+                return 36;
             case 10:
-                return "0xa9833c";
+                return 37;
             case 0:
-                return "0xbc892f";
+                return 38;
         }
     }
 
@@ -1143,10 +1154,14 @@ function contaminatedRiver() {
     //this is buggy -- still a work-in progress. Maybe the status of the river should be stored in the board for each year...
 
     if (Totals.phosphorusLoad[currentYear] > 1.7) {
-        river.material.color.setHex("0x663300");
+        for(var i = 0; i < river.children.length; i++){
+           river.children[i].material.color.setHex("0x663300");
+       }
     }
     else {
-        river.material.color.setHex("0x40a4df");
+        for(var i = 0; i < river.children.length; i++){
+            river.children[i].material.color.setHex("0x40a4df");
+        }
     }
     
 
