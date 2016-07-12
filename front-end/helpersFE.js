@@ -394,7 +394,7 @@ function onDocumentMouseMove(event) {
         highlightTile(-1);
     }
 
-    if (intersects.length > 0 && !modalUp) {
+    if (intersects.length > 0 && !modalUp && !mapIsHighlighted) {
 
         if (painterTool.status == 2) {
             //highlight a grid
@@ -419,7 +419,8 @@ function onDocumentMouseMove(event) {
 
         }
         else if(painterTool.status == 3){
-            changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z))
+            var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z) ;
+            if(boardData[currentBoard].map[currentTile].landType[0] != 0)  changeLandTypeTile(currentTile) ;
         }
         else {
             //just a normal highlighting
@@ -433,7 +434,7 @@ function onDocumentMouseMove(event) {
 
 //onDocumentDoubleClick changes landType to the painted (selected) landType on double-click
 //and will change map to a monoculture if shift is held down
-function onDocumentDoubleClick(event) {
+function onDocumentMouseDown(event) {
 
     event.preventDefault();
 
@@ -551,6 +552,7 @@ function onDocumentKeyDown(event) {
         case 70:
             launchFireworks();
             break;
+
     }
 
 } //end onDocumentKeyDown
@@ -567,7 +569,12 @@ function onDocumentKeyUp(event) {
             break;
         //case p
         case 80:
-          if(painterTool.status == 3 ) painterTool.status = 0 ;
+          if(painterTool.status == 3 ) painterTool.status = 0
+          break;
+        case 27:
+            if(document.getElementById('startupSequence').style.display == "none"){
+                showMainMenu() ;
+            }
     }
 
 } //end onDocumentKeyUp
@@ -1149,7 +1156,6 @@ function contaminatedRiver() {
 function achievementCheck(){
  
  var allDone = "none";
- 
  //check the current scores of each achievement
  for(var i = 0; i < achievementValues.length; i++){
      
@@ -1785,6 +1791,7 @@ function updatePopup(string){
 
 function clearPopup(){
     document.getElementById("popupText").innerHTML = " ";
+    document.getElementById("popup").className = "popupHidden";
 }
 
 

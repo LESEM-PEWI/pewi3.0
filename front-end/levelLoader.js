@@ -13,6 +13,7 @@ function loadLevel(level){
             //parse level options file
             loadLevelDetails("./front-end/level1Specifications.txt");
             initWorkspace('./front-end/pewiNewMapUpload.csv');
+            document.getElementById('popup').className = "popup"
             break;
         case 2:
             initWorkspace('./data.txt');
@@ -20,6 +21,7 @@ function loadLevel(level){
         case 3:
             initWorkspace('./data.txt');
             break;
+
     }
     
     

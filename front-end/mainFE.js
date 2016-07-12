@@ -298,8 +298,28 @@ function setupHighlight() {
 
     //add mouse listener
     document.addEventListener('mousemove', onDocumentMouseMove, false);
-    document.addEventListener('dblclick', onDocumentDoubleClick, false);
+    document.addEventListener('click', onDocumentMouseDown, false);
     document.addEventListener('keydown', onDocumentKeyDown, false);
     document.addEventListener('keyup', onDocumentKeyUp, false);
 
 }; //end setupHighlight
+
+function showMainMenu() {
+    if(confirm('Are you sure you want to exit? All your progress will be lost.')){
+    document.getElementById('startUpFrame')   
+    
+        document.getElementById('startUpFrame').contentWindow.recallMain() ;
+        
+        //function that overwrites all level options
+        //  cleans up board and achievments
+        
+        
+        setTimeout(function() {document.getElementById('startupSequence').style.display = "block" ;
+        clearPopup();
+        achievementValues = [];
+        document.getElementById('page').style.visibility = "hidden" ;}, 500 );
+        
+        
+        
+    }
+}
