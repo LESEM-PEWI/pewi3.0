@@ -109,6 +109,7 @@ function Tile(tileArray, board) {
 	this.topography = Number(tileArray[21]);
 	this.watershedNitrogenContribution = tileArray[22];
 	this.strategicWetland = tileArray[23];
+	this.riverStreams = tileArray[31];
 
 	//default settings for land use setup
 	//years 4 and 5 are land use types used for calculations of minumum and maximum values

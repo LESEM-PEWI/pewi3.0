@@ -1,5 +1,6 @@
 var textureArray ;
 var materialArray = [];
+var highlightArray = [];
 var oldPewiBackgrounds = [];
 var butterflyMaterials = [];
 
@@ -38,12 +39,50 @@ function loadResources() {
   materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/back.jpg'), side: THREE.BackSide }));
   
     oldPewiBackgrounds = [textureLoader.load("./background_images/Background_Drought.png"), textureLoader.load("./background_images/Background_Normal.png"), textureLoader.load("./background_images/Background_Flood.png")];
-
-  //butterflyMaterials.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./Butterfly/Texture/BUTTBODY.JPG')}));
-  //butterflyMaterials.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./Butterfly/Texture/BUTTFACE.JPG')}));
-  //butterflyMaterials.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./Butterfly/Texture/BUTTWIBA.JPG')}));
-  //butterflyMaterials.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./Butterfly/Texture/BUTTWIFR.JPG')}));
-
+    
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/e6bb00.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/c97b08.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/ad490d.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/9a3010.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/871c12.png'));
+    
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/ffffc9.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/c7eab4.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/7fcebb.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/41b7c5.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/2f7eb7.png'));
+    
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/45aa98.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/127731.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/989836.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/cc6578.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/a84597.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/dbcb74.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/342286.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/862254.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/87ceee.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/097c2f.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/979936.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/47aa98.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/e3c972.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/cb657a.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/882252.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/aa4497.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/302486.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/76d1c4.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/3f9f91.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/187336.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/919246.png'));
+    
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/0053b3.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/255d98.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/38638b.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/4b687e.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/5e6e71.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/837856.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/a9833c.png'));
+    highlightArray.push(textureLoader.load('./cell_images_bitmaps/bc892f.png'));
+    
   return 1 ;
 
 }
