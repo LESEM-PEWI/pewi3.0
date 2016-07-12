@@ -286,9 +286,9 @@ function startSandbox() {
  
  
  setTimeout(function() {
-  
+   
    //parent.initWorkspace();
-   parent.initWorkspace("./data.txt");
+   parent.loadLevel(0);
    
  }, 400);
 
@@ -312,7 +312,7 @@ function startOptions() {
  
   setTimeout(function() { resetElements() ; }, 300);
 
- }, 400);
+ }, 100);
  
 }
 
@@ -366,6 +366,14 @@ function reset() {
  document.getElementById('contentsHolder').style.top = "50%";
  document.getElementById('contentsHolder').style.height = "400px" ;
  document.getElementById('contentsHolder').style.backgroundColor = "rgba(0,0,0,0)" ;
+ 
+}
+
+
+function recallMain(){
+ resetElements() ;
+ reset() ;
+ document.getElementById('backImg').style.display = "block" ;
  
 }
 

@@ -1,5 +1,5 @@
 //global
-var level = 0; //base sandbox level = 0
+//base sandbox level = 0
 
 //game director
 function gameDirector() {
@@ -8,7 +8,7 @@ function gameDirector() {
     Totals.update() ;
     
     //sandbox features
-    if(level==0){
+    if(levelGlobal == 0){
         
     }
     

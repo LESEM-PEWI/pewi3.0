@@ -322,8 +322,44 @@ function setupHighlight() {
 
     //add mouse listener
     document.addEventListener('mousemove', onDocumentMouseMove, false);
-    document.addEventListener('dblclick', onDocumentDoubleClick, false);
+    document.addEventListener('click', onDocumentMouseDown, false);
     document.addEventListener('keydown', onDocumentKeyDown, false);
     document.addEventListener('keyup', onDocumentKeyUp, false);
 
 }; //end setupHighlight
+
+function showMainMenu() {
+    if(confirm('Are you sure you want to exit? All your progress will be lost.')){
+    document.getElementById('startUpFrame')   
+    
+       document.getElementById('startUpFrame').contentWindow.recallMain() ;
+        
+        setTimeout(function() {document.getElementById('startupSequence').style.display = "block" ;
+        //clearPopup();
+        //
+        previousHover = null ;
+        paintChange(1) ;
+        switchConsoleTab(1);
+        switchYearTab(1);
+        controls.reset() ;
+        
+         if(levelGlobal > 0){
+            //clean up from a level
+
+            console.log("---cleaning up---");
+            achievementValues = [] ;
+            clearPopup() ;
+            
+            window.top.document.getElementById('parameters').innerHTML = "" ;
+            toggleVisibility() ;
+            
+            document.getElementById('loading').style.display = "block" ;      
+
+        }
+        //achievementValues = [];
+        document.getElementById('page').style.visibility = "hidden" ;}, 1000 );
+        
+        
+        
+    }
+}

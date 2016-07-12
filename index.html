@@ -67,6 +67,8 @@
         </div>
         <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png">
         </div>
+        <div id="settingsButton" class="consoleButton" onclick="switchConsoleTab(5);"><img id="settingsImg" class="imgNotSelected" src="./imgs/settingsIcon.png">
+        </div>
     </div>
 
 
@@ -252,6 +254,14 @@
             <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('subwatershed');">
             <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
         </div>
+        
+         <div id="settingsTab" class="consoleTab" style="display:none;">
+             <img id="cellPaint" class="painterIconSelected" src="./imgs/cellPainter.png" onclick="painterSelect(1);">
+             <img id="gridPaint" class="painterIcon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
+             <img id="hoverPaint" class="painterIcon" src="./imgs/hoverPainter.png" onclick="painterSelect(3);">
+             
+        </div>
+        
     </div>
 
     <div id="resultsButton" class="resultsButtonRolled" onmouseover="roll(2); " onmouseout="roll(2);" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png">
