@@ -4,12 +4,14 @@ var achievementValues = [];
 var achievementDisplayed = -1;
 var achievementAccomplished = [];
 var yearToCheck = 0;
+var levelGlobal ;
 
 //loadLevel is triggered by clicking a level button on the html page
 function loadLevel(level){
     
     switch(level){
         case 1:
+            levelGlobal = 1 ;
             //parse level options file
             loadLevelDetails("./front-end/level1Specifications.txt");
             initWorkspace('./front-end/pewiNewMapUpload.csv');
@@ -19,6 +21,11 @@ function loadLevel(level){
             initWorkspace('./data.txt');
             break;
         case 3:
+            initWorkspace('./data.txt');
+            break;
+        case 0:
+            levelGlobal = 0 ;
+            
             initWorkspace('./data.txt');
             break;
 

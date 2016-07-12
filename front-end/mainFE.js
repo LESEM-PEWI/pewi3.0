@@ -308,16 +308,32 @@ function showMainMenu() {
     if(confirm('Are you sure you want to exit? All your progress will be lost.')){
     document.getElementById('startUpFrame')   
     
-        document.getElementById('startUpFrame').contentWindow.recallMain() ;
-        
-        //function that overwrites all level options
-        //  cleans up board and achievments
-        
+       document.getElementById('startUpFrame').contentWindow.recallMain() ;
         
         setTimeout(function() {document.getElementById('startupSequence').style.display = "block" ;
-        clearPopup();
-        achievementValues = [];
-        document.getElementById('page').style.visibility = "hidden" ;}, 500 );
+        //clearPopup();
+        //
+        previousHover = null ;
+        paintChange(1) ;
+        switchConsoleTab(1);
+        switchYearTab(1);
+        controls.reset() ;
+        
+         if(levelGlobal > 0){
+            //clean up from a level
+
+            console.log("---cleaning up---");
+            achievementValues = [] ;
+            clearPopup() ;
+            
+            window.top.document.getElementById('parameters').innerHTML = "" ;
+            toggleVisibility() ;
+            
+            document.getElementById('loading').style.display = "block" ;      
+
+        }
+        //achievementValues = [];
+        document.getElementById('page').style.visibility = "hidden" ;}, 1000 );
         
         
         

@@ -1822,6 +1822,12 @@ function toggleVisibility() {
     document.getElementById('statFrame').style.display = "none" ; 
     document.getElementById('year0Button').style.display = "none" ;
     
+    //reset items
+    for(var i=1; i <= 15; i++){
+        var string = "paint" + i ;
+        document.getElementById(string).style.display = "inline-block" ;
+    }
+    
     var strRawContents = document.getElementById('parameters').innerHTML ;
     
     //split based on escape chars
