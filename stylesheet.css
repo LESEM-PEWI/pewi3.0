@@ -711,6 +711,7 @@ select {
 }
 
 .meadowlarkhidden {
+    display:none ;
     text-decoration: none;
     padding-right: 0px;
     left: -800px;
@@ -720,7 +721,7 @@ select {
 
 .meadowlarkfly {
     text-decoration: none;
-    padding-right: 20px;
+    padding-right: 0px;
     left: 150%;
     top: 40%;
     position: absolute;

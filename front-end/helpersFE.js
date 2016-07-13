@@ -528,6 +528,7 @@ function onDocumentKeyDown(event) {
             if(modalUp != true && mapIsHighlighted != true){
                 tToggle ? tToggle = false : tToggle = true;
                 refreshBoard();
+                setupRiver();
             }
             break;
         //case i
@@ -1177,13 +1178,13 @@ function achievementCheck(){
  //check the current scores of each achievement
  for(var i = 0; i < achievementValues.length; i++){
      
-    //determine the script to print
-     
     //print the initial script when the totals are less than any achievement
     if(Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][1])){
-             if(achievementDisplayed < 0){
-                updatePopup(achievementScripts[i][0]);
-                achievementDisplayed = 1;
+             //if(achievementDisplayed < 0){
+             if(achievementAccomplished[0] < 0){
+                updatePopup(achievementScripts[i][0]); 
+                //achievementDisplayed = 1;
+                achievementAccomplished[0] = 1;
              }
              allDone = false;
     //determine if a final value has been surpassed for each achievement
@@ -1198,10 +1199,12 @@ function achievementCheck(){
             for(var j = 1; j < achievementValues[i].length; j++){
          
                 if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][j]) && Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][j+1])) {
-                    if( achievementDisplayed < j+1){
+                    //if( achievementDisplayed < j+1){
+                    if(achievementAccomplished[i] < j + 1){
                         updatePopup(achievementScripts[i][j]);
-                        achievementDisplayed = j+1;
-                        flyLark();
+                        //achievementDisplayed = j+1;
+                        achievementAccomplished[i] = j+1;
+                        selectAnimation(achievementAnimations[i]);
                     }
                     allDone = false;
                 }
@@ -1216,13 +1219,27 @@ function achievementCheck(){
  
  //if all achievements have been completed, the level is complete
  if(allDone == true){
-    if(achievementDisplayed < achievementValues[0].length){
+    //if(achievementDisplayed < achievementValues[0].length){
+    if(achievementAccomplished[0] < achievementValues[0].length){
         updatePopup(achievementScripts[0][achievementScripts[0].length-1]);
-        achievementDisplayed = achievementValues[0].length;
+        //achievementDisplayed = achievementValues[0].length;
+        achievementAccomplished[0] = achievementValues[0].length;
         launchFireworks();
     }
  }
 
+}
+
+function selectAnimation(animation) {
+    switch (animation) {
+        case "bird":
+            flyLark();
+            break;
+        case "fireworks":
+            launchFireworks();
+            break;
+    }
+    
 }
 
 function launchFireworks(){
@@ -1240,10 +1257,10 @@ function displayFirework(){
 }
 
 function flyLark(){
-    if(document.getElementById("meadowlark").className == "meadowlarkfly"){
-        document.getElementById("meadowlark").className = "meadowlarkhidden";
-    }
-    document.getElementById("meadowlark").className = "meadowlarkfly";
+
+    document.getElementById("meadowlark").className = "meadowlarkhidden";
+    setTimeout( function(){ document.getElementById("meadowlark").className = "meadowlarkfly"}, 1);
+
 }
 
 //writeFileToDownloadString creates a string in csv format that describes the current board

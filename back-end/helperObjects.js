@@ -1291,9 +1291,24 @@ function Results(board) {
 	this.strategicWetlandCells = Array(4);
 	this.grossErosionSeverity = Array(4);
 	this.phosphorusRiskAssessment = Array(4);
-	this.nitrateContribution = Array(4);
 	
-	//score variables
+	//Achievement Score Variables:
+	this.conventionalCornLandUseScore = [0,0,0,0];
+	this.conservationCornLandUseScore = [0,0,0,0];
+	this.conventionalSoybeanLandUseScore = [0,0,0,0];
+	this.conservationSoybeanLandUseScore = [0,0,0,0];
+	this.mixedFruitsAndVegetablesLandUseScore = [0,0,0,0];
+	this.permanentPastureLandUseScore = [0,0,0,0];
+	this.rotationalGrazingLandUseScore = [0,0,0,0];
+	this.grassHayLandUseScore = [0,0,0,0];
+	this.switchgrassLandUseScore = [0,0,0,0];
+	this.prairieLandUseScore = [0,0,0,0];
+	this.wetlandLandUseScore = [0,0,0,0];
+	this.alfalfaLandUseScore = [0,0,0,0];
+	this.conventionalForestLandUseScore = [0,0,0,0];
+	this.conservationForestLandUseScore = [0,0,0,0];
+	this.shortRotationWoodyBioenergyLandUseScore = [0,0,0,0];
+	
 	this.gameWildlifePointsScore = [0,0,0,0];
 	this.biodiversityPointsScore = [0,0,0,0];
 	this.carbonSequestrationScore = [0,0,0,0];
@@ -1301,6 +1316,16 @@ function Results(board) {
 	this.nitrateConcentrationScore = [0,0,0,0];
 	this.phosphorusLoadScore = [0,0,0,0] ;
 	this.sedimentDeliveryScore = [0,0,0,0] ;
+	
+	this.cornGrainYieldScore = [0,0,0,0];
+	this.soybeanYieldScore = [0,0,0,0];
+	this.mixedFruitsAndVegetablesYieldScore = [0,0,0,0];
+	this.cattleYieldScore = [0,0,0,0];
+	this.alfalfaHayYieldScore = [0,0,0,0];
+	this.grassHayYieldScore = [0,0,0,0];
+	this.switchgrassYieldScore = [0,0,0,0];
+	this.woodYieldScore = [0,0,0,0];
+	this.shortRotationWoodyBiomassYieldScore = [0,0,0,0];
 
 
 	//Function to sum the values of calculatedCarbonSequestration for each tile
@@ -2058,17 +2083,32 @@ function Results(board) {
 			this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin)) ;
 			this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin))	;
 	
-			this.yieldResults[y].cornGrainYieldScore = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax ;
-    		this.yieldResults[y].soybeanYieldScore = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax ;
-    		this.yieldResults[y].alfalfaHayYieldScore = 100 * this.yieldResults[y].alfalfaHayYield / board.maximums.alfalfaMax ;
-			this.yieldResults[y].grassHayYieldScore = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax ;
-    		this.yieldResults[y].woodYieldScore = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax ;
-    		this.yieldResults[y].cattleYieldScore = 100 * this.yieldResults[y].cattleYield / board.maximums.cattleMax ;
-    		this.yieldResults[y].switchgrassYieldScore = 100 * this.yieldResults[y].switchgrassYield / board.maximums.switchgrassMax ;
-    		this.yieldResults[y].shortRotationWoodyBiomassYieldScore = 100 * this.yieldResults[y].shortRotationWoodyBiomassYield / board.maximums.shortRotationWoodyBiomassMax ;
-    		this.yieldResults[y].mixedFruitsAndVegetablesYieldScore = 100 * this.yieldResults[y].mixedFruitsAndVegetablesYield / board.maximums.mixedFruitsAndVegetablesMax 
-	
-	
+			this.cornGrainYieldScore[y] = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax ;
+    		this.soybeanYieldScore[y] = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax ;
+    		this.alfalfaHayYieldScore[y] = 100 * this.yieldResults[y].alfalfaHayYield / board.maximums.alfalfaMax ;
+			this.grassHayYieldScore[y] = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax ;
+    		this.woodYieldScore[y] = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax ;
+    		this.cattleYieldScore[y] = 100 * this.yieldResults[y].cattleYield / board.maximums.cattleMax ;
+    		this.switchgrassYieldScore[y] = 100 * this.yieldResults[y].switchgrassYield / board.maximums.switchgrassMax ;
+    		this.shortRotationWoodyBiomassYieldScore[y] = 100 * this.yieldResults[y].shortRotationWoodyBiomassYield / board.maximums.shortRotationWoodyBiomassMax ;
+    		this.mixedFruitsAndVegetablesYieldScore[y] = 100 * this.yieldResults[y].mixedFruitsAndVegetablesYield / board.maximums.mixedFruitsAndVegetablesMax ;
+    		
+    		this.conventionalCornLandUseScore[y] = 100 * this.landUseResults[y].conventionalCornLandUse / this.totalArea;
+    		this.conservationCornLandUseScore[y] = 100 * this.landUseResults[y].conservationCornLandUse / this.totalArea;
+    		this.conventionalSoybeanLandUseScore[y] = 100 * this.landUseResults[y].conventionalSoybeanLandUse / this.totalArea;
+    		this.conservationSoybeanLandUseScore[y] = 100 * this.landUseResults[y].conservationSoybeanLandUse / this.totalArea;
+    		this.mixedFruitsAndVegetablesLandUseScore[y] = 100 * this.landUseResults[y].mixedFruitsVegetablesLandUse / this.totalArea;
+    		this.permanentPastureLandUseScore[y] = 100 * this.landUseResults[y].permanentPastureLandUse / this.totalArea;
+    		this.rotationalGrazingLandUseScore[y] = 100 * this.landUseResults[y].rotationalGrazingLandUse / this.totalArea;
+    		this.grassHayLandUseScore[y] = 100 * this.landUseResults[y].grassHayLandUse / this.totalArea;
+    		this.switchgrassLandUseScore[y] = 100 * this.landUseResults[y].switchgrassLandUse / this.totalArea;
+    		this.prairieLandUseScore[y] = 100 * this.landUseResults[y].prairieLandUse / this.totalArea;
+    		this.wetlandLandUseScore[y] = 100 * this.landUseResults[y].wetlandLandUse / this.totalArea;
+    		this.alfalfaLandUseScore[y] = 100 * this.landUseResults[y].alfalfaLandUse / this.totalARea;
+    		this.conventionalForestLandUseScore[y] = 100 * this.landUseResults[y].conventionalForestLandUse / this.totalArea;
+    		this.conservationForestLandUseScore[y] = 100 * this.landUseResults[y].conservationForestLandUse / this.totalArea;
+    		this.shortRotationWoodyBioenergyLandUseScore[y] = 100 * this.landUseResults[y].shortRotationWoodyBioenergyLandUse / this.totalArea;
+    		
 	
 		}
 		

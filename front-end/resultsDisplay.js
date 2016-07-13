@@ -256,7 +256,7 @@ function displayResults() {
             string2 += "<td>";
 
             var tempString = testArray[l] + "Score";
-            string2 += (Math.round(Totals.yieldResults[y][tempString] * 10) / 10) + "<br>";
+            string2 += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
 
             string2 += "</td>";
         } //for each year
