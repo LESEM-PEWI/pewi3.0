@@ -477,14 +477,9 @@ function onDocumentMouseDown(event) {
                         
                         //reset highlighting
                         refreshBoard();
-<<<<<<< HEAD
                         //reset gridPainting status
                         gridPaint.status = 0;
                         
-=======
-                        //reset painterTooling status
-                        painterTool.status = 1;
->>>>>>> origin/master
                     }
                 }
             }

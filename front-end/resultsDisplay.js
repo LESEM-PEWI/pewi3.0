@@ -441,7 +441,7 @@ var path = svg.selectAll('path')
       if(d.data.count == 0){
         return;
       }
-      console.log(d.data.count);
+      //console.log(d.data.count);
     return color(d.data.label);
   })
   .transition()
