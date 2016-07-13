@@ -253,39 +253,63 @@ function setupBoardFromUpload(data) {
 
 } //end setupBoardFromUpload
 
-//setupRiver creates a new CatmullRomCurve3 object for the river from the points stored in the riverPoints array
+//Create a river object with tributaries
 function setupRiver() {
-
+    
     if (river != null) {
         scene.remove(river);
     }
-
-    var closedSpline = new THREE.CatmullRomCurve3(riverPoints);
-    closedSpline.type = 'chordal';
-    closedSpline.closed = false;
-    var extrudeSettings = {
-        steps: 500,
-        bevelEnabled: false,
-        extrudePath: closedSpline
-    };
-    var pts = [];
-    pts.push(new THREE.Vector2(-5, 7.5));
-    pts.push(new THREE.Vector2(-4, 7.5));
-    pts.push(new THREE.Vector2(-5, 0));
-    pts.push(new THREE.Vector2(-4, 0));
-
-    var shape = new THREE.Shape(pts);
-    var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-
-    var material = new THREE.MeshBasicMaterial({
-        wireframe: false,
-        color: 0x40a4df,
-        opacity: 0.75,
-        transparent: true
-    });
-    river = new THREE.Mesh(geometry, material);
+    
+    river = new THREE.Object3D();
+    
+    for(var j = 0; j < riverPoints.length; j++){
+        
+        var riverCurve1 = []; 
+        var riverCurve2 = [];
+        for(var i = 0; i < riverPoints[j].length; i++){
+            riverCurve1.push(new THREE.Vector3(Math.min(riverPoints[j][i].x + 5, riverPoints[j][i].x + 2 * ((3*i)+1)/3), i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+7, riverPoints[j][i].z));
+            riverCurve2.push(new THREE.Vector3(Math.max(riverPoints[j][i].x - 5, riverPoints[j][i].x - 2 * ((3*i)+1)/3), i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+7, riverPoints[j][i].z));
+        }
+        
+        var curve1 = new THREE.CatmullRomCurve3(riverCurve1);
+            curve1.type = 'chordal';
+            curve1.closed = false;
+            var curve1geo = new THREE.Geometry();
+            curve1geo.vertices = curve1.getPoints(500);
+    
+        var curve2 = new THREE.CatmullRomCurve3(riverCurve2);
+            curve2.type = 'chordal';
+            curve2.closed = false;
+            var curve2geo = new THREE.Geometry();
+            curve2geo.vertices = curve2.getPoints(500);
+       
+        var riverCurve = new THREE.Geometry();
+        var riverMeshVertices = curve1geo.vertices;
+        riverMeshVertices = riverMeshVertices.concat(curve2geo.vertices);
+        
+        
+        var holes = [];
+        riverCurve.vertices = riverMeshVertices;
+        
+        for(var i = 0; i < riverCurve.vertices.length - curve1geo.vertices.length - 1; i++){
+            riverCurve.faces.push(new THREE.Face3(i, i + 1, i + curve1geo.vertices.length));
+            riverCurve.faces.push(new THREE.Face3(i + curve1geo.vertices.length, i + curve1geo.vertices.length + 1, i + 1));
+        }
+    
+        var material = new THREE.MeshBasicMaterial({
+            wireframe: false,
+            side: THREE.DoubleSide,
+            color: 0x40a4df,
+            opacity: 1,
+            transparent: true
+        });
+    
+        riverStream = new THREE.Mesh(riverCurve, material);
+        river.add(riverStream);
+        
+    }
+    
     scene.add(river);
-
 }
 
 function setupHighlight() {
