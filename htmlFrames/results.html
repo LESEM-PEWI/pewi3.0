@@ -99,19 +99,21 @@
 }
 
 .mouseOverInfo{
-    float:right;
-    margin-right:20px;
-    margin-top:110px;
+    position:absolute;
+    margin-left: -145px;
+    left:50%;
+    margin-top:390px;
     display: none;
     background-color: #000000;
-    border: 2px solid black;
+    border: 3px solid black;
     border-radius:8px;
     opacity:0.9;
     font-size: 22px ;
     padding:15px;
+    width:260px;
     color: #FFFFFF ;
     font-weight:bold;
-    text-align: right;
+    text-align: center;
     box-shadow: 0px -2px 10px 5px rgba(0,0,0,1);
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -121,13 +123,13 @@
 }
 
 .mouseOverInfo:after {
-    content: "";
-    position:absolute;
-    top:150px;
-    left:275px;
+       content: "";
+    position: absolute;
+    top: -15px;
+    left: 130px;
     border-style: solid;
-    border-width: 17px 0 17px 15px;
-    border-color: transparent #000000;
+    border-width: 0 17px 15px;
+    border-color: #000000 transparent;
     display: block;
     width: 0;
     z-index: 1;
@@ -155,9 +157,11 @@
 
 <div id="holder">
 <div id="innerContainer">
-[PAGE IS UNDER CONSTRUCTION]    
+[PAGE UNDER CONSTRUCTION]    
 <div id="graphics"><div id="contentsG" style="margin:10px;">
-    
+<button id="year1" onclick="parent.pie(1);">TEST ME, Year 1</button>   
+<button id="year2" onclick="parent.pie(2);">TEST ME, Year 2</button>   
+<button id="year3" onclick="parent.pie(3);">TEST ME, Year 3</button>   
     
 <div id="chart" class="chart"></div>    
 <div id="legendTest"></div>

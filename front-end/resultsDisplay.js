@@ -368,16 +368,25 @@ function displayResults() {
 
     document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsN').innerHTML = string2;
 
-    pie() ;
+    pie(currentYear) ;
     
 } //end displayResults
 
 
-function pie() {
+function pie(year) {
     
 document.getElementById('resultsFrame').contentWindow.document.getElementById('chart').innerHTML = " " ;   
- 
+document.getElementById('resultsFrame').contentWindow.document.getElementById('year2').style.display="block";
+document.getElementById('resultsFrame').contentWindow.document.getElementById('year3').style.display="block";
 
+var upTo = boardData[currentBoard].calculatedToYear ;
+
+if(upTo < 3){ 
+document.getElementById('resultsFrame').contentWindow.document.getElementById('year3').style.display="none";
+}
+if(upTo < 2){
+document.getElementById('resultsFrame').contentWindow.document.getElementById('year2').style.display="none";    
+}
  
  // = ["conventionalCorn", "conservationCorn", "conventionalSoybean",
  //       "conservationSoybean", "mixedFruitsVegetables", "permanentPasture", "rotationalGrazing", "grassHay",
@@ -385,29 +394,31 @@ document.getElementById('resultsFrame').contentWindow.document.getElementById('c
  //       "conservationForest", "shortRotationWoodyBioenergy"
         
 var dataset = [
-  { label: 'Conventional Corn', count:  (Math.round(Totals.landUseResults[1]['conventionalCornLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['conventionalCornLandUse'] * 10) / 10) }, 
-  { label: 'Conservation Corn', count: (Math.round(Totals.landUseResults[1]['conservationCornLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['conservationCornLandUse'] * 10) / 10)},
-  { label: 'Conventional Soybean', count: (Math.round(Totals.landUseResults[1]['conventionalSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['conventionalSoybeanLandUse'] * 10) / 10) },
-  { label: 'Conservation Soybean', count: (Math.round(Totals.landUseResults[1]['conservationSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['conservationSoybeanLandUse'] * 10) / 10) },
-  { label: 'Mixed Fruits/Vegetables', count:  (Math.round(Totals.landUseResults[1]['mixedFruitsVegetablesLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['mixedFruitsVegetablesLandUse'] * 10) / 10)}, 
-  { label: 'Permanent Pasture', count: (Math.round(Totals.landUseResults[1]['permanentPastureLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['permanentPastureLandUse'] * 10) / 10) },
-  { label: 'Rotational Grazing', count: (Math.round(Totals.landUseResults[1]['rotationalGrazingLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['rotationalGrazingLandUse'] * 10) / 10) },
-  { label: 'Grass Hay', count: (Math.round(Totals.landUseResults[1]['grassHayLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['grassHayLandUse'] * 10) / 10) },
-  { label: 'Switchgrass', count:  (Math.round(Totals.landUseResults[1]['switchgrassLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['switchgrassLandUse'] * 10) / 10)}, 
-  { label: 'Prairie', count: (Math.round(Totals.landUseResults[1]['prairieLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['prairieLandUse'] * 10) / 10) },
-  { label: 'Wetland', count: (Math.round(Totals.landUseResults[1]['wetlandLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['wetlandLandUse'] * 10) / 10) },
-  { label: 'Alfalfa', count: (Math.round(Totals.landUseResults[1]['alfalfaLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['alfalfaLandUse'] * 10) / 10) },
-  { label: 'Conventional Forest', count:  (Math.round(Totals.landUseResults[1]['conventionalForestLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['conventionalForestLandUse'] * 10) / 10)}, 
-  { label: 'Conservation Forest', count: (Math.round(Totals.landUseResults[1]['conservationForestLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['conservationForestLandUse'] * 10) / 10) },
-  { label: 'SR Woody Bioenergy', count: (Math.round(Totals.landUseResults[1]['shortRotationWoodyBioenergyLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[1]['shortRotationWoodyBioenergyLandUse'] * 10) / 10) }
+  { label: 'Conventional Corn', count:  (Math.round(Totals.landUseResults[year]['conventionalCornLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['conventionalCornLandUse'] * 10) / 10) }, 
+  { label: 'Conservation Corn', count: (Math.round(Totals.landUseResults[year]['conservationCornLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['conservationCornLandUse'] * 10) / 10)},
+  { label: 'Conventional Soybean', count: (Math.round(Totals.landUseResults[year]['conventionalSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['conventionalSoybeanLandUse'] * 10) / 10) },
+  { label: 'Conservation Soybean', count: (Math.round(Totals.landUseResults[year]['conservationSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['conservationSoybeanLandUse'] * 10) / 10) },
+  { label: 'Mixed Fruits/Vegetables', count:  (Math.round(Totals.landUseResults[year]['mixedFruitsVegetablesLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['mixedFruitsVegetablesLandUse'] * 10) / 10)}, 
+  { label: 'Permanent Pasture', count: (Math.round(Totals.landUseResults[year]['permanentPastureLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['permanentPastureLandUse'] * 10) / 10) },
+  { label: 'Rotational Grazing', count: (Math.round(Totals.landUseResults[year]['rotationalGrazingLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['rotationalGrazingLandUse'] * 10) / 10) },
+  { label: 'Grass Hay', count: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] * 10) / 10) },
+  { label: 'Switchgrass', count:  (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] * 10) / 10)}, 
+  { label: 'Prairie', count: (Math.round(Totals.landUseResults[year]['prairieLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['prairieLandUse'] * 10) / 10) },
+  { label: 'Wetland', count: (Math.round(Totals.landUseResults[year]['wetlandLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['wetlandLandUse'] * 10) / 10) },
+  { label: 'Alfalfa', count: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] * 10) / 10) },
+  { label: 'Conventional Forest', count:  (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] * 10) / 10)}, 
+  { label: 'Conservation Forest', count: (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] * 10) / 10) },
+  { label: 'Short Rotation Woody Bioenergy', count: (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] * 10) / 10) }
 ];    
  
 var width = 360;
 var height = 360;
 var radius = Math.min(width, height) / 2;     
 
-var color = d3.scaleOrdinal(d3.schemeCategory20b);
-    
+var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+var skipped = 0;
+//document.getElementById('resultsFrame').contentWindow.document.getElementById('chart').innerHTML = "" ;    
 var chart = document.getElementById('resultsFrame').contentWindow.document.getElementById('chart') ;
     
 var svg = d3.select(chart)
@@ -457,18 +468,18 @@ var path = svg.selectAll('path')
   .attr('class','testArc')
   .attr('d', arc)
   .attr('fill', function(d, i) { 
-      if(d.data.count == 0){
-        return;
-      }
-      //console.log(d.data.count);
+    if(d.data.count == 0){
+       return color(d.data.label + "#"); 
+    }  
     return color(d.data.label);
-  })
+
+     })
   .on('mouseover',function(d) { 
             var percent = d.data.count ;
             mouseoverInfo.select('.label').html(d.data.label);
             mouseoverInfo.select('.count').html(d.data.number + " acres"); 
             mouseoverInfo.select('.percent').html(percent + '%'); 
-            mouseoverInfo.style('background-color', color(d.data.label) );
+            mouseoverInfo.style('border-color', color(d.data.label) );
             mouseoverInfo.style('opacity', 1);
             mouseoverInfo.style('display', 'block');
             
@@ -484,30 +495,34 @@ var path = svg.selectAll('path')
           })
           
   .transition()
-    .duration(1400)
+    .duration(900)
     .attrTween("d", tweenPie);
    
 
   var legendRectSize = 18;
   var legendSpacing = 4;
   
-  
   var legend = svg.selectAll('.legend')                     
     .data(color.domain())                                   
     .enter()                                                
     .append('g')                                            
-    .attr('class', 'legend')                                
+    .attr('class', 'legend')  
+    .style('visibility', function(d) {
+        if(d[d.length-1 ] == "#") return "hidden";
+        return 'visible';
+    })
     .attr('transform', function(d, i) {                     
         var height = legendRectSize + legendSpacing;        
         var offset =  height * color.domain().length / 2;   
         var horz = width/2 + 20;   
         var vert = i * height - offset;  
-        return 'translate(' + horz + ',' + vert + ')';       
-});                                                     // NEW
+        return 'translate(' + horz + ',' + vert + ')';
+    });
+                                                    // NEW
 
         legend.append('rect')                                     // NEW
           .attr('width', legendRectSize)                          // NEW
-          .attr('height', legendRectSize)                         // NEW
+          .attr('height', legendRectSize) 
           .style('fill', color)                                   // NEW
           .style('stroke', color);                                // NEW
           
@@ -522,8 +537,14 @@ var path = svg.selectAll('path')
         .attr("text-anchor", "middle")  
         .style("font-size", "25px") 
         .style("font-weight", "bold")
-        .text("Land Use");
-        
+        .text("Land Use")
+    svg.append("text")
+        .attr("x", 0)             
+        .attr("y", 25)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "25px") 
+        .style("font-weight", "bold")
+        .text("Year " + year)
         
 
 
