@@ -3,6 +3,7 @@ var achievementScripts = [];
 var achievementValues = [];
 var achievementDisplayed = -1;
 var achievementAccomplished = [];
+var achievementAnimations = [];
 var yearToCheck = 0;
 var levelGlobal ;
 
@@ -53,6 +54,9 @@ function parseLevelDetails(data) {
         
         var tempScripts = [];
         var tempValues = [];
+        var tempAnimations = [];
+        
+        achievementAccomplished[i-2] = -1;
         
         //Add the start up script to tempScripts
         tempScripts.push(arrLines[1]);
@@ -63,10 +67,14 @@ function parseLevelDetails(data) {
         //Add the name of the score being checked to the values array
         tempValues.push(tempParsed[0]);
         for(var j = 1; j < tempParsed.length; j++){
-            if(j%2 != 0){
-                tempValues.push(tempParsed[j]);
+            if(j != tempParsed.length - 1){
+                if(j%2 != 0){
+                    tempValues.push(tempParsed[j]);
+                } else {
+                    tempScripts.push(tempParsed[j]);
+                }
             } else {
-                tempScripts.push(tempParsed[j]);
+                achievementAnimations[i-2] = tempParsed[tempParsed.length - 1];
             }
         }
         
@@ -81,10 +89,6 @@ function parseLevelDetails(data) {
         achievementScripts.push(tempScripts);
     
     }
-    
-    console.log(achievementValues);
-    console.log(achievementScripts);
-    
         
 } //end parseInitial()
 
