@@ -264,6 +264,7 @@ function endFunction() {
  document.getElementById('contentsHolder').style.transitionDuration = ".4s" ;
  
   moveBackground() ;
+  parent.animationFrames();
   
 }, 10);
  
@@ -396,6 +397,7 @@ function createEnvironment(){
  parent.initializeCamera();
  parent.initializeLighting();
  parent.setupHighlight();
+ 
  
 }
 
