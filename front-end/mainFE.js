@@ -223,6 +223,7 @@ function switchBoards(newBoard){
 
     refreshBoard();
     setupRiver();
+    previousHighlight = 0;
 
     //update Results to point to correct board since currentBoard is updated
     Totals = new Results(boardData[currentBoard]);
@@ -267,8 +268,8 @@ function setupRiver() {
         var riverCurve1 = []; 
         var riverCurve2 = [];
         for(var i = 0; i < riverPoints[j].length; i++){
-            riverCurve1.push(new THREE.Vector3(Math.min(riverPoints[j][i].x + 5, riverPoints[j][i].x + 2 * ((3*i)+1)/3), i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+7, riverPoints[j][i].z));
-            riverCurve2.push(new THREE.Vector3(Math.max(riverPoints[j][i].x - 5, riverPoints[j][i].x - 2 * ((3*i)+1)/3), i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+7, riverPoints[j][i].z));
+            riverCurve1.push(new THREE.Vector3(Math.min(riverPoints[j][i].x + 5, riverPoints[j][i].x + 2 * ((3*i)+1)/3), tToggle ? (i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+7) : riverPoints[j][i].y, riverPoints[j][i].z));
+            riverCurve2.push(new THREE.Vector3(Math.max(riverPoints[j][i].x - 5, riverPoints[j][i].x - 2 * ((3*i)+1)/3), tToggle ? (i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+7) : riverPoints[j][i].y, riverPoints[j][i].z));
         }
         
         var curve1 = new THREE.CatmullRomCurve3(riverCurve1);
