@@ -319,7 +319,6 @@ function addTile(tile) {
                 riverPoints[Number(streams[i]) - 1] = [];
             }
             riverPoints[Number(streams[i]) - 1].push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide) / 2 + tileWidth/2, 1, tile.row * tileHeight - (tileHeight * tilesHigh) / 2 + tileHeight));
-            //currentRow = tile.row;
         }
     }
 
@@ -399,7 +398,7 @@ function onDocumentMouseMove(event) {
         highlightTile(-1);
     }
 
-    if (intersects.length > 0 && !modalUp && !mapIsHighlighted) {
+    if (intersects.length > 0 && !modalUp) {
 
         if (painterTool.status == 2) {
             //highlight a grid
@@ -432,8 +431,6 @@ function onDocumentMouseMove(event) {
             highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
         }
 
-
-
     }
 } //end onDocumentMouseMove
 
@@ -449,30 +446,40 @@ function onDocumentMouseDown(event) {
 
     var intersects = raycaster.intersectObjects(scene.children);
 
-    if (!isShiftDown) {
+    if(event.which == 1 && intersects.length > 0){
 
-        if (intersects.length > 0 && !modalUp && !painterTool.hover ) {
- 
-            if (painterTool.status > 0) {
-
-                //take care of grid painting
-                if (painterTool.status == 1) {
-                    //start grid painting option
-
-                    painterTool.status = 2;
-                    painterTool.startTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-                }
-                else if (painterTool.status == 2) {
-                    //end painterTool.status function if
-                    var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-
-                    if (boardData[currentBoard].map[currentTile].landType[0] != 0) {
-                        //then paint since it's an actual tile
-                        painterTool.endTile = currentTile;
-                        var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
-
-                        for (var i = 0; i < changedTiles.length; i++) {
-                            changeLandTypeTile(changedTiles[i] - 1);
+        if (!isShiftDown) {
+    
+            if (!mapIsHighlighted && !modalUp && !painterTool.hover ) {
+     
+                if (painterTool.status > 0) {
+    
+                    //take care of grid painting
+                    if (painterTool.status == 1) {
+                        //start grid painting option
+    
+                        painterTool.status = 2;
+                        painterTool.startTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
+                    }
+                    else if (painterTool.status == 2) {
+                        //end painterTool.status function if
+                        var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
+    
+                        if (boardData[currentBoard].map[currentTile].landType[0] != 0) {
+                            //then paint since it's an actual tile
+                            painterTool.endTile = currentTile;
+                            var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
+    
+                            for (var i = 0; i < changedTiles.length; i++) {
+                                changeLandTypeTile(changedTiles[i] - 1);
+                            }
+                            
+                            //reset highlighting
+                            refreshBoard();
+    
+                            //reset painterTooling status
+                            painterTool.status = 1;
+    
                         }
                         
                         //reset highlighting
@@ -482,28 +489,29 @@ function onDocumentMouseDown(event) {
                         
                     }
                 }
+                else {
+                    //just a normal tile change
+                    changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+    
+                }
+    
             }
-            else {
-                //just a normal tile change
-                changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
-
-            }
-
+    
         }
-
-    }
-    else {
-
-        for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
-            if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-
-                changeLandTypeTile(i);
-
+        else {
+    
+            for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+    
+                if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+    
+                    changeLandTypeTile(i);
+    
+                }
+    
             }
-
+    
         }
-
+        
     }
 
 } //end onDocumentMouseDown(event)
