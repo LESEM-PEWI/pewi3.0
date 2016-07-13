@@ -95,10 +95,14 @@ function highlightTile(id) {
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(id) {
 
-    //change the materials of the faces in the meshMaterials array and update the boardData
-    meshMaterials[id].map = textureArray[painter];
-    boardData[currentBoard].map[id].landType[currentYear] = painter;
-    boardData[currentBoard].map[id].update(currentYear);
+    if(boardData[currentBoard].map[id].landType[currentYear] != 0){
+
+        //change the materials of the faces in the meshMaterials array and update the boardData
+        meshMaterials[id].map = textureArray[painter];
+        boardData[currentBoard].map[id].landType[currentYear] = painter;
+        boardData[currentBoard].map[id].update(currentYear);
+    
+    }
 
 }
 
@@ -400,7 +404,7 @@ function onDocumentMouseMove(event) {
 
     if (intersects.length > 0 && !modalUp) {
 
-        if (painterTool.status == 2) {
+        if (painterTool.status == 2 && !mapIsHighlighted) {
             //highlight a grid
             var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
             var tilesToHighlight = getGridOutline(painterTool.startTile, currentTile);
@@ -422,7 +426,7 @@ function onDocumentMouseMove(event) {
             }
 
         }
-        else if(painterTool.status == 3){
+        else if(painterTool.status == 3 && !mapIsHighlighted){
             var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z) ;
             if(boardData[currentBoard].map[currentTile].landType[0] != 0)  changeLandTypeTile(currentTile) ;
         }
@@ -450,9 +454,9 @@ function onDocumentMouseDown(event) {
 
         if (!isShiftDown) {
     
-            if (!mapIsHighlighted && !modalUp && !painterTool.hover ) {
+            if (!modalUp && (!painterTool.hover || mapIsHighlighted) ) {
      
-                if (painterTool.status > 0) {
+                if (painterTool.status > 0 && !mapIsHighlighted) {
     
                     //take care of grid painting
                     if (painterTool.status == 1) {
@@ -499,15 +503,19 @@ function onDocumentMouseDown(event) {
     
         }
         else {
+            
+            if(!mapIsHighlighted){
     
-            for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+                for (var i = 0; i < boardData[currentBoard].map.length; i++) {
     
-                if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+                    if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
     
-                    changeLandTypeTile(i);
+                        changeLandTypeTile(i);
+    
+                    }
     
                 }
-    
+            
             }
     
         }
