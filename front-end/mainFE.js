@@ -146,8 +146,6 @@ function initWorkspace(file){
             document.getElementById(idName).options[boardData[currentBoard].precipitationIndex[y]].selected = true;            
         }
       }
-      
-     animationFrames();
     
 }
 
@@ -337,6 +335,7 @@ function showMainMenu() {
         setTimeout(function() {document.getElementById('startupSequence').style.display = "block" ;
         //clearPopup();
         //
+        document.getElementById('loading').style.display = "block" ;      
         previousHover = null ;
         paintChange(1) ;
         switchConsoleTab(1);
@@ -353,7 +352,7 @@ function showMainMenu() {
             window.top.document.getElementById('parameters').innerHTML = "" ;
             toggleVisibility() ;
             
-            document.getElementById('loading').style.display = "block" ;      
+ 
 
         }
         //achievementValues = [];

@@ -1,11 +1,14 @@
 <html>
-    <style>
-    
+
+<head>
+
+<style>
+
     .resultsTable{
     width:100%;
+    margin:10px;
     border-collapse: collapse;
     border-bottom: 4px ridge #ddd;
-    
     }
 
     
@@ -28,29 +31,108 @@
     }
     
     .tableHeading:hover{
-        background:rgba(256,256,256,0);
-       
+        background: rgba(256,256,256,0);
     }
     
     tr:hover{
         background-color: rgba(154,173,163,0.5);
     }
     
-    body{
+.tab {
+    float: right;
+    width: 225px;
+    text-align: center;
+    height: 26px;
+    line-height: 0% ;
+    padding:10px;
+    margin: 5px;
+    margin-right:0px;
+    margin-bottom: 0px;
+    background-color: #cc9900;
+    display: inline-block;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    cursor:default;
+}
+    
+#holder{
+    display: inline-block;
+    border-top:2px solid black;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 0px;
+    height: 100%;
+    width: 100%;
+    
+} 
+
+#innerContainer{
+    margin:15px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    color: #000000;
+    font-size: 30px ;
 }
 
-    
-    
-    </style>
+.graph-svg-component{
+    background-color: white;
+}
+
+.legend{
+    font-size: 16px ;
+}
+
+</style>
+</head>
+
 <body>
 
 
-<div style="background:rgba(256,256,256,.7); border-radius:10px; margin:15px;">
-<h1 style="margin-top:25px; text-align:center;">PEWI Results</h1>
-<div id="contents" style="margin:10px;">
 
-</div>    
-</div>
-</body>   
+<div id="tab2" style="margin-right:45px;" class="tab" onclick="show(2);"> <h2>Numerical</h2> </div>
+<div style="background-color:#997300;"  id="tab1" class="tab" onclick="show(1);"> <h2>Graphical</h2> </div>
+
+<div id="holder">
+<div id="innerContainer">
     
+<div id="graphics"><div id="contentsG" style="margin:10px;">
+    
+    
+<div id="chart"></div>    
+<div id="legendTest"></div>
+
+    
+</div></div>
+
+<div style="display:none;" id="numbers"><br><div id="contentsN" style="margin:10px; margin-top:2px;"></div>    
+</div>
+    
+    
+</div>
+
+</div>
+<script>
+    
+function show(value) {
+    
+    document.getElementById('graphics').style.display = "none";
+    document.getElementById('numbers').style.display = "none" ;
+    document.getElementById('tab1').style.backgroundColor = "#cc9900" ;
+    document.getElementById('tab2').style.backgroundColor = "#cc9900" ;
+    
+    if(value == 1){
+         document.getElementById('graphics').style.display = "block";
+         document.getElementById('tab1').style.backgroundColor = "#997300" ;
+    }
+    else if(value == 2){
+        document.getElementById('numbers').style.display = "block" ;
+        document.getElementById('tab2').style.backgroundColor = "#997300" ;
+    }
+    
+}    
+    
+</script>
+    
+</body>    
+
+
 </html>

@@ -4,7 +4,9 @@
 //game director
 function gameDirector() {
     
-    //console.log("in gameDirector");
+    if(levelGlobal){
+        
+    
     Totals.update() ;
     
     //sandbox features
@@ -18,6 +20,8 @@ function gameDirector() {
     contaminatedRiver();
     
     achievementCheck();
+    
+    }
     
     
 }
