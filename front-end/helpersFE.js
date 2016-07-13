@@ -1352,6 +1352,7 @@ function animateResults() {
     //todo, increased functionality
     document.getElementById("resultsFrame").className = "resultsFrame";
 
+    
 } //end animateResults
 
 //calculateResults triggers the results calculations by updating Totals

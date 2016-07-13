@@ -74,11 +74,64 @@
 }
 
 .graph-svg-component{
-    background-color: white;
+    float:right;
 }
 
 .legend{
     font-size: 16px ;
+}
+
+.arc{
+    opacity:1;
+}
+
+.arcHighlight{
+    opacity:0.5;
+}
+
+.mouseOverInfo{
+    float:right;
+    margin-right:20px;
+    margin-top:110px;
+    display: none;
+    background-color: #000000;
+    border: 2px solid black;
+    border-radius:8px;
+    opacity:0.9;
+    font-size: 22px ;
+    padding:15px;
+    color:#000000;
+    font-weight:bold;
+    text-align: right;
+    box-shadow: 0px -2px 10px 5px rgba(0,0,0,1);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-box-shadow: 2px 2px 10px 5px #616161;
+    -moz-box-shadow: 2px 2px 10px 5px #616161;
+    
+}
+
+.mouseOverInfo:after {
+    content: "";
+    position:absolute;
+    top:150px;
+    left:275px;
+    border-style: solid;
+    border-width: 17px 0 17px 15px;
+    border-color: transparent #000000;
+    display: block;
+    width: 0;
+    z-index: 1;
+}
+
+
+.chart{
+    position:absolute;
+    margin-top:18px;
+    margin-left:-528px;
+    left:50%;
+    width:955px;
+    height:500px;
 }
 
 </style>
@@ -93,11 +146,11 @@
 
 <div id="holder">
 <div id="innerContainer">
-    
+[PAGE IS UNDER CONSTRUCTION]    
 <div id="graphics"><div id="contentsG" style="margin:10px;">
     
     
-<div id="chart"></div>    
+<div id="chart" class="chart"></div>    
 <div id="legendTest"></div>
 
     
