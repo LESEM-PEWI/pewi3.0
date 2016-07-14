@@ -376,18 +376,9 @@ function displayResults() {
 function pie(year) {
     
 document.getElementById('resultsFrame').contentWindow.document.getElementById('chart').innerHTML = " " ;   
-document.getElementById('resultsFrame').contentWindow.document.getElementById('year2').style.display="block";
-document.getElementById('resultsFrame').contentWindow.document.getElementById('year3').style.display="block";
+document.getElementById('resultsFrame').contentWindow.document.getElementById('curYear').innerHTML = year;
+document.getElementById('resultsFrame').contentWindow.document.getElementById('upTo').innerHTML = boardData[currentBoard].calculatedToYear;
 
-var upTo = boardData[currentBoard].calculatedToYear ;
-
-if(upTo < 3){ 
-document.getElementById('resultsFrame').contentWindow.document.getElementById('year3').style.display="none";
-}
-if(upTo < 2){
-document.getElementById('resultsFrame').contentWindow.document.getElementById('year2').style.display="none";    
-}
- 
  // = ["conventionalCorn", "conservationCorn", "conventionalSoybean",
  //       "conservationSoybean", "mixedFruitsVegetables", "permanentPasture", "rotationalGrazing", "grassHay",
  //       "switchgrass", "prairie", "wetland", "alfalfa", "conventionalForest",
@@ -417,14 +408,17 @@ var radius = Math.min(width, height) / 2;
 
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
-var skipped = 0;
+var nameArray = [] ;
+var colorLinker = {} ;
+
+
 //document.getElementById('resultsFrame').contentWindow.document.getElementById('chart').innerHTML = "" ;    
 var chart = document.getElementById('resultsFrame').contentWindow.document.getElementById('chart') ;
     
 var svg = d3.select(chart)
   .append('svg')
   .attr("class", "graph-svg-component")
-  .attr('width', width + 300)
+  .attr('width', width + 280)
   .attr('height', height)
   .append('g')
   .attr('transform', 'translate(' + (width / 2) +  ',' + (height / 2) + ')');    
@@ -468,10 +462,12 @@ var path = svg.selectAll('path')
   .attr('class','testArc')
   .attr('d', arc)
   .attr('fill', function(d, i) { 
-    if(d.data.count == 0){
-       return color(d.data.label + "#"); 
+    var hue = color(d.data.label) ;
+    if(d.data.count != 0){
+        nameArray.push(d.data.label) ;
+        colorLinker[d.data.label] = hue 
     }  
-    return color(d.data.label);
+    return hue ;
 
      })
   .on('mouseover',function(d) { 
@@ -495,40 +491,38 @@ var path = svg.selectAll('path')
           })
           
   .transition()
-    .duration(900)
+    .duration(700)
     .attrTween("d", tweenPie);
    
-
   var legendRectSize = 18;
   var legendSpacing = 4;
   
   var legend = svg.selectAll('.legend')                     
-    .data(color.domain())                                   
+    .data(nameArray)                                   
     .enter()                                                
     .append('g')                                            
     .attr('class', 'legend')  
-    .style('visibility', function(d) {
-        if(d[d.length-1 ] == "#") return "hidden";
-        return 'visible';
-    })
-    .attr('transform', function(d, i) {                     
+    .attr('transform', function(d, i) {
         var height = legendRectSize + legendSpacing;        
-        var offset =  height * color.domain().length / 2;   
+        var offset =  height * nameArray.length / 2;   
         var horz = width/2 + 20;   
         var vert = i * height - offset;  
         return 'translate(' + horz + ',' + vert + ')';
     });
-                                                    // NEW
 
-        legend.append('rect')                                     // NEW
-          .attr('width', legendRectSize)                          // NEW
+        legend.append('rect')                                     
+          .attr('width', legendRectSize)                          
           .attr('height', legendRectSize) 
-          .style('fill', color)                                   // NEW
-          .style('stroke', color);                                // NEW
+          .style('fill', function(d){
+              return colorLinker[d] ;
+          })                                   
+          .style('stroke',function(d){
+              return colorLinker[d] ;
+          });                                                     
           
-        legend.append('text')                                     // NEW
-          .attr('x', legendRectSize + legendSpacing)              // NEW
-          .attr('y', legendRectSize - legendSpacing)              // NEW
+        legend.append('text')                                     
+          .attr('x', legendRectSize + legendSpacing)              
+          .attr('y', legendRectSize - legendSpacing)              
           .text(function(d) { return d; });         
   
     svg.append("text")
@@ -547,7 +541,7 @@ var path = svg.selectAll('path')
         .text("Year " + year)
         
 
-
+    document.getElementById('resultsFrame').contentWindow.toggle(0) ;
     
 }
     

@@ -3,7 +3,6 @@
 <head>
 
 <style>
-
     .resultsTable{
     width:100%;
     margin:10px;
@@ -38,21 +37,20 @@
         background-color: rgba(154,173,163,0.5);
     }
     
-.tab {
-    float: right;
-    width: 225px;
+.tab, .tabSelected {
+    float: left;
+    width: 145px;
     text-align: center;
-    height: 26px;
+    height: 40px;
     line-height: 0% ;
     padding:10px;
-    margin: 5px;
-    margin-right:0px;
-    margin-bottom: 0px;
-    background-color: #cc9900;
+    margin: 10px;
     display: inline-block;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
     cursor:default;
+    background-color: rgba(40,44,42,0.03);
+    box-shadow: 0px 2px 2px 1px rgba(0,0,0,.6);
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none;   /* Chrome/Safari/Opera */
   -khtml-user-select: none;    /* Konqueror */
@@ -60,8 +58,16 @@
   -ms-user-select: none;       /* Internet Explorer/Edge */
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
+                                  
 
+}
 
+.tabSelected{
+ background-color: rgba(34, 37, 122,0.95);
+}
+    
+.tab:hover{
+    background-color: rgba(40,44,42,0.1);
 }
     
 #holder{
@@ -83,7 +89,7 @@
 }
 
 .graph-svg-component{
-    float:right;
+    margin:0px;
 }
 
 .legend{
@@ -100,14 +106,13 @@
 
 .mouseOverInfo{
     position:absolute;
-    margin-left: -145px;
-    left:50%;
-    margin-top:390px;
+    margin-left:25px;
     display: none;
     background-color: #000000;
     border: 3px solid black;
     border-radius:8px;
     opacity:0.9;
+    margin-top:20px;
     font-size: 22px ;
     padding:15px;
     width:260px;
@@ -123,7 +128,7 @@
 }
 
 .mouseOverInfo:after {
-       content: "";
+    content: "";
     position: absolute;
     top: -15px;
     left: 130px;
@@ -137,37 +142,133 @@
 
 
 .chart{
-    position:absolute;
-    margin-top:18px;
-    margin-left:-528px;
-    left:50%;
-    width:955px;
+    width:640px;
     height:500px;
+    float:right;
 }
+
+#yearHolder{
+    margin:0px;
+    float:left;
+    display:inline-block;
+    width:160px;
+    height:500px;
+    font-size: 12px;
+    
+}
+
+#graphics{
+    margin:10px;
+    height:100px;
+}
+
+#contentsG{
+    position:absolute;
+    width:800px;
+    height:100%;
+    margin:0px;
+    margin-left:-400px;
+    left:50%;
+
+    
+    -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.upArrow{
+margin-left: 95px;
+margin-top: 140px;
+width: 0px;
+height: 0;
+border-style: solid;
+border-width: 0 20px 30px 20px;
+border-color: transparent transparent #000000 transparent;
+border-radius:20px;
+-webkit-transform:rotate(360deg);
+ border-style: inset;
+
+}
+
+.upArrow:hover{
+ border-color: transparent transparent #22257a transparent;
+}
+
+.upArrowDisabled{
+width: 0;
+height: 0;
+border-style: solid;
+border-width: 0 20px 30px 20px;
+border-color: transparent transparent #c9c9d1 transparent;
+margin-left: 95px;
+margin-top: 140px;
+border-radius:20px;
+}
+
+.downArrowDisabled{
+width: 0;
+height: 0;
+margin-top:6px;
+margin-left: 95px;
+border-style: solid;
+border-width: 30px 20px 0 20px;
+border-color: #c9c9d1 transparent transparent transparent;
+border-radius:20px;
+}
+
+.downArrow{
+width: 0;
+height: 0;
+margin-top:6px;
+margin-left: 95px;
+border-style: solid;
+border-width: 30px 20px 0 20px;
+border-color: #000000 transparent transparent transparent;
+border-radius:20px;
+-webkit-transform:rotate(360deg);
+ border-style: inset;
+}
+
+.downArrow:hover{
+    border-style: solid;
+border-width: 30px 20px 0 20px;
+border-color: #22257a transparent transparent transparent;
+}
+
 
 </style>
 </head>
 
 <body>
 
+<div style="visibility:hidden;" id="curYear"></div>
+<div style="visibility:hidden;" id="upTo"></div>
 
+<div  id="tab1" class="tabSelected" onclick="show(1);"><img src="./imgs/graphIcon.png">  </div>
+<div id="tab2" class="tab" onclick="show(2);"><img src="./imgs/numbersIcon.png">   </div>
 
-<div id="tab2" style="margin-right:45px;" class="tab" onclick="show(2);"> <h2>Numerical</h2> </div>
-<div style="background-color:#997300;"  id="tab1" class="tab" onclick="show(1);"> <h2>Graphical</h2> </div>
 
 <div id="holder">
 <div id="innerContainer">
-[PAGE UNDER CONSTRUCTION]    
-<div id="graphics"><div id="contentsG" style="margin:10px;">
-<button id="year1" onclick="parent.pie(1);">TEST ME, Year 1</button>   
-<button id="year2" onclick="parent.pie(2);">TEST ME, Year 2</button>   
-<button id="year3" onclick="parent.pie(3);">TEST ME, Year 3</button>   
+<br>
+<div id="graphics">
+<div id="contentsG">
     
-<div id="chart" class="chart"></div>    
-<div id="legendTest"></div>
+<div id="yearHolder">    
+<div id="yearUpLand" onclick="changeLandPieBy(1);" class="upArrow"></div>
+<div id="yearDownLand" onclick="changeLandPieBy(-1);" class="downArrow"></div>
 
+
+</div>
+
+<div id="chart" class="chart"></div> 
     
-</div></div>
+</div>
+</div>
 
 <div style="display:none;" id="numbers"><br><div id="contentsN" style="margin:10px; margin-top:2px;"></div>    
 </div>
@@ -182,19 +283,58 @@ function show(value) {
     
     document.getElementById('graphics').style.display = "none";
     document.getElementById('numbers').style.display = "none" ;
-    document.getElementById('tab1').style.backgroundColor = "#cc9900" ;
-    document.getElementById('tab2').style.backgroundColor = "#cc9900" ;
+    document.getElementById('tab1').className = "tab" ;
+    document.getElementById('tab2').className = "tab" ;
     
     if(value == 1){
          document.getElementById('graphics').style.display = "block";
-         document.getElementById('tab1').style.backgroundColor = "#997300" ;
+         document.getElementById('tab1').className = "tabSelected" ;
     }
     else if(value == 2){
         document.getElementById('numbers').style.display = "block" ;
-        document.getElementById('tab2').style.backgroundColor = "#997300" ;
+        document.getElementById('tab2').className = "tabSelected" ;
     }
     
 }    
+
+function toggle(value){
+
+    
+var upTo = Number(document.getElementById('upTo').innerHTML) ;
+var year = Number(document.getElementById('curYear').innerHTML) ;
+
+console.log("currently, " + year);
+console.log("move by, " + value);
+
+year = year + value ;
+
+console.log("now, " + year );
+console.log("with max of, " + upTo);
+
+ document.getElementById('yearUpLand').className = "upArrow";
+ document.getElementById('yearUpLand').onclick = function() {changeLandPieBy(1);};
+ document.getElementById('yearDownLand').className = "downArrow";
+ document.getElementById('yearDownLand').onclick = function() {changeLandPieBy(-1);};
+
+if(year == upTo){
+    document.getElementById('yearUpLand').className = "upArrowDisabled";
+    document.getElementById('yearUpLand').onclick = function() {};
+    
+}
+
+if(year == 1){
+    document.getElementById('yearDownLand').className = "downArrowDisabled";
+document.getElementById('yearDownLand').onclick = function() {};
+    
+}
+
+return year ;
+
+}
+
+function changeLandPieBy(value){
+    parent.pie(toggle(value)) ;
+}
     
 </script>
     
