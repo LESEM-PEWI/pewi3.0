@@ -290,7 +290,11 @@
     <div id="year3Button" class="yearButton" onclick="transitionToYear(3); switchYearTab(3);"><img id="year3Image" class="yearNotSelected" src="./imgs/three.png">
     </div>
     
-    <div id="popup" class="popupHidden"><p id="popupText"></p></div>
+    <div id="popup" class="popupHidden">
+        <div id="nextLevelButton" class="moveButtonHidden" onclick = "loadLevel(levelGlobal + 1);">Next Level</div>
+        <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>
+        <p id="popupText"></p>
+    </div>
     
     <div id="fireworks-template">
         <div id="fw" class="firework"></div>
