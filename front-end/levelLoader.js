@@ -39,7 +39,7 @@ function loadLevel(level){
         case 0:
             levelGlobal = 0 ;
             initWorkspace('./data.txt');
-            if(achievedAllLevels){updatePopup("Congratulations! You made it through all the levels. Try out what your newfound knowledge in Sandbox mode!");}
+            if(achievedAllLevels){updatePopup("Congratulations! You made it through all the levels. Try out your newfound knowledge in Sandbox mode!");}
             break;
 
     }
