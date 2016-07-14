@@ -6,21 +6,30 @@ var achievementAccomplished = [];
 var achievementAnimations = [];
 var yearToCheck = 0;
 var levelGlobal ;
+var lastLevel = 2;
 
 //loadLevel is triggered by clicking a level button on the html page
 function loadLevel(level){
+    
+    resetLevel();
+    
+    var achievedAllLevels = false;
+    if(level > lastLevel){
+        level = 0;
+        achievedAllLevels = true;
+    }
     
     switch(level){
         case 1:
             levelGlobal = 1 ;
             //parse level options file
-            loadLevelDetails("./front-end/level1Specifications.txt");
-            initWorkspace('./front-end/pewiNewMapUpload.csv');
+            loadLevelDetails("./levels/specs/level1Specifications.txt");
+            initWorkspace('./levels/maps/pewiNewMapUpload.csv');
             document.getElementById('popup').className = "popup"
             break;
         case 2:
             levelGlobal = 2;
-            loadLevelDetails("./front-end/level2Specifications.txt");
+            loadLevelDetails("./levels/specs/level2Specifications.txt");
             initWorkspace('./data.txt');
             document.getElementById('popup').className = "popup"
             break;
@@ -29,8 +38,8 @@ function loadLevel(level){
             break;
         case 0:
             levelGlobal = 0 ;
-            
             initWorkspace('./data.txt');
+            if(achievedAllLevels){updatePopup("Congratulations! You made it through all the levels. Try out what your newfound knowledge in Sandbox mode!");}
             break;
 
     }
@@ -38,6 +47,22 @@ function loadLevel(level){
     
     
 } //end loadLevel
+
+function resetLevel(){
+    
+    achievementScripts = [];
+    achievementValues = [];
+    achievementDisplayed = -1;
+    achievementAccomplished = [];
+    achievementAnimations = [];
+    yearToCheck = 0;
+    
+    clearPopup();
+    
+    document.getElementById("mainMenuButton").className = "moveButtonHidden";
+    document.getElementById("nextLevelButton").className = "moveButtonHidden";
+    
+}
 
 function parseLevelDetails(data) {
  
@@ -109,4 +134,8 @@ function loadLevelDetails(fileString) {
        }
     });
     
+}
+
+function returnCurrentLevel(){
+    return levelGlobal;
 }

@@ -1233,8 +1233,15 @@ function achievementCheck(){
         //achievementDisplayed = achievementValues[0].length;
         achievementAccomplished[0] = achievementValues[0].length;
         launchFireworks();
+        
+        //Switch to next level or return to menu
+        document.getElementById("nextLevelButton").className = "moveButtonShow";
+        document.getElementById("mainMenuButton").className = "moveButtonShow";
+        
     }
  }
+ 
+ 
 
 }
 

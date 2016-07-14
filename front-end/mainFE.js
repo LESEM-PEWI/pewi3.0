@@ -347,7 +347,7 @@ function showMainMenu() {
             //clean up from a level
 
             console.log("---cleaning up---");
-            achievementValues = [] ;
+            resetLevel();
             clearPopup() ;
             
             window.top.document.getElementById('parameters').innerHTML = "" ;

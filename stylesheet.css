@@ -741,3 +741,29 @@ select {
         top: 0%;
     }
 }
+
+.moveButtonHidden, .moveButtonShow {
+    position:relative;
+    display:none;
+    padding: 5px;
+    background-color: #008fb3 ;
+    width:200px;
+    border-radius:12px;
+    height:50px ;
+    color: white ;
+    text-align:center;
+    line-height: 130%;
+    padding:5px;
+    margin:20px;
+    margin-bottom:30px;
+    border: 2px solid white;
+}
+
+.moveButtonShow {
+    position:relative;
+    display:inline-block;
+}
+
+#popupText {
+    position:relative;
+}
