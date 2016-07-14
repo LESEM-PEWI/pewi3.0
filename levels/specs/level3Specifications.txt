@@ -1,0 +1,9 @@
+paint1*paint2*paint5*paint12*paint8*paint13*paint3*paint4*paint9*paint9*paint10*paint11
+Goal: Reach greater than 45% mixed fruits/vegetables and cattle yields while keeping the nitrate pollution and phosphorus load scores above 80! Try experimenting with strategic wetlands and pasture type. Good Luck!
+nitrateConcentrationScore*30*Planting the whole field with mixed fruits and vegetables has high yield but a poor nitrate pollution score. Maybe strategic wetlands could help!*80*none
+wetlandLandUseScore*0.1*Awesome! Place wetlands on strategic wetlands to decrease nitrate pollution and increase biodiversity!*1*bird
+phosphorusLoadScore*40*Consider adding pasture to areas with high phosphorus contribution to decrease the phosphorus load.*80*none
+cattleYieldScore*45*none
+mixedFruitsAndVegetablesYieldScore*45*none
+Exercise 1A.3 Complete!
+1

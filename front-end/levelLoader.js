@@ -6,7 +6,7 @@ var achievementAccomplished = [];
 var achievementAnimations = [];
 var yearToCheck = 0;
 var levelGlobal ;
-var lastLevel = 2;
+var lastLevel = 3;
 
 //loadLevel is triggered by clicking a level button on the html page
 function loadLevel(level){
@@ -25,20 +25,23 @@ function loadLevel(level){
             //parse level options file
             loadLevelDetails("./levels/specs/level1Specifications.txt");
             initWorkspace('./levels/maps/pewiNewMapUpload.csv');
-            document.getElementById('popup').className = "popup"
+            document.getElementById('popup').className = "popup";
             break;
         case 2:
             levelGlobal = 2;
             loadLevelDetails("./levels/specs/level2Specifications.txt");
             initWorkspace('./data.txt');
-            document.getElementById('popup').className = "popup"
+            document.getElementById('popup').className = "popup";
             break;
         case 3:
+            levelGlobal = 3;
+            loadLevelDetails("./levels/specs/level3Specifications.txt");
             initWorkspace('./data.txt');
+            document.getElementById('popup').className = "popup";
             break;
         case 0:
             levelGlobal = 0 ;
-            initWorkspace('./data.txt');
+            initWorkspace('./data.txt');            
             if(achievedAllLevels){updatePopup("Congratulations! You made it through all the levels. Try out your newfound knowledge in Sandbox mode!");}
             break;
 
