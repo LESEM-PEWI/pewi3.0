@@ -3,5 +3,5 @@ In this level, start with conventional corn and soy land use covers. Then, add c
 phosphorusLoadScore*80*You're almost there! Phophorus load is now over 80%.*86*bird
 grossErosionScore*80*You're almost there! Gross erosion is now over 80%.*86*bird
 mixedFruitsAndVegetablesLandUseScore*1*Add some more mixed fruits and vegetables!*2*fireworks
-Level 1.1 Complete!
+Exercise 1A.1 Complete!
 1
