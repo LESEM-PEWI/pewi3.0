@@ -19,7 +19,10 @@ function loadLevel(level){
             document.getElementById('popup').className = "popup"
             break;
         case 2:
+            levelGlobal = 2;
+            loadLevelDetails("./front-end/level2Specifications.txt");
             initWorkspace('./data.txt');
+            document.getElementById('popup').className = "popup"
             break;
         case 3:
             initWorkspace('./data.txt');
