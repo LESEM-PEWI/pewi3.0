@@ -329,14 +329,16 @@ function setupHighlight() {
 
 function showMainMenu() {
     if(confirm('Are you sure you want to exit? All your progress will be lost.')){
-    document.getElementById('startUpFrame')   
-    
+
+       document.getElementById('loading').style.display = "block" ; 
        document.getElementById('startUpFrame').contentWindow.recallMain() ;
         
-        setTimeout(function() {document.getElementById('startupSequence').style.display = "block" ;
+        setTimeout(function() {
+            
+        document.getElementById('startupSequence').style.display = "block" ;
         //clearPopup();
         //
-        document.getElementById('loading').style.display = "block" ;      
+            
         previousHover = null ;
         paintChange(1) ;
         switchConsoleTab(1);
@@ -352,8 +354,6 @@ function showMainMenu() {
             
             window.top.document.getElementById('parameters').innerHTML = "" ;
             toggleVisibility() ;
-            
- 
 
         }
         //achievementValues = [];
