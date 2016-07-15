@@ -18,7 +18,6 @@
     <script src="./lib/OBJMTLLoader.js"></script>
     
     <link rel="stylesheet" type="text/css" href="./lib/fireworks.css" media="screen" />
-    <script type="text/javascript" src="./lib/soundmanager2-nodebug-jsmin.js"></script>
     <script type="text/javascript" src="./lib/fireworks.js"></script>
     
     <script src="./back-end/helperMethods.js"></script>
@@ -289,6 +288,8 @@
     </div>
     <div id="year3Button" class="yearButton" onclick="transitionToYear(3); switchYearTab(3);"><img id="year3Image" class="yearNotSelected" src="./imgs/three.png">
     </div>
+    
+    <div id="dialogueButton" class="dialogueButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/dialogue.png"></div>
     
     <div id="popup" class="popupHidden">
         <div id="nextLevelButton" class="moveButtonHidden" onclick = "loadLevel(levelGlobal + 1);">Next Level</div>
