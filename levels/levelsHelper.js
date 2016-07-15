@@ -90,8 +90,6 @@ function populateLevels(){
     
     for(var i = 0; i < levelContainer.length; i++){
         
-        console.log(levelContainer[i].name);
-        
         tempString += "<div id='" + levelContainer[i].name.replace(/\s/g, "") + "' class='groupElement' style='padding-left: 20px;'>";
         tempString += levelContainer[i].name;
         tempString += "</div>";
