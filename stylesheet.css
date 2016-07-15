@@ -605,7 +605,7 @@ select {
     margin-top: -50px;
     padding: 10px;
     position:absolute;
-    width: 100%;
+    width: 80%;
 }
 
 #index{
@@ -658,7 +658,7 @@ select {
   overflow-x:hidden;
   width:28%;
   height:250px;
-  margin: 0 0% 0%;
+  margin: 0px;
   font-family: 'Amatic SC', cursive;
   text-align:center;
   line-height: 85%;
@@ -675,15 +675,15 @@ select {
   border-top-left-radius: 12px;
   border-bottom-left-radius: 0px;
   
-    -webkit-animation-duration: 2s;
-  animation-duration: 2s;
+    -webkit-animation-duration: 1s;
+  animation-duration: 1s;
   -webkit-animation-name: rollUp;
   animation-name: rollUp;
 }
 
 @keyframes rollUp {
   0% {
-    bottom:-275px;
+    bottom:-270px;
   }
   100% {
     bottom: 0;
@@ -695,17 +695,17 @@ select {
     bottom: 0px;
   }
   100% {
-    bottom: -275px;
+    bottom: -270px;
   }
 }
 
 .popupHidden {
-  bottom: -275px;
+  bottom: -270px;
   right: 0px;
   position:absolute;
   
-  -webkit-animation-duration: 2s;
-  animation-duration: 2s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
   -webkit-animation-name: rollDown;
   animation-name: rollDown;
 }
@@ -766,4 +766,49 @@ select {
 
 #popupText {
     position:relative;
+}
+
+.dialogueButton, .dialogueButtonRolled {
+    position:absolute;
+    bottom:270px;
+    right:0px;
+    background-color: rgb(0,0,0,0.9);
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-radius: 0px;
+    border-right: 0px solid #F0A61D;
+    border-top-left-radius: 4px;
+    height:40px;
+    width:40px;
+    -webkit-animation-name: rollButtonUp;
+    animation-name: rollButtonUp;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+
+}
+
+.dialogueButtonRolled {
+    bottom:0px;
+    -webkit-animation-name: rollButtonDown;
+    animation-name: rollButtonDown;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+}
+
+@keyframes rollButtonUp {
+  0% {
+    bottom: 0px;
+  }
+  100% {
+    bottom: 270px;
+  }
+}
+
+@keyframes rollButtonDown {
+  0% {
+    bottom: 270px;
+  }
+  100% {
+    bottom: 0px;
+  }
 }

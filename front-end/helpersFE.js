@@ -1,5 +1,6 @@
 var currentRow = -1;
 var openBack;
+var reopenDialogue;
 /* global camera, scene, boardData,
           renderer, currentBoard, THREE, 
           currentYear, textureArray, riverPoints,
@@ -560,11 +561,7 @@ function onDocumentKeyDown(event) {
             break;
         //case b
         case 66:
-            if(document.getElementById("popup").className == "popupHidden"){
-                document.getElementById("popup").className = "popup";
-            } else {
-                document.getElementById("popup").className = "popupHidden";
-            }
+            togglePopupDisplay();
             break;
         //case p
         case 80:
@@ -632,6 +629,12 @@ function paintYear(value) {
 
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
+    
+    reopenDialogue = false;
+    if(document.getElementById("popup").className == "popup"){
+        togglePopupDisplay();
+        reopenDialogue = true;
+    }
 
     //if something else has precedence
     if(!modalUp){
@@ -688,6 +691,10 @@ function resultsEnd() {
         resultsStart();
     };
     modalUp = false;
+    
+    if (reopenDialogue){
+        togglePopupDisplay();
+    }
 
 } //end resultsEnd
 
@@ -1465,11 +1472,26 @@ function clearInfo(){
 function updatePopup(string){
     document.getElementById("popupText").innerHTML = string + "<br><br>" + document.getElementById("popupText").innerHTML;
     document.getElementById("popup").className = "popup";
+    document.getElementById("dialogueButton").className = "dialogueButton";
 }
 
 function clearPopup(){
     document.getElementById("popupText").innerHTML = " ";
     document.getElementById("popup").className = "popupHidden";
+    document.getElementById("dialogueButton").className = "dialogueButtonRolled";
+}
+
+function togglePopupDisplay(){
+    if(!modalUp){
+        if(document.getElementById("popup").className == "popup"){
+            document.getElementById("popup").className = "popupHidden";
+            document.getElementById("dialogueButton").className = "dialogueButtonRolled";
+        } else {
+            document.getElementById("popup").className = "popup";
+            document.getElementById("dialogueButton").className = "dialogueButton";
+        }
+    }
+    
 }
 
 
@@ -1516,7 +1538,6 @@ function toggleVisibility() {
 
     for(var i=0; i<arrLines.length; i++){
         if(arrLines[i]){
-            console.log(arrLines[i]) ;
             
             //giant switch
             switch(arrLines[i]){
