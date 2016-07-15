@@ -369,6 +369,7 @@ function displayResults() {
     document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsN').innerHTML = string2;
 
     pie(currentYear) ;
+    drawPrecipBar() ;
     
 } //end displayResults
 
@@ -481,7 +482,6 @@ var path = svg.selectAll('path')
             
             d3.select(this).classed("arc", false);
             d3.select(this).classed("arcHighlight", true);
-            //noah
   })
   .on('mouseout', function() {
             mouseoverInfo.style('display', 'none');
@@ -491,7 +491,7 @@ var path = svg.selectAll('path')
           })
           
   .transition()
-    .duration(700)
+    .duration(900)
     .attrTween("d", tweenPie);
    
   var legendRectSize = 18;
@@ -545,3 +545,181 @@ var path = svg.selectAll('path')
     
 }
     
+
+function drawPrecipBar() {
+    
+    var element = document.getElementById('resultsFrame').contentWindow.document.getElementById('precipChart');
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('precipChart').innerHTML = " " ;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo').innerHTML = " " ;
+
+    var data = [
+  {label: "Year 0",    value:  boardData[currentBoard].precipitation[0], percent: 0, adj: "", year: 0 },
+  {label: "Year 1",    value:  boardData[currentBoard].precipitation[1], percent: 0, adj: "", year: 1},
+  {label: "Year 2",     value: boardData[currentBoard].precipitation[2], percent: 0, adj: "", year: 2},
+  {label: "Year 3",   value: boardData[currentBoard].precipitation[3], percent: 0, adj: "", year: 3}
+];
+    
+        
+    for(var y=0; y<data.length; y++){
+        
+        var tempPercent ;
+        var tempAdj ;
+        
+        switch(data[y].value){
+            case 24.58:
+                tempPercent = 25;
+                tempAdj = "Dry";
+                break;
+            case 28.18:
+                tempPercent = 36;
+                tempAdj = "Dry";
+                break;
+            case 30.39:
+                tempPercent = 42;
+                tempAdj = "Normal";
+                break;
+            case 32.16:
+                tempPercent = 49;
+                tempAdj = "Normal";
+                break;
+            case 34.34:
+                tempPercent = 57;
+                tempAdj = "Normal" ;
+                break;
+            case 36.47:
+                tempPercent = 64;
+                tempAdj = "Wet" ;
+                
+                if(y > 0 && data[y-1].adj == "Dry"){
+                    tempAdj = "Flood";
+                }
+                
+                break;
+            case 45.1:
+                tempPercent = 89;
+                tempAdj = "Wet";
+                
+                if(y > 0 && data[y-1].adj == "Dry"){
+                    tempAdj = "Flood";
+                }
+                
+                break;
+            default:
+                tempPercent = 0;
+                tempAdj = "";
+                break;
+        }
+        
+        data[y].percent = tempPercent ;
+        data[y].adj = tempAdj ;
+        
+    }    
+        
+ 
+    var width = 420;
+    var barHeight = 30;
+
+    var x = d3.scaleLinear()
+        .domain([0, 100])
+        .range([0, width]);
+
+    var chart = d3.select(element)
+        .attr("width", width);
+
+    chart.attr("height", barHeight * data.length);
+    
+    
+    
+    var element = document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo');
+
+    var mouseoverInfo = d3.select(element)
+        .append('g');
+    
+    mouseoverInfo.append('div')
+        .attr('class', 'leftPrecipContainer');    
+    
+    var container = mouseoverInfo.select('.leftPrecipContainer');
+    
+    container.append('div')
+        .attr('class', 'yearLabel');
+
+    container.append('div')
+        .attr('class', 'precipValue');
+
+    container.append('div')
+        .attr('class', 'precipType');
+
+    mouseoverInfo.append('img')
+        .attr('class', 'precipImg')
+        
+  function setupPrecipInfo(year){
+       
+       container.select('.yearLabel').html(data[year].label);
+       container.select('.precipValue').html(data[year].value + " inches"); 
+       container.select('.precipType').html(data[year].adj); 
+       
+       
+       
+      var img = " ";
+      switch(data[year].adj){
+          case "Dry":
+              img = "./imgs/dry.png";
+              break;
+          case "Normal":
+              img = "./imgs/normal.png";
+              break;
+          case "Wet":
+              img = "./imgs/wet.png";
+              break;
+          case "Flood":
+              img = "imgs/flood.png";
+              break;
+      }
+      
+      //console.log(img);
+      mouseoverInfo.select('.precipImg').attr('src', img) ;
+              
+  }        
+
+  var bar = chart.selectAll("g")
+      .data(data)
+      .enter().append("g")
+      .attr('class', 'barData')  
+      .attr("transform", function(d, i) { return "translate(0," + (i * barHeight + 2) + ")"; });
+
+  bar.append("rect")
+      .attr("width", function(d) { return x(d.percent); })
+      .attr("height", barHeight - 4)
+      .attr("class", "legendBars")
+      .attr('fill', '#1f77b4')
+      .on('mouseover',function(d) { 
+          
+            setupPrecipInfo(d.year) ;
+            
+            mouseoverInfo.style('display', 'block');
+            
+            d3.select(this).attr('fill','lightskyblue');
+  })
+  .on('mouseout', function() {
+            d3.select(this).attr('fill', '#1f77b4');
+            
+            setupPrecipInfo(currentYear) ;
+            
+          })
+    .transition()
+    .duration(1400)
+    .attrTween("width", function() {
+        return d3.interpolate(0, this.getAttribute("width"));
+    });
+
+  bar.append("text")
+      .attr("x", function(d) { return x(d.percent) + 7; })
+      .attr("y", barHeight / 2)
+      .attr("dy", ".35em")
+      .text(function(d) { return d.label; })
+      .attr('fill','black');
+      
+    setupPrecipInfo(currentYear) ;
+
+
+}

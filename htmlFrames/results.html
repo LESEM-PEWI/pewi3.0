@@ -63,7 +63,7 @@
 }
 
 .tabSelected{
- background-color: rgba(34, 37, 122,0.95);
+ background-color: rgba(0,0,0,0.6);
 }
     
 .tab:hover{
@@ -142,8 +142,8 @@
 
 
 .chart{
-    width:640px;
-    height:500px;
+    width:680px;
+    height:400px;
     float:right;
 }
 
@@ -151,9 +151,10 @@
     margin:0px;
     float:left;
     display:inline-block;
-    width:160px;
-    height:500px;
+    width:120px;
+    height:400px;
     font-size: 12px;
+
     
 }
 
@@ -169,7 +170,7 @@
     margin:0px;
     margin-left:-400px;
     left:50%;
-
+   
     
     -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -181,7 +182,7 @@
 }
 
 .upArrow{
-margin-left: 95px;
+margin-left: 55px;
 margin-top: 140px;
 width: 0px;
 height: 0;
@@ -195,7 +196,7 @@ border-radius:20px;
 }
 
 .upArrow:hover{
- border-color: transparent transparent #22257a transparent;
+ opacity:0.6;
 }
 
 .upArrowDisabled{
@@ -204,7 +205,7 @@ height: 0;
 border-style: solid;
 border-width: 0 20px 30px 20px;
 border-color: transparent transparent #c9c9d1 transparent;
-margin-left: 95px;
+margin-left: 55px;
 margin-top: 140px;
 border-radius:20px;
 }
@@ -213,7 +214,7 @@ border-radius:20px;
 width: 0;
 height: 0;
 margin-top:6px;
-margin-left: 95px;
+margin-left: 55px;
 border-style: solid;
 border-width: 30px 20px 0 20px;
 border-color: #c9c9d1 transparent transparent transparent;
@@ -224,7 +225,7 @@ border-radius:20px;
 width: 0;
 height: 0;
 margin-top:6px;
-margin-left: 95px;
+margin-left: 55px;
 border-style: solid;
 border-width: 30px 20px 0 20px;
 border-color: #000000 transparent transparent transparent;
@@ -236,7 +237,78 @@ border-radius:20px;
 .downArrow:hover{
     border-style: solid;
 border-width: 30px 20px 0 20px;
-border-color: #22257a transparent transparent transparent;
+border-color: #000000 transparent transparent transparent;
+opacity: 0.6;
+}
+
+.barData {
+    color: white;
+    font-weight: bold;
+    font-size:16px;
+}
+
+#precipChart{
+    float:left;
+    width:440px;
+    margin:0px;
+    padding:0px;
+    display: inline-block;
+    background-color: rgba(40,44,42,0..1);
+    box-shadow: 0px 2px 2px 1px rgba(0,0,0,.6);
+ 
+}
+
+text{
+       cursor: default;
+}
+
+.precipInfo{
+    display:inline-block;
+    margin:0px;
+    float:left;
+    width:330px;
+    height:120px;
+    
+     background-color: rgba(40,44,42,0..1);
+    box-shadow: 0px 2px 2px 1px rgba(0,0,0,.6);
+    
+}
+
+#precipTitle{
+    background-image: url("./imgs/precipBack.png");
+    color: #000000 ;
+    display:inline-block;
+    float: left;
+    margin:0px;
+    width: 30px;
+    height: 120px;
+    background-color: rgba(40,44,42,0..1);
+
+}
+
+.yearLabel, .precipValue, .precipType {
+    font-size: 20;
+    font-weight: bold;
+    text-align: center;
+    line-height:120%;
+    margin-top:10px;
+  }
+  
+.leftPrecipContainer{
+    width:200px;
+
+    float:left;
+    height:100%;
+    display:block;
+}  
+
+.precipImg{
+    float:right;
+    margin-right:15px;
+    display:inline-block;
+    height:100px;
+    margin-top:10px;
+    
 }
 
 
@@ -265,7 +337,13 @@ border-color: #22257a transparent transparent transparent;
 
 </div>
 
-<div id="chart" class="chart"></div> 
+<div id="chart" class="chart"></div>
+
+
+<div id="precipInfo" class="precipInfo"></div>
+<div id="precipTitle"></div>
+<svg id="precipChart"></svg>
+
     
 </div>
 </div>
