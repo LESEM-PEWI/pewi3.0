@@ -142,16 +142,17 @@
 
 
 .chart{
-    width:680px;
+    width:660px;
     height:400px;
     float:right;
+    margin-top:40px;
 }
 
 #yearHolder{
     margin:0px;
     float:left;
     display:inline-block;
-    width:120px;
+    width:140px;
     height:400px;
     font-size: 12px;
 
@@ -182,7 +183,7 @@
 }
 
 .upArrow{
-margin-left: 55px;
+margin-left: 75px;
 margin-top: 140px;
 width: 0px;
 height: 0;
@@ -205,7 +206,7 @@ height: 0;
 border-style: solid;
 border-width: 0 20px 30px 20px;
 border-color: transparent transparent #c9c9d1 transparent;
-margin-left: 55px;
+margin-left: 75px;
 margin-top: 140px;
 border-radius:20px;
 }
@@ -214,7 +215,7 @@ border-radius:20px;
 width: 0;
 height: 0;
 margin-top:6px;
-margin-left: 55px;
+margin-left: 75px;
 border-style: solid;
 border-width: 30px 20px 0 20px;
 border-color: #c9c9d1 transparent transparent transparent;
@@ -225,7 +226,7 @@ border-radius:20px;
 width: 0;
 height: 0;
 margin-top:6px;
-margin-left: 55px;
+margin-left: 75px;
 border-style: solid;
 border-width: 30px 20px 0 20px;
 border-color: #000000 transparent transparent transparent;
@@ -308,7 +309,13 @@ text{
     display:inline-block;
     height:100px;
     margin-top:10px;
-    
+}
+
+#toggleYearPie{
+    width:140px;
+    background-color:red;
+    margin-top:150px;
+    height:100px;
 }
 
 
@@ -330,19 +337,23 @@ text{
 <div id="graphics">
 <div id="contentsG">
     
-<div id="yearHolder">    
-<div id="yearUpLand" onclick="changeLandPieBy(1);" class="upArrow"></div>
-<div id="yearDownLand" onclick="changeLandPieBy(-1);" class="downArrow"></div>
-
-
-</div>
-
-<div id="chart" class="chart"></div>
 
 
 <div id="precipInfo" class="precipInfo"></div>
 <div id="precipTitle"></div>
 <svg id="precipChart"></svg>
+
+<br/>
+
+<div id="yearHolder">    
+<div id="yearUpLand" onclick="changeLandPieBy(1);" class="upArrow"></div>
+<div id="yearDownLand" onclick="changeLandPieBy(-1);" class="downArrow"></div>
+<div id="toggleYearPie">Toggle to Categories</div>
+</div>
+<div id="chart" class="chart"></div>
+
+
+
 
     
 </div>
@@ -381,13 +392,9 @@ function toggle(value){
 var upTo = Number(document.getElementById('upTo').innerHTML) ;
 var year = Number(document.getElementById('curYear').innerHTML) ;
 
-console.log("currently, " + year);
-console.log("move by, " + value);
-
 year = year + value ;
 
-console.log("now, " + year );
-console.log("with max of, " + upTo);
+
 
  document.getElementById('yearUpLand').className = "upArrow";
  document.getElementById('yearUpLand').onclick = function() {changeLandPieBy(1);};
