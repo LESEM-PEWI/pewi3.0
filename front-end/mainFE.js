@@ -153,6 +153,30 @@ function animationFrames(){
     
     requestAnimationFrame(function animate() {
 
+    if(birds != null){
+        
+    	for ( var i = 0, il = birds.length; i < il; i++ ) {
+    
+    		boid = boids[ i ];
+    		boid.run( boids );
+    
+    		bird = birds[ i ];
+    		bird.position.copy( boids[ i ].position );
+    
+    		color = bird.material.color;
+    		color.r = color.g = color.b = ( 500 - bird.position.z ) / 1000;
+    
+    		bird.rotation.y = Math.atan2( - boid.velocity.z, boid.velocity.x );
+    		bird.rotation.z = Math.asin( boid.velocity.y / boid.velocity.length() );
+    
+    		bird.phase = ( bird.phase + ( Math.max( 0, bird.rotation.z ) + 0.1 )  ) % 62.83;
+    		bird.geometry.vertices[ 5 ].y = bird.geometry.vertices[ 4 ].y = Math.sin( bird.phase ) * 5;
+    
+    	}
+    
+    }
+
+
    renderer.autoClear = false;
    if(bgScene != null){
     renderer.render(bgScene, bgCam);
@@ -268,8 +292,8 @@ function setupRiver() {
         var riverCurve1 = []; 
         var riverCurve2 = [];
         for(var i = 0; i < riverPoints[j].length; i++){
-            riverCurve1.push(new THREE.Vector3(Math.min(riverPoints[j][i].x + 5, riverPoints[j][i].x + 2 * ((3*i)+1)/3), tToggle ? (i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+7) : riverPoints[j][i].y, riverPoints[j][i].z));
-            riverCurve2.push(new THREE.Vector3(Math.max(riverPoints[j][i].x - 5, riverPoints[j][i].x - 2 * ((3*i)+1)/3), tToggle ? (i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+7) : riverPoints[j][i].y, riverPoints[j][i].z));
+            riverCurve1.push(new THREE.Vector3(Math.min(riverPoints[j][i].x + 5, riverPoints[j][i].x + 2 * ((3*i)+1)/3), tToggle ? (i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+2) : riverPoints[j][i].y, riverPoints[j][i].z));
+            riverCurve2.push(new THREE.Vector3(Math.max(riverPoints[j][i].x - 5, riverPoints[j][i].x - 2 * ((3*i)+1)/3), tToggle ? (i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+2) : riverPoints[j][i].y, riverPoints[j][i].z));
         }
         
         var curve1 = new THREE.CatmullRomCurve3(riverCurve1);
@@ -363,3 +387,4 @@ function showMainMenu() {
         
     }
 }
+

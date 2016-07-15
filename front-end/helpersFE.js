@@ -30,6 +30,9 @@ var painterTool = {
     hover: false
 } ;
 
+var birds, bird;
+var boids, boid;
+
 //onResize dynamically adjusts to window size changes
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -269,12 +272,21 @@ function addTile(tile) {
     var top23 = boardData[currentBoard].map[mapID + (tilesWide)] ? boardData[currentBoard].map[mapID + (tilesWide)].topography : 0;
     var top24 = boardData[currentBoard].map[mapID + (tilesWide + 1)] ? boardData[currentBoard].map[mapID + (tilesWide + 1)].topography : 0;
 
+    var riverHeight = 1;
+
     //Calculate the heights of vertices by averaging topographies of adjacent tiles and create a vector for each corner
     if (tToggle) {
-        v1 = new THREE.Vector3(0, (topN24 + topN23 + topN1 + tile.topography) / 4 * 5, 0);
-        v2 = new THREE.Vector3(tileWidth, (topN23 + topN22 + top1 + tile.topography) / 4 * 5, 0);
-        v3 = new THREE.Vector3(tileWidth, (top24 + top23 + top1 + tile.topography) / 4 * 5, tileHeight);
-        v4 = new THREE.Vector3(0, (top22 + top23 + topN1 + tile.topography) / 4 * 5, tileHeight);
+        var h1 = (topN24 + topN23 + topN1 + tile.topography) / 4 * 5;
+        var h2 = (topN23 + topN22 + top1 + tile.topography) / 4 * 5;
+        var h3 = (top24 + top23 + top1 + tile.topography) / 4 * 5;
+        var h4 = (top22 + top23 + topN1 + tile.topography) / 4 * 5;
+        
+        v1 = new THREE.Vector3(0, h1, 0);
+        v2 = new THREE.Vector3(tileWidth, h2, 0);
+        v3 = new THREE.Vector3(tileWidth, h3, tileHeight);
+        v4 = new THREE.Vector3(0, h4, tileHeight);
+        
+        riverHeight = (h1+h2+h3+h4)/4;
     }
     else {
         v1 = new THREE.Vector3(0, 0, 0);
@@ -323,7 +335,7 @@ function addTile(tile) {
             if(!riverPoints[Number(streams[i]) - 1]){
                 riverPoints[Number(streams[i]) - 1] = [];
             }
-            riverPoints[Number(streams[i]) - 1].push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide) / 2 + tileWidth/2, 1, tile.row * tileHeight - (tileHeight * tilesHigh) / 2 + tileHeight));
+            riverPoints[Number(streams[i]) - 1].push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide) / 2 + tileWidth/2, riverHeight, tile.row * tileHeight - (tileHeight * tilesHigh) / 2 + tileHeight));
         }
     }
 
@@ -561,7 +573,7 @@ function onDocumentKeyDown(event) {
             break;
         //case b
         case 66:
-            togglePopupDisplay();
+            createFlock();
             break;
         //case p
         case 80:
@@ -1260,6 +1272,9 @@ function selectAnimation(animation) {
         case "fireworks":
             launchFireworks();
             break;
+        case "flock":
+            createFlock();
+            break;
     }
     
 }
@@ -1283,6 +1298,15 @@ function flyLark(){
     document.getElementById("meadowlark").className = "meadowlarkhidden";
     setTimeout( function(){ document.getElementById("meadowlark").className = "meadowlarkfly"}, 1);
 
+}
+
+function createFlock(){
+    
+    //setTimeout( function(){ addBirds();}, 30000);
+
+    addBirds();
+    setTimeout( function() { for(var i = 0; i < birds.length; i++){scene.remove(birds[i])}}, 10000);
+    
 }
 
 //writeFileToDownloadString creates a string in csv format that describes the current board
