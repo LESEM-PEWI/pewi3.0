@@ -1180,88 +1180,150 @@ function getHighlightColor(type, ID) {
 } //end getHighlightColor
 
 //contaminatedRiver changes the color of the river dependent on current phosphorus level
-function contaminatedRiver() {
-
-    //this is buggy -- still a work-in progress. Maybe the status of the river should be stored in the board for each year...
-
-    if (Totals.phosphorusLoad[currentYear] > 1.7) {
+function contaminatedRiver(riverColor) {
+    
+    if(riverColor == "brown"){
         for(var i = 0; i < river.children.length; i++){
-           river.children[i].material.color.setHex("0x663300");
+           river.children[i].material.color.setHex("0x664d00");
        }
     }
-    else {
+    
+    if(riverColor == "blue"){
         for(var i = 0; i < river.children.length; i++){
             river.children[i].material.color.setHex("0x40a4df");
         }
     }
     
-
 } //end contaminatedRiver
 
-//achievementCheck
-function achievementCheck(){
+
+//DEPRECATED
+// //achievementCheck
+// function achievementCheck(){
  
- var allDone = "none";
- //check the current scores of each achievement
- for(var i = 0; i < achievementValues.length; i++){
+//  var allDone = "none";
+//  //check the current scores of each achievement
+//  for(var i = 0; i < achievementValues.length; i++){
      
-    //print the initial script when the totals are less than any achievement
-    if(Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][1])){
-             //if(achievementDisplayed < 0){
-             if(achievementAccomplished[0] < 0){
-                updatePopup(achievementScripts[i][0]); 
-                //achievementDisplayed = 1;
-                achievementAccomplished[0] = 1;
-             }
-             allDone = false;
-    //determine if a final value has been surpassed for each achievement
-    } else if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][achievementValues[i].length-1])){
-             if(allDone == "none" || allDone == true){
-                allDone = true;
-             }
-    //print scripts for subobjective achievements
-    } else {
-        if(achievementValues[i].length > 2){
+//     //print the initial script when the totals are less than any achievement
+//     if(Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][1])){
+//              //if(achievementDisplayed < 0){
+//              if(achievementAccomplished[0] < 0){
+//                 updatePopup(achievementScripts[i][0]); 
+//                 //achievementDisplayed = 1;
+//                 achievementAccomplished[0] = 1;
+//              }
+//              allDone = false;
+//     //determine if a final value has been surpassed for each achievement
+//     } else if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][achievementValues[i].length-1])){
+//              if(allDone == "none" || allDone == true){
+//                 allDone = true;
+//              }
+//     //print scripts for subobjective achievements
+//     } else {
+//         if(achievementValues[i].length > 2){
             
-            for(var j = 1; j < achievementValues[i].length; j++){
+//             for(var j = 1; j < achievementValues[i].length; j++){
          
-                if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][j]) && Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][j+1])) {
-                    //if( achievementDisplayed < j+1){
-                    if(achievementAccomplished[i] < j + 1){
-                        updatePopup(achievementScripts[i][j]);
-                        //achievementDisplayed = j+1;
-                        achievementAccomplished[i] = j+1;
-                        selectAnimation(achievementAnimations[i]);
-                    }
-                    allDone = false;
-                }
+//                 if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][j]) && Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][j+1])) {
+//                     //if( achievementDisplayed < j+1){
+//                     if(achievementAccomplished[i] < j + 1){
+//                         updatePopup(achievementScripts[i][j]);
+//                         //achievementDisplayed = j+1;
+//                         achievementAccomplished[i] = j+1;
+//                         selectAnimation(achievementAnimations[i]);
+//                     }
+//                     allDone = false;
+//                 }
          
-            }
+//             }
      
-        }
+//         }
     
-    }
+//     }
 
- }
+//  }
  
- //if all achievements have been completed, the level is complete
- if(allDone == true){
-    //if(achievementDisplayed < achievementValues[0].length){
-    if(achievementAccomplished[0] < achievementValues[0].length){
-        updatePopup(achievementScripts[0][achievementScripts[0].length-1]);
-        //achievementDisplayed = achievementValues[0].length;
-        achievementAccomplished[0] = achievementValues[0].length;
-        launchFireworks();
+//  //if all achievements have been completed, the level is complete
+//  if(allDone == true){
+//     //if(achievementDisplayed < achievementValues[0].length){
+//     if(achievementAccomplished[0] < achievementValues[0].length){
+//         updatePopup(achievementScripts[0][achievementScripts[0].length-1]);
+//         //achievementDisplayed = achievementValues[0].length;
+//         achievementAccomplished[0] = achievementValues[0].length;
+//         launchFireworks();
         
-        //Switch to next level or return to menu
-        document.getElementById("nextLevelButton").className = "moveButtonShow";
-        document.getElementById("mainMenuButton").className = "moveButtonShow";
+//         //Switch to next level or return to menu
+//         document.getElementById("nextLevelButton").className = "moveButtonShow";
+//         document.getElementById("mainMenuButton").className = "moveButtonShow";
         
-    }
- }
+//     }
+//  }
  
  
 
+// }
+
+function objectiveCheck() {
+    
+    if(levelSpecs.started == 0){
+        
+        updatePopup(levelSpecs.begin);
+        levelSpecs.started = 1;
+        
+    }
+    
+    if(levelSpecs.started == 1 && levelSpecs.finished == 0){
+    
+        var numAccomplished = 0;
+        
+        for(var i = 0; i < objectives.length; i++){
+                
+            if(Totals[objectives[i].score][objectives[i].year] > objectives[i].low && Totals[objectives[i].score][objectives[i].year] <= objectives[i].high){
+                
+                if(objectives[i].final == 1){
+                    
+                    numAccomplished++;
+                    
+                }
+                
+                if(objectives[i].accomplished == 0){
+                
+                    if(objectives[i].script != "" && objectives[i].script != "none"){
+                        
+                        updatePopup(objectives[i].script);
+                            
+                    }
+                    
+                    if(objectives[i].animation != "" && objectives[i].animation != "none"){
+                        
+                        selectAnimation(objectives[i].animation);
+                        
+                    }
+                    
+                    objectives[i].accomplished = 1;
+                
+                }
+                
+            }
+            
+        }
+        
+        if(numAccomplished >= levelSpecs.numRequired){
+            
+            levelSpecs.finished = 1;
+            
+            updatePopup(levelSpecs.end);
+            launchFireworks();
+        
+            //Switch to next level or return to menu
+            document.getElementById("nextLevelButton").className = "moveButtonShow";
+            document.getElementById("mainMenuButton").className = "moveButtonShow";
+            
+        }
+        
+    }
+    
 }
 
 function selectAnimation(animation) {
@@ -1274,6 +1336,12 @@ function selectAnimation(animation) {
             break;
         case "flock":
             createFlock();
+            break;
+        case "brownRiver":
+            contaminatedRiver("brown");
+            break;
+        case "blueRiver":
+            contaminatedRiver("blue");
             break;
     }
     

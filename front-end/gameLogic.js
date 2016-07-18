@@ -19,7 +19,7 @@ function gameDirector() {
     //all features
     contaminatedRiver();
     
-    achievementCheck();
+    objectiveCheck();
     
     }
     
