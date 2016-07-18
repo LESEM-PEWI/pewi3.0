@@ -96,6 +96,12 @@
     font-size: 16px ;
 }
 
+.ecoLegend{
+    font-size: 20px;
+    text-align:center;
+    font-weight: bold;
+}
+
 .arc{
     opacity:1;
 }
@@ -313,11 +319,54 @@ text{
 
 #toggleYearPie{
     width:140px;
-    background-color:red;
-    margin-top:150px;
-    height:100px;
+    background-color: rgba(40,44,42,0.03);
+    box-shadow: 0px 2px 2px 1px rgba(0,0,0,.6);
+    margin-top:130px;
+    height:40px;
+    line-height: 190%;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    cursor: default;
+        -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
 }
 
+#toggleYearPie:hover{
+    background-color: rgba(40,44,42,0.1);
+}
+
+#asterChart {
+    display:block;
+    float:left;
+    margin-top:30px;
+    height:400px;
+    width: 400px;
+    overflow:hidden;
+}
+
+#asterHUD{
+    display:block;
+    margin-top:30px;
+    float:left;
+    width:400px;
+    height:400px;
+    
+    /** FOR NOW, DELETE LATER **/
+    margin-bottom:100px;
+}
+
+#asterContainer{
+    margin-top:80px;
+    margin-left:50px;
+    padding:0px;
+    width:300px;
+    display:block;
+    height:200px;
+    box-shadow: 0px 2px 2px 1px rgba(0,0,0,.6);
+    
+    
+}
 
 </style>
 </head>
@@ -348,11 +397,12 @@ text{
 <div id="yearHolder">    
 <div id="yearUpLand" onclick="changeLandPieBy(1);" class="upArrow"></div>
 <div id="yearDownLand" onclick="changeLandPieBy(-1);" class="downArrow"></div>
-<div id="toggleYearPie">Toggle to Categories</div>
+<div onclick="switchLandPie(1)" id="toggleYearPie">To Categories</div>
 </div>
 <div id="chart" class="chart"></div>
 
-
+<div id="asterChart"></div>
+<div id="asterHUD"> <div id="asterContainer"></div> </div>
 
 
     
@@ -367,6 +417,7 @@ text{
 
 </div>
 <script>
+var onCategories = false;
     
 function show(value) {
     
@@ -418,8 +469,34 @@ return year ;
 }
 
 function changeLandPieBy(value){
-    parent.pie(toggle(value)) ;
+    parent.pie(toggle(value), onCategories) ;
 }
+
+
+function toggleCategoriesPie(value) {
+    
+    if(value==1){
+        document.getElementById('toggleYearPie').innerHTML = "To List";
+        document.getElementById('toggleYearPie').onclick = function() { toggleCategoriesPie(0) } ;
+        onCategories = true ;
+    }
+    else{
+         document.getElementById('toggleYearPie').innerHTML = "To Categories";
+         document.getElementById('toggleYearPie').onclick = function() { toggleCategoriesPie(1) } ;
+         onCategories = false ;
+    }
+    
+    changeLandPieBy(0);
+}
+  
+function refreshPie(){
+    
+    document.getElementById('toggleYearPie').innerHTML = "To Categories";
+    document.getElementById('toggleYearPie').onclick = function() { toggleCategoriesPie(1) } ;
+    onCategories = false ;
+    
+}    
+    
     
 </script>
     
