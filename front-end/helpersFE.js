@@ -30,6 +30,9 @@ var painterTool = {
     hover: false
 } ;
 
+var birds, bird;
+var boids, boid;
+
 //onResize dynamically adjusts to window size changes
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -269,12 +272,21 @@ function addTile(tile) {
     var top23 = boardData[currentBoard].map[mapID + (tilesWide)] ? boardData[currentBoard].map[mapID + (tilesWide)].topography : 0;
     var top24 = boardData[currentBoard].map[mapID + (tilesWide + 1)] ? boardData[currentBoard].map[mapID + (tilesWide + 1)].topography : 0;
 
+    var riverHeight = 1;
+
     //Calculate the heights of vertices by averaging topographies of adjacent tiles and create a vector for each corner
     if (tToggle) {
-        v1 = new THREE.Vector3(0, (topN24 + topN23 + topN1 + tile.topography) / 4 * 5, 0);
-        v2 = new THREE.Vector3(tileWidth, (topN23 + topN22 + top1 + tile.topography) / 4 * 5, 0);
-        v3 = new THREE.Vector3(tileWidth, (top24 + top23 + top1 + tile.topography) / 4 * 5, tileHeight);
-        v4 = new THREE.Vector3(0, (top22 + top23 + topN1 + tile.topography) / 4 * 5, tileHeight);
+        var h1 = (topN24 + topN23 + topN1 + tile.topography) / 4 * 5;
+        var h2 = (topN23 + topN22 + top1 + tile.topography) / 4 * 5;
+        var h3 = (top24 + top23 + top1 + tile.topography) / 4 * 5;
+        var h4 = (top22 + top23 + topN1 + tile.topography) / 4 * 5;
+        
+        v1 = new THREE.Vector3(0, h1, 0);
+        v2 = new THREE.Vector3(tileWidth, h2, 0);
+        v3 = new THREE.Vector3(tileWidth, h3, tileHeight);
+        v4 = new THREE.Vector3(0, h4, tileHeight);
+        
+        riverHeight = (h1+h2+h3+h4)/4;
     }
     else {
         v1 = new THREE.Vector3(0, 0, 0);
@@ -323,7 +335,7 @@ function addTile(tile) {
             if(!riverPoints[Number(streams[i]) - 1]){
                 riverPoints[Number(streams[i]) - 1] = [];
             }
-            riverPoints[Number(streams[i]) - 1].push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide) / 2 + tileWidth/2, 1, tile.row * tileHeight - (tileHeight * tilesHigh) / 2 + tileHeight));
+            riverPoints[Number(streams[i]) - 1].push(new THREE.Vector3(tile.column * tileWidth - (tileWidth * tilesWide) / 2 + tileWidth/2, riverHeight, tile.row * tileHeight - (tileHeight * tilesHigh) / 2 + tileHeight));
         }
     }
 
@@ -561,7 +573,7 @@ function onDocumentKeyDown(event) {
             break;
         //case b
         case 66:
-            togglePopupDisplay();
+            createFlock();
             break;
         //case p
         case 80:
@@ -1168,88 +1180,150 @@ function getHighlightColor(type, ID) {
 } //end getHighlightColor
 
 //contaminatedRiver changes the color of the river dependent on current phosphorus level
-function contaminatedRiver() {
-
-    //this is buggy -- still a work-in progress. Maybe the status of the river should be stored in the board for each year...
-
-    if (Totals.phosphorusLoad[currentYear] > 1.7) {
+function contaminatedRiver(riverColor) {
+    
+    if(riverColor == "brown"){
         for(var i = 0; i < river.children.length; i++){
-           river.children[i].material.color.setHex("0x663300");
+           river.children[i].material.color.setHex("0x664d00");
        }
     }
-    else {
+    
+    if(riverColor == "blue"){
         for(var i = 0; i < river.children.length; i++){
             river.children[i].material.color.setHex("0x40a4df");
         }
     }
     
-
 } //end contaminatedRiver
 
-//achievementCheck
-function achievementCheck(){
+
+//DEPRECATED
+// //achievementCheck
+// function achievementCheck(){
  
- var allDone = "none";
- //check the current scores of each achievement
- for(var i = 0; i < achievementValues.length; i++){
+//  var allDone = "none";
+//  //check the current scores of each achievement
+//  for(var i = 0; i < achievementValues.length; i++){
      
-    //print the initial script when the totals are less than any achievement
-    if(Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][1])){
-             //if(achievementDisplayed < 0){
-             if(achievementAccomplished[0] < 0){
-                updatePopup(achievementScripts[i][0]); 
-                //achievementDisplayed = 1;
-                achievementAccomplished[0] = 1;
-             }
-             allDone = false;
-    //determine if a final value has been surpassed for each achievement
-    } else if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][achievementValues[i].length-1])){
-             if(allDone == "none" || allDone == true){
-                allDone = true;
-             }
-    //print scripts for subobjective achievements
-    } else {
-        if(achievementValues[i].length > 2){
+//     //print the initial script when the totals are less than any achievement
+//     if(Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][1])){
+//              //if(achievementDisplayed < 0){
+//              if(achievementAccomplished[0] < 0){
+//                 updatePopup(achievementScripts[i][0]); 
+//                 //achievementDisplayed = 1;
+//                 achievementAccomplished[0] = 1;
+//              }
+//              allDone = false;
+//     //determine if a final value has been surpassed for each achievement
+//     } else if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][achievementValues[i].length-1])){
+//              if(allDone == "none" || allDone == true){
+//                 allDone = true;
+//              }
+//     //print scripts for subobjective achievements
+//     } else {
+//         if(achievementValues[i].length > 2){
             
-            for(var j = 1; j < achievementValues[i].length; j++){
+//             for(var j = 1; j < achievementValues[i].length; j++){
          
-                if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][j]) && Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][j+1])) {
-                    //if( achievementDisplayed < j+1){
-                    if(achievementAccomplished[i] < j + 1){
-                        updatePopup(achievementScripts[i][j]);
-                        //achievementDisplayed = j+1;
-                        achievementAccomplished[i] = j+1;
-                        selectAnimation(achievementAnimations[i]);
-                    }
-                    allDone = false;
-                }
+//                 if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][j]) && Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][j+1])) {
+//                     //if( achievementDisplayed < j+1){
+//                     if(achievementAccomplished[i] < j + 1){
+//                         updatePopup(achievementScripts[i][j]);
+//                         //achievementDisplayed = j+1;
+//                         achievementAccomplished[i] = j+1;
+//                         selectAnimation(achievementAnimations[i]);
+//                     }
+//                     allDone = false;
+//                 }
          
-            }
+//             }
      
-        }
+//         }
     
-    }
+//     }
 
- }
+//  }
  
- //if all achievements have been completed, the level is complete
- if(allDone == true){
-    //if(achievementDisplayed < achievementValues[0].length){
-    if(achievementAccomplished[0] < achievementValues[0].length){
-        updatePopup(achievementScripts[0][achievementScripts[0].length-1]);
-        //achievementDisplayed = achievementValues[0].length;
-        achievementAccomplished[0] = achievementValues[0].length;
-        launchFireworks();
+//  //if all achievements have been completed, the level is complete
+//  if(allDone == true){
+//     //if(achievementDisplayed < achievementValues[0].length){
+//     if(achievementAccomplished[0] < achievementValues[0].length){
+//         updatePopup(achievementScripts[0][achievementScripts[0].length-1]);
+//         //achievementDisplayed = achievementValues[0].length;
+//         achievementAccomplished[0] = achievementValues[0].length;
+//         launchFireworks();
         
-        //Switch to next level or return to menu
-        document.getElementById("nextLevelButton").className = "moveButtonShow";
-        document.getElementById("mainMenuButton").className = "moveButtonShow";
+//         //Switch to next level or return to menu
+//         document.getElementById("nextLevelButton").className = "moveButtonShow";
+//         document.getElementById("mainMenuButton").className = "moveButtonShow";
         
-    }
- }
+//     }
+//  }
  
  
 
+// }
+
+function objectiveCheck() {
+    
+    if(levelSpecs.started == 0){
+        
+        updatePopup(levelSpecs.begin);
+        levelSpecs.started = 1;
+        
+    }
+    
+    if(levelSpecs.started == 1 && levelSpecs.finished == 0){
+    
+        var numAccomplished = 0;
+        
+        for(var i = 0; i < objectives.length; i++){
+                
+            if(Totals[objectives[i].score][objectives[i].year] > objectives[i].low && Totals[objectives[i].score][objectives[i].year] <= objectives[i].high){
+                
+                if(objectives[i].final == 1){
+                    
+                    numAccomplished++;
+                    
+                }
+                
+                if(objectives[i].accomplished == 0){
+                
+                    if(objectives[i].script != "" && objectives[i].script != "none"){
+                        
+                        updatePopup(objectives[i].script);
+                            
+                    }
+                    
+                    if(objectives[i].animation != "" && objectives[i].animation != "none"){
+                        
+                        selectAnimation(objectives[i].animation);
+                        
+                    }
+                    
+                    objectives[i].accomplished = 1;
+                
+                }
+                
+            }
+            
+        }
+        
+        if(numAccomplished >= levelSpecs.numRequired){
+            
+            levelSpecs.finished = 1;
+            
+            updatePopup(levelSpecs.end);
+            launchFireworks();
+        
+            //Switch to next level or return to menu
+            document.getElementById("nextLevelButton").className = "moveButtonShow";
+            document.getElementById("mainMenuButton").className = "moveButtonShow";
+            
+        }
+        
+    }
+    
 }
 
 function selectAnimation(animation) {
@@ -1259,6 +1333,15 @@ function selectAnimation(animation) {
             break;
         case "fireworks":
             launchFireworks();
+            break;
+        case "flock":
+            createFlock();
+            break;
+        case "brownRiver":
+            contaminatedRiver("brown");
+            break;
+        case "blueRiver":
+            contaminatedRiver("blue");
             break;
     }
     
@@ -1283,6 +1366,15 @@ function flyLark(){
     document.getElementById("meadowlark").className = "meadowlarkhidden";
     setTimeout( function(){ document.getElementById("meadowlark").className = "meadowlarkfly"}, 1);
 
+}
+
+function createFlock(){
+    
+    //setTimeout( function(){ addBirds();}, 30000);
+
+    addBirds();
+    setTimeout( function() { for(var i = 0; i < birds.length; i++){scene.remove(birds[i])}}, 10000);
+    
 }
 
 //writeFileToDownloadString creates a string in csv format that describes the current board

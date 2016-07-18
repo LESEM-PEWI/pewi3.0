@@ -5,8 +5,21 @@ var achievementDisplayed = -1;
 var achievementAccomplished = [];
 var achievementAnimations = [];
 var yearToCheck = 0;
+
+var objectives = [];
+var levelSpecs = {
+    begin: "",
+    end: "",
+    numRequired: 0,
+    started: 0,
+    finished: 0
+}
+
+
 var levelGlobal ;
 var lastLevel = 3;
+
+
 
 //loadLevel is triggered by clicking a level button on the html page
 function loadLevel(level){
@@ -24,7 +37,7 @@ function loadLevel(level){
             levelGlobal = 1 ;
             //parse level options file
             loadLevelDetails("./levels/specs/level1Specifications.txt");
-            initWorkspace('./levels/maps/pewiNewMapUpload.csv');
+            initWorkspace('./levels/maps/conservationSoybeanDSM.csv');
             document.getElementById('popup').className = "popup";
             break;
         case 2:
@@ -36,7 +49,7 @@ function loadLevel(level){
         case 3:
             levelGlobal = 3;
             loadLevelDetails("./levels/specs/level3Specifications.txt");
-            initWorkspace('./data.txt');
+            initWorkspace('./levels/maps/conservationSoybeanDSM.csv');
             document.getElementById('popup').className = "popup";
             break;
         case 0:
@@ -53,12 +66,10 @@ function loadLevel(level){
 
 function resetLevel(){
     
-    achievementScripts = [];
-    achievementValues = [];
-    achievementDisplayed = -1;
-    achievementAccomplished = [];
-    achievementAnimations = [];
-    yearToCheck = 0;
+    objectives = [];
+    levelSpecs = {
+            begin: "", end: "", numRequired: 0, started: 0, finished: 0
+    }
     
     clearPopup();
     
@@ -67,8 +78,66 @@ function resetLevel(){
     
 }
 
-function parseLevelDetails(data) {
+
+// DEPRECATED
+// function parseLevelDetails(data) {
  
+//     //get data from invisible div on page
+//     var strRawContents = data;
+//     //split based on escape chars
+//     while (strRawContents.indexOf("\r") >= 0)
+//         strRawContents = strRawContents.replace("\r", "");
+//     var arrLines = strRawContents.split("\n");
+
+//     var curLine = arrLines[0];
+//     //parse id's of items to hide using the parameters div in index.html
+//     hideOptions = curLine.split("*").join("\n");
+//     document.getElementById("parameters").innerHTML = hideOptions;
+    
+//     for(var i = 2; i < arrLines.length - 2; i++){
+        
+//         var tempScripts = [];
+//         var tempValues = [];
+//         var tempAnimations = [];
+        
+//         achievementAccomplished[i-2] = -1;
+        
+//         //Add the start up script to tempScripts
+//         tempScripts.push(arrLines[1]);
+        
+//         //Parse the items in each line
+//         var tempParsed = arrLines[i].split("*");
+        
+//         //Add the name of the score being checked to the values array
+//         tempValues.push(tempParsed[0]);
+//         for(var j = 1; j < tempParsed.length; j++){
+//             if(j != tempParsed.length - 1){
+//                 if(j%2 != 0){
+//                     tempValues.push(tempParsed[j]);
+//                 } else {
+//                     tempScripts.push(tempParsed[j]);
+//                 }
+//             } else {
+//                 achievementAnimations[i-2] = tempParsed[tempParsed.length - 1];
+//             }
+//         }
+        
+//         //Add the final script to tempScripts
+//         tempScripts.push(arrLines[arrLines.length - 2]);
+        
+//         //Determine which year is being checked
+//         yearToCheck = arrLines[arrLines.length - 1];
+        
+//         //Add tempScripts and tempValues to the achievements Arrays
+//         achievementValues.push(tempValues);
+//         achievementScripts.push(tempScripts);
+    
+//     }
+        
+// } //end parseInitial()
+
+function parseLevelDetails(data) {
+    
     //get data from invisible div on page
     var strRawContents = data;
     //split based on escape chars
@@ -81,47 +150,35 @@ function parseLevelDetails(data) {
     hideOptions = curLine.split("*").join("\n");
     document.getElementById("parameters").innerHTML = hideOptions;
     
-    for(var i = 2; i < arrLines.length - 2; i++){
-        
-        var tempScripts = [];
-        var tempValues = [];
-        var tempAnimations = [];
-        
-        achievementAccomplished[i-2] = -1;
-        
-        //Add the start up script to tempScripts
-        tempScripts.push(arrLines[1]);
-        
-        //Parse the items in each line
+    //add the beginning script to the levelScripts object
+    levelSpecs.begin = arrLines[1];
+    
+    //add the number of final objectives that are required to pass the level
+    levelSpecs.numRequired = arrLines[2];
+    
+    for(var i = 3; i < arrLines.length - 1; i++){
+    
         var tempParsed = arrLines[i].split("*");
-        
-        //Add the name of the score being checked to the values array
-        tempValues.push(tempParsed[0]);
-        for(var j = 1; j < tempParsed.length; j++){
-            if(j != tempParsed.length - 1){
-                if(j%2 != 0){
-                    tempValues.push(tempParsed[j]);
-                } else {
-                    tempScripts.push(tempParsed[j]);
-                }
-            } else {
-                achievementAnimations[i-2] = tempParsed[tempParsed.length - 1];
-            }
+    
+        var newObjective = {
+            score: tempParsed[0],
+            year: Number(tempParsed[1]),
+            final: Number(tempParsed[2]),
+            accomplished: 0,
+            low: Number(tempParsed[3]),
+            high: Number(tempParsed[4]),
+            script: tempParsed[5],
+            animation: tempParsed[6]
         }
         
-        //Add the final script to tempScripts
-        tempScripts.push(arrLines[arrLines.length - 2]);
+        objectives.push(newObjective);
         
-        //Determine which year is being checked
-        yearToCheck = arrLines[arrLines.length - 1];
-        
-        //Add tempScripts and tempValues to the achievements Arrays
-        achievementValues.push(tempValues);
-        achievementScripts.push(tempScripts);
-    
     }
-        
-} //end parseInitial()
+    
+    //add the ending script to the levelScripts object
+    levelSpecs.end = arrLines[arrLines.length - 1];
+
+}
 
 //load the data from given fileString into the given board object
 function loadLevelDetails(fileString) {
