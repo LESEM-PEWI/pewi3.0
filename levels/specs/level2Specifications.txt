@@ -1,8 +1,10 @@
 paint3*paint4*paint5*paint6*paint7*paint8*paint9*paint12*paint13*paint14*paint15
-Goal: Achieve greater than a score of 90 for gross erosion and phosphorus load with a corn grain yield of at least 75%.
-grossErosionScore*90*none
-phosphorusLoadScore*90*none
-cornGrainYieldScore*75*none
-woodYieldScore*0.1*Consider placing conservation forest on areas with high topography to reduce erosion!*10*flock
+Goal: Achieve greater than a score of 90 for both gross erosion and phosphorus load with a corn grain yield of more than 75%.
+3
+grossErosionScore*1*0*20*60*Conventional corn can cause a great deal of erosion. Consider ways that erosion could be reduced.*brownRiver
+grossErosionScore*1*0*80*88*Conservation corn includes buffers which help control erosion.*blueRiver
+grossErosionScore*1*1*90*100*Biodiversity has increased!*flock
+phosphorusLoadScore*1*1*90*100*none*blueRiver
+cornGrainYieldScore*1*1*75*100*none*none
+woodYieldScore*1*0*0*10*Consider the influence of topography when placing forest to reduce erosion!*bird
 Exercise 1A.2 Complete!
-1

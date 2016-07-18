@@ -1,9 +1,11 @@
-paint1*paint2*paint5*paint6*paint7*paint9*paint15
-Goal: Create a natural wildlife area surrounded by 2 farms, one soybean farmer and one hay farmer. Each farm must cover at least 25% of the land. Make sure to keep the water quality levels above 95. 
-soybeanYieldScore*25*none
-grassHayYieldScore*25*none
-nitrateConcentrationScore*95*none
-phosphorusLoadScore*95*none
-sedimentDeliveryScore*95*none
+paint1*paint2*paint5*paint6*paint7*paint15
+Goal: Create a natural wildlife area surrounded by 2 farms, one soybean farmer and one hay farmer. Each farm must cover at least 25% of the land. Make sure to keep the water quality levels above 95.
+5
+soybeanYieldScore*1*1*25*50*none*none
+grassHayYieldScore*1*1*25*50*none*none
+nitrateConcentrationScore*1*0*70*90*Consider the importance of wetland in regard to nitrate pollution levels.*none
+nitrateConcentrationScore*1*1*95*100*none*bird
+phosphorusLoadScore*1*0*1*95*none*brownRiver
+phosphorusLoadScore*1*1*95*100*none*blueRiver
+sedimentDeliveryScore*1*1*95*100*none*none
 Exercise 1A.3 Complete!
-1

@@ -1,7 +1,10 @@
 paint15*paint1*paint2*paint5*paint12*paint6*paint7*paint8*paint11*paint10*paint13
 Goal: Reach greater than 95% soybean yield while keeping your nitrate pollution score above 75! Try experimenting with strategic wetlands and/or prairie. Good Luck!
-nitrateConcentrationScore*10*The nitrate pollution score is rather low. Try planting a crop that won't dump as much nitrate in the river!*50*Great! Conservation soybean reduces nitrate pollution levels.*70*Retaining wetlands on strategic wetlands greatly improves nitrate pollution levels!*75*none
-wetlandLandUseScore*0.1*Awesome! Place wetlands on strategic wetlands to decrease nitrate pollution and increase biodiversity!*1*bird
-soybeanYieldScore*95*none
-Exercise 1A.2 Complete!
-1
+2
+nitrateConcentrationScore*1*0*10*50*The nitrate pollution score is rather low. Try planting a crop that won't dump as much nitrate in the river!*brownRiver
+nitrateConcentrationScore*1*0*50*70*Great! Conservation soybean reduces nitrate pollution levels. Try using the strategic wetlands button in the fourth tab on the left panel to find where to place wetlands.*blueRiver
+nitrateConcentrationScore*1*0*70*75*Retaining wetlands on strategic wetlands greatly improves nitrate pollution levels!*none
+nitrateConcentrationScore*1*1*75*100*Awesome! The nitrate pollution score is above 75!*bird
+wetlandLandUseScore*1*0*0.1*100*You're on to something! Place wetlands on strategic wetland areas to decrease population and increase biodiversity!*flock
+soybeanYieldScore*1*1*95*100*none*none
+Exercise 1A.1 Complete!

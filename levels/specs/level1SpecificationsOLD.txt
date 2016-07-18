@@ -1,7 +1,0 @@
-paint5*paint8*paint12*paint6*paint7*paint14*paint9*paint11*paint10*paint13
-In this level, start with conventional corn and soy land use covers. Then, add conservation corn and soy. Try to achieve a score of at least 86% for both phosphorus pollution control and erosion control. Make sure to use at least 2% mixed fruits and vegetables.
-phosphorusLoadScore*80*You're almost there! Phophorus load is now over 80%.*86*bird
-grossErosionScore*80*You're almost there! Gross erosion is now over 80%.*86*bird
-mixedFruitsAndVegetablesLandUseScore*1*Add some more mixed fruits and vegetables!*2*fireworks
-Exercise 1A.1 Complete!
-1
