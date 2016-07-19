@@ -1,0 +1,117 @@
+<!doctype html>
+
+<html>
+    
+<script src="../front-end/levelDesigner.js"></script>
+
+<head>
+    
+    <style>
+        
+    body {
+    background-color:black;
+    color:white;
+    }  
+    
+    .levelsDesignContainer{
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -350px;
+    margin-bottom: -350px;
+    
+    border-radius: 40px ;
+    border: 2px solid white;
+    
+    width:500px;
+    background-color: #00b8e6;
+    /*background-image: url("../modules/codex/dark-mosaic.png");*/
+    background-repeat: repeat ;
+
+    }
+    
+    .designLevel {
+        
+        padding: 20px;
+    }
+    
+        
+        
+    </style>
+
+</head>
+
+<body id="body">
+    
+    <form class="levelsDesignContainer">
+    
+    <div class="designLevel">
+    
+    <br>
+    
+    <!-- Text input-->
+    <div class="form-group">
+      <label for="textinput">PEWI Exercise Number</label>  
+      <div>
+      <input id="exerciseNumber" type="text" placeholder="Ex: 1A.1">
+      </div>
+    </div>
+    
+    <br>
+    
+    <div>
+        <label>Enter the level's beginning script. Tell the user what they need to accomplish.</label>
+        <div>
+            <textarea id="beginningScript"></textarea>
+        </div>
+    </div>
+    
+    <br>
+    <br>
+    
+    
+    <div id="objectiveDiv">
+    </div>
+    
+    <input type="button" value="Add an objective" onClick="addObjective('objectiveDiv');"> <br>
+    
+    <br>
+    <br>
+    
+    <div>
+        <label>Enter the level's ending script. Congratulate the user and provide any further/concluding information.</label>
+        <div>
+            <textarea id="endingScript"></textarea>
+        </div>
+    </div>
+
+    <br>
+    
+    <div id="settings">
+        <label>How many of the required objectives must the user complete to pass the level?</label>
+        <div>
+          <input id="numRequired" type="text" placeholder="Ex: 4">
+        </div>
+    </div>
+    
+        
+    <script>addOptions();</script>
+    
+    <br>
+    
+    <div>
+        <button type="button" onClick="downloadLevel();">Submit</button>
+        <button type="reset">Reset</button>
+    </div>
+    
+    <br>
+    
+    
+    </div>
+    </form>
+
+
+</body>
+
+</html>

@@ -17,7 +17,7 @@ var levelSpecs = {
 
 
 var levelGlobal ;
-var lastLevel = 3;
+var lastLevel = 4;
 
 
 
@@ -49,6 +49,12 @@ function loadLevel(level){
         case 3:
             levelGlobal = 3;
             loadLevelDetails("./levels/specs/level3Specifications.txt");
+            initWorkspace('./levels/maps/conservationSoybeanDSM.csv');
+            document.getElementById('popup').className = "popup";
+            break;
+        case 4:
+            levelGlobal = 4;
+            loadLevelDetails("./levels/specs/exercise1A.4.txt");
             initWorkspace('./levels/maps/conservationSoybeanDSM.csv');
             document.getElementById('popup').className = "popup";
             break;
