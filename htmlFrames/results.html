@@ -161,7 +161,6 @@
     width:140px;
     height:400px;
     font-size: 12px;
-
     
 }
 
@@ -341,7 +340,7 @@ text{
     float:left;
     margin-top:30px;
     height:400px;
-    width: 400px;
+    width: 360px;
     overflow:hidden;
 }
 
@@ -349,16 +348,16 @@ text{
     display:block;
     margin-top:30px;
     float:left;
-    width:400px;
+    width:320px;
     height:400px;
     
     /** FOR NOW, DELETE LATER **/
-    margin-bottom:100px;
+    margin-bottom:200px;
 }
 
 #asterContainer{
     margin-top:80px;
-    margin-left:50px;
+    margin-left:10px;
     padding:0px;
     width:300px;
     display:block;
@@ -368,13 +367,29 @@ text{
     
 }
 
+#yearHolder2{
+    margin:0px;
+    margin-top:30px;
+    float:left;
+    display:inline-block;
+    width:120px;
+    height:400px;
+    font-size: 12px;
+}
+
+#yearDownESI, #yearUpESI{
+    margin-left:40px;
+}
+
+
 </style>
 </head>
 
 <body>
-
-<div style="visibility:hidden;" id="curYear"></div>
+    
 <div style="visibility:hidden;" id="upTo"></div>
+<div style="visibility:hidden;" id="landYear"></div>
+<div style="visibility:hidden;" id="ecoYear"></div>
 
 <div  id="tab1" class="tabSelected" onclick="show(1);"><img src="./imgs/graphIcon.png">  </div>
 <div id="tab2" class="tab" onclick="show(2);"><img src="./imgs/numbersIcon.png">   </div>
@@ -402,8 +417,11 @@ text{
 <div id="chart" class="chart"></div>
 
 <div id="asterChart"></div>
+<div id="yearHolder2">
+<div id="yearUpESI" onclick="changeESIAsterBy(1);" class="upArrow"></div>
+<div id="yearDownESI" onclick="changeESIAsterBy(-1);" class="downArrow"></div>
+</div>
 <div id="asterHUD"> <div id="asterContainer"></div> </div>
-
 
     
 </div>
@@ -437,15 +455,13 @@ function show(value) {
     
 }    
 
-function toggle(value){
+function toggleYear(value){
 
     
 var upTo = Number(document.getElementById('upTo').innerHTML) ;
-var year = Number(document.getElementById('curYear').innerHTML) ;
+var year = Number(document.getElementById('landYear').innerHTML) ;
 
 year = year + value ;
-
-
 
  document.getElementById('yearUpLand').className = "upArrow";
  document.getElementById('yearUpLand').onclick = function() {changeLandPieBy(1);};
@@ -469,7 +485,7 @@ return year ;
 }
 
 function changeLandPieBy(value){
-    parent.pie(toggle(value), onCategories) ;
+    parent.pie(toggleYear(value), onCategories) ;
 }
 
 
@@ -496,6 +512,40 @@ function refreshPie(){
     onCategories = false ;
     
 }    
+
+function toggleESI(value) {
+    
+var upTo = Number(document.getElementById('upTo').innerHTML) ;
+var year = Number(document.getElementById('ecoYear').innerHTML) ;
+
+year = year + value ;
+
+ document.getElementById('yearUpESI').className = "upArrow";
+ document.getElementById('yearUpESI').onclick = function() {changeESIAsterBy(1);};
+ document.getElementById('yearDownESI').className = "downArrow";
+ document.getElementById('yearDownESI').onclick = function() {changeESIAsterBy(-1);};
+
+if(year == upTo){
+    document.getElementById('yearUpESI').className = "upArrowDisabled";
+    document.getElementById('yearUpESI').onclick = function() {};
+    
+}
+
+if(year == 1){
+    document.getElementById('yearDownESI').className = "downArrowDisabled";
+document.getElementById('yearDownESI').onclick = function() {};
+    
+}
+
+return year ;
+    
+    
+    
+}
+
+function changeESIAsterBy(value){
+    parent.aster(toggleESI(value)) ;
+}
     
     
 </script>

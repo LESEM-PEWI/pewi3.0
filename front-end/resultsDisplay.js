@@ -373,13 +373,16 @@ function displayResults() {
     drawPrecipBar() ;
     aster(currentYear);
     
+    document.getElementById('resultsFrame').contentWindow.toggleYear(0) ;
+    document.getElementById('resultsFrame').contentWindow.toggleESI(0) ;
+    
 } //end displayResults
 
 
 function pie(year, category) {
     
 document.getElementById('resultsFrame').contentWindow.document.getElementById('chart').innerHTML = " " ;   
-document.getElementById('resultsFrame').contentWindow.document.getElementById('curYear').innerHTML = year;
+document.getElementById('resultsFrame').contentWindow.document.getElementById('landYear').innerHTML = year;
 document.getElementById('resultsFrame').contentWindow.document.getElementById('upTo').innerHTML = boardData[currentBoard].calculatedToYear;
 
 
@@ -592,8 +595,6 @@ var path = svg.selectAll('path')
         .style("font-weight", "bold")
         .text("Year " + year)
         
-
-    document.getElementById('resultsFrame').contentWindow.toggle(0) ;
     
 }
     
@@ -783,15 +784,18 @@ function aster(year){
    
 document.getElementById('resultsFrame').contentWindow.document.getElementById('asterChart').innerHTML = " " ; 
 document.getElementById('resultsFrame').contentWindow.document.getElementById('asterContainer').innerHTML = " ";
+document.getElementById('resultsFrame').contentWindow.document.getElementById('ecoYear').innerHTML = year;
+document.getElementById('resultsFrame').contentWindow.document.getElementById('upTo').innerHTML = boardData[currentBoard].calculatedToYear;   
+   
    
 var dataset = [
-    {name: "Nitrate Concentration", score: (Math.round(Totals.nitrateConcentrationScore[year] * 10) / 10 ), color: "#0066cc", backColor: "navy", count: 1},
-    {name: "Phosphorus Load", score: (Math.round(Totals.phosphorusLoadScore[year] * 10 ) / 10) , color: "#00cc99", backColor: "navy", count: 1},
-    {name: "Sediment Delivery", score: (Math.round(Totals.sedimentDeliveryScore[year] * 10) / 10)  , color: "	#cc0033", backColor: "navy", count: 1},
-    {name: "Carbon Sequestration", score: (Math.round(Totals.carbonSequestrationScore[year] * 10) / 10), color: "#6b6961", backColor: "maroon", count:1},
-    {name: "Gross Erosion", score: (Math.round(Totals.grossErosionScore[year] * 10) / 10), color: "#cccc00", backColor: "maroon", count: 1},
-    {name: "Game Wildlife", score: (Math.round(Totals.gameWildlifePointsScore[year] * 10) / 10), color: "#9900cc", backColor: "tomato", count: 1},
-    {name: "Biodiversity", score: (Math.round(Totals.biodiversityPointsScore[year] * 10) / 10), color: "#33cc00", backColor: "tomato", count: 1}
+    {name: "Nitrate Concentration", score: (Math.round(Totals.nitrateConcentrationScore[year] * 10) / 10 ), color: "#0066cc", backColor: "navy", raw: (Math.round(Totals.nitrateConcentration[year] * 10) / 10 ) + " ppm", count: 1},
+    {name: "Phosphorus Load", score: (Math.round(Totals.phosphorusLoadScore[year] * 10 ) / 10) , color: "#00cc99", backColor: "navy", raw: (Math.round(Totals.phosphorusLoad[year] * 10) / 10 ) + " tons",  count: 1},
+    {name: "Sediment Delivery", score: (Math.round(Totals.sedimentDeliveryScore[year] * 10) / 10)  , color: "	#cc0033", backColor: "navy", raw: (Math.round(Totals.sedimentDelivery[year] * 10) / 10 ) + " tons", count: 1},
+    {name: "Carbon Sequestration", score: (Math.round(Totals.carbonSequestrationScore[year] * 10) / 10), color: "#6b6961", backColor: "maroon", raw: (Math.round(Totals.carbonSequestration[year] * 10) / 10 ) + " tons", count:1},
+    {name: "Gross Erosion", score: (Math.round(Totals.grossErosionScore[year] * 10) / 10), color: "#cccc00", backColor: "maroon", raw: (Math.round(Totals.grossErosion[year] * 10) / 10 ) + " tons", count: 1},
+    {name: "Game Wildlife", score: (Math.round(Totals.gameWildlifePointsScore[year] * 10) / 10), color: "#9900cc", backColor: "tomato", raw: (Math.round(Totals.gameWildlifePoints[year] * 10) / 10 ) + " pts", count: 1},
+    {name: "Biodiversity", score: (Math.round(Totals.biodiversityPointsScore[year] * 10) / 10), color: "#33cc00", backColor: "tomato", raw: (Math.round(Totals.biodiversityPoints[year] * 10) / 10 ) + " pts", count: 1}
     
     ];    
     
@@ -814,8 +818,8 @@ var innerArc = d3.arc()
    .innerRadius(innerRadius) 
    .padAngle(0)
    .outerRadius(function (d) { 
-    return (radius - innerRadius) * (d.data.score / 100.0) + innerRadius ;
-    });
+     return (radius - innerRadius) * (d.data.score / 100.0) + innerRadius ;  
+     });
     
     
 var outlineArc = d3.arc()
@@ -874,10 +878,10 @@ var path = svg.selectAll('path')
   .attr('class', 'arc')
   .on('mouseover',function(d) { 
             mouseoverInfo.select('.label').html(d.data.name);
-            mouseoverInfo.select('.count').html(d.data.count + " bahhh"); 
-            mouseoverInfo.select('.score').html(d.data.score ); 
-           // mouseoverInfo.style('border-color', color(d.data.label) );
-           //should be oN outer label!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+            mouseoverInfo.select('.count').html(d.data.raw); 
+            mouseoverInfo.select('.score').html(d.data.score + "/100"); 
+            mouseoverInfo.style('border-color', d.data.color );
+           
             mouseoverInfo.style('display', 'block');
             
             d3.select(this).classed("arc", false);
@@ -892,9 +896,10 @@ var path = svg.selectAll('path')
 
   })
   .transition()
-  .duration(1400)
+  .duration(700)
   .attrTween('d', function(d, i) {
-    var endRadius = (radius - innerRadius) * (d.data.score / 100.0) + innerRadius ;
+     //console.log(d) ;
+    var endRadius =  (d.data.score < 2) ? innerRadius + 6 : (radius - innerRadius) * (d.data.score / 100.0) + innerRadius ;
     return interpolateSVGArc(0, 0, endRadius, d.startAngle, d.endAngle);
    });
 
@@ -912,7 +917,7 @@ var cover = svg.selectAll(".cover")
       .attr("fill", "none")
       .attr("stroke", function(d) { return d.data.backColor ; })
       .attr("class", "outlineArc")
-      .attr("d", outlineArc);  
+      .attr("d", outlineArc);
      
       
  svg.append("text")
@@ -1035,9 +1040,9 @@ var cover = svg.selectAll(".cover")
         return 'translate(' + horz + ',' + vert + ')';
     })
     .transition()
-    .duration(1400)
+    .duration(1000)
     .attrTween("fill", function() {
-        console.log(this.getAttribute('fill'));
+        //console.log(this.getAttribute('fill'));
         return d3.interpolateRgb("#000000", this.getAttribute("fill"));
     });
 
