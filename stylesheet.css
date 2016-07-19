@@ -76,7 +76,9 @@ html{
 }
 
 body {
-	background-color: #FFFFFF;
+    position:fixed;
+	width:100%;
+	height:100%;
 	margin: 0px;
 	overflow: hidden;
 	padding:0px;
@@ -463,17 +465,18 @@ select {
     position:absolute;
     top: 10%;
     width:70%;
-    
-    -webkit-transition-duration: 1s; /* Safari */
-    transition-duration: 1s;
+    right:15%;
+    -webkit-transition-duration: 0.5s; /* Safari */
+    transition-duration: 0.5s;
 }
 
 .resultsFrame{
-    right:15%;
+    opacity: 1;
 }
 
 .resultsFrameRolled{
-    right:-75%;
+    opacity: 0;
+    visibility:hidden;
 }
 
 /** year buttons, right consol **/
