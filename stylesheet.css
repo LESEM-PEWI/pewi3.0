@@ -486,8 +486,8 @@ select {
     top: 0%;
     width:70%;
     right:15%;
-    -webkit-transition-duration: 0.2s; /* Safari */
-    transition-duration: 0.2s;
+  -webkit-transition-duration: 0.9s; 
+    transition-duration: 0.9s; 
 }
 
 .resultsFrame{

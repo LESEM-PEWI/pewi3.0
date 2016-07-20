@@ -675,6 +675,15 @@ function resultsStart() {
     document.getElementById("closeResults").style.opacity = "1";
     document.getElementById('closeResults').style.visibility = "visible" ;
 
+
+    //clean up frame so that no cached elements are left hangin' ya know
+    //clear residual graphics
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('chart').innerHTML = " " ; 
+    //document.getElementById('resultsFrame').contentWindow.document.getElementById('precipChart').innerHTML = " " ;
+    //document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo').innerHTML = " " ;
+    //document.getElementById('resultsFrame').contentWindow.document.getElementById('asterChart').innerHTML = " " ; 
+    //document.getElementById('resultsFrame').contentWindow.document.getElementById('asterContainer').innerHTML = " ";
+
     //functions that update results and display them appropriately
     calculateResults();
     displayResults();
@@ -707,7 +716,8 @@ function resultsEnd() {
     if (reopenDialogue){
         togglePopupDisplay();
     }
-
+    
+    
 } //end resultsEnd
 
 //roll controls the display of the toolbars on the left
@@ -1524,6 +1534,7 @@ function showUploadDownload() {
 function closeUploadDownloadFrame() {
     document.getElementById('closeUploadDownload').style.display = "none";
     document.getElementById('uploadDownloadFrame').style.display = "none";
+
     modalUp = false;
 } //end closeUploadDownloadFrame
 

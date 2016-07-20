@@ -171,8 +171,7 @@ left:45px;
  opacity:0;
  -webkit-transition-duration: 4s; /* Safari */
 transition-duration: 4s;
--webkit-transition-timing-function: ease-in-out;
-transition-timing-function: ease-out;
+
 }
 </style>
 
@@ -280,13 +279,17 @@ function endFunction() {
  document.getElementById('contentsHolder').style.transitionDuration = ".4s" ;
  
   //moveBackground() ;
-  document.getElementById('backImg2').style.transitionDuration = "50s";
-  document.getElementById('backImg2').style.bottom = "-1630px" ;
 
   parent.animationFrames();
   
   
 }, 10);
+
+setTimeout( function() {
+ document.getElementById('backImg2').style.transitionDuration = "50s";
+  document.getElementById('backImg2').style.bottom = "-1630px" ;
+ 
+}, 4000);
  
  
 }
@@ -298,7 +301,7 @@ function startSandbox() {
  
  document.getElementById('button2').style.display = "none" ;
  document.getElementById('button3').style.display = "none" ;
- document.getElementById('button1').style.left = "50%" ;
+ document.getElementById('button1').style.left = "51%" ;
  document.getElementById('button1').style.backgroundColor = "#003d4d" ;
  document.getElementById('contentsHolder').style.marginTop = "0px";
  document.getElementById('contentsHolder').style.top = "0%";

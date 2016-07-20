@@ -1,6 +1,9 @@
 //displayResults writes the html for the results iframe with updates results from Totals
 function displayResults() {
 
+    //clear graphics
+
+    
     toMetricFactorArea = 2.471;
     var upToYear = boardData[currentBoard].calculatedToYear;
 
@@ -375,6 +378,8 @@ function displayResults() {
     
     document.getElementById('resultsFrame').contentWindow.toggleYear(0) ;
     document.getElementById('resultsFrame').contentWindow.toggleESI(0) ;
+    
+    
     
 } //end displayResults
 
