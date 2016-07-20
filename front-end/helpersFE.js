@@ -696,12 +696,6 @@ function resultsEnd() {
         roll(1) ;
     }
     
-    document.getElementById("resultsButton").onmouseout = function() {
-        document.getElementById("resultsButton").className = "resultsButtonRolled";
-    };
-    document.getElementById("resultsButton").onmouseover = function() {
-        roll(2);
-    };
     document.getElementById("toolsButton").onclick = function() {
         roll(1);
     };
