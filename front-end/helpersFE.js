@@ -17,7 +17,7 @@ var rowCutOffs = []; //y coor of top left corner of each tile
 var columnCutOffs = [];
 var mesh = null;
 var isShiftDown = false;
-var tToggle = true;
+var tToggle = false; //topology off by default
 var mapIsHighlighted = false;
 var hoverOverride = false;
 var currentHighlightType = 0;
@@ -1678,11 +1678,11 @@ function toggleVisibility() {
         document.getElementById(idName).style.display = "inline-block";
         
         var htmlstuff = (document.getElementById(idName + "Container").innerHTML).trim() ;
-        console.log(htmlstuff[htmlstuff.length - 1] ) ;
+        //console.log(htmlstuff[htmlstuff.length - 1] ) ;
         if(!isNaN(htmlstuff[htmlstuff.length - 1])){
-            console.log("need to cut") ;
+            //console.log("need to cut") ;
             while(!(htmlstuff[htmlstuff.length - 1] == '>')){
-                console.log("cut...." + htmlstuff[htmlstuff.length - 1]);
+                //console.log("cut...." + htmlstuff[htmlstuff.length - 1]);
                 htmlstuff = htmlstuff.slice(0,-1);
             }
             
@@ -1704,16 +1704,22 @@ function toggleVisibility() {
         }
       }
       
-      console.log(document.getElementById("year" + currentYear + "Button").style.display);
-      
       //check to see if the year we are on is no longer a year... if so, well, switch to y1
-      if(document.getElementById("year" + currentYear + "Button").style.display == "none"){
-          console.log("oh no") ;
+      var yearMax = 3 ;
+      if(document.getElementById("year3Button").style.display == "none") yearMax = 2;
+      if(document.getElementById("year2Button").style.display == "none") yearMax = 1;
+      
+      if(currentYear > yearMax){
           transitionToYear(1);
           switchYearTab(1);
       }
+      
+      if(boardData[currentBoard].calculatedToYear > yearMax) boardData[currentBoard].calculatedToYear = yearMax;
     
-    
+      //check to see if the painter selected is no longer a painter...
+      if(document.getElementById('paint' + painter).style.display == "none"){
+            paintChange(1);
+      }
     
 }
 
@@ -1753,6 +1759,7 @@ function painterSelect(value){
 function resetOptions() {
     
     document.getElementById('options').style.visibility = "hidden" ;
+    
     document.activeElement.blur() ;
     toggleVisibility() ;
     
