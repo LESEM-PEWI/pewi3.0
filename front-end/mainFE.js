@@ -18,6 +18,12 @@ var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
 var skybox = false;
 
+//Variables for Zoom Function
+var zoomedIn = false;
+var fov = null, zoomFactor = 1.0, zoomInc = 0.01;
+var zoomingInNow = false;
+var zoomingOutNow = false;
+
 //createThreeFramework instantiates the renderer and scene to render 3D environment
 function createThreeFramework(){
     
@@ -42,9 +48,11 @@ function initializeCamera(){
     scene.add(camera);
     
     //point camera
+    camera.position.x = 0;
     camera.position.y = 320;
-    camera.position.z = 0;
-    camera.rotation.x = -1.570795331865673;
+
+    //set camera field of view for zoom functions
+    fov = camera.fov;
     
     //set up controls
     controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -175,6 +183,28 @@ function animationFrames(){
     	}
     
     }
+    
+    if(zoomingInNow){
+        
+        camera.fov = fov * zoomFactor;
+        camera.updateProjectionMatrix();
+        
+        zoomFactor = zoomFactor - zoomInc;
+        
+        if(zoomFactor < 0.35) zoomingInNow = false;
+        
+    }
+    
+    if(zoomingOutNow){
+        
+        camera.fov = fov * zoomFactor;
+        camera.updateProjectionMatrix();
+        
+        zoomFactor = zoomFactor + zoomInc;
+        
+        if(zoomFactor > 1.0) zoomingOutNow = false;
+    }
+    
 
 
    renderer.autoClear = false;
@@ -247,7 +277,7 @@ function switchBoards(newBoard){
 
     refreshBoard();
     setupRiver();
-    previousHighlight = 0;
+    previousHover = 0;
 
     //update Results to point to correct board since currentBoard is updated
     Totals = new Results(boardData[currentBoard]);
@@ -267,6 +297,7 @@ function setupBoardFromFile(file) {
     
 } //end setupBoardFromFile
 
+//setupBoardFromUpload
 function setupBoardFromUpload(data) {
 
     //addBoard
@@ -277,6 +308,58 @@ function setupBoardFromUpload(data) {
     switchBoards(boardFromUpload);
 
 } //end setupBoardFromUpload
+
+//switchToZoomView updates a zoom template map with information from the current full map
+function switchToZoomView(tile){
+    
+    //record the board index before zooming in
+    fullBoardBeforeZoom = currentBoard;
+    zoomedIn = true;
+    
+    //setup board from zoom template map
+    setupBoardFromFile("./levels/maps/zoomTemplate.csv");
+    
+    //for each of the tiles in the zoomed in map, update their information from the main board
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+
+        //update the mesh textures
+        meshMaterials[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+        
+        //update the land use types for each year
+        boardData[currentBoard].map[i].landType[1] = boardData[fullBoardBeforeZoom].map[tile].landType[1];
+        boardData[currentBoard].map[i].landType[2] = boardData[fullBoardBeforeZoom].map[tile].landType[2];
+        boardData[currentBoard].map[i].landType[3] = boardData[fullBoardBeforeZoom].map[tile].landType[3];
+        
+        //update the calculations for the current year
+        boardData[currentBoard].map[i].update(currentYear);
+
+    }
+    
+    //reset the camera location
+    controls.reset();
+    
+    //start animating the zoom in movement
+    zoomingInNow = true;
+
+}
+
+//switchToUnzoomedView returns to the full map from a zoomed in tile and updates the tile's results.
+function switchToUnzoomedView(tile){
+    
+    zoomedIn = false;
+    
+    //Record the results of this tile and save to the main map results for this tile.
+    //TODO
+    
+    //Switch back to the full map
+    switchBoards(boardData[fullBoardBeforeZoom]);
+    
+    //reset the camera location
+    controls.reset();
+    
+    //start animation the zoom out movement
+    zoomingOutNow = true;
+}
 
 //Create a river object with tributaries
 function setupRiver() {

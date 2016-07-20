@@ -33,6 +33,8 @@ var painterTool = {
 var birds, bird;
 var boids, boid;
 
+var fullBoardBeforeZoom, zIsDown, oneIsDown;
+
 //onResize dynamically adjusts to window size changes
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -507,9 +509,15 @@ function onDocumentMouseDown(event) {
                     }
                 }
                 else {
-                    //just a normal tile change
-                    changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
-    
+                    
+                    //Zoom in when z and 1 keys are pressed and a tile is clicked
+                    if(zIsDown && oneIsDown && !zoomedIn){
+                        switchToZoomView(getTileID(intersects[0].point.x, -intersects[0].point.z));
+                    } else {
+                        //just a normal tile change
+                        changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+                    }
+                    
                 }
     
             }
@@ -586,7 +594,20 @@ function onDocumentKeyDown(event) {
         case 70:
             launchFireworks();
             break;
-
+        //case z -- for zoom functions
+        case 90:
+            zIsDown = true;
+            break;
+        //case 1 -- press z,1 and click tile to zoom in
+        case 49:
+            oneIsDown = true;
+            break;
+        //case 2 -- press z,2 to zoom out
+        case 50:
+            if(zIsDown && zoomedIn){
+                switchToUnzoomedView();
+            }
+            break;
     }
 
 } //end onDocumentKeyDown
@@ -609,6 +630,14 @@ function onDocumentKeyUp(event) {
             if(document.getElementById('startupSequence').style.display == "none"){
                 showMainMenu() ;
             }
+        //case z -- for zoom functions
+        case 90:
+            zIsDown = false;
+            break;
+        //case 1 -- press z,1 and click tile to zoom in
+        case 49:
+            oneIsDown = false;
+            break;
     }
 
 } //end onDocumentKeyUp
