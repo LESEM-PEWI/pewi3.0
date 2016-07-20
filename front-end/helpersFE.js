@@ -17,7 +17,7 @@ var rowCutOffs = []; //y coor of top left corner of each tile
 var columnCutOffs = [];
 var mesh = null;
 var isShiftDown = false;
-var tToggle = true;
+var tToggle = false; //topology off by default
 var mapIsHighlighted = false;
 var hoverOverride = false;
 var currentHighlightType = 0;
@@ -608,6 +608,10 @@ function onDocumentKeyDown(event) {
                 switchToUnzoomedView();
             }
             break;
+        //case o :
+        case 79:
+            startOptions() ;
+            break;
     }
 
 } //end onDocumentKeyDown
@@ -721,12 +725,6 @@ function resultsEnd() {
         roll(1) ;
     }
     
-    document.getElementById("resultsButton").onmouseout = function() {
-        document.getElementById("resultsButton").className = "resultsButtonRolled";
-    };
-    document.getElementById("resultsButton").onmouseover = function() {
-        roll(2);
-    };
     document.getElementById("toolsButton").onclick = function() {
         roll(1);
     };
@@ -1461,25 +1459,6 @@ function writeFileToDownloadString() {
     return string;
 } //end writeFileToDownloadString
 
-//downloadClicked enables the user to download the currentBoard as a csv file
-function downloadClicked() {
-
-    var data = writeFileToDownloadString();
-    var fileName = "pewiMap";
-    var uri = 'data:text/csv;charset=UTF-8,' + escape(data);
-    var link = document.createElement("a");
-    link.href = uri;
-    link.style = "visibility:hidden";
-    link.download = fileName + ".csv";
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    closeUploadDownloadFrame();
-
-} // end downloadClicked
-
 //uploadClicked enables the user to upload a .csv of board data
 function uploadClicked(e) {
 
@@ -1507,6 +1486,15 @@ function uploadClicked(e) {
 
 } //end uploadClicked
 
+function downloadClicked(){
+    
+    closeUploadDownloadFrame();
+
+    //reset keylistening frame (ie give up focus on iframe)
+    document.activeElement.blur();
+
+}
+
 
 //animateResults
 function animateResults() {
@@ -1533,6 +1521,7 @@ function showCredits() {
     if(!modalUp){
     document.getElementById('creditsFrame').style.display = "block";
     document.getElementById('closeCredits').style.display = "block";
+    modalUp = true;
     }
 } //end showCredits
 
@@ -1541,6 +1530,7 @@ function closeCreditFrame() {
 
     document.getElementById('creditsFrame').style.display = "none";
     document.getElementById('closeCredits').style.display = "none";
+    modalUp = false;
 
 } //end closeCreditFrame
 
@@ -1550,6 +1540,7 @@ function showUploadDownload() {
     if(!modalUp){
     document.getElementById('closeUploadDownload').style.display = "block";
     document.getElementById('uploadDownloadFrame').style.display = "block";
+    modalUp = true;
     }
     
     if(mapIsHighlighted){
@@ -1562,7 +1553,7 @@ function showUploadDownload() {
 function closeUploadDownloadFrame() {
     document.getElementById('closeUploadDownload').style.display = "none";
     document.getElementById('uploadDownloadFrame').style.display = "none";
-
+    modalUp = false;
 } //end closeUploadDownloadFrame
 
 
@@ -1651,6 +1642,15 @@ function toggleVisibility() {
         document.getElementById(string).style.display = "inline-block" ;
     }
     
+    document.getElementById('year1Button').style.display = "block" ;
+    document.getElementById('year2Button').style.display = "block" ;
+    document.getElementById('year3Button').style.display = "block" ;
+    document.getElementById('year1PrecipContainer').style.display = "block" ;
+    document.getElementById('year2PrecipContainer').style.display = 'block';
+    document.getElementById('year3PrecipContainer').style.display = 'block' ;
+    
+    immutablePrecip = false ;
+    
     var strRawContents = document.getElementById('parameters').innerHTML ;
     
     //split based on escape chars
@@ -1681,16 +1681,61 @@ function toggleVisibility() {
              
                 
             }
-            
-            
-       
-       
-       
        
         }
     }
     
     
+    //toggle Precip visibility
+    for(var y=0; y <=3; y++){
+        
+        var idName = "year" + y + "Precip" ;
+        
+        document.getElementById(idName).style.display = "inline-block";
+        
+        var htmlstuff = (document.getElementById(idName + "Container").innerHTML).trim() ;
+        //console.log(htmlstuff[htmlstuff.length - 1] ) ;
+        if(!isNaN(htmlstuff[htmlstuff.length - 1])){
+            //console.log("need to cut") ;
+            while(!(htmlstuff[htmlstuff.length - 1] == '>')){
+                //console.log("cut...." + htmlstuff[htmlstuff.length - 1]);
+                htmlstuff = htmlstuff.slice(0,-1);
+            }
+            
+        document.getElementById(idName + "Container").innerHTML = htmlstuff ;
+            
+        }
+        
+        if(immutablePrecip){
+                       document.getElementById(idName).style.display = "none" ;
+                        
+                        var precipValue = boardData[currentBoard].precipitation[y] ;
+                        idName += "Container" ;
+                        var string = document.getElementById(idName).innerHTML ;
+                        string = string + "  " + precipValue ;
+                        document.getElementById(idName).innerHTML = string ;
+        }
+        else {
+            document.getElementById(idName).options[boardData[currentBoard].precipitationIndex[y]].selected = true;            
+        }
+      }
+      
+      //check to see if the year we are on is no longer a year... if so, well, switch to y1
+      var yearMax = 3 ;
+      if(document.getElementById("year3Button").style.display == "none") yearMax = 2;
+      if(document.getElementById("year2Button").style.display == "none") yearMax = 1;
+      
+      if(currentYear > yearMax){
+          transitionToYear(1);
+          switchYearTab(1);
+      }
+      
+      if(boardData[currentBoard].calculatedToYear > yearMax) boardData[currentBoard].calculatedToYear = yearMax;
+    
+      //check to see if the painter selected is no longer a painter...
+      if(document.getElementById('paint' + painter).style.display == "none"){
+            paintChange(1);
+      }
     
 }
 
@@ -1725,4 +1770,18 @@ function painterSelect(value){
         painterTool.hover = true ;
     }
     
+}
+
+function resetOptions() {
+    
+    document.getElementById('options').style.visibility = "hidden" ;
+    
+    document.activeElement.blur() ;
+    toggleVisibility() ;
+    
+    //toggle Precip
+}
+
+function startOptions() {
+    document.getElementById('options').style.visibility = "visible" ;
 }

@@ -136,13 +136,13 @@ margin: 20px;
 }
 
 </style>        
-        
+
 </head>
 
 <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
 
 <body>
-    
+
 <!--
   Checkbox Trickery with CSS:
   http://codersblock.com/blog/checkbox-trickery-with-css/ 
@@ -203,7 +203,7 @@ margin: 20px;
 </div>
 
 
-<div id="header4" class="header">Other Options<br><hr></div>
+<div id="header4" class="header">Year Options<br><hr></div>
 
 <div class="container">
   
@@ -228,14 +228,6 @@ margin: 20px;
 </div>  
 
 
-<div id="header2" class="header">Graphics Properties<br><hr></div>
-
-<div class="container">
-  
-<input id="skybox" type="checkbox" class="toggle">
-<label for="skybox"> 3D Environment On </label>  
-</div>  
-
 <div id="header3" class="header">Developer Tools<br><hr></div>
 
 <div class="container">
@@ -254,7 +246,7 @@ margin: 20px;
 </body>    
     
 <script>
-    
+ 
 var maxYear = 3 ; //for settings    
     
 getState() ;    
@@ -317,10 +309,8 @@ window.top.document.getElementById('parameters').innerHTML = tempString;
 }
 
 
-
-
-parent.reset() ;    
-    
+parent.resetOptions() ;    
+window.scrollTo(0,0); 
 
 
 }
@@ -328,7 +318,8 @@ parent.reset() ;
 
 
 function getState() {
-  
+ 
+ 
 var strRawContents = window.top.document.getElementById('parameters').innerHTML ;
     
     //split based on escape chars
@@ -377,7 +368,7 @@ for(var i=0; i < arrLines.length; i++) {
 document.getElementById('yearNumber').innerHTML = (3 - yearCounter) ;
 changeYearValue(0);
 
-
+   
 
 }
 

@@ -171,7 +171,8 @@ left:45px;
  opacity:0;
  -webkit-transition-duration: 4s; /* Safari */
 transition-duration: 4s;
- 
+-webkit-transition-timing-function: ease-in-out;
+transition-timing-function: ease-out;
 }
 </style>
 
@@ -206,7 +207,7 @@ function moveBackground() {
 <div id="button2" onmouseover="highlightButton(2,1);" onmouseout="highlightButton(2,0);" class="mainButton" onclick="startPlay();">Play</div>
 
 
-<div id="button3" onmouseover="highlightButton(3,1);" onmouseout="highlightButton(3,0);"class="mainButton" onclick="startOptions();">Options</div>
+<div id="button3" onmouseover="highlightButton(3,1);" onmouseout="highlightButton(3,0);"class="mainButton" onclick="//startOptions();">Utilities</div>
 
 </div>
 
@@ -279,8 +280,8 @@ function endFunction() {
  document.getElementById('contentsHolder').style.transitionDuration = ".4s" ;
  
   //moveBackground() ;
-  document.getElementById('backImg2').style.transitionDuration = "60s";
-  document.getElementById('backImg2').style.bottom = "-1650px" ;
+  document.getElementById('backImg2').style.transitionDuration = "50s";
+  document.getElementById('backImg2').style.bottom = "-1630px" ;
 
   parent.animationFrames();
   

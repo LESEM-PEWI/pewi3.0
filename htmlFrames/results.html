@@ -151,12 +151,14 @@
     width:660px;
     height:400px;
     float:right;
+    display: inline-block;
     margin-top:40px;
 }
 
 #yearHolder{
     margin:0px;
     float:left;
+    margin-top:40px;
     display:inline-block;
     width:140px;
     height:400px;
@@ -341,7 +343,7 @@ text{
 #asterChart {
     display:block;
     float:left;
-    margin-top:30px;
+    margin-top:40px;
     height:400px;
     width: 360px;
     overflow:hidden;
@@ -349,7 +351,7 @@ text{
 
 #asterHUD{
     display:block;
-    margin-top:30px;
+    margin-top:40px;
     float:left;
     width:320px;
     height:400px;
@@ -372,7 +374,7 @@ text{
 
 #yearHolder2{
     margin:0px;
-    margin-top:30px;
+    margin-top:40px;
     float:left;
     display:inline-block;
     width:120px;
@@ -384,6 +386,12 @@ text{
     margin-left:40px;
 }
 
+#precipSection{
+    display: inline-block;
+    height:150px;
+    margin-top:50px;
+    margin-bottom:10px;
+}
 
 </style>
 </head>
@@ -404,14 +412,6 @@ text{
 <div id="graphics">
 <div id="contentsG">
     
-
-
-<div id="precipInfo" class="precipInfo"></div>
-<div id="precipTitle"></div>
-<svg id="precipChart"></svg>
-
-<br/>
-
 <div id="yearHolder">    
 <div id="yearUpLand" onclick="changeLandPieBy(1);" class="upArrow"></div>
 <div id="yearDownLand" onclick="changeLandPieBy(-1);" class="downArrow"></div>
@@ -419,12 +419,26 @@ text{
 </div>
 <div id="chart" class="chart"></div>
 
+
+<br />
+
+<div id="precipSection">
+<div id="precipInfo" class="precipInfo"></div>
+<div id="precipTitle"></div>
+<svg id="precipChart"></svg>
+</div>
+
+<br />
+
 <div id="asterChart"></div>
 <div id="yearHolder2">
 <div id="yearUpESI" onclick="changeESIAsterBy(1);" class="upArrow"></div>
 <div id="yearDownESI" onclick="changeESIAsterBy(-1);" class="downArrow"></div>
 </div>
 <div id="asterHUD"> <div id="asterContainer"></div> </div>
+
+
+
 
     
 </div>

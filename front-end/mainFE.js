@@ -136,24 +136,6 @@ function initWorkspace(file){
     toggleVisibility() ;
     
     renderBackground();
-
-    for(var y=0; y <=3; y++){
-        
-        var idName = "year" + y + "Precip" ;
-         
-        if(immutablePrecip){
-                       document.getElementById(idName).style.display = "none" ;
-                        
-                        var precipValue = boardData[currentBoard].precipitation[y] ;
-                        idName += "Container" ;
-                        var string = document.getElementById(idName).innerHTML ;
-                        string = string + "  " + precipValue ;
-                        document.getElementById(idName).innerHTML = string ;
-        }
-        else {
-            document.getElementById(idName).options[boardData[currentBoard].precipitationIndex[y]].selected = true;            
-        }
-      }
     
 }
 

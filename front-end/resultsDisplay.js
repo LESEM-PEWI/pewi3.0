@@ -789,13 +789,13 @@ document.getElementById('resultsFrame').contentWindow.document.getElementById('u
    
    
 var dataset = [
-    {name: "Nitrate Concentration", score: (Math.round(Totals.nitrateConcentrationScore[year] * 10) / 10 ), color: "#0066cc", backColor: "navy", raw: (Math.round(Totals.nitrateConcentration[year] * 10) / 10 ) + " ppm", count: 1},
-    {name: "Phosphorus Load", score: (Math.round(Totals.phosphorusLoadScore[year] * 10 ) / 10) , color: "#00cc99", backColor: "navy", raw: (Math.round(Totals.phosphorusLoad[year] * 10) / 10 ) + " tons",  count: 1},
-    {name: "Sediment Delivery", score: (Math.round(Totals.sedimentDeliveryScore[year] * 10) / 10)  , color: "	#cc0033", backColor: "navy", raw: (Math.round(Totals.sedimentDelivery[year] * 10) / 10 ) + " tons", count: 1},
-    {name: "Carbon Sequestration", score: (Math.round(Totals.carbonSequestrationScore[year] * 10) / 10), color: "#6b6961", backColor: "maroon", raw: (Math.round(Totals.carbonSequestration[year] * 10) / 10 ) + " tons", count:1},
-    {name: "Gross Erosion", score: (Math.round(Totals.grossErosionScore[year] * 10) / 10), color: "#cccc00", backColor: "maroon", raw: (Math.round(Totals.grossErosion[year] * 10) / 10 ) + " tons", count: 1},
-    {name: "Game Wildlife", score: (Math.round(Totals.gameWildlifePointsScore[year] * 10) / 10), color: "#9900cc", backColor: "tomato", raw: (Math.round(Totals.gameWildlifePoints[year] * 10) / 10 ) + " pts", count: 1},
-    {name: "Biodiversity", score: (Math.round(Totals.biodiversityPointsScore[year] * 10) / 10), color: "#33cc00", backColor: "tomato", raw: (Math.round(Totals.biodiversityPoints[year] * 10) / 10 ) + " pts", count: 1}
+    {name: "Nitrate Concentration", score: (Math.round(Totals.nitrateConcentrationScore[year] * 10) / 10 ), color: "#1f77b4", backColor: "navy", raw: (Math.round(Totals.nitrateConcentration[year] * 10) / 10 ) + " ppm", count: 1},
+    {name: "Phosphorus Load", score: (Math.round(Totals.phosphorusLoadScore[year] * 10 ) / 10) , color: "#ff7f0e", backColor: "navy", raw: (Math.round(Totals.phosphorusLoad[year] * 10) / 10 ) + " tons",  count: 1},
+    {name: "Sediment Delivery", score: (Math.round(Totals.sedimentDeliveryScore[year] * 10) / 10)  , color: "	#2ca02c", backColor: "navy", raw: (Math.round(Totals.sedimentDelivery[year] * 10) / 10 ) + " tons", count: 1},
+    {name: "Carbon Sequestration", score: (Math.round(Totals.carbonSequestrationScore[year] * 10) / 10), color: "#d62728", backColor: "maroon", raw: (Math.round(Totals.carbonSequestration[year] * 10) / 10 ) + " tons", count:1},
+    {name: "Gross Erosion", score: (Math.round(Totals.grossErosionScore[year] * 10) / 10), color: "#9467bd", backColor: "maroon", raw: (Math.round(Totals.grossErosion[year] * 10) / 10 ) + " tons", count: 1},
+    {name: "Game Wildlife", score: (Math.round(Totals.gameWildlifePointsScore[year] * 10) / 10), color: "#8c564b", backColor: "tomato", raw: (Math.round(Totals.gameWildlifePoints[year] * 10) / 10 ) + " pts", count: 1},
+    {name: "Biodiversity", score: (Math.round(Totals.biodiversityPointsScore[year] * 10) / 10), color: "#e377c2", backColor: "tomato", raw: (Math.round(Totals.biodiversityPoints[year] * 10) / 10 ) + " pts", count: 1}
     
     ];    
     
