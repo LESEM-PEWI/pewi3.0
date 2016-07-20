@@ -660,8 +660,7 @@ function resultsStart() {
     };
 
     document.getElementById("toolsButton").onclick = "";
-
-    document.getElementById("resultsButton").className = "resultsButtonFar";
+    document.getElementById("resultsButton").className = "resultsButton";
 
     openBack = false ;
     if (document.getElementById("leftConsole").className == "leftConsole") {
@@ -669,7 +668,8 @@ function resultsStart() {
         roll(1) ;
     }
 
-    document.getElementById("closeResults").style.right = "16%";
+    document.getElementById("closeResults").style.opacity = "1";
+    document.getElementById('closeResults').style.visibility = "visible" ;
 
     //functions that update results and display them appropriately
     calculateResults();
@@ -684,7 +684,9 @@ function resultsEnd() {
     //reset functionality
     document.getElementById("resultsFrame").className = "resultsFrameRolled";
     document.getElementById("resultsButton").className = "resultsButtonRolled";
-    document.getElementById("closeResults").style.right = "-75%";
+    document.getElementById('closeResults').style.opacity = "0";
+    document.getElementById("closeResults").style.visibility = "hidden";
+    
 
     if (openBack) {
         roll(1) ;

@@ -15,7 +15,7 @@
 
 body{
 overflow: hidden;
-background-color: #000000;
+
 }
 
 #backImg {
@@ -56,7 +56,7 @@ transition-duration: 1.3s;
 
 position:fixed;
 width:240px;
-margin-left:-120px;
+margin-left:-111px;
 padding: 0px;
 
 left:50%;
@@ -68,7 +68,7 @@ transition-duration: 1s;
 
 .mainButton {
 position:fixed;
-background-color: #008fb3 ;
+background-color: #40A4DF ;
 width:200px;
 border-radius:12px;
 height:50px ;
@@ -155,19 +155,31 @@ border-bottom: 1px solid white ;
 
 #city {
 position:absolute;
-top:-150px;
-left:100px;
+top:-130px;
+left:45px;
 
  
 }
 
+
+#backImg2{
+ position:absolute;
+ width:100%;
+ height:3000px;
+ bottom : 0px;
+ left:0px;
+ opacity:0;
+ -webkit-transition-duration: 4s; /* Safari */
+transition-duration: 4s;
+ 
+}
 </style>
 
 <script>
 
 function moveBackground() {
-	var value = 0 - (4000 - screen.width - 300) ; //-300 just to be safe
-	document.getElementById('backImg').style.left = value;
+	//var value = 0 - (4000 - screen.width - 300) ; //-300 just to be safe
+	//document.getElementById('backImg').style.left = value;
 }
 
 
@@ -180,7 +192,7 @@ function moveBackground() {
 <body id="body">
 
 
-<img id="backImg" src="./imgs/backMap.png">
+<img id="backImg2" src="./imgs/normalBack.png">
 
 <div id="contentsHolder">
 
@@ -200,10 +212,12 @@ function moveBackground() {
 
 
 <div id="container">
-<video id="startVideo" width="800" height="1500px" autoplay="autoplay" style="margin-top:-300px;">
-<source src="./imgs/start.webm" type="video/webm" />
+ 
+<video id="startVideo" width="800" height="1500" autoplay="autoplay" style="margin-top:-300px;">
+<source src="./imgs/stargt.webm" type="video/webm" />
 loading
 </video>
+
 
 <div id="loadingTitle">
 <img id="city" src="./imgs/citySilloute.png">
@@ -241,10 +255,10 @@ function endFunction() {
  document.getElementById('container').style.display = "none";
  document.getElementById('pewiTitle').style.visibility = "visible";
  document.getElementById('pewiTitle').style.opacity = "1";
- document.getElementById('pewiTitle').style.top = "5%" ;
+ document.getElementById('pewiTitle').style.top = "25%" ;
  
  document.getElementById('contentsHolder').style.opacity = "1" ;
- document.getElementById('backImg').style.opacity = ".9" ;
+ document.getElementById('backImg2').style.opacity = "1" ;
 
  
  document.getElementById('button1').style.visibility = "visible";
@@ -257,14 +271,17 @@ function endFunction() {
  
 
  setTimeout(function() {
- document.getElementById('backImg').style.transitionDuration = "70s" ; 
+ //document.getElementById('backImg').style.transitionDuration = "70s" ; 
  document.getElementById('button1').style.transitionDuration = ".4s" ;
  document.getElementById('button2').style.transitionDuration = ".4s" ;
  document.getElementById('button3').style.transitionDuration = ".4s" ;
  document.getElementById('pewiTitle').style.transitionDuration = ".4s" ;
  document.getElementById('contentsHolder').style.transitionDuration = ".4s" ;
  
-  moveBackground() ;
+  //moveBackground() ;
+  document.getElementById('backImg2').style.transitionDuration = "60s";
+  document.getElementById('backImg2').style.bottom = "-1650px" ;
+
   parent.animationFrames();
   
   
@@ -348,9 +365,9 @@ function resetElements(){
  document.getElementById('button1').style.display = "block" ;
  document.getElementById('button2').style.display = "block" ;
  document.getElementById('button3').style.display = "block" ;
- document.getElementById('button1').style.backgroundColor = "rgb(0, 143, 179)" ;
- document.getElementById('button2').style.backgroundColor = "rgb(0, 143, 179)" ;
- document.getElementById('button3').style.backgroundColor = "rgb(0, 143, 179)" ;
+ document.getElementById('button1').style.backgroundColor = "#40A4DF" ;
+ document.getElementById('button2').style.backgroundColor = "#40A4DF" ;
+ document.getElementById('button3').style.backgroundColor = "#40A4DF" ;
  document.getElementById('button1').style.left = "25%" ;
  document.getElementById('button2').style.top = "50%" ;
  document.getElementById('button3').style.left = "75%" ;
@@ -376,7 +393,7 @@ function reset() {
 function recallMain(){
  resetElements() ;
  reset() ;
- document.getElementById('backImg').style.display = "block" ;
+ //document.getElementById('backImg').style.display = "block" ;
  
 }
 
@@ -385,10 +402,10 @@ function highlightButton(value, on) {
    var string = "button" + value ;
    
    if(on){
-      document.getElementById(string).style.backgroundColor = "#00b8e6" ;
+      document.getElementById(string).style.backgroundColor = "#7cc1e9" ;
    }
    else{
-      document.getElementById(string).style.backgroundColor = "#008fb3" ;
+      document.getElementById(string).style.backgroundColor = "#40A4DF" ;
    }
  
 }
