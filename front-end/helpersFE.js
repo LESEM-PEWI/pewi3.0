@@ -586,6 +586,10 @@ function onDocumentKeyDown(event) {
         case 70:
             launchFireworks();
             break;
+        //case o :
+        case 79:
+            startOptions() ;
+            break;
 
     }
 
@@ -1622,6 +1626,15 @@ function toggleVisibility() {
         document.getElementById(string).style.display = "inline-block" ;
     }
     
+    document.getElementById('year1Button').style.display = "block" ;
+    document.getElementById('year2Button').style.display = "block" ;
+    document.getElementById('year3Button').style.display = "block" ;
+    document.getElementById('year1PrecipContainer').style.display = "block" ;
+    document.getElementById('year2PrecipContainer').style.display = 'block';
+    document.getElementById('year3PrecipContainer').style.display = 'block' ;
+    
+    immutablePrecip = false ;
+    
     var strRawContents = document.getElementById('parameters').innerHTML ;
     
     //split based on escape chars
@@ -1652,14 +1665,53 @@ function toggleVisibility() {
              
                 
             }
-            
-            
-       
-       
-       
        
         }
     }
+    
+    
+    //toggle Precip visibility
+    for(var y=0; y <=3; y++){
+        
+        var idName = "year" + y + "Precip" ;
+        
+        document.getElementById(idName).style.display = "inline-block";
+        
+        var htmlstuff = (document.getElementById(idName + "Container").innerHTML).trim() ;
+        console.log(htmlstuff[htmlstuff.length - 1] ) ;
+        if(!isNaN(htmlstuff[htmlstuff.length - 1])){
+            console.log("need to cut") ;
+            while(!(htmlstuff[htmlstuff.length - 1] == '>')){
+                console.log("cut...." + htmlstuff[htmlstuff.length - 1]);
+                htmlstuff = htmlstuff.slice(0,-1);
+            }
+            
+        document.getElementById(idName + "Container").innerHTML = htmlstuff ;
+            
+        }
+        
+        if(immutablePrecip){
+                       document.getElementById(idName).style.display = "none" ;
+                        
+                        var precipValue = boardData[currentBoard].precipitation[y] ;
+                        idName += "Container" ;
+                        var string = document.getElementById(idName).innerHTML ;
+                        string = string + "  " + precipValue ;
+                        document.getElementById(idName).innerHTML = string ;
+        }
+        else {
+            document.getElementById(idName).options[boardData[currentBoard].precipitationIndex[y]].selected = true;            
+        }
+      }
+      
+      console.log(document.getElementById("year" + currentYear + "Button").style.display);
+      
+      //check to see if the year we are on is no longer a year... if so, well, switch to y1
+      if(document.getElementById("year" + currentYear + "Button").style.display == "none"){
+          console.log("oh no") ;
+          transitionToYear(1);
+          switchYearTab(1);
+      }
     
     
     
@@ -1696,4 +1748,17 @@ function painterSelect(value){
         painterTool.hover = true ;
     }
     
+}
+
+function resetOptions() {
+    
+    document.getElementById('options').style.visibility = "hidden" ;
+    document.activeElement.blur() ;
+    toggleVisibility() ;
+    
+    //toggle Precip
+}
+
+function startOptions() {
+    document.getElementById('options').style.visibility = "visible" ;
 }
