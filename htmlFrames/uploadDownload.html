@@ -4,7 +4,8 @@
 
 <style>
 body {
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-family: 'Amatic SC', cursive;
+    
 }
 
 * {
@@ -36,8 +37,9 @@ table {
 
 td {
     text-align: left;
+    font-size:22px;
     height:40px;
-    padding:10px;
+    padding:0px;
    
 }
 
@@ -99,9 +101,25 @@ function bindListener() {
     });
     
     
-};    
+};  
+
+function download() {
+    
+    var a = window.document.createElement('a');
+    var data = parent.writeFileToDownloadString();
+    a.href = window.URL.createObjectURL(new Blob([data], {type: 'text/csv'}));
+    a.download = 'pewiMap.csv';
+
+   // Append anchor to body.
+   document.body.appendChild(a)
+   a.click();
+   
+   parent.downloadClicked() ;
+}
     
 </script>
+
+<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700&text=Upload%20Download' rel='stylesheet' type='text/css'>
 
 </head>    
 <body>
@@ -109,13 +127,13 @@ function bindListener() {
 <div class="holder">
 
 <table>
-<tr>
-<td style="color:white;"> <h1 style="margin-top:20px; ">Download</h1>    </td>    
-<td>   <img id="downloadButton" class="upperButton" height="40px" src="./imgs/download.png" id="download" onclick="parent.downloadClicked();">          </td>    
+<tr >
+<td style="color:white;"> <h1 style="padding-left:20px; margin-top:15px">Download</h1>    </td>    
+<td>   <img id="downloadButton" class="upperButton" height="40px" style="margin-bottom:10px; " src="./imgs/download.png" id="download" onclick="download();">          </td>    
 </tr>    
     
 <tr>
-<td style="color:white; padding-top:20px "> <h1>Upload</h1>    </td>            
+<td style="color:white; padding-top:5px "> <h1 style="padding-left:20px;">Upload</h1>    </td>            
 <td>
     <div class="image-upload">
     <label for="file-upload">

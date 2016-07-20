@@ -1430,25 +1430,6 @@ function writeFileToDownloadString() {
     return string;
 } //end writeFileToDownloadString
 
-//downloadClicked enables the user to download the currentBoard as a csv file
-function downloadClicked() {
-
-    var data = writeFileToDownloadString();
-    var fileName = "pewiMap";
-    var uri = 'data:text/csv;charset=UTF-8,' + escape(data);
-    var link = document.createElement("a");
-    link.href = uri;
-    link.style = "visibility:hidden";
-    link.download = fileName + ".csv";
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    closeUploadDownloadFrame();
-
-} // end downloadClicked
-
 //uploadClicked enables the user to upload a .csv of board data
 function uploadClicked(e) {
 
@@ -1476,6 +1457,15 @@ function uploadClicked(e) {
 
 } //end uploadClicked
 
+function downloadClicked(){
+    
+    closeUploadDownloadFrame();
+
+    //reset keylistening frame (ie give up focus on iframe)
+    document.activeElement.blur();
+
+}
+
 
 //animateResults
 function animateResults() {
@@ -1502,6 +1492,7 @@ function showCredits() {
     if(!modalUp){
     document.getElementById('creditsFrame').style.display = "block";
     document.getElementById('closeCredits').style.display = "block";
+    modalUp = true;
     }
 } //end showCredits
 
@@ -1510,6 +1501,7 @@ function closeCreditFrame() {
 
     document.getElementById('creditsFrame').style.display = "none";
     document.getElementById('closeCredits').style.display = "none";
+    modalUp = false;
 
 } //end closeCreditFrame
 
@@ -1519,6 +1511,7 @@ function showUploadDownload() {
     if(!modalUp){
     document.getElementById('closeUploadDownload').style.display = "block";
     document.getElementById('uploadDownloadFrame').style.display = "block";
+    modalUp = true;
     }
     
     if(mapIsHighlighted){
@@ -1531,7 +1524,7 @@ function showUploadDownload() {
 function closeUploadDownloadFrame() {
     document.getElementById('closeUploadDownload').style.display = "none";
     document.getElementById('uploadDownloadFrame').style.display = "none";
-
+    modalUp = false;
 } //end closeUploadDownloadFrame
 
 

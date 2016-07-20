@@ -246,7 +246,7 @@ margin: 20px;
 </body>    
     
 <script>
-    
+ 
 var maxYear = 3 ; //for settings    
     
 getState() ;    
@@ -308,8 +308,9 @@ window.top.document.getElementById('parameters').innerHTML = tempString;
 
 }
 
+
 parent.resetOptions() ;    
-window.scrollTo(0,0);    
+window.scrollTo(0,0); 
 
 
 }
@@ -317,7 +318,8 @@ window.scrollTo(0,0);
 
 
 function getState() {
-  
+ 
+ 
 var strRawContents = window.top.document.getElementById('parameters').innerHTML ;
     
     //split based on escape chars
@@ -366,7 +368,7 @@ for(var i=0; i < arrLines.length; i++) {
 document.getElementById('yearNumber').innerHTML = (3 - yearCounter) ;
 changeYearValue(0);
 
-
+   
 
 }
 
