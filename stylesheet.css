@@ -306,15 +306,16 @@ select {
 .levelDetailsList, .levelDetailsListRolled {
     margin: 15px 0px 0px 0px ;
     position: absolute;
-    top: 295px;
-    width: 115px;
+    background-color: black;
+    top: 305px;
+    width: 135px;
     
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
 
 .levelDetailsList{
-    left:0px;
+    left:150px;
 }
 
 .levelDetailsListRolled {
@@ -359,6 +360,7 @@ select {
     height: 15px;
     margin: 5px 0px 10px 10px;
     width: 15px;
+
 }
 
 .floodColor1 {
@@ -380,6 +382,10 @@ select {
     background-color: #2f7eb7;
 }
 
+.floodColorNone {
+    border: 0px;
+}
+
 .drainageColor1 {
     background-color: #0053b3;
 }
@@ -392,14 +398,15 @@ select {
     margin: 15px 0px 0px 0px ;
     position: absolute;
     top: 305px;
-    width: 115;
+    width: 135px;
+    background-color: black ;
     
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
 
 .physicalDetailsList {
-    left:0px;
+    left:150px;
 }
 
 .physicalDetailsListRolled {

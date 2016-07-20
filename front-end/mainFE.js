@@ -50,7 +50,9 @@ function initializeCamera(){
     //point camera
     camera.position.x = 0;
     camera.position.y = 320;
-
+    camera.position.z = 0 ;
+    camera.rotation.x = -1.570795331865673;
+    
     //set camera field of view for zoom functions
     fov = camera.fov;
     

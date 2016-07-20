@@ -566,7 +566,10 @@ function onDocumentKeyDown(event) {
             break ;
         //case e
         case 69:
+            //why do we have to do this? Because scope updates incrementally
+            controls.value = 10 ;
             controls.reset();
+            setTimeout(function() {controls.value = 1 ; }, 100);
             break;
         //case r
         case 82:
