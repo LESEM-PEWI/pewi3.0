@@ -78,23 +78,25 @@ function highlightTile(id) {
 
     //highlight the new tile 
     //if not a tile
-    if (id != -1 && meshMaterials[id].emissive) {
+    if (id != -1 && !modalUp) {
 
-        meshMaterials[id].emissive.setHex(0x7f7f7f);
-        previousHover = id;
-
-        //document.getElementById("currentInfo").innerHTML = "Year: " + currentYear + "   Selected Land Type: " + LandUseType.getType(painter) + "   Higlighted Tile: " + LandUseType.getType(boardData[currentBoard].map[id].landType[currentYear]) + " " + boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column;
-        showInfo(boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column) ;
-    } else if(id != -1 && meshMaterials[id].emissive){
-        showInfo(boardData[currentBoard].map[id].row + ", " + boardData[currentBoard].map[id].column) ;
-    }
-    else {
+        if(boardData[currentBoard].map[id].landType[currentYear] == 0){
+            
+            showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
+        
+        } else {  
+            
+            meshMaterials[id].emissive.setHex(0x7f7f7f);
+            previousHover = id;
+            
+            showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[id].landType[currentYear]));
+        }
+    
+    } else {
         //don't delete info in an html element, else clear
         var line = document.getElementById('currentInfo').innerHTML ;
         if(!isNaN(line[0])) clearInfo() ;
     }
-
-
 
 }
 
@@ -1262,74 +1264,6 @@ function contaminatedRiver(riverColor) {
     
 } //end contaminatedRiver
 
-
-//DEPRECATED
-// //achievementCheck
-// function achievementCheck(){
- 
-//  var allDone = "none";
-//  //check the current scores of each achievement
-//  for(var i = 0; i < achievementValues.length; i++){
-     
-//     //print the initial script when the totals are less than any achievement
-//     if(Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][1])){
-//              //if(achievementDisplayed < 0){
-//              if(achievementAccomplished[0] < 0){
-//                 updatePopup(achievementScripts[i][0]); 
-//                 //achievementDisplayed = 1;
-//                 achievementAccomplished[0] = 1;
-//              }
-//              allDone = false;
-//     //determine if a final value has been surpassed for each achievement
-//     } else if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][achievementValues[i].length-1])){
-//              if(allDone == "none" || allDone == true){
-//                 allDone = true;
-//              }
-//     //print scripts for subobjective achievements
-//     } else {
-//         if(achievementValues[i].length > 2){
-            
-//             for(var j = 1; j < achievementValues[i].length; j++){
-         
-//                 if(Totals[achievementValues[i][0]][yearToCheck] > Number(achievementValues[i][j]) && Totals[achievementValues[i][0]][yearToCheck] <= Number(achievementValues[i][j+1])) {
-//                     //if( achievementDisplayed < j+1){
-//                     if(achievementAccomplished[i] < j + 1){
-//                         updatePopup(achievementScripts[i][j]);
-//                         //achievementDisplayed = j+1;
-//                         achievementAccomplished[i] = j+1;
-//                         selectAnimation(achievementAnimations[i]);
-//                     }
-//                     allDone = false;
-//                 }
-         
-//             }
-     
-//         }
-    
-//     }
-
-//  }
- 
-//  //if all achievements have been completed, the level is complete
-//  if(allDone == true){
-//     //if(achievementDisplayed < achievementValues[0].length){
-//     if(achievementAccomplished[0] < achievementValues[0].length){
-//         updatePopup(achievementScripts[0][achievementScripts[0].length-1]);
-//         //achievementDisplayed = achievementValues[0].length;
-//         achievementAccomplished[0] = achievementValues[0].length;
-//         launchFireworks();
-        
-//         //Switch to next level or return to menu
-//         document.getElementById("nextLevelButton").className = "moveButtonShow";
-//         document.getElementById("mainMenuButton").className = "moveButtonShow";
-        
-//     }
-//  }
- 
- 
-
-// }
-
 function objectiveCheck() {
     
     if(levelSpecs.started == 0){
@@ -1448,7 +1382,7 @@ function writeFileToDownloadString() {
 
     var string = "";
 
-    string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
+    string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
@@ -1476,6 +1410,7 @@ function writeFileToDownloadString() {
             boardData[currentBoard].map[i].topography + "," +
             boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
             boardData[currentBoard].map[i].strategicWetland + "," +
+            boardData[currentBoard].map[i].riverStreams + "," +
             boardData[currentBoard].map[i].landType[1] + "," +
             boardData[currentBoard].map[i].landType[2] + "," +
             boardData[currentBoard].map[i].landType[3] + "," +
@@ -1611,6 +1546,61 @@ function toggleIndex() {
         document.getElementById('index').style.display = "none" ;
         document.activeElement.blur();
     }
+}
+
+function printLandUseType(type){
+    
+    switch (type) {
+		case 0:
+			return "None";
+		case 1:
+			return "Conventional Corn";
+		case 2:
+			return "Conservation Corn";
+		case 3:
+			return "Conventional Soybean";
+		case 4:
+			return "Conservation Soybean";
+		case 5:
+			return "Alfalfa";
+		case 6:
+			return "Permanent Pasture";
+		case 7:
+			return "Rotational Grazing";
+		case 8:
+			return "Grass Hay";
+		case 9:
+			return "Prairie";
+		case 10:
+			return "Conservation Forest";
+		case 11:
+			return "Conventional Forest";
+		case 12:
+			return "Switchgrass";
+		case 13:
+			return "Short Rotation Woody Bioenergy";
+		case 14:
+			return "Wetland";
+		case 15:
+			return "Mixed Fruits and Vegetables";
+		default:
+			return "NOT FOUND";
+	} //end switch
+	
+}
+
+function printPrecipYearType(){
+    
+    var precipLevel = boardData[currentBoard].precipitation[currentYear];
+    
+    if(precipLevel == 24.58 || precipLevel == 28.18){
+        return "Dry";
+    } else if(precipLevel == 30.39 || precipLevel == 32.16 || precipLevel == 34.34){
+        return "Normal";
+    } else {
+        return "Flood";
+    }
+    
 }
 
 function showInfo(string){
