@@ -1843,62 +1843,19 @@ function endMultiAssignMode() {
     
 }
 
-function createPlayerMap(){
+function createPlayerMap(value){
     
-    var string = "";
     
-    string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
+    //value = 1 corresponds to player 1
     
-    console.log(string);
-
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-        
-        console.log(i);
-        
-        string = string + boardData[currentBoard].map[i].id + "," +
-            boardData[currentBoard].map[i].row + "," +
-            boardData[currentBoard].map[i].column + "," +
-            boardData[currentBoard].map[i].area + "," +
-          
-            ( (boardData[currentBoard].map[i].landType[1] == 1) ? boardData[currentBoard].map[i].baseLandUseType + "," : "0,") +
+   
+            //current board
+           // ( (boardData[currentBoard].map[i].landType[1] == 1) ? boardData[currentBoard].map[i].baseLandUseType + "," : "0,") +
             
-            boardData[currentBoard].map[i].carbonMax + "," +
-            boardData[currentBoard].map[i].carbonMin + "," +
-            boardData[currentBoard].map[i].cattle + "," +
-            boardData[currentBoard].map[i].cornYield + "," +
-            boardData[currentBoard].map[i].drainageClass + "," +
-            boardData[currentBoard].map[i].erosion + "," +
-            boardData[currentBoard].map[i].floodFrequency + "," +
-            boardData[currentBoard].map[i].group + "," +
-            boardData[currentBoard].map[i].nitratesPPM + "," +
-            boardData[currentBoard].map[i].pIndex + "," +
-            boardData[currentBoard].map[i].sediment + "," +
-            boardData[currentBoard].map[i].soilType + "," +
-            boardData[currentBoard].map[i].soybeanYield + "," +
-            boardData[currentBoard].map[i].streamNetwork + "," +
-            boardData[currentBoard].map[i].subwatershed + "," +
-            boardData[currentBoard].map[i].timber + "," +
-            boardData[currentBoard].map[i].topography + "," +
-            boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
-            boardData[currentBoard].map[i].strategicWetland + "," +
+        //    ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") +  //year1
+        //    ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") + //year2
+        //    ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") + //year3
             
-            ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") +  //year1
-            ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") + //year2
-            ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") + //year3
-            
-            boardData[currentBoard].precipitation[0] + "," +
-            boardData[currentBoard].precipitation[1] + "," +
-            boardData[currentBoard].precipitation[2] + "," +
-            boardData[currentBoard].precipitation[3];
-
-        if (i < boardData[currentBoard].map.length - 1) {
-            string = string + '\r\n';
-        }
-        else {
-            //Do Nothing
-        }
-
-    }
+    return "bah, humbug";
     
-    return string ;
 }
