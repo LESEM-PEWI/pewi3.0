@@ -559,7 +559,7 @@ function onDocumentKeyDown(event) {
             break;
         //case t
         case 84:
-            if(modalUp != true && mapIsHighlighted != true){
+            if(modalUp != true && mapIsHighlighted != true && !multiAssignMode){
                 tToggle ? tToggle = false : tToggle = true;
                 refreshBoard();
                 setupRiver();
