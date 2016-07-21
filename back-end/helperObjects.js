@@ -72,6 +72,7 @@ var LandUseType = {
 					return "NOT FOUND";
 			} //end switch
 		} //end getType
+		
 };
 //end definition of landUseType
 
@@ -109,11 +110,11 @@ function Tile(tileArray, board) {
 	this.topography = Number(tileArray[21]);
 	this.watershedNitrogenContribution = tileArray[22];
 	this.strategicWetland = tileArray[23];
-	this.riverStreams = tileArray[31];
+	this.riverStreams = tileArray[24];
 
 	//default settings for land use setup
 	//years 4 and 5 are land use types used for calculations of minumum and maximum values
-	this.landType = [this.baseLandUseType, Number(tileArray[24]), Number(tileArray[24]), Number(tileArray[24]), LandUseType.prairie, LandUseType.conventionalSoybean];
+	this.landType = [this.baseLandUseType, Number(tileArray[25]), Number(tileArray[26]), Number(tileArray[27]), LandUseType.prairie, LandUseType.conventionalSoybean];
 
 	//results holding variables
 	//these variables hold results from functions that other methods may need, this saves executing a base function multiple times
