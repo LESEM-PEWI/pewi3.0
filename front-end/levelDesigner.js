@@ -134,6 +134,19 @@ function processForm() {
     
     string = string.substring(0, string.length - 1) + "\r\n";
     
+    var y0 = document.getElementById("precipYear0");
+    var y1 = document.getElementById("precipYear1");
+    var y2 = document.getElementById("precipYear2");
+    var y3 = document.getElementById("precipYear3");
+    
+    string += y0.options[y0.selectedIndex].text + "*" + y1.options[y1.selectedIndex].text + "*" + y2.options[y2.selectedIndex].text + "*" + y3.options[y3.selectedIndex].text + "\r\n";
+    
+    y1 = document.getElementById("year1Monoculture");
+    y2 = document.getElementById("year2Monoculture");
+    y3 = document.getElementById("year3Monoculture");
+    
+    string += y1.options[y1.selectedIndex].value + "*" + y2.options[y2.selectedIndex].value + "*" + y3.options[y3.selectedIndex].value + "\r\n";
+     
     string += document.getElementById("beginningScript").value.replace(/\n/g, " ") + "\r\n";
     
     string += document.getElementById("numRequired").value + "\r\n";
