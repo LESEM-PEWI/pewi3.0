@@ -104,10 +104,15 @@ function changeLandTypeTile(id) {
     if(boardData[currentBoard].map[id].landType[currentYear] != 0){
 
         //change the materials of the faces in the meshMaterials array and update the boardData
-        meshMaterials[id].map = textureArray[painter];
-        boardData[currentBoard].map[id].landType[currentYear] = painter;
-        boardData[currentBoard].map[id].update(currentYear);
-    
+        if(!multiAssignMode){
+            meshMaterials[id].map = textureArray[painter];
+            boardData[currentBoard].map[id].landType[currentYear] = painter;
+            boardData[currentBoard].map[id].update(currentYear);
+        }
+        else if(multiAssignMode){
+            meshMaterials[id].map = multiplayerTextureArray[painter];
+            boardData[currentBoard].map[id].landType[currentYear] = painter;
+        }
     }
 
 }
@@ -615,6 +620,11 @@ function onDocumentKeyDown(event) {
         case 79:
             startOptions() ;
             break;
+        //case 86 
+        case 86:
+            if(multiAssignMode){
+                endMultiAssignMode() ;
+            }
     }
 
 } //end onDocumentKeyDown
@@ -652,6 +662,8 @@ function onDocumentKeyUp(event) {
 //paintChange changes the highlighted color of the selected painter and updates painter
 function paintChange(value) {
 
+    if(!multiAssignMode){
+        
     //change current painter to regular
     var string = "paint" + painter;
     document.getElementById(string).className = "landSelectorIcon";
@@ -660,6 +672,18 @@ function paintChange(value) {
     string = "paint" + value;
     document.getElementById(string).className = "landSelectedIcon";
     painter = value;
+    
+    }
+    else{
+    var string = "paintPlayer" + painter;
+    document.getElementById(string).className = "landSelectorIcon";
+
+    //change new paiter to current
+    string = "paintPlayer" + value;
+    document.getElementById(string).className = "landSelectedIcon";
+        
+    painter = value;    
+    }
 
 } //end paintChange
 
@@ -1690,6 +1714,12 @@ function toggleVisibility() {
                 case "precipOff":
                     immutablePrecip = true;
                      break;
+                case "multiAssign":
+                     for(var j = 1; j <= 6; j++){
+                         console.log(j) ;
+                          document.getElementById('paintPlayer' + j).style.display = "inline-block" ;
+                     }
+                     break;
                 default:
                     document.getElementById(arrLines[i]).style.display = "none" ;    
              
@@ -1798,4 +1828,77 @@ function resetOptions() {
 
 function startOptions() {
     document.getElementById('options').style.visibility = "visible" ;
+}
+
+
+
+function endMultiAssignMode() {
+    
+    console.log("nominally over, let's try to write player 1") ;
+    //create an iframe, select up to 6 players
+    //then downloads
+    document.getElementById('multiPlayer').style.visibility = "visible" ;
+    document.getElementById('multiPlayer').src = "./htmlFrames/multiDownload.html" ;
+    
+    
+}
+
+function createPlayerMap(){
+    
+    var string = "";
+    
+    string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
+    
+    console.log(string);
+
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+        
+        console.log(i);
+        
+        string = string + boardData[currentBoard].map[i].id + "," +
+            boardData[currentBoard].map[i].row + "," +
+            boardData[currentBoard].map[i].column + "," +
+            boardData[currentBoard].map[i].area + "," +
+          
+            ( (boardData[currentBoard].map[i].landType[1] == 1) ? boardData[currentBoard].map[i].baseLandUseType + "," : "0,") +
+            
+            boardData[currentBoard].map[i].carbonMax + "," +
+            boardData[currentBoard].map[i].carbonMin + "," +
+            boardData[currentBoard].map[i].cattle + "," +
+            boardData[currentBoard].map[i].cornYield + "," +
+            boardData[currentBoard].map[i].drainageClass + "," +
+            boardData[currentBoard].map[i].erosion + "," +
+            boardData[currentBoard].map[i].floodFrequency + "," +
+            boardData[currentBoard].map[i].group + "," +
+            boardData[currentBoard].map[i].nitratesPPM + "," +
+            boardData[currentBoard].map[i].pIndex + "," +
+            boardData[currentBoard].map[i].sediment + "," +
+            boardData[currentBoard].map[i].soilType + "," +
+            boardData[currentBoard].map[i].soybeanYield + "," +
+            boardData[currentBoard].map[i].streamNetwork + "," +
+            boardData[currentBoard].map[i].subwatershed + "," +
+            boardData[currentBoard].map[i].timber + "," +
+            boardData[currentBoard].map[i].topography + "," +
+            boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
+            boardData[currentBoard].map[i].strategicWetland + "," +
+            
+            ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") +  //year1
+            ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") + //year2
+            ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") + //year3
+            
+            boardData[currentBoard].precipitation[0] + "," +
+            boardData[currentBoard].precipitation[1] + "," +
+            boardData[currentBoard].precipitation[2] + "," +
+            boardData[currentBoard].precipitation[3];
+
+        if (i < boardData[currentBoard].map.length - 1) {
+            string = string + '\r\n';
+        }
+        else {
+            //Do Nothing
+        }
+
+    }
+    
+    return string ;
 }

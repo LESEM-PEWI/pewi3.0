@@ -1,0 +1,4 @@
+paint15*paint1*paint2*paint3*paint4*paint5*paint12*paint6*paint7*paint8*paint11*paint10*paint13*paint9*paint14*multiAssign*precipOff*year2Button*year3Button*resultsButton*gridPaint
+alright, now you can assign stuff...  PRESS V WHEN FINISHED
+1
+end

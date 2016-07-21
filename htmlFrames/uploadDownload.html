@@ -106,7 +106,9 @@ function bindListener() {
 function download() {
     
     var a = window.document.createElement('a');
+    
     var data = parent.writeFileToDownloadString();
+    
     a.href = window.URL.createObjectURL(new Blob([data], {type: 'text/csv'}));
     a.download = 'pewiMap.csv';
 

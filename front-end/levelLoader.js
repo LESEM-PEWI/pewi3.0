@@ -5,6 +5,7 @@ var achievementDisplayed = -1;
 var achievementAccomplished = [];
 var achievementAnimations = [];
 var yearToCheck = 0;
+var multiAssignMode = false ;
 
 var objectives = [];
 var levelSpecs = {
@@ -63,7 +64,12 @@ function loadLevel(level){
             initWorkspace('./data.txt');            
             if(achievedAllLevels){updatePopup("Congratulations! You made it through all the levels. Try out your newfound knowledge in Sandbox mode!");}
             break;
-
+        case -1:
+            levelGlobal = 1 ;
+            loadLevelDetails("./levels/specs/testMP.txt");
+            initWorkspace('./data.txt') ;
+            multiAssignMode = true ;
+            break;
     }
     
     
@@ -183,7 +189,6 @@ function parseLevelDetails(data) {
     
     //add the ending script to the levelScripts object
     levelSpecs.end = arrLines[arrLines.length - 1];
-
 }
 
 //load the data from given fileString into the given board object

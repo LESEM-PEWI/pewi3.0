@@ -1,4 +1,5 @@
 var textureArray ;
+var multiplayerTextureArray ;
 var materialArray = [];
 var highlightArray = [];
 var oldPewiBackgrounds = [];
@@ -25,6 +26,16 @@ function loadResources() {
     var textureHerbs = textureLoader.load('./cell_images_bitmaps/LandUse_Herbaceous_Perennial_Bioene.png');
     var textureWetland = textureLoader.load('./cell_images_bitmaps/LandUse_Wetland.png');
     var textureMixedFruitsVegetables = textureLoader.load('./cell_images_bitmaps/LandUse_Mixed_Fruits_and_Vegetables.png');
+    
+    //multiplayer Textures
+    var textureP1 = textureLoader.load('./imgs/player1.png');
+    var textureP2 = textureLoader.load('./imgs/player2.png');
+    var textureP3 = textureLoader.load('./imgs/player3.png');
+    var textureP4 = textureLoader.load('./imgs/player4.png');
+    var textureP5 = textureLoader.load('./imgs/player5.png');
+    var textureP6 = textureLoader.load('./imgs/player6.png');
+    
+    multiplayerTextureArray = [textureClear, textureP1, textureP2, textureP3, textureP4, textureP5, textureP6];
     
     textureArray = [textureClear, textureConventionalCorn, textureConservationCorn, textureConventionalSoybean, textureConservationSoybean,
                     textureAlfalfa, texturePermanentPasture, textureRotationalGrazing, textureGrassHay,

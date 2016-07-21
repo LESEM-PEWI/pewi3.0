@@ -1,0 +1,37 @@
+<html>
+<head>
+<style>
+
+body{
+    background-color: red;
+}
+
+</style>    
+</head>    
+    
+<body>
+<button onclick="download();"> Download Player1 Map</button>
+</body>    
+    
+<script>
+
+function download() {
+
+ var a = window.document.createElement('a');
+  
+ var data = parent.createPlayerMap() ;
+  
+ a.href = window.URL.createObjectURL(new Blob([data], {type: 'text/csv'}));
+ a.download = 'player1-PEWI-MAP.csv';
+
+   // Append anchor to body.
+   document.body.appendChild(a)
+   a.click();    
+  
+}  
+    
+    
+</script>    
+    
+    
+</html>

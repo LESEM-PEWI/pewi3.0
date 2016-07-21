@@ -207,7 +207,7 @@ function moveBackground() {
 <div id="button2" onmouseover="highlightButton(2,1);" onmouseout="highlightButton(2,0);" class="mainButton" onclick="startPlay();">Play</div>
 
 
-<div id="button3" onmouseover="highlightButton(3,1);" onmouseout="highlightButton(3,0);"class="mainButton" onclick="//startOptions();">Utilities</div>
+<div id="button3" onmouseover="highlightButton(3,1);" onmouseout="highlightButton(3,0);"class="mainButton" onclick="startUtilities();">Utilities</div>
 
 </div>
 
@@ -319,11 +319,11 @@ function startSandbox() {
 
 }
 
-function startOptions() {
+function startUtilities() {
  
  document.getElementById('button1').style.display = "none" ;
  document.getElementById('button2').style.display = "none" ;
- document.getElementById('button3').style.left = "50%" ;
+ document.getElementById('button3').style.left = "51%" ;
  document.getElementById('button3').style.backgroundColor = "#003d4d" ;
  document.getElementById('contentsHolder').style.marginTop = "0px";
  document.getElementById('contentsHolder').style.top = "0%";
@@ -332,12 +332,12 @@ function startOptions() {
   
  setTimeout(function() {
   
-  document.getElementById('dialogue').src = "options.html" ;
+  document.getElementById('dialogue').src = "utilities.html" ;
   document.getElementById('dialogue').style.visibility = "visible" ;
  
   setTimeout(function() { resetElements() ; }, 300);
 
- }, 100);
+ }, 400);
  
 }
 
