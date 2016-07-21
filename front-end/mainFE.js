@@ -20,7 +20,7 @@ var skybox = false;
 
 //Variables for Zoom Function
 var zoomedIn = false;
-var fov = null, zoomFactor = 1.0, zoomInc = 0.01;
+var fov = null, zoomFactor = 1.0, zoomInInc = 0.1, zoomOutInc = 0.2;
 var zoomingInNow = false;
 var zoomingOutNow = false;
 
@@ -173,7 +173,7 @@ function animationFrames(){
         camera.fov = fov * zoomFactor;
         camera.updateProjectionMatrix();
         
-        zoomFactor = zoomFactor - zoomInc;
+        zoomFactor = zoomFactor - zoomInInc;
         
         if(zoomFactor < 0.35) zoomingInNow = false;
         
@@ -184,7 +184,7 @@ function animationFrames(){
         camera.fov = fov * zoomFactor;
         camera.updateProjectionMatrix();
         
-        zoomFactor = zoomFactor + zoomInc;
+        zoomFactor = zoomFactor + zoomOutInc;
         
         if(zoomFactor > 1.0) zoomingOutNow = false;
     }
