@@ -269,6 +269,10 @@ body {
     
 }
 
+#year0PrecipContainer{
+    display:block;
+}
+
 select {
     font-size: 14px;
     margin:5px;

@@ -1,4 +1,6 @@
 paint15*paint1*paint2*paint3*paint4*paint5*paint12*paint6*paint7*paint8*paint11*paint10*paint13*paint9*paint14*multiAssign*precipOff*year2Button*year3Button*resultsButton*gridPaint
+24.58*24.58*24.58*24.58
+1*1*1
 Using the player colors in the console, divide up all of the land to a maximum of 6 players. <br /> <br /> When you are happy with the product, press V to create the Multi-Maps.
 1
-end
+OH NO! This message should *not* be displayed right now. Error
