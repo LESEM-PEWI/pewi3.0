@@ -93,9 +93,9 @@ function highlightTile(id) {
         }
     
     } else {
-        //don't delete info in an html element, else clear
-        var line = document.getElementById('currentInfo').innerHTML ;
-        if(!isNaN(line[0])) clearInfo() ;
+
+        showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
+
     }
 
 }

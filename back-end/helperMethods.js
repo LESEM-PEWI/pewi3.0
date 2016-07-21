@@ -31,6 +31,29 @@ function setPrecipitation() {
     return r;
 } //end setPrecipitation()
 
+//convertPrecipToIndex
+function convertPrecipToIndex(precip) {
+    
+    switch(precip){
+        
+        case 24.58:
+            return 0;
+        case 28.18:
+            return 1;
+        case 30.39:
+            return 2;
+        case 32.16:
+            return 3;
+        case 34.34:
+            return 4;
+        case 36.47:
+            return 5;
+        case 45.10:
+            return 6;
+    }
+    
+}
+
 
 //helper method for calculations of log base 10
 Math.log10 = function(n) {
