@@ -28,6 +28,29 @@ function propogateBoard(board) {
 
 } //end propogateBoard()
 
+function overlayBoard(board, overlay) {
+  
+  console.log("in overlay function");
+  
+  for (var i = 0; i < initData.length; i++) {
+    
+    var tile = new Tile(initData[i], board);
+    
+    //if tile has meaningful data...
+    if(tile.baseLandUseType == 1){
+      
+     // console.log("i = " + i + " with bldu as : " + tile.baseLandUseType);  
+      //then overwrite the tile in old board with new board stuffaroo
+      board.map[tile.id - 1] = tile ;
+      
+    }
+    
+  } //end for : each entry in initData 
+  
+  
+  
+}
+
 
 //calculate() function brings the resaults up to date
 //  this is currently set to calculate up to year 3 for testing purposes

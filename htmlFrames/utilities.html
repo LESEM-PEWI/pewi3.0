@@ -2,27 +2,216 @@
     
 <head>
 <style>
+
+* {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
 body{
     background-color:black;
 }    
     
+.button {
+position:relative;
+display: inline-block;
+background-color: #40A4DF ;
+width:400px;
+border-radius:12px;
+height:50px ;
+color: white ;
+padding:5px;
+border: 2px solid white;
+cursor: all-scroll ;
+font-family: 'Amatic SC', cursive;
+text-align:center;
+line-height: 90%;
+color: #FFFFFF;
+font-size: 40px ;
+font-weight: bold;
+margin-top:40px;
+}
+
+.button:hover {
+ background-color:  #7cc1e9 ;
+}    
+    
+#setupButton{
+
+}   
+
+#aggregateButton{
+
+}
+
+.uploadFile > input
+{
+    display: none;
+}    
+
+
+.info {
+    width:100%;
+    margin-top:35px;
+    text-align:center;
+    line-height:220%;
+    height:50px;
+    background-color: white;
+    color:#000000;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size:20px;
+}
+
+#addFile, #downloadFile{
+    width:350px;
+    margin-left:17px;
+    height:40px;
+}
+
+
+#backButton {
+    position:relative;
+    display:inline-block;
+    margin-left:10%;
+    margin-top:30px;
+    padding: 5px;
+}   
+
+#backButton:hover {
+    border-bottom: 2px solid white;
+}
+
+#aggregateTools{
+    position:relative;
+    display: inline-block;
+    width:400px;
+    height:300px;
+    background-color: #003d4d ;
+    margin-top:20px;
+    height:0px;
+    overflow:hidden;
+    border-radius: 6px;
+    
+    -webkit-transition-duration: 1s; /* Safari */
+    transition-duration: 1s;
+}
+
+#contentsHolder{
+    position:absolute;
+    margin-left:-200px;
+    left:50%;
+    width:400px;
+}
+
 </style>
+
+<script src=".././lib/jquery-1.12.4.min.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+
 </head>    
     
 <body>
+
+
+<img onclick="parent.reset()" id="backButton" src="./imgs/back.png">  
+
+<div id="contentsHolder">
+
+<button id="setupButton" class="button" onclick="setupMultiplayer();">Set-Up Multiplayer</button>    
+<button id="aggregateButton" class="button" onclick="showAggregateOptions();">Aggregate Multi-Maps</button>     
+
+<div id="aggregateTools">   
+   
+<div class="uploadFile">   
+<label for="file-upload">
+<div id="addFile" class="button">Add a File</div>    
+</label>
+<input id="file-upload" type="file"/>    
+</div>
     
-<button style="position:absolute; top:15%; left : 40%; width:300px; height:200px;" onclick="setupMultiplayer();">Set up Multiplayer</button>    
+<div id="downloadFile" class="button" onclick="download();">Download Aggregate</div>        
     
-    
+<div id="aggregateInfo" class="info">Ready. Upload first file.</div>    
+
+</div>
+
+
+</div>
+
+
 </body>    
 
 <script>
+
+aggregateMultimaps() ;
+
+var time = 1 ;
+
 function setupMultiplayer() {
     
     window.top.loadLevel(-1);
     
-}   ; 
+}    
     
+    
+function aggregateMultimaps(){
+    
+    console.log("binding prop change");
+    
+        $('#file-upload').bind('propertychange change', function (e) {
+        window.top.multiUpload(time, e) ;
+        
+        updateInfo(time);
+        time += 1 ;
+    });
+    
+}   
+
+
+function download() {
+    
+    var a = window.document.createElement('a');
+    
+    var data = window.top.writeFileToDownloadString();
+    
+    a.href = window.URL.createObjectURL(new Blob([data], {type: 'text/csv'}));
+    a.download = 'aggregatePewiMap.csv';
+
+   // Append anchor to body.
+   document.body.appendChild(a)
+   a.click();
+   
+   document.getElementById('aggregateInfo').innerHTML = "Downloaded. Return to Sandbox to load." ;
+
+}
+
+
+function showAggregateOptions() {
+    
+    if(document.getElementById('aggregateTools').style.height != "300px"){
+        document.getElementById('aggregateTools').style.height = "300px";    
+    }
+    else{
+        document.getElementById('aggregateTools').style.height = "0px";
+    }
+
+}
+
+function updateInfo(time){
+    
+    if(time == 1){
+        document.getElementById('aggregateInfo').innerHTML = "Success. Now add remaining players." ;
+    }
+    else{
+        document.getElementById('aggregateInfo').innerHTML = "Added " + time + " files" ;
+    }
+    
+}
 </script>    
     
     

@@ -1604,7 +1604,7 @@ function printPrecipYearType(){
 }
 
 function showInfo(string){
-    document.getElementById("currentInfo").innerHTML = string ;
+    if(!multiAssignMode) document.getElementById("currentInfo").innerHTML = string ;
 }
 
 function clearInfo(){
@@ -1834,18 +1834,131 @@ function endMultiAssignMode() {
 }
 
 function createPlayerMap(value){
-    
-    
-    //value = 1 corresponds to player 1
-    
-   
-            //current board
-           // ( (boardData[currentBoard].map[i].landType[1] == 1) ? boardData[currentBoard].map[i].baseLandUseType + "," : "0,") +
+ 
+    var string = "";
+
+    string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
+
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+
+        string = string + boardData[currentBoard].map[i].id + "," +
+            boardData[currentBoard].map[i].row + "," +
+            boardData[currentBoard].map[i].column + "," +
+            boardData[currentBoard].map[i].area + "," +
             
-        //    ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") +  //year1
-        //    ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") + //year2
-        //    ( (boardData[currentBoard].map[i].landType[1] == 1) ? "1," : "0,") + //year3
+            ( (boardData[currentBoard].map[i].landType[1] == value) ? boardData[currentBoard].map[i].baseLandUseType + "," : "0,") +
             
-    return "bah, humbug";
+            boardData[currentBoard].map[i].carbonMax + "," +
+            boardData[currentBoard].map[i].carbonMin + "," +
+            boardData[currentBoard].map[i].cattle + "," +
+            boardData[currentBoard].map[i].cornYield + "," +
+            boardData[currentBoard].map[i].drainageClass + "," +
+            boardData[currentBoard].map[i].erosion + "," +
+            boardData[currentBoard].map[i].floodFrequency + "," +
+            boardData[currentBoard].map[i].group + "," +
+            boardData[currentBoard].map[i].nitratesPPM + "," +
+            boardData[currentBoard].map[i].pIndex + "," +
+            boardData[currentBoard].map[i].sediment + "," +
+            boardData[currentBoard].map[i].soilType + "," +
+            boardData[currentBoard].map[i].soybeanYield + "," +
+            boardData[currentBoard].map[i].streamNetwork + "," +
+            boardData[currentBoard].map[i].subwatershed + "," +
+            boardData[currentBoard].map[i].timber + "," +
+            boardData[currentBoard].map[i].topography + "," +
+            boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
+            boardData[currentBoard].map[i].strategicWetland + "," +
+            boardData[currentBoard].map[i].riverStreams + "," +
+            
+            ( (boardData[currentBoard].map[i].landType[1] == value) ? "1," : "0,") +  //year1
+            ( (boardData[currentBoard].map[i].landType[1] == value) ? "1," : "0,") + //year2
+            ( (boardData[currentBoard].map[i].landType[1] == value) ? "1," : "0,") + //year3
+            
+            boardData[currentBoard].precipitation[0] + "," +
+            boardData[currentBoard].precipitation[1] + "," +
+            boardData[currentBoard].precipitation[2] + "," +
+            boardData[currentBoard].precipitation[3];
+
+        if (i < boardData[currentBoard].map.length - 1) {
+            string = string + '\r\n';
+        }
+        else {
+            //Do Nothing
+        }
+
+    }        
+            
+    return string;
+    
+}
+
+function multiUpload(value, e){
+    console.log("uploading time " + value);
+    if(value == 1) multiUploadStage1(e);
+    if(value >= 2) multiUploadStage2(e);
+}
+
+function multiUploadStage1(e){
+    
+    console.log("loading stuff");
+    loadResources();
+    
+    console.log("setting Up first file normally") ;
+    
+    
+    var files;
+    files = e.target.files;
+
+    if (files[0].name && !files[0].name.match(/\.csv/)) {
+        alert("Incorrect File Type!");
+    }
+    else {
+        var reader = new FileReader();
+        reader.readAsText(files[0]);
+        reader.onload = function(e) {
+            setupBoardFromUpload(reader.result);
+            //clear initData
+            initData = [];
+        }
+    } //end else
+}
+
+function multiUploadStage2(e) {
+    
+    console.log("attempting to overlay") ;
+    
+    var files;
+    files = e.target.files;
+
+    if (files[0].name && !files[0].name.match(/\.csv/)) {
+        alert("Incorrect File Type!");
+    }
+    else {
+        var reader = new FileReader();
+        reader.readAsText(files[0]);
+        reader.onload = function(e) {
+
+        var boardFromUpload = new GameBoard();
+        parseInitial(reader.result);
+        overlayBoard(boardData[currentBoard], boardFromUpload);
+    
+        switchBoards(boardData[currentBoard]);
+    
+        //clear initData
+        initData = [];
+        }
+    } //end else
+    
+    
+}
+
+function exitFromAggregate(){
+    
+    console.log("exiting from the aggregation confabulation") ;
+    
+        var temp = boardData[currentBoard] ;
+    initWorkspace('./data.txt');
+    boardData[currentBoard] = temp ;
+    refreshBoard() ;
+    
     
 }
