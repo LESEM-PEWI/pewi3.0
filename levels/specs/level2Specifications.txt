@@ -1,4 +1,6 @@
 paint3*paint4*paint5*paint6*paint7*paint8*paint9*paint12*paint13*paint14*paint15
+24.58*30.39*34.34*28.18
+1*1*1
 Goal: Achieve greater than a score of 90 for both gross erosion and phosphorus load with a corn grain yield of more than 75%.
 3
 grossErosionScore*1*0*20*60*Conventional corn can cause a great deal of erosion. Consider ways that erosion could be reduced.*brownRiver

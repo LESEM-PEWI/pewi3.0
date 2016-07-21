@@ -1,4 +1,6 @@
 paint1*paint2*paint5*paint6*paint7*paint15
+24.58*30.39*34.34*28.18
+9*9*9
 Goal: Create a natural wildlife area surrounded by 2 farms, one soybean farmer and one hay farmer. Each farm must cover at least 25% of the land. Make sure to keep the water quality levels above 95.
 5
 soybeanYieldScore*1*1*25*50*none*none
