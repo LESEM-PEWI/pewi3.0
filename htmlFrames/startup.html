@@ -136,7 +136,7 @@ position:absolute;
 width:60% ;
 left:20%;
 height:40px;
-top:195px;
+top:50px;
 /*border-bottom: 1px solid white ;*/
 
 
@@ -174,6 +174,14 @@ left:45px;
 transition-duration: 4s;
 
 }
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+     margin-top:-350px;
+    display: block
+}
+
 </style>
 
 <script>
@@ -214,7 +222,7 @@ function moveBackground() {
 
 <div id="container">
  
-<video id="startVideo" width="800" height="1000" autoplay="autoplay" style="margin-top:-300px;">
+<video id="startVideo" class="center" width="375" height="1100" autoplay="autoplay">
 <source src="./imgs/PewiLoading.webm" type="video/webm" />
 loading
 </video>

@@ -13,7 +13,9 @@ var levelSpecs = {
     end: "",
     numRequired: 0,
     started: 0,
-    finished: 0
+    finished: 0,
+    precipitation: [0,0,0,0],
+    landTypeMonoculture: [0,0,0,0]
 }
 
 
@@ -72,6 +74,54 @@ function loadLevel(level){
             break;
     }
     
+    if(levelGlobal > 0){
+        
+        //if precipitation was not set, then randomly generate values
+        for(var i = 0; i < 4; i++){
+            
+            if(levelSpecs.precipitation[i] == 0){
+                
+                levelSpecs.precipitation[i] = setPrecipitation();
+                
+            } else {
+                
+                levelSpecs.precipitation[i] = Number(levelSpecs.precipitation[i]);
+                
+            }
+            
+            //set board precipitation values to levelSpecs precipitation values
+            boardData[currentBoard].precipitation[i] = Number(levelSpecs.precipitation[i]);
+            boardData[currentBoard].precipitationIndex[i] = Number(convertPrecipToIndex(levelSpecs.precipitation[i]));
+            
+        }
+        
+        for(var i = 0; i < 4; i++){
+            
+            if(levelSpecs.landTypeMonoculture[i] != 0){
+                
+                for(var j = 0; j < boardData[currentBoard].map.length; j++){
+                    
+                    if(boardData[currentBoard].map[j].landType[i] != 0){
+                        
+                        boardData[currentBoard].map[j].landType[i] = Number(levelSpecs.landTypeMonoculture[i]);
+                        if(i == currentYear){
+                            meshMaterials[j].map = textureArray[Number(levelSpecs.landTypeMonoculture[i])];
+                            boardData[currentBoard].map[j].update(currentYear);
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+        //call toggleVisibility to update new precipitation values
+        toggleVisibility();
+        
+    }
+    
     
     
 } //end loadLevel
@@ -80,7 +130,7 @@ function resetLevel(){
     
     objectives = [];
     levelSpecs = {
-            begin: "", end: "", numRequired: 0, started: 0, finished: 0
+            begin: "", end: "", numRequired: 0, started: 0, finished: 0, precipitation: [0,0,0,0], landTypeMonoculture: [0,0,0,0]
     }
     
     clearPopup();
@@ -89,64 +139,6 @@ function resetLevel(){
     document.getElementById("nextLevelButton").className = "moveButtonHidden";
     
 }
-
-
-// DEPRECATED
-// function parseLevelDetails(data) {
- 
-//     //get data from invisible div on page
-//     var strRawContents = data;
-//     //split based on escape chars
-//     while (strRawContents.indexOf("\r") >= 0)
-//         strRawContents = strRawContents.replace("\r", "");
-//     var arrLines = strRawContents.split("\n");
-
-//     var curLine = arrLines[0];
-//     //parse id's of items to hide using the parameters div in index.html
-//     hideOptions = curLine.split("*").join("\n");
-//     document.getElementById("parameters").innerHTML = hideOptions;
-    
-//     for(var i = 2; i < arrLines.length - 2; i++){
-        
-//         var tempScripts = [];
-//         var tempValues = [];
-//         var tempAnimations = [];
-        
-//         achievementAccomplished[i-2] = -1;
-        
-//         //Add the start up script to tempScripts
-//         tempScripts.push(arrLines[1]);
-        
-//         //Parse the items in each line
-//         var tempParsed = arrLines[i].split("*");
-        
-//         //Add the name of the score being checked to the values array
-//         tempValues.push(tempParsed[0]);
-//         for(var j = 1; j < tempParsed.length; j++){
-//             if(j != tempParsed.length - 1){
-//                 if(j%2 != 0){
-//                     tempValues.push(tempParsed[j]);
-//                 } else {
-//                     tempScripts.push(tempParsed[j]);
-//                 }
-//             } else {
-//                 achievementAnimations[i-2] = tempParsed[tempParsed.length - 1];
-//             }
-//         }
-        
-//         //Add the final script to tempScripts
-//         tempScripts.push(arrLines[arrLines.length - 2]);
-        
-//         //Determine which year is being checked
-//         yearToCheck = arrLines[arrLines.length - 1];
-        
-//         //Add tempScripts and tempValues to the achievements Arrays
-//         achievementValues.push(tempValues);
-//         achievementScripts.push(tempScripts);
-    
-//     }
-        
-// } //end parseInitial()
 
 function parseLevelDetails(data) {
     
@@ -162,15 +154,28 @@ function parseLevelDetails(data) {
     hideOptions = curLine.split("*").join("\n");
     document.getElementById("parameters").innerHTML = hideOptions;
     
+    //add the specified precipitation levels to the levelSpecs
+    var tempParsed = arrLines[1].split("*");
+    for(var i = 0; i < 4; i++){
+        levelSpecs.precipitation[i] = tempParsed[i];
+    }
+
+    //add the specified monocultures to the levelSpecs
+    tempParsed = arrLines[2].split("*");
+    levelSpecs.landTypeMonoculture[0] = 1;
+    for(var i = 0; i < 3; i++){
+        levelSpecs.landTypeMonoculture[i+1] = tempParsed[i];
+    }
+    
     //add the beginning script to the levelScripts object
-    levelSpecs.begin = arrLines[1];
+    levelSpecs.begin = arrLines[3];
     
     //add the number of final objectives that are required to pass the level
-    levelSpecs.numRequired = arrLines[2];
+    levelSpecs.numRequired = arrLines[4];
     
-    for(var i = 3; i < arrLines.length - 1; i++){
+    for(var i = 5; i < arrLines.length - 1; i++){
     
-        var tempParsed = arrLines[i].split("*");
+        tempParsed = arrLines[i].split("*");
     
         var newObjective = {
             score: tempParsed[0],

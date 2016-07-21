@@ -186,7 +186,7 @@ function animationFrames(){
         
         zoomFactor = zoomFactor + zoomOutInc;
         
-        if(zoomFactor > 1.0) zoomingOutNow = false;
+        if(zoomFactor > 1.1) zoomingOutNow = false;
     }
     
 
