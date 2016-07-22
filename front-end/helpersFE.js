@@ -622,7 +622,7 @@ function onDocumentKeyDown(event) {
         case 79:
             startOptions() ;
             break;
-        //case 86 
+        //case v
         case 86:
             if(multiAssignMode){
                 endMultiAssignMode() ;
@@ -1824,13 +1824,15 @@ function startOptions() {
 
 function endMultiAssignMode() {
     
-    console.log("nominally over, let's try to write player 1") ;
+    //console.log("nominally over, let's try to write player 1") ;
     //create an iframe, select up to 6 players
     //then downloads
     document.getElementById('multiPlayer').style.visibility = "visible" ;
     document.getElementById('multiPlayer').src = "./htmlFrames/multiDownload.html" ;
-    
-    
+}
+
+function hideMultiDownload() {
+    document.getElementById('multiPlayer').style.visibility = "hidden" ;
 }
 
 function createPlayerMap(value){

@@ -165,13 +165,14 @@ left:45px;
 
 #backImg2{
  position:absolute;
- width:100%;
- height:3000px;
+ height:250em;
  bottom : 0px;
- left:0px;
+ right:0px;
  opacity:0;
  -webkit-transition-duration: 4s; /* Safari */
-transition-duration: 4s;
+ transition-duration: 4s;
+ width:100%;
+ min-width: 1800px;
 
 }
 
@@ -190,7 +191,6 @@ function moveBackground() {
 	//var value = 0 - (4000 - screen.width - 300) ; //-300 just to be safe
 	//document.getElementById('backImg').style.left = value;
 }
-
 
 </script>
 
@@ -241,6 +241,7 @@ People in Ecosystems / Watershed Integration
 document.getElementById('startVideo').addEventListener('ended', function() {
  endFunction();
 }, false);
+
 
 setTimeout(function() {
 
@@ -295,8 +296,8 @@ function endFunction() {
 }, 10);
 
 setTimeout( function() {
- document.getElementById('backImg2').style.transitionDuration = "50s";
-  document.getElementById('backImg2').style.bottom = "-1630px" ;
+ document.getElementById('backImg2').style.transitionDuration = "80s";
+  document.getElementById('backImg2').style.bottom = "-152em" ;
  
 }, 4000);
  
@@ -401,7 +402,6 @@ function reset() {
  document.getElementById('contentsHolder').style.backgroundColor = "rgba(0,0,0,0)" ;
  
 }
-
 
 function recallMain(){
  resetElements() ;
