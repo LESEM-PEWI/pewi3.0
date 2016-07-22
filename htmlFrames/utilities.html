@@ -23,7 +23,7 @@ display: inline-block;
 background-color: #40A4DF ;
 width:400px;
 border-radius:12px;
-height:50px ;
+height:40px ;
 color: white ;
 padding:5px;
 border: 2px solid white;
@@ -122,8 +122,10 @@ margin-top:40px;
 
 <div id="contentsHolder">
 
-<button id="setupButton" class="button" onclick="setupMultiplayer();">Set-Up Multiplayer</button>    
-<button id="aggregateButton" class="button" onclick="showAggregateOptions();">Aggregate Multi-Maps</button>     
+
+<div class="button" id="levelDesignerButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
+<div id="setupButton" class="button" onclick="setupMultiplayer();">Set-Up Multiplayer</div>    
+<div id="aggregateButton" class="button" onclick="showAggregateOptions();">Aggregate Multi-Maps</div>    
 
 <div id="aggregateTools">   
    
