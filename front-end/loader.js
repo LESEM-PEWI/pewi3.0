@@ -41,13 +41,6 @@ function loadResources() {
                     textureAlfalfa, texturePermanentPasture, textureRotationalGrazing, textureGrassHay,
                     texturePrairie, textureConservationForest, textureConventionalForest, textureHerbs, textureShortWoody,
                     textureWetland, textureMixedFruitsVegetables];
-                    
-  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/right.jpg'), side: THREE.BackSide }));
-  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/left.jpg'), side: THREE.BackSide }));
-  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/top.jpg'), side: THREE.BackSide }));
-  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/bottom.jpg'), side: THREE.BackSide }));
-  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/front.jpg'), side: THREE.BackSide }));
-  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load('./background_images/back.jpg'), side: THREE.BackSide }));
   
     oldPewiBackgrounds = [textureLoader.load("./background_images/Background_Drought.png"), textureLoader.load("./background_images/Background_Normal.png"), textureLoader.load("./background_images/Background_Flood.png")];
     

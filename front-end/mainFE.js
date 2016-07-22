@@ -24,6 +24,8 @@ var fov = null, zoomFactor = 1.0, zoomInInc = 0.1, zoomOutInc = 0.2;
 var zoomingInNow = false;
 var zoomingOutNow = false;
 
+var allLoaded = false;
+
 //createThreeFramework instantiates the renderer and scene to render 3D environment
 function createThreeFramework(){
     
@@ -91,7 +93,7 @@ function initializeLighting(){
 //renderBackground selects to render a skybox or a static background
 function renderBackground(){
     if(skybox){
-        setupSkyBox();
+        //setupSkyBox();
     } else {
         setupStaticBackground();        
     }
@@ -101,15 +103,17 @@ function loadingManager(){
     
     THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
     
-       console.log("loaded " + loaded + " of " + total);
+       console.log(item + " loaded " + loaded + " of " + total);
     
     };
    
-   THREE.DefaultLoadingManager.onLoad = function (){
-       console.log("loaded") ;
+  THREE.DefaultLoadingManager.onLoad = function (){
+      console.log("loaded") ;
+      
+      allLoaded = true;
      
-       document.getElementById('loading').style.display = "none" ;
-       document.getElementById('page').style.visibility = "visible" ;
+      //document.getElementById('loading').style.display = "none" ;
+      document.getElementById('page').style.visibility = "visible" ;
        
       //work around for firefox..... see bug 554039
       document.getElementById('firefoxWorkaround').focus() ;
@@ -122,22 +126,31 @@ function loadingManager(){
 //initSandbox initializes a sandbox game in the threeFramework
 function initWorkspace(file){
     
-    document.getElementById('startupSequence').style.display = "none" ;
-    document.getElementById('loading').style.visibility = "visible" ;
-   
-    loadingManager();
+    document.getElementById('startupSequence').style.display = "none";
+    document.getElementById('loading').style.visibility = "visible";
+    
+    document.activeElement.blur();
     
     //setup stats display
     stats.domElement.id = 'statFrame' ;
     document.body.appendChild(stats.domElement);
     
-    var hold = loadResources();
-    
-    hold = setupBoardFromFile(file) ;
+    var hold = setupBoardFromFile(file) ;
 
     toggleVisibility() ;
     
     renderBackground();
+    
+    function checkIfSceneLoaded() {
+        if(!bgScene.children || !allLoaded) {
+            setTimeout(checkIfSceneLoaded(), 500);//wait 500 millisecnds then recheck
+            return;
+        }
+        document.getElementById('loading').style.display = "none" ;
+        document.getElementById('page').style.visibility = "visible" ;
+    }
+
+    checkIfSceneLoaded();
     
 }
 

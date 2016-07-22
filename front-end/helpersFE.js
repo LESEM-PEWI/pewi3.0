@@ -33,6 +33,8 @@ var painterTool = {
 var birds, bird;
 var boids, boid;
 
+var clearToChangeLandType = true;
+
 var fullBoardBeforeZoom, zIsDown, oneIsDown;
 
 //onResize dynamically adjusts to window size changes
@@ -472,7 +474,7 @@ function onDocumentMouseDown(event) {
 
     var intersects = raycaster.intersectObjects(scene.children);
 
-    if(event.which == 1 && intersects.length > 0){
+    if(event.which == 1 && intersects.length > 0 && clearToChangeLandType){
 
         if (!isShiftDown) {
     
@@ -1960,5 +1962,15 @@ function exitFromAggregate(){
     boardData[currentBoard] = temp ;
     refreshBoard() ;
     
+    
+}
+
+function toggleChangeLandType() {
+    
+    if(clearToChangeLandType){
+        clearToChangeLandType = false;
+    } else {
+        clearToChangeLandType = true;
+    }
     
 }
