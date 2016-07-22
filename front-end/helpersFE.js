@@ -344,8 +344,8 @@ function addTile(tile) {
                  map: ((tile.landType[currentYear] < multiplayerTextureArray.length) ? multiplayerTextureArray[tile.landType[currentYear]] : null),
                  side: THREE.DoubleSide 
               });
+        }
         meshMaterials.push(tileMaterial);
-       }
     }
 
     //if this tile is the first in its row that is a streamNetwork tile add it to the riverPoints array
