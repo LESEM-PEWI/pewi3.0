@@ -245,7 +245,7 @@ body {
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
     color:#fff;
     cursor:pointer;
-    display:inline-block;
+    display:block;
     margin: 8px;
     outline:none;
     padding:3px;
