@@ -48,6 +48,10 @@
      img1.src = "./imgs/loader.gif" ;
      var img2 = new Image();
      img2.src ="./imgs/meadowlarkanimation.gif";
+     var img3 = new Image();
+     img3.src = "./htmlFrames/imgs/normalBack.png";
+     var img4 = new Image();
+     img4.src = "./htmlFrames/imgs/pewiLogoLarge.png";
     
      </script>
  
@@ -62,10 +66,10 @@
 
     <!--console tabs -->
 
-    <div id="toolsButton" class="consoleButton" onclick="roll(1) ;"> <img id="pick" src="./imgs/pickOut.png">
+    <div id="toolsButton" class="consoleButton" onclick="roll(1) ;"> <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     </div>
 
-    <div id="tabButtons" class="tabButtons">
+    <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
         <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);"><img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png">
         </div>
         <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png">
@@ -81,27 +85,27 @@
 
 
     <!-- console displays-->
-    <div id="leftConsole" class="leftConsole">
+    <div id="leftConsole" class="leftConsole" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
         <div id="painterTab" class="consoleTab">
 
-            <img id="paint1" onmouseover="showInfo('Conventional Corn');" onmouseout="clearInfo();" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="paintChange(1);">
-            <img id="paint2" onmouseover="showInfo('Conservation Corn');" onmouseout="clearInfo();" class="landSelectorIcon" src="./imgs/conservationCorn.png"  onclick="paintChange(2); ">
-            <img id="paint3" onmouseover="showInfo('Conventional Soybean');" onmouseout="clearInfo();" class="landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="paintChange(3);">
-            <img id="paint4" onmouseover="showInfo('Conservation Soybean');" onmouseout="clearInfo();" class="landSelectorIcon" src="./imgs/conservationSoybean.png" onclick="paintChange(4);">
-            <img id="paint15" onmouseover="showInfo('Mixed Fruits and Vegetables');" onmouseout="clearInfo();" class="landSelectorIcon" src="./imgs/fruits.png" onclick="paintChange(15);">
+            <img id="paint1" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="paintChange(1);">
+            <img id="paint2" class="landSelectorIcon" src="./imgs/conservationCorn.png"  onclick="paintChange(2); ">
+            <img id="paint3" class="landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="paintChange(3);">
+            <img id="paint4" class="landSelectorIcon" src="./imgs/conservationSoybean.png" onclick="paintChange(4);">
+            <img id="paint15" class="landSelectorIcon" src="./imgs/fruits.png" onclick="paintChange(15);">
 
-            <img id="paint5" onmouseover="showInfo('Alfalfa');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/alfalfa.png" onclick="paintChange(5);">
-            <img id="paint8" onmouseover="showInfo('Grass Hay');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/grassHay.png" onclick="paintChange(8);">
-            <img id="paint12" onmouseover="showInfo('Switchgrass');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/herbaceous.png" onclick="paintChange(12);">
-            <img id="paint6" onmouseover="showInfo('Permanent Pasture');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/permanentPasture.png" onclick="paintChange(6);">
-            <img id="paint7" onmouseover="showInfo('Rotational Grazing');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/rotationalGrazing.png" onclick="paintChange(7);">
+            <img id="paint5" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/alfalfa.png" onclick="paintChange(5);">
+            <img id="paint8" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/grassHay.png" onclick="paintChange(8);">
+            <img id="paint12" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/herbaceous.png" onclick="paintChange(12);">
+            <img id="paint6" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/permanentPasture.png" onclick="paintChange(6);">
+            <img id="paint7" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/rotationalGrazing.png" onclick="paintChange(7);">
 
-            <img id="paint14" onmouseover="showInfo('Wetland');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/wetland.png" onclick="paintChange(14);">
-            <img id="paint9" onmouseover="showInfo('Prairie');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/prairie.png" onclick="paintChange(9);">
-            <img id="paint11" onmouseover="showInfo('Conventional Forest');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/conventionalForest.png" onclick="paintChange(11);">
-            <img id="paint10" onmouseover="showInfo('Conservation Forest');" onmouseout="clearInfo();" class="landSelectorIcon"   class="landSelectorIcon" src="./imgs/conservationForest.png" onclick="paintChange(10);">
-            <img id="paint13" onmouseover="showInfo('Short Rotation Woody Bioenergy');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="paintChange(13);">
+            <img id="paint14" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/wetland.png" onclick="paintChange(14);">
+            <img id="paint9" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/prairie.png" onclick="paintChange(9);">
+            <img id="paint11" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/conventionalForest.png" onclick="paintChange(11);">
+            <img id="paint10" class="landSelectorIcon"   class="landSelectorIcon" src="./imgs/conservationForest.png" onclick="paintChange(10);">
+            <img id="paint13" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="paintChange(13);">
 
             <img id="paintPlayer1" style="display:none;" onmouseover="showInfo('Assign Player 1');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player1.png" onclick="paintChange(1)">
             <img id="paintPlayer2" style="display:none;" onmouseover="showInfo('Assign Player 2');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player2.png" onclick="paintChange(2)">
@@ -277,20 +281,20 @@
         
     </div>
 
-    <div id="resultsButton" class="resultsButtonRolled" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png">
+    <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png">
     </div>
 
-    <div id="year0Button" class="yearButton" onclick="transitionToYear(0); switchYearTab(0);"></div>
-    <div id="year1Button" class="yearButton" onclick="transitionToYear(1); switchYearTab(1);"><img id="year1Image" class="yearSelected" src="./imgs/one.png">
+    <div id="year0Button" class="yearButton" onclick="transitionToYear(0); switchYearTab(0);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
+    <div id="year1Button" class="yearButton" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="yearSelected" src="./imgs/one.png">
     </div>
-    <div id="year2Button" class="yearButton" onclick="transitionToYear(2); switchYearTab(2);"><img id="year2Image" class="yearNotSelected" src="./imgs/two.png">
+    <div id="year2Button" class="yearButton" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="yearNotSelected" src="./imgs/two.png">
     </div>
-    <div id="year3Button" class="yearButton" onclick="transitionToYear(3); switchYearTab(3);"><img id="year3Image" class="yearNotSelected" src="./imgs/three.png">
+    <div id="year3Button" class="yearButton" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="yearNotSelected" src="./imgs/three.png">
     </div>
 
-    <img id="logoBase" src="./imgs/inGameLogo.png">
-    <img id="uploadDownloadButton" class="upperButton" width="40px" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();">
-    <img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png" onclick="showCredits();">
+    <img id="logoBase" src="./imgs/inGameLogo.png" >
+    <img id="uploadDownloadButton" class="upperButton" width="40px" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     
     <iframe id="creditsFrame" style="display:none;" src="./htmlFrames/credits.html"></iframe>
     <img id="closeCredits" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeCreditFrame() ;">
@@ -299,9 +303,9 @@
     <iframe id="index" src="./modules/codex/codex.html"></iframe>
     
     
-    <div id="dialogueButton" class="dialogueButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/dialogue.png"></div>
+    <div id="dialogueButton" class="dialogueButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/dialogue.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
     
-    <div id="popup" class="popupHidden">
+    <div id="popup" class="popupHidden" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
         <div id="nextLevelButton" class="moveButtonHidden" onclick = "loadLevel(levelGlobal + 1);">Next Level</div>
         <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>
         <p id="popupText"></p>

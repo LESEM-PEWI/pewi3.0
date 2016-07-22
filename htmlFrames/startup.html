@@ -429,7 +429,8 @@ function createEnvironment(){
  parent.initializeCamera();
  parent.initializeLighting();
  parent.setupHighlight();
- 
+ parent.loadingManager();
+ var returned = parent.loadResources();
  
 }
 
