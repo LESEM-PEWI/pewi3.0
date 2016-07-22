@@ -330,10 +330,19 @@ function addTile(tile) {
         meshMaterials.push(tileMaterial);
     }
     else {
-        tileMaterial = new THREE.MeshLambertMaterial({
-            map: textureArray[tile.landType[currentYear]],
-            side: THREE.DoubleSide
-        });
+        
+        if(!multiAssignMode){
+          tileMaterial = new THREE.MeshLambertMaterial({
+              map: textureArray[tile.landType[currentYear]],
+              side: THREE.DoubleSide
+          });
+        }
+        else{
+            tileMaterial = new THREE.MeshLambertMaterial({
+              map: multiplayerTextureArray[tile.landType[currentYear]],
+              side: THREE.DoubleSide
+          });
+        }
         meshMaterials.push(tileMaterial);
     }
 
@@ -561,7 +570,7 @@ function onDocumentKeyDown(event) {
             break;
         //case t
         case 84:
-            if(modalUp != true && mapIsHighlighted != true && !multiAssignMode){
+            if(modalUp != true && mapIsHighlighted != true){
                 tToggle ? tToggle = false : tToggle = true;
                 refreshBoard();
                 setupRiver();
@@ -1648,7 +1657,8 @@ function randomizeBoard() {
     //if tile exists
         if(boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none ){
             
-            painter = getRandomInt(1,15) ;
+            if(!multiAssignMode) painter = getRandomInt(1,15) ;
+            else painter = getRandomInt(1,6) ;
             changeLandTypeTile(i) ;
         }
     }
@@ -1706,8 +1716,7 @@ function toggleVisibility() {
                      break;
                 case "multiAssign":
                      for(var j = 1; j <= 6; j++){
-                         console.log(j) ;
-                          document.getElementById('paintPlayer' + j).style.display = "inline-block" ;
+                         document.getElementById('paintPlayer' + j).style.display = "inline-block" ;
                      }
                      break;
                 default:
@@ -1818,6 +1827,7 @@ function resetOptions() {
 
 function startOptions() {
     document.getElementById('options').style.visibility = "visible" ;
+    document.getElementById('options').contentWindow.getState() ;
 }
 
 
@@ -1828,11 +1838,12 @@ function endMultiAssignMode() {
     //create an iframe, select up to 6 players
     //then downloads
     document.getElementById('multiPlayer').style.visibility = "visible" ;
-    document.getElementById('multiPlayer').src = "./htmlFrames/multiDownload.html" ;
+    
 }
 
 function hideMultiDownload() {
     document.getElementById('multiPlayer').style.visibility = "hidden" ;
+    document.activeElement.blur() ;
 }
 
 function createPlayerMap(value){

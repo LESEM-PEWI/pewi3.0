@@ -27,16 +27,6 @@ function loadResources() {
     var textureWetland = textureLoader.load('./cell_images_bitmaps/LandUse_Wetland.png');
     var textureMixedFruitsVegetables = textureLoader.load('./cell_images_bitmaps/LandUse_Mixed_Fruits_and_Vegetables.png');
     
-    //multiplayer Textures
-    var textureP1 = textureLoader.load('./imgs/player1.png');
-    var textureP2 = textureLoader.load('./imgs/player2.png');
-    var textureP3 = textureLoader.load('./imgs/player3.png');
-    var textureP4 = textureLoader.load('./imgs/player4.png');
-    var textureP5 = textureLoader.load('./imgs/player5.png');
-    var textureP6 = textureLoader.load('./imgs/player6.png');
-    
-    multiplayerTextureArray = [textureClear, textureP1, textureP2, textureP3, textureP4, textureP5, textureP6];
-    
     textureArray = [textureClear, textureConventionalCorn, textureConservationCorn, textureConventionalSoybean, textureConservationSoybean,
                     textureAlfalfa, texturePermanentPasture, textureRotationalGrazing, textureGrassHay,
                     texturePrairie, textureConservationForest, textureConventionalForest, textureHerbs, textureShortWoody,
@@ -93,6 +83,15 @@ function loadResources() {
     highlightArray.push(textureLoader.load('./cell_images_bitmaps/837856.png'));
     highlightArray.push(textureLoader.load('./cell_images_bitmaps/a9833c.png'));
     highlightArray.push(textureLoader.load('./cell_images_bitmaps/bc892f.png'));
+    
+    var textureP1 = highlightArray[9];
+    var textureP2 = highlightArray[1] ;
+    var textureP3 = highlightArray[17] ;
+    var textureP4 = highlightArray[19] ;
+    var textureP5 = highlightArray[5] ;
+    var textureP6 = highlightArray[4] ;
+    
+     multiplayerTextureArray = [textureClear, textureP1, textureP2, textureP3, textureP4, textureP5, textureP6];
     
   return 1 ;
 

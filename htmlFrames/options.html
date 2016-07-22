@@ -167,8 +167,8 @@ margin: 20px;
 
 <div class="container">
   
-  <input id="paint1" >
-  <label for="paint1" style = " background-color: #4c6167; cursor:default ;">Conventional Corn</label>
+  <input id="paint1" class="toggle" type="checkbox" >
+  <label for="nada" style = " background-color: #4c6167; cursor:default ;">Conventional Corn</label>
   
   <input id="paint2" class="toggle" type="checkbox" >
   <label for="paint2">Conservation Corn</label>
@@ -264,9 +264,6 @@ margin: 20px;
  
 var maxYear = 3 ; //for settings    
     
-getState() ;    
-    
-    
     
 function saveState() {
 
@@ -334,7 +331,6 @@ window.scrollTo(0,0);
 
 function getState() {
  
- 
 var strRawContents = window.top.document.getElementById('parameters').innerHTML ;
     
     //split based on escape chars
@@ -346,7 +342,7 @@ var strRawContents = window.top.document.getElementById('parameters').innerHTML 
   var yearCounter = 0 ;
 
 for(var i=0; i < arrLines.length; i++) {
-  
+  //console.log(arrLines[i]) ;
   var string = arrLines[i] ;
 
   
@@ -374,7 +370,7 @@ for(var i=0; i < arrLines.length; i++) {
           }
         }
         else{
-            document.getElementById(string).checked = 1 ;
+            if(document.getElementById(string)) document.getElementById(string).checked = 1 ;
         }
     }
   

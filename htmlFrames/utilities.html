@@ -163,9 +163,9 @@ function setupMultiplayer() {
     
 function aggregateMultimaps(){
     
-    console.log("binding prop change");
+    //console.log("binding prop change");
     
-        $('#file-upload').bind('propertychange change', function (e) {
+    $('#file-upload').bind('propertychange change', function (e) {
         window.top.multiUpload(time, e) ;
         
         updateInfo(time);

@@ -67,10 +67,10 @@ function loadLevel(level){
             if(achievedAllLevels){updatePopup("Congratulations! You made it through all the levels. Try out your newfound knowledge in Sandbox mode!");}
             break;
         case -1:
+            multiAssignMode = true ;
             levelGlobal = 1 ;
             loadLevelDetails("./levels/specs/testMP.txt");
             initWorkspace('./data.txt') ;
-            multiAssignMode = true ;
             break;
     }
     
@@ -105,7 +105,12 @@ function loadLevel(level){
                         
                         boardData[currentBoard].map[j].landType[i] = Number(levelSpecs.landTypeMonoculture[i]);
                         if(i == currentYear){
+                            if(!multiAssignMode){
                             meshMaterials[j].map = textureArray[Number(levelSpecs.landTypeMonoculture[i])];
+                            }
+                            else{
+                            meshMaterials[j].map = multiplayerTextureArray[Number(levelSpecs.landTypeMonoculture[i])];    
+                            }
                             boardData[currentBoard].map[j].update(currentYear);
                         }
                         
