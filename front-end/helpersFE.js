@@ -322,7 +322,6 @@ function addTile(tile) {
     tileGeometry.faces.push(face);
     tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1, 0), new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)]); // uvs
 
-
     if (tile.landType[currentYear] == 0) {
         tileMaterial = new THREE.MeshBasicMaterial({
             color: 0x000000,
@@ -340,12 +339,13 @@ function addTile(tile) {
           });
         }
         else{
-            tileMaterial = new THREE.MeshLambertMaterial({
-              map: multiplayerTextureArray[tile.landType[currentYear]],
-              side: THREE.DoubleSide
-          });
-        }
+            
+               tileMaterial = new THREE.MeshLambertMaterial({
+                 map: ((tile.landType[currentYear] < multiplayerTextureArray.length) ? multiplayerTextureArray[tile.landType[currentYear]] : null),
+                 side: THREE.DoubleSide 
+              });
         meshMaterials.push(tileMaterial);
+       }
     }
 
     //if this tile is the first in its row that is a streamNetwork tile add it to the riverPoints array
