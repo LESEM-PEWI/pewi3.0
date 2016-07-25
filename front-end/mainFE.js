@@ -17,6 +17,7 @@ var counter = 0;
 var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
 var skybox = false;
+var allLoaded = false;
 
 //Variables for Zoom Function
 var zoomedIn = false;
@@ -24,7 +25,6 @@ var fov = null, zoomFactor = 1.0, zoomInInc = 0.1, zoomOutInc = 0.2;
 var zoomingInNow = false;
 var zoomingOutNow = false;
 
-var allLoaded = false;
 
 //createThreeFramework instantiates the renderer and scene to render 3D environment
 function createThreeFramework(){
@@ -35,7 +35,7 @@ function createThreeFramework(){
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    //scene
+    //create the main THREE.js scene
     scene = new THREE.Scene();
 
 } //end createThreeFramework()
@@ -99,65 +99,94 @@ function renderBackground(){
     }
 } //end renderBackground
 
+//loadingManager records when all textures and resources are loaded
 function loadingManager(){
     
+    //DefaultLoadingManager.onProgress is a THREE.js function that tracks when items are loaded
     THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
-    
-       console.log(item + " loaded " + loaded + " of " + total);
-    
+       console.log(" loaded " + loaded + " of " + total);
     };
    
-  THREE.DefaultLoadingManager.onLoad = function (){
-      console.log("loaded") ;
-      
-      allLoaded = true;
+    //DefaultLoadingManager.onload updates boolean allLoaded when all resources are loaded
+    THREE.DefaultLoadingManager.onLoad = function (){
+        
+        //update allLoaded status
+        console.log("loaded") ;
+        allLoaded = true;
      
-      //document.getElementById('loading').style.display = "none" ;
-      document.getElementById('page').style.visibility = "visible" ;
-       
-      //work around for firefox..... see bug 554039
-      document.getElementById('firefoxWorkaround').focus() ;
-      //
-     
+        //show main PEWI page elements
+        document.getElementById('page').style.visibility = "visible" ;
+        document.getElementById('firefoxWorkaround').focus() ;
+        
     };
     
-}
+} //end loadingManager
 
-//initSandbox initializes a sandbox game in the threeFramework
+//initWorkspace initializes a sandbox game in the threeFramework
 function initWorkspace(file){
     
+    //hide the startup page and show the loading animation
     document.getElementById('startupSequence').style.display = "none";
     document.getElementById('loading').style.visibility = "visible";
     
+    //reset key functions on page
     document.activeElement.blur();
     
     //setup stats display
     stats.domElement.id = 'statFrame' ;
     document.body.appendChild(stats.domElement);
     
+    //Setup scene, toggle options, and add the background
     var hold = setupBoardFromFile(file) ;
-
     toggleVisibility() ;
-    
     renderBackground();
     
+    //wait until all elements of the THREE.js scene are displayed
     function checkIfSceneLoaded() {
         if(!bgScene.children || !allLoaded) {
-            setTimeout(checkIfSceneLoaded(), 500);//wait 500 millisecnds then recheck
+            setTimeout(checkIfSceneLoaded(), 500); //wait 500 milliseconds then recheck
             return;
         }
+        //hide loading animation and make the PEWI main page visible
         document.getElementById('loading').style.display = "none" ;
         document.getElementById('page').style.visibility = "visible" ;
     }
-
     checkIfSceneLoaded();
     
-}
+} //end initWorkspace
 
+//animationFrames updates rendered frames
 function animationFrames(){
     
+    //render animations
     requestAnimationFrame(function animate() {
+        
+        birdAnimation();
+        zoomAnimation();
+    
+        renderer.autoClear = false;
+        if(bgScene != null){
+            renderer.render(bgScene, bgCam);
+        }
+        renderer.render(scene, camera);
 
+        //wait # update frames to check
+        if (counter > 20) {
+            gameDirector();
+            counter = 0;
+        }
+        counter += 1;
+
+        requestAnimationFrame(animate);
+        stats.update();
+
+    }); //end request
+    
+} //end animationFrames 
+
+//birdAnimation updates bird and boid positions
+function birdAnimation() {
+    
     if(birds != null){
         
     	for ( var i = 0, il = birds.length; i < il; i++ ) {
@@ -181,6 +210,11 @@ function animationFrames(){
     
     }
     
+} //end birdAnimation
+
+//zoomAnimation updates field of view positions for zoom animation
+function zoomAnimation() {
+    
     if(zoomingInNow){
         
         camera.fov = fov * zoomFactor;
@@ -202,29 +236,7 @@ function animationFrames(){
         if(zoomFactor > 1.1) zoomingOutNow = false;
     }
     
-
-
-   renderer.autoClear = false;
-   if(bgScene != null){
-    renderer.render(bgScene, bgCam);
-   }
-   renderer.render(scene, camera);
-
-    //wait # update frames to check
-    if (counter > 20) {
-        gameDirector();
-        counter = 0;
-    }
-    counter += 1;
-
-    requestAnimationFrame(animate);
-    stats.update();
-
-    
-    
-  }); //end request
-    
-}
+} //end zoomAnimation
 
 //setupSkyBox instantiates the skybox background (HI-DEF Version)
 function setupSkyBox() {
@@ -260,6 +272,7 @@ function setupStaticBackground() {
     
 } //end setupStaticBackground
 
+//switchBoards removes and displays a new board in the THREE.js scene
 function switchBoards(newBoard){
     
     //remove points of previous board's river if present
@@ -333,7 +346,9 @@ function switchToZoomView(tile){
     }
     
     //reset the camera location
+    controls.value = 100 ;
     controls.reset();
+    setTimeout(function() {controls.value = 1 ; }, 100);
     
     //start animating the zoom in movement
     zoomingInNow = true;
@@ -352,7 +367,9 @@ function switchToUnzoomedView(tile){
     switchBoards(boardData[fullBoardBeforeZoom]);
     
     //reset the camera location
+    controls.value = 10 ;
     controls.reset();
+    setTimeout(function() {controls.value = 1 ; }, 100);
     
     //start animation the zoom out movement
     zoomingOutNow = true;
@@ -361,14 +378,18 @@ function switchToUnzoomedView(tile){
 //Create a river object with tributaries
 function setupRiver() {
     
+    //remove any previously rendered river
     if (river != null) {
         scene.remove(river);
     }
     
+    //stores the main river and all tributaries
     river = new THREE.Object3D();
     
+    //riverPoints stores the main river and tributary points
     for(var j = 0; j < riverPoints.length; j++){
         
+        //create two lines to bound the river
         var riverCurve1 = []; 
         var riverCurve2 = [];
         for(var i = 0; i < riverPoints[j].length; i++){
@@ -376,6 +397,7 @@ function setupRiver() {
             riverCurve2.push(new THREE.Vector3(Math.max(riverPoints[j][i].x - 5, riverPoints[j][i].x - 2 * ((3*i)+1)/3), tToggle ? (i == riverPoints[j].length-1 ? 1.5 : riverPoints[j][i].y+2) : riverPoints[j][i].y, riverPoints[j][i].z));
         }
         
+        //create two catmullRomCurves from the lines
         var curve1 = new THREE.CatmullRomCurve3(riverCurve1);
             curve1.type = 'chordal';
             curve1.closed = false;
@@ -395,12 +417,14 @@ function setupRiver() {
         
         var holes = [];
         riverCurve.vertices = riverMeshVertices;
-        
+       
+        //Create faces between the vertices on the catmullRomCurves 
         for(var i = 0; i < riverCurve.vertices.length - curve1geo.vertices.length - 1; i++){
             riverCurve.faces.push(new THREE.Face3(i, i + 1, i + curve1geo.vertices.length));
             riverCurve.faces.push(new THREE.Face3(i + curve1geo.vertices.length, i + curve1geo.vertices.length + 1, i + 1));
         }
     
+        //Add the river texture to the mesh
         var material = new THREE.MeshBasicMaterial({
             wireframe: false,
             side: THREE.DoubleSide,
@@ -409,14 +433,16 @@ function setupRiver() {
             transparent: true
         });
     
+        //Add one stream of the river to the river object
         riverStream = new THREE.Mesh(riverCurve, material);
         river.add(riverStream);
         
     }
     
     scene.add(river);
-}
+} //end setupRiver
 
+//setupHighlight adds listeners to the mouse in the THREE.js scene
 function setupHighlight() {
 
     //set up mouse functions and raycaster
@@ -431,25 +457,29 @@ function setupHighlight() {
 
 }; //end setupHighlight
 
+//showMainMenu uses the esc key to return to the startup screen
 function showMainMenu() {
+    
+    //alert user about exit
     if(confirm('Are you sure you want to exit? All your progress will be lost.')){
 
+       //show loading animation and startup page
        document.getElementById('loading').style.display = "block" ; 
        document.getElementById('startUpFrame').contentWindow.recallMain() ;
         
         setTimeout(function() {
             
         document.getElementById('startupSequence').style.display = "block" ;
-        //clearPopup();
-        //
-            
+        
+        //reset sandbox/level to original settings    
         previousHover = null ;
         paintChange(1) ;
         switchConsoleTab(1);
         switchYearTab(1);
         controls.reset() ;
         
-         if(levelGlobal > 0){
+        //clean up from level
+        if(levelGlobal > 0){
             //clean up from a level
 
             console.log("---cleaning up---");
@@ -460,11 +490,9 @@ function showMainMenu() {
             toggleVisibility() ;
 
         }
-        //achievementValues = [];
+        
         document.getElementById('page').style.visibility = "hidden" ;}, 1000 );
         
-        
-        
     }
-}
-
+    
+} //end showMainMenu

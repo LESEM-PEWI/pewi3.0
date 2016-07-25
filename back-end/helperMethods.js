@@ -31,7 +31,7 @@ function setPrecipitation() {
     return r;
 } //end setPrecipitation()
 
-//convertPrecipToIndex
+//convertPrecipToIndex returns precipitationIndex array indicies from precip levels
 function convertPrecipToIndex(precip) {
     
     switch(precip){
@@ -52,7 +52,7 @@ function convertPrecipToIndex(precip) {
             return 6;
     }
     
-}
+} //end convertPrecipToIndex
 
 
 //helper method for calculations of log base 10

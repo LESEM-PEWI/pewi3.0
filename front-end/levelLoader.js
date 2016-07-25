@@ -131,6 +131,7 @@ function loadLevel(level){
     
 } //end loadLevel
 
+//resetLevel removes all objects, resets the levelSpecs and clears the popup dialogue
 function resetLevel(){
     
     objectives = [];
@@ -143,8 +144,9 @@ function resetLevel(){
     document.getElementById("mainMenuButton").className = "moveButtonHidden";
     document.getElementById("nextLevelButton").className = "moveButtonHidden";
     
-}
+} //end resetLevel
 
+//parseLevelDetails parses a level specifications file and stores the data in the level specs object and objectives array
 function parseLevelDetails(data) {
     
     //get data from invisible div on page
@@ -187,6 +189,7 @@ function parseLevelDetails(data) {
             year: Number(tempParsed[1]),
             final: Number(tempParsed[2]),
             accomplished: 0,
+            previouslyDisplayed: 0,
             low: Number(tempParsed[3]),
             high: Number(tempParsed[4]),
             script: tempParsed[5],
@@ -199,7 +202,7 @@ function parseLevelDetails(data) {
     
     //add the ending script to the levelScripts object
     levelSpecs.end = arrLines[arrLines.length - 1];
-}
+} //end parseLevelDetails
 
 //load the data from given fileString into the given board object
 function loadLevelDetails(fileString) {
@@ -215,8 +218,9 @@ function loadLevelDetails(fileString) {
        }
     });
     
-}
+} //end loadLevelDetails
 
+//returnCurrentLevel
 function returnCurrentLevel(){
     return levelGlobal;
-}
+} //end returnCurrentLevel

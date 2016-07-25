@@ -7,9 +7,10 @@ var butterflyMaterials = [];
 
 function loadResources() {
 
-    //load resources here
+    //Add a textureLoader to load textures for THREE.js
     var textureLoader = new THREE.TextureLoader();
 
+    //Load the land type textures
     var textureClear = textureLoader.load('./cell_images_bitmaps/LandUse_None.png');
     var textureConventionalCorn = textureLoader.load('./cell_images_bitmaps/LandUse_Conventional_Corn.png');
     var textureConservationCorn = textureLoader.load('./cell_images_bitmaps/LandUse_Conservation_Corn.png');
@@ -27,13 +28,16 @@ function loadResources() {
     var textureWetland = textureLoader.load('./cell_images_bitmaps/LandUse_Wetland.png');
     var textureMixedFruitsVegetables = textureLoader.load('./cell_images_bitmaps/LandUse_Mixed_Fruits_and_Vegetables.png');
     
+    //Add the land type textures to textureArray
     textureArray = [textureClear, textureConventionalCorn, textureConservationCorn, textureConventionalSoybean, textureConservationSoybean,
                     textureAlfalfa, texturePermanentPasture, textureRotationalGrazing, textureGrassHay,
                     texturePrairie, textureConservationForest, textureConventionalForest, textureHerbs, textureShortWoody,
                     textureWetland, textureMixedFruitsVegetables];
   
+    //Add old pewi backgrounds to array after loaded
     oldPewiBackgrounds = [textureLoader.load("./background_images/Background_Drought.png"), textureLoader.load("./background_images/Background_Normal.png"), textureLoader.load("./background_images/Background_Flood.png")];
     
+    //Load all highlighted color tiles to the highlightArray
     highlightArray.push(textureLoader.load('./cell_images_bitmaps/e6bb00.png'));
     highlightArray.push(textureLoader.load('./cell_images_bitmaps/c97b08.png'));
     highlightArray.push(textureLoader.load('./cell_images_bitmaps/ad490d.png'));
@@ -77,15 +81,17 @@ function loadResources() {
     highlightArray.push(textureLoader.load('./cell_images_bitmaps/a9833c.png'));
     highlightArray.push(textureLoader.load('./cell_images_bitmaps/bc892f.png'));
     
+    //Select textures from the highlightArray for the multiplayer utility
     var textureP1 = highlightArray[9];
-    var textureP2 = highlightArray[1] ;
-    var textureP3 = highlightArray[17] ;
-    var textureP4 = highlightArray[19] ;
-    var textureP5 = highlightArray[5] ;
-    var textureP6 = highlightArray[4] ;
+    var textureP2 = highlightArray[1];
+    var textureP3 = highlightArray[17];
+    var textureP4 = highlightArray[19];
+    var textureP5 = highlightArray[5];
+    var textureP6 = highlightArray[4];
     
-     multiplayerTextureArray = [textureClear, textureP1, textureP2, textureP3, textureP4, textureP5, textureP6];
+    //Add selected textures to the multiplayTextureArray
+    multiplayerTextureArray = [textureClear, textureP1, textureP2, textureP3, textureP4, textureP5, textureP6];
     
-  return 1 ;
+  return 1;
 
 }

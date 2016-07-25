@@ -119,28 +119,23 @@ body {
     
 <body>
 
-
+<!-- back to startup page button -->
 <img onclick="parent.reset()" id="backButton" src="./imgs/back.png">    
     
 <script>
-
 init();
 generateDisplay();
-
-
 </script>    
 
+<!-- container to hold level links -->
 <div id="levelsDisplayContainer">
-    
  <div id="levelsHeader">LEVELS</div>
-
- <div id="levelsHolder">
- </div>  
-    
+ <div id="levelsHolder"></div>  
 </div>
 
 
 <script>
+//populate levels inserts html elements into the levels container that act as links to the levels
     document.getElementById("levelsHolder").innerHTML = populateLevels();
 </script>
     

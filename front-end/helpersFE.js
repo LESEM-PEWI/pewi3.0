@@ -19,6 +19,7 @@ var mesh = null;
 var isShiftDown = false;
 var tToggle = false; //topology off by default
 var mapIsHighlighted = false;
+var highlightedTiles = [] ;
 var hoverOverride = false;
 var currentHighlightType = 0;
 var immutablePrecip = false; 
@@ -54,6 +55,7 @@ function displayBoard() {
         addTile(boardData[currentBoard].map[i]);
     }
 
+    //Add material indicies in order to facilitate texture changes
     for (var i = 0; i < meshGeometry.faces.length; i += 2) {
         meshGeometry.faces[i].materialIndex = i / 2;
         meshGeometry.faces[i + 1].materialIndex = i / 2;
@@ -82,29 +84,34 @@ function highlightTile(id) {
     //if not a tile
     if (id != -1 && !modalUp) {
 
+        //remove currently highlighted land type from HUD if over a clear tile
         if(boardData[currentBoard].map[id].landType[currentYear] == 0){
             
             showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
         
         } else {  
             
+            //Highlight a nonzero land type tile
             meshMaterials[id].emissive.setHex(0x7f7f7f);
             previousHover = id;
             
+            //update HUD with current information
             showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[id].landType[currentYear]));
         }
     
     } else {
-
+        
+        //If not over any land tile, update HUD accordingly
         showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
 
     }
 
-}
+} //end highlightTile
 
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(id) {
-
+    
+    //if land type of tile is nonzero
     if(boardData[currentBoard].map[id].landType[currentYear] != 0){
 
         //change the materials of the faces in the meshMaterials array and update the boardData
@@ -119,8 +126,9 @@ function changeLandTypeTile(id) {
         }
     }
 
-}
+} //end changeLandTypeTile
 
+//getTileID calculates the id of the tile give the raycaster intersection coordinates
 function getTileID(x, y) {
 
     //x and y in terms of three.js 3d coordinates, not screen coordinates
@@ -158,8 +166,9 @@ function getTileID(x, y) {
 
    return (getTileIDFromRC(row, col) - 1);
 
-}
+} //end getTileID
 
+//calculateCutoffs determines the bordering coordinates of tiles
 function calculateCutoffs() {
 
     var tilesWide = boardData[currentBoard].width;
@@ -189,12 +198,13 @@ function calculateCutoffs() {
 
     rowCutOffs = tempRowCut;
 
-}
+} //end calculateCutoffs
 
+//getTileIDFromRC calculates ids given a row and column
 function getTileIDFromRC(row, col){
      var tilesWide = boardData[currentBoard].width;
      return Number( ((row - 1) * tilesWide) + col ) ;
-}
+} //end getTileIDFromRC
 
 //returns an array of tiles in the rectangle bounded by startTile and endTile
 function getGrid(startTile, endTile) {
@@ -233,6 +243,7 @@ function getGrid(startTile, endTile) {
     return tileArray ;
 }
 
+//getGridOutline is used to calculate higlighted regions using the rectangle painter
 function getGridOutline(startTile, endTile) {
     
     var tileArray = [] ;
@@ -322,6 +333,7 @@ function addTile(tile) {
     tileGeometry.faces.push(face);
     tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1, 0), new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)]); // uvs
 
+    //choose the relevant texture to add to the tile faces
     if (tile.landType[currentYear] == 0) {
         tileMaterial = new THREE.MeshBasicMaterial({
             color: 0x000000,
@@ -409,8 +421,6 @@ function transitionToYear(year) {
 
 } //end transitionToYear
 
-var highlightedTiles = [] ;
-
 //onDocumentMouseMove follows the cursor and highlights corresponding tiles
 function onDocumentMouseMove(event) {
 
@@ -437,6 +447,7 @@ function onDocumentMouseMove(event) {
 
     if (intersects.length > 0 && !modalUp) {
 
+        //if painter tool type is the rectangle painter
         if (painterTool.status == 2 && !mapIsHighlighted) {
             //highlight a grid
             var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
@@ -459,6 +470,7 @@ function onDocumentMouseMove(event) {
             }
 
         }
+        //if painter tool type is the hover painter
         else if(painterTool.status == 3 && !mapIsHighlighted){
             var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z) ;
             if(boardData[currentBoard].map[currentTile].landType[0] != 0)  changeLandTypeTile(currentTile) ;
@@ -543,6 +555,7 @@ function onDocumentMouseDown(event) {
         }
         else {
             
+            //if shift is down and map isn't highlighted, change all nonzero landtypes
             if(!mapIsHighlighted){
     
                 for (var i = 0; i < boardData[currentBoard].map.length; i++) {
@@ -567,10 +580,11 @@ function onDocumentMouseDown(event) {
 function onDocumentKeyDown(event) {
 
     switch (event.keyCode) {
+        //case shift - update isShiftDown
         case 16:
             isShiftDown = true;
             break;
-        //case t
+        //case t - toggle topography
         case 84:
             if(modalUp != true && mapIsHighlighted != true){
                 tToggle ? tToggle = false : tToggle = true;
@@ -578,40 +592,41 @@ function onDocumentKeyDown(event) {
                 setupRiver();
             }
             break;
-        //case i
+        //case i - toggle codex
         case 73:
             toggleIndex();
             break ;
-        //case e
+        //case e - reset camera position
         case 69:
             //why do we have to do this? Because scope updates incrementally
             controls.value = 10 ;
             controls.reset();
             setTimeout(function() {controls.value = 1 ; }, 100);
             break;
-        //case r
+        //case r - randomize land types
         case 82:
             if(modalUp != true && mapIsHighlighted != true){
                 randomizeBoard() ;
             }
             break;
+        //case c - log camera position and rotation
         case 67:
             console.log(camera.position) ;
             console.log(camera.rotation) ;
             console.log("-------------") ;
             break;
-        //case b
+        //case b - add animated birds to scene
         case 66:
             createFlock();
             break;
-        //case p
+        //case p - use for hover painting tool
         case 80:
             if(painterTool.hover && painterTool.status != 3) {
                 painterTool.status = 3 ;
                 highlightTile(-1);
             }
             break;
-        //case f
+        //case f - add animated fireworks
         case 70:
             launchFireworks();
             break;
@@ -629,11 +644,11 @@ function onDocumentKeyDown(event) {
                 switchToUnzoomedView();
             }
             break;
-        //case o :
+        //case o - show options
         case 79:
             startOptions() ;
             break;
-        //case v
+        //case v - key to record multiplayer fields
         case 86:
             if(multiAssignMode){
                 endMultiAssignMode() ;
@@ -649,22 +664,24 @@ function onDocumentKeyUp(event) {
         case 0:
             isShiftDown = false;
             break;
+        //case release shift
         case 16:
             isShiftDown = false;
             break;
-        //case p
+        //case release p
         case 80:
           if(painterTool.status == 3 ) painterTool.status = 0
           break;
+        //case release esc
         case 27:
             if(document.getElementById('startupSequence').style.display == "none"){
                 showMainMenu() ;
             }
-        //case z -- for zoom functions
+        //case release z -- for zoom functions
         case 90:
             zIsDown = false;
             break;
-        //case 1 -- press z,1 and click tile to zoom in
+        //case release 1 -- press z,1 and click tile to zoom in
         case 49:
             oneIsDown = false;
             break;
@@ -769,7 +786,7 @@ function resultsEnd() {
     document.getElementById('closeResults').style.opacity = "0";
     document.getElementById("closeResults").style.visibility = "hidden";
     
-
+    //reopen elements that were previously open
     if (openBack) {
         roll(1) ;
     }
@@ -791,6 +808,8 @@ function resultsEnd() {
 
 //roll controls the display of the toolbars on the left
 function roll(value) {
+    
+    //toggle rolled status of the left console
     if (value == 1) {
 
         if (document.getElementById('tabButtons').className == "tabButtons") {
@@ -815,8 +834,9 @@ function roll(value) {
 
         }
 
-    } //left tollbox
+    }
 
+    //toggle rolled status of the results button
     if (value == 2) {
 
         if (document.getElementById("resultsButton").className == "resultsButton") {
@@ -825,62 +845,69 @@ function roll(value) {
         else if (document.getElementById("resultsButton").className == "resultsButtonRolled") {
             document.getElementById("resultsButton").className = "resultsButton";
         }
+        
+    }
 
-
-    } //right results button
-
-
-} //roll
+} //end roll
 
 //showLevelDetails shows the legend for each of the highlight map functions
 function showLevelDetails(value) {
 
+    //show nitrate legend
     if (value == 1) {
         document.getElementById("nitrateDetailsList").className = "levelDetailsList";
         document.getElementById('nitrateIcon').className = "levelSelectorIconSelected" ;
     }
 
+    //show erosion legend
     if (value == 2) {
         document.getElementById("erosionDetailsList").className = "levelDetailsList";
         document.getElementById('erosionIcon').className = "levelSelectorIconSelected" ;
     }
 
+    //show phosphorus legend
     if (value == 3) {
         document.getElementById("phosphorusDetailsList").className = "levelDetailsList";
         document.getElementById('phoshorusIcon').className = "levelSelectorIconSelected" ;
     }
 
+    //show flood frequency legend
     if (value == 4) {
         document.getElementById('floodFrequency').className = "featureSelectorIconSelected" ;
         document.getElementById("floodFrequencyDetailsList").className = "physicalDetailsList";
     }
-
+    
+    //show drainage class legend
     if (value == 5) {
         document.getElementById('drainageClass').className = "featureSelectorIconSelected" ;
         document.getElementById("drainageClassDetailsList").className = "physicalDetailsList";
     }
     
+    //show strategic wetlands legend
     if (value == 6) {
         document.getElementById('strategicWetlands').className = "featureSelectorIconSelected" ;
         document.getElementById("wetlandClassDetailsList").className = "physicalDetailsList";
     }
 
+    //show subwatershed legend
     if (value == 7) {
         document.getElementById('subwatershedBoundaries').className = "featureSelectorIconSelected" ;
         document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
     }
     
+    //hide ecosystem indicator legends
     if (value > -4 && value < 0) {
         var element = document.getElementsByClassName('levelDetailsList');
         element[0].className = 'levelDetailsListRolled';
     }
 
+    //hide watershed feature legends
     if (value < -3) {
         var element = document.getElementsByClassName('physicalDetailsList');
         element[0].className = 'physicalDetailsListRolled';
     }
 
-} //showLevelDetails
+} //end showLevelDetails
 
 //updatePrecip updates the currentBoard with the precipitation values selected in the drop down boxes
 function updatePrecip(year) {
@@ -914,6 +941,7 @@ function switchConsoleTab(value) {
         elements[i].style.display = "none";
     }
 
+    //update the left console tab according to the value selected
     if (value == 1) {
 
         document.getElementById('terrainImg').className = "imgSelected";
@@ -975,13 +1003,16 @@ function switchYearTab(value) {
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(type) {
     
+        //map is not previously highlighted
         if(!mapIsHighlighted){
             
             mapIsHighlighted = true;
             
+            //update results
             Totals = new Results(boardData[currentBoard]);
             Totals.update();
     
+            //add highlighted textures to the map
             for (var i = 0; i < boardData[currentBoard].map.length; i++) {
     
                 if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
@@ -992,11 +1023,13 @@ function displayLevels(type) {
     
             }
             
+            //update tab selected
             var element = document.getElementsByClassName('featureSelectorIconSelected') ;
             if(element[0]) element[0].className = 'featureSelectorIcon' ;
             element = document.getElementsByClassName('levelSelectorIconSelected') ;
             if(element[0]) element[0].className = 'levelsSelectorIcon' ;
             
+            //show legends and record the type of highlighting
             switch(type){
                 case 'nitrate':
                     showLevelDetails(1);
@@ -1027,16 +1060,19 @@ function displayLevels(type) {
                     currentHighlightType = 7;
                     break;
             }
-            
+        
+        //if the map is previously highlighted 
         } else {
             
             var newSelection = 0;
             
+            //update console tab
             var element = document.getElementsByClassName('featureSelectorIconSelected') ;
             if(element[0]) element[0].className = 'featureSelectorIcon' ;
             element = document.getElementsByClassName('levelSelectorIconSelected') ;
             if(element[0]) element[0].className = 'levelsSelectorIcon' ;
             
+            //record new highlighting selection
             switch(type){
                 case 'nitrate':
                     newSelection = 1;
@@ -1061,22 +1097,28 @@ function displayLevels(type) {
                     break;
             }
             
+            //turning off previously highlighted map
             if(currentHighlightType == newSelection || newSelection == 0){
                 
                 mapIsHighlighted = false; 
                 refreshBoard();
                 showLevelDetails(-1 * currentHighlightType);
                 currentHighlightType = 0;
-                
+            
+            //selecting a new type of highlighting
             } else {
                 
                 mapIsHighlighted = true;
                 
+                //close previous legend
                 showLevelDetails(-1 * currentHighlightType);
                 
+                //update results
                 Totals = new Results(boardData[currentBoard]);
                 Totals.update();
     
+    
+                //update tiles
                 for (var i = 0; i < boardData[currentBoard].map.length; i++) {
     
                     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
@@ -1087,6 +1129,7 @@ function displayLevels(type) {
     
                 }
                 
+                //update legend and new highlighted type
                 showLevelDetails(newSelection);
                 currentHighlightType = newSelection;
                 
@@ -1100,11 +1143,10 @@ function displayLevels(type) {
 //getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
 function getHighlightColor(type, ID) {
 
+    //erosion highlight color indicies
     if (type == "erosion") {
 
         var erosionSeverity = Totals.grossErosionSeverity[currentYear][ID];
-
-        //console.log(erosionSeverity);
 
         switch (erosionSeverity) {
             case 1:
@@ -1121,6 +1163,7 @@ function getHighlightColor(type, ID) {
 
     }
 
+    //nitrite highlight color indicies
     if (type == "nitrate") {
 
         var nitrateConcentration = Totals.nitrateContribution[currentYear][ID];
@@ -1133,6 +1176,7 @@ function getHighlightColor(type, ID) {
 
     }
 
+    //phosphorus highlight color indicies
     if (type == "phosphorus") {
 
         var phosphorusRisk = Totals.phosphorusRiskAssessment[currentYear][ID];
@@ -1152,6 +1196,7 @@ function getHighlightColor(type, ID) {
 
     }
 
+    //flood frequency highlight color indicies
     if (type == "flood") {
 
         var flood = Number(boardData[currentBoard].map[ID].floodFrequency);
@@ -1172,6 +1217,7 @@ function getHighlightColor(type, ID) {
         }
     }
 
+    //wetland highlight color indicies
     if (type == "wetland") {
 
         if (boardData[currentBoard].map[ID].strategicWetland == 1) {
@@ -1182,6 +1228,7 @@ function getHighlightColor(type, ID) {
         }
     }
 
+    //subwatershed highlight color indicies
     if (type == "subwatershed") {
 
         var watershed = Number(boardData[currentBoard].map[ID].subwatershed);
@@ -1232,6 +1279,7 @@ function getHighlightColor(type, ID) {
         }
     }
 
+    //drainage highlight color indicies
     if (type == "drainage") {
 
         var drainage = Number(boardData[currentBoard].map[ID].drainageClass);
@@ -1275,8 +1323,10 @@ function contaminatedRiver(riverColor) {
     
 } //end contaminatedRiver
 
+//objectiveCheck keeps track of level based PEWI accomplishments
 function objectiveCheck() {
     
+    //if level is not yet started
     if(levelSpecs.started == 0){
         
         updatePopup(levelSpecs.begin);
@@ -1284,21 +1334,28 @@ function objectiveCheck() {
         
     }
     
+    //if level is started but not finished
     if(levelSpecs.started == 1 && levelSpecs.finished == 0){
     
         var numAccomplished = 0;
         
+        //for each objective
         for(var i = 0; i < objectives.length; i++){
-                
+            
+            //if the score monitored by this objective is in the target range
             if(Totals[objectives[i].score][objectives[i].year] > objectives[i].low && Totals[objectives[i].score][objectives[i].year] <= objectives[i].high){
                 
+                //if this is an objective that must be accomplished
                 if(objectives[i].final == 1){
                     
                     numAccomplished++;
                     
                 }
                 
-                if(objectives[i].accomplished == 0){
+                //if this objective is not currently accomplished
+                if(objectives[i].accomplished == 0 && objectives[i].previouslyDisplayed == 0){
+                
+                    objectives[i].previouslyDisplayed = 1;
                 
                     if(objectives[i].script != "" && objectives[i].script != "none"){
                         
@@ -1316,10 +1373,22 @@ function objectiveCheck() {
                 
                 }
                 
+            //if the score is not in the target range    
+            } else {
+                
+                //if the objective was previously accomplished but now is not
+                if(objectives[i].accomplished == 1){
+                    
+                    objectives[i].accomplished = 0;
+                    numAccomplished--;
+                
+                }
+                
             }
             
         }
         
+        //if enough objectives are accomplished
         if(numAccomplished >= levelSpecs.numRequired){
             
             levelSpecs.finished = 1;
@@ -1335,9 +1404,11 @@ function objectiveCheck() {
         
     }
     
-}
+} //end objectiveCheck
 
+//selectAnimation is a switch to trigger animations
 function selectAnimation(animation) {
+ 
     switch (animation) {
         case "bird":
             flyLark();
@@ -1356,8 +1427,9 @@ function selectAnimation(animation) {
             break;
     }
     
-}
+} //end selectAnimation
 
+//launchFireworks adds great balls of fire
 function launchFireworks(){
     var r=10+parseInt(Math.random()*10);
     for(var i=r; i--;){
@@ -1365,28 +1437,29 @@ function launchFireworks(){
             displayFirework(); 
         }, (i+1)*(1+parseInt(Math.random()*100)));
     }
-}
+} //end launchFireworks
 
+//displayFirework adds a single great ball of fire
 function displayFirework(){
     createFirework(11,61,6,2,null,null,null,null,false,true); 
     return 1;
-}
+} //end displayFirework
 
+//flyLark triggers the meadowlark animation
 function flyLark(){
 
     document.getElementById("meadowlark").className = "meadowlarkhidden";
     setTimeout( function(){ document.getElementById("meadowlark").className = "meadowlarkfly"}, 1);
 
-}
+} //end flyLark
 
+//createFlock displays an animated flock of birds for 10 seconds
 function createFlock(){
-    
-    //setTimeout( function(){ addBirds();}, 30000);
 
     addBirds();
     setTimeout( function() { for(var i = 0; i < birds.length; i++){scene.remove(birds[i])}}, 10000);
     
-}
+} //end createFlock
 
 //writeFileToDownloadString creates a string in csv format that describes the current board
 function writeFileToDownloadString() {
@@ -1540,7 +1613,7 @@ function closeUploadDownloadFrame() {
     modalUp = false;
 } //end closeUploadDownloadFrame
 
-
+//toggleIndex displays and hides the codex
 function toggleIndex() {
     
     if(document.getElementById('index').style.display != "block"){
@@ -1557,8 +1630,9 @@ function toggleIndex() {
         document.getElementById('index').style.display = "none" ;
         document.activeElement.blur();
     }
-}
+} //end toggleIndex
 
+//printLandUseType returns a display-worthy string of land type from numeric key
 function printLandUseType(type){
     
     switch (type) {
@@ -1598,8 +1672,9 @@ function printLandUseType(type){
 			return "NOT FOUND";
 	} //end switch
 	
-}
+}//end printLandUseType
 
+//printPrecipYearType returns the precipitation category of the year's precipitation
 function printPrecipYearType(){
     
     var precipLevel = boardData[currentBoard].precipitation[currentYear];
@@ -1612,28 +1687,33 @@ function printPrecipYearType(){
         return "Flood";
     }
     
-}
+} //end printPrecipYearType
 
+//showInfo updates the bottom HUD
 function showInfo(string){
     if(!multiAssignMode) document.getElementById("currentInfo").innerHTML = string ;
-}
+} //end showInfo
 
+//clearInfo removes text from the bottom HUD
 function clearInfo(){
     document.getElementById("currentInfo").innerHTML = " ";
-}
+} //end clearInfo
 
+//updatePopup appends text to the popup dialogue
 function updatePopup(string){
     document.getElementById("popupText").innerHTML = string + "<br><br>" + document.getElementById("popupText").innerHTML;
     document.getElementById("popup").className = "popup";
     document.getElementById("dialogueButton").className = "dialogueButton";
-}
+}  //end updatePopup
 
+//clearPopup removes all text from the popup dialogue and hides it
 function clearPopup(){
     document.getElementById("popupText").innerHTML = " ";
     document.getElementById("popup").className = "popupHidden";
     document.getElementById("dialogueButton").className = "dialogueButtonRolled";
-}
+} //end clearPopup
 
+//togglePopupDisplay allows for displaying and hiding the popup dialogue
 function togglePopupDisplay(){
     if(!modalUp){
         if(document.getElementById("popup").className == "popup"){
@@ -1647,9 +1727,8 @@ function togglePopupDisplay(){
     
 }
 
-
+//randomizeBoard randomly selects a landtype for each tile
 function randomizeBoard() {
-    
     
     var prevPainter = painter ;
     
@@ -1666,10 +1745,10 @@ function randomizeBoard() {
     }
     
     painter = prevPainter ;
-// boardData[currentBoard].map[id].landType[currentYear] = painter;    
     
-}
+} //end randomizeBoard
 
+//toggleVisibility parses the options stored in the parameters div and toggles their visibility
 function toggleVisibility() {
     
     //default off items
@@ -1782,9 +1861,9 @@ function toggleVisibility() {
             paintChange(1);
       }
     
-}
+} //end toggleVisibility
 
-
+//painterSelect updates the value of the selected painter tool
 function painterSelect(value){
    
     var element = document.getElementsByClassName('painterIconSelected') ;
@@ -1797,7 +1876,7 @@ function painterSelect(value){
         painterTool.status = 0 ;
         
         
-    }else if(value == 2 ){
+    } else if(value == 2 ){
         
             //painterTooler is not selected, so select it
             //painterTool.status 0 indicates not ready
@@ -1807,7 +1886,7 @@ function painterSelect(value){
             console.log("ready to DC, status=" + painterTool.status) ;
             document.getElementById('gridPaint').className = "painterIconSelected" ;
    
-    }else if(value == 3){
+    } else if(value == 3){
         painterTool.status = 0 ;
         if(painterTool.status == 2) refreshBoard() ;
         
@@ -1817,6 +1896,7 @@ function painterSelect(value){
     
 }
 
+//resetOptions sets the options from the screen to the game
 function resetOptions() {
     
     document.getElementById('options').style.visibility = "hidden" ;
@@ -1825,15 +1905,15 @@ function resetOptions() {
     toggleVisibility() ;
     
     //toggle Precip
-}
+} //end resetOptions
 
+//startOptions displays the options page 
 function startOptions() {
     document.getElementById('options').style.visibility = "visible" ;
     document.getElementById('options').contentWindow.getState() ;
-}
+} //end startOptions
 
-
-
+//endMultiAssignMode displays the multiPlayer element
 function endMultiAssignMode() {
     
     //console.log("nominally over, let's try to write player 1") ;
@@ -1841,13 +1921,15 @@ function endMultiAssignMode() {
     //then downloads
     document.getElementById('multiPlayer').style.visibility = "visible" ;
     
-}
+} //end endMultiAssignMode
 
+//hideMultiDownload hides the multiPlayer element
 function hideMultiDownload() {
     document.getElementById('multiPlayer').style.visibility = "hidden" ;
     document.activeElement.blur() ;
-}
+} //end hideMultiDownload
 
+//createPlayerMap creates the file for a multiplayer map for download
 function createPlayerMap(value){
  
     var string = "";
@@ -1904,14 +1986,16 @@ function createPlayerMap(value){
             
     return string;
     
-}
+} //end createPlayerMap
 
+//multiUpload directs functions for multiplayer file upload
 function multiUpload(value, e){
     console.log("uploading time " + value);
     if(value == 1) multiUploadStage1(e);
     if(value >= 2) multiUploadStage2(e);
-}
+} //end multiUpload
 
+//multiUploadStage1 initializes the aggregation of multiplayer boards
 function multiUploadStage1(e){
     
     console.log("loading stuff");
@@ -1935,8 +2019,10 @@ function multiUploadStage1(e){
             initData = [];
         }
     } //end else
-}
+    
+} //end multiUploadStage1
 
+//multiUploadStage2 facilitates the aggregation of multiplayer boards
 function multiUploadStage2(e) {
     
     console.log("attempting to overlay") ;
@@ -1963,9 +2049,9 @@ function multiUploadStage2(e) {
         }
     } //end else
     
-    
-}
+} //end multiUploadStage2
 
+//exitFromAggregate loads board with aggregated data
 function exitFromAggregate(){
     
     console.log("exiting from the aggregation confabulation") ;
@@ -1975,9 +2061,9 @@ function exitFromAggregate(){
     boardData[currentBoard] = temp ;
     refreshBoard() ;
     
-    
-}
+} //end exitFromAggregate
 
+//toggleChangeLandType toggles a boolean that tracks the state which is required to change land type
 function toggleChangeLandType() {
     
     if(clearToChangeLandType){
@@ -1986,4 +2072,4 @@ function toggleChangeLandType() {
         clearToChangeLandType = true;
     }
     
-}
+} //end toggleChangeLandType

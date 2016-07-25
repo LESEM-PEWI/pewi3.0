@@ -46,7 +46,7 @@
     
     <div class="designLevel">
     
-    <!-- Text input-->
+    <!-- Input for exercise number -->
     <div class="form-group">
       <label for="textinput">PEWI Exercise Number</label>  
       <div>
@@ -56,6 +56,7 @@
     
     <br>
     
+    <!-- Input for beginning level script -->
     <div>
         <label>Enter the level's beginning script. Tell the user what they need to accomplish.</label>
         <div>
@@ -66,15 +67,17 @@
     <br>
     <br>
     
-    
+    <!-- New objective div -->
     <div id="objectiveDiv">
     </div>
     
+    <!-- Button to dynamically add new objective -->
     <input type="button" value="Add an objective" onClick="addObjective('objectiveDiv');"> <br>
     
     <br>
     <br>
     
+    <!-- Input for yearly precipitation values -->
     <div>
         <label>Choose the precipitation values for each year:</label>
             <br><label>Year 0: </label>
@@ -121,6 +124,7 @@
     
     <br>
     
+    <!-- Input for yearly monocultures -->
     <div>
         <label>Choose a monoculture or preset map land covers for each year:</label>
         <br><label>Year 1: </label>
@@ -184,6 +188,7 @@
     
     <br>
     
+    <!-- Input for end of level script -->
     <div>
         <label>Enter the level's ending script. Congratulate the user and provide any further/concluding information.</label>
         <div>
@@ -193,6 +198,7 @@
 
     <br>
     
+    <!-- Input for required level toggle -->
     <div id="settings">
         <label>How many of the required objectives must the user complete to pass the level?</label>
         <div>
@@ -200,18 +206,17 @@
         </div>
     </div>
     
-        
     <script>addOptions();</script>
     
     <br>
     
+    <!-- Buttons to submit or reset level -->
     <div>
         <button type="button" onClick="downloadLevel();">Submit</button>
         <button type="reset">Reset</button>
     </div>
     
     <br>
-    
     
     </div>
     </form>
