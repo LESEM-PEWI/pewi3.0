@@ -1,9 +1,0 @@
-paint3*paint4*paint5*paint6*paint7*paint8*paint9*paint10*paint11*paint12*paint13*paint14*paint15
-24.58*30.39*34.34*28.18
-3*3*3
-Welcome to PEWI! Make sure to get more than a 95% corn grain yield for each year.
-3
-cornGrainYieldScore*1*1*95*100*Year 1 is done!*fireworks
-cornGrainYieldScore*2*1*95*100*Year 2 is done.*flock
-cornGrainYieldScore*3*1*95*100*Year 3 is done.*bird
-Great job! You are great at growing corn.

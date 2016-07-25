@@ -1,25 +1,24 @@
 //global
 //base sandbox level = 0
 
-//game director
+//gameDirector monitors achievements in the PEWI levels/exercises
 function gameDirector() {
     
     if(levelGlobal){
         
+        Totals.update() ;
     
-    Totals.update() ;
-    
-    //sandbox features
-    if(levelGlobal == 0){
+        //sandbox features
+        if(levelGlobal == 0){
         
-    }
+        }
     
-    //if(level==1) ...
+        //if(level==1) ...
     
-    //all features
-    contaminatedRiver();
+        //all features
+        contaminatedRiver();
     
-    objectiveCheck();
+        objectiveCheck();
     
     }
     
