@@ -45,21 +45,22 @@ function addObjective(addToDiv){
     
     objectiveNumber++;
     
-    divToAdd.innerHTML = "Objective " + objectiveNumber + "<br><br><div><label>Select the score type to monitor for this objective:</label><div>"
-        + addRadioButtons() + addMinValue() + addMaxValue() + addYearButtons() + addScript() + addAnimation() + addRequired()
+    divToAdd.innerHTML = "Objective " + objectiveNumber + "<br><br>"
+        + addObjectiveType() + addMinValue() + addMaxValue() + addYearButtons() + addScript() + addAnimation() + addRequired()
         + "</div></div></div><br>";
         
     document.getElementById(addToDiv).appendChild(divToAdd);
 } //end addObjective
 
-//addRadioButtons adds multiple choices for score type to monitor
-function addRadioButtons() {
-    var string = "";
+//addObjectiveType adds multiple choices for score type to monitor
+function addObjectiveType() {
+    var string = "<div><label>Choose the score type to monitor for this objective:</label><select id='scoretype-" + objectiveNumber + "'>";
     for(var i = 0; i < scoreTypes.length; i++){
-        string += "<div><label><input type='radio' name='scores" + objectiveNumber + "' id='score-" + objectiveNumber + "-" + i + "' value=" + scoreTypes[i] + ">" + scoreLabels[i] + "</label></div>";
+        string += "<option value='" + scoreTypes[i] + "'>" + scoreLabels[i] + "</option>";
     }
+    string += "</select></div>";
     return string + "<br>";
-} //end addRadioButtons
+} //end addObjectiveType
 
 //addMinValue inserts input for minimum score range
 function addMinValue() {
@@ -165,17 +166,9 @@ function processForm() {
         for(var i = 1; i < objectiveNumber+1; i++){
             
             //add the score being monitored    
-            for(var j = 0; j < scoreTypes.length; j++){
+            var objectiveScoreType = document.getElementById("scoretype-" + i);
             
-                var idValue = "score-" + i + "-" + j;
-            
-                if(document.getElementById(idValue).checked){
-                
-                    string += document.getElementById(idValue).value + "*";
-                
-                }            
-            
-            }
+            string += objectiveScoreType.options[objectiveScoreType.selectedIndex].value + "*";
             
             //insert the year to check this score in
             for(var j = 1; j < 4; j++){
