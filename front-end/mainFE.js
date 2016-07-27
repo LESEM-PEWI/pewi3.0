@@ -149,8 +149,6 @@ function initWorkspace(file){
         }
         //hide loading animation and make the PEWI main page visible
         document.getElementById('loading').style.display = "none" ;
-        document.getElementById('options').style.display = "none";
-        document.getElementById('options').style.visibility = "hidden";
         document.getElementById('page').style.visibility = "visible" ;
     
     }

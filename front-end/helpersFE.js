@@ -651,6 +651,12 @@ function onDocumentKeyDown(event) {
             if(multiAssignMode){
                 endMultiAssignMode() ;
             }
+            break;
+        //case esc - view escape menu
+        case 27:
+            toggleEscapeFrame();
+            break;
+            
     }
 
 } //end onDocumentKeyDown
@@ -670,11 +676,6 @@ function onDocumentKeyUp(event) {
         case 80:
           if(painterTool.status == 3 ) painterTool.status = 0
           break;
-        //case release esc
-        case 27:
-            if(document.getElementById('startupSequence').style.display == "none"){
-                showMainMenu() ;
-            }
         //case release z -- for zoom functions
         case 90:
             zIsDown = false;
@@ -686,6 +687,23 @@ function onDocumentKeyUp(event) {
     }
 
 } //end onDocumentKeyUp
+
+//toggleEscapeFrame displays and hides the div that allows the user to go to the main menu, options, or directory
+function toggleEscapeFrame() {
+    if(document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp){
+        document.getElementById('modalEscapeFrame').style.display = "block";
+        document.getElementById('exitToMenuButton').style.visibility = "visible";
+        document.getElementById('optionsButton').style.visibility = "visible";
+        document.getElementById('directoryButton').style.visibility = "visible";
+        modalUp = true;
+    } else if(document.getElementById('modalEscapeFrame').style.display == "block" && modalUp){
+        document.getElementById('modalEscapeFrame').style.display = "none";
+        document.getElementById('exitToMenuButton').style.visibility = "hidden";
+        document.getElementById('optionsButton').style.visibility = "hidden";
+        document.getElementById('directoryButton').style.visibility = "hidden";
+        modalUp = false;
+    }
+} //end toggleEscapeFrame
 
 //paintChange changes the highlighted color of the selected painter and updates painter
 function paintChange(value) {
@@ -800,7 +818,11 @@ function resultsEnd() {
         togglePopupDisplay();
     }
     
+<<<<<<< HEAD
     modalUp = false;
+=======
+    clearToChangeLandType = true;
+>>>>>>> origin/master
     
     
 } //end resultsEnd
@@ -1615,7 +1637,7 @@ function closeUploadDownloadFrame() {
 //toggleIndex displays and hides the codex
 function toggleIndex() {
     
-    if(document.getElementById('index').style.display != "block"){
+    if(document.getElementById('index').style.display != "block" && !modalUp){
         closeCreditFrame();
         closeUploadDownloadFrame() ;
         if(document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd() ;
@@ -1623,7 +1645,7 @@ function toggleIndex() {
         modalUp = true ;
         document.getElementById('index').style.display = "block";
     }
-    else{
+    else if(document.getElementById('index').style.display == "block" && modalUp){
         
         modalUp = false ;
         document.getElementById('index').style.display = "none" ;
@@ -1905,6 +1927,8 @@ function painterSelect(value){
 //resetOptions sets the options from the screen to the game
 function resetOptions() {
     
+    modalUp = false;
+    
     document.getElementById('options').style.visibility = "hidden" ;
     
     document.activeElement.blur() ;
@@ -1915,8 +1939,12 @@ function resetOptions() {
 
 //startOptions displays the options page 
 function startOptions() {
-    document.getElementById('options').style.visibility = "visible" ;
-    document.getElementById('options').contentWindow.getCurrentOptionsState() ;
+    if(!modalUp){
+        modalUp = true;
+        document.getElementById('options').style.visibility = "visible" ;
+        document.getElementById('options').contentWindow.getCurrentOptionsState() ;
+    }
+
 } //end startOptions
 
 //endMultiAssignMode displays the multiPlayer element
