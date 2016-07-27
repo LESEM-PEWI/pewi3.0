@@ -821,8 +821,9 @@ function resultsEnd() {
         togglePopupDisplay();
     }
     
-    clearToChangeLandType = true;
+    clearToChangeLandType = true; 
     
+    setTimeout(function() { document.activeElement.blur(); }, 1000);
     
 } //end resultsEnd
 
