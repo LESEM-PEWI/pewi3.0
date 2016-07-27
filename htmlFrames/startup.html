@@ -166,7 +166,7 @@
    
    #backImg2{
     position:absolute;
-    height:3000pt;
+    height:80cm;
     bottom : 0px;
     right:0px;
     opacity:0;
@@ -300,8 +300,8 @@ function endFunction() {
 
  //Animate the background image
  setTimeout( function() {
-  document.getElementById('backImg2').style.transitionDuration = "90s";
-  document.getElementById('backImg2').style.bottom = "-1820pt" ;
+  document.getElementById('backImg2').style.transitionDuration = "10s";
+  document.getElementById('backImg2').style.bottom = "-45cm" ;
  }, 4000);
 
 } //end endFunction
@@ -338,7 +338,8 @@ function startUtilities() {
  document.getElementById('contentsHolder').style.top = "0%";
  document.getElementById('contentsHolder').style.height = "100%" ;
  document.getElementById('contentsHolder').style.backgroundColor = "rgba(0,0,0,1)" ;
- 
+ document.getElementById('informationText').innerHTML = "" ;
+  
  //Display utilities elements
  setTimeout(function() {
   document.getElementById('dialogue').src = "utilities.html" ;
@@ -360,6 +361,7 @@ function startPlay() {
  document.getElementById('contentsHolder').style.top = "0%";
  document.getElementById('contentsHolder').style.height = "100%" ;
  document.getElementById('contentsHolder').style.backgroundColor = "rgba(0,0,0,1)" ;
+ document.getElementById('informationText').innerHTML = "" ;
   
  //Display level selector
  setTimeout(function() {
