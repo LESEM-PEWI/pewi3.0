@@ -466,6 +466,8 @@ function showMainMenu() {
        //show loading animation and startup page
        document.getElementById('loading').style.display = "block" ; 
        document.getElementById('startUpFrame').contentWindow.recallMain() ;
+       multiAssignMode = false ;
+       
         
         setTimeout(function() {
             
@@ -485,6 +487,7 @@ function showMainMenu() {
             console.log("---cleaning up---");
             resetLevel();
             clearPopup() ;
+            levelGlobal = 0 ;
             
             window.top.document.getElementById('parameters').innerHTML = "" ;
             toggleVisibility() ;

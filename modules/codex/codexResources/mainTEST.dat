@@ -1,0 +1,12 @@
+# + Testing
+<img src="./codexResources/imgs/test1.jpg" />
+test.html
+@ : Scores
+<img src="./codexResources/imgs/test3.jpg" />
+./codexResources/text/textTemplate.html
+1
+@ : Test Math
+<img src="./codexResources/imgs/test2.jpg" />
+./codexResources/text/mathTemplate.html
+0
+$
