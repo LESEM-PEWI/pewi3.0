@@ -318,7 +318,7 @@ function startSandbox() {
  document.getElementById('contentsHolder').style.top = "0%";
  document.getElementById('contentsHolder').style.height = "100%" ;
  document.getElementById('contentsHolder').style.backgroundColor = "rgba(0,0,0,1)" ;
- 
+ document.getElementById('informationText').innerHTML = "" ;
  //Load sandbox level
  setTimeout(function() {
    parent.loadLevel(0);

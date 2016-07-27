@@ -818,11 +818,8 @@ function resultsEnd() {
         togglePopupDisplay();
     }
     
-<<<<<<< HEAD
     modalUp = false;
-=======
     clearToChangeLandType = true;
->>>>>>> origin/master
     
     
 } //end resultsEnd
