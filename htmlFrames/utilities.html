@@ -152,7 +152,7 @@ margin-top:40px;
 
 aggregateMultimaps() ;
 
-var time = 1 ;
+var time = 0 ;
 
 function setupMultiplayer() {
     
@@ -166,10 +166,11 @@ function aggregateMultimaps(){
     //console.log("binding prop change");
     
     $('#file-upload').bind('propertychange change', function (e) {
-        window.top.multiUpload(time, e) ;
-        
+        console.log("----" + time ); 
+        time += window.top.multiUpload(time, e) ;
+        console.log(time) ;
         updateInfo(time);
-        time += 1 ;
+        
     });
     
 }   
@@ -207,7 +208,7 @@ function showAggregateOptions() {
 function updateInfo(time){
     
     if(time == 1){
-        document.getElementById('aggregateInfo').innerHTML = "Success. Now add remaining players." ;
+        document.getElementById('aggregateInfo').innerHTML = "Added 1. Now add remaining players." ;
     }
     else{
         document.getElementById('aggregateInfo').innerHTML = "Added " + time + " files" ;

@@ -166,7 +166,7 @@
    
    #backImg2{
     position:absolute;
-    height:250em;
+    height:3000pt;
     bottom : 0px;
     right:0px;
     opacity:0;
@@ -183,6 +183,19 @@
         margin-top:-350px;
        display: block
    }
+
+ #informationText{
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  color:#FFFFFF;
+  font-size:25px;
+  width:300px;
+  margin-left:-140px;
+  position:absolute;
+  left:50%;
+  text-align:center;
+  margin-top:60px;
+  
+ }
 
 </style>
 <!-- End startup page CSS elements -->
@@ -215,6 +228,8 @@ function moveBackground() {
  <div id="button1" onmouseover="highlightButton(1,1);" onmouseout="highlightButton(1,0);" class="mainButton" onclick="startSandbox();">Sandbox</div>
  <div id="button2" onmouseover="highlightButton(2,1);" onmouseout="highlightButton(2,0);" class="mainButton" onclick="startPlay();">Play</div>
  <div id="button3" onmouseover="highlightButton(3,1);" onmouseout="highlightButton(3,0);"class="mainButton" onclick="startUtilities();">Utilities</div>
+ 
+  <div id="informationText"> </div>
 
 </div>
 
@@ -285,8 +300,8 @@ function endFunction() {
 
  //Animate the background image
  setTimeout( function() {
-  document.getElementById('backImg2').style.transitionDuration = "80s";
-  document.getElementById('backImg2').style.bottom = "-152em" ;
+  document.getElementById('backImg2').style.transitionDuration = "90s";
+  document.getElementById('backImg2').style.bottom = "-1820pt" ;
  }, 4000);
 
 } //end endFunction
@@ -396,8 +411,24 @@ function highlightButton(value, on) {
    var string = "button" + value ;
    if(on){
       document.getElementById(string).style.backgroundColor = "#7cc1e9" ;
+      var message = "";
+      
+      switch(value){
+       case 1:
+        message = "explore the watershed" ;
+        break;
+       case 2:
+        message = "exercises and interaction" ;
+        break;
+       case 3:
+        message = "extend the application" ;
+        break;
+      }
+      
+      document.getElementById('informationText').innerHTML = message;
    }
    else{
+      document.getElementById('informationText').innerHTML = "" ;
       document.getElementById(string).style.backgroundColor = "#40A4DF" ;
    }
    
@@ -418,5 +449,4 @@ function createEnvironment(){
 </script>
 
 </body>
-
 </html>

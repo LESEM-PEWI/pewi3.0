@@ -67,13 +67,11 @@ function displayBoard() {
 
     //calculate locations of tiles on grid for highlighting and landType changes
     calculateCutoffs();
-
 } //end displayBoard
 
 
 //highlightTile updates the tile that should be highlighted.
 function highlightTile(id) {
-
 
     //if a previous tile was selected for highlighting, unhighlight that tile
     if (previousHover != null) {
@@ -332,9 +330,9 @@ function addTile(tile) {
     face.normal.set(0, 1, 0); // normal
     tileGeometry.faces.push(face);
     tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1, 0), new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)]); // uvs
-
+    
     //choose the relevant texture to add to the tile faces
-    if (tile.landType[currentYear] == 0) {
+    if (tile.landType[0] == 0) {
         tileMaterial = new THREE.MeshBasicMaterial({
             color: 0x000000,
             transparent: true,
@@ -345,14 +343,13 @@ function addTile(tile) {
     else {
         
         if(!multiAssignMode){
-          tileMaterial = new THREE.MeshLambertMaterial({
+              tileMaterial = new THREE.MeshLambertMaterial({
               map: textureArray[tile.landType[currentYear]],
               side: THREE.DoubleSide
           });
         }
         else{
-            
-               tileMaterial = new THREE.MeshLambertMaterial({
+                 tileMaterial = new THREE.MeshLambertMaterial({
                  map: ((tile.landType[currentYear] < multiplayerTextureArray.length) ? multiplayerTextureArray[tile.landType[currentYear]] : null),
                  side: THREE.DoubleSide 
               });
@@ -494,7 +491,8 @@ function onDocumentMouseDown(event) {
     raycaster.setFromCamera(mouse, camera);
 
     var intersects = raycaster.intersectObjects(scene.children);
-
+    
+    console.log(clearToChangeLandType) ;
     if(event.which == 1 && intersects.length > 0 && clearToChangeLandType){
 
         if (!isShiftDown) {
@@ -815,13 +813,20 @@ function resultsEnd() {
     document.getElementById("resultsButton").onclick = function() {
         resultsStart();
     };
-    modalUp = false;
     
     if (reopenDialogue){
         togglePopupDisplay();
     }
     
+<<<<<<< HEAD
     clearToChangeLandType = true; 
+=======
+<<<<<<< HEAD
+    modalUp = false;
+=======
+    clearToChangeLandType = true;
+>>>>>>> origin/master
+>>>>>>> 2914e792e2759dab892fbb81e165e79af0154721
     
     setTimeout(function() { document.activeElement.blur(); }, 1000);
     
@@ -2024,25 +2029,24 @@ function createPlayerMap(value){
 
 //multiUpload directs functions for multiplayer file upload
 function multiUpload(value, e){
-    console.log("uploading time " + value);
-    if(value == 1) multiUploadStage1(e);
-    if(value >= 2) multiUploadStage2(e);
+    //console.log("uploading time " + value);
+    if(value == 0) return multiUploadStage1(e);
+    if(value >= 1) return multiUploadStage2(e);
 } //end multiUpload
 
 //multiUploadStage1 initializes the aggregation of multiplayer boards
 function multiUploadStage1(e){
     
-    console.log("loading stuff");
-    loadResources();
+    //console.log("loading stuff");
+    //loadResources();
     
-    console.log("setting Up first file normally") ;
-    
-    
+    //console.log("setting Up first file normally") ;
     var files;
     files = e.target.files;
 
     if (files[0].name && !files[0].name.match(/\.csv/)) {
         alert("Incorrect File Type!");
+        return 0 ;
     }
     else {
         var reader = new FileReader();
@@ -2052,6 +2056,7 @@ function multiUploadStage1(e){
             //clear initData
             initData = [];
         }
+        return 1 ;
     } //end else
     
 } //end multiUploadStage1
@@ -2059,13 +2064,14 @@ function multiUploadStage1(e){
 //multiUploadStage2 facilitates the aggregation of multiplayer boards
 function multiUploadStage2(e) {
     
-    console.log("attempting to overlay") ;
+    //console.log("attempting to overlay") ;
     
     var files;
     files = e.target.files;
 
     if (files[0].name && !files[0].name.match(/\.csv/)) {
         alert("Incorrect File Type!");
+        return 0 ;
     }
     else {
         var reader = new FileReader();
@@ -2081,6 +2087,7 @@ function multiUploadStage2(e) {
         //clear initData
         initData = [];
         }
+        return 1 ;
     } //end else
     
 } //end multiUploadStage2

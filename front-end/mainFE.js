@@ -317,6 +317,7 @@ function setupBoardFromUpload(data) {
     propogateBoard(boardFromUpload);
     
     switchBoards(boardFromUpload);
+    previousHover = null ;
 
 } //end setupBoardFromUpload
 
@@ -468,7 +469,6 @@ function showMainMenu() {
        document.getElementById('loading').style.display = "block" ; 
        document.getElementById('startUpFrame').contentWindow.recallMain() ;
        multiAssignMode = false ;
-       
         
         setTimeout(function() {
             
