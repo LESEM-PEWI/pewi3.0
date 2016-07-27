@@ -866,24 +866,78 @@ select {
     visibility: hidden;
 }
 
-@page {
-    size: A4;
-    margin: 0;
+.mainEscapeButton {
+   background-color: #40A4DF ;
+   width:200px;
+   border-radius:12px;
+   height:50px ;
+   color: white ;
+   padding:5px;
+   border: 2px solid white;
+   cursor: all-scroll ;
+   font-family: 'Amatic SC', cursive;
+   text-align:center;
+   line-height: 130%;
+   color: #FFFFFF;
+   font-size: 40px ;
+   font-weight: bold;
+   margin-left: 50px;
+   margin-bottom:20px;
+   line-height:120%;
 }
-@media print {
-    .page {
-        margin: 0;
-        border: initial;
-        border-radius: initial;
-        width: initial;
-        min-height: initial;
-        box-shadow: initial;
-        background: initial;
-        page-break-after: always;
-    }
+
+.mainEscapeButton:hover {
+    background-color: #7cc1e9;
+}
+   
+#exitToMenuButton{
+    visibility: hidden;
+    -webkit-transition-duration: 0.4s; /* Safari */
+   animation-duration: 0.4s;
+   animation-name: showEffect;
+}
+   
+#optionsButton{
+    visibility: hidden;
+   -webkit-transition-duration: 0.8s; /* Safari */
+   animation-duration: 0.8s;
+   animation-name: showEffect;
+}
+   
+#directoryButton{
+    visibility: hidden;
+   -webkit-transition-duration: 1.2s; /* Safari */
+   animation-duration: 1.2s;
+   animation-name: showEffect;
+}
+
+#escapeMenu{
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    top: 25%;
+    left: 50%;
+    margin: -100px 0 0 -150px;
+}
+
+#modalEscapeFrame{
+    position: fixed;
+    width:100%;
+    height:100%;
+    display: none;
+    background-color: rgba(0,0,0,0.7);
     
-    #body{
-      width: 400px;
-      height: 400px;
-    }
+    -webkit-transition-duration: 1.0s; /* Safari */
+   animation-duration: 1.0s;
+   animation-name: showEffect;
+}
+
+@keyframes showEffect {
+	from  {  opacity: 0; }
+	to {  opacity: 1; }
+}
+
+@keyframes hideEffect {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
