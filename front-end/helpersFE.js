@@ -820,7 +820,9 @@ function resultsEnd() {
     
     modalUp = false;
     clearToChangeLandType = true;
+
     
+    setTimeout(function() { document.activeElement.blur(); }, 1000);
     
 } //end resultsEnd
 
