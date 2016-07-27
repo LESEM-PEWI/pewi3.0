@@ -8,14 +8,13 @@ function init() {
   $.ajax({
        async: false,
        type: "GET",
-       url: './codexResources/main.dat',
+       url: './codexResources/mainTEST.dat',
        dataType: "text",
        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
        success: function (data) {
            setUp(data);
        }
     });
-
 }
 
 
@@ -65,12 +64,12 @@ function setUp(data){
                 
                 break;
             case '@':
-                tableString += establishElement(i,arrLines[i],arrLines[i+1],arrLines[i+2],padding);
+                tableString += establishElement(i,arrLines[i],arrLines[i+1],arrLines[i+2],arrLines[i+3],padding);
                 
                 tempElementHolder[current] += 1 ;
                 
                 
-                i += 3 ;
+                i += 4 ;
                 break ;
             case '$':
                 
@@ -125,7 +124,7 @@ function establishHeader(i, line1, line2, line3, padding){
     return tempString ;
 }
 
-function establishElement(i, line1, line2, line3, padding){
+function establishElement(i, line1, line2, line3, line4, padding){
     
     var tempString = "";
     
@@ -142,6 +141,8 @@ function establishElement(i, line1, line2, line3, padding){
     dataHolder[i].square1 = line2 ;
              
     dataHolder[i].square2 = line3 ;
+    
+    dataHolder[i].hasMore = line4 ;
 
     dataHolder[i].title = line1.slice(3) ;
 
@@ -202,21 +203,20 @@ function toggleChild(value) {
 function arrangeDisplay(value) {
 
    document.getElementById('square1').innerHTML = dataHolder[value].square1 ;
+   document.getElementById('square2frame').src = dataHolder[value].square2  ;
    
-   var fileString = "./codexResources/text/" + dataHolder[value].square2 ;
+   console.log( dataHolder[value].hasMore ) ;
+   if(dataHolder[value].hasMore && dataHolder[value].hasMore == "1"){
+       document.getElementById('switchContentDepth').style.display = "block" ;
+        document.getElementById('switchContentDepth').onclick = function() { showAdvanceDetail(value) } ;
+   }
+   else{
+       document.getElementById('switchContentDepth').style.display = "none" ;
+   }
    
    document.getElementById('title').innerHTML = dataHolder[value].title.toUpperCase() ;
    
-   $.ajax({
-       async: false,
-       type: "GET",
-       url: fileString,
-       dataType: "text",
-       contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-       success: function (data) {
-           document.getElementById('square2text').innerHTML = data ;
-       }
-    });
+
     
     var element = document.getElementsByClassName('selectedGroupElement');
     if(element.length > 0) {
@@ -293,3 +293,17 @@ function onDocumentKeyDown(event) {
     }
 
 } //end onDocumentKeyDown
+
+function showAdvanceDetail(value) {
+    var string = dataHolder[value].square2 ;
+    string = string.slice(0,-5) + "More.html";
+    document.getElementById('square2frame').src =  string ;
+    document.getElementById('switchContentDepth').innerHTML = "Less"
+    document.getElementById('switchContentDepth').onclick = function() { showLessDetail(value) ;} ;
+}
+
+function showLessDetail(value){
+    document.getElementById('square2frame').src = dataHolder[value].square2;
+    document.getElementById('switchContentDepth').innerHTML = "Deeper"
+    document.getElementById('switchContentDepth').onclick = function() { showAdvanceDetail(value) ;} ;
+}

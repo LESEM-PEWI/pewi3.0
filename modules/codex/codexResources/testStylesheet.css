@@ -1,0 +1,10 @@
+body{
+    
+        overflow:auto;
+
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    line-height: 130%;
+	color: #FFFFFF;
+	font-size: 24 ;
+	font-weight: bold;
+}

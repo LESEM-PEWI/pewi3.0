@@ -1,158 +1,93 @@
+<!doctype html>
+
+<!--
+This page is designed to be used in a spanning iframe with index.html being its parent.
+
+The page consists of a four-cell table (2 rows, 2 cols) with the words 'Download' and
+'Upload' as well as the corresponding images. 
+
+As seen in the included script, uploading is taken care of through the parent frame
+while downloading is mostly taken care of here. Ideally, both would be in parent frame, 
+but an issue with communicating back and forth makes it necessary for downloading to occur
+in the child frames.
+
+Nevertheless, board setup and data prep is taken care of through the parent.
+
+Cleaned and Prepared - July 2016
+-->
+
 <html>
 <head>
-<script src=".././lib/jquery-1.12.4.min.js"></script>
-
-<style>
-body {
-    font-family: 'Amatic SC', cursive;
+    <meta charset="utf-8">
+    <title>Workspace - Upload/Download</title>
+    <!-- INCLUDES -->
     
-}
-
-* {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none;           /* Non-prefixed version, currently
-                                  not supported by any browser */
-}
-
-.image-upload > input
-{
-    display: none;
-}
-
-h1 {
-    vertical-align: middle;
-    color:white;
-}
-
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    height:100%;
-}
-
-td {
-    text-align: left;
-    font-size:22px;
-    height:40px;
-    padding:0px;
-   
-}
-
-
-
-.holder {
-    background: black;
-    position:fixed;
-    margin:5px;
-    margin-top:0px;
-    padding-left:0px;
-    margin-left:-125px;
-    width: 250px;
-    left:50%;
-}
- 
-.upperButton {
-    -webkit-transition-duration: 0.2s; /* Safari */
-    transition-duration: 0.2s;
+    <!--javascript-->
+    <script src=".././lib/jquery-1.12.4.min.js"></script>
+    <script src=".././lib/filesaver.min.js"></script>
+    <!--css-->
+    <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+    <!--external fonts (this only loads necessary characters)-->
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700&text=Upload%20Download' rel='stylesheet' type='text/css'>
     
+    <!-- /INCLUDES -->
     
-}
-
-.upperButton:hover {
-    height:38px;
-    margin-left:1px;
-    border-bottom: 2px groove white;
-    -webkit-transition-duration: 0.2s; /* Safari */
-    transition-duration: 0.2s;
-    
-    
-}    
-    
-.lowerButton {
-
-    -webkit-transition-duration: 0.2s; /* Safari */
-    transition-duration: 0.2s;
-    
-    
-}
-
-.lowerButton:hover {
-    height:38px;
-    margin-left:1px;
-    border-top: 2px groove white;
-    -webkit-transition-duration: 0.2s; /* Safari */
-    transition-duration: 0.2s;
-    
-}       
-
-</style>
+    <!--additional styling-->
+    <style>
+        body {
+            font-family: 'Amatic SC', cursive;
+        }
+    </style>
 
 <script>
-    
-function bindListener() {
-    
- $('#file-upload').bind('propertychange change', function (e) {
-        parent.uploadClicked(e) ;
+//this function attaches the uploadClicked function from helpersFE.js to 
+// changes in the file-upload element. When a file is select from the native
+// file dialogue, propertchange is triggered
+function bindUploadFileListener() {
+    //add listener
+    $('#file-upload').bind('propertychange change', function(e) {
+        parent.uploadClicked(e);
     });
-    
-    
-};  
+    //small issue: if file selected is same name as previous
+    //property change is not triggered, even if file has changed.
+};
 
-function download() {
-    
-    var a = window.document.createElement('a');
-    
+//this function triggers a download of the current data
+function triggerDownloadSequence() {
+    //helpersFE.js, creates data using current board
     var data = parent.writeFileToDownloadString();
-    
-    a.href = window.URL.createObjectURL(new Blob([data], {type: 'text/csv'}));
-    a.download = 'pewiMap.csv';
-
-   // Append anchor to body.
-   document.body.appendChild(a)
-   a.click();
-   
-   parent.downloadClicked() ;
+    var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
+    //filesaver.min.js
+    saveAs(blob, "pewiMap.csv");
+    //close necessary frames
+    parent.downloadClicked();
 }
-    
 </script>
 
-<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700&text=Upload%20Download' rel='stylesheet' type='text/css'>
-
-</head>    
+</head>
 <body>
+    <div id="uploadDownloadHolder">
+        <table id="downloadTable">
 
-<div class="holder">
+            <tr>
+                <td class="uploadDownloadText">Download</td>
+                <td> <img onclick="triggerDownloadSequence();" id="downloadButton" class="uploadDownloadButton" src="./imgs/download.png" alt="#"> </td>
+            </tr>
 
-<table>
-<tr >
-<td style="color:white;"> <h1 style="padding-left:20px; margin-top:15px">Download</h1>    </td>    
-<td>   <img id="downloadButton" class="upperButton" height="40px" style="margin-bottom:10px; " src="./imgs/download.png" id="download" onclick="download();">          </td>    
-</tr>    
-    
-<tr>
-<td style="color:white; padding-top:5px "> <h1 style="padding-left:20px;">Upload</h1>    </td>            
-<td>
-    <div class="image-upload">
-    <label for="file-upload">
-        <img style="padding-bottom:10px;" id="uploadButton" class="lowerButton" height="40px" src="./imgs/upload.png" onclick="bindListener(); "/>
-    </label>
-     <input id="file-upload" type="file"/>
-</div>
+            <tr>
+                <td class="uploadDownloadText">Upload</td>
+                <td >
+                    <div class="image-upload">
+                        <label for="file-upload">
+                        <img onclick="bindUploadFileListener();" id="uploadButton" class="uploadDownloadButton" src="./imgs/upload.png" alt="#" />
+                        </label>
+                        <input id="file-upload" type="file" />
+                    </div>
 
-     </td>
+                </td>
+            </tr>
 
-</tr>
-    
-    
-</table>
-
-</div>
-
-</body>    
-    
+        </table>
+    </div>
+</body>
 </html>

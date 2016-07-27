@@ -1774,6 +1774,13 @@ function toggleVisibility() {
     //default off items
     document.getElementById('statFrame').style.display = "none" ; 
     document.getElementById('year0Button').style.display = "none" ;
+    document.getElementById('paintPlayer1').style.display = "none" ;
+    document.getElementById('paintPlayer2').style.display = "none" ;
+    document.getElementById('paintPlayer3').style.display = "none" ;
+    document.getElementById('paintPlayer4').style.display = "none" ;
+    document.getElementById('paintPlayer5').style.display = "none" ;
+    document.getElementById('paintPlayer6').style.display = "none" ;
+    
     
     //reset items
     for(var i=1; i <= 15; i++){
@@ -1934,8 +1941,9 @@ function startOptions() {
     if(!modalUp){
         modalUp = true;
         document.getElementById('options').style.visibility = "visible" ;
-        document.getElementById('options').contentWindow.getState() ;
+        document.getElementById('options').contentWindow.getCurrentOptionsState() ;
     }
+
 } //end startOptions
 
 //endMultiAssignMode displays the multiPlayer element
