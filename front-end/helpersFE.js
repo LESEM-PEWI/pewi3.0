@@ -819,11 +819,16 @@ function resultsEnd() {
     }
     
 <<<<<<< HEAD
+    clearToChangeLandType = true; 
+=======
+<<<<<<< HEAD
     modalUp = false;
 =======
     clearToChangeLandType = true;
 >>>>>>> origin/master
+>>>>>>> 2914e792e2759dab892fbb81e165e79af0154721
     
+    setTimeout(function() { document.activeElement.blur(); }, 1000);
     
 } //end resultsEnd
 
