@@ -656,7 +656,7 @@ select {
     
     -webkit-box-shadow: 0px -2px 120px 80px rgba(0,0,0,1);
     -moz-box-shadow: 0px -2px 120px 80px rgba(0,0,0,1);
-    box-shadow: 0px -2px 120px 80px rgba(0,0,0,1);
+    box-shadow: 0px -2px 50px 12px rgba(0,0,0,1);
     
 }
 

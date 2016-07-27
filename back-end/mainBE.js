@@ -30,8 +30,6 @@ function propogateBoard(board) {
 
 function overlayBoard(board, overlay) {
   
-  console.log("in overlay function");
-  
   for (var i = 0; i < initData.length; i++) {
     
     var tile = new Tile(initData[i], board);
