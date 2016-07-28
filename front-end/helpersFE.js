@@ -31,8 +31,8 @@ var painterTool = {
     hover: false
 } ;
 
-var birds, bird;
-var boids, boid;
+var birds = [], bird;
+var boids = [], boid;
 
 var clearToChangeLandType = true;
 
@@ -492,7 +492,6 @@ function onDocumentMouseDown(event) {
 
     var intersects = raycaster.intersectObjects(scene.children);
     
-    console.log(clearToChangeLandType) ;
     if(event.which == 1 && intersects.length > 0 && clearToChangeLandType){
 
         if (!isShiftDown) {
@@ -538,8 +537,8 @@ function onDocumentMouseDown(event) {
                 }
                 else {
                     
-                    //Zoom in when z and 1 keys are pressed and a tile is clicked
-                    if(zIsDown && oneIsDown && !zoomedIn){
+                    //Zoom in when z and 1 keys are pressed and a tile is clicked -- also not multiAssign mode
+                    if(zIsDown && oneIsDown && !zoomedIn  && !multiAssignMode){
                         switchToZoomView(getTileID(intersects[0].point.x, -intersects[0].point.z));
                     } else {
                         //just a normal tile change
@@ -644,7 +643,9 @@ function onDocumentKeyDown(event) {
             break;
         //case o - show options
         case 79:
-            startOptions() ;
+            if(!multiAssignMode){
+                startOptions() ;
+            }
             break;
         //case v - key to record multiplayer fields
         case 86:
@@ -814,11 +815,12 @@ function resultsEnd() {
         resultsStart();
     };
     
+    modalUp = false;
+    
     if (reopenDialogue){
         togglePopupDisplay();
     }
     
-    modalUp = false;
     clearToChangeLandType = true;
 
     
@@ -918,13 +920,17 @@ function showLevelDetails(value) {
     //hide ecosystem indicator legends
     if (value > -4 && value < 0) {
         var element = document.getElementsByClassName('levelDetailsList');
-        element[0].className = 'levelDetailsListRolled';
+        if(element.length > 0){element[0].className = 'levelDetailsListRolled';}
+        element = document.getElementsByClassName('levelSelectorIconSelected');
+        if(element.length > 0){element[0].className = 'levelsSelectorIcon';}
     }
 
     //hide watershed feature legends
     if (value < -3) {
         var element = document.getElementsByClassName('physicalDetailsList');
-        element[0].className = 'physicalDetailsListRolled';
+        if(element.length > 0){element[0].className = 'physicalDetailsListRolled';}
+        element = document.getElementsByClassName('featureSelectorIconSelected');
+        if(element.length > 0){element[0].className = 'featureSelectorIcon';}
     }
 
 } //end showLevelDetails
@@ -1477,7 +1483,13 @@ function flyLark(){
 function createFlock(){
 
     addBirds();
-    setTimeout( function() { for(var i = 0; i < birds.length; i++){scene.remove(birds[i])}}, 10000);
+    setTimeout( function() { 
+        for(var i = 0; i < birds.length; i++){
+            scene.remove(birds[i]); 
+        }
+        birds = [];
+        boids = [];
+    }, 10000);
     
 } //end createFlock
 
@@ -1641,12 +1653,23 @@ function toggleIndex() {
         closeUploadDownloadFrame() ;
         if(document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd() ;
         
+        reopenDialogue = false;
+        if(document.getElementById("popup").className == "popup"){
+            togglePopupDisplay();
+            reopenDialogue = true;
+        }
+        
         modalUp = true ;
         document.getElementById('index').style.display = "block";
     }
     else if(document.getElementById('index').style.display == "block" && modalUp){
-        
+                
         modalUp = false ;
+        
+        if(reopenDialogue){
+            togglePopupDisplay();
+        }
+        
         document.getElementById('index').style.display = "none" ;
         document.activeElement.blur();
     }
