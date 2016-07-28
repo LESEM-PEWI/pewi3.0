@@ -282,26 +282,27 @@ var Boid = function() {
 
 function addBirds() {
     
-	birds = [];
-	boids = [];
-
-	for ( var i = 0; i < 100; i ++ ) {
-
-		boid = boids[ i ] = new Boid();
-		boid.position.x = Math.random() * 400 - 200;
-		boid.position.y = Math.abs(Math.random() * 400 - 200);
-		boid.position.z = Math.random() * 400 - 200;
-		boid.velocity.x = Math.random() * 2 - 1;
-		boid.velocity.y = Math.random() * 2 - 1;
-		boid.velocity.z = Math.random() * 2 - 1;
-		boid.setAvoidWalls( true );
-		boid.setWorldSize( 400, 250, 400 );
-
-		bird = birds[ i ] = new THREE.Mesh( new Bird(), new THREE.MeshBasicMaterial( { color:Math.random() * 0xffffff, side: THREE.DoubleSide } ) );
-		bird.phase = Math.floor( Math.random() * 62.83 );
-		scene.add( bird );
-
-
-	}
+    if(birds.length < 1 && boids.length < 1){
+	
+		for ( var i = 0; i < 100; i ++ ) {
+	
+			boid = boids[ i ] = new Boid();
+			boid.position.x = Math.random() * 400 - 200;
+			boid.position.y = Math.abs(Math.random() * 400 - 200);
+			boid.position.z = Math.random() * 400 - 200;
+			boid.velocity.x = Math.random() * 2 - 1;
+			boid.velocity.y = Math.random() * 2 - 1;
+			boid.velocity.z = Math.random() * 2 - 1;
+			boid.setAvoidWalls( true );
+			boid.setWorldSize( 400, 250, 400 );
+	
+			bird = birds[ i ] = new THREE.Mesh( new Bird(), new THREE.MeshBasicMaterial( { color:Math.random() * 0xffffff, side: THREE.DoubleSide } ) );
+			bird.phase = Math.floor( Math.random() * 62.83 );
+			scene.add( bird );
+	
+	
+		}
+		
+    }
 				
 }
