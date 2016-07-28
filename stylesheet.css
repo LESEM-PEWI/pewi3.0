@@ -311,8 +311,12 @@ select {
     margin: 15px 0px 0px 0px ;
     position: absolute;
     background-color: black;
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-radius: 12px;
     top: 305px;
     width: 135px;
+
     
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
@@ -404,6 +408,9 @@ select {
     top: 305px;
     width: 135px;
     background-color: black ;
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-radius: 12px;
     
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
@@ -703,7 +710,7 @@ select {
   background-color: rgba(0, 0, 0, 0.7);
   background-image: url('./imgs/consoleTexture.png');
   bottom:0px;
-  right:0px;
+  right:50px;
   padding: 10px;
   position:absolute;
   border-top-left-radius: 12px;
@@ -735,7 +742,7 @@ select {
 
 .popupHidden {
   bottom: -270px;
-  right: 0px;
+  right: 50px;
   position:absolute;
   
   -webkit-animation-duration: 1s;
@@ -805,13 +812,14 @@ select {
 .dialogueButton, .dialogueButtonRolled {
     position:absolute;
     bottom:270px;
-    right:0px;
+    right:50px;
     background-color: rgb(0,0,0,0.9);
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
     border-radius: 0px;
     border-right: 0px solid #F0A61D;
     border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
     height:40px;
     width:40px;
     -webkit-animation-name: rollButtonUp;
@@ -823,6 +831,7 @@ select {
 
 .dialogueButtonRolled {
     bottom:0px;
+    right: 0px;
     -webkit-animation-name: rollButtonDown;
     animation-name: rollButtonDown;
     -webkit-animation-duration: 1s;
@@ -832,18 +841,30 @@ select {
 @keyframes rollButtonUp {
   0% {
     bottom: 0px;
+    right: 0px;
+  }
+  20% {
+      bottom: 0px;
+      right: 50px;
   }
   100% {
     bottom: 270px;
+    right: 50px;
   }
 }
 
 @keyframes rollButtonDown {
   0% {
     bottom: 270px;
+    right: 50px;
+  }
+  50% {
+      bottom: 0px;
+      right:50px;
   }
   100% {
     bottom: 0px;
+    right: 0px;
   }
 }
 
