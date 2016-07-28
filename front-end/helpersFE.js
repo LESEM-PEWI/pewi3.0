@@ -704,6 +704,12 @@ function toggleEscapeFrame() {
         document.getElementById('directoryButton').style.visibility = "hidden";
         modalUp = false;
     }
+    
+    if(multiAssignMode){
+        document.getElementById('optionsButton').className = "unclickableMainEscapeButton";
+    } else {
+        document.getElementById('optionsButton').className = "mainEscapeButton";
+    }
 } //end toggleEscapeFrame
 
 //paintChange changes the highlighted color of the selected painter and updates painter
@@ -1012,6 +1018,9 @@ function switchYearTab(value) {
     }
 
     switch (value) {
+        case 0:
+            document.getElementById('year0Image').className = "yearSelected";
+            break;
         case 1:
             document.getElementById('year1Image').className = "yearSelected";
             break;

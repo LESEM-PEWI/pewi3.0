@@ -887,7 +887,7 @@ select {
     visibility: hidden;
 }
 
-.mainEscapeButton {
+.mainEscapeButton, .unclickableMainEscapeButton {
    background-color: #40A4DF ;
    width:200px;
    border-radius:12px;
@@ -905,6 +905,10 @@ select {
    margin-left: 50px;
    margin-bottom:20px;
    line-height:120%;
+}
+
+.unclickableMainEscapeButton {
+    background-color: #003d4d;
 }
 
 .mainEscapeButton:hover {
