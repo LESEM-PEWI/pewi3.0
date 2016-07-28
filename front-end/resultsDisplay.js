@@ -722,15 +722,19 @@ function drawPrecipBar() {
       var img = " ";
       switch(data[year].adj){
           case "Dry":
+              // "Clouds" by https://icons8.com with free commercial use / Inserted oval under cload
               img = "./imgs/dry.png";
               break;
           case "Normal":
+              // "Partly Cloudy Rain" by https://icons8.com with free commercial use
               img = "./imgs/normal.png";
               break;
           case "Wet":
+              // "Heavy Rain" by https://icons8.com with free commercial use
               img = "./imgs/wet.png";
               break;
           case "Flood":
+              // "Torrential Rain" by https://icons8.com with free commercial use / Inserted curved black lines under rain/cloud
               img = "imgs/flood.png";
               break;
       }
