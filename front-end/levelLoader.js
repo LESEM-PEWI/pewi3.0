@@ -55,12 +55,6 @@ function loadLevel(level){
             initWorkspace('./levels/maps/conservationSoybeanDSM.csv');
             document.getElementById('popup').className = "popup";
             break;
-        case 4:
-            levelGlobal = 4;
-            loadLevelDetails("./levels/specs/exercise1A.4.txt");
-            initWorkspace('./levels/maps/conservationSoybeanDSM.csv');
-            document.getElementById('popup').className = "popup";
-            break;
         case 0:
             levelGlobal = 0 ;
             initWorkspace('./data.txt');            

@@ -725,8 +725,14 @@ select {
 @keyframes rollUp {
   0% {
     bottom:-270px;
+    right: 0px;
+  }
+  20% {
+    bottom: -270px;
+    right: 50px;
   }
   100% {
+    right: 50px;
     bottom: 0;
   }
 }
@@ -734,8 +740,14 @@ select {
 @keyframes rollDown {
   0% {
     bottom: 0px;
+    right: 50px;
+  }
+  90% {
+      bottom:-270px;
+      right: 50px;
   }
   100% {
+    right: 0px;
     bottom: -270px;
   }
 }
@@ -858,8 +870,8 @@ select {
     bottom: 270px;
     right: 50px;
   }
-  50% {
-      bottom: 0px;
+  90% {
+      bottom:0px;
       right:50px;
   }
   100% {
