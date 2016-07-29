@@ -1,266 +1,85 @@
+<!doctype html>
+
+<!--
+Comments
+
+Cleaned and Prepared - July 2016
+-->
+
 <html>
 <head>
+    <meta charset="utf-8">
+    <title>Workspace - Start</title>
 
-<!-- Startup CSS elements -->
+    <!-- INCLUDES -->
+    <!--css-->
+    <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+    <!--external fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+    <!-- /INCLUDES -->
+
+    <!--additional styling-->
 <style>
-
-   * {
-     -webkit-touch-callout: none; /* iOS Safari */
-     -webkit-user-select: none;   /* Chrome/Safari/Opera */
-     -khtml-user-select: none;    /* Konqueror */
-     -moz-user-select: none;      /* Firefox */
-     -ms-user-select: none;       /* Internet Explorer/Edge */
-     user-select: none;           /* Non-prefixed version, currently
-                                     not supported by any browser */
-   }
-   
    body{
    overflow: hidden;
    background: black;
-   
    }
    
-   #backImg {
-   position:absolute;
-   top:0px;
-   left:0px;
-   margin:0px;
-   padding:0px;
-   height:100% ;
-   width:4000px;
-   opacity: 0;
-   
-   -webkit-transition-duration: 7s; /* Safari */
-   transition-duration: 7s;
-   
-   }
-   
-   #contentsHolder{
-   position:fixed;
-   margin:0px;
-   opacity: 0;
-   margin-top:-200px;
-   left:0%;
-   top:50%;
-   
-   background-color: rgba(0,0,0,0);
-   width:100% ;
-   height:400px;
-   border-radius:0px;
-   border-top: 0px solid white;
-   border-bottom: 0px solid white;
-   
-   -webkit-transition-duration: 1.3s; /* Safari */
-   transition-duration: 1.3s;
-   }
-   
-   #pewiTitle{
-   
-   position:fixed;
-   width:240px;
-   margin-left:-111px;
-   padding: 0px;
-   
-   left:50%;
-   top:40% ;
-   
-   -webkit-transition-duration: 1s; /* Safari */
-   transition-duration: 1s;
-   }
-   
-   .mainButton {
-   position:fixed;
-   background-color: #40A4DF ;
-   width:200px;
-   border-radius:12px;
-   height:50px ;
-   color: white ;
-   padding:5px;
-   border: 2px solid white;
-   cursor: all-scroll ;
-   font-family: 'Amatic SC', cursive;
-   text-align:center;
-   line-height: 130%;
-   color: #FFFFFF;
-   font-size: 40px ;
-   font-weight: bold;
-   }
-   
-   #button1, #button2, #button3 {
-   margin-left:-100px;
-   margin-right:10px;
-   margin-top:-25px;
-   top:50% ;
-   opacity: 0;
-   }
-   
-   #button1{
-   left:25%;
-   -webkit-transition-duration: 1.5s; /* Safari */
-   transition-duration: 1.5s;
-   }
-   
-   #button2{
-   left:50%;
-   -webkit-transition-duration: 2.2s; /* Safari */
-   transition-duration: 2.2s;
-   }
-   
-   #button3{
-   left:75%;
-   -webkit-transition-duration: 2.9s; /* Safari */
-   transition-duration: 2.9s;
-   }
-   
-   #container{
-   position:absolute;
-   width:800px ;
-   height:600px ;
-   margin:0px ;
-   padding: 0px ;
-   margin-left:-400px ;
-   left:50% ;
-   margin-top:-300px;
-   top:50%;
-   
-   }
-   
-   #loadingTitle {
-   font-family: 'Amatic SC', cursive;
-   text-align:center;
-   line-height: 85%;
-   color: #FFFFFF;
-   font-size: 35px ;
-   font-weight: bold;
-   
-   position:absolute;
-   width:60% ;
-   left:20%;
-   height:40px;
-   top:50px;
-   /*border-bottom: 1px solid white ;*/
-   
-   
-   }
-   
-   #dialogue {
-    position:fixed;
-    top: 0px;
-    left: 0px;
-    padding: 0px;
-    border: 0px;
-    margin: 0px;
-    width:100%;
-    height:100%;
-    visibility: hidden;
-   }
-   
-   #city {
-   position:absolute;
-   top:-130px;
-   left:45px;
-   
-    
-   }
-   
-   
-   #backImg2{
-    position:absolute;
-    height:80cm;
-    bottom : 0px;
-    right:0px;
-    opacity:0;
-    -webkit-transition-duration: 4s; /* Safari */
-    transition-duration: 4s;
-    width:100%;
-    min-width: 1700px;
-   
-   }
-   
-   .center {
-       margin-left: auto;
-       margin-right: auto;
-        margin-top:-350px;
-       display: block
-   }
-
- #informationText{
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  color:#FFFFFF;
-  font-size:25px;
-  width:300px;
-  margin-left:-140px;
-  position:absolute;
-  left:50%;
-  text-align:center;
-  margin-top:60px;
-  
- }
-
 </style>
-<!-- End startup page CSS elements -->
-
-<script>
-//DEPRECATED?
-function moveBackground() {
-	//var value = 0 - (4000 - screen.width - 300) ; //-300 just to be safe
-	//document.getElementById('backImg').style.left = value;
-}
-</script>
 
 </head>
+<body>
 
-<!-- Add PEWI font -->
-<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+ <img id="startupBackgroundImage" style="opacity:0;" src="./imgs/normalBack.png">
 
-<body id="body">
+ <div id="startupContent">
+ <!-- Insert background image -->
 
-<!-- Insert background image -->
-<img id="backImg2" src="./imgs/normalBack.png">
+ <!-- Insert PEWI Image logo and buttons for Sandbox, Play, and Utilities -->
+ <div id="startupContentsHolder">
 
-<!-- Insert PEWI Image logo and buttons for Sandbox, Play, and Utilities -->
-<div id="contentsHolder">
- 
- <div id="pewiTitle"> <!-- hidden -->
- <img src="./imgs/pewiLogoLarge.png" /> 
+  <div id="pewiTitle">
+   <!-- hidden -->
+   <img src="./imgs/pewiLogoLarge.png" />
+  </div>
+
+  <div id="startupButton1" onmouseover="highlightButton(1,1);" onmouseout="highlightButton(1,0);" class="mainButton" onclick="startSandbox();">Sandbox</div>
+  <div id="startupButton2" onmouseover="highlightButton(2,1);" onmouseout="highlightButton(2,0);" class="mainButton" onclick="startPlay();">Play</div>
+  <div id="startupButton3" onmouseover="highlightButton(3,1);" onmouseout="highlightButton(3,0);" class="mainButton" onclick="startUtilities();">Utilities</div>
+
+  <div id="startupInformationText"></div>
+
  </div>
 
- <div id="button1" onmouseover="highlightButton(1,1);" onmouseout="highlightButton(1,0);" class="mainButton" onclick="startSandbox();">Sandbox</div>
- <div id="button2" onmouseover="highlightButton(2,1);" onmouseout="highlightButton(2,0);" class="mainButton" onclick="startPlay();">Play</div>
- <div id="button3" onmouseover="highlightButton(3,1);" onmouseout="highlightButton(3,0);"class="mainButton" onclick="startUtilities();">Utilities</div>
- 
-  <div id="informationText"> </div>
 
 </div>
+ <!-- Insert container for loading animation and expanded PEWI title -->
+ <div id="startupLoadingContainer">
+  
+  <video id="startVideo" width="440" height="1120" autoplay="autoplay">
+      <source src="./imgs/PewiLoading.webm" type="video/webm" />
+      loading
+  </video>
 
-<!-- Insert container for loading animation and expanded PEWI title -->
-<div id="container">
- 
- <video id="startVideo" class="center" width="440" height="1120" autoplay="autoplay">
-  <source src="./imgs/PewiLoading.webm" type="video/webm" />
-  loading
- </video>
+  <div id="startupLoadingTitle">
+   People in Ecosystems / Watershed Integration
+  </div>
 
- <div id="loadingTitle">
- People in Ecosystems / Watershed Integration
  </div>
- 
-</div>
 
-
-<iframe id="dialogue"></iframe>
+<iframe id="startupDialogueOverlay"></iframe>
 
 <script type='text/javascript'>
 
 //Start initial screen video animation
 document.getElementById('startVideo').addEventListener('ended', function() {
- endFunction();
+ endOfVideo();
 }, false);
 
 setTimeout(function() {
  var vid = document.getElementById("startVideo");
  if (!(Number(vid.currentTime) > 0)) {
-  endFunction();
+  endOfVideo();
  }
 }, 2000);
 
@@ -268,40 +87,39 @@ setTimeout(function() {
 createEnvironment();
 
 //endFunction displays and animates startup page elements
-function endFunction() {
- 
- //Display elements on start up page
- document.getElementById('container').style.display = "none";
- document.getElementById('pewiTitle').style.visibility = "visible";
- document.getElementById('pewiTitle').style.opacity = "1";
- document.getElementById('pewiTitle').style.top = "25%" ;
- 
- document.getElementById('contentsHolder').style.opacity = "1" ;
- document.getElementById('backImg2').style.opacity = "1" ;
+function endOfVideo() {
 
- document.getElementById('button1').style.visibility = "visible";
- document.getElementById('button1').style.opacity = "1";
- document.getElementById('button2').style.visibility = "visible";
- document.getElementById('button2').style.opacity = "1";
- document.getElementById('button3').style.visibility = "visible";
- document.getElementById('button3').style.opacity = "1";
+ //Display elements on start up page
+ document.getElementById('startupContent').style.opacity = "1";
+ document.getElementById('startupLoadingContainer').style.display = "none";
+ document.getElementById('startupContentsHolder').style.visibility = "visible";
+ 
+ document.getElementById('pewiTitle').style.opacity = "1";
+ document.getElementById('pewiTitle').style.marginTop = "0";
+ 
+ document.getElementById('startupBackgroundImage').style.opacity = "1" ;
+ document.getElementById('startupButton1').style.opacity = "1";
+ document.getElementById('startupButton2').style.opacity = "1";
+ document.getElementById('startupButton3').style.opacity = "1";
 
  //Animate the display of elements on start up page
  setTimeout(function() {
   //document.getElementById('backImg').style.transitionDuration = "70s" ; 
-  document.getElementById('button1').style.transitionDuration = ".4s" ;
-  document.getElementById('button2').style.transitionDuration = ".4s" ;
-  document.getElementById('button3').style.transitionDuration = ".4s" ;
+  document.getElementById('startupButton1').style.transitionDuration = ".4s" ;
+  document.getElementById('startupButton2').style.transitionDuration = ".4s" ;
+  document.getElementById('startupButton3').style.transitionDuration = ".4s" ;
   document.getElementById('pewiTitle').style.transitionDuration = ".4s" ;
-  document.getElementById('contentsHolder').style.transitionDuration = ".4s" ;
-  //moveBackground() ;
-  parent.animationFrames();
+  document.getElementById('startupContentsHolder').style.transitionDuration = ".4s" ;
+ 
+  
  }, 10);
 
  //Animate the background image
  setTimeout( function() {
-  document.getElementById('backImg2').style.transitionDuration = "90s";
-  document.getElementById('backImg2').style.bottom = "-45cm" ;
+  
+  //180s, -3000px
+  document.getElementById('startupBackgroundImage').style.transitionDuration = "300s";
+  document.getElementById('startupBackgroundImage').style.bottom = "-3000px" ;
  }, 4000);
 
 } //end endFunction
@@ -310,15 +128,17 @@ function endFunction() {
 function startSandbox() {
  
  //Hide startup page elements
- document.getElementById('button2').style.display = "none" ;
- document.getElementById('button3').style.display = "none" ;
- document.getElementById('button1').style.left = "50.6%" ;
- document.getElementById('button1').style.backgroundColor = "#003d4d" ;
- document.getElementById('contentsHolder').style.marginTop = "0px";
- document.getElementById('contentsHolder').style.top = "0%";
- document.getElementById('contentsHolder').style.height = "100%" ;
- document.getElementById('contentsHolder').style.backgroundColor = "rgba(0,0,0,1)" ;
- document.getElementById('informationText').innerHTML = "" ;
+ document.getElementById('startupButton2').style.display = "none" ;
+ document.getElementById('startupButton3').style.display = "none" ;
+ document.getElementById('startupButton1').style.left = "50%" ;
+ document.getElementById('startupButton1').style.backgroundColor = "#003d4d" ;
+ document.getElementById('pewiTitle').style.marginTop = "100px";
+ document.getElementById('startupContentsHolder').style.marginTop = "0px";
+ document.getElementById('startupContentsHolder').style.top = "0%";
+ document.getElementById('startupContentsHolder').style.height = "100%" ;
+ document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,1)" ;
+ document.getElementById('startupInformationText').innerHTML = "" ;
+ 
  //Load sandbox level
  setTimeout(function() {
    parent.loadLevel(0);
@@ -330,20 +150,21 @@ function startSandbox() {
 function startUtilities() {
  
  //Hide startup page elements
- document.getElementById('button1').style.display = "none" ;
- document.getElementById('button2').style.display = "none" ;
- document.getElementById('button3').style.left = "50%" ;
- document.getElementById('button3').style.backgroundColor = "#003d4d" ;
- document.getElementById('contentsHolder').style.marginTop = "0px";
- document.getElementById('contentsHolder').style.top = "0%";
- document.getElementById('contentsHolder').style.height = "100%" ;
- document.getElementById('contentsHolder').style.backgroundColor = "rgba(0,0,0,1)" ;
- document.getElementById('informationText').innerHTML = "" ;
+ document.getElementById('startupButton1').style.display = "none" ;
+ document.getElementById('startupButton2').style.display = "none" ;
+ document.getElementById('startupButton3').style.left = "50%" ;
+ document.getElementById('startupButton3').style.backgroundColor = "#003d4d" ;
+ document.getElementById('pewiTitle').style.marginTop = "100px";
+ document.getElementById('startupContentsHolder').style.marginTop = "0px";
+ document.getElementById('startupContentsHolder').style.top = "0%";
+ document.getElementById('startupContentsHolder').style.height = "100%" ;
+ document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,1)" ;
+ document.getElementById('startupInformationText').innerHTML = "" ;
   
  //Display utilities elements
  setTimeout(function() {
-  document.getElementById('dialogue').src = "utilities.html" ;
-  document.getElementById('dialogue').style.visibility = "visible" ;
+  document.getElementById('startupDialogueOverlay').src = "utilities.html" ;
+  document.getElementById('startupDialogueOverlay').style.visibility = "visible" ;
   setTimeout(function() { resetElements() ; }, 800);
   }, 400);
   
@@ -353,21 +174,22 @@ function startUtilities() {
 function startPlay() {
  
  //Hide startup page elements
- document.getElementById('button1').style.display = "none" ;
- document.getElementById('button3').style.display = "none" ;
- document.getElementById('button2').style.top = "40%" ;
- document.getElementById('button2').style.backgroundColor = "#003d4d" ;
- document.getElementById('contentsHolder').style.marginTop = "0px";
- document.getElementById('contentsHolder').style.top = "0%";
- document.getElementById('contentsHolder').style.height = "100%" ;
- document.getElementById('contentsHolder').style.backgroundColor = "rgba(0,0,0,1)" ;
- document.getElementById('informationText').innerHTML = "" ;
+ document.getElementById('startupButton1').style.display = "none" ;
+ document.getElementById('startupButton3').style.display = "none" ;
+ document.getElementById('startupButton2').style.top = "40%" ;
+ document.getElementById('startupButton2').style.backgroundColor = "#003d4d" ;
+  document.getElementById('pewiTitle').style.marginTop = "100px";
+ document.getElementById('startupContentsHolder').style.marginTop = "0px";
+ document.getElementById('startupContentsHolder').style.top = "0%";
+ document.getElementById('startupContentsHolder').style.height = "100%" ;
+ document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,1)" ;
+ document.getElementById('startupInformationText').innerHTML = "" ;
   
  //Display level selector
  setTimeout(function() {
-  setTimeout(function() { resetElements() ; }, 800);
-   document.getElementById('dialogue').src = "play.html" ; 
-   document.getElementById('dialogue').style.visibility = "visible" ;
+   document.getElementById('startupDialogueOverlay').src = "play.html" ; 
+   document.getElementById('startupDialogueOverlay').style.visibility = "visible" ;
+   setTimeout(function() { resetElements() ; }, 800);
  }, 400) ;
 
 } //end startPlay
@@ -375,15 +197,17 @@ function startPlay() {
 //resetElements shows the elements of the startup page after reutrning to the page
 function resetElements(){
 
- document.getElementById('button1').style.display = "block" ;
- document.getElementById('button2').style.display = "block" ;
- document.getElementById('button3').style.display = "block" ;
- document.getElementById('button1').style.backgroundColor = "#40A4DF" ;
- document.getElementById('button2').style.backgroundColor = "#40A4DF" ;
- document.getElementById('button3').style.backgroundColor = "#40A4DF" ;
- document.getElementById('button1').style.left = "25%" ;
- document.getElementById('button2').style.top = "50%" ;
- document.getElementById('button3').style.left = "75%" ;
+
+ document.getElementById('startupButton1').style.display = "block" ;
+ document.getElementById('startupButton2').style.display = "block" ;
+ document.getElementById('startupButton3').style.display = "block" ;
+ document.getElementById('startupButton1').style.backgroundColor = "#40A4DF" ;
+ document.getElementById('startupButton2').style.backgroundColor = "#40A4DF" ;
+ document.getElementById('startupButton3').style.backgroundColor = "#40A4DF" ;
+ document.getElementById('startupButton1').style.left = "25%" ;
+ document.getElementById('startupButton2').style.top = "50%" ;
+ document.getElementById('startupButton3').style.left = "75%" ;
+  document.getElementById('pewiTitle').style.marginTop = "0px";
  
 } //end resetElements
 
@@ -392,25 +216,26 @@ function reset() {
  
  document.activeElement.blur() ;
  
- document.getElementById('dialogue').src = "" ;
- document.getElementById('dialogue').style.visibility = "hidden" ;
+ document.getElementById('startupDialogueOverlay').src = "" ;
+ document.getElementById('startupDialogueOverlay').style.visibility = "hidden" ;
   
- document.getElementById('contentsHolder').style.marginTop = "-200px";
- document.getElementById('contentsHolder').style.top = "50%";
- document.getElementById('contentsHolder').style.height = "400px" ;
- document.getElementById('contentsHolder').style.backgroundColor = "rgba(0,0,0,0)" ;
+ document.getElementById('startupContentsHolder').style.marginTop = "-250px";
+ document.getElementById('startupContentsHolder').style.top = "50%";
+ document.getElementById('startupContentsHolder').style.height = "500px" ;
+ document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)" ;
  
 } //end reset
 
 function recallMain(){
  resetElements() ;
  reset() ;
+ document.getElementById('startupBackgroundImage').style.bottom = "0px" ;
 }
 
 //highlightButton toggles the color of startup page buttons when hovered over
 function highlightButton(value, on) {
   
-   var string = "button" + value ;
+   var string = "startupButton" + value ;
    if(on){
       document.getElementById(string).style.backgroundColor = "#7cc1e9" ;
       var message = "";
@@ -427,10 +252,10 @@ function highlightButton(value, on) {
         break;
       }
       
-      document.getElementById('informationText').innerHTML = message;
+      document.getElementById('startupInformationText').innerHTML = message;
    }
    else{
-      document.getElementById('informationText').innerHTML = "" ;
+      document.getElementById('startupInformationText').innerHTML = "" ;
       document.getElementById(string).style.backgroundColor = "#40A4DF" ;
    }
    
@@ -445,7 +270,8 @@ function createEnvironment(){
  parent.setupHighlight();
  parent.loadingManager();
  var returned = parent.loadResources();
- 
+ parent.animationFrames();
+
 } //createEnvironment
 
 </script>
