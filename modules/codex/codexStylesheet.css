@@ -208,3 +208,28 @@ img {
 #switchContentDepth:hover {
     background-color: rgba(0, 0, 0, 1);
 }
+
+.closeButton{
+    height:40px;
+    position:absolute;
+    width:40px;
+    
+     -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+}
+
+.closeButton:hover{
+    height:35px;
+    margin-right:2px;
+    margin-top:2px;
+    width:35px;
+    
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+}
+
+#closeIndex {
+    position: fixed;
+    top:10px;
+    right:10px;
+}
