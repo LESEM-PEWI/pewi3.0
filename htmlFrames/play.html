@@ -4,6 +4,7 @@
   
 <script type="text/javascript" src="../lib/jquery-1.12.4.min.js"></script>    
 <script src="../levels/levelsHelper.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
 
     
 <style>
@@ -19,10 +20,8 @@
 }
 
 body {
-    background-color:black;
+    display: inline-block;
 }  
-
-
 
 #tutorial {
     top: 12%;
@@ -113,30 +112,88 @@ body {
     background-color: rgba(192,192,192, .5);
 }
 
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.cloudSpacer {
+    position: relative;
+    float:left;
+    height: 100px;
+    width: 50px;
+}
+
+.cloud {
+    position: relative;
+    float:left;
+    height: 100px;
+    width: 150px;
+    -webkit-transition: margin 0.5s ease-out;
+    -moz-transition: margin 0.5s ease-out;
+    -o-transition: margin 0.5s ease-out;
+}
+
+.cloud p {
+    position: absolute;
+    left:52px;
+    top: 15px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    color: #40a4df;
+	font-size: 48px;
+    margin: 5px;
+}
+
+.cloud:hover {
+	cursor:pointer;
+    margin-top: 5px;
+}
+
+.groupContainer {
+    position: absolute;
+}
+
+.mainButton {
+     background-color: #40A4DF;
+     border: 2px solid white;
+     border-radius: 12px;
+     color: #FFFFFF;
+     cursor: all-scroll;
+     font-family: 'Amatic SC', cursive;
+     font-size: 40px;
+     font-weight: bold;
+     height: 50px;
+     line-height: 130%;
+     padding: 5px;
+     position: absolute;
+     text-align: center;
+     width: 200px;
+ }
+
+
 </style>        
         
 </head>
     
-<body>
-
+<body id="body">
 <!-- back to startup page button -->
 <img onclick="parent.reset()" id="backButton" src="./imgs/back.png">    
     
 <script>
 init();
-generateDisplay();
 </script>    
 
-<!-- container to hold level links -->
-<div id="levelsDisplayContainer">
- <div id="levelsHeader">LEVELS</div>
- <div id="levelsHolder"></div>  
+
+<div id="cloudTest" class="cloud">
+    <img src="../imgs/Cloud.png" />
+    <p>2</p>
 </div>
 
 
 <script>
 //populate levels inserts html elements into the levels container that act as links to the levels
-    document.getElementById("levelsHolder").innerHTML = populateLevels();
+    document.getElementById("body").innerHTML = populateLevels();
 </script>
     
 </body>    

@@ -20,7 +20,7 @@ var levelSpecs = {
 
 
 var levelGlobal ;
-var lastLevel = 4;
+var lastLevel = 3;
 
 
 
