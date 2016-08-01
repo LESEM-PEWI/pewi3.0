@@ -9,25 +9,23 @@
     <style>
         
     body {
-    background-color:black;
-    color:white;
+    color:black;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    background-image: url("./imgs/normalBack.png");
+    background-position: left top;
+    background-attachment: fixed;
     }  
     
     .levelsDesignContainer{
-    position:absolute;
-    left: 50%;
-    margin-top: 100px;
-    margin-left: -250px;
-    margin-bottom: -350px;
+    position:relative;
+    width:50%;
+    margin: 0 auto;
     
     border-radius: 40px ;
     border: 2px solid white;
     
-    width:500px;
-    background-color: #40a4df;
+    background-color: #ffffff;
     /*background-image: url("../modules/codex/dark-mosaic.png");*/
-    background-repeat: repeat ;
 
     }
     
@@ -49,7 +47,7 @@
     
     <!-- Input for exercise number -->
     <div class="form-group">
-      <label for="textinput">PEWI Exercise Number:</label>  
+      <label for="textinput">PEWI Exercise Number:</label>
       <div>
       <input id="exerciseNumber" type="text" placeholder="Ex: 1A.1">
       </div>
