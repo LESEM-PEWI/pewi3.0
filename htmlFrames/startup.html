@@ -214,7 +214,7 @@ function startPlay() {
  document.getElementById('startupButton3').style.display = "none" ;
  document.getElementById('startupButton2').style.top = "40%" ;
  document.getElementById('startupButton2').style.backgroundColor = "#003d4d" ;
-  document.getElementById('pewiTitle').style.marginTop = "100px";
+ document.getElementById('pewiTitle').style.marginTop = "100px";
  document.getElementById('startupContentsHolder').style.marginTop = "0px";
  document.getElementById('startupContentsHolder').style.top = "0%";
  document.getElementById('startupContentsHolder').style.height = "100%" ;
@@ -225,7 +225,11 @@ function startPlay() {
  setTimeout(function() {
    document.getElementById('startupDialogueOverlay').src = "play.html" ; 
    document.getElementById('startupDialogueOverlay').style.visibility = "visible" ;
-   setTimeout(function() { resetElements() ; }, 800);
+   document.getElementById('startupButton1').style.visibility = "hidden" ;
+   document.getElementById('startupButton2').style.visibility = "hidden" ;
+   document.getElementById('startupButton3').style.visibility = "hidden" ;
+   document.getElementById('pewiTitle').style.visibility = "hidden" ;
+   //setTimeout(function() { resetElements() ; }, 800);
  }, 400) ;
 
 } //end startPlay
