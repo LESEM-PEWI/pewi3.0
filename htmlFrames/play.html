@@ -20,7 +20,6 @@
 }
 
 body {
-    display: inline-block;
 }  
 
 #tutorial {
@@ -121,7 +120,7 @@ img {
 .cloudSpacer {
     position: relative;
     float:left;
-    height: 100px;
+    height: 25px;
     width: 50px;
 }
 
@@ -177,24 +176,17 @@ img {
 </head>
     
 <body id="body">
-<!-- back to startup page button -->
-<img onclick="parent.reset()" id="backButton" src="./imgs/back.png">    
     
 <script>
 init();
-</script>    
-
-
-<div id="cloudTest" class="cloud">
-    <img src="../imgs/Cloud.png" />
-    <p>2</p>
-</div>
-
+</script>
 
 <script>
-//populate levels inserts html elements into the levels container that act as links to the levels
+    //populate levels inserts html elements into the levels container that act as links to the levels
     document.getElementById("body").innerHTML = populateLevels();
 </script>
+    
+<img onclick="parent.reset()" id="backButton" src="./imgs/back.png">        
     
 </body>    
     

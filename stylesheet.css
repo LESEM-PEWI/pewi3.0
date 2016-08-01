@@ -464,7 +464,7 @@ select {
     border-top-right-radius: 6px;
     height:40px;
     position:absolute;
-    top:180px;
+    top:200px;
     width:130px;
     -webkit-transition-duration: 0.5s; /* Safari */
     transition-duration: 0.5s;

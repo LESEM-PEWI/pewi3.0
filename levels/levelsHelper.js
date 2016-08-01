@@ -65,10 +65,10 @@ function populateLevels(){
     
     for(var i = 0; i < levelContainer.length; i++){
         
-        var placementPercent = [20, 50, 30];
+        var placementPercent = [25, 50, 30];
 
         //create a new stage element
-        tempString += "<div class='groupContainer' style='left:" + placementPercent[i] + "%; margin: 0 auto; top: " + ((i+1) * 250 - 75) + "px;'>";
+        tempString += "<div class='groupContainer' style='left:" + placementPercent[i] + "%; margin: 0 auto; top: " + ((i+1) * 250 - 200) + "px;'>";
         tempString += "<div class='mainButton' id='mainButtonNoHover' style='position: relative; margin: 0 auto; margin-bottom:20px'>" + levelContainer[i].name + "</div>";
         
             //for each exercise stored as an element in a level stored in the levelContainer
