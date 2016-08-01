@@ -1001,6 +1001,12 @@ function switchConsoleTab(value) {
         document.getElementById('settingsImg').className = "imgSelected";
         document.getElementById('settingsTab').style.display = "block";
     }
+    else if (value == 6) {
+        
+        document.getElementById('calendarImg').className = "imgSelected" ;
+        document.getElementById('yearsTab').style.display = "block" ;
+    }
+    
     
     if(mapIsHighlighted){
         displayLevels();
@@ -1826,6 +1832,7 @@ function toggleVisibility() {
     document.getElementById('year1PrecipContainer').style.display = "block" ;
     document.getElementById('year2PrecipContainer').style.display = 'block';
     document.getElementById('year3PrecipContainer').style.display = 'block' ;
+    document.getElementById('resultsButton').style.display = 'block';
     
     immutablePrecip = false ;
     
