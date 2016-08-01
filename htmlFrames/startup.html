@@ -194,13 +194,22 @@ function startUtilities() {
  document.getElementById('startupContentsHolder').style.marginTop = "0px";
  document.getElementById('startupContentsHolder').style.top = "0%";
  document.getElementById('startupContentsHolder').style.height = "100%" ;
- document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,1)" ;
+ document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)" ;
  document.getElementById('startupInformationText').innerHTML = "" ;
   
  //Display utilities elements
  setTimeout(function() {
+  document.getElementById('startupDialogueOverlay').style.visibility = "visible" ;
+   document.getElementById('startupButton1').style.visibility = "hidden" ;
+   document.getElementById('startupButton2').style.visibility = "hidden" ;
+   document.getElementById('startupButton3').style.visibility = "hidden" ;
+   document.getElementById('pewiTitle').style.visibility = "hidden" ;
+   
+   setTimeout(function() { 
   document.getElementById('startupDialogueOverlay').src = "utilities.html" ;
   document.getElementById('startupDialogueOverlay').style.visibility = "visible" ;
+   }, 400) ;
+   
   setTimeout(function() { resetElements() ; }, 800);
   }, 400);
   
@@ -212,7 +221,7 @@ function startPlay() {
  //Hide startup page elements
  document.getElementById('startupButton1').style.display = "none" ;
  document.getElementById('startupButton3').style.display = "none" ;
- document.getElementById('startupButton2').style.top = "40%" ;
+ document.getElementById('startupButton2').style.top = "50%" ;
  document.getElementById('startupButton2').style.backgroundColor = "#003d4d" ;
  document.getElementById('pewiTitle').style.marginTop = "100px";
  document.getElementById('startupContentsHolder').style.marginTop = "0px";
@@ -223,13 +232,18 @@ function startPlay() {
   
  //Display level selector
  setTimeout(function() {
-   document.getElementById('startupDialogueOverlay').src = "play.html" ; 
-   document.getElementById('startupDialogueOverlay').style.visibility = "visible" ;
+   
    document.getElementById('startupButton1').style.visibility = "hidden" ;
    document.getElementById('startupButton2').style.visibility = "hidden" ;
    document.getElementById('startupButton3').style.visibility = "hidden" ;
    document.getElementById('pewiTitle').style.visibility = "hidden" ;
-   //setTimeout(function() { resetElements() ; }, 800);
+   
+   setTimeout(function() { 
+    document.getElementById('startupDialogueOverlay').src = "play.html" ; 
+   document.getElementById('startupDialogueOverlay').style.visibility = "visible" ;
+   }, 400);
+   
+   setTimeout(function() { resetElements() ; }, 800);
  }, 400) ;
 
 } //end startPlay
@@ -248,6 +262,7 @@ function resetElements(){
  document.getElementById('startupButton2').style.top = "50%" ;
  document.getElementById('startupButton3').style.left = "75%" ;
   document.getElementById('pewiTitle').style.marginTop = "0px";
+  
  
 } //end resetElements
 
@@ -263,6 +278,11 @@ function reset() {
  document.getElementById('startupContentsHolder').style.top = "50%";
  document.getElementById('startupContentsHolder').style.height = "500px" ;
  document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)" ;
+ 
+    document.getElementById('startupButton1').style.visibility = "visible" ;
+   document.getElementById('startupButton2').style.visibility = "visible" ;
+   document.getElementById('startupButton3').style.visibility = "visible" ;
+   document.getElementById('pewiTitle').style.visibility = "visible" ;
  
 } //end reset
 
