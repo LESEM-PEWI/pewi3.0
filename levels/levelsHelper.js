@@ -45,23 +45,15 @@ function parseLevelMenuData(data) {
                 break;
             //if the line is a new level
             case "@":
-                stageIndex++;
-                var stageData = {
-                    data: [],
-                    name: lineContent
-                };
-                levelContainer[levelIndex].data.push(stageData);
-                break;
-            //inf the line is a new exercise
-            case "%":
                 var lineArray = lineContent.split(",");
                 var exerciseData = {
                     exercise: lineArray[1],
                     name: lineArray[0]
                 };
-                levelContainer[levelIndex].data[stageIndex].data.push(exerciseData);
+                levelContainer[levelIndex].data.push(exerciseData);
                 break;
         }
+    
     }
     
 } //end parseLevelMenuData
@@ -71,33 +63,24 @@ function populateLevels(){
     
     var tempString = " ";
     
-    //for each stage stored as an element in the levelContainer
     for(var i = 0; i < levelContainer.length; i++){
         
+        var placementPercent = [20, 50, 30];
+
         //create a new stage element
-        tempString += "<div id='" + levelContainer[i].name.replace(/\s/g, "") + "' class='groupElement' style='padding-left: 20px;'>";
-        tempString += levelContainer[i].name;
-        tempString += "</div>";
+        tempString += "<div class='groupContainer' style='left:" + placementPercent[i] + "%; margin: 0 auto; top: " + ((i+1) * 250 - 75) + "px;'>";
+        tempString += "<div class='mainButton' id='mainButtonNoHover' style='position: relative; margin: 0 auto; margin-bottom:20px'>" + levelContainer[i].name + "</div>";
         
-        //for each level stored as an element in a stage stored in the levelContainer
-        for(var j = 0; j < levelContainer[i].data.length; j++){
-        
-            //create a new level element
-            tempString += "<div id='" + levelContainer[i].data[j].name.replace(/\s/g, "") + "' class='groupElement' style='padding-left: 40px;'>";
-            tempString += levelContainer[i].data[j].name;
-            tempString += "</div>";
-         
             //for each exercise stored as an element in a level stored in the levelContainer
-            for(var k = 0; k < levelContainer[i].data[j].data.length; k++){
+            for(var k = 0; k < levelContainer[i].data.length; k++){
                 
-                //create a new exercise element
-                tempString += "<div id='" + levelContainer[i].data[j].data[k].name.replace(/\s/g, "") + "' class='exerciseElement' style='padding-left: 60px;' onclick='window.top.loadLevel(" + levelContainer[i].data[j].data[k].exercise + ")';>";
-                tempString += levelContainer[i].data[j].data[k].name;
-                tempString += "</div>";
+                //Create a new exercise element
+                tempString += "<div class='cloud' onclick='window.top.loadLevel(" + levelContainer[i].data[k].exercise + ")'><img src='../imgs/Cloud.png'/><p>" + (k+1) + "</p></div>";
+                if(k < levelContainer[i].data.length - 1){tempString += "<div class='cloudSpacer'></div>"};
                 
             }
             
-        }
+        tempString += "</div>";
         
         
     }

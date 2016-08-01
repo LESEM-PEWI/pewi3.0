@@ -93,7 +93,7 @@ function addAnimation() {
     string += "<div><label>Select the animation to play if objective " + objectiveNumber + " is accomplished:</label><div>";
     string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "0" + "' value=" + "'none'" + ">" + "Nothing" + "</label></div>";
     string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "1" + "' value=" + "'flock'" + ">" + "Flock of birds appears" + "</label></div>";
-    string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "2" + "' value=" + "'bird'" + ">" + "Mockingbird flys across screen" + "</label></div>";
+    string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "2" + "' value=" + "'bird'" + ">" + "Meadowlark flys across screen" + "</label></div>";
     string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "3" + "' value=" + "'blueRiver'" + ">" + "River turns blue" + "</label></div>";
     string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "4" + "' value=" + "'brownRiver'" + ">" + "River turns brown" + "</label></div>";
     string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "5" + "' value=" + "'fireworks'" + ">" + "Fireworks" + "</label></div>";
