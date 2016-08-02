@@ -22,7 +22,9 @@ var mapIsHighlighted = false;
 var highlightedTiles = [] ;
 var hoverOverride = false;
 var currentHighlightType = 0;
+var currentHighlightTypeString = null;
 var immutablePrecip = false; 
+var clickAndDrag = false;
 
 var painterTool = {
     status: 0,
@@ -428,6 +430,11 @@ function onDocumentMouseMove(event) {
     raycaster.setFromCamera(mouse, camera);
 
     var intersects = raycaster.intersectObjects(scene.children);
+    
+    //Remove highlighting if clicking and dragging
+    if(clickAndDrag) {
+        highlightTile(-1);
+    }
 
     if (intersects.length < 1) {
 
@@ -467,8 +474,8 @@ function onDocumentMouseMove(event) {
             }
 
         }
-        //if painter tool type is the hover painter
-        else if(painterTool.status == 3 && !mapIsHighlighted){
+        //if painter tool type is the clickAndDrag painter
+        else if(clickAndDrag){
             var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z) ;
             if(boardData[currentBoard].map[currentTile].landType[0] != 0)  changeLandTypeTile(currentTile) ;
         }
@@ -484,7 +491,9 @@ function onDocumentMouseMove(event) {
 //and will change map to a monoculture if shift is held down
 function onDocumentMouseDown(event) {
 
-    event.preventDefault();
+    if(clearToChangeLandType){
+        event.preventDefault();
+    }
 
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
 
@@ -543,6 +552,8 @@ function onDocumentMouseDown(event) {
                     } else {
                         //just a normal tile change
                         changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+                        //Change variable for painting click and drag status
+                        clickAndDrag = true;
                     }
                     
                 }
@@ -572,6 +583,31 @@ function onDocumentMouseDown(event) {
     }
 
 } //end onDocumentMouseDown(event)
+
+//onDocumentMouseUp listens for the release of the click event
+function onDocumentMouseUp(event) {
+
+    //Turn off click and drag functionality
+    clickAndDrag = false;
+
+    if(mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4){
+
+        Totals = new Results(boardData[currentBoard]);
+        Totals.update();
+
+        //update tiles
+        for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+
+            if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+
+                meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
+
+            }
+
+        }
+    }
+
+} //end onDocumentMouseUp
 
 //onDocumentKeyDown listens for the shift key held down
 function onDocumentKeyDown(event) {
@@ -615,13 +651,6 @@ function onDocumentKeyDown(event) {
         //case b - add animated birds to scene
         case 66:
             createFlock();
-            break;
-        //case p - use for hover painting tool
-        case 80:
-            if(painterTool.hover && painterTool.status != 3) {
-                painterTool.status = 3 ;
-                highlightTile(-1);
-            }
             break;
         //case f - add animated fireworks
         case 70:
@@ -673,10 +702,6 @@ function onDocumentKeyUp(event) {
         case 16:
             isShiftDown = false;
             break;
-        //case release p
-        case 80:
-          if(painterTool.status == 3 ) painterTool.status = 0
-          break;
         //case release z -- for zoom functions
         case 90:
             zIsDown = false;
@@ -1101,6 +1126,8 @@ function displayLevels(type) {
                     currentHighlightType = 7;
                     break;
             }
+            
+            currentHighlightTypeString = type;
         
         //if the map is previously highlighted 
         } else {
@@ -1145,6 +1172,7 @@ function displayLevels(type) {
                 refreshBoard();
                 showLevelDetails(-1 * currentHighlightType);
                 currentHighlightType = 0;
+                currentHighlightTypeString = null;
             
             //selecting a new type of highlighting
             } else {
@@ -1173,6 +1201,7 @@ function displayLevels(type) {
                 //update legend and new highlighted type
                 showLevelDetails(newSelection);
                 currentHighlightType = newSelection;
+                currentHighlightTypeString = type;
                 
             }
             
@@ -1952,12 +1981,6 @@ function painterSelect(value){
             console.log("ready to DC, status=" + painterTool.status) ;
             document.getElementById('gridPaint').className = "painterIconSelected" ;
    
-    } else if(value == 3){
-        painterTool.status = 0 ;
-        if(painterTool.status == 2) refreshBoard() ;
-        
-        document.getElementById('hoverPaint').className = 'painterIconSelected' ;
-        painterTool.hover = true ;
     }
     
 }
