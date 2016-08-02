@@ -625,10 +625,6 @@ function onDocumentKeyDown(event) {
                 setupRiver();
             }
             break;
-        //case i - toggle codex
-        case 73:
-            toggleIndex();
-            break ;
         //case e - reset camera position
         case 69:
             //why do we have to do this? Because scope updates incrementally
@@ -642,20 +638,6 @@ function onDocumentKeyDown(event) {
                 randomizeBoard() ;
             }
             break;
-        //case c - log camera position and rotation
-        case 67:
-            console.log(camera.position) ;
-            console.log(camera.rotation) ;
-            console.log("-------------") ;
-            break;
-        //case b - add animated birds to scene
-        case 66:
-            createFlock();
-            break;
-        //case f - add animated fireworks
-        case 70:
-            launchFireworks();
-            break;
         //case z -- for zoom functions
         case 90:
             zIsDown = true;
@@ -668,12 +650,6 @@ function onDocumentKeyDown(event) {
         case 50:
             if(zIsDown && zoomedIn){
                 switchToUnzoomedView();
-            }
-            break;
-        //case o - show options
-        case 79:
-            if(!multiAssignMode){
-                startOptions() ;
             }
             break;
         //case v - key to record multiplayer fields
