@@ -54,13 +54,15 @@ function bindUploadFileListener() {
 
 //this function triggers a download of the current data
 function triggerDownloadSequence() {
+
     //helpersFE.js, creates data using current board
     var data = parent.writeFileToDownloadString();
-    var blob = new Blob([data], {type: "text/csv;charset=utf-8"});
+    var downloadBlob = new Blob([data], {type: "text/csv;charset=utf-8"});
     //filesaver.min.js
-    saveAs(blob, "pewiMap.csv");
+    saveAs(downloadBlob, "pewiMap.csv") ;
+
     //close necessary frames
-    parent.downloadClicked();
+    setTimeout(function() {parent.downloadClicked();},1 ); 
 }
 </script>
 
