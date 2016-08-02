@@ -453,7 +453,8 @@ function setupHighlight() {
 
     //add mouse listener
     document.addEventListener('mousemove', onDocumentMouseMove, false);
-    document.addEventListener('click', onDocumentMouseDown, false);
+    document.addEventListener('mousedown', onDocumentMouseDown, false);
+    document.addEventListener('mouseup', onDocumentMouseUp, false);
     document.addEventListener('keydown', onDocumentKeyDown, false);
     document.addEventListener('keyup', onDocumentKeyUp, false);
 
