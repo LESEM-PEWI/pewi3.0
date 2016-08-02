@@ -696,10 +696,9 @@ select {
 }
 
 .popup, .popupHidden {
-  overflow-y:scroll;
+  overflow-y:auto;
   overflow-x:hidden;
   margin: 0px;
-  margin-right: -20px;
     
   width:12%;
   height:50%;
@@ -794,7 +793,7 @@ select {
     display:none;
     padding: 5px;
     background-color: #008fb3 ;
-    width:200px;
+    width:150px;
     border-radius:12px;
     height:50px ;
     color: white ;
@@ -832,14 +831,12 @@ select {
     animation-name: rollButtonUp;
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
-    margin-right:-20px;
 
 }
 
 .dialogueButtonRolled {
     bottom:0px;
     right: 0px;
-    margin-right: 0px;
     -webkit-animation-name: rollButtonDown;
     animation-name: rollButtonDown;
     -webkit-animation-duration: 1s;
