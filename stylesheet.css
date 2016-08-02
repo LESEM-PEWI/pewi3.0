@@ -259,7 +259,7 @@ body {
     -moz-border-radius:4px;
 }
 
-#precipTitle {
+#precipTitle, #yearTitle {
     color:#fff;
     margin: 4px;
     padding:3px;
@@ -696,11 +696,12 @@ select {
 }
 
 .popup, .popupHidden {
-  overflow-y:scroll;
+  overflow-y:auto;
   overflow-x:hidden;
+  margin: 0px;
+    
   width:12%;
   height:50%;
-  margin: 0px;
   text-align:center;
   line-height: 100%;
   color: #FFFFFF;
@@ -792,7 +793,7 @@ select {
     display:none;
     padding: 5px;
     background-color: #008fb3 ;
-    width:200px;
+    width:150px;
     border-radius:12px;
     height:50px ;
     color: white ;

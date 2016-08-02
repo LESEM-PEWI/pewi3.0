@@ -292,14 +292,14 @@
         
         <!-- Painter settings display -->
         <div id="settingsTab" class="consoleTab" style="display:none;">
-             <img id="cellPaint" class="painterIconSelected" src="./imgs/cellPainter.png" onclick="painterSelect(1);">
+             <img id="cellPaint" class="painterIconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
              <img id="gridPaint" class="painterIcon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
-             <img id="hoverPaint" class="painterIcon" src="./imgs/hoverPainter.png" onclick="painterSelect(3);">
              
         </div>
         
         <div id="yearsTab" class="consoleTab" style="display:none;">
             <!-- Create year buttons -->
+            <div id="yearTitle">Current year</div>
             <p class="featuresText" style="margin-left:10px;">Year Selection</p>
             <!-- "Exposure, zero icon" by Google Design (https://design.google.com/) used under CC BY (https://creativecommons.org/licenses/by/3.0/) / Inverted from original -->
             <div id="year0Button" class="yearButton" onclick="transitionToYear(0); switchYearTab(0);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year0Image" class="yearNotSelected" src="./imgs/zero_40px.png"></div>
