@@ -20,9 +20,9 @@ var levelSpecs = {
 
 
 var levelGlobal ;
-var lastLevel = 3;
+var lastLevel = 9;
 
-
+var levelContainer = [];
 
 //loadLevel is triggered by clicking a level button on the html page
 function loadLevel(level){
@@ -36,25 +36,6 @@ function loadLevel(level){
     }
     
     switch(level){
-        case 1:
-            levelGlobal = 1 ;
-            //parse level options file
-            loadLevelDetails("./levels/specs/level1Specifications.txt");
-            initWorkspace('./levels/maps/conservationSoybeanDSM.csv');
-            document.getElementById('popup').className = "popup";
-            break;
-        case 2:
-            levelGlobal = 2;
-            loadLevelDetails("./levels/specs/level2Specifications.txt");
-            initWorkspace('./data.txt');
-            document.getElementById('popup').className = "popup";
-            break;
-        case 3:
-            levelGlobal = 3;
-            loadLevelDetails("./levels/specs/level3Specifications.txt");
-            initWorkspace('./levels/maps/conservationSoybeanDSM.csv');
-            document.getElementById('popup').className = "popup";
-            break;
         case 0:
             levelGlobal = 0 ;
             initWorkspace('./data.txt');            
@@ -65,6 +46,12 @@ function loadLevel(level){
             levelGlobal = 1 ;
             loadLevelDetails("./levels/specs/testMP.txt");
             initWorkspace('./data.txt') ;
+            break;
+        default:
+            levelGlobal = level;
+            loadLevelDetails("./levels/specs/" + getFileForExercise(level));
+            initWorkspace('./data.txt');
+            document.getElementById('popup').className = 'popup';
             break;
     }
     
@@ -218,3 +205,125 @@ function loadLevelDetails(fileString) {
 function returnCurrentLevel(){
     return levelGlobal;
 } //end returnCurrentLevel
+
+//init parses the level.dat file which stores level data in the levelContainer array
+function init() {
+
+  $.ajax({
+       async: false,
+       type: "GET",
+       url: '../levels/levelResources/level.dat',
+       dataType: "text",
+       contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+       success: function (data) {
+           parseLevelMenuData(data);
+       }
+    });
+
+} //end init
+
+//parseLevelMenuData reads the string from the level.dat file into a level hierarchy
+function parseLevelMenuData(data) {
+    
+     var strRawContents = data;
+    //split based on escape chars
+    while (strRawContents.indexOf("\r") >= 0)
+        strRawContents = strRawContents.replace("\r", "");
+    var arrLines = strRawContents.split("\n");
+    
+    var levelIndex = -1;
+    var stageIndex = -1;   
+    lastLevel = 0;
+    
+    for( var i = 0; i < arrLines.length; i++){
+        var lineType = arrLines[i].substring(0, 1);
+        var lineContent = arrLines[i].substring(2, arrLines[i].length);
+        
+        switch(lineType){
+            //if the line is a new stage
+            case "#":
+                stageIndex = -1;
+                levelIndex++;
+                var levelData = {
+                    data: [],
+                    name: lineContent
+                };
+                levelContainer.push(levelData);
+                break;
+            //if the line is a new level
+            case "@":
+                lastLevel++;
+                var levelNumber = lastLevel;
+                var lineArray = lineContent.split(",");
+                var exerciseData = {
+                    exercise: levelNumber,
+                    text: lineArray[0],
+                    file: lineArray[1]
+                };
+                levelContainer[levelIndex].data.push(exerciseData);
+                break;
+        }
+    
+    }
+    
+    //Ensure that the main webpage and the play.html screen share the same levelContainer information
+    top.window.levelContainer = levelContainer;
+    
+} //end parseLevelMenuData
+
+//populateLevels uses the levelContainer hierarchy of stages, levels, and exercises to organize the level container
+function populateLevels(){
+    
+    var tempString = " ";
+    
+    for(var i = 0; i < levelContainer.length; i++){
+        
+        var placementPercent = [25, 50, 30];
+
+        //create a new stage element
+        tempString += "<div class='groupContainer' style='left:" + placementPercent[i % 3] + "%; margin: 0 auto; top: " + ((i+1) * 250 - 200) + "px;'>";
+        tempString += "<div class='mainButton' id='mainButtonNoHover' style='position: relative; margin: 0 auto; margin-bottom:20px'>" + levelContainer[i].name + "</div>";
+        
+            //for each exercise stored as an element in a level stored in the levelContainer
+            for(var k = 0; k < levelContainer[i].data.length; k++){
+                
+                var clickStringBuilder = "window.top.loadLevel(" + levelContainer[i].data[k].exercise  + ")";
+                
+                //Create a new exercise element
+                tempString += "<div id='cloud_" + i + "_" + k + "' class='cloud' onclick='" + clickStringBuilder + "'><img src='../imgs/Cloud.png'/><p>" + levelContainer[i].data[k].text + "</p></div>";
+                
+                if(k < levelContainer[i].data.length - 1){tempString += "<div class='cloudSpacer'></div>"};
+                
+            }
+            
+        tempString += "</div>";
+        
+        
+    }
+    
+    tempString += "<div class='groupContainer' style='left:" + placementPercent[i % 3] + "%; margin: 0 auto; top: " + ((i+1) * 250 - 200) + "px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>";
+    
+    return tempString;
+    
+} //end populateLevels
+
+//getFileForExercise Can retrieve file name from exercise/level number for the level loader
+function getFileForExercise(exercise){
+    
+    console.log(levelContainer);
+    
+    for(var i = 0; i < levelContainer.length; i++) {
+        
+        for(var k = 0; k < levelContainer[i].data.length; k++){
+            
+            if(exercise == levelContainer[i].data[k].exercise){
+                
+                return levelContainer[i].data[k].file;
+                
+            }
+            
+        }
+        
+    }
+    
+} //end getFileForExercise
