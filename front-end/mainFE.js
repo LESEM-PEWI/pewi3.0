@@ -475,7 +475,8 @@ function showMainMenu() {
             
         document.getElementById('startupSequence').style.display = "block" ;
         
-        //reset sandbox/level to original settings    
+        //reset sandbox/level to original settings   
+        switchToUnzoomedView();
         previousHover = null ;
         paintChange(1) ;
         switchConsoleTab(1);
