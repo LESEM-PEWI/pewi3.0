@@ -36,6 +36,7 @@ function loadLevel(level){
     }
     
     switch(level){
+        //sandbox
         case 0:
             levelGlobal = 0 ;
             initWorkspace('./data.csv');            
@@ -51,7 +52,7 @@ function loadLevel(level){
         default:
             levelGlobal = level;
             loadLevelDetails("./levels/specs/" + getFileForExercise(level));
-            initWorkspace('./data.txt');
+            initWorkspace('./data.csv');
             document.getElementById('popup').className = 'popup';
             break;
     }
@@ -310,8 +311,6 @@ function populateLevels(){
 
 //getFileForExercise Can retrieve file name from exercise/level number for the level loader
 function getFileForExercise(exercise){
-    
-    console.log(levelContainer);
     
     for(var i = 0; i < levelContainer.length; i++) {
         
