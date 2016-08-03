@@ -2060,19 +2060,16 @@ function createPlayerMap(value){
 } //end createPlayerMap
 
 //multiUpload directs functions for multiplayer file upload
-function multiUpload(value, e){
-    //console.log("uploading time " + value);
-    if(value == 0) return multiUploadStage1(e);
-    if(value >= 1) return multiUploadStage2(e);
+function multiplayerFileUpload(numberOfTimesThisFunctionHasBeenCalledInProcess, fileUploadEvent){
+    //if this is the first time, call base prep, otherwise, add map
+    return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
+       multiplayerAggregateOverlayMapping(fileUploadEvent) :
+       multiplayerAggregateBaseMapping(fileUploadEvent) ;
 } //end multiUpload
 
 //multiUploadStage1 initializes the aggregation of multiplayer boards
-function multiUploadStage1(e){
-    
-    //console.log("loading stuff");
-    //loadResources();
-    
-    //console.log("setting Up first file normally") ;
+function multiplayerAggregateBaseMapping(e){
+    //set up first file completely normally
     var files;
     files = e.target.files;
 
@@ -2090,13 +2087,10 @@ function multiUploadStage1(e){
         }
         return 1 ;
     } //end else
-    
-} //end multiUploadStage1
+} //end multiplayerAggregateBaseMapping
 
 //multiUploadStage2 facilitates the aggregation of multiplayer boards
-function multiUploadStage2(e) {
-    
-    //console.log("attempting to overlay") ;
+function multiplayerAggregateOverlayMapping(e) {
     
     var files;
     files = e.target.files;
@@ -2111,30 +2105,19 @@ function multiUploadStage2(e) {
         reader.onload = function(e) {
 
         var boardFromUpload = new GameBoard();
+        //setup data from reader (file) into intiData global
         parseInitial(reader.result);
+        //call *backend* function for overlaying boards, will put boardFromUpload onto
+        //  the current board
         overlayBoard(boardData[currentBoard], boardFromUpload);
-    
+        //now switch to the current board so that all data is up to date
         switchBoards(boardData[currentBoard]);
-    
         //clear initData
         initData = [];
         }
         return 1 ;
     } //end else
-    
-} //end multiUploadStage2
-
-//exitFromAggregate loads board with aggregated data
-function exitFromAggregate(){
-    
-    console.log("exiting from the aggregation confabulation") ;
-    
-        var temp = boardData[currentBoard] ;
-    initWorkspace('./data.txt');
-    boardData[currentBoard] = temp ;
-    refreshBoard() ;
-    
-} //end exitFromAggregate
+} //end multiplayerAggregateOverlayMapping
 
 //toggleChangeLandType toggles a boolean that tracks the state which is required to change land type
 function toggleChangeLandType() {
