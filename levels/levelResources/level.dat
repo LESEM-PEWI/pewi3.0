@@ -1,12 +1,12 @@
 # The N-Factor
-@ Level 1,1
-@ Level 2,2
-@ Level 3,3
+@ 1,N1.txt
+@ 2,N2.txt
+@ 3,N3.txt
 # The P-Factor
-@ Level 1
-@ Level 2
-@ Level 3
+@ 1,P1.txt
+@ 2,P2.txt
+@ 3,P3.txt
 # The B-Factor
-@ Level 1
-@ Level 2
-@ Level 3
+@ 1,B1.txt
+@ 2,B2.txt
+@ 3,B3.txt
