@@ -1,223 +1,126 @@
+<!doctype html>
+
+<!--
+The utilites page is a catch-all for functions that will mostly be used by 
+ teachers, professors, etc.
+ 
+The utilities page is displayed as an iframe over the startup iframe with no background
+  property set, making it appear as if it is a cohesive part of the program. Nevertheless,
+  changes can be made quite readily, and the code is much less cluttered with this 
+  separation of roles in place.
+  
+The page has three buttons on it. The levels button opens the level designer page in a new
+  tab. The Multiplayer buttons allow for multi-maps to be created and to be put back
+  together.
+
+Cleaned and Prepared - August 2016
+-->
+
 <html>
-    
 <head>
-<style>
+    <meta charset="utf-8">
+    <title>Workspace - Utilities</title>
 
-* {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none;           /* Non-prefixed version, currently
-                                  not supported by any browser */
-}
-
-body{
-
-}    
+    <!-- INCLUDES -->
+    <!--css-->
+    <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+    <!--javascript-->
+    <script src=".././lib/jquery-1.12.4.min.js"></script>
+    <script src=".././lib/filesaver.min.js"></script>
+    <!--external fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
     
-.button {
-position:relative;
-display: inline-block;
-background-color: #40A4DF ;
-width:400px;
-border-radius:12px;
-height:40px ;
-color: white ;
-padding:5px;
-border: 2px solid white;
-cursor: all-scroll ;
-font-family: 'Amatic SC', cursive;
-text-align:center;
-line-height: 90%;
-color: #FFFFFF;
-font-size: 40px ;
-font-weight: bold;
-margin-top:40px;
-}
+    <!-- /INCLUDES -->
 
-.button:hover {
- background-color:  #7cc1e9 ;
-}    
-    
-#setupButton{
-
-}   
-
-#aggregateButton{
-
-}
-
-.uploadFile > input
-{
-    display: none;
-}    
-
-
-.info {
-    width:100%;
-    margin-top:35px;
-    text-align:center;
-    line-height:220%;
-    height:50px;
-    background-color: white;
-    color:#000000;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    font-size:20px;
-}
-
-#addFile, #downloadFile{
-    width:350px;
-    margin-left:17px;
-    height:40px;
-}
-
-
-#backButton {
-    position:relative;
-    display:inline-block;
-    margin-left:10%;
-    margin-top:30px;
-    padding: 5px;
-}   
-
-#backButton:hover {
-    border-bottom: 2px solid white;
-}
-
-#aggregateTools{
-    position:relative;
-    display: inline-block;
-    width:400px;
-    height:300px;
-    background-color: #003d4d ;
-    margin-top:20px;
-    height:0px;
-    overflow:hidden;
-    border-radius: 6px;
-    margin-left:10px;
-    
-    -webkit-transition-duration: 1s; /* Safari */
-    transition-duration: 1s;
-}
-
-#contentsHolder{
-    position:absolute;
-    margin-left:-200px;
-    left:50%;
-    width:400px;
-}
-
-</style>
-
-<script src=".././lib/jquery-1.12.4.min.js"></script>
-<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+    <!--additional styling-->   
+    <style>
+    body{
+        overflow:hidden;
+    }
+    </style>
 
 </head>    
-    
 <body>
 
+    <img onclick="parent.reset()" id="backButton" src="./imgs/back.png" alt="Go Back <--">
 
-<img onclick="parent.reset()" id="backButton" src="./imgs/back.png">  
-
-<div id="contentsHolder">
-
-
-<div class="button" id="levelDesignerButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
-<div id="setupButton" class="button" onclick="setupMultiplayer();">Set-Up Multiplayer</div>    
-<div id="aggregateButton" class="button" onclick="showAggregateOptions();">Aggregate Multi-Maps</div>    
-
-<div id="aggregateTools">   
-   
-<div class="uploadFile">   
-<label for="file-upload">
-<div id="addFile" class="button">Add a File</div>    
-</label>
-<input id="file-upload" type="file"/>    
-</div>
-    
-<div id="downloadFile" class="button" onclick="download();">Download Aggregate</div>        
-    
-<div id="aggregateInfo" class="info">Ready. Upload first file.</div>    
-
-</div>
-
-
-</div>
-
-
-</body>    
-
+    <div id="utilitiesContentsHolder">
+        
+        <!---buttons for utilities, add new buttons here -->    
+        <div id="levelDesignerButton" class="mainButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
+        <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup();">Set-Up Multiplayer</div>
+        <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
+        
+        <!--container for Aggregate Tool, slides up and down by height changes-->
+        <div id="utilitiesAggregateTools">
+            <div class="uploadFile">
+                
+                <label for="file-upload">
+                    <!--Technically not allowed, but seems to work across browsers-->
+                    <!-- in future, div may need to be moved outside the label, cleverly-->
+                    <div id="addFile" class="mainButton">Add a File</div>
+                </label>
+                <input id="file-upload" type="file" />
+                
+            </div>
+            <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
+            <div id="aggregateInfo" class="infoBar">Ready. Upload first file.</div>
+        </div>
+        
+    </div>
 <script>
 
-aggregateMultimaps() ;
+var numberOfTimesAggregated = 0; //used to keep track for info bar 
+bindAggregateFunctionToFileUpload();
 
-var time = 0 ;
-
-function setupMultiplayer() {
-    
+//launch essentially sandbox with multiplayer tools
+function launchMultiplayerSetup() {
     window.top.loadLevel(-1);
-    
-}    
-    
-    
-function aggregateMultimaps(){
-    
-    //console.log("binding prop change");
-    
-    $('#file-upload').bind('propertychange change', function (e) {
-        console.log("----" + time ); 
-        time += window.top.multiUpload(time, e) ;
-        console.log(time) ;
-        updateInfo(time);
-        
+}//end launchMultiplayerSetup
+
+//attach the file upload event to our functions for aggregating
+function bindAggregateFunctionToFileUpload() {
+    //jquery attachment
+    $('#file-upload').bind('propertychange change', function(e) {
+        //if the upload is successful, then it returns 1, and numberOfTimes... increases
+        numberOfTimesAggregated += window.top.multiplayerFileUpload(numberOfTimesAggregated, e);
+        //change what is displayed in the info bar
+        updateInfo(numberOfTimesAggregated);
     });
-    
-}   
+}//end bindAggregateFunctionToFileUpload
 
+//expand or collapse the div holding tools for mashing together separate maps
+function toggleAggregateOptions() {
+    //if the div is not expanded, then expand 
+    //else if expanded, then collapse it
+    document.getElementById('utilitiesAggregateTools').style.height =
+        (document.getElementById('utilitiesAggregateTools').style.height != "300px") ?
+        document.getElementById('utilitiesAggregateTools').style.height = "300px" :
+        document.getElementById('utilitiesAggregateTools').style.height = "0px";
+}//end toggleAggregateOptions
 
-function download() {
-    
-    var a = window.document.createElement('a');
-    
+//assist in downloading the currently aggregated map
+//uses filesaver.js for compatibility purposes
+function downloadAggregateMap() {
+    //data from function in helpersFE.js
     var data = window.top.writeFileToDownloadString();
-    
-    a.href = window.URL.createObjectURL(new Blob([data], {type: 'text/csv'}));
-    a.download = 'aggregatePewiMap.csv';
+    var downloadBlob = new Blob([data], {type: "text/csv;charset=utf-8"});
+    //filesaver.min.js
+    saveAs(downloadBlob, "aggregatePewiMap.csv") ;
 
-   // Append anchor to body.
-   document.body.appendChild(a)
-   a.click();
-   
-   document.getElementById('aggregateInfo').innerHTML = "Downloaded. Return to Sandbox to load." ;
+    document.getElementById('aggregateInfo').innerHTML = "Downloaded. Return to Sandbox to load.";
+}//end downloadAggregateMap
 
-}
-
-
-function showAggregateOptions() {
-    
-    if(document.getElementById('aggregateTools').style.height != "300px"){
-        document.getElementById('aggregateTools').style.height = "300px";    
-    }
-    else{
-        document.getElementById('aggregateTools').style.height = "0px";
-    }
-
-}
-
-function updateInfo(time){
-    
-    if(time == 1){
-        document.getElementById('aggregateInfo').innerHTML = "Added 1. Now add remaining players." ;
-    }
-    else{
-        document.getElementById('aggregateInfo').innerHTML = "Added " + time + " files" ;
-    }
-    
-}
+//updates the text information in the infoBar for the user
+function updateInfo(time) {
+    //if the first time, give a unique message
+    //else, just tell how many files have been successfully added
+    document.getElementById('aggregateInfo').innerHTML =
+        (time == 1) ?
+        "Added 1. Now add remaining players." :
+        "Added " + time + " files";
+}//end updateInfo
 </script>    
     
-    
-    
+</body> 
 </html>

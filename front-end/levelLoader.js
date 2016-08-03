@@ -5,7 +5,7 @@ var achievementDisplayed = -1;
 var achievementAccomplished = [];
 var achievementAnimations = [];
 var yearToCheck = 0;
-var multiAssignMode = false ;
+var multiplayerAssigningModeOn = false ;
 
 var objectives = [];
 var levelSpecs = {
@@ -38,14 +38,15 @@ function loadLevel(level){
     switch(level){
         case 0:
             levelGlobal = 0 ;
-            initWorkspace('./data.txt');            
+            initWorkspace('./data.csv');            
             if(achievedAllLevels){updatePopup("Congratulations! You made it through all the levels. Try out your newfound knowledge in Sandbox mode!");}
             break;
+        //multiplayer assigning mode
         case -1:
-            multiAssignMode = true ;
+            multiplayerAssigningModeOn = true ;
             levelGlobal = 1 ;
-            loadLevelDetails("./levels/specs/testMP.txt");
-            initWorkspace('./data.txt') ;
+            loadLevelDetails("./levels/specs/multiplayerAssign.txt");
+            initWorkspace('./data.csv') ;
             break;
         default:
             levelGlobal = level;
@@ -86,7 +87,7 @@ function loadLevel(level){
                         
                         boardData[currentBoard].map[j].landType[i] = Number(levelSpecs.landTypeMonoculture[i]);
                         if(i == currentYear){
-                            if(!multiAssignMode){
+                            if(!multiplayerAssigningModeOn){
                             meshMaterials[j].map = textureArray[Number(levelSpecs.landTypeMonoculture[i])];
                             }
                             else{
