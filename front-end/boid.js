@@ -279,7 +279,7 @@ var Boid = function() {
 
 }
 
-
+//add birds and boid properties to the flock of birds created for the three.js scene
 function addBirds() {
     
     if(birds.length < 1 && boids.length < 1){

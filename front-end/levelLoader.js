@@ -27,14 +27,17 @@ var levelContainer = [];
 //loadLevel is triggered by clicking a level button on the html page
 function loadLevel(level){
     
+    //remove any previously set up level settings
     resetLevel();
     
+    //if all levels have been completed
     var achievedAllLevels = false;
     if(level > lastLevel){
         level = 0;
         achievedAllLevels = true;
     }
     
+    //switch control for levels
     switch(level){
         //sandbox
         case 0:
@@ -49,6 +52,7 @@ function loadLevel(level){
             loadLevelDetails("./levels/specs/multiplayerAssign.txt");
             initWorkspace('./data.csv') ;
             break;
+        //generic loading for levels
         default:
             levelGlobal = level;
             loadLevelDetails("./levels/specs/" + getFileForExercise(level));
@@ -57,6 +61,7 @@ function loadLevel(level){
             break;
     }
     
+    //if a level with specifications is loaded, control precipitation and monocultures
     if(levelGlobal > 0){
         
         //if precipitation was not set, then randomly generate values
@@ -78,8 +83,9 @@ function loadLevel(level){
             
         }
         
+        //set up monocultures on each year of the board
         for(var i = 0; i < 4; i++){
-            
+        
             if(levelSpecs.landTypeMonoculture[i] != 0){
                 
                 for(var j = 0; j < boardData[currentBoard].map.length; j++){
@@ -273,7 +279,7 @@ function parseLevelMenuData(data) {
     
 } //end parseLevelMenuData
 
-//populateLevels uses the levelContainer hierarchy of stages, levels, and exercises to organize the level container
+//populateLevels uses the levelContainer hierarchy of stages, levels, and exercises to organize the level container as clouds on the play screen
 function populateLevels(){
     
     var tempString = " ";
@@ -286,12 +292,12 @@ function populateLevels(){
         tempString += "<div class='groupContainer' style='left:" + placementPercent[i % 3] + "%; margin: 0 auto; top: " + ((i+1) * 250 - 200) + "px;'>";
         tempString += "<div class='mainButton' id='mainButtonNoHover' style='position: relative; margin: 0 auto; margin-bottom:20px'>" + levelContainer[i].name + "</div>";
         
-            //for each exercise stored as an element in a level stored in the levelContainer
+            //for each level stored as an element in a stage stored in the levelContainer
             for(var k = 0; k < levelContainer[i].data.length; k++){
                 
                 var clickStringBuilder = "window.top.loadLevel(" + levelContainer[i].data[k].exercise  + ")";
                 
-                //Create a new exercise element
+                //Create a new level element and cloud to display
                 tempString += "<div id='cloud_" + i + "_" + k + "' class='cloud' onclick='" + clickStringBuilder + "'><img src='../imgs/Cloud.png'/><p>" + levelContainer[i].data[k].text + "</p></div>";
                 
                 if(k < levelContainer[i].data.length - 1){tempString += "<div class='cloudSpacer'></div>"};
@@ -303,13 +309,14 @@ function populateLevels(){
         
     }
     
+    //include a spacer below the clouds so the last row in not on the bottom of the page
     tempString += "<div class='groupContainer' style='left:" + placementPercent[i % 3] + "%; margin: 0 auto; top: " + ((i+1) * 250 - 200) + "px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>";
     
     return tempString;
     
 } //end populateLevels
 
-//getFileForExercise Can retrieve file name from exercise/level number for the level loader
+//getFileForExercise can retrieve file name from exercise/level number for the level loader
 function getFileForExercise(exercise){
     
     for(var i = 0; i < levelContainer.length; i++) {

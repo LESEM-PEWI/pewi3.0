@@ -1,230 +1,238 @@
 <!doctype html>
 
-<html>
-    
-<script src="../front-end/levelDesigner.js"></script>
+<!--
+The levelDesigner page allows a user to create a new level for pewi by specifying
+objectives via score monitoring, animations for user feedback, and guiding scripts.
 
+This page is displayed as a separate tab/window so that the user may switch betweeen
+the PEWI sandbox and the level designer in order to create effective levels.
+  
+The levelDesigner page is composed of an html form which is set in a div element
+against a night sky background. The form contains generic html form elements.
+
+Cleaned and Prepared - August 2016
+-->
+
+<html lang="en">
 <head>
     
-    <link rel='shortcut icon' href='../imgs/leveldesignfavicon.ico' type='image/x-icon'/ >
+    <title>PEWI Level Designer</title>
     
+    <!--INCLUDES-->
+    <!-- javascript for form element processing -->
+    <script src="../front-end/levelDesigner.js"></script>
+    <!-- favicon icon -->
+    <link rel='shortcut icon' href='../imgs/leveldesignfavicon.ico' type='image/x-icon' />
+    <!--/INCLUDES-->
+    
+    <!-- styling for page -->
     <style>
-        
     body {
-    color:black;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    background-image: url("./imgs/normalBack.png");
-    background-position: left top;
-    background-attachment: fixed;
+        color:black;
+        background-image: url("./imgs/normalBack.png");
+        background-position: left top;
+        background-attachment: fixed;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     }  
-    
-    .levelsDesignContainer{
-    position:relative;
-    width:50%;
-    margin: 0 auto;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    
-    border-radius: 40px ;
-    border: 2px solid white;
-    
-    background-color: #ffffff;
-    /*background-image: url("../modules/codex/dark-mosaic.png");*/
-
-    }
     
     .designLevel {
         padding: 20px;
     }
     
-        
-        
+    .levelsDesignContainer{
+        border-radius: 40px ;
+        border: 2px solid white;
+        background-color: #ffffff;
+        margin: 0 auto;
+        margin-top: 100px;
+        margin-bottom: 100px;
+        position:relative;
+        width:50%;
+    }
     </style>
 
 </head>
-
 <body id="body">
     
     <form class="levelsDesignContainer">
     
-    <div class="designLevel">
+        <div class="designLevel">
     
-    <!-- Input for exercise number -->
-    <div class="form-group">
-      <label for="textinput">PEWI Level Name:</label>
-      <div>
-      <input id="exerciseNumber" type="text" placeholder="Ex: 1A.1">
-      </div>
-    </div>
+            <!-- Input for level name -->
+            <div class="form-group">
+                <label>PEWI Level/File Name:</label>
+                <div>
+                    <input id="exerciseNumber" type="text" placeholder="Ex: N1">
+                </div>
+            </div>
     
-    <br>
+            <br>
     
-    <!-- Input for beginning level script -->
-    <div>
-        <label>Enter the exercise's opening script. Tell the user what they need to accomplish.</label>
-        <div>
-            <textarea id="beginningScript"></textarea>
-        </div>
-    </div>
+            <!-- Input for beginning level script -->
+            <div>
+                <label>Enter the level's opening script. Tell the user what they need to accomplish.</label>
+                <div>
+                    <textarea id="beginningScript"></textarea>
+                </div>
+            </div>
     
-    <br>
-    <br>
+            <br>
+            <br>
     
-    <!-- New objective div -->
-    <div id="objectiveDiv">
-    </div>
+            <!-- New objective div -->
+            <div id="objectiveDiv"></div>
     
-    <!-- Button to dynamically add new objective -->
-    <input type="button" value="Add an objective" onClick="addObjective('objectiveDiv');"> <br>
+            <!-- Button to dynamically add new objective -->
+            <input type="button" value="Add an objective" onClick="addObjective('objectiveDiv');"> 
+            
+            <br>
+            <br>
+            <br>
     
-    <br>
-    <br>
+            <!-- Input for yearly precipitation values -->
+            <div>
+                <label>Choose the precipitation values for each year:</label>
+                    <br><label>Year 0: </label>
+                    <select id="precipYear0">
+                        <option value="24.58">24.58</option>
+                        <option value="28.18">28.18</option>
+                        <option value="30.39">30.39</option>
+                        <option value="32.16">32.16</option>
+                        <option value="34.34">34.34</option>
+                        <option value="36.47">36.47</option>
+                        <option value="45.1">45.1</option>
+                    </select>
+                    <br><label>Year 1: </label>
+                    <select id="precipYear1">
+                        <option value="24.58">24.58</option>
+                        <option value="28.18">28.18</option>
+                        <option value="30.39">30.39</option>
+                        <option value="32.16">32.16</option>
+                        <option value="34.34">34.34</option>
+                        <option value="36.47">36.47</option>
+                        <option value="45.1">45.1</option>
+                    </select>
+                    <br><label>Year 2: </label>
+                    <select id="precipYear2">
+                        <option value="24.58">24.58</option>
+                        <option value="28.18">28.18</option>
+                        <option value="30.39">30.39</option>
+                        <option value="32.16">32.16</option>
+                        <option value="34.34">34.34</option>
+                        <option value="36.47">36.47</option>
+                        <option value="45.1">45.1</option>
+                    </select>
+                    <br><label>Year 3: </label>
+                    <select id="precipYear3">
+                        <option value="24.58">24.58</option>
+                        <option value="28.18">28.18</option>
+                        <option value="30.39">30.39</option>
+                        <option value="32.16">32.16</option>
+                        <option value="34.34">34.34</option>
+                        <option value="36.47">36.47</option>
+                        <option value="45.1">45.1</option>
+                    </select>
+            </div>
     
-    <!-- Input for yearly precipitation values -->
-    <div>
-        <label>Choose the precipitation values for each year:</label>
-            <br><label>Year 0: </label>
-            <select id="precipYear0">
-                <option value="24.58">24.58</option>
-                <option value="28.18">28.18</option>
-                <option value="30.39">30.39</option>
-                <option value="32.16">32.16</option>
-                <option value="34.34">34.34</option>
-                <option value="36.47">36.47</option>
-                <option value="45.1">45.1</option>
-            </select>
-            <br><label>Year 1: </label>
-            <select id="precipYear1">
-                <option value="24.58">24.58</option>
-                <option value="28.18">28.18</option>
-                <option value="30.39">30.39</option>
-                <option value="32.16">32.16</option>
-                <option value="34.34">34.34</option>
-                <option value="36.47">36.47</option>
-                <option value="45.1">45.1</option>
-            </select>
-            <br><label>Year 2: </label>
-            <select id="precipYear2">
-                <option value="24.58">24.58</option>
-                <option value="28.18">28.18</option>
-                <option value="30.39">30.39</option>
-                <option value="32.16">32.16</option>
-                <option value="34.34">34.34</option>
-                <option value="36.47">36.47</option>
-                <option value="45.1">45.1</option>
-            </select>
-            <br><label>Year 3: </label>
-            <select id="precipYear3">
-                <option value="24.58">24.58</option>
-                <option value="28.18">28.18</option>
-                <option value="30.39">30.39</option>
-                <option value="32.16">32.16</option>
-                <option value="34.34">34.34</option>
-                <option value="36.47">36.47</option>
-                <option value="45.1">45.1</option>
-            </select>
-    </div>
+            <br>
     
-    <br>
+            <!-- Input for yearly monocultures -->
+            <div>
+                <label>Choose a monoculture or "use preset map land covers" for each year:</label>
+                <br><label>Year 1: </label>
+                <select id="year1Monoculture">
+                    <option value="0">Use preset map land cover</option>
+                    <option value="1">Conventional corn</option>
+                    <option value="2">Conservation corn</option>
+                    <option value="3">Conventional soybean</option>
+                    <option value="4">Conservation soybean</option>
+                    <option value="5">Alfalfa</option>
+                    <option value="6">Permanent pasture</option>
+                    <option value="7">Rotational grazing</option>
+                    <option value="8">Grass hay</option>
+                    <option value="9">Prairie</option>
+                    <option value="10">Conservation forest</option>
+                    <option value="11">Conventional forest</option>
+                    <option value="12">Switchgrass</option>
+                    <option value="13">Short rotation woody bioenergy</option>
+                    <option value="14">Wetland</option>
+                    <option value="15">Mixed fruits and vegetables</option>
+                </select>
+                <br><label>Year 2: </label>
+                <select id="year2Monoculture">
+                    <option value="0">Use preset map land cover</option>
+                    <option value="1">Conventional corn</option>
+                    <option value="2">Conservation corn</option>
+                    <option value="3">Conventional soybean</option>
+                    <option value="4">Conservation soybean</option>
+                    <option value="5">Alfalfa</option>
+                    <option value="6">Permanent pasture</option>
+                    <option value="7">Rotational grazing</option>
+                    <option value="8">Grass hay</option>
+                    <option value="9">Prairie</option>
+                    <option value="10">Conservation forest</option>
+                    <option value="11">Conventional forest</option>
+                    <option value="12">Switchgrass</option>
+                    <option value="13">Short rotation woody bioenergy</option>
+                    <option value="14">Wetland</option>
+                    <option value="15">Mixed fruits and vegetables</option>
+                </select>
+                <br><label>Year 3: </label>
+                <select id="year3Monoculture">
+                    <option value="0">Use preset map land cover</option>
+                    <option value="1">Conventional corn</option>
+                    <option value="2">Conservation corn</option>
+                    <option value="3">Conventional soybean</option>
+                    <option value="4">Conservation soybean</option>
+                    <option value="5">Alfalfa</option>
+                    <option value="6">Permanent pasture</option>
+                    <option value="7">Rotational grazing</option>
+                    <option value="8">Grass hay</option>
+                    <option value="9">Prairie</option>
+                    <option value="10">Conservation forest</option>
+                    <option value="11">Conventional forest</option>
+                    <option value="12">Switchgrass</option>
+                    <option value="13">Short rotation woody bioenergy</option>
+                    <option value="14">Wetland</option>
+                    <option value="15">Mixed fruits and vegetables</option>
+                </select>
+            </div>
     
-    <!-- Input for yearly monocultures -->
-    <div>
-        <label>Choose a monoculture or "use preset map land covers" for each year:</label>
-        <br><label>Year 1: </label>
-        <select id="year1Monoculture">
-            <option value="0">Use preset map land cover</option>
-            <option value="1">Conventional corn</option>
-            <option value="2">Conservation corn</option>
-            <option value="3">Conventional soybean</option>
-            <option value="4">Conservation soybean</option>
-            <option value="5">Alfalfa</option>
-            <option value="6">Permanent pasture</option>
-            <option value="7">Rotational grazing</option>
-            <option value="8">Grass hay</option>
-            <option value="9">Prairie</option>
-            <option value="10">Conservation forest</option>
-            <option value="11">Conventional forest</option>
-            <option value="12">Switchgrass</option>
-            <option value="13">Short rotation woody bioenergy</option>
-            <option value="14">Wetland</option>
-            <option value="15">Mixed fruits and vegetables</option>
-        </select>
-        <br><label>Year 2: </label>
-        <select id="year2Monoculture">
-            <option value="0">Use preset map land cover</option>
-            <option value="1">Conventional corn</option>
-            <option value="2">Conservation corn</option>
-            <option value="3">Conventional soybean</option>
-            <option value="4">Conservation soybean</option>
-            <option value="5">Alfalfa</option>
-            <option value="6">Permanent pasture</option>
-            <option value="7">Rotational grazing</option>
-            <option value="8">Grass hay</option>
-            <option value="9">Prairie</option>
-            <option value="10">Conservation forest</option>
-            <option value="11">Conventional forest</option>
-            <option value="12">Switchgrass</option>
-            <option value="13">Short rotation woody bioenergy</option>
-            <option value="14">Wetland</option>
-            <option value="15">Mixed fruits and vegetables</option>
-        </select>
-        <br><label>Year 3: </label>
-        <select id="year3Monoculture">
-            <option value="0">Use preset map land cover</option>
-            <option value="1">Conventional corn</option>
-            <option value="2">Conservation corn</option>
-            <option value="3">Conventional soybean</option>
-            <option value="4">Conservation soybean</option>
-            <option value="5">Alfalfa</option>
-            <option value="6">Permanent pasture</option>
-            <option value="7">Rotational grazing</option>
-            <option value="8">Grass hay</option>
-            <option value="9">Prairie</option>
-            <option value="10">Conservation forest</option>
-            <option value="11">Conventional forest</option>
-            <option value="12">Switchgrass</option>
-            <option value="13">Short rotation woody bioenergy</option>
-            <option value="14">Wetland</option>
-            <option value="15">Mixed fruits and vegetables</option>
-        </select>
-    </div>
+            <br>
     
-    <br>
-    
-    <!-- Input for end of level script -->
-    <div>
-        <label>Enter the exercise's closing script. Congratulate the user and provide any further/concluding information.</label>
-        <div>
-            <textarea id="endingScript"></textarea>
-        </div>
-    </div>
+            <!-- Input for end of level script -->
+            <div>
+                <label>Enter the exercise's closing script. Congratulate the user and provide any further/concluding information.</label>
+                <div>
+                    <textarea id="endingScript"></textarea>
+                </div>
+            </div>
 
-    <br>
+            <br>
     
-    <!-- Input for required level toggle -->
-    <div id="settings">
-        <label>How many of the required objectives must the user complete to pass the level?</label>
-        <div>
-          <input id="numRequired" type="text" placeholder="Ex: 4">
+            <!-- Input for required level toggle -->
+            <div id="settings">
+                <label>How many of the required objectives must the user complete to pass the level?</label>
+                <div>
+                  <input id="numRequired" type="text" placeholder="Ex: 4">
+                </div>
+            </div>
+    
+            <script>addOptions();</script>
+    
+            <br>
+    
+            <!-- Buttons to submit or reset level -->
+            <div>
+                <button type="button" onClick="downloadLevel();">Submit</button>
+                <button type="reset">Reset</button>
+            </div>
+    
+            <br>
+    
         </div>
-    </div>
     
-    <script>addOptions();</script>
-    
-    <br>
-    
-    <!-- Buttons to submit or reset level -->
-    <div>
-        <button type="button" onClick="downloadLevel();">Submit</button>
-        <button type="reset">Reset</button>
-    </div>
-    
-    <br>
-    
-    </div>
     </form>
 
-
 </body>
-
 </html>
