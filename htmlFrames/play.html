@@ -1,196 +1,51 @@
+<!doctype html>
+
+<!--
+This page is a skeleton page for the propogation of levels.
+Style attributes are attached as normal and elements are added to the main div.
+
+Cleaned and Prepared - August 2016
+-->
+
 <html>
-    
 <head>
-  
-<script type="text/javascript" src="../lib/jquery-1.12.4.min.js"></script>    
-<script src="../front-end/levelLoader.js"></script>
-<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8">
+    <title>Workspace - Play PEWI</title>
 
-    
-<style>
+    <!-- INCLUDES -->
+    <!--javascript-->
+    <script src=".././lib/jquery-1.12.4.min.js"></script>
+    <script src="../front-end/levelLoader.js"></script>
+    <!--css-->
+    <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+    <!--external fonts (this only loads necessary characters)-->
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
 
-* {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none;           /* Non-prefixed version, currently
-                                  not supported by any browser */
-}
+    <!-- /INCLUDES -->
 
-body {
-}  
+    <!--additional styling-->
+    <style>
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
 
-#tutorial {
-    top: 12%;
-}
-
-#level1 {
-    top:24%;
-}
-
-#level2 {
-    top:36%;
-}
-
-#level3 {
-    top:48%;
-}
-
-#resume {
-    top:60%;
-}
-    
-#backButton {
-    position:relative;
-    display:inline-block;
-    margin-left:10%;
-    margin-top:30px;
-    padding: 5px;
-}   
-
-#backButton:hover {
-    border-bottom: 2px solid white;
-}
-
-#levelsDisplayContainer{
-    position:absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -250px;
-    margin-top: -350px;
-    padding-bottom: 250px;
-    
-    border-radius: 40px ;
-    border: 2px solid white;
-    
-    width:500px;
-    height:700px;
-    background-color: #40a4df;
-    /*background-image: url("../modules/codex/dark-mosaic.png");*/
-    background-repeat: repeat ;
-
-}
-
-#levelsHeader {
-     width:80%;
-     margin-left:10%;
-     height:40px;
-     background-color: rgba(30,87,153, .5);
-     border-bottom-left-radius: 10px;
-     border-bottom-right-radius: 10px;
-     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-	color: #FFFFFF;
-	font-size: 24;
-	font-weight: bold;
-	text-align: center;
-	padding-top:5px;
-	margin-bottom:20px;
-}
-
-#levelsHolder{
-    overflow: auto;
-    height:550px;
-}
-
-.groupElement, .exerciseElement{
-    padding-top:5px ;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    border-radius:5px;
-	color: #FFFFFF;
-	font-size: 20px;
-	font-weight: bold;
-	border-radius: 0px;
-	background-color: rgba(255,255,102, 0);
-	height:30px;
-} 
-
-.exerciseElement:hover{
-    border: 2px solid gray;
-    background-color: rgba(192,192,192, .5);
-}
-
-
-img {
-    max-width: 100%;
-    max-height: 100%;
-}
-
-.cloudSpacer {
-    position: relative;
-    float:left;
-    height: 25px;
-    width: 50px;
-}
-
-.cloud {
-    position: relative;
-    float:left;
-    height: 100px;
-    width: 150px;
-    -webkit-transition: margin 0.5s ease-out;
-    -moz-transition: margin 0.5s ease-out;
-    -o-transition: margin 0.5s ease-out;
-}
-
-.cloud p {
-    position: absolute;
-    left:52px;
-    top: 15px;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    color: #40a4df;
-	font-size: 48px;
-    margin: 5px;
-}
-
-.cloud:hover {
-	cursor:pointer;
-    margin-top: 5px;
-}
-
-.groupContainer {
-    position: absolute;
-}
-
-.mainButton {
-     background-color: #40A4DF;
-     border: 2px solid white;
-     border-radius: 12px;
-     color: #FFFFFF;
-     cursor: all-scroll;
-     font-family: 'Amatic SC', cursive;
-     font-size: 40px;
-     font-weight: bold;
-     height: 50px;
-     line-height: 130%;
-     padding: 5px;
-     position: absolute;
-     text-align: center;
-     width: 200px;
- }
-
-
-</style>        
-        
 </head>
-    
-<body id="body">
-    
-<script>
-init();
-</script>
 
-<script>
-    //populate levels inserts html elements into the levels container that act as links to the levels
-    document.getElementById("body").innerHTML = populateLevels();
-</script>
-    
-<img onclick="parent.reset()" id="backButton" src="./imgs/back.png">        
-    
-</body>    
-    
-    
-    
+<body>
+    <img onclick="parent.reset()" id="backButton" src="./imgs/back.png" alt="Go Back <--">
+
+    <div id="playBody">
+    <!--Stuff get's put here by the populateLevels() function -->
+    </div>
+
+    <script>
+        //levelLoader.js
+        init();
+        //populate levels inserts html elements into the levels container that act as links to the levels
+        document.getElementById("playBody").innerHTML = populateLevels();
+    </script>
+
+</body>
 </html>
