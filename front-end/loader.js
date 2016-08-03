@@ -35,7 +35,7 @@ function loadResources() {
                     textureWetland, textureMixedFruitsVegetables];
   
     //Add old pewi backgrounds to array after loaded
-    oldPewiBackgrounds = [textureLoader.load("./background_images/Background_Drought.png"), textureLoader.load("./background_images/Background_Normal.png"), textureLoader.load("./background_images/Background_Flood.png")];
+    oldPewiBackgrounds = [textureLoader.load("./imgs/background_images/Background_Drought.png"), textureLoader.load("./imgs/background_images/Background_Normal.png"), textureLoader.load("./imgs/background_images/Background_Flood.png")];
     
     //Load all highlighted color tiles to the highlightArray
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/e6bb00.png'));
