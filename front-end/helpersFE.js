@@ -115,12 +115,12 @@ function changeLandTypeTile(id) {
     if(boardData[currentBoard].map[id].landType[currentYear] != 0){
 
         //change the materials of the faces in the meshMaterials array and update the boardData
-        if(!multiAssignMode){
+        if(!multiplayerAssigningModeOn){
             meshMaterials[id].map = textureArray[painter];
             boardData[currentBoard].map[id].landType[currentYear] = painter;
             boardData[currentBoard].map[id].update(currentYear);
         }
-        else if(multiAssignMode){
+        else if(multiplayerAssigningModeOn){
             meshMaterials[id].map = multiplayerTextureArray[painter];
             boardData[currentBoard].map[id].landType[currentYear] = painter;
         }
@@ -344,7 +344,7 @@ function addTile(tile) {
     }
     else {
         
-        if(!multiAssignMode){
+        if(!multiplayerAssigningModeOn){
               tileMaterial = new THREE.MeshLambertMaterial({
               map: textureArray[tile.landType[currentYear]],
               side: THREE.DoubleSide
@@ -547,7 +547,7 @@ function onDocumentMouseDown(event) {
                 else {
                     
                     //Zoom in when z and 1 keys are pressed and a tile is clicked -- also not multiAssign mode
-                    if(zIsDown && oneIsDown && !zoomedIn  && !multiAssignMode){
+                    if(zIsDown && oneIsDown && !zoomedIn  && !multiplayerAssigningModeOn){
                         switchToZoomView(getTileID(intersects[0].point.x, -intersects[0].point.z));
                     } else {
                         //just a normal tile change
@@ -654,8 +654,8 @@ function onDocumentKeyDown(event) {
             break;
         //case v - key to record multiplayer fields
         case 86:
-            if(multiAssignMode){
-                endMultiAssignMode() ;
+            if(multiplayerAssigningModeOn){
+                endMultiplayerAssignMode() ;
             }
             break;
         //case esc - view escape menu
@@ -706,7 +706,7 @@ function toggleEscapeFrame() {
         modalUp = false;
     }
     
-    if(multiAssignMode){
+    if(multiplayerAssigningModeOn){
         document.getElementById('optionsButton').className = "unclickableMainEscapeButton";
     } else {
         document.getElementById('optionsButton').className = "mainEscapeButton";
@@ -716,7 +716,7 @@ function toggleEscapeFrame() {
 //paintChange changes the highlighted color of the selected painter and updates painter
 function paintChange(value) {
 
-    if(!multiAssignMode){
+    if(!multiplayerAssigningModeOn){
         
     //change current painter to regular
     var string = "paint" + painter;
@@ -1754,7 +1754,7 @@ function printPrecipYearType(){
 
 //showInfo updates the bottom HUD
 function showInfo(string){
-    if(!multiAssignMode) document.getElementById("currentInfo").innerHTML = string ;
+    if(!multiplayerAssigningModeOn) document.getElementById("currentInfo").innerHTML = string ;
 } //end showInfo
 
 //clearInfo removes text from the bottom HUD
@@ -1801,7 +1801,7 @@ function randomizeBoard() {
     //if tile exists
         if(boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none ){
             
-            if(!multiAssignMode) painter = getRandomInt(1,15) ;
+            if(!multiplayerAssigningModeOn) painter = getRandomInt(1,15) ;
             else painter = getRandomInt(1,6) ;
             changeLandTypeTile(i) ;
         }
@@ -1985,13 +1985,10 @@ function startOptions() {
 } //end startOptions
 
 //endMultiAssignMode displays the multiPlayer element
-function endMultiAssignMode() {
-    
-    //console.log("nominally over, let's try to write player 1") ;
+function endMultiplayerAssignMode() {
     //create an iframe, select up to 6 players
     //then downloads
     document.getElementById('multiPlayer').style.visibility = "visible" ;
-    
 } //end endMultiAssignMode
 
 //hideMultiDownload hides the multiPlayer element

@@ -315,6 +315,15 @@
 
     <!-- Create results button -->
     <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
+        
+    <!-- Create dialogue popup box -->
+    <!-- "Bubble, speech icon" by http://www.iconsolid.com/ with free commercial usage / Inverted from original and resized -->
+    <div id="dialogueButton" class="dialogueButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/dialogue.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
+    <div id="popup" class="popupHidden" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+        <div id="nextLevelButton" class="moveButtonHidden" onclick = "loadLevel(levelGlobal + 1);">Next Level</div>
+        <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>
+        <p id="popupText"></p>
+    </div>
 
     <!-- Create buttons in upper right corner -->
     <img id="logoBase" src="./imgs/inGameLogo.png" >
@@ -328,16 +337,6 @@
     <img id="closeUploadDownload" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeUploadDownloadFrame();">
     <iframe id="index" src="./modules/codex/codex.html"></iframe>
 
-    
-    <!-- Create dialogue popup box -->
-    <!-- "Bubble, speech icon" by http://www.iconsolid.com/ with free commercial usage / Inverted from original and resized -->
-    <div id="dialogueButton" class="dialogueButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/dialogue.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
-    <div id="popup" class="popupHidden" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-        <div id="nextLevelButton" class="moveButtonHidden" onclick = "loadLevel(levelGlobal + 1);">Next Level</div>
-        <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>
-        <p id="popupText"></p>
-    </div>
-    
     <!-- Include fireworks javascript library -->
     <div id="fireworks-template">
         <div id="fw" class="firework"></div>
@@ -364,7 +363,7 @@
     <div id="modalEscapeFrame">
         <div id="escapeMenu">
             <div class="mainEscapeButton" id="exitToMenuButton" onclick="showMainMenu(); toggleEscapeFrame();">Main Menu</div>
-            <div class="mainEscapeButton" id="optionsButton" onclick="if(!multiAssignMode){toggleEscapeFrame(); startOptions();};">Options</div>
+            <div class="mainEscapeButton" id="optionsButton" onclick="if(!multiplayerAssigningModeOn){toggleEscapeFrame(); startOptions();};">Options</div>
             <div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleIndex() ;">Directory</div>
         </div>
     </div>
@@ -385,5 +384,4 @@
     </div>
 
 </body>
-
 </html>

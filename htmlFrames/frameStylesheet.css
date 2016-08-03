@@ -123,8 +123,8 @@
   margin-top: 105px;
   opacity: 0;
   
-  -webkit-transition-duration: 2.9s;
-  transition-duration: 2.9s;
+  -webkit-transition-duration: 4s;
+  transition-duration: 4s;
  }
  
  #startupLoadingContainer {

@@ -42,22 +42,26 @@ Cleaned and Prepared - August 2016
 </head>    
 <body>
 
-    <img onclick="parent.reset()" id="backButton" src="./imgs/back.png">
+    <img onclick="parent.reset()" id="backButton" src="./imgs/back.png" alt="Go Back <--">
 
     <div id="utilitiesContentsHolder">
         
         <!---buttons for utilities, add new buttons here -->    
-        <div id="levelDesignerButton" class="mainButton" id="levelDesignerButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
+        <div id="levelDesignerButton" class="mainButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
         <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup();">Set-Up Multiplayer</div>
         <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
         
         <!--container for Aggregate Tool, slides up and down by height changes-->
         <div id="utilitiesAggregateTools">
             <div class="uploadFile">
+                
                 <label for="file-upload">
-                  <div id="addFile" class="mainButton">Add a File</div>
+                    <!--Technically not allowed, but seems to work across browsers-->
+                    <!-- in future, div may need to be moved outside the label, cleverly-->
+                    <div id="addFile" class="mainButton">Add a File</div>
                 </label>
                 <input id="file-upload" type="file" />
+                
             </div>
             <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
             <div id="aggregateInfo" class="infoBar">Ready. Upload first file.</div>

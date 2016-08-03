@@ -469,7 +469,7 @@ function showMainMenu() {
        //show loading animation and startup page
        document.getElementById('loading').style.display = "block" ; 
        document.getElementById('startUpFrame').contentWindow.recallMain() ;
-       multiAssignMode = false ;
+       multiplayerAssigningModeOn = false ;
         
         setTimeout(function() {
             
