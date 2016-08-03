@@ -241,7 +241,7 @@ function processForm() {
 function downloadLevel() {
 
     var data = processForm();
-    var fileName = "exercise" + document.getElementById("exerciseNumber").value;
+    var fileName = document.getElementById("exerciseNumber").value;
     var uri = 'data:text/csv;charset=UTF-8,' + escape(data);
     var link = document.createElement("a");
     link.href = uri;
