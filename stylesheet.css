@@ -557,6 +557,7 @@ select {
 }
 
 /** Other elements **/
+
 .upperButton, #logoBase {
     position: absolute ;
     top:5px;
@@ -650,8 +651,9 @@ select {
     width: 80%;
 }
 
+
 #index{
-    display: none;
+    display:none;
     position:absolute;
     left:50%;
     top:50%;
@@ -664,7 +666,6 @@ select {
     -webkit-box-shadow: 0px -2px 120px 80px rgba(0,0,0,1);
     -moz-box-shadow: 0px -2px 120px 80px rgba(0,0,0,1);
     box-shadow: 0px -2px 50px 12px rgba(0,0,0,1);
-    
 }
 
 #closeIndex {
@@ -717,7 +718,7 @@ select {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 12px;
   
-    -webkit-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-name: rollUp;
   animation-name: rollUp;
