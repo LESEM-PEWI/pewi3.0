@@ -1,3 +1,6 @@
+//levelLoader keeps track of all the various parameters involved in a level
+// it is also called for sandbox, with no parameters assigned
+
 var hideOptions = "";
 var achievementScripts = [];
 var achievementValues = [];
@@ -18,10 +21,8 @@ var levelSpecs = {
     landTypeMonoculture: [0,0,0,0]
 }
 
-
 var levelGlobal ;
 var lastLevel = 9;
-
 var levelContainer = [];
 
 //loadLevel is triggered by clicking a level button on the html page
@@ -66,24 +67,19 @@ function loadLevel(level){
         
         //if precipitation was not set, then randomly generate values
         for(var i = 0; i < 4; i++){
-            
             if(levelSpecs.precipitation[i] == 0){
-                
                 levelSpecs.precipitation[i] = setPrecipitation();
-                
             } else {
-                
                 levelSpecs.precipitation[i] = Number(levelSpecs.precipitation[i]);
-                
             }
             
             //set board precipitation values to levelSpecs precipitation values
             boardData[currentBoard].precipitation[i] = Number(levelSpecs.precipitation[i]);
             boardData[currentBoard].precipitationIndex[i] = Number(convertPrecipToIndex(levelSpecs.precipitation[i]));
             
-        }
+        }//end for each year
         
-        //set up monocultures on each year of the board
+        //set up monocultures on each year of the board if it indeed needs a monoculture
         for(var i = 0; i < 4; i++){
         
             if(levelSpecs.landTypeMonoculture[i] != 0){
@@ -101,22 +97,19 @@ function loadLevel(level){
                             meshMaterials[j].map = multiplayerTextureArray[Number(levelSpecs.landTypeMonoculture[i])];    
                             }
                             boardData[currentBoard].map[j].update(currentYear);
-                        }
+                        }//end if
                         
-                    }
+                    }//end if
                     
-                }
+                }//end for
                 
-            }
+            }//end if
             
-        }
+        }//end for
         
         //call toggleVisibility to update new precipitation values
         toggleVisibility();
-        
-    }
-    
-    
+    }//end if level global is > 0
     
 } //end loadLevel
 
@@ -132,7 +125,6 @@ function resetLevel(){
     
     document.getElementById("mainMenuButton").className = "moveButtonHidden";
     document.getElementById("nextLevelButton").className = "moveButtonHidden";
-    
 } //end resetLevel
 
 //parseLevelDetails parses a level specifications file and stores the data in the level specs object and objectives array
@@ -161,7 +153,7 @@ function parseLevelDetails(data) {
     levelSpecs.landTypeMonoculture[0] = 1;
     for(var i = 0; i < 3; i++){
         levelSpecs.landTypeMonoculture[i+1] = tempParsed[i];
-    }
+    }//end for
     
     //add the beginning script to the levelScripts object
     levelSpecs.begin = arrLines[3];
@@ -187,7 +179,7 @@ function parseLevelDetails(data) {
         
         objectives.push(newObjective);
         
-    }
+    }//end for each line
     
     //add the ending script to the levelScripts object
     levelSpecs.end = arrLines[arrLines.length - 1];
@@ -233,7 +225,7 @@ function init() {
 //parseLevelMenuData reads the string from the level.dat file into a level hierarchy
 function parseLevelMenuData(data) {
     
-     var strRawContents = data;
+    var strRawContents = data;
     //split based on escape chars
     while (strRawContents.indexOf("\r") >= 0)
         strRawContents = strRawContents.replace("\r", "");
@@ -271,12 +263,10 @@ function parseLevelMenuData(data) {
                 levelContainer[levelIndex].data.push(exerciseData);
                 break;
         }
-    
     }
     
     //Ensure that the main webpage and the play.html screen share the same levelContainer information
     top.window.levelContainer = levelContainer;
-    
 } //end parseLevelMenuData
 
 //populateLevels uses the levelContainer hierarchy of stages, levels, and exercises to organize the level container as clouds on the play screen
@@ -306,7 +296,6 @@ function populateLevels(){
             
         tempString += "</div>";
         
-        
     }
     
     //include a spacer below the clouds so the last row in not on the bottom of the page
@@ -328,9 +317,7 @@ function getFileForExercise(exercise){
                 return levelContainer[i].data[k].file;
                 
             }
-            
         }
-        
     }
     
 } //end getFileForExercise
