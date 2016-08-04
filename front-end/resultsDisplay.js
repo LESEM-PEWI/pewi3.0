@@ -783,11 +783,7 @@ function drawPrecipBar() {
       .attr('fill','black');
       
     setupPrecipInfo(currentYear) ;
-
-
 }
-
-
 
 function aster(year){
    
@@ -811,7 +807,7 @@ var dataset = [
 var width = 360;
 var height = 360;
 var radius = Math.min(width, height) / 2;  
-var innerRadius = 75 ;
+var innerRadius = 75;
 
 var asterChart = document.getElementById('resultsFrame').contentWindow.document.getElementById('asterChart') ;
     
@@ -829,7 +825,6 @@ var innerArc = d3.arc()
    .outerRadius(function (d) { 
      return (radius - innerRadius) * (d.data.score / 100.0) + innerRadius ;  
      });
-    
     
 var outlineArc = d3.arc()
         .innerRadius(innerRadius)
@@ -849,7 +844,6 @@ function generateSVGArc(x, y, r, startAngle, endAngle) {
         ].join(' ');
 }
 
-
 function interpolateSVGArc(x, y, r, startAngle, endAngle) {
  return function(t) {
    return generateSVGArc(x, y, (r-innerRadius) * t + innerRadius , startAngle, endAngle);
@@ -860,9 +854,7 @@ function interpolateSVGArc(x, y, r, startAngle, endAngle) {
   .value(function(d) { return d.count; })
   .sort(null);
 
-    
-    
-     var mouseoverInfo = d3.select(asterChart)            
+ var mouseoverInfo = d3.select(asterChart)            
   .append('g')                          
   .attr('class', 'mouseoverInfo');              
 
@@ -928,7 +920,6 @@ var cover = svg.selectAll(".cover")
       .attr("class", "outlineArc")
       .attr("d", outlineArc);
      
-      
  svg.append("text")
         .attr("x", 0)             
         .attr("y", 0)
@@ -944,8 +935,6 @@ var cover = svg.selectAll(".cover")
       .style("font-size", "25px") 
       .style("font-weight", "bold")
       .text("Year " + year)      
-
- 
 
 
   function getColor(number){
@@ -1055,10 +1044,4 @@ var cover = svg.selectAll(".cover")
         return d3.interpolateRgb("#000000", this.getAttribute("fill"));
     });
 
-   
-    
-
-
-    
-    
 }
