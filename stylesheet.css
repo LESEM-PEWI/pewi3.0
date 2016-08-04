@@ -780,8 +780,11 @@ select {
     border-radius:12px;
     color: white ;
     display:none;
+    font-family: 'Amatic SC', cursive;
+    font-size: 40px ;
+    font-weight: bold;
     height:50px ;
-    line-height: 212%;
+    line-height: 120%;
     margin: 20px 20px 30px 20px ;
     padding: 5px; 
     position:relative;

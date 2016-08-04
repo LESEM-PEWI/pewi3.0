@@ -19,8 +19,8 @@ var levelSpecs = {
 }
 
 
-var levelGlobal ;
-var lastLevel = 9;
+var levelGlobal = 0;
+var lastLevel = 0;
 
 var levelContainer = [];
 
@@ -276,6 +276,7 @@ function parseLevelMenuData(data) {
     
     //Ensure that the main webpage and the play.html screen share the same levelContainer information
     top.window.levelContainer = levelContainer;
+    top.window.lastLevel = lastLevel;
     
 } //end parseLevelMenuData
 
