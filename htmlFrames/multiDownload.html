@@ -1,213 +1,135 @@
+<!doctype html>
+
+<!--
+This page is not uber-complicated. It is an iframe displayed within index.html
+   after webGL canvas is active. Users trigger this page with the V key on the 
+   keyboard. why v? who knows?
+   
+Users then select the number of players they have assigned, which is an important aspect.
+  If the user intends to assign 3 players, he or she must make these assignments
+  from the numbers 1 through 3.
+  
+Upon ending, this page reloads the entire program since the cleanup work
+  to send them back to the main menu is not worth the 4 seconds saved.
+
+Cleaned and Prepared - August 2016
+-->
+
 <html>
 <head>
-<style>
-
-* {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none;           /* Non-prefixed version, currently
-                                  not supported by any browser */
-}
-
-
-body{
-    background-color: black;
-}
-
-.button {
-position:relative;
-display: inline-block;
-background-color: #40A4DF ;
-width:400px;
-border-radius:12px;
-height:50px ;
-color: white ;
-padding:5px;
-border: 2px solid white;
-cursor: all-scroll ;
-font-family: 'Amatic SC', cursive;
-text-align:center;
-line-height: 130%;
-color: #FFFFFF;
-font-size: 40px ;
-font-weight: bold;
-margin-top:40px;
-}
-
-.button:hover {
- background-color:  #7cc1e9 ;
-}   
-
-#backButton {
-    position:relative;
-    display:inline-block;
-    margin-left:10%;
-    margin-top:30px;
-    padding: 5px;
-}   
-
-#backButton:hover {
-    border-bottom: 2px solid white;
-}
-
-#contentsHolder{
-    position:absolute;
-    margin-left:-205px;
-    left:50%;
-    width:410px;
-    height:100%;
-
-}
-
-#textInfo{
-    width:100%;
-    margin-top:35px;
-    border-radius: 6px;
-    text-align:left;
-    padding:10px;
-    line-height:110%;
-    height:240px;
-    background-color: white;
-    color:#000000;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    font-size:20px;
+    <meta charset="utf-8">
+    <title>Workspace - Multiplayer (multi-map) Export</title>
     
-}
+    <!-- INCLUDES -->
+    <!--css-->
+    <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+    <!--javascript-->
+    <script src=".././lib/filesaver.min.js"></script>
+    <script src=".././lib/jszip.min.js"></script>
+    <!--external fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
 
-#players {
-  width:300px;
-  background-color: #40A4DF  ;
-  border: 3px solid white;
-  display: inline-block;  
-  padding:5px;
-  text-align:center;
-  font-family: 'Amatic SC', cursive;
-  color: #FFFFFF;
-  font-size: 40px ;
-  font-weight: bold;
-  margin: 20px;
-  margin-left:25px;
-  margin-top:50px;
-  padding: 15px 30px 15px 30px;
-  
-}
+    <!-- /INCLUDES -->
 
-.math {
-  width:20px; 
-  cursor:default; 
-  display:inline-block;
-}
+    <!--additional styling-->
+    <style>
+        body {
+            background-color: black;
+        }
+    </style>
 
-.math:hover {
-  color: #990033;  
-}
-
-</style>    
-
-<script src=".././lib/filesaver.min.js"></script>
-<script src=".././lib/jszip.min.js"></script>
- 
-</head>    
-
-<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
-    
+</head>
 <body>
 
-<img onclick="parent.hideMultiDownload();" id="backButton" src="./imgs/back.png">  
+    <img onclick="parent.hideMultiDownload();" id="backButton" src="./imgs/back.png" alt="Go Back <--">
 
-<div id="contentsHolder">
+    <div id="utilitiesContentsHolder">
+        <div id="multiplayerInnerContainer">
 
-<div id="innerContainer">
-<div id="textInfo">
-Select the number of players you have assigned. Note that the players must be assigned in order. That is, if you 
-are using a maximum of 4 players, it should be assigned with players 1 through 4 and not 3 through 6. When you are
-ready, click download to save the zipped file.<br><br>Individual files can be distributed, modified, and then recombined
-(via utilities) to view aggregate results.    
-</div>
+            <div id="multiplayerInfoText">
+                Select the number of players you have assigned. Note that the players must be assigned in order. That is, if you are using a maximum of 4 players, it should be assigned with players 1 through 4 and not 3 through 6. When you are ready, click download to
+                save the zipped file.<br><br>Individual files can be distributed, modified, and then recombined (via utilities) to view aggregate results.
+            </div>
 
-<div id="players">
-<div style="cursor:default; display:inline-block;" id="title">Assigned Players: </div> 
+            <div id="multiplayerPlayerNumberParameter" class="mainButton">
+                <div id="title">Assigned Players:</div>
 
-<div style="cursor:default; display:inline-block;" id="playerNumber">6</div>
-<div id="subPlayer" style="margin-left:20px;" onclick="changeYearValue(-1)" class="math"><b>&ndash;</b></div>
-|
-<div id="addPlayer" style="visibility:hidden" onclick="changeYearValue(+1)" class="math"><b>+</b></div>
-</div>
+                <div id="playerNumber">6</div>
+                <div id="subtractPlayer" class="plusMinus" style="margin-left:20px;" onclick="changeNumberOfPlayersBy(-1)"><b>&ndash;</b></div>
+                <!-- Pipe -->|
+                <!-- /Pipe -->
+                <div id="addPlayer" class="plusMinus" style="visibility:hidden" onclick="changeNumberOfPlayersBy(+1)"><b>+</b></div>
+            </div>
 
-<div id="download" onclick="createDownload();" class="button">Download Multi-Map File</div>       
-</div>
-
-<div id="exit" style="visibility:hidden;" onclick="exitToMain();" class="button">Return to Start</div>       
-
-</div>
-
-</body>    
-      
+            <div id="multiplayerDownloadButton" onclick="createMultimapDownload();" class="mainButton">Download Multi-Map File</div>
+        </div>
+        <div id="multiplayerExitButton" style="visibility:hidden;" onclick="exitToMain();" class="mainButton">Return to Start</div>
+    </div>
     
 <script>
+//page-global zip file
 var zip = new JSZip();
-var maxPlayers = 6 ;
+//attribute in case more players are added later
+var maxPlayers = 6;
 
+//this function adds a file to the zip file
+// the map added corresponds to the player number 
 function addToZip(playerNumber) {
+    //player map creation, helperFE.js
+    var data = parent.createPlayerMap(playerNumber);
+    //jszip 
+    zip.file("player" + playerNumber + ".csv", data);
+}//end addToZip
 
- var data = parent.createPlayerMap(playerNumber) ;
-  
- //jszip 
- zip.file("player" + playerNumber + ".csv", data);
-
-}  
-    
-    
-function createDownload() {
-    
-    var assignedPlayers = Number(document.getElementById('playerNumber').innerHTML) ;
-    
-    for(var k=1; k <= assignedPlayers; k++){
-        addToZip(k) ;
+function createMultimapDownload() {
+    //get the number of players from the toggle tool
+    var assignedPlayers = Number(document.getElementById('playerNumber').innerHTML);
+    //for each player, add their map to the zip folder
+    for (var k = 1; k <= assignedPlayers; k++) {
+        addToZip(k);
     }
-
- zip.generateAsync({type:"blob"})
-.then(function (blob) {
-    //filesaver.min.js
-    saveAs(blob, "PEWI_multi-maps.zip");
-});
-
-document.getElementById('backButton').style.display = "none";
-document.getElementById('innerContainer').style.display = "none";
-document.getElementById('exit').style.visibility = "visible" ;
-
-}
-
-
-function changeYearValue(value) {
-
-var number = Number(document.getElementById('playerNumber').innerHTML) ;
-
-number += value ;
-
-document.getElementById('addPlayer').style.visibility = "visible" ;
-document.getElementById('subPlayer').style.visibility = "visible" ;
-
-if(number == maxPlayers){
-  document.getElementById('addPlayer').style.visibility = "hidden" ;
-}
-else if(number == 1){
-  document.getElementById('subPlayer').style.visibility = "hidden" ;
-}
-
-
-document.getElementById('playerNumber').innerHTML  = number ;
-  
-} 
     
+    //generate blob, then force browser to save it
+    zip.generateAsync({
+            type: "blob"
+        })
+        .then(function(blob) {
+            //filesaver.min.js
+            saveAs(blob, "PEWI_multi-maps.zip");
+        });
+
+    //arrange elements on page appropriately
+    document.getElementById('backButton').style.display = "none";
+    document.getElementById('multiplayerInnerContainer').style.display = "none";
+    document.getElementById('multiplayerExitButton').style.visibility = "visible";
+}//end createMultimapDownload
+
+function changeNumberOfPlayersBy(amountToChange) {
+
+    var currentNumberOfPlayers = Number(document.getElementById('playerNumber').innerHTML);
+    currentNumberOfPlayers += amountToChange;
+    
+    //reset both toggles to visible, then check limits
+    document.getElementById('addPlayer').style.visibility = "visible";
+    document.getElementById('subtractPlayer').style.visibility = "visible";
+    //check upper and lower limits and hide appropriate toggles as such
+    if (currentNumberOfPlayers == maxPlayers) {
+        document.getElementById('addPlayer').style.visibility = "hidden";
+    }
+    else if (currentNumberOfPlayers == 1) {
+        document.getElementById('subtractPlayer').style.visibility = "hidden";
+    }
+    
+    //update page to reflect new current number
+    document.getElementById('playerNumber').innerHTML = currentNumberOfPlayers;
+}//end changeNumberOfPlayersBy() 
+
+//surprisingly, this function does exactly what its name might imply
 function exitToMain() {
+    //start from scratch
     window.top.location.reload();
-}    
-    
-</script>    
-    
-    
+}//end exitToMain()
+</script>  
+
+</body>    
 </html>

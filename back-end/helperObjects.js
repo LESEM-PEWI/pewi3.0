@@ -948,7 +948,7 @@ this.runoffComponent = function(year) {
 	return 0; //else not a valid square and set phosphorus to 0
 };
 
-//ambiguity between thesis and pewi program
+//ambiguity between thesis and pewi program (check where to divide by 2000)
 //the erosionComponent of Phosphorus Calculatiosn
 this.erosionComponent = function(year) {
 	return ((this.rusleValues[year] + this.ephemeralGullyErosionValue[year]) * 

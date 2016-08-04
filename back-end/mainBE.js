@@ -28,26 +28,22 @@ function propogateBoard(board) {
 
 } //end propogateBoard()
 
-function overlayBoard(board, overlay) {
-  
+
+//overlayBoard takes two GameBoard objects, and merges tiles that exist in overlay
+// into board. The first argument is passed by reference, so nothing need be returned
+function overlayBoard(board) {
+  // for each data entry
   for (var i = 0; i < initData.length; i++) {
-    
+    //get the tile set up
     var tile = new Tile(initData[i], board);
     
     //if tile has meaningful data...
     if(tile.baseLandUseType == 1){
-      
-     // console.log("i = " + i + " with bldu as : " + tile.baseLandUseType);  
       //then overwrite the tile in old board with new board stuffaroo
       board.map[tile.id - 1] = tile ;
-      
     }
-    
   } //end for : each entry in initData 
-  
-  
-  
-}
+}//end overlayBoard()
 
 
 //calculate() function brings the resaults up to date

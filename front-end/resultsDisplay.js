@@ -376,8 +376,8 @@ function displayResults() {
     drawPrecipBar() ;
     aster(currentYear);
     
-    document.getElementById('resultsFrame').contentWindow.toggleYear(0) ;
-    document.getElementById('resultsFrame').contentWindow.toggleESI(0) ;
+    document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0) ;
+    document.getElementById('resultsFrame').contentWindow.toggleYearForESIAsterBy(0) ;
     
     
     

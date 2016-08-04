@@ -79,9 +79,10 @@ function loadBoard(board, fileString) {
     //clear initData
     initData = [] ;
     
-}
+}//end loadBoard()
 
+//this function returns a random int between min and max, inclusive!
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+}//end getRandomInt
 

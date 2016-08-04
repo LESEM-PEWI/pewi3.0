@@ -289,8 +289,8 @@ function populateLevels(){
         var placementPercent = [25, 50, 30];
 
         //create a new stage element
-        tempString += "<div class='groupContainer' style='left:" + placementPercent[i % 3] + "%; margin: 0 auto; top: " + ((i+1) * 250 - 200) + "px;'>";
-        tempString += "<div class='mainButton' id='mainButtonNoHover' style='position: relative; margin: 0 auto; margin-bottom:20px'>" + levelContainer[i].name + "</div>";
+        tempString += "<div class='playGroupContainer' style='left:" + placementPercent[i % 3] + "%; margin: 0 auto; top: " + ((i+1) * 250 - 200) + "px;'>";
+        tempString += "<div class='mainButton mainButtonNoHover' style='position: relative; width:250px; margin: 0 auto; margin-bottom:20px'>" + levelContainer[i].name + "</div>";
         
             //for each level stored as an element in a stage stored in the levelContainer
             for(var k = 0; k < levelContainer[i].data.length; k++){
