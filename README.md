@@ -16,7 +16,7 @@ page design outline:
      draws the pewi workspace div but renders the loadingContainer and 
      startUpFrame over the workspace for navigation
      
-    ./htmlFrames/startup.html
+     ./htmlFrames/startup.html
      onLoad this page plays a loading animation video and simultaneously calls on
      loader.js and mainFE.js to begin loading resources. navigation buttons to
      sandbox mode, play mode page, or utilities page will load further resources
@@ -96,3 +96,27 @@ notes:
 
     tileID starts at 1 but boardData[currentBoard].map is an array, so tileID 1
     is stored at index 0 in boardData[currentBoard].map
+    
+add a stage/level to PEWI:
+
+    Use the level designer in the utilities page to create a new level
+    specifications file. Submit the form to download the file. Follow these steps
+    to add the level to PEWI:
+    
+    1) Add the downloaded file to the pewi3/levels/specs directory
+    
+    2) Open the level.dat file in pewi3/levels/levelResources/level.dat
+    
+    3) If the level belongs in a new stage, create a line with "# " and the stage
+       name. Example: "# The N-Factor"
+       
+    4) Choose a stage to place the new level in and put a new line after the
+       line with the stage's name such as: "# The N-Factor"
+       
+    5) On the new line, add "@ " and the number/letter that should appear in the 
+       cloud, add a comma "," and write the name of the file that was placed in
+       the pewi3/levels/specs directory
+       
+    6) Save the edited level.dat file in the pewi3/levels/levelResources folder
+    
+    7) Open pewi and test out your new level.
