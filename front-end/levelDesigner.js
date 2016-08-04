@@ -30,14 +30,16 @@ var scoreLabels = ["Yield score: Corn grain", "Yield score: Soybean", "Yield sco
 var optionTypes = ["paint1", "paint2", "paint3", "paint4",
 "paint5", "paint6", "paint7", "paint8",
 "paint9", "paint10", "paint11", "paint12",
-"paint13", "paint14", "paint15"];
+"paint13", "paint14", "paint15",
+"year2Button*year2PrecipContainer", "year3Button*year3PrecipContainer"];
 
 //Contains strings to display for toggleable options
 var optionLabels = ["Hide conventional corn", "Hide conservation corn", "Hide conventional soybean",
 "Hide conservation soybean", "Hide alfalfa", "Hide permanent pasture",
 "Hide rotational grazing", "Hide grass hay", "Hide prairie", 
 "Hide conservation forest", "Hide conventional forest", "Hide switchgrass",
-"Hide short rotation woody bioenergy", "Hide wetland", "Hide mixed fruits and veggies"];
+"Hide short rotation woody bioenergy", "Hide wetland", "Hide mixed fruits and veggies",
+"Hide year 2", "Hide year 3"];
 
 //addObjective allows for objectives to be added to the form dynamically
 function addObjective(addToDiv){
@@ -54,7 +56,7 @@ function addObjective(addToDiv){
 
 //addObjectiveType adds multiple choices for score type to monitor
 function addObjectiveType() {
-    var string = "<div><label>Choose the score type to monitor for this objective:</label><select id='scoretype-" + objectiveNumber + "'>";
+    var string = "<div><label>Choose the score type to monitor for this objective: </label><select id='scoretype-" + objectiveNumber + "'>";
     for(var i = 0; i < scoreTypes.length; i++){
         string += "<option value='" + scoreTypes[i] + "'>" + scoreLabels[i] + "</option>";
     }
