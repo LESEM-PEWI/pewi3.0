@@ -115,7 +115,7 @@ add a stage/level to PEWI:
        
     5) On the new line, add "@ " and the number/letter that should appear in the 
        cloud, add a comma "," and write the name of the file that was placed in
-       the pewi3/levels/specs directory
+       the pewi3/levels/specs directory. Example: "@ 3,B3.txt"
        
     6) Save the edited level.dat file in the pewi3/levels/levelResources folder
     
