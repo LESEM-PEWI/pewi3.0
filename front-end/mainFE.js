@@ -23,6 +23,9 @@ var modalUp = false;
 var isShiftDown = false;
 var counter = 0;
 var allLoaded = false;
+var tToggle = false; //topology off by default
+var mapIsHighlighted = false;
+var previousHover = null;
 
 //Variables for Zoom Function
 var zoomedIn = false;
