@@ -1,22 +1,27 @@
+//================
 //global vars
+
+//webGL stuff
 var camera, scene, raycaster, mouse, hoveredOver, bgCam;
 var bgScene = null;
 var renderer = new THREE.WebGLRenderer();
 var controls;
+var stats = new Stats();
+var SCREEN_WIDTH, ASPECT, NEAR, FAR;
+//application data
 var river = null;
 var riverPoints = [];
-var painter = 1;
-var onYear = "year1";
 var boardData = [];
+var Totals; //global current calculated results, NOTE, should be reassigned every time currentBoard is changed
+
+//status trackers
+var onYear = "year1";
+var painter = 1;
 var currentBoard = -1;
 var currentYear = 1;
 var modalUp = false;
 var isShiftDown = false;
-var Totals; //global current calculated results, NOTE, should be reassigned every time currentBoard is changed
 var counter = 0;
-var stats = new Stats();
-var SCREEN_WIDTH, ASPECT, NEAR, FAR;
-var skybox = false;
 var allLoaded = false;
 
 //Variables for Zoom Function
@@ -25,19 +30,20 @@ var fov = null, zoomFactor = 1.0, zoomInInc = 0.1, zoomOutInc = 0.2;
 var zoomingInNow = false;
 var zoomingOutNow = false;
 
+//===================
 
 //createThreeFramework instantiates the renderer and scene to render 3D environment
 function createThreeFramework(){
-    
     //set up renderer
     renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    //add renderer (canvas element) to html page
     document.body.appendChild(renderer.domElement);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
+    
     //create the main THREE.js scene
     scene = new THREE.Scene();
-
 } //end createThreeFramework()
 
 //initializeCamera adds the camera object with specifications to the scene
@@ -49,7 +55,8 @@ function initializeCamera(){
     camera = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
     scene.add(camera);
     
-    //point camera
+    //point camera in the correct direction
+    // we'd hate to have the user looking at nothing
     camera.position.x = 0;
     camera.position.y = 320;
     camera.position.z = 0 ;
@@ -61,9 +68,8 @@ function initializeCamera(){
     //set up controls
     controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-    //add resize listener
+    //add resize listener, so we can keep the aspect ratio correct
     window.addEventListener('resize', onResize, false);
-    
 } //end initializeCamera
 
 //initializeLighting adds the lighting with specifications to the scene
@@ -87,16 +93,13 @@ function initializeLighting(){
     spotLight.shadow.mapSize.height = 2048;
     spotLight.shadow.camera.near = 1;
     spotLight.shadow.camera.far = 500;
-    
 } //end initializeCamera
 
-//renderBackground selects to render a skybox or a static background
+//renderBackground creates the static background always behind viewpoint
+//  this function used to select for the creation of a skybox
+//   but that functionality is deprecated as project requirements changed
 function renderBackground(){
-    if(skybox){
-        //setupSkyBox();
-    } else {
-        setupStaticBackground();        
-    }
+    setupStaticBackground();
 } //end renderBackground
 
 //loadingManager records when all textures and resources are loaded
@@ -111,15 +114,13 @@ function loadingManager(){
     THREE.DefaultLoadingManager.onLoad = function (){
         
         //update allLoaded status
-        console.log("loaded") ;
+        console.log("Everything is loaded and good to go!") ;
         allLoaded = true;
      
         //show main PEWI page elements
         document.getElementById('page').style.visibility = "visible" ;
         document.getElementById('firefoxWorkaround').focus() ;
-        
     };
-    
 } //end loadingManager
 
 //initWorkspace initializes a sandbox game in the threeFramework
@@ -150,13 +151,11 @@ function initWorkspace(file){
         //hide loading animation and make the PEWI main page visible
         document.getElementById('loading').style.display = "none" ;
         document.getElementById('page').style.visibility = "visible" ;
-    
     }
     checkIfSceneLoaded();
-    
 } //end initWorkspace
 
-//animationFrames updates rendered frames
+//animationFrames updates rendered frames, bird and zoom
 function animationFrames(){
     
     //render animations
@@ -239,17 +238,6 @@ function zoomAnimation() {
     
 } //end zoomAnimation
 
-//setupSkyBox instantiates the skybox background (HI-DEF Version)
-function setupSkyBox() {
-
-    for (var i = 0; i < 6; i++) materialArray[i].side = THREE.BackSide;
-    var skyboxMaterial = new THREE.MeshFaceMaterial(materialArray);
-    skyboxGeom = new THREE.CubeGeometry(5000, 5000, 5000, 1, 1, 1);
-    var skybox = new THREE.Mesh(skyboxGeom, skyboxMaterial);
-    scene.add(skybox);
-
-} //end setupSkyBox
-
 //setupStaticBackground uses the old pewi graphics as a background image
 function setupStaticBackground() {
     
@@ -288,6 +276,7 @@ function switchBoards(newBoard){
 
     refreshBoard();
     setupRiver();
+    //in case new board is smaller than old board, make sure to reset hover
     previousHover = 0;
 
     //update Results to point to correct board since currentBoard is updated
@@ -487,18 +476,16 @@ function showMainMenu() {
         if(levelGlobal > 0){
             //clean up from a level
 
-            console.log("---cleaning up---");
+            console.log("---cleaning up from exit---");
             resetLevel();
             clearPopup() ;
             levelGlobal = 0 ;
             
+            //reset parameters
             window.top.document.getElementById('parameters').innerHTML = "" ;
             toggleVisibility() ;
-
         }
         
         document.getElementById('page').style.visibility = "hidden" ;}, 1000 );
-        
     }
-    
 } //end showMainMenu
