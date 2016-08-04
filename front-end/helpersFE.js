@@ -2101,12 +2101,11 @@ function multiplayerAggregateOverlayMapping(e) {
         reader.readAsText(files[0]);
         reader.onload = function(e) {
 
-        var boardFromUpload = new GameBoard();
         //setup data from reader (file) into intiData global
         parseInitial(reader.result);
         //call *backend* function for overlaying boards, will put boardFromUpload onto
         //  the current board
-        overlayBoard(boardData[currentBoard], boardFromUpload);
+        overlayBoard(boardData[currentBoard]);
         //now switch to the current board so that all data is up to date
         switchBoards(boardData[currentBoard]);
         //clear initData
