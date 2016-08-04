@@ -694,7 +694,11 @@ function onDocumentKeyUp(event) {
 
 //toggleEscapeFrame displays and hides the div that allows the user to go to the main menu, options, or directory
 function toggleEscapeFrame() {
-    if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
+
+    if(document.getElementById('confirmEscape').style.height == "300px") {confirmEscape()};
+    
+    if(document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp){
+
         document.getElementById('modalEscapeFrame').style.display = "block";
         document.getElementById('exitToMenuButton').style.visibility = "visible";
         document.getElementById('optionsButton').style.visibility = "visible";
@@ -715,6 +719,7 @@ function toggleEscapeFrame() {
     else {
         document.getElementById('optionsButton').className = "mainEscapeButton";
     }
+    
 } //end toggleEscapeFrame
 
 //paintChange changes the highlighted color of the selected painter and updates painter

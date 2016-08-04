@@ -368,7 +368,8 @@ select {
 
 /*physical features map selector*/
 .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone,
-.drainageColor1, .drainageColor2 {
+.drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5,
+.drainageColor6, .drainageColor7, .drainageColor8 {
     height: 15px;
     margin: 5px 0px 10px 10px;
     width: 15px;
@@ -403,6 +404,30 @@ select {
 }
 
 .drainageColor2 {
+    background-color: #255d98;
+}
+
+.drainageColor3 {
+    background-color: #38638b;
+}
+
+.drainageColor4 {
+    background-color: #4b687e;
+}
+
+.drainageColor5 {
+    background-color: #5e6e71;
+}
+
+.drainageColor6 {
+    background-color: #837856;
+}
+
+.drainageColor7 {
+    background-color: #a9833c;
+}
+
+.drainageColor8 {
     background-color: #bc892f;
 }
 
@@ -755,8 +780,11 @@ select {
     border-radius:12px;
     color: white ;
     display:none;
+    font-family: 'Amatic SC', cursive;
+    font-size: 40px ;
+    font-weight: bold;
     height:50px ;
-    line-height: 212%;
+    line-height: 120%;
     margin: 20px 20px 30px 20px ;
     padding: 5px; 
     position:relative;
@@ -888,9 +916,10 @@ select {
    font-family: 'Amatic SC', cursive;
    font-size: 40px ;
    font-weight: bold;
+   margin-bottom: 20px;
    height:50px ;
    line-height:120%;
-   margin:0px 0px 20px 50px;
+   margin:0px 0px 20px 0px;
    padding:5px;
    text-align:center;
    width:200px;
@@ -905,27 +934,24 @@ select {
 }
    
 #exitToMenuButton{
-    visibility: hidden;
-    
-    -webkit-animation-duration: 0.4s; /* Safari */
-   animation-duration: 0.4s;
+   animation-duration: 1.2s;
    animation-name: showEffect;
+   visibility: hidden;
+   -webkit-transition-duration: 1.2s; /* Safari */
 }
    
 #optionsButton{
-    visibility: hidden;
-    
-   -webkit-animation-duration: 0.8s; /* Safari */
    animation-duration: 0.8s;
    animation-name: showEffect;
+   visibility: hidden;
+   -webkit-transition-duration: 0.8s; /* Safari */
 }
    
 #directoryButton{
+    animation-duration: 0.4s;
+    animation-name: showEffect;
     visibility: hidden;
-    
-   -webkit-animation-duration: 1.2s; /* Safari */
-   animation-duration: 1.2s;
-   animation-name: showEffect;
+    -webkit-transition-duration: 0.4s; /* Safari */
 }
 
 #escapeMenu{
@@ -946,4 +972,35 @@ select {
 @keyframes hideEffect {
     from { opacity: 1; }
     to { opacity: 0; }
+}
+
+#confirmEscape {
+  background-color: rgb(0,0,0,0);
+  border-radius: 6px;
+  display: inline-block;
+  height: 0px;
+
+  margin-left: -20px;
+  overflow: hidden;
+  position: relative;
+  width: 250px;
+  font-family: 'Amatic SC', cursive;
+  text-align:center;
+  line-height: 130%;
+  color: #FFFFFF;
+  font-size: 30px ;
+  font-weight: bold;
+  
+  -webkit-transition-duration: 1s;
+  transition-duration: 1s;
+}
+
+#yesConfirmEscape {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#noConfirmEscape {
+    margin: 0 auto;
 }

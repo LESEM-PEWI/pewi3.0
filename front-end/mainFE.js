@@ -452,43 +452,62 @@ function setupHighlight() {
 
 }; //end setupHighlight
 
+//expand or collapse the div holding tools for confirming escape to main menu
+function confirmEscape() {
+    //if the div is not expanded, then expand 
+    //else if expanded, then collapse it
+        if(document.getElementById('confirmEscape').style.height != "300px") {
+            document.getElementById('exitToMenuButton').style.backgroundColor = "#003d4d";
+            document.getElementById('optionsButton').style.opacity = 0;
+            document.getElementById('directoryButton').style.opacity = 0;
+            document.getElementById('optionsButton').onclick = function(){};
+            document.getElementById('directoryButton').onclick = function(){};
+            document.getElementById('confirmEscape').style.height = "300px";
+        } else {
+            document.getElementById('exitToMenuButton').style.backgroundColor = "#40a4df";
+            document.getElementById('optionsButton').onclick = function() {if(!multiplayerAssigningModeOn){toggleEscapeFrame(); startOptions();};};
+            document.getElementById('directoryButton').onclick = function() {toggleEscapeFrame(); toggleIndex() ;};
+            document.getElementById('optionsButton').style.opacity = 1;
+            document.getElementById('directoryButton').style.opacity = 1;
+            document.getElementById('confirmEscape').style.height = "0px";
+        }
+}//end toggleEscape
+
 //showMainMenu uses the esc key to return to the startup screen
 function showMainMenu() {
+
+   //show loading animation and startup page
+   document.getElementById('loading').style.display = "block" ; 
+   document.getElementById('startUpFrame').contentWindow.recallMain() ;
+   multiplayerAssigningModeOn = false ;
     
-    //alert user about exit
-    if(confirm('Are you sure you want to exit? All your progress will be lost.')){
+    setTimeout(function() {
+        
+    document.getElementById('startupSequence').style.display = "block" ;
+    
+    //reset sandbox/level to original settings   
+    switchToUnzoomedView();
+    previousHover = null ;
+    paintChange(1) ;
+    switchConsoleTab(1);
+    switchYearTab(1);
+    controls.reset() ;
+    
+    //clean up from level
+    if(levelGlobal > 0){
+        //clean up from a level
 
-       //show loading animation and startup page
-       document.getElementById('loading').style.display = "block" ; 
-       document.getElementById('startUpFrame').contentWindow.recallMain() ;
-       multiplayerAssigningModeOn = false ;
+        console.log("---cleaning up from exit---");
+        resetLevel();
+        clearPopup() ;
+        levelGlobal = 0 ;
         
-        setTimeout(function() {
-            
-        document.getElementById('startupSequence').style.display = "block" ;
-        
-        //reset sandbox/level to original settings   
-        switchToUnzoomedView();
-        previousHover = null ;
-        paintChange(1) ;
-        switchConsoleTab(1);
-        switchYearTab(1);
-        controls.reset() ;
-        
-        //clean up from level
-        if(levelGlobal > 0){
-            //clean up from a level
+        //reset paramters
+        window.top.document.getElementById('parameters').innerHTML = "" ;
+        toggleVisibility() ;
 
-            console.log("---cleaning up from exit---");
-            resetLevel();
-            clearPopup() ;
-            levelGlobal = 0 ;
-            
-            //reset parameters
-            window.top.document.getElementById('parameters').innerHTML = "" ;
-            toggleVisibility() ;
-        }
-        
-        document.getElementById('page').style.visibility = "hidden" ;}, 1000 );
     }
+    
+    document.getElementById('page').style.visibility = "hidden" ;}, 1000 );
+
 } //end showMainMenu

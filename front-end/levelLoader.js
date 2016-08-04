@@ -21,8 +21,10 @@ var levelSpecs = {
     landTypeMonoculture: [0,0,0,0]
 }
 
-var levelGlobal ;
-var lastLevel = 9;
+
+var levelGlobal = 0;
+var lastLevel = 0;
+
 var levelContainer = [];
 
 //loadLevel is triggered by clicking a level button on the html page
@@ -267,6 +269,8 @@ function parseLevelMenuData(data) {
     
     //Ensure that the main webpage and the play.html screen share the same levelContainer information
     top.window.levelContainer = levelContainer;
+    top.window.lastLevel = lastLevel;
+    
 } //end parseLevelMenuData
 
 //populateLevels uses the levelContainer hierarchy of stages, levels, and exercises to organize the level container as clouds on the play screen
