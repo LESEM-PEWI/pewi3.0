@@ -31,7 +31,7 @@ var optionTypes = ["paint1", "paint2", "paint3", "paint4",
 "paint5", "paint6", "paint7", "paint8",
 "paint9", "paint10", "paint11", "paint12",
 "paint13", "paint14", "paint15",
-"year2Button*year2PrecipContainer", "year3Button*year3PrecipContainer"];
+"precipOff", "year2Button*year2PrecipContainer", "year3Button*year3PrecipContainer"];
 
 //Contains strings to display for toggleable options
 var optionLabels = ["Hide conventional corn", "Hide conservation corn", "Hide conventional soybean",
@@ -39,7 +39,7 @@ var optionLabels = ["Hide conventional corn", "Hide conservation corn", "Hide co
 "Hide rotational grazing", "Hide grass hay", "Hide prairie", 
 "Hide conservation forest", "Hide conventional forest", "Hide switchgrass",
 "Hide short rotation woody bioenergy", "Hide wetland", "Hide mixed fruits and veggies",
-"Hide year 2", "Hide year 3"];
+"Prevent precipitation changes", "Hide year 2", "Hide year 3"];
 
 //addObjective allows for objectives to be added to the form dynamically
 function addObjective(addToDiv){
