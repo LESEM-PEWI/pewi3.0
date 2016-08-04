@@ -90,3 +90,9 @@ page design outline:
      ./htmlFrames/multiDownload.html
      completes the creation of mutliplayer maps when the user presses the v key
      in the workspace after assigning areas to players in the mutliplayer mode
+     
+
+notes:
+
+    tileID starts at 1 but boardData[currentBoard].map is an array, so tileID 1
+    is stored at index 0 in boardData[currentBoard].map
