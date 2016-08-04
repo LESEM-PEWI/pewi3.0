@@ -1,25 +1,37 @@
 <!doctype html>
 
-<html>
+<!-- Oh my, this is the base page, the page upon which all of PEWI is built.
+     Most of the elesments are outlined here.
+    Some of the more complicated elements are displayed as iframes on top of this page.
+    These iframes include the main loading screen, the codex, and much more. 
+    
+    Basic functionality in terms of javascript begins in startup.html under htmlFrames. Once
+    the webGL canvas is created, the startup iframe is made not displayed and the content
+    portion of this page is displayed. 
+    
+    It has been a goal of this page to create as much code reusibility as possilbe. Adding new
+    elements should be straightforward.
+    -->
 
+<html>
 <head>
     <meta charset="utf-8">
     <title>PEWI Workspace</title>
 
+    <!-- INCLUDES -->
+    <!--css-->
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <!--favicon-->
     <link rel='shortcut icon' href='./imgs/pewi_favicon.ico' type='image/x-icon' />
 
-    <!-- three.js framework libraries -->     
+    <!-- three.js framework and javascript libraries -->     
     <script src="./lib/d3.min.js"></script>
     <script src="./lib/three.min.js"></script>
     <script src="./lib/controls.js"></script>
     <script src="./lib/jquery-1.12.4.min.js"></script>
     <script src="./lib/stats.min.js"></script>
-    <script src="./lib/OBJLoader.js"></script>
-    <script src="./lib/MTLLoader.js"></script>
-    <script src="./lib/OBJMTLLoader.js"></script>
 
-    <!-- object oriented back-end implementation from PEWI 2.1 -->
+    <!-- object oriented javascript back-end implementation from PEWI 2.1 -->
     <script src="./back-end/helperMethods.js"></script>
     <script src="./back-end/helperObjects.js"></script>
     <script src="./back-end/mainBE.js"></script>
@@ -40,15 +52,15 @@
     <script src="./front-end/boid.js"></script>
     <script src="./front-end/Bird.js"></script>
     
+    <!--external fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+    
+    <!-- /INCLUDES -->
 
 </head>
-
-<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
-
 <body id="body">
  
-     <script>
-     
+     <script> 
      //Preload gifs and backgrounds on startup     
      var img1 = new Image();
      img1.src = "./imgs/loader.gif" ;
@@ -118,12 +130,12 @@
             <img id="paint10" class="landSelectorIcon"   class="landSelectorIcon" src="./imgs/conservationForest.png" onclick="paintChange(10);">
             <img id="paint13" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="paintChange(13);">
 
-            <img id="paintPlayer1" style="display:none;" onmouseover="showInfo('Assign Player 1');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player1.png" onclick="paintChange(1)">
-            <img id="paintPlayer2" style="display:none;" onmouseover="showInfo('Assign Player 2');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player2.png" onclick="paintChange(2)">
-            <img id="paintPlayer3" style="display:none;" onmouseover="showInfo('Assign Player 3');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player3.png" onclick="paintChange(3)">
-            <img id="paintPlayer4" style="display:none;" onmouseover="showInfo('Assign Player 4');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player4.png" onclick="paintChange(4)">
-            <img id="paintPlayer5" style="display:none;" onmouseover="showInfo('Assign Player 5');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player5.png" onclick="paintChange(5)">
-            <img id="paintPlayer6" style="display:none;" onmouseover="showInfo('Assign Player 6');" onmouseout="clearInfo();" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player6.png" onclick="paintChange(6)">
+            <img id="paintPlayer1" style="display:none;" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player1.png" onclick="paintChange(1)">
+            <img id="paintPlayer2" style="display:none;" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player2.png" onclick="paintChange(2)">
+            <img id="paintPlayer3" style="display:none;" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player3.png" onclick="paintChange(3)">
+            <img id="paintPlayer4" style="display:none;" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player4.png" onclick="paintChange(4)">
+            <img id="paintPlayer5" style="display:none;" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player5.png" onclick="paintChange(5)">
+            <img id="paintPlayer6" style="display:none;" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player6.png" onclick="paintChange(6)">
             
         </div>
 
@@ -295,6 +307,7 @@
              
         </div>
         
+        <!-- year display -->
         <div id="yearsTab" class="consoleTab" style="display:none;">
             <!-- Create year buttons -->
             <div id="yearTitle">Year Selection</div>
@@ -310,11 +323,12 @@
         </div>
         
     </div>
+    <!-- end left console, there is a lot happening there -->
 
     <!-- Create results button -->
     <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
         
-    <!-- Create dialogue popup box -->
+    <!-- Create dialogue popup box (message box) -->
     <!-- "Bubble, speech icon" by http://www.iconsolid.com/ with free commercial usage / Inverted from original and resized -->
     <div id="dialogueButton" class="dialogueButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/dialogue.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
     <div id="popup" class="popupHidden" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
@@ -323,10 +337,12 @@
         <p id="popupText"></p>
     </div>
 
-    <!-- Create buttons in upper right corner -->
+    <!-- Create buttons in upper right corner: upperHud-->
     <img id="logoBase" src="./imgs/inGameLogo.png" >
     <img id="uploadDownloadButton" class="upperButton" width="40px" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    
+    <!-- order now becomes important to make sure elements stack and cover correctly -->
     
     <!-- Create iFrames for credits, upload/download, and codex -->
     <iframe id="creditsFrame" style="display:none;" src="./htmlFrames/credits.html"></iframe>
@@ -334,7 +350,8 @@
     <iframe id="uploadDownloadFrame" style="display:none;" src="./htmlFrames/uploadDownload.html"></iframe>
     <img id="closeUploadDownload" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeUploadDownloadFrame();">
     <iframe id="index" src="./modules/codex/codex.html"></iframe>
-
+    <!-- index iframe has its own close button -->
+        
     <!-- Include fireworks javascript library -->
     <div id="fireworks-template">
         <div id="fw" class="firework"></div>
@@ -356,8 +373,9 @@
     <iframe id="options" src="./htmlFrames/options.html"></iframe>
     <iframe id="multiPlayer" src="./htmlFrames/multiDownload.html"></iframe>
      
-    </div> <!-- End of page div -->
+    </div> <!-- End of page div, this is all of the meaningful content for in-game -->
     
+    <!-- the modal frame covers the page with semi-opaque layer, and escape options -->
     <div id="modalEscapeFrame">
         <div id="escapeMenu">
             <div class="mainEscapeButton" id="exitToMenuButton" onclick="showMainMenu(); toggleEscapeFrame();">Main Menu</div>
@@ -366,9 +384,10 @@
         </div>
     </div>
 
-    <!-- Add spinning circle loading gif -->
+    <!-- Add spinning circle loading gif, this loader is visible during transitions-->
     <div id="loading" style="visibility:hidden;">
     <div id="loadingContainer">
+        <!-- center is not exactly optimal html, but will do for now -->
         <center>
         <br><br>
         <img src="./imgs/loader.gif">  

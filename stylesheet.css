@@ -534,7 +534,6 @@ select {
     margin-top:20px;
     margin-left:35px;
     border-radius:50%;
-
 }
 
 
@@ -653,26 +652,21 @@ select {
 
 
 #index{
+    border-radius:40px;
     display:none;
-    position:absolute;
+    height:700px;
     left:50%;
-    top:50%;
     margin-left:-500px;
     margin-top:-350px;
+    position:absolute;
+    top:50%;
     width:1000px;
-    height:700px;
-    border-radius:40px;
-    
+
     -webkit-box-shadow: 0px -2px 120px 80px rgba(0,0,0,1);
     -moz-box-shadow: 0px -2px 120px 80px rgba(0,0,0,1);
     box-shadow: 0px -2px 50px 12px rgba(0,0,0,1);
 }
 
-#closeIndex {
-    position:absolute;
-    top:20%;
-    right:20%;
-}
 
 #loading {
     position:absolute;
@@ -682,41 +676,39 @@ select {
 }
 
 #loadingContainer {
-    position:absolute;
+    color: #FFFFFF;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 22px ;
     height:200px;
-    width:200px;
+    left:50%;
+    line-height: 130%;
     margin-top:-100px;
     margin-left:-100px;
+    padding-left:25px;
+    position:absolute;
     top:50%;
-    left:50%;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    line-height: 130%;
-    color: #FFFFFF;
-     padding-left:25px;
-    font-size: 22px ;
+    width:200px;
 }
 
+/* message console */
 .popup, .popupHidden {
-  overflow-y:auto;
-  overflow-x:hidden;
-  margin: 0px;
-    
-  width:12%;
-  height:50%;
-  text-align:center;
-  line-height: 100%;
-  color: #FFFFFF;
-  font-size: 20px ;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    
   background-color: rgba(0, 0, 0, 0.7);
   background-image: url('./imgs/consoleTexture.png');
-  top:300px;
-  right:0px;
+  border-bottom-left-radius: 12px;
+  border-top-left-radius: 0px;
+  color: #FFFFFF;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; 
+  font-size: 20px ;
+  height:50%;
+  margin: 0px;
+  overflow-y:auto;
+  overflow-x:hidden;
   padding: 0px;
   position:absolute;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 12px;
+  right:0px;
+  text-align:center;
+  top:300px;
+  width:12%;
   
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -747,68 +739,34 @@ select {
 }
 
 .popupHidden {
-  top: 300px;
-  right: -12%;
   position:absolute;
-  
+  right: -12%;
+  top: 300px;
+ 
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-name: rollDown;
   animation-name: rollDown;
 }
 
-.meadowlarkhidden {
-    display:none ;
-    text-decoration: none;
-    padding-right: 0px;
-    left: -800px;
-    top:40%;
-    position: absolute;
-}
-
-.meadowlarkfly {
-    text-decoration: none;
-    padding-right: 0px;
-    left: 150%;
-    top: 40%;
-    position: absolute;
-    -webkit-animation-duration: 15s;
-    animation-duration: 15s;
-    -webkit-animation-name: fly;
-    animation-name: fly;
-}
-
-@keyframes fly {
-    0% {
-        left: -620px;
-        top: 40%;
-    }
-    100% {
-        left: 150%;
-        top: 0%;
-    }
-}
-
 .moveButtonHidden, .moveButtonShow {
-    position:relative;
-    display:none;
-    padding: 5px;
     background-color: #008fb3 ;
-    width:150px;
-    border-radius:12px;
-    height:50px ;
-    color: white ;
-    text-align:center;
-    line-height: 212%;
-    padding:5px;
-    margin:20px;
-    margin-bottom:30px;
     border: 2px solid white;
+    border-radius:12px;
+    color: white ;
+    display:none;
+    height:50px ;
+    line-height: 212%;
+    margin: 20px 20px 30px 20px ;
+    padding: 5px; 
+    position:relative;
+    text-align:center;
+    width:150px;
 }
 
 .moveButtonShow {
-    position:relative;
     display:inline-block;
+    position:relative;
 }
 
 #popupText {
@@ -816,9 +774,6 @@ select {
 }
 
 .dialogueButton, .dialogueButtonRolled {
-    position:absolute;
-    top:300px;
-    right:12%;
     background-color: rgb(0,0,0,0.9);
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
@@ -827,17 +782,21 @@ select {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
     height:40px;
+    position:absolute;
+    right:12%;
+    top:300px;
     width:40px;
+    
     -webkit-animation-name: rollButtonUp;
     animation-name: rollButtonUp;
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
-
 }
 
 .dialogueButtonRolled {
     bottom:0px;
     right: 0px;
+    
     -webkit-animation-name: rollButtonDown;
     animation-name: rollButtonDown;
     -webkit-animation-duration: 1s;
@@ -862,43 +821,79 @@ select {
   }
 }
 
-#options{
-    position:fixed;
-    width:100%;
-    height:100%;
-    top:0px;
-    left:0px;
-    visibility: hidden ;
-    
+/*bird thing, meadowlark styling*/
+.meadowlarkhidden {
+    display:none ;
+    left: -800px;
+    padding-right: 0px;
+    position: absolute;
+    text-decoration: none;
+    top:40%;
 }
 
-#multiPlayer{
-    position:fixed;
-    width:100%;
+.meadowlarkfly {
+    left: 150%;
+    padding-right: 0px;
+    position: absolute;
+    text-decoration: none;
+    top: 40%;
+    
+    -webkit-animation-duration: 15s;
+    animation-duration: 15s;
+    -webkit-animation-name: fly;
+    animation-name: fly;
+}
+
+@keyframes fly {
+    0% {
+        left: -620px;
+        top: 40%;
+    }
+    100% {
+        left: 150%;
+        top: 0%;
+    }
+}
+
+/* Some of the iframes */
+
+#options, #multiPlayer{
     height:100%;
-    top:0px;
     left:0px;
-    visibility: hidden;
+    position:fixed;
+    top:0px;
+    visibility: hidden ;
+    width:100%;
+}
+
+/* Escape Menu and Buttons */
+
+#modalEscapeFrame{
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+    height:100%;
+    position: fixed;
+    width:100%;
+    
+    animation-duration: 1.0s;
+    animation-name: showEffect;
 }
 
 .mainEscapeButton, .unclickableMainEscapeButton {
    background-color: #40A4DF ;
-   width:200px;
-   border-radius:12px;
-   height:50px ;
-   color: white ;
-   padding:5px;
    border: 2px solid white;
-   cursor: all-scroll ;
-   font-family: 'Amatic SC', cursive;
-   text-align:center;
-   line-height: 130%;
+   border-radius:12px;
    color: #FFFFFF;
+   cursor: default ;
+   font-family: 'Amatic SC', cursive;
    font-size: 40px ;
    font-weight: bold;
-   margin-left: 50px;
-   margin-bottom:20px;
+   height:50px ;
    line-height:120%;
+   margin:0px 0px 20px 50px;
+   padding:5px;
+   text-align:center;
+   width:200px;
 }
 
 .unclickableMainEscapeButton {
@@ -911,45 +906,37 @@ select {
    
 #exitToMenuButton{
     visibility: hidden;
-    -webkit-transition-duration: 0.4s; /* Safari */
+    
+    -webkit-animation-duration: 0.4s; /* Safari */
    animation-duration: 0.4s;
    animation-name: showEffect;
 }
    
 #optionsButton{
     visibility: hidden;
-   -webkit-transition-duration: 0.8s; /* Safari */
+    
+   -webkit-animation-duration: 0.8s; /* Safari */
    animation-duration: 0.8s;
    animation-name: showEffect;
 }
    
 #directoryButton{
     visibility: hidden;
-   -webkit-transition-duration: 1.2s; /* Safari */
+    
+   -webkit-animation-duration: 1.2s; /* Safari */
    animation-duration: 1.2s;
    animation-name: showEffect;
 }
 
 #escapeMenu{
-    position: absolute;
-    width: 300px;
     height: 200px;
-    top: 25%;
     left: 50%;
     margin: -100px 0 0 -150px;
+    position: absolute;
+    top: 25%;
+    width: 300px;
 }
 
-#modalEscapeFrame{
-    position: fixed;
-    width:100%;
-    height:100%;
-    display: none;
-    background-color: rgba(0,0,0,0.7);
-    
-    -webkit-transition-duration: 1.0s; /* Safari */
-   animation-duration: 1.0s;
-   animation-name: showEffect;
-}
 
 @keyframes showEffect {
 	from  {  opacity: 0; }
