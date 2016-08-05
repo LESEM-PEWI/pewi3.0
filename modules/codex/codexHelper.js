@@ -82,7 +82,7 @@ function setUpCodexData(data){
             //if '@' then element is a subElement
             //sub elements are basically headers, but have 2 important distinctions
             // 1) they cannot have child elements themselves
-            // 2) they may have 'deeper' text indicated by a "1" on the third following line
+            // 2) they may have 'advanced' text indicated by a "1" on the third following line
             case '@':
                 //add element as child of header (subElement) to left index
                 tableString += establishElement(i,arrLines[i],arrLines[i+1],arrLines[i+2],arrLines[i+3],padding);
@@ -306,7 +306,7 @@ function onDocumentKeyDown(event) {
 } //end onDocumentKeyDown
 
 //gets the advanced detail page by appending "More" to the file name
-//sets up corresponding changes in the 'Deeper' Button
+//sets up corresponding changes in the 'Advanced' Button
 function showAdvancedDetail(idOfCurrentElement) {
     //change frame content
     var string = dataHolder[idOfCurrentElement].square2 ;
@@ -320,6 +320,6 @@ function showAdvancedDetail(idOfCurrentElement) {
 //resets element with more general content and button as well
 function showLessDetail(idOfCurrentElement){
     document.getElementById('square2frame').src = dataHolder[idOfCurrentElement].square2;
-    document.getElementById('switchContentDepth').innerHTML = "Deeper"
+    document.getElementById('switchContentDepth').innerHTML = "Advanced"
     document.getElementById('switchContentDepth').onclick = function() { showAdvancedDetail(idOfCurrentElement) ;} ;
 }//end showLessDetail
