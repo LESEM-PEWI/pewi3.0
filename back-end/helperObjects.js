@@ -35,44 +35,84 @@ var LandUseType = {
 
 	getType: function(type) {
 
-			switch (type) {
-				case 0:
-					return "none";
-				case 1:
-					return "conventionalCorn";
-				case 2:
-					return "conservationCorn";
-				case 3:
-					return "conventionalSoybean";
-				case 4:
-					return "conservationSoybean";
-				case 5:
-					return "alfalfa";
-				case 6:
-					return "permanentPasture";
-				case 7:
-					return "rotationalGrazing";
-				case 8:
-					return "grassHay";
-				case 9:
-					return "prairie";
-				case 10:
-					return "conservationForest";
-				case 11:
-					return "conventionalForest";
-				case 12:
-					return "switchgrass";
-				case 13:
-					return "shortRotationWoodyBioenergy";
-				case 14:
-					return "wetland";
-				case 15:
-					return "mixedFruitsVegetables";
-				default:
-					return "NOT FOUND";
-			} //end switch
-		} //end getType
-		
+		switch (type) {
+			case 0:
+				return "none";
+			case 1:
+				return "conventionalCorn";
+			case 2:
+				return "conservationCorn";
+			case 3:
+				return "conventionalSoybean";
+			case 4:
+				return "conservationSoybean";
+			case 5:
+				return "alfalfa";
+			case 6:
+				return "permanentPasture";
+			case 7:
+				return "rotationalGrazing";
+			case 8:
+				return "grassHay";
+			case 9:
+				return "prairie";
+			case 10:
+				return "conservationForest";
+			case 11:
+				return "conventionalForest";
+			case 12:
+				return "switchgrass";
+			case 13:
+				return "shortRotationWoodyBioenergy";
+			case 14:
+				return "wetland";
+			case 15:
+				return "mixedFruitsVegetables";
+			default:
+				return "NOT FOUND";
+		} //end switch
+	}, //end getType
+
+	getPrintFriendlyType: function(type) {
+		switch (type) {
+			case 0:
+				return "None";
+			case 1:
+				return "Conventional Corn";
+			case 2:
+				return "Conservation Corn";
+			case 3:
+				return "Conventional Soybean";
+			case 4:
+				return "Conservation Soybean";
+			case 5:
+				return "Alfalfa";
+			case 6:
+				return "Permanent Pasture";
+			case 7:
+				return "Rotational Grazing";
+			case 8:
+				return "Grass Hay";
+			case 9:
+				return "Prairie";
+			case 10:
+				return "Conservation Forest";
+			case 11:
+				return "Conventional Forest";
+			case 12:
+				return "Switchgrass";
+			case 13:
+				return "Short Rotation Woody Bioenergy";
+			case 14:
+				return "Wetland";
+			case 15:
+				return "Mixed Fruits and Vegetables";
+			default:
+				return "NOT FOUND";
+		} //end switch
+
+	}
+
 };
 //end definition of landUseType
 

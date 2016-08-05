@@ -797,6 +797,10 @@ function resultsStart() {
 
 //resultsEnd hides the results and returns the menus to the screens
 function resultsEnd() {
+    
+    //modal is no longer up
+    modalUp = false;
+    
     //reset functionality
     document.getElementById("resultsFrame").className = "resultsFrameRolled";
     document.getElementById("resultsButton").className = "resultsButtonRolled";
@@ -814,9 +818,6 @@ function resultsEnd() {
     document.getElementById("resultsButton").onclick = function() {
         resultsStart();
     };
-
-    //modal is no longer up
-    modalUp = false;
 
     clearToChangeLandType = true;
     
@@ -1003,205 +1004,116 @@ function switchConsoleTab(value) {
 } //end switchConsoleTab
 
 //switchYearTab changes the highlighted year
-function switchYearTab(value) {
+function switchYearTab(yearNumberToChangeTo) {
 
+    //get the currently selected year and make it not selected
     var elements = document.getElementsByClassName("yearSelected");
-
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].className = "yearNotSelected";
-    }
-
-    switch (value) {
-        case 0:
-            document.getElementById('year0Image').className = "yearSelected";
-            break;
-        case 1:
-            document.getElementById('year1Image').className = "yearSelected";
-            break;
-        case 2:
-            document.getElementById('year2Image').className = "yearSelected";
-            break;
-        case 3:
-            document.getElementById('year3Image').className = "yearSelected";
-            break;
-    };
-
-
+    elements[0].className = "yearNotSelected";
+    
+    //then toggle on the selected year
+    var yearIdString = "year" + yearNumberToChangeTo + "Image" ;
+    document.getElementById(yearIdString).className = "yearSelected" ;
 } //end switchYearTab
 
+//here we draw the correct tile colors onto the board material mesh
+function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
+
+    //change global highlighting setting to set
+    mapIsHighlighted = true;
+
+    //update results
+    Totals = new Results(boardData[currentBoard]);
+    Totals.update();
+
+    //add highlighted textures to the map
+    //for each tile in the board
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+        //if there is an actual tile there
+        if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+            //then change mesh material
+            meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
+        } //end if
+    } //end for
+
+    showLevelDetails(selectionHighlightNumber);
+    currentHighlightType = selectionHighlightNumber;
+    currentHighlightTypeString = highlightType ;
+}//end drawLevelsOntoBoard
+
 //displayLevels highlight each tile using getHighlightColor method
-function displayLevels(type) {
+function displayLevels(overlayHighlightType) {
+
+    var selectionHighlightNumber = 0;
+
+    //update console tabs
+    var element = document.getElementsByClassName('featureSelectorIconSelected');
+    if (element[0]) element[0].className = 'featureSelectorIcon';
+    element = document.getElementsByClassName('levelSelectorIconSelected');
+    if (element[0]) element[0].className = 'levelsSelectorIcon';
+
+    //record new highlighting selection
+    switch (overlayHighlightType) {
+        case 'nitrate':
+            selectionHighlightNumber = 1;
+            break;
+        case 'erosion':
+            selectionHighlightNumber = 2;
+            break;
+        case 'phosphorus':
+            selectionHighlightNumber = 3;
+            break;
+        case 'flood':
+            selectionHighlightNumber = 4;
+            break;
+        case 'drainage':
+            selectionHighlightNumber = 5;
+            break;
+        case 'wetland':
+            selectionHighlightNumber = 6;
+            break;
+        case 'subwatershed':
+            selectionHighlightNumber = 7;
+            break;
+    }//end switch
 
     //map is not previously highlighted
     if (!mapIsHighlighted) {
-
-        mapIsHighlighted = true;
-
-        //update results
-        Totals = new Results(boardData[currentBoard]);
-        Totals.update();
-
-        //add highlighted textures to the map
-        for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
-            if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-
-                meshMaterials[i].map = highlightArray[getHighlightColor(type, i)];
-
-            }
-
-        }
-
-        //update tab selected
-        var element = document.getElementsByClassName('featureSelectorIconSelected');
-        if (element[0]) element[0].className = 'featureSelectorIcon';
-        element = document.getElementsByClassName('levelSelectorIconSelected');
-        if (element[0]) element[0].className = 'levelsSelectorIcon';
-
-        //show legends and record the type of highlighting
-        switch (type) {
-            case 'nitrate':
-                showLevelDetails(1);
-                currentHighlightType = 1;
-                break;
-            case 'erosion':
-                showLevelDetails(2);
-                currentHighlightType = 2;
-                break;
-            case 'phosphorus':
-                showLevelDetails(3);
-                currentHighlightType = 3;
-                break;
-            case 'flood':
-                showLevelDetails(4);
-                currentHighlightType = 4;
-                break;
-            case 'drainage':
-                showLevelDetails(5);
-                currentHighlightType = 5;
-                break;
-            case 'wetland':
-                showLevelDetails(6);
-                currentHighlightType = 6;
-                break;
-            case 'subwatershed':
-                showLevelDetails(7);
-                currentHighlightType = 7;
-                break;
-        }
-
-        currentHighlightTypeString = type;
-
-        //if the map is previously highlighted 
+        drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
     }
+    //if the map is previously highlighted
     else {
-
-        var newSelection = 0;
-
-        //update console tab
-        var element = document.getElementsByClassName('featureSelectorIconSelected');
-        if (element[0]) element[0].className = 'featureSelectorIcon';
-        element = document.getElementsByClassName('levelSelectorIconSelected');
-        if (element[0]) element[0].className = 'levelsSelectorIcon';
-
-        //record new highlighting selection
-        switch (type) {
-            case 'nitrate':
-                newSelection = 1;
-                break;
-            case 'erosion':
-                newSelection = 2;
-                break;
-            case 'phosphorus':
-                newSelection = 3;
-                break;
-            case 'flood':
-                newSelection = 4;
-                break;
-            case 'drainage':
-                newSelection = 5;
-                break;
-            case 'wetland':
-                newSelection = 6;
-                break;
-            case 'subwatershed':
-                newSelection = 7;
-                break;
-        }
-
-        //turning off previously highlighted map
-        if (currentHighlightType == newSelection || newSelection == 0) {
-
+        //if the highlight is the same... turn it off
+        if (currentHighlightType == selectionHighlightNumber || selectionHighlightNumber == 0) {
+            
             mapIsHighlighted = false;
             refreshBoard();
             showLevelDetails(-1 * currentHighlightType);
             currentHighlightType = 0;
             currentHighlightTypeString = null;
-
-            //selecting a new type of highlighting
+            
         }
+        //else if the highlighting is different, let's change to the new highlighting
         else {
-
-            mapIsHighlighted = true;
-
             //close previous legend
             showLevelDetails(-1 * currentHighlightType);
-
-            //update results
-            Totals = new Results(boardData[currentBoard]);
-            Totals.update();
-
-
-            //update tiles
-            for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
-                if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-
-                    meshMaterials[i].map = highlightArray[getHighlightColor(type, i)];
-
-                }
-
-            }
-
-            //update legend and new highlighted type
-            showLevelDetails(newSelection);
-            currentHighlightType = newSelection;
-            currentHighlightTypeString = type;
-
-        }
-
-
-    }
-
-} //end displayLevels
+            //highlight board
+            drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);d
+        }//end else/if group
+    }//end else/if mapIsHighlighted
+} //end displayLevels()
 
 //getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
-function getHighlightColor(type, ID) {
+function getHighlightColor(highlightType, tileId) {
 
     //erosion highlight color indicies
-    if (type == "erosion") {
-
-        var erosionSeverity = Totals.grossErosionSeverity[currentYear][ID];
-
-        switch (erosionSeverity) {
-            case 1:
-                return 0;
-            case 2:
-                return 1;
-            case 3:
-                return 2;
-            case 4:
-                return 3;
-            case 5:
-                return 4;
-        }
-
+    if (highlightType == "erosion") {
+        //subtract 1, as arrays index from 0
+       return (Totals.grossErosionSeverity[currentYear][tileId] - 1) ;
     }
-
     //nitrite highlight color indicies
-    if (type == "nitrate") {
+    else if (highlightType == "nitrate") {
 
-        var nitrateConcentration = Totals.nitrateContribution[currentYear][ID];
+        var nitrateConcentration = Totals.nitrateContribution[currentYear][tileId];
 
         if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return 0;
         else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return 1;
@@ -1210,31 +1122,15 @@ function getHighlightColor(type, ID) {
         else if (nitrateConcentration > 0.25) return 4;
 
     }
-
     //phosphorus highlight color indicies
-    if (type == "phosphorus") {
-
-        var phosphorusRisk = Totals.phosphorusRiskAssessment[currentYear][ID];
-
-        switch (phosphorusRisk) {
-            case 1:
-                return 0;
-            case 2:
-                return 1;
-            case 3:
-                return 2;
-            case 4:
-                return 3;
-            case 5:
-                return 4;
-        }
-
+    else if (highlightType == "phosphorus") {
+        //-1 for 0 indexing of arrays, sigh
+        return (Totals.phosphorusRiskAssessment[currentYear][tileId] - 1);
     }
-
     //flood frequency highlight color indicies
-    if (type == "flood") {
+    else if (highlightType == "flood") {
 
-        var flood = Number(boardData[currentBoard].map[ID].floodFrequency);
+        var flood = Number(boardData[currentBoard].map[tileId].floodFrequency);
 
         switch (flood) {
             case 0:
@@ -1249,75 +1145,28 @@ function getHighlightColor(type, ID) {
                 return 8;
             case 50:
                 return 9;
-        }
+        }//end switch
     }
-
     //wetland highlight color indicies
-    if (type == "wetland") {
+    else if (highlightType == "wetland") {
 
-        if (boardData[currentBoard].map[ID].strategicWetland == 1) {
+        if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
             return 9;
         }
         else {
             return 5;
         }
     }
-
     //subwatershed highlight color indicies
-    if (type == "subwatershed") {
+    else if (highlightType == "subwatershed") {
 
-        var watershed = Number(boardData[currentBoard].map[ID].subwatershed);
-
-        switch (watershed) {
-            case 1:
-                return 10;
-            case 2:
-                return 11;
-            case 3:
-                return 12;
-            case 4:
-                return 13;
-            case 5:
-                return 14;
-            case 6:
-                return 15;
-            case 7:
-                return 16;
-            case 8:
-                return 17;
-            case 9:
-                return 18;
-            case 10:
-                return 19;
-            case 11:
-                return 20;
-            case 12:
-                return 21;
-            case 13:
-                return 22;
-            case 14:
-                return 23;
-            case 15:
-                return 24;
-            case 16:
-                return 25;
-            case 17:
-                return 26;
-            case 18:
-                return 27;
-            case 19:
-                return 28;
-            case 20:
-                return 29;
-            case 21:
-                return 30;
-        }
+        var watershed = Number(boardData[currentBoard].map[tileId].subwatershed);
+        return watershed + 9 ;
     }
-
     //drainage highlight color indicies
-    if (type == "drainage") {
+    else if (highlightType == "drainage") {
 
-        var drainage = Number(boardData[currentBoard].map[ID].drainageClass);
+        var drainage = Number(boardData[currentBoard].map[tileId].drainageClass);
 
         switch (drainage) {
             case 70:
@@ -1336,9 +1185,8 @@ function getHighlightColor(type, ID) {
                 return 37;
             case 0:
                 return 38;
-        }
-    }
-
+        }//end switch
+    }//end else/if group
 } //end getHighlightColor
 
 //contaminatedRiver changes the color of the river dependent on current phosphorus level
@@ -1417,11 +1265,8 @@ function objectiveCheck() {
 
                     objectives[i].accomplished = 0;
                     numAccomplished--;
-
                 }
-
             }
-
         }
 
         //if enough objectives are accomplished
@@ -1461,7 +1306,7 @@ function selectAnimation(animation) {
         case "blueRiver":
             contaminatedRiver("blue");
             break;
-    }
+    }//end switch
 
 } //end selectAnimation
 
@@ -1483,17 +1328,14 @@ function displayFirework() {
 
 //flyLark triggers the meadowlark animation
 function flyLark() {
-
     document.getElementById("meadowlark").className = "meadowlarkhidden";
     setTimeout(function() {
         document.getElementById("meadowlark").className = "meadowlarkfly"
     }, 1);
-
 } //end flyLark
 
 //createFlock displays an animated flock of birds for 10 seconds
 function createFlock() {
-
     addBirds();
     setTimeout(function() {
         for (var i = 0; i < birds.length; i++) {
@@ -1502,7 +1344,6 @@ function createFlock() {
         birds = [];
         boids = [];
     }, 10000);
-
 } //end createFlock
 
 //writeFileToDownloadString creates a string in csv format that describes the current board
@@ -1550,18 +1391,16 @@ function writeFileToDownloadString() {
         if (i < boardData[currentBoard].map.length - 1) {
             string = string + '\r\n';
         }
-        else {
-            //Do Nothing
-        }
 
-    }
+    }//end for
 
     return string;
 } //end writeFileToDownloadString
 
 //uploadClicked enables the user to upload a .csv of board data
+// this function is called from child frame uploadDownload
 function uploadClicked(e) {
-
+    
     var files;
     files = e.target.files;
 
@@ -1581,43 +1420,38 @@ function uploadClicked(e) {
     closeUploadDownloadFrame();
 
     //reset keylistening frame (ie give up focus on iframe)
+    //no more conch for us
     document.activeElement.blur();
-
-
 } //end uploadClicked
 
+//downloadClicked() is called by child frame uploadDownload
+// since downloading must be handeled in the active frame, 
+// much of the function is taken care of there.
+//This function closes the download frame and tidies up
 function downloadClicked() {
-
     closeUploadDownloadFrame();
-
     //reset keylistening frame (ie give up focus on iframe)
     document.activeElement.blur();
+}//end downloadClicked()
 
-}
-
-
-//animateResults
+//animateResults() frame
 function animateResults() {
-
-    //todo, increased functionality
+    //if it is ever the case that we want to do some fancy zooming or screen
+    //  arrangement for the results page, we'll do that here
     document.getElementById("resultsFrame").className = "resultsFrame";
-
 
 } //end animateResults
 
 //calculateResults triggers the results calculations by updating Totals
+// deprecated?
 function calculateResults() {
-
     //Totals = new Results(boardData[currentBoard]);
     Totals.update();
-
     //contaminatedRiver(Totals);
-
 } //end calculateResults
 
 //showCredits opens the credits iframe
 function showCredits() {
-
     if (!modalUp) {
         document.getElementById('creditsFrame').style.display = "block";
         document.getElementById('closeCredits').style.display = "block";
@@ -1627,16 +1461,13 @@ function showCredits() {
 
 //closeCreditFrame closes the credits iframe
 function closeCreditFrame() {
-
     document.getElementById('creditsFrame').style.display = "none";
     document.getElementById('closeCredits').style.display = "none";
     modalUp = false;
-
 } //end closeCreditFrame
 
 //showUploadDownload opens the credits iframe
 function showUploadDownload() {
-
     if (!modalUp) {
         document.getElementById('closeUploadDownload').style.display = "block";
         document.getElementById('uploadDownloadFrame').style.display = "block";
@@ -1646,7 +1477,6 @@ function showUploadDownload() {
     if (mapIsHighlighted) {
         displayLevels();
     }
-
 } //end showUploadDownload
 
 //closeUploadDownloadFrame closes the credits iframe
@@ -1689,44 +1519,9 @@ function toggleIndex() {
 
 //printLandUseType returns a display-worthy string of land type from numeric key
 function printLandUseType(type) {
-
-    switch (type) {
-        case 0:
-            return "None";
-        case 1:
-            return "Conventional Corn";
-        case 2:
-            return "Conservation Corn";
-        case 3:
-            return "Conventional Soybean";
-        case 4:
-            return "Conservation Soybean";
-        case 5:
-            return "Alfalfa";
-        case 6:
-            return "Permanent Pasture";
-        case 7:
-            return "Rotational Grazing";
-        case 8:
-            return "Grass Hay";
-        case 9:
-            return "Prairie";
-        case 10:
-            return "Conservation Forest";
-        case 11:
-            return "Conventional Forest";
-        case 12:
-            return "Switchgrass";
-        case 13:
-            return "Short Rotation Woody Bioenergy";
-        case 14:
-            return "Wetland";
-        case 15:
-            return "Mixed Fruits and Vegetables";
-        default:
-            return "NOT FOUND";
-    } //end switch
-
+  //completely redundant, but preserved for ease of use
+  //see backEnd
+  return LandUseType.getPrintFriendlyType(type) ;
 } //end printLandUseType
 
 //printPrecipYearType returns the precipitation category of the year's precipitation
@@ -1741,7 +1536,14 @@ function printPrecipYearType() {
         return "Normal";
     }
     else {
-        return "Flood";
+        if(currentYear > 0 
+            && (boardData[currentBoard].precipitation[currentYear - 1] == 24.58 ||
+            boardData[currentBoard].precipitation[currentYear - 1] == 28.18)
+            ){
+                return "Flood" ;
+            }
+        return "Wet";
+        
     }
 
 } //end printPrecipYearType
