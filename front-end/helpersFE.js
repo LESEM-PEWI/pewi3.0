@@ -761,6 +761,8 @@ function resultsStart() {
         document.getElementById("resultsButton").onmouseover = "";
         document.getElementById("closeResults").style.opacity = "1";
         document.getElementById('closeResults').style.visibility = "visible";
+        
+        document.getElementById('modalResultsFrame').style.display = "block";
 
         document.getElementById("resultsButton").onclick = function() {
             resultsEnd();
@@ -777,6 +779,12 @@ function resultsStart() {
         if (document.getElementById("leftConsole").className == "leftConsole") {
             leftToolConsoleWasOpen = true;
             roll(1);
+            
+            //hide the highlighted map legend if necessary
+            if(currentHighlightType > 0){
+                showLevelDetails(-1 * currentHighlightType);
+            }
+            
         }
         //right popup
         rightPopupWasOpen = false;
@@ -806,10 +814,17 @@ function resultsEnd() {
     document.getElementById("resultsButton").className = "resultsButtonRolled";
     document.getElementById('closeResults').style.opacity = "0";
     document.getElementById("closeResults").style.visibility = "hidden";
+    
+    document.getElementById('modalResultsFrame').style.display = "none";
 
     //reopen elements that were previously open
     if (leftToolConsoleWasOpen)    roll(1);
     if (rightPopupWasOpen) togglePopupDisplay();
+    
+    //if highlighted map legend was previously open, redisplay
+    if(currentHighlightType > 0){
+        showLevelDetails(currentHighlightType);
+    }
 
     //reset functionality to buttons that were made unclickable
     document.getElementById("toolsButton").onclick = function() {
@@ -1455,6 +1470,7 @@ function showCredits() {
     if (!modalUp) {
         document.getElementById('creditsFrame').style.display = "block";
         document.getElementById('closeCredits').style.display = "block";
+        document.getElementById('modalCreditsFrame').style.display = "block";
         modalUp = true;
     }
 } //end showCredits
@@ -1463,6 +1479,7 @@ function showCredits() {
 function closeCreditFrame() {
     document.getElementById('creditsFrame').style.display = "none";
     document.getElementById('closeCredits').style.display = "none";
+    document.getElementById('modalCreditsFrame').style.display = "none";
     modalUp = false;
 } //end closeCreditFrame
 
@@ -1471,6 +1488,7 @@ function showUploadDownload() {
     if (!modalUp) {
         document.getElementById('closeUploadDownload').style.display = "block";
         document.getElementById('uploadDownloadFrame').style.display = "block";
+        document.getElementById('modalUploadFrame').style.display = "block";
         modalUp = true;
     }
 
@@ -1483,6 +1501,7 @@ function showUploadDownload() {
 function closeUploadDownloadFrame() {
     document.getElementById('closeUploadDownload').style.display = "none";
     document.getElementById('uploadDownloadFrame').style.display = "none";
+    document.getElementById('modalUploadFrame').style.display = "none";
 
     modalUp = false;
 } //end closeUploadDownloadFrame
@@ -1495,23 +1514,15 @@ function toggleIndex() {
         closeUploadDownloadFrame();
         if (document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd();
 
-        rightPopupWasOpen = false;
-        if (document.getElementById("popup").className == "popup") {
-            togglePopupDisplay();
-            rightPopupWasOpen = true;
-        }
-
         modalUp = true;
+        document.getElementById('modalCodexFrame').style.display = "block";
         document.getElementById('index').style.display = "block";
     }
     else if (document.getElementById('index').style.display == "block" && modalUp) {
 
         modalUp = false;
 
-        if (rightPopupWasOpen) {
-            togglePopupDisplay();
-        }
-
+        document.getElementById('modalCodexFrame').style.display = "none";
         document.getElementById('index').style.display = "none";
         document.activeElement.blur();
     }
