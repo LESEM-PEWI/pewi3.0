@@ -59,9 +59,9 @@ Cleaned and Prepared - August 2016
         <div class="designLevel">
             <!-- Input for level name -->
             <div class="form-group">
-                <label>PEWI Level/File Name:</label>
+                <label>Save this file as:</label>
                 <div>
-                    <input id="exerciseNumber" type="text" placeholder="Ex: N1">
+                    <input id="exerciseNumber" type="text" placeholder="Ex: N1 (auto-appends .txt)">
                 </div>
             </div>
     
@@ -69,7 +69,7 @@ Cleaned and Prepared - August 2016
     
             <!-- Input for beginning level script -->
             <div>
-                <label>Enter the level's opening script. Tell the user what they need to accomplish.</label>
+                <label>Tell the user what they need to accomplish in this level:</label>
                 <div>
                     <textarea id="beginningScript"></textarea>
                 </div>
@@ -90,7 +90,7 @@ Cleaned and Prepared - August 2016
     
             <!-- Input for yearly precipitation values -->
             <div>
-                <label>Choose the precipitation values for each year:</label>
+                <label>How much rain should there be each year?</label>
                     <br><label>Year 0: </label>
                     <select id="precipYear0">
                         <option value="24.58">24.58</option>
@@ -99,7 +99,7 @@ Cleaned and Prepared - August 2016
                         <option value="32.16">32.16</option>
                         <option value="34.34">34.34</option>
                         <option value="36.47">36.47</option>
-                        <option value="45.1">45.1</option>
+                        <option value="45.1">45.10</option>
                     </select>
                     <br><label>Year 1: </label>
                     <select id="precipYear1">
@@ -109,7 +109,7 @@ Cleaned and Prepared - August 2016
                         <option value="32.16">32.16</option>
                         <option value="34.34">34.34</option>
                         <option value="36.47">36.47</option>
-                        <option value="45.1">45.1</option>
+                        <option value="45.1">45.10</option>
                     </select>
                     <br><label>Year 2: </label>
                     <select id="precipYear2">
@@ -119,7 +119,7 @@ Cleaned and Prepared - August 2016
                         <option value="32.16">32.16</option>
                         <option value="34.34">34.34</option>
                         <option value="36.47">36.47</option>
-                        <option value="45.1">45.1</option>
+                        <option value="45.1">45.10</option>
                     </select>
                     <br><label>Year 3: </label>
                     <select id="precipYear3">
@@ -129,7 +129,7 @@ Cleaned and Prepared - August 2016
                         <option value="32.16">32.16</option>
                         <option value="34.34">34.34</option>
                         <option value="36.47">36.47</option>
-                        <option value="45.1">45.1</option>
+                        <option value="45.1">45.10</option>
                     </select>
             </div>
     
@@ -137,10 +137,9 @@ Cleaned and Prepared - August 2016
     
             <!-- Input for yearly monocultures -->
             <div>
-                <label>Choose a monoculture or "use preset map land covers" for each year:</label>
+                <label>Which crop should be planted each year?</label>
                 <br><label>Year 1: </label>
                 <select id="year1Monoculture">
-                    <option value="0">Use preset map land cover</option>
                     <option value="1">Conventional corn</option>
                     <option value="2">Conservation corn</option>
                     <option value="3">Conventional soybean</option>
@@ -156,10 +155,10 @@ Cleaned and Prepared - August 2016
                     <option value="13">Short rotation woody bioenergy</option>
                     <option value="14">Wetland</option>
                     <option value="15">Mixed fruits and vegetables</option>
+                    <option value="0">Default to the map's settings</option>
                 </select>
                 <br><label>Year 2: </label>
                 <select id="year2Monoculture">
-                    <option value="0">Use preset map land cover</option>
                     <option value="1">Conventional corn</option>
                     <option value="2">Conservation corn</option>
                     <option value="3">Conventional soybean</option>
@@ -175,10 +174,10 @@ Cleaned and Prepared - August 2016
                     <option value="13">Short rotation woody bioenergy</option>
                     <option value="14">Wetland</option>
                     <option value="15">Mixed fruits and vegetables</option>
+                    <option value="0">Default to the map's settings</option>
                 </select>
                 <br><label>Year 3: </label>
                 <select id="year3Monoculture">
-                    <option value="0">Use preset map land cover</option>
                     <option value="1">Conventional corn</option>
                     <option value="2">Conservation corn</option>
                     <option value="3">Conventional soybean</option>
@@ -194,6 +193,7 @@ Cleaned and Prepared - August 2016
                     <option value="13">Short rotation woody bioenergy</option>
                     <option value="14">Wetland</option>
                     <option value="15">Mixed fruits and vegetables</option>
+                    <option value="0">Default to the map's settings</option>
                 </select>
             </div>
     
@@ -201,9 +201,9 @@ Cleaned and Prepared - August 2016
     
             <!-- Input for end of level script -->
             <div>
-                <label>Enter the exercise's closing script. Congratulate the user and provide any further/concluding information.</label>
+                <label>When the player wins this level, what else do you want to tell them?</label>
                 <div>
-                    <textarea id="endingScript"></textarea>
+                    <textarea id="endingScript" placeholder="Ex: Congrats! Level Complete"></textarea>
                 </div>
             </div>
 
@@ -224,7 +224,7 @@ Cleaned and Prepared - August 2016
             <!-- Buttons to submit or reset level -->
             <div>
                 <button type="button" onClick="downloadLevel();">Submit</button>
-                <button type="reset">Reset</button>
+                <button type="button" onClick="location.reload();">Reset</button>
             </div>
     
             <br>
