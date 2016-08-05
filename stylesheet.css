@@ -692,6 +692,14 @@ select {
     box-shadow: 0px -2px 50px 12px rgba(0,0,0,1);
 }
 
+#modalCodexFrame {
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+    height:100%;
+    position: fixed;
+    width:100%;
+}
+
 
 #loading {
     position:absolute;
@@ -779,6 +787,7 @@ select {
     border: 2px solid white;
     border-radius:12px;
     color: white ;
+    cursor: default ;
     display:none;
     font-family: 'Amatic SC', cursive;
     font-size: 40px ;
@@ -802,7 +811,7 @@ select {
 }
 
 .dialogueButton, .dialogueButtonRolled {
-    background-color: rgb(0,0,0,0.9);
+    background-color: rgba(0,0,0,0.9);
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
     border-radius: 0px;
@@ -896,17 +905,6 @@ select {
 
 /* Escape Menu and Buttons */
 
-#modalEscapeFrame{
-    background-color: rgba(0,0,0,0.7);
-    display: none;
-    height:100%;
-    position: fixed;
-    width:100%;
-    
-    animation-duration: 1.0s;
-    animation-name: showEffect;
-}
-
 .mainEscapeButton, .unclickableMainEscapeButton {
    background-color: #40A4DF ;
    border: 2px solid white;
@@ -930,7 +928,7 @@ select {
 }
 
 .mainEscapeButton:hover {
-    background-color: #7cc1e9;
+    background-color: #7cc1e9 !important;
 }
    
 #exitToMenuButton{
@@ -975,7 +973,7 @@ select {
 }
 
 #confirmEscape {
-  background-color: rgb(0,0,0,0);
+  background-color: rgba(0,0,0,0);
   border-radius: 6px;
   display: inline-block;
   height: 0px;
@@ -1003,4 +1001,15 @@ select {
 
 #noConfirmEscape {
     margin: 0 auto;
+}
+
+#modalUploadFrame, #modalEscapeFrame, #modalCreditsFrame, #modalResultsFrame {
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+    height:100%;
+    position: fixed;
+    width:100%;
+    
+    animation-duration: 1.0s;
+    animation-name: showEffect;
 }
