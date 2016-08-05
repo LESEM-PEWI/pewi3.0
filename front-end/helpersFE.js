@@ -654,7 +654,8 @@ function onDocumentKeyDown(event) {
             //case 2 -- press z,2 to zoom out
         case 50:
             if (zIsDown && zoomedIn) {
-                switchToUnzoomedView();
+                //1 is dummy value for now
+                switchToUnzoomedView(1, true );
             }
             break;
             //case v - key to record multiplayer fields
@@ -663,6 +664,7 @@ function onDocumentKeyDown(event) {
             break;
             //case esc - view escape menu
         case 27:
+            highlightTile(-1) ;
             toggleEscapeFrame();
             break;
             //no default handler
@@ -1097,7 +1099,7 @@ function displayLevels(overlayHighlightType) {
             //close previous legend
             showLevelDetails(-1 * currentHighlightType);
             //highlight board
-            drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);d
+            drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
         }//end else/if group
     }//end else/if mapIsHighlighted
 } //end displayLevels()
@@ -1543,14 +1545,13 @@ function printPrecipYearType() {
                 return "Flood" ;
             }
         return "Wet";
-        
     }
 
 } //end printPrecipYearType
 
 //showInfo updates the bottom HUD
-function showInfo(string) {
-    if (!multiplayerAssigningModeOn) document.getElementById("currentInfo").innerHTML = string;
+function showInfo(stringToShow) {
+    if (!multiplayerAssigningModeOn) document.getElementById("currentInfo").innerHTML = stringToShow;
 } //end showInfo
 
 //clearInfo removes text from the bottom HUD
@@ -1583,35 +1584,35 @@ function togglePopupDisplay() {
             document.getElementById("popup").className = "popup";
             document.getElementById("dialogueButton").className = "dialogueButton";
         }
-    }
-
-}
+    }//end if
+}// togglePopupDisplay()
 
 //randomizeBoard randomly selects a landtype for each tile
 function randomizeBoard() {
 
     var prevPainter = painter;
-
     //for whole board
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
         //if tile exists
         if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
-
+            //getRandomInt is in back-end helperMethods
             if (!multiplayerAssigningModeOn) painter = getRandomInt(1, 15);
             else painter = getRandomInt(1, 6);
             changeLandTypeTile(i);
         }
-    }
+    }//end for all tiles
 
     painter = prevPainter;
 
 } //end randomizeBoard
 
 //toggleVisibility parses the options stored in the parameters div and toggles their visibility
+//elements that are on by default can be turned off with their id
+//some elements that are off by default can be toggled on with specific keywords
+//  see the switch statement and code in options Frame for more detail
 function toggleVisibility() {
 
-    //default off items
+    //reset default off items
     document.getElementById('statFrame').style.display = "none";
     document.getElementById('year0Button').style.display = "none";
     document.getElementById('paintPlayer1').style.display = "none";
@@ -1622,7 +1623,7 @@ function toggleVisibility() {
     document.getElementById('paintPlayer6').style.display = "none";
 
 
-    //reset items
+    //reset default on items
     for (var i = 1; i <= 15; i++) {
         var string = "paint" + i;
         document.getElementById(string).style.display = "inline-block";
@@ -1636,8 +1637,11 @@ function toggleVisibility() {
     document.getElementById('year3PrecipContainer').style.display = 'block';
     document.getElementById('resultsButton').style.display = 'block';
 
+    //reset precip
     immutablePrecip = false;
-
+    
+    //alright, now let's see what the parameters look like
+    // abscond them from the index.html page parameters div
     var strRawContents = document.getElementById('parameters').innerHTML;
 
     //split based on escape chars
@@ -1646,14 +1650,12 @@ function toggleVisibility() {
     }
     var arrLines = strRawContents.split("\n");
 
+    //for each line of the parameters div, as each keyword has its own line
     for (var i = 0; i < arrLines.length; i++) {
         if (arrLines[i]) {
 
             //giant switch
             switch (arrLines[i]) {
-                case "skyboxOn":
-                    skybox = true;
-                    break;
                 case "statsOn":
                     document.getElementById('statFrame').style.display = "block";
                     break;
@@ -1671,44 +1673,45 @@ function toggleVisibility() {
                 default:
                     document.getElementById(arrLines[i]).style.display = "none";
 
-
             }
-
         }
-    }
+    }//end for
 
 
     //toggle Precip visibility
     for (var y = 0; y <= 3; y++) {
 
-        var idName = "year" + y + "Precip";
+        var elementIdString = "year" + y + "Precip";
 
-        document.getElementById(idName).style.display = "inline-block";
+        document.getElementById(elementIdString).style.display = "inline-block";
 
-        var htmlstuff = (document.getElementById(idName + "Container").innerHTML).trim();
-        //console.log(htmlstuff[htmlstuff.length - 1] ) ;
-        if (!isNaN(htmlstuff[htmlstuff.length - 1])) {
-            //console.log("need to cut") ;
-            while (!(htmlstuff[htmlstuff.length - 1] == '>')) {
-                //console.log("cut...." + htmlstuff[htmlstuff.length - 1]);
-                htmlstuff = htmlstuff.slice(0, -1);
-            }
+        var currentInnerHtml = (document.getElementById(elementIdString + "Container").innerHTML).trim();
+        //if it's not, not a number, that is, if the last digit is a number
+        //  then we know the precip was immutable before and we need to cut 
+        //  this text off
+        if (!isNaN(currentInnerHtml[currentInnerHtml.length - 1])) {
+            while (!(currentInnerHtml[currentInnerHtml.length - 1] == '>')) {
+                //keep cutting off characters until we come back to the end tag of the
+                // selector element
+                currentInnerHtml = currentInnerHtml.slice(0, -1);
+            }//end while
 
-            document.getElementById(idName + "Container").innerHTML = htmlstuff;
-
+            //write the new string
+            document.getElementById(elementIdString + "Container").innerHTML = currentInnerHtml;
         }
-
+        //check if the precip shouldn't be changeable
+        // if this is the case, then show the precip values, but not in a drop-down selector
         if (immutablePrecip) {
-            document.getElementById(idName).style.display = "none";
+            document.getElementById(elementIdString).style.display = "none";
 
             var precipValue = boardData[currentBoard].precipitation[y];
-            idName += "Container";
-            var string = document.getElementById(idName).innerHTML;
+            elementIdString += "Container";
+            var string = document.getElementById(elementIdString).innerHTML;
             string = string + "  " + precipValue;
-            document.getElementById(idName).innerHTML = string;
+            document.getElementById(elementIdString).innerHTML = string;
         }
         else {
-            document.getElementById(idName).options[boardData[currentBoard].precipitationIndex[y]].selected = true;
+            document.getElementById(elementIdString).options[boardData[currentBoard].precipitationIndex[y]].selected = true;
         }
     }
 

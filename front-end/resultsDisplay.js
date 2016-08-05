@@ -70,13 +70,13 @@ function displayResults() {
                 string2 += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>";
                 break;
             case 7:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Herbaceous (non-pasture)</b></td></tr>";
+                string2 += "<tr class='tableHeading'><td><b>Perennial Herbaceous (non-pasture)</b></td></tr>";
                 break;
             case 11:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Legume</b></td></tr>";
+                string2 += "<tr class='tableHeading'><td><b>Perennial Legume</b></td></tr>";
                 break;
             case 12:
-                string2 += "<tr class='tableHeading'><td><b>Perrenial Wooded</b></td></tr>";
+                string2 += "<tr class='tableHeading'><td><b>Perennial Wooded</b></td></tr>";
                 break;
 
         } //end switch
@@ -423,17 +423,17 @@ if(category){
     
     { label: "dummy4", count: 0, number: 0},
     
-    {label: "Non-pasture Perrenial Herbs",
+    {label: "Non-pasture Perennial Herbs",
     count: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['prairieLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['wetlandLandUse'] / Totals.totalArea * 100 * 10) / 10) ,
     number: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['prairieLandUse'] * 10) / 10)  + (Math.round(Totals.landUseResults[year]['wetlandLandUse'] * 10) / 10) },
     
     { label: "dummy5", count: 0, number: 0},
     
-    {label: 'Perrenial Legume', count: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] * 10) / 10) },
+    {label: 'Perennial Legume', count: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] / Totals.totalArea * 100 * 10) / 10), number: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] * 10) / 10) },
     
     { label: "dummy6", count: 0, number: 0}, 
      
-    {label: "Perrenial Woodland",
+    {label: "Perennial Woodland",
     count: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] / Totals.totalArea * 100 * 10) / 10),
     number: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] * 10) / 10) }
      
@@ -490,8 +490,7 @@ var arc = d3.arc()
    .innerRadius(100) 
    .padAngle(0.01);
    
-  
-  
+   
  var pie = d3.pie()
   .value(function(d) { return d.count; })
   .sort(null);
@@ -535,7 +534,7 @@ var path = svg.selectAll('path')
             var percent = d.data.count ;
             mouseoverInfo.select('.label').html(d.data.label);
             mouseoverInfo.select('.count').html(d.data.number + " acres"); 
-            mouseoverInfo.select('.percent').html(percent + '%'); 
+            mouseoverInfo.select('.percent').html( (Math.round(percent*100) / 100) + '%'); 
             mouseoverInfo.style('border-color', color(d.data.label) );
             mouseoverInfo.style('opacity', 1);
             mouseoverInfo.style('display', 'block');

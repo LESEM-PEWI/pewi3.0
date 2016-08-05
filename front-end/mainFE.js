@@ -161,7 +161,8 @@ function initWorkspace(file) {
     checkIfSceneLoaded();
 } //end initWorkspace
 
-//animationFrames updates rendered frames, bird and zoom
+//animationFrames is the key function involved in webGl
+// here we set up a loop that calls itsef throughout the duration of the activity 
 function animationFrames() {
 
     //render animations
@@ -238,10 +239,20 @@ function zoomAnimation() {
         camera.updateProjectionMatrix();
 
         zoomFactor = zoomFactor + zoomOutInc;
-
-        if (zoomFactor > 1.1) zoomingOutNow = false;
+        
+        
+        console.log(zoomFactor) ;
+        
+        if (zoomFactor > 0.8) {
+            
+         if(zoomFactor >= 1.2){
+           zoomingOutNow = false; 
+         }
+         
+         zoomFactor = 1.0;
+      }
     }
-
+    
 } //end zoomAnimation
 
 //setupStaticBackground uses the old pewi graphics as a background image
@@ -357,15 +368,15 @@ function switchToZoomView(tile) {
 }
 
 //switchToUnzoomedView returns to the full map from a zoomed in tile and updates the tile's results.
-function switchToUnzoomedView(tile) {
+function switchToUnzoomedView(tile, shouldResetBoard) {
 
     zoomedIn = false;
 
     //Record the results of this tile and save to the main map results for this tile.
     //TODO
-
+    
     //Switch back to the full map
-    switchBoards(boardData[fullBoardBeforeZoom]);
+    if(shouldResetBoard) switchBoards(boardData[fullBoardBeforeZoom]);
 
     //reset the camera location
     controls.value = 10;
@@ -493,7 +504,7 @@ function confirmEscape() {
 
 //showMainMenu uses the esc key to return to the startup screen
 function showMainMenu() {
-
+    
     //show loading animation and startup page
     document.getElementById('loading').style.display = "block";
     document.getElementById('startUpFrame').contentWindow.recallMain();
@@ -501,22 +512,22 @@ function showMainMenu() {
 
     setTimeout(function() {
 
-        //reset paramters
-        window.top.document.getElementById('parameters').innerHTML = "";
-        toggleVisibility();
-
         document.getElementById('startupSequence').style.display = "block";
 
         //reset sandbox/level to original settings   
-        switchToUnzoomedView();
+        if(zoomedIn) switchToUnzoomedView(1,false);
         previousHover = null;
-        paintChange(1);
+        changeSelectedPaintTo(1);
         switchConsoleTab(1);
         switchYearTab(1);
         controls.reset();
 
+        //reset paramters
+        window.top.document.getElementById('parameters').innerHTML = "";
+        toggleVisibility();
+
         //clean up from level
-        if (levelGlobal > 0) {
+        if (levelGlobal > 0 || levelGlobal < 0) {
             //clean up from a level
             console.log("---cleaning up from exit---");
             resetLevel();
@@ -526,4 +537,5 @@ function showMainMenu() {
 
         document.getElementById('page').style.visibility = "hidden";
     }, 1000);
+    
 } //end showMainMenu
