@@ -441,12 +441,13 @@ body{
             <div id="graphics">
                 
                 <div id="contentsG">
+                    
                     <div id="yearHolder">
                         <div id="yearUpLand" onclick="changeLandPieBy(1);" class="upArrow"></div>
                         <div id="yearDownLand" onclick="changeLandPieBy(-1);" class="downArrow"></div>
                         <div onclick="switchLandPie(1)" id="toggleYearPie">To Categories</div>
                     </div>
-                    <div id="chart" class="chart"></div>
+                    <div id="landusePieChart" class="chart"></div>
                     <br />
 
                     <div id="precipSection">
@@ -540,7 +541,7 @@ function toggleYearForLandPlotBy(yearsToChange) {
 function changeLandPieBy(numberOfYears){
     //parent is index.html
     //resultsDisplay.js
-    parent.pie(toggleYearForLandPlotBy(numberOfYears), isLandPlotOnCategories) ;
+    parent.drawD3LandPieChart(toggleYearForLandPlotBy(numberOfYears), isLandPlotOnCategories) ;
 }//end changeLandPieBy()
 
 //change main pie chart from landList to Categories List
@@ -606,7 +607,7 @@ function toggleYearForESIAsterBy(yearsToChange) {
 //  requests that it be redrawn by parent
 function changeESIAsterBy(numberOfYearsToChange) {
     //index.html
-    parent.aster(toggleYearForESIAsterBy(numberOfYearsToChange));
+    parent.drawEcosystemIndicatorsDisplay(toggleYearForESIAsterBy(numberOfYearsToChange));
 }//end changeESIAsterBy
 
 </script>
