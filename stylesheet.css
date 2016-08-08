@@ -894,7 +894,7 @@ select {
 
 /* Some of the iframes */
 
-#options, #multiPlayer{
+#options, #multiplayer{
     height:100%;
     left:0px;
     position:fixed;

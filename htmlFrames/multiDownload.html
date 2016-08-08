@@ -76,7 +76,7 @@ var maxPlayers = 6;
 // the map added corresponds to the player number 
 function addToZip(playerNumber) {
     //player map creation, helperFE.js
-    var data = parent.createPlayerMap(playerNumber);
+    var data = parent.writeFileToDownloadString(playerNumber);
     //jszip 
     zip.file("player" + playerNumber + ".csv", data);
 }//end addToZip
