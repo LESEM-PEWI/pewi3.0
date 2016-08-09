@@ -85,12 +85,12 @@ function loadResources() {
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/bc892f.png'));
 
     //Select textures from the highlightArray for the multiplayer utility
-    var textureP1 = highlightArray[9];
-    var textureP2 = highlightArray[1];
-    var textureP3 = highlightArray[17];
+    var textureP1 = highlightArray[18];
+    var textureP2 = highlightArray[0];
+    var textureP3 = highlightArray[13];
     var textureP4 = highlightArray[19];
-    var textureP5 = highlightArray[5];
-    var textureP6 = highlightArray[4];
+    var textureP5 = highlightArray[1];
+    var textureP6 = highlightArray[26];
 
     //Add selected textures to the multiplayTextureArray
     multiplayerTextureArray = [textureClear, textureP1, textureP2, textureP3, textureP4, textureP5, textureP6];

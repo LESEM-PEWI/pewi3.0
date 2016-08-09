@@ -10,7 +10,7 @@ function init() {
   $.ajax({
        async: false,
        type: "GET",
-       url: './codexResources/mainTEST.dat',
+       url: './codexResources/main.dat',
        dataType: "text",
        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
        success: function (data) {
@@ -55,7 +55,7 @@ function setUpCodexData(data){
             //treat it as such
             case '#':
                 //add a header element to the left index
-                tableString += establishHeader(i,arrLines[i],arrLines[i+1],arrLines[i+2],padding);
+                tableString += establishHeader(i,arrLines[i],arrLines[i+1],arrLines[i+2],arrLines[i+3],padding);
                 //since this is a header, we expect child elements, add an expandible div
                 tableString += "<div id='" + i + "sub' class='subHolder'>" ;
                 //all of the sub elements should now be tabbed, thus increase padding variable (for left pad)
@@ -76,7 +76,7 @@ function setUpCodexData(data){
                 //-----
                 
                 //since we dealt with both 2 lines following, increment accordingly and move on
-                i += 3 ;
+                i += 4 ;
                 break;
                 
             //if '@' then element is a subElement
@@ -122,7 +122,7 @@ function setUpCodexData(data){
 
 //this function creates the html string needed for all header elements
 // it also stores the relevant data in dataHolder
-function establishHeader(i, line1, line2, line3, padding){
+function establishHeader(i, line1, line2, line3, line4, padding){
     
     //html part----
     
@@ -137,7 +137,22 @@ function establishHeader(i, line1, line2, line3, padding){
     
     dataHolder[i] = {} ;
     dataHolder[i].square1 = line2 ;
-    dataHolder[i].square2 = line3 ;  
+    dataHolder[i].square2 = line3 ;
+    dataHolder[i].hasMore = line4 ;
+    
+    if(dataHolder[i].hasMore){
+     var temp = line2.split(" + ") ;
+     //really the creator of the .dat file should sanitize input,
+     //  but just in case, we'll be extra careful and build in a check
+     if(temp.length > 1){
+        dataHolder[i].square1 = temp[0] ;
+        dataHolder[i].square1Advanced = temp[1] ;
+     }
+     else{
+         dataHolder[i].hasMore = 0 ;
+     }
+    }
+    
     dataHolder[i].title = line1.slice(3) ;
     
     return tempString ;
@@ -158,6 +173,20 @@ function establishElement(i, line1, line2, line3, line4, padding){
     dataHolder[i].square1 = line2 ;
     dataHolder[i].square2 = line3 ;
     dataHolder[i].hasMore = line4 ;
+    
+    if(dataHolder[i].hasMore){
+     var temp = line2.split(" + ") ;
+     //really the creator of the .dat file should sanitize input,
+     //  but just in case, we'll be extra careful and build in a check
+     if(temp.length > 1){
+        dataHolder[i].square1 = temp[0] ;
+        dataHolder[i].square1Advanced = temp[1] ;
+     }
+     else{
+         dataHolder[i].hasMore = 0 ;
+     }
+    }
+    
     dataHolder[i].title = line1.slice(3) ;
 
     return tempString ;
@@ -228,13 +257,20 @@ function arrangeContent(idOfElement) {
    document.getElementById('square2frame').src = dataHolder[idOfElement].square2  ;
    document.getElementById('title').innerHTML = dataHolder[idOfElement].title.toUpperCase() ;
    
+
    //if element hasMore attribute == 1, then we show the deaper button and assign it functionality   
    if(dataHolder[idOfElement].hasMore && dataHolder[idOfElement].hasMore == "1"){
-       document.getElementById('switchContentDepth').style.display = "block" ;
-        document.getElementById('switchContentDepth').onclick = function() { showAdvancedDetail(idOfElement) } ;
+       document.getElementById('switchAdvanced').style.display = "block" ;
+       document.getElementById('switchAdvanced').className = "switchContentDepth";
+       
+       document.getElementById('switchGeneral').style.display = "block" ;
+       document.getElementById('switchGeneral').className = "switchContentDepthSelected" ;
+       
+        document.getElementById('switchAdvanced').onclick = function() { showAdvancedDetail(idOfElement) } ;
    }
    else{
-       document.getElementById('switchContentDepth').style.display = "none" ;
+       document.getElementById('switchAdvanced').style.display = "none" ;
+       document.getElementById('switchGeneral').style.display = "none" ;
    }
    
     //also change the class of the item clicked if it's a subElement
@@ -308,18 +344,40 @@ function onDocumentKeyDown(event) {
 //gets the advanced detail page by appending "More" to the file name
 //sets up corresponding changes in the 'Advanced' Button
 function showAdvancedDetail(idOfCurrentElement) {
-    //change frame content
+    //change frame content square 2
     var string = dataHolder[idOfCurrentElement].square2 ;
     string = string.slice(0,-5) + "More.html";
     document.getElementById('square2frame').src =  string ;
+    
+    //change frame content square 1
+    document.getElementById('square1').innerHTML = dataHolder[idOfCurrentElement].square1Advanced ;
+    
     //change button attributes
-    document.getElementById('switchContentDepth').innerHTML = "Less"
-    document.getElementById('switchContentDepth').onclick = function() { showLessDetail(idOfCurrentElement) ;} ;
+    document.getElementById('switchAdvanced').className = "switchContentDepthSelected" ;
+    document.getElementById('switchGeneral').className = "switchContentDepth" ;
+    
+    document.getElementById('switchGeneral').onclick = function() { showLessDetail(idOfCurrentElement) ;} ;
 }//end showAdvancedDetail
 
 //resets element with more general content and button as well
 function showLessDetail(idOfCurrentElement){
+    
+    //reset square 2
     document.getElementById('square2frame').src = dataHolder[idOfCurrentElement].square2;
-    document.getElementById('switchContentDepth').innerHTML = "Advanced"
-    document.getElementById('switchContentDepth').onclick = function() { showAdvancedDetail(idOfCurrentElement) ;} ;
+    document.getElementById('switchAdvanced').className = "switchContentDepth";
+    document.getElementById('switchGeneral').className = "switchContentDepthSelected";
+    
+    //reset square 1
+    document.getElementById('square1').innerHTML = dataHolder[idOfCurrentElement].square1 ;
+    
+    document.getElementById('switchAdvanced').onclick = function() { showAdvancedDetail(idOfCurrentElement) ;} ;
 }//end showLessDetail
+
+//for use by helpersFE.js toggle index
+function resetHighlighting() {
+    var currentSelectedGroupElements = document.getElementsByClassName('selectedGroupElement');
+    //unhighlight the current selected element
+    if(currentSelectedGroupElements.length > 0) {
+        currentSelectedGroupElements[0].className = 'groupElement';
+    }
+}

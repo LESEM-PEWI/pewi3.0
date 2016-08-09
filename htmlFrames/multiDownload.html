@@ -47,18 +47,22 @@ Cleaned and Prepared - August 2016
         <div id="multiplayerInnerContainer">
 
             <div id="multiplayerInfoText">
-                Select the number of players you have assigned. Note that the players must be assigned in order. That is, if you are using a maximum of 4 players, it should be assigned with players 1 through 4 and not 3 through 6. When you are ready, click download to
-                save the zipped file.<br><br>Individual files can be distributed, modified, and then recombined (via utilities) to view aggregate results.
+                Select the number of players you have assigned. Note that the players must be assigned in order. 
+                That is, if you are using a maximum of 4 players, it should be assigned with players 1 through 4 and not 3 through 6.
+                Click download to save the zipped file.
+                <br><br>
+                Individual files can be distributed, loaded via 'Sandbox' mode, modified, and saved.
+                Then recombine them via PEWI’s “Utilities” to view aggregate results.
             </div>
 
             <div id="multiplayerPlayerNumberParameter" class="mainButton">
                 <div id="title">Assigned Players:</div>
 
                 <div id="playerNumber">6</div>
-                <div id="subtractPlayer" class="plusMinus" style="margin-left:20px;" onclick="changeNumberOfPlayersBy(-1)"><b>&ndash;</b></div>
+                <div id="subtractPlayer" class="plusMinus" style="margin-left:15px; padding-right:14px; font-weight:200;" onclick="changeNumberOfPlayersBy(-1)"><b>&#8595;</b></div>
                 <!-- Pipe -->|
                 <!-- /Pipe -->
-                <div id="addPlayer" class="plusMinus" style="visibility:hidden" onclick="changeNumberOfPlayersBy(+1)"><b>+</b></div>
+                <div id="addPlayer" class="plusMinus" style="visibility:hidden; font-weight:200;" onclick="changeNumberOfPlayersBy(+1)"><b>&#8593;</b></div>
             </div>
 
             <div id="multiplayerDownloadButton" onclick="createMultimapDownload();" class="mainButton">Download Multi-Map File</div>

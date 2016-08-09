@@ -47,7 +47,7 @@ function onResize() {
 //only needs to be called when an entirely new board is loaded, since each
 //tile is created from scratch
 function displayBoard() {
-
+    
     riverPoints = [];
 
     //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
@@ -83,7 +83,8 @@ function highlightTile(tileId) {
     if (tileId != -1 && !modalUp) {
 
         //remove currently highlighted land type from HUD if over a clear tile
-        if (boardData[currentBoard].map[tileId].landType[currentYear] == 0) {
+        if (boardData[currentBoard].map[tileId].landType[currentYear] == 0 ||
+            boardData[currentBoard].map[tileId].landType[0] == -1     ) {
 
             showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
 
@@ -333,14 +334,29 @@ function addTile(tile) {
     tileGeometry.faces.push(face);
     tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1, 0), new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)]); // uvs
 
+    
+
     //choose the relevant texture to add to the tile faces
     if (tile.landType[0] == 0) {
-        tileMaterial = new THREE.MeshBasicMaterial({
+        
+            tileMaterial = new THREE.MeshBasicMaterial({
             color: 0x000000,
             transparent: true,
             opacity: 0.0
-        });
+            });    
+  
         meshMaterials.push(tileMaterial);
+    }
+    else if(tile.landType[0] == -1) {
+        
+        tileMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFFFFFF,
+            transparent: true,
+            opacity: 0.7
+            });    
+    
+        meshMaterials.push(tileMaterial);
+        
     }
     else {
 
@@ -1385,7 +1401,8 @@ function writeFileToDownloadString(mapPlayerNumber) {
             boardData[currentBoard].map[i].area + ",";
 
         if (mapPlayerNumber > 0) {
-            string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "0,")
+            if(boardData[currentBoard].map[i].landType[0] == 0) string += "0," ;
+            else string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "-1,")
         }
         else {
             string += boardData[currentBoard].map[i].baseLandUseType + ",";
@@ -1551,7 +1568,16 @@ function toggleIndex() {
         document.getElementById('modalCodexFrame').style.display = "none";
         document.getElementById('index').style.display = "none";
         document.activeElement.blur();
-    }
+    
+        document.getElementById('index').contentWindow.document.getElementById('square1').innerHTML = "<img src='./imgs/indexMain.png'>";
+        document.getElementById('index').contentWindow.document.getElementById('square2frame').src = "";
+        document.getElementById('index').contentWindow.document.getElementById('switchGeneral').style.display = "none" ;
+        document.getElementById('index').contentWindow.document.getElementById('switchAdvanced').style.display = "none" ;
+        document.getElementById('index').contentWindow.document.getElementById('title').innerHTML = "";
+        
+        document.getElementById('index').contentWindow.resetHighlighting() ;
+        
+       }
 } //end toggleIndex
 
 //printLandUseType returns a display-worthy string of land type from numeric key

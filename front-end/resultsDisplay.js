@@ -2,34 +2,34 @@
 function displayResults() {
 
     //Create results table and append it to the proper tab of the results frame
-    var numericalTableString = generateResultsTable() ;
-    document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsN').innerHTML =  numericalTableString ;
+    var numericalTableString = generateResultsTable();
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsN').innerHTML = numericalTableString;
 
     //refresh frame properties
-    document.getElementById('resultsFrame').contentWindow.refreshPie() ;
-    
+    document.getElementById('resultsFrame').contentWindow.refreshPie();
+
     //create land Pie Chart
-    drawD3LandPieChart(currentYear, false) ;
+    drawD3LandPieChart(currentYear, false);
     //create precipitation Bar Graph
-    drawPrecipitationInformationChart() ;
+    drawPrecipitationInformationChart();
     //create display with aster plot of ecoIndicators and 
     // gradient indicators for ecoscores
     drawEcosystemIndicatorsDisplay(currentYear);
-    
+
     //toggle the arrows on the results page
-    document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0) ;
-    document.getElementById('resultsFrame').contentWindow.toggleYearForESIAsterBy(0) ;
-    
+    document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0);
+    document.getElementById('resultsFrame').contentWindow.toggleYearForESIAsterBy(0);
+
 } //end displayResults
 
 //generateResultsTable creates the string of html with all the numerical results
 // the code here is a little dense, but entirely straightforward
 // where possible, loops are created for years
 function generateResultsTable() {
-    
+
     var toMetricFactorArea = 2.471;
     var upToYear = boardData[currentBoard].calculatedToYear;
-    
+
     var frontendNames = ["Conventional Corn Area", "Conservation Corn Area", "Conventional Soybean Area", "Conservation Soybean Area",
         "Mixed Fruits and Vegetables Area", "Permanent Pasture Area", "Rotational Grazing Area", "Grass Hay Area",
         "Switchgrass Area", "Prairie Area", "Wetland Area", "Alfalfa Area", "Conventional Forest Area",
@@ -42,7 +42,7 @@ function generateResultsTable() {
     ];
 
     var htmlTableString = "";
-    
+
     //FIRST TABLE, LAND USE
 
     htmlTableString += "<table class='resultsTable'>";
@@ -80,7 +80,7 @@ function generateResultsTable() {
     //Add Data Rows
 
     for (var l = 0; l < backendDataIdentifiers.length; l++) {
-        
+
         //check for the cases where a header needs to be added
         switch (l) {
             case 0:
@@ -144,7 +144,7 @@ function generateResultsTable() {
             htmlTableString += "</td>";
 
         } //for each year
-        
+
         //units cell
         htmlTableString += "<td>hectares</td></tr>";
     }
@@ -163,7 +163,7 @@ function generateResultsTable() {
     backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "carbonSequestration", "grossErosion", "nitrateConcentration",
         "phosphorusLoad", "sedimentDelivery"
     ];
-    
+
     //variables for english to metric
     // results are generally in english units as the original thesis
     // had all calculations done this way
@@ -200,7 +200,7 @@ function generateResultsTable() {
     htmlTableString += "<th>Units (Metric) </th>";
 
     htmlTableString += "</tr>";
-    
+
     //table data
 
     for (var l = 0; l < backendDataIdentifiers.length; l++) {
@@ -276,14 +276,14 @@ function generateResultsTable() {
     backendDataIdentifiers = ["cornGrainYield", "soybeanYield", "mixedFruitsAndVegetablesYield", "cattleYield",
         "alfalfaHayYield", "grassHayYield", "switchgrassYield", "woodYield", "shortRotationWoodyBiomassYield"
     ];
-    
+
     //conversion factors for the yeilds
     conversionArray = [0.0254, 0.0254, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474, 0.002359737, 0.90718474];
 
     //fill in table rows with data
-    
+
     for (var l = 0; l < backendDataIdentifiers.length; l++) {
-        
+
         //keep track of subheadings, just 1 this time
         switch (l) {
             case 0:
@@ -319,7 +319,7 @@ function generateResultsTable() {
         //units cell, lots of different ones to keep track of here
         if (l < 2) htmlTableString += "<td>bu</td>";
         if (l == 2) htmlTableString += "<td>tons</td>";
-        if (l == 3) htmlTableString += "<td>animals</td>";  //what an odd unit
+        if (l == 3) htmlTableString += "<td>animals</td>"; //what an odd unit
         if (4 <= l && l < 7) htmlTableString += "<td>tons</td>";
         if (l == 7) htmlTableString += "<td>board-ft</td>";
         if (l == 8) htmlTableString += "<td>tons</td>";
@@ -387,7 +387,7 @@ function generateResultsTable() {
         htmlTableString += Math.round(boardData[currentBoard].precipitation[y] * 2.54 * 10) / 10;
         htmlTableString += "</td>";
     }
-    
+
     htmlTableString += "<td>cm</td>";
 
     htmlTableString += "</tr>";
@@ -413,15 +413,15 @@ function generateResultsTable() {
     htmlTableString += "</tr>";
 
     htmlTableString += "</table><br>";
-    
-    
+
+
     //===========================END TABLE
-    
+
     //well, we did all this work, we should probably do something with it.
     //let's give pass it off to some other function...
-    
-    return htmlTableString ;
-}//end generateResultsTable()
+
+    return htmlTableString;
+} //end generateResultsTable()
 
 // this function creates the pie chart at the top of the graphics in the results page
 //it uses d3 and has the option to be displayed by categories or by a complete listing
@@ -439,59 +439,58 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
         //data groupings, dummy labels are there to increase color contrast
         dataset = [{
-                label: "Annual Grain",
-                count: (Math.round(Totals.landUseResults[year]['conventionalCornLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationCornLandUse'] / Totals.totalArea * 100 * 10) / 10),
-                number: (Math.round(Totals.landUseResults[year]['conventionalCornLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationCornLandUse'] * 10) / 10)
-            }, {
-                label: "dummy1",
-                count: 0,
-                number: 0
-            }, {
-                label: "Annual Legume",
-                count: (Math.round(Totals.landUseResults[year]['conventionalSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10),
-                number: (Math.round(Totals.landUseResults[year]['conventionalSoybeanLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationSoybeanLandUse'] * 10) / 10)
-            }, {
-                label: "dummy2",
-                count: 0,
-                number: 0
-            }, {
-                label: 'Mixed Fruits/Vegetables',
-                count: (Math.round(Totals.landUseResults[year]['mixedFruitsVegetablesLandUse'] / Totals.totalArea * 100 * 10) / 10),
-                number: (Math.round(Totals.landUseResults[year]['mixedFruitsVegetablesLandUse'] * 10) / 10)
-            }, {
-                label: "dummy3",
-                count: 0,
-                number: 0
-            }, {
-                label: "Pasture",
-                count: (Math.round(Totals.landUseResults[year]['permanentPastureLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['rotationalGrazingLandUse'] / Totals.totalArea * 100 * 10) / 10),
-                number: (Math.round(Totals.landUseResults[year]['permanentPastureLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['rotationalGrazingLandUse'] * 10) / 10)
-            }, {
-                label: "dummy4",
-                count: 0,
-                number: 0
-            }, {
-                label: "Non-pasture Perennial Herbs",
-                count: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['prairieLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['wetlandLandUse'] / Totals.totalArea * 100 * 10) / 10),
-                number: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['prairieLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['wetlandLandUse'] * 10) / 10)
-            }, {
-                label: "dummy5",
-                count: 0,
-                number: 0
-            }, {
-                label: 'Perennial Legume',
-                count: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] / Totals.totalArea * 100 * 10) / 10),
-                number: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] * 10) / 10)
-            }, {
-                label: "dummy6",
-                count: 0,
-                number: 0
-            }, {
-                label: "Perennial Woodland",
-                count: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] / Totals.totalArea * 100 * 10) / 10),
-                number: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] * 10) / 10)
-            }
-        ];
+            label: "Annual Grain",
+            count: (Math.round(Totals.landUseResults[year]['conventionalCornLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationCornLandUse'] / Totals.totalArea * 100 * 10) / 10),
+            number: (Math.round(Totals.landUseResults[year]['conventionalCornLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationCornLandUse'] * 10) / 10)
+        }, {
+            label: "dummy1",
+            count: 0,
+            number: 0
+        }, {
+            label: "Annual Legume",
+            count: (Math.round(Totals.landUseResults[year]['conventionalSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10),
+            number: (Math.round(Totals.landUseResults[year]['conventionalSoybeanLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationSoybeanLandUse'] * 10) / 10)
+        }, {
+            label: "dummy2",
+            count: 0,
+            number: 0
+        }, {
+            label: 'Mixed Fruits/Vegetables',
+            count: (Math.round(Totals.landUseResults[year]['mixedFruitsVegetablesLandUse'] / Totals.totalArea * 100 * 10) / 10),
+            number: (Math.round(Totals.landUseResults[year]['mixedFruitsVegetablesLandUse'] * 10) / 10)
+        }, {
+            label: "dummy3",
+            count: 0,
+            number: 0
+        }, {
+            label: "Pasture",
+            count: (Math.round(Totals.landUseResults[year]['permanentPastureLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['rotationalGrazingLandUse'] / Totals.totalArea * 100 * 10) / 10),
+            number: (Math.round(Totals.landUseResults[year]['permanentPastureLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['rotationalGrazingLandUse'] * 10) / 10)
+        }, {
+            label: "dummy4",
+            count: 0,
+            number: 0
+        }, {
+            label: "Non-pasture Perennial Herbs",
+            count: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['prairieLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['wetlandLandUse'] / Totals.totalArea * 100 * 10) / 10),
+            number: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['prairieLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['wetlandLandUse'] * 10) / 10)
+        }, {
+            label: "dummy5",
+            count: 0,
+            number: 0
+        }, {
+            label: 'Perennial Legume',
+            count: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] / Totals.totalArea * 100 * 10) / 10),
+            number: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] * 10) / 10)
+        }, {
+            label: "dummy6",
+            count: 0,
+            number: 0
+        }, {
+            label: "Perennial Woodland",
+            count: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] / Totals.totalArea * 100 * 10) / 10),
+            number: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] * 10) / 10)
+        }];
     }
     //else we'll set it up for listing all of the land types
     else {
@@ -722,7 +721,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
         .style("font-weight", "bold")
         .text("Year " + year);
 } //end drawD3LandPieChart()
-    
+
 //this function mainly is responsible for setting up the precipitation bar graph
 // as well as the left utility  which gives info on the year's precip and a nice image
 function drawPrecipitationInformationChart() {
@@ -847,7 +846,7 @@ function drawPrecipitationInformationChart() {
     }
 
     //d3 stuff, again, I won't comment too heavily since much of this is standard practice
-    
+
     //bar chart width and height
     // note that these are closely interrelated to css styling on results page
     var width = 420;
@@ -885,7 +884,7 @@ function drawPrecipitationInformationChart() {
 
     mouseoverInfo.append('img')
         .attr('class', 'precipImg');
-    
+
     //setup precipitation bar chart    
 
     var bar = chart.selectAll("g")
@@ -938,7 +937,7 @@ function drawPrecipitationInformationChart() {
     //lastly, after all of the chart setup, just setup the default information in the
     //  precipitation graphic to the left
     setupPrecipInfo(currentYear);
-    
+
 } //end drawPrecipitationInformationChart()
 
 //this funtion creates and animates the Ecoscores aster plot
@@ -954,56 +953,55 @@ function drawEcosystemIndicatorsDisplay(year) {
 
     //set up d3 dataset
     var dataset = [{
-            name: "Nitrate Concentration",
-            score: (Math.round(Totals.nitrateConcentrationScore[year] * 10) / 10),
-            color: "#1f77b4",
-            backColor: "navy",
-            raw: (Math.round(Totals.nitrateConcentration[year] * 10) / 10) + " ppm"
-        }, {
-            name: "Phosphorus Load",
-            score: (Math.round(Totals.phosphorusLoadScore[year] * 10) / 10),
-            color: "#ff7f0e",
-            backColor: "navy",
-            raw: (Math.round(Totals.phosphorusLoad[year] * 10) / 10) + " tons"
-        }, {
-            name: "Sediment Delivery",
-            score: (Math.round(Totals.sedimentDeliveryScore[year] * 10) / 10),
-            color: "	#2ca02c",
-            backColor: "navy",
-            raw: (Math.round(Totals.sedimentDelivery[year] * 10) / 10) + " tons"
-        }, {
-            name: "Carbon Sequestration",
-            score: (Math.round(Totals.carbonSequestrationScore[year] * 10) / 10),
-            color: "#d62728",
-            backColor: "maroon",
-            raw: (Math.round(Totals.carbonSequestration[year] * 10) / 10) + " tons"
-        }, {
-            name: "Gross Erosion",
-            score: (Math.round(Totals.grossErosionScore[year] * 10) / 10),
-            color: "#9467bd",
-            backColor: "maroon",
-            raw: (Math.round(Totals.grossErosion[year] * 10) / 10) + " tons"
-        }, {
-            name: "Game Wildlife",
-            score: (Math.round(Totals.gameWildlifePointsScore[year] * 10) / 10),
-            color: "#8c564b",
-            backColor: "tomato",
-            raw: (Math.round(Totals.gameWildlifePoints[year] * 10) / 10) + " pts"
-        }, {
-            name: "Biodiversity",
-            score: (Math.round(Totals.biodiversityPointsScore[year] * 10) / 10),
-            color: "#e377c2",
-            backColor: "tomato",
-            raw: (Math.round(Totals.biodiversityPoints[year] * 10) / 10) + " pts"
-        }
-    ];
+        name: "Nitrate Concentration",
+        score: (Math.round(Totals.nitrateConcentrationScore[year] * 10) / 10),
+        color: "#1f77b4",
+        backColor: "navy",
+        raw: (Math.round(Totals.nitrateConcentration[year] * 10) / 10) + " ppm"
+    }, {
+        name: "Phosphorus Load",
+        score: (Math.round(Totals.phosphorusLoadScore[year] * 10) / 10),
+        color: "#ff7f0e",
+        backColor: "navy",
+        raw: (Math.round(Totals.phosphorusLoad[year] * 10) / 10) + " tons"
+    }, {
+        name: "Sediment Delivery",
+        score: (Math.round(Totals.sedimentDeliveryScore[year] * 10) / 10),
+        color: "	#2ca02c",
+        backColor: "navy",
+        raw: (Math.round(Totals.sedimentDelivery[year] * 10) / 10) + " tons"
+    }, {
+        name: "Carbon Sequestration",
+        score: (Math.round(Totals.carbonSequestrationScore[year] * 10) / 10),
+        color: "#d62728",
+        backColor: "maroon",
+        raw: (Math.round(Totals.carbonSequestration[year] * 10) / 10) + " tons"
+    }, {
+        name: "Gross Erosion",
+        score: (Math.round(Totals.grossErosionScore[year] * 10) / 10),
+        color: "#9467bd",
+        backColor: "maroon",
+        raw: (Math.round(Totals.grossErosion[year] * 10) / 10) + " tons"
+    }, {
+        name: "Game Wildlife",
+        score: (Math.round(Totals.gameWildlifePointsScore[year] * 10) / 10),
+        color: "#8c564b",
+        backColor: "tomato",
+        raw: (Math.round(Totals.gameWildlifePoints[year] * 10) / 10) + " pts"
+    }, {
+        name: "Biodiversity",
+        score: (Math.round(Totals.biodiversityPointsScore[year] * 10) / 10),
+        color: "#e377c2",
+        backColor: "tomato",
+        raw: (Math.round(Totals.biodiversityPoints[year] * 10) / 10) + " pts"
+    }];
 
     //chart parameters
     var width = 360;
     var height = 360;
     var radius = Math.min(width, height) / 2;
     var innerRadius = 75;
-    
+
     //d3 stuff, once again, mostly standard, although a little less so
     //  not heavily commented for that reason
 
@@ -1026,7 +1024,7 @@ function drawEcosystemIndicatorsDisplay(year) {
         });
 
     var outlineArc = d3.arc()
-        .innerRadius(innerRadius)
+        .innerRadius(radius-1)
         .outerRadius(radius);
 
     var coverArc = d3.arc()
@@ -1043,15 +1041,15 @@ function drawEcosystemIndicatorsDisplay(year) {
         return ['M', x, y, 'L', x + Math.sin(startAngle) * r, y - (Math.cos(startAngle) * r),
             'A', r, r, 0, largeArc, sweepFlag, x + Math.sin(endAngle) * r, y - (Math.cos(endAngle) * r), 'Z'
         ].join(' ');
-    }//end nested function
-    
+    } //end nested function
+
     //function to create the tween animation moving the values from inner radius to their
     // correct positions
     function interpolateSVGArc(x, y, r, startAngle, endAngle) {
         return function(t) {
             return generateSVGArc(x, y, (r - innerRadius) * t + innerRadius, startAngle, endAngle);
         };
-    }//end nested function
+    } //end nested function
 
     //d3 programming for creating the aster plot
     // this is a very sneaky plot, as it is essentially a pie chart with variable outter radii
@@ -1062,7 +1060,7 @@ function drawEcosystemIndicatorsDisplay(year) {
             return 1; //everything has equal value, split up the pie chart accordingly
         })
         .sort(null);
-        
+
     //create mouseover information elements
 
     var mouseoverInfo = d3.select(asterChart)
@@ -1172,7 +1170,7 @@ function drawEcosystemIndicatorsDisplay(year) {
         if (number > 0) return "#808080";
         //else
         return "#333333";
-    }//end nested function
+    } //end nested function
 
 
     var nameArray = [];
@@ -1195,7 +1193,7 @@ function drawEcosystemIndicatorsDisplay(year) {
     colorLinker[nameArray[0]] = getColor(sum / 3);
 
     //soil quality indicator
-        
+
     nameArray.push("Soil Quality");
 
     var sum = 0;
@@ -1203,9 +1201,9 @@ function drawEcosystemIndicatorsDisplay(year) {
         sum += dataset[i].score;
     }
 
-    dataLinker[nameArray[1]] = sum / 2;  //average them
+    dataLinker[nameArray[1]] = sum / 2; //average them
     colorLinker[nameArray[1]] = getColor(sum / 2);
-    
+
     //habitat quality indicator
 
     nameArray.push("Habitat Quality");
@@ -1219,7 +1217,7 @@ function drawEcosystemIndicatorsDisplay(year) {
     colorLinker[nameArray[2]] = getColor(sum / 2);
 
     //now that all of this is set up, now create the graphic, d3
-    
+
     var container = document.getElementById('resultsFrame').contentWindow.document.getElementById('asterContainer');
 
     var svg2 = d3.select(container)
@@ -1245,7 +1243,7 @@ function drawEcosystemIndicatorsDisplay(year) {
             var vert = i * height + offset;
             return 'translate(' + horz + ',' + vert + ')';
         });
-    
+
     //add the text headings for the indicators
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
@@ -1280,5 +1278,5 @@ function drawEcosystemIndicatorsDisplay(year) {
             //animate the change of the color gradient from black to bright blue 
             return d3.interpolateRgb("#000000", this.getAttribute("fill"));
         });
-        
-}//end drawEcosystemIndicatorsDisplay()
+
+} //end drawEcosystemIndicatorsDisplay()
