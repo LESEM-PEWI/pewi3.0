@@ -450,6 +450,19 @@ body{
     
  }
  
+ #checks{
+     position:absolute;
+     width:20px;
+     margin-left:595px;
+     margin-top:99px;
+ }
+ 
+ .yearCheckbox{
+     opacity:1;
+     padding:0px;
+     margin:0px;
+     
+ }
  
 </style>
 
@@ -487,7 +500,8 @@ body{
                     </div>
 
                     <br />
-
+                    
+                    <!-- 
                     <div id="asterChart"></div>
                     
                     <div id="yearHolder2">
@@ -495,16 +509,21 @@ body{
                         <div id="yearDownESI" onclick="changeESIAsterBy(-1);" class="downArrow"></div>
                     </div>
                     
+                   
                     <div id="asterHUD">
                         <div id="asterContainer"></div>
                     </div>
+                    -->
                     
                     <div id="radarContainer" class="chart">
                         <div id="radarChart"></div>
                         <div id="radarLegend"></div>
+                        <div id="checks">
+                            <input type="checkbox" id="checkboxYear1" checked onclick="radarPlotYearToggle(1);" class="yearCheckbox" >
+                            <input type="checkbox" id="checkboxYear2" checked onclick="radarPlotYearToggle(2);" class="yearCheckbox" >
+                            <input type="checkbox" id="checkboxYear3" checked onclick="radarPlotYearToggle(3);" class="yearCheckbox" >
+                        </div>
                     </div>
-
-
                 </div>
             </div>
 
@@ -645,6 +664,38 @@ function changeESIAsterBy(numberOfYearsToChange) {
     //index.html
     parent.drawEcosystemIndicatorsDisplay(toggleYearForESIAsterBy(numberOfYearsToChange));
 }//end changeESIAsterBy
+
+function radarPlotYearToggle(yearToToggle){
+    
+    if(!(document.getElementById('checkboxYear' + yearToToggle).checked) ){
+        window.top.removeYearFromRadar(yearToToggle) ;
+    }
+    else{
+        window.top.addBackYearToRadar(yearToToggle) ;
+    }
+    
+}
+
+
+function toggleYearCheckboxes() {
+    var upTo = Number(document.getElementById('upTo').innerHTML) ;
+    var yearMax = 3 ;
+    
+    for(var y = 1; y <= yearMax; y++){
+        console.log('turning on  :  checkboxYear' + y) ;
+        document.getElementById('checkboxYear' + y).style.visibility = "visible" ;
+        document.getElementById('checkboxYear' + y).checked = true ;
+    }
+    
+    while(yearMax - upTo > 0){
+        console.log('turning off  :  checkboxYear' + yearMax) ;
+        document.getElementById('checkboxYear' + yearMax).style.visibility = "hidden" ;
+        yearMax -= 1 ;
+    }
+    
+}
+
+
 
 </script>
     

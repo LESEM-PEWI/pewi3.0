@@ -14,19 +14,19 @@ function displayResults() {
     drawPrecipitationInformationChart();
     //create display with aster plot of ecoIndicators and 
     // gradient indicators for ecoscores
-    drawEcosystemIndicatorsDisplay(currentYear);
+    //drawEcosystemIndicatorsDisplay(currentYear);
 
     var tempObj = [];
     //test functions
-    for(var y = 1; y <= currentYear; y++){
+    for(var y = 1; y <= boardData[currentBoard].calculatedToYear ; y++){
         tempObj.push(y) ;
     }
     drawEcosystemRadar(tempObj);
-    
-
+    document.getElementById('resultsFrame').contentWindow.toggleYearCheckboxes() ;
     //toggle the arrows on the results page
+    
     document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0);
-    document.getElementById('resultsFrame').contentWindow.toggleYearForESIAsterBy(0);
+    //document.getElementById('resultsFrame').contentWindow.toggleYearForESIAsterBy(0);
 
 } //end displayResults
 
@@ -1602,6 +1602,9 @@ var RadarChart = {
 					 .data([dataValues])
 					 .enter()
 					 .append("polygon")
+					 .attr("id", function(d, i) {
+					     return "polygon-serie" + series + "num" + i ;
+					 })
 					 .attr("class", "radar-chart-serie"+series)
 					 .style("stroke-width", "2px")
 					 .style("stroke", cfg.color(series))
@@ -1628,6 +1631,9 @@ var RadarChart = {
 	  g.selectAll(".nodes")
 		.data(y).enter()
 		.append("svg:circle")
+		.attr("id", function(d, i) {
+					     return "circle-serie" + series + "num" + i ;
+					 })
 		.attr("class", "radar-chart-serie"+series)
 		.attr('r', cfg.radius)
 		.attr("alt", function(j){return Math.max(j.value, 0)})
@@ -1683,3 +1689,24 @@ var RadarChart = {
 	
   }
 };
+
+function removeYearFromRadar(yearToRemove){
+    
+   var elementsToTrash = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName('radar-chart-serie' + (yearToRemove - 1)) ;
+   //console.log(elementsToTrash) ;
+   
+   for(var e=0; e < elementsToTrash.length; e++){
+       document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToTrash[e].id).style.visibility = "hidden" ;
+   }
+    
+}
+
+function addBackYearToRadar(yearToAdd){
+    
+    var elementsToRevive = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName('radar-chart-serie' + (yearToAdd - 1)) ;
+    
+     for(var e=0; e < elementsToRevive.length; e++){
+       document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToRevive[e].id).style.visibility = "visible" ;
+   }
+    
+}
