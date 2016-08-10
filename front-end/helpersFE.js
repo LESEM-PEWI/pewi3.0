@@ -737,11 +737,11 @@ function onDocumentKeyDown(event) {
             break;
             //case r - randomize land types
         case 82:
-            if (modalUp != true){
+            if (modalUp != true && currentHighlightType < 4){
                 randomizeBoard();
                 //in the case that the map is currently highlighted for a ecosystem indicator,
                 //keep highlighting on and randomize the land types
-                if(currentHighlightType > 0 && currentHighlightType < 4){
+                if(currentHighlightType > 0){
                     refreshBoard(true);
                     setupRiver();
                 }
@@ -967,6 +967,7 @@ function roll(value) {
             document.getElementById('pick').src = "./imgs/pickIn.png"
             document.getElementById('tabButtons').className = "tabButtonsRolled";
             document.getElementById('leftConsole').className = "leftConsoleRolled";
+
         }
         else {
             document.getElementById('toolsButton').style.left = "135px";
@@ -974,6 +975,7 @@ function roll(value) {
             document.getElementById('pick').src = "./imgs/pickOut.png"
             document.getElementById('tabButtons').className = "tabButtons";
             document.getElementById('leftConsole').className = "leftConsole";
+            
         }
     } //end value == 1
 
@@ -1033,6 +1035,12 @@ function showLevelDetails(value) {
         document.getElementById('subwatershedBoundaries').className = "featureSelectorIconSelected";
         document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
     } //end else/if group
+    
+    //show soil class legend
+    else if (value == 8) {
+        document.getElementById('soilClass').className = "featureSelectorIconSelected";
+        document.getElementById('soilClassDetailsList').className = "physicalDetailsList";
+    }
 
     //hide ecosystem indicator legends
     if (value > -4 && value < 0) {
@@ -1199,6 +1207,9 @@ function displayLevels(overlayHighlightType) {
         case 'subwatershed':
             selectionHighlightNumber = 7;
             break;
+        case 'soil':
+            selectionHighlightNumber = 8;
+            break;
     } //end switch
 
     //map is not previously highlighted
@@ -1311,7 +1322,54 @@ function getHighlightColor(highlightType, tileId) {
             case 0:
                 return 35;
         }//end switch
-    }//end else/if group
+    }
+    //soil class highlight color indicies
+    else if(highlightType == "soil"){
+        
+        var soil = boardData[currentBoard].map[tileId].soilType;
+        
+        switch(soil) {
+            case "A":
+                //color 097c2f
+                return 19;
+            case "B":
+                //color a84597
+                return 14;
+            case "C":
+                //color 919246
+                return 30;
+            case "D":
+                //color c97b08
+                return 1;
+            case "G":
+                //color 9a3010
+                return 3;
+            case "K":
+                //color c7eab4
+                return 6;
+            case "L":
+                //color cc6578
+                return 13;
+            case "M":
+                //color e6bb00
+                return 0;
+            case "N":
+                //color 5e6e71
+                return 33;
+            case "O":
+                //color 837856
+                return 34;
+            case "Q":
+                //color 41b7c5
+                return 8;
+            case "T":
+                //color 0053b3
+                return 31;
+            case "Y":
+                //color 87ceee
+                return 18;
+        }
+    }
 } //end getHighlightColor
 
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
@@ -1398,6 +1456,38 @@ function getHighlightedInfo(tileId) {
             case 7:
                 highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed;
                 break;
+            //create string for soil class
+            case 8:
+                soil = boardData[currentBoard].map[tileId].soilType;
+                switch(soil) {
+                    case "A":
+                        return "Clarion 138B";
+                    case "B":
+                        return "Buckney 1636";
+                    case "C":
+                        return "Canisteo 507";
+                    case "D":
+                        return "Downs 162D2";
+                    case "G":
+                        return "Gara-Armstrong 993E2";
+                    case "K":
+                        return "Ackmore-Colo 5B";
+                    case "L":
+                        return "Coland 135";
+                    case "M":
+                        return "Tama 120C2";
+                    case "N":
+                        return "Nicollet 55";
+                    case "O":
+                        return "Okoboji 90";
+                    case "Q":
+                        return "Tama 120B";
+                    case "T":
+                        return "Muscatine 119";
+                    case "Y":
+                        return "Noadaway 220";
+                }
+                
         }
         
         return highlightString;

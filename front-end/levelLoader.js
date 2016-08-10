@@ -46,8 +46,8 @@ function loadLevel(level){
         case 0:
             levelGlobal = 0 ;
             initWorkspace('./data.csv');            
-            if(achievedAllLevels){updatePopup("Congratulations! You made it through all the levels. Try out your newfound knowledge in Sandbox mode!");}
-            else{ updatePopup("Welcome to Sandbox Mode! <br><br> In the sandbox you can play freely, without the limits imposed by specific exercises and levels."); }
+            if(achievedAllLevels){updatePopup("Congratulations! You made it through all the levels. Try out your newfound knowledge in Sandbox mode!"); setTimeout(function() {togglePopupDisplay();}, 5000);}
+            else{ updatePopup("Welcome to Sandbox Mode! <br><br> In the sandbox you can play freely, without the limits imposed by specific exercises and levels."); setTimeout(function() {togglePopupDisplay();}, 5000);}
             break;
         //multiplayer assigning mode
         case -1:
