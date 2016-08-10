@@ -1,180 +1,201 @@
-# + Data
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-@ : Scores
-<img src="./codexResources/imgs/test3.jpg" />
-text1.txt
-@ : Maps
-<img src="./codexResources/imgs/test3.jpg" />
-text1.txt
-@ : Results
-<img src="./codexResources/imgs/test3.jpg" />
-text1.txt
-$
-
-
 # + Land Use
-<img src="./codexResources/imgs/test1.jpg" />
-landuse.txt
+<img src="./codexResources/imgs/riparianbuffer.jpeg" />
+./codexResources/text/landUse.html
+1
 @ : Conventional Corn
-<iframe width="500" height="300" src="https://www.youtube.com/embed/pGJH_-S_MGs" frameborder="0" allowfullscreen></iframe>
-conventionalcorn.txt
+<iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/conventionalCorn.html
+1
 @ : Conventional Soy
 <img src="./codexResources/imgs/conventionalsoy.png" />
-conventionalsoy.txt
+./codexResources/text/conventionalSoy.html
+1
 @ : Conservation Corn
 <img src="./codexResources/imgs/conservationcorn.png" />
-conservationcorn.txt
+./codexResources/text/conservationCorn.html
+1
 @ : Conservation Soy
 <img src="./codexResources/imgs/coservationsoy.png" />
-conservationsoy.txt
+./codexResources/text/conservationSoy.html
+1
 @ : Alfalfa
 <img src="./codexResources/imgs/alfalfa.png" />
-alfalfa.txt
+./codexResources/text/alfalfa.html
+1
 @ : Fruit and Veg
 <img src="./codexResources/imgs/mixedfruitandvegetable.png" />
-mixedfruitandvegetable.txt
+./codexResources/text/mixedFruitAndVegetable.html
+1
 @ : Grass Hay
 <img src="./codexResources/imgs/grasshay.png" />
-grasshay.txt
+./codexResources/text/grassHay.html
+1
 @ : Switchgrass
 <img src="./codexResources/imgs/switchgrass.png" />
-switchgrass.txt
+./codexResources/text/switchgrass.html
+1
 @ : Permanent Pasture
 <img src="./codexResources/imgs/permanentpasture.png" />
-permanentpasture.txt
+./codexResources/text/permanentPasture.html
+1
 @ : Rotational Grazing
 <img src="./codexResources/imgs/rotationalgrazing.png" />
-rotationalgrazing.txt
+./codexResources/text/rotationalGrazing.html
+1
 @ : Wetland
 <img src="./codexResources/imgs/wetland.png" />
-wetland.txt
+./codexResources/text/wetland.html
+1
 @ : Prairie
 <img src="./codexResources/imgs/prairie.png" />
-prairie.txt
+./codexResources/text/prairie.html
+1
 @ : Conventional Forest
 <img src="./codexResources/imgs/conventionalforest.png" />
-conventionalforest.txt
+./codexResources/text/conventionalForest.html
+1
 @ : Conservation Forest
 <img src="./codexResources/imgs/conservationforest.png" />
-conservationforest.txt
+./codexResources/text/conservationForest.html
+1
 @ : Short-Rotation Woody Bioenergy
 <img src="./codexResources/imgs/shortrotation.png" />
-shortrotation.txt
+./codexResources/text/shortRotation.html
+1
 $
-
-
-@ : Management Practices
-<img src="./codexResources/imgs/test1.jpg" />
-text1.txt
-
-
-
+# + Physical Features
+<img src="./codexResources/imgs/test3.jpg" />
+./codexResources/text/physicalFeatures.html
+1
+@ : Topographic Relief
+<img src="./codexResources/imgs/test4.jpg" />
+topographicrelief.txt
+1
+@ : Flood Frequency
+<img src="./codexResources/imgs/test4.jpg" />
+floodfrequency.txt
+1
+@ : Strategic Wetlands
+<img src="./codexResources/imgs/test4.jpg" />
+strategicwetlands.txt
+1
+@ : Subwatersheds
+<img src="./codexResources/imgs/test4.jpg" />
+subwatershedboundaries.txt
+1
+@ : Drainage Class
+<img src="./codexResources/imgs/test4.jpg" />
+drainageclass.txt
+1
+$
+@ : Precipitation
+<img src="./codexResources/imgs/test3.jpg" />
+./codexResources/text/precipitation.html
+1
+# + Scores
+<img src="./codexResources/imgs/test3.jpg" />
+./codexResources/text/textTemplate.html
+1
+$
+# + Management Practices
+<img src="./codexResources/imgs/test3.jpg" />
+./codexResources/text/textTemplate.html
+1
+$
 # + Modules
 <img src="./codexResources/imgs/test1.jpg" />
-modules.txt
-
+./codexResources/text/modules.html
+1
 # + Habitat
 <img src="./codexResources/imgs/test1.jpg" />
-habitat.txt
+./codexResources/text/habitat.html
+1
 @ : Biodiversity
 <img src="./codexResources/imgs/test1.jpg" />
-biodiversity.txt
+./codexResources/text/biodiversity.html
+1
 @ : Game Wildlife
 <img src="./codexResources/imgs/test1.jpg" />
-gamewildlife.txt
+./codexResources/text/gameWildlife.html
+1
 $
 
 # + Soil Quality
 <img src="./codexResources/imgs/test2.jpg" />
-soilquality.txt
+./codexResources/text/soilQuality.html
+1
 @ : Carbon Sequestration
 <img src="./codexResources/imgs/test2.jpg" />
-carbonsequestration.txt
+./codexResources/text/carbonSequestration.html
+1
 @ : Erosion Control
 <img src="./codexResources/imgs/test2.jpg" />
-erosioncontrol.txt
+./codexResources/text/erosionControl.html
+1
 $
 
 # + Water Quality
 <img src="./codexResources/imgs/test3.jpg" />
-waterquality.txt
+./codexResources/text/waterQuality.html
+1
 @ : Nitrate Pollution Control
 <img src="./codexResources/imgs/test3.jpg" />
-nitratepollutioncontrol.txt
+./codexResources/text/nitratePollutionControl.html
+1
 @ : Phosphorous Pollution Control
 <img src="./codexResources/imgs/test3.jpg" />
-phosphorouspollutioncontrol.txt
+./codexResources/text/phosphorousPollutionControl.html
+1
 @ : Sediment Control
 <img src="./codexResources/imgs/test3.jpg" />
-sedimentcontrol.txt
+./codexResources/text/sedimentControl.html
+1
 $
 
 # + Yield
 <img src="./codexResources/imgs/test3.jpg" />
-yield.txt
+./codexResources/text/yield.html
+1
 @ : Alfalfa
 <img src="./codexResources/imgs/test3.jpg" />
-alfalfayield.txt
+./codexResources/text/alfalfaYield.html
+1
 @ : Cattle
 <img src="./codexResources/imgs/test3.jpg" />
-cattleyield.txt
+./codexResources/text/cattleYield.html
+1
 @ : Corn Grain
 <img src="./codexResources/imgs/test3.jpg" />
-cornyield.txt
+./codexResources/text/cornYield.html
+1
 @ : Grass Hay
 <img src="./codexResources/imgs/test3.jpg" />
-hayyield.txt
+./codexResources/text/hayYield.html
+1
 @ : Switchgrass
 <img src="./codexResources/imgs/test3.jpg" />
-switchgrassyield.txt
+./codexResources/text/switchgrassYield.html
+1
 @ : Mixed Fruit and Vegetable
 <img src="./codexResources/imgs/test3.jpg" />
-fruitvegyield.txt
+./codexResources/text/mixedFruitAndVegetableYield.html
+1
 @ : Short-Rotation Woody Biomass
 <img src="./codexResources/imgs/test3.jpg" />
-shortrotationyield.txt
+./codexResources/text/shortRotationYield.html
+1
 @ : Soybeans
 <img src="./codexResources/imgs/test3.jpg" />
-soyyield.txt
+./codexResources/text/soybeanYield.html
+1
 @ : Wood
 <img src="./codexResources/imgs/test3.jpg" />
-woodyield.txt
+./codexResources/text/woodYield.html
+1
 $
 $
-
-# + Precipitation
-<img src="./codexResources/imgs/test1.jpg” />
-precipitation.txt
-@ : Dry
-<img src="./codexResources/imgs/test2.jpg" />
-dry.txt
-@ : Normal
-<img src="./codexResources/imgs/test2.jpg" />
-normal.txt
-@ : Wet
+# + Functionality
 <img src="./codexResources/imgs/test3.jpg" />
-wet.txt
+./codexResources/text/textTemplate.html
+1
 $
-
-
-# + Physical Features
-<img src="./codexResources/imgs/test1.jpg” />
-physicalfeatures.txt
-@ : Topographic Relief
-<img src="./codexResources/imgs/test4.jpg" />
-topographicrelief.txt
-@ : Flood Frequency
-<img src="./codexResources/imgs/test4.jpg" />
-floodfrequency.txt
-@ : Strategic Wetlands
-<img src="./codexResources/imgs/test4.jpg" />
-strategicwetlands.txt
-@ : Subwatersheds
-<img src="./codexResources/imgs/test4.jpg" />
-subwatershedboundaries.txt
-@ : Drainage Class
-<img src="./codexResources/imgs/test4.jpg" />
-drainageclass.txt
-$
-

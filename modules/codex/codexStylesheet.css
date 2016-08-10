@@ -186,27 +186,41 @@ img {
     width: 455px;
 }
 
-#switchContentDepth {
+.switchContentDepth, .switchContentDepthSelected {
     background-color: rgba(0, 0, 0, 0.7);
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
     color: #FFFFFF;
     cursor: default;
-    display: none;
+    display:none;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 20px;
     height: 25px;
-    left: 420px;
+    left: 414px;
     line-height: 120%;
     position: absolute;
     text-align: center;
-    top: 550px;
     transform: rotate(-90deg);
     width: 100px;
 }
 
-#switchContentDepth:hover {
-    background-color: rgba(0, 0, 0, 1);
+.switchContentDepthSelected {
+    background-color: rgba(0, 61, 77, 0.5);
+    
+    -webkit-transition-duration: .5s; /* Safari */
+    transition-duration: 0.5s;
+}
+
+.switchContentDepth:hover {
+    background-color: rgba(0, 0, 90, 1);
+}
+
+#switchAdvanced{
+    top: 590px;
+}
+
+#switchGeneral{
+    top: 480px;    
 }
 
 .closeButton{

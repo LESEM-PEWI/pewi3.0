@@ -48,7 +48,7 @@ function onResize() {
 //only needs to be called when an entirely new board is loaded, since each
 //tile is created from scratch
 function displayBoard() {
-
+    
     riverPoints = [];
 
     //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
@@ -87,7 +87,8 @@ function highlightTile(tileId) {
     if (tileId != -1 && !modalUp) {
 
         //remove currently highlighted land type from HUD if over a clear tile
-        if (boardData[currentBoard].map[tileId].landType[currentYear] == 0) {
+        if (boardData[currentBoard].map[tileId].landType[currentYear] == 0 ||
+            boardData[currentBoard].map[tileId].landType[0] == -1     ) {
 
             showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
             
@@ -345,14 +346,29 @@ function addTile(tile) {
     tileGeometry.faces.push(face);
     tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1, 0), new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)]); // uvs
 
+    
+
     //choose the relevant texture to add to the tile faces
     if (tile.landType[0] == 0) {
-        tileMaterial = new THREE.MeshBasicMaterial({
+        
+            tileMaterial = new THREE.MeshBasicMaterial({
             color: 0x000000,
             transparent: true,
             opacity: 0.0
-        });
+            });    
+  
         meshMaterials.push(tileMaterial);
+    }
+    else if(tile.landType[0] == -1) {
+        
+        tileMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFFFFFF,
+            transparent: true,
+            opacity: 0.7
+            });    
+    
+        meshMaterials.push(tileMaterial);
+        
     }
     else {
 
@@ -745,7 +761,7 @@ function onDocumentKeyDown(event) {
         case 50:
             if (zIsDown && zoomedIn) {
                 //1 is dummy value for now
-                switchToUnzoomedView(1, true );
+                switchToUnzoomedView(1, true);
             }
             break;
             //case v - key to record multiplayer fields
@@ -754,7 +770,7 @@ function onDocumentKeyDown(event) {
             break;
             //case esc - view escape menu
         case 27:
-            highlightTile(-1) ;
+            highlightTile(-1);
             toggleEscapeFrame();
             break;
             //no default handler
@@ -787,9 +803,11 @@ function onDocumentKeyUp(event) {
 //toggleEscapeFrame displays and hides the div that allows the user to go to the main menu, options, or directory
 function toggleEscapeFrame() {
 
-    if(document.getElementById('confirmEscape').style.height == "300px") {confirmEscape()};
-    
-    if(document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp){
+    if (document.getElementById('confirmEscape').style.height == "300px") {
+        confirmEscape()
+    };
+
+    if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
 
         document.getElementById('modalEscapeFrame').style.display = "block";
         document.getElementById('exitToMenuButton').style.visibility = "visible";
@@ -811,7 +829,7 @@ function toggleEscapeFrame() {
     else {
         document.getElementById('optionsButton').className = "mainEscapeButton";
     }
-    
+
 } //end toggleEscapeFrame
 
 //paintChange changes the highlighted color of the selected painter and updates painter
@@ -836,15 +854,15 @@ function changeSelectedPaintTo(newPaintValue) {
         //change new painter to the current corresponding paintPlayer
         painterElementId = "paintPlayer" + newPaintValue;
         document.getElementById(painterElementId).className = "landSelectedIcon";
-        
+
         //update the current painter to the value
         painter = newPaintValue;
-    }//end if/else group
-}//end paintChange
+    } //end if/else group
+} //end paintChange
 
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
-    
+
     //if something else does not have precedence
     if (!modalUp) {
 
@@ -853,7 +871,7 @@ function resultsStart() {
         document.getElementById("resultsButton").onmouseover = "";
         document.getElementById("closeResults").style.opacity = "1";
         document.getElementById('closeResults').style.visibility = "visible";
-        
+
         document.getElementById('modalResultsFrame').style.display = "block";
 
         document.getElementById("resultsButton").onclick = function() {
@@ -871,50 +889,50 @@ function resultsStart() {
         if (document.getElementById("leftConsole").className == "leftConsole") {
             leftToolConsoleWasOpen = true;
             roll(1);
-            
+
             //hide the highlighted map legend if necessary
-            if(currentHighlightType > 0){
+            if (currentHighlightType > 0) {
                 showLevelDetails(-1 * currentHighlightType);
             }
-            
+
         }
         //right popup
         rightPopupWasOpen = false;
         if (document.getElementById("popup").className == "popup") {
-            togglePopupDisplay() ;
+            togglePopupDisplay();
             rightPopupWasOpen = true;
         }
-        
+
         //prevent background land changes and so forth
         modalUp = true;
-        
+
         //functions that update results and display them appropriately
         calculateResults();
         displayResults();
         animateResults();
-    }//end if
+    } //end if
 } //end resultsStart
 
 //resultsEnd hides the results and returns the menus to the screens
 function resultsEnd() {
-    
+
     //modal is no longer up
     modalUp = false;
-    
+
     //reset functionality
     document.getElementById("resultsFrame").className = "resultsFrameRolled";
     document.getElementById("resultsButton").className = "resultsButtonRolled";
     document.getElementById('closeResults').style.opacity = "0";
     document.getElementById("closeResults").style.visibility = "hidden";
-    
+
     document.getElementById('modalResultsFrame').style.display = "none";
 
     //reopen elements that were previously open
-    if (leftToolConsoleWasOpen)    roll(1);
+    if (leftToolConsoleWasOpen) roll(1);
     if (rightPopupWasOpen) togglePopupDisplay();
-    
+
     //if highlighted map legend was previously open, redisplay
-    if(currentHighlightType > 0){
+    if (currentHighlightType > 0) {
         showLevelDetails(currentHighlightType);
     }
 
@@ -927,7 +945,7 @@ function resultsEnd() {
     };
 
     clearToChangeLandType = true;
-    
+
     //after page is no longer visible, reset active element
     setTimeout(function() {
         //I have the conch...
@@ -957,7 +975,7 @@ function roll(value) {
             document.getElementById('tabButtons').className = "tabButtons";
             document.getElementById('leftConsole').className = "leftConsole";
         }
-    }//end value == 1
+    } //end value == 1
 
     //toggle rolled status of the results button
     if (value == 2) {
@@ -968,7 +986,7 @@ function roll(value) {
         else if (document.getElementById("resultsButton").className == "resultsButtonRolled") {
             document.getElementById("resultsButton").className = "resultsButton";
         }
-    }//end value == 2
+    } //end value == 2
 } //end roll
 
 //showLevelDetails shows the legend for each of the highlight map functions
@@ -979,7 +997,7 @@ function showLevelDetails(value) {
         document.getElementById("nitrateDetailsList").className = "levelDetailsList";
         document.getElementById('nitrateIcon').className = "levelSelectorIconSelected";
     }
-    
+
     //show erosion legend
     else if (value == 2) {
         document.getElementById("erosionDetailsList").className = "levelDetailsList";
@@ -1014,7 +1032,7 @@ function showLevelDetails(value) {
     else if (value == 7) {
         document.getElementById('subwatershedBoundaries').className = "featureSelectorIconSelected";
         document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
-    }//end else/if group
+    } //end else/if group
 
     //hide ecosystem indicator legends
     if (value > -4 && value < 0) {
@@ -1038,7 +1056,7 @@ function showLevelDetails(value) {
         if (element.length > 0) {
             element[0].className = 'featureSelectorIcon';
         }
-    }//end else/if group
+    } //end else/if group
 
 } //end showLevelDetails
 
@@ -1064,7 +1082,7 @@ function updatePrecip(year) {
 
 //switchConsoleTab updates the currently selected toolbar on the left
 function switchConsoleTab(value) {
-    
+
     //turn off selected image in tabs
     var element = document.getElementsByClassName("imgSelected");
     element[0].className = "imgNotSelected";
@@ -1077,7 +1095,7 @@ function switchConsoleTab(value) {
     }
 
     //then we'll turn back on the tab that was switched to, clever eh?
-    
+
     //update the left console tab according to the value selected
     if (value == 1) {
         document.getElementById('terrainImg').className = "imgSelected";
@@ -1103,7 +1121,7 @@ function switchConsoleTab(value) {
         document.getElementById('calendarImg').className = "imgSelected";
         document.getElementById('yearsTab').style.display = "block";
     }
-    
+
     //check if the map needs the levels legend displayed
     if (mapIsHighlighted) {
         displayLevels();
@@ -1116,10 +1134,10 @@ function switchYearTab(yearNumberToChangeTo) {
     //get the currently selected year and make it not selected
     var elements = document.getElementsByClassName("yearSelected");
     elements[0].className = "yearNotSelected";
-    
+
     //then toggle on the selected year
-    var yearIdString = "year" + yearNumberToChangeTo + "Image" ;
-    document.getElementById(yearIdString).className = "yearSelected" ;
+    var yearIdString = "year" + yearNumberToChangeTo + "Image";
+    document.getElementById(yearIdString).className = "yearSelected";
 } //end switchYearTab
 
 //here we draw the correct tile colors onto the board material mesh
@@ -1144,8 +1162,8 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
 
     showLevelDetails(selectionHighlightNumber);
     currentHighlightType = selectionHighlightNumber;
-    currentHighlightTypeString = highlightType ;
-}//end drawLevelsOntoBoard
+    currentHighlightTypeString = highlightType;
+} //end drawLevelsOntoBoard
 
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(overlayHighlightType) {
@@ -1181,7 +1199,7 @@ function displayLevels(overlayHighlightType) {
         case 'subwatershed':
             selectionHighlightNumber = 7;
             break;
-    }//end switch
+    } //end switch
 
     //map is not previously highlighted
     if (!mapIsHighlighted) {
@@ -1191,13 +1209,13 @@ function displayLevels(overlayHighlightType) {
     else {
         //if the highlight is the same... turn it off
         if (currentHighlightType == selectionHighlightNumber || selectionHighlightNumber == 0) {
-            
+
             mapIsHighlighted = false;
             refreshBoard();
             showLevelDetails(-1 * currentHighlightType);
             currentHighlightType = 0;
             currentHighlightTypeString = null;
-            
+
         }
         //else if the highlighting is different, let's change to the new highlighting
         else {
@@ -1205,8 +1223,8 @@ function displayLevels(overlayHighlightType) {
             showLevelDetails(-1 * currentHighlightType);
             //highlight board
             drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
-        }//end else/if group
-    }//end else/if mapIsHighlighted
+        } //end else/if group
+    } //end else/if mapIsHighlighted
 } //end displayLevels()
 
 //getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
@@ -1215,7 +1233,7 @@ function getHighlightColor(highlightType, tileId) {
     //erosion highlight color indicies
     if (highlightType == "erosion") {
         //subtract 1, as arrays index from 0
-       return (Totals.grossErosionSeverity[currentYear][tileId] - 1) ;
+        return (Totals.grossErosionSeverity[currentYear][tileId] - 1);
     }
     //nitrite highlight color indicies
     else if (highlightType == "nitrate") {
@@ -1252,7 +1270,7 @@ function getHighlightColor(highlightType, tileId) {
                 return 8;
             case 50:
                 return 9;
-        }//end switch
+        } //end switch
     }
     //wetland highlight color indicies
     else if (highlightType == "wetland") {
@@ -1268,7 +1286,7 @@ function getHighlightColor(highlightType, tileId) {
     else if (highlightType == "subwatershed") {
 
         var watershed = Number(boardData[currentBoard].map[tileId].subwatershed);
-        return watershed + 9 ;
+        return watershed + 9;
     }
     //drainage highlight color indicies
     else if (highlightType == "drainage") {
@@ -1518,7 +1536,6 @@ function selectAnimation(animation) {
             rainOnPewi();
             break;
     }//end switch
-
 } //end selectAnimation
 
 //launchFireworks adds great balls of fire
@@ -1570,7 +1587,12 @@ function rainOnPewi() {
 } //end rain
 
 //writeFileToDownloadString creates a string in csv format that describes the current board
-function writeFileToDownloadString() {
+function writeFileToDownloadString(mapPlayerNumber) {
+
+    //IF mapPlayerNumber is 0, then the map is written out as is.
+    //  this is the desired use in all cases apart from the multiplayer mode
+    //Otherwise, if a player number is specified, the map of that player is distinguished
+    //  when the year 1 land use is equal to that player's number
 
     var string = "";
 
@@ -1581,9 +1603,17 @@ function writeFileToDownloadString() {
         string = string + boardData[currentBoard].map[i].id + "," +
             boardData[currentBoard].map[i].row + "," +
             boardData[currentBoard].map[i].column + "," +
-            boardData[currentBoard].map[i].area + "," +
-            boardData[currentBoard].map[i].baseLandUseType + "," +
-            boardData[currentBoard].map[i].carbonMax + "," +
+            boardData[currentBoard].map[i].area + ",";
+
+        if (mapPlayerNumber > 0) {
+            if(boardData[currentBoard].map[i].landType[0] == 0) string += "0," ;
+            else string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "-1,")
+        }
+        else {
+            string += boardData[currentBoard].map[i].baseLandUseType + ",";
+        }
+
+        string += boardData[currentBoard].map[i].carbonMax + "," +
             boardData[currentBoard].map[i].carbonMin + "," +
             boardData[currentBoard].map[i].cattle + "," +
             boardData[currentBoard].map[i].cornYield + "," +
@@ -1602,11 +1632,21 @@ function writeFileToDownloadString() {
             boardData[currentBoard].map[i].topography + "," +
             boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
             boardData[currentBoard].map[i].strategicWetland + "," +
-            boardData[currentBoard].map[i].riverStreams + "," +
-            boardData[currentBoard].map[i].landType[1] + "," +
-            boardData[currentBoard].map[i].landType[2] + "," +
-            boardData[currentBoard].map[i].landType[3] + "," +
-            boardData[currentBoard].precipitation[0] + "," +
+            boardData[currentBoard].map[i].riverStreams + ",";
+
+        if (mapPlayerNumber > 0) {
+            string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year1
+                ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year2
+                ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,"); //year3
+        }
+        else {
+
+            string += boardData[currentBoard].map[i].landType[1] + "," +
+                boardData[currentBoard].map[i].landType[2] + "," +
+                boardData[currentBoard].map[i].landType[3] + ",";
+        }
+
+        string += boardData[currentBoard].precipitation[0] + "," +
             boardData[currentBoard].precipitation[1] + "," +
             boardData[currentBoard].precipitation[2] + "," +
             boardData[currentBoard].precipitation[3];
@@ -1615,7 +1655,7 @@ function writeFileToDownloadString() {
             string = string + '\r\n';
         }
 
-    }//end for
+    } //end for
 
     return string;
 } //end writeFileToDownloadString
@@ -1623,7 +1663,7 @@ function writeFileToDownloadString() {
 //uploadClicked enables the user to upload a .csv of board data
 // this function is called from child frame uploadDownload
 function uploadClicked(e) {
-    
+
     var files;
     files = e.target.files;
 
@@ -1655,7 +1695,7 @@ function downloadClicked() {
     closeUploadDownloadFrame();
     //reset keylistening frame (ie give up focus on iframe)
     document.activeElement.blur();
-}//end downloadClicked()
+} //end downloadClicked()
 
 //animateResults() frame
 function animateResults() {
@@ -1733,14 +1773,23 @@ function toggleIndex() {
         document.getElementById('modalCodexFrame').style.display = "none";
         document.getElementById('index').style.display = "none";
         document.activeElement.blur();
-    }
+    
+        document.getElementById('index').contentWindow.document.getElementById('square1').innerHTML = "<img src='./imgs/indexMain.png'>";
+        document.getElementById('index').contentWindow.document.getElementById('square2frame').src = "";
+        document.getElementById('index').contentWindow.document.getElementById('switchGeneral').style.display = "none" ;
+        document.getElementById('index').contentWindow.document.getElementById('switchAdvanced').style.display = "none" ;
+        document.getElementById('index').contentWindow.document.getElementById('title').innerHTML = "";
+        
+        document.getElementById('index').contentWindow.resetHighlighting() ;
+        
+       }
 } //end toggleIndex
 
 //printLandUseType returns a display-worthy string of land type from numeric key
 function printLandUseType(type) {
-  //completely redundant, but preserved for ease of use
-  //see backEnd
-  return LandUseType.getPrintFriendlyType(type) ;
+    //completely redundant, but preserved for ease of use
+    //see backEnd
+    return LandUseType.getPrintFriendlyType(type);
 } //end printLandUseType
 
 //printPrecipYearType returns the precipitation category of the year's precipitation
@@ -1755,12 +1804,12 @@ function printPrecipYearType() {
         return "Normal";
     }
     else {
-        if(currentYear > 0 
-            && (boardData[currentBoard].precipitation[currentYear - 1] == 24.58 ||
-            boardData[currentBoard].precipitation[currentYear - 1] == 28.18)
-            ){
-                return "Flood" ;
-            }
+        if (currentYear > 0 &&
+            (boardData[currentBoard].precipitation[currentYear - 1] == 24.58 ||
+                boardData[currentBoard].precipitation[currentYear - 1] == 28.18)
+        ) {
+            return "Flood";
+        }
         return "Wet";
     }
 
@@ -1801,8 +1850,8 @@ function togglePopupDisplay() {
             document.getElementById("popup").className = "popup";
             document.getElementById("dialogueButton").className = "dialogueButton";
         }
-    }//end if
-}// togglePopupDisplay()
+    } //end if
+} // togglePopupDisplay()
 
 //randomizeBoard randomly selects a landtype for each tile
 function randomizeBoard() {
@@ -1817,7 +1866,7 @@ function randomizeBoard() {
             else painter = getRandomInt(1, 6);
             changeLandTypeTile(i);
         }
-    }//end for all tiles
+    } //end for all tiles
 
     painter = prevPainter;
 
@@ -1856,7 +1905,7 @@ function toggleVisibility() {
 
     //reset precip
     immutablePrecip = false;
-    
+
     //alright, now let's see what the parameters look like
     // abscond them from the index.html page parameters div
     var strRawContents = document.getElementById('parameters').innerHTML;
@@ -1892,7 +1941,7 @@ function toggleVisibility() {
 
             }
         }
-    }//end for
+    } //end for
 
 
     //toggle Precip visibility
@@ -1911,7 +1960,7 @@ function toggleVisibility() {
                 //keep cutting off characters until we come back to the end tag of the
                 // selector element
                 currentInnerHtml = currentInnerHtml.slice(0, -1);
-            }//end while
+            } //end while
 
             //write the new string
             document.getElementById(elementIdString + "Container").innerHTML = currentInnerHtml;
@@ -1932,6 +1981,9 @@ function toggleVisibility() {
         }
     }
 
+    //alright, now we just have to check to make sure that nothing that was toggled off
+    // is selected
+
     //check to see if the year we are on is no longer a year... if so, well, switch to y1
     var yearMax = 3;
     if (document.getElementById("year3Button").style.display == "none") yearMax = 2;
@@ -1949,140 +2001,83 @@ function toggleVisibility() {
         changeSelectedPaintTo(1);
     }
 
-} //end toggleVisibility
+} //end toggleVisibility()
 
-//painterSelect updates the value of the selected painter tool
-function painterSelect(value) {
+//painterSelect changes the currenly selected 'brush' of the painter tool
+//  the options are normla click change, hover change, and grid change.
+function painterSelect(brushNumberValue) {
 
-    var element = document.getElementsByClassName('painterIconSelected');
-    element[0].className = "painterIcon";
+    //reset the functionality to default, then change as needed
+    var selectedElement = document.getElementsByClassName('painterIconSelected');
+    selectedElement[0].className = "painterIcon";
     painterTool.hover = false;
 
-    if (value == 1) {
+    //if the brush is a normal cell paint
+    if (brushNumberValue == 1) {
         document.getElementById('cellPaint').className = 'painterIconSelected';
         if (painterTool.status == 2) refreshBoard();
         painterTool.status = 0;
-
-
     }
-    else if (value == 2) {
-
-        //painterTooler is not selected, so select it
+    //set the grid paint up with a status of 1
+    else if (brushNumberValue == 2) {
         //painterTool.status 0 indicates not ready
         //painterTool.status 1 indicates waiting for DoubleClick
         //painterTool.status 2 indicates grid drag activity
         painterTool.status = 1;
-        console.log("ready to DC, status=" + painterTool.status);
+        //ready for double click
         document.getElementById('gridPaint').className = "painterIconSelected";
+    } //end else/if group
+} //end painterSelect()
 
-    }
-
-}
-
-//resetOptions sets the options from the screen to the game
+//resetOptions is called when options menu is closed
+// this function closes the iframe, blurs the frame, and
+// takes the parameters set by it to order the page elements
 function resetOptions() {
 
+    //close frame
     modalUp = false;
-
     document.getElementById('options').style.visibility = "hidden";
-
+    //make sure the frame is no longer accepting input such as keyboard or mouse events
     document.activeElement.blur();
-    toggleVisibility();
 
-    //toggle Precip
+    //setup page according to the parameters
+    toggleVisibility();
 } //end resetOptions
 
 //startOptions displays the options page 
 function startOptions() {
+    //if nothing else has precedence
     if (!modalUp) {
         modalUp = true;
         document.getElementById('options').style.visibility = "visible";
+        //setup options page with the current parameter selection
         document.getElementById('options').contentWindow.getCurrentOptionsState();
-    }
-
+    } //end if
 } //end startOptions
 
 //endMultiAssignMode displays the multiPlayer element
 function endMultiplayerAssignMode() {
     //create an iframe, select up to 6 players
     //then downloads
-    document.getElementById('multiPlayer').style.visibility = "visible";
+    document.getElementById('multiplayer').style.visibility = "visible";
 } //end endMultiAssignMode
 
 //hideMultiDownload hides the multiPlayer element
 function hideMultiDownload() {
-    document.getElementById('multiPlayer').style.visibility = "hidden";
+    document.getElementById('multiplayer').style.visibility = "hidden";
     document.activeElement.blur();
 } //end hideMultiDownload
 
-//createPlayerMap creates the file for a multiplayer map for download
-function createPlayerMap(value) {
-
-    var string = "";
-
-    string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
-
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
-        string = string + boardData[currentBoard].map[i].id + "," +
-            boardData[currentBoard].map[i].row + "," +
-            boardData[currentBoard].map[i].column + "," +
-            boardData[currentBoard].map[i].area + "," +
-
-            ((boardData[currentBoard].map[i].landType[1] == value) ? boardData[currentBoard].map[i].baseLandUseType + "," : "0,") +
-
-            boardData[currentBoard].map[i].carbonMax + "," +
-            boardData[currentBoard].map[i].carbonMin + "," +
-            boardData[currentBoard].map[i].cattle + "," +
-            boardData[currentBoard].map[i].cornYield + "," +
-            boardData[currentBoard].map[i].drainageClass + "," +
-            boardData[currentBoard].map[i].erosion + "," +
-            boardData[currentBoard].map[i].floodFrequency + "," +
-            boardData[currentBoard].map[i].group + "," +
-            boardData[currentBoard].map[i].nitratesPPM + "," +
-            boardData[currentBoard].map[i].pIndex + "," +
-            boardData[currentBoard].map[i].sediment + "," +
-            boardData[currentBoard].map[i].soilType + "," +
-            boardData[currentBoard].map[i].soybeanYield + "," +
-            boardData[currentBoard].map[i].streamNetwork + "," +
-            boardData[currentBoard].map[i].subwatershed + "," +
-            boardData[currentBoard].map[i].timber + "," +
-            boardData[currentBoard].map[i].topography + "," +
-            boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
-            boardData[currentBoard].map[i].strategicWetland + "," +
-            boardData[currentBoard].map[i].riverStreams + "," +
-
-            ((boardData[currentBoard].map[i].landType[1] == value) ? "1," : "0,") + //year1
-            ((boardData[currentBoard].map[i].landType[1] == value) ? "1," : "0,") + //year2
-            ((boardData[currentBoard].map[i].landType[1] == value) ? "1," : "0,") + //year3
-
-            boardData[currentBoard].precipitation[0] + "," +
-            boardData[currentBoard].precipitation[1] + "," +
-            boardData[currentBoard].precipitation[2] + "," +
-            boardData[currentBoard].precipitation[3];
-
-        if (i < boardData[currentBoard].map.length - 1) {
-            string = string + '\r\n';
-        }
-        else {
-            //Do Nothing
-        }
-
-    }
-
-    return string;
-
-} //end createPlayerMap
-
 //multiUpload directs functions for multiplayer file upload
 function multiplayerFileUpload(numberOfTimesThisFunctionHasBeenCalledInProcess, fileUploadEvent) {
-    //if this is the first time, call base prep, otherwise, add map
+    //if this is the first time, call base prep, otherwise, add map on top
     return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
         multiplayerAggregateOverlayMapping(fileUploadEvent) :
         multiplayerAggregateBaseMapping(fileUploadEvent);
 } //end multiUpload
 
-//multiUploadStage1 initializes the aggregation of multiplayer boards
+//this function initializes the aggregation of multiplayer boards
+//  basically, it setups up the first board as is
 function multiplayerAggregateBaseMapping(e) {
     //set up first file completely normally
     var files;
@@ -2104,7 +2099,7 @@ function multiplayerAggregateBaseMapping(e) {
     } //end else
 } //end multiplayerAggregateBaseMapping
 
-//multiUploadStage2 facilitates the aggregation of multiplayer boards
+//here we facilitate the aggregation of multiplayer boards
 function multiplayerAggregateOverlayMapping(e) {
 
     var files;
@@ -2135,12 +2130,7 @@ function multiplayerAggregateOverlayMapping(e) {
 
 //toggleChangeLandType toggles a boolean that tracks the state which is required to change land type
 function toggleChangeLandType() {
-
-    if (clearToChangeLandType) {
-        clearToChangeLandType = false;
-    }
-    else {
-        clearToChangeLandType = true;
-    }
-
+    //ternary toggle on clearToChangeLandType being true
+    clearToChangeLandType = 
+      (clearToChangeLandType) ? false : true ;
 } //end toggleChangeLandType

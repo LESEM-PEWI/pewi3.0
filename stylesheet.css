@@ -621,7 +621,8 @@ select {
 
 #closeUploadDownload{
     position:fixed;
-    right: 20%;
+    left: 50%;
+    padding-left:140px;
     top: 21%;
 }
 
@@ -638,11 +639,12 @@ select {
 }
 
 #uploadDownloadFrame{
-    background-color: rgba(0,0,0,1);
+    
     height:200px;
     position:absolute;
     top: 20%;
-    width:100% ;
+    width:40% ;
+    left:30%;
 }
 
 #creditsFrame{
@@ -885,7 +887,7 @@ select {
 
 /* Some of the iframes */
 
-#options, #multiPlayer{
+#options, #multiplayer{
     height:100%;
     left:0px;
     position:fixed;

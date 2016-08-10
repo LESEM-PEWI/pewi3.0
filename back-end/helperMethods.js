@@ -17,8 +17,8 @@ function parseInitial(data) {
     //for each line in the file, split line by comma and push to the initData array
     for (var i = 1; i < arrLines.length; i++) {
         var curLine = arrLines[i];
-        initData.push(curLine.split(","));
-        
+        if(curLine.length > 0) initData.push(curLine.split(","));
+        else console.log("Empty line in file: ignored");
     } //end for : each line in the file
 } //end parseInitial()
 

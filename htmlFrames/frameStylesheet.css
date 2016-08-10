@@ -213,7 +213,8 @@
  **/
  
  #uploadDownloadHolder {
-  background: black;
+  background: #40A4DF;
+  border-radius:8px;
   left: 50%;
   margin: 0 5px 5px -125px;
   padding: 0px;
@@ -231,7 +232,7 @@
  .uploadDownloadText {
   color: white;
   font-size: 45px;
-  padding: 10px 0px 10px 30px;
+  padding: 10px 0px 10px 15px;
   text-align: left;
  }
  
