@@ -3,6 +3,7 @@ var multiplayerTextureArray = [];
 var materialArray = [];
 var highlightArray = [];
 var oldPewiBackgrounds = [];
+var rainTexture;
 
 //this function loads into the texture arrays the necessary images for creation of webGl
 //  materials. All are loaded via the three.js textureLoader
@@ -76,13 +77,13 @@ function loadResources() {
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/919246.png'));
 
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3.png'));
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/255d98.png'));
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/38638b.png'));
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/4b687e.png'));
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/5e6e71.png'));
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/837856.png'));
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/a9833c.png'));
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/bc892f.png'));
+    
+    //raindrop texture
+    rainTexture = textureLoader.load("./imgs/raindrop.png");
 
     //Select textures from the highlightArray for the multiplayer utility
     var textureP1 = highlightArray[9];

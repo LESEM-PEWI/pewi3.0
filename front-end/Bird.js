@@ -319,7 +319,7 @@ function addBirds() {
     
     if(birds.length < 1 && boids.length < 1){
 	
-		for ( var i = 0; i < 100; i ++ ) {
+		for ( var i = 0; i < 25; i ++ ) {
 	
 			boid = boids[ i ] = new Boid();
 			boid.position.x = Math.random() * 400 - 200;

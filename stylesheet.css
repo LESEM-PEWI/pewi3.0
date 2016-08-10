@@ -25,7 +25,7 @@ font-family: 'Amatic SC', cursive;
 /******CSS RESET*****/
 
 
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -404,30 +404,18 @@ select {
 }
 
 .drainageColor2 {
-    background-color: #255d98;
-}
-
-.drainageColor3 {
     background-color: #38638b;
 }
 
-.drainageColor4 {
-    background-color: #4b687e;
-}
-
-.drainageColor5 {
+.drainageColor3 {
     background-color: #5e6e71;
 }
 
-.drainageColor6 {
+.drainageColor4 {
     background-color: #837856;
 }
 
-.drainageColor7 {
-    background-color: #a9833c;
-}
-
-.drainageColor8 {
+.drainageColor5 {
     background-color: #bc892f;
 }
 
@@ -435,7 +423,7 @@ select {
     margin: 15px 0px 0px 0px ;
     position: absolute;
     top: 305px;
-    width: 135px;
+    width: 150px;
     background-color: black ;
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
@@ -450,7 +438,7 @@ select {
 }
 
 .physicalDetailsListRolled {
-    left:-135px;
+    left:-150px;
 }
 
 .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
@@ -561,7 +549,6 @@ select {
     border-radius:50%;
 }
 
-
 .yearSelected {
     border-radius:50%;
     box-shadow: 0px 0px 16px 5px rgba(14,71,204,0.5), 0 17px 50px 0 rgba(14,71,204,0.4);
@@ -573,6 +560,10 @@ select {
 
 .yearButton:hover {
    box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+.yearButtonHidden, .yearImageHidden {
+    display:none;
 }
 
 #yearPlusButton{
@@ -1012,4 +1003,18 @@ select {
     
     animation-duration: 1.0s;
     animation-name: showEffect;
+}
+
+#hover-div{
+    background: none !important;
+    border-radius: 100%;
+    color: #003d4d;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 18px ;
+    height: 100px;
+    left: 48.85%;
+    pointer-events: none;
+    position: fixed;
+    top: 49%;
+    width: 250px;
 }

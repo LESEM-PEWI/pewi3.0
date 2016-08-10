@@ -35,6 +35,7 @@ var painterTool = {
     endTile: 0,
     hover: false
 };
+var myTimer = null;
 
 //onResize dynamically adjusts to window size changes
 function onResize() {
@@ -69,9 +70,12 @@ function displayBoard() {
     calculateCutoffs();
 } //end displayBoard
 
-
 //highlightTile updates the tile that should be highlighted.
 function highlightTile(tileId) {
+
+    //clear the information in the delayed information hover div
+    document.getElementById("hover-info").innerHTML = "";
+    if(myTimer != null) { clearTimeout(myTimer); }
 
     //if a previous tile was selected for highlighting, unhighlight that tile
     if (previousHover != null) {
@@ -86,9 +90,10 @@ function highlightTile(tileId) {
         if (boardData[currentBoard].map[tileId].landType[currentYear] == 0) {
 
             showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
+            
+            document.getElementById('hover-info').innerHTML = "";
 
-        }
-        else {
+        } else {
 
             //Highlight a nonzero land type tile
             meshMaterials[tileId].emissive.setHex(0x7f7f7f);
@@ -96,6 +101,11 @@ function highlightTile(tileId) {
 
             //update HUD with current information
             showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
+            
+            //update the information displayed in the delayed hover div by cursor
+            myTimer = setTimeout(function() {
+                    document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId);
+            }, 500);
         }
 
     }
@@ -103,6 +113,8 @@ function highlightTile(tileId) {
 
         //If not over any land tile, update HUD accordingly
         showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
+        
+        document.getElementById("hover-info").innerHTML = "";
 
     }
 
@@ -394,7 +406,9 @@ function addTile(tile) {
 //  refreshBoard() show up instantly as a marked decline in fps.
 //Ususally, (except for changes with the whole board) a better method is 
 //  to change the mesh material map which is automatically redrawn
-function refreshBoard() {
+//The argument bypassFromKeyEvent helps the t key and r key switch up the board when pressed
+//  to change topography and random tiles, but keep the board highlighted
+function refreshBoard(bypassFromKeyEvent) {
 
     if (mesh != null) {
         scene.remove(mesh);
@@ -403,11 +417,19 @@ function refreshBoard() {
     meshGeometry = new THREE.Geometry();
     meshMaterials = [];
 
-    mapIsHighlighted = false;
-    showLevelDetails(-1 * currentHighlightType);
-    currentHighlightType = 0;
+    //if the map is just being changed normally, not when it is highlighted and t or r were pressed
+    if(!bypassFromKeyEvent){
+        mapIsHighlighted = false;
+        showLevelDetails(-1 * currentHighlightType);
+        currentHighlightType = 0;
+        displayBoard();
+    //if the map is highlighted and t or r keys were pressed
+    } else {
+        currentHighlightType = 0;
+        displayBoard();
+        displayLevels(currentHighlightTypeString);
+    }
 
-    displayBoard();
 } //end refreshBoard
 
 //transitionToYear updates the graphics for a board to "year" input
@@ -417,11 +439,58 @@ function transitionToYear(year) {
 
     if (year > boardData[currentBoard].calculatedToYear) {
         boardData[currentBoard].calculatedToYear = year;
+        
+        for(var i = 0; i < boardData[currentBoard].map.length; i++){
+            boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
+        }
+        
         boardData[currentBoard].updateBoard();
     }
 
     refreshBoard();
 } //end transitionToYear
+
+//addYearAndTransition updates the years to switch between in the left console and transitions to the new year
+function addYearAndTransition() {
+    
+    var totalYearsAllowed = 3
+    var nextYear = currentYear + 1;
+    
+    //make next button appear (has some prebuilt functionality for expanded number of years)
+    if(currentYear < totalYearsAllowed - 1) {
+
+        document.getElementById("year" + nextYear + "Button").className = "yearButton";
+        document.getElementById("year" + nextYear + "Image").className = "yearNotSelected";
+        
+    }
+    
+    //make last button appear and remove the "+" Button (has some prebuilt functionality for expanded number of years)
+    if(currentYear == totalYearsAllowed - 1) {
+        
+        document.getElementById("year3Button").className = "yearButton";
+        document.getElementById("year3Image").className = "yearNotSelected";
+        document.getElementById("yearAddButton").style.display = "none";
+        
+    }
+    
+    switchYearTab(nextYear);
+    transitionToYear(nextYear);
+    
+} //end addYearAndTransition
+
+//resetYearDisplay removes the years which have been displayed throughout the current session of the game
+function resetYearDisplay() {
+    
+    //remove all years except the first and reshow the + button (has some prebuilt functionality for expanded number of years)
+    
+    for(var i = 2; i < 4; i++){
+        document.getElementById("year" + i + "Button").className = "yearButtonHidden";
+        document.getElementById("year" + i + "Image").className = "yearImageHidden";
+    }
+    
+    document.getElementById("yearAddButton").style.display = "inline-block";
+    
+} //end resetYearDisplay
 
 //onDocumentMouseMove follows the cursor and highlights corresponding tiles
 function onDocumentMouseMove(event) {
@@ -429,6 +498,14 @@ function onDocumentMouseMove(event) {
     event.preventDefault();
 
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
+    
+    //set location of div that follows cursor for hover-info and displays with 1s delay
+    var x = event.clientX;
+    var y = event.clientY;                    
+    if ( x != 'undefined' && y != 'undefined'){
+        document.getElementById('hover-div').style.left = (x + 20) + "px";
+        document.getElementById('hover-div').style.top = (y + 20) + "px";
+    }
 
     raycaster.setFromCamera(mouse, camera);
 
@@ -621,9 +698,13 @@ function onDocumentKeyDown(event) {
             break;
             //case t - toggle topography
         case 84:
-            if (modalUp != true && mapIsHighlighted != true) {
+            if (modalUp != true) {
                 tToggle ? tToggle = false : tToggle = true;
-                refreshBoard();
+                
+                //in the case when the map is highlighted:
+                if(mapIsHighlighted) { refreshBoard(true); }
+                //if the map is not highlighted:
+                else { refreshBoard(); }
                 setupRiver();
             }
             break;
@@ -640,7 +721,16 @@ function onDocumentKeyDown(event) {
             break;
             //case r - randomize land types
         case 82:
-            if (modalUp != true && mapIsHighlighted != true) randomizeBoard();
+            if (modalUp != true){
+                randomizeBoard();
+                //in the case that the map is currently highlighted for a ecosystem indicator,
+                //keep highlighting on and randomize the land types
+                if(currentHighlightType > 0 && currentHighlightType < 4){
+                    refreshBoard(true);
+                    setupRiver();
+                }
+            }
+            
             break;
             //case z -- for zoom functions
         case 90:
@@ -1193,18 +1283,110 @@ function getHighlightColor(highlightType, tileId) {
             case 50:
                 return 33;
             case 45:
-                return 34;
+                return 33;
             case 40:
-                return 35;
+                return 34;
             case 30:
-                return 36;
+                return 34;
             case 10:
-                return 37;
+                return 35;
             case 0:
-                return 38;
+                return 35;
         }//end switch
     }//end else/if group
 } //end getHighlightColor
+
+//getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
+function getHighlightedInfo(tileId) {
+    
+    //return information about the tile that is highlighted
+    if(currentHighlightType <= 0){
+        return "";
+    } else {
+        
+        var highlightString = "";
+        
+        switch(currentHighlightType) {
+            //create string for nitrate levels
+            case 1:
+                highlightString = (Totals.nitrateContribution[currentYear][tileId]*100).toFixed(2) + "%";
+                break;
+            //create string for gross erosion levels
+            case 2:
+                highlightString = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr";
+                break;
+            //create string for phosphorus load levels
+            case 3:
+                highlightString = (boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr";
+                break;
+            //create string for flood frequency levels
+            case 4:
+                switch(Number(boardData[currentBoard].map[tileId].floodFrequency)) {
+                    case 0:
+                        highlightString = "None";
+                        break;
+                    case 10:
+                        highlightString = "None";
+                        break;
+                    case 20:
+                        highlightString = "Rare";
+                        break;
+                    case 30:
+                        highlightString = "Occasionally";
+                        break;
+                    case 40:
+                        highlightString = "Frequently";
+                        break;
+                    case 50:
+                        highlightString = "Ponded";
+                        break;
+                }
+                break;
+            //create string for drainage classification
+            case 5:
+                var drainage = Number(boardData[currentBoard].map[tileId].drainageClass);
+                switch (drainage) {
+                    case 70:
+                        highlightString = "Very Poor";
+                        break;
+                    case 60:
+                        highlightString = "Poor";
+                        break;
+                    case 50:
+                        highlightString = "Somewhat Poor";
+                        break;
+                    case 45:
+                        highlightString = "Somewhat Poor";
+                        break;
+                    case 40:
+                        highlightString = "Moderate / Well";
+                        break;
+                    case 30:
+                        highlightString = "Moderate / Well";
+                        break;
+                    case 10:
+                        highlightString = "Excessive";
+                        break;
+                    case 0:
+                        highlightString = "Excessive";
+                        break;
+                }//end switch
+                break;
+            //create string for strategic wetlands
+            case 6:
+                if (boardData[currentBoard].map[tileId].strategicWetland == 1) { highlightString = "Strategic wetland"; }
+                break;
+            //create string for subwatershed number
+            case 7:
+                highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed;
+                break;
+        }
+        
+        return highlightString;
+    }
+    
+    
+} //end getHighlightedInfo
 
 //contaminatedRiver changes the color of the river dependent on current phosphorus level
 function contaminatedRiver(riverColor) {
@@ -1218,6 +1400,12 @@ function contaminatedRiver(riverColor) {
     if (riverColor == "blue") {
         for (var i = 0; i < river.children.length; i++) {
             river.children[i].material.color.setHex("0x40a4df");
+        }
+    }
+    
+    if (riverColor == "green") {
+        for (var i = 0; i < river.children.length; i++) {
+            river.children[i].material.color.setHex("0x599300");
         }
     }
 
@@ -1323,6 +1511,12 @@ function selectAnimation(animation) {
         case "blueRiver":
             contaminatedRiver("blue");
             break;
+        case "greenRiver":
+            contaminatedRiver("green");
+            break;
+        case "rain":
+            rainOnPewi();
+            break;
     }//end switch
 
 } //end selectAnimation
@@ -1362,6 +1556,18 @@ function createFlock() {
         boids = [];
     }, 10000);
 } //end createFlock
+
+//rain makes a storm blow over pewi
+function rainOnPewi() {
+    //specify the number of raindrops -- could be related to precipitation values
+    if(rain == null){
+        makeItRain(Math.pow(Number(boardData[currentBoard].precipitation[currentYear]), 2) * (Number(boardData[currentBoard].precipitation[currentYear])/24));
+        setTimeout(function() {
+            scene.remove(rain);
+            rain = null;
+        }, 10000);
+    }
+} //end rain
 
 //writeFileToDownloadString creates a string in csv format that describes the current board
 function writeFileToDownloadString() {

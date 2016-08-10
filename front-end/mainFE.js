@@ -36,6 +36,7 @@ var fov = null,
 var zoomingInNow = false;
 var zoomingOutNow = false;
 
+var rain = null;
 //===================
 
 //createThreeFramework instantiates the renderer and scene to render 3D environment
@@ -170,12 +171,23 @@ function animationFrames() {
 
         birdAnimation();
         zoomAnimation();
+        
+        //rain animations (change y position of each raindrop)
+        if(rain != null){
+            for(var i = 0; i < rain.geometry.vertices.length; i++){
+                //update position
+                rain.geometry.vertices[i].y = rain.geometry.vertices[i].y - (rain.geometry.vertices[i].speed);
+                //if the raindrop reaches the ground, regenerate above the board
+                if (rain.geometry.vertices[i].y <= 0) rain.geometry.vertices[i].y = Math.random() * 500;
+            }
+            //necessary to make the raindrops move
+            rain.geometry.verticesNeedUpdate = true;
+        }
 
         renderer.autoClear = false;
         if (bgScene != null) {
             renderer.render(bgScene, bgCam);
         }
-        renderer.render(scene, camera);
 
         //wait # update frames to check
         if (counter > 20) {
@@ -185,6 +197,7 @@ function animationFrames() {
         counter += 1;
 
         requestAnimationFrame(animate);
+        renderer.render(scene, camera);
         stats.update();
 
     }); //end request
@@ -517,9 +530,11 @@ function showMainMenu() {
         //reset sandbox/level to original settings   
         if(zoomedIn) switchToUnzoomedView(1,false);
         previousHover = null;
+        currentYear = 1;
         changeSelectedPaintTo(1);
         switchConsoleTab(1);
         switchYearTab(1);
+        resetYearDisplay();
         controls.reset();
 
         //reset paramters
@@ -539,3 +554,39 @@ function showMainMenu() {
     }, 1000);
     
 } //end showMainMenu
+
+//makeItRain -- add some precipitation to PEWI
+function makeItRain(numberOfRaindrops) {
+    
+    //create geometry and material for raindrops
+    var rainGeometry = new THREE.Geometry();
+    var rainMaterial = new THREE.PointsMaterial({blending: THREE.AdditiveBlending, color: 0x40a4df, map: rainTexture, opacity: 0.5, size: 2, sizeAttenuation:true, transparent: true});
+    
+    //for each raindrop to create randomly assign a position within the map boundaries
+    for (var i = 0; i < numberOfRaindrops; i++) {
+        
+        //determine maximum dimensions of the current board
+        var maxWidth = boardData[currentBoard].width;
+        var maxHeight = boardData[currentBoard].height;
+    
+        //x range of board
+        var xRange = Math.abs(1 * tileWidth - (tileWidth * maxWidth) / 2) + Math.abs(maxWidth * tileWidth - (tileWidth * maxWidth) / 2);
+        //z range of board
+        var zRange = Math.abs(1 * tileHeight - (tileHeight * maxHeight) / 2) + Math.abs(maxHeight * tileHeight - (tileHeight * maxHeight) / 2);
+        
+        //add a raindrop as a vertex in the rain object
+        var raindrop = new THREE.Vector3(
+            Math.random() * xRange - xRange / 2,
+            Math.random() * 500,
+            Math.random() * zRange - zRange / 2
+        );
+        raindrop.speed = Math.random() + 2;
+        rainGeometry.vertices.push(raindrop);
+    }
+    
+    //create the rain object and add to the scene
+    rain = new THREE.Points(rainGeometry, rainMaterial);
+    rain.sortParticles = true;
+    scene.add(rain);
+    
+} //end makeItRain
