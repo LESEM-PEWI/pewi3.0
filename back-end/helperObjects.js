@@ -2241,6 +2241,11 @@ function GameBoard() {
 		this.width = maxWidth;
 		this.height = maxHeight;
 		
+		//update THREE.js panning limits to the center of the leftmost and rightmost tiles
+		panLimitLeft = 1 * tileWidth - (tileWidth * maxWidth - tileWidth) / 2;
+		panLimitRight = maxWidth * tileWidth - (tileWidth * maxWidth - tileWidth) / 2;
+		
+		
 	}; //end establishBoardArea
 	
 	

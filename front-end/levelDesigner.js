@@ -103,7 +103,9 @@ function addAnimation() {
     string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "2" + "' value=" + "'bird'" + ">" + "Meadowlark flys across screen" + "</label></div>";
     string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "3" + "' value=" + "'blueRiver'" + ">" + "River turns blue" + "</label></div>";
     string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "4" + "' value=" + "'brownRiver'" + ">" + "River turns brown" + "</label></div>";
-    string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "5" + "' value=" + "'fireworks'" + ">" + "Fireworks" + "</label></div>";
+    string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "5" + "' value=" + "'greenRiver'" + ">" + "River turns green" + "</label></div>";
+    string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "6" + "' value=" + "'rain'" + ">" + "Rain shower" + "</label></div>";
+    string += "<div><label><input type='radio' name='animate" + objectiveNumber + "' id='animation-" + objectiveNumber + "-" + "7" + "' value=" + "'fireworks'" + ">" + "Fireworks" + "</label></div>";
     return string + "<br>";
 } //end addAnimation
 

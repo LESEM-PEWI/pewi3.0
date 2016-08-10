@@ -145,7 +145,7 @@
 
                 <div id="year0PrecipContainer" class="styled-select">
                     Year 0:
-                    <select id="year0Precip" onChange="updatePrecip(0)">
+                    <select id="year0Precip" onChange="updatePrecip(0); rainOnPewi();">
 
                         <option value=0>24.58</option>
                         <option value=1>28.18</option>
@@ -158,7 +158,7 @@
                 </div>
                 <div id="year1PrecipContainer" class="styled-select">
                     Year 1:
-                    <select id="year1Precip" onChange="updatePrecip(1)">
+                    <select id="year1Precip" onChange="updatePrecip(1); rainOnPewi();">
                         <option value=0>24.58</option>
                         <option value=1>28.18</option>
                         <option value=2>30.39</option>
@@ -170,7 +170,7 @@
                 </div>
                 <div id="year2PrecipContainer" class="styled-select">
                     Year 2:
-                    <select id="year2Precip" onChange="updatePrecip(2)">
+                    <select id="year2Precip" onChange="updatePrecip(2); rainOnPewi();">
                         <option value=0>24.58</option>
                         <option value=1>28.18</option>
                         <option value=2>30.39</option>
@@ -182,7 +182,7 @@
                 </div>
                 <div id="year3PrecipContainer" class="styled-select">
                     Year 3:
-                    <select id="year3Precip" onChange="updatePrecip(3)">
+                    <select id="year3Precip" onChange="updatePrecip(3); rainOnPewi();">
                         <option value=0>24.58</option>
                         <option value=1>28.18</option>
                         <option value=2>30.39</option>
@@ -280,27 +280,18 @@
             </div>
             <div id="drainageClassDetailsList" class="physicalDetailsListRolled">
                 <div class="drainageColor1" >
-                    <p class="levelsTextDetails" style="margin-top:10px;">Poor</p>
+                    <p class="levelsTextDetails" style="margin-top:10px;">Very Poor</p>
                 </div>
                 <div class="drainageColor2">
-                    <p class="levelsTextDetails">?????????</p>
+                    <p class="levelsTextDetails">Poor</p>
                 </div>
                 <div class="drainageColor3">
-                    <p class="levelsTextDetails">?????????</p>
+                    <p class="levelsTextDetails">Somewhat Poor</p>
                 </div>
                 <div class="drainageColor4">
-                    <p class="levelsTextDetails">?????????</p>
+                    <p class="levelsTextDetails">Moderate / Well</p>
                 </div>
                 <div class="drainageColor5">
-                    <p class="levelsTextDetails">?????????</p>
-                </div>
-                <div class="drainageColor6">
-                    <p class="levelsTextDetails">?????????</p>
-                </div>
-                <div class="drainageColor7">
-                    <p class="levelsTextDetails">?????????</p>
-                </div>
-                <div class="drainageColor8">
                     <p class="levelsTextDetails">Excessive</p>
                 </div>
             </div>
@@ -327,12 +318,10 @@
             <div id="yearTitle">Year Selection</div>
             <!-- "Exposure, zero icon" by Google Design (https://design.google.com/) used under CC BY (https://creativecommons.org/licenses/by/3.0/) / Inverted from original -->
             <div id="year0Button" class="yearButton" onclick="transitionToYear(0); switchYearTab(0);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year0Image" class="yearNotSelected" src="./imgs/zero_40px.png"></div>
-            <!-- "Looks, one icon" by Google Design (https://design.google.com/) used under CC BY (https://creativecommons.org/licenses/by/3.0/) / Inverted from original -->
             <div id="year1Button"  class="yearButton" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="yearSelected" src="./imgs/one.png"></div>
-            <!-- "Looks, two icon" by Google Design (https://design.google.com/) used under CC BY (https://creativecommons.org/licenses/by/3.0/) / Inverted from original -->
-            <div id="year2Button" class="yearButton" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="yearNotSelected" src="./imgs/two.png"></div>
-            <!-- "Looks, three icon" by Google Design (https://design.google.com/) used under CC BY (https://creativecommons.org/licenses/by/3.0/) / Inverted from original -->
-            <div id="year3Button" class="yearButton" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="yearNotSelected" src="./imgs/three.png"></div>
+            <div id="year2Button" class="yearButtonHidden" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="yearImageHidden" src="./imgs/two.png"></div>
+            <div id="year3Button" class="yearButtonHidden" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="yearImageHidden" src="./imgs/three.png"></div>
+            <div id="yearAddButton" class="yearButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="yearNotSelected" src="./imgs/addYear.png"></div>
             
         </div>
         
@@ -363,6 +352,9 @@
         <p id="currentInfo">
     </div>
     
+    <!-- div which follows cursor for delayed hover information -->
+    <div id="hover-div"><p id="hover-info"></p></div>
+    
     <!-- Create iFrames for credits, upload/download, and codex -->
     <div id="modalCreditsFrame"><iframe id="creditsFrame" style="display:none;" src="./htmlFrames/credits.html"></iframe></div>
     <img id="closeCredits" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeCreditFrame() ;">
@@ -390,6 +382,7 @@
     </div> <!-- End of page div, this is all of the meaningful content for in-game -->
     
     <!-- the modal frame covers the page with semi-opaque layer, and escape options -->
+
     <div id="modalEscapeFrame">
         <div id="escapeMenu">
             <div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleIndex() ;">Index</div>
@@ -402,6 +395,15 @@
             </div>
         </div>
     </div>
+    
+    <!-- Javascript to stop event propogation for bug fix in modalEscapeFrame (above) -->
+    <script>
+    //prevent modalEscapeFrame from being clicked on when using the buttons stored in the frame
+    $("#escapeMenu").click(function(e) {
+        e.stopPropagation();
+        return false;
+    });
+    </script>
 
     <!-- Add spinning circle loading gif, this loader is visible during transitions-->
     <div id="loading" style="visibility:hidden;">
