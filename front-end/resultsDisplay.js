@@ -628,6 +628,8 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
         .append('path')
         .attr('class', 'dataArc')
         .attr('d', arc)
+        .attr('count', function(d) { return d.data.number})
+        .attr('percent', function(d) { return d.data.count})
         .attr('fill', function(d, i) {
             var hue = color(d.data.label);
             //use these structures to keep track of what actually has a count
@@ -638,6 +640,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
             }
             return hue;
         })
+        .attr("id", function(d) { return d.data.label; })
         .on('mouseover', function(d) {
             //update the mouseover box
             var percent = d.data.count;
@@ -647,7 +650,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
             mouseoverInfo.style('border-color', color(d.data.label));
             mouseoverInfo.style('opacity', 1);
             mouseoverInfo.style('display', 'block');
-
+            
             //highlight the pie slice
             d3.select(this).classed("arc", false);
             d3.select(this).classed("arcHighlight", true);
@@ -676,6 +679,33 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
         .enter()
         .append('g')
         .attr('class', 'legend')
+        .on('mouseover', function(d) {
+           
+            d3.select(this).style("fill", "steelblue");
+            
+            var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d) ;
+            
+            d3.select(slice).classed("arc", false)
+              .classed("arcHighlight", true);
+    
+             mouseoverInfo.select('.label').html(d);
+             mouseoverInfo.select('.count').html( d3.select(slice).attr("count") + " acres");
+             mouseoverInfo.select('.percent').html((Math.round(d3.select(slice).attr("percent") * 100) / 100) + '%');
+             mouseoverInfo.style('border-color', color(d));
+             mouseoverInfo.style('opacity', 1);
+             mouseoverInfo.style('display', 'block');
+            
+        })
+        .on('mouseout', function(d) {
+            
+            d3.select(this).style("fill", "black");
+            
+            var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d) ;
+            d3.select(slice).classed("arcHighlight", false);
+            d3.select(slice).classed("arc", true);
+            
+             mouseoverInfo.style('display', 'none');
+        })
         .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
             var offset = height * nameArray.length / 2;
