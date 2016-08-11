@@ -3,7 +3,6 @@ function displayResults() {
 
     //Create results table and append it to the proper tab of the results frame
     var numericalTableString = generateResultsTable();
-    console.log(numericalTableString.length) ;
     document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsN').innerHTML = numericalTableString;
 
     //refresh frame properties
@@ -13,27 +12,30 @@ function displayResults() {
     drawD3LandPieChart(currentYear, false);
     //create precipitation Bar Graph
     drawPrecipitationInformationChart();
-    //create display with aster plot of ecoIndicators and 
-    // gradient indicators for ecoscores
-    //drawEcosystemIndicatorsDisplay(currentYear);
-
-
-//test functions
-//==================
-    var tempObj = [];
     
+    //DEPRECATED, (create ecosystem indicators aster plot
+    //drawEcosystemIndicatorsDisplay(currentYear);
+    //============= END DEPRECATED
+
+    //create the radar plots
+    var tempObj = []; //get an array of years to display
     for(var y = 1; y <= boardData[currentBoard].calculatedToYear ; y++){
         tempObj.push(y) ;
-    }
+    }//end for
+    
+    //create our top Radar plot, of the ecosystem indicators
     drawEcosystemRadar(tempObj);
+    //create our bottom Radar plot, of the yield scores
     drawYieldRadar(tempObj);
+    //toggle the legend checkboxes for both of the radar plots on the page
     document.getElementById('resultsFrame').contentWindow.toggleYearCheckboxes() ;
+    
     //toggle the arrows on the results page
-    
-    
-//================    
     document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0);
+    
+    //=======DEPRECATED
     //document.getElementById('resultsFrame').contentWindow.toggleYearForESIAsterBy(0);
+    //=======END DEPRECATED
     
 } //end displayResults
 
@@ -695,14 +697,15 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
         .append('g')
         .attr('class', 'legend')
         .on('mouseover', function(d) {
-           
+            //highlight text
             d3.select(this).style("fill", "steelblue");
             
+            //highlight arc
             var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d) ;
-            
             d3.select(slice).classed("arc", false)
               .classed("arcHighlight", true);
-    
+              
+            //show appropriate mouseover info
              mouseoverInfo.select('.label').html(d);
              mouseoverInfo.select('.count').html( d3.select(slice).attr("count") + " acres");
              mouseoverInfo.select('.percent').html((Math.round(d3.select(slice).attr("percent") * 100) / 100) + '%');
@@ -713,13 +716,16 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
         })
         .on('mouseout', function(d) {
             
+            //set text back to black
             d3.select(this).style("fill", "black");
             
+            //unhighlight the arc
             var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d) ;
             d3.select(slice).classed("arcHighlight", false);
             d3.select(slice).classed("arc", true);
             
-             mouseoverInfo.style('display', 'none');
+            //undisplay the mouseover information box
+            mouseoverInfo.style('display', 'none');
         })
         .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
@@ -987,6 +993,7 @@ function drawPrecipitationInformationChart() {
 
 //this funtion creates and animates the Ecoscores aster plot
 // it also creates the quality indicator gradients to the plot's right
+//======= it's use is currently deprecated
 function drawEcosystemIndicatorsDisplay(year) {
 
     //clear info
@@ -1326,124 +1333,148 @@ function drawEcosystemIndicatorsDisplay(year) {
 
 } //end drawEcosystemIndicatorsDisplay()
 
-
-//
-
+//drawEcosystemRadar() takes an array of years and draws a radar chart
+// for each of the years
+// the code here is original, but the Radar object prototype is credited following
 function drawEcosystemRadar(yearArray) {
-    
-    //clear info
+
+    //clear info already on page
     document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart').innerHTML = " ";
     document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend').innerHTML = " ";
-    
-var w = 300,
-	h = 300;
 
-var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
-var legendOptions = [] ;
-var radarClassElementsString = "radar-chart-serie";
+    var graphWidth = 300;
+    var graphHeight = 300;
 
-//Data
-var d = [] ;
-		  
-for(var i=0; i < yearArray.length; i++){
-    
-    var y = yearArray[i] ;
-    
-    var obj = [ 
-            {label:"Nitrate Concentration", axis:"Nitrate", value: Totals.nitrateConcentrationScore[y] / 100, raw: (Math.round(Totals.nitrateConcentration[y]*10) / 10) + " ppm" },
-			{label:"Phosphorus Load", axis:"Phosphorus", value: Totals.phosphorusLoadScore[y] / 100, raw: (Math.round(Totals.phosphorusLoad[y]*10) / 10) + " tons" },
-			{label:"Sediment Delivery",axis: "Sediment", value: Totals.sedimentDeliveryScore[y] / 100, raw: (Math.round(Totals.sedimentDelivery[y]*10) / 10) + " tons"},
-			{label:"Carbon Sequestration", axis: "Carbon", value: Totals.carbonSequestrationScore[y] / 100, raw: (Math.round(Totals.carbonSequestration[y]*10) / 10) + " tons"},
-			{label:"Gross Erosion", axis: "Erosion", value: Totals.grossErosionScore[y] / 100, raw: (Math.round(Totals.grossErosion[y]*10) / 10) + " tons"},
-			{label:"Game Wildlife", axis: "Wildlife", value: Totals.gameWildlifePointsScore[y] / 100, raw: (Math.round(Totals.gameWildlifePoints[y]*10) / 10) + " pts"},
-			{label:"Biodiversity", axis: "Biodiversity", value: Totals.biodiversityPointsScore[y] / 100, raw: (Math.round(Totals.biodiversityPoints[y]*10) / 10) + " pts"} 
-			];
-			
-    d.push(obj) ;
-    legendOptions.push("Year " + y ) ;
-}		  
-			
-		  	
 
-//Options for the Radar chart, other than default
-var mycfg = {
-  w: w,
-  h: h,
-  maxValue: 1,
-  levels: 5,
-  ExtraWidthX: 300
-}
+    var dataset = [];
+    var legendOptions = [];
+    var radarClassElementsString = "radar-chart-serie";
+    var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
 
-var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart');
-var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend');
+    //assign the dataset for each year
+    for (var i = 0; i < yearArray.length; i++) {
 
-//Call function to draw the Radar chart
-//Will expect that data is in %'s
-RadarChart.draw(radarId, d, mycfg, 'mouseoverInfoRadarRight', radarClassElementsString);
-    
-    
-var width = 355 ;
-var height = 370;
+        var y = yearArray[i];
 
-//draw legend and title
-var svg = d3.select(radarLegendId)
+        var obj = [{
+            label: "Nitrate Concentration",
+            axis: "Nitrate",
+            value: Totals.nitrateConcentrationScore[y] / 100,
+            raw: (Math.round(Totals.nitrateConcentration[y] * 10) / 10) + " ppm"
+        }, {
+            label: "Phosphorus Load",
+            axis: "Phosphorus",
+            value: Totals.phosphorusLoadScore[y] / 100,
+            raw: (Math.round(Totals.phosphorusLoad[y] * 10) / 10) + " tons"
+        }, {
+            label: "Sediment Delivery",
+            axis: "Sediment",
+            value: Totals.sedimentDeliveryScore[y] / 100,
+            raw: (Math.round(Totals.sedimentDelivery[y] * 10) / 10) + " tons"
+        }, {
+            label: "Carbon Sequestration",
+            axis: "Carbon",
+            value: Totals.carbonSequestrationScore[y] / 100,
+            raw: (Math.round(Totals.carbonSequestration[y] * 10) / 10) + " tons"
+        }, {
+            label: "Gross Erosion",
+            axis: "Erosion",
+            value: Totals.grossErosionScore[y] / 100,
+            raw: (Math.round(Totals.grossErosion[y] * 10) / 10) + " tons"
+        }, {
+            label: "Game Wildlife",
+            axis: "Wildlife",
+            value: Totals.gameWildlifePointsScore[y] / 100,
+            raw: (Math.round(Totals.gameWildlifePoints[y] * 10) / 10) + " pts"
+        }, {
+            label: "Biodiversity",
+            axis: "Biodiversity",
+            value: Totals.biodiversityPointsScore[y] / 100,
+            raw: (Math.round(Totals.biodiversityPoints[y] * 10) / 10) + " pts"
+        }];
+
+        dataset.push(obj);
+        legendOptions.push("Year " + y);
+    } //end for loop		  
+
+    //Separate configuration options for the radar
+    var overrideConfig = {
+        w: graphWidth,
+        h: graphHeight,
+        maxValue: 1,
+        levels: 5,
+        ExtraWidthX: 300
+    }
+
+    var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart');
+    var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend');
+
+    //Create the Radar chart on page
+    RadarChart.draw(radarId, dataset, overrideConfig, 'mouseoverInfoRadarRight', radarClassElementsString);
+
+    //Now let's create the legend, standard d3 stuff  
+    var legendWidth = 355;
+    var legendHeight = 370;
+
+    var svg = d3.select(radarLegendId)
         .append('svg')
-        .attr('width', width)
-        .attr('height', height)
+        .attr('width', legendWidth)
+        .attr('height', legendHeight)
         .append('g')
-        .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')');
-        
-        
-     svg.append("text")
+        .attr('transform', 'translate(' + (legendWidth / 2) + ',' + (legendHeight / 2) + ')');
+
+    //add legend/chart title   
+    svg.append("text")
         .attr("x", 0)
         .attr("y", -120)
         .attr("text-anchor", "middle")
         .style("font-size", "25px")
         .style("font-weight", "bold")
-        .text("Ecosystem Services");        
-    
-//sizing for the colored squares and spaces 
+        .text("Ecosystem Services");
+
+    //sizing for the colored squares and spaces 
     var legendRectSize = 18;
     var legendSpacing = 4;
 
-    //add all the elements that have a nonzero count
+    //add all of the year series to the legend
     var legend = svg.selectAll('.legend')
         .data(legendOptions)
         .enter()
         .append('g')
         .on('mouseover', function(d) {
-           
+
+            //change text color
             d3.select(this).style("fill", "steelblue");
-            
-            var g = d3.select(radarId) ;
-            z = d3.select(this).attr("childElement") ;
+
+            //select the polygon area and highlight it 
+            var g = d3.select(radarId);
+            z = d3.select(this).attr("childElement");
             z = "polygon." + z;
-            
-            		g.selectAll("polygon")
-						.transition(200)
-						.style("fill-opacity", 0.1); 
-					g.selectAll(z)
-						.transition(200)
-						.style("fill-opacity", .7);
-						
-            
+
+            g.selectAll("polygon")
+                .transition(200)
+                .style("fill-opacity", 0.1);
+            g.selectAll(z)
+                .transition(200)
+                .style("fill-opacity", .7);
         })
         .on('mouseout', function(d) {
-            
+
+            //set legend text back to black
             d3.select(this).style("fill", "black");
-            
-            var g = d3.select(radarId) ;
+
+            //reset all of the polygons in the chart
+            var g = d3.select(radarId);
             g.selectAll("polygon")
-				.transition(200)
-				.style("fill-opacity", 0.2);
-            
+                .transition(200)
+                .style("fill-opacity", 0.2);
         })
-        .attr("childElement", function(d,i){
-            return radarClassElementsString + i ;
+        .attr("childElement", function(d, i) {
+            return radarClassElementsString + i;
         })
         .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
-            var offset = 80 ;
+            var offset = 80;
             var horz = -117;
             var vert = i * height - offset;
             return 'translate(' + horz + ',' + vert + ')';
@@ -1454,10 +1485,10 @@ var svg = d3.select(radarLegendId)
         .attr('width', legendRectSize)
         .attr('height', legendRectSize)
         .style('fill', function(d, i) {
-            return colorscale(i) ;
+            return colorscale(i);
         })
         .style('stroke', function(d, i) {
-            return colorscale(i) ;
+            return colorscale(i);
         });
 
     //add legend text info 
@@ -1466,17 +1497,19 @@ var svg = d3.select(radarLegendId)
         .attr('y', legendRectSize - legendSpacing)
         .text(function(d) {
             return d;
-        });    
-
-    
-    
-}
+        });
+} //end  drawEcosystemRadar()
 
 
+//RadarChart Object, 
+// Code modified, animation tweens, mouseover interaction, and some logic 
+//     interfacing are original to us
 
-////credits
-//http://bl.ocks.org/nbremer/6506614
+//  Our Code based on Bremer's Code based on Graves's code
+//          Bremer:  see post at http://bl.ocks.org/nbremer/6506614
+//          Graves:  see alangrafu on gitHub
 
+//Radar prototype with construction function
 var RadarChart = {
   draw: function(id, d, options, mouseoverClass, radarClassElementsString){
   var cfg = {
@@ -1712,19 +1745,20 @@ var RadarChart = {
 	});
 	
   }
-};
+}; //End Radar Object
 
+//removeYearFromRadar hides all of the graph elements of that year on the ecosystem
+//  indicators plot
 function removeYearFromRadar(yearToRemove){
     
    var elementsToTrash = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName('radar-chart-serie' + (yearToRemove - 1)) ;
-   //console.log(elementsToTrash) ;
-   
+    
    for(var e=0; e < elementsToTrash.length; e++){
        document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToTrash[e].id).style.visibility = "hidden" ;
    }
-    
-}
+}//end removeYearFromRadar() 
 
+//addBackYearToRadar unhides all of the associated elements of that year on the graph
 function addBackYearToRadar(yearToAdd){
     
     var elementsToRevive = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName('radar-chart-serie' + (yearToAdd - 1)) ;
@@ -1732,26 +1766,25 @@ function addBackYearToRadar(yearToAdd){
      for(var e=0; e < elementsToRevive.length; e++){
        document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToRevive[e].id).style.visibility = "visible" ;
    }
-    
-}
+}//end addBackYearToRadar()
 
-
+//This function is in some ways similar to the ecosystem radar function
+//  here we updata the dataset and legend accordingly
 function drawYieldRadar(yearArray) {
     
-    //clear info
+    //clear info already on page
     document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart').innerHTML = " ";
     document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend').innerHTML = " ";
     
-var w = 300,
-	h = 300;
+var graphWidth = 300,
+	graphHeight = 300;
 
-var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
+var dataset = [] ;
 var legendOptions = [] ;
-var radarClassElementsString = "yield-radar-chart-serie" ;
+var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
+var radarClassElementsString = "yield-radar-chart-serie" ; //ironically missing an s
 
-//Data
-var d = [] ;
-		  
+//for each year given, setup the data in that series
 for(var i=0; i < yearArray.length; i++){
     
     var y = yearArray[i] ;
@@ -1768,46 +1801,48 @@ for(var i=0; i < yearArray.length; i++){
             {label:"Short Rotation Woody Biomass", axis:"Woody Biomass", value: Totals.shortRotationWoodyBiomassYieldScore[y] / 100, raw: (Math.round(Totals.yieldResults[y].shortRotationWoodyBiomassYield * 10) / 10) + " tons" }
 			];
 			
-    d.push(obj) ;
+    dataset.push(obj) ;
     legendOptions.push("Year " + y ) ;
 }		  
-			
+
+//not used, but is useful for scaling the radar plot
+//  I decided against using the maximumOfData in config, as it is somewhat misleading
+//  when the graphic changes scales between uses
 var maximumOfData = 0 ;
-for(var i = 0; i < d.length ; i++){
-    for(var j=0; j< d[i].length; j++){
-        if(d[i][j].value > maximumOfData) maximumOfData = d[i][j].value ;    
+for(var i = 0; i < dataset.length ; i++){
+    for(var j=0; j< dataset[i].length; j++){
+        if(dataset[i][j].value > maximumOfData) maximumOfData = dataset[i][j].value ;    
     }
 }
 
-//Options for the Radar chart, other than default
-var mycfg = {
-  w: w,
-  h: h,
+//option overrides for chart
+var chartConfigOverride = {
+  w: graphWidth,
+  h: graphHeight,
   maxValue: 1 ,
   levels: 5,
   ExtraWidthX: 300
 }
 
+//get elements in the child frame
 var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart');
 var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend');
 
-//Call function to draw the Radar chart
-//Will expect that data is in %'s
-RadarChart.draw(radarId, d, mycfg, 'mouseoverInfoRadarLeft', radarClassElementsString);
+//use Radar object to create a plot
+RadarChart.draw(radarId, dataset, chartConfigOverride, 'mouseoverInfoRadarLeft', radarClassElementsString);
 
+//now, time for the legend
+var legendWidth = 355 ;
+var legendHeight = 370;
 
-var width = 355 ;
-var height = 370;
-
-//draw legend and title
 var svg = d3.select(radarLegendId)
         .append('svg')
-        .attr('width', width)
-        .attr('height', height)
+        .attr('width', legendWidth)
+        .attr('height', legendHeight)
         .append('g')
-        .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')');
-        
-        
+        .attr('transform', 'translate(' + (legendWidth / 2) + ',' + (legendHeight / 2) + ')');
+    
+    //add title for legend/chart
      svg.append("text")
         .attr("x", 0)
         .attr("y", -120)
@@ -1827,31 +1862,32 @@ var svg = d3.select(radarLegendId)
         .append('g')
         .on('mouseover', function(d) {
            
+           //change text to blue on mouse over
             d3.select(this).style("fill", "steelblue");
             
+            //highlight area for the series in plot
             var g = d3.select(radarId) ;
             z = d3.select(this).attr("childElement") ;
             z = "polygon." + z;
-            
+        
             		g.selectAll("polygon")
 						.transition(200)
 						.style("fill-opacity", 0.1); 
 					g.selectAll(z)
 						.transition(200)
 						.style("fill-opacity", .7);
-						
-            
-        })
+            })
         .on('mouseout', function(d) {
             
+            //set text back to black
             d3.select(this).style("fill", "black");
             
+            //reset polygon area highlight
             var g = d3.select(radarId) ;
             g.selectAll("polygon")
 				.transition(200)
 				.style("fill-opacity", 0.2);
-            
-        })
+            })
         .attr("childElement", function(d,i){
             return radarClassElementsString + i ;
         })
@@ -1881,20 +1917,21 @@ var svg = d3.select(radarLegendId)
         .text(function(d) {
             return d;
         });    
-}
+}//end drawYieldRadar()
 
 
+//here we remove all of the graph elements in the yield plot for the appropriate year
 function removeYearFromYieldRadar(yearToRemove){
     
    var elementsToTrash = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName('yield-radar-chart-serie' + (yearToRemove - 1)) ;
-   //console.log(elementsToTrash) ;
-   
+  
    for(var e=0; e < elementsToTrash.length; e++){
        document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToTrash[e].id).style.visibility = "hidden" ;
    }
-    
-}
+}//end removeYearFromYieldRadar
 
+//or, do the opposite of the above function and unhide all of the elements on the
+// yield graph that belong to the year passed to the function
 function addBackYearToYieldRadar(yearToAdd){
     
     var elementsToRevive = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName('yield-radar-chart-serie' + (yearToAdd - 1)) ;
@@ -1902,5 +1939,4 @@ function addBackYearToYieldRadar(yearToAdd){
      for(var e=0; e < elementsToRevive.length; e++){
        document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToRevive[e].id).style.visibility = "visible" ;
    }
-    
-}
+}//end addBackYearToYieldRadar
