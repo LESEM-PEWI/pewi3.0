@@ -369,7 +369,7 @@ select {
 /*physical features map selector*/
 .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone,
 .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5,
-.drainageColor6, .drainageColor7, .drainageColor8 {
+.drainageColor6, .drainageColor7, .drainageColor8, .soilColor {
     height: 15px;
     margin: 5px 0px 10px 10px;
     width: 15px;
@@ -438,7 +438,15 @@ select {
 }
 
 .physicalDetailsListRolled {
-    left:-150px;
+    left:-210px;
+}
+
+#drainageClassDetailsList {
+    width: 170px;
+}
+
+#soilClassDetailsList {
+    width: 210px;
 }
 
 .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
