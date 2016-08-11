@@ -3,6 +3,7 @@ function displayResults() {
 
     //Create results table and append it to the proper tab of the results frame
     var numericalTableString = generateResultsTable();
+    console.log(numericalTableString.length) ;
     document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsN').innerHTML = numericalTableString;
 
     //refresh frame properties
@@ -16,18 +17,24 @@ function displayResults() {
     // gradient indicators for ecoscores
     //drawEcosystemIndicatorsDisplay(currentYear);
 
+
+//test functions
+//==================
     var tempObj = [];
-    //test functions
+    
     for(var y = 1; y <= boardData[currentBoard].calculatedToYear ; y++){
         tempObj.push(y) ;
     }
     drawEcosystemRadar(tempObj);
+    drawYieldRadar(tempObj);
     document.getElementById('resultsFrame').contentWindow.toggleYearCheckboxes() ;
     //toggle the arrows on the results page
     
+    
+//================    
     document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0);
     //document.getElementById('resultsFrame').contentWindow.toggleYearForESIAsterBy(0);
-
+    
 } //end displayResults
 
 //generateResultsTable creates the string of html with all the numerical results
@@ -1333,6 +1340,7 @@ var w = 300,
 
 var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
 var legendOptions = [] ;
+var radarClassElementsString = "radar-chart-serie";
 
 //Data
 var d = [] ;
@@ -1371,7 +1379,7 @@ var radarLegendId = document.getElementById('resultsFrame').contentWindow.docume
 
 //Call function to draw the Radar chart
 //Will expect that data is in %'s
-RadarChart.draw(radarId, d, mycfg);
+RadarChart.draw(radarId, d, mycfg, 'mouseoverInfoRadarRight', radarClassElementsString);
     
     
 var width = 355 ;
@@ -1431,7 +1439,7 @@ var svg = d3.select(radarLegendId)
             
         })
         .attr("childElement", function(d,i){
-            return "radar-chart-serie" + i ;
+            return radarClassElementsString + i ;
         })
         .attr('transform', function(d, i) {
             var height = legendRectSize + legendSpacing;
@@ -1470,7 +1478,7 @@ var svg = d3.select(radarLegendId)
 //http://bl.ocks.org/nbremer/6506614
 
 var RadarChart = {
-  draw: function(id, d, options){
+  draw: function(id, d, options, mouseoverClass, radarClassElementsString){
   var cfg = {
 	 radius: 5,
 	 w: 600,
@@ -1513,7 +1521,7 @@ var RadarChart = {
 
   var mouseoverInfo = d3.select(id)
         .append('g')
-        .attr('class', 'mouseoverInfoRadar');
+        .attr('class', mouseoverClass);
 
     mouseoverInfo.append('div')
         .attr('class', 'label');
@@ -1603,9 +1611,9 @@ var RadarChart = {
 					 .enter()
 					 .append("polygon")
 					 .attr("id", function(d, i) {
-					     return "polygon-serie" + series + "num" + i ;
+					     return radarClassElementsString + "polygon-serie" + series + "num" + i ;
 					 })
-					 .attr("class", "radar-chart-serie"+series)
+					 .attr("class", radarClassElementsString+series)
 					 .style("stroke-width", "2px")
 					 .style("stroke", cfg.color(series))
 					 .attr("points",function(d) {
@@ -1621,7 +1629,13 @@ var RadarChart = {
 					    
 					 })
 					 .on('mouseout', function(){ 
-					    					 });
+					    					 })
+					 .transition()
+                     .duration(900)
+                     .styleTween("fill-opacity", function() {
+                     //animate the change of the color gradient from black to bright blue 
+                        return d3.interpolate(0, cfg.opacityArea);
+                     });
 	  series++;
 	});
 	series=0;
@@ -1632,9 +1646,9 @@ var RadarChart = {
 		.data(y).enter()
 		.append("svg:circle")
 		.attr("id", function(d, i) {
-					     return "circle-serie" + series + "num" + i ;
+					     return radarClassElementsString + "circle-serie" + series + "num" + i ;
 					 })
-		.attr("class", "radar-chart-serie"+series)
+		.attr("class", radarClassElementsString+series)
 		.attr('r', cfg.radius)
 		.attr("alt", function(j){return Math.max(j.value, 0)})
 		.attr("cx", function(j, i){
@@ -1682,8 +1696,18 @@ var RadarChart = {
 						.style("fill-opacity", cfg.opacityArea);
 					
 				 })
-		.text(function(j){return Math.max(j.value, 0)});
-
+		.text(function(j){return Math.max(j.value, 0)})
+		.transition()
+        .duration(900)
+        .attrTween("cy", function() {
+            //animate the change of the color gradient from black to bright blue 
+            return d3.interpolate(150, this.getAttribute("cy"));
+        })
+        .attrTween("cx", function() {
+            //animate the change of the color gradient from black to bright blue 
+            return d3.interpolate(150, this.getAttribute("cx"));
+        });
+        
 	  series++;
 	});
 	
@@ -1704,6 +1728,176 @@ function removeYearFromRadar(yearToRemove){
 function addBackYearToRadar(yearToAdd){
     
     var elementsToRevive = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName('radar-chart-serie' + (yearToAdd - 1)) ;
+    
+     for(var e=0; e < elementsToRevive.length; e++){
+       document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToRevive[e].id).style.visibility = "visible" ;
+   }
+    
+}
+
+
+function drawYieldRadar(yearArray) {
+    
+    //clear info
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart').innerHTML = " ";
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend').innerHTML = " ";
+    
+var w = 300,
+	h = 300;
+
+var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
+var legendOptions = [] ;
+var radarClassElementsString = "yield-radar-chart-serie" ;
+
+//Data
+var d = [] ;
+		  
+for(var i=0; i < yearArray.length; i++){
+    
+    var y = yearArray[i] ;
+                                                                        //Totals.yieldResults[y][tempString]
+    var obj = [ 
+            {label:"Corn Grain", axis:"Corn Grain", value: Totals.cornGrainYieldScore[y] / 100, raw: (Math.round(Totals.yieldResults[y].cornGrainYield * 10) / 10) + " bu" },
+            {label:"Soybean", axis:"Soybean", value: Totals.soybeanYieldScore[y] / 100, raw: (Math.round(Totals.yieldResults[y].soybeanYield * 10) / 10) + " bu" },
+            {label:"Mixed Fruits and Vegetables", axis:"Fruit/Veg", value: Totals.mixedFruitsAndVegetablesYieldScore[y] / 100, raw: (Math.round(Totals.yieldResults[y].mixedFruitsAndVegetablesYield * 10) / 10) + " tons" },
+            {label:"Cattle", axis:"Cattle", value: Totals.cattleYieldScore[y] / 100, raw: (Math.round(Totals.yieldResults[y].cattleYield * 10) / 10) + " animals" },
+            {label:"Alfalfa Hay", axis:"Alfalfa", value: Totals.alfalfaHayYieldScore[y] / 100, raw: (Math.round(Totals.yieldResults[y].alfalfaHayYield * 10) / 10) + " tons" },
+            {label:"Grass Hay", axis:"Grass Hay", value: Totals.grassHayYieldScore[y] / 100, raw: (Math.round(Totals.yieldResults[y].grassHayYield * 10) / 10) + " tons" },
+            {label:"Switchgrass Biomass", axis:"Switchgrass", value: Totals.switchgrassYieldScore[y] / 100, raw: (Math.round(Totals.yieldResults[y].switchgrassYield * 10) / 10) + " tons" },
+            {label:"Wood", axis:"Wood", value: Totals.woodYieldScore[y] / 100, raw: (Math.round(Totals.yieldResults[y].woodYield * 10) / 10) + " board-ft" },
+            {label:"Short Rotation Woody Biomass", axis:"Woody Biomass", value: Totals.shortRotationWoodyBiomassYieldScore[y] / 100, raw: (Math.round(Totals.yieldResults[y].shortRotationWoodyBiomassYield * 10) / 10) + " tons" }
+			];
+			
+    d.push(obj) ;
+    legendOptions.push("Year " + y ) ;
+}		  
+			
+var maximumOfData = 0 ;
+for(var i = 0; i < d.length ; i++){
+    for(var j=0; j< d[i].length; j++){
+        if(d[i][j].value > maximumOfData) maximumOfData = d[i][j].value ;    
+    }
+}
+
+//Options for the Radar chart, other than default
+var mycfg = {
+  w: w,
+  h: h,
+  maxValue: 1 ,
+  levels: 5,
+  ExtraWidthX: 300
+}
+
+var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart');
+var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend');
+
+//Call function to draw the Radar chart
+//Will expect that data is in %'s
+RadarChart.draw(radarId, d, mycfg, 'mouseoverInfoRadarLeft', radarClassElementsString);
+
+
+var width = 355 ;
+var height = 370;
+
+//draw legend and title
+var svg = d3.select(radarLegendId)
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+        .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')');
+        
+        
+     svg.append("text")
+        .attr("x", 0)
+        .attr("y", -120)
+        .attr("text-anchor", "middle")
+        .style("font-size", "25px")
+        .style("font-weight", "bold")
+        .text("Annual Yield Results");        
+    
+//sizing for the colored squares and spaces 
+    var legendRectSize = 18;
+    var legendSpacing = 4;
+
+    //add all the elements that have a nonzero count
+    var legend = svg.selectAll('.legend')
+        .data(legendOptions)
+        .enter()
+        .append('g')
+        .on('mouseover', function(d) {
+           
+            d3.select(this).style("fill", "steelblue");
+            
+            var g = d3.select(radarId) ;
+            z = d3.select(this).attr("childElement") ;
+            z = "polygon." + z;
+            
+            		g.selectAll("polygon")
+						.transition(200)
+						.style("fill-opacity", 0.1); 
+					g.selectAll(z)
+						.transition(200)
+						.style("fill-opacity", .7);
+						
+            
+        })
+        .on('mouseout', function(d) {
+            
+            d3.select(this).style("fill", "black");
+            
+            var g = d3.select(radarId) ;
+            g.selectAll("polygon")
+				.transition(200)
+				.style("fill-opacity", 0.2);
+            
+        })
+        .attr("childElement", function(d,i){
+            return radarClassElementsString + i ;
+        })
+        .attr('transform', function(d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset = 80 ;
+            var horz = -124;
+            var vert = i * height - offset;
+            return 'translate(' + horz + ',' + vert + ')';
+        });
+
+    //add legend color squares
+    legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', function(d, i) {
+            return colorscale(i) ;
+        })
+        .style('stroke', function(d, i) {
+            return colorscale(i) ;
+        });
+
+    //add legend text info 
+    legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(function(d) {
+            return d;
+        });    
+}
+
+
+function removeYearFromYieldRadar(yearToRemove){
+    
+   var elementsToTrash = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName('yield-radar-chart-serie' + (yearToRemove - 1)) ;
+   //console.log(elementsToTrash) ;
+   
+   for(var e=0; e < elementsToTrash.length; e++){
+       document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToTrash[e].id).style.visibility = "hidden" ;
+   }
+    
+}
+
+function addBackYearToYieldRadar(yearToAdd){
+    
+    var elementsToRevive = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName('yield-radar-chart-serie' + (yearToAdd - 1)) ;
     
      for(var e=0; e < elementsToRevive.length; e++){
        document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToRevive[e].id).style.visibility = "visible" ;

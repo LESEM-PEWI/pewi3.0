@@ -150,7 +150,7 @@ body{
      margin-top: 40px;
  }
  
- .mouseoverInfo, .mouseoverInfoRadar {
+ .mouseoverInfo, .mouseoverInfoRadarRight, .mouseoverInfoRadarLeft {
      position: absolute;
      margin-left: 25px;
      display:none;
@@ -172,9 +172,14 @@ body{
      -moz-box-shadow: 2px 2px 10px 5px #616161;
  }
  
- .mouseoverInfoRadar {
+ .mouseoverInfoRadarRight {
      margin-top: -160px;
-     margin-left: 470px;
+     margin-left: 490px;
+ }
+ 
+ .mouseoverInfoRadarLeft{
+     margin-left:-315px;
+     margin-top: -160px;
  }
  
  .mouseoverInfo:after {
@@ -427,13 +432,18 @@ body{
      margin-bottom: 10px;
  }
  
- #radarContainer {
+ #radarContainer, #yieldRadarContainer {
     width:100%;
     height:370px;
-    margin-bottom:100px;
+    margin-bottom:15px;
  }
  
- #radarChart{
+ #yieldRadarContainer{
+     margin-top:45px;
+     margin-bottom:120px;
+ }
+ 
+ #radarChart, #yieldRadarChart{
      margin:0px;
      padding:0px;
      width:445px;
@@ -450,11 +460,24 @@ body{
     
  }
  
+  #yieldRadarLegend{
+      float:left;
+      height:100%;
+      width:355px;
+  }
+ 
  #checks{
      position:absolute;
      width:20px;
      margin-left:595px;
      margin-top:99px;
+ }
+ 
+ #yieldChecks{
+      position:absolute;
+      width:20px;
+      margin-top:100px;
+      margin-left:145px;
  }
  
  .yearCheckbox{
@@ -493,14 +516,7 @@ body{
                     <div id="landusePieChart" class="chart"></div>
                     <br />
 
-                    <div id="precipSection">
-                        <div id="precipInfo" class="precipInfo"></div>
-                        <div id="precipTitle"></div>
-                        <svg id="precipChart"></svg>
-                    </div>
 
-                    <br />
-                    
                     <!-- 
                     <div id="asterChart"></div>
                     
@@ -524,6 +540,27 @@ body{
                             <input type="checkbox" id="checkboxYear3" checked onclick="radarPlotYearToggle(3);" class="yearCheckbox" >
                         </div>
                     </div>
+                    
+                    <div id="precipSection">
+                        <div id="precipInfo" class="precipInfo"></div>
+                        <div id="precipTitle"></div>
+                        <svg id="precipChart"></svg>
+                    </div>
+
+                    <br />
+                    
+                        
+                    <div id="yieldRadarContainer" class="chart">
+                        
+                        <div id="yieldRadarLegend"></div>
+                        <div id="yieldRadarChart"></div>
+                        <div id="yieldChecks">
+                            <input type="checkbox" id="yieldCheckboxYear1" checked onclick="yieldRadarPlotYearToggle(1);" class="yearCheckbox" >
+                            <input type="checkbox" id="yieldCheckboxYear2" checked onclick="yieldRadarPlotYearToggle(2);" class="yearCheckbox" >
+                            <input type="checkbox" id="yieldCheckboxYear3" checked onclick="yieldRadarPlotYearToggle(3);" class="yearCheckbox" >
+                        </div>
+                    </div>    
+                    
                 </div>
             </div>
 
@@ -666,14 +703,21 @@ function changeESIAsterBy(numberOfYearsToChange) {
 }//end changeESIAsterBy
 
 function radarPlotYearToggle(yearToToggle){
-    
     if(!(document.getElementById('checkboxYear' + yearToToggle).checked) ){
         window.top.removeYearFromRadar(yearToToggle) ;
     }
     else{
         window.top.addBackYearToRadar(yearToToggle) ;
     }
-    
+}
+
+function yieldRadarPlotYearToggle(yearToToggle){
+    if(!(document.getElementById('yieldCheckboxYear' + yearToToggle).checked) ){
+        window.top.removeYearFromYieldRadar(yearToToggle) ;
+    }
+    else{
+        window.top.addBackYearToYieldRadar(yearToToggle) ;
+    }
 }
 
 
@@ -682,14 +726,15 @@ function toggleYearCheckboxes() {
     var yearMax = 3 ;
     
     for(var y = 1; y <= yearMax; y++){
-        console.log('turning on  :  checkboxYear' + y) ;
         document.getElementById('checkboxYear' + y).style.visibility = "visible" ;
         document.getElementById('checkboxYear' + y).checked = true ;
+        document.getElementById('yieldCheckboxYear' + y).style.visibility = "visible" ;
+        document.getElementById('yieldCheckboxYear' + y).checked = true ;
     }
     
     while(yearMax - upTo > 0){
-        console.log('turning off  :  checkboxYear' + yearMax) ;
         document.getElementById('checkboxYear' + yearMax).style.visibility = "hidden" ;
+        document.getElementById('yieldCheckboxYear' + yearMax).style.visibility = "hidden" ;
         yearMax -= 1 ;
     }
     
