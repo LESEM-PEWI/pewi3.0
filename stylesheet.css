@@ -527,8 +527,8 @@ select {
     height:100%;
     position:absolute;
     top: 0%;
-    width:70%;
-    right:15%;
+    width:86%;
+    right:7%;
   -webkit-transition-duration: 0.9s; 
     transition-duration: 0.9s; 
 }
@@ -743,6 +743,7 @@ select {
   text-align:center;
   top:300px;
   width:12%;
+ 
   
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
