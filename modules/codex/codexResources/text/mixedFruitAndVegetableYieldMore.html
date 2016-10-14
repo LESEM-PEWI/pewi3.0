@@ -6,11 +6,38 @@
     <!-- INCLUDES -->
     <!--css-->
     <link rel="stylesheet" type="text/css" href=".././iframeStylesheet.css">
+    <!--Mathjax-->
+    <script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
     <!-- /INCLUDES -->
 </head>
 <body>
-Corn is an annual grain crop traditionally used for food, animal feed, and biofuel. Corn is currently the most planted field crop in the US, with over 90 million acres of corn planted every year. In PEWI, conventional corn management assumes conventional tillage and management in alignment with specifications from the Iowa Soil Properties and Interpretations Database.
+<p>The yield equation for mixed fruit and vegetables is:
+$$\sum_{i=1}^n \sum_{j=1}^{m_i} A_{ij} * YB_{ij}[FruitVeg] * YP_{ij}$$
+where \(YB_{ij}[FruitVeg] = 0.25 * STM * (GRY + GBY + SQY + STY)\)
+and ranges from 6.58 to 16.5 Mg/ha/yr</p>
+
+<ul style="list-style-type:none">
+  <li>GRY = Grape Yield  = 17.6 Mg/ha/yr</li>
+  <li>GBY = Green Bean Yield = 6.73 Mg/ha/yr</li>
+  <li>SQY = Squash Yield = 33.6 Mg/ha/yr</li>
+  <li>STY = Strawberry Yield = 7.85 Mg/ha/yr</li>
+</ul>  
+
+<table border="1">
+<tr><th rowspan="4">\(STM\) (Soil Texture Multiplier) </th><td>Fine Sandy Loam (FSL)
+</td><td>1.00</td></tr>
+<tr><td>Silt Loam (SIL)
+</td><td>0.90</td></tr>
+<tr><td>Loam (L)
+</td><td>0.85</td></tr>
+<tr><td>Clay Loam (CL), Mucky Silt Loam (MK-SIL), Silty Clay Loam (SICL)
+</td><td>0.40</td></tr>
+</table>
     
-    
+    <p>A chart for Soil Texture Multiplier (STM) for each soil type can be found in the Texture tab.
+Green bean, squash, and strawberry yield values are from Iowa State University Extension, with adjustments for unfavorable soil texture (Taber 2009). Due to lack of published data for Iowa grapes, regionally similar data was used from New York state indicating 17.6 Mg/ha (Post and Robinson 1995, Delate and Friedrich 2004). Mixed fruit and vegetable production is maximized in a dry or normal precipitation year. Yield on a per-unit basis is maximized in fine sandy loam (Buckney 1636 soils), followed by silt loam (Downs 162D2, Ackmore-Colo 5B, and Nodoway 220) soils. It is minimized in clay loam (Coland 135), mucky silt loam (Okoboji 90), and silty clay loam (Tama 120C2, Tama 120B, and Muscatine 119).
+</p>
 </body>    
 </html>

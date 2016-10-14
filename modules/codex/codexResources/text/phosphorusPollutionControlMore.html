@@ -1,0 +1,49 @@
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>codex text</title>
+
+    <!-- INCLUDES -->
+    <!--css-->
+    <link rel="stylesheet" type="text/css" href=".././iframeStylesheet.css">
+    <!--Mathjax-->
+    <script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- /INCLUDES -->
+</head>
+<body>
+Phosphorus loading for each grid cell is found by 
+\(EC_{ij} + RC_{ij} + SDC_{ij}\)
+where ECij represents erosion component, \(RC_{ij}\) is a runoff component, and \(SDC_{ij}\) is a subsurface drainage component. The erosion component, which measures delivery with sediment, is broken down as 
+$$\frac{(B_{ij} * E_{ij} * SDR_{ij} * EF_{ij} * STPE_{ij})}{2,000}$$ where
+<P>
+ <ul>
+  <li>\(B_{ij}\) is buffer factor</li>
+  <li>\(E_{ij}\) is gross erosion</li>
+  <li>\(SDR_{ij}\) is sediment delivery ratio</li>
+  <li>\(EF_{ij}\) is enrichment factor, and</li>
+  <li>\(STPE_{ij}\) is soil test phosphorus erosion factor (USDA NRCS, 2004a)</li>
+  
+</ul>
+Information for gross erosion can be found under the erosion control tab. Information for buffer factor and SDR can be found under the sediment control tab. The enrichment factor accounts for the impact of management techniques on soil phosphorus levels (Table 2-12, USDA NRCS 2004a). The STP Erosion factor estimates the phosphorus release over time from STP in eroded sediment (USDA NRCS, 2004a) and is found by $$0.7 * (500+STP_{ij} ) * (2,000 ⁄ 1,000,000)$$ (technical note 25), where
+\(STP_{ij}\) is averaged over the major landform region area (MLRA) at 30 ppm for the Des Moines Lobe and 27 ppm for the Southern Iowa Drift Plain (Iowa, 2013).
+</P>
+
+<P>The runoff component, measuring delivery with runoff, is broken down as $$RF_{ij} * PF * (STPR_{ij} + PA_{ij} )$$
+where 
+ <ul>
+  <li>\(RF_{ij}\) is the runoff factor</li>
+  <li>\(PF\) is the precipitation factor</li>
+  <li>\(STPR_{ij}\) is the soil test phosphorus runoff factor, and</li>
+  <li>\(PA_{ij}\) is the phosphorus application factor (Error! Reference source not found.).</li>
+</ul>
+\(RF_{ij}\) is a function of Runoff Curve Number (RCN) representing the fraction of precipitation that runs off the field (Mallarino et al., 2005),USDA NRCS, 2004b), (Error! Reference source not found., Error! Reference source not found.). \(PF\) is the annual precipitation in million Mg/ha. \(STPR_{ij}\) is found by \(0.05 + 0.005 * STP_{ij}\) (technical note 25).</P>
+
+<P>The subsurface drainage component, measuring delivery with subsurface drainage, is broken down as 
+$$FF_{ij} * PF * STPD_{ij}$$
+where \(FF_{ij}\) is the flow factor and \(STPD_{ij}\) is the soil test phosphorus drainage factor. Flow factor is either 0 or 0.1 according to P-Index Technical Note 25 (USDA NRCS 2004a). \(STPD_{ij}\) is .2 for STP values over 100 and .1 for all other values (USDA NRCS 2004a). STP values in PEWI are always under 100.</P>
+    
+    
+</body>    
+</html>

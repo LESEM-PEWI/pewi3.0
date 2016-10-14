@@ -6,11 +6,34 @@
     <!-- INCLUDES -->
     <!--css-->
     <link rel="stylesheet" type="text/css" href=".././iframeStylesheet.css">
+    <!--Mathjax-->
+    <script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
     <!-- /INCLUDES -->
 </head>
 <body>
-Corn is an annual grain crop traditionally used for food, animal feed, and biofuel. Corn is currently the most planted field crop in the US, with over 90 million acres of corn planted every year. In PEWI, conventional corn management assumes conventional tillage and management in alignment with specifications from the Iowa Soil Properties and Interpretations Database.
-    
+<P>The General equation is:
+$$\sum_{i=1}^n \sum_{j=1}^{m_i} A_{ij} * YB_{ij}[YieldType] * YP_{ij}$$
+where \(A_{ij}\)  is the area of the grid cell, \(YB_{ij}[Yield Type]\) is the yield base rate for the type of product, and \(YP_{ij}\) is the yield precipitation factor. Yield precipitation factors for each precipitation level are shown below:
+</P>
+
+  <table border="1">
+  <tr>
+  <th>Land-Use Types</th>
+  <th colspan="7">Precipitation (cm) Factors</th>
+  </tr>
+
+  <tr><th></th><th>62.4 cm (24.58 in)</th><th>71.6 cm (28.18 in)</th><th>77.2 cm (30.39 in)</th><th>81.7 cm (32.16 in)</th><th>87.2 cm (34.34 in)</th><th>92.6 cm (36.47 in)</th><th>114.6 cm (45.1 in)</th></tr>
+  <tr><td>Alfalfa, Grass Hay, Switchgrass, Permanent Pasture, Rotational Grazing</td>
+  <td>0.75</td><td>0.90</td><td>1.00</td><td>1.00</td><td>1.00</td><td>0.90</td><td>0.75</td></tr>
+  <tr><td>Conventional Corn, Conventional Soybean, Conservation Corn, Conservation Soybean</td>
+  <td>0.95</td><td>1.00</td><td>1.00</td><td>1.00</td><td>1.00</td><td>1.00</td><td>0.95</td></tr>
+  <tr><td>Mixed Fruit & Vegetables</td>
+  <td>1.00</td><td>1.00</td><td>1.00</td><td>1.00</td><td>1.00</td><td>0.90</td><td>0.75</td></tr>
+  <tr><td>All Others</td>
+  <td>1.00</td><td>1.00</td><td>1.00</td><td>1.00</td><td>1.00</td><td>1.00</td><td>1.00</td></tr>
+  </table>
     
 </body>    
 </html>

@@ -6,11 +6,25 @@
     <!-- INCLUDES -->
     <!--css-->
     <link rel="stylesheet" type="text/css" href=".././iframeStylesheet.css">
+    <!--Mathjax-->
+    <script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
     <!-- /INCLUDES -->
 </head>
 <body>
-Corn is an annual grain crop traditionally used for food, animal feed, and biofuel. Corn is currently the most planted field crop in the US, with over 90 million acres of corn planted every year. In PEWI, conventional corn management assumes conventional tillage and management in alignment with specifications from the Iowa Soil Properties and Interpretations Database.
-    
+  
+  <P>Grass Hay yield is based on the ISPAID equation of $$YB_{ij}[GrassHay] = DF_{ij} * YB_{ij}[Corn]$$, multiplied by a conversion factor from tons to megagrams and with a minimum of 8.07 Mg/ha yr.
+  </P>
+<P>$$DF_{ij}$$ is a drainage factor equal to:
+ <ul>
+  <li>0.028 for soils with Drainage Class values of 10-35, as well as most soils with Drainage Class values of 40</li>
+  <li>0.026 for soils with Drainage Class values of 45-50, as well as two soils with Drainage Class values of 40</li>
+  <li>0.021 for soils with Drainage Class values of 55-70</li>
+</ul> </P>
+
+<P>Total production is given by the product of the yield on a per-unit basis and the area of the grid cell, summed over the entire watershed. </P>
+
     
 </body>    
 </html>
