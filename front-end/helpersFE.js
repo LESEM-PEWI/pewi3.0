@@ -845,6 +845,9 @@ function changeSelectedPaintTo(newPaintValue) {
         painterElementId = "paint" + newPaintValue;
         document.getElementById(painterElementId).className = "landSelectedIcon";
         painter = newPaintValue;
+
+		//have land type update immediately, well, pretend the mouse moved...
+        highlightTile(-1) ;
     }
     else {
         //reset the landSectedIcon back to a normal landSelectorIcon
