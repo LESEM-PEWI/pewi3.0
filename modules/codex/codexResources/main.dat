@@ -11,7 +11,7 @@
 ./codexResources/text/conventionalSoy.html
 1
 @ : Conservation Corn
-<iframe width="500" height="300" src="https://www.youtube.com/embed/aAi8v8FGrG0?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/qT5NbVf9eCo?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/aAi8v8FGrG0?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/5tojBTJJ_QM?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/conservationCorn.html
 1
 @ : Conservation Soy
@@ -59,7 +59,7 @@
 ./codexResources/text/conservationForest.html
 1
 @ : Short-Rotation Woody Bioenergy
-<iframe width="500" height="300" src="https://www.youtube.com/embed/-bK5W2iJjT8?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <p> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/-bK5W2iJjT8?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/VD2TWiWOkQ8?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/shortRotation.html
 0
 $
@@ -208,81 +208,81 @@ $
 $
 $
 # + Functionality
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/P1gope1kXVc?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/functionality.html
 0
 # + Navigating the PEWI Workspace
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/gqEBtHsjsss?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/navigation.html
 0
 @ : Tool Panel
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/ZU3rGlO2jDM?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/toolPanel.html
 0
 # + Results Panel
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/_4DV0MjCaDQ?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/resultsPanel.html
 0
 @ : Land Use Graph
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/9l1orYBSKpE?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/landUseGraph.html
 0
 @ : Ecosystem Services Graph
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/A67Vr82oYNA?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/ecosystemServicesGraph.html
 0
 @ : Precipitation Graph
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/c_RhBMOAErE?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/precipitationGraph.html
 0
 @ : Annual Yield Graph
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/ma_NZ1xuqqU?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/annualYieldGraph.html
 0
 @ : Data Sheet
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/GdSJMB1XTkI?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/dataSheet.html
 0
 $
 @ : Comment Panel
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/VdqI3fNfM64?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/commentPanel.html
 0
 @ : View Perspective
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/2Nq9H5RHMZc?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/viewPerspective.html
 0
 @ : Save Watershed
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/zD12Vz8pU-k?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/saveWatershed.html
 0
 $
 @ : Main Menu
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/XanFEFELSKo?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/mainMenu.html
 0
-@ : Levels
-<img src="./codexResources/imgs/test3.jpg" />
+@ : Guided Play
+<iframe width="500" height="300" src="https://www.youtube.com/embed/EUTA0GHlRN4?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/levels.html
 0
 @ : Multiplayer Mode
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/0LR-eApREnA?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/multiplayerMode.html
 0
 @ : Pause Menu
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/omod9bdpe2Y?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/pauseMenu.html
 0
 @ : Keyboard Shortcuts
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/keyboardShortcuts.html
 0
 @ : About
-<img src="./codexResources/imgs/test3.jpg" />
+<img src="./codexResources/imgs/about.png" />
 ./codexResources/text/about.html
 0
 @ : Bibliography
-<img src="./codexResources/imgs/cell_images_bitmaps/4b687e.png” />
+<img src="./codexResources/imgs/test2.jpg" />
 ./codexResources/text/biblio.html
 0
 $
