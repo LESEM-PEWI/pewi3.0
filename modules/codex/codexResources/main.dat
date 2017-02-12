@@ -59,62 +59,62 @@
 ./codexResources/text/conservationForest.html
 1
 @ : Short-Rotation Woody Bioenergy
-<iframe width="500" height="300" src="https://www.youtube.com/embed/-bK5W2iJjT8?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/VD2TWiWOkQ8?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/-bK5W2iJjT8?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> 
 ./codexResources/text/shortRotation.html
 0
 $
 # + Physical Features
-<img src="./codexResources/imgs/test3.jpg" />
+<img src="./codexResources/imgs/physicalFeaturesHolder.png" />
 ./codexResources/text/physicalFeatures.html
 0
 @ : Topographic Relief
-<img src="./codexResources/imgs/test4.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/OBbzsBKu6JE?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>  + <p style="margin-left:10px;"> Video Coming Soon! </p>
 ./codexResources/text/topographicRelief.html
 1
 @ : Flood Frequency
-<img src="./codexResources/imgs/test4.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/RQVwwU8l0RM?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/floodFrequency.html
 0
 @ : Strategic Wetlands
-<img src="./codexResources/imgs/test4.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/cho9HQRd3ys?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>>
 ./codexResources/text/strategicWetlands.html
 0
 @ : Subwatershed Boundaries
-<img src="./codexResources/imgs/test4.jpg" />
-./codexResources/text/subWatershedBoundaries.html
+<iframe width="500" height="300" src="https://www.youtube.com/embed/oRJHaOjQXio?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/subwatershedBoundaries.html
 0
 # + Drainage Class
-<img src="./codexResources/imgs/test4.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/E0EufTP9cv0?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/drainageClass.html
 0
 @ : Hydrologic Group
-<img src="./codexResources/imgs/test4.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/fmFViV8I8P8?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>> + <iframe width="500" height="300" src="https://www.youtube.com/embed/koQ8-v1HFBA?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/hydrologicGroup.html
 1
 $
 @ : Soil Class
-<img src="./codexResources/imgs/test4.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/b-jIBLorR6E?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/soilClass.html
 0
 @ : Soil Texture
-<img src="./codexResources/imgs/test4.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/UfPu7H4qNJw?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/soilTexture.html
 0
 @ : Corn Suitability Rating
-<img src="./codexResources/imgs/test4.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/a4ilVP2Mis8?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/cornSuitabilityRating.html
 0
 $
 @ : Precipitation
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/W5uzvzk3tBA?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/precipitation.html
 0
 # + Management Practices
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/FX6S6UGcRIs?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/managementPractices.html
 0
 @ : Crop Rotation
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/SdoXE6SbwQ4?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <img src="./codexResources/imgs/cropRotationHolder.png" />
 ./codexResources/text/cropRotation.html
 1
 $
