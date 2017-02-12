@@ -119,90 +119,90 @@ $
 1
 $
 # + Modules
-<img src="./codexResources/imgs/test1.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/y13P-Fn6oSE?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/modules.html
 0
 # + Habitat
-<img src="./codexResources/imgs/test1.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/nWmCkNCFD10?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/habitat.html
 0
 @ : Biodiversity
-<img src="./codexResources/imgs/test1.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/lfPKEbvWxOg?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/YW4BV-lIsvk?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/biodiversity.html
 1
 @ : Game Wildlife
-<img src="./codexResources/imgs/test1.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/aH_xS7Td5ls?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/EjTo1W6_PZw?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/gameWildlife.html
 1
 $
 # + Soil Quality
-<img src="./codexResources/imgs/test2.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/kQxwPNuEok8?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/soilQuality.html
 0
 @ : Carbon Sequestration
-<img src="./codexResources/imgs/test2.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/UdgbOGyhTAY?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/uTrkrluZNGQ?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/carbonSequestration.html
 1
 @ : Erosion Control
-<img src="./codexResources/imgs/test2.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/XVktzbugNvo?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>  + <p style="margin-left:10px;"> Video Coming Soon! </p>
 ./codexResources/text/erosionControl.html
 1
 $
 # + Water Quality
-<img src="./codexResources/imgs/test3.jpg" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/MHOh7LyZlV0?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> 
 ./codexResources/text/waterQuality.html
 0
 @ : Nitrate Pollution Control
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/c63ZXfZyfEg?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>  + <p style="margin-left:10px;"> Video Coming Soon! </p>
 ./codexResources/text/nitratePollutionControl.html
 1
 @ : Phosphorus Pollution Control
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/2HZDHK8uy7Y?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>  + <p style="margin-left:10px;"> Video Coming Soon! </p>
 ./codexResources/text/phosphorusPollutionControl.html
 1
 @ : Sediment Control
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/vER6hvsQPlg?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>  + <p style="margin-left:10px;"> Video Coming Soon! </p>
 ./codexResources/text/sedimentControl.html
 1
 $
 # + Yield
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/5cZ4xD4EYU0?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/5SbrIOBypMU?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/yield.html
 1
 @ : Alfalfa
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<p style="margin-left:10px;"> Video Coming Soon! </p> + <iframe width="500" height="300" src="https://www.youtube.com/embed/nUe7FxjYDYI?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/alfalfaYield.html
 1
 @ : Cattle
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/Zhu5nUqDu5s?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <p style="margin-left:10px;"> Video Coming Soon! </p>
 ./codexResources/text/cattleYield.html
 1
 @ : Corn Grain
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/lhJpVGvgC4k?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/hm6eOmQMfPM?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/cornYield.html
 1
 @ : Grass Hay
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<p style="margin-left:10px;"> Video Coming Soon! </p> + <p style="margin-left:10px;"> Video Coming Soon! </p>
 ./codexResources/text/hayYield.html
 1
 @ : Switchgrass
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/F7wbTIQBjIg?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <p style="margin-left:10px;"> Video Coming Soon! </p>
 ./codexResources/text/switchgrassYield.html
 1
 @ : Mixed Fruit and Vegetable
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/Mt3lKBIYA9Y?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <p style="margin-left:10px;"> Video Coming Soon! </p>
 ./codexResources/text/mixedFruitAndVegetableYield.html
 1
 @ : Short-Rotation Woody Biomass
-<img src="./codexResources/imgs/test3.jpg" />
+<p style="margin-left:10px;"> Video Coming Soon! </p>
 ./codexResources/text/shortRotationYield.html
 0
 @ : Soybeans
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3kdO-YXHMLI?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/o0SdBQhtCLA?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/soybeanYield.html
 1
 @ : Wood
-<img src="./codexResources/imgs/test3.jpg" /> + <p> <iframe width="500" height="300" src="https://app.box.com/embed/preview/2zzto8rvrnuh47pv4edujdw8oxii4550?" frameborder="0" allowfullscreen></iframe> </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/dUBW069EWxQ?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/faR9cPe-SsU?autoplay=0&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/woodYield.html
 1
 $
