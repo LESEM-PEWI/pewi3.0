@@ -1,10 +1,24 @@
 body{
     
-        overflow:auto;
-
+    overflow:auto;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     line-height: 130%;
 	color: #FFFFFF;
 	font-size: 18px ;
 	font-weight: bold;
+}
+
+.footer:link, .footer:visited, .footer:active{
+ 	text-decoration: underline;
+	color:white;
+}
+
+.footer:hover{
+	text-decoration: none;
+}
+
+hr{
+	color:white;
+	float: left;
+	width: 200px;
 }
