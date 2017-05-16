@@ -163,12 +163,14 @@
  #startupButton1,
  #startupButton2,
  #startupButton3 {
-  width: 200px;
-  padding: 0;
+  /*width: 200px;*/
+  height: 10%;
   margin-left: -100px;
   margin-top: -25px;
-  top: 50%;
   opacity: 0;
+  padding: 0;
+  top: 50%;
+  width: 15%;
  }
  
  #startupButton1 {
