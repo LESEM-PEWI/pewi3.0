@@ -1,7 +1,7 @@
 /**
 
 Palette:
-#F0A61D - orange 
+#F0A61D - orange
    rgb(240, 166, 29)
 #40A4DF - main Blue, river color
    rgb(64, 164, 223)
@@ -39,8 +39,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -51,7 +51,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -59,6 +59,8 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
+
+
 ol, ul {
 	list-style: none;
 }
@@ -109,11 +111,11 @@ body {
     background-repeat:repeat;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 12px;
-    height:450px;
+    height: 55%;
     position: absolute;
     top:150px;
-    width:135px;
-   
+    width: 10%;
+
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
@@ -127,8 +129,10 @@ body {
 }
 
 .consoleTab {
-    left:0px;
+		height: inherit;
+		left:0px;
     padding:4px;
+		width: inherit;
 }
 
 /**left console buttons**/
@@ -144,7 +148,7 @@ body {
     transition-property: none;
     transition-property: left;
     width:40px;
-    
+
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
@@ -179,7 +183,7 @@ body {
     background-image: none;
     background-color: rgba(0, 0, 0, 0.7);
     border-bottom-right-radius: 5px ;
-    
+
 }
 
 
@@ -216,14 +220,14 @@ body {
     width:40px;
     border-right: 0px solid #F0A61D;
 }
-	
+
 /**inner elements of left console**/
 
 /*terrain selector*/
 .landSelectorIcon, .landSelectedIcon {
     border-radius: 50% ;
-    height:40px;
-    width:40px;
+    height: 40px;
+    width: 40px;
     margin: 6px ;
     margin-left:10px;
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8), 0 17px 50px 0 rgba(0,0,0,0.6);
@@ -244,7 +248,7 @@ body {
 /*precip selector*/
 .styled-select {
     background: #3b3b3b;
-    border:none;    
+    border:none;
     border-radius:4px;
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
     color:#fff;
@@ -254,7 +258,7 @@ body {
     outline:none;
     padding:3px;
     text-align:center;
-    
+
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
 }
@@ -267,10 +271,10 @@ body {
 }
 
 #precipTab{
-    
+
     color: white;
     font-size: 18px;
-    
+
 }
 
 #year0PrecipContainer{
@@ -321,7 +325,7 @@ select {
     top: 305px;
     width: 135px;
 
-    
+
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
@@ -428,7 +432,7 @@ select {
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
     border-radius: 12px;
-    
+
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
@@ -463,7 +467,7 @@ select {
 
 .featureSelectorIconSelected:hover, .painterIconSelected:hover {
     box-shadow: 0px 0px 25px 0px rgba(20,80,214,0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
-} 
+}
 
 .featureSelectorIconSelected {
       box-shadow: 0px 0px 16px 5px rgba(14,71,204,0.5), 0 17px 50px 0 rgba(14,71,204,0.4);
@@ -478,7 +482,7 @@ select {
     text-align: center;
     margin-right:14px;
     margin-top: 5px;
-    
+
 }
 
 /**results right styling**/
@@ -493,7 +497,7 @@ select {
     width:130px;
     -webkit-transition-duration: 0.5s; /* Safari */
     transition-duration: 0.5s;
-    
+
     -webkit-transform: rotate(-90deg); /* Safari */
     transform: rotate(-90deg);
 }
@@ -519,7 +523,7 @@ select {
 
 .resultsFrameInvisible{
     display:none;
-     
+
 }
 
 .resultsFrame, .resultsFrameRolled{
@@ -529,8 +533,8 @@ select {
     top: 0%;
     width:86%;
     right:7%;
-  -webkit-transition-duration: 0.9s; 
-    transition-duration: 0.9s; 
+  -webkit-transition-duration: 0.9s;
+    transition-duration: 0.9s;
 }
 
 .resultsFrame{
@@ -545,7 +549,7 @@ select {
 /** year buttons, right consol **/
 
 .yearButton {
-    
+
     background-color: rgba(0, 0, 0, 0.7);
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -584,14 +588,14 @@ select {
 .upperButton, #logoBase {
     position: absolute ;
     top:5px;
-    
+
     -webkit-transition-duration: 0.1s; /* Safari */
     transition-duration: 0.1s;
 }
 
 .upperButton:hover {
     border-bottom: 2px groove white;
-    
+
     -webkit-transition-duration: 0.1s; /* Safari */
     transition-duration: 0.1s;
 }
@@ -612,7 +616,7 @@ select {
     height:40px;
     position:absolute;
     width:40px;
-    
+
      -webkit-transition-duration: 0.1s; /* Safari */
     transition-duration: 0.1s;
 }
@@ -622,7 +626,7 @@ select {
     margin-right:2px;
     margin-top:2px;
     width:35px;
-    
+
     -webkit-transition-duration: 0.1s; /* Safari */
     transition-duration: 0.1s;
 }
@@ -641,13 +645,13 @@ select {
 
 #closeResults {
     top:4%;
-    
+
     -webkit-transition-duration: .2s; /* Safari */
     transition-duration: .2s;
 }
 
 #uploadDownloadFrame{
-    
+
     height:200px;
     position:absolute;
     top: 20%;
@@ -657,7 +661,7 @@ select {
 
 #creditsFrame{
     background-color: white;
-    border-radius:10px;    
+    border-radius:10px;
     height:60%;
     position:absolute;
     right:25%;
@@ -731,7 +735,7 @@ select {
   border-bottom-left-radius: 12px;
   border-top-left-radius: 0px;
   color: #FFFFFF;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; 
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 20px ;
   height:50%;
   margin: 0px;
@@ -743,8 +747,8 @@ select {
   text-align:center;
   top:300px;
   width:12%;
- 
-  
+
+
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-name: rollUp;
@@ -777,7 +781,7 @@ select {
   position:absolute;
   right: -12%;
   top: 300px;
- 
+
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-name: rollDown;
@@ -797,7 +801,7 @@ select {
     height:50px ;
     line-height: 120%;
     margin: 20px 20px 30px 20px ;
-    padding: 5px; 
+    padding: 5px;
     position:relative;
     text-align:center;
     width:150px;
@@ -825,7 +829,7 @@ select {
     right:12%;
     top:300px;
     width:40px;
-    
+
     -webkit-animation-name: rollButtonUp;
     animation-name: rollButtonUp;
     -webkit-animation-duration: 1s;
@@ -835,7 +839,7 @@ select {
 .dialogueButtonRolled {
     bottom:0px;
     right: 0px;
-    
+
     -webkit-animation-name: rollButtonDown;
     animation-name: rollButtonDown;
     -webkit-animation-duration: 1s;
@@ -876,7 +880,7 @@ select {
     position: absolute;
     text-decoration: none;
     top: 40%;
-    
+
     -webkit-animation-duration: 15s;
     animation-duration: 15s;
     -webkit-animation-name: fly;
@@ -932,21 +936,21 @@ select {
 .mainEscapeButton:hover {
     background-color: #7cc1e9 !important;
 }
-   
+
 #exitToMenuButton{
    animation-duration: 1.2s;
    animation-name: showEffect;
    visibility: hidden;
    -webkit-transition-duration: 1.2s; /* Safari */
 }
-   
+
 #optionsButton{
    animation-duration: 0.8s;
    animation-name: showEffect;
    visibility: hidden;
    -webkit-transition-duration: 0.8s; /* Safari */
 }
-   
+
 #directoryButton{
     animation-duration: 0.4s;
     animation-name: showEffect;
@@ -990,7 +994,7 @@ select {
   color: #FFFFFF;
   font-size: 30px ;
   font-weight: bold;
-  
+
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
 }
@@ -1011,7 +1015,7 @@ select {
     height:100%;
     position: fixed;
     width:100%;
-    
+
     animation-duration: 1.0s;
     animation-name: showEffect;
 }

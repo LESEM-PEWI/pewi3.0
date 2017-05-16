@@ -3,12 +3,12 @@
 <!-- Oh my, this is the base page, the page upon which all of PEWI is built.
      Most of the elesments are outlined here.
     Some of the more complicated elements are displayed as iframes on top of this page.
-    These iframes include the main loading screen, the codex, and much more. 
-    
+    These iframes include the main loading screen, the codex, and much more.
+
     Basic functionality in terms of javascript begins in startup.html under htmlFrames. Once
     the webGL canvas is created, the startup iframe is made not displayed and the content
-    portion of this page is displayed. 
-    
+    portion of this page is displayed.
+
     It has been a goal of this page to create as much code reusibility as possilbe. Adding new
     elements should be straightforward.
     -->
@@ -24,7 +24,7 @@
     <!--favicon-->
     <link rel='shortcut icon' href='./imgs/pewi_favicon.ico' type='image/x-icon' />
 
-    <!-- three.js framework and javascript libraries -->     
+    <!-- three.js framework and javascript libraries -->
     <script src="./lib/d3.min.js"></script>
     <script src="./lib/three.min.js"></script>
     <script src="./lib/controls.js"></script>
@@ -43,49 +43,49 @@
     <script src="./front-end/mainFE.js"></script>
     <script src="./front-end/helpersFE.js"></script>
     <script src="./front-end/levelLoader.js"></script>
-    
+
     <!--from http://www.schillmania.com/projects/fireworks/ -->
     <script type="text/javascript" src="./lib/fireworks.js"></script>
     <link rel="stylesheet" type="text/css" href="./lib/fireworks.css" media="screen" />
-    
+
     <!--from http://threejs.org/examples/#canvas_geometry_birds -->
     <script src="./front-end/Bird.js"></script>
-    
+
     <!--external fonts-->
     <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
-    
+
     <!-- /INCLUDES -->
 
 </head>
 <body id="body">
- 
-     <script> 
-     //Preload gifs and backgrounds on startup     
-     var img1 = new Image();
-     img1.src = "./imgs/loader.gif" ;
-     var img3 = new Image();
-     img3.src = "./htmlFrames/imgs/normalBackWithRiver.png";
-     var img4 = new Image();
-     img4.src = "./htmlFrames/imgs/pewiLogoLarge.png";
-     var img5 = new Image() ;
-     img5.src = "./htmlFrames/imgs/water.gif" ;
-     var img2 = new Image();
-     img2.src ="./imgs/meadowlarkanimation.gif";
+     <script>
+         //Preload gifs and backgrounds on startup
+         var img1 = new Image();
+         img1.src = "./imgs/loader.gif" ;
+         var img3 = new Image();
+         img3.src = "./htmlFrames/imgs/normalBackWithRiver.png";
+         var img4 = new Image();
+         img4.src = "./htmlFrames/imgs/pewiLogoLarge.png";
+         var img5 = new Image() ;
+         img5.src = "./htmlFrames/imgs/water.gif" ;
+         var img2 = new Image();
+         img2.src ="./imgs/meadowlarkanimation.gif";
      </script>
- 
+
     <!-- Create hidden div to contain settings/options for in-game updates -->
     <div id="settingsHolder" style="position:absolute; cursor:default; background:rgba(0,0,0,0); overflow:hidden; margin:0px; padding:0px; height:0px; width:0px;">
-    <input id="firefoxWorkaround"></input>
-    <div id="parameters"></div>
+        <input id="firefoxWorkaround"></input>
+        <div id="parameters"></div>
     </div>
-    
+
     <!-- Main webpage element containing pewi -->
     <div id="page" style="visibility:hidden;">
-    
+
     <!-- Begin left side console with land-type painter, precipitation, ecosystem indicators and feature highlighting functions -->
     <!-- Create left-side console button tabs -->
     <!-- "Pickaxe" by Luke Anthony Firth on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-    <div id="toolsButton" class="consoleButton" onclick="roll(1);"> <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <div id="toolsButton" class="consoleButton" onclick="roll(1);">
+      <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     </div>
 
     <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
@@ -93,15 +93,13 @@
         <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);"><img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png"></div>
         <!-- "Cloud, raindrops, sun icon" by Yannick Lung (http://yannicklung.com/) with free commercial use / Inverted and resized -->
         <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png"></div>
-        
         <!-- "Calendar tool variant for time administration free icon" by FreePik (http://www.freepik.com), retrived from www.flaticon.com  with free commercial use / Inverted and resized -->
         <div id="yearButton" class="consoleButton" onclick="switchConsoleTab(6);"><img id="calendarImg" class="imgNotSelected" src="./imgs/calendarIcon.png"></div>
-        
         <!-- "Filter, levels, settings icon" by Yash Ranpara (https://www.iconfinder.com/yash11) with free commerical use / Inverted and resized -->
         <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);"><img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png"></div>
         <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
         <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
-        
+
         <div id="settingsButton" class="consoleButton" onclick="switchConsoleTab(5);"><img id="settingsImg" class="imgNotSelected" src="./imgs/settingsIcon.png"></div>
     </div>
 
@@ -135,7 +133,7 @@
             <img id="paintPlayer4" style="display:none;" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player4.png" onclick="changeSelectedPaintTo(4)">
             <img id="paintPlayer5" style="display:none;" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player5.png" onclick="changeSelectedPaintTo(5)">
             <img id="paintPlayer6" style="display:none;" class="landSelectorIcon"  class="landSelectorIcon" src="./imgs/player6.png" onclick="changeSelectedPaintTo(6)">
-            
+
         </div>
 
         <!-- Precipitation display -->
@@ -346,14 +344,14 @@
             <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
             <p class="featuresText">Soil Class</p><img id="soilClass" class="featureSelectorIcon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
         </div>
-        
+
         <!-- Painter settings display -->
         <div id="settingsTab" class="consoleTab" style="display:none;">
              <img id="cellPaint" class="painterIconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
              <img id="gridPaint" class="painterIcon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
-             
+
         </div>
-        
+
         <!-- year display -->
         <div id="yearsTab" class="consoleTab" style="display:none;">
             <!-- Create year buttons -->
@@ -364,15 +362,15 @@
             <div id="year2Button" class="yearButtonHidden" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="yearImageHidden" src="./imgs/two.png"></div>
             <div id="year3Button" class="yearButtonHidden" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="yearImageHidden" src="./imgs/three.png"></div>
             <div id="yearAddButton" class="yearButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="yearNotSelected" src="./imgs/addYear.png"></div>
-            
+
         </div>
-        
+
     </div>
     <!-- end left console, there is a lot happening there -->
 
     <!-- Create results button -->
     <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
-        
+
     <!-- Create dialogue popup box (message box) -->
     <!-- "Bubble, speech icon" by http://www.iconsolid.com/ with free commercial usage / Inverted from original and resized -->
     <div id="dialogueButton" class="dialogueButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/dialogue.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
@@ -386,17 +384,17 @@
     <img id="logoBase" src="./imgs/inGameLogo.png" >
     <img id="uploadDownloadButton" class="upperButton" width="40px" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-    
+
     <!-- order now becomes important to make sure elements stack and cover correctly -->
-    
+
     <!-- Add heads up display in lower left corner -->
     <div id="bottomHUD" class="bottomHUD">
         <p id="currentInfo">
     </div>
-    
+
     <!-- div which follows cursor for delayed hover information -->
     <div id="hover-div"><p id="hover-info"></p></div>
-    
+
     <!-- Create iFrames for credits, upload/download, and codex -->
     <div id="modalCreditsFrame"><iframe id="creditsFrame" style="display:none;" src="./htmlFrames/credits.html"></iframe></div>
     <img id="closeCredits" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeCreditFrame() ;">
@@ -404,25 +402,25 @@
     <img id="closeUploadDownload" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeUploadDownloadFrame();">
     <div id="modalCodexFrame"><iframe id="index" src="./modules/codex/codex.html"></iframe></div>
     <!-- index iframe has its own close button -->
-        
+
     <!-- Include fireworks javascript library -->
     <div id="fireworks-template">
         <div id="fw" class="firework"></div>
         <div id="fp" class="fireworkParticle"><img src="./imgs/particles.gif" alt="" /></div>
     </div>
     <div id="fireContainer"></div>
-    
+
     <!-- Place meadowlark gif off page -->
     <img id="meadowlark" class="meadowlarkhidden" src="./imgs/meadowlarkanimation.gif"></div>
-    
+
     <!-- Create iframes for the results, options and multiplayer screens -->
     <div id="modalResultsFrame"><iframe id="resultsFrame" class="resultsFrameRolled" src="./htmlFrames/results.html"></iframe></div>
     <img id="closeResults" class="closeButton" style="opacity:0; visibility:hidden; right:9%;" src="./imgs/close_black.png" onclick="resultsEnd() ;">
     <iframe id="options" src="./htmlFrames/options.html"></iframe>
     <iframe id="multiplayer" src="./htmlFrames/multiDownload.html"></iframe>
-     
+
     </div> <!-- End of page div, this is all of the meaningful content for in-game -->
-    
+
     <!-- the modal frame covers the page with semi-opaque layer, and escape options -->
 
     <div id="modalEscapeFrame">
@@ -437,7 +435,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Javascript to stop event propogation for bug fix in modalEscapeFrame (above) -->
     <script>
     //prevent modalEscapeFrame from being clicked on when using the buttons stored in the frame
@@ -462,6 +460,5 @@
     <div id="startupSequence" style="position:absolute; padding:0px margin:0px; width:100%; height:100%;">
     <iframe id="startUpFrame" src="./htmlFrames/startup.html" style="width:100%; height:100%; padding:0px margin:0px;"></iframe>
     </div>
-
 </body>
 </html>
