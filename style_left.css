@@ -1,0 +1,363 @@
+/**left console**/
+
+#leftConsole {
+	background-color: rgba(0, 0, 0, 0.7);
+	background-image: url('./imgs/consoleTexture.png');
+	background-repeat: repeat;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 12px;
+	height: 30vw;
+	/*height: 55%;*/
+	position: absolute;
+	/*top: 150px;*/
+	top: 10.7vw;
+	width: 9.6vw;
+	/*width: 10%;*/
+	-webkit-transition-duration: 0.4s;
+	/* Safari */
+	transition-duration: 0.4s;
+}
+.leftConsole {
+	left: 0px;
+	/*min-height: 225px;
+	min-width: 75px ;*/
+}
+.leftConsoleRolled {
+	left: -135px;
+}
+.consoleTab {
+	height: 90%;
+	left: 0px;
+	padding: 4px;
+	width: 90%;
+}
+
+/**left console buttons**/
+
+.consoleButton {
+	background-color: rgba(0, 0, 0, 0.9);
+	background-image: url('./imgs/consoleTexture.png');
+	background-repeat: repeat;
+	border-radius: 0px;
+	border-right: 0px solid #F0A61D;
+	border-top-right-radius: 0px;
+	/*height: 40px;*/
+	height: 3vw;
+	position: absolute;
+	transition-property: none;
+	transition-property: left;
+	/*width: 40px;*/
+	width: 3vw;
+	/*-webkit-transition-duration: 0.4s;*/
+	/* Safari */
+	/*transition-duration: 0.4s;*/
+}
+.consoleButton:hover {
+	box-shadow: 8px 0px 10px -4px rgba(240, 166, 29, 0.8);
+}
+#toolsButton:hover {
+	box-shadow: 0 0px 8px 2px rgba(0, 0, 0, 0.8);
+}
+.tabButtons, #toolsButton {
+	/*left: 135px;*/
+	left: 9.6vw;
+	position: absolute;
+
+	-webkit-transition-duration: 0.4s;
+	/* Safari */
+	transition-duration: 0.4s;
+}
+
+@media screen and (max-width: 300px) {
+    .tabButtons, #toolsButton {
+			margin-left: 0px;
+        left: 75px;
+    }
+		/*.leftConsole {
+			height: 225px;
+			width: 75px ;
+		}*/
+}
+
+/*@media screen and (max-width: 172px) {
+    .tabButtons, #toolsButton {
+			overflow-y: scroll;
+    }
+		.leftConsole {
+			height: 225px;
+			width: 75px ;
+		}
+}*/
+
+.tabButtonsRolled {
+	/*left: -60px;*/
+	left: -4.26vw;
+	position: absolute;
+	-webkit-transition-duration: 0.4s;
+	/* Safari */
+	transition-duration: 0.4s;
+}
+#toolsButton {
+	/*top: 150px;*/
+	top: 10.7vw;
+	background-image: none;
+	background-color: rgba(0, 0, 0, 0.7);
+	border-bottom-right-radius: 5px;
+}
+#terrainButton {
+	/*top: 220px;*/
+	top: 15.47vw;
+}
+#precipButton {
+	/*top: 260px;*/
+	top: 18.28vw;
+}
+#yearButton {
+	/*top: 300px;*/
+	top: 21.09vw;
+}
+#levelsButton {
+	/*top: 340px;*/
+	top: 23.9vw;
+}
+#featuresButton {
+	/*top: 380px;*/
+	top: 26.71vw;
+}
+#settingsButton {
+	/*top: 420px;*/
+	top: 29.52vw;
+}
+
+.imgSelected {
+	border-right: 2px solid #F0A61D;
+	/*width: 40px;*/
+	width: 2vw;
+}
+.imgNotSelected {
+	/*width: 40px;*/
+	width: 2vw;
+	border-right: 0px solid #F0A61D;
+}
+
+/**inner elements of left console**/
+
+
+/*terrain selector*/
+
+.landSelectorIcon, .landSelectedIcon {
+	height: 2.5vw;
+	width: 2.5vw;
+	/*min-height: 20px;
+	min-width: 20px;*/
+	position: relative;
+	border-radius: 50%;
+	/*height: 40px;*/
+	/*width: 40px;*/
+	margin: 6px;
+	margin-left: 10px;
+	box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+}
+.landSelectorIcon:hover {
+	box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+.landSelectedIcon {
+	box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+.landSelectedIcon:hover {
+	box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+}
+
+/*precip selector*/
+
+.styled-select {
+	background: #3b3b3b;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+	color: #fff;
+	cursor: pointer;
+	display: block;
+	margin: 8px;
+	outline: none;
+	padding: 3px;
+	text-align: center;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+#precipTitle, #yearTitle {
+	color: #fff;
+	margin: 4px;
+	padding: 3px;
+	text-align: center;
+}
+#precipTab {
+	color: white;
+	font-size: 18px;
+}
+#year0PrecipContainer {
+	display: block;
+}
+select {
+	font-size: 14px;
+	margin: 5px;
+}
+
+/*levels map selector*/
+
+.levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5 {
+	height: 15px;
+	margin: 10px 0px 10px 10px;
+	width: 15px;
+}
+.levelColor1 {
+	background-color: #e6bb00;
+}
+.levelColor2 {
+	background-color: #c97b08;
+}
+.levelColor3 {
+	background-color: #ad490d;
+}
+.levelColor4 {
+	background-color: #9a3010;
+}
+.levelColor5 {
+	background-color: #871c12;
+}
+.levelDetailsList, .levelDetailsListRolled {
+	margin: 15px 0px 0px 0px;
+	position: absolute;
+	background-color: black;
+	background-image: url('./imgs/consoleTexture.png');
+	background-repeat: repeat;
+	border-radius: 12px;
+	top: 305px;
+	width: 135px;
+	-webkit-transition-duration: 0.4s;
+	/* Safari */
+	transition-duration: 0.4s;
+}
+.levelDetailsList {
+	left: 150px;
+}
+.levelDetailsListRolled {
+	left: -135px;
+}
+.levelsText {
+	color: #fff;
+	margin-top: 5px;
+	margin-right: 14px;
+	text-align: center;
+}
+.levelsTextDetails {
+	color: #fff;
+	margin-left: 22px;
+	white-space: nowrap;
+}
+.levelsSelectorIcon, .levelSelectorIconSelected {
+	box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+	height: 40px;
+	margin: 5px 35px 10px 35px;
+	width: 40px;
+}
+.levelsSelectorIcon:hover {
+	box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+.levelSelectorIconSelected {
+	box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+.levelSelectorIconSelected:hover {
+	box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+}
+
+/*physical features map selector*/
+
+.floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone, .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8, .soilColor {
+	height: 15px;
+	margin: 5px 0px 10px 10px;
+	width: 15px;
+}
+.floodColor1 {
+	background-color: #ffffc9;
+}
+.floodColor2 {
+	background-color: #c7eab4;
+}
+.floodColor3 {
+	background-color: #7fcebb;
+}
+.floodColor4 {
+	background-color: #41b7c5;
+}
+.floodColor5 {
+	background-color: #2f7eb7;
+}
+.floodColorNone {
+	border: 0px;
+}
+.drainageColor1 {
+	background-color: #0053b3;
+}
+.drainageColor2 {
+	background-color: #38638b;
+}
+.drainageColor3 {
+	background-color: #5e6e71;
+}
+.drainageColor4 {
+	background-color: #837856;
+}
+.drainageColor5 {
+	background-color: #bc892f;
+}
+.physicalDetailsList, .physicalDetailsListRolled {
+	margin: 15px 0px 0px 0px;
+	position: absolute;
+	top: 305px;
+	width: 150px;
+	background-color: black;
+	background-image: url('./imgs/consoleTexture.png');
+	background-repeat: repeat;
+	border-radius: 12px;
+	-webkit-transition-duration: 0.4s;
+	/* Safari */
+	transition-duration: 0.4s;
+}
+.physicalDetailsList {
+	left: 150px;
+}
+.physicalDetailsListRolled {
+	left: -210px;
+}
+#drainageClassDetailsList {
+	width: 170px;
+}
+#soilClassDetailsList {
+	width: 210px;
+}
+.featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
+	border-radius: 50%;
+	box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+	height: 40px;
+	margin: 5px 35px 10px 35px;
+	width: 40px;
+}
+.painterIcon:hover, .featureSelectorIcon:hover {
+	box-shadow: 0px 0px 5px 5px rgba(200, 120, 18, 0.3), 0 17px 50px 0 rgba(227, 154, 18, 0.2);
+}
+.featureSelectorIconSelected:hover, .painterIconSelected:hover {
+	box-shadow: 0px 0px 25px 0px rgba(20, 80, 214, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+}
+.featureSelectorIconSelected {
+	box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+.painterIconSelected {
+	box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+.featuresText {
+	color: #fff;
+	text-align: center;
+	margin-right: 14px;
+	margin-top: 5px;
+}

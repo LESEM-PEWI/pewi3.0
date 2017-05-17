@@ -21,6 +21,8 @@
     <!-- INCLUDES -->
     <!--css-->
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="style_left.css">
+    <link rel="stylesheet" type="text/css" href="style_right.css">
     <!--favicon-->
     <link rel='shortcut icon' href='./imgs/pewi_favicon.ico' type='image/x-icon' />
 
@@ -85,7 +87,7 @@
     <!-- Create left-side console button tabs -->
     <!-- "Pickaxe" by Luke Anthony Firth on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
     <div id="toolsButton" class="consoleButton" onclick="roll(1);">
-      <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+      <img id="pick" src="./imgs/pickOut.png" style="width: 2vw;" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     </div>
 
     <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
@@ -277,8 +279,8 @@
                 </div>
             </div>
             <div id="drainageClassDetailsList" class="physicalDetailsListRolled">
+              <p class="levelsTextDetails" style="margin-top:10px;">Very Poor</p>
                 <div class="drainageColor1" >
-                    <p class="levelsTextDetails" style="margin-top:10px;">Very Poor</p>
                 </div>
                 <div class="drainageColor2">
                     <p class="levelsTextDetails">Poor</p>
@@ -369,11 +371,11 @@
     <!-- end left console, there is a lot happening there -->
 
     <!-- Create results button -->
-    <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
+    <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png" style="width: 9vw;"></div>
 
     <!-- Create dialogue popup box (message box) -->
     <!-- "Bubble, speech icon" by http://www.iconsolid.com/ with free commercial usage / Inverted from original and resized -->
-    <div id="dialogueButton" class="dialogueButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/dialogue.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
+    <div id="dialogueButton" class="dialogueButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/dialogue.png" style="width: 2.5vw;" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
     <div id="popup" class="popupHidden" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
         <div id="nextLevelButton" class="moveButtonHidden" onclick = "loadLevel(levelGlobal + 1);">Next Level</div>
         <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>

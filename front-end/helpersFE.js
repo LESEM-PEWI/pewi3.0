@@ -1,8 +1,8 @@
 /* global camera, scene, boardData,
-          renderer, currentBoard, THREE, 
+          renderer, currentBoard, THREE,
           currentYear, textureArray, riverPoints,
           mouse, raycaster,
-          isShiftDown, modalUp, precip, 
+          isShiftDown, modalUp, precip,
           painter, Totals, river,
           Results, initData, hoveredOver*/
 
@@ -48,7 +48,7 @@ function onResize() {
 //only needs to be called when an entirely new board is loaded, since each
 //tile is created from scratch
 function displayBoard() {
-    
+
     riverPoints = [];
 
     //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
@@ -82,7 +82,7 @@ function highlightTile(tileId) {
         meshMaterials[previousHover].emissive.setHex(0x000000);
     }
 
-    //highlight the new tile 
+    //highlight the new tile
     //if not a tile
     if (tileId != -1 && !modalUp) {
 
@@ -91,7 +91,7 @@ function highlightTile(tileId) {
             boardData[currentBoard].map[tileId].landType[0] == -1     ) {
 
             showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
-            
+
             document.getElementById('hover-info').innerHTML = "";
 
         } else {
@@ -102,7 +102,7 @@ function highlightTile(tileId) {
 
             //update HUD with current information
             showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
-            
+
             //update the information displayed in the delayed hover div by cursor
             myTimer = setTimeout(function() {
                     document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId);
@@ -114,7 +114,7 @@ function highlightTile(tileId) {
 
         //If not over any land tile, update HUD accordingly
         showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
-        
+
         document.getElementById("hover-info").innerHTML = "";
 
     }
@@ -346,29 +346,29 @@ function addTile(tile) {
     tileGeometry.faces.push(face);
     tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1, 0), new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)]); // uvs
 
-    
+
 
     //choose the relevant texture to add to the tile faces
     if (tile.landType[0] == 0) {
-        
+
             tileMaterial = new THREE.MeshBasicMaterial({
             color: 0x000000,
             transparent: true,
             opacity: 0.0
-            });    
-  
+            });
+
         meshMaterials.push(tileMaterial);
     }
     else if(tile.landType[0] == -1) {
-        
+
         tileMaterial = new THREE.MeshBasicMaterial({
             color: 0xFFFFFF,
             transparent: true,
             opacity: 0.7
-            });    
-    
+            });
+
         meshMaterials.push(tileMaterial);
-        
+
     }
     else {
 
@@ -398,7 +398,7 @@ function addTile(tile) {
         }
     }
 
-    //create a new mesh from the two faces for the tile    
+    //create a new mesh from the two faces for the tile
     var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
 
     //change the x and z position of the tile dependent on the row and column that it is in
@@ -406,10 +406,10 @@ function addTile(tile) {
     newTile.position.y = 0;
     newTile.position.z = tile.row * tileHeight - (tileHeight * tilesHigh) / 2;
 
-    //add the mapID to the 
+    //add the mapID to the
     newTile.mapID = mapID;
 
-    //add the tile to the meshGeometry which contains all vertices/faces of the merged tiles 
+    //add the tile to the meshGeometry which contains all vertices/faces of the merged tiles
     newTile.updateMatrix();
     meshGeometry.merge(newTile.geometry, newTile.matrix);
 
@@ -420,7 +420,7 @@ function addTile(tile) {
 //  this function is *very* computationally intensive, and as such, it should only be
 //  called sparringly, when the whole board needs to be redrawn. Multiple calls to
 //  refreshBoard() show up instantly as a marked decline in fps.
-//Ususally, (except for changes with the whole board) a better method is 
+//Ususally, (except for changes with the whole board) a better method is
 //  to change the mesh material map which is automatically redrawn
 //The argument bypassFromKeyEvent helps the t key and r key switch up the board when pressed
 //  to change topography and random tiles, but keep the board highlighted
@@ -455,11 +455,11 @@ function transitionToYear(year) {
 
     if (year > boardData[currentBoard].calculatedToYear) {
         boardData[currentBoard].calculatedToYear = year;
-        
+
         for(var i = 0; i < boardData[currentBoard].map.length; i++){
             boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
         }
-        
+
         boardData[currentBoard].updateBoard();
     }
 
@@ -468,44 +468,44 @@ function transitionToYear(year) {
 
 //addYearAndTransition updates the years to switch between in the left console and transitions to the new year
 function addYearAndTransition() {
-    
+
     var totalYearsAllowed = 3
     var nextYear = currentYear + 1;
-    
+
     //make next button appear (has some prebuilt functionality for expanded number of years)
     if(currentYear < totalYearsAllowed - 1) {
 
         document.getElementById("year" + nextYear + "Button").className = "yearButton";
         document.getElementById("year" + nextYear + "Image").className = "yearNotSelected";
-        
+
     }
-    
+
     //make last button appear and remove the "+" Button (has some prebuilt functionality for expanded number of years)
     if(currentYear == totalYearsAllowed - 1) {
-        
+
         document.getElementById("year3Button").className = "yearButton";
         document.getElementById("year3Image").className = "yearNotSelected";
         document.getElementById("yearAddButton").style.display = "none";
-        
+
     }
-    
+
     switchYearTab(nextYear);
     transitionToYear(nextYear);
-    
+
 } //end addYearAndTransition
 
 //resetYearDisplay removes the years which have been displayed throughout the current session of the game
 function resetYearDisplay() {
-    
+
     //remove all years except the first and reshow the + button (has some prebuilt functionality for expanded number of years)
-    
+
     for(var i = 2; i < 4; i++){
         document.getElementById("year" + i + "Button").className = "yearButtonHidden";
         document.getElementById("year" + i + "Image").className = "yearImageHidden";
     }
-    
+
     document.getElementById("yearAddButton").style.display = "inline-block";
-    
+
 } //end resetYearDisplay
 
 //onDocumentMouseMove follows the cursor and highlights corresponding tiles
@@ -514,10 +514,10 @@ function onDocumentMouseMove(event) {
     event.preventDefault();
 
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-    
+
     //set location of div that follows cursor for hover-info and displays with 1s delay
     var x = event.clientX;
-    var y = event.clientY;                    
+    var y = event.clientY;
     if ( x != 'undefined' && y != 'undefined'){
         document.getElementById('hover-div').style.left = (x + 20) + "px";
         document.getElementById('hover-div').style.top = (y + 20) + "px";
@@ -694,7 +694,7 @@ function onDocumentMouseUp(event) {
         Totals = new Results(boardData[currentBoard]);
         Totals.update();
 
-        // update each tile on the board with its corresponding color 
+        // update each tile on the board with its corresponding color
         for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
             if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
@@ -716,7 +716,7 @@ function onDocumentKeyDown(event) {
         case 84:
             if (modalUp != true) {
                 tToggle ? tToggle = false : tToggle = true;
-                
+
                 //in the case when the map is highlighted:
                 if(mapIsHighlighted) { refreshBoard(true); }
                 //if the map is not highlighted:
@@ -746,7 +746,7 @@ function onDocumentKeyDown(event) {
                     setupRiver();
                 }
             }
-            
+
             break;
             //case z -- for zoom functions
         case 90:
@@ -973,12 +973,13 @@ function roll(value) {
 
         }
         else {
-            document.getElementById('toolsButton').style.left = "135px";
+            // document.getElementById('toolsButton').style.left = "135px";
+            document.getElementById('toolsButton').style.left = "9.6vw";
             document.getElementById('toolsButton').style.backgroundImage = "none";
             document.getElementById('pick').src = "./imgs/pickOut.png"
             document.getElementById('tabButtons').className = "tabButtons";
             document.getElementById('leftConsole').className = "leftConsole";
-            
+
         }
     } //end value == 1
 
@@ -1038,7 +1039,7 @@ function showLevelDetails(value) {
         document.getElementById('subwatershedBoundaries').className = "featureSelectorIconSelected";
         document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
     } //end else/if group
-    
+
     //show soil class legend
     else if (value == 8) {
         document.getElementById('soilClass').className = "featureSelectorIconSelected";
@@ -1328,9 +1329,9 @@ function getHighlightColor(highlightType, tileId) {
     }
     //soil class highlight color indicies
     else if(highlightType == "soil"){
-        
+
         var soil = boardData[currentBoard].map[tileId].soilType;
-        
+
         switch(soil) {
             case "A":
                 //color 097c2f
@@ -1377,14 +1378,14 @@ function getHighlightColor(highlightType, tileId) {
 
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 function getHighlightedInfo(tileId) {
-    
+
     //return information about the tile that is highlighted
     if(currentHighlightType <= 0){
         return "";
     } else {
-        
+
         var highlightString = "";
-        
+
         switch(currentHighlightType) {
             //create string for nitrate levels
             case 1:
@@ -1490,13 +1491,13 @@ function getHighlightedInfo(tileId) {
                     case "Y":
                         return "Noadaway 220";
                 }
-                
+
         }
-        
+
         return highlightString;
     }
-    
-    
+
+
 } //end getHighlightedInfo
 
 //contaminatedRiver changes the color of the river dependent on current phosphorus level
@@ -1513,7 +1514,7 @@ function contaminatedRiver(riverColor) {
             river.children[i].material.color.setHex("0x40a4df");
         }
     }
-    
+
     if (riverColor == "green") {
         for (var i = 0; i < river.children.length; i++) {
             river.children[i].material.color.setHex("0x599300");
@@ -1572,7 +1573,7 @@ function objectiveCheck() {
 
                 }
 
-                //if the score is not in the target range    
+                //if the score is not in the target range
             }
             else {
 
@@ -1781,7 +1782,7 @@ function uploadClicked(e) {
 } //end uploadClicked
 
 //downloadClicked() is called by child frame uploadDownload
-// since downloading must be handeled in the active frame, 
+// since downloading must be handeled in the active frame,
 // much of the function is taken care of there.
 //This function closes the download frame and tidies up
 function downloadClicked() {
@@ -1866,15 +1867,15 @@ function toggleIndex() {
         document.getElementById('modalCodexFrame').style.display = "none";
         document.getElementById('index').style.display = "none";
         document.activeElement.blur();
-    
+
         document.getElementById('index').contentWindow.document.getElementById('square1').innerHTML = "<img src='./imgs/indexMain.png'>";
         document.getElementById('index').contentWindow.document.getElementById('square2frame').src = "";
         document.getElementById('index').contentWindow.document.getElementById('switchGeneral').style.display = "none" ;
         document.getElementById('index').contentWindow.document.getElementById('switchAdvanced').style.display = "none" ;
         document.getElementById('index').contentWindow.document.getElementById('title').innerHTML = "";
-        
+
         document.getElementById('index').contentWindow.resetHighlighting() ;
-        
+
        }
 } //end toggleIndex
 
@@ -2046,7 +2047,7 @@ function toggleVisibility() {
 
         var currentInnerHtml = (document.getElementById(elementIdString + "Container").innerHTML).trim();
         //if it's not, not a number, that is, if the last digit is a number
-        //  then we know the precip was immutable before and we need to cut 
+        //  then we know the precip was immutable before and we need to cut
         //  this text off
         if (!isNaN(currentInnerHtml[currentInnerHtml.length - 1])) {
             while (!(currentInnerHtml[currentInnerHtml.length - 1] == '>')) {
@@ -2137,7 +2138,7 @@ function resetOptions() {
     toggleVisibility();
 } //end resetOptions
 
-//startOptions displays the options page 
+//startOptions displays the options page
 function startOptions() {
     //if nothing else has precedence
     if (!modalUp) {
@@ -2224,6 +2225,6 @@ function multiplayerAggregateOverlayMapping(e) {
 //toggleChangeLandType toggles a boolean that tracks the state which is required to change land type
 function toggleChangeLandType() {
     //ternary toggle on clearToChangeLandType being true
-    clearToChangeLandType = 
+    clearToChangeLandType =
       (clearToChangeLandType) ? false : true ;
 } //end toggleChangeLandType
