@@ -1,39 +1,19 @@
-/**left console**/
-
-#leftConsole {
-	background-color: rgba(0, 0, 0, 0.7);
-	background-image: url('./imgs/consoleTexture.png');
-	background-repeat: repeat;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 12px;
-	height: 30vw;
-	/*height: 55%;*/
-	position: absolute;
-	/*top: 150px;*/
-	top: 10.7vw;
-	width: 9.6vw;
-	/*width: 10%;*/
-	-webkit-transition-duration: 0.4s;
-	/* Safari */
-	transition-duration: 0.4s;
-}
-.leftConsole {
-	left: 0px;
-	/*min-height: 225px;
-	min-width: 75px ;*/
-}
-.leftConsoleRolled {
-	left: -135px;
-}
-.consoleTab {
-	height: 90%;
-	left: 0px;
-	padding: 4px;
-	width: 90%;
+/* css variable declaration */
+:root {
+	--consoleButton-height: 2.81vw;
+	--first-consoleButton-top: 15.47vw;
+	--font-size: 1vw;
+	--left-console-top-value: 10.7vw;
+	--left-console-width: 9.6vw;
+	--left-console-button-length: 3vw;
+	--left-console-button-image-length: 2vw;
+	--level-indicator-length: 1vw;
+	--selector-icon-length: 2.5vw;
+	--title-font-weight: 900;
+	--transition-duration: 0.4s;
 }
 
-/**left console buttons**/
-
+/**left console buttons or toolbar**/
 .consoleButton {
 	background-color: rgba(0, 0, 0, 0.9);
 	background-image: url('./imgs/consoleTexture.png');
@@ -42,15 +22,15 @@
 	border-right: 0px solid #F0A61D;
 	border-top-right-radius: 0px;
 	/*height: 40px;*/
-	height: 3vw;
+	height: var(--left-console-button-length);
 	position: absolute;
 	transition-property: none;
 	transition-property: left;
 	/*width: 40px;*/
-	width: 3vw;
-	/*-webkit-transition-duration: 0.4s;*/
+	width: var(--left-console-button-length);
+	-webkit-transition-duration: var(--transition-duration);
 	/* Safari */
-	/*transition-duration: 0.4s;*/
+	transition-duration: var(--transition-duration);
 }
 .consoleButton:hover {
 	box-shadow: 8px 0px 10px -4px rgba(240, 166, 29, 0.8);
@@ -60,12 +40,12 @@
 }
 .tabButtons, #toolsButton {
 	/*left: 135px;*/
-	left: 9.6vw;
+	left: var(--left-console-width);
 	position: absolute;
 
-	-webkit-transition-duration: 0.4s;
+	-webkit-transition-duration: var(--transition-duration);
 	/* Safari */
-	transition-duration: 0.4s;
+	transition-duration: var(--transition-duration);
 }
 
 @media screen and (max-width: 300px) {
@@ -78,55 +58,50 @@
 			width: 75px ;
 		}*/
 }
-
-/*@media screen and (max-width: 172px) {
-    .tabButtons, #toolsButton {
-			overflow-y: scroll;
-    }
-		.leftConsole {
-			height: 225px;
-			width: 75px ;
-		}
-}*/
-
 .tabButtonsRolled {
 	/*left: -60px;*/
 	left: -4.26vw;
 	position: absolute;
-	-webkit-transition-duration: 0.4s;
+	-webkit-transition-duration: var(--transition-duration);
 	/* Safari */
-	transition-duration: 0.4s;
+	transition-duration: var(--transition-duration);
 }
 #toolsButton {
 	/*top: 150px;*/
-	top: 10.7vw;
+	top: var(--left-console-top-value);
 	background-image: none;
 	background-color: rgba(0, 0, 0, 0.7);
 	border-bottom-right-radius: 5px;
 }
 #terrainButton {
 	/*top: 220px;*/
-	top: 15.47vw;
+	/*top: 15.47vw;*/
+	top: var(--first-consoleButton-top);
 }
 #precipButton {
 	/*top: 260px;*/
-	top: 18.28vw;
+	/*top: 18.28vw;*/
+	top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
 }
 #yearButton {
 	/*top: 300px;*/
-	top: 21.09vw;
+	/*top: 21.09vw;*/
+	top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
 }
 #levelsButton {
 	/*top: 340px;*/
-	top: 23.9vw;
+	/*top: 23.9vw;*/
+	top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
 }
 #featuresButton {
 	/*top: 380px;*/
-	top: 26.71vw;
+	/*top: 26.71vw;*/
+	top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
 }
 #settingsButton {
 	/*top: 420px;*/
-	top: 29.52vw;
+	/*top: 29.52vw;*/
+	top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
 }
 
 .imgSelected {
@@ -138,6 +113,43 @@
 	/*width: 40px;*/
 	width: 2vw;
 	border-right: 0px solid #F0A61D;
+}
+
+/**left console container**/
+
+#leftConsole {
+	background-color: rgba(0, 0, 0, 0.7);
+	background-image: url('./imgs/consoleTexture.png');
+	background-repeat: repeat;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 12px;
+	height: 30vw;
+	/*height: 55%;*/
+	position: absolute;
+	/*top: 150px;*/
+	top: var(--left-console-top-value);
+	width: var(--left-console-width);
+	/*width: 10%;*/
+	-webkit-transition-duration: var(--transition-duration);
+	/* Safari */
+	transition-duration: var(--transition-duration);
+}
+.leftConsole {
+	left: 0px;
+	/*min-height: 225px;
+	min-width: 75px ;*/
+}
+.leftConsoleRolled {
+	/*left: -135px;*/
+	left: calc( -1*var(--left-console-width) );
+}
+
+/* The content of each tab */
+.consoleTab {
+	/*height: 90%;*/
+	left: 0px;
+	padding: 4px;
+	width: 90%;
 }
 
 /**inner elements of left console**/
@@ -178,22 +190,40 @@
 	color: #fff;
 	cursor: pointer;
 	display: block;
-	margin: 8px;
+	/*margin: 8px;*/
 	outline: none;
-	padding: 3px;
+	/*padding: 3px;*/
+	margin: 0.5vw;
+	padding: 0.2vw;
+	height: 4vw;
+	width: 7.5vw;
 	text-align: center;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
+.year-precip-select {
+	height: 1.8vw;
+	width: 5vw;
+
+}
+
+option {
+	font-size: 1vw;
+}
+
 #precipTitle, #yearTitle {
 	color: #fff;
-	margin: 4px;
-	padding: 3px;
+	/*margin: 4px;*/
+	/*padding: 3px;*/
+	margin: 0.3vw;
+	padding: 0.2vw;
 	text-align: center;
+	font-weight: var(--title-font-weight);
 }
 #precipTab {
 	color: white;
-	font-size: 18px;
+	/*font-size: 14px;*/
+	font-size: 1vw;
 }
 #year0PrecipContainer {
 	display: block;
@@ -203,12 +233,51 @@ select {
 	margin: 5px;
 }
 
+/** year buttons**/
+
+.yearButton {
+	background-color: rgba(0, 0, 0, 0.7);
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	/*height: 40px;*/
+	/*width: 40px;*/
+	height: var(--selector-icon-length);
+	width: var(--selector-icon-length);
+	display: inline-block;
+	margin-top: 20px;
+	margin-left: 35px;
+	border-radius: 50%;
+}
+.yearSelected {
+	border-radius: 50%;
+	box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+	height: var(--selector-icon-length);
+	width: var(--selector-icon-length);
+}
+.yearNotSelected {
+	box-shadow: none;
+	height: var(--selector-icon-length);
+	width: var(--selector-icon-length);
+}
+.yearButton:hover {
+	box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+.yearButtonHidden, .yearImageHidden {
+	display: none;
+}
+#yearPlusButton {
+	position: absolute;
+	top: 70px;
+}
+
 /*levels map selector*/
 
 .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5 {
-	height: 15px;
+	/*height: 15px;*/
 	margin: 10px 0px 10px 10px;
-	width: 15px;
+	/*width: 15px;*/
+	height: var(--level-indicator-length);
+	width: var(--level-indicator-length);
 }
 .levelColor1 {
 	background-color: #e6bb00;
@@ -234,9 +303,9 @@ select {
 	border-radius: 12px;
 	top: 305px;
 	width: 135px;
-	-webkit-transition-duration: 0.4s;
+	-webkit-transition-duration: var(--transition-duration);
 	/* Safari */
-	transition-duration: 0.4s;
+	transition-duration: var(--transition-duration);
 }
 .levelDetailsList {
 	left: 150px;
@@ -257,9 +326,11 @@ select {
 }
 .levelsSelectorIcon, .levelSelectorIconSelected {
 	box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
-	height: 40px;
+	/*height: 40px;*/
 	margin: 5px 35px 10px 35px;
-	width: 40px;
+	/*width: 40px;*/
+	height: var(--selector-icon-length);
+	width: var(--selector-icon-length);
 }
 .levelsSelectorIcon:hover {
 	box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
@@ -274,9 +345,11 @@ select {
 /*physical features map selector*/
 
 .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone, .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8, .soilColor {
-	height: 15px;
+	/*height: 15px;*/
 	margin: 5px 0px 10px 10px;
-	width: 15px;
+	/*width: 15px;*/
+	height: var(--level-indicator-length);
+	width: var(--level-indicator-length);
 }
 .floodColor1 {
 	background-color: #ffffc9;
@@ -320,9 +393,9 @@ select {
 	background-image: url('./imgs/consoleTexture.png');
 	background-repeat: repeat;
 	border-radius: 12px;
-	-webkit-transition-duration: 0.4s;
+	-webkit-transition-duration: var(--transition-duration);
 	/* Safari */
-	transition-duration: 0.4s;
+	transition-duration: var(--transition-duration);
 }
 .physicalDetailsList {
 	left: 150px;
@@ -339,9 +412,11 @@ select {
 .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
 	border-radius: 50%;
 	box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
-	height: 40px;
+	/*height: 40px;*/
 	margin: 5px 35px 10px 35px;
-	width: 40px;
+	/*width: 40px;*/
+	height: var(--selector-icon-length);
+	width: var(--selector-icon-length);
 }
 .painterIcon:hover, .featureSelectorIcon:hover {
 	box-shadow: 0px 0px 5px 5px rgba(200, 120, 18, 0.3), 0 17px 50px 0 rgba(227, 154, 18, 0.2);
