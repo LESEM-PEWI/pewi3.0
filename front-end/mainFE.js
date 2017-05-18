@@ -365,7 +365,6 @@ function setupBoardFromUpload(data) {
     {
         parent.loadLevel(-1);
     }
-
 } //end setupBoardFromUpload
 
 //switchToZoomView updates a zoom template map with information from the current full map
