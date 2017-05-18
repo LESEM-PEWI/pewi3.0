@@ -161,12 +161,13 @@ body {
 }
 
 .closeButton {
-  height: 40px;
   position: absolute;
-  width: 40px;
+	width: 2.5vw;
   -webkit-transition-duration: 0.1s;
   /* Safari */
   transition-duration: 0.1s;
+	/*height: 40px;
+	width: 40px;*/
 }
 
 .closeButton:hover {
@@ -191,12 +192,7 @@ body {
   top: 21%;
 }
 
-#closeResults {
-  top: 4%;
-  -webkit-transition-duration: .2s;
-  /* Safari */
-  transition-duration: .2s;
-}
+
 
 #uploadDownloadFrame {
   height: 200px;
