@@ -1,7 +1,7 @@
 <!doctype html>
 
 <!-- Oh my, this is the base page, the page upon which all of PEWI is built.
-     Most of the elesments are outlined here.
+     Most of the elements are outlined here.
     Some of the more complicated elements are displayed as iframes on top of this page.
     These iframes include the main loading screen, the codex, and much more. 
     
@@ -55,7 +55,6 @@
     <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
     
     <!-- /INCLUDES -->
-
 </head>
 <body id="body">
  
@@ -72,7 +71,7 @@
      var img2 = new Image();
      img2.src ="./imgs/meadowlarkanimation.gif";
      </script>
- 
+    
     <!-- Create hidden div to contain settings/options for in-game updates -->
     <div id="settingsHolder" style="position:absolute; cursor:default; background:rgba(0,0,0,0); overflow:hidden; margin:0px; padding:0px; height:0px; width:0px;">
     <input id="firefoxWorkaround"></input>
@@ -386,6 +385,9 @@
     <img id="logoBase" src="./imgs/inGameLogo.png" >
     <img id="uploadDownloadButton" class="upperButton" width="40px" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+
+    <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+    <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     
     <!-- order now becomes important to make sure elements stack and cover correctly -->
     
