@@ -320,12 +320,25 @@ function switchBoards(newBoard) {
 function setupBoardFromFile(file) {
 
     //addBoard
+    if(file!="")
+    {
         var boardFromFile = new GameBoard();
         loadBoard(boardFromFile, file);
 
         switchBoards(boardFromFile);
 
         return 1;
+    }
+    //If file is empty, load the default level
+    else if (!multiplayerAssigningModeOn)
+    {
+        parent.loadLevel(levelGlobal);
+    }
+    //If file is empty and multiplayer is active, load the level multiplayer level creator
+    else
+    {
+        parent.loadLevel(-1);
+    }
 
 } //end setupBoardFromFile
 
@@ -333,13 +346,25 @@ function setupBoardFromFile(file) {
 function setupBoardFromUpload(data) {
 
     //addBoard
+    if(data!="")
+    {
         var boardFromUpload = new GameBoard();
         parseInitial(data);
         propogateBoard(boardFromUpload);
 
         switchBoards(boardFromUpload);
         previousHover = null;
-   
+    }
+    //If file is empty, load the default level
+    else if (!multiplayerAssigningModeOn)
+    {
+        parent.loadLevel(levelGlobal);
+    }
+    //If file is empty and multiplayer is active, load the level multiplayer level creator
+    else
+    {
+        parent.loadLevel(-1);
+    }
 } //end setupBoardFromUpload
 
 //switchToZoomView updates a zoom template map with information from the current full map

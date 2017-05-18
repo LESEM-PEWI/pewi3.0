@@ -943,7 +943,6 @@ function changeSelectedPaintTo(newPaintValue) {
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
     inResults = true;
-
     //if something else does not have precedence
     if (!modalUp) {
 
