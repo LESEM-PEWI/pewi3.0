@@ -24,6 +24,8 @@ Cleaned and Prepared - July 2016
  <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
  <!--external fonts-->
  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+ <!--helper methods for class modes-->
+ <script src="../front-end/helpersFE.js"></script>
  <!-- /INCLUDES -->
 
  <!--additional styling-->
@@ -83,7 +85,7 @@ Cleaned and Prepared - July 2016
     <img src="./imgs/pewiLogoLarge.png" />
    </div>
 
-   <div id="startupButton1" onmouseover="highlightButtonAndShowInfo(1,1);" onmouseout="highlightButtonAndShowInfo(1,0);" class="mainButton" onclick="startSandbox();">Sandbox</div>
+   <div id="startupButton1" onmouseover="highlightButtonAndShowInfo(1,1);"  onmouseout="highlightButtonAndShowInfo(1,0);" class="mainButton" onclick="startSandbox();">Sandbox</div>
    <div id="startupButton2" onmouseover="highlightButtonAndShowInfo(2,1);" onmouseout="highlightButtonAndShowInfo(2,0);" class="mainButton" onclick="startPlay();">Play</div>
    <div id="startupButton3" onmouseover="highlightButtonAndShowInfo(3,1);" onmouseout="highlightButtonAndShowInfo(3,0);" class="mainButton" onclick="startUtilities();">Utilities</div>
 
@@ -181,6 +183,8 @@ function startSandbox() {
  document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,1)";
  //clear informational text
  document.getElementById('startupInformationText').innerHTML = "";
+ //change random tolerance
+ randomAllowed("S");
 
  //after all of this styling magic, let's actually do something and start the sandbox mode
  setTimeout(function() {
@@ -204,6 +208,8 @@ function startUtilities() {
  document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)";
  //clear informational text
  document.getElementById('startupInformationText').innerHTML = "";
+ //change random tolerance
+ randomAllowed("U");
 
  //Display utilities frame over the page, then with
  // the background elements hidden, rearrange them in preparation for the user
@@ -239,7 +245,8 @@ function startPlay() {
  document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)" ;
  //clear informational text
  document.getElementById('startupInformationText').innerHTML = "" ;
-  
+ //change random tolerance
+ randomAllowed("P");
  //after all the moving around, then show iframe page over the page, then
  //  reset the buttons and content in the background
  setTimeout(function() {

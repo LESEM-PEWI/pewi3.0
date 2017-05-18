@@ -48,10 +48,8 @@ var optionLabels = ["Hide conventional corn", "Hide conservation corn", "Hide co
 
 //addObjective allows for objectives to be added to the form dynamically
 function addObjective(addToDiv) {
-    var divToAdd = document.createElement('div');
-
     objectiveNumber++;
-
+    var divToAdd = document.createElement("div");
     divToAdd.innerHTML = "Objective " + objectiveNumber + "<br><br>" +
         addObjectiveType() + addMinValue() + addMaxValue() + addYearButtons() + addScript() + addAnimation() + addRequired() +
         "</div></div></div><br>";
