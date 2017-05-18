@@ -24,9 +24,12 @@ font-family: 'Amatic SC', cursive;
 
 /* css variable declaration */
 :root {
+	--button-font-size: 3vw;
   --font-size: 1vw;
   --title-font-weight: 900;
   --transition-duration: 0.4s;
+	--main-button-height: 3vw;
+	--main-button-width: 12vw;
 }
 
 /******CSS RESET*****/
@@ -130,10 +133,12 @@ body {
 
 .upperButton, #logoBase {
   position: absolute;
-  top: 5px;
+	top: 0.1vw;
+	height: 3vw;
   -webkit-transition-duration: 0.1s;
   /* Safari */
   transition-duration: 0.1s;
+	/*top: 5px;*/
 }
 
 .upperButton:hover {
@@ -324,15 +329,19 @@ body {
   color: #FFFFFF;
   cursor: default;
   font-family: 'Amatic SC', cursive;
-  font-size: 40px;
+  font-size: var(--button-font-size);
   font-weight: bold;
-  margin-bottom: 20px;
-  height: 50px;
-  line-height: 120%;
+	height: var(--main-button-height);
+	line-height: 100%;
+	margin-bottom: 20px;
   margin: 0px 0px 20px 0px;
   padding: 5px;
   text-align: center;
-  width: 200px;
+	width: var(--main-button-width);
+	/*font-size: 40px;
+	height: 50px;
+	line-height: 120%;
+  width: 200px;*/
 }
 
 .unclickableMainEscapeButton {
@@ -370,10 +379,11 @@ body {
 #escapeMenu {
   height: 200px;
   left: 50%;
-  margin: -100px 0 0 -150px;
+  margin: -100px 0 0 -8vw;
   position: absolute;
   top: 25%;
   width: 300px;
+	/*margin: -100px 0 0 -150px;*/
 }
 
 @keyframes showEffect {
@@ -399,18 +409,22 @@ body {
   border-radius: 6px;
   display: inline-block;
   height: 0px;
-  margin-left: -20px;
   overflow: hidden;
   position: relative;
-  width: 250px;
   font-family: 'Amatic SC', cursive;
   text-align: center;
   line-height: 130%;
   color: #FFFFFF;
-  font-size: 30px;
+	font-size: calc(var(--button-font-size) - 1vw);
   font-weight: bold;
+	width: var(--main-button-width);
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
+	/*font-size: 30px;
+	margin-left: -10.6vw;
+	margin-left: -20px;
+	width: 250px;
+	*/
 }
 
 #yesConfirmEscape {
