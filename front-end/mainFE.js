@@ -320,12 +320,12 @@ function switchBoards(newBoard) {
 function setupBoardFromFile(file) {
 
     //addBoard
-    var boardFromFile = new GameBoard();
-    loadBoard(boardFromFile, file);
+        var boardFromFile = new GameBoard();
+        loadBoard(boardFromFile, file);
 
-    switchBoards(boardFromFile);
+        switchBoards(boardFromFile);
 
-    return 1;
+        return 1;
 
 } //end setupBoardFromFile
 
@@ -333,12 +333,12 @@ function setupBoardFromFile(file) {
 function setupBoardFromUpload(data) {
 
     //addBoard
-    var boardFromUpload = new GameBoard();
-    parseInitial(data);
-    propogateBoard(boardFromUpload);
+        var boardFromUpload = new GameBoard();
+        parseInitial(data);
+        propogateBoard(boardFromUpload);
 
-    switchBoards(boardFromUpload);
-    previousHover = null;
+        switchBoards(boardFromUpload);
+        previousHover = null;
 
 } //end setupBoardFromUpload
 
