@@ -183,7 +183,7 @@ function startSandbox() {
  document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,1)";
  //clear informational text
  document.getElementById('startupInformationText').innerHTML = "";
- //change random tolerance
+ //change random tolerance ("S" for sandbox)
  randomAllowed("S");
 
  //after all of this styling magic, let's actually do something and start the sandbox mode
@@ -208,7 +208,7 @@ function startUtilities() {
  document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)";
  //clear informational text
  document.getElementById('startupInformationText').innerHTML = "";
- //change random tolerance
+ //change random tolerance ("U" for utilities)
  randomAllowed("U");
 
  //Display utilities frame over the page, then with
@@ -245,7 +245,7 @@ function startPlay() {
  document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)" ;
  //clear informational text
  document.getElementById('startupInformationText').innerHTML = "" ;
- //change random tolerance
+ //change random tolerance ("P" for play)
  randomAllowed("P");
  //after all the moving around, then show iframe page over the page, then
  //  reset the buttons and content in the background

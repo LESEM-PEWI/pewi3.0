@@ -943,6 +943,7 @@ function changeSelectedPaintTo(newPaintValue) {
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
     inResults = true;
+
     //if something else does not have precedence
     if (!modalUp) {
 
@@ -2028,23 +2029,27 @@ function togglePopupDisplay() {
     } //end if
 } // togglePopupDisplay()
 
+//randomAllowed determines whether or not the current mode permits tile randomization
 function randomAllowed(modeName) {
+    //Randomization is not allowed in play (P) or utilities (U)
     if(modeName == "P" || modeName == "U")
     {
         randAllow = "false";
         localStorage.setItem("randAllow",randAllow);
     }
+    //Randomization is allowed in sandbox mode
     else
     {
         randAllow = "true";
         localStorage.setItem("randAllow",randAllow);
     }
-}
+} //end randomAllowed
+
 //randomizeBoard randomly selects a landtype for each tile
 function randomizeBoard() {
 
-    var prevPainter = painter;
-    //for whole board
+  var prevPainter = painter;
+  //for whole board (as long as randomization is allowed)
 	if(localStorage.getItem("randAllow")=="true" && !multiplayerAssigningModeOn)
 	{
 		for (var i = 0; i < boardData[currentBoard].map.length; i++) {
