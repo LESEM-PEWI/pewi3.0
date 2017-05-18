@@ -1,5 +1,4 @@
 /* css variable declaration */
-
 :root {
   --consoleButton-height: 2.81vw;
   --first-consoleButton-top: 15.47vw;
@@ -229,20 +228,16 @@ option {
   font-size: 1vw;
 }
 
-#precipTab {
-	color: white;
-	/*font-size: 14px;*/
-	font-size: 1vw;
-}
-
 #precipTitle, #yearTitle {
   color: #fff;
-  /*margin: 4px;*/
-  /*padding: 3px;*/
+	font-size: var(--font-size);
+	font-weight: var(--title-font-weight);
   margin: 0.3vw;
   padding: 0.2vw;
   text-align: center;
-  font-weight: var(--title-font-weight);
+	/*font-size: 14px;*/
+	/*margin: 4px;*/
+	/*padding: 3px;*/
 }
 
 #year0PrecipContainer {
@@ -258,16 +253,18 @@ select {
 
 .yearButton {
   background-color: rgba(0, 0, 0, 0.7);
+	border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
+	border-radius: 50%;
   /*height: 40px;*/
   /*width: 40px;*/
   height: var(--selector-icon-length);
-  width: var(--selector-icon-length);
   display: inline-block;
-  margin-top: 20px;
-  margin-left: 35px;
-  border-radius: 50%;
+  margin-left: 3vw;
+	margin-top: 1.2vw;
+	width: var(--selector-icon-length);
+	/*margin-top: 20px;
+  margin-left: 35px;*/
 }
 
 .yearSelected {
@@ -351,9 +348,12 @@ select {
 
 .levelsText {
   color: #fff;
-  margin-top: 5px;
-  margin-right: 14px;
-  text-align: center;
+	font-size: var(--font-size);
+	font-weight: var(--title-font-weight);
+	margin-top: 0.5vw;
+	text-align: center;
+  /*margin-top: 5px;*/
+  /*margin-right: 14px;*/
 }
 
 .levelsTextDetails {
@@ -365,7 +365,8 @@ select {
 .levelsSelectorIcon, .levelSelectorIconSelected {
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   /*height: 40px;*/
-  margin: 5px 35px 10px 35px;
+  /*margin: 5px 35px 10px 35px;*/
+	margin: 1vw 3vw 1.2vw;
   /*width: 40px;*/
   height: var(--selector-icon-length);
   width: var(--selector-icon-length);
@@ -471,11 +472,12 @@ select {
 .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
   border-radius: 50%;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
-  /*height: 40px;*/
-  margin: 5px 35px 10px 35px;
+	height: var(--selector-icon-length);
+	margin: 1vw 3vw 1.2vw;
+	width: var(--selector-icon-length);
+	/*height: 40px;*/
+	/*margin: 5px 35px 10px 35px;*/
   /*width: 40px;*/
-  height: var(--selector-icon-length);
-  width: var(--selector-icon-length);
 }
 
 .painterIcon:hover, .featureSelectorIcon:hover {
@@ -497,6 +499,8 @@ select {
 .featuresText {
   color: #fff;
   text-align: center;
-  margin-right: 14px;
-  margin-top: 5px;
+	/*margin: 0.25vw;*/
+	margin-top: 0.5vw;
+  /*margin-right: 14px;*/
+  /*margin-top: 5px;*/
 }

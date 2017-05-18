@@ -22,6 +22,12 @@ font-family: 'Amatic SC', cursive;
 
 **/
 
+/* css variable declaration */
+:root {
+  --font-size: 1vw;
+  --title-font-weight: 900;
+  --transition-duration: 0.4s;
+}
 
 /******CSS RESET*****/
 
@@ -101,6 +107,7 @@ body {
   /*height:100%;*/
   overflow: hidden;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-size: var(--font-size);
 }
 
 
