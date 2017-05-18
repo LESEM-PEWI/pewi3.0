@@ -339,7 +339,7 @@ function setupBoardFromUpload(data) {
 
         switchBoards(boardFromUpload);
         previousHover = null;
-
+   
 } //end setupBoardFromUpload
 
 //switchToZoomView updates a zoom template map with information from the current full map
