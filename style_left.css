@@ -7,6 +7,7 @@
   --left-console-width: 9.6vw;
   --left-console-button-length: 3vw;
   --left-console-button-image-length: 2vw;
+	--left-console-button-image-margin: 0.5vw;
   --level-indicator-length: 1vw;
   --selector-icon-length: 2.5vw;
   --title-font-weight: 900;
@@ -52,6 +53,7 @@
 }
 
 #pick {
+	margin: var(--left-console-button-image-margin);
 	width: var(--left-console-button-image-length);
 }
 
@@ -75,14 +77,18 @@
 
 .imgSelected {
 	border-right: 2px solid #F0A61D;
+	margin: var(--left-console-button-image-margin);
+	width: var(--left-console-button-image-length);
 	/*width: 40px;*/
-	width: 2vw;
+	/*width: 2vw;*/
 }
 
 .imgNotSelected {
-	/*width: 40px;*/
-	width: 2vw;
 	border-right: 0px solid #F0A61D;
+	margin: var(--left-console-button-image-margin);
+	width: var(--left-console-button-image-length);
+	/*width: 40px;*/
+	/*width: 2vw;*/
 }
 
 #terrainButton {
