@@ -157,7 +157,6 @@
   left: calc( -1*var(--left-console-width));
 }
 
-
 /* The content of each tab */
 
 .consoleTab {
@@ -169,7 +168,6 @@
 
 
 /**inner elements of left console**/
-
 
 /*terrain selector*/
 
@@ -231,6 +229,12 @@ option {
   font-size: 1vw;
 }
 
+#precipTab {
+	color: white;
+	/*font-size: 14px;*/
+	font-size: 1vw;
+}
+
 #precipTitle, #yearTitle {
   color: #fff;
   /*margin: 4px;*/
@@ -241,12 +245,6 @@ option {
   font-weight: var(--title-font-weight);
 }
 
-#precipTab {
-  color: white;
-  /*font-size: 14px;*/
-  font-size: 1vw;
-}
-
 #year0PrecipContainer {
   display: block;
 }
@@ -255,7 +253,6 @@ select {
   font-size: 14px;
   margin: 5px;
 }
-
 
 /** year buttons**/
 
