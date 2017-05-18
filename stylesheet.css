@@ -318,7 +318,7 @@ select {
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
     border-radius: 12px;
-    top: 305px;
+    top: 80px;
     width: 135px;
 
     
@@ -327,11 +327,11 @@ select {
 }
 
 .levelDetailsList{
-    left:150px;
+    left:180px;
 }
 
 .levelDetailsListRolled {
-    left: -135px;
+    left: -210px;
 }
 
 .levelsText {
@@ -422,7 +422,7 @@ select {
 .physicalDetailsList, .physicalDetailsListRolled {
     margin: 15px 0px 0px 0px ;
     position: absolute;
-    top: 305px;
+    top: 80px;
     width: 150px;
     background-color: black ;
     background-image: url('./imgs/consoleTexture.png');
@@ -434,7 +434,7 @@ select {
 }
 
 .physicalDetailsList {
-    left:150px;
+    left:180px;
 }
 
 .physicalDetailsListRolled {
