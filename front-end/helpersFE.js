@@ -22,6 +22,15 @@ var currentHighlightType = 0;
 var currentHighlightTypeString = null;
 var immutablePrecip = false;
 var clickAndDrag = false;
+var previousTileId = [];
+var previousPainter = [];
+var lastPainter = null;
+var lastSelectedPainter = 1;
+var paintSwitch = false;
+var undo = false;
+var previous = false;
+var inResults = false;
+var inDispLevels = false;
 var birds = [],
     bird;
 var boids = [],
@@ -124,6 +133,43 @@ function highlightTile(tileId) {
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(tileId) {
 
+    //determines whether or not the given tile should be added to the tile history (for undo function)
+    if(previousTileId.length>0)
+    {
+        if (!previousTileId.includes(tileId))
+        {
+            previous = false;
+        }
+    }
+    else
+    {
+        previous = false;
+    }
+    //set tiles to change as the previous tile in that position (undo function).
+    if (previousTileId[previousTileId.length-1] == tileId && undo==true)
+    {
+        lastPainter = boardData[currentBoard].map[tileId].landType[currentYear];
+        painter = previousPainter[previousPainter.length-1];
+        previousTileId.splice(previousTileId.length-1,1);
+        previousPainter.splice(previousPainter.length-1,1);
+        undo = false;
+        paintSwitch = false;
+    }
+    //store previous tile data only if it's not a previously-listed tile in the array
+    else if (previous == false)
+    {
+        //save previous tile information
+        previousTileId = previousTileId.concat(tileId);
+        previousPainter = previousPainter.concat(boardData[currentBoard].map[tileId].landType[currentYear]);
+        previous = true;
+        //since the undo function assumes the paint switched to another type (even when the user didn't), the painter will
+        // will equal the actual selected painter after the undo function is performed.
+        if(lastPainter!=null && !paintSwitch)
+        {
+            painter = lastSelectedPainter;
+            lastPainter = null;
+        }
+    }
     //if land type of tile is nonzero
     if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
 
@@ -448,6 +494,17 @@ function refreshBoard(bypassFromKeyEvent) {
 
 } //end refreshBoard
 
+//revertChanges undos the users previous tile changes, and goes back to the previous board instance
+function revertChanges()
+{
+    if(previousTileId.length>0 && !inResults && !inDispLevels)
+    {
+        undo = true;
+        changeLandTypeTile(previousTileId[previousTileId.length-1]);
+        undo = false;
+    }
+}
+
 //transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
 
@@ -578,6 +635,14 @@ function onDocumentMouseMove(event) {
         //if painter tool type is the clickAndDrag painter
         else if (clickAndDrag) {
             var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
+            if(currentTile==previousTileId[previousTileId.length-1] && previousPainter.length>0)
+            {
+                previous = true;
+            }
+            else
+            {
+                previous = false;
+            }
             if (boardData[currentBoard].map[currentTile].landType[0] != 0) changeLandTypeTile(currentTile);
         }
         else {
@@ -632,6 +697,7 @@ function onDocumentMouseDown(event) {
                             var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
 
                             for (var i = 0; i < changedTiles.length; i++) {
+                                previous = false;
                                 changeLandTypeTile(changedTiles[i] - 1);
                             }
 
@@ -773,6 +839,13 @@ function onDocumentKeyDown(event) {
             highlightTile(-1);
             toggleEscapeFrame();
             break;
+        case 85:
+            if(!inResults && !inDispLevels)
+            {
+                revertChanges();
+            }
+            undo = false;
+            break;
             //no default handler
     } //end switch
 } //end onDocumentKeyDown
@@ -834,6 +907,10 @@ function toggleEscapeFrame() {
 
 //paintChange changes the highlighted color of the selected painter and updates painter
 function changeSelectedPaintTo(newPaintValue) {
+    //paint color has been switched
+    paintSwitch = true;
+    painter = lastSelectedPainter;
+    lastSelectedPainter = newPaintValue;
     //check to see if multiplayer Assignment Mode is On
     if (!multiplayerAssigningModeOn) {
 
@@ -865,7 +942,7 @@ function changeSelectedPaintTo(newPaintValue) {
 
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
-
+    inResults = true;
     //if something else does not have precedence
     if (!modalUp) {
 
@@ -918,7 +995,7 @@ function resultsStart() {
 
 //resultsEnd hides the results and returns the menus to the screens
 function resultsEnd() {
-
+    inResults = false;
     //modal is no longer up
     modalUp = false;
 
@@ -1109,26 +1186,32 @@ function switchConsoleTab(value) {
 
     //update the left console tab according to the value selected
     if (value == 1) {
+        inDispLevels = false;
         document.getElementById('terrainImg').className = "imgSelected";
         document.getElementById('painterTab').style.display = "block";
     }
     else if (value == 2) {
+        inDispLevels = false;
         document.getElementById('precipImg').className = "imgSelected";
         document.getElementById('precipTab').style.display = "block";
     }
     else if (value == 3) {
+        inDispLevels = true;
         document.getElementById('levelsImg').className = "imgSelected";
         document.getElementById('levelsTab').style.display = "block";
     }
     else if (value == 4) {
+        inDispLevels = true;
         document.getElementById('featuresImg').className = "imgSelected";
         document.getElementById('featuresTab').style.display = "block";
     }
     else if (value == 5) {
+        inDispLevels = false;
         document.getElementById('settingsImg').className = "imgSelected";
         document.getElementById('settingsTab').style.display = "block";
     }
     else if (value == 6) {
+        inDispLevels = false;
         document.getElementById('calendarImg').className = "imgSelected";
         document.getElementById('yearsTab').style.display = "block";
     }
@@ -1178,7 +1261,6 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
 
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(overlayHighlightType) {
-
     var selectionHighlightNumber = 0;
 
     //update console tabs
@@ -1946,20 +2028,34 @@ function togglePopupDisplay() {
     } //end if
 } // togglePopupDisplay()
 
+function randomAllowed(modeName) {
+    if(modeName == "P" || modeName == "U")
+    {
+        randAllow = "false";
+        localStorage.setItem("randAllow",randAllow);
+    }
+    else
+    {
+        randAllow = "true";
+        localStorage.setItem("randAllow",randAllow);
+    }
+}
 //randomizeBoard randomly selects a landtype for each tile
 function randomizeBoard() {
 
     var prevPainter = painter;
     //for whole board
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-        //if tile exists
-        if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
-            //getRandomInt is in back-end helperMethods
-            if (!multiplayerAssigningModeOn) painter = getRandomInt(1, 15);
-            else painter = getRandomInt(1, 6);
-            changeLandTypeTile(i);
-        }
-    } //end for all tiles
+	if(localStorage.getItem("randAllow")=="true" && !multiplayerAssigningModeOn)
+	{
+		for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+			//if tile exists
+			if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
+				//getRandomInt is in back-end helperMethods
+				painter = getRandomInt(1, 15);
+				changeLandTypeTile(i);
+			}	
+		} //end for all tiles
+	}
 
     painter = prevPainter;
 
