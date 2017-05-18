@@ -834,6 +834,7 @@ function toggleEscapeFrame() {
 
 //paintChange changes the highlighted color of the selected painter and updates painter
 function changeSelectedPaintTo(newPaintValue) {
+
     //check to see if multiplayer Assignment Mode is On
     if (!multiplayerAssigningModeOn) {
 
@@ -865,7 +866,6 @@ function changeSelectedPaintTo(newPaintValue) {
 
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
-
     //if something else does not have precedence
     if (!modalUp) {
 
@@ -918,7 +918,6 @@ function resultsStart() {
 
 //resultsEnd hides the results and returns the menus to the screens
 function resultsEnd() {
-
     //modal is no longer up
     modalUp = false;
 
@@ -1178,7 +1177,6 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
 
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(overlayHighlightType) {
-
     var selectionHighlightNumber = 0;
 
     //update console tabs
@@ -1946,20 +1944,38 @@ function togglePopupDisplay() {
     } //end if
 } // togglePopupDisplay()
 
+//randomAllowed determines whether or not the current mode permits tile randomization
+function randomAllowed(modeName) {
+    //Randomization is not allowed in play (P) or utilities (U)
+    if(modeName == "P" || modeName == "U")
+    {
+        randAllow = "false";
+        localStorage.setItem("randAllow",randAllow);
+    }
+    //Randomization is allowed in sandbox mode
+    else
+    {
+        randAllow = "true";
+        localStorage.setItem("randAllow",randAllow);
+    }
+} //end randomAllowed
+
 //randomizeBoard randomly selects a landtype for each tile
 function randomizeBoard() {
 
     var prevPainter = painter;
-    //for whole board
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-        //if tile exists
-        if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
-            //getRandomInt is in back-end helperMethods
-            if (!multiplayerAssigningModeOn) painter = getRandomInt(1, 15);
-            else painter = getRandomInt(1, 6);
-            changeLandTypeTile(i);
-        }
-    } //end for all tiles
+    //for whole board (as long as randomization is allowed)
+	if(localStorage.getItem("randAllow")=="true" && !multiplayerAssigningModeOn)
+	{
+		for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+			//if tile exists
+			if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
+				//getRandomInt is in back-end helperMethods
+				painter = getRandomInt(1, 15);
+				changeLandTypeTile(i);
+			}	
+		} //end for all tiles
+	}
 
     painter = prevPainter;
 
