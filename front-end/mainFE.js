@@ -320,7 +320,9 @@ function switchBoards(newBoard) {
 function setupBoardFromFile(file) {
 
     //addBoard
-    if(file!="")
+    //Length of the csv object when empty is 3
+    var isEmpty = Object.getOwnPropertyNames(data).length == 3;
+    if(!isEmpty)
     {
         var boardFromFile = new GameBoard();
         loadBoard(boardFromFile, file);
@@ -346,7 +348,9 @@ function setupBoardFromFile(file) {
 function setupBoardFromUpload(data) {
 
     //addBoard
-    if(data!="")
+    //Length of the csv object when empty is 3
+    var isEmpty = Object.getOwnPropertyNames(data).length == 3;
+    if(!isEmpty)
     {
         var boardFromUpload = new GameBoard();
         parseInitial(data);
