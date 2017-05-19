@@ -19,6 +19,7 @@ var onYear = "year1";
 var painter = 1;
 var currentBoard = -1;
 var currentYear = 1;
+var currentPlayer = 1;
 var modalUp = false;
 var isShiftDown = false;
 var counter = 0;
