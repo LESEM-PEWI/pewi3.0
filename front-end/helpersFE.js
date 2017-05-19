@@ -1247,7 +1247,7 @@ function getHighlightColor(highlightType, tileId) {
     //erosion highlight color indicies
     if (highlightType == "erosion") {
         //subtract 1, as arrays index from 0
-        return (Totals.grossErosionSeverity[currentYear][tileId] + 32);
+        return (Totals.grossErosionSeverity[currentYear][tileId] + 35); //Comment
     }
     //nitrite highlight color indicies
     else if (highlightType == "nitrate") {
