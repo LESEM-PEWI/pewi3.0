@@ -153,11 +153,14 @@ body {
     box-shadow: 8px 0px 10px -4px rgba(240,166,29,0.8) ;
 }
 
+#undoButton:hover {
+    box-shadow: 0 0px 8px 2px rbg(0,0,0,0.8) ;
+}
 #toolsButton:hover {
     box-shadow: 0 0px 8px 2px rgba(0,0,0,0.8) ;
 }
 
-.tabButtons, #toolsButton {
+.tabButtons, #toolsButton, #undoButton {
     left: 135px;
     position:absolute;
 
@@ -173,6 +176,11 @@ body {
     transition-duration: 0.4s;
 }
 
+#undoButton {
+    top: 100px;
+    border-bottom-right-radius: 5px ;
+    
+}
 
 #toolsButton {
     top: 150px;
@@ -226,7 +234,7 @@ body {
     width:40px;
     margin: 6px ;
     margin-left:10px;
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8), 0 17px 50px 0 rgba(0,0,0,0.6);
+    
 }
 
 .landSelectorIcon:hover {
@@ -234,11 +242,12 @@ body {
 }
 
 .landSelectedIcon {
-    box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14,71,204,0.4);
+box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14,71,204,0.4);
+   
 }
 
 .landSelectedIcon:hover {
-    box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 ;
+    box-shadow: 0px 0px 25px 5px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
 }
 
 /*precip selector*/
@@ -318,7 +327,7 @@ select {
     background-image: url('./imgs/consoleTexture.png');
     background-repeat:repeat;
     border-radius: 12px;
-    top: 305px;
+    top: 80px;
     width: 135px;
 
     
@@ -327,11 +336,11 @@ select {
 }
 
 .levelDetailsList{
-    left:150px;
+    left:180px;
 }
 
 .levelDetailsListRolled {
-    left: -135px;
+    left: -210px;
 }
 
 .levelsText {
@@ -422,7 +431,7 @@ select {
 .physicalDetailsList, .physicalDetailsListRolled {
     margin: 15px 0px 0px 0px ;
     position: absolute;
-    top: 305px;
+    top: 80px;
     width: 150px;
     background-color: black ;
     background-image: url('./imgs/consoleTexture.png');
@@ -434,7 +443,7 @@ select {
 }
 
 .physicalDetailsList {
-    left:150px;
+    left:180px;
 }
 
 .physicalDetailsListRolled {
@@ -479,6 +488,28 @@ select {
     margin-right:14px;
     margin-top: 5px;
     
+}
+
+/**Index Button on screen Styling**/
+.indexmenu{
+    background-image: url('./imgs/consoleTexture.png');
+    border: none;
+    border-radius: 6px;
+    color: #FFFFFF;
+    cursor: default;
+    font-family: 'Amatic SC', cursive;
+    font-size: 30px;
+    height: 30px;
+    margin-top: 100px;
+    padding: 5px;
+    text-align: center;
+    width: 100px;
+    position: absolute;
+    background-repeat: repeat;    
+}
+
+.indexmenu:hover{
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
 }
 
 /**results right styling**/
@@ -583,8 +614,7 @@ select {
 
 .upperButton, #logoBase {
     position: absolute ;
-    top:4px;
-    right: 44px;
+    top:5px;
     
     -webkit-transition-duration: 0.1s; /* Safari */
     transition-duration: 0.1s;
@@ -906,32 +936,8 @@ select {
     width:100%;
 }
 
-
-/*Index button design*/
-
-.indexmenu{
-    background-image: url('./imgs/consoleTexture.png');
-    border: none ;
-    border-radius: 6px;
-    color: #FFFFFF;
-    cursor: default;
-    font-family: 'Amatic SC', cursive;
-    font-size: 30px;
-    font-weight: bold;
-    height:30px;
-    margin-top: 100px;
-    padding :5px;
-    text-align: center;
-    width:100px;
-    position: absolute;
-    background-repeat: repeat;
-    
-}
-.indexmenu:hover{
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
-}
-
 /* Escape Menu and Buttons */
+
 .mainEscapeButton, .unclickableMainEscapeButton {
    background-color: #40A4DF ;
    border: 2px solid white;

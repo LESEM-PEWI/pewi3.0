@@ -254,17 +254,8 @@
  /** Credits (About) Frame 
  -------------------------
  **/
-.feedback{
-    height:25px;
-    width:50%;
-}
-
-.textera{
-    height:130px;
-}
-
  
-.aboutLinks {
+ .aboutLinks {
   transition: color .4s;
   color: #265C83;
  }
