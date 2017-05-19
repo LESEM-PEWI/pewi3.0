@@ -320,25 +320,12 @@ function switchBoards(newBoard) {
 function setupBoardFromFile(file) {
 
     //addBoard
-    if(file!="")
-    {
         var boardFromFile = new GameBoard();
         loadBoard(boardFromFile, file);
 
         switchBoards(boardFromFile);
 
         return 1;
-    }
-    //If file is empty, load the default level
-    else if (!multiplayerAssigningModeOn)
-    {
-        parent.loadLevel(levelGlobal);
-    }
-    //If file is empty and multiplayer is active, load the level multiplayer level creator
-    else
-    {
-        parent.loadLevel(-1);
-    }
 
 } //end setupBoardFromFile
 
@@ -346,7 +333,9 @@ function setupBoardFromFile(file) {
 function setupBoardFromUpload(data) {
 
     //addBoard
-    if(data!="")
+    //Length of the csv object when empty is 3
+    var isEmpty = Object.getOwnPropertyNames(data).length == 3;
+    if(!isEmpty)
     {
         var boardFromUpload = new GameBoard();
         parseInitial(data);
