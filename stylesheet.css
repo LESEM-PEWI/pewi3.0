@@ -24,11 +24,11 @@ font-family: 'Amatic SC', cursive;
 
 /* css variable declaration */
 :root {
-	--button-font-size: 3vw;
+	--button-font-size: 2.5vw;
   --font-size: 1vw;
   --title-font-weight: 900;
   --transition-duration: 0.4s;
-	--main-button-height: 3vw;
+	--main-button-height: 2.5vw;
 	--main-button-width: 12vw;
 }
 
@@ -378,10 +378,11 @@ body {
 
 #escapeMenu {
   height: 200px;
-  left: 50%;
-  margin: -100px 0 0 -8vw;
+  left: 42%;
+	top: 7vw;
+  /*margin: -100px 0 0 -8vw;*/
   position: absolute;
-  top: 25%;
+  /*top: 25%;*/
   width: 300px;
 	/*margin: -100px 0 0 -150px;*/
 }
@@ -408,7 +409,8 @@ body {
   background-color: rgba(0, 0, 0, 0);
   border-radius: 6px;
   display: inline-block;
-  height: 0px;
+  height: 0;
+	width: 0;
   overflow: hidden;
   position: relative;
   font-family: 'Amatic SC', cursive;

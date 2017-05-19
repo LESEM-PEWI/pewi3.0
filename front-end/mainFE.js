@@ -163,7 +163,7 @@ function initWorkspace(file) {
 } //end initWorkspace
 
 //animationFrames is the key function involved in webGl
-// here we set up a loop that calls itsef throughout the duration of the activity 
+// here we set up a loop that calls itsef throughout the duration of the activity
 function animationFrames() {
 
     //render animations
@@ -171,7 +171,7 @@ function animationFrames() {
 
         birdAnimation();
         zoomAnimation();
-        
+
         //rain animations (change y position of each raindrop)
         if(rain != null){
             for(var i = 0; i < rain.geometry.vertices.length; i++){
@@ -202,7 +202,7 @@ function animationFrames() {
 
     }); //end request
 
-} //end animationFrames 
+} //end animationFrames
 
 //birdAnimation updates bird and boid positions
 function birdAnimation() {
@@ -252,20 +252,20 @@ function zoomAnimation() {
         camera.updateProjectionMatrix();
 
         zoomFactor = zoomFactor + zoomOutInc;
-        
-        
+
+
         console.log(zoomFactor) ;
-        
+
         if (zoomFactor > 0.8) {
-            
+
          if(zoomFactor >= 1.2){
-           zoomingOutNow = false; 
+           zoomingOutNow = false;
          }
-         
+
          zoomFactor = 1.0;
       }
     }
-    
+
 } //end zoomAnimation
 
 //setupStaticBackground uses the old pewi graphics as a background image
@@ -387,7 +387,7 @@ function switchToUnzoomedView(tile, shouldResetBoard) {
 
     //Record the results of this tile and save to the main map results for this tile.
     //TODO
-    
+
     //Switch back to the full map
     if(shouldResetBoard) switchBoards(boardData[fullBoardBeforeZoom]);
 
@@ -445,7 +445,7 @@ function setupRiver() {
         var holes = [];
         riverCurve.vertices = riverMeshVertices;
 
-        //Create faces between the vertices on the catmullRomCurves 
+        //Create faces between the vertices on the catmullRomCurves
         for (var i = 0; i < riverCurve.vertices.length - curve1geo.vertices.length - 1; i++) {
             riverCurve.faces.push(new THREE.Face3(i, i + 1, i + curve1geo.vertices.length));
             riverCurve.faces.push(new THREE.Face3(i + curve1geo.vertices.length, i + curve1geo.vertices.length + 1, i + 1));
@@ -487,15 +487,16 @@ function setupHighlight() {
 
 //expand or collapse the div holding tools for confirming escape to main menu
 function confirmEscape() {
-    //if the div is not expanded, then expand 
+    //if the div is not expanded, then expand
     //else if expanded, then collapse it
-    if (document.getElementById('confirmEscape').style.height != "300px") {
+    if (document.getElementById('confirmEscape').style.height != "20vw") {
         document.getElementById('exitToMenuButton').style.backgroundColor = "#003d4d";
         document.getElementById('optionsButton').style.opacity = 0;
         document.getElementById('directoryButton').style.opacity = 0;
         document.getElementById('optionsButton').onclick = function() {};
         document.getElementById('directoryButton').onclick = function() {};
-        document.getElementById('confirmEscape').style.height = "300px";
+        document.getElementById('confirmEscape').style.height = "20vw";
+        document.getElementById('confirmEscape').style.width = "13.2vw";
     }
     else {
         document.getElementById('exitToMenuButton').style.backgroundColor = "#40a4df";
@@ -512,12 +513,13 @@ function confirmEscape() {
         document.getElementById('optionsButton').style.opacity = 1;
         document.getElementById('directoryButton').style.opacity = 1;
         document.getElementById('confirmEscape').style.height = "0px";
+        document.getElementById('confirmEscape').style.width = "0px";
     }
 } //end toggleEscape
 
 //showMainMenu uses the esc key to return to the startup screen
 function showMainMenu() {
-    
+
     //show loading animation and startup page
     document.getElementById('loading').style.display = "block";
     document.getElementById('startUpFrame').contentWindow.recallMain();
@@ -527,7 +529,7 @@ function showMainMenu() {
 
         document.getElementById('startupSequence').style.display = "block";
 
-        //reset sandbox/level to original settings   
+        //reset sandbox/level to original settings
         if(zoomedIn) switchToUnzoomedView(1,false);
         previousHover = null;
         currentYear = 1;
@@ -552,28 +554,28 @@ function showMainMenu() {
 
         document.getElementById('page').style.visibility = "hidden";
     }, 1000);
-    
+
 } //end showMainMenu
 
 //makeItRain -- add some precipitation to PEWI
 function makeItRain(numberOfRaindrops) {
-    
+
     //create geometry and material for raindrops
     var rainGeometry = new THREE.Geometry();
     var rainMaterial = new THREE.PointsMaterial({blending: THREE.AdditiveBlending, color: 0x40a4df, map: rainTexture, opacity: 0.5, size: 2, sizeAttenuation:true, transparent: true});
-    
+
     //for each raindrop to create randomly assign a position within the map boundaries
     for (var i = 0; i < numberOfRaindrops; i++) {
-        
+
         //determine maximum dimensions of the current board
         var maxWidth = boardData[currentBoard].width;
         var maxHeight = boardData[currentBoard].height;
-    
+
         //x range of board
         var xRange = Math.abs(1 * tileWidth - (tileWidth * maxWidth) / 2) + Math.abs(maxWidth * tileWidth - (tileWidth * maxWidth) / 2);
         //z range of board
         var zRange = Math.abs(1 * tileHeight - (tileHeight * maxHeight) / 2) + Math.abs(maxHeight * tileHeight - (tileHeight * maxHeight) / 2);
-        
+
         //add a raindrop as a vertex in the rain object
         var raindrop = new THREE.Vector3(
             Math.random() * xRange - xRange / 2,
@@ -583,10 +585,10 @@ function makeItRain(numberOfRaindrops) {
         raindrop.speed = Math.random() + 2;
         rainGeometry.vertices.push(raindrop);
     }
-    
+
     //create the rain object and add to the scene
     rain = new THREE.Points(rainGeometry, rainMaterial);
     rain.sortParticles = true;
     scene.add(rain);
-    
+
 } //end makeItRain

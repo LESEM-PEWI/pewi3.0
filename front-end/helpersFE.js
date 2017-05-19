@@ -803,9 +803,9 @@ function onDocumentKeyUp(event) {
 //toggleEscapeFrame displays and hides the div that allows the user to go to the main menu, options, or directory
 function toggleEscapeFrame() {
 
-    if (document.getElementById('confirmEscape').style.height == "300px") {
-        confirmEscape()
-    };
+    if (document.getElementById('confirmEscape').style.height == "20vw") {
+        confirmEscape();
+    }
 
     if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
 
