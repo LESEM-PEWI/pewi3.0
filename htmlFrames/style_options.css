@@ -1,12 +1,14 @@
 /* css variable declaration */
+
 :root {
-  --button-font-size: 2.5vw; /* 20px */
+  --button-font-size: 2.5vw;
+  /* 20px */
   --button-height: 1vw;
-  --button-width: 12vw; /* 250px */
+  --button-width: 12vw;
+  /* 250px */
   --font-size: 1.2vw;
   /*--transition-duration: 0.4s;*/
 }
-
   body {
     background-color: #000000;
   }
