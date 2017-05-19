@@ -2237,7 +2237,7 @@ function addPlayerAndTransition() {
     console.log("Add button was hit");
     var totalPlayersAllowed = 6;
     var nextPlayer = currentPlayer + 1;
-    
+   
     //make next button appear (has some prebuilt functionality for expanded number of years)
     if(currentPlayer < totalPlayersAllowed - 1) {
 
