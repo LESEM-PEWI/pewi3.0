@@ -4,7 +4,7 @@
           mouse, raycaster,
           isShiftDown, modalUp, precip, 
           painter, Totals, river,
-          Results, initData, hoveredOver*/
+          Results, initData, hoveredOver, currentPlayer*/
 
 var currentRow = -1;
 var leftToolConsoleWasOpen;
@@ -766,7 +766,7 @@ function onDocumentKeyDown(event) {
             break;
             //case v - key to record multiplayer fields
         case 86:
-            if (multiplayerAssigningModeOn) endMultiplayerAssignMode();
+            if (multiplayerAssigningModeOn) { resetMultiPlayer(); endMultiplayerAssignMode();}
             break;
             //case esc - view escape menu
         case 27:
@@ -1132,7 +1132,7 @@ function switchConsoleTab(value) {
         document.getElementById('calendarImg').className = "imgSelected";
         document.getElementById('yearsTab').style.display = "block";
     }
-
+    
     //check if the map needs the levels legend displayed
     if (mapIsHighlighted) {
         displayLevels();
@@ -1973,13 +1973,15 @@ function toggleVisibility() {
 
     //reset default off items
     document.getElementById('statFrame').style.display = "none";
-    document.getElementById('year0Button').style.display = "none";
+    //document.getElementById('year0Button').style.display = "none";
     document.getElementById('paintPlayer1').style.display = "none";
     document.getElementById('paintPlayer2').style.display = "none";
     document.getElementById('paintPlayer3').style.display = "none";
     document.getElementById('paintPlayer4').style.display = "none";
     document.getElementById('paintPlayer5').style.display = "none";
     document.getElementById('paintPlayer6').style.display = "none";
+    document.getElementById('playerAddButton').style.display = "none";
+    //currentPlayer=1;
 
 
     //reset default on items
@@ -2028,6 +2030,7 @@ function toggleVisibility() {
                     for (var j = 1; j <= 6; j++) {
                         document.getElementById('paintPlayer' + j).style.display = "inline-block";
                     }
+                    document.getElementById('playerAddButton').style.display= "inline-block";
                     break;
                 default:
                     document.getElementById(arrLines[i]).style.display = "none";
@@ -2152,7 +2155,9 @@ function startOptions() {
 function endMultiplayerAssignMode() {
     //create an iframe, select up to 6 players
     //then downloads
+
     document.getElementById('multiplayer').style.visibility = "visible";
+
 } //end endMultiAssignMode
 
 //hideMultiDownload hides the multiPlayer element
@@ -2227,3 +2232,81 @@ function toggleChangeLandType() {
     clearToChangeLandType = 
       (clearToChangeLandType) ? false : true ;
 } //end toggleChangeLandType
+function addPlayerAndTransition() {
+    
+    console.log("Add button was hit");
+    var totalPlayersAllowed = 6;
+    var nextPlayer = currentPlayer + 1;
+    
+    //make next button appear (has some prebuilt functionality for expanded number of years)
+    if(currentPlayer < totalPlayersAllowed - 1) {
+
+        document.getElementById("paintPlayer" + nextPlayer).className = "playerButton";
+        document.getElementById("player" + nextPlayer + "Image").className = "playerSelected";
+        document.getElementById("player" + nextPlayer + "Image").className = "landSelectorIcon";
+        document.getElementById("player" + nextPlayer + "Image").style.display = "inline-block";
+
+        
+    }
+    
+    //make last button appear and remove the "+" Button (has some prebuilt functionality for expanded number of years)
+    if(currentPlayer == totalPlayersAllowed - 1) {
+        
+        document.getElementById("paintPlayer6").className = "playerButton";
+        document.getElementById("player6Image").className = "playerSelected";
+        document.getElementById("player6Image").style.display = "inline-block";
+        document.getElementById("playerAddButton").style.display = "none";
+
+        
+    }
+    
+    switchPlayerTab(nextPlayer);
+    var debug_arr = new Array();
+    debug_arr = document.getElementsByClassName("playerNotSelected");
+    console.log("Current player %s",debug_arr[0].id);
+    console.log("Next player %s",document.getElementsByClassName("playerSelected")[0].id);
+    transitionToPlayer(nextPlayer);
+    changeSelectedPaintTo(nextPlayer);
+    
+} //end addYearAndTransition
+
+
+//switches between players
+function switchPlayerTab(playerNumberToChangeTo) {
+
+    //get the currently selected year and make it not selected
+    //var elements = document.getElementsByClassName("playerSelected");
+
+    //elements[0].className = "playerNotSelected";
+    document.getElementById("player"+currentPlayer+"Image").className="playerNotSelected";
+    //then toggle on the selected year
+    var playerIdString = "player" + playerNumberToChangeTo + "Image";
+    document.getElementById(playerIdString).className = "playerSelected";
+}
+
+
+
+function transitionToPlayer(playerNumber) {
+
+    currentPlayer = playerNumber;
+    console.log("Total number of players : %s",currentPlayer);
+
+   
+
+   // refreshBoard();
+} //end transitionToYear
+function resetMultiPlayer()
+{
+currentPlayer=1;
+document.getElementById("player1Image").style.display="inline-block";
+document.getElementById("paintPlayer1").className = "playerButton";
+document.getElementById("playerAddButton").style.display="inline-block";
+for(var i = 2; i <= 6; i++)
+{
+document.getElementById("player"+i+"Image").style.display="none";
+document.getElementById("paintPlayer"+i).className = "playerButtonHidden";
+
+
+}
+}
+
