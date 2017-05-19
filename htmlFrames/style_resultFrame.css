@@ -1,6 +1,6 @@
   /* css variable declaration */
 
-  :root {
+   :root {
     --font-size: 1.5vw;
     --tab-image-length: 2vw;
     --tab-height: 2vw;
@@ -46,14 +46,11 @@
   }
   /** Main page styling **/
 
-  .tab img,
-  .tabSelected img {
+  .tab img, .tabSelected img {
     width: var(--tab-image-length);
   }
 
-
-  .tab,
-  .tabSelected {
+  .tab, .tabSelected {
     background-color: rgba(40, 44, 42, 0.03);
     box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
     cursor: default;
@@ -138,9 +135,7 @@
     margin-top: 40px;
   }
 
-  .mouseoverInfo,
-  .mouseoverInfoRadarRight,
-  .mouseoverInfoRadarLeft {
+  .mouseoverInfo, .mouseoverInfoRadarRight, .mouseoverInfoRadarLeft {
     position: absolute;
     margin-left: 25px;
     display: none;
@@ -325,9 +320,7 @@
     background-color: rgba(40, 44, 42, 0..1);
   }
 
-  .yearLabel,
-  .precipValue,
-  .precipType {
+  .yearLabel, .precipValue, .precipType {
     font-size: 20;
     font-weight: bold;
     text-align: center;
@@ -408,8 +401,7 @@
     font-size: 12px;
   }
 
-  #yearDownESI,
-  #yearUpESI {
+  #yearDownESI, #yearUpESI {
     margin-left: 40px;
   }
 
@@ -420,8 +412,7 @@
     margin-bottom: 10px;
   }
 
-  #radarContainer,
-  #yieldRadarContainer {
+  #radarContainer, #yieldRadarContainer {
     height: 370px;
     margin-bottom: 15px;
     width: 100%;
@@ -432,8 +423,7 @@
     margin-top: 45px;
   }
 
-  #radarChart,
-  #yieldRadarChart {
+  #radarChart, #yieldRadarChart {
     float: left;
     height: 100%;
     margin: 0px;

@@ -22,15 +22,18 @@ font-family: 'Amatic SC', cursive;
 
 **/
 
+
 /* css variable declaration */
+
 :root {
-	--button-font-size: 3vw;
+  --button-font-size: 3vw;
   --font-size: 1vw;
   --title-font-weight: 900;
   --transition-duration: 0.4s;
-	--main-button-height: 3vw;
-	--main-button-width: 12vw;
+  --main-button-height: 3vw;
+  --main-button-width: 12vw;
 }
+
 
 /******CSS RESET*****/
 
@@ -110,7 +113,7 @@ body {
   /*height:100%;*/
   overflow: hidden;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-	font-size: var(--font-size);
+  font-size: var(--font-size);
 }
 
 
@@ -128,17 +131,17 @@ body {
 }
 
 #page {
-	visibility:hidden;
+  visibility: hidden;
 }
 
 .upperButton, #logoBase {
   position: absolute;
-	top: 0.1vw;
-	height: 3vw;
+  top: 0.1vw;
+  height: 3vw;
   -webkit-transition-duration: 0.1s;
   /* Safari */
   transition-duration: 0.1s;
-	/*top: 5px;*/
+  /*top: 5px;*/
 }
 
 .upperButton:hover {
@@ -162,11 +165,11 @@ body {
 
 .closeButton {
   position: absolute;
-	width: 2.5vw;
+  width: 2.5vw;
   -webkit-transition-duration: 0.1s;
   /* Safari */
   transition-duration: 0.1s;
-	/*height: 40px;
+  /*height: 40px;
 	width: 40px;*/
 }
 
@@ -191,8 +194,6 @@ body {
   right: 26%;
   top: 21%;
 }
-
-
 
 #uploadDownloadFrame {
   height: 200px;
@@ -327,14 +328,14 @@ body {
   font-family: 'Amatic SC', cursive;
   font-size: var(--button-font-size);
   font-weight: bold;
-	height: var(--main-button-height);
-	line-height: 100%;
-	margin-bottom: 20px;
+  height: var(--main-button-height);
+  line-height: 100%;
+  margin-bottom: 20px;
   margin: 0px 0px 20px 0px;
   padding: 5px;
   text-align: center;
-	width: var(--main-button-width);
-	/*font-size: 40px;
+  width: var(--main-button-width);
+  /*font-size: 40px;
 	height: 50px;
 	line-height: 120%;
   width: 200px;*/
@@ -379,7 +380,7 @@ body {
   position: absolute;
   top: 25%;
   width: 300px;
-	/*margin: -100px 0 0 -150px;*/
+  /*margin: -100px 0 0 -150px;*/
 }
 
 @keyframes showEffect {
@@ -411,12 +412,12 @@ body {
   text-align: center;
   line-height: 130%;
   color: #FFFFFF;
-	font-size: calc(var(--button-font-size) - 1vw);
+  font-size: calc(var(--button-font-size) - 1vw);
   font-weight: bold;
-	width: var(--main-button-width);
+  width: var(--main-button-width);
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
-	/*font-size: 30px;
+  /*font-size: 30px;
 	margin-left: -10.6vw;
 	margin-left: -20px;
 	width: 250px;
@@ -432,6 +433,9 @@ body {
 #noConfirmEscape {
   margin: 0 auto;
 }
+
+
+/* style of all the iframe */
 
 #modalUploadFrame, #modalEscapeFrame, #modalCreditsFrame, #modalResultsFrame {
   background-color: rgba(0, 0, 0, 0.7);
