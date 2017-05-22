@@ -91,22 +91,9 @@ tr:hover {
     user-select: none;
     /* Non-prefixed version, */
 }
-.tabSelected *{
-    box-sizing: border-box;
-}
+
 .tabSelected {
     background-color: rgba(0, 0, 0, 0.6);
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    max-width: 100%;
-    height: auto;
-}
-.tabSelected img{
-    max-width: 100%;
-}
-.tabSelected .tab1_bottom{
-    display: block;
 }
 
 .tab:hover {
@@ -507,14 +494,10 @@ text {
     <div style="visibility:hidden;" id="landYear"></div>
     <div style="visibility:hidden;" id="ecoYear"></div>
     
-    <!--Where the tabs on the Results page are located -->
-
     <!-- "Business bars graphic" by Flaticon (http://www.flaticon.com/) with free commercial use -->
-    <div id="tab1" class="tabSelected" onclick="toggleToTab(1);"><img src="./imgs/graphIcon.png" title = "Graphics"> </div> 
-    <!-- Made it so that the titles of the tabs would appear when the mouse hovers over the screen-->
+    <div id="tab1" class="tabSelected" onclick="toggleToTab(1);"><img src="./imgs/graphIcon.png"> </div>
     <!-- "Abacus silhouette" by Freepik (http://www.freepik.com/) with free commercial use -->
-    <div id="tab2" class="tab" onclick="toggleToTab(2);"><img src="./imgs/numbersIcon.png" title = "Tables"> </div>
-    <div id= tabTitle></div>
+    <div id="tab2" class="tab" onclick="toggleToTab(2);"><img src="./imgs/numbersIcon.png"> </div>
     
     <div id="centralContentHolder">
         <div id="innerContainer">
@@ -609,27 +592,6 @@ function toggleToTab(tabNumber) {
         document.getElementById('tab2').className = "tabSelected";
     } //end else if block
 } //end toggleToTab
-
-//Added a new function for hovering over the tabs, similar to startup.html function highlightButtonAndShowInfo
-/*function highlightTab(number, on)
-{
-    if(on){
-      document.getElementById(string).style.backgroundColor = "#7cc1e9" ;
-      var message = "";
-      switch(number){
-        case 1:
-        message = "Graphics";
-        break;
-        case 2:
-        message = "Tables";
-        break;
-      }
-      document.getElementById('tabTitle').innerHTML = message;
-   }
-   else{
-      document.getElementById('tabTitle').innerHTML = "" ;
-   }
-}//end function*/
 
 //toggleYearForLandPlotBy(), examines the current year and the limits
 // up and down arrow are turned off if one or both present the opportunity
