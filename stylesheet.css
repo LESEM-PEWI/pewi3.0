@@ -156,6 +156,10 @@ body {
   right: 42px;
 }
 
+#creditsButton, #uploadDownloadButton {
+	width: 3vw;
+}
+
 #logoBase {
   right: 82px;
 }
