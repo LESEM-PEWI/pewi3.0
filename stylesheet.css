@@ -339,7 +339,7 @@ body {
   font-family: 'Amatic SC', cursive;
   font-size: var(--button-font-size);
   font-weight: bold;
-	height: var(--main-button-height);
+	/*height: var(--main-button-height);*/
 	line-height: 100%;
 	margin-bottom: 20px;
   margin: 0px 0px 20px 0px;
@@ -427,7 +427,9 @@ body {
   color: #FFFFFF;
 	font-size: calc(var(--button-font-size) - 1vw);
   font-weight: bold;
-	width: var(--main-button-width);
+	/*width: var(--main-button-width);*/
+	width: 13.2vw;
+	left: -0.5vw;
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
 	/*font-size: 30px;

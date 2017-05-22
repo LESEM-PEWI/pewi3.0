@@ -27,8 +27,9 @@
   }
 
   #exitOptionsButton {
-   margin-top: 50px;
-   margin-left: 45px;
+    margin-left: 5%;
+   margin-top: 5%;
+   width: 12vw;
   }
 
   #optionsMainHolder {

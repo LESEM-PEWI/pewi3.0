@@ -1,6 +1,6 @@
 //global variables in the codex frame
 var dataHolder ; //keeps track of individual properties for each element
-var elementNum ; 
+var elementNum ;
 var elementHeight; //array with the current height of each section
 
 //initialize the codex by calling main setup file
@@ -22,7 +22,7 @@ function init() {
 //parse through the data lines and create the corresponding elements
 //  also keep track of element numbers so that height can be correctly established
 function setUpCodexData(data){
-  
+
     var strRawContents = data;
     //split based on escape chars
     while (strRawContents.indexOf("\r") >= 0)
@@ -37,19 +37,20 @@ function setUpCodexData(data){
     elementNum = Array(arrLines.length) ;
     elementHeight = Array(arrLines.length) ;
 
-    var padding = 20 ; //increase by 20 each sub category
+    // var padding = 20 ; //increase by 20 each sub category
+    var padding = 6 ; //increase by 20 each sub category
     var i = 0 ;
     var tempElementHolder = [0,0,0,0,0,0,0,0,0];
     var tempIndexHolder = [0,0,0,0,0,0,0,0,0,0];
     var current = -1;
-    
+
     //for each line in the file, we sort and create corresponding elements
     while(i<arrLines.length){
-        
+
         //see what's up with the first character of the line
         //this allows dataset creator a (very) wide discretion over elements and subElements
         var char = arrLines[i][0] ;
-    
+
         switch(char){
             //if '#' then element is a header (with subHolder and subElements)
             //treat it as such
@@ -59,12 +60,13 @@ function setUpCodexData(data){
                 //since this is a header, we expect child elements, add an expandible div
                 tableString += "<div id='" + i + "sub' class='subHolder'>" ;
                 //all of the sub elements should now be tabbed, thus increase padding variable (for left pad)
-                padding += 20 ;
-                
+                // padding += 20 ;
+                padding += 6 ;
+
                 //----This code here a tiny bit convoluted, but pragmatic...
                 //----basically the goal is to keep track of if we're inside a header
                 //------so that both child elements and nested headers get accounted for
-                
+
                 //change the current index of the current header to which we are adding
                 current += 1 ;
                 tempIndexHolder[current] = i ;
@@ -72,13 +74,13 @@ function setUpCodexData(data){
                 if(current>0){
                     tempElementHolder[current - 1] += 1 ;
                 }
-               
+
                 //-----
-                
+
                 //since we dealt with both 2 lines following, increment accordingly and move on
                 i += 4 ;
                 break;
-                
+
             //if '@' then element is a subElement
             //sub elements are basically headers, but have 2 important distinctions
             // 1) they cannot have child elements themselves
@@ -88,16 +90,16 @@ function setUpCodexData(data){
                 tableString += establishElement(i,arrLines[i],arrLines[i+1],arrLines[i+2],arrLines[i+3],padding);
                 //the current header gets another element
                 tempElementHolder[current] += 1 ;
-                
+
                 //since we've accounted for 3 lines, let's not deal with them again
                 i += 4 ;
                 break ;
-                
+
             //if '$' then a nested subdivision is ended
             //this is important so that the program can distinguish (and not guess)
             //  if headers are nested, and to which headers they belong
             case '$':
-                
+
                 //keep track of how many child elements were added to the current header
                 //  this is a bit recursive as it saves upward once we hit the deepest element
                 elementNum[tempIndexHolder[current]] = tempElementHolder[current] ;
@@ -105,16 +107,17 @@ function setUpCodexData(data){
                 current -= 1 ;
                 //end subholder
                 tableString += '</div>' ;
-                padding -= 20 ;
+                // padding -= 20 ;
+                padding -= 6 ;
                 i += 1 ;
                 break ;
-                
+
             //if a blank line or something wrong was left accidentally, we'll get over it
             default :
                 i+= 1;
         }//end switch
     }//end while
-  
+
     document.getElementById('indexHolder').innerHTML = tableString ;
     estalishHeights() ;
 }//end function setUpCodexData()
@@ -123,23 +126,23 @@ function setUpCodexData(data){
 //this function creates the html string needed for all header elements
 // it also stores the relevant data in dataHolder
 function establishHeader(i, line1, line2, line3, line4, padding){
-    
+
     //html part----
-    
+
     //generic string to which we can add
     var tempString = "" ;
-    tempString += "<div id='" + i + "' class='groupHeader' onmouseover='this.focus()' onclick='arrangeContent(" + i + "); toggleChildElements(" + i + ");' style='padding-left:" + padding + "px;' >" ;
-    //add the whole text, minus the indicator symbol and following space     
+    tempString += "<div id='" + i + "' class='groupHeader' onmouseover='this.focus()' onclick='arrangeContent(" + i + "); toggleChildElements(" + i + ");' style='padding-left:" + padding + "%;' >" ;
+    //add the whole text, minus the indicator symbol and following space
     tempString += line1.slice(2) ;
-    tempString += "</div>" ; 
-    
+    tempString += "</div>" ;
+
     //data linkage part---
-    
+
     dataHolder[i] = {} ;
     dataHolder[i].square1 = line2 ;
     dataHolder[i].square2 = line3 ;
     dataHolder[i].hasMore = line4 ;
-    
+
     if(dataHolder[i].hasMore){
      var temp = line2.split(" + ") ;
      //really the creator of the .dat file should sanitize input,
@@ -152,28 +155,28 @@ function establishHeader(i, line1, line2, line3, line4, padding){
          dataHolder[i].hasMore = 0 ;
      }
     }
-    
+
     dataHolder[i].title = line1.slice(3) ;
-    
+
     return tempString ;
 }//end establishHeader()
 
 //this function creates the html string needed for all child elements
 // it also stores the relevant data in dataHolder
 function establishElement(i, line1, line2, line3, line4, padding){
-    
+
     //html----
     var tempString = "";
-    tempString += "<div id='" + i + "' class='groupElement' onclick='arrangeContent(" + i + ");' style='padding-left:" + padding + "px;' >" ;
+    tempString += "<div id='" + i + "' class='groupElement' onclick='arrangeContent(" + i + ");' style='padding-left:" + padding + "%;' >" ;
     tempString += line1.slice(2) ;
-    tempString += "</div>" ; 
-             
+    tempString += "</div>" ;
+
     //data linkage----
     dataHolder[i] = {} ;
     dataHolder[i].square1 = line2 ;
     dataHolder[i].square2 = line3 ;
     dataHolder[i].hasMore = line4 ;
-    
+
     if(dataHolder[i].hasMore){
      var temp = line2.split(" + ") ;
      //really the creator of the .dat file should sanitize input,
@@ -186,7 +189,7 @@ function establishElement(i, line1, line2, line3, line4, padding){
          dataHolder[i].hasMore = 0 ;
      }
     }
-    
+
     dataHolder[i].title = line1.slice(3) ;
 
     return tempString ;
@@ -195,32 +198,34 @@ function establishElement(i, line1, line2, line3, line4, padding){
 //rather self-explanator, this function creates an array of heights for all of the headers
 // based on the number of child elements they have
 function estalishHeights() {
-    
+
     //35 px for each element
-    heightConstant = 35 ;
-    
+    // heightConstant = 35 ;
+    heightConstant = 6;
+
     for(var i=0; i < elementNum.length; i++){
         if(elementNum[i]){
             elementHeight[i] = heightConstant * elementNum[i] ;
         }//end if
     }//end for
-}//end establishHeights() 
+}//end establishHeights()
 
 
-//this function is in theory simple, all we need to do is display the child element associated with 
+//this function is in theory simple, all we need to do is display the child element associated with
 //  a header element.
 // Unfortunately, a second part is resizing all open divs appropriately, since opening a nested div
 //  requires its parent to expand as well
 function toggleChildElements(idOfHeader) {
-    
+
     //the sub div is named with the parent id and 'sub' appended
     var childString = idOfHeader + "sub" ;
-    
-    heightString = elementHeight[idOfHeader] + "px" ;
+
+    // heightString = elementHeight[idOfHeader] + "px" ;
+    heightString = elementHeight[idOfHeader] + "%" ;
 
     //if it is an unopened group Header, open it
     if(document.getElementById(idOfHeader).className == "groupHeader") {
-        
+
         //change styling accordingly
         document.getElementById(childString).style.visibility = "visible" ;
         document.getElementById(childString).style.height = heightString ;
@@ -256,23 +261,23 @@ function arrangeContent(idOfElement) {
    document.getElementById('square1').innerHTML = dataHolder[idOfElement].square1 ;
    document.getElementById('square2frame').src = dataHolder[idOfElement].square2  ;
    document.getElementById('title').innerHTML = dataHolder[idOfElement].title.toUpperCase() ;
-   
 
-   //if element hasMore attribute == 1, then we show the deaper button and assign it functionality   
+
+   //if element hasMore attribute == 1, then we show the deaper button and assign it functionality
    if(dataHolder[idOfElement].hasMore && dataHolder[idOfElement].hasMore == "1"){
        document.getElementById('switchAdvanced').style.display = "block" ;
        document.getElementById('switchAdvanced').className = "switchContentDepth";
-       
+
        document.getElementById('switchGeneral').style.display = "block" ;
        document.getElementById('switchGeneral').className = "switchContentDepthSelected" ;
-       
+
         document.getElementById('switchAdvanced').onclick = function() { showAdvancedDetail(idOfElement) } ;
    }
    else{
        document.getElementById('switchAdvanced').style.display = "none" ;
        document.getElementById('switchGeneral').style.display = "none" ;
    }
-   
+
     //also change the class of the item clicked if it's a subElement
     //note that headers have separate functionality, despite updating rightward squares
     var currentSelectedGroupElements = document.getElementsByClassName('selectedGroupElement');
@@ -280,9 +285,9 @@ function arrangeContent(idOfElement) {
     if(currentSelectedGroupElements.length > 0) {
         currentSelectedGroupElements[0].className = 'groupElement';
     }
-    //select the current element if not already 
+    //select the current element if not already
     if(document.getElementById(idOfElement).className == 'groupElement'){
-        document.getElementById(idOfElement).className = 'selectedGroupElement' ; 
+        document.getElementById(idOfElement).className = 'selectedGroupElement' ;
     }
 }//end function arrangeContent()
 
@@ -293,13 +298,13 @@ function resizeAffectedElements(idOfClickedElement,operationToPerform){
     currentPadding = currentPadding.slice(0,-1);
     currentPadding = currentPadding.slice(0,-1);
     currentPadding = Number(currentPadding) ;
-   
+
    var i = idOfClickedElement - 1;
    var onwards = 1 ;
    //find open group headers above us by going through all of the elements
    //resize them accordingly
    while(i >= 0 && onwards){
-    
+
        //if the element is an open group header
        if(document.getElementById(i) && document.getElementById(i).className == "selectedGroupHeader") {
             //painstakingly get the element padding...
@@ -307,25 +312,26 @@ function resizeAffectedElements(idOfClickedElement,operationToPerform){
             elementPadding = elementPadding.slice(0,-1);
             elementPadding = elementPadding.slice(0,-1);
             elementPadding = Number(elementPadding) ;
-           
+
             //if the element is some parent container, it will have lower padding
             if(elementPadding < currentPadding){
-            
-            //find the container referred to by the open header    
+
+            //find the container referred to by the open header
             var string = document.getElementById((i + "sub")).style.height ;
             string = string.slice(0,-1);
             string = string.slice(0,-1);
-            
+
             //here's where the magic happens, add or subtract the height of current element from parent holder
             if(operationToPerform == 'expand') string = Number(string) + elementHeight[idOfClickedElement]  ;
             if(operationToPerform == 'shrink') string = Number(string) - elementHeight[idOfClickedElement] ;
-            
+
             //update new height
             document.getElementById((i + "sub")).style.height = string + "px" ;
             elementHeight[i] = string ;
             }
-           //let's stop looking if we're at the topmost padding       
-           if(elementPadding == 20) onwards = 0 ;
+           //let's stop looking if we're at the topmost padding
+          //  if(elementPadding == 20) onwards = 0 ;
+           if(elementPadding == 6) onwards = 0 ;
         }//end if
        //cycle through all elements above us
        i -= 1 ;
@@ -348,28 +354,28 @@ function showAdvancedDetail(idOfCurrentElement) {
     var string = dataHolder[idOfCurrentElement].square2 ;
     string = string.slice(0,-5) + "More.html";
     document.getElementById('square2frame').src =  string ;
-    
+
     //change frame content square 1
     document.getElementById('square1').innerHTML = dataHolder[idOfCurrentElement].square1Advanced ;
-    
+
     //change button attributes
     document.getElementById('switchAdvanced').className = "switchContentDepthSelected" ;
     document.getElementById('switchGeneral').className = "switchContentDepth" ;
-    
+
     document.getElementById('switchGeneral').onclick = function() { showLessDetail(idOfCurrentElement) ;} ;
 }//end showAdvancedDetail
 
 //resets element with more general content and button as well
 function showLessDetail(idOfCurrentElement){
-    
+
     //reset square 2
     document.getElementById('square2frame').src = dataHolder[idOfCurrentElement].square2;
     document.getElementById('switchAdvanced').className = "switchContentDepth";
     document.getElementById('switchGeneral').className = "switchContentDepthSelected";
-    
+
     //reset square 1
     document.getElementById('square1').innerHTML = dataHolder[idOfCurrentElement].square1 ;
-    
+
     document.getElementById('switchAdvanced').onclick = function() { showAdvancedDetail(idOfCurrentElement) ;} ;
 }//end showLessDetail
 

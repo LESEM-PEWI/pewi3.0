@@ -496,7 +496,7 @@ function confirmEscape() {
         document.getElementById('optionsButton').onclick = function() {};
         document.getElementById('directoryButton').onclick = function() {};
         document.getElementById('confirmEscape').style.height = "20vw";
-        document.getElementById('confirmEscape').style.width = "13.2vw";
+        // document.getElementById('confirmEscape').style.width = "13.2vw";
     }
     else {
         document.getElementById('exitToMenuButton').style.backgroundColor = "#40a4df";
@@ -513,7 +513,7 @@ function confirmEscape() {
         document.getElementById('optionsButton').style.opacity = 1;
         document.getElementById('directoryButton').style.opacity = 1;
         document.getElementById('confirmEscape').style.height = "0px";
-        document.getElementById('confirmEscape').style.width = "0px";
+        // document.getElementById('confirmEscape').style.width = "0px";
     }
 } //end toggleEscape
 

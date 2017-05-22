@@ -58,7 +58,8 @@ body {
   float: left;
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8', GradientType=0);
   height: 85.7%;
-  margin: 7.1% 5% 7.1% 2.5%;
+  /*margin: 7.1% 5% 7.1% 2.5%;*/
+  margin: 5% 5% 5% 2.5%;
   width: 40%;
   /*
   height: 600px;
@@ -81,7 +82,8 @@ body {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   color: #FFFFFF;
   font-family: 'Amatic SC', cursive;
-  font-size: 38px;
+  /*font-size: 38px;*/
+  font-size: 200%;
   font-weight: bold;
   height: 10%;
   line-height: 90%;
@@ -111,9 +113,10 @@ body {
 .groupHeader, .groupElement, .selectedGroupHeader, .selectedGroupElement {
   color: #FFFFFF;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 20px;
+  /*font-size: 20px;*/
+  font-size: 80%;
   font-weight: bold;
-  height: 5%;
+  /*height: 5%;*/
   padding-top: .8%;
   /*
   height: 30px;
@@ -195,15 +198,17 @@ img {
 #title {
   color: #FFFFFF;
   font-family: 'Amatic SC', cursive;
-  font-size: 35px;
+  /*font-size: 35px;*/
+  font-size: 120%;
   font-weight: 900;
-  height: 5%;
+  height: 5.3%;
   line-height: 130%;
   padding-right: 4%;
   position: absolute;
   text-align: right;
   top: 50.7%;
-  width: 96%;
+  width: 50%;
+  /*width: 96%;*/
   /*
   height: 35px;
   padding-right: 20px;
@@ -229,7 +234,7 @@ img {
 #square2frame {
   border: 0px;
   float: right;
-  height: 41.5%;
+  height: 90%;
   margin-top: 3%;
   padding-right: 2%;
   width: 93%;
@@ -249,14 +254,18 @@ img {
   cursor: default;
   display: none;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 20px;
-  height: 25px;
-  left: 414px;
+  /*font-size: 20px;*/
+  font-size: 76%;
+  /*height: 25px;*/
+  /*left: 414px;*/
+  height: 3.6%;
+  left: 41.4%;
   line-height: 120%;
   position: absolute;
   text-align: center;
   transform: rotate(-90deg);
-  width: 100px;
+  /*width: 100px;*/
+  width: 10%;
 }
 
 .switchContentDepthSelected {
@@ -271,11 +280,13 @@ img {
 }
 
 #switchAdvanced {
-  top: 590px;
+  /*top: 590px;*/
+  top: 86.3%;
 }
 
 #switchGeneral {
-  top: 480px;
+  /*top: 480px;*/
+  top: 67.6%;
 }
 
 .closeButton {
