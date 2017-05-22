@@ -29,6 +29,9 @@ var lastSelectedPainter = 1;
 var paintSwitch = false;
 var undo = false;
 var previous = false;
+var previousOverlay = null;
+var previousTab = null;
+var overlayedToggled = false;
 var inResults = false;
 var inDispLevels = false;
 var birds = [],
@@ -840,11 +843,17 @@ function onDocumentKeyDown(event) {
             toggleEscapeFrame();
             break;
         case 85:
-            if(!inResults && !inDispLevels)
+            if(!inResults && !inDispLevels && !overlayedToggled)
             {
                 revertChanges();
             }
             undo = false;
+            break;
+        case 79:
+            if(previousOverlay!=null)
+            {
+                toggleOverlay();
+            }
             break;
             //no default handler
     } //end switch
@@ -1171,6 +1180,12 @@ function updatePrecip(year) {
 //switchConsoleTab updates the currently selected toolbar on the left
 function switchConsoleTab(value) {
 
+    //Store last tab
+    if(value!=1)
+    {
+        previousTab = value;
+    }
+
     //turn off selected image in tabs
     var element = document.getElementsByClassName("imgSelected");
     element[0].className = "imgNotSelected";
@@ -1268,7 +1283,8 @@ function displayLevels(overlayHighlightType) {
     if (element[0]) element[0].className = 'featureSelectorIcon';
     element = document.getElementsByClassName('levelSelectorIconSelected');
     if (element[0]) element[0].className = 'levelsSelectorIcon';
-
+    //When an overlay is toggled, set toggledOverlay to true
+    overlayedToggled = true;
     //record new highlighting selection
     switch (overlayHighlightType) {
         case 'nitrate':
@@ -1297,6 +1313,12 @@ function displayLevels(overlayHighlightType) {
             break;
     } //end switch
 
+    //save selectionHighlightNumber for quick access via hotkey
+    if(selectionHighlightNumber!=0)
+    {
+        previousOverlay = overlayHighlightType;
+    }
+
     //map is not previously highlighted
     if (!mapIsHighlighted) {
         drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
@@ -1322,6 +1344,22 @@ function displayLevels(overlayHighlightType) {
         } //end else/if group
     } //end else/if mapIsHighlighted
 } //end displayLevels()
+
+//toggleOverlay allows the user to quickly switch between an overlay map and the land type mode
+function toggleOverlay()
+{
+    if(overlayedToggled == false)
+    {
+        switchConsoleTab(previousTab);
+        displayLevels(previousOverlay);
+        overlayedToggled = true;
+    }
+    else
+    {
+        switchConsoleTab(1);
+        overlayedToggled = false;
+    }
+} //end toggleOverlay()
 
 //getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
 function getHighlightColor(highlightType, tileId) {
