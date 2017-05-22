@@ -489,7 +489,28 @@ select {
     margin-top: 5px;
     
 }
-
+/**Styling for index Menu**/
+.indexmenu{
+    background-image: url('./imgs/consoleTexture.png');
+    border: none ;
+    border-radius: 6px;
+    color: #FFFFFF;
+    cursor: default;
+    font-family: 'Amatic SC', cursive;
+    font-size: 30px;
+    font-weight: bold;
+    height:30px;
+    margin-top: 100px;
+    padding :5px;
+    text-align: center;
+    width:100px;
+    position: absolute;
+    background-repeat: repeat;
+    
+}
+.indexmenu:hover{
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8),0 17px 50px 0 rgba(0,0,0,0.6);
+}
 /**results right styling**/
 
 .resultsButton, .resultsButtonRolled {
