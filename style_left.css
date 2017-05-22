@@ -14,6 +14,9 @@
   --transition-duration: 0.4s;
 }
 
+* {
+  box-sizing: border-box;
+}
 
 /**left console buttons or toolbar**/
 
@@ -168,15 +171,33 @@
   /*height: 90%;*/
   left: 0px;
   padding: 4px;
-  width: 90%;
+  width: 100%;
 }
 
 
 /**inner elements of left console**/
 
 /*terrain selector*/
+#painterTab {
+  display: inline-block;
+}
+
+#painterTab-leftcol {
+  width: calc(var(--left-console-width) / 2);
+  display: block;
+  left: 0.5vw;
+  position: absolute;
+}
+
+#painterTab-rightcol {
+  width: calc(var(--left-console-width) / 2);
+  display: block;
+  left: 5vw;
+  position: absolute;
+}
 
 .landSelectorIcon, .landSelectedIcon {
+  display: block;
   height: 2.5vw;
   width: 2.5vw;
   /*min-height: 20px;
@@ -201,7 +222,6 @@
 .landSelectedIcon:hover {
   box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
 }
-
 
 /*precip selector*/
 

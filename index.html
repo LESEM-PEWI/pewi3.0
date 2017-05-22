@@ -113,24 +113,27 @@
     <div id="leftConsole" class="leftConsole" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
       <!-- Land type painter display -->
       <div id="painterTab" class="consoleTab">
+        <div id=painterTab-leftcol>
+          <img id="paint1" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);">
+          <img id="paint3" class="landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);">
+          <img id="paint15" class="landSelectorIcon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);">
+          <img id="paint8" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/grassHay.png" onclick="changeSelectedPaintTo(8);">
+          <img id="paint6" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/permanentPasture.png" onclick="changeSelectedPaintTo(6);">
+          <img id="paint14" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/wetland.png" onclick="changeSelectedPaintTo(14);">
+          <img id="paint11" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);">
+          <img id="paint13" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);">
+        </div>
+        <div id=painterTab-rightcol>
+          <img id="paint2" class="landSelectorIcon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
+          <img id="paint4" class="landSelectorIcon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
+          <img id="paint5" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
+          <img id="paint12" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);">
+          <img id="paint7" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);">
+          <img id="paint9" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);">
+          <img id="paint10" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);">
+        </div>
 
-        <img id="paint1" class="landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);">
-        <img id="paint2" class="landSelectorIcon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
-        <img id="paint3" class="landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);">
-        <img id="paint4" class="landSelectorIcon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
-        <img id="paint15" class="landSelectorIcon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);">
 
-        <img id="paint5" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
-        <img id="paint8" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/grassHay.png" onclick="changeSelectedPaintTo(8);">
-        <img id="paint12" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);">
-        <img id="paint6" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/permanentPasture.png" onclick="changeSelectedPaintTo(6);">
-        <img id="paint7" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);">
-
-        <img id="paint14" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/wetland.png" onclick="changeSelectedPaintTo(14);">
-        <img id="paint9" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);">
-        <img id="paint11" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);">
-        <img id="paint10" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);">
-        <img id="paint13" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);">
 
         <img id="paintPlayer1" style="display:none;" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/player1.png" onclick="changeSelectedPaintTo(1)">
         <img id="paintPlayer2" style="display:none;" class="landSelectorIcon" class="landSelectorIcon" src="./imgs/player2.png" onclick="changeSelectedPaintTo(2)">
