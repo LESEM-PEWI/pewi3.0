@@ -1367,18 +1367,18 @@ function getHighlightColor(highlightType, tileId) {
     //erosion highlight color indicies
     if (highlightType == "erosion") {
         //subtract 1, as arrays index from 0
-        return (Totals.grossErosionSeverity[currentYear][tileId] - 1);
+        return (Totals.grossErosionSeverity[currentYear][tileId] + 35);
     }
     //nitrite highlight color indicies
     else if (highlightType == "nitrate") {
 
         var nitrateConcentration = Totals.nitrateContribution[currentYear][tileId];
 
-        if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return 0;
-        else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return 1;
-        else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return 2;
-        else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return 3;
-        else if (nitrateConcentration > 0.25) return 4;
+        if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return 18;
+        else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return 8;
+        else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return 9;
+        else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return 31;
+        else if (nitrateConcentration > 0.25) return 26;
 
     }
     //phosphorus highlight color indicies
@@ -1410,12 +1410,13 @@ function getHighlightColor(highlightType, tileId) {
     else if (highlightType == "wetland") {
 
         if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
-            return 9;
+            return 26;
         }
         else {
-            return 5;
+            return 41;
         }
     }
+     // loader
     //subwatershed highlight color indicies
     else if (highlightType == "subwatershed") {
 
