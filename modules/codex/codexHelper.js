@@ -326,7 +326,8 @@ function resizeAffectedElements(idOfClickedElement,operationToPerform){
             if(operationToPerform == 'shrink') string = Number(string) - elementHeight[idOfClickedElement] ;
 
             //update new height
-            document.getElementById((i + "sub")).style.height = string + "px" ;
+            // document.getElementById((i + "sub")).style.height = string + "px" ;
+            document.getElementById((i + "sub")).style.height = string + "%" ;
             elementHeight[i] = string ;
             }
            //let's stop looking if we're at the topmost padding
