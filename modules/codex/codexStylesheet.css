@@ -83,7 +83,8 @@ body {
   color: #FFFFFF;
   font-family: 'Amatic SC', cursive;
   /*font-size: 38px;*/
-  font-size: 200%;
+  /*font-size: 200%;*/
+  font-size: 9vmin;
   font-weight: bold;
   height: 10%;
   line-height: 90%;
@@ -114,10 +115,13 @@ body {
   color: #FFFFFF;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   /*font-size: 20px;*/
-  font-size: 80%;
+  /*font-size: 80%;*/
+  font-size: 3.3vmin;
   font-weight: bold;
+  height: 2.5vw;
+  padding-top: 0.2vw;
   /*height: 5%;*/
-  padding-top: .8%;
+  /*padding-top: .8%;*/
   /*
   height: 30px;
   padding-top: 5px;
