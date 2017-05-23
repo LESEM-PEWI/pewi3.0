@@ -172,28 +172,7 @@ body {
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
-.tabSelected{
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
-.tabSelected .tab1text{
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    
-    position: absolute;
-    z-index: 1;
-    top: -5px;
-    right: 105%;
-}
-.tab:hover .tab1text{
-    visibility: visible;
-}
+
 
 #toolsButton {
     top: 150px;
