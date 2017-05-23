@@ -311,7 +311,6 @@ function resizeAffectedElements(idOfClickedElement, operationToPerform) {
       var elementPadding = document.getElementById(i).style.paddingLeft;
       // slice off "%"
       elementPadding = elementPadding.slice(0, -1);
-      // elementPadding = elementPadding.slice(0, -1);
       elementPadding = Number(elementPadding);
 
       //if the element is some parent container, it will have lower padding
