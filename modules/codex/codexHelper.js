@@ -294,8 +294,9 @@ function arrangeContent(idOfElement) {
 function resizeAffectedElements(idOfClickedElement, operationToPerform) {
   //let's judge where elements are by their padding
   var currentPadding = document.getElementById(idOfClickedElement).style.paddingLeft;
+  //slice off "%"
   currentPadding = currentPadding.slice(0, -1);
-  currentPadding = currentPadding.slice(0, -1);
+  // currentPadding = currentPadding.slice(0, -1);
   currentPadding = Number(currentPadding);
 
   var i = idOfClickedElement - 1;
@@ -308,8 +309,9 @@ function resizeAffectedElements(idOfClickedElement, operationToPerform) {
     if (document.getElementById(i) && document.getElementById(i).className == "selectedGroupHeader") {
       //painstakingly get the element padding...
       var elementPadding = document.getElementById(i).style.paddingLeft;
+      // slice off "%"
       elementPadding = elementPadding.slice(0, -1);
-      elementPadding = elementPadding.slice(0, -1);
+      // elementPadding = elementPadding.slice(0, -1);
       elementPadding = Number(elementPadding);
 
       //if the element is some parent container, it will have lower padding
@@ -317,6 +319,7 @@ function resizeAffectedElements(idOfClickedElement, operationToPerform) {
 
         //find the container referred to by the open header
         var string = document.getElementById((i + "sub")).style.height;
+        // slice off "vw"
         string = string.slice(0, -1);
         string = string.slice(0, -1);
 
