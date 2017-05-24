@@ -24,7 +24,7 @@ var levelSpecs = {
 
 var levelGlobal = 0;
 var lastLevel = 0;
-
+var originalDiv;
 var levelContainer = [];
 
 //loadLevel is triggered by clicking a level button on the html page
@@ -45,6 +45,7 @@ function loadLevel(level){
         //sandbox
         case 0:
             levelGlobal = 0 ;
+            multiplayerExit();
             initWorkspace('./data.csv');            
             if(achievedAllLevels){updatePopup("Congratulations! You made it through all the levels. Try out your newfound knowledge in Sandbox mode!"); setTimeout(function() {togglePopupDisplay();}, 5000);}
             else{ updatePopup("Welcome to Sandbox Mode! <br><br> In the sandbox you can play freely, without the limits imposed by specific exercises and levels."); setTimeout(function() {togglePopupDisplay();}, 5000);}
@@ -52,12 +53,15 @@ function loadLevel(level){
         //multiplayer assigning mode
         case -1:
             multiplayerAssigningModeOn = true ;
+            multiplayerMode();
             levelGlobal = 1 ;
             loadLevelDetails("./levels/specs/multiplayerAssign.txt");
             initWorkspace('./data.csv') ;
             break;
         //generic loading for levels
         default:
+
+            //multiplayerExit();
             levelGlobal = level;
             loadLevelDetails("./levels/specs/" + getFileForExercise(level));
             initWorkspace('./data.csv');
