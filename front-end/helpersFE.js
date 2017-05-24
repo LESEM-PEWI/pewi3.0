@@ -2494,7 +2494,7 @@ function multiplayerMode()
    // document.getElementById('levelsImg').style.display="none";
    //document.getElementById('levelsImg').onclick="";
   // document.getElementById("levelsTab").style.display="none";
-  
+                document.getElementById("message").style.display="block";
             document.getElementById("player1Image").style.display="inline-block";
             document.getElementById("paintPlayer1").className = "playerButton";
             document.getElementById("playerAddButton").style.display="inline-block";
@@ -2513,6 +2513,7 @@ function multiplayerExit()
     document.getElementById("yearButton").style.display="block";
     document.getElementById("playerResetImage").style.display="none";
     //resetMultiPlayer();
+    document.getElementById("message").style.display="none";
     multiplayerAssigningModeOn=false;
     //boardData[currentBoard].updateBoard();
 

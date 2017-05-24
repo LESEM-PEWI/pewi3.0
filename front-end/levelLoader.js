@@ -53,6 +53,7 @@ function loadLevel(level){
         //multiplayer assigning mode
         case -1:
             multiplayerAssigningModeOn = true ;
+
             multiplayerMode();
             levelGlobal = 1 ;
             loadLevelDetails("./levels/specs/multiplayerAssign.txt");
@@ -61,7 +62,7 @@ function loadLevel(level){
         //generic loading for levels
         default:
 
-            //multiplayerExit();
+            multiplayerExit();
             levelGlobal = level;
             loadLevelDetails("./levels/specs/" + getFileForExercise(level));
             initWorkspace('./data.csv');
