@@ -29,6 +29,11 @@ var lastSelectedPainter = 1;
 var paintSwitch = false;
 var undo = false;
 var previous = false;
+
+var previousOverlay = null;
+var previousTab = null;
+var overlayedToggled = false;
+
 var inResults = false;
 var inDispLevels = false;
 var birds = [],
@@ -840,12 +845,22 @@ function onDocumentKeyDown(event) {
             toggleEscapeFrame();
             break;
         case 85:
-            if(!inResults && !inDispLevels)
+
+            if(!inResults && !inDispLevels && !overlayedToggled)
+
             {
                 revertChanges();
             }
             undo = false;
             break;
+
+        case 79:
+            if(previousOverlay!=null)
+            {
+                toggleOverlay();
+            }
+            break;
+
             //no default handler
     } //end switch
 } //end onDocumentKeyDown
@@ -1171,6 +1186,12 @@ function updatePrecip(year) {
 //switchConsoleTab updates the currently selected toolbar on the left
 function switchConsoleTab(value) {
 
+    //Store last tab
+    if(value!=1)
+    {
+        previousTab = value;
+    }
+
     //turn off selected image in tabs
     var element = document.getElementsByClassName("imgSelected");
     element[0].className = "imgNotSelected";
@@ -1268,7 +1289,8 @@ function displayLevels(overlayHighlightType) {
     if (element[0]) element[0].className = 'featureSelectorIcon';
     element = document.getElementsByClassName('levelSelectorIconSelected');
     if (element[0]) element[0].className = 'levelsSelectorIcon';
-
+    //When an overlay is toggled, set toggledOverlay to true
+    overlayedToggled = true;
     //record new highlighting selection
     switch (overlayHighlightType) {
         case 'nitrate':
@@ -1297,6 +1319,12 @@ function displayLevels(overlayHighlightType) {
             break;
     } //end switch
 
+    //save selectionHighlightNumber for quick access via hotkey
+    if(selectionHighlightNumber!=0)
+    {
+        previousOverlay = overlayHighlightType;
+    }
+
     //map is not previously highlighted
     if (!mapIsHighlighted) {
         drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
@@ -1323,24 +1351,40 @@ function displayLevels(overlayHighlightType) {
     } //end else/if mapIsHighlighted
 } //end displayLevels()
 
+//toggleOverlay allows the user to quickly switch between an overlay map and the land type mode
+function toggleOverlay()
+{
+    if(overlayedToggled == false)
+    {
+        switchConsoleTab(previousTab);
+        displayLevels(previousOverlay);
+        overlayedToggled = true;
+    }
+    else
+    {
+        switchConsoleTab(1);
+        overlayedToggled = false;
+    }
+} //end toggleOverlay()
+
 //getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
 function getHighlightColor(highlightType, tileId) {
 
     //erosion highlight color indicies
     if (highlightType == "erosion") {
         //subtract 1, as arrays index from 0
-        return (Totals.grossErosionSeverity[currentYear][tileId] - 1);
+        return (Totals.grossErosionSeverity[currentYear][tileId] + 35);
     }
     //nitrite highlight color indicies
     else if (highlightType == "nitrate") {
 
         var nitrateConcentration = Totals.nitrateContribution[currentYear][tileId];
 
-        if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return 0;
-        else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return 1;
-        else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return 2;
-        else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return 3;
-        else if (nitrateConcentration > 0.25) return 4;
+        if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return 18;
+        else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return 8;
+        else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return 9;
+        else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return 31;
+        else if (nitrateConcentration > 0.25) return 26;
 
     }
     //phosphorus highlight color indicies
@@ -1372,12 +1416,13 @@ function getHighlightColor(highlightType, tileId) {
     else if (highlightType == "wetland") {
 
         if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
-            return 9;
+            return 26;
         }
         else {
-            return 5;
+            return 41;
         }
     }
+     // loader
     //subwatershed highlight color indicies
     else if (highlightType == "subwatershed") {
 
