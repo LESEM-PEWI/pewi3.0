@@ -1,7 +1,9 @@
 /**
- * @Last modified time: 2017-05-24T16:51:06-05:00
+ * @Last modified time: 2017-05-24T17:37:54-05:00
  * modified:
  *  drawD3LandPieChart()
+ *  drawEcosystemRadar()
+ *  drawYieldRadar()
  *   - size: change px to resizable unit (vmax, %)
  */
 
@@ -589,15 +591,15 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   // css styling on results page
   // XXX:
   // var width = 360;
-  var w = Math.round(window.innerWidth*0.38);
+  var w = Math.round(window.innerWidth * 0.38);
   // var legendW = Math.round(w*0.77);
   // var height = 360;
   // var width = Math.min(w, h);
   // var height = Math.min(w, h);
   // var radius = Math.min(width, height) / 2;
-  var h = Math.round(window.innerHeight*0.382);
+  var h = Math.round(window.innerHeight * 0.382);
   var pieChart_length = Math.min(w, h);
-  var legendW = Math.round(pieChart_length*1.06);
+  var legendW = Math.round(pieChart_length * 1.06);
 
   var radius = pieChart_length / 2;
 
@@ -624,7 +626,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
   var arc = d3.arc()
     .outerRadius(radius)
-    .innerRadius(radius*0.55)
+    .innerRadius(radius * 0.55)
     .padAngle(0.01);
 
   var pie = d3.pie()
@@ -716,8 +718,8 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   //sizing for the colored squares and spaces
   // var legendRectSize = 18;
   // var legendRectSize = 0.05*height;
-  var legendRectSize = Math.round(0.05*pieChart_length);
-  var legendSpacing = Math.round(0.22*legendRectSize);
+  var legendRectSize = Math.round(0.05 * pieChart_length);
+  var legendSpacing = Math.round(0.22 * legendRectSize);
   // var legendSpacing = 4;
 
   //add all the elements that have a nonzero count
@@ -1373,8 +1375,8 @@ function drawEcosystemRadar(yearArray) {
   document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart').innerHTML = " ";
   document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend').innerHTML = " ";
 
-  var w = Math.round(window.innerWidth*0.317);
-  var h = Math.round(window.innerHeight*0.319);
+  var w = Math.round(window.innerWidth * 0.317);
+  var h = Math.round(window.innerHeight * 0.319);
   var graphLength = Math.min(w, h);
 
   // var graphWidth = 300;
@@ -1453,9 +1455,9 @@ function drawEcosystemRadar(yearArray) {
   //Now let's create the legend, standard d3 stuff
   // var legendWidth = 355;
   // var legendHeight = 370;
-  var legendWidth = Math.round(window.innerWidth*0.376);
-  var legendHeight = Math.round(window.innerHeight*0.394);
-  var legendLength = Math.round( Math.min(legendWidth, legendHeight) );
+  var legendWidth = Math.round(window.innerWidth * 0.376);
+  var legendHeight = Math.round(window.innerHeight * 0.394);
+  var legendLength = Math.round(Math.min(legendWidth, legendHeight));
 
   var svg = d3.select(radarLegendId)
     .append('svg')
@@ -1470,7 +1472,7 @@ function drawEcosystemRadar(yearArray) {
   svg.append("text")
     .attr("x", 0)
     // .attr("y", -120)
-    .attr("y", Math.round(-0.324*legendHeight) )
+    .attr("y", Math.round(-0.324 * legendHeight))
     .attr("text-anchor", "middle")
     .style("font-size", "1.8vmax")
     .style("font-weight", "bold")
@@ -1480,8 +1482,8 @@ function drawEcosystemRadar(yearArray) {
   // XXX:
   // var legendRectSize = 18;
   // var legendSpacing = 4;
-  var legendRectSize = Math.round(graphLength*0.06);
-  var legendSpacing = Math.round(legendRectSize*0.22);
+  var legendRectSize = Math.round(graphLength * 0.06);
+  var legendSpacing = Math.round(legendRectSize * 0.22);
 
   //add all of the year series to the legend
   var legend = svg.selectAll('.legend')
@@ -1523,8 +1525,8 @@ function drawEcosystemRadar(yearArray) {
       var height = legendRectSize + legendSpacing;
       // var offset = 80;
       // var horz = -117;
-      var offset = Math.round(legendRectSize*4.44);
-      var horz = Math.round(legendRectSize*-6.5);
+      var offset = Math.round(legendRectSize * 4.44);
+      var horz = Math.round(legendRectSize * -6.5);
       var vert = i * height - offset;
       return 'translate(' + horz + ',' + vert + ')';
     });
@@ -1861,8 +1863,11 @@ function drawYieldRadar(yearArray) {
   document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart').innerHTML = " ";
   document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend').innerHTML = " ";
 
-  var graphWidth = 300,
-    graphHeight = 300;
+  var w = Math.round(window.innerWidth * 0.317);
+  var h = Math.round(window.innerHeight * 0.319);
+  var graphLength = Math.min(w, h);
+  // var graphWidth = 300,
+  //   graphHeight = 300;
 
   var dataset = [];
   var legendOptions = [];
@@ -1946,8 +1951,10 @@ function drawYieldRadar(yearArray) {
 
   //option overrides for chart
   var chartConfigOverride = {
-    w: graphWidth,
-    h: graphHeight,
+    // w: graphWidth,
+    // h: graphHeight,
+    w: graphLength,
+    h: graphLength,
     maxValue: 1,
     levels: 5,
     ExtraWidthX: 300
@@ -1961,28 +1968,36 @@ function drawYieldRadar(yearArray) {
   RadarChart.draw(radarId, dataset, chartConfigOverride, 'mouseoverInfoRadarLeft', radarClassElementsString);
 
   //now, time for the legend
-  var legendWidth = 355;
-  var legendHeight = 370;
+  // var legendWidth = 355;
+  // var legendHeight = 370;
+  var legendWidth = Math.round(window.innerWidth * 0.376);
+  var legendHeight = Math.round(window.innerHeight * 0.394);
+  var legendLength = Math.round(Math.min(legendWidth, legendHeight));
 
   var svg = d3.select(radarLegendId)
     .append('svg')
-    .attr('width', legendWidth)
-    .attr('height', legendHeight)
+    // .attr('width', legendWidth)
+    // .attr('height', legendHeight)
+    .attr('width', legendLength)
+    .attr('height', legendLength)
     .append('g')
-    .attr('transform', 'translate(' + (legendWidth / 2) + ',' + (legendHeight / 2) + ')');
+    .attr('transform', 'translate(' + (legendLength / 2) + ',' + (legendLength / 2) + ')');
 
   //add title for legend/chart
   svg.append("text")
     .attr("x", 0)
-    .attr("y", -120)
+    // .attr("y", -120)
+    .attr("y", Math.round(-0.324 * legendHeight))
     .attr("text-anchor", "middle")
     .style("font-size", "1.8vmax")
     .style("font-weight", "bold")
     .text("Annual Yield Results");
 
   //sizing for the colored squares and spaces
-  var legendRectSize = 18;
-  var legendSpacing = 4;
+  // var legendRectSize = 18;
+  // var legendSpacing = 4;
+  var legendRectSize = Math.round(graphLength * 0.06);
+  var legendSpacing = Math.round(legendRectSize * 0.22);
 
   //add all the elements that have a nonzero count
   var legend = svg.selectAll('.legend')
@@ -2022,8 +2037,10 @@ function drawYieldRadar(yearArray) {
     })
     .attr('transform', function(d, i) {
       var height = legendRectSize + legendSpacing;
-      var offset = 80;
-      var horz = -124;
+      // var offset = 80;
+      // var horz = -124;
+      var offset = Math.round(legendRectSize * 4.44);
+      var horz = Math.round(legendRectSize * -1.55);
       var vert = i * height - offset;
       return 'translate(' + horz + ',' + vert + ')';
     });

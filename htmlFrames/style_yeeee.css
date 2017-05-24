@@ -1,7 +1,6 @@
 /**
- * @Last modified time: 2017-05-24T16:54:08-05:00
+ * @Last modified time: 2017-05-24T17:36:33-05:00
  */
-
 
 
 /* css variable declaration */
@@ -26,6 +25,8 @@
 body {
   font-size: var(--font-size);
 }
+
+
 /** Results Table Styling  **/
 
 .resultsTable {
@@ -58,6 +59,8 @@ th {
 tr:hover {
   background-color: rgba(154, 173, 163, 0.5);
 }
+
+
 /** Main page styling **/
 
 .tab img, .tabSelected img {
@@ -119,6 +122,8 @@ tr:hover {
   /*font-size: 20px;*/
   /* affect legend text */
 }
+
+
 /** Graphics elements for first tab **/
 
 .graph-svg-component {
@@ -143,17 +148,11 @@ tr:hover {
   opacity: 0.5;
 }
 
-.chart {
+.graph-section {
   border: 3px solid #6ac5ac;
   height: 40%;
-  margin: 1% auto;
+  margin: 5% auto;
   width: 80%;
-  /*width: 660px;*/
-  /*width: 90vw;*/
-  /*height: 400px;*/
-  /*float: right;*/
-  /*display: inline-block;*/
-  /*margin-top: 40px;*/
 }
 
 .mouseoverInfo, .mouseoverInfoRadarRight, .mouseoverInfoRadarLeft {
@@ -267,7 +266,6 @@ tr:hover {
   position: relative;
   width: 75%;
   /*top: 2%;*/
-
 }
 
 .upArrow, .upArrowDisabled, .downArrow, .downArrowDisabled {
@@ -457,10 +455,11 @@ text {
 }
 
 #precipSection {
-  display: inline-block;
+  height: 18%;
+  /*display: inline-block;
   height: 150px;
   margin-top: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 10px;*/
 }
 
 #radarContainer, #yieldRadarContainer {
@@ -473,8 +472,8 @@ text {
 }
 
 #yieldRadarContainer {
-  margin-bottom: 120px;
-  margin-top: 45px;
+  /*margin-bottom: 120px;
+  margin-top: 45px;*/
 }
 
 #radarChart, #yieldRadarChart {
@@ -495,29 +494,27 @@ text {
 }
 
 #yieldRadarLegend {
+  border: 3px solid #fdc72f;
   display: inline-block;
   float: left;
-  height: 100%;
-  width: 355px;
+  height: 98%;
+  width: 38.3%;
+}
+
+.check {
+  border: 3px solid #FF5511;
+  position: absolute;
+  width: 3%;
 }
 
 #checks {
-  border: 3px solid #FF5511;
   margin-left: 61%;
   margin-top: 8%;
-  position: absolute;
-  width: 3%;
-  /*margin-left: 595px;
-  margin-top: 99px;*/
-  /*width: 20px;*/
 }
 
 #yieldChecks {
-  border: 3px solid #FF5511;
-  margin-top: 100px;
-  margin-left: 145px;
-  position: absolute;
-  width: 20px;
+  margin-left: 9%;
+  margin-top: 8.4%;
 }
 
 .yearCheckbox {

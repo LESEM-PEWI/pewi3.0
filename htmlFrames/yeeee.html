@@ -59,7 +59,7 @@ Cleaned and Prepared - August 2016
 
         <div id="contentsG">
 
-          <div id="landUseTypeContainer"  class="chart">
+          <div id="landUseTypeContainer" class="graph-section">
             <div id="yearHolder">
               <div id="yearArrows">
                 <div id="yearUpLand" onclick="changeLandPieBy(1);" class="upArrow"></div>
@@ -69,8 +69,6 @@ Cleaned and Prepared - August 2016
             </div>
             <div id="landusePieChart"></div>
           </div>
-
-          <!-- <br /> -->
 
           <!-- Aster HUD Deprecated, along with the functions that support it
                                code is left for future implementations, if needed -->
@@ -88,29 +86,27 @@ Cleaned and Prepared - August 2016
                         </div>
                         -->
 
-          <div id="radarContainer" class="chart">
+          <div id="radarContainer" class="graph-section">
             <div id="radarChart"></div>
             <div id="radarLegend"></div>
-            <div id="checks">
-              <input id="checkboxYear1" class="yearCheckbox" checked onclick="radarPlotYearToggle(1);" type="checkbox" >
-              <input id="checkboxYear2" class="yearCheckbox" checked onclick="radarPlotYearToggle(2);" type="checkbox" >
-              <input id="checkboxYear3" class="yearCheckbox" checked onclick="radarPlotYearToggle(3);" type="checkbox" >
+            <div id="checks" class="check">
+              <input id="checkboxYear1" class="yearCheckbox" checked onclick="radarPlotYearToggle(1);" type="checkbox">
+              <input id="checkboxYear2" class="yearCheckbox" checked onclick="radarPlotYearToggle(2);" type="checkbox">
+              <input id="checkboxYear3" class="yearCheckbox" checked onclick="radarPlotYearToggle(3);" type="checkbox">
             </div>
           </div>
 
-          <div id="precipSection">
+          <div id="precipSection" class="graph-section">
             <div id="precipInfo" class="precipInfo"></div>
             <div id="precipTitle"></div>
             <svg id="precipChart"></svg>
           </div>
 
-          <br />
-
-          <div id="yieldRadarContainer" class="chart">
+          <div id="yieldRadarContainer" class="graph-section">
 
             <div id="yieldRadarLegend"></div>
             <div id="yieldRadarChart"></div>
-            <div id="yieldChecks">
+            <div id="yieldChecks" class="check">
               <input type="checkbox" id="yieldCheckboxYear1" checked onclick="yieldRadarPlotYearToggle(1);" class="yearCheckbox">
               <input type="checkbox" id="yieldCheckboxYear2" checked onclick="yieldRadarPlotYearToggle(2);" class="yearCheckbox">
               <input type="checkbox" id="yieldCheckboxYear3" checked onclick="yieldRadarPlotYearToggle(3);" class="yearCheckbox">
