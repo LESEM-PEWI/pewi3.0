@@ -55,21 +55,13 @@ Cleaned and Prepared - August 2016
                 Then recombine them via PEWI’s “Utilities” to view aggregate results.
             </div>
 
-            <div id="multiplayerPlayerNumberParameter" class="mainButton">
-                <div id="title">Assigned Players:</div>
-
-                <div id="playerNumber">6</div>
-                <div id="subtractPlayer" class="plusMinus" style="margin-left:15px; padding-right:14px; font-weight:200;" onclick="changeNumberOfPlayersBy(-1)"><b>&#8595;</b></div>
-                <!-- Pipe -->|
-                <!-- /Pipe -->
-                <div id="addPlayer" class="plusMinus" style="visibility:hidden; font-weight:200;" onclick="changeNumberOfPlayersBy(+1)"><b>&#8593;</b></div>
-            </div>
+            
 
             <div id="multiplayerDownloadButton" onclick="createMultimapDownload();" class="mainButton">Download Multi-Map File</div>
         </div>
         <div id="multiplayerExitButton" style="visibility:hidden;" onclick="exitToMain();" class="mainButton">Return to Start</div>
     </div>
-    
+ <script src="/mainFE.js"></script>   
 <script>
 //page-global zip file
 var zip = new JSZip();
@@ -87,7 +79,7 @@ function addToZip(playerNumber) {
 
 function createMultimapDownload() {
     //get the number of players from the toggle tool
-    var assignedPlayers = Number(document.getElementById('playerNumber').innerHTML);
+    var assignedPlayers = parent.getNumberOfPlayers();// Number(document.getElementById('playerNumber').innerHTML);
     //for each player, add their map to the zip folder
     for (var k = 1; k <= assignedPlayers; k++) {
         addToZip(k);

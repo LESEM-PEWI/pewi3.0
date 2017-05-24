@@ -29,9 +29,11 @@ var lastSelectedPainter = 1;
 var paintSwitch = false;
 var undo = false;
 var previous = false;
+
 var previousOverlay = null;
 var previousTab = null;
 var overlayedToggled = false;
+
 var inResults = false;
 var inDispLevels = false;
 var birds = [],
@@ -835,7 +837,7 @@ function onDocumentKeyDown(event) {
             break;
             //case v - key to record multiplayer fields
         case 86:
-            if (multiplayerAssigningModeOn) { resetMultiPlayer(); endMultiplayerAssignMode();}
+            if (multiplayerAssigningModeOn) {  endMultiplayerAssignMode();}
             break;
             //case esc - view escape menu
         case 27:
@@ -843,18 +845,22 @@ function onDocumentKeyDown(event) {
             toggleEscapeFrame();
             break;
         case 85:
+
             if(!inResults && !inDispLevels && !overlayedToggled)
+
             {
                 revertChanges();
             }
             undo = false;
             break;
+
         case 79:
             if(previousOverlay!=null)
             {
                 toggleOverlay();
             }
             break;
+
             //no default handler
     } //end switch
 } //end onDocumentKeyDown
@@ -1198,8 +1204,10 @@ function switchConsoleTab(value) {
     }
 
     //then we'll turn back on the tab that was switched to, clever eh?
+   
 
     //update the left console tab according to the value selected
+    
     if (value == 1) {
         inDispLevels = false;
         document.getElementById('terrainImg').className = "imgSelected";
@@ -1215,7 +1223,7 @@ function switchConsoleTab(value) {
         document.getElementById('levelsImg').className = "imgSelected";
         document.getElementById('levelsTab').style.display = "block";
     }
-    else if (value == 4) {
+    else if (value == 4 ) {
         inDispLevels = true;
         document.getElementById('featuresImg').className = "imgSelected";
         document.getElementById('featuresTab').style.display = "block";
@@ -1230,6 +1238,7 @@ function switchConsoleTab(value) {
         document.getElementById('calendarImg').className = "imgSelected";
         document.getElementById('yearsTab').style.display = "block";
     }
+
     
     //check if the map needs the levels legend displayed
     if (mapIsHighlighted) {
@@ -2166,6 +2175,7 @@ function toggleVisibility() {
                     immutablePrecip = true;
                     break;
                 case "multiAssign":
+
                     for (var j = 1; j <= 6; j++) {
                         document.getElementById('paintPlayer' + j).style.display = "inline-block";
                     }
@@ -2202,6 +2212,8 @@ function toggleVisibility() {
         }
         //check if the precip shouldn't be changeable
         // if this is the case, then show the precip values, but not in a drop-down selector
+        if(multiplayerAssigningModeOn)
+            immutablePrecip=false;//***************************************************trial
         if (immutablePrecip) {
             document.getElementById(elementIdString).style.display = "none";
 
@@ -2377,7 +2389,7 @@ function addPlayerAndTransition() {
     var totalPlayersAllowed = 6;
     var nextPlayer = currentPlayer + 1;
    
-    //make next button appear (has some prebuilt functionality for expanded number of years)
+    //make next button appear (has some prebuilt functionality for expanded number of players)
     if(currentPlayer < totalPlayersAllowed - 1) {
 
         document.getElementById("paintPlayer" + nextPlayer).className = "playerButton";
@@ -2400,9 +2412,8 @@ function addPlayerAndTransition() {
     }
     
     switchPlayerTab(nextPlayer);
-    var debug_arr = new Array();
-    debug_arr = document.getElementsByClassName("playerNotSelected");
-    console.log("Current player %s",debug_arr[0].id);
+   
+    console.log("Current player %s",document.getElementsByClassName("playerNotSelected")[0].id);
     console.log("Next player %s",document.getElementsByClassName("playerSelected")[0].id);
     transitionToPlayer(nextPlayer);
     changeSelectedPaintTo(nextPlayer);
@@ -2429,23 +2440,87 @@ function transitionToPlayer(playerNumber) {
 
     currentPlayer = playerNumber;
     console.log("Total number of players : %s",currentPlayer);
+    boardData[currentBoard].updateBoard();
+
+    
+
+   
 
    
 
    // refreshBoard();
 } //end transitionToYear
+
+//resetMultiplayer() undos the display-changes made while assigning multiplayers
 function resetMultiPlayer()
 {
 currentPlayer=1;
 document.getElementById("player1Image").style.display="inline-block";
 document.getElementById("paintPlayer1").className = "playerButton";
 document.getElementById("playerAddButton").style.display="inline-block";
+document.getElementById("player1Image").className="playerSelected";
+
+
 for(var i = 2; i <= 6; i++)
 {
 document.getElementById("player"+i+"Image").style.display="none";
 document.getElementById("paintPlayer"+i).className = "playerButtonHidden";
+document.getElementById("player"+i+"Image").className = "playerNotSelected";
+
+}
+parent.loadLevel(-1);
+
+
+//document.getElementById('calendarImg').style.display="block";
+   // document.getElementById('yearsTab').style.display="none";
+    //document.getElementById('levelsImg').style.display="block";
+    //document.getElementById('levelsImg').onclick="";
+  // document.getElementById("levelsTab").style.display="none";
+
+
+   // document.getElementById("hiddenYear").id="yearButton";
+   // document.getElementById("hiddenLevels").id="levelsButton";
+
+//$("tabButtons").replaceWith=originalDiv;
+}
+//multiplayerMode hides all unnecessary options from screen
+function multiplayerMode()
+{
+    if(multiplayerAssigningModeOn)
+    {
+
+   // document.getElementById('calendarImg').style.display="none";
+   // document.getElementById('yearsTab').style.display="none";
+   // document.getElementById('levelsImg').style.display="none";
+   //document.getElementById('levelsImg').onclick="";
+  // document.getElementById("levelsTab").style.display="none";
+                document.getElementById("message").style.display="block";
+            document.getElementById("player1Image").style.display="inline-block";
+            document.getElementById("paintPlayer1").className = "playerButton";
+            document.getElementById("playerAddButton").style.display="inline-block";
+            document.getElementById("player1Image").className="playerSelected";
+     document.getElementById("levelsButton").style.display="none";
+    document.getElementById("yearButton").style.display="none";
+        document.getElementById("playerResetImage").style.display="inline-block";
+
+    }
 
 
 }
+function multiplayerExit()
+{
+ document.getElementById("levelsButton").style.display="block";
+    document.getElementById("yearButton").style.display="block";
+    document.getElementById("playerResetImage").style.display="none";
+    //resetMultiPlayer();
+    document.getElementById("message").style.display="none";
+    multiplayerAssigningModeOn=false;
+    //boardData[currentBoard].updateBoard();
+
+
+}
+function getNumberOfPlayers()
+{
+    return currentPlayer;
 }
 

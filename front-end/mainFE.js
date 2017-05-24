@@ -353,7 +353,7 @@ function setupBoardFromUpload(data) {
     //If file is empty and multiplayer is active, load the level multiplayer level creator
     else
     {
-        parent.loadLevel(-1);
+    parent.loadLevel(-1);
     }
 } //end setupBoardFromUpload
 

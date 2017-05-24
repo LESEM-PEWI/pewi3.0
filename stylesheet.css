@@ -1059,3 +1059,36 @@ select {
     top: 49%;
     width: 250px;
 }
+.playerReset {
+
+    border-radius: 50% ;
+    height:40px;
+    width:40px;
+    margin: 6px ;
+    margin-left:10px;
+    
+
+}
+#playerReset .message{
+
+    border-radius: 50% ;
+    height:40px;
+    width:40px;
+    margin: 20px ;
+    margin-left:40px;
+   
+    
+
+}
+#message {
+    position: static;
+    visibility: hidden;
+    color: white;
+    font-family: 'Amatic SC', cursive;
+    font-size: 40px ;
+}
+#playerResetButton:hover #message{
+    top: 100%;
+    right: 88%;
+    visibility: visible;
+} 
