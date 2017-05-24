@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-24T16:45:47-05:00
+ * @Last modified time: 2017-05-24T16:54:08-05:00
  */
 
 
@@ -146,7 +146,7 @@ tr:hover {
 .chart {
   border: 3px solid #6ac5ac;
   height: 40%;
-  margin: 0 auto;
+  margin: 1% auto;
   width: 80%;
   /*width: 660px;*/
   /*width: 90vw;*/
@@ -464,12 +464,12 @@ text {
 }
 
 #radarContainer, #yieldRadarContainer {
-  border: 3px solid #6ac5ac;
-  /*height: 370px;*/
+  /*border: 3px solid #6ac5ac;
   height: 40%;
   margin-bottom: 15px;
+  width: 80%;*/
+  /*height: 370px;*/
   /*width: 100%;*/
-  width: 80%;
 }
 
 #yieldRadarContainer {
