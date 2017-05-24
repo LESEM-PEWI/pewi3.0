@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-24T12:05:45-05:00
+ * @Last modified time: 2017-05-24T16:51:06-05:00
  * modified:
  *  drawD3LandPieChart()
  *   - size: change px to resizable unit (vmax, %)
@@ -590,13 +590,15 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   // XXX:
   // var width = 360;
   var w = Math.round(window.innerWidth*0.38);
-  var legendW = Math.round(w*0.77);
+  // var legendW = Math.round(w*0.77);
   // var height = 360;
-  var h = Math.round(window.innerHeight*0.382);
-  var pieChart_length = Math.min(w, h);
   // var width = Math.min(w, h);
   // var height = Math.min(w, h);
   // var radius = Math.min(width, height) / 2;
+  var h = Math.round(window.innerHeight*0.382);
+  var pieChart_length = Math.min(w, h);
+  var legendW = Math.round(pieChart_length*1.06);
+
   var radius = pieChart_length / 2;
 
   //colors are assigned from one of the default scaling options
@@ -714,8 +716,9 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   //sizing for the colored squares and spaces
   // var legendRectSize = 18;
   // var legendRectSize = 0.05*height;
-  var legendRectSize = 0.05*pieChart_length;
-  var legendSpacing = 4;
+  var legendRectSize = Math.round(0.05*pieChart_length);
+  var legendSpacing = Math.round(0.22*legendRectSize);
+  // var legendSpacing = 4;
 
   //add all the elements that have a nonzero count
   var legend = svg.selectAll('.legend')
@@ -1224,7 +1227,7 @@ function drawEcosystemIndicatorsDisplay(year) {
     .attr("x", 0)
     .attr("y", 0)
     .attr("text-anchor", "middle")
-    .style("font-size", "25px")
+    .style("font-size", "1.8vmax")
     .style("font-weight", "bold")
     .text("Eco-Scores");
 
@@ -1232,7 +1235,7 @@ function drawEcosystemIndicatorsDisplay(year) {
     .attr("x", 0)
     .attr("y", 25)
     .attr("text-anchor", "middle")
-    .style("font-size", "25px")
+    .style("font-size", "1.8vmax")
     .style("font-weight", "bold")
     .text("Year " + year)
 
@@ -1370,8 +1373,12 @@ function drawEcosystemRadar(yearArray) {
   document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart').innerHTML = " ";
   document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend').innerHTML = " ";
 
-  var graphWidth = 300;
-  var graphHeight = 300;
+  var w = Math.round(window.innerWidth*0.317);
+  var h = Math.round(window.innerHeight*0.319);
+  var graphLength = Math.min(w, h);
+
+  // var graphWidth = 300;
+  // var graphHeight = 300;
 
 
   var dataset = [];
@@ -1427,11 +1434,14 @@ function drawEcosystemRadar(yearArray) {
 
   //Separate configuration options for the radar
   var overrideConfig = {
-    w: graphWidth,
-    h: graphHeight,
+    // w: graphWidth,
+    // h: graphHeight,
+    // ExtraWidthX: 300
+    w: graphLength,
+    h: graphLength,
     maxValue: 1,
     levels: 5,
-    ExtraWidthX: 300
+    ExtraWidthX: graphLength
   }
 
   var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart');
@@ -1441,28 +1451,37 @@ function drawEcosystemRadar(yearArray) {
   RadarChart.draw(radarId, dataset, overrideConfig, 'mouseoverInfoRadarRight', radarClassElementsString);
 
   //Now let's create the legend, standard d3 stuff
-  var legendWidth = 355;
-  var legendHeight = 370;
+  // var legendWidth = 355;
+  // var legendHeight = 370;
+  var legendWidth = Math.round(window.innerWidth*0.376);
+  var legendHeight = Math.round(window.innerHeight*0.394);
+  var legendLength = Math.round( Math.min(legendWidth, legendHeight) );
 
   var svg = d3.select(radarLegendId)
     .append('svg')
-    .attr('width', legendWidth)
-    .attr('height', legendHeight)
+    // .attr('width', legendWidth)
+    // .attr('height', legendHeight)
+    .attr('width', legendLength)
+    .attr('height', legendLength)
     .append('g')
-    .attr('transform', 'translate(' + (legendWidth / 2) + ',' + (legendHeight / 2) + ')');
+    .attr('transform', 'translate(' + (legendLength / 2) + ',' + (legendLength / 2) + ')');
 
   //add legend/chart title
   svg.append("text")
     .attr("x", 0)
-    .attr("y", -120)
+    // .attr("y", -120)
+    .attr("y", Math.round(-0.324*legendHeight) )
     .attr("text-anchor", "middle")
-    .style("font-size", "25px")
+    .style("font-size", "1.8vmax")
     .style("font-weight", "bold")
     .text("Ecosystem Services");
 
   //sizing for the colored squares and spaces
-  var legendRectSize = 18;
-  var legendSpacing = 4;
+  // XXX:
+  // var legendRectSize = 18;
+  // var legendSpacing = 4;
+  var legendRectSize = Math.round(graphLength*0.06);
+  var legendSpacing = Math.round(legendRectSize*0.22);
 
   //add all of the year series to the legend
   var legend = svg.selectAll('.legend')
@@ -1502,8 +1521,10 @@ function drawEcosystemRadar(yearArray) {
     })
     .attr('transform', function(d, i) {
       var height = legendRectSize + legendSpacing;
-      var offset = 80;
-      var horz = -117;
+      // var offset = 80;
+      // var horz = -117;
+      var offset = Math.round(legendRectSize*4.44);
+      var horz = Math.round(legendRectSize*-6.5);
       var vert = i * height - offset;
       return 'translate(' + horz + ',' + vert + ')';
     });
@@ -1955,7 +1976,7 @@ function drawYieldRadar(yearArray) {
     .attr("x", 0)
     .attr("y", -120)
     .attr("text-anchor", "middle")
-    .style("font-size", "25px")
+    .style("font-size", "1.8vmax")
     .style("font-weight", "bold")
     .text("Annual Yield Results");
 

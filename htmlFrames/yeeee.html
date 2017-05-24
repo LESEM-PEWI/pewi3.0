@@ -59,7 +59,7 @@ Cleaned and Prepared - August 2016
 
         <div id="contentsG">
 
-          <div id="landUseTypeContainer">
+          <div id="landUseTypeContainer"  class="chart">
             <div id="yearHolder">
               <div id="yearArrows">
                 <div id="yearUpLand" onclick="changeLandPieBy(1);" class="upArrow"></div>
@@ -67,7 +67,7 @@ Cleaned and Prepared - August 2016
               </div>
               <div id="toggleYearPie" onclick="switchLandPie(1)">To Categories</div>
             </div>
-            <div id="landusePieChart" class="chart"></div>
+            <div id="landusePieChart"></div>
           </div>
 
           <br />
@@ -90,11 +90,15 @@ Cleaned and Prepared - August 2016
 
           <div id="radarContainer" class="chart">
             <div id="radarChart"></div>
-            <div id="radarLegend"></div>
+            <div id="radarLegend">
+              <div id="iddddd">
+
+              </div>
+            </div>
             <div id="checks">
-              <input type="checkbox" id="checkboxYear1" checked onclick="radarPlotYearToggle(1);" class="yearCheckbox">
-              <input type="checkbox" id="checkboxYear2" checked onclick="radarPlotYearToggle(2);" class="yearCheckbox">
-              <input type="checkbox" id="checkboxYear3" checked onclick="radarPlotYearToggle(3);" class="yearCheckbox">
+              <input id="checkboxYear1" class="yearCheckbox" checked onclick="radarPlotYearToggle(1);" type="checkbox" >
+              <input id="checkboxYear2" class="yearCheckbox" checked onclick="radarPlotYearToggle(2);" type="checkbox" >
+              <input id="checkboxYear3" class="yearCheckbox" checked onclick="radarPlotYearToggle(3);" type="checkbox" >
             </div>
           </div>
 
