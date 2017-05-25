@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-05-25T15:58:08-05:00
+ * @Last modified time: 2017-05-25T17:19:46-05:00
  */
 
 
@@ -299,7 +299,8 @@ select {
 
 .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5 {
   height: var(--level-indicator-length);
-  margin: 10px 0px 10px 10px;
+  /*margin: 10px 0px 10px 10px;*/
+  margin: 8%;
   width: var(--level-indicator-length);
 }
 
@@ -330,8 +331,10 @@ select {
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
   border-radius: 12px;
-  top: 305px;
-  width: 135px;
+  top: 21.4vw;
+  width: 8.5vw;
+  /*top: 305px;*/
+  /*width: 135px;*/
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
@@ -339,12 +342,12 @@ select {
 
 .levelDetailsList {
   /*left: 150px;*/
-  left: 12vw;
+  left: 10.4vw;
 }
 
 .levelDetailsListRolled {
-  /*left: -135px;*/
-  left: -10.8vw;
+  left: -135px;
+  /*left: -10.8vw;*/
 }
 
 .levelsText {
@@ -357,7 +360,8 @@ select {
 
 .levelsTextDetails {
   color: #fff;
-  margin-left: 22px;
+  margin-left: 1.8vw;
+  /*margin-left: 22px;*/
   white-space: nowrap;
 }
 
@@ -434,14 +438,16 @@ select {
 }
 
 .physicalDetailsList, .physicalDetailsListRolled {
-  margin: 15px 0px 0px 0px;
-  position: absolute;
-  top: 305px;
-  width: 150px;
   background-color: black;
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
   border-radius: 12px;
+  margin: 15px 0px 0px 0px;
+  position: absolute;
+  top: 21.4vw;
+  width: 15vw;
+  /*top: 305px;
+  width: 150px;*/
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
@@ -449,20 +455,20 @@ select {
 
 .physicalDetailsList {
   /*left: 150px;*/
-  left: 12vw;
+  left: 10.4vw;
 }
 
 .physicalDetailsListRolled {
-  /*left: -210px;*/
-  left: -16.8vw;
+  left: -210px;
+  /*left: -16.8vw;*/
 }
 
 #drainageClassDetailsList {
-  width: 170px;
+  /*width: 170px;*/
 }
 
 #soilClassDetailsList {
-  width: 210px;
+  /*width: 210px;*/
 }
 
 .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
@@ -572,7 +578,7 @@ select {
     margin-left: 17px;
     margin-top: 10px;
   }
-  .yearSelected, .yearNotSelected, .featureSelectorIcon, .levelsSelectorIcon, .levelSelectorIconSelected, .painterIcon, .painterIconSelected {
+  .yearSelected, .yearNotSelected, .featureSelectorIcon, .featureSelectorIconSelected, .levelsSelectorIcon, .levelSelectorIconSelected, .painterIcon, .painterIconSelected {
     height: 15px;
     width: 15px;
   }
@@ -585,5 +591,28 @@ select {
   .levelsText, .featuresText {
     font-size: 6px;
     margin-top: 3px;
+  }
+  .levelDetailsList {
+    left: 62px;
+  }
+  .levelDetailsList, .levelDetailsListRolled{
+    top: 128px;
+    width: 51px;
+  }
+  .physicalDetailsList{
+    left: 62px;
+  }
+  .physicalDetailsList, .physicalDetailsListRolled{
+    top: 128px;
+    width: 89px;
+  }
+  .levelsTextDetails{
+    margin-left: 9px;
+    font-size: 6px;
+  }
+  .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5, .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone, .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8, .soilColor{
+    height: 6px;
+    /*margin: ;*/
+    width: 6px;
   }
 }
