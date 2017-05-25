@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-24T19:07:39-05:00
+ * @Last modified time: 2017-05-24T19:10:37-05:00
  */
 
 
@@ -149,7 +149,7 @@ tr:hover {
 }
 
 .graph-section {
-  border: 3px solid #6ac5ac;
+  /*border: 3px solid #6ac5ac;*/
   height: 40%;
   margin: 5% auto;
   width: 80%;
@@ -232,7 +232,7 @@ tr:hover {
 #landUseTypeContainer {}
 
 #yearHolder {
-  border: 3px solid #fdc72f;
+  /*border: 3px solid #fdc72f;*/
   display: inline-block;
   float: left;
   height: 98%;
@@ -240,7 +240,7 @@ tr:hover {
 }
 
 #landusePieChart {
-  border: 3px solid #d64078;
+  /*border: 3px solid #d64078;*/
   display: inline-block;
   height: 98%;
   position: relative;
@@ -438,14 +438,14 @@ text {
 #yieldRadarContainer {}
 
 #radarChart, #yieldRadarChart {
-  border: 3px solid #d64078;
+  /*border: 3px solid #d64078;*/
   float: left;
   height: 98%;
   width: 60%;
 }
 
 #radarLegend {
-  border: 3px solid #fdc72f;
+  /*border: 3px solid #fdc72f;*/
   display: inline-block;
   float: left;
   height: 98%;
@@ -455,7 +455,7 @@ text {
 }
 
 #yieldRadarLegend {
-  border: 3px solid #fdc72f;
+  /*border: 3px solid #fdc72f;*/
   display: inline-block;
   float: left;
   height: 98%;
@@ -463,7 +463,7 @@ text {
 }
 
 .check {
-  border: 3px solid #FF5511;
+  /*border: 3px solid #FF5511;*/
   position: absolute;
   width: 3%;
 }
