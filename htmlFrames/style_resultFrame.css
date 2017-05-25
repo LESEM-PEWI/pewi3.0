@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-25T11:44:01-05:00
+ * @Last modified time: 2017-05-25T17:33:20-05:00
  */
 
 
@@ -140,7 +140,7 @@ tr:hover {
   /*border: 3px solid #6ac5ac;*/
   height: 40%;
   margin: 5% auto;
-  width: 80%;
+  /*width: 80%;*/
 }
 
 .mouseoverInfo, .mouseoverInfoRadarRight, .mouseoverInfoRadarLeft {
@@ -195,9 +195,9 @@ tr:hover {
 
 #contentsG {
   height: 100%;
-  left: 14%;
+  left: 25%;
   position: absolute;
-  width: 800px;
+  /*width: 800px;*/
   -webkit-touch-callout: none;
   /* iOS Safari */
   -webkit-user-select: none;
@@ -451,13 +451,13 @@ text {
 }
 
 #checks {
-  margin-left: 61%;
-  margin-top: 8%;
+  margin-left: 78%;
+  margin-top: 10.5%;
 }
 
 #yieldChecks {
-  margin-left: 9%;
-  margin-top: 8.4%;
+  margin-left: 10%;
+  margin-top: 10.7%;
 }
 
 .yearCheckbox {
