@@ -1,3 +1,25 @@
+  /* css variable declaration */
+
+   :root {
+    --font-size: 1vw;
+    /* 12px */
+    --legend-font-size: 1.4vw;
+    /* 16px */
+    --class-font-size: 2.1vw;
+    /* 20px */
+    /* 22px */
+    --title-font-size: 3.5vw;
+    /* 25px */
+    --tab-image-length: 2vw;
+    --tab-height: 2vw;
+    --tab-width: 8vw;
+    --title-font-weight: 900;
+    --transition-duration: 0.4s;
+  }
+
+  body {
+    font-size: var(--font-size);
+  }
   /** Results Table Styling  **/
 
   .resultsTable {
@@ -32,19 +54,24 @@
   }
   /** Main page styling **/
 
-  .tab,
-  .tabSelected {
+  .tab img, .tabSelected img {
+    width: var(--tab-image-length);
+  }
+
+  .tab, .tabSelected {
     background-color: rgba(40, 44, 42, 0.03);
     box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
     cursor: default;
     display: inline-block;
     float: left;
-    height: 40px;
+    /*height: 40px;*/
+    height: var(--tab-height);
     line-height: 0%;
     margin: 10px;
     padding: 10px;
     text-align: center;
-    width: 145px;
+    /*width: 145px;*/
+    width: var(--tab-width);
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     -webkit-touch-callout: none;
@@ -81,8 +108,10 @@
   #innerContainer {
     margin: 15px;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    color: #000000;
-    font-size: 20px;
+    /*color: #000000; */
+    /* affect label to the left (To Category) and Wheather */
+    /*font-size: 20px;*/
+    /* affect legend text */
   }
   /** Graphics elements for first tab **/
 
@@ -110,15 +139,14 @@
 
   .chart {
     width: 660px;
-    height: 400px;
+    /*width: 90vw;*/
+    /*height: 400px;*/
     float: right;
     display: inline-block;
     margin-top: 40px;
   }
 
-  .mouseoverInfo,
-  .mouseoverInfoRadarRight,
-  .mouseoverInfoRadarLeft {
+  .mouseoverInfo, .mouseoverInfoRadarRight, .mouseoverInfoRadarLeft {
     position: absolute;
     margin-left: 25px;
     display: none;
@@ -163,28 +191,21 @@
     z-index: 1;
   }
 
-  #yearHolder {
-    margin: 0px;
-    float: left;
-    margin-top: 40px;
-    display: inline-block;
-    width: 140px;
-    height: 400px;
-    font-size: 12px;
-  }
-
   #graphics {
-    margin: 10px;
-    height: 100px;
+    margin: 1%;
+    /*margin: 10px;*/
+    /*height: 100px;*/
   }
 
   #contentsG {
     position: absolute;
-    width: 800px;
+    /*width: 75%;*/
     height: 100%;
-    margin: 0px;
-    margin-left: -400px;
-    left: 50%;
+    width: 800px;
+    /*margin: 0px;*/
+    /*margin-left: -400px;*/
+    /*left: 50%;*/
+    left: 14%;
     -webkit-touch-callout: none;
     /* iOS Safari */
     -webkit-user-select: none;
@@ -199,6 +220,31 @@
     /* Non-prefixed version, currently
                                 not supported by any browser */
   }
+
+  /*#landUseTypeContainer {
+    display: -webkit-flex;
+    display: flex;
+    border: 3px solid #6ac5ac;
+  }*/
+
+  #yearHolder {
+    /*-webkit-flex: 1;
+            flex: 1;*/
+    margin: 0px;
+    float: left;
+    margin-top: 40px;
+    display: inline-block;
+    width: 140px;
+    height: 400px;
+    font-size: 12px;
+    /*border: 3px solid #fdc72f;*/
+  }
+
+  /*#landusePieChart {
+    -webkit-flex: 2;
+            flex: 2;
+    border: 3px solid #d64078;
+  }*/
 
   .upArrow {
     margin-left: 75px;
@@ -269,8 +315,11 @@
   }
 
   #precipChart {
-    float: left;
-    width: 440px;
+    /*float: left;*/
+    /*width: 440px;*/
+    width: 40vw;
+    height: 10vw;
+    ;
     margin: 0px;
     padding: 0px;
     display: inline-block;
@@ -285,9 +334,11 @@
   .precipInfo {
     display: inline-block;
     margin: 0px;
-    float: left;
-    width: 330px;
-    height: 120px;
+    /*float: left;*/
+    /*width: 330px;*/
+    /*height: 120px;*/
+    height: 10vw;
+    width: 22vw;
     background-color: rgba(40, 44, 42, 0..1);
     box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
   }
@@ -296,16 +347,17 @@
     background-image: url("./imgs/precipBack.png");
     color: #000000;
     display: inline-block;
-    float: left;
+    /*float: left;*/
     margin: 0px;
-    width: 30px;
-    height: 120px;
+    width: 3vw;
+    height: 10vw;
+    ;
+    /*width: 30px;*/
+    /*height: 120px;*/
     background-color: rgba(40, 44, 42, 0..1);
   }
 
-  .yearLabel,
-  .precipValue,
-  .precipType {
+  .yearLabel, .precipValue, .precipType {
     font-size: 20;
     font-weight: bold;
     text-align: center;
@@ -314,33 +366,42 @@
   }
 
   .leftPrecipContainer {
-    width: 200px;
-    float: left;
-    height: 100%;
-    display: block;
+    /*width: 200px;*/
+    width: 12vw;
+    /*float: left;*/
+    /*height: 100%;*/
+    display: inline-block;
   }
 
   .precipImg {
-    float: right;
-    margin-right: 15px;
+    /*float: right;*/
+    /*margin-right: 15px;*/
     display: inline-block;
-    height: 100px;
-    margin-top: 10px;
+    /*height: 100px;*/
+    height: 8vw;
+    margin-top: 1.9vw;
+    /*margin-top: 10px;*/
   }
 
   #toggleYearPie {
-    width: 140px;
+    /*width: 140px;*/
     background-color: rgba(40, 44, 42, 0.03);
     box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
-    margin-top: 130px;
-    height: 40px;
-    line-height: 190%;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
     cursor: default;
+    font-size: var(--class-font-size);
+    font-weight: bold;
+    height: 4vw;
+    ;
+    margin-top: 80%;
+    line-height: 200%;
+    text-align: center;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
+    width: 14vw;
+    /*font-size: 20px;*/
+    /*width: 105%;*/
+    /*margin-top: 130px;*/
+    /*height: 40px;*/
   }
 
   #toggleYearPie:hover {
@@ -381,13 +442,13 @@
     margin-top: 40px;
     float: left;
     display: inline-block;
-    width: 120px;
+    width: 16vw;
     height: 400px;
-    font-size: 12px;
+    /*width: 120px;*/
+    /*font-size: 12px;*/
   }
 
-  #yearDownESI,
-  #yearUpESI {
+  #yearDownESI, #yearUpESI {
     margin-left: 40px;
   }
 
@@ -398,8 +459,7 @@
     margin-bottom: 10px;
   }
 
-  #radarContainer,
-  #yieldRadarContainer {
+  #radarContainer, #yieldRadarContainer {
     height: 370px;
     margin-bottom: 15px;
     width: 100%;
@@ -410,8 +470,7 @@
     margin-top: 45px;
   }
 
-  #radarChart,
-  #yieldRadarChart {
+  #radarChart, #yieldRadarChart {
     float: left;
     height: 100%;
     margin: 0px;
