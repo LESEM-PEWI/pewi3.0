@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-24T19:08:47-05:00
+ * @Last modified time: 2017-05-25T09:59:53-05:00
  * modified:
  *  drawD3LandPieChart()
  *  drawEcosystemRadar()
@@ -1447,7 +1447,9 @@ function drawEcosystemRadar(yearArray) {
     h: graphLength,
     maxValue: 1,
     levels: 5,
-    ExtraWidthX: graphLength
+    ExtraWidthX: graphLength,
+    TranslateX: graphLength * 0.487,//95
+    TranslateY: graphLength * 0.154//30
   }
 
   var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart');
@@ -1578,13 +1580,12 @@ var RadarChart = {
       radians: 2 * Math.PI,
       opacityArea: 0.2,
       ToRight: 5,
-      TranslateX: 70,
-      TranslateY: 30,
+      TranslateX: 70,//95
+      TranslateY: 30,//25
       ExtraWidthX: 100,
       ExtraWidthY: 100,
       color: d3.scaleOrdinal(d3.schemeCategory10)
     };
-
     if ('undefined' !== typeof options) {
       for (var i in options) {
         if ('undefined' !== typeof options[i]) {
@@ -1607,8 +1608,8 @@ var RadarChart = {
 
     var g = d3.select(id)
       .append("svg")
-      .attr("width", cfg.w + 250)
-      .attr("height", cfg.h + cfg.ExtraWidthY)
+      .attr("width", cfg.w * 1.97)//384
+      .attr("height", cfg.h * 1.23)//239
       .append("g")
       .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");;
 
@@ -1699,7 +1700,7 @@ var RadarChart = {
         return d
       })
       .style("font-family", "sans-serif")
-      .style("font-size", "16px")
+      // .style("font-size", "16px")
       .attr("text-anchor", "middle")
       .attr("dy", "1.5em")
       .attr("transform", function(d, i) {
@@ -1961,7 +1962,9 @@ function drawYieldRadar(yearArray) {
     h: graphLength,
     maxValue: 1,
     levels: 5,
-    ExtraWidthX: 300
+    ExtraWidthX: 300,
+    TranslateX: graphLength * 0.487,//95
+    TranslateY: graphLength * 0.154//30
   }
 
   //get elements in the child frame
