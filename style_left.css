@@ -1,4 +1,11 @@
+/**
+ * @Date:   2017-05-25T10:59:40-05:00
+ * @Last modified time: 2017-05-25T11:30:23-05:00
+ */
+
+
 /* css variable declaration */
+
 :root {
   --consoleButton-height: 2.81vw;
   --first-consoleButton-top: 15.47vw;
@@ -7,7 +14,7 @@
   --left-console-width: 9.6vw;
   --left-console-button-length: 3vw;
   --left-console-button-image-length: 2vw;
-	--left-console-button-image-margin: 0.5vw;
+  --left-console-button-image-margin: 0.5vw;
   --level-indicator-length: 1vw;
   --selector-icon-length: 2.5vw;
   --title-font-weight: 900;
@@ -18,6 +25,7 @@
   box-sizing: border-box;
 }
 
+
 /**left console buttons or toolbar**/
 
 .consoleButton {
@@ -27,12 +35,10 @@
   border-radius: 0px;
   border-right: 0px solid #F0A61D;
   border-top-right-radius: 0px;
-  /*height: 40px;*/
   height: var(--left-console-button-length);
   position: absolute;
   transition-property: none;
   transition-property: left;
-  /*width: 40px;*/
   width: var(--left-console-button-length);
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
@@ -48,7 +54,6 @@
 }
 
 #toolsButton {
-  /*top: 150px;*/
   top: var(--left-console-top-value);
   background-image: none;
   background-color: rgba(0, 0, 0, 0.7);
@@ -56,12 +61,11 @@
 }
 
 #pick {
-	margin: var(--left-console-button-image-margin);
-	width: var(--left-console-button-image-length);
+  margin: var(--left-console-button-image-margin);
+  width: var(--left-console-button-image-length);
 }
 
 .tabButtons, #toolsButton {
-  /*left: 135px;*/
   left: var(--left-console-width);
   position: absolute;
   -webkit-transition-duration: var(--transition-duration);
@@ -70,7 +74,6 @@
 }
 
 .tabButtonsRolled {
-  /*left: -60px;*/
   left: -4.26vw;
   position: absolute;
   -webkit-transition-duration: var(--transition-duration);
@@ -79,62 +82,44 @@
 }
 
 .imgSelected {
-	border-right: 2px solid #F0A61D;
-	margin: var(--left-console-button-image-margin);
-	width: var(--left-console-button-image-length);
-	/*width: 40px;*/
-	/*width: 2vw;*/
+  border-right: 2px solid #F0A61D;
+  margin: var(--left-console-button-image-margin);
+  width: var(--left-console-button-image-length);
 }
 
 .imgNotSelected {
-	border-right: 0px solid #F0A61D;
-	margin: var(--left-console-button-image-margin);
-	width: var(--left-console-button-image-length);
-	/*width: 40px;*/
-	/*width: 2vw;*/
+  border-right: 0px solid #F0A61D;
+  margin: var(--left-console-button-image-margin);
+  width: var(--left-console-button-image-length);
 }
 
 #terrainButton {
-  /*top: 220px;*/
-  /*top: 15.47vw;*/
   top: var(--first-consoleButton-top);
 }
 
 #precipButton {
-  /*top: 260px;*/
-  /*top: 18.28vw;*/
   top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
 }
 
 #yearButton {
-  /*top: 300px;*/
-  /*top: 21.09vw;*/
   top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
 }
 
 #levelsButton {
-  /*top: 340px;*/
-  /*top: 23.9vw;*/
   top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
 }
 
 #featuresButton {
-  /*top: 380px;*/
-  /*top: 26.71vw;*/
   top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
 }
 
 #settingsButton {
-  /*top: 420px;*/
-  /*top: 29.52vw;*/
   top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
 }
 
 
 /**left console content container**/
 
-/* XXX Can combine this two (#leftConsole, .leftConsole) or not? */
-/* needed for container */
 #leftConsole {
   background-color: rgba(0, 0, 0, 0.7);
   background-image: url('./imgs/consoleTexture.png');
@@ -143,32 +128,28 @@
   border-bottom-right-radius: 12px;
   height: 30vw;
   position: absolute;
-	top: var(--left-console-top-value);
-	width: var(--left-console-width);
-	-webkit-transition-duration: var(--transition-duration);
-	/* Safari */
-	transition-duration: var(--transition-duration);
-	/*height: 55%;*/
-  /*top: 150px;*/
-  /*width: 10%;*/
+  top: var(--left-console-top-value);
+  width: var(--left-console-width);
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
 }
 
+
 /* needed for sliding  */
+
 .leftConsole {
   left: 0px;
-  /*min-height: 225px;
-	min-width: 75px ;*/
 }
 
 .leftConsoleRolled {
-  /*left: -135px;*/
   left: calc( -1*var(--left-console-width));
 }
+
 
 /* The content of each tab */
 
 .consoleTab {
-  /*height: 90%;*/
   left: 0px;
   padding: 4px;
   width: 100%;
@@ -177,16 +158,18 @@
 
 /**inner elements of left console**/
 
+
 /*terrain selector*/
+
 #painterTab {
   /*display: inline-block;*/
   height: 100%;
   -moz-column-count: 2;
   -webkit-column-count: 2;
   column-count: 2;
-/*-moz-column-gap: 1em;*/
-/*-webkit-column-gap: 1em;*/
-/*column-gap: 1em;*/
+  /*-moz-column-gap: 1em;*/
+  /*-webkit-column-gap: 1em;*/
+  /*column-gap: 1em;*/
 }
 
 #painterTab-leftcol {
@@ -207,12 +190,8 @@
   display: block;
   height: 2.5vw;
   width: 2.5vw;
-  /*min-height: 20px;
-	min-width: 20px;*/
   position: relative;
   border-radius: 50%;
-  /*height: 40px;*/
-  /*width: 40px;*/
   margin: 6px;
   margin-left: 10px;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
@@ -230,6 +209,7 @@
   box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
 }
 
+
 /*precip selector*/
 
 .styled-select {
@@ -240,9 +220,7 @@
   color: #fff;
   cursor: pointer;
   display: block;
-  /*margin: 8px;*/
   outline: none;
-  /*padding: 3px;*/
   margin: 0.5vw;
   padding: 0.2vw;
   height: 4vw;
@@ -263,14 +241,11 @@ option {
 
 #precipTitle, #yearTitle {
   color: #fff;
-	font-size: var(--font-size);
-	font-weight: var(--title-font-weight);
+  font-size: var(--font-size);
+  font-weight: var(--title-font-weight);
   margin: 0.3vw;
   padding: 0.2vw;
   text-align: center;
-	/*font-size: 14px;*/
-	/*margin: 4px;*/
-	/*padding: 3px;*/
 }
 
 #year0PrecipContainer {
@@ -282,22 +257,19 @@ select {
   margin: 5px;
 }
 
+
 /** year buttons**/
 
 .yearButton {
   background-color: rgba(0, 0, 0, 0.7);
-	border-bottom-left-radius: 3px;
+  border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
-	border-radius: 50%;
-  /*height: 40px;*/
-  /*width: 40px;*/
+  border-radius: 50%;
   height: var(--selector-icon-length);
   display: inline-block;
   margin-left: 3vw;
-	margin-top: 1.2vw;
-	width: var(--selector-icon-length);
-	/*margin-top: 20px;
-  margin-left: 35px;*/
+  margin-top: 1.2vw;
+  width: var(--selector-icon-length);
 }
 
 .yearSelected {
@@ -330,10 +302,8 @@ select {
 /*levels map selector*/
 
 .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5 {
-  /*height: 15px;*/
-  margin: 10px 0px 10px 10px;
-  /*width: 15px;*/
   height: var(--level-indicator-length);
+  margin: 10px 0px 10px 10px;
   width: var(--level-indicator-length);
 }
 
@@ -381,12 +351,10 @@ select {
 
 .levelsText {
   color: #fff;
-	font-size: var(--font-size);
-	font-weight: var(--title-font-weight);
-	margin-top: 0.5vw;
-	text-align: center;
-  /*margin-top: 5px;*/
-  /*margin-right: 14px;*/
+  font-size: var(--font-size);
+  font-weight: var(--title-font-weight);
+  margin-top: 0.5vw;
+  text-align: center;
 }
 
 .levelsTextDetails {
@@ -397,10 +365,7 @@ select {
 
 .levelsSelectorIcon, .levelSelectorIconSelected {
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
-  /*height: 40px;*/
-  /*margin: 5px 35px 10px 35px;*/
-	margin: 1vw 3vw 1.2vw;
-  /*width: 40px;*/
+  margin: 1vw 3vw 1.2vw;
   height: var(--selector-icon-length);
   width: var(--selector-icon-length);
 }
@@ -421,9 +386,7 @@ select {
 /*physical features map selector*/
 
 .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone, .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8, .soilColor {
-  /*height: 15px;*/
   margin: 5px 0px 10px 10px;
-  /*width: 15px;*/
   height: var(--level-indicator-length);
   width: var(--level-indicator-length);
 }
@@ -505,12 +468,9 @@ select {
 .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
   border-radius: 50%;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
-	height: var(--selector-icon-length);
-	margin: 1vw 3vw 1.2vw;
-	width: var(--selector-icon-length);
-	/*height: 40px;*/
-	/*margin: 5px 35px 10px 35px;*/
-  /*width: 40px;*/
+  height: var(--selector-icon-length);
+  margin: 0.8vw 3vw 0.5vw;
+  width: var(--selector-icon-length);
 }
 
 .painterIcon:hover, .featureSelectorIcon:hover {
@@ -532,8 +492,5 @@ select {
 .featuresText {
   color: #fff;
   text-align: center;
-	/*margin: 0.25vw;*/
-	margin-top: 0.5vw;
-  /*margin-right: 14px;*/
-  /*margin-top: 5px;*/
+  margin-top: 0.5vw;
 }
