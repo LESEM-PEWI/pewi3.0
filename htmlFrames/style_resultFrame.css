@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-25T11:32:25-05:00
+ * @Last modified time: 2017-05-25T11:44:01-05:00
  */
 
 
@@ -197,6 +197,7 @@ tr:hover {
   height: 100%;
   left: 14%;
   position: absolute;
+  width: 800px;
   -webkit-touch-callout: none;
   /* iOS Safari */
   -webkit-user-select: none;

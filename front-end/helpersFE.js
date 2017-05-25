@@ -1,3 +1,10 @@
+/**
+ * @Date:   2017-05-25T10:59:40-05:00
+ * @Last modified time: 2017-05-25T14:55:53-05:00
+ */
+
+
+
 /* global camera, scene, boardData,
           renderer, currentBoard, THREE,
           currentYear, textureArray, riverPoints,
@@ -974,7 +981,8 @@ function roll(value) {
         }
         else {
             // document.getElementById('toolsButton').style.left = "135px";
-            document.getElementById('toolsButton').style.left = "9.6vw";
+            // document.getElementById('toolsButton').style.left = "9.6vw";
+            document.getElementById('toolsButton').style.left = document.getElementById('leftConsole').style.width;
             document.getElementById('toolsButton').style.backgroundImage = "none";
             document.getElementById('pick').src = "./imgs/pickOut.png"
             document.getElementById('tabButtons').className = "tabButtons";

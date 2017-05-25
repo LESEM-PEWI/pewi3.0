@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-05-25T11:30:23-05:00
+ * @Last modified time: 2017-05-25T15:45:49-05:00
  */
 
 
@@ -156,9 +156,6 @@
 }
 
 
-/**inner elements of left console**/
-
-
 /*terrain selector*/
 
 #painterTab {
@@ -192,8 +189,7 @@
   width: 2.5vw;
   position: relative;
   border-radius: 50%;
-  margin: 6px;
-  margin-left: 10px;
+  margin: 0.5vw;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
 }
 
@@ -493,4 +489,97 @@ select {
   color: #fff;
   text-align: center;
   margin-top: 0.5vw;
+}
+
+@media screen and (max-width: 600px), screen and (max-height: 400px) {
+  .icon {
+    height: 15px;
+    width: 15px;
+    margin: 3px;
+  }
+  painterTab-leftcol {
+    left: 0px;
+    width: 28.8px;
+  }
+  #painterTab-rightcol {
+    left: 28.8px;
+    width: 28.8px;
+  }
+  #leftConsole {
+    height: 180px;
+    top: 64px;
+    width: 57.6px;
+  }
+  .consoleButton {
+    height: 18px;
+    width: 18px;
+  }
+  .imgSelected, .imgNotSelected {
+    height: 10px;
+    margin: 4px;
+    width: 12px;
+  }
+  #pick {
+    height: 10px;
+    margin: 4px;
+    width: 12px;
+  }
+  .tabButtons, #toolsButton {
+    left: 57px;
+  }
+  #toolsButton {
+    top: 64px;
+  }
+  #terrainButton {
+    top: 92px;
+  }
+  #precipButton {
+    top: 110px;
+  }
+  #yearButton {
+    top: 128px;
+  }
+  #levelsButton {
+    top: 146px;
+  }
+  #featuresButton {
+    top: 164px;
+  }
+  #settingsButton {
+    top: 182px;
+  }
+  #precipTitle, #yearTitle {
+    font-size: 6px;
+    height: 8.4px;
+    width: 46px;
+  }
+  .styled-select {
+    font-size: 6px;
+    height: 24px;
+    width: 45px;
+  }
+  .year-precip-select {
+    height: 10.8px;
+    width: 30px;
+  }
+  .yearButton {
+    height: 15px;
+    width: 15px;
+    margin-left: 17px;
+    margin-top: 10px;
+  }
+  .yearSelected, .yearNotSelected, .levelSelectorIcon, .featureSelectorIcon, .levelsSelectorIcon, .levelsSelectorIconSelected, .painterIcon, .painterIconSelected {
+    height: 15px;
+    width: 15px;
+  }
+  .levelsSelectorIcon, .levelsSelectorIconSelected {
+    margin: 6px 18px 7.2px;
+  }
+  .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
+    margin: 4.8px 18px 3px;
+  }
+  .levelsText, .featuresText {
+    font-size: 6px;
+    margin-top: 3px;
+  }
 }
