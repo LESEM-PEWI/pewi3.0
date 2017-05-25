@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-24T17:36:33-05:00
+ * @Last modified time: 2017-05-24T19:07:39-05:00
  */
 
 
@@ -73,13 +73,11 @@ tr:hover {
   cursor: default;
   display: inline-block;
   float: left;
-  /*height: 40px;*/
   height: var(--tab-height);
   line-height: 0%;
   margin: 10px;
   padding: 10px;
   text-align: center;
-  /*width: 145px;*/
   width: var(--tab-width);
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
@@ -95,6 +93,8 @@ tr:hover {
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, */
+  /*height: 40px;*/
+  /*width: 145px;*/
 }
 
 .tabSelected {
@@ -108,9 +108,9 @@ tr:hover {
 #centralContentHolder {
   display: inline-block;
   border-top: 2px solid black;
+  height: 100%;
   margin: 0px;
   padding: 0px;
-  height: 100%;
   width: 100%;
 }
 
@@ -136,8 +136,8 @@ tr:hover {
 
 .ecoLegend {
   font-size: 20px;
-  text-align: center;
   font-weight: bold;
+  text-align: center;
 }
 
 .arc {
@@ -156,21 +156,21 @@ tr:hover {
 }
 
 .mouseoverInfo, .mouseoverInfoRadarRight, .mouseoverInfoRadarLeft {
-  position: absolute;
-  margin-left: 25px;
-  display: none;
   background-color: #000000;
   border: 3px solid black;
   border-radius: 8px;
-  opacity: 0.9;
-  margin-top: 20px;
-  font-size: 22px;
-  padding: 15px;
-  width: 260px;
-  color: #FFFFFF;
-  font-weight: bold;
-  text-align: center;
   box-shadow: 0px -2px 10px 5px rgba(0, 0, 0, 1);
+  color: #FFFFFF;
+  display: none;
+  font-size: 22px;
+  font-weight: bold;
+  margin-left: 25px;
+  margin-top: 20px;
+  opacity: 0.9;
+  padding: 15px;
+  position: absolute;
+  text-align: center;
+  width: 260px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-box-shadow: 2px 2px 10px 5px #616161;
@@ -178,8 +178,8 @@ tr:hover {
 }
 
 .mouseoverInfoRadarRight {
-  margin-top: -160px;
   margin-left: 490px;
+  margin-top: -160px;
 }
 
 .mouseoverInfoRadarLeft {
@@ -188,14 +188,14 @@ tr:hover {
 }
 
 .mouseoverInfo:after {
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: 130px;
   border-style: solid;
   border-width: 0 17px 15px;
   border-color: #000000 transparent;
+  content: "";
   display: block;
+  left: 130px;
+  position: absolute;
+  top: -15px;
   width: 0;
   z-index: 1;
 }
@@ -203,19 +203,13 @@ tr:hover {
 #graphics {
   display: block;
   margin: 1%;
-  /*margin: 10px;*/
-  /*height: 100px;*/
 }
 
 #contentsG {
-  position: absolute;
-  /*width: 75%;*/
   height: 100%;
-  width: 800px;
-  /*margin: 0px;*/
-  /*margin-left: -400px;*/
-  /*left: 50%;*/
   left: 14%;
+  position: absolute;
+  width: 800px;
   -webkit-touch-callout: none;
   /* iOS Safari */
   -webkit-user-select: none;
@@ -229,42 +223,31 @@ tr:hover {
   user-select: none;
   /* Non-prefixed version, currently
                               not supported by any browser */
+  /*width: 75%;*/
+  /*margin: 0px;*/
+  /*margin-left: -400px;*/
+  /*left: 50%;*/
 }
 
-#landUseTypeContainer {
-  /*display: -webkit-flex;
-  display: flex;*/
-  /*border: 3px solid #6ac5ac;
-  height: 40%;
-  margin: 0 auto;
-  width: 80%;*/
-}
+#landUseTypeContainer {}
 
 #yearHolder {
   border: 3px solid #fdc72f;
-  /*
-  -webkit-flex: 1;
-          flex: 1;*/
-  /*margin: 0px;*/
-  float: left;
-  /*margin-top: 40px;*/
   display: inline-block;
-  /*width: 140px;*/
-  width: 23.3%;
-  /*height: 400px;*/
+  float: left;
   height: 98%;
-  /*font-size: 12px;*/
+  width: 23.3%;
 }
 
 #landusePieChart {
-  /*-webkit-flex: 2;
-          flex: 2;
-  */
   border: 3px solid #d64078;
   display: inline-block;
   height: 98%;
   position: relative;
   width: 75%;
+  /*-webkit-flex: 2;
+          flex: 2;
+  */
   /*top: 2%;*/
 }
 
@@ -322,15 +305,12 @@ tr:hover {
 }
 
 #precipChart {
-  /*float: left;*/
-  /*width: 440px;*/
-  width: 40vw;
-  height: 10vw;
-  margin: 0px;
-  padding: 0px;
-  display: inline-block;
   background-color: rgba(40, 44, 42, 0..1);
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  display: inline-block;
+  float: left;
+  height: 90%;
+  width: 60%;
 }
 
 text {
@@ -338,55 +318,50 @@ text {
 }
 
 .precipInfo {
-  display: inline-block;
-  margin: 0px;
-  /*float: left;*/
-  /*width: 330px;*/
-  /*height: 120px;*/
-  height: 10vw;
-  width: 22vw;
   background-color: rgba(40, 44, 42, 0..1);
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  display: inline-block;
+  float: left;
+  height: 90%;
+  margin: 0px;
+  width: 35%;
 }
 
 #precipTitle {
-  background-image: url("./imgs/precipBack.png");
-  color: #000000;
-  display: inline-block;
-  /*float: left;*/
-  margin: 0px;
-  width: 3vw;
-  height: 10vw;
-  ;
-  /*width: 30px;*/
-  /*height: 120px;*/
   background-color: rgba(40, 44, 42, 0..1);
+  display: inline-block;
+  color: #000000;
+  float: left;
+  height: 90%;
+  margin: 0px;
+  width: 5%;
+}
+
+#precipTitle img {
+  height: 100%;
+  width: 100%;
 }
 
 .yearLabel, .precipValue, .precipType {
   font-size: 20;
   font-weight: bold;
-  text-align: center;
-  line-height: 120%;
   margin-top: 10px;
+  line-height: 120%;
+  text-align: center;
 }
 
 .leftPrecipContainer {
-  /*width: 200px;*/
-  width: 12vw;
-  /*float: left;*/
-  /*height: 100%;*/
   display: inline-block;
+  float: left;
+  margin-top: 8%;
+  width: 58%;
 }
 
 .precipImg {
-  /*float: right;*/
-  /*margin-right: 15px;*/
   display: inline-block;
-  /*height: 100px;*/
   height: 8vw;
   margin-top: 1.9vw;
-  /*margin-top: 10px;*/
+  width: 40%;
 }
 
 #toggleYearPie {
@@ -402,8 +377,8 @@ text {
   text-align: center;
   top: 42%;
   transition-duration: 0.4s;
-  -webkit-transition-duration: 0.4s;
   width: 70%;
+  -webkit-transition-duration: 0.4s;
 }
 
 #toggleYearPie:hover {
@@ -430,22 +405,22 @@ text {
 }
 
 #asterContainer {
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  display: block;
+  height: 200px;
   margin-top: 80px;
   margin-left: 10px;
   padding: 0px;
   width: 300px;
-  display: block;
-  height: 200px;
-  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
 }
 
 #yearHolder2 {
+  display: inline-block;
+  float: left;
+  height: 400px;
   margin: 0px;
   margin-top: 40px;
-  float: left;
-  display: inline-block;
   width: 16vw;
-  height: 400px;
   /*width: 120px;*/
   /*font-size: 12px;*/
 }
@@ -455,26 +430,12 @@ text {
 }
 
 #precipSection {
-  height: 18%;
-  /*display: inline-block;
-  height: 150px;
-  margin-top: 50px;
-  margin-bottom: 10px;*/
+  height: 20%;
 }
 
-#radarContainer, #yieldRadarContainer {
-  /*border: 3px solid #6ac5ac;
-  height: 40%;
-  margin-bottom: 15px;
-  width: 80%;*/
-  /*height: 370px;*/
-  /*width: 100%;*/
-}
+#radarContainer, #yieldRadarContainer {}
 
-#yieldRadarContainer {
-  /*margin-bottom: 120px;
-  margin-top: 45px;*/
-}
+#yieldRadarContainer {}
 
 #radarChart, #yieldRadarChart {
   border: 3px solid #d64078;
@@ -523,6 +484,8 @@ text {
   padding: 0px;
 }
 
+
+/*
 #container {
   border: 3px solid #6ac5ac;
   display: -webkit-flex;
@@ -541,7 +504,7 @@ text {
   -webkit-flex: 3;
   flex: 3;
   border: 3px solid #d64078;
-}
+}*/
 
 #results-header {
   position: static;

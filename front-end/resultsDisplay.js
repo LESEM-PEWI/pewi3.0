@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-24T17:37:54-05:00
+ * @Last modified time: 2017-05-24T19:08:47-05:00
  * modified:
  *  drawD3LandPieChart()
  *  drawEcosystemRadar()
@@ -933,8 +933,11 @@ function drawPrecipitationInformationChart() {
 
   //bar chart width and height
   // note that these are closely interrelated to css styling on results page
-  var width = 420;
-  var barHeight = 30;
+  // var width = 420;
+  // var barHeight = 30;
+  var width = Math.round(window.innerWidth * 0.3);
+  var barHeight = Math.round(window.innerHeight * 0.045);
+
 
   //create bar scale for percentages
   var x = d3.scaleLinear()
@@ -954,6 +957,7 @@ function drawPrecipitationInformationChart() {
 
   mouseoverInfo.append('div')
     .attr('class', 'leftPrecipContainer');
+  // .attr('style', 'display: inline-block; float: left; position: relative; top: 18%; width: 60%');
 
   var container = mouseoverInfo.select('.leftPrecipContainer');
 
