@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-05-25T15:45:49-05:00
+ * @Last modified time: 2017-05-25T15:58:08-05:00
  */
 
 
@@ -338,11 +338,13 @@ select {
 }
 
 .levelDetailsList {
-  left: 150px;
+  /*left: 150px;*/
+  left: 12vw;
 }
 
 .levelDetailsListRolled {
-  left: -135px;
+  /*left: -135px;*/
+  left: -10.8vw;
 }
 
 .levelsText {
@@ -446,11 +448,13 @@ select {
 }
 
 .physicalDetailsList {
-  left: 150px;
+  /*left: 150px;*/
+  left: 12vw;
 }
 
 .physicalDetailsListRolled {
-  left: -210px;
+  /*left: -210px;*/
+  left: -16.8vw;
 }
 
 #drainageClassDetailsList {
@@ -568,11 +572,11 @@ select {
     margin-left: 17px;
     margin-top: 10px;
   }
-  .yearSelected, .yearNotSelected, .levelSelectorIcon, .featureSelectorIcon, .levelsSelectorIcon, .levelsSelectorIconSelected, .painterIcon, .painterIconSelected {
+  .yearSelected, .yearNotSelected, .featureSelectorIcon, .levelsSelectorIcon, .levelSelectorIconSelected, .painterIcon, .painterIconSelected {
     height: 15px;
     width: 15px;
   }
-  .levelsSelectorIcon, .levelsSelectorIconSelected {
+  .levelsSelectorIcon, .levelSelectorIconSelected {
     margin: 6px 18px 7.2px;
   }
   .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
