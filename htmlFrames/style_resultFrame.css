@@ -1,513 +1,499 @@
-  /* css variable declaration */
+/**
+ * @Last modified time: 2017-05-25T11:15:45-05:00
+ */
 
-   :root {
-    --font-size: 1vw;
-    /* 12px */
-    --legend-font-size: 1.4vw;
-    /* 16px */
-    --class-font-size: 2.1vw;
-    /* 20px */
-    /* 22px */
-    --title-font-size: 3.5vw;
-    /* 25px */
-    --tab-image-length: 2vw;
-    --tab-height: 2vw;
-    --tab-width: 8vw;
-    --title-font-weight: 900;
-    --transition-duration: 0.4s;
-  }
 
-  body {
-    font-size: var(--font-size);
-  }
-  /** Results Table Styling  **/
+/* css variable declaration */
 
-  .resultsTable {
-    border-collapse: collapse;
-    border-bottom: 4px ridge #ddd;
-    margin: 10px;
-    width: 100%;
-  }
+ :root {
+  --class-font-size: 1.4vmax;
+  --font-size: 1vmax;
+  --legend-font-size: 1.4vmax;
+  --tab-image-length: 2vw;
+  --tab-height: 2vw;
+  --tab-width: 8vw;
+  --title-font-size: 3.5vmax;
+  --title-font-weight: 900;
+  --transition-duration: 0.4s;
+}
 
-  td {
-    border-bottom: 0px solid #ddd;
-    padding: 5px;
-    text-align: left;
-  }
+body {
+  font-size: var(--font-size);
+}
 
-  th {
-    border-bottom: 2px solid #ddd;
-    padding: 5px;
-    text-align: left;
-  }
 
-  .tableHeading {
-    border-bottom: 0px;
-  }
+/** Results Table Styling  **/
 
-  .tableHeading:hover {
-    background: rgba(256, 256, 256, 0);
-  }
+.resultsTable {
+  border-collapse: collapse;
+  border-bottom: 4px ridge #ddd;
+  margin: 10px;
+  width: 100%;
+}
 
-  tr:hover {
-    background-color: rgba(154, 173, 163, 0.5);
-  }
-  /** Main page styling **/
+td {
+  border-bottom: 0px solid #ddd;
+  padding: 5px;
+  text-align: left;
+}
 
-  .tab img, .tabSelected img {
-    width: var(--tab-image-length);
-  }
+th {
+  border-bottom: 2px solid #ddd;
+  padding: 5px;
+  text-align: left;
+}
 
-  .tab, .tabSelected {
-    background-color: rgba(40, 44, 42, 0.03);
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
-    cursor: default;
-    display: inline-block;
-    float: left;
-    /*height: 40px;*/
-    height: var(--tab-height);
-    line-height: 0%;
-    margin: 10px;
-    padding: 10px;
-    text-align: center;
-    /*width: 145px;*/
-    width: var(--tab-width);
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    -webkit-touch-callout: none;
-    /* iOS Safari */
-    -webkit-user-select: none;
-    /* Chrome/Safari/Opera */
-    -khtml-user-select: none;
-    /* Konqueror */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* Internet Explorer/Edge */
-    user-select: none;
-    /* Non-prefixed version, */
-  }
+.tableHeading {
+  border-bottom: 0px;
+}
 
-  .tabSelected {
-    background-color: rgba(0, 0, 0, 0.6);
-  }
+.tableHeading:hover {
+  background: rgba(256, 256, 256, 0);
+}
 
-  .tab:hover {
-    background-color: rgba(40, 44, 42, 0.1);
-  }
+tr:hover {
+  background-color: rgba(154, 173, 163, 0.5);
+}
 
-  #centralContentHolder {
-    display: inline-block;
-    border-top: 2px solid black;
-    margin: 0px;
-    padding: 0px;
-    height: 100%;
-    width: 100%;
-  }
 
-  #innerContainer {
-    margin: 15px;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    /*color: #000000; */
-    /* affect label to the left (To Category) and Wheather */
-    /*font-size: 20px;*/
-    /* affect legend text */
-  }
-  /** Graphics elements for first tab **/
+/** Main page styling **/
 
-  .graph-svg-component {
-    margin: 0px;
-  }
+.tab img, .tabSelected img {
+  width: var(--tab-image-length);
+}
 
-  .legend {
-    font-size: 16px;
-  }
+.tab, .tabSelected {
+  background-color: rgba(40, 44, 42, 0.03);
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  cursor: default;
+  display: inline-block;
+  float: left;
+  height: var(--tab-height);
+  line-height: 0%;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  width: var(--tab-width);
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, */
+  /*height: 40px;*/
+  /*width: 145px;*/
+}
 
-  .ecoLegend {
-    font-size: 20px;
-    text-align: center;
-    font-weight: bold;
-  }
+.tabSelected {
+  background-color: rgba(0, 0, 0, 0.6);
+}
 
-  .arc {
-    opacity: 1;
-  }
+.tab:hover {
+  background-color: rgba(40, 44, 42, 0.1);
+}
 
-  .arcHighlight {
-    opacity: 0.5;
-  }
+#centralContentHolder {
+  display: inline-block;
+  border-top: 2px solid black;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
 
-  .chart {
-    width: 660px;
-    /*width: 90vw;*/
-    /*height: 400px;*/
-    float: right;
-    display: inline-block;
-    margin-top: 40px;
-  }
+#innerContainer {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
 
-  .mouseoverInfo, .mouseoverInfoRadarRight, .mouseoverInfoRadarLeft {
-    position: absolute;
-    margin-left: 25px;
-    display: none;
-    background-color: #000000;
-    border: 3px solid black;
-    border-radius: 8px;
-    opacity: 0.9;
-    margin-top: 20px;
-    font-size: 22px;
-    padding: 15px;
-    width: 260px;
-    color: #FFFFFF;
-    font-weight: bold;
-    text-align: center;
-    box-shadow: 0px -2px 10px 5px rgba(0, 0, 0, 1);
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-box-shadow: 2px 2px 10px 5px #616161;
-    -moz-box-shadow: 2px 2px 10px 5px #616161;
-  }
 
-  .mouseoverInfoRadarRight {
-    margin-top: -160px;
-    margin-left: 490px;
-  }
+/** Graphics elements for first tab **/
 
-  .mouseoverInfoRadarLeft {
-    margin-left: -315px;
-    margin-top: -160px;
-  }
+.graph-svg-component {
+  margin: 0px;
+}
 
-  .mouseoverInfo:after {
-    content: "";
-    position: absolute;
-    top: -15px;
-    left: 130px;
-    border-style: solid;
-    border-width: 0 17px 15px;
-    border-color: #000000 transparent;
-    display: block;
-    width: 0;
-    z-index: 1;
-  }
+.legend {}
 
-  #graphics {
-    margin: 1%;
-    /*margin: 10px;*/
-    /*height: 100px;*/
-  }
+.ecoLegend {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
 
-  #contentsG {
-    position: absolute;
-    /*width: 75%;*/
-    height: 100%;
-    width: 800px;
-    /*margin: 0px;*/
-    /*margin-left: -400px;*/
-    /*left: 50%;*/
-    left: 14%;
-    -webkit-touch-callout: none;
-    /* iOS Safari */
-    -webkit-user-select: none;
-    /* Chrome/Safari/Opera */
-    -khtml-user-select: none;
-    /* Konqueror */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* Internet Explorer/Edge */
-    user-select: none;
-    /* Non-prefixed version, currently
-                                not supported by any browser */
-  }
+.arc {
+  opacity: 1;
+}
 
-  /*#landUseTypeContainer {
-    display: -webkit-flex;
-    display: flex;
-    border: 3px solid #6ac5ac;
-  }*/
+.arcHighlight {
+  opacity: 0.5;
+}
 
-  #yearHolder {
-    /*-webkit-flex: 1;
-            flex: 1;*/
-    margin: 0px;
-    float: left;
-    margin-top: 40px;
-    display: inline-block;
-    width: 140px;
-    height: 400px;
-    font-size: 12px;
-    /*border: 3px solid #fdc72f;*/
-  }
+.graph-section {
+  /*border: 3px solid #6ac5ac;*/
+  height: 40%;
+  margin: 5% auto;
+  width: 80%;
+}
 
-  /*#landusePieChart {
-    -webkit-flex: 2;
-            flex: 2;
-    border: 3px solid #d64078;
-  }*/
+.mouseoverInfo, .mouseoverInfoRadarRight, .mouseoverInfoRadarLeft {
+  background-color: #000000;
+  border: 3px solid black;
+  border-radius: 8px;
+  box-shadow: 0px -2px 10px 5px rgba(0, 0, 0, 1);
+  color: #FFFFFF;
+  display: none;
+  font-size: 22px;
+  font-weight: bold;
+  margin-left: 25px;
+  margin-top: 20px;
+  opacity: 0.9;
+  padding: 15px;
+  position: absolute;
+  text-align: center;
+  width: 260px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-box-shadow: 2px 2px 10px 5px #616161;
+  -moz-box-shadow: 2px 2px 10px 5px #616161;
+}
 
-  .upArrow {
-    margin-left: 75px;
-    margin-top: 140px;
-    width: 0px;
-    height: 0;
-    border-style: solid;
-    border-width: 0 20px 30px 20px;
-    border-color: transparent transparent #000000 transparent;
-    border-radius: 20px;
-    -webkit-transform: rotate(360deg);
-    opacity: 1;
-  }
+.mouseoverInfoRadarRight {
+  margin-left: 490px;
+  margin-top: -160px;
+}
 
-  .upArrow:hover {
-    border-style: solid;
-    border-width: 0 20px 30px 20px;
-    border-color: transparent transparent #000000 transparent;
-    opacity: 0.6;
-  }
+.mouseoverInfoRadarLeft {
+  margin-left: -315px;
+  margin-top: -160px;
+}
 
-  .upArrowDisabled {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 20px 30px 20px;
-    border-color: transparent transparent #c9c9d1 transparent;
-    margin-left: 75px;
-    margin-top: 140px;
-    border-radius: 20px;
-  }
+.mouseoverInfo:after {
+  border-style: solid;
+  border-width: 0 17px 15px;
+  border-color: #000000 transparent;
+  content: "";
+  display: block;
+  left: 130px;
+  position: absolute;
+  top: -15px;
+  width: 0;
+  z-index: 1;
+}
 
-  .downArrowDisabled {
-    width: 0;
-    height: 0;
-    margin-top: 6px;
-    margin-left: 75px;
-    border-style: solid;
-    border-width: 30px 20px 0 20px;
-    border-color: #c9c9d1 transparent transparent transparent;
-    border-radius: 20px;
-  }
+#graphics {
+  display: block;
+  margin: 1%;
+}
 
-  .downArrow {
-    width: 0;
-    height: 0;
-    margin-top: 6px;
-    margin-left: 75px;
-    border-style: solid;
-    border-width: 30px 20px 0 20px;
-    border-color: #000000 transparent transparent transparent;
-    border-radius: 20px;
-    opacity: 1;
-    -webkit-transform: rotate(360deg);
-  }
+#contentsG {
+  height: 100%;
+  left: 14%;
+  position: absolute;
+  width: 800px;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                              not supported by any browser */
+  /*width: 75%;*/
+  /*margin: 0px;*/
+  /*margin-left: -400px;*/
+  /*left: 50%;*/
+}
 
-  .downArrow:hover {
-    border-style: solid;
-    border-width: 30px 20px 0 20px;
-    border-color: #000000 transparent transparent transparent;
-    opacity: 0.6;
-  }
+#landUseTypeContainer {}
 
-  .barData {
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-  }
+#yearHolder {
+  /*border: 3px solid #fdc72f;*/
+  display: inline-block;
+  float: left;
+  height: 98%;
+  width: 23.3%;
+}
 
-  #precipChart {
-    /*float: left;*/
-    /*width: 440px;*/
-    width: 40vw;
-    height: 10vw;
-    ;
-    margin: 0px;
-    padding: 0px;
-    display: inline-block;
-    background-color: rgba(40, 44, 42, 0..1);
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
-  }
+#landusePieChart {
+  /*border: 3px solid #d64078;*/
+  display: inline-block;
+  height: 98%;
+  position: relative;
+  width: 75%;
+}
 
-  text {
-    cursor: default;
-  }
+.upArrow, .upArrowDisabled, .downArrow, .downArrowDisabled {
+  border-radius: 20px;
+  border-style: solid;
+  height: 0;
+  position: relative;
+  width: 0;
+  left: 53%;
+}
 
-  .precipInfo {
-    display: inline-block;
-    margin: 0px;
-    /*float: left;*/
-    /*width: 330px;*/
-    /*height: 120px;*/
-    height: 10vw;
-    width: 22vw;
-    background-color: rgba(40, 44, 42, 0..1);
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
-  }
+.upArrow, .upArrowDisabled {
+  border-width: 0 20px 30px 20px;
+  margin-top: 20%;
+}
 
-  #precipTitle {
-    background-image: url("./imgs/precipBack.png");
-    color: #000000;
-    display: inline-block;
-    /*float: left;*/
-    margin: 0px;
-    width: 3vw;
-    height: 10vw;
-    ;
-    /*width: 30px;*/
-    /*height: 120px;*/
-    background-color: rgba(40, 44, 42, 0..1);
-  }
+.upArrow {
+  border-color: transparent transparent #000000 transparent;
+  -webkit-transform: rotate(360deg);
+  opacity: 1;
+}
 
-  .yearLabel, .precipValue, .precipType {
-    font-size: 20;
-    font-weight: bold;
-    text-align: center;
-    line-height: 120%;
-    margin-top: 10px;
-  }
+.upArrow:hover {
+  opacity: 0.6;
+}
 
-  .leftPrecipContainer {
-    /*width: 200px;*/
-    width: 12vw;
-    /*float: left;*/
-    /*height: 100%;*/
-    display: inline-block;
-  }
+.upArrowDisabled {
+  border-color: transparent transparent #c9c9d1 transparent;
+}
 
-  .precipImg {
-    /*float: right;*/
-    /*margin-right: 15px;*/
-    display: inline-block;
-    /*height: 100px;*/
-    height: 8vw;
-    margin-top: 1.9vw;
-    /*margin-top: 10px;*/
-  }
+.downArrow, .downArrowDisabled {
+  border-width: 30px 20px 0 20px;
+  margin-top: 6px;
+}
 
-  #toggleYearPie {
-    /*width: 140px;*/
-    background-color: rgba(40, 44, 42, 0.03);
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
-    cursor: default;
-    font-size: var(--class-font-size);
-    font-weight: bold;
-    height: 4vw;
-    ;
-    margin-top: 80%;
-    line-height: 200%;
-    text-align: center;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    width: 14vw;
-    /*font-size: 20px;*/
-    /*width: 105%;*/
-    /*margin-top: 130px;*/
-    /*height: 40px;*/
-  }
+.downArrowDisabled {
+  border-color: #c9c9d1 transparent transparent transparent;
+}
 
-  #toggleYearPie:hover {
-    background-color: rgba(40, 44, 42, 0.1);
-  }
+.downArrow {
+  border-color: #000000 transparent transparent transparent;
+  opacity: 1;
+  -webkit-transform: rotate(360deg);
+}
 
-  #asterChart {
-    display: block;
-    float: left;
-    margin-top: 40px;
-    height: 400px;
-    width: 360px;
-    overflow: hidden;
-  }
+.downArrow:hover {
+  opacity: 0.6;
+}
 
-  #asterHUD {
-    display: block;
-    margin-top: 40px;
-    float: left;
-    width: 320px;
-    height: 400px;
-    /** FOR NOW, DELETE LATER **/
-    margin-bottom: 200px;
-  }
+.barData {
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
 
-  #asterContainer {
-    margin-top: 80px;
-    margin-left: 10px;
-    padding: 0px;
-    width: 300px;
-    display: block;
-    height: 200px;
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
-  }
+#precipChart {
+  background-color: rgba(40, 44, 42, 0..1);
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  display: inline-block;
+  float: left;
+  height: 90%;
+  width: 60%;
+}
 
-  #yearHolder2 {
-    margin: 0px;
-    margin-top: 40px;
-    float: left;
-    display: inline-block;
-    width: 16vw;
-    height: 400px;
-    /*width: 120px;*/
-    /*font-size: 12px;*/
-  }
+text {
+  cursor: default;
+}
 
-  #yearDownESI, #yearUpESI {
-    margin-left: 40px;
-  }
+.precipInfo {
+  background-color: rgba(40, 44, 42, 0..1);
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  display: inline-block;
+  float: left;
+  height: 90%;
+  margin: 0px;
+  width: 35%;
+}
 
-  #precipSection {
-    display: inline-block;
-    height: 150px;
-    margin-top: 50px;
-    margin-bottom: 10px;
-  }
+#precipTitle {
+  background-color: rgba(40, 44, 42, 0..1);
+  display: inline-block;
+  color: #000000;
+  float: left;
+  height: 90%;
+  margin: 0px;
+  width: 5%;
+}
 
-  #radarContainer, #yieldRadarContainer {
-    height: 370px;
-    margin-bottom: 15px;
-    width: 100%;
-  }
+#precipTitle img {
+  height: 100%;
+  width: 100%;
+}
 
-  #yieldRadarContainer {
-    margin-bottom: 120px;
-    margin-top: 45px;
-  }
+.yearLabel, .precipValue, .precipType {
+  font-size: 20;
+  font-weight: bold;
+  margin-top: 10px;
+  line-height: 120%;
+  text-align: center;
+}
 
-  #radarChart, #yieldRadarChart {
-    float: left;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-    width: 445px;
-  }
+.leftPrecipContainer {
+  display: inline-block;
+  float: left;
+  margin-top: 8%;
+  width: 58%;
+}
 
-  #radarLegend {
-    float: left;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-    width: 355px;
-  }
+.precipImg {
+  display: inline-block;
+  height: 8vw;
+  margin-top: 1.9vw;
+  width: 40%;
+}
 
-  #yieldRadarLegend {
-    float: left;
-    height: 100%;
-    width: 355px;
-  }
+#toggleYearPie {
+  background-color: rgba(40, 44, 42, 0.03);
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  cursor: pointer;
+  font-size: var(--class-font-size);
+  font-weight: bold;
+  height: 15%;
+  line-height: 200%;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+  top: 42%;
+  transition-duration: 0.4s;
+  width: 70%;
+  -webkit-transition-duration: 0.4s;
+}
 
-  #checks {
-    margin-left: 595px;
-    margin-top: 99px;
-    position: absolute;
-    width: 20px;
-  }
+#toggleYearPie:hover {
+  background-color: rgba(40, 44, 42, 0.1);
+}
 
-  #yieldChecks {
-    margin-top: 100px;
-    margin-left: 145px;
-    position: absolute;
-    width: 20px;
-  }
+#asterChart {
+  display: block;
+  float: left;
+  margin-top: 40px;
+  height: 400px;
+  width: 360px;
+  overflow: hidden;
+}
 
-  .yearCheckbox {
-    margin: 0px;
-    opacity: 1;
-    padding: 0px;
-  }
+#asterHUD {
+  display: block;
+  margin-top: 40px;
+  float: left;
+  width: 320px;
+  height: 400px;
+  /** FOR NOW, DELETE LATER **/
+  margin-bottom: 200px;
+}
+
+#asterContainer {
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  display: block;
+  height: 200px;
+  margin-top: 80px;
+  margin-left: 10px;
+  padding: 0px;
+  width: 300px;
+}
+
+#yearHolder2 {
+  display: inline-block;
+  float: left;
+  height: 400px;
+  margin: 0px;
+  margin-top: 40px;
+  width: 16vw;
+}
+
+#yearDownESI, #yearUpESI {
+  margin-left: 40px;
+}
+
+#precipSection {
+  height: 20%;
+}
+
+#radarContainer, #yieldRadarContainer {}
+
+#yieldRadarContainer {}
+
+#radarChart, #yieldRadarChart {
+  /*border: 3px solid #d64078;*/
+  float: left;
+  height: 98%;
+  width: 60%;
+}
+
+#radarLegend {
+  /*border: 3px solid #fdc72f;*/
+  display: inline-block;
+  float: left;
+  height: 98%;
+  margin: 0px;
+  padding: 0px;
+  width: 38.3%;
+}
+
+#yieldRadarLegend {
+  /*border: 3px solid #fdc72f;*/
+  display: inline-block;
+  float: left;
+  height: 98%;
+  width: 38.3%;
+}
+
+.check {
+  /*border: 3px solid #FF5511;*/
+  position: absolute;
+  width: 3%;
+}
+
+#checks {
+  margin-left: 61%;
+  margin-top: 8%;
+}
+
+#yieldChecks {
+  margin-left: 9%;
+  margin-top: 8.4%;
+}
+
+.yearCheckbox {
+  margin: 0px;
+  opacity: 1;
+  padding: 0px;
+}
+
+
+/*
+#container {
+  border: 3px solid #6ac5ac;
+  display: -webkit-flex;
+  display: flex;
+  margin: 0 auto;
+  width: 74%;
+}
+
+#left {
+  -webkit-flex: 1;
+  flex: 1;
+  border: 3px solid #fdc72f;
+}
+
+#right {
+  -webkit-flex: 3;
+  flex: 3;
+  border: 3px solid #d64078;
+}*/
+
+#results-header {
+  position: static;
+}
+
+#yearArrows {
+  display: block;
+  position: relative;
+  top: 25%;
+}
