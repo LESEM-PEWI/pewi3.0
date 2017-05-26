@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-25T17:33:20-05:00
+ * @Last modified time: 2017-05-26T09:53:48-05:00
  */
 
 
@@ -436,6 +436,10 @@ text {
   width: 38.3%;
 }
 
+#radarLegend svg g g{
+  margin: 30% 0;
+}
+
 #yieldRadarLegend {
   /*border: 3px solid #fdc72f;*/
   display: inline-block;
@@ -452,16 +456,17 @@ text {
 
 #checks {
   margin-left: 78%;
-  margin-top: 10.5%;
+  margin-top: 10%;
 }
 
 #yieldChecks {
   margin-left: 10%;
-  margin-top: 10.7%;
+  margin-top: 10%;
 }
 
 .yearCheckbox {
-  margin: 0px;
+  /*margin: 0px;*/
+  /*margin: 30%;*/
   opacity: 1;
   padding: 0px;
 }

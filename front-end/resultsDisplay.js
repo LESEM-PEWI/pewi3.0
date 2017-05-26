@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-25T09:59:53-05:00
+ * @Last modified time: 2017-05-26T09:52:24-05:00
  * modified:
  *  drawD3LandPieChart()
  *  drawEcosystemRadar()
@@ -1454,6 +1454,7 @@ function drawEcosystemRadar(yearArray) {
 
   var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart');
   var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend');
+  var checkboxes = document.getElementById('resultsFrame').contentWindow.document.getElementById('checks');
 
   //Create the Radar chart on page
   RadarChart.draw(radarId, dataset, overrideConfig, 'mouseoverInfoRadarRight', radarClassElementsString);
@@ -1552,9 +1553,15 @@ function drawEcosystemRadar(yearArray) {
   legend.append('text')
     .attr('x', legendRectSize + legendSpacing)
     .attr('y', legendRectSize - legendSpacing)
+    // .attr('x', 6)
+    // .attr('y', offsetH )
     .text(function(d) {
       return d;
     });
+
+  d3.select(checkboxes)
+  .attr('x', legendRectSize + legendSpacing)
+  .attr('y', legendRectSize - legendSpacing);
 } //end  drawEcosystemRadar()
 
 
@@ -1970,6 +1977,7 @@ function drawYieldRadar(yearArray) {
   //get elements in the child frame
   var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart');
   var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend');
+  var checkboxes = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldChecks');
 
   //use Radar object to create a plot
   RadarChart.draw(radarId, dataset, chartConfigOverride, 'mouseoverInfoRadarLeft', radarClassElementsString);
@@ -2070,6 +2078,10 @@ function drawYieldRadar(yearArray) {
     .text(function(d) {
       return d;
     });
+
+  d3.select(checkboxes)
+  .attr('x', legendRectSize + legendSpacing)
+  .attr('y', legendRectSize - legendSpacing);
 } //end drawYieldRadar()
 
 
