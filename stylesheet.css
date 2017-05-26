@@ -462,6 +462,7 @@ select {
 
 .yieldDetailsList{
     left: 180px;
+    width: 210px;
 }
 .yieldDetailsListRolled{
     left:-210px;
@@ -513,6 +514,7 @@ select {
 .cornGrain4{
     background-color: #bc892f;
 }
+
 
 .soyBean1{
     background-color: #ffffff;
@@ -566,19 +568,19 @@ select {
 }
 
 .grassHay1{
-    background-color: #f9ffe6;
-}
-.grassHay2{
     background-color: #d9ff66;
 }
+.grassHay2{
+    background-color: #66ff66;
+}
 .grassHay3{
-    background-color: #ccff33;
+    background-color: #00ff00;
 }
 .grassHay4{
-    background-color: #608000;
+    background-color: #187336;
 }
 .switchGrass1{
-    background-color: #c2f0c2;
+    background-color: #66ff66;
 }
 .switchGrass2{
     background-color: #33cc33;

@@ -1453,6 +1453,204 @@ function getHighlightColor(highlightType, tileId) {
                 return 18;
         }
     }
+    else if(highlightType == "cornGrain"){
+        var soil = boardData[currentBoard].map[tileId].soilType;
+        switch(soil) 
+            {
+            case "A":
+                return 35;
+            case "B":
+                return 5;
+            case "C":
+                return 0;
+            case "D":
+                return 22;
+            case "G":
+                return 5;
+            case "K":
+                return 22;
+            case "L":
+                return 0;
+            case "M":
+                return 35;
+            case "N":
+                return 35;
+            case "O":
+                return 22;
+            case "Q":
+                return 35;
+            case "T":
+                return 35;
+            case "Y":
+                return 22;
+        }
+    }
+    else if(highlightType == "soy")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 46;
+            case "B":
+                return 43;
+            case "C":
+                return 45;
+            case "D":
+                return 45;
+            case "G":
+                return 43;
+            case "K":
+                return 45;
+            case "L":
+                return 45;
+            case "M":
+                return 46;
+            case "N":
+                return 46;
+            case "O":
+                return 44;
+            case "Q":
+                return 46;
+            case "T":
+                return 46;
+            case "Y":
+                return 45;
+            }
+
+    }
+    else if(highlightType == "alfalfa")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 42;
+            case "B":
+                return 13;
+            case "C":
+                return 25;
+            case "D":
+                return 42;
+            case "G":
+                return 13;
+            case "K":
+                return 13;
+            case "L":
+                return 25;
+            case "M":
+                return 17;
+            case "N":
+                return 42;
+            case "O":
+                return 13;
+            case "Q":
+                return 17;
+            case "T":
+                return 17;
+            case "Y":
+                return 42;
+            }
+    }
+    else if(highlightType == "grassHay")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 46;
+            case "B":
+                return 47;
+            case "C":
+                return 45;
+            case "D":
+                return 46;
+            case "G":
+                return 47;
+            case "K":
+                return 47;
+            case "L":
+                return 45;
+            case "M":
+                return 29;
+            case "N":
+                return 46;
+            case "O":
+                return 47;
+            case "Q":
+                return 29;
+            case "T":
+                return 29;
+            case "Y":
+                return 46;
+            }
+    }
+    else if(highlightType == "switchGrass")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 49;
+            case "B":
+                return 45;
+            case "C":
+                return 49;
+            case "D":
+                return 45;
+            case "G":
+                return 45;
+            case "K":
+                return 45;
+            case "L":
+                return 49;
+            case "M":
+                return 49;
+            case "N":
+                return 51;
+            case "O":
+                return 45;
+            case "Q":
+                return 51;
+            case "T":
+                return 51;
+            case "Y":
+                return 50;
+            }
+    }
+    else if(highlightType == "wood")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 55;
+            case "B":
+                return 53;
+            case "C":
+                return 52;
+            case "D":
+                return 55;
+            case "G":
+                return 55;
+            case "K":
+                return 53;
+            case "L":
+                return 52;
+            case "M":
+                return 55;
+            case "N":
+                return 54;
+            case "O":
+                return 52;
+            case "Q":
+                return 55;
+            case "T":
+                return 54;
+            case "Y":
+                return 55;
+            }
+    }
 } //end getHighlightColor
 
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile

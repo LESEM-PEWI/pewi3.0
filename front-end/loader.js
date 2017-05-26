@@ -108,22 +108,19 @@ function loadResources() {
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/00ff00.png')); // 46       Medium Green
 
     //GrassHay Yield
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/F9FFE6.png')); // 47       Almost White Green
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/d9ff66.png')); // 48       Light Yellowish Green
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/CCFF33.png')); // 49       Medium Yellowish Green
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/608000.png')); // 50       Army Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/d9ff66.png')); // 47       Light Yellowish Green
 
     //SwitchGrass Yield
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/C2F0C2.png')); // 51       Really Pale Green
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/33CC33.png')); // 52       Mediumish Green
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/1F7A1F.png')); // 53       Normalish Green
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/145214.png')); // 54       Darkish Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/C2F0C2.png')); // 48       Really Pale Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/33CC33.png')); // 49       Mediumish Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/1F7A1F.png')); // 50       Normalish Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/145214.png')); // 51       Darkish Green
 
     //Wood Yield
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/F2E6D9.png')); // 55       Really Light Brown
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/d9b38c.png')); // 56       Medium Light Brown
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/ac7339.png')); // 57       Mediumish Brown
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/734D26.png')); // 58       Darker Medium Brown
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/F2E6D9.png')); // 52       Really Light Brown
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/d9b38c.png')); // 53       Medium Light Brown
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/ac7339.png')); // 54       Mediumish Brown
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/734D26.png')); // 55       Darker Medium Brown
 
 
 
