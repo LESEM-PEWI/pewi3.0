@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-26T09:53:48-05:00
+ * @Last modified time: 2017-05-26T11:53:30-05:00
  */
 
 
@@ -501,4 +501,16 @@ text {
   display: block;
   position: relative;
   top: 25%;
+}
+
+@media screen and (min-height: 800px) {
+  #checks {
+    margin-left: 78%;
+    margin-top: 10%;
+  }
+
+  #yieldChecks {
+    margin-left: 10%;
+    margin-top: 10%;
+  }
 }
