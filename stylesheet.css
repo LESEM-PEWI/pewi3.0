@@ -358,9 +358,6 @@ select {
     box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
-.levelSelectorIconSelected{
-    box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14,71,204,0.4);
-}
 
 .levelSelectorIconSelected:hover{
     box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
@@ -444,10 +441,179 @@ select {
 #drainageClassDetailsList {
     width: 170px;
 }
-
-#soilClassDetailsList {
+#soilClassDetailsList{
     width: 210px;
 }
+
+.yieldDetailsList, .yieldDetailsListRolled{
+    margin: 15px 0px 0px 0px ;
+    position: absolute;
+    top: 80px;
+    width: 150px;
+    background-color: black ;
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat:repeat;
+    border-radius: 12px;
+    
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+
+.yieldDetailsList{
+    left: 180px;
+}
+.yieldDetailsListRolled{
+    left:-210px;
+}
+.yieldtext {
+    color: #fff;
+    margin-top: 5px;
+    margin-right:14px;
+    text-align: center;
+}
+
+.yieldSelectorIcon, .yieldSelectorIconSelected{
+    border-radius: 50% ;
+    height:45px;
+    width:45px;
+    margin: 6px ;
+    margin-left:12px;
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.8), 0 17px 50px 0 rgba(0,0,0,0.6);
+    display: inline-block;
+    float: left;
+
+}
+
+.yieldSelectorIcon:hover {
+       box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+.yieldSelectorIconSelected:hover{
+      box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
+}
+
+.cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4, .soyBean1, .soyBean2, .soyBean3, .soyBean4, .fruit1, .fruit2, .fruit3, .fruit4, 
+.cattle1, .cattle2, .cattle3, .cattle4, .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4, .grassHay1, .grassHay2, .grassHay3,.grassHay4,
+.switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4, .wood1, .wood2, .wood3, .wood4, .short1, .short2, .short3, .short4{
+    height: 15px;
+    margin: 5px 0px 10px 10px;
+    width: 15px;
+}
+
+.cornGrain1{
+    background-color: #ffffc9;
+}
+.cornGrain2{
+    background-color: #e3c972;
+}
+.cornGrain3{
+    background-color: #e6bb00;
+}
+.cornGrain4{
+    background-color: #bc892f;
+}
+
+.soyBean1{
+    background-color: #ffffff;
+}
+.soyBean2{
+    background-color: #ccffcc;
+}
+.soyBean3{
+    background-color: #66ff66;
+}
+.soyBean4{
+    background-color: #00cc00;
+}
+
+.fruit1{
+    background-color: #ffffc9;
+}
+.fruit2{
+    background-color: #c7eab4;
+}
+.fruit3{
+    background-color: #7fcebb;
+}
+.fruit4{
+    background-color: #41b7c5;
+}
+.cattle1{
+    background-color: #ffffc9;
+}
+.cattle2{
+    background-color: #c7eab4;
+}
+.cattle3{
+    background-color: #7fcebb;
+}
+.cattle4{
+    background-color: #41b7c5;
+}
+
+.alfalfa1{
+    background-color: #cc6578;
+}
+.alfalfa2{
+    background-color: #aa4497;
+}
+.alfalfa3{
+    background-color: #8B008B;
+}
+.alfalfa4{
+    background-color: #862254;
+}
+
+.grassHay1{
+    background-color: #f9ffe6;
+}
+.grassHay2{
+    background-color: #d9ff66;
+}
+.grassHay3{
+    background-color: #ccff33;
+}
+.grassHay4{
+    background-color: #608000;
+}
+.switchGrass1{
+    background-color: #c2f0c2;
+}
+.switchGrass2{
+    background-color: #33cc33;
+}
+.switchGrass3{
+    background-color: #1f7a1f;
+}
+.switchGrass4{
+    background-color: #145214;
+}
+.wood1{
+    background-color: #f2e6d9;
+}
+.wood2{
+    background-color: #d9b38c;
+}
+.wood3{
+    background-color: #ac7339;
+}
+.wood4{
+    background-color: #734d26;
+}
+.short1{
+    background-color: #ffffc9;
+}
+.short2{
+    background-color: #c7eab4;
+}
+.short3{
+    background-color: #7fcebb;
+}
+.short4{
+    background-color: #41b7c5;
+}
+
 
 .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
     border-radius: 50% ;
@@ -456,6 +622,7 @@ select {
     margin: 5px 35px 10px 35px;
     width: 40px;
 }
+
 
 .painterIcon:hover, .featureSelectorIcon:hover{
     box-shadow: 0px 0px 5px 5px rgba(200,120,18,0.3), 0 17px 50px 0 rgba(227,154,18,0.2);

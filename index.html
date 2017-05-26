@@ -87,6 +87,7 @@
     <!-- "Pickaxe" by Luke Anthony Firth on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
     <div id="toolsButton" class="consoleButton" onclick="roll(1);"> <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     </div>
+    <!-- Where we create different tabs-->
 
     <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
         <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
@@ -103,6 +104,8 @@
         <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
         
         <div id="settingsButton" class="consoleButton" onclick="switchConsoleTab(5);"><img id="settingsImg" class="imgNotSelected" src="./imgs/settingsIcon.png"></div>
+
+        <div id= "yieldButton" class="consoleButton" onclick = "switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
     </div>
 
     <!-- Create left-side console displays-->
@@ -259,6 +262,7 @@
             <p class="levelsText">Phosphorus Index Risk Assessment</p><img id="phoshorusIcon" class="levelsSelectorIcon" src="./imgs/P.png" style="border-radius: 50%;" onclick="displayLevels('phosphorus');">
         </div>
 
+        
         <!-- Watershed feature display -->
         <div id="featuresTab" class="consoleTab" style="display:none;">
             <div id="floodFrequencyDetailsList" class="physicalDetailsListRolled">
@@ -345,7 +349,161 @@
             <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('subwatershed');">
             <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
             <p class="featuresText">Soil Class</p><img id="soilClass" class="featureSelectorIcon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
+
         </div>
+
+        <!--Yield Productivity Overlay Maps -->
+         <div id = "yieldTab" class="consoleTab" style = "display: block;">
+            <div id = "cornGrainDetailsList" class = "yieldDetailsListRolled">
+                <div class = "cornGrain1">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Low</p>
+                </div>
+                <div class = "cornGrain2">
+                    <p class = "levelsTextDetails">Medium</p>
+                </div> 
+                <div class = "cornGrain3">
+                    <p class = "levelsTextDetails">High</p>
+                </div>
+                <div class = "cornGrain4">
+                    <p class = "levelsTextDetails">Very High</p>
+                </div>
+            </div>
+             
+             <div id = "soyBeanDetailsList" class = "yieldDetailsListRolled">
+                <div class = "soyBean1" >
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Low</p>
+                </div>
+                <div class = "soyBean2" >
+                    <p class = "levelsTextDetails">Medium</p>
+                </div>
+                <div class = "soyBean3" >
+                    <p class = "levelsTextDetails">High</p>
+                </div>
+                <div class = "soyBean4" >
+                    <p class = "levelsTextDetails">Very High</p>
+                </div>
+            </div>
+
+            <div id = "fruitDetailsList" class = "yieldDetailsListRolled">
+                <div class = "fruit1" >
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Low</p>
+                </div>
+                <div class = "fruit2" >
+                    <p class = "levelsTextDetails">Medium</p>
+                </div>
+                <div class = "fruit3">
+                    <p class = "levelsTextDetails">High</p>
+                </div>
+                <div class = "fruit4">
+                    <p class = "levelsTextDetails">Very High</p>
+                </div>
+
+            </div>
+
+            <div id = "cattleDetailsList" class = "yieldDetailsListRolled">
+                <div class = "cattle1">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Low</p>
+                </div>
+                <div class = "cattle2">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Medium</p>
+                </div>
+                <div class = "cattle3">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">High</p>
+                </div>
+                <div class = "cattle4">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Very High</p>
+                </div>
+            </div>
+
+            <div id = "alfalfaDetailsList" class = "yieldDetailsListRolled">
+                <div class = "alfalfa1">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Low</p>
+                </div>
+                <div class = "alfalfa2">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Medium</p>
+                </div>
+                <div class = "alfalfa3">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">High</p>
+                </div>
+                <div class = "alfalfa4">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Very High</p>
+                </div>
+            </div>
+
+            <div id = "grassHayDetailsList" class = "yieldDetailsListRolled">
+                <div class = "grassHay1">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Low</p>
+                </div>
+                <div class = "grassHay2">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Medium</p>
+                </div>
+                <div class = "grassHay3">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">High</p>
+                </div>
+                <div class = "grassHay4">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Very High</p>
+                </div>
+            </div>
+
+             <div id = "switchGrassDetailsList" class = "yieldDetailsListRolled">
+                <div class = "switchGrass1">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Low</p>
+                </div>
+                <div class = "switchGrass2">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Medium</p>
+                </div>
+                <div class = "switchGrass3">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">High</p>
+                </div>
+                <div class = "switchGrass4">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Very High</p>
+                </div>
+            </div>
+
+            <div id = "woodDetailsList" class = "yieldDetailsListRolled">
+                <div class = "wood1">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Low</p>
+                </div>
+                <div class = "wood2">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Medium</p>
+                </div>
+                <div class = "wood3">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">High</p>
+                </div>
+                <div class = "wood4">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Very High</p>
+                </div>
+            </div>
+
+            <div id = "shortDetailsList" class = "yieldDetailsListRolled">
+                <div class = "short1">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Low</p>
+                </div>
+                <div class = "short2">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Medium</p>
+                </div>
+                <div class = "short3">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">High</p>
+                </div>
+                <div class = "short4">
+                    <p class = "levelsTextDetails" style = "margin-top: 10px;">Very High</p>
+                </div>
+            </div>
+
+            <p class="featuresText"></p><img id="cornClass" class="yieldSelectorIcon" src="./imgs/cornGrainIcon.png" title = "Corn Grain"  onclick="displayLevels('cornGrain');" style= "display: inline-block;">
+            <p class = "featuresText"></p><img id ="soyClass" class = "yieldSelectorIcon" src="./imgs/soybeanIcon.png" title = "Soybean"
+            onclick = "displayLevels('soy');" style= "display: inline-block;">
+            <p class = "featuresText"></p><img id = "fruitClass" class = "yieldSelectorIcon" src="./imgs/fruitIcon.png" title = "Mixed Fruits and Vegetables"
+            onclick="displayLevels('fruit');" style= "display: inline-block;">
+            <p class = "featuresText"></p><img id = "cattleClass" class = "yieldSelectorIcon" src="./imgs/cowIcon.png" title = "Cattle" onclick="displayLevels('cattle');" style= "display: inline-block;">
+            <p class = "featuresText"></p><img id = "alfalfaClass" class = "yieldSelectorIcon" src="./imgs/alfalfaIcon.png" title = "Alfalfa" onclick="
+            displayLevels('alfalfa');" style = "display: inline-block;">
+            <p class = "featuresText"></p><img id = "grassHayClass" class = "yieldSelectorIcon" src="./imgs/grassHayIcon.png" title = "GrassHay" onclick= "displayLevels('grassHay');" style = "display: inline-block;">
+            <p class = "featuresText"></p><img id = "switchGrassClass" class = "yieldSelectorIcon" src="./imgs/switchGrassIcon.png" title = "Switch Grass" onclick="displayLevels('switchGrass');" style = "display: inline-block;">
+            <p class = "featuresText"></p><img id = "woodClass" class = "yieldSelectorIcon" src="./imgs/woodIcon.png" title = "Wood" onclick="displayLevels('wood');" style = "display: inline-block;">
+            <p class = "featuresText"></p><img id = "shortClass" class = "yieldSelectorIcon" src="./imgs/woodyBiomassIcon.png" title = "Woody Biomass" onclick="displayLevels('short');" style = "display: inline-block;">
+            
+         </div>
         
         <!-- Painter settings display -->
         <div id="settingsTab" class="consoleTab" style="display:none;">

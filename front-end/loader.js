@@ -13,29 +13,32 @@ function loadResources() {
     //Add a textureLoader to load textures for THREE.js
     var textureLoader = new THREE.TextureLoader();
 
-    //Load the land type textures
+    //Load the land type textures. Each land type has a number from 1 to 15.
     var textureClear = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_None.png');
-    var textureConventionalCorn = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conventional_Corn.png');
-    var textureConservationCorn = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conservation_Corn.png');
-    var textureConventionalSoybean = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conventional_Soybean.png');
-    var textureConservationSoybean = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conservation_Soybean.png');
-    var textureAlfalfa = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Alfalfa.png');
-    var texturePermanentPasture = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Permanent_Pasture.png');
-    var textureRotationalGrazing = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Rotational_Grazing.png');
-    var textureGrassHay = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Hay.png');
-    var texturePrairie = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Prairie.png');
-    var textureConservationForest = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conservation_Forest.png');
-    var textureConventionalForest = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conventional_Forest.png');
-    var textureShortWoody = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Woody_Bioenergy.png');
-    var textureHerbs = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Herbaceous_Perennial_Bioene.png');
-    var textureWetland = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Wetland.png');
-    var textureMixedFruitsVegetables = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Mixed_Fruits_and_Vegetables.png');
+    var textureConventionalCorn = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conventional_Corn.png'); //1
+    var textureConservationCorn = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conservation_Corn.png'); //2
+    var textureConventionalSoybean = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conventional_Soybean.png');//3
+    var textureConservationSoybean = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conservation_Soybean.png');//4
+    var textureAlfalfa = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Alfalfa.png');//5
+    var texturePermanentPasture = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Permanent_Pasture.png');//6
+    var textureRotationalGrazing = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Rotational_Grazing.png');//7
+    var textureGrassHay = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Hay.png');//8
+    var texturePrairie = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Prairie.png');//9
+    var textureConservationForest = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conservation_Forest.png');//10
+    var textureConventionalForest = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conventional_Forest.png');//11
+    var textureShortWoody = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Woody_Bioenergy.png');//12
+    var textureHerbs = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Herbaceous_Perennial_Bioene.png');//13
+    var textureWetland = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Wetland.png');//14
+    var textureMixedFruitsVegetables = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Mixed_Fruits_and_Vegetables.png');//15
+
+    //yield textures
+    //var textureCornGrain = textureLoader.load('./imgs/cell_images_bitmaps/cornGrainIcon.png'); //16
 
     //Add the land type textures to textureArray
     textureArray = [textureClear, textureConventionalCorn, textureConservationCorn, textureConventionalSoybean, textureConservationSoybean,
         textureAlfalfa, texturePermanentPasture, textureRotationalGrazing, textureGrassHay,
         texturePrairie, textureConservationForest, textureConventionalForest, textureHerbs, textureShortWoody,
-        textureWetland, textureMixedFruitsVegetables
+        textureWetland, textureMixedFruitsVegetables,// textureCornGrain
     ];
 
     //Add old pewi backgrounds to array after loaded
@@ -94,6 +97,39 @@ function loadResources() {
 
     //Added Strategic Wetlands Color to a lighter orange to emphasize the locations of the wetlands
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/FFB347.png')); // 41       Light Orange
+
+    //Added additional Yield Overlay Map Colors
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/8B008B.png')); // 42       Dark Magenta
+    
+    //Soybean Yield
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/ffffff.png')); // 43       White
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/ccffcc.png')); // 44       White Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/66ff66.png')); // 45       Lime Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/00ff00.png')); // 46       Medium Green
+
+    //GrassHay Yield
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/F9FFE6.png')); // 47       Almost White Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/d9ff66.png')); // 48       Light Yellowish Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/CCFF33.png')); // 49       Medium Yellowish Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/608000.png')); // 50       Army Green
+
+    //SwitchGrass Yield
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/C2F0C2.png')); // 51       Really Pale Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/33CC33.png')); // 52       Mediumish Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/1F7A1F.png')); // 53       Normalish Green
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/145214.png')); // 54       Darkish Green
+
+    //Wood Yield
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/F2E6D9.png')); // 55       Really Light Brown
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/d9b38c.png')); // 56       Medium Light Brown
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/ac7339.png')); // 57       Mediumish Brown
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/734D26.png')); // 58       Darker Medium Brown
+
+
+
+    
+
+
     //raindrop texture
     rainTexture = textureLoader.load("./imgs/raindrop.png");
 

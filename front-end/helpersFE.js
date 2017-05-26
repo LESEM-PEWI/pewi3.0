@@ -1044,6 +1044,43 @@ function showLevelDetails(value) {
         document.getElementById('soilClass').className = "featureSelectorIconSelected";
         document.getElementById('soilClassDetailsList').className = "physicalDetailsList";
     }
+    //Corn class legend
+    else if(value == 9){
+        document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
+        document.getElementById('cornClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 10){
+        document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
+        document.getElementById('soyClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 11){
+        document.getElementById('fruitDetailsList').className = "yieldDetailsList";
+        document.getElementById('fruitClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 12){
+        document.getElementById('cattleDetailsList').className = "yieldDetailsList";
+        document.getElementById('cattleClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 13){
+        document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
+        document.getElementById('alfalfaClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 14){
+        document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
+        document.getElementById('grassHayClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 15){
+        document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
+        document.getElementById('switchGrassClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 16){
+        document.getElementById('woodDetailsList').className = "yieldDetailsList";
+        document.getElementById('woodClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 17){
+        document.getElementById('shortDetailsList').className = "yieldDetailsList";
+        document.getElementById('shortClass').className = "yieldSelectorIconSelected";
+    }
 
     //hide ecosystem indicator legends
     if (value > -4 && value < 0) {
@@ -1058,7 +1095,7 @@ function showLevelDetails(value) {
     }
 
     //hide watershed feature legends
-    else if (value < -3) {
+    else if (value < -3 && value > -9) {
         var element = document.getElementsByClassName('physicalDetailsList');
         if (element.length > 0) {
             element[0].className = 'physicalDetailsListRolled';
@@ -1068,6 +1105,16 @@ function showLevelDetails(value) {
             element[0].className = 'featureSelectorIcon';
         }
     } //end else/if group
+    else if(value < -8){
+        var element = document.getElementsByClassName('yieldDetailsList');
+        if(element.length > 0) {
+            element[0].className = 'yieldDetailsListRolled';
+        }
+        element = document.getElementsByClassName('yieldSelectorIconSelected');
+        if(element.length > 0){
+            element[0].ckassName = 'yieldSelectorIcon';
+        }
+    }
 
 } //end showLevelDetails
 
@@ -1131,6 +1178,10 @@ function switchConsoleTab(value) {
     else if (value == 6) {
         document.getElementById('calendarImg').className = "imgSelected";
         document.getElementById('yearsTab').style.display = "block";
+    }
+    else if(value == 7){
+        document.getElementById('yieldImg').className = "imgSelected";
+        document.getElementById('yieldTab').style.display = "block"
     }
 
     //check if the map needs the levels legend displayed
@@ -1213,6 +1264,34 @@ function displayLevels(overlayHighlightType) {
         case 'soil':
             selectionHighlightNumber = 8;
             break;
+        case 'cornGrain':
+            selectionHighlightNumber = 9;
+            break;
+        case 'soy':
+            selectionHighlightNumber = 10;
+            break;
+        case 'fruit':
+            selectionHighlightNumber = 11;
+            break;
+        case 'cattle':
+            selectionHighlightNumber = 12;
+            break;
+        case 'alfalfa':
+            selectionHighlightNumber = 13;
+            break;
+        case 'grassHay':
+            selectionHighlightNumber = 14;
+            break;
+        case 'switchGrass':
+            selectionHighlightNumber = 15;
+            break;
+        case 'wood':
+            selectionHighlightNumber = 16;
+            break;
+        case 'short':
+            selectionHighlightNumber = 17;
+            break;
+
     } //end switch
 
     //map is not previously highlighted
