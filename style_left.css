@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-05-25T17:50:02-05:00
+ * @Last modified time: 2017-05-26T11:44:09-05:00
  */
 
 
@@ -12,6 +12,7 @@
   --font-size: 1vw;
   --left-console-top-value: 10.7vw;
   --left-console-width: 9.6vw;
+  --left-console-height: 30vw;
   --left-console-button-length: 3vw;
   --left-console-button-image-length: 2vw;
   --left-console-button-image-margin: 0.5vw;
@@ -155,6 +156,23 @@
   width: 100%;
 }
 
+#settingsTab {
+  height: 3vw;
+  left: 0;
+  position: absolute;
+  top: calc(var(--left-console-top-value) - 4vw);
+  /*top: calc(var(--left-console-top-value) + var(--left-console-height));*/
+  width: var(--left-console-width);
+}
+
+.painterIcon, .painterIconSelected {
+  border-radius: 50%;
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+  float: left;
+  height: var(--selector-icon-length);
+  margin: 0.5vw 1vw;
+  width: var(--selector-icon-length);
+}
 
 /*terrain selector*/
 
@@ -470,7 +488,7 @@ select {
   /*width: 210px;*/
 }
 
-.featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
+.featureSelectorIcon, .featureSelectorIconSelected {
   border-radius: 50%;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   height: var(--selector-icon-length);
@@ -519,6 +537,12 @@ select {
     top: 64px;
     width: 57.6px;
   }
+  #settingsTab{
+    height: 23px;
+    top: 41px;
+    /*top: 243px;*/
+    width: 57.6px;
+  }
   .consoleButton {
     height: 18px;
     width: 18px;
@@ -554,9 +578,9 @@ select {
   #featuresButton {
     top: 164px;
   }
-  #settingsButton {
+  /*#settingsButton {
     top: 182px;
-  }
+  }*/
   #precipTitle, #yearTitle {
     font-size: 6px;
     height: 8.4px;
@@ -577,15 +601,18 @@ select {
     margin-left: 17px;
     margin-top: 10px;
   }
-  .yearSelected, .yearNotSelected, .featureSelectorIcon, .featureSelectorIconSelected, .levelsSelectorIcon, .levelSelectorIconSelected, .painterIcon, .painterIconSelected {
+  .landSelectorIcon, .landSelectedIcon, .yearSelected, .yearNotSelected, .featureSelectorIcon, .featureSelectorIconSelected, .levelsSelectorIcon, .levelSelectorIconSelected, .painterIcon, .painterIconSelected {
     height: 15px;
     width: 15px;
   }
   .levelsSelectorIcon, .levelSelectorIconSelected {
     margin: 6px 18px 7.2px;
   }
-  .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
+  .featureSelectorIcon, .featureSelectorIconSelected {
     margin: 4.8px 18px 3px;
+  }
+  .painterIcon, .painterIconSelected {
+    margin: 4.8px 6px;
   }
   .levelsText, .featuresText {
     font-size: 6px;

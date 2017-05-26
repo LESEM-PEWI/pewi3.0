@@ -107,7 +107,12 @@
       <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
       <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
 
-      <div id="settingsButton" class="consoleButton" onclick="switchConsoleTab(5);"><img id="settingsImg" class="imgNotSelected" src="./imgs/settingsIcon.png"></div>
+      <!-- <div id="settingsButton" class="consoleButton" onclick="switchConsoleTab(5);"><img id="settingsImg" class="imgNotSelected" src="./imgs/settingsIcon.png"></div> -->
+    </div>
+
+    <div id="settingsTab">
+      <img id="cellPaint" class="painterIconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
+      <img id="gridPaint" class="painterIcon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
     </div>
 
     <!-- Create left-side console displays-->
@@ -350,10 +355,10 @@
       </div>
 
       <!-- Painter settings display -->
-      <div id="settingsTab" class="consoleTab" style="display:none;">
+      <!-- <div id="settingsTab" class="consoleTab" style="display:none;">
         <img id="cellPaint" class="painterIconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
         <img id="gridPaint" class="painterIcon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
-      </div>
+      </div> -->
 
       <!-- year display -->
       <div id="yearsTab" class="consoleTab" style="display:none;">
