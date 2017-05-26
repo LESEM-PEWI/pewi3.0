@@ -75,6 +75,8 @@ function initializeCamera() {
 
     //set up controls
     controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.minDistance = 120;
+    controls.maxDistance = 500;
 
     //add resize listener, so we can keep the aspect ratio correct
     window.addEventListener('resize', onResize, false);
