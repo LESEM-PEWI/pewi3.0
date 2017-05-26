@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-05-26T11:44:09-05:00
+ * @Last modified time: 2017-05-26T11:51:43-05:00
  */
 
 
@@ -173,6 +173,7 @@
   margin: 0.5vw 1vw;
   width: var(--selector-icon-length);
 }
+
 
 /*terrain selector*/
 
@@ -537,7 +538,7 @@ select {
     top: 64px;
     width: 57.6px;
   }
-  #settingsTab{
+  #settingsTab {
     height: 23px;
     top: 41px;
     /*top: 243px;*/
@@ -621,22 +622,22 @@ select {
   .levelDetailsList {
     left: 62px;
   }
-  .levelDetailsList, .levelDetailsListRolled{
+  .levelDetailsList, .levelDetailsListRolled {
     top: 128px;
     width: 51px;
   }
-  .physicalDetailsList{
+  .physicalDetailsList {
     left: 62px;
   }
-  .physicalDetailsList, .physicalDetailsListRolled{
+  .physicalDetailsList, .physicalDetailsListRolled {
     top: 128px;
     width: 89px;
   }
-  .levelsTextDetails{
+  .levelsTextDetails {
     margin-left: 9px;
     font-size: 6px;
   }
-  .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5, .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone, .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8, .soilColor{
+  .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5, .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone, .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8, .soilColor {
     height: 6px;
     /*margin: ;*/
     width: 6px;
