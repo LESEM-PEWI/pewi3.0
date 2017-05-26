@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-26T14:52:57-05:00
+ * @Last modified time: 2017-05-26T15:17:26-05:00
  * modified:
  *  drawD3LandPieChart()
  *  drawEcosystemRadar()
@@ -1448,8 +1448,8 @@ function drawEcosystemRadar(yearArray) {
     maxValue: 1,
     levels: 5,
     ExtraWidthX: graphLength,
-    TranslateX: graphLength * 0.487,//95
-    TranslateY: graphLength * 0.154//30
+    TranslateX: graphLength * 0.487, //95
+    TranslateY: graphLength * 0.154 //30
   }
 
   var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart');
@@ -1587,8 +1587,8 @@ var RadarChart = {
       radians: 2 * Math.PI,
       opacityArea: 0.2,
       ToRight: 5,
-      TranslateX: 70,//95
-      TranslateY: 30,//25
+      TranslateX: 70, //95
+      TranslateY: 30, //25
       ExtraWidthX: 100,
       ExtraWidthY: 100,
       color: d3.scaleOrdinal(d3.schemeCategory10)
@@ -1615,8 +1615,8 @@ var RadarChart = {
 
     var g = d3.select(id)
       .append("svg")
-      .attr("width", cfg.w * 1.97)//384
-      .attr("height", cfg.h * 1.23)//239
+      .attr("width", cfg.w * 1.97) //384
+      .attr("height", cfg.h * 1.23) //239
       .append("g")
       .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");;
 
@@ -1970,8 +1970,8 @@ function drawYieldRadar(yearArray) {
     maxValue: 1,
     levels: 5,
     ExtraWidthX: 300,
-    TranslateX: graphLength * 0.487,//95
-    TranslateY: graphLength * 0.154//30
+    TranslateX: graphLength * 0.487, //95
+    TranslateY: graphLength * 0.154 //30
   }
 
   //get elements in the child frame
