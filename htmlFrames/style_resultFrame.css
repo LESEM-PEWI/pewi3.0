@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-26T09:53:48-05:00
+ * @Last modified time: 2017-05-26T14:37:46-05:00
  */
 
 
@@ -436,7 +436,7 @@ text {
   width: 38.3%;
 }
 
-#radarLegend svg g g{
+#radarLegend svg g g {
   margin: 30% 0;
 }
 
