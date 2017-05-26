@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-05-26T15:07:46-05:00
+ * @Last modified time: 2017-05-26T15:12:09-05:00
  */
 
 
@@ -448,8 +448,11 @@
   width: 50px;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (min-width: 1200px) {
   #pewiTitle {
     left: 46%;
+  }
+  #startupInformationText {
+    left: 52%;
   }
 }
