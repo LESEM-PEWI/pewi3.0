@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-05-26T11:51:43-05:00
+ * @Last modified time: 2017-05-26T12:08:50-05:00
  */
 
 
@@ -160,8 +160,8 @@
   height: 3vw;
   left: 0;
   position: absolute;
-  top: calc(var(--left-console-top-value) - 4vw);
-  /*top: calc(var(--left-console-top-value) + var(--left-console-height));*/
+  /*top: calc(var(--left-console-top-value) - 4vw);*/
+  top: calc(var(--left-console-top-value) + var(--left-console-height));
   width: var(--left-console-width);
 }
 
@@ -540,8 +540,8 @@ select {
   }
   #settingsTab {
     height: 23px;
-    top: 41px;
-    /*top: 243px;*/
+    /*top: 41px;*/
+    top: 243px;
     width: 57.6px;
   }
   .consoleButton {
