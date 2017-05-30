@@ -48,10 +48,8 @@ var optionLabels = ["Hide conventional corn", "Hide conservation corn", "Hide co
 
 //addObjective allows for objectives to be added to the form dynamically
 function addObjective(addToDiv) {
-    var divToAdd = document.createElement('div');
-
     objectiveNumber++;
-
+    var divToAdd = document.createElement("div");
     divToAdd.innerHTML = "Objective " + objectiveNumber + "<br><br>" +
         addObjectiveType() + addMinValue() + addMaxValue() + addYearButtons() + addScript() + addAnimation() + addRequired() +
         "</div></div></div><br>";
@@ -59,6 +57,37 @@ function addObjective(addToDiv) {
     document.getElementById(addToDiv).appendChild(divToAdd);
 } //end addObjective
 
+//deleteObjective allows for objectives to be deleted from the form dynamically
+function deleteObjective() {
+    if(objectiveNumber>0)
+    {
+        var objectiveToDelete = prompt("Please enter an objective number:", objectiveNumber);
+        if(objectiveToDelete == "" || objectiveToDelete<0 || objectiveToDelete>objectiveNumber)
+        {
+            objectiveToDelete = prompt("Please enter a valid objective number:", objectiveNumber);
+        }
+        if(objectiveToDelete!=null)
+        {
+            var list = document.getElementById("objectiveDiv");
+            list.removeChild(list.childNodes[objectiveToDelete-1]);
+            objectiveNumber--;
+            for(var i = 0; i < objectiveNumber; i++)
+            {
+                var tempInt = i+1;
+                list.childNodes[i].childNodes[0].data = "Objective " + tempInt;
+                list.childNodes[i].childNodes[5].innerHTML = "Objective " + tempInt + " minimum score value:"
+                list.childNodes[i].childNodes[9].innerHTML = "Objective " + tempInt + " maximum score value:"
+                list.childNodes[i].childNodes[13].childNodes[0].innerHTML = "Select which year to monitor objective " + tempInt;
+                list.childNodes[i].childNodes[13].childNodes[1].childNodes[4].innerHTML = "If the user accomplishes objective " +
+                tempInt + ", PEWI should say:";
+                list.childNodes[i].childNodes[13].childNodes[1].childNodes[8].childNodes[0].innerHTML = "Select the animation to play if objective " +
+                tempInt + " is accomplished:";
+                list.childNodes[i].childNodes[13].childNodes[1].childNodes[8].childNodes[1].childNodes[9].childNodes[0].innerHTML = "Is objective " +
+                tempInt + " required for the user to complete the exercise?";
+            }
+        }
+    }
+} //end deleteObjective
 //addObjectiveType adds multiple choices for score type to monitor
 function addObjectiveType() {
     var string = "<div><label>Choose the score type to monitor for this objective: </label><select id='scoretype-" + objectiveNumber + "'>";

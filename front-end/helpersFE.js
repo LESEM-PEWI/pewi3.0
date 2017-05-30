@@ -4,7 +4,7 @@
           mouse, raycaster,
           isShiftDown, modalUp, precip, 
           painter, Totals, river,
-          Results, initData, hoveredOver*/
+          Results, initData, hoveredOver, currentPlayer*/
 
 var currentRow = -1;
 var leftToolConsoleWasOpen;
@@ -22,6 +22,20 @@ var currentHighlightType = 0;
 var currentHighlightTypeString = null;
 var immutablePrecip = false;
 var clickAndDrag = false;
+var previousTileId = [];
+var previousPainter = [];
+var lastPainter = null;
+var lastSelectedPainter = 1;
+var paintSwitch = false;
+var undo = false;
+var previous = false;
+
+var previousOverlay = null;
+var previousTab = null;
+var overlayedToggled = false;
+
+var inResults = false;
+var inDispLevels = false;
 var birds = [],
     bird;
 var boids = [],
@@ -124,6 +138,43 @@ function highlightTile(tileId) {
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(tileId) {
 
+    //determines whether or not the given tile should be added to the tile history (for undo function)
+    if(previousTileId.length>0)
+    {
+        if (!previousTileId.includes(tileId))
+        {
+            previous = false;
+        }
+    }
+    else
+    {
+        previous = false;
+    }
+    //set tiles to change as the previous tile in that position (undo function).
+    if (previousTileId[previousTileId.length-1] == tileId && undo==true)
+    {
+        lastPainter = boardData[currentBoard].map[tileId].landType[currentYear];
+        painter = previousPainter[previousPainter.length-1];
+        previousTileId.splice(previousTileId.length-1,1);
+        previousPainter.splice(previousPainter.length-1,1);
+        undo = false;
+        paintSwitch = false;
+    }
+    //store previous tile data only if it's not a previously-listed tile in the array
+    else if (previous == false)
+    {
+        //save previous tile information
+        previousTileId = previousTileId.concat(tileId);
+        previousPainter = previousPainter.concat(boardData[currentBoard].map[tileId].landType[currentYear]);
+        previous = true;
+        //since the undo function assumes the paint switched to another type (even when the user didn't), the painter will
+        // will equal the actual selected painter after the undo function is performed.
+        if(lastPainter!=null && !paintSwitch)
+        {
+            painter = lastSelectedPainter;
+            lastPainter = null;
+        }
+    }
     //if land type of tile is nonzero
     if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
 
@@ -448,6 +499,17 @@ function refreshBoard(bypassFromKeyEvent) {
 
 } //end refreshBoard
 
+//revertChanges undos the users previous tile changes, and goes back to the previous board instance
+function revertChanges()
+{
+    if(previousTileId.length>0 && !inResults && !inDispLevels)
+    {
+        undo = true;
+        changeLandTypeTile(previousTileId[previousTileId.length-1]);
+        undo = false;
+    }
+}
+
 //transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
 
@@ -578,6 +640,14 @@ function onDocumentMouseMove(event) {
         //if painter tool type is the clickAndDrag painter
         else if (clickAndDrag) {
             var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
+            if(currentTile==previousTileId[previousTileId.length-1] && previousPainter.length>0)
+            {
+                previous = true;
+            }
+            else
+            {
+                previous = false;
+            }
             if (boardData[currentBoard].map[currentTile].landType[0] != 0) changeLandTypeTile(currentTile);
         }
         else {
@@ -632,6 +702,7 @@ function onDocumentMouseDown(event) {
                             var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
 
                             for (var i = 0; i < changedTiles.length; i++) {
+                                previous = false;
                                 changeLandTypeTile(changedTiles[i] - 1);
                             }
 
@@ -766,13 +837,30 @@ function onDocumentKeyDown(event) {
             break;
             //case v - key to record multiplayer fields
         case 86:
-            if (multiplayerAssigningModeOn) endMultiplayerAssignMode();
+            if (multiplayerAssigningModeOn) {  endMultiplayerAssignMode();}
             break;
             //case esc - view escape menu
         case 27:
             highlightTile(-1);
             toggleEscapeFrame();
             break;
+        case 85:
+
+            if(!inResults && !inDispLevels && !overlayedToggled)
+
+            {
+                revertChanges();
+            }
+            undo = false;
+            break;
+
+        case 79:
+            if(previousOverlay!=null)
+            {
+                toggleOverlay();
+            }
+            break;
+
             //no default handler
     } //end switch
 } //end onDocumentKeyDown
@@ -834,6 +922,10 @@ function toggleEscapeFrame() {
 
 //paintChange changes the highlighted color of the selected painter and updates painter
 function changeSelectedPaintTo(newPaintValue) {
+    //paint color has been switched
+    paintSwitch = true;
+    painter = lastSelectedPainter;
+    lastSelectedPainter = newPaintValue;
     //check to see if multiplayer Assignment Mode is On
     if (!multiplayerAssigningModeOn) {
 
@@ -865,7 +957,7 @@ function changeSelectedPaintTo(newPaintValue) {
 
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
-
+    inResults = true;
     //if something else does not have precedence
     if (!modalUp) {
 
@@ -918,7 +1010,7 @@ function resultsStart() {
 
 //resultsEnd hides the results and returns the menus to the screens
 function resultsEnd() {
-
+    inResults = false;
     //modal is no longer up
     modalUp = false;
 
@@ -1141,6 +1233,12 @@ function updatePrecip(year) {
 //switchConsoleTab updates the currently selected toolbar on the left
 function switchConsoleTab(value) {
 
+    //Store last tab
+    if(value!=1)
+    {
+        previousTab = value;
+    }
+
     //turn off selected image in tabs
     var element = document.getElementsByClassName("imgSelected");
     element[0].className = "imgNotSelected";
@@ -1153,29 +1251,37 @@ function switchConsoleTab(value) {
     }
 
     //then we'll turn back on the tab that was switched to, clever eh?
+   
 
     //update the left console tab according to the value selected
+    
     if (value == 1) {
+        inDispLevels = false;
         document.getElementById('terrainImg').className = "imgSelected";
         document.getElementById('painterTab').style.display = "block";
     }
     else if (value == 2) {
+        inDispLevels = false;
         document.getElementById('precipImg').className = "imgSelected";
         document.getElementById('precipTab').style.display = "block";
     }
     else if (value == 3) {
+        inDispLevels = true;
         document.getElementById('levelsImg').className = "imgSelected";
         document.getElementById('levelsTab').style.display = "block";
     }
-    else if (value == 4) {
+    else if (value == 4 ) {
+        inDispLevels = true;
         document.getElementById('featuresImg').className = "imgSelected";
         document.getElementById('featuresTab').style.display = "block";
     }
     else if (value == 5) {
+        inDispLevels = false;
         document.getElementById('settingsImg').className = "imgSelected";
         document.getElementById('settingsTab').style.display = "block";
     }
     else if (value == 6) {
+        inDispLevels = false;
         document.getElementById('calendarImg').className = "imgSelected";
         document.getElementById('yearsTab').style.display = "block";
     }
@@ -1184,6 +1290,7 @@ function switchConsoleTab(value) {
         document.getElementById('yieldTab').style.display = "block"
     }
 
+    
     //check if the map needs the levels legend displayed
     if (mapIsHighlighted) {
         displayLevels();
@@ -1229,7 +1336,6 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
 
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(overlayHighlightType) {
-
     var selectionHighlightNumber = 0;
 
     //update console tabs
@@ -1237,7 +1343,8 @@ function displayLevels(overlayHighlightType) {
     if (element[0]) element[0].className = 'featureSelectorIcon';
     element = document.getElementsByClassName('levelSelectorIconSelected');
     if (element[0]) element[0].className = 'levelsSelectorIcon';
-
+    //When an overlay is toggled, set toggledOverlay to true
+    overlayedToggled = true;
     //record new highlighting selection
     switch (overlayHighlightType) {
         case 'nitrate':
@@ -1294,6 +1401,12 @@ function displayLevels(overlayHighlightType) {
 
     } //end switch
 
+    //save selectionHighlightNumber for quick access via hotkey
+    if(selectionHighlightNumber!=0)
+    {
+        previousOverlay = overlayHighlightType;
+    }
+
     //map is not previously highlighted
     if (!mapIsHighlighted) {
         drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
@@ -1319,6 +1432,22 @@ function displayLevels(overlayHighlightType) {
         } //end else/if group
     } //end else/if mapIsHighlighted
 } //end displayLevels()
+
+//toggleOverlay allows the user to quickly switch between an overlay map and the land type mode
+function toggleOverlay()
+{
+    if(overlayedToggled == false)
+    {
+        switchConsoleTab(previousTab);
+        displayLevels(previousOverlay);
+        overlayedToggled = true;
+    }
+    else
+    {
+        switchConsoleTab(1);
+        overlayedToggled = false;
+    }
+} //end toggleOverlay()
 
 //getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
 function getHighlightColor(highlightType, tileId) {
@@ -2324,20 +2453,38 @@ function togglePopupDisplay() {
     } //end if
 } // togglePopupDisplay()
 
+//randomAllowed determines whether or not the current mode permits tile randomization
+function randomAllowed(modeName) {
+    //Randomization is not allowed in play (P) or utilities (U)
+    if(modeName == "P" || modeName == "U")
+    {
+        randAllow = "false";
+        localStorage.setItem("randAllow",randAllow);
+    }
+    //Randomization is allowed in sandbox mode
+    else
+    {
+        randAllow = "true";
+        localStorage.setItem("randAllow",randAllow);
+    }
+} //end randomAllowed
+
 //randomizeBoard randomly selects a landtype for each tile
 function randomizeBoard() {
 
-    var prevPainter = painter;
-    //for whole board
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-        //if tile exists
-        if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
-            //getRandomInt is in back-end helperMethods
-            if (!multiplayerAssigningModeOn) painter = getRandomInt(1, 15);
-            else painter = getRandomInt(1, 6);
-            changeLandTypeTile(i);
-        }
-    } //end for all tiles
+  var prevPainter = painter;
+  //for whole board (as long as randomization is allowed)
+	if(localStorage.getItem("randAllow")=="true" && !multiplayerAssigningModeOn)
+	{
+		for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+			//if tile exists
+			if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
+				//getRandomInt is in back-end helperMethods
+				painter = getRandomInt(1, 15);
+				changeLandTypeTile(i);
+			}	
+		} //end for all tiles
+	}
 
     painter = prevPainter;
 
@@ -2351,13 +2498,15 @@ function toggleVisibility() {
 
     //reset default off items
     document.getElementById('statFrame').style.display = "none";
-    document.getElementById('year0Button').style.display = "none";
+    //document.getElementById('year0Button').style.display = "none";
     document.getElementById('paintPlayer1').style.display = "none";
     document.getElementById('paintPlayer2').style.display = "none";
     document.getElementById('paintPlayer3').style.display = "none";
     document.getElementById('paintPlayer4').style.display = "none";
     document.getElementById('paintPlayer5').style.display = "none";
     document.getElementById('paintPlayer6').style.display = "none";
+    document.getElementById('playerAddButton').style.display = "none";
+    //currentPlayer=1;
 
 
     //reset default on items
@@ -2403,9 +2552,11 @@ function toggleVisibility() {
                     immutablePrecip = true;
                     break;
                 case "multiAssign":
+
                     for (var j = 1; j <= 6; j++) {
                         document.getElementById('paintPlayer' + j).style.display = "inline-block";
                     }
+                    document.getElementById('playerAddButton').style.display= "inline-block";
                     break;
                 default:
                     document.getElementById(arrLines[i]).style.display = "none";
@@ -2438,6 +2589,8 @@ function toggleVisibility() {
         }
         //check if the precip shouldn't be changeable
         // if this is the case, then show the precip values, but not in a drop-down selector
+        if(multiplayerAssigningModeOn)
+            immutablePrecip=false;//***************************************************trial
         if (immutablePrecip) {
             document.getElementById(elementIdString).style.display = "none";
 
@@ -2530,7 +2683,9 @@ function startOptions() {
 function endMultiplayerAssignMode() {
     //create an iframe, select up to 6 players
     //then downloads
+
     document.getElementById('multiplayer').style.visibility = "visible";
+
 } //end endMultiAssignMode
 
 //hideMultiDownload hides the multiPlayer element
@@ -2605,3 +2760,144 @@ function toggleChangeLandType() {
     clearToChangeLandType = 
       (clearToChangeLandType) ? false : true ;
 } //end toggleChangeLandType
+function addPlayerAndTransition() {
+    
+    console.log("Add button was hit");
+    var totalPlayersAllowed = 6;
+    var nextPlayer = currentPlayer + 1;
+   
+    //make next button appear (has some prebuilt functionality for expanded number of players)
+    if(currentPlayer < totalPlayersAllowed - 1) {
+
+        document.getElementById("paintPlayer" + nextPlayer).className = "playerButton";
+        document.getElementById("player" + nextPlayer + "Image").className = "playerSelected";
+        document.getElementById("player" + nextPlayer + "Image").className = "landSelectorIcon";
+        document.getElementById("player" + nextPlayer + "Image").style.display = "inline-block";
+
+        
+    }
+    
+    //make last button appear and remove the "+" Button (has some prebuilt functionality for expanded number of years)
+    if(currentPlayer == totalPlayersAllowed - 1) {
+        
+        document.getElementById("paintPlayer6").className = "playerButton";
+        document.getElementById("player6Image").className = "playerSelected";
+        document.getElementById("player6Image").style.display = "inline-block";
+        document.getElementById("playerAddButton").style.display = "none";
+
+        
+    }
+    
+    switchPlayerTab(nextPlayer);
+   
+    console.log("Current player %s",document.getElementsByClassName("playerNotSelected")[0].id);
+    console.log("Next player %s",document.getElementsByClassName("playerSelected")[0].id);
+    transitionToPlayer(nextPlayer);
+    changeSelectedPaintTo(nextPlayer);
+    
+} //end addYearAndTransition
+
+
+//switches between players
+function switchPlayerTab(playerNumberToChangeTo) {
+
+    //get the currently selected year and make it not selected
+    //var elements = document.getElementsByClassName("playerSelected");
+
+    //elements[0].className = "playerNotSelected";
+    document.getElementById("player"+currentPlayer+"Image").className="playerNotSelected";
+    //then toggle on the selected year
+    var playerIdString = "player" + playerNumberToChangeTo + "Image";
+    document.getElementById(playerIdString).className = "playerSelected";
+}
+
+
+
+function transitionToPlayer(playerNumber) {
+
+    currentPlayer = playerNumber;
+    console.log("Total number of players : %s",currentPlayer);
+    boardData[currentBoard].updateBoard();
+
+    
+
+   
+
+   
+
+   // refreshBoard();
+} //end transitionToYear
+
+//resetMultiplayer() undos the display-changes made while assigning multiplayers
+function resetMultiPlayer()
+{
+currentPlayer=1;
+document.getElementById("player1Image").style.display="inline-block";
+document.getElementById("paintPlayer1").className = "playerButton";
+document.getElementById("playerAddButton").style.display="inline-block";
+document.getElementById("player1Image").className="playerSelected";
+
+
+for(var i = 2; i <= 6; i++)
+{
+document.getElementById("player"+i+"Image").style.display="none";
+document.getElementById("paintPlayer"+i).className = "playerButtonHidden";
+document.getElementById("player"+i+"Image").className = "playerNotSelected";
+
+}
+parent.loadLevel(-1);
+
+
+//document.getElementById('calendarImg').style.display="block";
+   // document.getElementById('yearsTab').style.display="none";
+    //document.getElementById('levelsImg').style.display="block";
+    //document.getElementById('levelsImg').onclick="";
+  // document.getElementById("levelsTab").style.display="none";
+
+
+   // document.getElementById("hiddenYear").id="yearButton";
+   // document.getElementById("hiddenLevels").id="levelsButton";
+
+//$("tabButtons").replaceWith=originalDiv;
+}
+//multiplayerMode hides all unnecessary options from screen
+function multiplayerMode()
+{
+    if(multiplayerAssigningModeOn)
+    {
+
+   // document.getElementById('calendarImg').style.display="none";
+   // document.getElementById('yearsTab').style.display="none";
+   // document.getElementById('levelsImg').style.display="none";
+   //document.getElementById('levelsImg').onclick="";
+  // document.getElementById("levelsTab").style.display="none";
+                document.getElementById("message").style.display="block";
+            document.getElementById("player1Image").style.display="inline-block";
+            document.getElementById("paintPlayer1").className = "playerButton";
+            document.getElementById("playerAddButton").style.display="inline-block";
+            document.getElementById("player1Image").className="playerSelected";
+     document.getElementById("levelsButton").style.display="none";
+    document.getElementById("yearButton").style.display="none";
+        document.getElementById("playerResetImage").style.display="inline-block";
+
+    }
+
+
+}
+function multiplayerExit()
+{
+ document.getElementById("levelsButton").style.display="block";
+    document.getElementById("yearButton").style.display="block";
+    document.getElementById("playerResetImage").style.display="none";
+    //resetMultiPlayer();
+    document.getElementById("message").style.display="none";
+    multiplayerAssigningModeOn=false;
+    //boardData[currentBoard].updateBoard();
+
+
+}
+function getNumberOfPlayers()
+{
+    return currentPlayer;
+}
+

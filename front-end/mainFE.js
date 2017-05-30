@@ -19,6 +19,7 @@ var onYear = "year1";
 var painter = 1;
 var currentBoard = -1;
 var currentYear = 1;
+var currentPlayer = 1;
 var modalUp = false;
 var isShiftDown = false;
 var counter = 0;
@@ -74,6 +75,8 @@ function initializeCamera() {
 
     //set up controls
     controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.minDistance = 120;
+    controls.maxDistance = 500;
 
     //add resize listener, so we can keep the aspect ratio correct
     window.addEventListener('resize', onResize, false);
@@ -320,12 +323,12 @@ function switchBoards(newBoard) {
 function setupBoardFromFile(file) {
 
     //addBoard
-    var boardFromFile = new GameBoard();
-    loadBoard(boardFromFile, file);
+        var boardFromFile = new GameBoard();
+        loadBoard(boardFromFile, file);
 
-    switchBoards(boardFromFile);
+        switchBoards(boardFromFile);
 
-    return 1;
+        return 1;
 
 } //end setupBoardFromFile
 
@@ -333,13 +336,27 @@ function setupBoardFromFile(file) {
 function setupBoardFromUpload(data) {
 
     //addBoard
-    var boardFromUpload = new GameBoard();
-    parseInitial(data);
-    propogateBoard(boardFromUpload);
+    //Length of the csv object when empty is 3
+    var isEmpty = Object.getOwnPropertyNames(data).length == 3;
+    if(!isEmpty)
+    {
+        var boardFromUpload = new GameBoard();
+        parseInitial(data);
+        propogateBoard(boardFromUpload);
 
-    switchBoards(boardFromUpload);
-    previousHover = null;
-
+        switchBoards(boardFromUpload);
+        previousHover = null;
+    }
+    //If file is empty, load the default level
+    else if (!multiplayerAssigningModeOn)
+    {
+        parent.loadLevel(levelGlobal);
+    }
+    //If file is empty and multiplayer is active, load the level multiplayer level creator
+    else
+    {
+    parent.loadLevel(-1);
+    }
 } //end setupBoardFromUpload
 
 //switchToZoomView updates a zoom template map with information from the current full map
