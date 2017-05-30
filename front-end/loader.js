@@ -122,7 +122,12 @@ function loadResources() {
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/ac7339.png')); // 54       Mediumish Brown
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/734D26.png')); // 55       Darker Medium Brown
 
+    //Fruits Yield
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/ff4000.png')); // 56       Red
 
+    //Cattle Yield
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/000000.png')); // 57       Black
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/CECACA.png')); // 58       Light Grey
 
     
 

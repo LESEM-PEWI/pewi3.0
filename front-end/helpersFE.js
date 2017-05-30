@@ -1651,6 +1651,106 @@ function getHighlightColor(highlightType, tileId) {
                 return 55;
             }
     }
+     else if(highlightType == "fruit")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 0;
+            case "B":
+                return 25;
+            case "C":
+                return 56;
+            case "D":
+                return 45;
+            case "G":
+                return 0;
+            case "K":
+                return 45;
+            case "L":
+                return 56;
+            case "M":
+                return 56;
+            case "N":
+                return 0;
+            case "O":
+                return 56;
+            case "Q":
+                return 56;
+            case "T":
+                return 56;
+            case "Y":
+                return 45;
+            }
+    }
+    else if(highlightType == "cattle")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 57;
+            case "B":
+                return 43;
+            case "C":
+                return 58;
+            case "D":
+                return 33;
+            case "G":
+                return 43;
+            case "K":
+                return 58;
+            case "L":
+                return 58;
+            case "M":
+                return 57;
+            case "N":
+                return 57;
+            case "O":
+                return 43;
+            case "Q":
+                return 57;
+            case "T":
+                return 57;
+            case "Y":
+                return 57;
+            }
+    }
+   
+    else if(highlightType == "short")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 55;
+            case "B":
+                return 55;
+            case "C":
+                return 55;
+            case "D":
+                return 55;
+            case "G":
+                return 55;
+            case "K":
+                return 55;
+            case "L":
+                return 55;
+            case "M":
+                return 55;
+            case "N":
+                return 55;
+            case "O":
+                return 55;
+            case "Q":
+                return 55;
+            case "T":
+                return 55;
+            case "Y":
+                return 55;
+            }
+    }
 } //end getHighlightColor
 
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile

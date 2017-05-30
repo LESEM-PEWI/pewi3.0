@@ -203,8 +203,12 @@ body {
     top: 380px;
 }
 
-#settingsButton {
+#yieldButton{
     top:420px;
+}
+
+#settingsButton {
+    top:460px;
 }
 
 .imgSelected {
@@ -496,7 +500,7 @@ select {
 
 .cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4, .soyBean1, .soyBean2, .soyBean3, .soyBean4, .fruit1, .fruit2, .fruit3, .fruit4, 
 .cattle1, .cattle2, .cattle3, .cattle4, .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4, .grassHay1, .grassHay2, .grassHay3,.grassHay4,
-.switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4, .wood1, .wood2, .wood3, .wood4, .short1, .short2, .short3, .short4{
+.switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4, .wood1, .wood2, .wood3, .wood4, .short1{
     height: 15px;
     margin: 5px 0px 10px 10px;
     width: 15px;
@@ -530,28 +534,28 @@ select {
 }
 
 .fruit1{
-    background-color: #ffffc9;
+    background-color: #ff4000;
 }
 .fruit2{
-    background-color: #c7eab4;
+    background-color: #e6bb00;
 }
 .fruit3{
-    background-color: #7fcebb;
+    background-color: #66ff66;
 }
 .fruit4{
-    background-color: #41b7c5;
+    background-color: #aa4497;
 }
 .cattle1{
-    background-color: #ffffc9;
+    background-color: #ffffff;
 }
 .cattle2{
-    background-color: #c7eab4;
+    background-color: #CECACA;
 }
 .cattle3{
-    background-color: #7fcebb;
+    background-color: #5e6e71;
 }
 .cattle4{
-    background-color: #41b7c5;
+    background-color: #000000;
 }
 
 .alfalfa1{
@@ -604,18 +608,11 @@ select {
     background-color: #734d26;
 }
 .short1{
-    background-color: #ffffc9;
+    background-color: #734D26;
 }
-.short2{
-    background-color: #c7eab4;
+#shortDetailsList{
+    width: 220px;
 }
-.short3{
-    background-color: #7fcebb;
-}
-.short4{
-    background-color: #41b7c5;
-}
-
 
 .featureSelectorIcon, .featureSelectorIconSelected, .painterIcon, .painterIconSelected {
     border-radius: 50% ;
