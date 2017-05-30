@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-26T15:17:26-05:00
+ * @Last modified time: 2017-05-30T17:20:14-05:00
  * modified:
  *  drawD3LandPieChart()
  *  drawEcosystemRadar()
@@ -1553,15 +1553,28 @@ function drawEcosystemRadar(yearArray) {
   legend.append('text')
     .attr('x', legendRectSize + legendSpacing)
     .attr('y', legendRectSize - legendSpacing)
-    // .attr('x', 6)
-    // .attr('y', offsetH )
     .text(function(d) {
       return d;
     });
 
-  // d3.select(checkboxes)
-  // .attr('x', legendRectSize + legendSpacing)
-  // .attr('y', legendRectSize - legendSpacing);
+  // add checkbox
+  // legend.append('foreignObject')
+  //   .attr('id', 'checks')
+  //   .attr('class', 'check')
+  //   .attr('style', 'visibility: visible;')
+  //   .attr('width', 20)
+  //   .attr('height', 70)
+  //   .attr('x', 70)
+  //   .attr('y', -4)
+  //
+  //   .append('xhtml:input')
+  //   .attr('id', 'checkboxYear1')
+  //   .attr('class', 'yearCheckbox')
+  //   .attr('onclick', 'radarPlotYearToggle(1);')
+  //   .attr('width', legendRectSize)
+  //   .attr('height', legendRectSize)
+  //   .attr('type', 'checkbox');
+
 } //end  drawEcosystemRadar()
 
 
