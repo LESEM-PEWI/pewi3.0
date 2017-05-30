@@ -1,0 +1,669 @@
+/**
+ * @Date:   2017-05-25T10:59:40-05:00
+ * @Last modified time: 2017-05-26T12:08:50-05:00
+ */
+
+
+/* css variable declaration */
+
+:root {
+  --consoleButton-height: 2.81vw;
+  --first-consoleButton-top: 15.47vw;
+  --font-size: 1vw;
+  --left-console-top-value: 10.7vw;
+  --left-console-width: 9.6vw;
+  --left-console-height: 30vw;
+  --left-console-button-length: 3vw;
+  --left-console-button-image-length: 2vw;
+  --left-console-button-image-margin: 0.5vw;
+  --level-indicator-length: 1vw;
+  --selector-icon-length: 2.5vw;
+  --title-font-weight: 900;
+  --transition-duration: 0.4s;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+/**left console buttons or toolbar**/
+
+.consoleButton {
+  background-color: rgba(0, 0, 0, 0.9);
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 0px;
+  border-right: 0px solid #F0A61D;
+  border-top-right-radius: 0px;
+  height: var(--left-console-button-length);
+  position: absolute;
+  transition-property: none;
+  transition-property: left;
+  width: var(--left-console-button-length);
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+.consoleButton:hover {
+  box-shadow: 8px 0px 10px -4px rgba(240, 166, 29, 0.8);
+}
+
+#undoButton:hover {
+  box-shadow: 0 0px 8px 2px rbg(0, 0, 0, 0.8);
+}
+
+#toolsButton:hover {
+  box-shadow: 0 0px 8px 2px rgba(0, 0, 0, 0.8);
+}
+
+#undoButton {
+  border-bottom-right-radius: 5px;
+  top: 100px;
+}
+
+#toolsButton {
+  top: var(--left-console-top-value);
+  background-image: none;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-bottom-right-radius: 5px;
+}
+
+#pick {
+  margin: var(--left-console-button-image-margin);
+  width: var(--left-console-button-image-length);
+}
+
+.tabButtons, #toolsButton, #undoButton {
+  left: var(--left-console-width);
+  position: absolute;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+.tabButtonsRolled {
+  left: -4.26vw;
+  position: absolute;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+.imgSelected {
+  border-right: 2px solid #F0A61D;
+  margin: var(--left-console-button-image-margin);
+  width: var(--left-console-button-image-length);
+}
+
+.imgNotSelected {
+  border-right: 0px solid #F0A61D;
+  margin: var(--left-console-button-image-margin);
+  width: var(--left-console-button-image-length);
+}
+
+#terrainButton {
+  top: var(--first-consoleButton-top);
+}
+
+#precipButton {
+  top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
+}
+
+#yearButton {
+  top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
+}
+
+#levelsButton {
+  top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
+}
+
+#featuresButton {
+  top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
+}
+
+
+/*#settingsButton {
+  top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
+}*/
+
+
+/**left console content container**/
+
+#leftConsole {
+  background-color: rgba(0, 0, 0, 0.7);
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 12px;
+  height: 30vw;
+  position: absolute;
+  top: var(--left-console-top-value);
+  width: var(--left-console-width);
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+
+/* needed for sliding  */
+
+.leftConsole {
+  left: 0px;
+}
+
+.leftConsoleRolled {
+  left: calc( -1*var(--left-console-width));
+}
+
+
+/* The content of each tab */
+
+.consoleTab {
+  left: 0px;
+  padding: 4px;
+  width: 100%;
+}
+
+#settingsTab {
+  height: 3vw;
+  left: 0;
+  position: absolute;
+  /*top: calc(var(--left-console-top-value) - 4vw);*/
+  top: calc(var(--left-console-top-value) + var(--left-console-height));
+  width: var(--left-console-width);
+}
+
+.painterIcon, .painterIconSelected {
+  border-radius: 50%;
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+  float: left;
+  height: var(--selector-icon-length);
+  margin: 0.5vw 1vw;
+  width: var(--selector-icon-length);
+}
+
+
+/*terrain selector*/
+
+#painterTab {
+  /*display: inline-block;*/
+  height: 100%;
+  -moz-column-count: 2;
+  -webkit-column-count: 2;
+  column-count: 2;
+  /*-moz-column-gap: 1em;*/
+  /*-webkit-column-gap: 1em;*/
+  /*column-gap: 1em;*/
+}
+
+#painterTab-leftcol {
+  width: calc(var(--left-console-width) / 2);
+  display: block;
+  left: 0.5vw;
+  position: absolute;
+}
+
+#painterTab-rightcol {
+  width: calc(var(--left-console-width) / 2);
+  display: block;
+  left: 5vw;
+  position: absolute;
+}
+
+
+/**inner elements of left console**/
+
+
+/*terrain selector*/
+
+.landSelectorIcon, .landSelectedIcon {
+  display: block;
+  height: 2.5vw;
+  width: 2.5vw;
+  position: relative;
+  border-radius: 50%;
+  margin: 0.5vw;
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+}
+
+.landSelectorIcon:hover {
+  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+.landSelectedIcon {
+  box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+
+.landSelectedIcon:hover {
+  box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+}
+
+
+/*precip selector*/
+
+.styled-select {
+  background: #3b3b3b;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  outline: none;
+  margin: 0.5vw;
+  padding: 0.2vw;
+  height: 4vw;
+  width: 7.5vw;
+  text-align: center;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+
+.year-precip-select {
+  height: 1.8vw;
+  width: 5vw;
+}
+
+option {
+  font-size: 1vw;
+}
+
+#precipTitle, #yearTitle {
+  color: #fff;
+  font-size: var(--font-size);
+  font-weight: var(--title-font-weight);
+  margin: 0.3vw;
+  padding: 0.2vw;
+  text-align: center;
+}
+
+
+/* appear when development merge Issue94  */
+
+#precipTab {
+  color: white;
+  font-size: 18px;
+}
+
+#year0PrecipContainer {
+  display: block;
+}
+
+select {
+  font-size: 14px;
+  margin: 5px;
+}
+
+
+/** year buttons**/
+
+.yearButton {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+  border-radius: 50%;
+  height: var(--selector-icon-length);
+  display: inline-block;
+  margin-left: 3vw;
+  margin-top: 1.2vw;
+  width: var(--selector-icon-length);
+}
+
+.yearSelected {
+  border-radius: 50%;
+  box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+  height: var(--selector-icon-length);
+  width: var(--selector-icon-length);
+}
+
+.yearNotSelected {
+  box-shadow: none;
+  height: var(--selector-icon-length);
+  width: var(--selector-icon-length);
+}
+
+.yearButton:hover {
+  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+.yearButtonHidden, .yearImageHidden {
+  display: none;
+}
+
+#yearPlusButton {
+  position: absolute;
+  top: 70px;
+}
+
+
+/*levels map selector*/
+
+.levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5 {
+  height: var(--level-indicator-length);
+  /*margin: 10px 0px 10px 10px;*/
+  margin: 8%;
+  width: var(--level-indicator-length);
+}
+
+.levelColor1 {
+  background-color: #e6bb00;
+}
+
+.levelColor2 {
+  background-color: #c97b08;
+}
+
+.levelColor3 {
+  background-color: #ad490d;
+}
+
+.levelColor4 {
+  background-color: #9a3010;
+}
+
+.levelColor5 {
+  background-color: #871c12;
+}
+
+.levelDetailsList, .levelDetailsListRolled {
+  margin: 15px 0px 0px 0px;
+  position: absolute;
+  background-color: black;
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 12px;
+  top: 21.4vw;
+  width: 8.5vw;
+  /*top: 305px;*/
+  /*width: 135px;*/
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+.levelDetailsList {
+  /*left: 150px;*/
+  left: 10.4vw;
+}
+
+.levelDetailsListRolled {
+  left: -1000px;
+}
+
+.levelsText {
+  color: #fff;
+  font-size: var(--font-size);
+  font-weight: var(--title-font-weight);
+  margin-top: 0.5vw;
+  text-align: center;
+}
+
+.levelsTextDetails {
+  color: #fff;
+  margin-left: 1.8vw;
+  /*margin-left: 22px;*/
+  white-space: nowrap;
+}
+
+.levelsSelectorIcon, .levelSelectorIconSelected {
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+  margin: 1vw 3vw 1.2vw;
+  height: var(--selector-icon-length);
+  width: var(--selector-icon-length);
+}
+
+.levelsSelectorIcon:hover {
+  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+.levelSelectorIconSelected {
+  box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+
+.levelSelectorIconSelected:hover {
+  box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+}
+
+
+/*physical features map selector*/
+
+.floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone, .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8, .soilColor {
+  margin: 5px 0px 10px 10px;
+  height: var(--level-indicator-length);
+  width: var(--level-indicator-length);
+}
+
+.floodColor1 {
+  background-color: #ffffc9;
+}
+
+.floodColor2 {
+  background-color: #c7eab4;
+}
+
+.floodColor3 {
+  background-color: #7fcebb;
+}
+
+.floodColor4 {
+  background-color: #41b7c5;
+}
+
+.floodColor5 {
+  background-color: #2f7eb7;
+}
+
+.floodColorNone {
+  border: 0px;
+}
+
+.drainageColor1 {
+  background-color: #0053b3;
+}
+
+.drainageColor2 {
+  background-color: #38638b;
+}
+
+.drainageColor3 {
+  background-color: #5e6e71;
+}
+
+.drainageColor4 {
+  background-color: #837856;
+}
+
+.drainageColor5 {
+  background-color: #bc892f;
+}
+
+.physicalDetailsList, .physicalDetailsListRolled {
+  background-color: black;
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 12px;
+  margin: 15px 0px 0px 0px;
+  position: absolute;
+  top: 21.4vw;
+  width: 15vw;
+  /*top: 305px;
+  width: 150px;*/
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+.physicalDetailsList {
+  /*left: 150px;*/
+  left: 10.4vw;
+}
+
+.physicalDetailsListRolled {
+  left: -1000px;
+  /*left: -16.8vw;*/
+}
+
+#drainageClassDetailsList {
+  /*width: 170px;*/
+}
+
+#soilClassDetailsList {
+  /*width: 210px;*/
+}
+
+.featureSelectorIcon, .featureSelectorIconSelected {
+  border-radius: 50%;
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+  height: var(--selector-icon-length);
+  margin: 0.8vw 3vw 0.5vw;
+  width: var(--selector-icon-length);
+}
+
+.painterIcon:hover, .featureSelectorIcon:hover {
+  box-shadow: 0px 0px 5px 5px rgba(200, 120, 18, 0.3), 0 17px 50px 0 rgba(227, 154, 18, 0.2);
+}
+
+.featureSelectorIconSelected:hover, .painterIconSelected:hover {
+  box-shadow: 0px 0px 25px 0px rgba(20, 80, 214, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+}
+
+.featureSelectorIconSelected {
+  box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+
+.painterIconSelected {
+  box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+
+.featuresText {
+  color: #fff;
+  text-align: center;
+  margin-top: 0.5vw;
+}
+
+@media screen and (max-width: 600px), screen and (max-height: 400px) {
+  .icon {
+    height: 15px;
+    width: 15px;
+    margin: 3px;
+  }
+  painterTab-leftcol {
+    left: 0px;
+    width: 28.8px;
+  }
+  #painterTab-rightcol {
+    left: 28.8px;
+    width: 28.8px;
+  }
+  #leftConsole {
+    height: 180px;
+    top: 64px;
+    width: 57.6px;
+  }
+  #settingsTab {
+    height: 23px;
+    /*top: 41px;*/
+    top: 243px;
+    width: 57.6px;
+  }
+  .consoleButton {
+    height: 18px;
+    width: 18px;
+  }
+  .imgSelected, .imgNotSelected {
+    height: 10px;
+    margin: 4px;
+    width: 12px;
+  }
+  #pick {
+    height: 10px;
+    margin: 4px;
+    width: 12px;
+  }
+  .tabButtons, #toolsButton {
+    left: 57px;
+  }
+  #toolsButton {
+    top: 64px;
+  }
+  #terrainButton {
+    top: 92px;
+  }
+  #precipButton {
+    top: 110px;
+  }
+  #yearButton {
+    top: 128px;
+  }
+  #levelsButton {
+    top: 146px;
+  }
+  #featuresButton {
+    top: 164px;
+  }
+  /*#settingsButton {
+    top: 182px;
+  }*/
+  #precipTitle, #yearTitle {
+    font-size: 6px;
+    height: 8.4px;
+    width: 46px;
+  }
+  .styled-select {
+    font-size: 6px;
+    height: 24px;
+    width: 45px;
+  }
+  .year-precip-select {
+    height: 10.8px;
+    width: 30px;
+  }
+  .yearButton {
+    height: 15px;
+    width: 15px;
+    margin-left: 17px;
+    margin-top: 10px;
+  }
+  .landSelectorIcon, .landSelectedIcon, .yearSelected, .yearNotSelected, .featureSelectorIcon, .featureSelectorIconSelected, .levelsSelectorIcon, .levelSelectorIconSelected, .painterIcon, .painterIconSelected {
+    height: 15px;
+    width: 15px;
+  }
+  .levelsSelectorIcon, .levelSelectorIconSelected {
+    margin: 6px 18px 7.2px;
+  }
+  .featureSelectorIcon, .featureSelectorIconSelected {
+    margin: 4.8px 18px 3px;
+  }
+  .painterIcon, .painterIconSelected {
+    margin: 4.8px 6px;
+  }
+  .levelsText, .featuresText {
+    font-size: 6px;
+    margin-top: 3px;
+  }
+  .levelDetailsList {
+    left: 62px;
+  }
+  .levelDetailsList, .levelDetailsListRolled {
+    top: 128px;
+    width: 51px;
+  }
+  .physicalDetailsList {
+    left: 62px;
+  }
+  .physicalDetailsList, .physicalDetailsListRolled {
+    top: 128px;
+    width: 89px;
+  }
+  .levelsTextDetails {
+    margin-left: 9px;
+    font-size: 6px;
+  }
+  .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5, .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone, .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8, .soilColor {
+    height: 6px;
+    /*margin: ;*/
+    width: 6px;
+  }
+}
