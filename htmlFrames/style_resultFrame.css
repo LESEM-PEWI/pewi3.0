@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-31T16:55:29-05:00
+ * @Last modified time: 2017-05-31T17:33:00-05:00
  */
 
 
@@ -539,36 +539,12 @@ text {
 
 @media screen and (max-width: 768px) {
   /*<= 768px */
-  /*#checks {
-    margin-left: 78%;
-    margin-top: 12.5%;
-  }
-  #yieldChecks {
-    margin-left: 10%;
-    margin-top: 12.5%;
-  }*/
 }
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
   /* 768px ~ 992px */
-  /*#checks {
-    margin-left: 80%;
-    margin-top: 13.5%;
-  }
-  #yieldChecks {
-    margin-left: 15%;
-    margin-top: 13.5%;
-  }*/
 }
 
 @media screen and (min-width: 1200px) {
   /* >= 1200px */
-  /*#checks {
-    margin-left: 78%;
-    margin-top: 11%;
-  }
-  #yieldChecks {
-    margin-left: 10%;
-    margin-top: 11%;
-  }*/
 }

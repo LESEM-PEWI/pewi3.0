@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-31T17:00:07-05:00
+ * @Last modified time: 2017-05-31T17:30:44-05:00
  * modified:
  *  drawD3LandPieChart()
  *  drawEcosystemRadar()
@@ -1555,7 +1555,7 @@ function drawEcosystemRadar(yearArray) {
     .attr('width', 20)
     .attr('height', 20)
     .attr('x', 70)
-    .attr('y', -4)
+    .attr('y', 0)
 
     .append('xhtml:input')
     .attr('id', function(d) {
@@ -2092,7 +2092,7 @@ function drawYieldRadar(yearArray) {
     .attr('width', 20)
     .attr('height', 20)
     .attr('x', 70)
-    .attr('y', -4)
+    .attr('y', 0)
 
     .append('xhtml:input')
     .attr('id', function(d) {
