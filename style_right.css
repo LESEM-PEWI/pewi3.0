@@ -1,0 +1,252 @@
+/**
+ * @Date:   2017-05-18T10:17:38-05:00
+ * @Last modified time: 2017-05-31T10:57:21-05:00
+ */
+
+
+/**results right styling**/
+
+.resultsButton, .resultsButtonRolled {
+  background-color: rgba(14, 71, 204, 0.8);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  cursor: pointer;
+  height: 3vw;
+  position: absolute;
+  top: 10.7vw;
+  width: 9.4vw;
+  /*-webkit-transition-duration: 0.4s;*/
+  /* Safari */
+  /*transition-duration: 0.4s;*/
+  -webkit-transform: rotate(-90deg);
+  /* Safari */
+  transform: rotate(-90deg);
+}
+
+.resultsButton {
+  right: -3.18vw;
+}
+
+.resultsButtonRolled {
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  right: -3.18vw;
+}
+
+.resultsButton:hover {
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+}
+
+.resultsButtonRolled:hover {
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+}
+
+.resultsButton img, .resultsButtonRolled img {
+  width: 9vw;
+}
+
+.resultsFrameInvisible {
+  display: none;
+}
+
+.resultsFrame, .resultsFrameRolled {
+  background-color: white;
+  height: 100%;
+  position: absolute;
+  right: 7%;
+  top: 0%;
+  width: 86%;
+  -webkit-transition-duration: 0.9s;
+  transition-duration: 0.9s;
+}
+
+.resultsFrame {
+  opacity: 1;
+}
+
+.resultsFrameRolled {
+  opacity: 0;
+  visibility: hidden;
+}
+
+
+/* message console */
+
+.popup, .popupHidden {
+  background-color: rgba(0, 0, 0, 0.7);
+  background-image: url('./imgs/consoleTexture.png');
+  border-bottom-left-radius: 12px;
+  border-top-left-radius: 0px;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  /*font-size: 14px;*/
+  height: 50%;
+  /*margin: 0px;*/
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0px;
+  position: absolute;
+  right: 0px;
+  text-align: center;
+  top: 18vw;
+  width: 12%;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-name: rollUp;
+  animation-name: rollUp;
+}
+
+.popup p, .popupHidden p {
+  padding: 10px;
+}
+
+@keyframes rollUp {
+  0% {
+    right: -12%;
+  }
+  100% {
+    right: 0%;
+  }
+}
+
+@keyframes rollDown {
+  0% {
+    right: 0%;
+  }
+  100% {
+    right: -12%;
+  }
+}
+
+.popupHidden {
+  position: absolute;
+  right: -12%;
+  /*top: 300px;*/
+  top: 18vw;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-name: rollDown;
+  animation-name: rollDown;
+}
+
+.moveButtonHidden, .moveButtonShow {
+  background-color: #008fb3;
+  border: 2px solid white;
+  border-radius: 12px;
+  color: white;
+  cursor: default;
+  display: none;
+  font-family: 'Amatic SC', cursive;
+  font-size: 40px;
+  font-weight: bold;
+  height: 50px;
+  line-height: 120%;
+  margin: 20px 20px 30px 20px;
+  padding: 5px;
+  position: relative;
+  text-align: center;
+  width: 150px;
+}
+
+.moveButtonShow {
+  display: inline-block;
+  position: relative;
+}
+
+#popupText {
+  position: relative;
+}
+
+.dialogueButton, .dialogueButtonRolled {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-name: rollButtonUp;
+  animation-name: rollButtonUp;
+  background-color: rgba(0, 0, 0, 0.9);
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 0px;
+  border-right: 0px solid #F0A61D;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  cursor: pointer;
+  height: 3vw;
+  position: absolute;
+  right: 12%;
+  top: 18vw;
+  width: 3vw;
+}
+
+.dialogueButtonRolled {
+  bottom: 0px;
+  right: 0px;
+  -webkit-animation-name: rollButtonDown;
+  animation-name: rollButtonDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+
+.dialogueButton img, .dialogueButtonRolled img {
+  width: 2.5vw;
+  margin: 0.25vw;
+}
+
+@keyframes rollButtonUp {
+  0% {
+    right: 0%;
+  }
+  100% {
+    right: 12%;
+  }
+}
+
+@keyframes rollButtonDown {
+  0% {
+    right: 12%;
+  }
+  100% {
+    right: 0%;
+  }
+}
+
+@media screen and (max-width: 600px), screen and (max-height: 400px) {
+  .resultsButton, .resultsButtonRolled {
+    font-size: 20px;
+    height: 18px;
+    top: 64px;
+    width: 54px;
+  }
+  .resultsButtonRolled {
+    right: -18px;
+  }
+  .resultsButton img, .resultsButtonRolled img {
+    height: 15.4px;
+    width: 54px;
+  }
+  .dialogueButton, .dialogueButtonRolled {
+    height: 18px;
+    width: 18px;
+    top: 108px;
+  }
+  .dialogueButton {
+    right: 72px;
+  }
+  .dialogueButton img, .dialogueButtonRolled img {
+    height: 10px;
+    margin: 4px;
+    width: 12px;
+  }
+  .popup, .popupHidden {
+    height: 200.5px;
+    top: 108px;
+    width: 72px;
+  }
+  .popup {
+    right: 0px;
+    font-size: 6px;
+  }
+  .popupHidden {
+    right: -72px;
+  }
+}

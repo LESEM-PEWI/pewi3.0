@@ -1,8 +1,24 @@
- /** Common Elements
+/**
+ * @Last modified time: 2017-05-31T14:06:02-05:00
+ */
+
+
+/* css variable declaration */
+
+:root {
+  --button-font-size: 2.6vw;
+  --main-button-height: 3.5vw;
+  --button-width: 12vw;
+  --font-size: 1.2vw;
+  /*--transition-duration: 0.4s;*/
+}
+
+
+/** Common Elements
  -------------------------
  **/
- 
- * {
+
+* {
   -webkit-touch-callout: none;
   /* iOS Safari */
   -webkit-user-select: none;
@@ -15,67 +31,57 @@
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, currently not supported by any browser */
- }
- 
- .mainButton {
+}
+
+.mainButton {
   background-color: #40A4DF;
   border: 2px solid white;
   border-radius: 12px;
   color: #FFFFFF;
-  cursor: default;
+  cursor: pointer;
   font-family: 'Amatic SC', cursive;
-  font-size: 40px;
+  font-size: var(--button-font-size);
   font-weight: bold;
-  height: 50px;
   line-height: 130%;
   padding: 5px;
   position: absolute;
   text-align: center;
-  width: 200px;
- }
- 
- .mainButton:hover {
+}
+
+.mainButton:hover {
   background-color: #7cc1e9;
- }
- 
- .mainButtonNoHover{
-   inherit: all ;
- }
- 
- .mainButtonNoHover:hover{
-   background-color: #40A4DF;
- }
- 
- .plusMinus {
-  cursor: default;
-  display: inline-block;
-  width: 20px;
- }
- 
- .plusMinus:hover {
-  color: #990033;
- }
- 
- .uploadFile> input {
+}
+
+.mainButtonNoHover {
+  inherit: all;
+}
+
+.mainButtonNoHover:hover {
+  background-color: #40A4DF;
+}
+
+.uploadFile>input {
   display: none;
- }
- 
- #backButton {
+}
+
+#backButton {
   display: inline-block;
-  margin-left: 10%;
-  margin-top: 30px;
+  left: 10%;
+  top: 1%;
   padding: 5px;
   position: relative;
- }
- 
- #backButton:hover {
+}
+
+#backButton:hover {
   border-bottom: 2px solid white;
- }
- /** Start Up
+}
+
+
+/** Start Up
  -------------------------
  **/
- 
- #startupBackgroundImage {
+
+#startupBackgroundImage {
   position: absolute;
   bottom: 0px;
   right: 0px;
@@ -85,29 +91,25 @@
   display: block;
   opacity: 0;
   border: 0px;
-  
   -webkit-transition-duration: 4s;
   transition-duration: 4s;
- }
- 
- #startupContent {
+}
+
+#startupContent {
   position: fixed;
   opacity: 0;
- }
- 
- #pewiTitle {
+}
+
+#pewiTitle {
   position: fixed;
-  width: 240px;
+  width: 24vw;
   padding: 0px;
-  margin-left: -120px;
-  left: 50%;
-  margin-top: 200px;
-  
+  left: 40%;
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
- }
- 
- #startupContentsHolder {
+}
+
+#startupContentsHolder {
   position: fixed;
   display: block;
   margin-top: -250px;
@@ -117,9 +119,9 @@
   width: 100%;
   height: 500px;
   border-radius: 0px;
- }
- 
- #startupInformationText {
+}
+
+#startupInformationText {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   color: #FFFFFF;
   font-size: 25px;
@@ -130,12 +132,11 @@
   text-align: center;
   margin-top: 105px;
   opacity: 0;
-  
   -webkit-transition-duration: 4s;
   transition-duration: 4s;
- }
- 
- #startupLoadingContainer {
+}
+
+#startupLoadingContainer {
   position: absolute;
   width: 800px;
   height: 600px;
@@ -145,9 +146,9 @@
   left: 50%;
   margin-top: -300px;
   top: 50%;
- }
- 
- #startupLoadingTitle {
+}
+
+#startupLoadingTitle {
   font-family: 'Amatic SC', cursive;
   text-align: center;
   line-height: 85%;
@@ -158,38 +159,36 @@
   width: 100%;
   height: 40px;
   top: 50px;
- }
- 
- #startupButton1,
- #startupButton2,
- #startupButton3 {
-  width: 200px;
-  padding: 0;
+}
+
+#startupButton1, #startupButton2, #startupButton3 {
   margin-left: -100px;
   margin-top: -25px;
-  top: 50%;
   opacity: 0;
- }
- 
- #startupButton1 {
+  padding: 0;
+  top: 50%;
+  width: 15%;
+}
+
+#startupButton1 {
   left: 25%;
   -webkit-transition-duration: 1.5s;
   transition-duration: 1.5s;
- }
- 
- #startupButton2 {
+}
+
+#startupButton2 {
   left: 50%;
   -webkit-transition-duration: 2.2s;
   transition-duration: 2.2s;
- }
- 
- #startupButton3 {
+}
+
+#startupButton3 {
   left: 75%;
   -webkit-transition-duration: 2.9s;
   transition-duration: 2.9s;
- }
- 
- #startupDialogueOverlay {
+}
+
+#startupDialogueOverlay {
   position: fixed;
   top: 0px;
   left: 0px;
@@ -199,169 +198,110 @@
   width: 100%;
   height: 100%;
   visibility: hidden;
- }
- 
- #startVideo {
+}
+
+#startVideo {
   position: fixed;
   margin-top: -350px;
   margin-left: -220px;
   left: 50%;
- }
- 
- /** Upload Download Frame 
+}
+
+
+/** Upload Download Frame
  -------------------------
  **/
- 
- #uploadDownloadHolder {
+
+#uploadDownloadHolder {
   background: #40A4DF;
-  border-radius:8px;
+  border-radius: 8px;
   left: 50%;
   margin: 0 5px 5px -125px;
   padding: 0px;
   position: fixed;
   width: 250px;
- }
- 
- #downloadTable {
+}
+
+#downloadTable {
   border-collapse: collapse;
   height: 100%;
   margin-top: 10px;
   width: 100%;
- }
- 
- .uploadDownloadText {
+}
+
+.uploadDownloadText {
   color: white;
   font-size: 45px;
   padding: 10px 0px 10px 15px;
   text-align: left;
- }
- 
- .uploadDownloadButton {
+}
+
+.uploadDownloadButton {
   height: 40px;
-  
   -webkit-transition-duration: 0.2s;
   transition-duration: 0.2s;
- }
- 
- #downloadButton:hover {
+}
+
+#downloadButton:hover {
   border-bottom: 5px solid white;
- }
- 
- #uploadButton:hover {
+}
+
+#uploadButton:hover {
   border-top: 5px solid white;
- }
- 
- /** Credits (About) Frame 
+}
+
+
+/** Credits (About) Frame
  -------------------------
  **/
- 
- .aboutLinks {
+
+.aboutLinks {
   transition: color .4s;
   color: #265C83;
- }
- 
- .aboutLinks:link {
+}
+
+.aboutLinks:link {
   text-decoration: none;
- }
- 
- .aboutLinks:visited {
+}
+
+.aboutLinks:visited {
   color: #265C83;
- }
- 
- .aboutLinks:hover {
+}
+
+.aboutLinks:hover {
   color: #7FDBFF;
- }
- 
- .aboutLinks:active {
+}
+
+.aboutLinks:active {
   transition: color .3s;
   color: #007BE6;
- }
- 
- /** Options Frame 
+}
+
+
+/** Utilities Frame
  -------------------------
  **/
- 
- #optionsBackroundImage {
-  bottom: 0px;
-  left: 0px;
-  margin: 0px;
-  padding: 0px;
-  position: fixed;
-  width: 100%;
- }
- 
- #exitOptionsButton {
-  margin-top: 50px;
-  margin-left: 45px;
- }
- 
- #optionsMainHolder {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  margin: 0px 15% 0px 15%;
-  top: 0px;
-  padding-bottom: 0px;
-  position: absolute;
- }
- 
- .optionsSubContainer {
-  position: relative;
-  margin: 30px;
-  margin-top: 0px;
- }
- 
- .optionsHeader {
-  color: #FFFFFF;
-  font-family: 'Amatic SC', cursive;
-  font-size: 35px;
-  font-weight: bold;
-  margin-left: 45px;
-  margin-right: 45px;
-  padding: 5px;
-  width: 600px;
- }
- 
- #maxYearOptions {
-  background-color: #40A4DF;
-  border: 3px solid white;
-  color: #FFFFFF;
+
+#levelDesignerButton, #setupButton, #aggregateButton, #addFile, #downloadFile {
   display: inline-block;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 20px;
-  margin: 20px;
-  padding: 15px 30px 15px 30px;
-  text-align: center;
-  width: 250px;
- }
- 
- /** Utilities Frame
- -------------------------
- **/
- 
- #levelDesignerButton,
- #setupButton,
- #aggregateButton,
- #addFile,
- #downloadFile {
-  display: inline-block;
-  margin-top: 40px;
+  margin-top: 7%;
   position: relative;
- }
- 
- #levelDesignerButton,
- #setupButton,
- #aggregateButton {
-  width: 400px;
- }
- 
- #addFile,
- #downloadFile {
+}
+
+#levelDesignerButton, #setupButton, #aggregateButton {
+  width: 96.2%;
+  /*width: 400px;*/
+}
+
+#addFile, #downloadFile {
   height: 40px;
   line-height: 90%;
   margin-left: 17px;
-  width: 350px;
- }
- 
- .infoBar {
+  margin-left: 4.1%;
+  width: 84.1%;
+}
+
+.infoBar {
   background-color: white;
   color: #000000;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -371,139 +311,143 @@
   margin-top: 35px;
   text-align: center;
   width: 100%;
- }
- 
- #utilitiesContentsHolder {
+}
+
+#utilitiesContentsHolder {
   height: 100%;
-  left: 50%;
-  margin-left: -208px;
-  position: absolute;
-  top: 60px;
-  width: 416px;
- }
- 
- #utilitiesAggregateTools {
+  width: 25%;
+  margin: 0 auto;
+}
+
+#utilitiesAggregateTools {
   background-color: #003d4d;
   border-radius: 6px;
   display: inline-block;
   height: 0px;
-  margin-left: 10px;
+  margin-left: 2.4%;
   margin-top: 20px;
   overflow: hidden;
   position: relative;
-  width: 400px;
-  
+  width: 96.2%;
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
- }
- 
-  /** MultiDownload (multiplayer setup) Frame
+}
+
+
+/** MultiDownload (multiplayer setup) Frame
  -------------------------
- **/ 
- 
-  #multiplayerDownloadButton,
-  #multiplayerExitButton {
-   display: inline-block;
-   margin-top: 40px;
-   position: relative;
-   width: 400px;
-  }
-  
-  #title,
-  #addPlayer,
-  #subtractPlayer,
-  #playerNumber {
-   cursor: default;
-   display: inline-block;
-  }
-  
-  #multiplayerPlayerNumberParameter {
-   border: 3px solid white;
-   display: inline-block;
-   padding: 15px 30px 15px 30px;
-   position: relative;
-   margin: 50px 20px 20px 25px;
-   width: 300px;
-  }
-  
-  #multiplayerPlayerNumberParameter:hover {
-   /** This isn't a button, so please, let's not highlight it
+ **/
+
+#multiplayerDownloadButton, #multiplayerExitButton {
+  display: inline-block;
+  margin-top: 40px;
+  position: relative;
+  width: 400px;
+}
+
+#title, #addPlayer, #subtractPlayer, #playerNumber {
+  cursor: default;
+  display: inline-block;
+}
+
+#multiplayerPlayerNumberParameter {
+  border: 3px solid white;
+  display: inline-block;
+  padding: 15px 30px 15px 30px;
+  position: relative;
+  margin: 50px 20px 20px 25px;
+  width: 300px;
+}
+
+#multiplayerPlayerNumberParameter:hover {
+  /** This isn't a button, so please, let's not highlight it
           and mislead people :) **/
-   background-color: #40A4DF;
-  }
-  
-  #multiplayerInfoText {
-   background-color: white;
-   border-radius: 6px;
-   color: #000000;
-   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-   font-size: 20px;
-   height: 240px;
-   line-height: 110%;
-   margin-top: 35px;
-   padding: 10px;
-   text-align: left;
-   width: 100%;
-  }
+  background-color: #40A4DF;
+}
+
+#multiplayerInfoText {
+  background-color: white;
+  border-radius: 6px;
+  color: #000000;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 20px;
+  height: 240px;
+  line-height: 110%;
+  margin-top: 35px;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+}
+
 
 /**Email sending dialog**/
-.text{
-    width: 300px;
-    height: 30px;
-    font-size: 17px;
-    font-family: sans-serif;
+
+.text {
+  width: 300px;
+  height: 30px;
+  font-size: 17px;
+  font-family: sans-serif;
 }
 
-.mess{
-    height: 170px;
-    width: 450px;
-    font-family: sans-serif;
-    font-size: 17px;
+.mess {
+  height: 170px;
+  width: 450px;
+  font-family: sans-serif;
+  font-size: 17px;
 }
 
-.btn{
-    padding: 10px 32px;
-    font-family: sans-serif;
-    font-size: 15px;
+.btn {
+  padding: 10px 32px;
+  font-family: sans-serif;
+  font-size: 15px;
 }
-  
-    /** Play Frame
+
+
+/** Play Frame
  -------------------------
- **/ 
- 
-  .playGroupContainer {
-    position: absolute;
-   }
-   
-   .cloud {
-    cursor: pointer;
-    float: left;
-    height: 100px;
-    position: relative;
-    width: 150px;
-    
-    -webkit-transition: margin 0.5s ease-out;
-    -moz-transition: margin 0.5s ease-out;
-    -o-transition: margin 0.5s ease-out;
-   }
-   
-   .cloud p {
-    color: #40a4df;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 48px;
-    left: 52px;
-    margin: 5px;
-    position: absolute;
-    top: 15px;
-   }
-   
-   .cloud:hover {
-    margin-top: 5px;
-   }
-   
-   .cloudSpacer {
-    float: left;
-    height: 25px;
-    position: relative;
-    width: 50px;
+ **/
+
+.playGroupContainer {
+  position: absolute;
+}
+
+.cloud {
+  cursor: pointer;
+  float: left;
+  height: 7vw;
+  position: relative;
+  width: 10vw;
+  -webkit-transition: margin 0.5s ease-out;
+  -moz-transition: margin 0.5s ease-out;
+  -o-transition: margin 0.5s ease-out;
+}
+
+.cloud p {
+  color: #40a4df;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 300%;
+  left: 33%;
+  margin: 3%;
+  position: absolute;
+  top: 15%;
+}
+
+.cloud:hover {
+  margin-top: 5px;
+}
+
+.cloudSpacer {
+  float: left;
+  height: 25px;
+  position: relative;
+  width: 50px;
+}
+
+@media screen and (min-width: 1281px) {
+  #pewiTitle {
+    left: 46%;
+  }
+  #startupInformationText {
+    left: 52%;
+  }
 }
