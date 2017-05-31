@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T11:01:34-05:00
- * @Last modified time: 2017-05-31T11:15:35-05:00
+ * @Last modified time: 2017-05-31T14:44:43-05:00
  */
 
 
@@ -50,7 +50,16 @@ font-family: 'Amatic SC', cursive;
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+html, body, div, span, applet, object,
+iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym,
+address, big, cite, code, del, dfn, em,
+img, ins, kbd, q, s, samp, small, strike, strong,
+sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody,
+tfoot, thead, tr, th, td, article, aside, canvas, details,
+embed, figure, figcaption, footer, header, hgroup, menu, nav,
+output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -66,59 +75,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-
-/**left console**/
-
-
-/**left console buttons**/
-
-
-/*#undoButton:hover {
-    box-shadow: 0 0px 8px 2px rbg(0,0,0,0.8) ;
-}*/
-
-
-/*.tabButtons, #toolsButton, #undoButton {*/
-
-
-/*left: 135px;*/
-
-
-/*position:absolute;*/
-
-
-/*-webkit-transition-duration: 0.4s; */
-
-
-/* Safari */
-
-
-/*transition-duration: 0.4s;*/
-
-
-/*}*/
-
-
-/*#undoButton {
-    top: 100px;
-    border-bottom-right-radius: 5px ;
-
-}*/
-
-
-/*}*/
-
-
-/*#precipTab{
-
-    color: white;
-    font-size: 18px;
-
-}*/
-
 ol, ul {
   list-style: none;
-  >>>>>>>Issue94
 }
 
 blockquote, q {
@@ -187,13 +145,16 @@ body {
 }
 
 .upperButton, #logoBase {
-  cursor: pointer;
   height: 3vw;
   position: absolute;
   top: 0.1vw;
   -webkit-transition-duration: 0.1s;
   /* Safari */
   transition-duration: 0.1s;
+}
+
+.upperButton {
+  cursor: pointer;
 }
 
 .upperButton:hover {
@@ -295,10 +256,6 @@ body {
   width: 52.2%;
   -webkit-box-shadow: 0px -2px 120px 80px rgba(0, 0, 0, 1);
   -moz-box-shadow: 0px -2px 120px 80px rgba(0, 0, 0, 1);
-  /*
-	height: 700px;
-	width: 1000px;
-	*/
 }
 
 #modalCodexFrame {
@@ -386,7 +343,6 @@ body {
   border: 2px solid white;
   border-radius: 12px;
   color: #FFFFFF;
-  cursor: default;
   font-family: var(--button-font-family);
   font-size: var(--button-font-size);
   font-weight: bold;
@@ -396,15 +352,15 @@ body {
   padding: 5px;
   text-align: center;
   width: var(--main-button-width);
-  /*height: var(--main-button-height);*/
-  /*font-size: 40px;
-	height: 50px;
-	line-height: 120%;
-  width: 200px;*/
+}
+
+.mainEscapeButton {
+  cursor: pointer;
 }
 
 .unclickableMainEscapeButton {
   background-color: #003d4d;
+  cursor: default;
 }
 
 .mainEscapeButton:hover {
@@ -441,9 +397,6 @@ body {
   top: 7vw;
   position: absolute;
   width: 300px;
-  /*top: 25%;*/
-  /*margin: -100px 0 0 -8vw;*/
-  /*margin: -100px 0 0 -150px;*/
 }
 
 @keyframes showEffect {
@@ -481,13 +434,6 @@ body {
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
   width: 13.2vw;
-  /*width: 0;*/
-  /*width: var(--main-button-width);*/
-  /*font-size: 30px;
-	margin-left: -10.6vw;
-	margin-left: -20px;
-	width: 250px;
-	*/
 }
 
 #yesConfirmEscape {
@@ -525,34 +471,4 @@ body {
   position: fixed;
   top: 49%;
   width: 250px;
-}
-
-.playerReset {
-  border-radius: 50%;
-  height: 40px;
-  margin: 6px;
-  margin-left: 10px;
-  width: 40px;
-}
-
-#playerReset .message {
-  border-radius: 50%;
-  height: 40px;
-  margin: 20px;
-  margin-left: 40px;
-  width: 40px;
-}
-
-#message {
-  color: white;
-  font-family: var(--button-font-family);
-  font-size: 40px;
-  position: static;
-  visibility: hidden;
-}
-
-#playerResetButton:hover #message {
-  top: 100%;
-  right: 88%;
-  visibility: visible;
 }

@@ -115,7 +115,7 @@
 
 
     <!--Create index button on screen-->
-    <div class="indexmenu" onclick="toggleIndex();">Index</div>
+    <div id="indexmenu" onclick="toggleIndex();">Index</div>
 
     <!-- Create left-side console displays-->
     <div id="leftConsole" class="leftConsole" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
@@ -132,9 +132,17 @@
           <img id="paint11" class="icon landSelectorIcon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);">
           <img id="paint13" class="icon landSelectorIcon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);">
 
-          <div id="paintPlayer1" class="playerButton" onclick="changeSelectedPaintTo(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player1Image" style="display:inline-block;" class="landSelectorIcon" class="playerSelected" src="./imgs/player1a.png"></div>
-          <div id="paintPlayer3" class="playerButton" class="landSelectorIcon" onclick="changeSelectedPaintTo(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player3Image" style="display:none;" class="landSelectorIcon" class="landSelectorIcon" class="playerImageHidden" src="./imgs/player3a.png"></div>
-          <div id="paintPlayer5" class="playerButtonHidden" class="landSelectorIcon" onclick="changeSelectedPaintTo(5);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player5Image" style="display:none;" class="landSelectorIcon" class="landSelectorIcon" class="playerImageHidden" src="./imgs/player5a.png"></div>
+          <!-- multiplayer mode  -->
+          <div id="paintPlayer1" onclick="changeSelectedPaintTo(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player1Image" style="display:inline-block;" class="playerSelected" src="./imgs/player1a.png"></div>
+          <div id="paintPlayer3" onclick="changeSelectedPaintTo(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player3Image" style="display:none;" class="" src="./imgs/player3a.png"></div>
+          <div id="paintPlayer5" onclick="changeSelectedPaintTo(5);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player5Image" style="display:none;" class="" src="./imgs/player5a.png"></div>
+
+          <div id="playerResetButton" class="playerReset" onclick="resetMultiPlayer(); resetMultiPlayer();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+            <div id="message" style="display: none">
+              <p>RESET</p>
+            </div>
+            <img id="playerResetImage" style="display:inline-block;" class="playerReset playerButton playerNotSelected" src="./imgs/close_black.png">
+          </div>
 
           <!-- <img id="paintPlayer1" style="display:none;" class="icon landSelectorIcon" src="./imgs/player1.png" onclick="changeSelectedPaintTo(1)">
           <img id="paintPlayer3" style="display:none;" class="icon landSelectorIcon" src="./imgs/player3.png" onclick="changeSelectedPaintTo(3)">
@@ -150,21 +158,17 @@
           <img id="paint9" class="icon landSelectorIcon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);">
           <img id="paint10" class="icon landSelectorIcon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);">
 
-          <div id="paintPlayer2" class="playerButton" onclick="changeSelectedPaintTo(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player2Image" style="display:none;" class="landSelectorIcon" class="landSelectorIcon" class="landSelectorIcon" class="playertNotSelected" src="./imgs/player2a.png"></div>
-          <div id="paintPlayer4" class="playerButtonHidden" class="landSelectorIcon" onclick="changeSelectedPaintTo(4);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player4Image" style="display:none;" class="landSelectorIcon" class="landSelectorIcon" class="playerImageHidden" src="./imgs/player4a.png"></div>
-          <div id="paintPlayer6" class="playerButtonHidden" class="landSelectorIcon" onclick="changeSelectedPaintTo(6);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player6Image" style="display:none;" class="landSelectorIcon" class="landSelectorIcon" class="playerImageHidden" src="./imgs/player6a.png"></div>
+          <!-- multiplayer mode  -->
+          <div id="paintPlayer2" onclick="changeSelectedPaintTo(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player2Image" style="display:none;" class="playertNotSelected" src="./imgs/player2a.png"></div>
+          <div id="paintPlayer4" onclick="changeSelectedPaintTo(4);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player4Image" style="display:none;" class="" src="./imgs/player4a.png"></div>
+          <div id="paintPlayer6" onclick="changeSelectedPaintTo(6);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player6Image" style="display:none;" class="" src="./imgs/player6a.png"></div>
+
+          <div id="playerAddButton" onclick="addPlayerAndTransition(); " onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="playerAddImage" style="display:inline-block;" class="playerNotSelected" src="./imgs/addYear.png"></div>
 
           <!-- <img id="paintPlayer2" style="display:none;" class="icon landSelectorIcon" src="./imgs/player2.png" onclick="changeSelectedPaintTo(2)">
           <img id="paintPlayer4" style="display:none;" class="icon landSelectorIcon" src="./imgs/player4.png" onclick="changeSelectedPaintTo(4)">
           <img id="paintPlayer6" style="display:none;" class="icon landSelectorIcon" src="./imgs/player6.png" onclick="changeSelectedPaintTo(6)"> -->
         </div>
-
-        <!-- Appear when development merge Issue94, not sure where it should be put -->
-        <div id="playerAddButton" class="playerButton" class="landSelectorIcon" onclick="addPlayerAndTransition(); " onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="playerAddImage" style="display:inline-block;" class="landSelectorIcon" class="playerNotSelected" src="./imgs/addYear.png"></div>
-        <div id="playerResetButton" class="playerButton" class="playerReset" onclick="resetMultiPlayer(); resetMultiPlayer();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-          <div id="message" style="display: none">
-            <p>RESET</p>
-          </div><img id="playerResetImage" style="display:inline-block;" class="playerReset" class="playerNotSelected" src="./imgs/close_black.png"></div>
 
       </div>
 

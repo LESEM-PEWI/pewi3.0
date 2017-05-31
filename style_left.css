@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-05-31T11:01:52-05:00
+ * @Last modified time: 2017-05-31T14:38:12-05:00
  */
 
 
@@ -29,10 +29,9 @@
 
 /**left console buttons or toolbar**/
 
-
 /**Styling for index Menu**/
 
-.indexmenu {
+#indexmenu {
   background-image: url('./imgs/consoleTexture.png');
   border: none;
   border-radius: 6px;
@@ -49,7 +48,7 @@
   background-repeat: repeat;
 }
 
-.indexmenu:hover {
+#indexmenu:hover {
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
 }
 
@@ -261,6 +260,60 @@
 
 .landSelectedIcon:hover {
   box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+}
+
+
+/* muti-player buttons */
+
+.playerReset {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+#playerReset .message {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+#message {
+  color: white;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  position: static;
+  visibility: hidden;
+}
+
+#playerResetButton:hover #message {
+  top: 100%;
+  right: 88%;
+  visibility: visible;
+}
+
+.playerImageHidden {
+  height: 100%;
+  width: 100%;
+}
+
+.playerNotSelected, .playerSelected {
+  /* image inside playerButton div */
+  border-radius: 50%;
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  display: block;
+  height: 2.5vw;
+  margin: 0.4vw;
+  position: relative;
+  width: 2.5vw;
+}
+
+.playerNotSelected:hover {
+  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+.playerSelected {
+  box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
 }
 
 
@@ -529,6 +582,7 @@ select {
 .featureSelectorIcon, .featureSelectorIconSelected {
   border-radius: 50%;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+  cursor: pointer;
   height: var(--selector-icon-length);
   margin: 0.5vw 3vw;
   width: var(--selector-icon-length);
@@ -567,6 +621,7 @@ select {
     margin: 2.5px;
   }
   #indexmenu {
+    font-size: 14px;
     height: 18px;
     top: 46px;
     width: 51.6px;
@@ -649,7 +704,7 @@ select {
     margin-left: 17px;
     margin-top: 10px;
   }
-  .landSelectorIcon, .landSelectedIcon, .yearSelected, .yearNotSelected, .featureSelectorIcon, .featureSelectorIconSelected, .levelsSelectorIcon, .levelSelectorIconSelected, .painterIcon, .painterIconSelected {
+  .landSelectorIcon, .landSelectedIcon, .yearSelected, .yearNotSelected, .featureSelectorIcon, .featureSelectorIconSelected, .levelsSelectorIcon, .levelSelectorIconSelected, .painterIcon, .painterIconSelected, .playerNotSelected, .playerSelected {
     height: 15px;
     width: 15px;
   }
