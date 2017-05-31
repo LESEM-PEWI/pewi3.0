@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-23T15:09:56-05:00
- * @Last modified time: 2017-05-24T17:36:43-05:00
+ * @Last modified time: 2017-05-31T16:52:59-05:00
  */
 
 
@@ -180,22 +180,22 @@
   // Then, if we've only calculated 1 year, make sure the checkboxes for years 2 and 3 are
   //  not displayed.
   //This function is used for both radar plots
-  function toggleYearCheckboxes() {
-    var upTo = Number(document.getElementById('upTo').innerHTML);
-    var yearMax = 3 //for generality, in case more years are added later;
-
-    //fist toggle all of the checkboxes on and checked
-    for (var y = 1; y <= yearMax; y++) {
-      document.getElementById('checkboxYear' + y).style.visibility = "visible";
-      document.getElementById('checkboxYear' + y).checked = true;
-      document.getElementById('yieldCheckboxYear' + y).style.visibility = "visible";
-      document.getElementById('yieldCheckboxYear' + y).checked = true;
-    } //end for
-
-    //then, remove the ones for years that don't exist yet
-    while (yearMax - upTo > 0) {
-      document.getElementById('checkboxYear' + yearMax).style.visibility = "hidden";
-      document.getElementById('yieldCheckboxYear' + yearMax).style.visibility = "hidden";
-      yearMax -= 1;
-    } //end while
-  } //end toggleYearCheckboxes()
+  // function toggleYearCheckboxes() {
+  //   var upTo = Number(document.getElementById('upTo').innerHTML);
+  //   var yearMax = 3 //for generality, in case more years are added later;
+  //
+  //   //fist toggle all of the checkboxes on and checked
+  //   for (var y = 1; y <= yearMax; y++) {
+  //     document.getElementById('checkboxYear' + y).style.visibility = "visible";
+  //     document.getElementById('checkboxYear' + y).checked = true;
+  //     document.getElementById('yieldCheckboxYear' + y).style.visibility = "visible";
+  //     document.getElementById('yieldCheckboxYear' + y).checked = true;
+  //   } //end for
+  //
+  //   //then, remove the ones for years that don't exist yet
+  //   while (yearMax - upTo > 0) {
+  //     document.getElementById('checkboxYear' + yearMax).style.visibility = "hidden";
+  //     document.getElementById('yieldCheckboxYear' + yearMax).style.visibility = "hidden";
+  //     yearMax -= 1;
+  //   } //end while
+  // } //end toggleYearCheckboxes()

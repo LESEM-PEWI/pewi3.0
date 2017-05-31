@@ -19,47 +19,6 @@ Cleaned and Prepared - August 2016
 -->
 
 <html>
-<!--
-/** Main page styling **/
-
-/*.tabSelected {
-    background-color: rgba(0, 0, 0, 0.6);
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    max-width: 100%;
-    height: auto;
-}*/
-
-/*When you hover over either tab, it will turn a slightly darker color
-*/
-
-/*#innerContainer {
-    margin: 15px;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    color: #000000;
-    font-size: 20px;
-}*/
-
-
-/** Graphics elements for first tab **/
-
-/*.legend {
-    font-size: 16px;
-}*/
-
-/*.chart {
-    width: 660px;
-    height: 400px;
-    float: right;
-    display: inline-block;
-    margin-top: 40px;
-}*/
-
-/*#graphics {
-    margin: 10px;
-    height: 100px;
-}*/ -->
 
 <head>
   <meta charset="utf-8">
@@ -122,13 +81,10 @@ Cleaned and Prepared - August 2016
                         -->
 
           <div id="radarContainer" class="graph-section">
+
             <div id="radarChart"></div>
             <div id="radarLegend"></div>
-            <div id="checks" class="check">
-              <input id="checkboxYear1" class="yearCheckbox" checked onclick="radarPlotYearToggle(1);" type="checkbox">
-              <input id="checkboxYear2" class="yearCheckbox" checked onclick="radarPlotYearToggle(2);" type="checkbox">
-              <input id="checkboxYear3" class="yearCheckbox" checked onclick="radarPlotYearToggle(3);" type="checkbox">
-            </div>
+
           </div>
 
           <div id="precipSection" class="graph-section">
@@ -143,11 +99,6 @@ Cleaned and Prepared - August 2016
 
             <div id="yieldRadarLegend"></div>
             <div id="yieldRadarChart"></div>
-            <div id="yieldChecks" class="check">
-              <input type="checkbox" id="yieldCheckboxYear1" checked onclick="yieldRadarPlotYearToggle(1);" class="yearCheckbox">
-              <input type="checkbox" id="yieldCheckboxYear2" checked onclick="yieldRadarPlotYearToggle(2);" class="yearCheckbox">
-              <input type="checkbox" id="yieldCheckboxYear3" checked onclick="yieldRadarPlotYearToggle(3);" class="yearCheckbox">
-            </div>
           </div>
 
         </div>

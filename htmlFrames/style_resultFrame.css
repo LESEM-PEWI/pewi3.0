@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-31T11:13:32-05:00
+ * @Last modified time: 2017-05-31T16:55:29-05:00
  */
 
 
@@ -65,7 +65,6 @@ tr:hover {
 .tab, .tabSelected {
   background-color: rgba(40, 44, 42, 0.03);
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
-  cursor: default;
   display: inline-block;
   float: left;
   height: var(--tab-height);
@@ -88,6 +87,10 @@ tr:hover {
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, */
+}
+
+.tab {
+  cursor: pointer;
 }
 
 .tabSelected {
@@ -502,32 +505,6 @@ text {
   width: 38.3%;
 }
 
-.check {
-  /*border: 3px solid #FF5511;*/
-  position: absolute;
-  width: 3%;
-}
-
-#checks {
-  /*visibility: hidden;*/
-
-  margin-left: 78%;
-  margin-top: 10%;
-}
-
-#yieldChecks {
-  margin-left: 10%;
-  margin-top: 10%;
-}
-
-.yearCheckbox {
-  /*margin: 0px;*/
-  /*margin: 30%;*/
-  opacity: 1;
-  padding: 0px;
-}
-
-
 /*
 #container {
   border: 3px solid #6ac5ac;
@@ -547,7 +524,8 @@ text {
   -webkit-flex: 3;
   flex: 3;
   border: 3px solid #d64078;
-}*/
+}
+*/
 
 #results-header {
   position: static;
@@ -561,36 +539,36 @@ text {
 
 @media screen and (max-width: 768px) {
   /*<= 768px */
-  #checks {
+  /*#checks {
     margin-left: 78%;
     margin-top: 12.5%;
   }
   #yieldChecks {
     margin-left: 10%;
     margin-top: 12.5%;
-  }
+  }*/
 }
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
   /* 768px ~ 992px */
-  #checks {
+  /*#checks {
     margin-left: 80%;
     margin-top: 13.5%;
   }
   #yieldChecks {
     margin-left: 15%;
     margin-top: 13.5%;
-  }
+  }*/
 }
 
 @media screen and (min-width: 1200px) {
   /* >= 1200px */
-  #checks {
+  /*#checks {
     margin-left: 78%;
     margin-top: 11%;
   }
   #yieldChecks {
     margin-left: 10%;
     margin-top: 11%;
-  }
+  }*/
 }
