@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-05-26T12:08:50-05:00
+ * @Last modified time: 2017-05-31T11:01:52-05:00
  */
 
 
@@ -29,6 +29,30 @@
 
 /**left console buttons or toolbar**/
 
+
+/**Styling for index Menu**/
+
+.indexmenu {
+  background-image: url('./imgs/consoleTexture.png');
+  border: none;
+  border-radius: 6px;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  font-weight: bold;
+  height: 3vw;
+  top: 7.7vw;
+  text-align: center;
+  width: 8.6vw;
+  position: absolute;
+  background-repeat: repeat;
+}
+
+.indexmenu:hover {
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+}
+
 .consoleButton {
   background-color: rgba(0, 0, 0, 0.9);
   background-image: url('./imgs/consoleTexture.png');
@@ -36,6 +60,7 @@
   border-radius: 0px;
   border-right: 0px solid #F0A61D;
   border-top-right-radius: 0px;
+  cursor: pointer;
   height: var(--left-console-button-length);
   position: absolute;
   transition-property: none;
@@ -50,17 +75,15 @@
   box-shadow: 8px 0px 10px -4px rgba(240, 166, 29, 0.8);
 }
 
-#undoButton:hover {
-  box-shadow: 0 0px 8px 2px rbg(0, 0, 0, 0.8);
-}
-
-#toolsButton:hover {
-  box-shadow: 0 0px 8px 2px rgba(0, 0, 0, 0.8);
-}
-
 #undoButton {
   border-bottom-right-radius: 5px;
-  top: 100px;
+  height: var(--left-console-button-length);
+  width: var(--left-console-button-length);
+  top: 7.7vw;
+}
+
+#undoButton:hover {
+  box-shadow: 0 0px 8px 2px rbg(0, 0, 0, 0.8);
 }
 
 #toolsButton {
@@ -70,12 +93,18 @@
   border-bottom-right-radius: 5px;
 }
 
+#toolsButton:hover {
+  box-shadow: 0 0px 8px 2px rgba(0, 0, 0, 0.8);
+}
+
 #pick {
+  cursor: pointer;
   margin: var(--left-console-button-image-margin);
   width: var(--left-console-button-image-length);
 }
 
 .tabButtons, #toolsButton, #undoButton {
+  cursor: pointer;
   left: var(--left-console-width);
   position: absolute;
   -webkit-transition-duration: var(--transition-duration);
@@ -124,11 +153,6 @@
 }
 
 
-/*#settingsButton {
-  top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
-}*/
-
-
 /**left console content container**/
 
 #leftConsole {
@@ -170,7 +194,6 @@
   height: 3vw;
   left: 0;
   position: absolute;
-  /*top: calc(var(--left-console-top-value) - 4vw);*/
   top: calc(var(--left-console-top-value) + var(--left-console-height));
   width: var(--left-console-width);
 }
@@ -224,7 +247,7 @@
   width: 2.5vw;
   position: relative;
   border-radius: 50%;
-  margin: 0.5vw;
+  margin: 0.4vw;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
 }
 
@@ -374,18 +397,17 @@ select {
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
   border-radius: 12px;
-  top: 21.4vw;
+  /*top: 21.4vw;*/
+  top: 1.4vw;
   width: 8.5vw;
-  /*top: 305px;*/
-  /*width: 135px;*/
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
 }
 
 .levelDetailsList {
-  /*left: 150px;*/
-  left: 10.4vw;
+  left: 14vw;
+  /*left: 10.4vw;*/
 }
 
 .levelDetailsListRolled {
@@ -403,7 +425,6 @@ select {
 .levelsTextDetails {
   color: #fff;
   margin-left: 1.8vw;
-  /*margin-left: 22px;*/
   white-space: nowrap;
 }
 
@@ -486,38 +507,30 @@ select {
   border-radius: 12px;
   margin: 15px 0px 0px 0px;
   position: absolute;
-  top: 21.4vw;
+  top: 1.4vw;
   width: 15vw;
-  /*top: 305px;
-  width: 150px;*/
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
 }
 
 .physicalDetailsList {
-  /*left: 150px;*/
-  left: 10.4vw;
+  left: 14vw;
 }
 
 .physicalDetailsListRolled {
   left: -1000px;
-  /*left: -16.8vw;*/
 }
 
-#drainageClassDetailsList {
-  /*width: 170px;*/
-}
+#drainageClassDetailsList {}
 
-#soilClassDetailsList {
-  /*width: 210px;*/
-}
+#soilClassDetailsList {}
 
 .featureSelectorIcon, .featureSelectorIconSelected {
   border-radius: 50%;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   height: var(--selector-icon-length);
-  margin: 0.8vw 3vw 0.5vw;
+  margin: 0.5vw 3vw;
   width: var(--selector-icon-length);
 }
 
@@ -540,16 +553,25 @@ select {
 .featuresText {
   color: #fff;
   text-align: center;
-  margin-top: 0.5vw;
+  /*margin-top: 0.5vw;*/
+}
+
+.icon {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 600px), screen and (max-height: 400px) {
   .icon {
     height: 15px;
     width: 15px;
-    margin: 3px;
+    margin: 2.5px;
   }
-  painterTab-leftcol {
+  #indexmenu {
+    height: 18px;
+    top: 46px;
+    width: 51.6px;
+  }
+  #painterTab-leftcol {
     left: 0px;
     width: 28.8px;
   }
@@ -564,11 +586,10 @@ select {
   }
   #settingsTab {
     height: 23px;
-    /*top: 41px;*/
     top: 243px;
     width: 57.6px;
   }
-  .consoleButton {
+  .consoleButton, #undoButton {
     height: 18px;
     width: 18px;
   }
@@ -582,8 +603,13 @@ select {
     margin: 4px;
     width: 12px;
   }
-  .tabButtons, #toolsButton {
+  .tabButtons, #toolsButton, #undoButton {
     left: 57px;
+  }
+  #undoButton {
+    height: 18px;
+    top: 46px;
+    width: 18px;
   }
   #toolsButton {
     top: 64px;
@@ -603,9 +629,6 @@ select {
   #featuresButton {
     top: 164px;
   }
-  /*#settingsButton {
-    top: 182px;
-  }*/
   #precipTitle, #yearTitle {
     font-size: 6px;
     height: 8.4px;
@@ -634,27 +657,29 @@ select {
     margin: 6px 18px 7.2px;
   }
   .featureSelectorIcon, .featureSelectorIconSelected {
-    margin: 4.8px 18px 3px;
+    margin: 3px 18px;
   }
   .painterIcon, .painterIconSelected {
     margin: 4.8px 6px;
   }
   .levelsText, .featuresText {
     font-size: 6px;
-    margin-top: 3px;
+    /*margin-top: 3px;*/
   }
   .levelDetailsList {
-    left: 62px;
+    left: 78px;
+    /*left: 62px;*/
   }
   .levelDetailsList, .levelDetailsListRolled {
-    top: 128px;
+    top: 8px;
+    /*top: 128px;*/
     width: 51px;
   }
   .physicalDetailsList {
-    left: 62px;
+    left: 78px;
   }
   .physicalDetailsList, .physicalDetailsListRolled {
-    top: 128px;
+    top: 8px;
     width: 89px;
   }
   .levelsTextDetails {

@@ -113,10 +113,9 @@
       <!-- <div id="settingsButton" class="consoleButton" onclick="switchConsoleTab(5);"><img id="settingsImg" class="imgNotSelected" src="./imgs/settingsIcon.png"></div> -->
     </div>
 
-    <div id="settingsTab">
-      <img id="cellPaint" class="painterIconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
-      <img id="gridPaint" class="painterIcon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
-    </div>
+
+    <!--Create index button on screen-->
+    <div class="indexmenu" onclick="toggleIndex();">Index</div>
 
     <!-- Create left-side console displays-->
     <div id="leftConsole" class="leftConsole" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
@@ -285,11 +284,11 @@
         </div>
 
         <!-- "Letter N Ig Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p><img id="nitrateIcon" class="levelsSelectorIcon" src="./imgs/N.png" style="border-radius: 50%;" onclick="displayLevels('nitrate');">
+        <p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p><img id="nitrateIcon" class="icon levelsSelectorIcon" src="./imgs/N.png" style="border-radius: 50%;" onclick="displayLevels('nitrate');">
         <!-- "Letter E gold Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Gross Erosion</p><img id="erosionIcon" class="levelsSelectorIcon" src="./imgs/E.png" style="border-radius: 50%;" onclick="displayLevels('erosion');">
+        <p class="levelsText">Gross Erosion</p><img id="erosionIcon" class="icon levelsSelectorIcon" src="./imgs/E.png" style="border-radius: 50%;" onclick="displayLevels('erosion');">
         <!-- "Letter P blue Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Phosphorus Index Risk Assessment</p><img id="phoshorusIcon" class="levelsSelectorIcon" src="./imgs/P.png" style="border-radius: 50%;" onclick="displayLevels('phosphorus');">
+        <p class="levelsText">Phosphorus Index Risk Assessment</p><img id="phoshorusIcon" class="icon levelsSelectorIcon" src="./imgs/P.png" style="border-radius: 50%;" onclick="displayLevels('phosphorus');">
 
       </div>
 
@@ -375,18 +374,12 @@
             <p class="levelsTextDetails">Nodaway 220</p>
           </div>
         </div>
-        <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
-        <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetland');">
-        <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('subwatershed');">
-        <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
-        <p class="featuresText">Soil Class</p><img id="soilClass" class="featureSelectorIcon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
+        <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="icon featureSelectorIcon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
+        <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="icon featureSelectorIcon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetland');">
+        <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="icon featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('subwatershed');">
+        <p class="featuresText">Drainage Class</p><img id="drainageClass" class="icon featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
+        <p class="featuresText">Soil Class</p><img id="soilClass" class="icon featureSelectorIcon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
       </div>
-
-      <!-- Painter settings display -->
-      <!-- <div id="settingsTab" class="consoleTab" style="display:none;">
-        <img id="cellPaint" class="painterIconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
-        <img id="gridPaint" class="painterIcon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
-      </div> -->
 
       <!-- year display -->
       <div id="yearsTab" class="consoleTab" style="display:none;">
@@ -394,23 +387,24 @@
         <div id="yearTitle">Year Selection</div>
         <!-- "Exposure, zero icon" by Google Design (https://design.google.com/) used under CC BY (https://creativecommons.org/licenses/by/3.0/) / Inverted from original -->
         <div id="year0Button" class="yearButton" style="display:none;" onclick="transitionToYear(0); switchYearTab(0);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year0Image" class="yearNotSelected" src="./imgs/zero_40px.png"></div>
-        <div id="year1Button" class="yearButton" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="yearSelected" src="./imgs/one.png"></div>
-        <div id="year2Button" class="yearButtonHidden" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="yearImageHidden" src="./imgs/two.png"></div>
-        <div id="year3Button" class="yearButtonHidden" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="yearImageHidden" src="./imgs/three.png"></div>
-        <div id="yearAddButton" class="yearButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="yearNotSelected" src="./imgs/addYear.png"></div>
+        <div id="year1Button" class="icon yearButton" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="yearSelected" src="./imgs/one.png"></div>
+        <div id="year2Button" class="icon yearButtonHidden" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="yearImageHidden" src="./imgs/two.png"></div>
+        <div id="year3Button" class="icon yearButtonHidden" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="yearImageHidden" src="./imgs/three.png"></div>
+        <div id="yearAddButton" class="icon yearButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="yearNotSelected" src="./imgs/addYear.png"></div>
       </div>
 
     </div>
     <!-- END left console, there is a lot happening there -->
 
+    <div id="settingsTab">
+      <img id="cellPaint" class="icon painterIconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
+      <img id="gridPaint" class="icon painterIcon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
+    </div>
+
     <!-- **BEGIN Right Side Component** -->
 
     <!-- Create results button -->
     <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
-
-    <!--Create index button on screen-->
-    <div class="indexmenu" onclick="toggleIndex();">Index</div>
-
 
     <!-- Create dialogue popup box (message box) -->
     <!-- "Bubble, speech icon" by http://www.iconsolid.com/ with free commercial usage / Inverted from original and resized -->
@@ -435,9 +429,9 @@
     <!-- order now becomes important to make sure elements stack and cover correctly -->
 
     <!-- Add heads up display in lower left corner -->
-    <div id="bottomHUD" class="bottomHUD">
+    <footer id="bottomHUD" class="bottomHUD">
       <p id="currentInfo">
-    </div>
+    </footer>
 
     <!-- div which follows cursor for delayed hover information -->
     <div id="hover-div">

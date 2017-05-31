@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T11:01:34-05:00
- * @Last modified time: 2017-05-25T11:04:04-05:00
+ * @Last modified time: 2017-05-31T11:15:35-05:00
  */
 
 
@@ -32,6 +32,7 @@ font-family: 'Amatic SC', cursive;
 /* css variable declaration */
 
 :root {
+  --button-font-family: 'Amatic SC', cursive;
   --button-font-size: 2.5vw;
   --font-size: 1vw;
   --main-button-height: 2.5vw;
@@ -48,19 +49,8 @@ font-family: 'Amatic SC', cursive;
    v2.0 | 20110126
    License: none (public domain)
 */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -118,6 +108,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 /*}*/
 
+
 /*#precipTab{
 
     color: white;
@@ -125,79 +116,61 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 }*/
 
-/**Styling for index Menu**/
-.indexmenu {
-  background-image: url('./imgs/consoleTexture.png');
-  border: none;
-  border-radius: 6px;
-  color: #FFFFFF;
-  cursor: default;
-  font-family: 'Amatic SC', cursive;
-  font-size: 30px;
-  font-weight: bold;
-  height: 30px;
-  margin-top: 100px;
-  padding: 5px;
-  text-align: center;
-  width: 100px;
-  position: absolute;
-  background-repeat: repeat;
-}
-.indexmenu:hover {
-  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
-}
 ol, ul {
   list-style: none;
   >>>>>>>Issue94
 }
+
 blockquote, q {
   quotes: none;
 }
+
 blockquote:before, blockquote:after, q:before, q:after {
   content: '';
   content: none;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
 html {
   height: 100%;
 }
 
+
 /*END CSS RESET */
 
+
 /******PAGINATION STYLING*****/
+
 * {
   -webkit-touch-callout: none;
   /* iOS Safari */
-
   -webkit-user-select: none;
   /* Chrome/Safari/Opera */
-
   -khtml-user-select: none;
   /* Konqueror */
-
   -moz-user-select: none;
   /* Firefox */
-
   -ms-user-select: none;
   /* Internet Explorer/Edge */
-
   user-select: none;
   /* Non-prefixed version, currently
                                   not supported by any browser */
 }
+
 body {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: var(--font-size);
   overflow: hidden;
   position: fixed;
-  /*height:100%;*/
-  /*width:100%;*/
 }
 
+
 /** Other elements **/
+
 #settingsHolder {
   background: rgba(0, 0, 0, 0);
   cursor: default;
@@ -208,48 +181,58 @@ body {
   position: absolute;
   width: 0px;
 }
+
 #page {
   visibility: hidden;
 }
+
 .upperButton, #logoBase {
+  cursor: pointer;
   height: 3vw;
   position: absolute;
   top: 0.1vw;
   -webkit-transition-duration: 0.1s;
   /* Safari */
-
   transition-duration: 0.1s;
-  /*top: 5px;*/
 }
+
 .upperButton:hover {
   border-bottom: 2px groove white;
   -webkit-transition-duration: 0.1s;
   /* Safari */
-
   transition-duration: 0.1s;
 }
+
 #creditsButton {
+  cursor: pointer;
   right: 2px;
 }
+
 #uploadDownloadButton {
+  cursor: pointer;
   right: 42px;
 }
+
 #creditsButton, #uploadDownloadButton {
+  cursor: pointer;
   width: 3vw;
 }
+
 #logoBase {
   right: 82px;
 }
+
 .closeButton {
+  cursor: pointer;
   position: absolute;
   width: 2.5vw;
   -webkit-transition-duration: 0.1s;
   /* Safari */
-
   transition-duration: 0.1s;
   /*height: 40px;
 	width: 40px;*/
 }
+
 .closeButton:hover {
   height: 35px;
   margin-right: 2px;
@@ -257,19 +240,23 @@ body {
   width: 35px;
   -webkit-transition-duration: 0.1s;
   /* Safari */
-
   transition-duration: 0.1s;
 }
+
 #closeUploadDownload {
+  cursor: pointer;
   left: 50%;
   padding-left: 140px;
   position: fixed;
   top: 21%;
 }
+
 #closeCredits {
+  cursor: pointer;
   right: 26%;
   top: 21%;
 }
+
 #uploadDownloadFrame {
   height: 200px;
   position: absolute;
@@ -277,6 +264,7 @@ body {
   top: 20%;
   width: 40%;
 }
+
 #creditsFrame {
   background-color: white;
   border-radius: 10px;
@@ -286,17 +274,16 @@ body {
   top: 20%;
   width: 50%;
 }
+
 #bottomHUD {
+  /*border: 3px solid #6ac5ac;*/
   bottom: 0;
   color: white;
-  /*font-size: 20px;*/
-
-  height: 20px;
-  margin-top: -50px;
-  padding: 10px;
+  height: 1.8vw;
   position: absolute;
   width: 100%;
 }
+
 #index {
   border-radius: 40px;
   box-shadow: 0px -2px 50px 12px rgba(0, 0, 0, 1);
@@ -313,6 +300,7 @@ body {
 	width: 1000px;
 	*/
 }
+
 #modalCodexFrame {
   background-color: rgba(0, 0, 0, 0.7);
   display: none;
@@ -320,12 +308,14 @@ body {
   position: fixed;
   width: 100%;
 }
+
 #loading {
   position: absolute;
   width: 100%;
   height: 100%;
   background: black;
 }
+
 #loadingContainer {
   color: #FFFFFF;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -341,7 +331,9 @@ body {
   width: 200px;
 }
 
+
 /*bird thing, meadowlark styling*/
+
 .meadowlarkhidden {
   display: none;
   left: -800px;
@@ -350,6 +342,7 @@ body {
   text-decoration: none;
   top: 40%;
 }
+
 .meadowlarkfly {
   left: 150%;
   padding-right: 0px;
@@ -361,19 +354,21 @@ body {
   -webkit-animation-name: fly;
   animation-name: fly;
 }
+
 @keyframes fly {
   0% {
     left: -620px;
     top: 40%;
   }
-
   100% {
     left: 150%;
     top: 0%;
   }
 }
 
+
 /* Some of the iframes */
+
 #options, #multiplayer {
   height: 100%;
   left: 0px;
@@ -383,14 +378,16 @@ body {
   width: 100%;
 }
 
+
 /* Escape Menu and Buttons */
+
 .mainEscapeButton, .unclickableMainEscapeButton {
   background-color: #40A4DF;
   border: 2px solid white;
   border-radius: 12px;
   color: #FFFFFF;
   cursor: default;
-  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
   font-size: var(--button-font-size);
   font-weight: bold;
   line-height: 100%;
@@ -405,12 +402,15 @@ body {
 	line-height: 120%;
   width: 200px;*/
 }
+
 .unclickableMainEscapeButton {
   background-color: #003d4d;
 }
+
 .mainEscapeButton:hover {
   background-color: #7cc1e9 !important;
 }
+
 #exitToMenuButton {
   animation-duration: 1.2s;
   animation-name: showEffect;
@@ -418,6 +418,7 @@ body {
   -webkit-transition-duration: 1.2s;
   /* Safari */
 }
+
 #optionsButton {
   animation-duration: 0.8s;
   animation-name: showEffect;
@@ -425,6 +426,7 @@ body {
   -webkit-transition-duration: 0.8s;
   /* Safari */
 }
+
 #directoryButton {
   animation-duration: 0.4s;
   animation-name: showEffect;
@@ -432,6 +434,7 @@ body {
   -webkit-transition-duration: 0.4s;
   /* Safari */
 }
+
 #escapeMenu {
   height: 200px;
   left: 42%;
@@ -442,30 +445,31 @@ body {
   /*margin: -100px 0 0 -8vw;*/
   /*margin: -100px 0 0 -150px;*/
 }
+
 @keyframes showEffect {
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
 }
+
 @keyframes hideEffect {
   from {
     opacity: 1;
   }
-
   to {
     opacity: 0;
   }
 }
+
 #confirmEscape {
   background-color: rgba(0, 0, 0, 0);
   border-radius: 6px;
   display: inline-block;
   color: #FFFFFF;
-  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
   font-size: calc(var(--button-font-size) - 1vw);
   font-weight: bold;
   height: 0;
@@ -485,16 +489,20 @@ body {
 	width: 250px;
 	*/
 }
+
 #yesConfirmEscape {
   margin: 0 auto;
   margin-bottom: 20px;
   margin-top: 20px;
 }
+
 #noConfirmEscape {
   margin: 0 auto;
 }
 
+
 /* style of all the iframe */
+
 #modalUploadFrame, #modalEscapeFrame, #modalCreditsFrame, #modalResultsFrame {
   animation-duration: 1.0s;
   animation-name: showEffect;
@@ -504,6 +512,7 @@ body {
   position: fixed;
   width: 100%;
 }
+
 #hover-div {
   background: none !important;
   border-radius: 100%;
@@ -517,6 +526,7 @@ body {
   top: 49%;
   width: 250px;
 }
+
 .playerReset {
   border-radius: 50%;
   height: 40px;
@@ -524,6 +534,7 @@ body {
   margin-left: 10px;
   width: 40px;
 }
+
 #playerReset .message {
   border-radius: 50%;
   height: 40px;
@@ -531,13 +542,15 @@ body {
   margin-left: 40px;
   width: 40px;
 }
+
 #message {
   color: white;
-  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
   font-size: 40px;
   position: static;
   visibility: hidden;
 }
+
 #playerResetButton:hover #message {
   top: 100%;
   right: 88%;

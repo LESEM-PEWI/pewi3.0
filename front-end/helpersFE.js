@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-05-25T14:55:53-05:00
+ * @Last modified time: 2017-05-31T11:08:55-05:00
  */
 
 
@@ -544,7 +544,7 @@ function addYearAndTransition() {
     //make next button appear (has some prebuilt functionality for expanded number of years)
     if(currentYear < totalYearsAllowed - 1) {
 
-        document.getElementById("year" + nextYear + "Button").className = "yearButton";
+        document.getElementById("year" + nextYear + "Button").className = "icon yearButton";
         document.getElementById("year" + nextYear + "Image").className = "yearNotSelected";
 
     }
@@ -1213,10 +1213,10 @@ function switchConsoleTab(value) {
     }
 
     //then we'll turn back on the tab that was switched to, clever eh?
-   
+
 
     //update the left console tab according to the value selected
-    
+
     if (value == 1) {
         inDispLevels = false;
         document.getElementById('terrainImg').className = "imgSelected";
@@ -1248,7 +1248,7 @@ function switchConsoleTab(value) {
         document.getElementById('yearsTab').style.display = "block";
     }
 
-    
+
     //check if the map needs the levels legend displayed
     if (mapIsHighlighted) {
         displayLevels();
@@ -2114,7 +2114,7 @@ function randomizeBoard() {
 				//getRandomInt is in back-end helperMethods
 				painter = getRandomInt(1, 15);
 				changeLandTypeTile(i);
-			}	
+			}
 		} //end for all tiles
 	}
 
@@ -2393,11 +2393,11 @@ function toggleChangeLandType() {
       (clearToChangeLandType) ? false : true ;
 } //end toggleChangeLandType
 function addPlayerAndTransition() {
-    
+
     console.log("Add button was hit");
     var totalPlayersAllowed = 6;
     var nextPlayer = currentPlayer + 1;
-   
+
     //make next button appear (has some prebuilt functionality for expanded number of players)
     if(currentPlayer < totalPlayersAllowed - 1) {
 
@@ -2406,27 +2406,27 @@ function addPlayerAndTransition() {
         document.getElementById("player" + nextPlayer + "Image").className = "landSelectorIcon";
         document.getElementById("player" + nextPlayer + "Image").style.display = "inline-block";
 
-        
+
     }
-    
+
     //make last button appear and remove the "+" Button (has some prebuilt functionality for expanded number of years)
     if(currentPlayer == totalPlayersAllowed - 1) {
-        
+
         document.getElementById("paintPlayer6").className = "playerButton";
         document.getElementById("player6Image").className = "playerSelected";
         document.getElementById("player6Image").style.display = "inline-block";
         document.getElementById("playerAddButton").style.display = "none";
 
-        
+
     }
-    
+
     switchPlayerTab(nextPlayer);
-   
+
     console.log("Current player %s",document.getElementsByClassName("playerNotSelected")[0].id);
     console.log("Next player %s",document.getElementsByClassName("playerSelected")[0].id);
     transitionToPlayer(nextPlayer);
     changeSelectedPaintTo(nextPlayer);
-    
+
 } //end addYearAndTransition
 
 
@@ -2451,11 +2451,11 @@ function transitionToPlayer(playerNumber) {
     console.log("Total number of players : %s",currentPlayer);
     boardData[currentBoard].updateBoard();
 
-    
 
-   
 
-   
+
+
+
 
    // refreshBoard();
 } //end transitionToYear
@@ -2532,4 +2532,3 @@ function getNumberOfPlayers()
 {
     return currentPlayer;
 }
-
