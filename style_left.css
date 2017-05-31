@@ -50,8 +50,17 @@
   box-shadow: 8px 0px 10px -4px rgba(240, 166, 29, 0.8);
 }
 
+#undoButton:hover {
+  box-shadow: 0 0px 8px 2px rbg(0, 0, 0, 0.8);
+}
+
 #toolsButton:hover {
   box-shadow: 0 0px 8px 2px rgba(0, 0, 0, 0.8);
+}
+
+#undoButton {
+  border-bottom-right-radius: 5px;
+  top: 100px;
 }
 
 #toolsButton {
@@ -66,7 +75,7 @@
   width: var(--left-console-button-image-length);
 }
 
-.tabButtons, #toolsButton {
+.tabButtons, #toolsButton, #undoButton {
   left: var(--left-console-width);
   position: absolute;
   -webkit-transition-duration: var(--transition-duration);
@@ -114,9 +123,10 @@
   top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
 }
 
-#settingsButton {
+
+/*#settingsButton {
   top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
-}
+}*/
 
 
 /**left console content container**/
@@ -202,6 +212,12 @@
   position: absolute;
 }
 
+
+/**inner elements of left console**/
+
+
+/*terrain selector*/
+
 .landSelectorIcon, .landSelectedIcon {
   display: block;
   height: 2.5vw;
@@ -261,6 +277,14 @@ option {
   margin: 0.3vw;
   padding: 0.2vw;
   text-align: center;
+}
+
+
+/* appear when development merge Issue94  */
+
+#precipTab {
+  color: white;
+  font-size: 18px;
 }
 
 #year0PrecipContainer {

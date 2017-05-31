@@ -4,7 +4,6 @@
  */
 
 
-
 /**
 
 Palette:
@@ -33,10 +32,10 @@ font-family: 'Amatic SC', cursive;
 /* css variable declaration */
 
 :root {
-	--button-font-size: 2.5vw;
+  --button-font-size: 2.5vw;
   --font-size: 1vw;
-	--main-button-height: 2.5vw;
-	--main-button-width: 12vw;
+  --main-button-height: 2.5vw;
+  --main-button-width: 12vw;
   --title-font-weight: 900;
   --transition-duration: 0.4s;
 }
@@ -49,8 +48,19 @@ font-family: 'Amatic SC', cursive;
    v2.0 | 20110126
    License: none (public domain)
 */
-
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -66,124 +76,180 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-body {
-  line-height: 1;
-}
 
+/**left console**/
+
+
+/**left console buttons**/
+
+
+/*#undoButton:hover {
+    box-shadow: 0 0px 8px 2px rbg(0,0,0,0.8) ;
+}*/
+
+
+/*.tabButtons, #toolsButton, #undoButton {*/
+
+
+/*left: 135px;*/
+
+
+/*position:absolute;*/
+
+
+/*-webkit-transition-duration: 0.4s; */
+
+
+/* Safari */
+
+
+/*transition-duration: 0.4s;*/
+
+
+/*}*/
+
+
+/*#undoButton {
+    top: 100px;
+    border-bottom-right-radius: 5px ;
+
+}*/
+
+
+/*}*/
+
+/*#precipTab{
+
+    color: white;
+    font-size: 18px;
+
+}*/
+
+/**Styling for index Menu**/
+.indexmenu {
+  background-image: url('./imgs/consoleTexture.png');
+  border: none;
+  border-radius: 6px;
+  color: #FFFFFF;
+  cursor: default;
+  font-family: 'Amatic SC', cursive;
+  font-size: 30px;
+  font-weight: bold;
+  height: 30px;
+  margin-top: 100px;
+  padding: 5px;
+  text-align: center;
+  width: 100px;
+  position: absolute;
+  background-repeat: repeat;
+}
+.indexmenu:hover {
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+}
 ol, ul {
   list-style: none;
+  >>>>>>>Issue94
 }
-
 blockquote, q {
   quotes: none;
 }
-
 blockquote:before, blockquote:after, q:before, q:after {
   content: '';
   content: none;
 }
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
 html {
   height: 100%;
 }
 
-
 /*END CSS RESET */
 
-
 /******PAGINATION STYLING*****/
-
 * {
   -webkit-touch-callout: none;
   /* iOS Safari */
+
   -webkit-user-select: none;
   /* Chrome/Safari/Opera */
+
   -khtml-user-select: none;
   /* Konqueror */
+
   -moz-user-select: none;
   /* Firefox */
+
   -ms-user-select: none;
   /* Internet Explorer/Edge */
+
   user-select: none;
   /* Non-prefixed version, currently
                                   not supported by any browser */
 }
-
 body {
-  position: fixed;
-  /*width:100%;*/
-  /*height:100%;*/
-  overflow: hidden;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: var(--font-size);
+  overflow: hidden;
+  position: fixed;
+  /*height:100%;*/
+  /*width:100%;*/
 }
-
 
 /** Other elements **/
-
 #settingsHolder {
-  position: absolute;
-  cursor: default;
   background: rgba(0, 0, 0, 0);
-  overflow: hidden;
-  margin: 0px;
-  padding: 0px;
+  cursor: default;
   height: 0px;
+  margin: 0px;
+  overflow: hidden;
+  padding: 0px;
+  position: absolute;
   width: 0px;
 }
-
 #page {
   visibility: hidden;
 }
-
 .upperButton, #logoBase {
+  height: 3vw;
   position: absolute;
   top: 0.1vw;
-  height: 3vw;
   -webkit-transition-duration: 0.1s;
   /* Safari */
+
   transition-duration: 0.1s;
   /*top: 5px;*/
 }
-
 .upperButton:hover {
   border-bottom: 2px groove white;
   -webkit-transition-duration: 0.1s;
   /* Safari */
+
   transition-duration: 0.1s;
 }
-
 #creditsButton {
   right: 2px;
 }
-
 #uploadDownloadButton {
   right: 42px;
 }
-
 #creditsButton, #uploadDownloadButton {
-	width: 3vw;
+  width: 3vw;
 }
-
 #logoBase {
   right: 82px;
 }
-
 .closeButton {
   position: absolute;
   width: 2.5vw;
   -webkit-transition-duration: 0.1s;
   /* Safari */
+
   transition-duration: 0.1s;
   /*height: 40px;
 	width: 40px;*/
 }
-
 .closeButton:hover {
   height: 35px;
   margin-right: 2px;
@@ -191,29 +257,26 @@ body {
   width: 35px;
   -webkit-transition-duration: 0.1s;
   /* Safari */
+
   transition-duration: 0.1s;
 }
-
 #closeUploadDownload {
-  position: fixed;
   left: 50%;
   padding-left: 140px;
+  position: fixed;
   top: 21%;
 }
-
 #closeCredits {
   right: 26%;
   top: 21%;
 }
-
 #uploadDownloadFrame {
   height: 200px;
   position: absolute;
+  left: 30%;
   top: 20%;
   width: 40%;
-  left: 30%;
 }
-
 #creditsFrame {
   background-color: white;
   border-radius: 10px;
@@ -223,37 +286,33 @@ body {
   top: 20%;
   width: 50%;
 }
-
 #bottomHUD {
   bottom: 0;
   color: white;
   /*font-size: 20px;*/
+
   height: 20px;
   margin-top: -50px;
   padding: 10px;
   position: absolute;
   width: 100%;
 }
-
 #index {
   border-radius: 40px;
-	box-shadow: 0px -2px 50px 12px rgba(0, 0, 0, 1);
+  box-shadow: 0px -2px 50px 12px rgba(0, 0, 0, 1);
   display: none;
-	height: 64.3%;
-	left: 22%;
-  /*margin-left: -32%;*/
-  /*margin-top: -18%;*/
+  height: 64.3%;
+  left: 22%;
   position: absolute;
   top: 15%;
-	width: 52.2%;
+  width: 52.2%;
   -webkit-box-shadow: 0px -2px 120px 80px rgba(0, 0, 0, 1);
   -moz-box-shadow: 0px -2px 120px 80px rgba(0, 0, 0, 1);
-	/*
+  /*
 	height: 700px;
 	width: 1000px;
 	*/
 }
-
 #modalCodexFrame {
   background-color: rgba(0, 0, 0, 0.7);
   display: none;
@@ -261,14 +320,12 @@ body {
   position: fixed;
   width: 100%;
 }
-
 #loading {
   position: absolute;
   width: 100%;
   height: 100%;
   background: black;
 }
-
 #loadingContainer {
   color: #FFFFFF;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -284,9 +341,7 @@ body {
   width: 200px;
 }
 
-
 /*bird thing, meadowlark styling*/
-
 .meadowlarkhidden {
   display: none;
   left: -800px;
@@ -295,7 +350,6 @@ body {
   text-decoration: none;
   top: 40%;
 }
-
 .meadowlarkfly {
   left: 150%;
   padding-right: 0px;
@@ -307,21 +361,19 @@ body {
   -webkit-animation-name: fly;
   animation-name: fly;
 }
-
 @keyframes fly {
   0% {
     left: -620px;
     top: 40%;
   }
+
   100% {
     left: 150%;
     top: 0%;
   }
 }
 
-
 /* Some of the iframes */
-
 #options, #multiplayer {
   height: 100%;
   left: 0px;
@@ -331,9 +383,7 @@ body {
   width: 100%;
 }
 
-
 /* Escape Menu and Buttons */
-
 .mainEscapeButton, .unclickableMainEscapeButton {
   background-color: #40A4DF;
   border: 2px solid white;
@@ -343,27 +393,24 @@ body {
   font-family: 'Amatic SC', cursive;
   font-size: var(--button-font-size);
   font-weight: bold;
-	line-height: 100%;
-	margin-bottom: 20px;
+  line-height: 100%;
+  margin-bottom: 20px;
   margin: 0px 0px 20px 0px;
   padding: 5px;
   text-align: center;
   width: var(--main-button-width);
-	/*height: var(--main-button-height);*/
+  /*height: var(--main-button-height);*/
   /*font-size: 40px;
 	height: 50px;
 	line-height: 120%;
   width: 200px;*/
 }
-
 .unclickableMainEscapeButton {
   background-color: #003d4d;
 }
-
 .mainEscapeButton:hover {
   background-color: #7cc1e9 !important;
 }
-
 #exitToMenuButton {
   animation-duration: 1.2s;
   animation-name: showEffect;
@@ -371,7 +418,6 @@ body {
   -webkit-transition-duration: 1.2s;
   /* Safari */
 }
-
 #optionsButton {
   animation-duration: 0.8s;
   animation-name: showEffect;
@@ -379,7 +425,6 @@ body {
   -webkit-transition-duration: 0.8s;
   /* Safari */
 }
-
 #directoryButton {
   animation-duration: 0.4s;
   animation-name: showEffect;
@@ -387,85 +432,78 @@ body {
   -webkit-transition-duration: 0.4s;
   /* Safari */
 }
-
 #escapeMenu {
   height: 200px;
   left: 42%;
-	top: 7vw;
-  /*margin: -100px 0 0 -8vw;*/
+  top: 7vw;
   position: absolute;
-  /*top: 25%;*/
   width: 300px;
+  /*top: 25%;*/
+  /*margin: -100px 0 0 -8vw;*/
   /*margin: -100px 0 0 -150px;*/
 }
-
 @keyframes showEffect {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
-
 @keyframes hideEffect {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
 }
-
 #confirmEscape {
   background-color: rgba(0, 0, 0, 0);
   border-radius: 6px;
   display: inline-block;
-	color: #FFFFFF;
-	font-family: 'Amatic SC', cursive;
-	font-size: calc(var(--button-font-size) - 1vw);
-	font-weight: bold;
-	left: -0.5vw;
-	line-height: 130%;
+  color: #FFFFFF;
+  font-family: 'Amatic SC', cursive;
+  font-size: calc(var(--button-font-size) - 1vw);
+  font-weight: bold;
   height: 0;
+  left: -0.5vw;
+  line-height: 130%;
   overflow: hidden;
   position: relative;
   text-align: center;
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
-	width: 13.2vw;
-	/*width: 0;*/
-	/*width: var(--main-button-width);*/
+  width: 13.2vw;
+  /*width: 0;*/
+  /*width: var(--main-button-width);*/
   /*font-size: 30px;
 	margin-left: -10.6vw;
 	margin-left: -20px;
 	width: 250px;
 	*/
 }
-
 #yesConfirmEscape {
   margin: 0 auto;
   margin-bottom: 20px;
   margin-top: 20px;
 }
-
 #noConfirmEscape {
   margin: 0 auto;
 }
 
-
 /* style of all the iframe */
-
 #modalUploadFrame, #modalEscapeFrame, #modalCreditsFrame, #modalResultsFrame {
+  animation-duration: 1.0s;
+  animation-name: showEffect;
   background-color: rgba(0, 0, 0, 0.7);
   display: none;
   height: 100%;
   position: fixed;
   width: 100%;
-  animation-duration: 1.0s;
-  animation-name: showEffect;
 }
-
 #hover-div {
   background: none !important;
   border-radius: 100%;
@@ -478,4 +516,30 @@ body {
   position: fixed;
   top: 49%;
   width: 250px;
+}
+.playerReset {
+  border-radius: 50%;
+  height: 40px;
+  margin: 6px;
+  margin-left: 10px;
+  width: 40px;
+}
+#playerReset .message {
+  border-radius: 50%;
+  height: 40px;
+  margin: 20px;
+  margin-left: 40px;
+  width: 40px;
+}
+#message {
+  color: white;
+  font-family: 'Amatic SC', cursive;
+  font-size: 40px;
+  position: static;
+  visibility: hidden;
+}
+#playerResetButton:hover #message {
+  top: 100%;
+  right: 88%;
+  visibility: visible;
 }

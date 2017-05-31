@@ -25,6 +25,8 @@ Cleaned and Prepared - July 2016
   <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
   <!--external fonts-->
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+  <!--helper methods for class modes-->
+  <script src="../front-end/helpersFE.js"></script>
   <!-- /INCLUDES -->
 
   <!--additional styling-->
@@ -115,6 +117,8 @@ Cleaned and Prepared - July 2016
 
   </div>
 
+  </div>
+
   <iframe id="startupDialogueOverlay"></iframe>
 
   <script type='text/javascript'>
@@ -122,7 +126,6 @@ Cleaned and Prepared - July 2016
     document.getElementById('startVideo').addEventListener('ended', function() {
       endOfVideo();
     }, false);
-
     //if after 2000milisecs, the video hasn't taken off, well then we just pretend
     // that there's no video and move on
     //This is important for browsers without video playback, otherwise the endOfVideo
@@ -133,26 +136,21 @@ Cleaned and Prepared - July 2016
         endOfVideo();
       }
     }, 2000);
-
     //Create three framework and load textures
     // this takes care of all of the webGL setup that only needs to be done once
     createEnvironment();
-
     //endOfVideo changes styling for the transitions that need to occur between the loading
     // screen and the main start screen
     function endOfVideo() {
-
       //Change from Loading stuff to content stuff
       document.getElementById('startupContent').style.opacity = "1";
       document.getElementById('startupLoadingContainer').style.display = "none";
       document.getElementById('startupContentsHolder').style.visibility = "visible";
-
       //setup backgrond
       document.getElementById('startupBackgroundImage').style.opacity = "1";
       document.getElementById('riverBackgroundColoring').style.opacity = "1";
       document.getElementById('riverBack1').style.opacity = "0.4";
       document.getElementById('riverBack2').style.opacity = "0.4";
-
       //setup main content styling
       document.getElementById('pewiTitle').style.opacity = "1";
       document.getElementById('pewiTitle').style.marginTop = "0";
@@ -160,7 +158,6 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupButton2').style.opacity = "1";
       document.getElementById('startupButton3').style.opacity = "1";
       document.getElementById('startupInformationText').style.opacity = "1";
-
       //Once these transitions have been calculated by the browser and are under way
       // then we can safely reduce the transition times of all the elements
       setTimeout(function() {
@@ -172,7 +169,6 @@ Cleaned and Prepared - July 2016
         document.getElementById('startupContentsHolder').style.transitionDuration = ".4s";
       }, 10);
     } //end endOfVideo
-
     //startSandbox hides the startup page and loads the sandbox
     function startSandbox() {
       //Update Buttons appropriately
@@ -189,13 +185,13 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,1)";
       //clear informational text
       document.getElementById('startupInformationText').innerHTML = "";
-
+      //change random tolerance ("S" for sandbox)
+      randomAllowed("S");
       //after all of this styling magic, let's actually do something and start the sandbox mode
       setTimeout(function() {
         parent.loadLevel(0);
       }, 400);
     } //end startSandbox
-
     //startUtilities hides the startup page elements and displays utilities
     function startUtilities() {
       //Update Buttons appropriately
@@ -212,27 +208,22 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)";
       //clear informational text
       document.getElementById('startupInformationText').innerHTML = "";
-
+      //change random tolerance ("U" for utilities)
+      randomAllowed("U");
       //Display utilities frame over the page, then with
       // the background elements hidden, rearrange them in preparation for the user
       // clicking back
       setTimeout(function() {
-
         hideBackgroundStartupElements();
-
         setTimeout(function() {
           document.getElementById('startupDialogueOverlay').src = "utilities.html";
           document.getElementById('startupDialogueOverlay').style.visibility = "visible";
         }, 400);
-
         setTimeout(function() {
           resetElements();
         }, 500);
-
       }, 400);
-
     } //end startUtilities
-
     //startPlay hides the startup page elements and displays the level selector
     function startPlay() {
       //Update Buttons appropriately
@@ -249,7 +240,9 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)";
       //clear informational text
       document.getElementById('startupInformationText').innerHTML = "";
-
+      //change random tolerance ("P" for play)
+      randomAllowed("P");
+      //function multiplayerMode();
       //after all the moving around, then show iframe page over the page, then
       //  reset the buttons and content in the background
       setTimeout(function() {
@@ -267,7 +260,6 @@ Cleaned and Prepared - July 2016
 
       }, 400);
     } //end startPlay
-
     // this function simply hides the main content from the startup page
     function hideBackgroundStartupElements() {
       document.getElementById('startupButton1').style.visibility = "hidden";
@@ -275,7 +267,6 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupButton3').style.visibility = "hidden";
       document.getElementById('pewiTitle').style.visibility = "hidden";
     } //end function
-
     //resetElements moves the elements around on the page and resets the colors of elements
     //  in preparation for returning to the page
     function resetElements() {
@@ -290,7 +281,6 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupButton3').style.left = "75%";
       document.getElementById('pewiTitle').style.marginTop = "0px";
     } //end resetElements
-
     //reset makes the changes necessary for displaying the main page again
     // this is necessary to be separated so that the elements can be moved prior to being
     // redisplayed in avoidance of carry over transitions
@@ -311,13 +301,11 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupButton3').style.visibility = "visible";
       document.getElementById('pewiTitle').style.visibility = "visible";
     } //end reset
-
     //chains the two functions needed for resetting the page completely. Called by helpersFE.js
     function recallMain() {
       resetElements();
       reset();
     } //end recallMain
-
     //highlightButton toggles the color of startup page buttons when hovered over
     // and updates the informational text bar
     // There was some issue with just hover styling, so we'll do the styling here too
@@ -345,7 +333,6 @@ Cleaned and Prepared - July 2016
         document.getElementById(string).style.backgroundColor = "#40A4DF";
       }
     } //end function
-
     //createEnvironment creates scene generic THREE.js elements and loads textures
     // this all is done cleverly in the background when the video and loading are being shown
     function createEnvironment() {
