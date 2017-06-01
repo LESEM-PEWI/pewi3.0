@@ -1124,27 +1124,7 @@ function showLevelDetails(value) {
     document.getElementById('soilClass').className = "featureSelectorIconSelected";
     document.getElementById('soilClassDetailsList').className = "physicalDetailsList";
   }
-
-  //hide ecosystem indicator legends
-  if (value > -4 && value < 0) {
-    var element = document.getElementsByClassName('levelDetailsList');
-    if (element.length > 0) {
-      element[0].className = 'levelDetailsListRolled';
-    }
-    element = document.getElementsByClassName('levelSelectorIconSelected');
-    if (element.length > 0) {
-      element[0].className = 'levelsSelectorIcon';
-    }
-  }
-
-  //hide watershed feature legends
-  else if (value < -3) {
-    var element = document.getElementsByClassName('physicalDetailsList');
-    if (element.length > 0) {
-      element[0].className = 'physicalDetailsListRolled';
-    }
-
-    //Corn class legend
+  //Corn class legend
     else if(value == 9){
         document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
         document.getElementById('cornClass').className = "yieldSelectorIconSelected";
@@ -1182,30 +1162,31 @@ function showLevelDetails(value) {
         document.getElementById('shortClass').className = "yieldSelectorIconSelected";
     }
 
-    //hide ecosystem indicator legends
-    if (value > -4 && value < 0) {
-        var element = document.getElementsByClassName('levelDetailsList');
-        if (element.length > 0) {
-            element[0].className = 'levelDetailsListRolled';
-        }
-        element = document.getElementsByClassName('levelSelectorIconSelected');
-        if (element.length > 0) {
-            element[0].className = 'levelsSelectorIcon';
-        }
+  //hide ecosystem indicator legends
+  if (value > -4 && value < 0) {
+    var element = document.getElementsByClassName('levelDetailsList');
+    if (element.length > 0) {
+      element[0].className = 'levelDetailsListRolled';
     }
+    element = document.getElementsByClassName('levelSelectorIconSelected');
+    if (element.length > 0) {
+      element[0].className = 'levelsSelectorIcon';
+    }
+  }
 
-    //hide watershed feature legends
-    else if (value < -3 && value > -9) {
-        var element = document.getElementsByClassName('physicalDetailsList');
-        if (element.length > 0) {
-            element[0].className = 'physicalDetailsListRolled';
-        }
-        element = document.getElementsByClassName('featureSelectorIconSelected');
-        if (element.length > 0) {
-            element[0].className = 'featureSelectorIcon';
-        }
-    } //end else/if group
-    else if(value < -8){
+  //hide watershed feature legends
+  else if (value < -3 && value > -9) {
+    var element = document.getElementsByClassName('physicalDetailsList');
+    if (element.length > 0) {
+      element[0].className = 'physicalDetailsListRolled';
+    }
+    element = document.getElementsByClassName('featureSelectorIconSelected');
+    if (element.length > 0) {
+      element[0].className = 'featureSelectorIcon';
+    }
+  } //end else/if group
+
+  else if(value < -8){
         var element = document.getElementsByClassName('yieldDetailsList');
         if(element.length > 0) {
             element[0].className = 'yieldDetailsListRolled';
@@ -1215,11 +1196,6 @@ function showLevelDetails(value) {
             element[0].ckassName = 'yieldSelectorIcon';
         }
     }
-    element = document.getElementsByClassName('featureSelectorIconSelected');
-    if (element.length > 0) {
-      element[0].className = 'featureSelectorIcon';
-    }
-  } //end else/if group
 
 } //end showLevelDetails
 
@@ -1245,70 +1221,6 @@ function updatePrecip(year) {
 
 //switchConsoleTab updates the currently selected toolbar on the left
 function switchConsoleTab(value) {
-
-
-    //Store last tab
-    if(value!=1)
-    {
-        previousTab = value;
-    }
-
-    //turn off selected image in tabs
-    var element = document.getElementsByClassName("imgSelected");
-    element[0].className = "imgNotSelected";
-
-    //turn off all the consoleTabs
-    var elements = document.getElementsByClassName("consoleTab");
-
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].style.display = "none";
-    }
-
-    //then we'll turn back on the tab that was switched to, clever eh?
-   
-
-    //update the left console tab according to the value selected
-    
-    if (value == 1) {
-        inDispLevels = false;
-        document.getElementById('terrainImg').className = "imgSelected";
-        document.getElementById('painterTab').style.display = "block";
-    }
-    else if (value == 2) {
-        inDispLevels = false;
-        document.getElementById('precipImg').className = "imgSelected";
-        document.getElementById('precipTab').style.display = "block";
-    }
-    else if (value == 3) {
-        inDispLevels = true;
-        document.getElementById('levelsImg').className = "imgSelected";
-        document.getElementById('levelsTab').style.display = "block";
-    }
-    else if (value == 4 ) {
-        inDispLevels = true;
-        document.getElementById('featuresImg').className = "imgSelected";
-        document.getElementById('featuresTab').style.display = "block";
-    }
-    else if (value == 5) {
-        inDispLevels = false;
-        document.getElementById('settingsImg').className = "imgSelected";
-        document.getElementById('settingsTab').style.display = "block";
-    }
-    else if (value == 6) {
-        inDispLevels = false;
-        document.getElementById('calendarImg').className = "imgSelected";
-        document.getElementById('yearsTab').style.display = "block";
-    }
-    else if(value == 7){
-        document.getElementById('yieldImg').className = "imgSelected";
-        document.getElementById('yieldTab').style.display = "block"
-    }
-
-    
-    //check if the map needs the levels legend displayed
-    if (mapIsHighlighted) {
-        displayLevels();
-    }
 
   //Store last tab
   if (value != 1) {
@@ -1356,13 +1268,16 @@ function switchConsoleTab(value) {
     document.getElementById('calendarImg').className = "imgSelected";
     document.getElementById('yearsTab').style.display = "block";
   }
+     else if(value == 7){
+        document.getElementById('yieldImg').className = "imgSelected";
+        document.getElementById('yieldTab').style.display = "block"
+  }
 
 
   //check if the map needs the levels legend displayed
   if (mapIsHighlighted) {
     displayLevels();
   }
-
 } //end switchConsoleTab
 
 //switchYearTab changes the highlighted year
@@ -1404,84 +1319,6 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
 
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(overlayHighlightType) {
-
-    var selectionHighlightNumber = 0;
-
-    //update console tabs
-    var element = document.getElementsByClassName('featureSelectorIconSelected');
-    if (element[0]) element[0].className = 'featureSelectorIcon';
-    element = document.getElementsByClassName('levelSelectorIconSelected');
-    if (element[0]) element[0].className = 'levelsSelectorIcon';
-    //When an overlay is toggled, set toggledOverlay to true
-    overlayedToggled = true;
-    //record new highlighting selection
-    switch (overlayHighlightType) {
-        case 'nitrate':
-            selectionHighlightNumber = 1;
-            break;
-        case 'erosion':
-            selectionHighlightNumber = 2;
-            break;
-        case 'phosphorus':
-            selectionHighlightNumber = 3;
-            break;
-        case 'flood':
-            selectionHighlightNumber = 4;
-            break;
-        case 'drainage':
-            selectionHighlightNumber = 5;
-            break;
-        case 'wetland':
-            selectionHighlightNumber = 6;
-            break;
-        case 'subwatershed':
-            selectionHighlightNumber = 7;
-            break;
-        case 'soil':
-            selectionHighlightNumber = 8;
-            break;
-        case 'cornGrain':
-            selectionHighlightNumber = 9;
-            break;
-        case 'soy':
-            selectionHighlightNumber = 10;
-            break;
-        case 'fruit':
-            selectionHighlightNumber = 11;
-            break;
-        case 'cattle':
-            selectionHighlightNumber = 12;
-            break;
-        case 'alfalfa':
-            selectionHighlightNumber = 13;
-            break;
-        case 'grassHay':
-            selectionHighlightNumber = 14;
-            break;
-        case 'switchGrass':
-            selectionHighlightNumber = 15;
-            break;
-        case 'wood':
-            selectionHighlightNumber = 16;
-            break;
-        case 'short':
-            selectionHighlightNumber = 17;
-            break;
-
-    } //end switch
-
-    //save selectionHighlightNumber for quick access via hotkey
-    if(selectionHighlightNumber!=0)
-    {
-        previousOverlay = overlayHighlightType;
-    }
-
-    //map is not previously highlighted
-    if (!mapIsHighlighted) {
-        drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
-    }
-    //if the map is previously highlighted
-
   var selectionHighlightNumber = 0;
 
   //update console tabs
@@ -1517,6 +1354,33 @@ function displayLevels(overlayHighlightType) {
     case 'soil':
       selectionHighlightNumber = 8;
       break;
+       case 'cornGrain':
+            selectionHighlightNumber = 9;
+            break;
+        case 'soy':
+            selectionHighlightNumber = 10;
+            break;
+        case 'fruit':
+            selectionHighlightNumber = 11;
+            break;
+        case 'cattle':
+            selectionHighlightNumber = 12;
+            break;
+        case 'alfalfa':
+            selectionHighlightNumber = 13;
+            break;
+        case 'grassHay':
+            selectionHighlightNumber = 14;
+            break;
+        case 'switchGrass':
+            selectionHighlightNumber = 15;
+            break;
+        case 'wood':
+            selectionHighlightNumber = 16;
+            break;
+        case 'short':
+            selectionHighlightNumber = 17;
+            break;  
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -1541,7 +1405,6 @@ function displayLevels(overlayHighlightType) {
 
     }
     //else if the highlighting is different, let's change to the new highlighting
-
     else {
       //close previous legend
       showLevelDetails(-1 * currentHighlightType);
@@ -1695,199 +1558,7 @@ function getHighlightColor(highlightType, tileId) {
         return 18;
     }
   }
-} //end getHighlightColor
-
-//getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
-function getHighlightedInfo(tileId) {
-
-  //return information about the tile that is highlighted
-  if (currentHighlightType <= 0) {
-    return "";
-  } else {
-
-    var highlightString = "";
-
-    switch (currentHighlightType) {
-      //create string for nitrate levels
-      case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%";
-        break;
-        //create string for gross erosion levels
-      case 2:
-        highlightString = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr";
-        break;
-        //create string for phosphorus load levels
-      case 3:
-        highlightString = (boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr";
-        break;
-        //create string for flood frequency levels
-      case 4:
-        switch (Number(boardData[currentBoard].map[tileId].floodFrequency)) {
-          case 0:
-            highlightString = "None";
-            break;
-          case 10:
-            highlightString = "None";
-            break;
-          case 20:
-            highlightString = "Rare";
-            break;
-          case 30:
-            highlightString = "Occasionally";
-            break;
-          case 40:
-            highlightString = "Frequently";
-            break;
-          case 50:
-            highlightString = "Ponded";
-            break;
-        }
-        break;
-        //create string for drainage classification
-      case 5:
-        var drainage = Number(boardData[currentBoard].map[tileId].drainageClass);
-        switch (drainage) {
-          case 70:
-            highlightString = "Very Poor";
-            break;
-          case 60:
-            highlightString = "Poor";
-            break;
-          case 50:
-            highlightString = "Somewhat Poor";
-            break;
-          case 45:
-            highlightString = "Somewhat Poor";
-            break;
-          case 40:
-            highlightString = "Moderate / Well";
-            break;
-          case 30:
-            highlightString = "Moderate / Well";
-            break;
-          case 10:
-            highlightString = "Excessive";
-            break;
-          case 0:
-            highlightString = "Excessive";
-            break;
-        } //end switch
-        break;
-        //create string for strategic wetlands
-      case 6:
-        if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
-          highlightString = "Strategic wetland";
-        }
-        break;
-        //create string for subwatershed number
-      case 7:
-        highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed;
-        break;
-        //create string for soil class
-      case 8:
-        soil = boardData[currentBoard].map[tileId].soilType;
-        switch (soil) {
-          case "A":
-            return "Clarion 138B";
-          case "B":
-            return "Buckney 1636";
-          case "C":
-            return "Canisteo 507";
-          case "D":
-            return "Downs 162D2";
-          case "G":
-            return "Gara-Armstrong 993E2";
-          case "K":
-            return "Ackmore-Colo 5B";
-          case "L":
-            return "Coland 135";
-          case "M":
-            return "Tama 120C2";
-          case "N":
-            return "Nicollet 55";
-          case "O":
-            return "Okoboji 90";
-          case "Q":
-            return "Tama 120B";
-          case "T":
-            return "Muscatine 119";
-          case "Y":
-            return "Noadaway 220";
-        }
-
-    }
-
-    return highlightString;
-  }
-
-
-        switch (drainage) {
-            case 70:
-                return 31;
-            case 60:
-                return 32;
-            case 50:
-                return 33;
-            case 45:
-                return 33;
-            case 40:
-                return 34;
-            case 30:
-                return 34;
-            case 10:
-                return 35;
-            case 0:
-                return 35;
-        }//end switch
-    }
-    //soil class highlight color indicies
-    else if(highlightType == "soil"){
-        
-        var soil = boardData[currentBoard].map[tileId].soilType;
-        
-        switch(soil) {
-            case "A":
-                //color 097c2f
-                return 19;
-            case "B":
-                //color a84597
-                return 14;
-            case "C":
-                //color 919246
-                return 30;
-            case "D":
-                //color c97b08
-                return 1;
-            case "G":
-                //color 9a3010
-                return 3;
-            case "K":
-                //color c7eab4
-                return 6;
-            case "L":
-                //color cc6578
-                return 13;
-            case "M":
-                //color e6bb00
-                return 0;
-            case "N":
-                //color 5e6e71
-                return 33;
-            case "O":
-                //color 837856
-                return 34;
-            case "Q":
-                //color 41b7c5
-                return 8;
-            case "T":
-                //color 0053b3
-                return 31;
-            case "Y":
-                //color 87ceee
-                return 18;
-        }
-    }
-    else if(highlightType == "cornGrain"){
+   else if(highlightType == "cornGrain"){
         var soil = boardData[currentBoard].map[tileId].soilType;
         switch(soil) 
             {
@@ -2186,6 +1857,129 @@ function getHighlightedInfo(tileId) {
             }
     }
 } //end getHighlightColor
+
+//getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
+function getHighlightedInfo(tileId) {
+
+  //return information about the tile that is highlighted
+  if (currentHighlightType <= 0) {
+    return "";
+  } else {
+
+    var highlightString = "";
+
+    switch (currentHighlightType) {
+      //create string for nitrate levels
+      case 1:
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%";
+        break;
+        //create string for gross erosion levels
+      case 2:
+        highlightString = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr";
+        break;
+        //create string for phosphorus load levels
+      case 3:
+        highlightString = (boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr";
+        break;
+        //create string for flood frequency levels
+      case 4:
+        switch (Number(boardData[currentBoard].map[tileId].floodFrequency)) {
+          case 0:
+            highlightString = "None";
+            break;
+          case 10:
+            highlightString = "None";
+            break;
+          case 20:
+            highlightString = "Rare";
+            break;
+          case 30:
+            highlightString = "Occasionally";
+            break;
+          case 40:
+            highlightString = "Frequently";
+            break;
+          case 50:
+            highlightString = "Ponded";
+            break;
+        }
+        break;
+        //create string for drainage classification
+      case 5:
+        var drainage = Number(boardData[currentBoard].map[tileId].drainageClass);
+        switch (drainage) {
+          case 70:
+            highlightString = "Very Poor";
+            break;
+          case 60:
+            highlightString = "Poor";
+            break;
+          case 50:
+            highlightString = "Somewhat Poor";
+            break;
+          case 45:
+            highlightString = "Somewhat Poor";
+            break;
+          case 40:
+            highlightString = "Moderate / Well";
+            break;
+          case 30:
+            highlightString = "Moderate / Well";
+            break;
+          case 10:
+            highlightString = "Excessive";
+            break;
+          case 0:
+            highlightString = "Excessive";
+            break;
+        } //end switch
+        break;
+        //create string for strategic wetlands
+      case 6:
+        if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
+          highlightString = "Strategic wetland";
+        }
+        break;
+        //create string for subwatershed number
+      case 7:
+        highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed;
+        break;
+        //create string for soil class
+      case 8:
+        soil = boardData[currentBoard].map[tileId].soilType;
+        switch (soil) {
+          case "A":
+            return "Clarion 138B";
+          case "B":
+            return "Buckney 1636";
+          case "C":
+            return "Canisteo 507";
+          case "D":
+            return "Downs 162D2";
+          case "G":
+            return "Gara-Armstrong 993E2";
+          case "K":
+            return "Ackmore-Colo 5B";
+          case "L":
+            return "Coland 135";
+          case "M":
+            return "Tama 120C2";
+          case "N":
+            return "Nicollet 55";
+          case "O":
+            return "Okoboji 90";
+          case "Q":
+            return "Tama 120B";
+          case "T":
+            return "Muscatine 119";
+          case "Y":
+            return "Noadaway 220";
+        }
+
+    }
+
+    return highlightString;
+  }
 
 
 } //end getHighlightedInfo
@@ -3067,3 +2861,4 @@ function multiplayerExit() {
 function getNumberOfPlayers() {
   return currentPlayer;
 }
+

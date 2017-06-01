@@ -96,30 +96,8 @@
     <div id="toolsButton" class="consoleButton" onclick="roll(1);">
       <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     </div>
-    <!-- Where we create different tabs-->
 
     <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-
-        <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-        <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);"><img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png"></div>
-        <!-- "Cloud, raindrops, sun icon" by Yannick Lung (http://yannicklung.com/) with free commercial use / Inverted and resized -->
-        <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png"></div>
-        
-        <!-- "Calendar tool variant for time administration free icon" by FreePik (http://www.freepik.com), retrived from www.flaticon.com  with free commercial use / Inverted and resized -->
-        <div id="yearButton" class="consoleButton" onclick="switchConsoleTab(6);"><img id="calendarImg" class="imgNotSelected" src="./imgs/calendarIcon.png"></div>
-        
-        <!-- "Filter, levels, settings icon" by Yash Ranpara (https://www.iconfinder.com/yash11) with free commerical use / Inverted and resized -->
-        <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);"><img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png"></div>
-        <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
-        <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
-        
-        <div id="settingsButton" class="consoleButton" onclick="switchConsoleTab(5);"><img id="settingsImg" class="imgNotSelected" src="./imgs/settingsIcon.png"></div>
-
-
-        <div id= "yieldButton" class="consoleButton" onclick = "switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
-    </div>
-  </div>
-
 
       <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
       <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);"><img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png"></div>
@@ -132,13 +110,14 @@
       <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
       <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
 
+      <div id= "yieldButton" class="consoleButton" onclick = "switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
+
       <!-- <div id="settingsButton" class="consoleButton" onclick="switchConsoleTab(5);"><img id="settingsImg" class="imgNotSelected" src="./imgs/settingsIcon.png"></div> -->
     </div>
 
 
     <!--Create index button on screen-->
     <div id="indexmenu" onclick="toggleIndex();">Index</div>
-
 
     <!-- Create left-side console displays-->
     <div id="leftConsole" class="leftConsole" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
@@ -292,246 +271,6 @@
           </div>
         </div>
 
-        
-        <!-- Watershed feature display -->
-        <div id="featuresTab" class="consoleTab" style="display:none;">
-            <div id="floodFrequencyDetailsList" class="physicalDetailsListRolled">
-                <div class="floodColor1" >
-                    <p class="levelsTextDetails" style="margin-top:10px;">None</p>
-                </div>
-                <div class="floodColor2">
-                    <p class="levelsTextDetails">Rare</p>
-                </div>
-                <div class="floodColor3">
-                    <p class="levelsTextDetails">Occasionally</p>
-                </div>
-                <div class="floodColor4">
-                    <p class="levelsTextDetails">Frequently</p>
-                </div>
-                <div class="floodColor5">
-                    <p class="levelsTextDetails">Ponded</p>
-                </div>
-            </div>
-            <div id="drainageClassDetailsList" class="physicalDetailsListRolled">
-                <div class="drainageColor1" >
-                    <p class="levelsTextDetails" style="margin-top:10px;">Very Poor</p>
-                </div>
-                <div class="drainageColor2">
-                    <p class="levelsTextDetails">Poor</p>
-                </div>
-                <div class="drainageColor3">
-                    <p class="levelsTextDetails">Somewhat Poor</p>
-                </div>
-                <div class="drainageColor4">
-                    <p class="levelsTextDetails">Moderate / Well</p>
-                </div>
-                <div class="drainageColor5">
-                    <p class="levelsTextDetails">Excessive</p>
-                </div>
-            </div>
-            <div id="wetlandClassDetailsList" class="physicalDetailsListRolled">
-            </div>
-            <div id="subwatershedClassDetailsList" class="physicalDetailsListRolled">
-            </div>
-            <div id="soilClassDetailsList" class="physicalDetailsListRolled">
-                <div class="soilColor" style="background-color: #097c2f">
-                    <p class="levelsTextDetails" style="margin-top:10px;">Clarion 138B</p>
-                </div>
-                <div class="soilColor" style="background-color: #a84597">
-                    <p class="levelsTextDetails">Buckney 1636</p>
-                </div>
-                <div class="soilColor" style="background-color: #919246">
-                    <p class="levelsTextDetails">Canisteo 507</p>
-                </div>
-                <div class="soilColor" style="background-color: #c97b08">
-                    <p class="levelsTextDetails">Downs 162D2</p>
-                </div>
-                <div class="soilColor" style="background-color: #9a3010">
-                    <p class="levelsTextDetails">Gara-Armstrong 993E2</p>
-                </div>
-                <div class="soilColor" style="background-color: #c7eab4">
-                    <p class="levelsTextDetails">Ackmore-Colo 5B</p>
-                </div>
-                <div class="soilColor" style="background-color: #cc6578">
-                    <p class="levelsTextDetails">Coland 135</p>
-                </div>
-                <div class="soilColor" style="background-color: #e6bb00">
-                    <p class="levelsTextDetails">Tama 120C2</p>
-                </div>
-                <div class="soilColor" style="background-color: #5e6e71">
-                    <p class="levelsTextDetails">Nicollet 55</p>
-                </div>
-                <div class="soilColor" style="background-color: #837856">
-                    <p class="levelsTextDetails">Okoboji 90</p>
-                </div>
-                <div class="soilColor" style="background-color: #41b7c5">
-                    <p class="levelsTextDetails">Tama 120B</p>
-                </div>
-                <div class="soilColor" style="background-color: #0053b3">
-                    <p class="levelsTextDetails">Muscatine 119</p>
-                </div>
-                <div class="soilColor" style="background-color: #87ceee">
-                    <p class="levelsTextDetails">Nodaway 220</p>
-                </div>
-            </div>
-            <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
-            <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetland');">
-            <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('subwatershed');">
-            <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
-            <p class="featuresText">Soil Class</p><img id="soilClass" class="featureSelectorIcon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
-
-        </div>
-
-        <!--Yield Productivity Overlay Maps -->
-         <div id = "yieldTab" class="consoleTab" style = "display: block;">
-            <div id = "cornGrainDetailsList" class = "yieldDetailsListRolled">
-                <div class = "cornGrain1">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">0 Mg/ha/yr</p>
-                </div>
-                <div class = "cornGrain2">
-                    <p class = "levelsTextDetails">11.2-13.2 Mg/ha/yr</p>
-                </div> 
-                <div class = "cornGrain3">
-                    <p class = "levelsTextDetails">13.2-13.9 Mg/ha/yr</p>
-                </div>
-                <div class = "cornGrain4">
-                    <p class = "levelsTextDetails">13.9-15.1 Mg/ha/yr</p>
-                </div>
-            </div>
-             
-             <div id = "soyBeanDetailsList" class = "yieldDetailsListRolled">
-                <div class = "soyBean1" >
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">0 Mg/ha/yr</p>
-                </div>
-                <div class = "soyBean2" >
-                    <p class = "levelsTextDetails">3.50-3.90 Mg/ha/yr</p>
-                </div>
-                <div class = "soyBean3" >
-                    <p class = "levelsTextDetails">3.90-4.30 Mg/ha/yr</p>
-                </div>
-                <div class = "soyBean4" >
-                    <p class = "levelsTextDetails">4.30-4.70 Mg/ha/yr</p>
-                </div>
-            </div>
-
-            <div id = "fruitDetailsList" class = "yieldDetailsListRolled">
-                <div class = "fruit1" >
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">6.58 Mg/ha/yr</p>
-                </div>
-                <div class = "fruit2" >
-                    <p class = "levelsTextDetails">13.98 Mg/ha/yr</p>
-                </div>
-                <div class = "fruit3">
-                    <p class = "levelsTextDetails">14.80 Mg/ha/yr</p>
-                </div>
-                <div class = "fruit4">
-                    <p class = "levelsTextDetails">16.45 Mg/ha/yr</p>
-                </div>
-
-            </div>
-
-            <div id = "cattleDetailsList" class = "yieldDetailsListRolled">
-                <div class = "cattle1">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">3.4-4.0 animals/acre/yr</p>
-                </div>
-                <div class = "cattle2">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">4.0-5.4 animals/acre/yr</p>
-                </div>
-                <div class = "cattle3">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">5.4-6.1 animals/acre/yr</p>
-                </div>
-                <div class = "cattle4">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">6.1-6.7 animals/acre/yr</p>
-                </div>
-            </div>
-
-            <div id = "alfalfaDetailsList" class = "yieldDetailsListRolled">
-                <div class = "alfalfa1">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">8.07-9.42 Mg/ha/yr</p>
-                </div>
-                <div class = "alfalfa2">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">9.42-12.6 Mg/ha/yr</p>
-                </div>
-                <div class = "alfalfa3">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">12.6-14.6 Mg/ha/yr</p>
-                </div>
-                <div class = "alfalfa4">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">14.6-15.5 Mg/ha/yr</p>
-                </div>
-            </div>
-
-            <div id = "grassHayDetailsList" class = "yieldDetailsListRolled">
-                <div class = "grassHay1">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">8.07-9.42 Mg/ha/yr</p>
-                </div>
-                <div class = "grassHay2">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">9.42-12.6 Mg/ha/yr</p>
-                </div>
-                <div class = "grassHay3">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">12.6-14.6 Mg/ha/yr</p>
-                </div>
-                <div class = "grassHay4">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">14.6-15.5 Mg/ha/yr</p>
-                </div>
-            </div>
-
-             <div id = "switchGrassDetailsList" class = "yieldDetailsListRolled">
-                <div class = "switchGrass1">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">4.39-5.29 Mg/ha/yr</p>
-                </div>
-                <div class = "switchGrass2">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">5.29-5.83 Mg/ha/yr</p>
-                </div>
-                <div class = "switchGrass3">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">5.83-6.25 Mg/ha/yr</p>
-                </div>
-                <div class = "switchGrass4">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">6.25-6.61 Mg/ha/yr</p>
-                </div>
-            </div>
-
-            <div id = "woodDetailsList" class = "yieldDetailsListRolled">
-                <div class = "wood1">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">0.50-0.73 m3/ha/yr</p>
-                </div>
-                <div class = "wood2">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">0.73-1.02 m3/ha/yr</p>
-                </div>
-                <div class = "wood3">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">1.02-1.43 m3/ha/yr</p>
-                </div>
-                <div class = "wood4">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">1.43-1.60 m3/ha/yr</p>
-                </div>
-            </div>
-
-            <div id = "shortDetailsList" class = "yieldDetailsListRolled">
-                <div class = "short1">
-                    <p class = "levelsTextDetails" style = "margin-top: 10px;">608.6 tons/acre/yr</p>
-                </div>
-            </div>
-
-            <p class="featuresText"></p><img id="cornClass" class="yieldSelectorIcon" src="./imgs/cornGrainIcon.png" title = "Corn Grain"  onclick="displayLevels('cornGrain');" style= "display: inline-block;">
-            <p class = "featuresText"></p><img id ="soyClass" class = "yieldSelectorIcon" src="./imgs/soybeanIcon.png" title = "Soybean"
-            onclick = "displayLevels('soy');" style= "display: inline-block;">
-            <p class = "featuresText"></p><img id = "fruitClass" class = "yieldSelectorIcon" src="./imgs/fruitIcon.png" title = "Mixed Fruits and Vegetables"
-            onclick="displayLevels('fruit');" style= "display: inline-block;">
-            <p class = "featuresText"></p><img id = "cattleClass" class = "yieldSelectorIcon" src="./imgs/cowIcon.png" title = "Cattle" onclick="displayLevels('cattle');" style= "display: inline-block;">
-            <p class = "featuresText"></p><img id = "alfalfaClass" class = "yieldSelectorIcon" src="./imgs/alfalfaIcon.png" title = "Alfalfa" onclick="
-            displayLevels('alfalfa');" style = "display: inline-block;">
-            <p class = "featuresText"></p><img id = "grassHayClass" class = "yieldSelectorIcon" src="./imgs/grassHayIcon.png" title = "GrassHay" onclick= "displayLevels('grassHay');" style = "display: inline-block;">
-            <p class = "featuresText"></p><img id = "switchGrassClass" class = "yieldSelectorIcon" src="./imgs/switchGrassIcon.png" title = "Switch Grass" onclick="displayLevels('switchGrass');" style = "display: inline-block;">
-            <p class = "featuresText"></p><img id = "woodClass" class = "yieldSelectorIcon" src="./imgs/woodIcon.png" title = "Wood" onclick="displayLevels('wood');" style = "display: inline-block;">
-            <p class = "featuresText"></p><img id = "shortClass" class = "yieldSelectorIcon" src="./imgs/woodyBiomassIcon.png" title = "Woody Biomass" onclick="displayLevels('short');" style = "display: inline-block;">
-            
-         </div>
-        
-        <!-- Painter settings display -->
-        <div id="settingsTab" class="consoleTab" style="display:none;">
-             <img id="cellPaint" class="painterIconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
-             <img id="gridPaint" class="painterIcon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
-             
-
         <div id="phosphorusDetailsList" class="levelDetailsListRolled">
           <div class="levelColor1">
             <p class="levelsTextDetails">Very Low</p>
@@ -594,7 +333,6 @@
           <div class="drainageColor5">
             <p class="levelsTextDetails">Excessive</p>
           </div>
-
         </div>
 
         <div id="wetlandClassDetailsList" class="physicalDetailsListRolled">
@@ -649,6 +387,149 @@
         <p class="featuresText">Soil Class</p><img id="soilClass" class="icon featureSelectorIcon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
       </div>
 
+      <!--Yield Productivity Overlay Maps -->
+         <div id = "yieldTab" class="consoleTab" style = "display: none;">
+            <div id = "cornGrainDetailsList" class = "yieldDetailsListRolled">
+                <div class = "cornGrain1">
+                    <p class = "levelsTextDetails">0 Mg/ha/yr</p>
+                </div>
+                <div class = "cornGrain2">
+                    <p class = "levelsTextDetails">11.2-13.2 Mg/ha/yr</p>
+                </div> 
+                <div class = "cornGrain3">
+                    <p class = "levelsTextDetails">13.2-13.9 Mg/ha/yr</p>
+                </div>
+                <div class = "cornGrain4">
+                    <p class = "levelsTextDetails">13.9-15.1 Mg/ha/yr</p>
+                </div>
+            </div>
+             
+             <div id = "soyBeanDetailsList" class = "yieldDetailsListRolled">
+                <div class = "soyBean1" >
+                    <p class = "levelsTextDetails">0 Mg/ha/yr</p>
+                </div>
+                <div class = "soyBean2" >
+                    <p class = "levelsTextDetails">3.50-3.90 Mg/ha/yr</p>
+                </div>
+                <div class = "soyBean3" >
+                    <p class = "levelsTextDetails">3.90-4.30 Mg/ha/yr</p>
+                </div>
+                <div class = "soyBean4" >
+                    <p class = "levelsTextDetails">4.30-4.70 Mg/ha/yr</p>
+                </div>
+            </div>
+
+            <div id = "fruitDetailsList" class = "yieldDetailsListRolled">
+                <div class = "fruit1" >
+                    <p class = "levelsTextDetails">6.58 Mg/ha/yr</p>
+                </div>
+                <div class = "fruit2" >
+                    <p class = "levelsTextDetails">13.98 Mg/ha/yr</p>
+                </div>
+                <div class = "fruit3">
+                    <p class = "levelsTextDetails">14.80 Mg/ha/yr</p>
+                </div>
+                <div class = "fruit4">
+                    <p class = "levelsTextDetails">16.45 Mg/ha/yr</p>
+                </div>
+
+            </div>
+
+            <div id = "cattleDetailsList" class = "yieldDetailsListRolled">
+                <div class = "cattle1">
+                    <p class = "levelsTextDetails">3.4-4.0 animals/acre/yr</p>
+                </div>
+                <div class = "cattle2">
+                    <p class = "levelsTextDetails">4.0-5.4 animals/acre/yr</p>
+                </div>
+                <div class = "cattle3">
+                    <p class = "levelsTextDetails">5.4-6.1 animals/acre/yr</p>
+                </div>
+                <div class = "cattle4">
+                    <p class = "levelsTextDetails">6.1-6.7 animals/acre/yr</p>
+                </div>
+            </div>
+
+            <div id = "alfalfaDetailsList" class = "yieldDetailsListRolled">
+                <div class = "alfalfa1">
+                    <p class = "levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
+                </div>
+                <div class = "alfalfa2">
+                    <p class = "levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
+                </div>
+                <div class = "alfalfa3">
+                    <p class = "levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
+                </div>
+                <div class = "alfalfa4">
+                    <p class = "levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
+                </div>
+            </div>
+
+            <div id = "grassHayDetailsList" class = "yieldDetailsListRolled">
+                <div class = "grassHay1">
+                    <p class = "levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
+                </div>
+                <div class = "grassHay2">
+                    <p class = "levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
+                </div>
+                <div class = "grassHay3">
+                    <p class = "levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
+                </div>
+                <div class = "grassHay4">
+                    <p class = "levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
+                </div>
+            </div>
+
+             <div id = "switchGrassDetailsList" class = "yieldDetailsListRolled">
+                <div class = "switchGrass1">
+                    <p class = "levelsTextDetails">4.39-5.29 Mg/ha/yr</p>
+                </div>
+                <div class = "switchGrass2">
+                    <p class = "levelsTextDetails">5.29-5.83 Mg/ha/yr</p>
+                </div>
+                <div class = "switchGrass3">
+                    <p class = "levelsTextDetails">5.83-6.25 Mg/ha/yr</p>
+                </div>
+                <div class = "switchGrass4">
+                    <p class = "levelsTextDetails">6.25-6.61 Mg/ha/yr</p>
+                </div>
+            </div>
+
+            <div id = "woodDetailsList" class = "yieldDetailsListRolled">
+                <div class = "wood1">
+                    <p class = "levelsTextDetails">0.50-0.73 m3/ha/yr</p>
+                </div>
+                <div class = "wood2">
+                    <p class = "levelsTextDetails">0.73-1.02 m3/ha/yr</p>
+                </div>
+                <div class = "wood3">
+                    <p class = "levelsTextDetails">1.02-1.43 m3/ha/yr</p>
+                </div>
+                <div class = "wood4">
+                    <p class = "levelsTextDetails">1.43-1.60 m3/ha/yr</p>
+                </div>
+            </div>
+
+            <div id = "shortDetailsList" class = "yieldDetailsListRolled">
+                <div class = "short1">
+                    <p class = "levelsTextDetails">608.6 tons/acre/yr</p>
+                </div>
+            </div>
+
+            <p class="featuresText"></p><img id="cornClass" class="icon yieldSelectorIcon" src="./imgs/cornGrainIcon.png" style="border-radius: 50%"; title = "Corn Grain"  onclick="displayLevels('cornGrain');" >
+            <p class = "featuresText"></p><img id ="soyClass" class = "icon yieldSelectorIcon" src="./imgs/soybeanIcon.png" style="border-radius: 50%"; title = "Soybean"
+            onclick = "displayLevels('soy');">
+            <p class = "featuresText"></p><img id = "fruitClass" class = "icon yieldSelectorIcon" src="./imgs/fruitIcon.png" style="border-radius: 50%"; title = "Mixed Fruits and Vegetables"
+            onclick="displayLevels('fruit');">
+            <p class = "featuresText"></p><img id = "cattleClass" class = "icon yieldSelectorIcon" src="./imgs/cowIcon.png" style="border-radius: 50%"; title = "Cattle" onclick="displayLevels('cattle');">
+            <p class = "featuresText"></p><img id = "alfalfaClass" class = "icon yieldSelectorIcon" src="./imgs/alfalfaIcon.png" style="border-radius: 50%"; title = "Alfalfa" onclick="
+            displayLevels('alfalfa');" >
+            <p class = "featuresText"></p><img id = "grassHayClass" class = "icon yieldSelectorIcon" src="./imgs/grassHayIcon.png" style="border-radius: 50%"; title = "GrassHay" onclick= "displayLevels('grassHay');">
+            <p class = "featuresText"></p><img id = "switchGrassClass" class = "icon yieldSelectorIcon" src="./imgs/switchGrassIcon.png" style="border-radius: 50%"; title = "Switch Grass" onclick="displayLevels('switchGrass');">
+            <p class = "featuresText"></p><img id = "woodClass" class = "icon yieldSelectorIcon" src="./imgs/woodIcon.png"  style="border-radius: 50%"; title = "Wood" onclick="displayLevels('wood');">
+            <p class = "featuresText"></p><img id = "shortClass" class = "icon yieldSelectorIcon" src="./imgs/woodyBiomassIcon.png"  style="border-radius: 50%"; title = "Woody Biomass" onclick="displayLevels('short');">
+            
+         </div>
       <!-- year display -->
       <div id="yearsTab" class="consoleTab" style="display:none;">
         <!-- Create year buttons -->
