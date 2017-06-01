@@ -1143,11 +1143,85 @@ function showLevelDetails(value) {
     if (element.length > 0) {
       element[0].className = 'physicalDetailsListRolled';
     }
+
+    //Corn class legend
+    else if(value == 9){
+        document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
+        document.getElementById('cornClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 10){
+        document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
+        document.getElementById('soyClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 11){
+        document.getElementById('fruitDetailsList').className = "yieldDetailsList";
+        document.getElementById('fruitClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 12){
+        document.getElementById('cattleDetailsList').className = "yieldDetailsList";
+        document.getElementById('cattleClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 13){
+        document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
+        document.getElementById('alfalfaClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 14){
+        document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
+        document.getElementById('grassHayClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 15){
+        document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
+        document.getElementById('switchGrassClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 16){
+        document.getElementById('woodDetailsList').className = "yieldDetailsList";
+        document.getElementById('woodClass').className = "yieldSelectorIconSelected";
+    }
+    else if(value == 17){
+        document.getElementById('shortDetailsList').className = "yieldDetailsList";
+        document.getElementById('shortClass').className = "yieldSelectorIconSelected";
+    }
+
+    //hide ecosystem indicator legends
+    if (value > -4 && value < 0) {
+        var element = document.getElementsByClassName('levelDetailsList');
+        if (element.length > 0) {
+            element[0].className = 'levelDetailsListRolled';
+        }
+        element = document.getElementsByClassName('levelSelectorIconSelected');
+        if (element.length > 0) {
+            element[0].className = 'levelsSelectorIcon';
+        }
+    }
+
+    //hide watershed feature legends
+    else if (value < -3 && value > -9) {
+        var element = document.getElementsByClassName('physicalDetailsList');
+        if (element.length > 0) {
+            element[0].className = 'physicalDetailsListRolled';
+        }
+        element = document.getElementsByClassName('featureSelectorIconSelected');
+        if (element.length > 0) {
+            element[0].className = 'featureSelectorIcon';
+        }
+    } //end else/if group
+    else if(value < -8){
+        var element = document.getElementsByClassName('yieldDetailsList');
+        if(element.length > 0) {
+            element[0].className = 'yieldDetailsListRolled';
+        }
+        element = document.getElementsByClassName('yieldSelectorIconSelected');
+        if(element.length > 0){
+            element[0].ckassName = 'yieldSelectorIcon';
+        }
+    }
+
     element = document.getElementsByClassName('featureSelectorIconSelected');
     if (element.length > 0) {
       element[0].className = 'featureSelectorIcon';
     }
   } //end else/if group
+
 
 } //end showLevelDetails
 
@@ -1173,6 +1247,70 @@ function updatePrecip(year) {
 
 //switchConsoleTab updates the currently selected toolbar on the left
 function switchConsoleTab(value) {
+
+
+    //Store last tab
+    if(value!=1)
+    {
+        previousTab = value;
+    }
+
+    //turn off selected image in tabs
+    var element = document.getElementsByClassName("imgSelected");
+    element[0].className = "imgNotSelected";
+
+    //turn off all the consoleTabs
+    var elements = document.getElementsByClassName("consoleTab");
+
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = "none";
+    }
+
+    //then we'll turn back on the tab that was switched to, clever eh?
+   
+
+    //update the left console tab according to the value selected
+    
+    if (value == 1) {
+        inDispLevels = false;
+        document.getElementById('terrainImg').className = "imgSelected";
+        document.getElementById('painterTab').style.display = "block";
+    }
+    else if (value == 2) {
+        inDispLevels = false;
+        document.getElementById('precipImg').className = "imgSelected";
+        document.getElementById('precipTab').style.display = "block";
+    }
+    else if (value == 3) {
+        inDispLevels = true;
+        document.getElementById('levelsImg').className = "imgSelected";
+        document.getElementById('levelsTab').style.display = "block";
+    }
+    else if (value == 4 ) {
+        inDispLevels = true;
+        document.getElementById('featuresImg').className = "imgSelected";
+        document.getElementById('featuresTab').style.display = "block";
+    }
+    else if (value == 5) {
+        inDispLevels = false;
+        document.getElementById('settingsImg').className = "imgSelected";
+        document.getElementById('settingsTab').style.display = "block";
+    }
+    else if (value == 6) {
+        inDispLevels = false;
+        document.getElementById('calendarImg').className = "imgSelected";
+        document.getElementById('yearsTab').style.display = "block";
+    }
+    else if(value == 7){
+        document.getElementById('yieldImg').className = "imgSelected";
+        document.getElementById('yieldTab').style.display = "block"
+    }
+
+    
+    //check if the map needs the levels legend displayed
+    if (mapIsHighlighted) {
+        displayLevels();
+    }
 
   //Store last tab
   if (value != 1) {
@@ -1226,6 +1364,7 @@ function switchConsoleTab(value) {
   if (mapIsHighlighted) {
     displayLevels();
   }
+
 } //end switchConsoleTab
 
 //switchYearTab changes the highlighted year
@@ -1267,6 +1406,84 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
 
 //displayLevels highlight each tile using getHighlightColor method
 function displayLevels(overlayHighlightType) {
+
+    var selectionHighlightNumber = 0;
+
+    //update console tabs
+    var element = document.getElementsByClassName('featureSelectorIconSelected');
+    if (element[0]) element[0].className = 'featureSelectorIcon';
+    element = document.getElementsByClassName('levelSelectorIconSelected');
+    if (element[0]) element[0].className = 'levelsSelectorIcon';
+    //When an overlay is toggled, set toggledOverlay to true
+    overlayedToggled = true;
+    //record new highlighting selection
+    switch (overlayHighlightType) {
+        case 'nitrate':
+            selectionHighlightNumber = 1;
+            break;
+        case 'erosion':
+            selectionHighlightNumber = 2;
+            break;
+        case 'phosphorus':
+            selectionHighlightNumber = 3;
+            break;
+        case 'flood':
+            selectionHighlightNumber = 4;
+            break;
+        case 'drainage':
+            selectionHighlightNumber = 5;
+            break;
+        case 'wetland':
+            selectionHighlightNumber = 6;
+            break;
+        case 'subwatershed':
+            selectionHighlightNumber = 7;
+            break;
+        case 'soil':
+            selectionHighlightNumber = 8;
+            break;
+        case 'cornGrain':
+            selectionHighlightNumber = 9;
+            break;
+        case 'soy':
+            selectionHighlightNumber = 10;
+            break;
+        case 'fruit':
+            selectionHighlightNumber = 11;
+            break;
+        case 'cattle':
+            selectionHighlightNumber = 12;
+            break;
+        case 'alfalfa':
+            selectionHighlightNumber = 13;
+            break;
+        case 'grassHay':
+            selectionHighlightNumber = 14;
+            break;
+        case 'switchGrass':
+            selectionHighlightNumber = 15;
+            break;
+        case 'wood':
+            selectionHighlightNumber = 16;
+            break;
+        case 'short':
+            selectionHighlightNumber = 17;
+            break;
+
+    } //end switch
+
+    //save selectionHighlightNumber for quick access via hotkey
+    if(selectionHighlightNumber!=0)
+    {
+        previousOverlay = overlayHighlightType;
+    }
+
+    //map is not previously highlighted
+    if (!mapIsHighlighted) {
+        drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
+    }
+    //if the map is previously highlighted
+
   var selectionHighlightNumber = 0;
 
   //update console tabs
@@ -1326,6 +1543,7 @@ function displayLevels(overlayHighlightType) {
 
     }
     //else if the highlighting is different, let's change to the new highlighting
+
     else {
       //close previous legend
       showLevelDetails(-1 * currentHighlightType);
@@ -1603,6 +1821,373 @@ function getHighlightedInfo(tileId) {
 
     return highlightString;
   }
+
+
+        switch (drainage) {
+            case 70:
+                return 31;
+            case 60:
+                return 32;
+            case 50:
+                return 33;
+            case 45:
+                return 33;
+            case 40:
+                return 34;
+            case 30:
+                return 34;
+            case 10:
+                return 35;
+            case 0:
+                return 35;
+        }//end switch
+    }
+    //soil class highlight color indicies
+    else if(highlightType == "soil"){
+        
+        var soil = boardData[currentBoard].map[tileId].soilType;
+        
+        switch(soil) {
+            case "A":
+                //color 097c2f
+                return 19;
+            case "B":
+                //color a84597
+                return 14;
+            case "C":
+                //color 919246
+                return 30;
+            case "D":
+                //color c97b08
+                return 1;
+            case "G":
+                //color 9a3010
+                return 3;
+            case "K":
+                //color c7eab4
+                return 6;
+            case "L":
+                //color cc6578
+                return 13;
+            case "M":
+                //color e6bb00
+                return 0;
+            case "N":
+                //color 5e6e71
+                return 33;
+            case "O":
+                //color 837856
+                return 34;
+            case "Q":
+                //color 41b7c5
+                return 8;
+            case "T":
+                //color 0053b3
+                return 31;
+            case "Y":
+                //color 87ceee
+                return 18;
+        }
+    }
+    else if(highlightType == "cornGrain"){
+        var soil = boardData[currentBoard].map[tileId].soilType;
+        switch(soil) 
+            {
+            case "A":
+                return 35;
+            case "B":
+                return 5;
+            case "C":
+                return 0;
+            case "D":
+                return 22;
+            case "G":
+                return 5;
+            case "K":
+                return 22;
+            case "L":
+                return 0;
+            case "M":
+                return 35;
+            case "N":
+                return 35;
+            case "O":
+                return 22;
+            case "Q":
+                return 35;
+            case "T":
+                return 35;
+            case "Y":
+                return 22;
+        }
+    }
+    else if(highlightType == "soy")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 46;
+            case "B":
+                return 43;
+            case "C":
+                return 45;
+            case "D":
+                return 45;
+            case "G":
+                return 43;
+            case "K":
+                return 45;
+            case "L":
+                return 45;
+            case "M":
+                return 46;
+            case "N":
+                return 46;
+            case "O":
+                return 44;
+            case "Q":
+                return 46;
+            case "T":
+                return 46;
+            case "Y":
+                return 45;
+            }
+
+    }
+    else if(highlightType == "alfalfa")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 42;
+            case "B":
+                return 13;
+            case "C":
+                return 25;
+            case "D":
+                return 42;
+            case "G":
+                return 13;
+            case "K":
+                return 13;
+            case "L":
+                return 25;
+            case "M":
+                return 17;
+            case "N":
+                return 42;
+            case "O":
+                return 13;
+            case "Q":
+                return 17;
+            case "T":
+                return 17;
+            case "Y":
+                return 42;
+            }
+    }
+    else if(highlightType == "grassHay")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 46;
+            case "B":
+                return 47;
+            case "C":
+                return 45;
+            case "D":
+                return 46;
+            case "G":
+                return 47;
+            case "K":
+                return 47;
+            case "L":
+                return 45;
+            case "M":
+                return 29;
+            case "N":
+                return 46;
+            case "O":
+                return 47;
+            case "Q":
+                return 29;
+            case "T":
+                return 29;
+            case "Y":
+                return 46;
+            }
+    }
+    else if(highlightType == "switchGrass")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 49;
+            case "B":
+                return 45;
+            case "C":
+                return 49;
+            case "D":
+                return 45;
+            case "G":
+                return 45;
+            case "K":
+                return 45;
+            case "L":
+                return 49;
+            case "M":
+                return 49;
+            case "N":
+                return 51;
+            case "O":
+                return 45;
+            case "Q":
+                return 51;
+            case "T":
+                return 51;
+            case "Y":
+                return 50;
+            }
+    }
+    else if(highlightType == "wood")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 55;
+            case "B":
+                return 53;
+            case "C":
+                return 52;
+            case "D":
+                return 55;
+            case "G":
+                return 55;
+            case "K":
+                return 53;
+            case "L":
+                return 52;
+            case "M":
+                return 55;
+            case "N":
+                return 54;
+            case "O":
+                return 52;
+            case "Q":
+                return 55;
+            case "T":
+                return 54;
+            case "Y":
+                return 55;
+            }
+    }
+     else if(highlightType == "fruit")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 0;
+            case "B":
+                return 25;
+            case "C":
+                return 56;
+            case "D":
+                return 45;
+            case "G":
+                return 0;
+            case "K":
+                return 45;
+            case "L":
+                return 56;
+            case "M":
+                return 56;
+            case "N":
+                return 0;
+            case "O":
+                return 56;
+            case "Q":
+                return 56;
+            case "T":
+                return 56;
+            case "Y":
+                return 45;
+            }
+    }
+    else if(highlightType == "cattle")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 57;
+            case "B":
+                return 43;
+            case "C":
+                return 58;
+            case "D":
+                return 33;
+            case "G":
+                return 43;
+            case "K":
+                return 58;
+            case "L":
+                return 58;
+            case "M":
+                return 57;
+            case "N":
+                return 57;
+            case "O":
+                return 43;
+            case "Q":
+                return 57;
+            case "T":
+                return 57;
+            case "Y":
+                return 57;
+            }
+    }
+   
+    else if(highlightType == "short")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil) 
+            {
+            case "A":
+                return 55;
+            case "B":
+                return 55;
+            case "C":
+                return 55;
+            case "D":
+                return 55;
+            case "G":
+                return 55;
+            case "K":
+                return 55;
+            case "L":
+                return 55;
+            case "M":
+                return 55;
+            case "N":
+                return 55;
+            case "O":
+                return 55;
+            case "Q":
+                return 55;
+            case "T":
+                return 55;
+            case "Y":
+                return 55;
+            }
+    }
+} //end getHighlightColor
 
 
 } //end getHighlightedInfo
