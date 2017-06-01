@@ -4,7 +4,7 @@
 This page provides the structural elements for propogation of the codex.
 The central container is divided into left and right sections with the right section containing
   square1 for images/videos and square2 for text/tables/math
-All of these sections are propogated automatically from the info in codexResources File. 
+All of these sections are propogated automatically from the info in codexResources File.
 -->
 
 <html>
@@ -22,16 +22,11 @@ All of these sections are propogated automatically from the info in codexResourc
     <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
     <!-- /INCLUDES -->
 
-    <!--additional styling-->
-    <style>
-
-    </style>
-
     <!--page scripting (codexHelper.js)-->
     <script>
         //listen for i key to exit (since page currently is the active element)
         //    Whoever holds the conch gets to speak...
-        //    Conch! Conch! We don’t need the conch any more. We know who ought to say things. 
+        //    Conch! Conch! We don’t need the conch any more. We know who ought to say things.
         document.addEventListener('keydown', onDocumentKeyDown, false);
         //propogate data onload
         window.onload = init;
@@ -41,9 +36,9 @@ All of these sections are propogated automatically from the info in codexResourc
 <body>
     <!--page is divided into left and right containers, with right container having 2 squares -->
     <div id="mainContainer">
-        
+
         <img id="closeIndex" class="closeButton" src="./imgs/close_black.png" onclick="parent.toggleIndex();">
-        
+
         <div id="leftContainer">
             <div id="topicsHeader">TOPICS</div>
             <div id="indexHolder"> </div>
@@ -51,7 +46,7 @@ All of these sections are propogated automatically from the info in codexResourc
 
         <div id="rightContainer">
             <div id="title"></div>
-            
+
             <div id="square1">
                 <img src="./imgs/indexMain.png">
             </div>

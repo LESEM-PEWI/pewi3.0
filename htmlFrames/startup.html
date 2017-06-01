@@ -3,10 +3,10 @@
 <!--
 This page is displayed initially inside index.html as an iframe. It also
   has an iframe inside of it that covers the page of the play or utility functionalities.
- 
+
 The page deals out a lot of interactivity via animations that are setup through css. Thus
   a lot of styling changes characterize the events in the page.
-  
+
 The page has three main buttons which are displayed at the end of the video. The video
   is displayed while much of the loading functionality is taken care of in the background.
   WebGL elements such as the camera and the renderer only need to be created this once.
@@ -15,346 +15,337 @@ Cleaned and Prepared - July 2016
 -->
 
 <html>
+
 <head>
- <meta charset="utf-8">
- <title>Workspace - Start</title>
+  <meta charset="utf-8">
+  <title>Workspace - Start</title>
 
- <!-- INCLUDES -->
- <!--css-->
- <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
- <!--external fonts-->
- <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
- <!--helper methods for class modes-->
- <script src="../front-end/helpersFE.js"></script>
- <!-- /INCLUDES -->
+  <!-- INCLUDES -->
+  <!--css-->
+  <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+  <!--external fonts-->
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+  <!--helper methods for class modes-->
+  <script src="../front-end/helpersFE.js"></script>
+  <!-- /INCLUDES -->
 
- <!--additional styling-->
- <style>
-  body {
-   overflow: hidden;
-   background: black;
-  }
-  
-  .underneathRiverGif {
-   height: 10%;
-   left: 0px;
-   opacity: 0.4;
-   position: absolute;
-   width: 100%;
-   
-   -webkit-transition-duration: 10s;
-   transition-duration: 10s
-  }
-  
-  #riverBack1 {
-   bottom: 0px;
-  }
-  
-  #riverBack2 {
-   bottom: 9%;
-  }
-  
-  #riverBackgroundColoring {
-   background-color: #40A4DF;
-   bottom: 0px;
-   height: 100%;
-   left: 0px;
-   opacity: 1;
-   position: absolute;
-   width: 100%;
-   
-   -webkit-transition-duration: 7s;
-   transition-duration: 7s
-  }
- </style>
+  <!--additional styling-->
+  <style>
+    body {
+      overflow: hidden;
+      background: black;
+    }
+
+    .underneathRiverGif {
+      height: 10%;
+      left: 0px;
+      opacity: 0.4;
+      position: absolute;
+      width: 100%;
+
+      -webkit-transition-duration: 10s;
+      transition-duration: 10s
+    }
+
+    #riverBack1 {
+      bottom: 0px;
+    }
+
+    #riverBack2 {
+      bottom: 9%;
+    }
+
+    #riverBackgroundColoring {
+      background-color: #40A4DF;
+      bottom: 0px;
+      height: 100%;
+      left: 0px;
+      opacity: 1;
+      position: absolute;
+      width: 100%;
+
+      -webkit-transition-duration: 7s;
+      transition-duration: 7s
+    }
+
+    #startup-buttons {
+      position: relative;
+      top: 50%;
+    }
+  </style>
 
 </head>
+
 <body>
 
- <div style="opacity:0;" id="riverBackgroundColoring"></div>
- <img id="riverBack1" style="opacity:0;" class="underneathRiverGif" src="./imgs/water.gif">
- <img id="riverBack2" style="opacity:0;" class="underneathRiverGif" src="./imgs/water.gif">
- <img id="startupBackgroundImage" style="opacity:0;" src="./imgs/normalBackWithRiver.png">
+  <div style="opacity:0;" id="riverBackgroundColoring"></div>
+  <img id="riverBack1" style="opacity:0;" class="underneathRiverGif" src="./imgs/water.gif">
+  <img id="riverBack2" style="opacity:0;" class="underneathRiverGif" src="./imgs/water.gif">
+  <img id="startupBackgroundImage" style="opacity:0;" src="./imgs/normalBackWithRiver.png">
 
- <div id="startupContent">
-  <!-- Insert PEWI Image logo and buttons for Sandbox, Play, and Utilities -->
-  <div id="startupContentsHolder">
+  <div id="startupContent">
+    <!-- Insert PEWI Image logo and buttons for Sandbox, Play, and Utilities -->
+    <div id="startupContentsHolder">
 
-   <div id="pewiTitle">
-    <!-- hidden -->
-    <img src="./imgs/pewiLogoLarge.png" />
-   </div>
+      <div id="pewiTitle">
+        <!-- hidden -->
+        <img src="./imgs/pewiLogoLarge.png" />
+      </div>
 
-   <div id="startupButton1" onmouseover="highlightButtonAndShowInfo(1,1);"  onmouseout="highlightButtonAndShowInfo(1,0);" class="mainButton" onclick="startSandbox();">Sandbox</div>
-   <div id="startupButton2" onmouseover="highlightButtonAndShowInfo(2,1);" onmouseout="highlightButtonAndShowInfo(2,0);" class="mainButton" onclick="startPlay();">Play</div>
-   <div id="startupButton3" onmouseover="highlightButtonAndShowInfo(3,1);" onmouseout="highlightButtonAndShowInfo(3,0);" class="mainButton" onclick="startUtilities();">Utilities</div>
+      <div id="startup-buttons">
+        <div id="startupButton1" onmouseover="highlightButtonAndShowInfo(1,1);" onmouseout="highlightButtonAndShowInfo(1,0);" class="mainButton" onclick="startSandbox();">Sandbox</div>
+        <div id="startupButton2" onmouseover="highlightButtonAndShowInfo(2,1);" onmouseout="highlightButtonAndShowInfo(2,0);" class="mainButton" onclick="startPlay();">Play</div>
+        <div id="startupButton3" onmouseover="highlightButtonAndShowInfo(3,1);" onmouseout="highlightButtonAndShowInfo(3,0);" class="mainButton" onclick="startUtilities();">Utilities</div>
+      </div>
 
-   <div id="startupInformationText"></div>
+      <div id="startupInformationText"></div>
 
+    </div>
   </div>
- </div>
- 
- <!-- Insert container for loading animation and expanded PEWI title -->
- <div id="startupLoadingContainer">
 
-  <video id="startVideo" width="440" height="1120" autoplay="autoplay">
+  <!-- Insert container for loading animation and expanded PEWI title -->
+  <div id="startupLoadingContainer">
+
+    <video id="startVideo" width="440" height="1120" autoplay="autoplay">
       <source src="./imgs/PewiLoading.webm" type="video/webm" />
       loading
   </video>
 
-  <div id="startupLoadingTitle">
-   People in Ecosystems / Watershed Integration
+    <div id="startupLoadingTitle">
+      People in Ecosystems / Watershed Integration
+    </div>
+
   </div>
-  
- </div>
 
- <iframe id="startupDialogueOverlay"></iframe>
+  </div>
 
-<script type='text/javascript'>
+  <iframe id="startupDialogueOverlay"></iframe>
 
-//Start initial screen video animation
-document.getElementById('startVideo').addEventListener('ended', function() {
- endOfVideo();
-}, false);
-
-//if after 2000milisecs, the video hasn't taken off, well then we just pretend
-// that there's no video and move on
-//This is important for browsers without video playback, otherwise the endOfVideo
-// function will never be triggered and bad stuff like that.
-setTimeout(function() {
- var vid = document.getElementById("startVideo");
- if (!(Number(vid.currentTime) > 0)) {
-  endOfVideo();
- }
-}, 2000);
-
-//Create three framework and load textures
-// this takes care of all of the webGL setup that only needs to be done once
-createEnvironment();
-
-//endOfVideo changes styling for the transitions that need to occur between the loading
-// screen and the main start screen
-function endOfVideo() {
-
- //Change from Loading stuff to content stuff
- document.getElementById('startupContent').style.opacity = "1";
- document.getElementById('startupLoadingContainer').style.display = "none";
- document.getElementById('startupContentsHolder').style.visibility = "visible";
-
- //setup backgrond
- document.getElementById('startupBackgroundImage').style.opacity = "1";
- document.getElementById('riverBackgroundColoring').style.opacity = "1";
- document.getElementById('riverBack1').style.opacity = "0.4";
- document.getElementById('riverBack2').style.opacity = "0.4";
-
- //setup main content styling
- document.getElementById('pewiTitle').style.opacity = "1";
- document.getElementById('pewiTitle').style.marginTop = "0";
- document.getElementById('startupButton1').style.opacity = "1";
- document.getElementById('startupButton2').style.opacity = "1";
- document.getElementById('startupButton3').style.opacity = "1";
- document.getElementById('startupInformationText').style.opacity = "1";
-
- //Once these transitions have been calculated by the browser and are under way
- // then we can safely reduce the transition times of all the elements
- setTimeout(function() {
-  //document.getElementById('backImg').style.transitionDuration = "70s" ; 
-  document.getElementById('startupButton1').style.transitionDuration = ".4s";
-  document.getElementById('startupButton2').style.transitionDuration = ".4s";
-  document.getElementById('startupButton3').style.transitionDuration = ".4s";
-  document.getElementById('pewiTitle').style.transitionDuration = ".4s";
-  document.getElementById('startupContentsHolder').style.transitionDuration = ".4s";
- }, 10);
-} //end endOfVideo
-
-//startSandbox hides the startup page and loads the sandbox
-function startSandbox() {
- //Update Buttons appropriately
- document.getElementById('startupButton2').style.display = "none";
- document.getElementById('startupButton3').style.display = "none";
- document.getElementById('startupButton1').style.left = "50%";
- document.getElementById('startupButton1').style.backgroundColor = "#003d4d";
- //prevent pewiTitle from pressing against the top of the screen
- document.getElementById('pewiTitle').style.marginTop = "100px";
- //open up background curtain
- document.getElementById('startupContentsHolder').style.marginTop = "0px";
- document.getElementById('startupContentsHolder').style.top = "0%";
- document.getElementById('startupContentsHolder').style.height = "100%";
- document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,1)";
- //clear informational text
- document.getElementById('startupInformationText').innerHTML = "";
- //change random tolerance ("S" for sandbox)
- randomAllowed("S");
-
- //after all of this styling magic, let's actually do something and start the sandbox mode
- setTimeout(function() {
-  parent.loadLevel(0);
- }, 400);
-} //end startSandbox
-
-//startUtilities hides the startup page elements and displays utilities
-function startUtilities() {
- //Update Buttons appropriately
- document.getElementById('startupButton1').style.display = "none";
- document.getElementById('startupButton2').style.display = "none";
- document.getElementById('startupButton3').style.left = "50%";
- document.getElementById('startupButton3').style.backgroundColor = "#003d4d";
- //prevent pewiTitle from pressing against the top of the screen
- document.getElementById('pewiTitle').style.marginTop = "100px";
- //open up background curtain (entirely transparent here)
- document.getElementById('startupContentsHolder').style.marginTop = "0px";
- document.getElementById('startupContentsHolder').style.top = "0%";
- document.getElementById('startupContentsHolder').style.height = "100%";
- document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)";
- //clear informational text
- document.getElementById('startupInformationText').innerHTML = "";
- //change random tolerance ("U" for utilities)
- randomAllowed("U");
-
- //Display utilities frame over the page, then with
- // the background elements hidden, rearrange them in preparation for the user
- // clicking back
- setTimeout(function() {
-
-  hideBackgroundStartupElements();
-
-  setTimeout(function() {
-   document.getElementById('startupDialogueOverlay').src = "utilities.html";
-   document.getElementById('startupDialogueOverlay').style.visibility = "visible";
-  }, 400);
-
-  setTimeout(function() { resetElements(); }, 500);
-
- }, 400);
-
-} //end startUtilities
-
-//startPlay hides the startup page elements and displays the level selector
-function startPlay() {
- //Update Buttons appropriately
- document.getElementById('startupButton1').style.display = "none" ;
- document.getElementById('startupButton3').style.display = "none" ;
- document.getElementById('startupButton2').style.top = "50%" ;
- document.getElementById('startupButton2').style.backgroundColor = "#003d4d" ;
- //prevent pewiTitle from pressing against the top of the screen
- document.getElementById('pewiTitle').style.marginTop = "100px";
- //open up background curtain (entirely transparent here)
- document.getElementById('startupContentsHolder').style.marginTop = "0px";
- document.getElementById('startupContentsHolder').style.top = "0%";
- document.getElementById('startupContentsHolder').style.height = "100%" ;
- document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)" ;
- //clear informational text
- document.getElementById('startupInformationText').innerHTML = "" ;
- //change random tolerance ("P" for play)
- randomAllowed("P");
- //function multiplayerMode();
- //after all the moving around, then show iframe page over the page, then
- //  reset the buttons and content in the background
- setTimeout(function() {
-   
-   hideBackgroundStartupElements();
-   
-   setTimeout(function() { 
-    document.getElementById('startupDialogueOverlay').src = "play.html" ; 
-    document.getElementById('startupDialogueOverlay').style.visibility = "visible" ;
-   }, 400);
-   
-   setTimeout(function() { resetElements() ; }, 500);
-   
- }, 400) ;
-} //end startPlay
-
-// this function simply hides the main content from the startup page
-function hideBackgroundStartupElements() {
-   document.getElementById('startupButton1').style.visibility = "hidden" ;
-   document.getElementById('startupButton2').style.visibility = "hidden" ;
-   document.getElementById('startupButton3').style.visibility = "hidden" ;
-   document.getElementById('pewiTitle').style.visibility = "hidden" ;
-}//end function
-
-//resetElements moves the elements around on the page and resets the colors of elements
-//  in preparation for returning to the page
-function resetElements(){
- document.getElementById('startupButton1').style.display = "block" ;
- document.getElementById('startupButton2').style.display = "block" ;
- document.getElementById('startupButton3').style.display = "block" ;
- document.getElementById('startupButton1').style.backgroundColor = "#40A4DF" ;
- document.getElementById('startupButton2').style.backgroundColor = "#40A4DF" ;
- document.getElementById('startupButton3').style.backgroundColor = "#40A4DF" ;
- document.getElementById('startupButton1').style.left = "25%" ;
- document.getElementById('startupButton2').style.top = "50%" ;
- document.getElementById('startupButton3').style.left = "75%" ;
- document.getElementById('pewiTitle').style.marginTop = "0px";
-} //end resetElements
-
-//reset makes the changes necessary for displaying the main page again
-// this is necessary to be separated so that the elements can be moved prior to being
-// redisplayed in avoidance of carry over transitions
-function reset() {
- 
- document.activeElement.blur() ;
- 
- document.getElementById('startupDialogueOverlay').src = "" ;
- document.getElementById('startupDialogueOverlay').style.visibility = "hidden" ;
-  
- document.getElementById('startupContentsHolder').style.marginTop = "-250px";
- document.getElementById('startupContentsHolder').style.top = "50%";
- document.getElementById('startupContentsHolder').style.height = "500px" ;
- document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)" ;
- 
- document.getElementById('startupButton1').style.visibility = "visible" ;
- document.getElementById('startupButton2').style.visibility = "visible" ;
- document.getElementById('startupButton3').style.visibility = "visible" ;
- document.getElementById('pewiTitle').style.visibility = "visible" ;
-} //end reset
-
-//chains the two functions needed for resetting the page completely. Called by helpersFE.js
-function recallMain(){
- resetElements() ;
- reset() ;
-}//end recallMain
-
-//highlightButton toggles the color of startup page buttons when hovered over
-// and updates the informational text bar
-// There was some issue with just hover styling, so we'll do the styling here too
-function highlightButtonAndShowInfo(value, on) {
-  
-   var string = "startupButton" + value ;
-   if(on){
-      document.getElementById(string).style.backgroundColor = "#7cc1e9" ;
-      var message = "";
-      
-      switch(value){
-       case 1:
-        message = "explore the watershed" ;
-        break;
-       case 2:
-        message = "exercises and interaction" ;
-        break;
-       case 3:
-        message = "extend the application" ;
-        break;
+  <script type='text/javascript'>
+    //Start initial screen video animation
+    document.getElementById('startVideo').addEventListener('ended', function() {
+      endOfVideo();
+    }, false);
+    //if after 2000milisecs, the video hasn't taken off, well then we just pretend
+    // that there's no video and move on
+    //This is important for browsers without video playback, otherwise the endOfVideo
+    // function will never be triggered and bad stuff like that.
+    setTimeout(function() {
+      var vid = document.getElementById("startVideo");
+      if (!(Number(vid.currentTime) > 0)) {
+        endOfVideo();
       }
-      document.getElementById('startupInformationText').innerHTML = message;
-   }
-   else{
-      document.getElementById('startupInformationText').innerHTML = "" ;
-      document.getElementById(string).style.backgroundColor = "#40A4DF" ;
-   }
-}//end function
+    }, 2000);
+    //Create three framework and load textures
+    // this takes care of all of the webGL setup that only needs to be done once
+    createEnvironment();
+    //endOfVideo changes styling for the transitions that need to occur between the loading
+    // screen and the main start screen
+    function endOfVideo() {
+      //Change from Loading stuff to content stuff
+      document.getElementById('startupContent').style.opacity = "1";
+      document.getElementById('startupLoadingContainer').style.display = "none";
+      document.getElementById('startupContentsHolder').style.visibility = "visible";
+      //setup backgrond
+      document.getElementById('startupBackgroundImage').style.opacity = "1";
+      document.getElementById('riverBackgroundColoring').style.opacity = "1";
+      document.getElementById('riverBack1').style.opacity = "0.4";
+      document.getElementById('riverBack2').style.opacity = "0.4";
+      //setup main content styling
+      document.getElementById('pewiTitle').style.opacity = "1";
+      document.getElementById('pewiTitle').style.marginTop = "0";
+      document.getElementById('startupButton1').style.opacity = "1";
+      document.getElementById('startupButton2').style.opacity = "1";
+      document.getElementById('startupButton3').style.opacity = "1";
+      document.getElementById('startupInformationText').style.opacity = "1";
+      //Once these transitions have been calculated by the browser and are under way
+      // then we can safely reduce the transition times of all the elements
+      setTimeout(function() {
+        //document.getElementById('backImg').style.transitionDuration = "70s" ;
+        document.getElementById('startupButton1').style.transitionDuration = ".4s";
+        document.getElementById('startupButton2').style.transitionDuration = ".4s";
+        document.getElementById('startupButton3').style.transitionDuration = ".4s";
+        document.getElementById('pewiTitle').style.transitionDuration = ".4s";
+        document.getElementById('startupContentsHolder').style.transitionDuration = ".4s";
+      }, 10);
+    } //end endOfVideo
+    //startSandbox hides the startup page and loads the sandbox
+    function startSandbox() {
+      //Update Buttons appropriately
+      document.getElementById('startupButton2').style.display = "none";
+      document.getElementById('startupButton3').style.display = "none";
+      document.getElementById('startupButton1').style.left = "50%";
+      document.getElementById('startupButton1').style.backgroundColor = "#003d4d";
+      //prevent pewiTitle from pressing against the top of the screen
+      document.getElementById('pewiTitle').style.marginTop = "100px";
+      //open up background curtain
+      document.getElementById('startupContentsHolder').style.marginTop = "0px";
+      document.getElementById('startupContentsHolder').style.top = "0%";
+      document.getElementById('startupContentsHolder').style.height = "100%";
+      document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,1)";
+      //clear informational text
+      document.getElementById('startupInformationText').innerHTML = "";
+      //change random tolerance ("S" for sandbox)
+      randomAllowed("S");
+      //after all of this styling magic, let's actually do something and start the sandbox mode
+      setTimeout(function() {
+        parent.loadLevel(0);
+      }, 400);
+    } //end startSandbox
+    //startUtilities hides the startup page elements and displays utilities
+    function startUtilities() {
+      //Update Buttons appropriately
+      document.getElementById('startupButton1').style.display = "none";
+      document.getElementById('startupButton2').style.display = "none";
+      document.getElementById('startupButton3').style.left = "50%";
+      document.getElementById('startupButton3').style.backgroundColor = "#003d4d";
+      //prevent pewiTitle from pressing against the top of the screen
+      document.getElementById('pewiTitle').style.marginTop = "100px";
+      //open up background curtain (entirely transparent here)
+      document.getElementById('startupContentsHolder').style.marginTop = "0px";
+      document.getElementById('startupContentsHolder').style.top = "0%";
+      document.getElementById('startupContentsHolder').style.height = "100%";
+      document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)";
+      //clear informational text
+      document.getElementById('startupInformationText').innerHTML = "";
+      //change random tolerance ("U" for utilities)
+      randomAllowed("U");
+      //Display utilities frame over the page, then with
+      // the background elements hidden, rearrange them in preparation for the user
+      // clicking back
+      setTimeout(function() {
+        hideBackgroundStartupElements();
+        setTimeout(function() {
+          document.getElementById('startupDialogueOverlay').src = "utilities.html";
+          document.getElementById('startupDialogueOverlay').style.visibility = "visible";
+        }, 400);
+        setTimeout(function() {
+          resetElements();
+        }, 500);
+      }, 400);
+    } //end startUtilities
+    //startPlay hides the startup page elements and displays the level selector
+    function startPlay() {
+      //Update Buttons appropriately
+      document.getElementById('startupButton1').style.display = "none";
+      document.getElementById('startupButton3').style.display = "none";
+      document.getElementById('startupButton2').style.top = "50%";
+      document.getElementById('startupButton2').style.backgroundColor = "#003d4d";
+      //prevent pewiTitle from pressing against the top of the screen
+      document.getElementById('pewiTitle').style.marginTop = "100px";
+      //open up background curtain (entirely transparent here)
+      document.getElementById('startupContentsHolder').style.marginTop = "0px";
+      document.getElementById('startupContentsHolder').style.top = "0%";
+      document.getElementById('startupContentsHolder').style.height = "100%";
+      document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)";
+      //clear informational text
+      document.getElementById('startupInformationText').innerHTML = "";
+      //change random tolerance ("P" for play)
+      randomAllowed("P");
+      //function multiplayerMode();
+      //after all the moving around, then show iframe page over the page, then
+      //  reset the buttons and content in the background
+      setTimeout(function() {
 
-//createEnvironment creates scene generic THREE.js elements and loads textures
-// this all is done cleverly in the background when the video and loading are being shown
-function createEnvironment(){
- parent.createThreeFramework();
- parent.initializeCamera();
- parent.initializeLighting();
- parent.setupHighlight();
- parent.loadingManager();
- var returned = parent.loadResources();
- parent.animationFrames();
-} //createEnvironment
-</script>
+        hideBackgroundStartupElements();
+
+        setTimeout(function() {
+          document.getElementById('startupDialogueOverlay').src = "play.html";
+          document.getElementById('startupDialogueOverlay').style.visibility = "visible";
+        }, 400);
+
+        setTimeout(function() {
+          resetElements();
+        }, 500);
+
+      }, 400);
+    } //end startPlay
+    // this function simply hides the main content from the startup page
+    function hideBackgroundStartupElements() {
+      document.getElementById('startupButton1').style.visibility = "hidden";
+      document.getElementById('startupButton2').style.visibility = "hidden";
+      document.getElementById('startupButton3').style.visibility = "hidden";
+      document.getElementById('pewiTitle').style.visibility = "hidden";
+    } //end function
+    //resetElements moves the elements around on the page and resets the colors of elements
+    //  in preparation for returning to the page
+    function resetElements() {
+      document.getElementById('startupButton1').style.display = "block";
+      document.getElementById('startupButton2').style.display = "block";
+      document.getElementById('startupButton3').style.display = "block";
+      document.getElementById('startupButton1').style.backgroundColor = "#40A4DF";
+      document.getElementById('startupButton2').style.backgroundColor = "#40A4DF";
+      document.getElementById('startupButton3').style.backgroundColor = "#40A4DF";
+      document.getElementById('startupButton1').style.left = "25%";
+      document.getElementById('startupButton2').style.top = "50%";
+      document.getElementById('startupButton3').style.left = "75%";
+      document.getElementById('pewiTitle').style.marginTop = "0px";
+    } //end resetElements
+    //reset makes the changes necessary for displaying the main page again
+    // this is necessary to be separated so that the elements can be moved prior to being
+    // redisplayed in avoidance of carry over transitions
+    function reset() {
+
+      document.activeElement.blur();
+
+      document.getElementById('startupDialogueOverlay').src = "";
+      document.getElementById('startupDialogueOverlay').style.visibility = "hidden";
+
+      document.getElementById('startupContentsHolder').style.marginTop = "-250px";
+      document.getElementById('startupContentsHolder').style.top = "50%";
+      document.getElementById('startupContentsHolder').style.height = "500px";
+      document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)";
+
+      document.getElementById('startupButton1').style.visibility = "visible";
+      document.getElementById('startupButton2').style.visibility = "visible";
+      document.getElementById('startupButton3').style.visibility = "visible";
+      document.getElementById('pewiTitle').style.visibility = "visible";
+    } //end reset
+    //chains the two functions needed for resetting the page completely. Called by helpersFE.js
+    function recallMain() {
+      resetElements();
+      reset();
+    } //end recallMain
+    //highlightButton toggles the color of startup page buttons when hovered over
+    // and updates the informational text bar
+    // There was some issue with just hover styling, so we'll do the styling here too
+    function highlightButtonAndShowInfo(value, on) {
+
+      var string = "startupButton" + value;
+      if (on) {
+        document.getElementById(string).style.backgroundColor = "#7cc1e9";
+        var message = "";
+
+        switch (value) {
+          case 1:
+            message = "explore the watershed";
+            break;
+          case 2:
+            message = "exercises and interaction";
+            break;
+          case 3:
+            message = "extend the application";
+            break;
+        }
+        document.getElementById('startupInformationText').innerHTML = message;
+      } else {
+        document.getElementById('startupInformationText').innerHTML = "";
+        document.getElementById(string).style.backgroundColor = "#40A4DF";
+      }
+    } //end function
+    //createEnvironment creates scene generic THREE.js elements and loads textures
+    // this all is done cleverly in the background when the video and loading are being shown
+    function createEnvironment() {
+      parent.createThreeFramework();
+      parent.initializeCamera();
+      parent.initializeLighting();
+      parent.setupHighlight();
+      parent.loadingManager();
+      var returned = parent.loadResources();
+      parent.animationFrames();
+    } //createEnvironment
+  </script>
 
 </body>
+
 </html>
