@@ -46,7 +46,7 @@ function overlayBoard(board) {
 }//end overlayBoard()
 
 
-//calculate() function brings the resaults up to date
+//calculate() function brings the results up to date
 //  this is currently set to calculate up to year 3 for testing purposes
 function calculate() {
   board1.calculatedToYear = 3;
