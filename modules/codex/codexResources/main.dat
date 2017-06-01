@@ -68,7 +68,7 @@ $
 ./codexResources/text/physicalFeatures.html
 0
 @ : Topographic Relief
-<iframe width="500" height="300" src="https://www.youtube.com/embed/OBbzsBKu6JE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <p style="margin-left:10px;"> Video Coming Soon! </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/OBbzsBKu6JE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/gKDQGOtzrqg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/topographicRelief.html
 1
 @ : Flood Frequency
@@ -144,7 +144,7 @@ $
 ./codexResources/text/carbonSequestration.html
 1
 @ : Erosion Control
-<iframe width="500" height="300" src="https://www.youtube.com/embed/XVktzbugNvo?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <p style="margin-left:10px;"> Video Coming Soon! </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/XVktzbugNvo?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/fnLnv8FwDE4?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/erosionControl.html
 1
 $
@@ -153,15 +153,15 @@ $
 ./codexResources/text/waterQuality.html
 0
 @ : Nitrate Pollution Control
-<iframe width="500" height="300" src="https://www.youtube.com/embed/c63ZXfZyfEg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <p style="margin-left:10px;"> Video Coming Soon! </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/c63ZXfZyfEg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300"src="https://www.youtube.com/embed/ccMThKYFQxE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/nitratePollutionControl.html
 1
 @ : Phosphorus Pollution Control
-<iframe width="500" height="300" src="https://www.youtube.com/embed/2HZDHK8uy7Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <p style="margin-left:10px;"> Video Coming Soon! </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/2HZDHK8uy7Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/nEa1KeAaIL0?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/phosphorusPollutionControl.html
 1
 @ : Sediment Control
-<iframe width="500" height="300" src="https://www.youtube.com/embed/vER6hvsQPlg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <p style="margin-left:10px;"> Video Coming Soon! </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/vER6hvsQPlg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/jRcfevPEnqM?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/sedimentControl.html
 1
 $
@@ -170,11 +170,11 @@ $
 ./codexResources/text/yield.html
 1
 @ : Alfalfa
-<p style="margin-left:10px;"> Video Coming Soon! </p> + <iframe width="500" height="300" src="https://www.youtube.com/embed/nUe7FxjYDYI?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/l5lm3Lph8r0?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/nUe7FxjYDYI?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/alfalfaYield.html
 1
 @ : Cattle
-<iframe width="500" height="300" src="https://www.youtube.com/embed/Zhu5nUqDu5s?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <p style="margin-left:10px;"> Video Coming Soon! </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/Zhu5nUqDu5s?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/0nGXNaBCLa4?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/cattleYield.html
 1
 @ : Corn Grain
@@ -182,19 +182,19 @@ $
 ./codexResources/text/cornYield.html
 1
 @ : Grass Hay
-<p style="margin-left:10px;"> Video Coming Soon! </p> + <p style="margin-left:10px;"> Video Coming Soon! </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/kfxw8SxRqZE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/VFGW5Mt9hrM?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/hayYield.html
 1
 @ : Switchgrass
-<iframe width="500" height="300" src="https://www.youtube.com/embed/F7wbTIQBjIg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <p style="margin-left:10px;"> Video Coming Soon! </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/F7wbTIQBjIg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/YknGumV6o6w?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/switchgrassYield.html
 1
 @ : Mixed Fruit and Vegetable
-<iframe width="500" height="300" src="https://www.youtube.com/embed/Mt3lKBIYA9Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <p style="margin-left:10px;"> Video Coming Soon! </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/Mt3lKBIYA9Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/f8yziJ0FqjQ?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/mixedFruitAndVegetableYield.html
 1
 @ : Short-Rotation Woody Biomass
-<p style="margin-left:10px;"> Video Coming Soon! </p>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/oYKe3VjYVMs?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/shortRotationYield.html
 0
 @ : Soybeans
