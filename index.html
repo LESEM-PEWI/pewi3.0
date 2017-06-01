@@ -63,7 +63,7 @@
 
 </head>
 
-<body id="body">
+<body id="body" onunload="alert('Have you saved all the changes? ');">
 
   <script>
     //Preload gifs and backgrounds on startup
@@ -631,6 +631,12 @@
 
   <!-- Javascript to stop event propogation for bug fix in modalEscapeFrame (above) -->
   <script>
+  $(window).bind("beforeunload",function(event) {
+    return "You have some unsaved changes";
+  });
+  $(window).bind("onunload",function(event) {
+    alert("You have some unsaved changes");
+  });
     //prevent modalEscapeFrame from being clicked on when using the buttons stored in the frame
     $("#escapeMenu").click(function(e) {
       e.stopPropagation();
