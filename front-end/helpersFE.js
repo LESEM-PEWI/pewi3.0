@@ -1869,7 +1869,7 @@ function uploadClicked(e) {
     files = e.target.files;
 
     if (files[0].name && !files[0].name.match(/\.csv/)) {
-        if(files[0].name.match(/\.json/))
+        if(files[0].name.match(/\.json/))//. json is file format from pewi2.1
         {
          
 
@@ -1891,18 +1891,26 @@ string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle
 
    console.log("loading the json %s");
     var obj = JSON.parse(event.target.result);
-    //alert(jsonObj["1"].area.data[11]);
+    
 
 
 
 
     for(var i=0; i<828; i++){
+      try{
+        //This variable 'string' stores the extracted data from the .json file 
         string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + "," 
         + ((obj["1"].area.data[i]== null)? 0 :obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i]== null)? 0:obj["1"].baseLandUseType.data[i]) + "," +  ((obj["1"].carbonmax.data[i]==null)?"NA":obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i]==null)?"NA":obj["1"].carbonmin.data[i]) 
         + "," + ((obj["1"].cattle.data[i]==null)?"NA":obj["1"].cattle.data[i]) + ","  + ((obj["1"].cornyield.data[i]==null)?"NA":obj["1"].cornyield.data[i]) + "," +  ((obj["1"].drainageclass.data[i]==null)?"NA":obj["1"].drainageclass.data[i]) + ","  + ((obj["1"].erosion.data[i]==null)?"NA":obj["1"].erosion.data[i]) + ","  + ((obj["1"].floodfrequency.data[i]==null)?"NA":obj["1"].floodfrequency.data[i]) + "," 
         +  ((obj["1"].group.data[i]==null && obj["1"].floodfrequency.data[i]!=0)?"NA":" ") + ","  + ((obj["1"].nitratespmm.data[i]==null)?"NA":obj["1"].nitratespmm.data[i]) + ","  + ((obj["1"].pindex.data[i]==null)?"NA":obj["1"].pindex.data[i]) + "," +  ((obj["1"].sediment.data[i]==null)?"NA": obj["1"].sediment.data[i]) + "," +  ((obj["1"].soiltype.data[i]==null)?0:obj["1"].soiltype.data[i]) + "," + ((obj["1"].soybeanyield.data[i]==null)?"NA":obj["1"].soybeanyield.data[i]) + "," 
         +((obj["1"].streamnetwork.data[i]==null)?"NA":obj["1"].streamnetwork.data[i]) + "," +((obj["1"].subwatershed.data[i]==null)?0:obj["1"].subwatershed.data[i]) + "," +((obj["1"].timber.data[i]==null)?"NA":obj["1"].timber.data[i]) + "," +((obj["1"].topography.data[i]==null)?0:obj["1"].topography.data[i]) +"," + ((obj["1"].watershednitrogencontribution.data[i]==null)?"NA":obj["1"].watershednitrogencontribution.data[i]) +"," 
-        + ((obj["1"].wetland.data[i]==null)?"NA":obj["1"].wetland.data[i]) +"," + boardData[currentBoard].map[i].riverStreams+","/** riverStreams*/ ;
+        + ((obj["1"].wetland.data[i]==null)?"NA":obj["1"].wetland.data[i]) +"," + boardData[currentBoard].map[i].riverStreams+","/** riverStreams is taken from the rever stream of currrent board*/ ;
+      }
+      catch(except)//catches for a wrong json file type error
+      {
+        alert("This file format is not compatible");
+        return;
+      }
        
         try 
         {
