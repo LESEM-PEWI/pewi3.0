@@ -110,9 +110,8 @@
       <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
       <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
 
-      <div id= "yieldButton" class="consoleButton" onclick = "switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
+      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
 
-      <!-- <div id="settingsButton" class="consoleButton" onclick="switchConsoleTab(5);"><img id="settingsImg" class="imgNotSelected" src="./imgs/settingsIcon.png"></div> -->
     </div>
 
 
@@ -135,20 +134,17 @@
           <img id="paint13" class="icon landSelectorIcon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);">
 
           <!-- multiplayer mode  -->
-          <div id="paintPlayer1" onclick="changeSelectedPaintTo(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player1Image" style="display:inline-block;" class="playerSelected" src="./imgs/player1a.png"></div>
+          <div id="paintPlayer1" onclick="changeSelectedPaintTo(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player1Image" style="display:inline-block;" class="icon playerSelected" src="./imgs/player1a.png"></div>
           <div id="paintPlayer3" onclick="changeSelectedPaintTo(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player3Image" style="display:none;" class="" src="./imgs/player3a.png"></div>
           <div id="paintPlayer5" onclick="changeSelectedPaintTo(5);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player5Image" style="display:none;" class="" src="./imgs/player5a.png"></div>
 
-          <div id="playerResetButton" class="playerReset" onclick="resetMultiPlayer(); resetMultiPlayer();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+          <div id="playerResetButton" class="playerReset" onclick="resetMultiPlayer();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
             <div id="message" style="display: none">
               <p>RESET</p>
             </div>
             <img id="playerResetImage" style="display:inline-block;" class="playerReset playerButton playerNotSelected" src="./imgs/close_black.png">
           </div>
 
-          <!-- <img id="paintPlayer1" style="display:none;" class="icon landSelectorIcon" src="./imgs/player1.png" onclick="changeSelectedPaintTo(1)">
-          <img id="paintPlayer3" style="display:none;" class="icon landSelectorIcon" src="./imgs/player3.png" onclick="changeSelectedPaintTo(3)">
-          <img id="paintPlayer5" style="display:none;" class="icon landSelectorIcon" src="./imgs/player5.png" onclick="changeSelectedPaintTo(5)"> -->
         </div>
 
         <div id=painterTab-rightcol>
@@ -165,11 +161,8 @@
           <div id="paintPlayer4" onclick="changeSelectedPaintTo(4);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player4Image" style="display:none;" class="" src="./imgs/player4a.png"></div>
           <div id="paintPlayer6" onclick="changeSelectedPaintTo(6);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player6Image" style="display:none;" class="" src="./imgs/player6a.png"></div>
 
-          <div id="playerAddButton" onclick="addPlayerAndTransition(); " onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="playerAddImage" style="display:inline-block;" class="playerNotSelected" src="./imgs/addYear.png"></div>
+          <div id="playerAddButton" onclick="addPlayerAndTransition(); " onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="playerAddImage" style="display:inline-block;" class="icon playerNotSelected" src="./imgs/addYear.png"></div>
 
-          <!-- <img id="paintPlayer2" style="display:none;" class="icon landSelectorIcon" src="./imgs/player2.png" onclick="changeSelectedPaintTo(2)">
-          <img id="paintPlayer4" style="display:none;" class="icon landSelectorIcon" src="./imgs/player4.png" onclick="changeSelectedPaintTo(4)">
-          <img id="paintPlayer6" style="display:none;" class="icon landSelectorIcon" src="./imgs/player6.png" onclick="changeSelectedPaintTo(6)"> -->
         </div>
 
       </div>
@@ -290,11 +283,14 @@
         </div>
 
         <!-- "Letter N Ig Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p><img id="nitrateIcon" class="icon levelsSelectorIcon" src="./imgs/N.png" style="border-radius: 50%;" onclick="displayLevels('nitrate');">
+        <p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p>
+        <img id="nitrateIcon" class="icon levelsSelectorIcon" src="./imgs/N.png" onclick="displayLevels('nitrate');">
         <!-- "Letter E gold Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Gross Erosion</p><img id="erosionIcon" class="icon levelsSelectorIcon" src="./imgs/E.png" style="border-radius: 50%;" onclick="displayLevels('erosion');">
+        <p class="levelsText">Gross Erosion</p>
+        <img id="erosionIcon" class="icon levelsSelectorIcon" src="./imgs/E.png" onclick="displayLevels('erosion');">
         <!-- "Letter P blue Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Phosphorus Index Risk Assessment</p><img id="phoshorusIcon" class="icon levelsSelectorIcon" src="./imgs/P.png" style="border-radius: 50%;" onclick="displayLevels('phosphorus');">
+        <p class="levelsText">Phosphorus Index Risk Assessment</p>
+        <img id="phoshorusIcon" class="icon levelsSelectorIcon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
 
       </div>
 
@@ -388,158 +384,155 @@
       </div>
 
       <!--Yield Productivity Overlay Maps -->
-         <div id = "yieldTab" class="consoleTab" style = "display: none;">
-            <div id = "cornGrainDetailsList" class = "yieldDetailsListRolled">
-                <div class = "cornGrain1">
-                    <p class = "levelsTextDetails">0 Mg/ha/yr</p>
-                </div>
-                <div class = "cornGrain2">
-                    <p class = "levelsTextDetails">11.2-13.2 Mg/ha/yr</p>
-                </div> 
-                <div class = "cornGrain3">
-                    <p class = "levelsTextDetails">13.2-13.9 Mg/ha/yr</p>
-                </div>
-                <div class = "cornGrain4">
-                    <p class = "levelsTextDetails">13.9-15.1 Mg/ha/yr</p>
-                </div>
-            </div>
-             
-             <div id = "soyBeanDetailsList" class = "yieldDetailsListRolled">
-                <div class = "soyBean1" >
-                    <p class = "levelsTextDetails">0 Mg/ha/yr</p>
-                </div>
-                <div class = "soyBean2" >
-                    <p class = "levelsTextDetails">3.50-3.90 Mg/ha/yr</p>
-                </div>
-                <div class = "soyBean3" >
-                    <p class = "levelsTextDetails">3.90-4.30 Mg/ha/yr</p>
-                </div>
-                <div class = "soyBean4" >
-                    <p class = "levelsTextDetails">4.30-4.70 Mg/ha/yr</p>
-                </div>
-            </div>
+      <div id="yieldTab" class="consoleTab" style="display: none;">
+        <div id="cornGrainDetailsList" class="yieldDetailsListRolled">
+          <div class="cornGrain1">
+            <p class="levelsTextDetails">0 Mg/ha/yr</p>
+          </div>
+          <div class="cornGrain2">
+            <p class="levelsTextDetails">11.2-13.2 Mg/ha/yr</p>
+          </div>
+          <div class="cornGrain3">
+            <p class="levelsTextDetails">13.2-13.9 Mg/ha/yr</p>
+          </div>
+          <div class="cornGrain4">
+            <p class="levelsTextDetails">13.9-15.1 Mg/ha/yr</p>
+          </div>
+        </div>
 
-            <div id = "fruitDetailsList" class = "yieldDetailsListRolled">
-                <div class = "fruit1" >
-                    <p class = "levelsTextDetails">6.58 Mg/ha/yr</p>
-                </div>
-                <div class = "fruit2" >
-                    <p class = "levelsTextDetails">13.98 Mg/ha/yr</p>
-                </div>
-                <div class = "fruit3">
-                    <p class = "levelsTextDetails">14.80 Mg/ha/yr</p>
-                </div>
-                <div class = "fruit4">
-                    <p class = "levelsTextDetails">16.45 Mg/ha/yr</p>
-                </div>
+        <div id="soyBeanDetailsList" class="yieldDetailsListRolled">
+          <div class="soyBean1">
+            <p class="levelsTextDetails">0 Mg/ha/yr</p>
+          </div>
+          <div class="soyBean2">
+            <p class="levelsTextDetails">3.50-3.90 Mg/ha/yr</p>
+          </div>
+          <div class="soyBean3">
+            <p class="levelsTextDetails">3.90-4.30 Mg/ha/yr</p>
+          </div>
+          <div class="soyBean4">
+            <p class="levelsTextDetails">4.30-4.70 Mg/ha/yr</p>
+          </div>
+        </div>
 
-            </div>
+        <div id="fruitDetailsList" class="yieldDetailsListRolled">
+          <div class="fruit1">
+            <p class="levelsTextDetails">6.58 Mg/ha/yr</p>
+          </div>
+          <div class="fruit2">
+            <p class="levelsTextDetails">13.98 Mg/ha/yr</p>
+          </div>
+          <div class="fruit3">
+            <p class="levelsTextDetails">14.80 Mg/ha/yr</p>
+          </div>
+          <div class="fruit4">
+            <p class="levelsTextDetails">16.45 Mg/ha/yr</p>
+          </div>
 
-            <div id = "cattleDetailsList" class = "yieldDetailsListRolled">
-                <div class = "cattle1">
-                    <p class = "levelsTextDetails">3.4-4.0 animals/acre/yr</p>
-                </div>
-                <div class = "cattle2">
-                    <p class = "levelsTextDetails">4.0-5.4 animals/acre/yr</p>
-                </div>
-                <div class = "cattle3">
-                    <p class = "levelsTextDetails">5.4-6.1 animals/acre/yr</p>
-                </div>
-                <div class = "cattle4">
-                    <p class = "levelsTextDetails">6.1-6.7 animals/acre/yr</p>
-                </div>
-            </div>
+        </div>
 
-            <div id = "alfalfaDetailsList" class = "yieldDetailsListRolled">
-                <div class = "alfalfa1">
-                    <p class = "levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
-                </div>
-                <div class = "alfalfa2">
-                    <p class = "levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
-                </div>
-                <div class = "alfalfa3">
-                    <p class = "levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
-                </div>
-                <div class = "alfalfa4">
-                    <p class = "levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
-                </div>
-            </div>
+        <div id="cattleDetailsList" class="yieldDetailsListRolled">
+          <div class="cattle1">
+            <p class="levelsTextDetails">3.4-4.0 animals/acre/yr</p>
+          </div>
+          <div class="cattle2">
+            <p class="levelsTextDetails">4.0-5.4 animals/acre/yr</p>
+          </div>
+          <div class="cattle3">
+            <p class="levelsTextDetails">5.4-6.1 animals/acre/yr</p>
+          </div>
+          <div class="cattle4">
+            <p class="levelsTextDetails">6.1-6.7 animals/acre/yr</p>
+          </div>
+        </div>
 
-            <div id = "grassHayDetailsList" class = "yieldDetailsListRolled">
-                <div class = "grassHay1">
-                    <p class = "levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
-                </div>
-                <div class = "grassHay2">
-                    <p class = "levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
-                </div>
-                <div class = "grassHay3">
-                    <p class = "levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
-                </div>
-                <div class = "grassHay4">
-                    <p class = "levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
-                </div>
-            </div>
+        <div id="alfalfaDetailsList" class="yieldDetailsListRolled">
+          <div class="alfalfa1">
+            <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
+          </div>
+          <div class="alfalfa2">
+            <p class="levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
+          </div>
+          <div class="alfalfa3">
+            <p class="levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
+          </div>
+          <div class="alfalfa4">
+            <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
+          </div>
+        </div>
 
-             <div id = "switchGrassDetailsList" class = "yieldDetailsListRolled">
-                <div class = "switchGrass1">
-                    <p class = "levelsTextDetails">4.39-5.29 Mg/ha/yr</p>
-                </div>
-                <div class = "switchGrass2">
-                    <p class = "levelsTextDetails">5.29-5.83 Mg/ha/yr</p>
-                </div>
-                <div class = "switchGrass3">
-                    <p class = "levelsTextDetails">5.83-6.25 Mg/ha/yr</p>
-                </div>
-                <div class = "switchGrass4">
-                    <p class = "levelsTextDetails">6.25-6.61 Mg/ha/yr</p>
-                </div>
-            </div>
+        <div id="grassHayDetailsList" class="yieldDetailsListRolled">
+          <div class="grassHay1">
+            <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
+          </div>
+          <div class="grassHay2">
+            <p class="levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
+          </div>
+          <div class="grassHay3">
+            <p class="levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
+          </div>
+          <div class="grassHay4">
+            <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
+          </div>
+        </div>
 
-            <div id = "woodDetailsList" class = "yieldDetailsListRolled">
-                <div class = "wood1">
-                    <p class = "levelsTextDetails">0.50-0.73 m3/ha/yr</p>
-                </div>
-                <div class = "wood2">
-                    <p class = "levelsTextDetails">0.73-1.02 m3/ha/yr</p>
-                </div>
-                <div class = "wood3">
-                    <p class = "levelsTextDetails">1.02-1.43 m3/ha/yr</p>
-                </div>
-                <div class = "wood4">
-                    <p class = "levelsTextDetails">1.43-1.60 m3/ha/yr</p>
-                </div>
-            </div>
+        <div id="switchGrassDetailsList" class="yieldDetailsListRolled">
+          <div class="switchGrass1">
+            <p class="levelsTextDetails">4.39-5.29 Mg/ha/yr</p>
+          </div>
+          <div class="switchGrass2">
+            <p class="levelsTextDetails">5.29-5.83 Mg/ha/yr</p>
+          </div>
+          <div class="switchGrass3">
+            <p class="levelsTextDetails">5.83-6.25 Mg/ha/yr</p>
+          </div>
+          <div class="switchGrass4">
+            <p class="levelsTextDetails">6.25-6.61 Mg/ha/yr</p>
+          </div>
+        </div>
 
-            <div id = "shortDetailsList" class = "yieldDetailsListRolled">
-                <div class = "short1">
-                    <p class = "levelsTextDetails">608.6 tons/acre/yr</p>
-                </div>
-            </div>
+        <div id="woodDetailsList" class="yieldDetailsListRolled">
+          <div class="wood1">
+            <p class="levelsTextDetails">0.50-0.73 m3/ha/yr</p>
+          </div>
+          <div class="wood2">
+            <p class="levelsTextDetails">0.73-1.02 m3/ha/yr</p>
+          </div>
+          <div class="wood3">
+            <p class="levelsTextDetails">1.02-1.43 m3/ha/yr</p>
+          </div>
+          <div class="wood4">
+            <p class="levelsTextDetails">1.43-1.60 m3/ha/yr</p>
+          </div>
+        </div>
 
-            <p class="featuresText"></p><img id="cornClass" class="icon yieldSelectorIcon" src="./imgs/cornGrainIcon.png" style="border-radius: 50%"; title = "Corn Grain"  onclick="displayLevels('cornGrain');" >
-            <p class = "featuresText"></p><img id ="soyClass" class = "icon yieldSelectorIcon" src="./imgs/soybeanIcon.png" style="border-radius: 50%"; title = "Soybean"
-            onclick = "displayLevels('soy');">
-            <p class = "featuresText"></p><img id = "fruitClass" class = "icon yieldSelectorIcon" src="./imgs/fruitIcon.png" style="border-radius: 50%"; title = "Mixed Fruits and Vegetables"
-            onclick="displayLevels('fruit');">
-            <p class = "featuresText"></p><img id = "cattleClass" class = "icon yieldSelectorIcon" src="./imgs/cowIcon.png" style="border-radius: 50%"; title = "Cattle" onclick="displayLevels('cattle');">
-            <p class = "featuresText"></p><img id = "alfalfaClass" class = "icon yieldSelectorIcon" src="./imgs/alfalfaIcon.png" style="border-radius: 50%"; title = "Alfalfa" onclick="
-            displayLevels('alfalfa');" >
-            <p class = "featuresText"></p><img id = "grassHayClass" class = "icon yieldSelectorIcon" src="./imgs/grassHayIcon.png" style="border-radius: 50%"; title = "GrassHay" onclick= "displayLevels('grassHay');">
-            <p class = "featuresText"></p><img id = "switchGrassClass" class = "icon yieldSelectorIcon" src="./imgs/switchGrassIcon.png" style="border-radius: 50%"; title = "Switch Grass" onclick="displayLevels('switchGrass');">
-            <p class = "featuresText"></p><img id = "woodClass" class = "icon yieldSelectorIcon" src="./imgs/woodIcon.png"  style="border-radius: 50%"; title = "Wood" onclick="displayLevels('wood');">
-            <p class = "featuresText"></p><img id = "shortClass" class = "icon yieldSelectorIcon" src="./imgs/woodyBiomassIcon.png"  style="border-radius: 50%"; title = "Woody Biomass" onclick="displayLevels('short');">
-            
-         </div>
+        <div id="shortDetailsList" class="yieldDetailsListRolled">
+          <div class="short1">
+            <p class="levelsTextDetails">608.6 tons/acre/yr</p>
+          </div>
+        </div>
+
+        <p class="featuresText"></p><img id="cornClass" class="icon yieldSelectorIcon" src="./imgs/cornGrainIcon.png" title="Corn Grain" onclick="displayLevels('cornGrain');">
+        <p class="featuresText"></p><img id="soyClass" class="icon yieldSelectorIcon" src="./imgs/soybeanIcon.png" title="Soybean" onclick="displayLevels('soy');">
+        <p class="featuresText"></p><img id="fruitClass" class="icon yieldSelectorIcon" src="./imgs/fruitIcon.png" title="Mixed Fruits and Vegetables" onclick="displayLevels('fruit');">
+        <p class="featuresText"></p><img id="cattleClass" class="icon yieldSelectorIcon" src="./imgs/cowIcon.png" title="Cattle" onclick="displayLevels('cattle');">
+        <p class="featuresText"></p><img id="alfalfaClass" class="icon yieldSelectorIcon" src="./imgs/alfalfaIcon.png" title="Alfalfa" onclick="displayLevels('alfalfa');">
+        <p class="featuresText"></p><img id="grassHayClass" class="icon yieldSelectorIcon" src="./imgs/grassHayIcon.png" title="GrassHay" onclick="displayLevels('grassHay');">
+        <p class="featuresText"></p><img id="switchGrassClass" class="icon yieldSelectorIcon" src="./imgs/switchGrassIcon.png" title="Switch Grass" onclick="displayLevels('switchGrass');">
+        <p class="featuresText"></p><img id="woodClass" class="icon yieldSelectorIcon" src="./imgs/woodIcon.png" title="Wood" onclick="displayLevels('wood');">
+        <p class="featuresText"></p><img id="shortClass" class="icon yieldSelectorIcon" src="./imgs/woodyBiomassIcon.png" title="Woody Biomass" onclick="displayLevels('short');">
+
+      </div>
       <!-- year display -->
       <div id="yearsTab" class="consoleTab" style="display:none;">
         <!-- Create year buttons -->
         <div id="yearTitle">Year Selection</div>
         <!-- "Exposure, zero icon" by Google Design (https://design.google.com/) used under CC BY (https://creativecommons.org/licenses/by/3.0/) / Inverted from original -->
         <div id="year0Button" class="yearButton" style="display:none;" onclick="transitionToYear(0); switchYearTab(0);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year0Image" class="yearNotSelected" src="./imgs/zero_40px.png"></div>
-        <div id="year1Button" class="icon yearButton" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="yearSelected" src="./imgs/one.png"></div>
-        <div id="year2Button" class="icon yearButtonHidden" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="yearImageHidden" src="./imgs/two.png"></div>
-        <div id="year3Button" class="icon yearButtonHidden" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="yearImageHidden" src="./imgs/three.png"></div>
-        <div id="yearAddButton" class="icon yearButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="yearNotSelected" src="./imgs/addYear.png"></div>
+        <div id="year1Button" class="yearButton" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="icon yearSelected" src="./imgs/one.png"></div>
+        <div id="year2Button" class="yearButtonHidden" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="icon yearImageHidden" src="./imgs/two.png"></div>
+        <div id="year3Button" class="yearButtonHidden" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="icon yearImageHidden" src="./imgs/three.png"></div>
+        <div id="yearAddButton" class="yearButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
       </div>
 
     </div>

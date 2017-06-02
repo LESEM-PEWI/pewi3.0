@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-31T14:33:29-05:00
+ * @Last modified time: 2017-06-06T17:04:42-05:00
  */
 
 
@@ -528,8 +528,8 @@ function addYearAndTransition() {
   //make next button appear (has some prebuilt functionality for expanded number of years)
   if (currentYear < totalYearsAllowed - 1) {
 
-    document.getElementById("year" + nextYear + "Button").className = "icon yearButton";
-    document.getElementById("year" + nextYear + "Image").className = "yearNotSelected";
+    document.getElementById("year" + nextYear + "Button").className = "yearButton";
+    document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
 
   }
 
@@ -537,7 +537,7 @@ function addYearAndTransition() {
   if (currentYear == totalYearsAllowed - 1) {
 
     document.getElementById("year3Button").className = "yearButton";
-    document.getElementById("year3Image").className = "yearNotSelected";
+    document.getElementById("year3Image").className = "icon yearNotSelected";
     document.getElementById("yearAddButton").style.display = "none";
 
   }
@@ -920,11 +920,11 @@ function changeSelectedPaintTo(newPaintValue) {
 
     //change current painter to regular
     var painterElementId = "paint" + painter;
-    document.getElementById(painterElementId).className = "landSelectorIcon";
+    document.getElementById(painterElementId).className = "icon landSelectorIcon";
 
     //change new paiter to current
     painterElementId = "paint" + newPaintValue;
-    document.getElementById(painterElementId).className = "landSelectedIcon";
+    document.getElementById(painterElementId).className = "icon landSelectedIcon";
     painter = newPaintValue;
 
     // if it's grid painting mode and the user click to switch painter, erase the first seleted tile
@@ -937,11 +937,11 @@ function changeSelectedPaintTo(newPaintValue) {
   } else {
     //reset the playerSelected back to a normal playerNotSelected
     var painterElementId = "player" + painter + "Image";
-    document.getElementById(painterElementId).className = "playerNotSelected";
+    document.getElementById(painterElementId).className = "icon playerNotSelected";
 
     //change new painter to the current corresponding paintPlayer
     painterElementId = "player" + newPaintValue + "Image";
-    document.getElementById(painterElementId).className = "playerSelected";
+    document.getElementById(painterElementId).className = "icon playerSelected";
 
     //update the current painter to the value
     painter = newPaintValue;
@@ -1085,79 +1085,87 @@ function showLevelDetails(value) {
   //show nitrate legend
   if (value == 1) {
     document.getElementById("nitrateDetailsList").className = "levelDetailsList";
-    document.getElementById('nitrateIcon').className = "levelSelectorIconSelected";
+    document.getElementById('nitrateIcon').className = "icon levelSelectorIconSelected";
   }
 
   //show erosion legend
   else if (value == 2) {
     document.getElementById("erosionDetailsList").className = "levelDetailsList";
-    document.getElementById('erosionIcon').className = "levelSelectorIconSelected";
+    document.getElementById('erosionIcon').className = "icon levelSelectorIconSelected";
   }
 
   //show phosphorus legend
   else if (value == 3) {
     document.getElementById("phosphorusDetailsList").className = "levelDetailsList";
-    document.getElementById('phoshorusIcon').className = "levelSelectorIconSelected";
+    document.getElementById('phoshorusIcon').className = "icon levelSelectorIconSelected";
   }
 
   //show flood frequency legend
   else if (value == 4) {
-    document.getElementById('floodFrequency').className = "featureSelectorIconSelected";
+    document.getElementById('floodFrequency').className = "icon featureSelectorIconSelected";
     document.getElementById("floodFrequencyDetailsList").className = "physicalDetailsList";
   }
 
   //show drainage class legend
   else if (value == 5) {
-    document.getElementById('drainageClass').className = "featureSelectorIconSelected";
+    document.getElementById('drainageClass').className = "icon featureSelectorIconSelected";
     document.getElementById("drainageClassDetailsList").className = "physicalDetailsList";
   }
 
   //show strategic wetlands legend
   else if (value == 6) {
-    document.getElementById('strategicWetlands').className = "featureSelectorIconSelected";
+    document.getElementById('strategicWetlands').className = "icon featureSelectorIconSelected";
     document.getElementById("wetlandClassDetailsList").className = "physicalDetailsList";
   }
 
   //show subwatershed legend
   else if (value == 7) {
-    document.getElementById('subwatershedBoundaries').className = "featureSelectorIconSelected";
+    document.getElementById('subwatershedBoundaries').className = "icon featureSelectorIconSelected";
     document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
   } //end else/if group
 
   //show soil class legend
   else if (value == 8) {
-    document.getElementById('soilClass').className = "featureSelectorIconSelected";
+    document.getElementById('soilClass').className = "icon featureSelectorIconSelected";
     document.getElementById('soilClassDetailsList').className = "physicalDetailsList";
   }
   //Corn class legend
-  else if (value == 9) {
-    document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
-    document.getElementById('cornClass').className = "yieldSelectorIconSelected";
-  } else if (value == 10) {
-    document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
-    document.getElementById('soyClass').className = "yieldSelectorIconSelected";
-  } else if (value == 11) {
-    document.getElementById('fruitDetailsList').className = "yieldDetailsList";
-    document.getElementById('fruitClass').className = "yieldSelectorIconSelected";
-  } else if (value == 12) {
-    document.getElementById('cattleDetailsList').className = "yieldDetailsList";
-    document.getElementById('cattleClass').className = "yieldSelectorIconSelected";
-  } else if (value == 13) {
-    document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
-    document.getElementById('alfalfaClass').className = "yieldSelectorIconSelected";
-  } else if (value == 14) {
-    document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
-    document.getElementById('grassHayClass').className = "yieldSelectorIconSelected";
-  } else if (value == 15) {
-    document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
-    document.getElementById('switchGrassClass').className = "yieldSelectorIconSelected";
-  } else if (value == 16) {
-    document.getElementById('woodDetailsList').className = "yieldDetailsList";
-    document.getElementById('woodClass').className = "yieldSelectorIconSelected";
-  } else if (value == 17) {
-    document.getElementById('shortDetailsList').className = "yieldDetailsList";
-    document.getElementById('shortClass').className = "yieldSelectorIconSelected";
-  }
+    else if(value == 9){
+        document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
+        document.getElementById('cornClass').className = "icon yieldSelectorIconSelected";
+    }
+    else if(value == 10){
+        document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
+        document.getElementById('soyClass').className = "icon yieldSelectorIconSelected";
+    }
+    else if(value == 11){
+        document.getElementById('fruitDetailsList').className = "yieldDetailsList";
+        document.getElementById('fruitClass').className = "icon yieldSelectorIconSelected";
+    }
+    else if(value == 12){
+        document.getElementById('cattleDetailsList').className = "yieldDetailsList";
+        document.getElementById('cattleClass').className = "icon yieldSelectorIconSelected";
+    }
+    else if(value == 13){
+        document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
+        document.getElementById('alfalfaClass').className = "icon yieldSelectorIconSelected";
+    }
+    else if(value == 14){
+        document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
+        document.getElementById('grassHayClass').className = "icon yieldSelectorIconSelected";
+    }
+    else if(value == 15){
+        document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
+        document.getElementById('switchGrassClass').className = "icon yieldSelectorIconSelected";
+    }
+    else if(value == 16){
+        document.getElementById('woodDetailsList').className = "yieldDetailsList";
+        document.getElementById('woodClass').className = "icon yieldSelectorIconSelected";
+    }
+    else if(value == 17){
+        document.getElementById('shortDetailsList').className = "yieldDetailsList";
+        document.getElementById('shortClass').className = "icon yieldSelectorIconSelected";
+    }
 
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
@@ -1165,9 +1173,9 @@ function showLevelDetails(value) {
     if (element.length > 0) {
       element[0].className = 'levelDetailsListRolled';
     }
-    element = document.getElementsByClassName('levelSelectorIconSelected');
+    element = document.getElementsByClassName('icon levelSelectorIconSelected');
     if (element.length > 0) {
-      element[0].className = 'levelsSelectorIcon';
+      element[0].className = 'icon levelsSelectorIcon';
     }
   }
 
@@ -1177,19 +1185,19 @@ function showLevelDetails(value) {
     if (element.length > 0) {
       element[0].className = 'physicalDetailsListRolled';
     }
-    element = document.getElementsByClassName('featureSelectorIconSelected');
+    element = document.getElementsByClassName('icon featureSelectorIconSelected');
     if (element.length > 0) {
-      element[0].className = 'featureSelectorIcon';
+      element[0].className = 'icon featureSelectorIcon';
     }
   } //end else/if group
-  else if (value < -8) {
+  else if(value < -8){
     var element = document.getElementsByClassName('yieldDetailsList');
-    if (element.length > 0) {
-      element[0].className = 'yieldDetailsListRolled';
+    if(element.length > 0) {
+        element[0].className = 'yieldDetailsListRolled';
     }
-    element = document.getElementsByClassName('yieldSelectorIconSelected');
-    if (element.length > 0) {
-      element[0].ckassName = 'yieldSelectorIcon';
+    element = document.getElementsByClassName('icon yieldSelectorIconSelected');
+    if(element.length > 0){
+        element[0].ckassName = 'icon yieldSelectorIcon';
     }
   }
 
@@ -1279,12 +1287,12 @@ function switchConsoleTab(value) {
 function switchYearTab(yearNumberToChangeTo) {
 
   //get the currently selected year and make it not selected
-  var elements = document.getElementsByClassName("yearSelected");
-  elements[0].className = "yearNotSelected";
+  var elements = document.getElementsByClassName("icon yearSelected");
+  elements[0].className = "icon yearNotSelected";
 
   //then toggle on the selected year
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
-  document.getElementById(yearIdString).className = "yearSelected";
+  document.getElementById(yearIdString).className = "icon yearSelected";
 } //end switchYearTab
 
 //here we draw the correct tile colors onto the board material mesh
@@ -1317,10 +1325,10 @@ function displayLevels(overlayHighlightType) {
   var selectionHighlightNumber = 0;
 
   //update console tabs
-  var element = document.getElementsByClassName('featureSelectorIconSelected');
-  if (element[0]) element[0].className = 'featureSelectorIcon';
-  element = document.getElementsByClassName('levelSelectorIconSelected');
-  if (element[0]) element[0].className = 'levelsSelectorIcon';
+  var element = document.getElementsByClassName('icon featureSelectorIconSelected');
+  if (element[0]) element[0].className = 'icon featureSelectorIcon';
+  element = document.getElementsByClassName('icon levelSelectorIconSelected');
+  if (element[0]) element[0].className = 'icon levelsSelectorIcon';
   //When an overlay is toggled, set toggledOverlay to true
   overlayedToggled = true;
   //record new highlighting selection
@@ -2648,13 +2656,13 @@ function toggleVisibility() {
 function painterSelect(brushNumberValue) {
 
   //reset the functionality to default, then change as needed
-  var selectedElement = document.getElementsByClassName('painterIconSelected');
-  selectedElement[0].className = "painterIcon";
+  var selectedElement = document.getElementsByClassName('icon painterIconSelected');
+  selectedElement[0].className = "icon painterIcon";
   painterTool.hover = false;
 
   //if the brush is a normal cell paint
   if (brushNumberValue == 1) {
-    document.getElementById('cellPaint').className = 'painterIconSelected';
+    document.getElementById('cellPaint').className = 'icon painterIconSelected';
     if (painterTool.status == 2) refreshBoard();
     painterTool.status = 0;
   }
@@ -2665,7 +2673,7 @@ function painterSelect(brushNumberValue) {
     //painterTool.status 2 indicates grid drag activity
     painterTool.status = 1;
     //ready for double click
-    document.getElementById('gridPaint').className = "painterIconSelected";
+    document.getElementById('gridPaint').className = "icon painterIconSelected";
   } //end else/if group
 } //end painterSelect()
 
@@ -2786,7 +2794,7 @@ function addPlayerAndTransition() {
   if (currentPlayer < totalPlayersAllowed - 1) {
 
     document.getElementById("paintPlayer" + nextPlayer).className = "playerButton";
-    document.getElementById("player" + nextPlayer + "Image").className = "playerSelected";
+    document.getElementById("player" + nextPlayer + "Image").className = "icon playerSelected";
     // document.getElementById("player" + nextPlayer + "Image").className = "landSelectorIcon";
     document.getElementById("player" + nextPlayer + "Image").style.display = "inline-block";
 
@@ -2797,7 +2805,7 @@ function addPlayerAndTransition() {
   if (currentPlayer == totalPlayersAllowed - 1) {
 
     // document.getElementById("paintPlayer6").className = "playerButton";
-    document.getElementById("player6Image").className = "playerSelected";
+    document.getElementById("player6Image").className = "icon playerSelected";
     document.getElementById("player6Image").style.display = "inline-block";
     document.getElementById("playerAddButton").style.display = "none";
 
@@ -2824,7 +2832,7 @@ function switchPlayerTab(playerNumberToChangeTo) {
   document.getElementById("player" + currentPlayer + "Image").className = "playerNotSelected";
   //then toggle on the selected year
   var playerIdString = "player" + playerNumberToChangeTo + "Image";
-  document.getElementById(playerIdString).className = "playerSelected";
+  document.getElementById(playerIdString).className = "icon playerSelected";
 }
 
 
@@ -2846,19 +2854,19 @@ function transitionToPlayer(playerNumber) {
 
 //resetMultiplayer() undos the display-changes made while assigning multiplayers
 function resetMultiPlayer() {
+
+  for (var i = 1; i <= 6; i++) {
+    document.getElementById("player" + i + "Image").className = "icon playerNotSelected";
+    document.getElementById("player" + i + "Image").style.display = "none";
+    // document.getElementById("paintPlayer" + i).className = "playerButtonHidden";
+  }
+
   currentPlayer = 1;
   document.getElementById("player1Image").style.display = "inline-block";
-  document.getElementById("player1Image").className = "playerSelected";
+  document.getElementById("player1Image").className = "icon playerSelected";
   document.getElementById("playerAddButton").style.display = "inline-block";
   // document.getElementById("paintPlayer1").className = "playerButton";
 
-
-  for (var i = 2; i <= 6; i++) {
-    document.getElementById("player" + i + "Image").style.display = "none";
-    document.getElementById("player" + i + "Image").className = "playerNotSelected";
-    // document.getElementById("paintPlayer" + i).className = "playerButtonHidden";
-
-  }
   parent.loadLevel(-1);
 
 
@@ -2887,7 +2895,7 @@ function multiplayerMode() {
     document.getElementById("player1Image").style.display = "inline-block";
     // document.getElementById("paintPlayer1").className = "playerButton";
     document.getElementById("playerAddButton").style.display = "inline-block";
-    document.getElementById("player1Image").className = "playerSelected";
+    document.getElementById("player1Image").className = "icon playerSelected";
     document.getElementById("levelsButton").style.display = "none";
     document.getElementById("yearButton").style.display = "none";
     document.getElementById("playerResetImage").style.display = "inline-block";
