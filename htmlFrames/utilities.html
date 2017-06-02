@@ -1,14 +1,14 @@
 <!doctype html>
 
 <!--
-The utilites page is a catch-all for functions that will mostly be used by 
+The utilites page is a catch-all for functions that will mostly be used by
  teachers, professors, etc.
- 
+
 The utilities page is displayed as an iframe over the startup iframe with no background
   property set, making it appear as if it is a cohesive part of the program. Nevertheless,
-  changes can be made quite readily, and the code is much less cluttered with this 
+  changes can be made quite readily, and the code is much less cluttered with this
   separation of roles in place.
-  
+
 The page has three buttons on it. The levels button opens the level designer page in a new
   tab. The Multiplayer buttons allow for multi-maps to be created and to be put back
   together.
@@ -29,53 +29,74 @@ Cleaned and Prepared - August 2016
     <script src=".././lib/filesaver.min.js"></script>
     <!--external fonts-->
     <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
-    
+
     <!-- /INCLUDES -->
 
-    <!--additional styling-->   
+    <!--additional styling-->
     <style>
     body{
         overflow:hidden;
     }
     </style>
 
-</head>    
+</head>
 <body>
 
     <img onclick="parent.reset()" id="backButton" src="./imgs/back.png" alt="Go Back <--">
 
     <div id="utilitiesContentsHolder">
-        
-        <!---buttons for utilities, add new buttons here -->    
+
+        <!---buttons for utilities, add new buttons here -->
         <div id="levelDesignerButton" class="mainButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
         <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup();">Set-Up Multiplayer</div>
         <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
-        
+
         <!--container for Aggregate Tool, slides up and down by height changes-->
         <div id="utilitiesAggregateTools">
             <div class="uploadFile">
-                
+
                 <label for="file-upload">
                     <!--Technically not allowed, but seems to work across browsers-->
                     <!-- in future, div may need to be moved outside the label, cleverly-->
                     <div id="addFile" class="mainButton">Add a File</div>
                 </label>
-                <input id="file-upload" type="file" />
-                
+                <input id="file-upload" type="file" multiple="" onchange="makeFileList()"/>
             </div>
+            <ul id="fileList"><li>No Files Selected</li></ul>
             <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
             <div id="aggregateInfo" class="infoBar">Ready. Upload first file.</div>
         </div>
-        
+
     </div>
 <script>
 
-var numberOfTimesAggregated = 0; //used to keep track for info bar 
-bindAggregateFunctionToFileUpload();
+//testing
+// list all the files selected
+function makeFileList() {
+  var input = document.getElementById("file-upload");
+  var ul = document.getElementById("fileList");
+  while (ul.hasChildNodes()) {
+    ul.removeChild(ul.firstChild);
+  }
+  for (var i = 0; i < input.files.length; i++) {
+    var li = document.createElement("li");
+    li.innerHTML = input.files[i].name;
+    ul.appendChild(li);
+  }
+  if(!ul.hasChildNodes()) {
+    var li = document.createElement("li");
+    li.innerHTML = 'No Files Selected';
+    ul.appendChild(li);
+  }
+}
+
+
+var numberOfTimesAggregated = 0; //used to keep track for info bar
+// bindAggregateFunctionToFileUpload();
 
 //launch essentially sandbox with multiplayer tools
 function launchMultiplayerSetup() {
-   
+
    window.top.loadLevel(-1);
 
 }//end launchMultiplayerSetup
@@ -93,12 +114,16 @@ function bindAggregateFunctionToFileUpload() {
 
 //expand or collapse the div holding tools for mashing together separate maps
 function toggleAggregateOptions() {
-    //if the div is not expanded, then expand 
-    //else if expanded, then collapse it
+    //if the div is not expanded, then expand
+    //else if expanded, then collapse it (preferable using %, it relates to its layout)
     document.getElementById('utilitiesAggregateTools').style.height =
-        (document.getElementById('utilitiesAggregateTools').style.height != "300px") ?
-        document.getElementById('utilitiesAggregateTools').style.height = "300px" :
+        (document.getElementById('utilitiesAggregateTools').style.height != "18vw") ?
+        document.getElementById('utilitiesAggregateTools').style.height = "18vw" :
         document.getElementById('utilitiesAggregateTools').style.height = "0px";
+    // document.getElementById('utilitiesAggregateTools').style.height =
+    //     (document.getElementById('utilitiesAggregateTools').style.height != "300px") ?
+    //     document.getElementById('utilitiesAggregateTools').style.height = "300px" :
+    //     document.getElementById('utilitiesAggregateTools').style.height = "0px";
 }//end toggleAggregateOptions
 
 //assist in downloading the currently aggregated map
@@ -122,7 +147,7 @@ function updateInfo(time) {
         "Added 1. Now add remaining players." :
         "Added " + time + " files";
 }//end updateInfo
-</script>    
-    
-</body> 
+</script>
+
+</body>
 </html>

@@ -65,6 +65,7 @@
 }
 
 #backButton {
+  cursor: pointer;
   display: inline-block;
   left: 10%;
   top: 1%;
