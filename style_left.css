@@ -591,7 +591,24 @@ margin: 15px 0px 0px 0px;
   /* Safari */
   transition-duration: var(--transition-duration);
 }
-
+table, th, td {
+    border: 0.1vw solid black;
+    border-collapse: collapse;
+    color: white;
+    font-size: 6pt;
+}
+th, td {
+    padding: 0.6vw;
+    text-align: left;
+    color: white;
+    font-size: 6pt;
+}
+table #yieldGrainTable {
+    width: 100%;    
+    background-image: url('./imgs/consoleTexture.png');
+    color: white;
+    font-size: 6pt;
+}
 
 .yieldDetailsList{
     left: 14vw
