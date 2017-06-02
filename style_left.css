@@ -225,62 +225,45 @@
 
 /**inner elements of left console**/
 
-.icon {
+/* icons */
+.icon, .iconSelected {
   border-radius: 50%;
-  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   cursor: pointer;
   float: left;
   height: var(--selector-icon-length);
   width: var(--selector-icon-length);
 }
-
-.painterIcon, .painterIconSelected {
-  margin: 0.5vw 1vw;
+.icon{
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
 }
 
-.painterIconSelected {
-  box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
-}
-
-/*terrain selector*/
-
-.landSelectorIcon, .landSelectedIcon {
-  display: block;
-  margin: 0.5vw;
-  position: relative;
-  /*border-radius: 50%;*/
-  /*box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);*/
-  /*height: var(--selector-icon-length);*/
-  /*width: var(--selector-icon-length);*/
-}
-
-.landSelectorIcon:hover {
+.icon:hover {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
-.landSelectedIcon {
+.iconSelected {
   box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
 }
 
-.landSelectedIcon:hover {
+.iconSelected:hover {
   box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
 }
 
 
+.painterIcon {
+  margin: 0.5vw 1vw;
+}
+
+/*terrain selector*/
+
+.landSelectorIcon {
+  display: block;
+  margin: 0.5vw;
+  position: relative;
+}
+
+
 /* muti-player buttons */
-
-.playerReset {
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-}
-
-#playerReset .message {
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-}
-
 #message {
   color: white;
   font-family: var(--button-font-family);
@@ -300,20 +283,11 @@
   width: 100%;
 }
 
-.playerNotSelected, .playerSelected {
+.playerIcon {
   /* image inside playerButton div */
   margin: 0.5vw;
   position: relative;
 }
-
-.playerNotSelected:hover {
-  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
-}
-
-.playerSelected {
-  box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
-}
-
 
 /*precip selector*/
 
@@ -373,8 +347,6 @@ select {
 
 /** year buttons div**/
 .yearButton {
-  /*background-color: rgba(0, 0, 0, 0.7);*/
-  /*border-radius: 50%;*/
   height: var(--selector-icon-length);
   margin-left: 3vw;
   margin-top: 1.2vw;
@@ -464,21 +436,21 @@ select {
   white-space: nowrap;
 }
 
-.levelsSelectorIcon, .levelSelectorIconSelected {
+.levelsSelectorIcon {
   margin: 1vw 3vw 1.2vw;
 }
 
-.levelsSelectorIcon:hover {
+/*.levelsSelectorIcon:hover {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
-}
+}*/
 
-.levelSelectorIconSelected {
+/*.levelSelectorIconSelected {
   box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
 }
 
 .levelSelectorIconSelected:hover {
   box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
-}
+}*/
 
 
 /*physical features map selector*/
@@ -582,19 +554,19 @@ select {
   white-space: nowrap;
 }
 
-.yieldSelectorIcon, .yieldSelectorIconSelected{
- display: block;
+.yieldSelectorIcon{
+  display: block;
   margin: 0.8vw;
   position: relative;
 }
 
-.yieldSelectorIcon:hover {
+/*.yieldSelectorIcon:hover {
        box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
-}
+}*/
 
-.yieldSelectorIconSelected:hover{
+/*.yieldSelectorIconSelected:hover{
       box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
-}
+}*/
 
 .cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4, .soyBean1, .soyBean2, .soyBean3, .soyBean4, .fruit1, .fruit2, .fruit3, .fruit4,
 .cattle1, .cattle2, .cattle3, .cattle4, .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4, .grassHay1, .grassHay2, .grassHay3,.grassHay4,
@@ -723,21 +695,21 @@ select {
 
 #soilClassDetailsList {}
 
-.featureSelectorIcon, .featureSelectorIconSelected {
+.featureSelectorIcon {
   margin: 0.5vw 3vw;
 }
 
-.painterIcon:hover, .featureSelectorIcon:hover {
+/*.painterIcon:hover, .featureSelectorIcon:hover {
   box-shadow: 0px 0px 5px 5px rgba(200, 120, 18, 0.3), 0 17px 50px 0 rgba(227, 154, 18, 0.2);
-}
+}*/
 
-.featureSelectorIconSelected:hover, .painterIconSelected:hover {
+/*.featureSelectorIconSelected:hover, .painterIconSelected:hover {
   box-shadow: 0px 0px 25px 0px rgba(20, 80, 214, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
-}
+}*/
 
-.featureSelectorIconSelected {
+/*.featureSelectorIconSelected {
   box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
-}
+}*/
 
 .featuresText {
   color: #fff;

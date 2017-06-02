@@ -124,44 +124,51 @@
       <!-- Land type painter display -->
       <div id="painterTab" class="consoleTab">
         <div id=painterTab-leftcol>
-          <img id="paint1" class="icon landSelectedIcon" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);">
-          <img id="paint3" class="icon landSelectorIcon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);">
-          <img id="paint15" class="icon landSelectorIcon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);">
-          <img id="paint8" class="icon landSelectorIcon" src="./imgs/grassHay.png" onclick="changeSelectedPaintTo(8);">
-          <img id="paint6" class="icon landSelectorIcon" src="./imgs/permanentPasture.png" onclick="changeSelectedPaintTo(6);">
-          <img id="paint14" class="icon landSelectorIcon" src="./imgs/wetland.png" onclick="changeSelectedPaintTo(14);">
-          <img id="paint11" class="icon landSelectorIcon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);">
-          <img id="paint13" class="icon landSelectorIcon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);">
+          <img id="paint1" class="landSelectorIcon iconSelected" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);">
+          <img id="paint3" class="landSelectorIcon icon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);">
+          <img id="paint15" class="landSelectorIcon icon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);">
+          <img id="paint8" class="landSelectorIcon icon" src="./imgs/grassHay.png" onclick="changeSelectedPaintTo(8);">
+          <img id="paint6" class="landSelectorIcon icon" src="./imgs/permanentPasture.png" onclick="changeSelectedPaintTo(6);">
+          <img id="paint14" class="landSelectorIcon icon" src="./imgs/wetland.png" onclick="changeSelectedPaintTo(14);">
+          <img id="paint11" class="landSelectorIcon icon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);">
+          <img id="paint13" class="landSelectorIcon icon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);">
 
           <!-- multiplayer mode  -->
-          <div id="paintPlayer1" onclick="changeSelectedPaintTo(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player1Image" style="display:inline-block;" class="icon playerSelected" src="./imgs/player1a.png"></div>
-          <div id="paintPlayer3" onclick="changeSelectedPaintTo(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player3Image" style="display:none;" class="" src="./imgs/player3a.png"></div>
-          <div id="paintPlayer5" onclick="changeSelectedPaintTo(5);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player5Image" style="display:none;" class="" src="./imgs/player5a.png"></div>
+          <div id="paintPlayer1" onclick="changeSelectedPaintTo(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+            <img id="player1Image" style="display:inline-block;" class="playerIcon iconSelected" src="./imgs/player1a.png"></div>
+          <div id="paintPlayer3" onclick="changeSelectedPaintTo(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+            <img id="player3Image" style="display:none;" src="./imgs/player3a.png"></div>
+          <div id="paintPlayer5" onclick="changeSelectedPaintTo(5);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+            <img id="player5Image" style="display:none;" src="./imgs/player5a.png"></div>
 
-          <div id="playerResetButton" class="playerReset" onclick="resetMultiPlayer();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+          <div id="playerResetButton" onclick="resetMultiPlayer();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
             <div id="message" style="display: none">
               <p>RESET</p>
             </div>
-            <img id="playerResetImage" style="display:inline-block;" class="playerReset playerButton playerNotSelected" src="./imgs/close_black.png">
+            <img id="playerResetImage" style="display:inline-block;" class="playerIcon icon" src="./imgs/close_black.png">
           </div>
 
         </div>
 
         <div id=painterTab-rightcol>
-          <img id="paint2" class="icon landSelectorIcon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
-          <img id="paint4" class="icon landSelectorIcon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
-          <img id="paint5" class="icon landSelectorIcon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
-          <img id="paint12" class="icon landSelectorIcon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);">
-          <img id="paint7" class="icon landSelectorIcon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);">
-          <img id="paint9" class="icon landSelectorIcon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);">
-          <img id="paint10" class="icon landSelectorIcon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);">
+          <img id="paint2" class="landSelectorIcon icon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
+          <img id="paint4" class="landSelectorIcon icon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
+          <img id="paint5" class="landSelectorIcon icon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
+          <img id="paint12" class="landSelectorIcon icon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);">
+          <img id="paint7" class="landSelectorIcon icon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);">
+          <img id="paint9" class="landSelectorIcon icon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);">
+          <img id="paint10" class="landSelectorIcon icon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);">
 
           <!-- multiplayer mode  -->
-          <div id="paintPlayer2" onclick="changeSelectedPaintTo(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player2Image" style="display:none;" class="playertNotSelected" src="./imgs/player2a.png"></div>
-          <div id="paintPlayer4" onclick="changeSelectedPaintTo(4);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player4Image" style="display:none;" class="" src="./imgs/player4a.png"></div>
-          <div id="paintPlayer6" onclick="changeSelectedPaintTo(6);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="player6Image" style="display:none;" class="" src="./imgs/player6a.png"></div>
+          <div id="paintPlayer2" onclick="changeSelectedPaintTo(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+            <img id="player2Image" style="display:none;" src="./imgs/player2a.png"></div>
+          <div id="paintPlayer4" onclick="changeSelectedPaintTo(4);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+            <img id="player4Image" style="display:none;" src="./imgs/player4a.png"></div>
+          <div id="paintPlayer6" onclick="changeSelectedPaintTo(6);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+            <img id="player6Image" style="display:none;" src="./imgs/player6a.png"></div>
 
-          <div id="playerAddButton" onclick="addPlayerAndTransition(); " onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="playerAddImage" style="display:inline-block;" class="icon playerNotSelected" src="./imgs/addYear.png"></div>
+          <div id="playerAddButton" onclick="addPlayerAndTransition(); " onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+            <img id="playerAddImage" style="display:inline-block;" class="playerIcon icon" src="./imgs/addYear.png"></div>
 
         </div>
 
@@ -284,13 +291,13 @@
 
         <!-- "Letter N Ig Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
         <p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p>
-        <img id="nitrateIcon" class="icon levelsSelectorIcon" src="./imgs/N.png" onclick="displayLevels('nitrate');">
+        <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/N.png" onclick="displayLevels('nitrate');">
         <!-- "Letter E gold Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
         <p class="levelsText">Gross Erosion</p>
-        <img id="erosionIcon" class="icon levelsSelectorIcon" src="./imgs/E.png" onclick="displayLevels('erosion');">
+        <img id="erosionIcon" class="levelsSelectorIcon icon" src="./imgs/E.png" onclick="displayLevels('erosion');">
         <!-- "Letter P blue Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
         <p class="levelsText">Phosphorus Index Risk Assessment</p>
-        <img id="phoshorusIcon" class="icon levelsSelectorIcon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
+        <img id="phoshorusIcon" class="levelsSelectorIcon icon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
 
       </div>
 
@@ -376,11 +383,11 @@
             <p class="levelsTextDetails">Nodaway 220</p>
           </div>
         </div>
-        <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="icon featureSelectorIcon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
-        <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="icon featureSelectorIcon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetland');">
-        <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="icon featureSelectorIcon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('subwatershed');">
-        <p class="featuresText">Drainage Class</p><img id="drainageClass" class="icon featureSelectorIcon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
-        <p class="featuresText">Soil Class</p><img id="soilClass" class="icon featureSelectorIcon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
+        <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon icon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
+        <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetland');">
+        <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('subwatershed');">
+        <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon icon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
+        <p class="featuresText">Soil Class</p><img id="soilClass" class="featureSelectorIcon icon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
       </div>
 
       <!--Yield Productivity Overlay Maps -->
@@ -512,15 +519,15 @@
           </div>
         </div>
 
-        <p class="featuresText"></p><img id="cornClass" class="icon yieldSelectorIcon" src="./imgs/cornGrainIcon.png" title="Corn Grain" onclick="displayLevels('cornGrain');">
-        <p class="featuresText"></p><img id="soyClass" class="icon yieldSelectorIcon" src="./imgs/soybeanIcon.png" title="Soybean" onclick="displayLevels('soy');">
-        <p class="featuresText"></p><img id="fruitClass" class="icon yieldSelectorIcon" src="./imgs/fruitIcon.png" title="Mixed Fruits and Vegetables" onclick="displayLevels('fruit');">
-        <p class="featuresText"></p><img id="cattleClass" class="icon yieldSelectorIcon" src="./imgs/cowIcon.png" title="Cattle" onclick="displayLevels('cattle');">
-        <p class="featuresText"></p><img id="alfalfaClass" class="icon yieldSelectorIcon" src="./imgs/alfalfaIcon.png" title="Alfalfa" onclick="displayLevels('alfalfa');">
-        <p class="featuresText"></p><img id="grassHayClass" class="icon yieldSelectorIcon" src="./imgs/grassHayIcon.png" title="GrassHay" onclick="displayLevels('grassHay');">
-        <p class="featuresText"></p><img id="switchGrassClass" class="icon yieldSelectorIcon" src="./imgs/switchGrassIcon.png" title="Switch Grass" onclick="displayLevels('switchGrass');">
-        <p class="featuresText"></p><img id="woodClass" class="icon yieldSelectorIcon" src="./imgs/woodIcon.png" title="Wood" onclick="displayLevels('wood');">
-        <p class="featuresText"></p><img id="shortClass" class="icon yieldSelectorIcon" src="./imgs/woodyBiomassIcon.png" title="Woody Biomass" onclick="displayLevels('short');">
+        <p class="featuresText"></p><img id="cornClass" class="yieldSelectorIcon icon" src="./imgs/cornGrainIcon.png" title="Corn Grain" onclick="displayLevels('cornGrain');">
+        <p class="featuresText"></p><img id="soyClass" class="yieldSelectorIcon icon" src="./imgs/soybeanIcon.png" title="Soybean" onclick="displayLevels('soy');">
+        <p class="featuresText"></p><img id="fruitClass" class="yieldSelectorIcon icon" src="./imgs/fruitIcon.png" title="Mixed Fruits and Vegetables" onclick="displayLevels('fruit');">
+        <p class="featuresText"></p><img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" title="Cattle" onclick="displayLevels('cattle');">
+        <p class="featuresText"></p><img id="alfalfaClass" class="yieldSelectorIcon icon" src="./imgs/alfalfaIcon.png" title="Alfalfa" onclick="displayLevels('alfalfa');">
+        <p class="featuresText"></p><img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" title="GrassHay" onclick="displayLevels('grassHay');">
+        <p class="featuresText"></p><img id="switchGrassClass" class="yieldSelectorIcon icon" src="./imgs/switchGrassIcon.png" title="Switch Grass" onclick="displayLevels('switchGrass');">
+        <p class="featuresText"></p><img id="woodClass" class="yieldSelectorIcon icon" src="./imgs/woodIcon.png" title="Wood" onclick="displayLevels('wood');">
+        <p class="featuresText"></p><img id="shortClass" class="yieldSelectorIcon icon" src="./imgs/woodyBiomassIcon.png" title="Woody Biomass" onclick="displayLevels('short');">
 
       </div>
       <!-- year display -->
@@ -539,8 +546,8 @@
     <!-- END left console, there is a lot happening there -->
 
     <div id="settingsTab">
-      <img id="cellPaint" class="icon painterIconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
-      <img id="gridPaint" class="icon painterIcon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
+      <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
+      <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
     </div>
 
     <!-- **BEGIN Right Side Component** -->

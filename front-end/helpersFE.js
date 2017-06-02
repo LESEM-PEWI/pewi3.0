@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-06T17:04:42-05:00
+ * @Last modified time: 2017-06-06T17:06:07-05:00
  */
 
 
@@ -920,11 +920,11 @@ function changeSelectedPaintTo(newPaintValue) {
 
     //change current painter to regular
     var painterElementId = "paint" + painter;
-    document.getElementById(painterElementId).className = "icon landSelectorIcon";
+    document.getElementById(painterElementId).className = "landSelectorIcon icon";
 
     //change new paiter to current
     painterElementId = "paint" + newPaintValue;
-    document.getElementById(painterElementId).className = "icon landSelectedIcon";
+    document.getElementById(painterElementId).className = "landSelectorIcon iconSelected";
     painter = newPaintValue;
 
     // if it's grid painting mode and the user click to switch painter, erase the first seleted tile
@@ -937,11 +937,11 @@ function changeSelectedPaintTo(newPaintValue) {
   } else {
     //reset the playerSelected back to a normal playerNotSelected
     var painterElementId = "player" + painter + "Image";
-    document.getElementById(painterElementId).className = "icon playerNotSelected";
+    document.getElementById(painterElementId).className = "playerIcon icon";
 
     //change new painter to the current corresponding paintPlayer
     painterElementId = "player" + newPaintValue + "Image";
-    document.getElementById(painterElementId).className = "icon playerSelected";
+    document.getElementById(painterElementId).className = "playerIcon iconSelected";
 
     //update the current painter to the value
     painter = newPaintValue;
@@ -1085,86 +1085,86 @@ function showLevelDetails(value) {
   //show nitrate legend
   if (value == 1) {
     document.getElementById("nitrateDetailsList").className = "levelDetailsList";
-    document.getElementById('nitrateIcon').className = "icon levelSelectorIconSelected";
+    document.getElementById('nitrateIcon').className = "levelsSelectorIcon iconSelected";
   }
 
   //show erosion legend
   else if (value == 2) {
     document.getElementById("erosionDetailsList").className = "levelDetailsList";
-    document.getElementById('erosionIcon').className = "icon levelSelectorIconSelected";
+    document.getElementById('erosionIcon').className = "levelsSelectorIcon iconSelected";
   }
 
   //show phosphorus legend
   else if (value == 3) {
     document.getElementById("phosphorusDetailsList").className = "levelDetailsList";
-    document.getElementById('phoshorusIcon').className = "icon levelSelectorIconSelected";
+    document.getElementById('phoshorusIcon').className = "levelsSelectorIcon iconSelected";
   }
 
   //show flood frequency legend
   else if (value == 4) {
-    document.getElementById('floodFrequency').className = "icon featureSelectorIconSelected";
+    document.getElementById('floodFrequency').className = "featureSelectorIcon iconSelected";
     document.getElementById("floodFrequencyDetailsList").className = "physicalDetailsList";
   }
 
   //show drainage class legend
   else if (value == 5) {
-    document.getElementById('drainageClass').className = "icon featureSelectorIconSelected";
+    document.getElementById('drainageClass').className = "featureSelectorIcon iconSelected";
     document.getElementById("drainageClassDetailsList").className = "physicalDetailsList";
   }
 
   //show strategic wetlands legend
   else if (value == 6) {
-    document.getElementById('strategicWetlands').className = "icon featureSelectorIconSelected";
+    document.getElementById('strategicWetlands').className = "featureSelectorIcon iconSelected";
     document.getElementById("wetlandClassDetailsList").className = "physicalDetailsList";
   }
 
   //show subwatershed legend
   else if (value == 7) {
-    document.getElementById('subwatershedBoundaries').className = "icon featureSelectorIconSelected";
+    document.getElementById('subwatershedBoundaries').className = "featureSelectorIcon iconSelected";
     document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
   } //end else/if group
 
   //show soil class legend
   else if (value == 8) {
-    document.getElementById('soilClass').className = "icon featureSelectorIconSelected";
+    document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
     document.getElementById('soilClassDetailsList').className = "physicalDetailsList";
   }
   //Corn class legend
     else if(value == 9){
         document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
-        document.getElementById('cornClass').className = "icon yieldSelectorIconSelected";
+        document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 10){
         document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
-        document.getElementById('soyClass').className = "icon yieldSelectorIconSelected";
+        document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 11){
         document.getElementById('fruitDetailsList').className = "yieldDetailsList";
-        document.getElementById('fruitClass').className = "icon yieldSelectorIconSelected";
+        document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 12){
         document.getElementById('cattleDetailsList').className = "yieldDetailsList";
-        document.getElementById('cattleClass').className = "icon yieldSelectorIconSelected";
+        document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 13){
         document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
-        document.getElementById('alfalfaClass').className = "icon yieldSelectorIconSelected";
+        document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 14){
         document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
-        document.getElementById('grassHayClass').className = "icon yieldSelectorIconSelected";
+        document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 15){
         document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
-        document.getElementById('switchGrassClass').className = "icon yieldSelectorIconSelected";
+        document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 16){
         document.getElementById('woodDetailsList').className = "yieldDetailsList";
-        document.getElementById('woodClass').className = "icon yieldSelectorIconSelected";
+        document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 17){
         document.getElementById('shortDetailsList').className = "yieldDetailsList";
-        document.getElementById('shortClass').className = "icon yieldSelectorIconSelected";
+        document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
     }
 
   //hide ecosystem indicator legends
@@ -1173,9 +1173,9 @@ function showLevelDetails(value) {
     if (element.length > 0) {
       element[0].className = 'levelDetailsListRolled';
     }
-    element = document.getElementsByClassName('icon levelSelectorIconSelected');
+    element = document.getElementsByClassName('levelsSelectorIcon iconSelected');
     if (element.length > 0) {
-      element[0].className = 'icon levelsSelectorIcon';
+      element[0].className = 'levelsSelectorIcon icon';
     }
   }
 
@@ -1185,19 +1185,20 @@ function showLevelDetails(value) {
     if (element.length > 0) {
       element[0].className = 'physicalDetailsListRolled';
     }
-    element = document.getElementsByClassName('icon featureSelectorIconSelected');
+    element = document.getElementsByClassName('featureSelectorIcon iconSelected');
     if (element.length > 0) {
-      element[0].className = 'icon featureSelectorIcon';
+      element[0].className = 'featureSelectorIcon icon';
     }
   } //end else/if group
   else if(value < -8){
-    var element = document.getElementsByClassName('yieldDetailsList');
-    if(element.length > 0) {
-        element[0].className = 'yieldDetailsListRolled';
-    }
-    element = document.getElementsByClassName('icon yieldSelectorIconSelected');
-    if(element.length > 0){
-        element[0].ckassName = 'icon yieldSelectorIcon';
+        var element = document.getElementsByClassName('yieldDetailsList');
+        if(element.length > 0) {
+            element[0].className = 'yieldDetailsListRolled';
+        }
+        element = document.getElementsByClassName('yieldSelectorIcon iconSelected');
+        if(element.length > 0){
+            element[0].className = 'yieldSelectorIcon icon';
+        }
     }
   }
 
@@ -1325,10 +1326,10 @@ function displayLevels(overlayHighlightType) {
   var selectionHighlightNumber = 0;
 
   //update console tabs
-  var element = document.getElementsByClassName('icon featureSelectorIconSelected');
-  if (element[0]) element[0].className = 'icon featureSelectorIcon';
-  element = document.getElementsByClassName('icon levelSelectorIconSelected');
-  if (element[0]) element[0].className = 'icon levelsSelectorIcon';
+  var element = document.getElementsByClassName('featureSelectorIcon iconSelected');
+  if (element[0]) element[0].className = 'featureSelectorIcon icon';
+  element = document.getElementsByClassName('levelsSelectorIcon iconSelected');
+  if (element[0]) element[0].className = 'levelsSelectorIcon icon';
   //When an overlay is toggled, set toggledOverlay to true
   overlayedToggled = true;
   //record new highlighting selection
@@ -2656,13 +2657,13 @@ function toggleVisibility() {
 function painterSelect(brushNumberValue) {
 
   //reset the functionality to default, then change as needed
-  var selectedElement = document.getElementsByClassName('icon painterIconSelected');
-  selectedElement[0].className = "icon painterIcon";
+  var selectedElement = document.getElementsByClassName('painterIcon iconSelected');
+  selectedElement[0].className = "painterIcon icon";
   painterTool.hover = false;
 
   //if the brush is a normal cell paint
   if (brushNumberValue == 1) {
-    document.getElementById('cellPaint').className = 'icon painterIconSelected';
+    document.getElementById('cellPaint').className = 'painterIcon iconSelected';
     if (painterTool.status == 2) refreshBoard();
     painterTool.status = 0;
   }
@@ -2673,7 +2674,7 @@ function painterSelect(brushNumberValue) {
     //painterTool.status 2 indicates grid drag activity
     painterTool.status = 1;
     //ready for double click
-    document.getElementById('gridPaint').className = "icon painterIconSelected";
+    document.getElementById('gridPaint').className = "painterIcon iconSelected";
   } //end else/if group
 } //end painterSelect()
 
@@ -2794,7 +2795,7 @@ function addPlayerAndTransition() {
   if (currentPlayer < totalPlayersAllowed - 1) {
 
     document.getElementById("paintPlayer" + nextPlayer).className = "playerButton";
-    document.getElementById("player" + nextPlayer + "Image").className = "icon playerSelected";
+    document.getElementById("player" + nextPlayer + "Image").className = "playerIcon iconSelected";
     // document.getElementById("player" + nextPlayer + "Image").className = "landSelectorIcon";
     document.getElementById("player" + nextPlayer + "Image").style.display = "inline-block";
 
@@ -2805,7 +2806,7 @@ function addPlayerAndTransition() {
   if (currentPlayer == totalPlayersAllowed - 1) {
 
     // document.getElementById("paintPlayer6").className = "playerButton";
-    document.getElementById("player6Image").className = "icon playerSelected";
+    document.getElementById("player6Image").className = "playerIcon iconSelected";
     document.getElementById("player6Image").style.display = "inline-block";
     document.getElementById("playerAddButton").style.display = "none";
 
@@ -2829,10 +2830,10 @@ function switchPlayerTab(playerNumberToChangeTo) {
   //var elements = document.getElementsByClassName("playerSelected");
 
   //elements[0].className = "playerNotSelected";
-  document.getElementById("player" + currentPlayer + "Image").className = "playerNotSelected";
+  document.getElementById("player" + currentPlayer + "Image").className = "playerIcon icon";
   //then toggle on the selected year
   var playerIdString = "player" + playerNumberToChangeTo + "Image";
-  document.getElementById(playerIdString).className = "icon playerSelected";
+  document.getElementById(playerIdString).className = "playerIcon iconSelected";
 }
 
 
@@ -2856,14 +2857,14 @@ function transitionToPlayer(playerNumber) {
 function resetMultiPlayer() {
 
   for (var i = 1; i <= 6; i++) {
-    document.getElementById("player" + i + "Image").className = "icon playerNotSelected";
+    document.getElementById("player" + i + "Image").className = "playerIcon icon";
     document.getElementById("player" + i + "Image").style.display = "none";
     // document.getElementById("paintPlayer" + i).className = "playerButtonHidden";
   }
 
   currentPlayer = 1;
   document.getElementById("player1Image").style.display = "inline-block";
-  document.getElementById("player1Image").className = "icon playerSelected";
+  document.getElementById("player1Image").className = "playerIcon iconSelected";
   document.getElementById("playerAddButton").style.display = "inline-block";
   // document.getElementById("paintPlayer1").className = "playerButton";
 
@@ -2895,7 +2896,7 @@ function multiplayerMode() {
     document.getElementById("player1Image").style.display = "inline-block";
     // document.getElementById("paintPlayer1").className = "playerButton";
     document.getElementById("playerAddButton").style.display = "inline-block";
-    document.getElementById("player1Image").className = "icon playerSelected";
+    document.getElementById("player1Image").className = "playerIcon iconSelected";
     document.getElementById("levelsButton").style.display = "none";
     document.getElementById("yearButton").style.display = "none";
     document.getElementById("playerResetImage").style.display = "inline-block";
