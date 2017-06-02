@@ -29,7 +29,7 @@ font-family: 'Amatic SC', cursive;
 **/
 
 
-/* css variable declaration */
+/* css global variable declaration */
 
 :root {
   --button-font-family: 'Amatic SC', cursive;
