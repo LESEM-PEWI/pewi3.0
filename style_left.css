@@ -150,7 +150,9 @@
 #featuresButton {
   top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
 }
-
+#yieldButton{
+  top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
+}
 
 /**left console content container**/
 
@@ -575,6 +577,178 @@ select {
   left: -1000px;
 }
 
+.yieldDetailsList, .yieldDetailsListRolled{
+margin: 15px 0px 0px 0px;
+  position: absolute;
+  background-color: black;
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 12px;
+  /*top: 21.4vw;*/
+  top: 1.4vw;
+  width: 15vw;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+
+.yieldDetailsList{
+    left: 14vw
+}
+.yieldDetailsListRolled{
+    left:-1000px;
+}
+.yieldtext {
+  color: #fff;
+  margin-left: 1.8vw;
+  white-space: nowrap;
+}
+
+.yieldSelectorIcon, .yieldSelectorIconSelected{
+ display: block;
+  height: 2.5vw;
+  width: 2.5vw;
+  position: relative;
+  border-radius: 50%;
+  margin: 0.8vw;
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+  float: left;
+
+}
+
+.yieldSelectorIcon:hover {
+       box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+
+}
+
+.yieldSelectorIconSelected:hover{
+      box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
+}
+
+.cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4, .soyBean1, .soyBean2, .soyBean3, .soyBean4, .fruit1, .fruit2, .fruit3, .fruit4, 
+.cattle1, .cattle2, .cattle3, .cattle4, .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4, .grassHay1, .grassHay2, .grassHay3,.grassHay4,
+.switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4, .wood1, .wood2, .wood3, .wood4, .short1{
+   margin: 5px 0px 10px 10px;
+  height: var(--level-indicator-length);
+  width: var(--level-indicator-length);
+}
+
+.cornGrain1{
+    background-color: #ffffc9;
+}
+.cornGrain2{
+    background-color: #e3c972;
+}
+.cornGrain3{
+    background-color: #e6bb00;
+}
+.cornGrain4{
+    background-color: #bc892f;
+}
+
+
+.soyBean1{
+    background-color: #ffffff;
+}
+.soyBean2{
+    background-color: #ccffcc;
+}
+.soyBean3{
+    background-color: #66ff66;
+}
+.soyBean4{
+    background-color: #00cc00;
+}
+
+.fruit1{
+    background-color: #ff4000;
+}
+.fruit2{
+    background-color: #e6bb00;
+}
+.fruit3{
+    background-color: #66ff66;
+}
+.fruit4{
+    background-color: #aa4497;
+}
+.cattle1{
+    background-color: #ffffff;
+}
+.cattle2{
+    background-color: #CECACA;
+}
+.cattle3{
+    background-color: #5e6e71;
+}
+.cattle4{
+    background-color: #000000;
+}
+
+.alfalfa1{
+    background-color: #cc6578;
+}
+.alfalfa2{
+    background-color: #aa4497;
+}
+.alfalfa3{
+    background-color: #8B008B;
+}
+.alfalfa4{
+    background-color: #862254;
+}
+
+.grassHay1{
+    background-color: #d9ff66;
+}
+.grassHay2{
+    background-color: #66ff66;
+}
+.grassHay3{
+    background-color: #00ff00;
+}
+.grassHay4{
+    background-color: #187336;
+}
+.switchGrass1{
+    background-color: #66ff66;
+}
+.switchGrass2{
+    background-color: #33cc33;
+}
+.switchGrass3{
+    background-color: #1f7a1f;
+}
+.switchGrass4{
+    background-color: #145214;
+}
+.wood1{
+    background-color: #f2e6d9;
+}
+.wood2{
+    background-color: #d9b38c;
+}
+.wood3{
+    background-color: #ac7339;
+}
+.wood4{
+    background-color: #734d26;
+}
+.short1{
+    background-color: #734D26;
+}
+#shortDetailsList{
+    width: 220px;
+}
+#cornGrainDetailsList{}
+#soyBeanDetailsList{}
+#fruitDetailsList{}
+#cattleDetailsList{}
+#alfalfaDetailsList{}
+#grassHayDetailsList{}
+#switchGrassDetailsList{}
+#woodDetailsList{}
 #drainageClassDetailsList {}
 
 #soilClassDetailsList {}
@@ -684,6 +858,9 @@ select {
   #featuresButton {
     top: 164px;
   }
+  #yieldButton{
+    top: 182px;
+  }
   #precipTitle, #yearTitle {
     font-size: 6px;
     height: 8.4px;
@@ -704,7 +881,7 @@ select {
     margin-left: 17px;
     margin-top: 10px;
   }
-  .landSelectorIcon, .landSelectedIcon, .yearSelected, .yearNotSelected, .featureSelectorIcon, .featureSelectorIconSelected, .levelsSelectorIcon, .levelSelectorIconSelected, .painterIcon, .painterIconSelected, .playerNotSelected, .playerSelected {
+  .landSelectorIcon, .landSelectedIcon, .yearSelected, .yearNotSelected, .featureSelectorIcon, .featureSelectorIconSelected, .levelsSelectorIcon, .levelSelectorIconSelected, .painterIcon, .painterIconSelected, .playerNotSelected, .playerSelected, .yieldSelectorIcon, .yieldSelectedIcon {
     height: 15px;
     width: 15px;
   }
@@ -733,7 +910,7 @@ select {
   .physicalDetailsList {
     left: 78px;
   }
-  .physicalDetailsList, .physicalDetailsListRolled {
+  .physicalDetailsList, .physicalDetailsListRolled{
     top: 8px;
     width: 89px;
   }
@@ -745,5 +922,18 @@ select {
     height: 6px;
     /*margin: ;*/
     width: 6px;
+  }
+  .cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4, .soyBean1, .soyBean2, .soyBean3, .soyBean4, .fruit1, .fruit2, .fruit3, .fruit4, 
+.cattle1, .cattle2, .cattle3, .cattle4, .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4, .grassHay1, .grassHay2, .grassHay3,.grassHay4,
+.switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4, .wood1, .wood2, .wood3, .wood4, .short1{
+  height: 6px;
+  width: 6px;
+}
+  .yieldDetailsList, .yieldDetailsListRolled{
+    top: 8px;
+    width: 89px;
+  }
+  .yieldDetailsList{
+    left: 78px;
   }
 }
