@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-06-05T01:50:27-05:00
+ * @Last modified time: 2017-06-05T02:04:41-05:00
  */
 
 /* css global variable declaration */
@@ -42,12 +42,10 @@
   transition-duration: var(--transition-duration);
   top: 7.7vw;
   width: 8.6vw;
-  /*border: none;*/
 }
 
 #indexmenu:hover {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
-  /*box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);*/
 }
 
 /* left console clickable buttons */
@@ -63,10 +61,6 @@
   /*transition-duration: var(--transition-duration);*/
   /* Safari */
   /*-webkit-transition-duration: var(--transition-duration);*/
-  /*transition-property: none;*/
-  /*border-radius: 0px;*/
-  /*border-right: 0px solid #F0A61D;*/
-  /*border-top-right-radius: 0px;*/
 }
 .consoleButton:hover {
   box-shadow: 8px 0px 10px -4px rgba(240, 166, 29, 0.8);
@@ -165,7 +159,6 @@
   /* Safari */
   transition-duration: var(--transition-duration);
   width: var(--left-console-width);
-  /*border-top-right-radius: 0px;*/
 }
 /**left console content container**/
 /* needed for sliding  */
@@ -182,20 +175,10 @@
   height: 100%;
   padding: 3%;
   width: 100%;
-  /*left: 0px;*/
-  /*padding: 4px;*/
 }
 
 /*terrain selector*/
 #painterTab {
-  /*height: 100%;*/
-  /*display: inline-block;*/
-  /*-moz-column-count: 2;*/
-  /*-webkit-column-count: 2;*/
-  /*column-count: 2;*/
-  /*-moz-column-gap: 1em;*/
-  /*-webkit-column-gap: 1em;*/
-  /*column-gap: 1em;*/
 }
 
 #painterTab-leftcol {
@@ -242,8 +225,6 @@
 /*terrain selector*/
 .landSelectorIcon {
   margin: 0.5vw;
-  /*position: relative;*/
-  /*display: block;*/
 }
 
 /* muti-player buttons */
@@ -293,10 +274,7 @@
 /* end multiplayerTab section */
 
 /* precipTab section */
-#precipTab {
-  /*color: white;
-  font-size: var(--font-size);*/
-}
+#precipTab {}
 
 #precipTitle, #yearTitle, .levelsText {
   color: #fff;
@@ -315,15 +293,9 @@
   -moz-border-radius: 4px;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   color: #fff;
-  /*display: block;*/
-  /*outline: none;*/
   margin: 0.5vw;
   padding: 0.2vw;
   text-align: center;
-  /*cursor: pointer;*/
-  /*height: 4vw;*/
-  /*width: 7.5vw;*/
-  /*border: none;*/
 }
 
 #year0PrecipContainer {
@@ -333,8 +305,6 @@
 select {
   font-size: var(--font-size);
   margin: 5%;
-  /*font-size: 14px;*/
-  /*margin: 5px;*/
 }
 
 .year-precip-select {
@@ -367,13 +337,6 @@ option {
 .yearNotSelected:hover {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
-
-/*#yearPlusButton {
-  position: absolute;
-  top: 70px;
-}*/
-
-
 
 .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5,
 .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone,
@@ -425,6 +388,7 @@ option {
   transition-duration: var(--transition-duration);
 }
 
+/* detail lists */
 .DetailsList {
   left: 14vw;
 }
@@ -437,63 +401,11 @@ option {
   width: 8.5vw;
 }
 
-.levelDetailsList, .levelDetailsListRolled {
-  /*background-color: black;*/
-  /*background-image: url('./imgs/consoleTexture.png');*/
-  /*background-repeat: repeat;*/
-  /*border-radius: 12px;*/
-  /*margin: 15px 0px 0px 0px;*/
-  /*position: absolute;*/
-  /*top: 1.4vw;*/
-  /*width: 8.5vw;*/
-  /*-webkit-transition-duration: var(--transition-duration);*/
-  /* Safari */
-  /*transition-duration: var(--transition-duration);*/
-}
-
-.levelDetailsList {
-  /*left: 14vw;*/
-}
-
-.levelDetailsListRolled {
-  /*left: -1000px;*/
-}
-
-/*.levelsText {
-  color: #fff;
-  font-size: var(--font-size);
-  font-weight: var(--title-font-weight);
-  margin-top: 0.5vw;
-  text-align: center;
-}*/
-
 .levelsTextDetails {
   color: #fff;
   margin-left: 1.8vw;
   white-space: nowrap;
 }
-
-
-/*.levelsSelectorIcon:hover {
-  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
-}*/
-
-/*.levelSelectorIconSelected {
-  box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
-}
-
-.levelSelectorIconSelected:hover {
-  box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
-}*/
-
-
-
-/*.floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone, .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8, .soilColor {
-  margin: 5px 0px 10px 10px;
-  height: var(--level-indicator-length);
-  width: var(--level-indicator-length);
-}*/
-
 .floodColor1 {
   background-color: #ffffc9;
 }
@@ -542,75 +454,15 @@ option {
   width: 15vw;
 }
 
-/* detail lists */
-.physicalDetailsList, .physicalDetailsListRolled {
-  /*background-color: black;*/
-  /*background-image: url('./imgs/consoleTexture.png');*/
-  /*background-repeat: repeat;*/
-  /*border-radius: 12px;*/
-  /*margin: 15px 0px 0px 0px;*/
-  /*position: absolute;*/
-  /*top: 1.4vw;*/
-  /*width: 15vw;*/
-  /*-webkit-transition-duration: var(--transition-duration);*/
-  /* Safari */
-  /*transition-duration: var(--transition-duration);*/
-}
-
-.physicalDetailsList {
-  /*left: 14vw;*/
-}
-
-.physicalDetailsListRolled {
-  /*left: -1000px;*/
-}
 
 .yieldDetailsList {
   width: 15vw;
-}
-
-.yieldDetailsList, .yieldDetailsListRolled{
-  /*background-color: black;*/
-  /*background-image: url('./imgs/consoleTexture.png');*/
-  /*background-repeat: repeat;*/
-  /*border-radius: 12px;*/
-  /*margin: 15px 0px 0px 0px;*/
-  /*position: absolute;*/
-  /*top: 1.4vw;*/
-  /*width: 15vw;*/
-  /*-webkit-transition-duration: var(--transition-duration);*/
-  /* Safari */
-  /*transition-duration: var(--transition-duration);*/
-}
-
-.yieldDetailsList{
-    /*left: 14vw*/
-}
-.yieldDetailsListRolled{
-    /*left:-1000px;*/
 }
 .yieldtext {
   color: #fff;
   margin-left: 1.8vw;
   white-space: nowrap;
 }
-
-
-/*.yieldSelectorIcon:hover {
-       box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
-}*/
-
-/*.yieldSelectorIconSelected:hover{
-      box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30,90,224,0.6);
-}*/
-
-/*.cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4, .soyBean1, .soyBean2, .soyBean3, .soyBean4, .fruit1, .fruit2, .fruit3, .fruit4,
-.cattle1, .cattle2, .cattle3, .cattle4, .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4, .grassHay1, .grassHay2, .grassHay3,.grassHay4,
-.switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4, .wood1, .wood2, .wood3, .wood4, .short1{
-   margin: 5px 0px 10px 10px;
-  height: var(--level-indicator-length);
-  width: var(--level-indicator-length);
-}*/
 
 .cornGrain1{
     background-color: #ffffc9;
@@ -728,25 +580,11 @@ option {
 #switchGrassDetailsList{}
 #woodDetailsList{}
 #drainageClassDetailsList {}
-
 #soilClassDetailsList {}
-
-/*.painterIcon:hover, .featureSelectorIcon:hover {
-  box-shadow: 0px 0px 5px 5px rgba(200, 120, 18, 0.3), 0 17px 50px 0 rgba(227, 154, 18, 0.2);
-}*/
-
-/*.featureSelectorIconSelected:hover, .painterIconSelected:hover {
-  box-shadow: 0px 0px 25px 0px rgba(20, 80, 214, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
-}*/
-
-/*.featureSelectorIconSelected {
-  box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
-}*/
 
 .featuresText {
   color: #fff;
   text-align: center;
-  /*margin-top: 0.5vw;*/
 }
 
 #settingsTab {
@@ -865,18 +703,17 @@ option {
   .levelsText, .featuresText {
     font-size: 6px;
   }
-  .levelDetailsList {
+  .DetailsList {
+    top: 8px;
     left: 78px;
   }
-  .levelDetailsList, .levelDetailsListRolled {
-    top: 8px;
+  .levelDetailsList {
     width: 51px;
   }
   .physicalDetailsList {
-    left: 78px;
+    width: 89px;
   }
-  .physicalDetailsList, .physicalDetailsListRolled{
-    top: 8px;
+  .yieldDetailsList {
     width: 89px;
   }
   .levelsTextDetails {
@@ -895,14 +732,6 @@ option {
   .switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4,
   .wood1, .wood2, .wood3, .wood4, .short1 {
     height: 6px;
-    /*margin: ;*/
     width: 6px;
-  }
-  .yieldDetailsList, .yieldDetailsListRolled{
-    top: 8px;
-    width: 89px;
-  }
-  .yieldDetailsList{
-    left: 78px;
   }
 }
