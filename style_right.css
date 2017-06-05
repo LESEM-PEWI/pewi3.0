@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-18T10:17:38-05:00
- * @Last modified time: 2017-06-05T12:15:20-05:00
+ * @Last modified time: 2017-06-05T14:15:59-05:00
  */
 
 
@@ -94,6 +94,7 @@
   padding: 10px;
 }
 
+/* animation for popup */
 @keyframes rollUp {
   0% {
     right: -12vw;
@@ -257,6 +258,9 @@
     width: 18px;
     top: 108px;
   }
+  .dialogueButtonRolled {
+    right: 0px;
+  }
   .dialogueButton {
     right: 72px;
   }
@@ -273,8 +277,81 @@
   }
   .popup {
     right: 0px;
-  }】
+  }
   .popupHidden {
     right: -72px;
+  }
+  /* animation for popup */
+  @keyframes rollUp {
+    0% {
+      right: -72px;
+    }
+    100% {
+      right: 0;
+    }
+  }
+  /* Safari 4.0 - 8.0 */
+  @-webkit-keyframes rollUp {
+    0% {
+      right: -72px;
+    }
+    100% {
+      right: 0;
+    }
+  }
+
+  @keyframes rollDown {
+    0% {
+      right: 0;
+    }
+    100% {
+      right: -72px;
+    }
+  }
+  /* Safari 4.0 - 8.0 */
+  @-webkit-keyframes rollDown {
+    0% {
+      right: 0;
+    }
+    100% {
+      right: -72px;
+    }
+  }
+
+  /* animation for dialogueButton */
+  @keyframes rollButtonUp {
+    0% {
+      right: 0;
+    }
+    100% {
+      right: 72px;
+    }
+  }
+  /* Safari 4.0 - 8.0 */
+  @-webkit-keyframes rollButtonUp {
+    0% {
+      right: 0%;
+    }
+    100% {
+      right: 72px;
+    }
+  }
+
+  @keyframes rollButtonDown {
+    0% {
+      right: 72px;
+    }
+    100% {
+      right: 0;
+    }
+  }
+  /* Safari 4.0 - 8.0 */
+  @-webkit-keyframes rollButtonDown {
+    0% {
+      right: 72px;
+    }
+    100% {
+      right: 0;
+    }
   }
 }
