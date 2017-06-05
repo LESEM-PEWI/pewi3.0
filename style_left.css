@@ -34,7 +34,7 @@
 #indexmenu {
   background-image: url('./imgs/consoleTexture.png');
   border: none;
-  border-radius: 6px;
+  border-radius: 6px 6px 0 0;
   color: #FFFFFF;
   cursor: pointer;
   font-family: var(--button-font-family);
@@ -56,9 +56,8 @@
   background-color: rgba(0, 0, 0, 0.9);
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
-  border-radius: 6px 6px 6px 6px;
+  border-radius: 0 6px 6px 0;
   border-right: 0px solid #F0A61D;
-  /*border-top-right-radius: 6px;*/
   cursor: pointer;
   height: var(--left-console-button-length);
   position: absolute;
@@ -75,10 +74,11 @@
 }
 
 #undoButton {
-  border-bottom-right-radius: 5px;
+  /*border-bottom-right-radius: 5px;*/
   height: var(--left-console-button-length);
   width: var(--left-console-button-length);
   top: 40.75vw;
+  border-radius: 50%;
 }
 
 #undoButton:hover {
