@@ -34,7 +34,7 @@
 #indexmenu {
   background-image: url('./imgs/consoleTexture.png');
   border: none;
-  border-radius: 6px;
+  border-radius: 6px 6px 0 0;
   color: #FFFFFF;
   cursor: pointer;
   font-family: var(--button-font-family);
@@ -43,7 +43,7 @@
   height: 3vw;
   top: 7.7vw;
   text-align: center;
-  width: 8.6vw;
+  width: 12.5vw;
   position: absolute;
   background-repeat: repeat;
 }
@@ -56,9 +56,8 @@
   background-color: rgba(0, 0, 0, 0.9);
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
-  border-radius: 0px;
+  border-radius: 0 6px 6px 0;
   border-right: 0px solid #F0A61D;
-  border-top-right-radius: 0px;
   cursor: pointer;
   height: var(--left-console-button-length);
   position: absolute;
@@ -75,10 +74,11 @@
 }
 
 #undoButton {
-  border-bottom-right-radius: 5px;
+  /*border-bottom-right-radius: 5px;*/
   height: var(--left-console-button-length);
   width: var(--left-console-button-length);
-  top: 7.7vw;
+  top: 40.75vw;
+  border-radius: 50%;
 }
 
 #undoButton:hover {
@@ -324,7 +324,7 @@
 .styled-select {
   background: #3b3b3b;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   color: #fff;
   cursor: pointer;
@@ -591,7 +591,24 @@ margin: 15px 0px 0px 0px;
   /* Safari */
   transition-duration: var(--transition-duration);
 }
-
+table, th, td {
+    border: 0.1vw solid black;
+    border-collapse: collapse;
+    color: white;
+    font-size: 6pt;
+}
+th, td {
+    padding: 0.6vw;
+    text-align: left;
+    color: white;
+    font-size: 6pt;
+}
+table #yieldGrainTable {
+    width: 100%;    
+    background-image: url('./imgs/consoleTexture.png');
+    color: white;
+    font-size: 6pt;
+}
 
 .yieldDetailsList{
     left: 14vw
@@ -741,20 +758,10 @@ margin: 15px 0px 0px 0px;
 #shortDetailsList{
     width: 220px;
 }
-#cornGrainDetailsList{}
-#soyBeanDetailsList{}
-#fruitDetailsList{}
-#cattleDetailsList{}
-#alfalfaDetailsList{}
-#grassHayDetailsList{}
-#switchGrassDetailsList{}
-#woodDetailsList{}
-#drainageClassDetailsList {}
 
-#soilClassDetailsList {}
 
 .featureSelectorIcon, .featureSelectorIconSelected {
-  border-radius: 50%;
+  border-radius: 6px;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   cursor: pointer;
   height: var(--selector-icon-length);
@@ -834,6 +841,7 @@ margin: 15px 0px 0px 0px;
   }
   .tabButtons, #toolsButton, #undoButton {
     left: 57px;
+    border-radius: 6px;
   }
   #undoButton {
     height: 18px;
