@@ -87,6 +87,80 @@
 
   <!-- Main webpage element containing pewi -->
   <div id="page">
+    <!-- Add banner for when simulation is about to begin -->
+    <div id = "overlayContainer" style="visibility:hidden;">
+        <div id="overlay">
+            <div id="overlay-message">
+                <div id = "overlayMessage">Click here to begin simulation</div>
+            </div>
+            <label for="file-upload">
+                <div id="overlay-message-2" onclick="bindUploadFileListener();">
+                    <div id = "overlayMessage2">Click here to upload a custom PEWI map</div>
+                </div>
+            </label>
+            <input id="file-upload" type="file"/>
+        </div>
+    </div>
+
+     <!-- Add banner for when simulation is done -->
+    <div id = "simContainer" style="visibility:hidden;">
+        <div class="simOverlay">
+            <div id="sim-message-exit">
+                <div id = "exitSim">Return to Main Menu</div>
+            </div>
+            <div id="sim-message-repeat">
+               <div id = "repeatSim">Repeat Simulation</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Handles the overlay shown during simulations -->
+    <script>
+
+    function bindUploadFileListener() {
+    //add listener
+    $('#file-upload').bind('propertychange change', function(e) {
+        parent.uploadClicked(e);
+    });
+    //small issue: if file selected is same name as previous
+    //property change is not triggered, even if file has changed.
+    };
+
+    $(document).ready(function() {
+
+        $("#overlay-message").click(function() {
+            $("#overlay-message, #overlayMessage, #overlay-message-2, #overlayMessage2").css("visibility","hidden");
+            $("#overlay").css("background-color","transparent");
+            runSimulation();
+        });
+
+        $("#sim-message-exit").click(function() {
+            $("#overlay").css("background","rgba(0, 0, 0, 0.4)");
+            $("#simContainer, #overlayContainer, #overlay").css("visibility","hidden");
+            setSimBoolean(false);
+            //Reset defaults
+            resetPresets();
+            resetSlider();
+            clearTimers();
+            setPause(false);
+            setUpload(false);
+            document.getElementById("sliderCon").style.visibility = "hidden";
+            showMainMenu(); 
+        });
+
+        $("#sim-message-repeat").click(function() {
+            $("#simContainer").css("visibility","hidden");
+            $("#overlay").css("background","rgba(0, 0, 0, 0.4)");
+            $("#overlay-message").css("visibility","visible");
+            //Reset defaults
+            resetSlider();
+            clearTimers();
+            setPause(false);
+            setUpload(false);
+            promptUserSim();
+        })
+    });
+    </script>
 
     <!-- **BEGIN Left Side Console**
       with land-type painter, precipitation, ecosystem indicators and feature highlighting functions -->
@@ -570,6 +644,7 @@
     <img id="logoBase" src="./imgs/inGameLogo.png">
     <img id="uploadDownloadButton" class="upperButton" width="40px" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="recordIcon" class="upperButton" style="visibility:hidden;" width="40px" src="./imgs/recordingIcon.gif">
 
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
     <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
@@ -579,6 +654,11 @@
 
     <!-- Add heads up display in lower left corner -->
     <footer id="bottomHUD" class="bottomHUD">
+      <div id="sliderCon" style="visibility: hidden">
+          <label for="simSlider">Simulation Time</label>
+          <input id="simSlider" type="range" min="0" max="100" value="0" onclick="updateSim(this.value)">
+          <output for="simSlider" id="timer">00:00:00</output>
+      </div>
       <p id="currentInfo">
     </footer>
 

@@ -240,7 +240,7 @@ body {
   /*border: 3px solid #6ac5ac;*/
   bottom: 0;
   color: white;
-  height: 1.8vw;
+  height: 50px;
   position: absolute;
   width: 100%;
 }
@@ -471,4 +471,62 @@ body {
   position: fixed;
   top: 49%;
   width: 250px;
+}
+
+#overlay, .simOverlay {
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index:1001;
+}
+
+#overlay-message, #overlay-message-2, #sim-message-exit, #sim-message-repeat {
+    position: relative;
+    top: 40%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 200px;
+    height: 100px;
+    text-align: center;
+    border-radius: 8px;
+    border: 2px solid white;
+    margin: auto;
+    background-color: #40A4DF;
+    z-index:1003;
+    margin-top: 20px;
+}
+
+#overlayMessage, #overlayMessage2, #exitSim, #repeatSim {
+    padding-top: 20px;
+    color: white;
+    font-family: 'Amatic SC', cursive;
+    font-size: 28px;
+}
+
+#overlay-message:hover , #overlay-message-2:hover, #sim-message-exit:hover, #sim-message-repeat:hover {
+    background-color: #7cc1e9;
+    cursor: default;
+}
+
+#currentInfo {
+    position: fixed;
+    bottom: 5px;
+}
+
+#simSlider {
+    position: absolute;
+    z-index:1;
+}
+
+#timer {
+    position: absolute;
+    left: 25%;
+}
+
+#file-upload {
+    display: none;
 }

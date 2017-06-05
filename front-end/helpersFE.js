@@ -16,6 +16,7 @@ var currentRow = -1;
 var leftToolConsoleWasOpen;
 var rightPopupWasOpen;
 var meshGeometry = new THREE.Geometry();
+var click;
 var meshMaterials = [];
 var tileHeight = 12;
 var tileWidth = 18;
@@ -35,7 +36,17 @@ var lastSelectedPainter = 1;
 var paintSwitch = false;
 var undo = false;
 var previous = false;
-
+var previousTab = null;
+var overlayedToggled = false;
+var inResults = false;
+var inDispLevels = false;
+var curTracking = false;
+var startTime;
+var endTime;
+var curTime;
+var simulationData;
+var runningSim = false;
+var randomzing = false;
 var previousOverlay = null;
 var previousTab = null;
 var overlayedToggled = false;
@@ -56,6 +67,38 @@ var painterTool = {
   hover: false
 };
 var myTimer = null;
+var mainTimer = [];
+var exitTimer;
+var sliderTimer;
+var timeStopped;
+var timeResumed;
+var pauseDuration = 0;
+var elapsedTime;
+var cur;
+var paused = false;
+var randomizing = false;
+var simBoard;
+
+//Used for preventing users from exiting (click-tracking mode)
+window.onbeforeunload = confirmExit;
+function confirmExit() {
+    if(curTracking)
+    {
+        pushClick(0,getStamp(),2,0,null);
+        return "You are currently in click-tracking mode, please stay on the page. To refresh, please leave click-tracking mode";
+    }
+}
+
+//Returns the value of curTracking
+function getTracking() {
+    return curTracking;
+} //end getTracking()
+
+//Creates a click object and pushes it into the click array (Useful for remote functions)
+function pushClick(id,stamp,type,gap,tile) {
+    click = new Click(id,stamp,type,gap,tile)
+    clickTrackings.push(click);
+} //end pushClick()
 
 //onResize dynamically adjusts to window size changes
 function onResize() {
@@ -188,6 +231,10 @@ function changeLandTypeTile(tileId) {
       boardData[currentBoard].map[tileId].landType[currentYear] = painter;
     }
   }
+  if (curTracking && painterTool.status!=2 && !undo && !randomizing)
+    {
+        pushClick(0,getStamp(),55,0,tileId);
+    }
 
 } //end changeLandTypeTile
 
@@ -494,6 +541,10 @@ function refreshBoard(bypassFromKeyEvent) {
 
 //revertChanges undos the users previous tile changes, and goes back to the previous board instance
 function revertChanges() {
+  //For storing clicks
+  if(curTracking) {
+    pushClick(0,getStamp(),30,0,null);
+  }
   if (previousTileId.length > 0 && !inResults && !inDispLevels) {
     undo = true;
     changeLandTypeTile(previousTileId[previousTileId.length - 1]);
@@ -505,7 +556,10 @@ function revertChanges() {
 function transitionToYear(year) {
 
   currentYear = year;
-
+  var tempNum = year + 37;
+  if (curTracking) {
+    pushClick(0,getStamp(),tempNum,0,null);
+  }
   if (year > boardData[currentBoard].calculatedToYear) {
     boardData[currentBoard].calculatedToYear = year;
 
@@ -524,7 +578,9 @@ function addYearAndTransition() {
 
   var totalYearsAllowed = 3
   var nextYear = currentYear + 1;
-
+  if (curTracking) {
+    pushClick(0,getStamp(),41,0,null);
+  }
   //make next button appear (has some prebuilt functionality for expanded number of years)
   if (currentYear < totalYearsAllowed - 1) {
 
@@ -649,7 +705,7 @@ function onDocumentMouseMove(event) {
 //onDocumentDoubleClick changes landType to the painted (selected) landType on double-click
 //and will change map to a monoculture if shift is held down
 function onDocumentMouseDown(event) {
-
+if(!runningSim) {
   //if the user's mouse is over one of the frames
   // such as the left console or results button
   if (clearToChangeLandType) {
@@ -691,6 +747,9 @@ function onDocumentMouseDown(event) {
 
               for (var i = 0; i < changedTiles.length; i++) {
                 previous = false;
+                if (curTracking) {
+                  pushClick(0,getStamp(),56,0,changedTiles[i]);
+                }
                 changeLandTypeTile(changedTiles[i] - 1);
               }
 
@@ -736,6 +795,7 @@ function onDocumentMouseDown(event) {
       }
     }
   } //end else/if group
+}
 } //end onDocumentMouseDown(event)
 
 //onDocumentMouseUp listens for the release of the click event
@@ -772,6 +832,9 @@ function onDocumentKeyDown(event) {
       //case t - toggle topography
     case 84:
       if (modalUp != true) {
+        if (curTracking) {
+          pushClick(0,getStamp(),32,0,null);
+        }
         tToggle ? tToggle = false : tToggle = true;
 
         //in the case when the map is highlighted:
@@ -799,6 +862,9 @@ function onDocumentKeyDown(event) {
       //case r - randomize land types
     case 82:
       if (modalUp != true && currentHighlightType < 4) {
+        if (curTracking) {
+        pushClick(0,getStamp(),52,0,null);
+        }
         randomizeBoard();
         //in the case that the map is currently highlighted for a ecosystem indicator,
         //keep highlighting on and randomize the land types
@@ -833,9 +899,25 @@ function onDocumentKeyDown(event) {
       break;
       //case esc - view escape menu
     case 27:
-      highlightTile(-1);
-      toggleEscapeFrame();
-      break;
+      if(!curTracking && !runningSim)
+            {
+                highlightTile(-1);
+                toggleEscapeFrame();
+                break;
+            }
+            if(runningSim && !paused)
+            {
+                endSimPrompt();
+                break;
+            }
+            if(runningSim && paused)
+            {
+                document.getElementById("simContainer").style.visibility = "hidden";
+                paused = false;
+                resumeSim();
+                break;
+            }
+            break;
     case 85:
 
       if (!inResults && !inDispLevels && !overlayedToggled)
@@ -848,10 +930,30 @@ function onDocumentKeyDown(event) {
 
     case 79:
       if (previousOverlay != null) {
+        if (curTracking) {
+          pushClick(0,getStamp(),31,0,null);
+        }
         toggleOverlay();
       }
       break;
 
+    case 66:
+      if(!curTracking)
+        {
+          curTracking = true;
+          //Starting date is recorded
+          startTime = new Date();
+          clickTrackings = [];
+          document.getElementById("recordIcon").style.visibility = "visible";
+        }
+        else
+        {
+          curTracking = false;
+          //Ending date is recorded
+          endTime = new Date();
+          document.getElementById("recordIcon").style.visibility = "hidden";
+          exportTracking(clickTrackings);
+        }
       //no default handler
   } //end switch
 } //end onDocumentKeyDown
@@ -917,7 +1019,12 @@ function changeSelectedPaintTo(newPaintValue) {
   lastSelectedPainter = newPaintValue;
   //check to see if multiplayer Assignment Mode is On
   if (!multiplayerAssigningModeOn) {
-
+    //Store paint change if click-tracking is on
+    if(curTracking)
+    {
+      var tempNum = newPaintValue+14;
+      pushClick(0,getStamp(),tempNum,0,null);
+    }
     //change current painter to regular
     var painterElementId = "paint" + painter;
     document.getElementById(painterElementId).className = "landSelectorIcon";
@@ -953,7 +1060,10 @@ function resultsStart() {
   inResults = true;
   //if something else does not have precedence
   if (!modalUp) {
-
+    if(curTracking)
+    {
+      pushClick(0,getStamp(),12,0,null);
+    }
     //setup Screen Appropriately
     document.getElementById("resultsButton").onmouseout = "";
     document.getElementById("resultsButton").onmouseover = "";
@@ -1006,7 +1116,10 @@ function resultsEnd() {
   inResults = false;
   //modal is no longer up
   modalUp = false;
-
+  if (curTracking)
+  {
+    pushClick(0,getStamp(),13,0,null);
+  }
   //reset functionality
   document.getElementById("resultsFrame").className = "resultsFrameRolled";
   document.getElementById("resultsButton").className = "resultsButtonRolled";
@@ -1049,7 +1162,10 @@ function roll(value) {
   if (value == 1) {
     //if the console is open, then roll it with corresponding style changes
     if (document.getElementById('tabButtons').className == "tabButtons") {
-
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),57,0,null);
+      }
       document.getElementById('toolsButton').style.left = "0px";
       document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')";
       document.getElementById('pick').src = "./imgs/pickIn.png"
@@ -1057,6 +1173,10 @@ function roll(value) {
       document.getElementById('leftConsole').className = "leftConsoleRolled";
 
     } else {
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),3,0,null);
+      }
       // document.getElementById('toolsButton').style.left = "135px";
       // document.getElementById('toolsButton').style.left = "9.6vw";
       document.getElementById('toolsButton').style.left = document.getElementById('leftConsole').style.width;
@@ -1208,15 +1328,31 @@ function showLevelDetails(value) {
 function updatePrecip(year) {
 
   if (year == 0) {
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),34,0,document.getElementById("year0Precip").value);
+    }
     boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year0Precip").value)];
   }
   if (year == 1) {
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),35,0,document.getElementById("year1Precip").value);
+    }
     boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year1Precip").value)];
   }
   if (year == 2) {
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),36,0,document.getElementById("year2Precip").value);
+    }
     boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year2Precip").value)];
   }
   if (year == 3) {
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),37,0,document.getElementById("year3Precip").value);
+    }
     boardData[currentBoard].precipitation[year] = precip[Number(document.getElementById("year3Precip").value)];
   }
 
@@ -1250,32 +1386,60 @@ function switchConsoleTab(value) {
 
   if (value == 1) {
     inDispLevels = false;
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),4,0,null);
+    }
     document.getElementById('terrainImg').className = "imgSelected";
     document.getElementById('painterTab').style.display = "block";
   } else if (value == 2) {
     inDispLevels = false;
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),5,0,null);
+    }
     document.getElementById('precipImg').className = "imgSelected";
     document.getElementById('precipTab').style.display = "block";
   } else if (value == 3) {
     inDispLevels = true;
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),7,0,null);
+    }
     document.getElementById('levelsImg').className = "imgSelected";
     document.getElementById('levelsTab').style.display = "block";
   } else if (value == 4) {
     inDispLevels = true;
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),8,0,null);
+    }
     document.getElementById('featuresImg').className = "imgSelected";
     document.getElementById('featuresTab').style.display = "block";
   } else if (value == 5) {
     inDispLevels = false;
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),9,0,null);
+    }
     document.getElementById('settingsImg').className = "imgSelected";
     document.getElementById('settingsTab').style.display = "block";
   } else if (value == 6) {
     inDispLevels = false;
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),6,0,null);
+    }
     document.getElementById('calendarImg').className = "imgSelected";
     document.getElementById('yearsTab').style.display = "block";
-  }
-     else if(value == 7){
-        document.getElementById('yieldImg').className = "imgSelected";
-        document.getElementById('yieldTab').style.display = "block"
+  } else if(value == 7){
+    inDispLevels = true;
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),68,0,null);
+    }
+    document.getElementById('yieldImg').className = "imgSelected";
+    document.getElementById('yieldTab').style.display = "block"
   }
 
 
@@ -1337,54 +1501,122 @@ function displayLevels(overlayHighlightType) {
   switch (overlayHighlightType) {
     case 'nitrate':
       selectionHighlightNumber = 1;
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),42,0,null);
+      }
       break;
     case 'erosion':
       selectionHighlightNumber = 2;
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),43,0,null);
+      }
       break;
     case 'phosphorus':
       selectionHighlightNumber = 3;
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),44,0,null);
+      }
       break;
     case 'flood':
       selectionHighlightNumber = 4;
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),45,0,null);
+      }
       break;
     case 'drainage':
       selectionHighlightNumber = 5;
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),48,0,null);
+      }
       break;
     case 'wetland':
       selectionHighlightNumber = 6;
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),46,0,null);
+      }
       break;
     case 'subwatershed':
       selectionHighlightNumber = 7;
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),47,0,null);
+      }
       break;
     case 'soil':
       selectionHighlightNumber = 8;
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),49,0,null);
+      }
       break;
        case 'cornGrain':
             selectionHighlightNumber = 9;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),69,0,null);
+            }
             break;
         case 'soy':
             selectionHighlightNumber = 10;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),70,0,null);
+            }
             break;
         case 'fruit':
             selectionHighlightNumber = 11;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),71,0,null);
+            }
             break;
         case 'cattle':
             selectionHighlightNumber = 12;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),72,0,null);
+            }
             break;
         case 'alfalfa':
             selectionHighlightNumber = 13;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),73,0,null);
+            }
             break;
         case 'grassHay':
             selectionHighlightNumber = 14;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),74,0,null);
+            }
             break;
         case 'switchGrass':
             selectionHighlightNumber = 15;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),75,0,null);
+            }
             break;
         case 'wood':
             selectionHighlightNumber = 16;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),76,0,null);
+            }
             break;
         case 'short':
             selectionHighlightNumber = 17;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),77,0,null);
+            }
             break;  
   } //end switch
 
@@ -2388,6 +2620,10 @@ function calculateResults() {
 //showCredits opens the credits iframe
 function showCredits() {
   if (!modalUp) {
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),11,0,null);
+    }
     document.getElementById('creditsFrame').style.display = "block";
     document.getElementById('closeCredits').style.display = "block";
     document.getElementById('modalCreditsFrame').style.display = "block";
@@ -2397,6 +2633,10 @@ function showCredits() {
 
 //closeCreditFrame closes the credits iframe
 function closeCreditFrame() {
+  if (curTracking)
+  {
+    pushClick(0,getStamp(),33,0,null);
+  }
   document.getElementById('creditsFrame').style.display = "none";
   document.getElementById('closeCredits').style.display = "none";
   document.getElementById('modalCreditsFrame').style.display = "none";
@@ -2406,6 +2646,10 @@ function closeCreditFrame() {
 //showUploadDownload opens the credits iframe
 function showUploadDownload() {
   if (!modalUp) {
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),10,0,null);
+    }
     document.getElementById('closeUploadDownload').style.display = "block";
     document.getElementById('uploadDownloadFrame').style.display = "block";
     document.getElementById('modalUploadFrame').style.display = "block";
@@ -2419,6 +2663,10 @@ function showUploadDownload() {
 
 //closeUploadDownloadFrame closes the credits iframe
 function closeUploadDownloadFrame() {
+  if (curTracking)
+  {
+    pushClick(0,getStamp(),53,0,null);
+  }
   document.getElementById('closeUploadDownload').style.display = "none";
   document.getElementById('uploadDownloadFrame').style.display = "none";
   document.getElementById('modalUploadFrame').style.display = "none";
@@ -2434,11 +2682,17 @@ function toggleIndex() {
     closeUploadDownloadFrame();
     if (document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd();
 
+    if(curTracking) {
+      pushClick(0,getStamp(),78,0,null)
+    }
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
     document.getElementById('index').style.display = "block";
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
 
+    if(curTracking) {
+      pushClick(0,getStamp(),79,0,null)
+    }
     modalUp = false;
 
     document.getElementById('modalCodexFrame').style.display = "none";
@@ -2512,9 +2766,17 @@ function clearPopup() {
 function togglePopupDisplay() {
   if (!modalUp) {
     if (document.getElementById("popup").className == "popup") {
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),14,0,null);
+      }
       document.getElementById("popup").className = "popupHidden";
       document.getElementById("dialogueButton").className = "dialogueButtonRolled";
     } else {
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),54,0,null);
+      }
       document.getElementById("popup").className = "popup";
       document.getElementById("dialogueButton").className = "dialogueButton";
     }
@@ -2539,6 +2801,7 @@ function randomAllowed(modeName) {
 function randomizeBoard() {
 
   var prevPainter = painter;
+  randomizing = true;
   //for whole board (as long as randomization is allowed)
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
@@ -2550,7 +2813,7 @@ function randomizeBoard() {
       }
     } //end for all tiles
   }
-
+  randomizing = false;
   painter = prevPainter;
 
 } //end randomizeBoard
@@ -2702,12 +2965,20 @@ function painterSelect(brushNumberValue) {
 
   //if the brush is a normal cell paint
   if (brushNumberValue == 1) {
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),50,0,null);
+    }
     document.getElementById('cellPaint').className = 'painterIconSelected';
     if (painterTool.status == 2) refreshBoard();
     painterTool.status = 0;
   }
   //set the grid paint up with a status of 1
   else if (brushNumberValue == 2) {
+    if (curTracking)
+    {
+      pushClick(0,getStamp(),51,0,null);
+    }
     //painterTool.status 0 indicates not ready
     //painterTool.status 1 indicates waiting for DoubleClick
     //painterTool.status 2 indicates grid drag activity
@@ -2937,7 +3208,7 @@ function multiplayerMode() {
     document.getElementById("player1Image").className = "playerSelected";
     document.getElementById("levelsButton").style.display = "none";
     document.getElementById("yearButton").style.display = "none";
-    document.getElementById("playerResetImage").style.display = "inline-block";
+    //document.getElementById("playerResetImage").style.display = "inline-block";
 
   }
 
@@ -2947,9 +3218,9 @@ function multiplayerMode() {
 function multiplayerExit() {
   document.getElementById("levelsButton").style.display = "block";
   document.getElementById("yearButton").style.display = "block";
-  document.getElementById("playerResetImage").style.display = "none";
+  //document.getElementById("playerResetImage").style.display = "none";
   //resetMultiPlayer();
-  document.getElementById("message").style.display = "none";
+  //document.getElementById("message").style.display = "none";
   multiplayerAssigningModeOn = false;
   //boardData[currentBoard].updateBoard();
 
@@ -2960,3 +3231,278 @@ function getNumberOfPlayers() {
   return currentPlayer;
 }
 
+//Gets the current timestamp for the click (event)
+function getStamp() {
+    curTime = new Date()
+    return (curTime-startTime);
+} //end getStamp
+
+//Completes needed object property insertion
+function finishProperties() {
+    var tempClicks = [];
+    tempClicks.push(clickTrackings[0]);
+    for(var i = 1; i < clickTrackings.length; i++)
+    {
+        if(clickTrackings[i].tileID!=clickTrackings[i-1].tileID || clickTrackings[i].tileID==null || clickTrackings[i-1].tileID==null)
+        {
+            clickTrackings[i].clickID = i;
+            clickTrackings[i].timeGap = (clickTrackings[i].timeStamp - clickTrackings[i-1].timeStamp);
+            tempClicks.push(clickTrackings[i]);
+        }
+    }
+    clickTrackings = tempClicks;
+} //end finishProperties
+
+//Handles exporting the clicks given by the user
+function exportTracking() {
+    //Initial action is equal to time elapsed at that point
+    if(clickTrackings.length>0)
+    {
+        clickTrackings[0].timeGap = clickTrackings[0].timeStamp;
+    }
+    finishProperties();
+    var A = [['ClickID','Time Stamp (Milliseconds)','Click Type','Time Gap (Milliseconds)','Description of click','TileID/Precip',startTime,endTime,startTime.getTime(),endTime.getTime()]];
+    for(var j=0;j<clickTrackings.length;j++)
+    { 
+        A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
+    }
+    var csvRows = [];
+    for(var i=0; i<A.length; i++)
+    {
+        csvRows.push(A[i].join(','));
+    }
+    var csvString = csvRows.join("\n");
+    //Get ready to prompt for file
+    var a = document.createElement('a');
+    a.href     = 'data:text/csv;charset=utf-8;base64,' + window.btoa(csvString);
+    a.target   = '_blank';
+    var fileID = Math.round(Math.random()*100000000000000000000);
+    a.download = 'PEWI_UserExperienceFile_'+fileID+'.csv';
+    document.body.appendChild(a);
+    a.click();
+    clickTrackings = [];
+} //end exportTracking
+
+//Handles the simulation file
+function loadSimulation(e) {
+    var files;
+    files = e.target.files;
+
+    if (files[0].name && !files[0].name.match(/\.csv/)) {
+        alert("Incorrect File Type!");
+    }
+    else {
+        var reader = new FileReader();
+        reader.readAsText(files[0]);
+        //Perform the simulation
+        reader.onload = function(e) {
+            var sim = reader.result.split("\n");
+            simulationData = sim;
+            promptUserSim();
+        }
+    }
+} //end loadSimulation
+
+//Prompts user to begin the simulation
+function promptUserSim()
+{
+    resetPresets();
+    document.getElementById('sliderCon').style.visibility = "visible";
+    document.getElementById("overlayContainer").style.visibility = "visible";
+    document.getElementById("overlay").style.visibility = "visible";
+    document.getElementById("overlay-message").style.visibility = "visible";
+    document.getElementById("overlayMessage").style.visibility = "visible";
+    document.getElementById("overlay-message-2").style.visibility = "visible";
+    document.getElementById("overlayMessage2").style.visibility = "visible";
+} //end promptUserSim()
+
+//Returns the value of runningSim
+function isSimRunning() {
+    return runningSim;
+} //end isSimRunning
+
+//Sets a new value for runningSim
+function setSimBoolean(newValue) {
+    runningSim = newValue;
+} //end setSimBoolean
+
+//Handles the click tracking simulation replay
+function runSimulation() {
+    //Begin simulation: Initial step is to clear preset variables before using them.
+    runningSim = true;
+    clickTrackings = [];
+    elapsedTime = 0;
+    pauseDuration = 0;
+    document.getElementById("simSlider").style.zIndex = "1002";
+    //Obtain end time for the simulation
+    tempArr = simulationData[0].split(',');
+    endTime = parseInt(tempArr[9])-parseInt(tempArr[8]);
+    document.getElementById("simSlider").max = endTime;
+    //First, populate the clicks
+    for(var i = 1; i < simulationData.length; i++)
+    {
+        tempArr = simulationData[i].split(',');
+        tempID = tempArr[0];
+        tempStamp = tempArr[1];
+        tempType = tempArr[2];
+        tempGap = tempArr[3];
+        if(tempType == 55 || tempType == 56 || tempType == 34 ||tempType == 35 || tempType == 36 || tempType == 37)
+        {
+            tempTile = tempArr[5];
+        }
+        else
+        {
+            tempTile = null;
+        }
+        pushClick(tempID,tempStamp,tempType,tempGap,tempTile);
+    }
+    //Beginning time of simulation
+    startTime = new Date();
+    //Next, perform the commands on-screen in accordance to their order and time frame
+    sliderTimer = setInterval(updateTime,1);
+    for(var j = 0; j < clickTrackings.length; j++)
+    {
+        mainTimer[j] = (setTimeout(performAction, parseInt(clickTrackings[j].timeStamp), j));
+    }
+    //Simulation is now complete. Ask user if they would like to replay or exit to the Main Menu
+    exitTimer = setTimeout(endSimPrompt, endTime);
+} //end runSimulation
+
+//Performs the actions for simulation
+function performAction(clickValue) {
+    clickTrackings[clickValue].getAction();
+} //end performAction
+
+//Handles the end of a simulation (or when a user pauses the sim)
+function endSimPrompt() {
+    paused = true;
+    pauseSim();
+    document.getElementById("simContainer").style.visibility = "visible";
+} //end endSimPrompt()
+
+//Pauses the sim (and related times)
+function pauseSim() {
+    timeStopped = new Date();
+    document.getElementById("simSlider").style.zIndex = "1";
+    clearTimers();
+} //end pauseSim()
+
+//Resumes the sim (and related times)
+function resumeSim() {
+    timeResumed = new Date()
+    //Amount of time the user was paused (total for session)
+    pauseDuration = pauseDuration + (timeResumed-timeStopped);
+    //Amount of simulation time that has passed
+    sliderTimer = setInterval(updateTime,1);
+    elapsedTime = timeResumed-startTime-pauseDuration;
+    for(var j = 0; j < mainTimer.length; j++)
+    {
+        mainTimer[j] = setTimeout(performAction, parseInt(clickTrackings[j].timeStamp)-elapsedTime, j);
+    }
+    exitTimer = setTimeout(endSimPrompt, endTime-elapsedTime);
+    document.getElementById("simSlider").style.zIndex = "1002";
+} //end resumeSim()
+
+//Sets the paused boolean
+function setPause(setValue) {
+    paused = setValue;
+}
+
+//Clears all relative timers
+function clearTimers() {
+    for(var j = 0; j<mainTimer.length;j++)
+    {
+        clearTimeout(mainTimer[j]);
+    }
+    clearTimeout(exitTimer);
+    clearInterval(sliderTimer);
+} //end clearTimers()
+
+//Sets the slider for simulations
+function resetSlider() {
+    document.getElementById('simSlider').value = 0;
+    document.getElementById('timer').innerHTML = "00:00:00";
+}
+//Provides elapsedTime for any given moment during simulation (in milliseconds) and updates the slider count and display
+function updateTime() {
+    cur = new Date();
+    elapsedTime = cur.getTime()-startTime.getTime()-pauseDuration;
+    updateSlider(elapsedTime);
+} //end updateTime()
+
+//Updates the slider's input value (duration is in milliseconds) [Note: Format is 00:00:00.0]
+function updateSlider(duration) {
+    var milliseconds = parseInt((duration%1000)/100)
+        , seconds = parseInt((duration/1000)%60)
+        , minutes = parseInt((duration/(1000*60))%60)
+        , hours = parseInt((duration/(1000*60*60))%24);
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+    document.getElementById('timer').innerHTML=hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+    document.getElementById('simSlider').value = duration;
+} //end updateSlider()
+
+//Updates the current simulation after the slider has been moved
+function updateSim(newTime) {
+    clearTimers();
+    console.log(document.getElementById('simSlider').value);
+    //If the user is going back in time, refresh the board so that future changes don't yet happen
+    if(elapsedTime>newTime) {
+        resetPresets();
+    }
+    //New elapsed time (since slider has been moved by user)
+    elapsedTime = newTime;
+    //New start time (since slider has been moved by user)
+    cur = new Date();
+    var tempTime = cur.getTime() - elapsedTime;
+    startTime = new Date(tempTime);
+    //Since it's a new time, pausedDuration is reset
+    pauseDuration = 0;
+    //Update all timers
+    sliderTimer = setInterval(updateTime,1);
+    for(var j = 0; j < mainTimer.length; j++)
+    {
+        mainTimer[j] = setTimeout(performAction, parseInt(clickTrackings[j].timeStamp)-elapsedTime, j);
+    }
+    exitTimer = setTimeout(endSimPrompt, endTime-elapsedTime);
+} //end updateSim()
+
+//Resets presets that are present in the level when you exit/refresh the simulation
+function resetPresets() {
+    //Clears the board and sets all tiles back to convetional corn (or the custom map if used)
+    if(uploadedBoard) {
+        setupBoardFromUpload(simUpload);
+        //clear initData
+        initData = [];
+    } else {
+        loadLevel(0);
+    }
+    //Goes back to the land-type selection
+    switchConsoleTab(1);
+    //Goes back to the default land-use selection
+    changeSelectedPaintTo(1);
+    //Goes back to single-selection painter
+    painterSelect(1);
+    //Resets the year selections
+    resetYearDisplay();
+    document.getElementById("year1Image").className = "yearSelected"
+    currentYear = 1;
+    //Resets the scroll in the results tab
+    window.frames[3].scrollTo(0,0);
+    //Resets the scroll in the credits tab
+    window.frames[0].scrollTo(0,0);
+    //Closes the results tab (if it was open)
+    resultsEnd();
+    //Closes the credits tab (if it was open)
+    closeCreditFrame();
+    //Closes the upload/download tab (if it was open)
+    closeUploadDownloadFrame();
+    //Rolls out the left console
+    if(document.getElementById('tabButtons').className != "tabButtons"){roll(1)}
+} //end resetPresets()
+
+//Sets the simUpload boolean value
+function setUpload(givenValue) {
+  uploadedBoard = givenValue;
+} //end setUpload()
