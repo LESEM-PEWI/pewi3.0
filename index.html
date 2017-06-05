@@ -63,7 +63,7 @@
 
 </head>
 
-<body id="body" onunload="alert('Have you saved all the changes? ');">
+<body id="body">
 
   <script>
     //Preload gifs and backgrounds on startup
@@ -87,6 +87,11 @@
 
   <!-- Main webpage element containing pewi -->
   <div id="page">
+
+    <!--Create index button on screen-->
+    <div id="indexmenu" onclick="toggleIndex();">Index</div>
+    <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+    <img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
     <!-- **BEGIN Left Side Console**
       with land-type painter, precipitation, ecosystem indicators and feature highlighting functions -->
@@ -113,10 +118,6 @@
       <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
 
     </div>
-
-
-    <!--Create index button on screen-->
-    <div id="indexmenu" onclick="toggleIndex();">Index</div>
 
     <!-- Create left-side console displays-->
     <div id="leftConsole" class="leftConsole" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
@@ -176,11 +177,11 @@
 
       <!-- Precipitation display -->
       <div id="precipTab" class="consoleTab" style="display:none;">
-        <form method="precipValues" action=" ">
-          <div id="precipTitle">Precipitation</div>
+        <form method="precipValues" action=" "> <!-- wtf method is called precipValues? -->
+          <div id="precipTitle"><h3>Precipitation</h3></div>
 
           <div id="year0PrecipContainer" class="styled-select">
-            Year 0:
+            <h4>Year 0:</h4>
             <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
                         <option value=0>24.58</option>
                         <option value=1>28.18</option>
@@ -192,7 +193,7 @@
                     </select>
           </div>
           <div id="year1PrecipContainer" class="styled-select">
-            Year 1:
+            <h4>Year 1:</h4>
             <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();">
                         <option value=0>24.58</option>
                         <option value=1>28.18</option>
@@ -204,7 +205,7 @@
                     </select>
           </div>
           <div id="year2PrecipContainer" class="styled-select">
-            Year 2:
+            <h4>Year 2:</h4>
             <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi();">
                         <option value=0>24.58</option>
                         <option value=1>28.18</option>
@@ -216,7 +217,7 @@
                     </select>
           </div>
           <div id="year3PrecipContainer" class="styled-select">
-            Year 3:
+            <h4>Year 3:</h4>
             <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi();">
                         <option value=0>24.58</option>
                         <option value=1>28.18</option>
@@ -231,10 +232,22 @@
 
       </div>
 
+      <!-- year display -->
+      <div id="yearsTab" class="consoleTab" style="display:none;">
+        <!-- Create year buttons -->
+        <div id="yearTitle">Year Selection</div>
+        <!-- "Exposure, zero icon" by Google Design (https://design.google.com/) used under CC BY (https://creativecommons.org/licenses/by/3.0/) / Inverted from original -->
+        <div id="year0Button" class="yearButton" style="display:none;" onclick="transitionToYear(0); switchYearTab(0);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year0Image" class="yearNotSelected" src="./imgs/zero_40px.png"></div>
+        <div id="year1Button" class="yearButton" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="icon yearSelected" src="./imgs/one.png"></div>
+        <div id="year2Button" class="yearButtonHidden" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="icon yearImageHidden" src="./imgs/two.png"></div>
+        <div id="year3Button" class="yearButtonHidden" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="icon yearImageHidden" src="./imgs/three.png"></div>
+        <div id="yearAddButton" class="yearButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
+      </div>
+
       <!-- Ecosystem indicator highlighting display -->
       <div id="levelsTab" class="consoleTab" style="display:none;">
 
-        <div id="nitrateDetailsList" class="levelDetailsListRolled">
+        <div id="nitrateDetailsList" class="DetailsListRolled levelDetailsList">
           <div class="levelColor1" style="background-color: #87ceee">
             <p class="levelsTextDetails">0 - 5 %</p>
           </div>
@@ -252,7 +265,7 @@
           </div>
         </div>
 
-        <div id="erosionDetailsList" class="levelDetailsListRolled">
+        <div id="erosionDetailsList" class="DetailsListRolled levelDetailsList">
           <div class="levelColor1" style="background-color: #ffffc9">
             <p class="levelsTextDetails">
               < 0.5 t/ac/yr</p>
@@ -271,7 +284,7 @@
           </div>
         </div>
 
-        <div id="phosphorusDetailsList" class="levelDetailsListRolled">
+        <div id="phosphorusDetailsList" class="DetailsListRolled levelDetailsList">
           <div class="levelColor1">
             <p class="levelsTextDetails">Very Low</p>
           </div>
@@ -303,7 +316,7 @@
 
       <!-- Watershed feature display -->
       <div id="featuresTab" class="consoleTab" style="display:none;">
-        <div id="floodFrequencyDetailsList" class="physicalDetailsListRolled">
+        <div id="floodFrequencyDetailsList" class="DetailsListRolled physicalDetailsList">
           <div class="floodColor1">
             <p class="levelsTextDetails" style="margin-top:10px;">None</p>
           </div>
@@ -320,7 +333,7 @@
             <p class="levelsTextDetails">Ponded</p>
           </div>
         </div>
-        <div id="drainageClassDetailsList" class="physicalDetailsListRolled">
+        <div id="drainageClassDetailsList" class="DetailsListRolled physicalDetailsList">
           <div class="drainageColor1">
             <p class="levelsTextDetails">Very Poor</p>
           </div>
@@ -338,11 +351,11 @@
           </div>
         </div>
 
-        <div id="wetlandClassDetailsList" class="physicalDetailsListRolled">
+        <div id="wetlandClassDetailsList" class="DetailsListRolled physicalDetailsList">
         </div>
-        <div id="subwatershedClassDetailsList" class="physicalDetailsListRolled">
+        <div id="subwatershedClassDetailsList" class="DetailsListRolled physicalDetailsList">
         </div>
-        <div id="soilClassDetailsList" class="physicalDetailsListRolled">
+        <div id="soilClassDetailsList" class="DetailsListRolled physicalDetailsList">
           <div class="soilColor" style="background-color: #097c2f">
             <p class="levelsTextDetails" style="margin-top:10px;">Clarion 138B</p>
           </div>
@@ -392,7 +405,7 @@
 
       <!--Yield Productivity Overlay Maps -->
       <div id="yieldTab" class="consoleTab" style="display: none;">
-        <div id="cornGrainDetailsList" class="yieldDetailsListRolled">
+        <div id="cornGrainDetailsList" class="DetailsListRolled yieldDetailsList">
           <div class="cornGrain1">
             <p class="levelsTextDetails">0 Mg/ha/yr</p>
           </div>
@@ -407,7 +420,7 @@
           </div>
         </div>
 
-        <div id="soyBeanDetailsList" class="yieldDetailsListRolled">
+        <div id="soyBeanDetailsList" class="DetailsListRolled yieldDetailsList">
           <div class="soyBean1">
             <p class="levelsTextDetails">0 Mg/ha/yr</p>
           </div>
@@ -422,7 +435,7 @@
           </div>
         </div>
 
-        <div id="fruitDetailsList" class="yieldDetailsListRolled">
+        <div id="fruitDetailsList" class="DetailsListRolled yieldDetailsList">
           <div class="fruit1">
             <p class="levelsTextDetails">6.58 Mg/ha/yr</p>
           </div>
@@ -438,7 +451,7 @@
 
         </div>
 
-        <div id="cattleDetailsList" class="yieldDetailsListRolled">
+        <div id="cattleDetailsList" class="DetailsListRolled yieldDetailsList">
           <div class="cattle1">
             <p class="levelsTextDetails">3.4-4.0 animals/acre/yr</p>
           </div>
@@ -453,7 +466,7 @@
           </div>
         </div>
 
-        <div id="alfalfaDetailsList" class="yieldDetailsListRolled">
+        <div id="alfalfaDetailsList" class="DetailsListRolled yieldDetailsList">
           <div class="alfalfa1">
             <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
           </div>
@@ -468,7 +481,7 @@
           </div>
         </div>
 
-        <div id="grassHayDetailsList" class="yieldDetailsListRolled">
+        <div id="grassHayDetailsList" class="DetailsListRolled yieldDetailsList">
           <div class="grassHay1">
             <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
           </div>
@@ -483,7 +496,7 @@
           </div>
         </div>
 
-        <div id="switchGrassDetailsList" class="yieldDetailsListRolled">
+        <div id="switchGrassDetailsList" class="DetailsListRolled yieldDetailsList">
           <div class="switchGrass1">
             <p class="levelsTextDetails">4.39-5.29 Mg/ha/yr</p>
           </div>
@@ -498,7 +511,7 @@
           </div>
         </div>
 
-        <div id="woodDetailsList" class="yieldDetailsListRolled">
+        <div id="woodDetailsList" class="DetailsListRolled yieldDetailsList">
           <div class="wood1">
             <p class="levelsTextDetails">0.50-0.73 m3/ha/yr</p>
           </div>
@@ -513,7 +526,7 @@
           </div>
         </div>
 
-        <div id="shortDetailsList" class="yieldDetailsListRolled">
+        <div id="shortDetailsList" class="DetailsListRolled yieldDetailsList">
           <div class="short1">
             <p class="levelsTextDetails">608.6 tons/acre/yr</p>
           </div>
@@ -530,25 +543,15 @@
         <p class="featuresText"></p><img id="shortClass" class="yieldSelectorIcon icon" src="./imgs/woodyBiomassIcon.png" title="Woody Biomass" onclick="displayLevels('short');">
 
       </div>
-      <!-- year display -->
-      <div id="yearsTab" class="consoleTab" style="display:none;">
-        <!-- Create year buttons -->
-        <div id="yearTitle">Year Selection</div>
-        <!-- "Exposure, zero icon" by Google Design (https://design.google.com/) used under CC BY (https://creativecommons.org/licenses/by/3.0/) / Inverted from original -->
-        <div id="year0Button" class="yearButton" style="display:none;" onclick="transitionToYear(0); switchYearTab(0);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year0Image" class="yearNotSelected" src="./imgs/zero_40px.png"></div>
-        <div id="year1Button" class="yearButton" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="icon yearSelected" src="./imgs/one.png"></div>
-        <div id="year2Button" class="yearButtonHidden" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="icon yearImageHidden" src="./imgs/two.png"></div>
-        <div id="year3Button" class="yearButtonHidden" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="icon yearImageHidden" src="./imgs/three.png"></div>
-        <div id="yearAddButton" class="yearButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
-      </div>
 
     </div>
-    <!-- END left console, there is a lot happening there -->
 
+    <!-- painter brush -->
     <div id="settingsTab">
       <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
       <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
     </div>
+    <!-- END left console, there is a lot happening there -->
 
     <!-- **BEGIN Right Side Component** -->
 
@@ -568,12 +571,8 @@
 
     <!-- Create buttons in upper right corner: upperHud-->
     <img id="logoBase" src="./imgs/inGameLogo.png">
-    <img id="uploadDownloadButton" class="upperButton" width="40px" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-    <img id="creditsButton" class="upperButton" width="40px" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-
-    <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
-    <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-
+    <img id="uploadDownloadButton" class="upperButton"src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
     <!-- order now becomes important to make sure elements stack and cover correctly -->
 
@@ -638,7 +637,10 @@
     });
     $(window).bind("onunload", function(event) {
       showUploadDownload();
-      confirm("Are you sure to leave? Make sure if you saved changes.");
+      if(confirm("Are you sure to leave? Make sure if you saved changes.")==true ) {
+        boardData=null;// clean data
+        console.log("finished clean data");
+      }
     });
 
     //prevent modalEscapeFrame from being clicked on when using the buttons stored in the frame

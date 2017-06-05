@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-06T17:06:07-05:00
+ * @Last modified time: 2017-06-06T17:06:46-05:00
  */
 
 
@@ -1051,7 +1051,7 @@ function roll(value) {
     if (document.getElementById('tabButtons').className == "tabButtons") {
 
       document.getElementById('toolsButton').style.left = "0px";
-      document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')";
+      // document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')";
       document.getElementById('pick').src = "./imgs/pickIn.png"
       document.getElementById('tabButtons').className = "tabButtonsRolled";
       document.getElementById('leftConsole').className = "leftConsoleRolled";
@@ -1060,7 +1060,7 @@ function roll(value) {
       // document.getElementById('toolsButton').style.left = "135px";
       // document.getElementById('toolsButton').style.left = "9.6vw";
       document.getElementById('toolsButton').style.left = document.getElementById('leftConsole').style.width;
-      document.getElementById('toolsButton').style.backgroundImage = "none";
+      // document.getElementById('toolsButton').style.backgroundImage = "none";
       document.getElementById('pick').src = "./imgs/pickOut.png"
       document.getElementById('tabButtons').className = "tabButtons";
       document.getElementById('leftConsole').className = "leftConsole";
@@ -1084,94 +1084,94 @@ function showLevelDetails(value) {
 
   //show nitrate legend
   if (value == 1) {
-    document.getElementById("nitrateDetailsList").className = "levelDetailsList";
+    document.getElementById("nitrateDetailsList").className = "DetailsList levelDetailsList";
     document.getElementById('nitrateIcon').className = "levelsSelectorIcon iconSelected";
   }
 
   //show erosion legend
   else if (value == 2) {
-    document.getElementById("erosionDetailsList").className = "levelDetailsList";
+    document.getElementById("erosionDetailsList").className = "DetailsList levelDetailsList";
     document.getElementById('erosionIcon').className = "levelsSelectorIcon iconSelected";
   }
 
   //show phosphorus legend
   else if (value == 3) {
-    document.getElementById("phosphorusDetailsList").className = "levelDetailsList";
+    document.getElementById("phosphorusDetailsList").className = "DetailsList levelDetailsList";
     document.getElementById('phoshorusIcon').className = "levelsSelectorIcon iconSelected";
   }
 
   //show flood frequency legend
   else if (value == 4) {
     document.getElementById('floodFrequency').className = "featureSelectorIcon iconSelected";
-    document.getElementById("floodFrequencyDetailsList").className = "physicalDetailsList";
+    document.getElementById("floodFrequencyDetailsList").className = "DetailsList physicalDetailsList";
   }
 
   //show drainage class legend
   else if (value == 5) {
     document.getElementById('drainageClass').className = "featureSelectorIcon iconSelected";
-    document.getElementById("drainageClassDetailsList").className = "physicalDetailsList";
+    document.getElementById("drainageClassDetailsList").className = "DetailsList physicalDetailsList";
   }
 
   //show strategic wetlands legend
   else if (value == 6) {
     document.getElementById('strategicWetlands').className = "featureSelectorIcon iconSelected";
-    document.getElementById("wetlandClassDetailsList").className = "physicalDetailsList";
+    document.getElementById("wetlandClassDetailsList").className = "DetailsList physicalDetailsList";
   }
 
   //show subwatershed legend
   else if (value == 7) {
     document.getElementById('subwatershedBoundaries').className = "featureSelectorIcon iconSelected";
-    document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
+    document.getElementById("subwatershedClassDetailsList").className = "DetailsList physicalDetailsList";
   } //end else/if group
 
   //show soil class legend
   else if (value == 8) {
     document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
-    document.getElementById('soilClassDetailsList').className = "physicalDetailsList";
+    document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
   }
   //Corn class legend
     else if(value == 9){
-        document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
+        document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
         document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 10){
-        document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
+        document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
         document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 11){
-        document.getElementById('fruitDetailsList').className = "yieldDetailsList";
+        document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
         document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 12){
-        document.getElementById('cattleDetailsList').className = "yieldDetailsList";
+        document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
         document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 13){
-        document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
+        document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
         document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 14){
-        document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
+        document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
         document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 15){
-        document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
+        document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
         document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 16){
-        document.getElementById('woodDetailsList').className = "yieldDetailsList";
+        document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
         document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
     }
     else if(value == 17){
-        document.getElementById('shortDetailsList').className = "yieldDetailsList";
+        document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
         document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
     }
 
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
-    var element = document.getElementsByClassName('levelDetailsList');
+    var element = document.getElementsByClassName('DetailsList');
     if (element.length > 0) {
-      element[0].className = 'levelDetailsListRolled';
+      element[0].className = 'DetailsListRolled';
     }
     element = document.getElementsByClassName('levelsSelectorIcon iconSelected');
     if (element.length > 0) {
@@ -1181,9 +1181,9 @@ function showLevelDetails(value) {
 
   //hide watershed feature legends
   else if (value < -3 && value > -9) {
-    var element = document.getElementsByClassName('physicalDetailsList');
+    var element = document.getElementsByClassName('DetailsList physicalDetailsList');
     if (element.length > 0) {
-      element[0].className = 'physicalDetailsListRolled';
+      element[0].className = 'DetailsListRolled physicalDetailsList';
     }
     element = document.getElementsByClassName('featureSelectorIcon iconSelected');
     if (element.length > 0) {
@@ -1191,9 +1191,9 @@ function showLevelDetails(value) {
     }
   } //end else/if group
   else if(value < -8){
-        var element = document.getElementsByClassName('yieldDetailsList');
+        var element = document.getElementsByClassName('DetailsList yieldDetailsList');
         if(element.length > 0) {
-            element[0].className = 'yieldDetailsListRolled';
+            element[0].className = 'DetailsListRolled yieldDetailsList';
         }
         element = document.getElementsByClassName('yieldSelectorIcon iconSelected');
         if(element.length > 0){
