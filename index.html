@@ -77,6 +77,39 @@
     img5.src = "./htmlFrames/imgs/water.gif";
     var img2 = new Image();
     img2.src = "./imgs/meadowlarkanimation.gif";
+
+
+    // Prompt save changes before user exit the program
+    var page = document.getElementById("page");
+    $(window).bind("beforeunload", function(event) {
+      if (page.style.visibility == 'hidden') {
+        // not on the main page, exit the app directly
+
+        page = null; // XXX should clean more objects (everything) here
+
+        return ;
+      }
+
+      // on the main page, ask the user to save changes
+      showUploadDownload();
+      return "Are you sure to leave? Make sure if you saved changes.";
+    });
+
+    // // for different browsers
+    // $(window).bind("onunload", function(event) {
+    // if (page.style.visibility == 'hidden') {
+    //   // not on the main page, exit the app directly
+    //
+    //   page = null; // XXX should clean more objects (everything) here
+    //
+    //   return ;
+    // }
+    //
+    // // on the main page, ask the user to save changes
+    // showUploadDownload();
+    //   confirm("Are you sure to leave? Make sure if you saved changes.");
+    // });
+
   </script>
 
   <!-- Create hidden div to contain settings/options for in-game updates -->
@@ -471,7 +504,7 @@
                 </div>
                 <div class = "cornGrain2">
                     <p class = "levelsTextDetails">11.2-13.2 Mg/ha/yr</p>
-                </div> 
+                </div>
                 <div class = "cornGrain3">
                     <p class = "levelsTextDetails">13.2-13.9 Mg/ha/yr</p>
                 </div>
@@ -517,7 +550,7 @@
                        </tr>
                     </table>
             </div>
-             
+
              <div id = "soyBeanDetailsList" class = "yieldDetailsListRolled">
              <br>
              <font size = "1" color = "white"><center>Soybean Yield Key</center></font>
@@ -953,7 +986,7 @@
             <p class = "featuresText"></p><img id = "switchGrassClass" class = "icon yieldSelectorIcon" src="./imgs/switchGrassIcon.png" style="border-radius: 50%"; title = "Switch Grass" onclick="displayLevels('switchGrass');">
             <p class = "featuresText"></p><img id = "woodClass" class = "icon yieldSelectorIcon" src="./imgs/woodIcon.png"  style="border-radius: 50%"; title = "Wood" onclick="displayLevels('wood');">
             <p class = "featuresText"></p><img id = "shortClass" class = "icon yieldSelectorIcon" src="./imgs/woodyBiomassIcon.png"  style="border-radius: 50%"; title = "Woody Biomass" onclick="displayLevels('short');">
-            
+
          </div>
       <!-- year display -->
       <div id="yearsTab" class="consoleTab" style="display:none;">
@@ -1062,16 +1095,6 @@
 
   <!-- Javascript to stop event propogation for bug fix in modalEscapeFrame (above) -->
   <script>
-    // prompt before user exit the program two methods for different browsers
-    $(window).bind("beforeunload", function(event) {
-      showUploadDownload();
-      return "Are you sure to leave? Make sure if you saved changes.";
-    });
-    $(window).bind("onunload", function(event) {
-      showUploadDownload();
-      confirm("Are you sure to leave? Make sure if you saved changes.");
-    });
-
     //prevent modalEscapeFrame from being clicked on when using the buttons stored in the frame
     $("#escapeMenu").click(function(e) {
       e.stopPropagation();
