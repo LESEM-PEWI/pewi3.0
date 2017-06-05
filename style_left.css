@@ -43,7 +43,7 @@
   height: 3vw;
   top: 7.7vw;
   text-align: center;
-  width: 8.6vw;
+  width: 12.5vw;
   position: absolute;
   background-repeat: repeat;
 }
@@ -56,9 +56,9 @@
   background-color: rgba(0, 0, 0, 0.9);
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
-  border-radius: 0px;
+  border-radius: 6px 6px 6px 6px;
   border-right: 0px solid #F0A61D;
-  border-top-right-radius: 0px;
+  /*border-top-right-radius: 6px;*/
   cursor: pointer;
   height: var(--left-console-button-length);
   position: absolute;
@@ -78,7 +78,7 @@
   border-bottom-right-radius: 5px;
   height: var(--left-console-button-length);
   width: var(--left-console-button-length);
-  top: 7.7vw;
+  top: 40.75vw;
 }
 
 #undoButton:hover {
@@ -324,7 +324,7 @@
 .styled-select {
   background: #3b3b3b;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   color: #fff;
   cursor: pointer;
@@ -758,20 +758,10 @@ table #yieldGrainTable {
 #shortDetailsList{
     width: 220px;
 }
-#cornGrainDetailsList{}
-#soyBeanDetailsList{}
-#fruitDetailsList{}
-#cattleDetailsList{}
-#alfalfaDetailsList{}
-#grassHayDetailsList{}
-#switchGrassDetailsList{}
-#woodDetailsList{}
-#drainageClassDetailsList {}
 
-#soilClassDetailsList {}
 
 .featureSelectorIcon, .featureSelectorIconSelected {
-  border-radius: 50%;
+  border-radius: 6px;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   cursor: pointer;
   height: var(--selector-icon-length);
@@ -851,6 +841,7 @@ table #yieldGrainTable {
   }
   .tabButtons, #toolsButton, #undoButton {
     left: 57px;
+    border-radius: 6px;
   }
   #undoButton {
     height: 18px;
