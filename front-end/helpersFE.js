@@ -1,8 +1,6 @@
 /**
- * @Last modified time: 2017-06-06T17:06:46-05:00
+ * @Last modified time: 2017-06-06T17:07:11-05:00
  */
-
-
 
 /* global camera, scene, boardData,
           renderer, currentBoard, THREE,
@@ -2841,7 +2839,7 @@ function switchPlayerTab(playerNumberToChangeTo) {
 function transitionToPlayer(playerNumber) {
 
   currentPlayer = playerNumber;
-  console.log("Total number of players : %s", currentPlayer);
+  // console.log("Total number of players : %s", currentPlayer);
   boardData[currentBoard].updateBoard();
 
 

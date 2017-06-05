@@ -1,3 +1,10 @@
+/**
+ * @Date:   2017-06-01T16:49:42-05:00
+ * @Last modified time: 2017-06-05T09:22:26-05:00
+ */
+
+
+
 //================
 //global vars
 
@@ -562,7 +569,7 @@ function showMainMenu() {
     //clean up from level
     if (levelGlobal > 0 || levelGlobal < 0) {
       //clean up from a level
-      console.log("---cleaning up from exit---");
+      // console.log("---cleaning up from exit---");
       resetLevel();
       clearPopup();
       levelGlobal = 0;

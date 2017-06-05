@@ -1,10 +1,10 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-06-05T02:04:41-05:00
+ * @Last modified time: 2017-06-05T11:56:12-05:00
  */
 
-/* css global variable declaration */
 
+/* css global variable declaration */
 :root {
   --consoleButton-height: 2.81vw;
   --first-consoleButton-top: 15.47vw;
@@ -22,13 +22,14 @@
   box-sizing: border-box;
 }
 
-/**left console buttons or toolbar**/
 
 /**Styling for index Menu**/
 #indexmenu {
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
   border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
   color: #FFFFFF;
   cursor: pointer;
   font-family: var(--button-font-family);
@@ -48,6 +49,7 @@
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
+
 /* left console clickable buttons */
 .consoleButton {
   background-color: rgba(0, 0, 0, 0.7);
@@ -62,9 +64,11 @@
   /* Safari */
   /*-webkit-transition-duration: var(--transition-duration);*/
 }
+
 .consoleButton:hover {
   box-shadow: 8px 0px 10px -4px rgba(240, 166, 29, 0.8);
 }
+
 
 /* undo button */
 #undoButton {
@@ -73,9 +77,11 @@
   width: var(--left-console-button-length);
   top: 7.7vw;
 }
+
 #undoButton:hover {
   box-shadow: 0 0px 8px 2px rbg(0, 0, 0, 0.8);
 }
+
 
 /* toolsButton to slide the left console */
 #toolsButton {
@@ -83,9 +89,6 @@
   top: var(--left-console-top-value);
 }
 
-/*#toolsButton:hover {
-  box-shadow: 0 0px 8px 2px rgba(0, 0, 0, 0.8);
-}*/
 
 /* tabButtons class: container for consoleButton class */
 .tabButtons, #toolsButton, #undoButton {
@@ -95,6 +98,8 @@
   /* Safari */
   -webkit-transition-duration: var(--transition-duration);
 }
+
+
 /* needed for sliding  */
 .tabButtonsRolled {
   left: -4.26vw;
@@ -104,49 +109,65 @@
   transition-duration: var(--transition-duration);
 }
 
+
 /* img for consoleButton class.*/
 .imgSelected, .imgNotSelected, #pick {
   margin: var(--left-console-button-image-margin);
   width: var(--left-console-button-image-length);
 }
+
+
 /* img for consoleButton class. button selected */
 .imgSelected {
   border-right: 2px solid #F0A61D;
 }
+
+
 /* img for consoleButton class. button not selected */
 .imgNotSelected {
   border-right: 0px;
 }
 
- /* left consoleButton, terrain button */
+
+/* left consoleButton, terrain button */
 #terrainButton {
   border-top-right-radius: 5px;
   top: var(--first-consoleButton-top);
 }
+
+
 /* left consoleButton, precipatation button */
 #precipButton {
   top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
 }
+
+
 /* left consoleButton, year button */
 #yearButton {
   top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
 }
+
+
 /* left consoleButton, levels button */
 #levelsButton {
   top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
 }
+
+
 /* left consoleButton, features button */
 #featuresButton {
   top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
 }
+
+
 /* left consoleButton, yield button */
-#yieldButton{
+#yieldButton {
   border-bottom-right-radius: 5px;
   top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
 }
 
-/**left console content container**/
 
+/**left console content container**/
 #leftConsole {
   background-color: rgba(0, 0, 0, 0.7);
   background-image: url('./imgs/consoleTexture.png');
@@ -160,7 +181,8 @@
   transition-duration: var(--transition-duration);
   width: var(--left-console-width);
 }
-/**left console content container**/
+
+
 /* needed for sliding  */
 .leftConsole {
   left: 0;
@@ -169,6 +191,8 @@
 .leftConsoleRolled {
   left: calc( -1*var(--left-console-width));
 }
+/* end left console content container */
+
 
 /* The content div of each tab */
 .consoleTab {
@@ -177,9 +201,9 @@
   width: 100%;
 }
 
+
 /*terrain selector*/
-#painterTab {
-}
+#painterTab {}
 
 #painterTab-leftcol {
   width: calc(var(--left-console-width) / 2);
@@ -198,15 +222,19 @@
 
 /**inner elements of left console**/
 
+
 /* icons & iconSelected class */
 .icon, .iconSelected {
   border-radius: 50%;
+  -webkit-border-radius: 50;
+  -moz-border-radius: 50;
   cursor: pointer;
   float: left;
   height: var(--selector-icon-length);
   width: var(--selector-icon-length);
 }
-.icon{
+
+.icon {
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
 }
 
@@ -222,10 +250,12 @@
   box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
 }
 
+
 /*terrain selector*/
 .landSelectorIcon {
   margin: 0.5vw;
 }
+
 
 /* muti-player buttons */
 .playerIcon {
@@ -233,24 +263,34 @@
   margin: 0.5vw;
   position: relative;
 }
-/*levels map selector*/
+
+
+/* levels map selector */
 .levelsSelectorIcon {
   margin: 1vw 3vw 1.2vw;
 }
-/*physical features map selector*/
+
+
+/* physical features map selector */
 .featureSelectorIcon {
   margin: 0.5vw 3vw;
 }
 
-.yieldSelectorIcon{
+
+/* yield map selector */
+.yieldSelectorIcon {
   display: block;
   margin: 0.8vw;
   position: relative;
 }
 
+
+/* painter brush selector */
 .painterIcon {
   margin: 0.5vw 1vw;
 }
+/* end icons */
+
 
 /* multiplayerTab section */
 #message {
@@ -273,6 +313,7 @@
 }
 /* end multiplayerTab section */
 
+
 /* precipTab section */
 #precipTab {}
 
@@ -284,6 +325,7 @@
   padding: 0.2vw;
   text-align: center;
 }
+
 
 /*precip selector*/
 .styled-select {
@@ -299,7 +341,6 @@
 }
 
 #year0PrecipContainer {
-  /*display: block;*/
 }
 
 select {
@@ -316,6 +357,7 @@ option {
   font-size: var(--font-size);
 }
 /* end precipTab section */
+
 
 /** year buttons div**/
 .yearButton {
@@ -338,16 +380,70 @@ option {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
+
+/* detail lists */
+.DetailsList, .DetailsListRolled {
+  background-color: black;
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  margin: 15px 0px 0px 0px;
+  position: absolute;
+  top: 1.4vw;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+.DetailsList {
+  left: 14vw;
+}
+
+.DetailsListRolled {
+  left: -1000px;
+}
+
+.levelDetailsList {
+  width: 8.5vw;
+}
+
+.physicalDetailsList {
+  width: 15vw;
+}
+
+.yieldDetailsList {
+  width: 15vw;
+}
+/* end detail lists */
+
+.levelsTextDetails, .yieldtext {
+  color: #fff;
+  margin-left: 1.8vw;
+  white-space: nowrap;
+}
+
+.featuresText {
+  color: #fff;
+  text-align: center;
+}
+
+#shortDetailsList {
+  width: 220px;
+}
+
+
+/* indicator size and colors on detail lists */
 .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5,
 .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone,
-.drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5,
-.drainageColor6, .drainageColor7, .drainageColor8, .soilColor,
-.cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4,
+.drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8,
+.soilColor, .cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4,
 .soyBean1, .soyBean2, .soyBean3, .soyBean4,
 .fruit1, .fruit2, .fruit3, .fruit4,
 .cattle1, .cattle2, .cattle3, .cattle4,
 .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4,
-.grassHay1, .grassHay2, .grassHay3,.grassHay4,
+.grassHay1, .grassHay2, .grassHay3, .grassHay4,
 .switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4,
 .wood1, .wood2, .wood3, .wood4, .short1 {
   height: var(--level-indicator-length);
@@ -375,37 +471,6 @@ option {
   background-color: #871c12;
 }
 
-.DetailsList, .DetailsListRolled {
-  background-color: black;
-  background-image: url('./imgs/consoleTexture.png');
-  background-repeat: repeat;
-  border-radius: 12px;
-  margin: 15px 0px 0px 0px;
-  position: absolute;
-  top: 1.4vw;
-  -webkit-transition-duration: var(--transition-duration);
-  /* Safari */
-  transition-duration: var(--transition-duration);
-}
-
-/* detail lists */
-.DetailsList {
-  left: 14vw;
-}
-
-.DetailsListRolled {
-  left: -1000px;
-}
-
-.levelDetailsList {
-  width: 8.5vw;
-}
-
-.levelsTextDetails {
-  color: #fff;
-  margin-left: 1.8vw;
-  white-space: nowrap;
-}
 .floodColor1 {
   background-color: #ffffc9;
 }
@@ -450,142 +515,138 @@ option {
   background-color: #bc892f;
 }
 
-.physicalDetailsList {
-  width: 15vw;
+.cornGrain1 {
+  background-color: #ffffc9;
 }
 
-
-.yieldDetailsList {
-  width: 15vw;
-}
-.yieldtext {
-  color: #fff;
-  margin-left: 1.8vw;
-  white-space: nowrap;
+.cornGrain2 {
+  background-color: #e3c972;
 }
 
-.cornGrain1{
-    background-color: #ffffc9;
-}
-.cornGrain2{
-    background-color: #e3c972;
-}
-.cornGrain3{
-    background-color: #e6bb00;
-}
-.cornGrain4{
-    background-color: #bc892f;
+.cornGrain3 {
+  background-color: #e6bb00;
 }
 
-
-.soyBean1{
-    background-color: #ffffff;
-}
-.soyBean2{
-    background-color: #ccffcc;
-}
-.soyBean3{
-    background-color: #66ff66;
-}
-.soyBean4{
-    background-color: #00cc00;
+.cornGrain4 {
+  background-color: #bc892f;
 }
 
-.fruit1{
-    background-color: #ff4000;
-}
-.fruit2{
-    background-color: #e6bb00;
-}
-.fruit3{
-    background-color: #66ff66;
-}
-.fruit4{
-    background-color: #aa4497;
-}
-.cattle1{
-    background-color: #ffffff;
-}
-.cattle2{
-    background-color: #CECACA;
-}
-.cattle3{
-    background-color: #5e6e71;
-}
-.cattle4{
-    background-color: #000000;
+.soyBean1 {
+  background-color: #ffffff;
 }
 
-.alfalfa1{
-    background-color: #cc6578;
-}
-.alfalfa2{
-    background-color: #aa4497;
-}
-.alfalfa3{
-    background-color: #8B008B;
-}
-.alfalfa4{
-    background-color: #862254;
+.soyBean2 {
+  background-color: #ccffcc;
 }
 
-.grassHay1{
-    background-color: #d9ff66;
+.soyBean3 {
+  background-color: #66ff66;
 }
-.grassHay2{
-    background-color: #66ff66;
-}
-.grassHay3{
-    background-color: #00ff00;
-}
-.grassHay4{
-    background-color: #187336;
-}
-.switchGrass1{
-    background-color: #66ff66;
-}
-.switchGrass2{
-    background-color: #33cc33;
-}
-.switchGrass3{
-    background-color: #1f7a1f;
-}
-.switchGrass4{
-    background-color: #145214;
-}
-.wood1{
-    background-color: #f2e6d9;
-}
-.wood2{
-    background-color: #d9b38c;
-}
-.wood3{
-    background-color: #ac7339;
-}
-.wood4{
-    background-color: #734d26;
-}
-.short1{
-    background-color: #734D26;
-}
-#shortDetailsList{
-    width: 220px;
-}
-#cornGrainDetailsList{}
-#soyBeanDetailsList{}
-#fruitDetailsList{}
-#cattleDetailsList{}
-#alfalfaDetailsList{}
-#grassHayDetailsList{}
-#switchGrassDetailsList{}
-#woodDetailsList{}
-#drainageClassDetailsList {}
-#soilClassDetailsList {}
 
-.featuresText {
-  color: #fff;
-  text-align: center;
+.soyBean4 {
+  background-color: #00cc00;
 }
+
+.fruit1 {
+  background-color: #ff4000;
+}
+
+.fruit2 {
+  background-color: #e6bb00;
+}
+
+.fruit3 {
+  background-color: #66ff66;
+}
+
+.fruit4 {
+  background-color: #aa4497;
+}
+
+.cattle1 {
+  background-color: #ffffff;
+}
+
+.cattle2 {
+  background-color: #CECACA;
+}
+
+.cattle3 {
+  background-color: #5e6e71;
+}
+
+.cattle4 {
+  background-color: #000000;
+}
+
+.alfalfa1 {
+  background-color: #cc6578;
+}
+
+.alfalfa2 {
+  background-color: #aa4497;
+}
+
+.alfalfa3 {
+  background-color: #8B008B;
+}
+
+.alfalfa4 {
+  background-color: #862254;
+}
+
+.grassHay1 {
+  background-color: #d9ff66;
+}
+
+.grassHay2 {
+  background-color: #66ff66;
+}
+
+.grassHay3 {
+  background-color: #00ff00;
+}
+
+.grassHay4 {
+  background-color: #187336;
+}
+
+.switchGrass1 {
+  background-color: #66ff66;
+}
+
+.switchGrass2 {
+  background-color: #33cc33;
+}
+
+.switchGrass3 {
+  background-color: #1f7a1f;
+}
+
+.switchGrass4 {
+  background-color: #145214;
+}
+
+.wood1 {
+  background-color: #f2e6d9;
+}
+
+.wood2 {
+  background-color: #d9b38c;
+}
+
+.wood3 {
+  background-color: #ac7339;
+}
+
+.wood4 {
+  background-color: #734d26;
+}
+
+.short1 {
+  background-color: #734D26;
+}
+/* end indicator size and colors on detail lists */
 
 #settingsTab {
   height: 3vw;
@@ -598,6 +659,7 @@ option {
   width: var(--left-console-width);
 }
 
+/* responsive web design. When the window size gets smaller than 600x400 */
 @media screen and (max-width: 600px), screen and (max-height: 400px) {
   .icon, .iconSelected {
     height: 15px;
@@ -668,7 +730,7 @@ option {
   #featuresButton {
     top: 164px;
   }
-  #yieldButton{
+  #yieldButton {
     top: 182px;
   }
   #precipTitle, #yearTitle {
@@ -723,12 +785,10 @@ option {
   .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5,
   .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone,
   .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8,
-  .soilColor,.cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4,
-  .soyBean1, .soyBean2, .soyBean3, .soyBean4,
-  .fruit1, .fruit2, .fruit3, .fruit4,
-  .cattle1, .cattle2, .cattle3, .cattle4,
-  .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4,
-  .grassHay1, .grassHay2, .grassHay3,.grassHay4,
+  .soilColor, .cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4,
+  .soyBean1, .soyBean2, .soyBean3, .soyBean4, .fruit1, .fruit2, .fruit3, .fruit4,
+  .cattle1, .cattle2, .cattle3, .cattle4, .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4,
+  .grassHay1, .grassHay2, .grassHay3, .grassHay4,
   .switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4,
   .wood1, .wood2, .wood3, .wood4, .short1 {
     height: 6px;
