@@ -308,6 +308,7 @@ function switchBoards(newBoard) {
   boardData.push(newBoard);
   currentBoard++;
   boardData[currentBoard].updateBoard();
+  console.log("boardData[currentBoard] in switchBoards() after updateBoard() "+boardData[currentBoard]);
 
   refreshBoard();
   setupRiver();
@@ -340,8 +341,10 @@ function setupBoardFromUpload(data) {
   var isEmpty = Object.getOwnPropertyNames(data).length == 3;
   if (!isEmpty) {
     var boardFromUpload = new GameBoard();
+    console.log("What is data? " + data);
     parseInitial(data);
     propogateBoard(boardFromUpload);
+    console.log("What is boardFromUpload? " + boardFromUpload);
 
     switchBoards(boardFromUpload);
     previousHover = null;

@@ -929,7 +929,7 @@ function changeSelectedPaintTo(newPaintValue) {
 
     // if it's grid painting mode and the user click to switch painter, erase the first seleted tile
     if (painterTool.status == 2) {
-      painterTool.status = 1;// ready to do grid paint
+      painterTool.status = 1; // ready to do grid paint
     }
 
     //have land type update immediately, well, pretend the mouse moved...
@@ -1130,42 +1130,34 @@ function showLevelDetails(value) {
     document.getElementById('soilClassDetailsList').className = "physicalDetailsList";
   }
   //Corn class legend
-    else if(value == 9){
-        document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
-        document.getElementById('cornClass').className = "yieldSelectorIconSelected";
-    }
-    else if(value == 10){
-        document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
-        document.getElementById('soyClass').className = "yieldSelectorIconSelected";
-    }
-    else if(value == 11){
-        document.getElementById('fruitDetailsList').className = "yieldDetailsList";
-        document.getElementById('fruitClass').className = "yieldSelectorIconSelected";
-    }
-    else if(value == 12){
-        document.getElementById('cattleDetailsList').className = "yieldDetailsList";
-        document.getElementById('cattleClass').className = "yieldSelectorIconSelected";
-    }
-    else if(value == 13){
-        document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
-        document.getElementById('alfalfaClass').className = "yieldSelectorIconSelected";
-    }
-    else if(value == 14){
-        document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
-        document.getElementById('grassHayClass').className = "yieldSelectorIconSelected";
-    }
-    else if(value == 15){
-        document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
-        document.getElementById('switchGrassClass').className = "yieldSelectorIconSelected";
-    }
-    else if(value == 16){
-        document.getElementById('woodDetailsList').className = "yieldDetailsList";
-        document.getElementById('woodClass').className = "yieldSelectorIconSelected";
-    }
-    else if(value == 17){
-        document.getElementById('shortDetailsList').className = "yieldDetailsList";
-        document.getElementById('shortClass').className = "yieldSelectorIconSelected";
-    }
+  else if (value == 9) {
+    document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
+    document.getElementById('cornClass').className = "yieldSelectorIconSelected";
+  } else if (value == 10) {
+    document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
+    document.getElementById('soyClass').className = "yieldSelectorIconSelected";
+  } else if (value == 11) {
+    document.getElementById('fruitDetailsList').className = "yieldDetailsList";
+    document.getElementById('fruitClass').className = "yieldSelectorIconSelected";
+  } else if (value == 12) {
+    document.getElementById('cattleDetailsList').className = "yieldDetailsList";
+    document.getElementById('cattleClass').className = "yieldSelectorIconSelected";
+  } else if (value == 13) {
+    document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
+    document.getElementById('alfalfaClass').className = "yieldSelectorIconSelected";
+  } else if (value == 14) {
+    document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
+    document.getElementById('grassHayClass').className = "yieldSelectorIconSelected";
+  } else if (value == 15) {
+    document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
+    document.getElementById('switchGrassClass').className = "yieldSelectorIconSelected";
+  } else if (value == 16) {
+    document.getElementById('woodDetailsList').className = "yieldDetailsList";
+    document.getElementById('woodClass').className = "yieldSelectorIconSelected";
+  } else if (value == 17) {
+    document.getElementById('shortDetailsList').className = "yieldDetailsList";
+    document.getElementById('shortClass').className = "yieldSelectorIconSelected";
+  }
 
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
@@ -1190,17 +1182,16 @@ function showLevelDetails(value) {
       element[0].className = 'featureSelectorIcon';
     }
   } //end else/if group
-
-  else if(value < -8){
-        var element = document.getElementsByClassName('yieldDetailsList');
-        if(element.length > 0) {
-            element[0].className = 'yieldDetailsListRolled';
-        }
-        element = document.getElementsByClassName('yieldSelectorIconSelected');
-        if(element.length > 0){
-            element[0].ckassName = 'yieldSelectorIcon';
-        }
+  else if (value < -8) {
+    var element = document.getElementsByClassName('yieldDetailsList');
+    if (element.length > 0) {
+      element[0].className = 'yieldDetailsListRolled';
     }
+    element = document.getElementsByClassName('yieldSelectorIconSelected');
+    if (element.length > 0) {
+      element[0].ckassName = 'yieldSelectorIcon';
+    }
+  }
 
 } //end showLevelDetails
 
@@ -1272,10 +1263,9 @@ function switchConsoleTab(value) {
     inDispLevels = false;
     document.getElementById('calendarImg').className = "imgSelected";
     document.getElementById('yearsTab').style.display = "block";
-  }
-     else if(value == 7){
-        document.getElementById('yieldImg').className = "imgSelected";
-        document.getElementById('yieldTab').style.display = "block"
+  } else if (value == 7) {
+    document.getElementById('yieldImg').className = "imgSelected";
+    document.getElementById('yieldTab').style.display = "block"
   }
 
 
@@ -1359,33 +1349,33 @@ function displayLevels(overlayHighlightType) {
     case 'soil':
       selectionHighlightNumber = 8;
       break;
-       case 'cornGrain':
-            selectionHighlightNumber = 9;
-            break;
-        case 'soy':
-            selectionHighlightNumber = 10;
-            break;
-        case 'fruit':
-            selectionHighlightNumber = 11;
-            break;
-        case 'cattle':
-            selectionHighlightNumber = 12;
-            break;
-        case 'alfalfa':
-            selectionHighlightNumber = 13;
-            break;
-        case 'grassHay':
-            selectionHighlightNumber = 14;
-            break;
-        case 'switchGrass':
-            selectionHighlightNumber = 15;
-            break;
-        case 'wood':
-            selectionHighlightNumber = 16;
-            break;
-        case 'short':
-            selectionHighlightNumber = 17;
-            break;
+    case 'cornGrain':
+      selectionHighlightNumber = 9;
+      break;
+    case 'soy':
+      selectionHighlightNumber = 10;
+      break;
+    case 'fruit':
+      selectionHighlightNumber = 11;
+      break;
+    case 'cattle':
+      selectionHighlightNumber = 12;
+      break;
+    case 'alfalfa':
+      selectionHighlightNumber = 13;
+      break;
+    case 'grassHay':
+      selectionHighlightNumber = 14;
+      break;
+    case 'switchGrass':
+      selectionHighlightNumber = 15;
+      break;
+    case 'wood':
+      selectionHighlightNumber = 16;
+      break;
+    case 'short':
+      selectionHighlightNumber = 17;
+      break;
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -1562,305 +1552,278 @@ function getHighlightColor(highlightType, tileId) {
         //color 87ceee
         return 18;
     }
+  } else if (highlightType == "cornGrain") {
+    var soil = boardData[currentBoard].map[tileId].soilType;
+    switch (soil) {
+      case "A":
+        return 35;
+      case "B":
+        return 5;
+      case "C":
+        return 0;
+      case "D":
+        return 22;
+      case "G":
+        return 5;
+      case "K":
+        return 22;
+      case "L":
+        return 0;
+      case "M":
+        return 35;
+      case "N":
+        return 35;
+      case "O":
+        return 22;
+      case "Q":
+        return 35;
+      case "T":
+        return 35;
+      case "Y":
+        return 22;
+    }
+  } else if (highlightType == "soy") {
+    var soil = boardData[currentBoard].map[tileId].soilType;
+    switch (soil) {
+      case "A":
+        return 46;
+      case "B":
+        return 43;
+      case "C":
+        return 45;
+      case "D":
+        return 45;
+      case "G":
+        return 43;
+      case "K":
+        return 45;
+      case "L":
+        return 45;
+      case "M":
+        return 46;
+      case "N":
+        return 46;
+      case "O":
+        return 44;
+      case "Q":
+        return 46;
+      case "T":
+        return 46;
+      case "Y":
+        return 45;
+    }
+
+  } else if (highlightType == "alfalfa") {
+    var soil = boardData[currentBoard].map[tileId].soilType;
+    switch (soil) {
+      case "A":
+        return 42;
+      case "B":
+        return 13;
+      case "C":
+        return 25;
+      case "D":
+        return 42;
+      case "G":
+        return 13;
+      case "K":
+        return 13;
+      case "L":
+        return 25;
+      case "M":
+        return 17;
+      case "N":
+        return 42;
+      case "O":
+        return 13;
+      case "Q":
+        return 17;
+      case "T":
+        return 17;
+      case "Y":
+        return 42;
+    }
+  } else if (highlightType == "grassHay") {
+    var soil = boardData[currentBoard].map[tileId].soilType;
+    switch (soil) {
+      case "A":
+        return 46;
+      case "B":
+        return 47;
+      case "C":
+        return 45;
+      case "D":
+        return 46;
+      case "G":
+        return 47;
+      case "K":
+        return 47;
+      case "L":
+        return 45;
+      case "M":
+        return 29;
+      case "N":
+        return 46;
+      case "O":
+        return 47;
+      case "Q":
+        return 29;
+      case "T":
+        return 29;
+      case "Y":
+        return 46;
+    }
+  } else if (highlightType == "switchGrass") {
+    var soil = boardData[currentBoard].map[tileId].soilType;
+    switch (soil) {
+      case "A":
+        return 49;
+      case "B":
+        return 45;
+      case "C":
+        return 49;
+      case "D":
+        return 45;
+      case "G":
+        return 45;
+      case "K":
+        return 45;
+      case "L":
+        return 49;
+      case "M":
+        return 49;
+      case "N":
+        return 51;
+      case "O":
+        return 45;
+      case "Q":
+        return 51;
+      case "T":
+        return 51;
+      case "Y":
+        return 50;
+    }
+  } else if (highlightType == "wood") {
+    var soil = boardData[currentBoard].map[tileId].soilType;
+    switch (soil) {
+      case "A":
+        return 55;
+      case "B":
+        return 53;
+      case "C":
+        return 52;
+      case "D":
+        return 55;
+      case "G":
+        return 55;
+      case "K":
+        return 53;
+      case "L":
+        return 52;
+      case "M":
+        return 55;
+      case "N":
+        return 54;
+      case "O":
+        return 52;
+      case "Q":
+        return 55;
+      case "T":
+        return 54;
+      case "Y":
+        return 55;
+    }
+  } else if (highlightType == "fruit") {
+    var soil = boardData[currentBoard].map[tileId].soilType;
+    switch (soil) {
+      case "A":
+        return 0;
+      case "B":
+        return 25;
+      case "C":
+        return 56;
+      case "D":
+        return 45;
+      case "G":
+        return 0;
+      case "K":
+        return 45;
+      case "L":
+        return 56;
+      case "M":
+        return 56;
+      case "N":
+        return 0;
+      case "O":
+        return 56;
+      case "Q":
+        return 56;
+      case "T":
+        return 56;
+      case "Y":
+        return 45;
+    }
+  } else if (highlightType == "cattle") {
+    var soil = boardData[currentBoard].map[tileId].soilType;
+    switch (soil) {
+      case "A":
+        return 57;
+      case "B":
+        return 43;
+      case "C":
+        return 58;
+      case "D":
+        return 33;
+      case "G":
+        return 43;
+      case "K":
+        return 58;
+      case "L":
+        return 58;
+      case "M":
+        return 57;
+      case "N":
+        return 57;
+      case "O":
+        return 43;
+      case "Q":
+        return 57;
+      case "T":
+        return 57;
+      case "Y":
+        return 57;
+    }
+  } else if (highlightType == "short") {
+    var soil = boardData[currentBoard].map[tileId].soilType;
+    switch (soil) {
+      case "A":
+        return 55;
+      case "B":
+        return 55;
+      case "C":
+        return 55;
+      case "D":
+        return 55;
+      case "G":
+        return 55;
+      case "K":
+        return 55;
+      case "L":
+        return 55;
+      case "M":
+        return 55;
+      case "N":
+        return 55;
+      case "O":
+        return 55;
+      case "Q":
+        return 55;
+      case "T":
+        return 55;
+      case "Y":
+        return 55;
+    }
   }
-   else if(highlightType == "cornGrain"){
-        var soil = boardData[currentBoard].map[tileId].soilType;
-        switch(soil)
-            {
-            case "A":
-                return 35;
-            case "B":
-                return 5;
-            case "C":
-                return 0;
-            case "D":
-                return 22;
-            case "G":
-                return 5;
-            case "K":
-                return 22;
-            case "L":
-                return 0;
-            case "M":
-                return 35;
-            case "N":
-                return 35;
-            case "O":
-                return 22;
-            case "Q":
-                return 35;
-            case "T":
-                return 35;
-            case "Y":
-                return 22;
-        }
-    }
-    else if(highlightType == "soy")
-    {
-        var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil)
-            {
-            case "A":
-                return 46;
-            case "B":
-                return 43;
-            case "C":
-                return 45;
-            case "D":
-                return 45;
-            case "G":
-                return 43;
-            case "K":
-                return 45;
-            case "L":
-                return 45;
-            case "M":
-                return 46;
-            case "N":
-                return 46;
-            case "O":
-                return 44;
-            case "Q":
-                return 46;
-            case "T":
-                return 46;
-            case "Y":
-                return 45;
-            }
-
-    }
-    else if(highlightType == "alfalfa")
-    {
-        var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil)
-            {
-            case "A":
-                return 42;
-            case "B":
-                return 13;
-            case "C":
-                return 25;
-            case "D":
-                return 42;
-            case "G":
-                return 13;
-            case "K":
-                return 13;
-            case "L":
-                return 25;
-            case "M":
-                return 17;
-            case "N":
-                return 42;
-            case "O":
-                return 13;
-            case "Q":
-                return 17;
-            case "T":
-                return 17;
-            case "Y":
-                return 42;
-            }
-    }
-    else if(highlightType == "grassHay")
-    {
-        var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil)
-            {
-            case "A":
-                return 46;
-            case "B":
-                return 47;
-            case "C":
-                return 45;
-            case "D":
-                return 46;
-            case "G":
-                return 47;
-            case "K":
-                return 47;
-            case "L":
-                return 45;
-            case "M":
-                return 29;
-            case "N":
-                return 46;
-            case "O":
-                return 47;
-            case "Q":
-                return 29;
-            case "T":
-                return 29;
-            case "Y":
-                return 46;
-            }
-    }
-    else if(highlightType == "switchGrass")
-    {
-        var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil)
-            {
-            case "A":
-                return 49;
-            case "B":
-                return 45;
-            case "C":
-                return 49;
-            case "D":
-                return 45;
-            case "G":
-                return 45;
-            case "K":
-                return 45;
-            case "L":
-                return 49;
-            case "M":
-                return 49;
-            case "N":
-                return 51;
-            case "O":
-                return 45;
-            case "Q":
-                return 51;
-            case "T":
-                return 51;
-            case "Y":
-                return 50;
-            }
-    }
-    else if(highlightType == "wood")
-    {
-        var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil)
-            {
-            case "A":
-                return 55;
-            case "B":
-                return 53;
-            case "C":
-                return 52;
-            case "D":
-                return 55;
-            case "G":
-                return 55;
-            case "K":
-                return 53;
-            case "L":
-                return 52;
-            case "M":
-                return 55;
-            case "N":
-                return 54;
-            case "O":
-                return 52;
-            case "Q":
-                return 55;
-            case "T":
-                return 54;
-            case "Y":
-                return 55;
-            }
-    }
-     else if(highlightType == "fruit")
-    {
-        var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil)
-            {
-            case "A":
-                return 0;
-            case "B":
-                return 25;
-            case "C":
-                return 56;
-            case "D":
-                return 45;
-            case "G":
-                return 0;
-            case "K":
-                return 45;
-            case "L":
-                return 56;
-            case "M":
-                return 56;
-            case "N":
-                return 0;
-            case "O":
-                return 56;
-            case "Q":
-                return 56;
-            case "T":
-                return 56;
-            case "Y":
-                return 45;
-            }
-    }
-    else if(highlightType == "cattle")
-    {
-        var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil)
-            {
-            case "A":
-                return 57;
-            case "B":
-                return 43;
-            case "C":
-                return 58;
-            case "D":
-                return 33;
-            case "G":
-                return 43;
-            case "K":
-                return 58;
-            case "L":
-                return 58;
-            case "M":
-                return 57;
-            case "N":
-                return 57;
-            case "O":
-                return 43;
-            case "Q":
-                return 57;
-            case "T":
-                return 57;
-            case "Y":
-                return 57;
-            }
-    }
-
-    else if(highlightType == "short")
-    {
-        var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil)
-            {
-            case "A":
-                return 55;
-            case "B":
-                return 55;
-            case "C":
-                return 55;
-            case "D":
-                return 55;
-            case "G":
-                return 55;
-            case "K":
-                return 55;
-            case "L":
-                return 55;
-            case "M":
-                return 55;
-            case "N":
-                return 55;
-            case "O":
-                return 55;
-            case "Q":
-                return 55;
-            case "T":
-                return 55;
-            case "Y":
-                return 55;
-            }
-    }
 } //end getHighlightColor
 
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
@@ -2750,24 +2713,28 @@ function hideMultiDownload() {
 //multiUpload directs functions for multiplayer file upload
 function multiplayerFileUpload(numberOfTimesThisFunctionHasBeenCalledInProcess, fileUploadEvent) {
   //if this is the first time, call base prep, otherwise, add map on top
-  return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
-    multiplayerAggregateOverlayMapping(fileUploadEvent) :
-    multiplayerAggregateBaseMapping(fileUploadEvent);
+  // return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
+  //   multiplayerAggregateOverlayMapping(fileUploadEvent) :
+  //   multiplayerAggregateBaseMapping(fileUploadEvent);
+
+  multiplayerAggregateBaseMapping(fileUploadEvent.files[0]);
+  for (var i = 1; i < fileUploadEvent.files.length; i++) {
+    multiplayerAggregateOverlayMapping(fileUploadEvent.files[i]);
+  }
+
 } //end multiUpload
 
 //this function initializes the aggregation of multiplayer boards
 //  basically, it setups up the first board as is
-function multiplayerAggregateBaseMapping(e) {
+function multiplayerAggregateBaseMapping(file) {
   //set up first file completely normally
-  var files;
-  files = e.target.files;
 
-  if (files[0].name && !files[0].name.match(/\.csv/)) {
+  if (file.name && !file.name.match(/\.csv/)) {
     alert("Incorrect File Type!");
     return 0;
   } else {
     var reader = new FileReader();
-    reader.readAsText(files[0]);
+    reader.readAsText(file);
     reader.onload = function(e) {
       setupBoardFromUpload(reader.result);
       //clear initData
@@ -2778,17 +2745,14 @@ function multiplayerAggregateBaseMapping(e) {
 } //end multiplayerAggregateBaseMapping
 
 //here we facilitate the aggregation of multiplayer boards
-function multiplayerAggregateOverlayMapping(e) {
+function multiplayerAggregateOverlayMapping(file) {
 
-  var files;
-  files = e.target.files;
-
-  if (files[0].name && !files[0].name.match(/\.csv/)) {
+  if (file.name && !file.name.match(/\.csv/)) {
     alert("Incorrect File Type!");
     return 0;
   } else {
     var reader = new FileReader();
-    reader.readAsText(files[0]);
+    reader.readAsText(file);
     reader.onload = function(e) {
 
       //setup data from reader (file) into intiData global
