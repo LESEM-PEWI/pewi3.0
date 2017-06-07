@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T11:01:34-05:00
- * @Last modified time: 2017-06-04T16:40:40-05:00
+ * @Last modified time: 2017-06-07T15:02:48-05:00
  */
 
 
@@ -141,7 +141,8 @@ body {
 }
 
 #page {
-  visibility: hidden;
+  display: none;
+  /*visibility: hidden;*/
 }
 
 .upperButton, #logoBase {
@@ -267,10 +268,11 @@ body {
 }
 
 #loading {
+  background: black;
+  display: none;
+  height: 100%;
   position: absolute;
   width: 100%;
-  height: 100%;
-  background: black;
 }
 
 #loadingContainer {

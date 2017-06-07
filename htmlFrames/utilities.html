@@ -62,13 +62,16 @@ Cleaned and Prepared - August 2016
                     <!-- in future, div may need to be moved outside the label, cleverly-->
                     <div id="addFile" class="mainButton">Add a File</div>
                 </label>
-        <input id="file-upload" type="file" multiple="" onchange="makeFileList()"/>
+        <input id="file-upload" type="file" multiple="" onchange="makeFileList()" />
         <!-- <input id="file-upload" type="file" /> -->
       </div>
       <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
       <div id="aggregateInfo" class="infoBar">
         Ready. Upload first file.
       </div>
+
+    </div>
+    <div id="div-fileList">
       <ul id="fileList">
         <li>No Files Selected</li>
       </ul>
@@ -76,35 +79,48 @@ Cleaned and Prepared - August 2016
 
   </div>
   <script>
-    //testing
     // list all the files selected
     function makeFileList() {
       var input = document.getElementById("file-upload");
       var ul = document.getElementById("fileList");
 
+      // delete all the nodes under fileList
       while (ul.hasChildNodes()) {
         ul.removeChild(ul.firstChild);
       }
 
-      for (var i = 0; i < input.files.length; i++) {
-        var li = document.createElement("li");
-        li.innerHTML = input.files[i].name;
-        ul.appendChild(li);
-      }
+      if (input.files.length > 0) {
 
-      if(!ul.hasChildNodes()) {
-        var li = document.createElement("li");
-        li.innerHTML = 'No Files Selected';
-        ul.appendChild(li);
-      }
-      // do uploading and process the files
-      window.top.multiplayerFileUpload(input.files.length, input);
+        // check file type here
+        var typeError = false;
+        for (var i = 0; i < input.files.length; i++) {
+          if (!input.files[i].name.match(/\.csv/)) {
+            typeError = true;
+            break;
+          }
+        }
+        if (typeError) {
+          alert("At Least One Incorrect File Type!");
+          return;
+        }
+        
+        for (var i = 0; i < input.files.length; i++) {
+          var li = document.createElement("li");
+          li.innerHTML = input.files[i].name;
+          ul.appendChild(li);
+        }
+        document.getElementById("div-fileList").style.display = 'block';
+
+        // do uploading and process the files
+        window.top.multiplayerFileUpload(input);
+      } // end if
+
       //change what is displayed in the info bar
       updateInfo(input.files.length);
     }
 
 
-    var numberOfTimesAggregated = 0; //used to keep track for info bar
+    // var numberOfTimesAggregated = 0; //used to keep track for info bar
     // bindAggregateFunctionToFileUpload();
 
     //launch essentially sandbox with multiplayer tools
@@ -115,15 +131,15 @@ Cleaned and Prepared - August 2016
     } //end launchMultiplayerSetup
 
     //attach the file upload event to our functions for aggregating
-    function bindAggregateFunctionToFileUpload() {
-      //jquery attachment
-      $('#file-upload').bind('propertychange change', function(e) {
-        //if the upload is successful, then it returns 1, and numberOfTimes... increases
-        numberOfTimesAggregated += window.top.multiplayerFileUpload(numberOfTimesAggregated, e);
-        //change what is displayed in the info bar
-        updateInfo(numberOfTimesAggregated);
-      });
-    } //end bindAggregateFunctionToFileUpload
+    // function bindAggregateFunctionToFileUpload() {
+    //   //jquery attachment
+    //   $('#file-upload').bind('propertychange change', function(e) {
+    //     //if the upload is successful, then it returns 1, and numberOfTimes... increases
+    //     numberOfTimesAggregated += window.top.multiplayerFileUpload(numberOfTimesAggregated, e);
+    //     //change what is displayed in the info bar
+    //     updateInfo(numberOfTimesAggregated);
+    //   });
+    // } //end bindAggregateFunctionToFileUpload
 
     //expand or collapse the div holding tools for mashing together separate maps
     function toggleAggregateOptions() {
@@ -149,16 +165,23 @@ Cleaned and Prepared - August 2016
       while (ul.hasChildNodes()) {
         ul.removeChild(ul.firstChild);
       }
+      // remove div-fileList
+      document.getElementById("div-fileList").style.display = 'none';
 
       //data from function in helpersFE.js
       var data = window.top.writeFileToDownloadString();
-      var downloadBlob = new Blob([data], {
-        type: "text/csv;charset=utf-8"
-      });
-      //filesaver.min.js
-      saveAs(downloadBlob, "aggregatePewiMap.csv");
+      if (data.length != 0) {
+        var downloadBlob = new Blob([data], {
+          type: "text/csv;charset=utf-8"
+        });
+        //filesaver.min.js
+        saveAs(downloadBlob, "aggregatePewiMap.csv");
 
-      document.getElementById('aggregateInfo').innerHTML = "Downloaded. Return to Sandbox to load.";
+        document.getElementById('aggregateInfo').innerHTML = "Downloaded. Return to Sandbox to load.";
+      } else {
+        document.getElementById('aggregateInfo').innerHTML = "No data to download.";
+      }
+
     } //end downloadAggregateMap
 
     //updates the text information in the infoBar for the user

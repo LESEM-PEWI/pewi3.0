@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-06T17:07:11-05:00
+ * @Last modified time: 2017-06-07T16:09:51-05:00
  */
 
 /* global camera, scene, boardData,
@@ -1128,42 +1128,34 @@ function showLevelDetails(value) {
     document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
   }
   //Corn class legend
-    else if(value == 9){
-        document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 10){
-        document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 11){
-        document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 12){
-        document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 13){
-        document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 14){
-        document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 15){
-        document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 16){
-        document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 17){
-        document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
-    }
+  else if (value == 9) {
+    document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
+  } else if (value == 10) {
+    document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
+  } else if (value == 11) {
+    document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
+  } else if (value == 12) {
+    document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
+  } else if (value == 13) {
+    document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
+  } else if (value == 14) {
+    document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
+  } else if (value == 15) {
+    document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
+  } else if (value == 16) {
+    document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
+  } else if (value == 17) {
+    document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
+  }
 
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
@@ -1188,15 +1180,14 @@ function showLevelDetails(value) {
       element[0].className = 'featureSelectorIcon icon';
     }
   } //end else/if group
-  else if(value < -8){
-        var element = document.getElementsByClassName('DetailsList yieldDetailsList');
-        if(element.length > 0) {
-            element[0].className = 'DetailsListRolled yieldDetailsList';
-        }
-        element = document.getElementsByClassName('yieldSelectorIcon iconSelected');
-        if(element.length > 0){
-            element[0].className = 'yieldSelectorIcon icon';
-        }
+  else if (value < -8) {
+    var element = document.getElementsByClassName('DetailsList yieldDetailsList');
+    if (element.length > 0) {
+      element[0].className = 'DetailsListRolled yieldDetailsList';
+    }
+    element = document.getElementsByClassName('yieldSelectorIcon iconSelected');
+    if (element.length > 0) {
+      element[0].className = 'yieldSelectorIcon icon';
     }
   }
 
@@ -2147,65 +2138,71 @@ function writeFileToDownloadString(mapPlayerNumber) {
   //  when the year 1 land use is equal to that player's number
 
   var string = "";
+  if (typeof boardData[currentBoard] !== 'undefined') {
 
-  string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
+    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
 
-  for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
-    string = string + boardData[currentBoard].map[i].id + "," +
-      boardData[currentBoard].map[i].row + "," +
-      boardData[currentBoard].map[i].column + "," +
-      boardData[currentBoard].map[i].area + ",";
+      string = string + boardData[currentBoard].map[i].id + "," +
+        boardData[currentBoard].map[i].row + "," +
+        boardData[currentBoard].map[i].column + "," +
+        boardData[currentBoard].map[i].area + ",";
 
-    if (mapPlayerNumber > 0) {
-      if (boardData[currentBoard].map[i].landType[0] == 0) string += "0,";
-      else string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "-1,")
-    } else {
-      string += boardData[currentBoard].map[i].baseLandUseType + ",";
-    }
+      if (mapPlayerNumber > 0) {
+        if (boardData[currentBoard].map[i].landType[0] == 0) string += "0,";
+        else string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "-1,")
+      } else {
+        string += boardData[currentBoard].map[i].baseLandUseType + ",";
+      }
 
-    string += boardData[currentBoard].map[i].carbonMax + "," +
-      boardData[currentBoard].map[i].carbonMin + "," +
-      boardData[currentBoard].map[i].cattle + "," +
-      boardData[currentBoard].map[i].cornYield + "," +
-      boardData[currentBoard].map[i].drainageClass + "," +
-      boardData[currentBoard].map[i].erosion + "," +
-      boardData[currentBoard].map[i].floodFrequency + "," +
-      boardData[currentBoard].map[i].group + "," +
-      boardData[currentBoard].map[i].nitratesPPM + "," +
-      boardData[currentBoard].map[i].pIndex + "," +
-      boardData[currentBoard].map[i].sediment + "," +
-      boardData[currentBoard].map[i].soilType + "," +
-      boardData[currentBoard].map[i].soybeanYield + "," +
-      boardData[currentBoard].map[i].streamNetwork + "," +
-      boardData[currentBoard].map[i].subwatershed + "," +
-      boardData[currentBoard].map[i].timber + "," +
-      boardData[currentBoard].map[i].topography + "," +
-      boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
-      boardData[currentBoard].map[i].strategicWetland + "," +
-      boardData[currentBoard].map[i].riverStreams + ",";
+      string += boardData[currentBoard].map[i].carbonMax + "," +
+        boardData[currentBoard].map[i].carbonMin + "," +
+        boardData[currentBoard].map[i].cattle + "," +
+        boardData[currentBoard].map[i].cornYield + "," +
+        boardData[currentBoard].map[i].drainageClass + "," +
+        boardData[currentBoard].map[i].erosion + "," +
+        boardData[currentBoard].map[i].floodFrequency + "," +
+        boardData[currentBoard].map[i].group + "," +
+        boardData[currentBoard].map[i].nitratesPPM + "," +
+        boardData[currentBoard].map[i].pIndex + "," +
+        boardData[currentBoard].map[i].sediment + "," +
+        boardData[currentBoard].map[i].soilType + "," +
+        boardData[currentBoard].map[i].soybeanYield + "," +
+        boardData[currentBoard].map[i].streamNetwork + "," +
+        boardData[currentBoard].map[i].subwatershed + "," +
+        boardData[currentBoard].map[i].timber + "," +
+        boardData[currentBoard].map[i].topography + "," +
+        boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
+        boardData[currentBoard].map[i].strategicWetland + "," +
+        boardData[currentBoard].map[i].riverStreams + ",";
 
-    if (mapPlayerNumber > 0) {
-      string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year1
-        ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year2
-        ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,"); //year3
-    } else {
+      if (mapPlayerNumber > 0) {
+        string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year1
+          ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year2
+          ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,"); //year3
+      } else {
 
-      string += boardData[currentBoard].map[i].landType[1] + "," +
-        boardData[currentBoard].map[i].landType[2] + "," +
-        boardData[currentBoard].map[i].landType[3] + ",";
-    }
+        string += boardData[currentBoard].map[i].landType[1] + "," +
+          boardData[currentBoard].map[i].landType[2] + "," +
+          boardData[currentBoard].map[i].landType[3] + ",";
+      }
 
-    string += boardData[currentBoard].precipitation[0] + "," +
-      boardData[currentBoard].precipitation[1] + "," +
-      boardData[currentBoard].precipitation[2] + "," +
-      boardData[currentBoard].precipitation[3];
+      string += boardData[currentBoard].precipitation[0] + "," +
+        boardData[currentBoard].precipitation[1] + "," +
+        boardData[currentBoard].precipitation[2] + "," +
+        boardData[currentBoard].precipitation[3];
 
-    if (i < boardData[currentBoard].map.length - 1) {
-      string = string + '\r\n';
-    }
+      if (i < boardData[currentBoard].map.length - 1) {
+        string = string + '\r\n';
+      }
 
-  } //end for
+    } //end for
+
+    // set boardData as undefined
+    boardData[currentBoard] = void 0;
+
+  } // end if
 
   return string;
 } //end writeFileToDownloadString
@@ -2718,8 +2715,9 @@ function hideMultiDownload() {
 } //end hideMultiDownload
 
 //multiUpload directs functions for multiplayer file upload
-function multiplayerFileUpload(numberOfTimesThisFunctionHasBeenCalledInProcess, fileUploadEvent) {
+function multiplayerFileUpload(fileUploadEvent) {
   //if this is the first time, call base prep, otherwise, add map on top
+
   // return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
   //   multiplayerAggregateOverlayMapping(fileUploadEvent) :
   //   multiplayerAggregateBaseMapping(fileUploadEvent);
@@ -2736,44 +2734,45 @@ function multiplayerFileUpload(numberOfTimesThisFunctionHasBeenCalledInProcess, 
 function multiplayerAggregateBaseMapping(file) {
   //set up first file completely normally
 
-  if (file.name && !file.name.match(/\.csv/)) {
-    alert("Incorrect File Type!");
-    return 0;
-  } else {
-    var reader = new FileReader();
-    reader.readAsText(file);
-    reader.onload = function(e) {
-      setupBoardFromUpload(reader.result);
-      //clear initData
-      initData = [];
-    }
-    return 1;
-  } //end else
+  // if (file.name && !file.name.match(/\.csv/)) {
+  //   alert("Incorrect File Type!");
+  //   return 0;
+  // } else {
+  var reader = new FileReader();
+  reader.readAsText(file);
+  reader.onload = function(e) {
+    setupBoardFromUpload(reader.result);
+    //clear initData
+    initData = [];
+  }
+  //   return 1;
+  // } //end else
 } //end multiplayerAggregateBaseMapping
 
 //here we facilitate the aggregation of multiplayer boards
 function multiplayerAggregateOverlayMapping(file) {
 
-  if (file.name && !file.name.match(/\.csv/)) {
-    alert("Incorrect File Type!");
-    return 0;
-  } else {
-    var reader = new FileReader();
-    reader.readAsText(file);
-    reader.onload = function(e) {
+  // if (file.name && !file.name.match(/\.csv/)) {
+  //   alert("Incorrect File Type!");
+  //   return 0;
+  // } else {
+  var reader = new FileReader();
+  reader.readAsText(file);
+  reader.onload = function(e) {
 
-      //setup data from reader (file) into intiData global
-      parseInitial(reader.result);
+    //setup data from reader (file) into intiData global
+    if(parseInitial(reader.result) ) {
       //call *backend* function for overlaying boards, will put boardFromUpload onto
       //  the current board
       overlayBoard(boardData[currentBoard]);
       //now switch to the current board so that all data is up to date
       switchBoards(boardData[currentBoard]);
-      //clear initData
-      initData = [];
     }
-    return 1;
-  } //end else
+    //clear initData
+    initData = [];
+  }
+  //   return 1;
+  // } //end else
 } //end multiplayerAggregateOverlayMapping
 
 //toggleChangeLandType toggles a boolean that tracks the state which is required to change land type
