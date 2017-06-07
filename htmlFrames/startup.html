@@ -194,6 +194,8 @@ Cleaned and Prepared - July 2016
     } //end startSandbox
     //startUtilities hides the startup page elements and displays utilities
     function startUtilities() {
+       //Event Listener for utilities escape. Go back when escape is pressed
+        document.addEventListener('keyup',backUp );  
       //Update Buttons appropriately
       document.getElementById('startupButton1').style.display = "none";
       document.getElementById('startupButton2').style.display = "none";
@@ -224,8 +226,17 @@ Cleaned and Prepared - July 2016
         }, 500);
       }, 400);
     } //end startUtilities
+      
+      //Function to call the back up ie reset the page back to the start up page 
+      function backUp(e){
+        if (e.keyCode == 27){
+        reset();
+            document.removeEventListener('keyup',backUp);
+     }
+      }
     //startPlay hides the startup page elements and displays the level selector
     function startPlay() {
+       document.addEventListener('keyup',playbackUp);
       //Update Buttons appropriately
       document.getElementById('startupButton1').style.display = "none";
       document.getElementById('startupButton3').style.display = "none";
@@ -260,6 +271,14 @@ Cleaned and Prepared - July 2016
 
       }, 400);
     } //end startPlay
+    
+      function playbackUp(e){
+    if (e.keyCode == 27){
+        reset();
+        document.removeEventListener('keyup',playbackUp );
+        }
+      }
+      
     // this function simply hides the main content from the startup page
     function hideBackgroundStartupElements() {
       document.getElementById('startupButton1').style.visibility = "hidden";
