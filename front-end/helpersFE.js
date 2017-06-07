@@ -833,7 +833,6 @@ function onDocumentKeyDown(event) {
       break;
       //case esc - view escape menu
     case 27:
-      console.log("escape toggled");
       highlightTile(-1);
       toggleEscapeFrame();
       break;
