@@ -52,6 +52,15 @@ Cleaned and Prepared - August 2016
     <div id="levelDesignerButton" class="mainButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
     <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup();">Set-Up Multiplayer</div>
     <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
+    <div class="uploadFile">
+
+      <label for="file-upload2">
+                <!--Technically not allowed, but seems to work across browsers-->
+                <!-- in future, div may need to be moved outside the label, cleverly-->
+                <div id="simulationButton" class="mainButton">Run User Simulation</div>
+            </label>
+      <input id="file-upload2" type="file" />
+    </div>
 
     <!--container for Aggregate Tool, slides up and down by height changes-->
     <div id="utilitiesAggregateTools">
@@ -62,7 +71,7 @@ Cleaned and Prepared - August 2016
                     <!-- in future, div may need to be moved outside the label, cleverly-->
                     <div id="addFile" class="mainButton">Add a File</div>
                 </label>
-        <input id="file-upload" type="file" multiple="" onchange="makeFileList()"/>
+        <input id="file-upload" type="file" multiple="" onchange="makeFileList()" />
         <!-- <input id="file-upload" type="file" /> -->
       </div>
       <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
@@ -92,7 +101,7 @@ Cleaned and Prepared - August 2016
         ul.appendChild(li);
       }
 
-      if(!ul.hasChildNodes()) {
+      if (!ul.hasChildNodes()) {
         var li = document.createElement("li");
         li.innerHTML = 'No Files Selected';
         ul.appendChild(li);
@@ -106,6 +115,7 @@ Cleaned and Prepared - August 2016
 
     var numberOfTimesAggregated = 0; //used to keep track for info bar
     // bindAggregateFunctionToFileUpload();
+    bindSimulationFileListener();
 
     //launch essentially sandbox with multiplayer tools
     function launchMultiplayerSetup() {
@@ -113,6 +123,17 @@ Cleaned and Prepared - August 2016
       window.top.loadLevel(-1);
 
     } //end launchMultiplayerSetup
+
+    //attach the file upload event to our functions for simulating
+    function bindSimulationFileListener() {
+      //jquery attachment
+      $('#file-upload2').bind('propertychange change', function(e) {
+        //Load the simulation into the helper method
+        window.top.loadSimulation(e);
+      });
+      //small issue: if file selected is same name as previous
+      //property change is not triggered, even if file has changed.
+    };
 
     //attach the file upload event to our functions for aggregating
     function bindAggregateFunctionToFileUpload() {
