@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-07T16:45:38-05:00
+ * @Last modified time: 2017-06-08T12:12:25-05:00
  */
 
 //================
@@ -17,6 +17,8 @@ var river = null;
 var riverPoints = [];
 var boardData = [];
 var Totals; //global current calculated results, NOTE, should be reassigned every time currentBoard is changed
+var clickTrackings = []; //array for storing all clicks in when click-tracking is enabled
+var simUpload;
 
 //status trackers
 var onYear = "year1";
@@ -31,6 +33,7 @@ var allLoaded = false;
 var tToggle = false; //topology off by default
 var mapIsHighlighted = false;
 var previousHover = null;
+var uploadedBoard = false;
 
 //Variables for Zoom Function
 var zoomedIn = false;
@@ -346,8 +349,10 @@ function setupBoardFromUpload(data) {
   //Length of the csv object when empty is 3
   var isEmpty = Object.getOwnPropertyNames(data).length == 3;
   if (!isEmpty) {
+    uploadedBoard = true;
+    simUpload = data;
     var boardFromUpload = new GameBoard();
-    if(parseInitial(data)) {
+    if (parseInitial(data)) {
       propogateBoard(boardFromUpload);
 
       switchBoards(boardFromUpload);

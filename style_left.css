@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-06-05T14:33:38-05:00
+ * @Last modified time: 2017-06-08T11:12:50-05:00
  */
 
 
@@ -27,9 +27,9 @@
 #indexmenu {
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
-  border-radius: 6px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
+  border-radius: 6px 6px 0 0;
+  -webkit-border-radius: 6px 6px 0 0;
+  -moz-border-radius: 6px 6px 0 0;
   color: #FFFFFF;
   cursor: pointer;
   font-family: var(--button-font-family);
@@ -42,7 +42,7 @@
   /* Safari */
   transition-duration: var(--transition-duration);
   top: 7.7vw;
-  width: 8.6vw;
+  width: 12.5vw;
 }
 
 #indexmenu:hover {
@@ -55,6 +55,7 @@
   background-color: rgba(0, 0, 0, 0.7);
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
+  border-radius: 0 6px 6px 0;
   cursor: pointer;
   height: var(--left-console-button-length);
   position: absolute;
@@ -70,22 +71,37 @@
 }
 
 
+/* painter brush tab */
+#settingsTab {
+  height: 3vw;
+  left: 0;
+  position: absolute;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+  top: 4vw;
+  /*top: calc(var(--left-console-top-value) + var(--left-console-height));*/
+  width: var(--left-console-width);
+}
+
 /* undo button */
 #undoButton {
+  /*border-bottom-right-radius: 5px;*/
+  border-radius: 50%;
   cursor: pointer;
   height: var(--left-console-button-length);
   width: var(--left-console-button-length);
-  top: 7.7vw;
+  top: 4vw;
 }
 
 #undoButton:hover {
-  box-shadow: 0 0px 8px 2px rgb(0, 0, 0, 0.8);
+  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
 
 /* toolsButton to slide the left console */
 #toolsButton {
-  border-bottom-right-radius: 5px;
+  /*border-bottom-right-radius: 5px;*/
   top: var(--left-console-top-value);
 }
 
@@ -162,7 +178,7 @@
 
 /* left consoleButton, yield button */
 #yieldButton {
-  border-bottom-right-radius: 5px;
+  /*border-bottom-right-radius: 5px;*/
   top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
 }
 
@@ -200,7 +216,6 @@
   padding: 3%;
   width: 100%;
 }
-
 
 /*terrain selector*/
 #painterTab {}
@@ -301,6 +316,10 @@
   visibility: hidden;
 }
 
+#playerResetButton {
+  display: none;
+}
+
 #playerResetButton:hover #message {
   top: 100%;
   right: 88%;
@@ -330,9 +349,9 @@
 /*precip selector*/
 .styled-select {
   background: #3b3b3b;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   color: #fff;
   margin: 0.5vw;
@@ -433,6 +452,22 @@ option {
   width: 220px;
 }
 
+table, th, td {
+    border: 0.1vw solid black;
+    border-collapse: collapse;
+    color: white;
+    font-size: 6pt;
+}
+th, td {
+    padding: 0.6vw;
+    text-align: left;
+}
+table #yieldGrainTable {
+    width: 100%;
+    background-image: url('./imgs/consoleTexture.png');
+    color: white;
+    font-size: 6pt;
+}
 
 /* indicator size and colors on detail lists */
 .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5,
@@ -648,17 +683,6 @@ option {
 }
 /* end indicator size and colors on detail lists */
 
-#settingsTab {
-  height: 3vw;
-  left: 0;
-  position: absolute;
-  -webkit-transition-duration: var(--transition-duration);
-  /* Safari */
-  transition-duration: var(--transition-duration);
-  top: calc(var(--left-console-top-value) + var(--left-console-height));
-  width: var(--left-console-width);
-}
-
 /* responsive web design. When the window size gets smaller than 600x400 */
 @media screen and (max-width: 600px), screen and (max-height: 400px) {
   .icon, .iconSelected {
@@ -670,7 +694,7 @@ option {
     font-size: 14px;
     height: 18px;
     top: 46px;
-    width: 51.6px;
+    width: 75px;
   }
   #painterTab-leftcol {
     left: 0px;
@@ -687,7 +711,7 @@ option {
   }
   #settingsTab {
     height: 23px;
-    top: 243px;
+    top: 23px;
     width: 57.6px;
   }
   .consoleButton, #undoButton {
@@ -709,7 +733,7 @@ option {
   }
   #undoButton {
     height: 18px;
-    top: 46px;
+    top: 25px;
     width: 18px;
   }
   #toolsButton {
@@ -753,13 +777,13 @@ option {
     margin-left: 17px;
     margin-top: 10px;
   }
-  .levelsSelectorIcon, .levelSelectorIconSelected {
+  .levelsSelectorIcon {
     margin: 6px 18px 7.2px;
   }
-  .featureSelectorIcon, .featureSelectorIconSelected {
+  .featureSelectorIcon {
     margin: 3px 18px;
   }
-  .painterIcon, .painterIconSelected {
+  .painterIcon {
     margin: 4.8px 6px;
   }
   .levelsText, .featuresText {
