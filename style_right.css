@@ -90,7 +90,7 @@
   right: 0px;
   text-align: center;
   top: 18vw;
-  width: 12%;
+  width: 18vw;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-name: rollUp;
@@ -175,7 +175,7 @@
   position: absolute;
   right: 12%;
   top: 18vw;
-  width: 3vw;
+  width: 9vw;
 }
 
 .dialogueButtonRolled {
@@ -245,8 +245,9 @@
   .popup {
     right: 0px;
     font-size: 6px;
+    width: 72px;
   }
   .popupHidden {
-    right: -72px;
+    right: -80px;
   }
 }

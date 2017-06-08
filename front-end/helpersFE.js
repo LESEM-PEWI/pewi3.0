@@ -2804,7 +2804,7 @@ function randomizeBoard() {
 
   //Range of values for each land-use type
   var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-  randomizing = tru
+  randomizing = true
   //for whole board (as long as randomization is allowed)
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
