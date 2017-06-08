@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-05-30T17:20:14-05:00
+ * @Last modified time: 2017-05-31T17:30:44-05:00
  * modified:
  *  drawD3LandPieChart()
  *  drawEcosystemRadar()
@@ -38,8 +38,8 @@ function displayResults() {
   drawEcosystemRadar(tempObj);
   //create our bottom Radar plot, of the yield scores
   drawYieldRadar(tempObj);
-  //toggle the legend checkboxes for both of the radar plots on the page
-  document.getElementById('resultsFrame').contentWindow.toggleYearCheckboxes();
+  // toggle the legend checkboxes for both of the radar plots on the page
+  // document.getElementById('resultsFrame').contentWindow.toggleYearCheckboxes(); //XXX
 
   //toggle the arrows on the results page
   document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0);
@@ -1374,7 +1374,6 @@ function drawEcosystemIndicatorsDisplay(year) {
 // for each of the years
 // the code here is original, but the Radar object prototype is credited following
 function drawEcosystemRadar(yearArray) {
-
   //clear info already on page
   document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart').innerHTML = " ";
   document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend').innerHTML = " ";
@@ -1382,10 +1381,6 @@ function drawEcosystemRadar(yearArray) {
   var w = Math.round(window.innerWidth * 0.317);
   var h = Math.round(window.innerHeight * 0.319);
   var graphLength = Math.min(w, h);
-
-  // var graphWidth = 300;
-  // var graphHeight = 300;
-
 
   var dataset = [];
   var legendOptions = [];
@@ -1454,14 +1449,11 @@ function drawEcosystemRadar(yearArray) {
 
   var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart');
   var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend');
-  // var checkboxes = document.getElementById('resultsFrame').contentWindow.document.getElementById('checks');
 
   //Create the Radar chart on page
   RadarChart.draw(radarId, dataset, overrideConfig, 'mouseoverInfoRadarRight', radarClassElementsString);
 
   //Now let's create the legend, standard d3 stuff
-  // var legendWidth = 355;
-  // var legendHeight = 370;
   var legendWidth = Math.round(window.innerWidth * 0.376);
   var legendHeight = Math.round(window.innerHeight * 0.394);
   var legendLength = Math.round(Math.min(legendWidth, legendHeight));
@@ -1558,22 +1550,25 @@ function drawEcosystemRadar(yearArray) {
     });
 
   // add checkbox
-  // legend.append('foreignObject')
-  //   .attr('id', 'checks')
-  //   .attr('class', 'check')
-  //   .attr('style', 'visibility: visible;')
-  //   .attr('width', 20)
-  //   .attr('height', 70)
-  //   .attr('x', 70)
-  //   .attr('y', -4)
-  //
-  //   .append('xhtml:input')
-  //   .attr('id', 'checkboxYear1')
-  //   .attr('class', 'yearCheckbox')
-  //   .attr('onclick', 'radarPlotYearToggle(1);')
-  //   .attr('width', legendRectSize)
-  //   .attr('height', legendRectSize)
-  //   .attr('type', 'checkbox');
+  legend.append('foreignObject')
+    .attr('style', 'visibility: visible;')
+    .attr('width', 20)
+    .attr('height', 20)
+    .attr('x', 70)
+    .attr('y', 0)
+
+    .append('xhtml:input')
+    .attr('id', function(d) {
+      return "checkboxYear" + d.slice(-1);
+    })
+    .attr('class', 'yearCheckbox')
+    .attr('onclick', function(d) {
+      return "radarPlotYearToggle(" + d.slice(-1) + ");";
+    })
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .attr('checked', "")
+    .attr('type', 'checkbox');
 
 } //end  drawEcosystemRadar()
 
@@ -2092,9 +2087,25 @@ function drawYieldRadar(yearArray) {
       return d;
     });
 
-  // d3.select(checkboxes)
-  // .attr('x', legendRectSize + legendSpacing)
-  // .attr('y', legendRectSize - legendSpacing);
+  // add checkbox
+  legend.append('foreignObject')
+    .attr('width', 20)
+    .attr('height', 20)
+    .attr('x', 70)
+    .attr('y', 0)
+
+    .append('xhtml:input')
+    .attr('id', function(d) {
+      return "yieldCheckboxYear" + d.slice(-1);
+    })
+    .attr('class', 'yearCheckbox')
+    .attr('onclick', function(d) {
+      return "yieldRadarPlotYearToggle(" + d.slice(-1) + ");";
+    })
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .attr('checked', "")
+    .attr('type', 'checkbox');
 } //end drawYieldRadar()
 
 
