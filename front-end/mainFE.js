@@ -1,3 +1,10 @@
+/**
+ * @Date:   2017-06-08T14:46:42-05:00
+ * @Last modified time: 2017-06-08T15:51:54-05:00
+ */
+
+
+
 //================
 //global vars
 
@@ -131,7 +138,7 @@ function loadingManager() {
     allLoaded = true;
 
     //show main PEWI page elements
-    document.getElementById('page').style.visibility = "visible";
+    // document.getElementById('page').style.visibility = "visible";
     document.getElementById('firefoxWorkaround').focus();
   };
 } //end loadingManager
