@@ -2750,7 +2750,7 @@ function clearInfo() {
 
 //updatePopup appends text to the popup dialogue
 function updatePopup(string) {
-  document.getElementById("popupText").innerHTML = string + "<br><br>" + document.getElementById("popupText").innerHTML;
+  document.getElementById("popupText").innerHTML = string + "<br>___________________________<br>" + document.getElementById("popupText").innerHTML;
   document.getElementById("popup").className = "popup";
   document.getElementById("dialogueButton").className = "dialogueButton";
 } //end updatePopup
