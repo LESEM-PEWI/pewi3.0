@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T10:59:40-05:00
- * @Last modified time: 2017-06-05T14:33:38-05:00
+ * @Last modified time: 2017-06-08T09:54:14-05:00
  */
 
 
@@ -27,9 +27,9 @@
 #indexmenu {
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
-  border-radius: 6px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
+  border-radius: 6px 6px 0 0;
+  -webkit-border-radius: 6px 6px 0 0;
+  -moz-border-radius: 6px 6px 0 0;
   color: #FFFFFF;
   cursor: pointer;
   font-family: var(--button-font-family);
@@ -42,7 +42,7 @@
   /* Safari */
   transition-duration: var(--transition-duration);
   top: 7.7vw;
-  width: 8.6vw;
+  width: 12.5vw;
 }
 
 #indexmenu:hover {
@@ -55,6 +55,7 @@
   background-color: rgba(0, 0, 0, 0.7);
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
+  border-radius: 0 6px 6px 0;
   cursor: pointer;
   height: var(--left-console-button-length);
   position: absolute;
@@ -70,12 +71,25 @@
 }
 
 
+/* painter brush tab */
+#settingsTab {
+  height: 3vw;
+  left: 0;
+  position: absolute;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+  top: 4vw;
+  /*top: calc(var(--left-console-top-value) + var(--left-console-height));*/
+  width: var(--left-console-width);
+}
+
 /* undo button */
 #undoButton {
   cursor: pointer;
   height: var(--left-console-button-length);
   width: var(--left-console-button-length);
-  top: 7.7vw;
+  top: 4vw;
 }
 
 #undoButton:hover {
@@ -85,7 +99,7 @@
 
 /* toolsButton to slide the left console */
 #toolsButton {
-  border-bottom-right-radius: 5px;
+  /*border-bottom-right-radius: 5px;*/
   top: var(--left-console-top-value);
 }
 
@@ -162,7 +176,7 @@
 
 /* left consoleButton, yield button */
 #yieldButton {
-  border-bottom-right-radius: 5px;
+  /*border-bottom-right-radius: 5px;*/
   top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
 }
 
@@ -200,7 +214,6 @@
   padding: 3%;
   width: 100%;
 }
-
 
 /*terrain selector*/
 #painterTab {}
@@ -647,17 +660,6 @@ option {
   background-color: #734D26;
 }
 /* end indicator size and colors on detail lists */
-
-#settingsTab {
-  height: 3vw;
-  left: 0;
-  position: absolute;
-  -webkit-transition-duration: var(--transition-duration);
-  /* Safari */
-  transition-duration: var(--transition-duration);
-  top: calc(var(--left-console-top-value) + var(--left-console-height));
-  width: var(--left-console-width);
-}
 
 /* responsive web design. When the window size gets smaller than 600x400 */
 @media screen and (max-width: 600px), screen and (max-height: 400px) {

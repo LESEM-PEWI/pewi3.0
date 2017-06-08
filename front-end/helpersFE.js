@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-06T17:07:11-05:00
+ * @Last modified time: 2017-06-08T09:56:23-05:00
  */
 
 /* global camera, scene, boardData,
@@ -1128,42 +1128,34 @@ function showLevelDetails(value) {
     document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
   }
   //Corn class legend
-    else if(value == 9){
-        document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 10){
-        document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 11){
-        document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 12){
-        document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 13){
-        document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 14){
-        document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 15){
-        document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 16){
-        document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
-    }
-    else if(value == 17){
-        document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
-        document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
-    }
+  else if (value == 9) {
+    document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
+  } else if (value == 10) {
+    document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
+  } else if (value == 11) {
+    document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
+  } else if (value == 12) {
+    document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
+  } else if (value == 13) {
+    document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
+  } else if (value == 14) {
+    document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
+  } else if (value == 15) {
+    document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
+  } else if (value == 16) {
+    document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
+  } else if (value == 17) {
+    document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
+  }
 
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
@@ -1188,15 +1180,14 @@ function showLevelDetails(value) {
       element[0].className = 'featureSelectorIcon icon';
     }
   } //end else/if group
-  else if(value < -8){
-        var element = document.getElementsByClassName('DetailsList yieldDetailsList');
-        if(element.length > 0) {
-            element[0].className = 'DetailsListRolled yieldDetailsList';
-        }
-        element = document.getElementsByClassName('yieldSelectorIcon iconSelected');
-        if(element.length > 0){
-            element[0].className = 'yieldSelectorIcon icon';
-        }
+  else if (value < -8) {
+    var element = document.getElementsByClassName('DetailsList yieldDetailsList');
+    if (element.length > 0) {
+      element[0].className = 'DetailsListRolled yieldDetailsList';
+    }
+    element = document.getElementsByClassName('yieldSelectorIcon iconSelected');
+    if (element.length > 0) {
+      element[0].className = 'yieldSelectorIcon icon';
     }
   }
 
