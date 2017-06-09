@@ -1108,11 +1108,15 @@ function resultsStart() {
     calculateResults();
     displayResults();
     animateResults();
+    //Event Listener for closing reslts tab
+        document.addEventListener('keyup', resultsEsc);  
   } //end if
 } //end resultsStart
 
 //resultsEnd hides the results and returns the menus to the screens
 function resultsEnd() {
+    //Fucntion for removing event listener when resluts is closed
+    document.removeEventListener('keyup', resultsEsc);
   inResults = false;
   //modal is no longer up
   modalUp = false;
@@ -2588,9 +2592,6 @@ string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle
 } //end uploadClicked
 
 
-
-
-
 //downloadClicked() is called by child frame uploadDownload
 // since downloading must be handeled in the active frame,
 // much of the function is taken care of there.
@@ -2628,7 +2629,9 @@ function showCredits() {
     document.getElementById('closeCredits').style.display = "block";
     document.getElementById('modalCreditsFrame').style.display = "block";
     modalUp = true;
-  }
+ }
+   //Event Listner to close the credits page
+        document.addEventListener('keyup',aboutsEsc); 
 } //end showCredits
 
 //closeCreditFrame closes the credits iframe
@@ -2641,6 +2644,8 @@ function closeCreditFrame() {
   document.getElementById('closeCredits').style.display = "none";
   document.getElementById('modalCreditsFrame').style.display = "none";
   modalUp = false;
+    //Event listner that closes escape key
+    document.removeEventListener('keyup', aboutsEsc);
 } //end closeCreditFrame
 
 //showUploadDownload opens the credits iframe
@@ -2655,7 +2660,7 @@ function showUploadDownload() {
     document.getElementById('modalUploadFrame').style.display = "block";
     modalUp = true;
   }
-
+    document.addEventListener('keyup', downuploadEsc);  
   if (mapIsHighlighted) {
     displayLevels();
   }
@@ -2670,8 +2675,8 @@ function closeUploadDownloadFrame() {
   document.getElementById('closeUploadDownload').style.display = "none";
   document.getElementById('uploadDownloadFrame').style.display = "none";
   document.getElementById('modalUploadFrame').style.display = "none";
-
   modalUp = false;
+  document.removeEventListener('keyup', downuploadEsc);  
 } //end closeUploadDownloadFrame
 
 //toggleIndex displays and hides the codex
@@ -2688,6 +2693,7 @@ function toggleIndex() {
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
     document.getElementById('index').style.display = "block";
+     document.addEventListener('keyup', indexEsc); 
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
 
     if(curTracking) {
@@ -2706,9 +2712,36 @@ function toggleIndex() {
     document.getElementById('index').contentWindow.document.getElementById('title').innerHTML = "";
 
     document.getElementById('index').contentWindow.resetHighlighting();
+    document.removeEventListener('keyup', indexEsc); 
 
   }
 } //end toggleIndex
+function resultsEsc(e){
+    if (e.keyCode == 27){
+        resultsEnd();
+    }
+}
+
+//Function that closes the about dialog when escape key is pressed
+function aboutsEsc(e){
+    if (e.keyCode == 27){
+        closeCreditFrame();
+    }
+}
+
+//Function that closes the Download dialog when the escape key is pressed
+function downuploadEsc(e){
+    if (e.keyCode == 27){
+       closeUploadDownloadFrame();
+    }
+}
+//Function that closes the download index dialog when escape key is pressed
+function indexEsc(e){
+    if (e.keyCode == 27){
+        toggleIndex();
+    }
+}
+
 
 //printLandUseType returns a display-worthy string of land type from numeric key
 function printLandUseType(type) {
@@ -3010,9 +3043,9 @@ function startOptions() {
     modalUp = true;
     document.getElementById('options').style.visibility = "visible";
     //setup options page with the current parameter selection
-    document.getElementById('options').contentWindow.getCurrentOptionsState();
-  } //end if
-} //end startOptions
+    document.getElementById('options').contentWindow.getCurrentOptionsState();}
+      }
+ //end startOptions
 
 //endMultiAssignMode displays the multiPlayer element
 function endMultiplayerAssignMode() {
