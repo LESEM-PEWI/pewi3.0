@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-09T12:36:06-05:00
+ * @Last modified time: 2017-06-09T14:46:21-05:00
  */
 
 //global variable for initial board state, cleared after use
@@ -7,7 +7,7 @@ var initData = [];
 
 //set of possible precipitation levels
 var precip = [24.58, 28.18, 30.39, 32.16, 34.34, 36.47, 45.10];
-var success = true;
+
 //checkFileCorrectness takes the file and check if it has correct lines and cells
 function checkFileCorrectness(file, callback) {
 
@@ -29,6 +29,9 @@ function checkFileCorrectness(file, callback) {
       console.log("Lines number not correct. " + arrLines.length);
       result = false;
     }
+
+    // can further check other things
+
     callback(result);
   }; // end onload()
 
@@ -52,12 +55,12 @@ function parseInitial(data) {
     else console.log("Empty line in file: ignored");
   } //end for : each line in the file
 
-  // // check initData type correctness
-  // if (initDataIsCorrupt()) {
-  //   alert("Cannnot convert the file content!");
-  //   console.log("Inner content is not correct.");
-  //   return 0;
-  // }
+  // check initData type correctness
+  if (initDataIsCorrupt()) {
+    alert("Cannnot convert the file content!");
+    console.log("Inner content is not correct.");
+    return 0;
+  }
 
   // // success
   return 1;

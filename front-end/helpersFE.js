@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-09T12:37:05-05:00
+ * @Last modified time: 2017-06-09T14:47:03-05:00
  */
 
 /* global camera, scene, boardData,
@@ -2961,10 +2961,6 @@ function multiplayerFileUpload(fileUploadEvent) {
 function multiplayerAggregateBaseMapping(file) {
   //set up first file completely normally
 
-  // if (file.name && !file.name.match(/\.csv/)) {
-  //   alert("Incorrect File Type!");
-  //   return 0;
-  // } else {
   var reader = new FileReader();
   reader.readAsText(file);
   reader.onload = function(e) {
@@ -2972,17 +2968,11 @@ function multiplayerAggregateBaseMapping(file) {
     //clear initData
     initData = [];
   }
-  //   return 1;
-  // } //end else
 } //end multiplayerAggregateBaseMapping
 
 //here we facilitate the aggregation of multiplayer boards
 function multiplayerAggregateOverlayMapping(file) {
 
-  // if (file.name && !file.name.match(/\.csv/)) {
-  //   alert("Incorrect File Type!");
-  //   return 0;
-  // } else {
   var reader = new FileReader();
   reader.readAsText(file);
   reader.onload = function(e) {
@@ -2998,8 +2988,6 @@ function multiplayerAggregateOverlayMapping(file) {
     //clear initData
     initData = [];
   }
-  //   return 1;
-  // } //end else
 } //end multiplayerAggregateOverlayMapping
 
 //toggleChangeLandType toggles a boolean that tracks the state which is required to change land type
