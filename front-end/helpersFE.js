@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-08T12:12:01-05:00
+ * @Last modified time: 2017-06-09T12:37:05-05:00
  */
 
 /* global camera, scene, boardData,
@@ -2392,19 +2392,22 @@ function writeFileToDownloadString(mapPlayerNumber) {
 
     } //end for
 
-    // set boardData as undefined
-    boardData[currentBoard] = void 0;
+    // finish processing, set boardData as undefined
+    cleanCurrentBoardData();
 
   } // end if
 
   return string;
 } //end writeFileToDownloadString
 
+// clean current boardData
+function cleanCurrentBoardData() {
+  // set boardData as undefined
+  boardData[currentBoard] = void 0;
+}
+
 //uploadClicked enables the user to upload a .csv of board data
 // this function is called from child frame uploadDownload
-
-
-
 function uploadClicked(e) {
 
 

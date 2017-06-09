@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-07T16:48:17-05:00
+ * @Last modified time: 2017-06-09T12:36:06-05:00
  */
 
 //global variable for initial board state, cleared after use
@@ -7,6 +7,32 @@ var initData = [];
 
 //set of possible precipitation levels
 var precip = [24.58, 28.18, 30.39, 32.16, 34.34, 36.47, 45.10];
+var success = true;
+//checkFileCorrectness takes the file and check if it has correct lines and cells
+function checkFileCorrectness(file, callback) {
+
+  var reader = new FileReader();
+  reader.readAsText(file);
+
+  // onload function is asynchronous function, can't return value; therefore use callback function
+  reader.onload = function(e) {
+    var result = true;
+    var strRawContents = "";
+    strRawContents = reader.result;
+    //split based on escape chars
+    while (strRawContents.indexOf("\r") >= 0)
+      strRawContents = strRawContents.replace("\r", "");
+    var arrLines = strRawContents.split("\n");
+
+    // check the content length here
+    if (arrLines.length != 829) {
+      console.log("Lines number not correct. " + arrLines.length);
+      result = false;
+    }
+    callback(result);
+  }; // end onload()
+
+}
 
 //parseInitial takes the data from on server text file and fills global array
 // return true/false
@@ -19,13 +45,6 @@ function parseInitial(data) {
     strRawContents = strRawContents.replace("\r", "");
   var arrLines = strRawContents.split("\n");
 
-  // check the content length here
-  if (arrLines.length != 829) {
-    alert("Cannnot convert the file content!");
-    console.log("Lines number not correct. " + arrLines.length);
-    return 0;
-  }
-
   //for each line in the file, split line by comma and push to the initData array
   for (var i = 1; i < arrLines.length; i++) {
     var curLine = arrLines[i];
@@ -33,14 +52,14 @@ function parseInitial(data) {
     else console.log("Empty line in file: ignored");
   } //end for : each line in the file
 
-  // check initData type correctness
-  if (initDataIsCorrupt()) {
-    alert("Cannnot convert the file content!");
-    console.log("Inner content is not correct.");
-    return 0;
-  }
+  // // check initData type correctness
+  // if (initDataIsCorrupt()) {
+  //   alert("Cannnot convert the file content!");
+  //   console.log("Inner content is not correct.");
+  //   return 0;
+  // }
 
-  // success
+  // // success
   return 1;
 
 } //end parseInitial()
@@ -117,7 +136,7 @@ function initDataIsCorrupt() {
   // Each cell is an array, check the length of each cell
   for (var i = 0; i < initData.length; i++) {
     if (initData[i].length != 32) {
-      console.log("something wrong inside at row "+i+"in initData");
+      console.log("something wrong inside at row " + i + "in initData");
       return 1;
     } // end if
 
