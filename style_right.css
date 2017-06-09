@@ -90,7 +90,7 @@
   right: 0px;
   text-align: center;
   top: 18vw;
-  width: 18vw;
+  width: 15%;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-name: rollUp;
@@ -121,11 +121,11 @@
 
 .popupHidden {
   position: absolute;
-  right: -12%;
+  right: -15%;
   /*top: 300px;*/
   top: 18vw;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
+  -webkit-animation-duration: 1.2s;
+  animation-duration: 1.2s;
   -webkit-animation-name: rollDown;
   animation-name: rollDown;
 }
@@ -175,16 +175,16 @@
   position: absolute;
   right: 12%;
   top: 18vw;
-  width: 9vw;
+  width: 6vw;
 }
 
 .dialogueButtonRolled {
   bottom: 0px;
-  right: 0px;
+  right: -3%;
   -webkit-animation-name: rollButtonDown;
   animation-name: rollButtonDown;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
+  -webkit-animation-duration: 1.2s;
+  animation-duration: 1.2s;
 }
 
 .dialogueButton img, .dialogueButtonRolled img {
@@ -245,9 +245,8 @@
   .popup {
     right: 0px;
     font-size: 6px;
-    width: 72px;
   }
   .popupHidden {
-    right: -80px;
+    right: -72px;
   }
 }

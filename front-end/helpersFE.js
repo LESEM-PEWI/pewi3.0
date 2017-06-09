@@ -2753,6 +2753,9 @@ function updatePopup(string) {
   document.getElementById("popupText").innerHTML = string + "<br>___________________________<br>" + document.getElementById("popupText").innerHTML;
   document.getElementById("popup").className = "popup";
   document.getElementById("dialogueButton").className = "dialogueButton";
+   document.getElementById("dialogueButton").style.background= '#'+Math.random().toString(16).slice(-6)
+//document.getElementById("popup").style.background= "green";
+  //Will activate an animation on the lower right side of the screen to show that the message box has updated
 } //end updatePopup
 
 //clearPopup removes all text from the popup dialogue and hides it
