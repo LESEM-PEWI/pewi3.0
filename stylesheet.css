@@ -1,6 +1,5 @@
 /**
- * @Date:   2017-05-25T11:01:34-05:00
- * @Last modified time: 2017-06-07T15:02:48-05:00
+ * @Last modified time: 2017-06-12T16:52:29-05:00
  */
 
 
@@ -183,11 +182,11 @@ body {
   right: 82px;
 }
 
-.closeButton {  
+.closeButton {
   height: 40px;
   position: absolute;
   width: 40px;
-    
+
   -webkit-transition-duration: 0.1s; /* Safari */
   transition-duration: 0.1s;
 }

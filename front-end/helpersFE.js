@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-09T14:47:03-05:00
+ * @Last modified time: 2017-06-12T16:43:04-05:00
  */
 
 /* global camera, scene, boardData,
@@ -1098,7 +1098,7 @@ function resultsStart() {
     displayResults();
     animateResults();
     //Event Listener for closing reslts tab
-        document.addEventListener('keyup', resultsEsc);  
+        document.addEventListener('keyup', resultsEsc);
   } //end if
 } //end resultsStart
 
@@ -1571,6 +1571,69 @@ function displayLevels(overlayHighlightType) {
         pushClick(0, getStamp(), 77, 0, null);
       }
       break;
+       case 'cornGrain':
+            selectionHighlightNumber = 9;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),69,0,null);
+            }
+            break;
+        case 'soy':
+            selectionHighlightNumber = 10;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),70,0,null);
+            }
+            break;
+        case 'fruit':
+            selectionHighlightNumber = 11;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),71,0,null);
+            }
+            break;
+        case 'cattle':
+            selectionHighlightNumber = 12;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),72,0,null);
+            }
+            break;
+        case 'alfalfa':
+            selectionHighlightNumber = 13;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),73,0,null);
+            }
+            break;
+        case 'grassHay':
+            selectionHighlightNumber = 14;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),74,0,null);
+            }
+            break;
+        case 'switchGrass':
+            selectionHighlightNumber = 15;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),75,0,null);
+            }
+            break;
+        case 'wood':
+            selectionHighlightNumber = 16;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),76,0,null);
+            }
+            break;
+        case 'short':
+            selectionHighlightNumber = 17;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),77,0,null);
+            }
+            break;
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -2550,7 +2613,7 @@ function showCredits() {
     modalUp = true;
  }
    //Event Listner to close the credits page
-        document.addEventListener('keyup',aboutsEsc); 
+        document.addEventListener('keyup',aboutsEsc);
 } //end showCredits
 
 //closeCreditFrame closes the credits iframe
@@ -2577,7 +2640,7 @@ function showUploadDownload() {
     document.getElementById('modalUploadFrame').style.display = "block";
     modalUp = true;
   }
-    document.addEventListener('keyup', downuploadEsc);  
+    document.addEventListener('keyup', downuploadEsc);
   if (mapIsHighlighted) {
     displayLevels();
   }
@@ -2592,7 +2655,7 @@ function closeUploadDownloadFrame() {
   document.getElementById('uploadDownloadFrame').style.display = "none";
   document.getElementById('modalUploadFrame').style.display = "none";
   modalUp = false;
-  document.removeEventListener('keyup', downuploadEsc);  
+  document.removeEventListener('keyup', downuploadEsc);
 } //end closeUploadDownloadFrame
 
 //toggleIndex displays and hides the codex
@@ -2609,7 +2672,7 @@ function toggleIndex() {
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
     document.getElementById('index').style.display = "block";
-     document.addEventListener('keyup', indexEsc); 
+     document.addEventListener('keyup', indexEsc);
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
 
     if (curTracking) {
@@ -2628,7 +2691,7 @@ function toggleIndex() {
     document.getElementById('index').contentWindow.document.getElementById('title').innerHTML = "";
 
     document.getElementById('index').contentWindow.resetHighlighting();
-    document.removeEventListener('keyup', indexEsc); 
+    document.removeEventListener('keyup', indexEsc);
 
   }
 } //end toggleIndex
