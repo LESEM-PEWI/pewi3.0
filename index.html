@@ -1121,6 +1121,7 @@
 
     // Prompt save changes before user exit the program
     var page = document.getElementById("page");
+
     $(window).bind("beforeunload", function(event) {
       if (page.style.visibility == 'visible') {
         // on the main page, ask the user to save changes
