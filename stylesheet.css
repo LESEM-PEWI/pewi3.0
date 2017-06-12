@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T11:01:34-05:00
- * @Last modified time: 2017-05-31T14:44:43-05:00
+ * @Last modified time: 2017-06-08T15:10:48-05:00
  */
 
 
@@ -29,7 +29,7 @@ font-family: 'Amatic SC', cursive;
 **/
 
 
-/* css variable declaration */
+/* css global variable declaration */
 
 :root {
   --button-font-family: 'Amatic SC', cursive;

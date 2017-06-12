@@ -88,78 +88,77 @@
   <!-- Main webpage element containing pewi -->
   <div id="page">
     <!-- Add banner for when simulation is about to begin -->
-    <div id = "overlayContainer" style="visibility:hidden;">
-        <div id="overlay">
-            <div id="overlay-message">
-                <div id = "overlayMessage">Click here to begin simulation</div>
-            </div>
-            <label for="file-upload">
+    <div id="overlayContainer" style="visibility:hidden;">
+      <div id="overlay">
+        <div id="overlay-message">
+          <div id="overlayMessage">Click here to begin simulation</div>
+        </div>
+        <label for="file-upload">
                 <div id="overlay-message-2" onclick="bindUploadFileListener();">
                     <div id = "overlayMessage2">Click here to upload a custom PEWI map</div>
                 </div>
             </label>
-            <input id="file-upload" type="file"/>
-        </div>
+        <input id="file-upload" type="file" />
+      </div>
     </div>
 
-     <!-- Add banner for when simulation is done -->
-    <div id = "simContainer" style="visibility:hidden;">
-        <div class="simOverlay">
-            <div id="sim-message-exit">
-                <div id = "exitSim">Return to Main Menu</div>
-            </div>
-            <div id="sim-message-repeat">
-               <div id = "repeatSim">Repeat Simulation</div>
-            </div>
+    <!-- Add banner for when simulation is done -->
+    <div id="simContainer" style="visibility:hidden;">
+      <div class="simOverlay">
+        <div id="sim-message-exit">
+          <div id="exitSim">Return to Main Menu</div>
         </div>
+        <div id="sim-message-repeat">
+          <div id="repeatSim">Repeat Simulation</div>
+        </div>
+      </div>
     </div>
 
     <!-- Handles the overlay shown during simulations -->
     <script>
+      function bindUploadFileListener() {
+        //add listener
+        $('#file-upload').bind('propertychange change', function(e) {
+          parent.uploadClicked(e);
+        });
+        //small issue: if file selected is same name as previous
+        //property change is not triggered, even if file has changed.
+      };
 
-    function bindUploadFileListener() {
-    //add listener
-    $('#file-upload').bind('propertychange change', function(e) {
-        parent.uploadClicked(e);
-    });
-    //small issue: if file selected is same name as previous
-    //property change is not triggered, even if file has changed.
-    };
-
-    $(document).ready(function() {
+      $(document).ready(function() {
 
         $("#overlay-message").click(function() {
-            $("#overlay-message, #overlayMessage, #overlay-message-2, #overlayMessage2").css("visibility","hidden");
-            $("#overlay").css("background-color","transparent");
-            runSimulation();
+          $("#overlay-message, #overlayMessage, #overlay-message-2, #overlayMessage2").css("visibility", "hidden");
+          $("#overlay").css("background-color", "transparent");
+          runSimulation();
         });
 
         $("#sim-message-exit").click(function() {
-            $("#overlay").css("background","rgba(0, 0, 0, 0.4)");
-            $("#simContainer, #overlayContainer, #overlay").css("visibility","hidden");
-            setSimBoolean(false);
-            //Reset defaults
-            resetPresets();
-            resetSlider();
-            clearTimers();
-            setPause(false);
-            setUpload(false);
-            document.getElementById("sliderCon").style.visibility = "hidden";
-            showMainMenu(); 
+          $("#overlay").css("background", "rgba(0, 0, 0, 0.4)");
+          $("#simContainer, #overlayContainer, #overlay").css("visibility", "hidden");
+          setSimBoolean(false);
+          //Reset defaults
+          resetPresets();
+          resetSlider();
+          clearTimers();
+          setPause(false);
+          setUpload(false);
+          document.getElementById("sliderCon").style.visibility = "hidden";
+          showMainMenu();
         });
 
         $("#sim-message-repeat").click(function() {
-            $("#simContainer").css("visibility","hidden");
-            $("#overlay").css("background","rgba(0, 0, 0, 0.4)");
-            $("#overlay-message").css("visibility","visible");
-            //Reset defaults
-            resetSlider();
-            clearTimers();
-            setPause(false);
-            setUpload(false);
-            promptUserSim();
+          $("#simContainer").css("visibility", "hidden");
+          $("#overlay").css("background", "rgba(0, 0, 0, 0.4)");
+          $("#overlay-message").css("visibility", "visible");
+          //Reset defaults
+          resetSlider();
+          clearTimers();
+          setPause(false);
+          setUpload(false);
+          promptUserSim();
         })
-    });
+      });
     </script>
 
     <!-- **BEGIN Left Side Console**
@@ -184,7 +183,7 @@
       <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
       <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
 
-      <div id= "yieldButton" class="consoleButton" onclick = "switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
+      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
 
       <!-- <div id="settingsButton" class="consoleButton" onclick="switchConsoleTab(5);"><img id="settingsImg" class="imgNotSelected" src="./imgs/settingsIcon.png"></div> -->
     </div>
@@ -462,499 +461,551 @@
       </div>
 
       <!--Yield Productivity Overlay Maps -->
-         <div id = "yieldTab" class="consoleTab" style = "display: none;">
-            <div id = "cornGrainDetailsList" class = "yieldDetailsListRolled">
-            <br>
-            <font size = "1" color = "white"><center>Corn Grain Yield Key</center></font>
-                <div class = "cornGrain1">
-                    <p class = "levelsTextDetails">0 Mg/ha/yr</p>
-                </div>
-                <div class = "cornGrain2">
-                    <p class = "levelsTextDetails">11.2-13.2 Mg/ha/yr</p>
-                </div> 
-                <div class = "cornGrain3">
-                    <p class = "levelsTextDetails">13.2-13.9 Mg/ha/yr</p>
-                </div>
-                <div class = "cornGrain4">
-                    <p class = "levelsTextDetails">13.9-15.1 Mg/ha/yr</p>
-                </div>
-                <br>
-                <font size = "1" color = "white"><center>Corn Grain Precipitation Factor</center></font>
-                <font size = "1" color = "white"><center>At Different Precipitation Levels</center></font>
-                
-                <table id = "yieldTable">
-                       <tr>
-                        <th>Yield Type Precipitation Factor</th>
-                        <th>Precipitation Level (in)/yr</th>
-                       </tr>
-                       <tr>
-                        <td>0.75</td>
-                        <td>24.6</td>
-                       </tr>
-                       <tr>
-                        <td>0.90</td>
-                        <td>28.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>30.4</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>32.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>34.3</td>
-                       </tr>
-                       <tr>
-                        <td>0.90</td>
-                        <td>36.5</td>
-                       </tr>
-                       <tr>
-                        <td>0.75</td>
-                        <td>45.1</td>
-                       </tr>
-                    </table>
-            </div>
-             
-             <div id = "soyBeanDetailsList" class = "yieldDetailsListRolled">
-             <br>
-             <font size = "1" color = "white"><center>Soybean Yield Key</center></font>
-                <div class = "soyBean1" >
-                    <p class = "levelsTextDetails">0 Mg/ha/yr</p>
-                </div>
-                <div class = "soyBean2" >
-                    <p class = "levelsTextDetails">3.50-3.90 Mg/ha/yr</p>
-                </div>
-                <div class = "soyBean3" >
-                    <p class = "levelsTextDetails">3.90-4.30 Mg/ha/yr</p>
-                </div>
-                <div class = "soyBean4" >
-                    <p class = "levelsTextDetails">4.30-4.70 Mg/ha/yr</p>
-                </div>
-                <br>
-                <font size = "1" color = "white"><center>Soybean Precipitation Factor</center></font>
-                <font size = "1" color = "white"><center>At Different Precipitation Levels</center></font>
-                <table id = "yieldTable">
-                       <tr>
-                        <th>Yield Type Precipitation Factor </th>
-                        <th>Precipitation Level (in)/yr</th>
-                       </tr>
-                       <tr>
-                        <td>0.75</td>
-                        <td>24.6</td>
-                       </tr>
-                       <tr>
-                        <td>0.90</td>
-                        <td>28.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>30.4</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>32.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>34.3</td>
-                       </tr>
-                       <tr>
-                        <td>0.90</td>
-                        <td>36.5</td>
-                       </tr>
-                       <tr>
-                        <td>0.75</td>
-                        <td>45.1</td>
-                       </tr>
-                    </table>
-            </div>
+      <div id="yieldTab" class="consoleTab" style="display: none;">
+        <div id="cornGrainDetailsList" class="yieldDetailsListRolled">
+          <br>
+          <font size="1" color="white">
+            <center>Corn Grain Yield Key</center>
+          </font>
+          <div class="cornGrain1">
+            <p class="levelsTextDetails">0 Mg/ha/yr</p>
+          </div>
+          <div class="cornGrain2">
+            <p class="levelsTextDetails">11.2-13.2 Mg/ha/yr</p>
+          </div>
+          <div class="cornGrain3">
+            <p class="levelsTextDetails">13.2-13.9 Mg/ha/yr</p>
+          </div>
+          <div class="cornGrain4">
+            <p class="levelsTextDetails">13.9-15.1 Mg/ha/yr</p>
+          </div>
+          <br>
+          <font size="1" color="white">
+            <center>Corn Grain Precipitation Factor</center>
+          </font>
+          <font size="1" color="white">
+            <center>At Different Precipitation Levels</center>
+          </font>
 
-            <div id = "fruitDetailsList" class = "yieldDetailsListRolled">
-            <br>
-             <font size = "1" color = "white"><center>Mixed Fruit and Vegetable Yield Key</center></font>
-                <div class = "fruit1" >
-                    <p class = "levelsTextDetails">6.58 Mg/ha/yr</p>
-                </div>
-                <div class = "fruit2" >
-                    <p class = "levelsTextDetails">13.98 Mg/ha/yr</p>
-                </div>
-                <div class = "fruit3">
-                    <p class = "levelsTextDetails">14.80 Mg/ha/yr</p>
-                </div>
-                <div class = "fruit4">
-                    <p class = "levelsTextDetails">16.45 Mg/ha/yr</p>
-                </div>
-                <br>
-                <font size = "1" color = "white"><center>Mixed Fruit and Vegetable Precipitation Factor</center></font>
-                <font size = "1" color = "white"><center>At Different Precipitation Levels</center></font>
-                <table id = "yieldTable">
-                       <tr>
-                        <th>Yield Type Precipitation Factor </th>
-                        <th>Precipitation Level (in)/yr</th>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>24.6</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>28.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>30.4</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>32.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>34.3</td>
-                       </tr>
-                       <tr>
-                        <td>0.90</td>
-                        <td>36.5</td>
-                       </tr>
-                       <tr>
-                        <td>0.75</td>
-                        <td>45.1</td>
-                       </tr>
-                    </table>
-            </div>
+          <table id="yieldTable">
+            <tr>
+              <th>Yield Type Precipitation Factor</th>
+              <th>Precipitation Level (in)/yr</th>
+            </tr>
+            <tr>
+              <td>0.75</td>
+              <td>24.6</td>
+            </tr>
+            <tr>
+              <td>0.90</td>
+              <td>28.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>30.4</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>32.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>34.3</td>
+            </tr>
+            <tr>
+              <td>0.90</td>
+              <td>36.5</td>
+            </tr>
+            <tr>
+              <td>0.75</td>
+              <td>45.1</td>
+            </tr>
+          </table>
+        </div>
 
-            <div id = "cattleDetailsList" class = "yieldDetailsListRolled">
-            <br>
-             <font size = "1" color = "white"><center>Cattle Yield Key</center></font>
-                <div class = "cattle1">
-                    <p class = "levelsTextDetails">3.4-4.0 animals/acre/yr</p>
-                </div>
-                <div class = "cattle2">
-                    <p class = "levelsTextDetails">4.0-5.4 animals/acre/yr</p>
-                </div>
-                <div class = "cattle3">
-                    <p class = "levelsTextDetails">5.4-6.1 animals/acre/yr</p>
-                </div>
-                <div class = "cattle4">
-                    <p class = "levelsTextDetails">6.1-6.7 animals/acre/yr</p>
-                </div>
-                <br>
-                <font size = "1" color = "white"><center>Cattle Precipitation Factor</center></font>
-                <font size = "1" color = "white"><center>At Different Precipitation Levels</center></font>
-                <table id = "yieldTable">
-                       <tr>
-                        <th>Yield Type Precipitation Factor </th>
-                        <th>Precipitation Level (in)/yr</th>
-                       </tr>
-                       <tr>
-                        <td>0.95</td>
-                        <td>24.6</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>28.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>30.4</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>32.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>34.3</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>36.5</td>
-                       </tr>
-                       <tr>
-                        <td>0.95</td>
-                        <td>45.1</td>
-                       </tr>
-                    </table>
-            </div>
+        <div id="soyBeanDetailsList" class="yieldDetailsListRolled">
+          <br>
+          <font size="1" color="white">
+            <center>Soybean Yield Key</center>
+          </font>
+          <div class="soyBean1">
+            <p class="levelsTextDetails">0 Mg/ha/yr</p>
+          </div>
+          <div class="soyBean2">
+            <p class="levelsTextDetails">3.50-3.90 Mg/ha/yr</p>
+          </div>
+          <div class="soyBean3">
+            <p class="levelsTextDetails">3.90-4.30 Mg/ha/yr</p>
+          </div>
+          <div class="soyBean4">
+            <p class="levelsTextDetails">4.30-4.70 Mg/ha/yr</p>
+          </div>
+          <br>
+          <font size="1" color="white">
+            <center>Soybean Precipitation Factor</center>
+          </font>
+          <font size="1" color="white">
+            <center>At Different Precipitation Levels</center>
+          </font>
+          <table id="yieldTable">
+            <tr>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
+            </tr>
+            <tr>
+              <td>0.75</td>
+              <td>24.6</td>
+            </tr>
+            <tr>
+              <td>0.90</td>
+              <td>28.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>30.4</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>32.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>34.3</td>
+            </tr>
+            <tr>
+              <td>0.90</td>
+              <td>36.5</td>
+            </tr>
+            <tr>
+              <td>0.75</td>
+              <td>45.1</td>
+            </tr>
+          </table>
+        </div>
 
-            <div id = "alfalfaDetailsList" class = "yieldDetailsListRolled">
-            <br>
-             <font size = "1" color = "white"><center>Alfalfa Yield Key</center></font>
-                <div class = "alfalfa1">
-                    <p class = "levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
-                </div>
-                <div class = "alfalfa2">
-                    <p class = "levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
-                </div>
-                <div class = "alfalfa3">
-                    <p class = "levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
-                </div>
-                <div class = "alfalfa4">
-                    <p class = "levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
-                </div>
-                <br>
-                <font size = "1" color = "white"><center>Alfalfa Precipitation Factor</center></font>
-                <font size = "1" color = "white"><center>At Different Precipitation Levels</center></font>
-                <table id = "yieldTable">
-                       <tr>
-                        <th>Yield Type Precipitation Factor </th>
-                        <th>Precipitation Level (in)/yr</th>
-                       </tr>
-                       <tr>
-                        <td>0.95</td>
-                        <td>24.6</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>28.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>30.4</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>32.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>34.3</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>36.5</td>
-                       </tr>
-                       <tr>
-                        <td>0.95</td>
-                        <td>45.1</td>
-                       </tr>
-                    </table>
-            </div>
+        <div id="fruitDetailsList" class="yieldDetailsListRolled">
+          <br>
+          <font size="1" color="white">
+            <center>Mixed Fruit and Vegetable Yield Key</center>
+          </font>
+          <div class="fruit1">
+            <p class="levelsTextDetails">6.58 Mg/ha/yr</p>
+          </div>
+          <div class="fruit2">
+            <p class="levelsTextDetails">13.98 Mg/ha/yr</p>
+          </div>
+          <div class="fruit3">
+            <p class="levelsTextDetails">14.80 Mg/ha/yr</p>
+          </div>
+          <div class="fruit4">
+            <p class="levelsTextDetails">16.45 Mg/ha/yr</p>
+          </div>
+          <br>
+          <font size="1" color="white">
+            <center>Mixed Fruit and Vegetable Precipitation Factor</center>
+          </font>
+          <font size="1" color="white">
+            <center>At Different Precipitation Levels</center>
+          </font>
+          <table id="yieldTable">
+            <tr>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>24.6</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>28.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>30.4</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>32.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>34.3</td>
+            </tr>
+            <tr>
+              <td>0.90</td>
+              <td>36.5</td>
+            </tr>
+            <tr>
+              <td>0.75</td>
+              <td>45.1</td>
+            </tr>
+          </table>
+        </div>
 
-            <div id = "grassHayDetailsList" class = "yieldDetailsListRolled">
-            <br>
-             <font size = "1" color = "white"><center>Grass Hay Yield Key</center></font>
-                <div class = "grassHay1">
-                    <p class = "levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
-                </div>
-                <div class = "grassHay2">
-                    <p class = "levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
-                </div>
-                <div class = "grassHay3">
-                    <p class = "levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
-                </div>
-                <div class = "grassHay4">
-                    <p class = "levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
-                </div>
-                <br>
-                <font size = "1" color = "white"><center>Grass Hay Precipitation Factor</center></font>
-                <font size = "1" color = "white"><center>At Different Precipitation Levels</center></font>
-                <table id = "yieldTable">
-                       <tr>
-                        <th>Yield Type Precipitation Factor </th>
-                        <th>Precipitation Level (in)/yr</th>
-                       </tr>
-                       <tr>
-                        <td>0.95</td>
-                        <td>24.6</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>28.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>30.4</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>32.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>34.3</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>36.5</td>
-                       </tr>
-                       <tr>
-                        <td>0.95</td>
-                        <td>45.1</td>
-                       </tr>
-                    </table>
-            </div>
+        <div id="cattleDetailsList" class="yieldDetailsListRolled">
+          <br>
+          <font size="1" color="white">
+            <center>Cattle Yield Key</center>
+          </font>
+          <div class="cattle1">
+            <p class="levelsTextDetails">3.4-4.0 animals/acre/yr</p>
+          </div>
+          <div class="cattle2">
+            <p class="levelsTextDetails">4.0-5.4 animals/acre/yr</p>
+          </div>
+          <div class="cattle3">
+            <p class="levelsTextDetails">5.4-6.1 animals/acre/yr</p>
+          </div>
+          <div class="cattle4">
+            <p class="levelsTextDetails">6.1-6.7 animals/acre/yr</p>
+          </div>
+          <br>
+          <font size="1" color="white">
+            <center>Cattle Precipitation Factor</center>
+          </font>
+          <font size="1" color="white">
+            <center>At Different Precipitation Levels</center>
+          </font>
+          <table id="yieldTable">
+            <tr>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
+            </tr>
+            <tr>
+              <td>0.95</td>
+              <td>24.6</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>28.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>30.4</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>32.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>34.3</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>36.5</td>
+            </tr>
+            <tr>
+              <td>0.95</td>
+              <td>45.1</td>
+            </tr>
+          </table>
+        </div>
 
-             <div id = "switchGrassDetailsList" class = "yieldDetailsListRolled">
-             <br>
-             <font size = "1" color = "white"><center>Switchgrass Yield Key</center></font>
-                <div class = "switchGrass1">
-                    <p class = "levelsTextDetails">4.39-5.29 Mg/ha/yr</p>
-                </div>
-                <div class = "switchGrass2">
-                    <p class = "levelsTextDetails">5.29-5.83 Mg/ha/yr</p>
-                </div>
-                <div class = "switchGrass3">
-                    <p class = "levelsTextDetails">5.83-6.25 Mg/ha/yr</p>
-                </div>
-                <div class = "switchGrass4">
-                    <p class = "levelsTextDetails">6.25-6.61 Mg/ha/yr</p>
-                </div>
-                <br>
-                <font size = "1" color = "white"><center>Switchgrass Precipitation Factor</center></font>
-                <font size = "1" color = "white"><center>At Different Precipitation Levels</center></font>
-                <table id = "yieldTable">
-                       <tr>
-                        <th>Yield Type Precipitation Factor </th>
-                        <th>Precipitation Level (in)/yr</th>
-                       </tr>
-                       <tr>
-                        <td>0.95</td>
-                        <td>24.6</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>28.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>30.4</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>32.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>34.3</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>36.5</td>
-                       </tr>
-                       <tr>
-                        <td>0.95</td>
-                        <td>45.1</td>
-                       </tr>
-                    </table>
-            </div>
+        <div id="alfalfaDetailsList" class="yieldDetailsListRolled">
+          <br>
+          <font size="1" color="white">
+            <center>Alfalfa Yield Key</center>
+          </font>
+          <div class="alfalfa1">
+            <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
+          </div>
+          <div class="alfalfa2">
+            <p class="levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
+          </div>
+          <div class="alfalfa3">
+            <p class="levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
+          </div>
+          <div class="alfalfa4">
+            <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
+          </div>
+          <br>
+          <font size="1" color="white">
+            <center>Alfalfa Precipitation Factor</center>
+          </font>
+          <font size="1" color="white">
+            <center>At Different Precipitation Levels</center>
+          </font>
+          <table id="yieldTable">
+            <tr>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
+            </tr>
+            <tr>
+              <td>0.95</td>
+              <td>24.6</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>28.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>30.4</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>32.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>34.3</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>36.5</td>
+            </tr>
+            <tr>
+              <td>0.95</td>
+              <td>45.1</td>
+            </tr>
+          </table>
+        </div>
 
-            <div id = "woodDetailsList" class = "yieldDetailsListRolled">
-            <br>
-             <font size = "1" color = "white"><center>Wood Yield Key</center></font>
-                <div class = "wood1">
-                    <p class = "levelsTextDetails">0.50-0.73 m3/ha/yr</p>
-                </div>
-                <div class = "wood2">
-                    <p class = "levelsTextDetails">0.73-1.02 m3/ha/yr</p>
-                </div>
-                <div class = "wood3">
-                    <p class = "levelsTextDetails">1.02-1.43 m3/ha/yr</p>
-                </div>
-                <div class = "wood4">
-                    <p class = "levelsTextDetails">1.43-1.60 m3/ha/yr</p>
-                </div>
-                <br>
-                <font size = "1" color = "white"><center>Wood Precipitation Factor</center></font>
-                <font size = "1" color = "white"><center>At Different Precipitation Levels</center></font>
-                <table id = "yieldTable">
-                       <tr>
-                        <th>Yield Type Precipitation Factor </th>
-                        <th>Precipitation Level (in)/yr</th>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>24.6</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>28.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>30.4</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>32.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>34.3</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>36.5</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>45.1</td>
-                       </tr>
-                    </table>
-            </div>
+        <div id="grassHayDetailsList" class="yieldDetailsListRolled">
+          <br>
+          <font size="1" color="white">
+            <center>Grass Hay Yield Key</center>
+          </font>
+          <div class="grassHay1">
+            <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
+          </div>
+          <div class="grassHay2">
+            <p class="levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
+          </div>
+          <div class="grassHay3">
+            <p class="levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
+          </div>
+          <div class="grassHay4">
+            <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
+          </div>
+          <br>
+          <font size="1" color="white">
+            <center>Grass Hay Precipitation Factor</center>
+          </font>
+          <font size="1" color="white">
+            <center>At Different Precipitation Levels</center>
+          </font>
+          <table id="yieldTable">
+            <tr>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
+            </tr>
+            <tr>
+              <td>0.95</td>
+              <td>24.6</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>28.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>30.4</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>32.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>34.3</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>36.5</td>
+            </tr>
+            <tr>
+              <td>0.95</td>
+              <td>45.1</td>
+            </tr>
+          </table>
+        </div>
 
-            <div id = "shortDetailsList" class = "yieldDetailsListRolled">
-            <br>
-             <font size = "1" color = "white"><center>Short-Rotation Woody Biomass Yield Key</center></font>
-                <div class = "short1">
-                    <p class = "levelsTextDetails">608.6 tons/acre/yr</p>
-                </div>
-                <br>
-                <font size = "1" color = "white"><center>Short-Rotation Woody Biomass Yield Precipitation Factor</center></font>
-                <font size = "1" color = "white"><center>At Different Precipitation Levels</center></font>
-                <table id = "yieldTable">
-                       <tr>
-                        <th>Yield Type Precipitation Factor </th>
-                        <th>Precipitation Level (id)/yr</th>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>24.6</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>28.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>30.4</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>32.2</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>34.3</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>36.5</td>
-                       </tr>
-                       <tr>
-                        <td>1.00</td>
-                        <td>45.1</td>
-                       </tr>
-                    </table>
-            </div>
+        <div id="switchGrassDetailsList" class="yieldDetailsListRolled">
+          <br>
+          <font size="1" color="white">
+            <center>Switchgrass Yield Key</center>
+          </font>
+          <div class="switchGrass1">
+            <p class="levelsTextDetails">4.39-5.29 Mg/ha/yr</p>
+          </div>
+          <div class="switchGrass2">
+            <p class="levelsTextDetails">5.29-5.83 Mg/ha/yr</p>
+          </div>
+          <div class="switchGrass3">
+            <p class="levelsTextDetails">5.83-6.25 Mg/ha/yr</p>
+          </div>
+          <div class="switchGrass4">
+            <p class="levelsTextDetails">6.25-6.61 Mg/ha/yr</p>
+          </div>
+          <br>
+          <font size="1" color="white">
+            <center>Switchgrass Precipitation Factor</center>
+          </font>
+          <font size="1" color="white">
+            <center>At Different Precipitation Levels</center>
+          </font>
+          <table id="yieldTable">
+            <tr>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
+            </tr>
+            <tr>
+              <td>0.95</td>
+              <td>24.6</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>28.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>30.4</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>32.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>34.3</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>36.5</td>
+            </tr>
+            <tr>
+              <td>0.95</td>
+              <td>45.1</td>
+            </tr>
+          </table>
+        </div>
 
-            <p class="featuresText"></p><img id="cornClass" class="icon yieldSelectorIcon" src="./imgs/cornGrainIcon.png" style="border-radius: 50%"; title = "Corn Grain"  onclick="displayLevels('cornGrain');" >
-            <p class = "featuresText"></p><img id ="soyClass" class = "icon yieldSelectorIcon" src="./imgs/soybeanIcon.png" style="border-radius: 50%"; title = "Soybean"
-            onclick = "displayLevels('soy');">
-            <p class = "featuresText"></p><img id = "fruitClass" class = "icon yieldSelectorIcon" src="./imgs/fruitIcon.png" style="border-radius: 50%"; title = "Mixed Fruits and Vegetables"
-            onclick="displayLevels('fruit');">
-            <p class = "featuresText"></p><img id = "cattleClass" class = "icon yieldSelectorIcon" src="./imgs/cowIcon.png" style="border-radius: 50%"; title = "Cattle" onclick="displayLevels('cattle');">
-            <p class = "featuresText"></p><img id = "alfalfaClass" class = "icon yieldSelectorIcon" src="./imgs/alfalfaIcon.png" style="border-radius: 50%"; title = "Alfalfa" onclick="
-            displayLevels('alfalfa');" >
-            <p class = "featuresText"></p><img id = "grassHayClass" class = "icon yieldSelectorIcon" src="./imgs/grassHayIcon.png" style="border-radius: 50%"; title = "GrassHay" onclick= "displayLevels('grassHay');">
-            <p class = "featuresText"></p><img id = "switchGrassClass" class = "icon yieldSelectorIcon" src="./imgs/switchGrassIcon.png" style="border-radius: 50%"; title = "Switch Grass" onclick="displayLevels('switchGrass');">
-            <p class = "featuresText"></p><img id = "woodClass" class = "icon yieldSelectorIcon" src="./imgs/woodIcon.png"  style="border-radius: 50%"; title = "Wood" onclick="displayLevels('wood');">
-            <p class = "featuresText"></p><img id = "shortClass" class = "icon yieldSelectorIcon" src="./imgs/woodyBiomassIcon.png"  style="border-radius: 50%"; title = "Woody Biomass" onclick="displayLevels('short');">
-            
-         </div>
+        <div id="woodDetailsList" class="yieldDetailsListRolled">
+          <br>
+          <font size="1" color="white">
+            <center>Wood Yield Key</center>
+          </font>
+          <div class="wood1">
+            <p class="levelsTextDetails">0.50-0.73 m3/ha/yr</p>
+          </div>
+          <div class="wood2">
+            <p class="levelsTextDetails">0.73-1.02 m3/ha/yr</p>
+          </div>
+          <div class="wood3">
+            <p class="levelsTextDetails">1.02-1.43 m3/ha/yr</p>
+          </div>
+          <div class="wood4">
+            <p class="levelsTextDetails">1.43-1.60 m3/ha/yr</p>
+          </div>
+          <br>
+          <font size="1" color="white">
+            <center>Wood Precipitation Factor</center>
+          </font>
+          <font size="1" color="white">
+            <center>At Different Precipitation Levels</center>
+          </font>
+          <table id="yieldTable">
+            <tr>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>24.6</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>28.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>30.4</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>32.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>34.3</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>36.5</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>45.1</td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="shortDetailsList" class="yieldDetailsListRolled">
+          <br>
+          <font size="1" color="white">
+            <center>Short-Rotation Woody Biomass Yield Key</center>
+          </font>
+          <div class="short1">
+            <p class="levelsTextDetails">608.6 tons/acre/yr</p>
+          </div>
+          <br>
+          <font size="1" color="white">
+            <center>Short-Rotation Woody Biomass Yield Precipitation Factor</center>
+          </font>
+          <font size="1" color="white">
+            <center>At Different Precipitation Levels</center>
+          </font>
+          <table id="yieldTable">
+            <tr>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (id)/yr</th>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>24.6</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>28.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>30.4</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>32.2</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>34.3</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>36.5</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td>45.1</td>
+            </tr>
+          </table>
+        </div>
+
+        <p class="featuresText"></p><img id="cornClass" class="icon yieldSelectorIcon" src="./imgs/cornGrainIcon.png" style="border-radius: 50%" ; title="Corn Grain" onclick="displayLevels('cornGrain');">
+        <p class="featuresText"></p><img id="soyClass" class="icon yieldSelectorIcon" src="./imgs/soybeanIcon.png" style="border-radius: 50%" ; title="Soybean" onclick="displayLevels('soy');">
+        <p class="featuresText"></p><img id="fruitClass" class="icon yieldSelectorIcon" src="./imgs/fruitIcon.png" style="border-radius: 50%" ; title="Mixed Fruits and Vegetables" onclick="displayLevels('fruit');">
+        <p class="featuresText"></p><img id="cattleClass" class="icon yieldSelectorIcon" src="./imgs/cowIcon.png" style="border-radius: 50%" ; title="Cattle" onclick="displayLevels('cattle');">
+        <p class="featuresText"></p><img id="alfalfaClass" class="icon yieldSelectorIcon" src="./imgs/alfalfaIcon.png" style="border-radius: 50%" ; title="Alfalfa" onclick="
+            displayLevels('alfalfa');">
+        <p class="featuresText"></p><img id="grassHayClass" class="icon yieldSelectorIcon" src="./imgs/grassHayIcon.png" style="border-radius: 50%" ; title="GrassHay" onclick="displayLevels('grassHay');">
+        <p class="featuresText"></p><img id="switchGrassClass" class="icon yieldSelectorIcon" src="./imgs/switchGrassIcon.png" style="border-radius: 50%" ; title="Switch Grass" onclick="displayLevels('switchGrass');">
+        <p class="featuresText"></p><img id="woodClass" class="icon yieldSelectorIcon" src="./imgs/woodIcon.png" style="border-radius: 50%" ; title="Wood" onclick="displayLevels('wood');">
+        <p class="featuresText"></p><img id="shortClass" class="icon yieldSelectorIcon" src="./imgs/woodyBiomassIcon.png" style="border-radius: 50%" ; title="Woody Biomass" onclick="displayLevels('short');">
+
+      </div>
       <!-- year display -->
       <div id="yearsTab" class="consoleTab" style="display:none;">
         <!-- Create year buttons -->
@@ -1006,9 +1057,9 @@
     <!-- Add heads up display in lower left corner -->
     <footer id="bottomHUD" class="bottomHUD">
       <div id="sliderCon" style="visibility: hidden">
-          <label for="simSlider">Simulation Time</label>
-          <input id="simSlider" type="range" min="0" max="100" value="0" onclick="updateSim(this.value)">
-          <output for="simSlider" id="timer">00:00:00</output>
+        <label for="simSlider">Simulation Time</label>
+        <input id="simSlider" type="range" min="0" max="100" value="0" onclick="updateSim(this.value)">
+        <output for="simSlider" id="timer">00:00:00</output>
       </div>
       <p id="currentInfo">
     </footer>
@@ -1067,6 +1118,36 @@
       e.stopPropagation();
       return false;
     });
+
+    // Prompt save changes before user exit the program
+    var page = document.getElementById("page");
+
+    $(window).bind("beforeunload", function(event) {
+      if (page.style.visibility == 'visible') {
+        // on the main page, ask the user to save changes
+        showUploadDownload();
+        return "Are you sure to leave? Make sure if you saved changes.";
+      } else {
+        // not on the main page, exit the app directly
+        return;
+      }
+
+    });
+
+    // // for different browsers
+    // $(window).bind("onunload", function(event) {
+    // if (page.style.visibility == 'hidden') {
+    //   // not on the main page, exit the app directly
+    //
+    //   page = null; // XXX should clean more objects (everything) here
+    //
+    //   return ;
+    // }
+    //
+    // // on the main page, ask the user to save changes
+    // showUploadDownload();
+    //   confirm("Are you sure to leave? Make sure if you saved changes.");
+    // });
   </script>
 
   <!-- Add spinning circle loading gif, this loader is visible during transitions-->

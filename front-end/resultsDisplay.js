@@ -1,10 +1,5 @@
 /**
  * @Last modified time: 2017-05-31T17:30:44-05:00
- * modified:
- *  drawD3LandPieChart()
- *  drawEcosystemRadar()
- *  drawYieldRadar()
- *   - size: change px to resizable unit (vmax, %)
  */
 
 
@@ -589,14 +584,10 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   //variables for the display of the chart on the page
   // be careful about changing these values since they are tied closely to
   // css styling on results page
-  // XXX:
   // var width = 360;
-  var w = Math.round(window.innerWidth * 0.38);
-  // var legendW = Math.round(w*0.77);
   // var height = 360;
-  // var width = Math.min(w, h);
-  // var height = Math.min(w, h);
   // var radius = Math.min(width, height) / 2;
+  var w = Math.round(window.innerWidth * 0.38);
   var h = Math.round(window.innerHeight * 0.382);
   var pieChart_length = Math.min(w, h);
   var legendW = Math.round(pieChart_length * 1.06);
@@ -717,10 +708,9 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
   //sizing for the colored squares and spaces
   // var legendRectSize = 18;
-  // var legendRectSize = 0.05*height;
+  // var legendSpacing = 4;
   var legendRectSize = Math.round(0.05 * pieChart_length);
   var legendSpacing = Math.round(0.22 * legendRectSize);
-  // var legendSpacing = 4;
 
   //add all the elements that have a nonzero count
   var legend = svg.selectAll('.legend')
@@ -1478,7 +1468,6 @@ function drawEcosystemRadar(yearArray) {
     .text("Ecosystem Services");
 
   //sizing for the colored squares and spaces
-  // XXX:
   // var legendRectSize = 18;
   // var legendSpacing = 4;
   var legendRectSize = Math.round(graphLength * 0.06);
