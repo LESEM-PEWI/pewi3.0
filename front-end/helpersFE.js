@@ -2594,6 +2594,7 @@
             document.getElementById("year2Precip").value=(boardData[currentBoard].precipitation[2]==24.58)?0:((boardData[currentBoard].precipitation[2]==28.18)?1:((boardData[currentBoard].precipitation[2]==30.39)?2:((boardData[currentBoard].precipitation[2]==32.16)?3:(boardData[currentBoard].precipitation[2]==34.34)?4:((boardData[currentBoard].precipitation[2]==36.47)?5:6))));
             document.getElementById("year3Precip").value=(boardData[currentBoard].precipitation[3]==24.58)?0:((boardData[currentBoard].precipitation[3]==28.18)?1:((boardData[currentBoard].precipitation[3]==30.39)?2:((boardData[currentBoard].precipitation[3]==32.16)?3:(boardData[currentBoard].precipitation[3]==34.34)?4:((boardData[currentBoard].precipitation[3]==36.47)?5:6))));
             transitionToYear(1);
+            switchYearTab(1);
           //clear initData
           initData = [];
 
@@ -2681,6 +2682,7 @@
             document.getElementById("year2Precip").value=(boardData[currentBoard].precipitation[2]==24.58)?0:((boardData[currentBoard].precipitation[2]==28.18)?1:((boardData[currentBoard].precipitation[2]==30.39)?2:((boardData[currentBoard].precipitation[2]==32.16)?3:(boardData[currentBoard].precipitation[2]==34.34)?4:((boardData[currentBoard].precipitation[2]==36.47)?5:6))));
             document.getElementById("year3Precip").value=(boardData[currentBoard].precipitation[3]==24.58)?0:((boardData[currentBoard].precipitation[3]==28.18)?1:((boardData[currentBoard].precipitation[3]==30.39)?2:((boardData[currentBoard].precipitation[3]==32.16)?3:(boardData[currentBoard].precipitation[3]==34.34)?4:((boardData[currentBoard].precipitation[3]==36.47)?5:6))));
             transitionToYear(1);//transition to year one
+            switchYearTab(1);
 
             
 
