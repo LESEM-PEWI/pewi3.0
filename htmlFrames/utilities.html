@@ -1,14 +1,14 @@
 <!doctype html>
 
 <!--
-The utilites page is a catch-all for functions that will mostly be used by 
+The utilites page is a catch-all for functions that will mostly be used by
  teachers, professors, etc.
- 
+
 The utilities page is displayed as an iframe over the startup iframe with no background
   property set, making it appear as if it is a cohesive part of the program. Nevertheless,
-  changes can be made quite readily, and the code is much less cluttered with this 
+  changes can be made quite readily, and the code is much less cluttered with this
   separation of roles in place.
-  
+
 The page has three buttons on it. The levels button opens the level designer page in a new
   tab. The Multiplayer buttons allow for multi-maps to be created and to be put back
   together.
@@ -17,110 +17,242 @@ Cleaned and Prepared - August 2016
 -->
 
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>Workspace - Utilities</title>
+  <meta charset="utf-8">
+  <title>Workspace - Utilities</title>
 
-    <!-- INCLUDES -->
-    <!--css-->
-    <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
-    <!--javascript-->
-    <script src=".././lib/jquery-1.12.4.min.js"></script>
-    <script src=".././lib/filesaver.min.js"></script>
-    <!--external fonts-->
-    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
-    
-    <!-- /INCLUDES -->
+  <!-- INCLUDES -->
+  <!--css-->
+  <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+  <!--javascript-->
+  <script src=".././lib/jquery-1.12.4.min.js"></script>
+  <script src=".././lib/filesaver.min.js"></script>
+  <!-- <script src=".././back-end/helperMethods.js"></script> -->
+  <!--external fonts-->
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
 
-    <!--additional styling-->   
-    <style>
-    body{
-        overflow:hidden;
+  <!-- /INCLUDES -->
+
+  <!--additional styling-->
+  <style>
+    body {
+      overflow: hidden;
     }
-    </style>
+  </style>
 
-</head>    
+</head>
+
 <body>
 
-    <img onclick="parent.reset()" id="backButton" src="./imgs/back.png" alt="Go Back <--">
+  <img onclick="parent.reset()" id="backButton" src="./imgs/back.png" alt="Go Back <--">
 
-    <div id="utilitiesContentsHolder">
-        
-        <!---buttons for utilities, add new buttons here -->    
-        <div id="levelDesignerButton" class="mainButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
-        <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup();">Set-Up Multiplayer</div>
-        <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
-        
-        <!--container for Aggregate Tool, slides up and down by height changes-->
-        <div id="utilitiesAggregateTools">
-            <div class="uploadFile">
-                
-                <label for="file-upload">
+  <div id="utilitiesContentsHolder">
+
+    <!---buttons for utilities, add new buttons here -->
+    <div id="levelDesignerButton" class="mainButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
+    <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup();">Set-Up Multiplayer</div>
+    <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
+    <div class="uploadFile">
+
+      <label for="file-upload2">
+                <!--Technically not allowed, but seems to work across browsers-->
+                <!-- in future, div may need to be moved outside the label, cleverly-->
+                <div id="simulationButton" class="mainButton">Run User Simulation</div>
+            </label>
+      <input id="file-upload2" type="file" />
+    </div>
+
+    <!--container for Aggregate Tool, slides up and down by height changes-->
+    <div id="utilitiesAggregateTools">
+      <div class="uploadFile">
+
+        <label for="file-upload">
                     <!--Technically not allowed, but seems to work across browsers-->
                     <!-- in future, div may need to be moved outside the label, cleverly-->
                     <div id="addFile" class="mainButton">Add a File</div>
                 </label>
-                <input id="file-upload" type="file" />
-                
-            </div>
-            <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
-            <div id="aggregateInfo" class="infoBar">Ready. Upload first file.</div>
-        </div>
-        
+        <input id="file-upload" type="file" multiple="" onchange="uploadAggregateMultiMap();" />
+      </div>
+      <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
+      <div id="aggregateInfo" class="infoBar">
+        Ready. Upload csv map files.
+      </div>
+
     </div>
-<script>
+    <div id="div-fileList">
+      <ul id="fileList"></ul>
+    </div>
 
-var numberOfTimesAggregated = 0; //used to keep track for info bar 
-bindAggregateFunctionToFileUpload();
+  </div>
+  <script>
+    var input = document.getElementById("file-upload");
+    var ul = document.getElementById("fileList");
 
-//launch essentially sandbox with multiplayer tools
-function launchMultiplayerSetup() {
-    window.top.loadLevel(-1);
-}//end launchMultiplayerSetup
+    bindSimulationFileListener();
 
-//attach the file upload event to our functions for aggregating
-function bindAggregateFunctionToFileUpload() {
-    //jquery attachment
-    $('#file-upload').bind('propertychange change', function(e) {
-        //if the upload is successful, then it returns 1, and numberOfTimes... increases
-        numberOfTimesAggregated += window.top.multiplayerFileUpload(numberOfTimesAggregated, e);
-        //change what is displayed in the info bar
-        updateInfo(numberOfTimesAggregated);
-    });
-}//end bindAggregateFunctionToFileUpload
+    //attach the file upload event to our functions for simulating
+    function bindSimulationFileListener() {
+      //jquery attachment
+      $('#file-upload2').bind('propertychange change', function(e) {
+        //Load the simulation into the helper method
+        window.top.loadSimulation(e);
+      });
+      //small issue: if file selected is same name as previous
+      //property change is not triggered, even if file has changed.
+    };
 
-//expand or collapse the div holding tools for mashing together separate maps
-function toggleAggregateOptions() {
-    //if the div is not expanded, then expand 
-    //else if expanded, then collapse it
-    document.getElementById('utilitiesAggregateTools').style.height =
-        (document.getElementById('utilitiesAggregateTools').style.height != "300px") ?
-        document.getElementById('utilitiesAggregateTools').style.height = "300px" :
+    //assist in downloading the currently aggregated map
+    //uses filesaver.js for compatibility purposes
+    function downloadAggregateMap() {
+      emptyFileList();
+      // remove the file handler
+      input.files = null;
+
+      //data from function in helpersFE.js
+      var data = window.top.writeFileToDownloadString();
+      if (data.length != 0) {
+        var downloadBlob = new Blob([data], {
+          type: "text/csv;charset=utf-8"
+        });
+        //filesaver.min.js
+        saveAs(downloadBlob, "aggregatePewiMap.csv");
+        updateInfo("Downloaded. Return to Sandbox to load.");
+      } else {
+        updateInfo("No data to download.");
+      }
+    } //end downloadAggregateMap
+
+    // clean the file list
+    function emptyFileList() {
+      // delete all the nodes under fileList
+      while (ul.hasChildNodes()) {
+        ul.removeChild(ul.firstChild);
+      }
+      // remove div-fileList
+      document.getElementById("div-fileList").style.display = 'none';
+    } // end emptyFileList()
+
+    //launch essentially sandbox with multiplayer tools
+    function launchMultiplayerSetup() {
+
+      window.top.loadLevel(-1);
+
+    } //end launchMultiplayerSetup
+
+    // list all the files selected
+    function makeFileList() {
+      // append filename entries
+      if (input.files.length > 0) {
+        for (var i = 0; i < input.files.length; i++) {
+          var li = document.createElement("li");
+          li.innerHTML = input.files[i].name;
+          ul.appendChild(li);
+        }
+        document.getElementById("div-fileList").style.display = 'block';
+      } // end if
+    } // end makeFileList()
+
+    //expand or collapse the div holding tools for mashing together separate maps
+    function toggleAggregateOptions() {
+      //if the div is not expanded, then expand
+      //else if expanded, then collapse it (preferable using %, it relates to its layout)
+      document.getElementById('utilitiesAggregateTools').style.height =
+        (document.getElementById('utilitiesAggregateTools').style.height != "18vw") ?
+        document.getElementById('utilitiesAggregateTools').style.height = "18vw" :
         document.getElementById('utilitiesAggregateTools').style.height = "0px";
-}//end toggleAggregateOptions
+      // document.getElementById('utilitiesAggregateTools').style.height =
+      //     (document.getElementById('utilitiesAggregateTools').style.height != "300px") ?
+      //     document.getElementById('utilitiesAggregateTools').style.height = "300px" :
+      //     document.getElementById('utilitiesAggregateTools').style.height = "0px";
+    } //end toggleAggregateOptions
 
-//assist in downloading the currently aggregated map
-//uses filesaver.js for compatibility purposes
-function downloadAggregateMap() {
-    //data from function in helpersFE.js
-    var data = window.top.writeFileToDownloadString();
-    var downloadBlob = new Blob([data], {type: "text/csv;charset=utf-8"});
-    //filesaver.min.js
-    saveAs(downloadBlob, "aggregatePewiMap.csv") ;
+    //updates the text information in the infoBar for the user
+    function updateInfo(content) {
+      if (isNaN(content)) {
+        // string information
+        document.getElementById('aggregateInfo').innerHTML = content;
+      } else {
+        // number of files
+        document.getElementById('aggregateInfo').innerHTML = "Added " + content + " files";
+      }
+    } //end updateInfo
 
-    document.getElementById('aggregateInfo').innerHTML = "Downloaded. Return to Sandbox to load.";
-}//end downloadAggregateMap
+    // trigger the file upload process for aggregating maps`
+    function uploadAggregateMultiMap() {
+      // clean the files list
+      emptyFileList();
 
-//updates the text information in the infoBar for the user
-function updateInfo(time) {
-    //if the first time, give a unique message
-    //else, just tell how many files have been successfully added
-    document.getElementById('aggregateInfo').innerHTML =
-        (time == 1) ?
-        "Added 1. Now add remaining players." :
-        "Added " + time + " files";
-}//end updateInfo
-</script>    
-    
-</body> 
+      // check files number
+      if (input.files.length > 6) {
+        // remove the file handler
+        input.files = null;
+        // clean the data to prevent from downloading something
+        window.top.cleanCurrentBoardData();
+        alert("Can Upload At Most 6 Files!");
+        updateInfo("Ready. Upload csv map files.");
+        return;
+      }
+
+      // check file type here
+      for (var i = 0; i < input.files.length; i++) {
+        if (!input.files[i].name.match(/\.csv/)) {
+          // remove the file handler
+          input.files = null;
+          // clean the data to prevent from downloading something
+          window.top.cleanCurrentBoardData();
+          alert("At Least One Incorrect File Type!");
+          updateInfo("Ready. Upload csv map files.");
+          return;
+        }
+      }
+
+      // testing for execution time
+      // var d = new Date();
+      // var n = d.getTime();
+      // var n1;
+
+      var hasCorrupt = false;
+      updateInfo("Verifying...");
+
+      // check the correctness of the files
+      for (var i = 0; i < input.files.length; i++) {
+
+        // asynchronous callback function to get parse data result
+        window.top.checkFileCorrectness(input.files[i], function(result) {
+          if (result == false) {
+            hasCorrupt = true;
+            // remove the file handler
+            input.files = null;
+            // clean the data to prevent from downloading something
+            window.top.cleanCurrentBoardData();
+            alert("At Least One Corrupt File!");
+          }
+          // testing for execution time
+          // d = new Date();
+          // n1 = d.getTime();
+          // console.log("callback function: Waited for "+ (n1-n) + " milliseconds.");
+        });
+      }
+
+      // set delay time 2.5 seconds to wait for files uploading
+      setTimeout(function() {
+
+        if (hasCorrupt == false) {
+          // list all the files selected
+          makeFileList();
+          // do uploading and process the files
+          window.top.multiplayerFileUpload(input);
+          //change what is displayed in the info bar
+          updateInfo(input.files.length);
+        } else {
+          updateInfo("Please try again with valid csv map file.");
+        }
+      }, 2500);
+
+    } // end bindAggregateFunctionToFileUpload()
+  </script>
+
+</body>
+
 </html>

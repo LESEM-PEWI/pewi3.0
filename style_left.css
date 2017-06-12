@@ -1,0 +1,821 @@
+/**
+ * @Date:   2017-05-25T10:59:40-05:00
+ * @Last modified time: 2017-06-08T11:12:50-05:00
+ */
+
+
+/* css global variable declaration */
+:root {
+  --consoleButton-height: 2.81vw;
+  --first-consoleButton-top: 15.47vw;
+  --left-console-top-value: 10.7vw;
+  --left-console-width: 9.6vw;
+  --left-console-height: 30vw;
+  --left-console-button-length: 3vw;
+  --left-console-button-image-length: 2vw;
+  --left-console-button-image-margin: 0.5vw;
+  --level-indicator-length: 1vw;
+  --selector-icon-length: 2.5vw;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+/**Styling for index Menu**/
+#indexmenu {
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 6px 6px 0 0;
+  -webkit-border-radius: 6px 6px 0 0;
+  -moz-border-radius: 6px 6px 0 0;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  font-weight: bold;
+  height: 3vw;
+  position: absolute;
+  text-align: center;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+  top: 7.7vw;
+  width: 12.5vw;
+}
+
+#indexmenu:hover {
+  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+
+/* left console clickable buttons */
+.consoleButton {
+  background-color: rgba(0, 0, 0, 0.7);
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  height: var(--left-console-button-length);
+  position: absolute;
+  transition-property: left;
+  width: var(--left-console-button-length);
+  /*transition-duration: var(--transition-duration);*/
+  /* Safari */
+  /*-webkit-transition-duration: var(--transition-duration);*/
+}
+
+.consoleButton:hover {
+  box-shadow: 8px 0px 10px -4px rgba(240, 166, 29, 0.8);
+}
+
+
+/* painter brush tab */
+#settingsTab {
+  height: 3vw;
+  left: 0;
+  position: absolute;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+  top: 4vw;
+  /*top: calc(var(--left-console-top-value) + var(--left-console-height));*/
+  width: var(--left-console-width);
+}
+
+/* undo button */
+#undoButton {
+  /*border-bottom-right-radius: 5px;*/
+  border-radius: 50%;
+  cursor: pointer;
+  height: var(--left-console-button-length);
+  width: var(--left-console-button-length);
+  top: 4vw;
+}
+
+#undoButton:hover {
+  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+
+/* toolsButton to slide the left console */
+#toolsButton {
+  /*border-bottom-right-radius: 5px;*/
+  top: var(--left-console-top-value);
+}
+
+
+/* tabButtons class: container for consoleButton class */
+.tabButtons, #toolsButton, #undoButton {
+  left: var(--left-console-width);
+  position: absolute;
+  transition-duration: var(--transition-duration);
+  /* Safari */
+  -webkit-transition-duration: var(--transition-duration);
+}
+
+
+/* needed for sliding  */
+.tabButtonsRolled {
+  left: -4.26vw;
+  position: absolute;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+
+/* img for consoleButton class.*/
+.imgSelected, .imgNotSelected, #pick {
+  margin: var(--left-console-button-image-margin);
+  width: var(--left-console-button-image-length);
+}
+
+
+/* img for consoleButton class. button selected */
+.imgSelected {
+  border-right: 2px solid #F0A61D;
+}
+
+
+/* img for consoleButton class. button not selected */
+.imgNotSelected {
+  border-right: 0px;
+}
+
+
+/* left consoleButton, terrain button */
+#terrainButton {
+  border-top-right-radius: 5px;
+  top: var(--first-consoleButton-top);
+}
+
+
+/* left consoleButton, precipatation button */
+#precipButton {
+  top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
+}
+
+
+/* left consoleButton, year button */
+#yearButton {
+  top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
+}
+
+
+/* left consoleButton, levels button */
+#levelsButton {
+  top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
+}
+
+
+/* left consoleButton, features button */
+#featuresButton {
+  top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
+}
+
+
+/* left consoleButton, yield button */
+#yieldButton {
+  /*border-bottom-right-radius: 5px;*/
+  top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
+}
+
+
+/**left console content container**/
+#leftConsole {
+  background-color: rgba(0, 0, 0, 0.7);
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-bottom-right-radius: 12px;
+  height: 30vw;
+  position: absolute;
+  top: var(--left-console-top-value);
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+  width: var(--left-console-width);
+}
+
+
+/* needed for sliding  */
+.leftConsole {
+  left: 0;
+}
+
+.leftConsoleRolled {
+  left: calc( -1*var(--left-console-width));
+}
+/* end left console content container */
+
+
+/* The content div of each tab */
+.consoleTab {
+  height: 100%;
+  padding: 3%;
+  width: 100%;
+}
+
+/*terrain selector*/
+#painterTab {}
+
+#painterTab-leftcol {
+  width: calc(var(--left-console-width) / 2);
+  display: block;
+  left: 0.5vw;
+  position: absolute;
+}
+
+#painterTab-rightcol {
+  width: calc(var(--left-console-width) / 2);
+  display: block;
+  left: 5vw;
+  position: absolute;
+}
+
+
+/**inner elements of left console**/
+
+
+/* icons & iconSelected class */
+.icon, .iconSelected {
+  border-radius: 50%;
+  -webkit-border-radius: 50;
+  -moz-border-radius: 50;
+  cursor: pointer;
+  float: left;
+  height: var(--selector-icon-length);
+  width: var(--selector-icon-length);
+}
+
+.icon {
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+}
+
+.icon:hover {
+  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+.iconSelected {
+  box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+
+.iconSelected:hover {
+  box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+}
+
+
+/*terrain selector*/
+.landSelectorIcon {
+  margin: 0.5vw;
+}
+
+
+/* muti-player buttons */
+.playerIcon {
+  /* image inside playerButton div */
+  margin: 0.5vw;
+  position: relative;
+}
+
+
+/* levels map selector */
+.levelsSelectorIcon {
+  margin: 1vw 3vw 1.2vw;
+}
+
+
+/* physical features map selector */
+.featureSelectorIcon {
+  margin: 0.5vw 3vw;
+}
+
+
+/* yield map selector */
+.yieldSelectorIcon {
+  display: block;
+  margin: 0.8vw;
+  position: relative;
+}
+
+
+/* painter brush selector */
+.painterIcon {
+  margin: 0.5vw 1vw;
+}
+/* end icons */
+
+
+/* multiplayerTab section */
+#message {
+  color: white;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  position: static;
+  visibility: hidden;
+}
+
+#playerResetButton {
+  display: none;
+}
+
+#playerResetButton:hover #message {
+  top: 100%;
+  right: 88%;
+  visibility: visible;
+}
+
+.playerImageHidden {
+  height: 100%;
+  width: 100%;
+}
+/* end multiplayerTab section */
+
+
+/* precipTab section */
+#precipTab {}
+
+#precipTitle, #yearTitle, .levelsText {
+  color: #fff;
+  font-size: var(--font-size);
+  font-weight: var(--title-font-weight);
+  margin: 0.3vw;
+  padding: 0.2vw;
+  text-align: center;
+}
+
+
+/*precip selector*/
+.styled-select {
+  background: #3b3b3b;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+  color: #fff;
+  margin: 0.5vw;
+  padding: 0.2vw;
+  text-align: center;
+}
+
+#year0PrecipContainer {
+}
+
+select {
+  font-size: var(--font-size);
+  margin: 5%;
+}
+
+.year-precip-select {
+  height: 1.8vw;
+  width: 5vw;
+}
+
+option {
+  font-size: var(--font-size);
+}
+/* end precipTab section */
+
+
+/** year buttons div**/
+.yearButton {
+  height: var(--selector-icon-length);
+  margin-left: 3vw;
+  margin-top: 1.2vw;
+  width: var(--selector-icon-length);
+}
+
+.yearButtonHidden, .yearImageHidden {
+  display: none;
+}
+
+/** year buttons**/
+.yearSelected {
+  box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+
+.yearNotSelected:hover {
+  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+
+/* detail lists */
+.DetailsList, .DetailsListRolled {
+  background-color: black;
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  margin: 15px 0px 0px 0px;
+  position: absolute;
+  top: 1.4vw;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+.DetailsList {
+  left: 14vw;
+}
+
+.DetailsListRolled {
+  left: -1000px;
+}
+
+.levelDetailsList {
+  width: 8.5vw;
+}
+
+.physicalDetailsList {
+  width: 15vw;
+}
+
+.yieldDetailsList {
+  width: 15vw;
+}
+/* end detail lists */
+
+.levelsTextDetails, .yieldtext {
+  color: #fff;
+  margin-left: 1.8vw;
+  white-space: nowrap;
+}
+
+.featuresText {
+  color: #fff;
+  text-align: center;
+}
+
+#shortDetailsList {
+  width: 220px;
+}
+
+table, th, td {
+    border: 0.1vw solid black;
+    border-collapse: collapse;
+    color: white;
+    font-size: 6pt;
+}
+th, td {
+    padding: 0.6vw;
+    text-align: left;
+}
+table #yieldGrainTable {
+    width: 100%;
+    background-image: url('./imgs/consoleTexture.png');
+    color: white;
+    font-size: 6pt;
+}
+
+/* indicator size and colors on detail lists */
+.levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5,
+.floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone,
+.drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8,
+.soilColor, .cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4,
+.soyBean1, .soyBean2, .soyBean3, .soyBean4,
+.fruit1, .fruit2, .fruit3, .fruit4,
+.cattle1, .cattle2, .cattle3, .cattle4,
+.alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4,
+.grassHay1, .grassHay2, .grassHay3, .grassHay4,
+.switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4,
+.wood1, .wood2, .wood3, .wood4, .short1 {
+  height: var(--level-indicator-length);
+  margin: 5%;
+  width: var(--level-indicator-length);
+}
+
+.levelColor1 {
+  background-color: #e6bb00;
+}
+
+.levelColor2 {
+  background-color: #c97b08;
+}
+
+.levelColor3 {
+  background-color: #ad490d;
+}
+
+.levelColor4 {
+  background-color: #9a3010;
+}
+
+.levelColor5 {
+  background-color: #871c12;
+}
+
+.floodColor1 {
+  background-color: #ffffc9;
+}
+
+.floodColor2 {
+  background-color: #c7eab4;
+}
+
+.floodColor3 {
+  background-color: #7fcebb;
+}
+
+.floodColor4 {
+  background-color: #41b7c5;
+}
+
+.floodColor5 {
+  background-color: #2f7eb7;
+}
+
+.floodColorNone {
+  border: 0px;
+}
+
+.drainageColor1 {
+  background-color: #0053b3;
+}
+
+.drainageColor2 {
+  background-color: #38638b;
+}
+
+.drainageColor3 {
+  background-color: #5e6e71;
+}
+
+.drainageColor4 {
+  background-color: #837856;
+}
+
+.drainageColor5 {
+  background-color: #bc892f;
+}
+
+.cornGrain1 {
+  background-color: #ffffc9;
+}
+
+.cornGrain2 {
+  background-color: #e3c972;
+}
+
+.cornGrain3 {
+  background-color: #e6bb00;
+}
+
+.cornGrain4 {
+  background-color: #bc892f;
+}
+
+.soyBean1 {
+  background-color: #ffffff;
+}
+
+.soyBean2 {
+  background-color: #ccffcc;
+}
+
+.soyBean3 {
+  background-color: #66ff66;
+}
+
+.soyBean4 {
+  background-color: #00cc00;
+}
+
+.fruit1 {
+  background-color: #ff4000;
+}
+
+.fruit2 {
+  background-color: #e6bb00;
+}
+
+.fruit3 {
+  background-color: #66ff66;
+}
+
+.fruit4 {
+  background-color: #aa4497;
+}
+
+.cattle1 {
+  background-color: #ffffff;
+}
+
+.cattle2 {
+  background-color: #CECACA;
+}
+
+.cattle3 {
+  background-color: #5e6e71;
+}
+
+.cattle4 {
+  background-color: #000000;
+}
+
+.alfalfa1 {
+  background-color: #cc6578;
+}
+
+.alfalfa2 {
+  background-color: #aa4497;
+}
+
+.alfalfa3 {
+  background-color: #8B008B;
+}
+
+.alfalfa4 {
+  background-color: #862254;
+}
+
+.grassHay1 {
+  background-color: #d9ff66;
+}
+
+.grassHay2 {
+  background-color: #66ff66;
+}
+
+.grassHay3 {
+  background-color: #00ff00;
+}
+
+.grassHay4 {
+  background-color: #187336;
+}
+
+.switchGrass1 {
+  background-color: #66ff66;
+}
+
+.switchGrass2 {
+  background-color: #33cc33;
+}
+
+.switchGrass3 {
+  background-color: #1f7a1f;
+}
+
+.switchGrass4 {
+  background-color: #145214;
+}
+
+.wood1 {
+  background-color: #f2e6d9;
+}
+
+.wood2 {
+  background-color: #d9b38c;
+}
+
+.wood3 {
+  background-color: #ac7339;
+}
+
+.wood4 {
+  background-color: #734d26;
+}
+
+.short1 {
+  background-color: #734D26;
+}
+/* end indicator size and colors on detail lists */
+
+/* responsive web design. When the window size gets smaller than 600x400 */
+@media screen and (max-width: 600px), screen and (max-height: 400px) {
+  .icon, .iconSelected {
+    height: 15px;
+    width: 15px;
+    margin: 2.5px;
+  }
+  #indexmenu {
+    font-size: 14px;
+    height: 18px;
+    top: 46px;
+    width: 75px;
+  }
+  #painterTab-leftcol {
+    left: 0px;
+    width: 28.8px;
+  }
+  #painterTab-rightcol {
+    left: 28.8px;
+    width: 28.8px;
+  }
+  #leftConsole {
+    height: 180px;
+    top: 64px;
+    width: 57.6px;
+  }
+  #settingsTab {
+    height: 23px;
+    top: 23px;
+    width: 57.6px;
+  }
+  .consoleButton, #undoButton {
+    height: 18px;
+    width: 18px;
+  }
+  .imgSelected, .imgNotSelected {
+    height: 10px;
+    margin: 4px;
+    width: 12px;
+  }
+  #pick {
+    height: 10px;
+    margin: 4px;
+    width: 12px;
+  }
+  .tabButtons, #toolsButton, #undoButton {
+    left: 57px;
+  }
+  #undoButton {
+    height: 18px;
+    top: 25px;
+    width: 18px;
+  }
+  #toolsButton {
+    top: 64px;
+  }
+  #terrainButton {
+    top: 92px;
+  }
+  #precipButton {
+    top: 110px;
+  }
+  #yearButton {
+    top: 128px;
+  }
+  #levelsButton {
+    top: 146px;
+  }
+  #featuresButton {
+    top: 164px;
+  }
+  #yieldButton {
+    top: 182px;
+  }
+  #precipTitle, #yearTitle {
+    font-size: 6px;
+    height: 8.4px;
+    width: 46px;
+  }
+  .styled-select {
+    font-size: 6px;
+    height: 24px;
+    width: 45px;
+  }
+  .year-precip-select {
+    height: 10.8px;
+    width: 30px;
+  }
+  .yearButton {
+    height: 15px;
+    width: 15px;
+    margin-left: 17px;
+    margin-top: 10px;
+  }
+  .levelsSelectorIcon {
+    margin: 6px 18px 7.2px;
+  }
+  .featureSelectorIcon {
+    margin: 3px 18px;
+  }
+  .painterIcon {
+    margin: 4.8px 6px;
+  }
+  .levelsText, .featuresText {
+    font-size: 6px;
+  }
+  .DetailsList {
+    top: 8px;
+    left: 78px;
+  }
+  .levelDetailsList {
+    width: 51px;
+  }
+  .physicalDetailsList {
+    width: 89px;
+  }
+  .yieldDetailsList {
+    width: 89px;
+  }
+  .levelsTextDetails {
+    margin-left: 9px;
+    font-size: 6px;
+  }
+  .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5,
+  .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone,
+  .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8,
+  .soilColor, .cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4,
+  .soyBean1, .soyBean2, .soyBean3, .soyBean4, .fruit1, .fruit2, .fruit3, .fruit4,
+  .cattle1, .cattle2, .cattle3, .cattle4, .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4,
+  .grassHay1, .grassHay2, .grassHay3, .grassHay4,
+  .switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4,
+  .wood1, .wood2, .wood3, .wood4, .short1 {
+    height: 6px;
+    width: 6px;
+  }
+}

@@ -3,7 +3,7 @@
 <!--
 The options page is accessible from the parent document index.html
   It interfaces with methods in helpersFE.js
-  
+
 Options are propogated and stored in the index.html parameters div, an invisible div.
 Each parameter is designated by some text and then a newline.
 In order to avoid a comprehensive toggling of each element our system will work as such:
@@ -11,8 +11,8 @@ In order to avoid a comprehensive toggling of each element our system will work 
   elements off by default can be toggled on with keywords
   other special features (off by default), such as precip unchangeable,
       are added with keywords
-      
-This page page contains most of the current options keywords as toggle buttons or 
+
+This page page contains most of the current options keywords as toggle buttons or
 numerical select. State is saved to the parameters div on close and pulled from that
 div on open.
 
@@ -20,6 +20,7 @@ Cleaned and Prepared - July 2016
 -->
 
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Workspace - Upload/Download</title>
@@ -27,209 +28,169 @@ Cleaned and Prepared - July 2016
 
   <!--css-->
   <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+  <link rel="stylesheet" type="text/css" href="./style_options.css">
   <!--external fonts -->
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
-
   <!-- /INCLUDES -->
-
   <!--additional styling-->
-  <style>
-    body {
-      background-color: #000000;
-    }
-    
-    input {
-      position: absolute;
-      left: -9999px;
-    }
-    
-    label {
-      background-color: #40A4DF;
-      border: 3px solid #fff;
-      border-radius: 100px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, .2);
-      color: #fff;
-      cursor: pointer;
-      display: inline-block;
-      font-size: 20px;
-      margin: 20px;
-      padding: 15px 30px 15px 30px;
-      position: relative;
-      text-align: center;
-      transition: background-color .2s, box-shadow .2s;
-      user-select: none;
-      white-space: nowrap;
-      width: 250px;
-    }
-    
-    label:hover,
-    input:focus+ label {
-      box-shadow: 0 0 30px rgba(255, 255, 255, .7);
-    }
-    
-    input:checked+ label {
-      background-color: #003d4d;
-    }
-  </style>
-  
+
   <!--page scripting-->
   <script>
-  var maxYear = 3; //for settings, defines the number of year buttons specified    
+    var maxYear = 3; //for settings, defines the number of year buttons specified
 
-  //the saveCurrentOptionsState function is called when the save/exit button is pressed
-  //each of the options is evaluated and the text for the parameters div is generated
-  //as needed
-  //the parent page is then called to hide the options iframe
-  function saveCurrentOptionsState() {
-    //find the elements that are able to be checked
-    var toggledElements = document.getElementsByClassName('toggle');
-    var tempString = "";
-    
-    //if there are toggle elements
-    if (toggledElements) {
-      for (var i = 0; i < toggledElements.length; i++) {
-        switch (toggledElements[i].id) {
-          case "year0":
-            if (toggledElements[i].checked) {
-              tempString += "year0On" + "\n";
-            }
-            break;
-          case "statFrame":
-            if (toggledElements[i].checked) {
-              tempString += "statsOn" + "\n";
-            }
-            break;
-          case "skybox":
-            if (toggledElements[i].checked) {
-              tempString += "skyboxOn" + "\n";
-            }
-            break;
-          case "precip":
-            if (toggledElements[i].checked) {
-              tempString += "precipOff" + "\n";
-            }
-            break;
-          //default case, just add a new line with parameter
-          default:
-            if (toggledElements[i].checked) {
-              tempString += toggledElements[i].id + "\n"
-            }
-        }//end switch
-      } //end for elements of class toggle
+    //the saveCurrentOptionsState function is called when the save/exit button is pressed
+    //each of the options is evaluated and the text for the parameters div is generated
+    //as needed
+    //the parent page is then called to hide the options iframe
+    function saveCurrentOptionsState() {
+      //find the elements that are able to be checked
+      var toggledElements = document.getElementsByClassName('toggle');
+      var tempString = "";
 
-      var yearNum = Number(document.getElementById('yearNumber').innerHTML);
-      
-      //if year number is less than max year then get rid of that year
-      //  by adding it to the parameters list
-      while (yearNum < maxYear) {
-        yearNum += 1;
-        //toggle off year button
-        var idName = "year" + yearNum + "Button";
-        tempString += idName + "\n";
-        //toggle off precip selection
-        idName = "year" + yearNum + "PrecipContainer";
-        tempString += idName + "\n";
+      //if there are toggle elements
+      if (toggledElements) {
+        for (var i = 0; i < toggledElements.length; i++) {
+          switch (toggledElements[i].id) {
+            case "year0":
+              if (toggledElements[i].checked) {
+                tempString += "year0On" + "\n";
+              }
+              break;
+            case "statFrame":
+              if (toggledElements[i].checked) {
+                tempString += "statsOn" + "\n";
+              }
+              break;
+            case "skybox":
+              if (toggledElements[i].checked) {
+                tempString += "skyboxOn" + "\n";
+              }
+              break;
+            case "precip":
+              if (toggledElements[i].checked) {
+                tempString += "precipOff" + "\n";
+              }
+              break;
+              //default case, just add a new line with parameter
+            default:
+              if (toggledElements[i].checked) {
+                tempString += toggledElements[i].id + "\n"
+              }
+          } //end switch
+        } //end for elements of class toggle
+
+        var yearNum = Number(document.getElementById('yearNumber').innerHTML);
+
+        //if year number is less than max year then get rid of that year
+        //  by adding it to the parameters list
+        while (yearNum < maxYear) {
+          yearNum += 1;
+          //toggle off year button
+          var idName = "year" + yearNum + "Button";
+          tempString += idName + "\n";
+          //toggle off precip selection
+          idName = "year" + yearNum + "PrecipContainer";
+          tempString += idName + "\n";
+        }
+
+        //put all the elements in the parameters div of index.html
+        window.top.document.getElementById('parameters').innerHTML = tempString;
+      } //end if
+
+      //hide the options frame from the top frame (index.html)
+      parent.resetOptions();
+      //scroll page to top, so that next time options is loaded it starts there
+      window.scrollTo(0, 0); 
+    } //end function saveCurrentOptionsState
+
+
+    //this function gets the current option parameters which are stored as text in
+    // the parameter div
+    // it then updates the options page accordingly, since the iframe has no memory of
+    // it's state
+    // This function is called by the parent page in helpers.js
+    function getCurrentOptionsState() {
+      //raw text content in parameters div
+      var strRawContents = window.top.document.getElementById('parameters').innerHTML;
+
+      //split based on escape chars
+      while (strRawContents.indexOf("\r") >= 0) {
+        strRawContents = strRawContents.replace("\r", "");
       }
-    
-      //put all the elements in the parameters div of index.html
-      window.top.document.getElementById('parameters').innerHTML = tempString;
-    }//end if
-    
-    //hide the options frame from the top frame (index.html)
-    parent.resetOptions();
-    //scroll page to top, so that next time options is loaded it starts there
-    window.scrollTo(0, 0);
-  }//end function saveCurrentOptionsState
+      var arrLines = strRawContents.split("\n");
 
+      var yearCounter = 0;
+      //for each line attribute in the parameters div, see what needs to be done
+      for (var i = 0; i < arrLines.length; i++) {
+        var string = arrLines[i];
 
-  //this function gets the current option parameters which are stored as text in 
-  // the parameter div
-  // it then updates the options page accordingly, since the iframe has no memory of
-  // it's state
-  // This function is called by the parent page in helpers.js
-  function getCurrentOptionsState() {
-    //raw text content in parameters div
-    var strRawContents = window.top.document.getElementById('parameters').innerHTML;
-
-    //split based on escape chars
-    while (strRawContents.indexOf("\r") >= 0) {
-      strRawContents = strRawContents.replace("\r", "");
-    }
-    var arrLines = strRawContents.split("\n");
-
-    var yearCounter = 0;
-    //for each line attribute in the parameters div, see what needs to be done
-    for (var i = 0; i < arrLines.length; i++) {
-     var string = arrLines[i];
-
-      switch (string) {
-        case "year0On":
-          document.getElementById('year0').checked = 1;
-          break;
-        case "statsOn":
-          document.getElementById('statFrame').checked = 1;
-          break;
-        case "skyboxOn":
-          document.getElementById('skybox').checked = 1;
-          break;
-        case "precipOff":
-          document.getElementById('precip').checked = 1;
-          break;
-        //case nothing, do nothing (error protection)
-        case "":
-          break;
-        default:
-          //workaroundy, but let's see if it's a year, if not, just toggle the element
-          if (string.slice(0, 4) == "year") {
-            //filter out the precip containers that have been generated off
-            if (string.length < 12) {
-              yearCounter += 1;
+        switch (string) {
+          case "year0On":
+            document.getElementById('year0').checked = 1;
+            break;
+          case "statsOn":
+            document.getElementById('statFrame').checked = 1;
+            break;
+          case "skyboxOn":
+            document.getElementById('skybox').checked = 1;
+            break;
+          case "precipOff":
+            document.getElementById('precip').checked = 1;
+            break;
+            //case nothing, do nothing (error protection)
+          case "":
+            break;
+          default:
+            //workaroundy, but let's see if it's a year, if not, just toggle the element
+            if (string.slice(0, 4) == "year") {
+              //filter out the precip containers that have been generated off
+              if (string.length < 12) {
+                yearCounter += 1;
+              }
+            } else {
+              if (document.getElementById(string)) document.getElementById(string).checked = 1;
             }
-          }
-          else {
-            if (document.getElementById(string)) document.getElementById(string).checked = 1;
-          }
-      }//end switch
-    }//end for each line in the parameters div
+        } //end switch
+      } //end for each line in the parameters div
 
-    //set year values
-    document.getElementById('yearNumber').innerHTML = (3 - yearCounter);
-    //make sure that correct +/- arrows are displayed
-    changeYearValueBy(0);
-  }
-
-  //assists in toggling year value up and down on the options page
-  //  checks limits and toggles the up/down options off if needed
-  function changeYearValueBy(amountToChange) {
-
-    var currentNumber = Number(document.getElementById('yearNumber').innerHTML);
-    currentNumber += amountToChange;
-
-    //reset visibility, then turn off as needed
-    document.getElementById('addYear').style.visibility = "visible";
-    document.getElementById('subtractYear').style.visibility = "visible";
-    //turning off to prevent users from exceeding
-    if (currentNumber == maxYear) {
-      document.getElementById('addYear').style.visibility = "hidden";
+      //set year values
+      document.getElementById('yearNumber').innerHTML = (3 - yearCounter);
+      //make sure that correct +/- arrows are displayed
+      changeYearValueBy(0);
     }
-    else if (currentNumber == 1) {
-      document.getElementById('subtractYear').style.visibility = "hidden";
+
+    //assists in toggling year value up and down on the options page
+    //  checks limits and toggles the up/down options off if needed
+    function changeYearValueBy(amountToChange) {
+
+      var currentNumber = Number(document.getElementById('yearNumber').innerHTML);
+      currentNumber += amountToChange;
+
+      //reset visibility, then turn off as needed
+      document.getElementById('addYear').style.visibility = "visible";
+      document.getElementById('subtractYear').style.visibility = "visible";
+      //turning off to prevent users from exceeding
+      if (currentNumber == maxYear) {
+        document.getElementById('addYear').style.visibility = "hidden";
+      } else if (currentNumber == 1) {
+        document.getElementById('subtractYear').style.visibility = "hidden";
+      }
+
+      //alright now, let's put the year number back in the document
+      document.getElementById('yearNumber').innerHTML = currentNumber;
     }
-    
-    //alright now, let's put the year number back in the document
-    document.getElementById('yearNumber').innerHTML = currentNumber;
-  }
-</script>
+  </script>
 
 </head>
+
 <body>
 
   <img id="optionsBackroundImage" alt="" src="./imgs/floodBack.png">
 
   <!--Credit for functionality of hidden checkboxes
-  http://codersblock.com/blog/checkbox-trickery-with-css/ 
+  http://codersblock.com/blog/checkbox-trickery-with-css/
   -->
-  
+
   <div id="optionsMainHolder">
     <div class="optionsHeader" style="margin-top:15px;">
       Disable Land Use Types
@@ -239,7 +200,8 @@ Cleaned and Prepared - July 2016
 
     <div class="optionsSubContainer">
       <input id="paint1" class="toggle" type="checkbox">
-      <label style=" background-color: #4c6167; cursor:default ;">Conventional Corn</label>
+      <!-- <label style=" background-color: #4c6167; cursor:pointer ;">Conventional Corn</label> -->
+      <label for="paint1">Conventional Corn</label>
 
       <input id="paint2" class="toggle" type="checkbox">
       <label for="paint2">Conservation Corn</label>
@@ -282,8 +244,10 @@ Cleaned and Prepared - July 2016
 
       <input id="paint13" class="toggle" type="checkbox">
       <label for="paint13">Woody Bioenergy</label>
-    </div>
 
+     <!--<input id="paint16" class = "toggle" type = "checkbox">
+      <label for = "paint16">Corn Grain</label>-->
+    </div>
     <div class="optionsHeader">
       Annual Options
       <br>
@@ -291,13 +255,15 @@ Cleaned and Prepared - July 2016
     </div>
 
     <div class="optionsSubContainer">
-      <div id="maxYearOptions">
-        <div style="cursor:default; display:inline-block;">Years to Show: </div>
-        <!-- year number can be toggled up down here -->
-        <div style="cursor:default; display:inline-block;" id="yearNumber">3</div>
-        <div id="subtractYear" style="margin-left:20px; font-size:34px;" onclick="changeYearValueBy(-1)" class="plusMinus"><b>&#8595;</b></div>
-        <!-- Separation Bar --><div style="display:inline-block; font-size:34px; font-weight:100;"> | </div><!-- /Separation Bar -->
-        <div id="addYear" style="visibility:hidden; font-size:34px; " onclick="changeYearValueBy(+1)" class="plusMinus"><b>&#8593;</b></div>
+      <div id="maxYearOptions-button">
+          <div class="maxYearOptions-text">Years to Show: </div>
+          <!-- year number can be toggled up down here -->
+          <div class="maxYearOptions-text" id="yearNumber">3</div>
+          <div id="subtractYear" onclick="changeYearValueBy(-1)" class="plusMinus"><b>&#8595;</b></div>
+          <!-- Separation Bar -->
+          <div id="delimiter" class="maxYearOptions-text"> | </div>
+          <!-- /Separation Bar -->
+          <div id="addYear" style="visibility:hidden;" onclick="changeYearValueBy(+1)" class="plusMinus"><b>&#8593;</b></div>
       </div>
 
       <input id="year0" type="checkbox" class="toggle">
@@ -317,12 +283,13 @@ Cleaned and Prepared - July 2016
       <input id="statFrame" type="checkbox" class="toggle">
       <label for="statFrame"> Application Statistics On </label>
     </div>
-    
+
     <div style="width:100%;height:200px;position:relative;">
-    <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState() ;">Save & Exit</div>
+      <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState() ;">Save & Exit</div>
     </div>
-    
-</div>
+
+  </div>
 
 </body>
+
 </html>
