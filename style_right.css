@@ -212,6 +212,12 @@
   border-bottom-left-radius: 12px;
   background-image: url('./imgs/consoleTexture.png');
 }
+#indexPopupText{
+  position: relative;
+  text-align: center;
+  color: white;
+  top: 10px;
+}
 /*.backgroundInfoButton, .backgroundInfoButtonRolled{
    -webkit-animation-duration: 1s;
   animation-duration: 1s;

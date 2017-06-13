@@ -1033,15 +1033,66 @@ function changeSelectedPaintTo(newPaintValue) {
     painterElementId = "paint" + newPaintValue;
     document.getElementById(painterElementId).className = "landSelectedIcon";
     painter = newPaintValue;
+    //Index chat box entries for each landuse type
+    if(painterElementId == 'paint1'){
+      updateIndexPopup('This is corn');
+    }
+     else if(painterElementId == 'paint2'){
+      updateIndexPopup('This is other corn');
+    }
+     else if(painterElementId == 'paint3'){
+      updateIndexPopup('This is soy');
+    }
+     else if(painterElementId == 'paint4'){
+      updateIndexPopup('This is other soy');
+    }
+     else if(painterElementId == 'paint15'){
+      updateIndexPopup('This is fruits and vegetables');
+    }
+    else if(painterElementId == 'paint5'){
+      updateIndexPopup('This is Alfalfa');
+    }
+    else if(painterElementId == 'paint8'){
+      updateIndexPopup('This is grassHay');
+    }
+    else if(painterElementId == 'paint12'){
+      updateIndexPopup('This is SwitchGrass');
+    }
+    else if(painterElementId == 'paint6'){
+      updateIndexPopup('This is Permanent Pasture');
+    }
+    else if(painterElementId == 'paint7'){
+      updateIndexPopup('This is Rotational Grazing');
+    }
+    else if(painterElementId == 'paint14'){
+      updateIndexPopup('This is Wetland');
+    }
+    else if(painterElementId == 'paint9'){
+      updateIndexPopup('This is Prairie');
+    }
+    else if(painterElementId == 'paint11'){
+      updateIndexPopup('This is Conventional Forest');
+    }
+    else if(painterElementId == 'paint10'){
+      updateIndexPopup('This is Conservation Forest');
+    }
+    else if(painterElementId == 'paint13'){
+      updateIndexPopup('This is Woody Bioenergy');
+    }
+    else{
+      updateIndexPopup('');
+    }
 
     // if it's grid painting mode and the user click to switch painter, erase the first seleted tile
-    if (painterTool.status == 2) {
+    if (painterTool.status == 2) 
+    {
       painterTool.status = 1;// ready to do grid paint
     }
 
     //have land type update immediately, well, pretend the mouse moved...
     highlightTile(-1);
-  } else {
+  } 
+  else {
     //reset the playerSelected back to a normal playerNotSelected
     var painterElementId = "player" + painter + "Image";
     document.getElementById(painterElementId).className = "playerNotSelected";
@@ -1054,6 +1105,7 @@ function changeSelectedPaintTo(newPaintValue) {
     painter = newPaintValue;
   } //end if/else group
 } //end paintChange
+
 
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
@@ -1257,6 +1309,7 @@ function showLevelDetails(value) {
     else if(value == 9){
         document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
         document.getElementById('cornClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup("This is corn grain yield");
     }
     else if(value == 10){
         document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
@@ -1396,6 +1449,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('terrainImg').className = "imgSelected";
     document.getElementById('painterTab').style.display = "block";
+    updateIndexPopup('Landuse type tab! Wooh!')
   } else if (value == 2) {
     inDispLevels = false;
     if (curTracking)
@@ -1404,6 +1458,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('precipImg').className = "imgSelected";
     document.getElementById('precipTab').style.display = "block";
+    updateIndexPopup('Precip Tabs! Wooh!');
   } else if (value == 3) {
     inDispLevels = true;
     if (curTracking)
@@ -1412,6 +1467,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('levelsImg').className = "imgSelected";
     document.getElementById('levelsTab').style.display = "block";
+    updateIndexPopup('Levels Tab! Wooh!');
   } else if (value == 4) {
     inDispLevels = true;
     if (curTracking)
@@ -1420,6 +1476,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('featuresImg').className = "imgSelected";
     document.getElementById('featuresTab').style.display = "block";
+    updateIndexPopup('Physical Features Tab! Woot!');
   } else if (value == 5) {
     inDispLevels = false;
     if (curTracking)
@@ -1436,6 +1493,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('calendarImg').className = "imgSelected";
     document.getElementById('yearsTab').style.display = "block";
+    updateIndexPopup('Year tab! Wooh!');
   } else if(value == 7){
     inDispLevels = true;
     if (curTracking)
@@ -1444,6 +1502,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('yieldImg').className = "imgSelected";
     document.getElementById('yieldTab').style.display = "block"
+    updateIndexPopup('Yield Tab! Wooh!');
   }
 
 
@@ -2761,6 +2820,10 @@ function updatePopup(string) {
 //document.getElementById("popup").style.background= "green";
   //Will activate an animation on the lower right side of the screen to show that the message box has updated
 } //end updatePopup
+function updateIndexPopup(string){
+  document.getElementById("indexPopupText").innerHTML = string;
+  document.getElementById("backgroundInfoButton").style.background= '#'+Math.random().toString(16).slice(-6)
+}
 
 //clearPopup removes all text from the popup dialogue and hides it
 function clearPopup() {
