@@ -186,7 +186,7 @@ function animationFrames() {
     zoomAnimation();
 
     //rain animations (change y position of each raindrop)
-    if (rain != null) {
+    if (rain !== null) {
       for (var i = 0; i < rain.geometry.vertices.length; i++) {
         //update position
         rain.geometry.vertices[i].y = rain.geometry.vertices[i].y - (rain.geometry.vertices[i].speed);
@@ -198,7 +198,7 @@ function animationFrames() {
     }
 
     renderer.autoClear = false;
-    if (bgScene != null) {
+    if (bgScene !== null) {
       renderer.render(bgScene, bgCam);
     }
 
@@ -220,7 +220,7 @@ function animationFrames() {
 //birdAnimation updates bird and boid positions
 function birdAnimation() {
 
-  if (birds != null) {
+  if (birds !== null) {
 
     for (var i = 0, il = birds.length; i < il; i++) {
 
@@ -433,7 +433,7 @@ function switchToUnzoomedView(tile, shouldResetBoard) {
 function setupRiver() {
 
   //remove any previously rendered river
-  if (river != null) {
+  if (river !== null) {
     scene.remove(river);
   }
 
@@ -510,7 +510,7 @@ function setupHighlight() {
   document.addEventListener('keydown', onDocumentKeyDown, false);
   document.addEventListener('keyup', onDocumentKeyUp, false);
 
-}; //end setupHighlight
+} //end setupHighlight
 
 //expand or collapse the div holding tools for confirming escape to main menu
 function confirmEscape() {
@@ -530,7 +530,7 @@ function confirmEscape() {
       if (!multiplayerAssigningModeOn) {
         toggleEscapeFrame();
         startOptions();
-      };
+      }
     };
     document.getElementById('directoryButton').onclick = function() {
       toggleEscapeFrame();

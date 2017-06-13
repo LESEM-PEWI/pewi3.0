@@ -94,7 +94,7 @@ function getTracking() {
 
 //Creates a click object and pushes it into the click array (Useful for remote functions)
 function pushClick(id, stamp, type, gap, tile) {
-  click = new Click(id, stamp, type, gap, tile)
+  click = new Click(id, stamp, type, gap, tile);
   clickTrackings.push(click);
 } //end pushClick()
 
@@ -136,12 +136,12 @@ function highlightTile(tileId) {
 
   //clear the information in the delayed information hover div
   document.getElementById("hover-info").innerHTML = "";
-  if (myTimer != null) {
+  if (myTimer !== null) {
     clearTimeout(myTimer);
   }
 
   //if a previous tile was selected for highlighting, unhighlight that tile
-  if (previousHover != null) {
+  if (previousHover !== null) {
     meshMaterials[previousHover].emissive.setHex(0x000000);
   }
 
@@ -150,7 +150,7 @@ function highlightTile(tileId) {
   if (tileId != -1 && !modalUp) {
 
     //remove currently highlighted land type from HUD if over a clear tile
-    if (boardData[currentBoard].map[tileId].landType[currentYear] == 0 ||
+    if (boardData[currentBoard].map[tileId].landType[currentYear] === 0 ||
       boardData[currentBoard].map[tileId].landType[0] == -1) {
 
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
@@ -195,7 +195,7 @@ function changeLandTypeTile(tileId) {
     previous = false;
   }
   //set tiles to change as the previous tile in that position (undo function).
-  if (previousTileId[previousTileId.length - 1] == tileId && undo == true) {
+  if (previousTileId[previousTileId.length - 1] == tileId && undo === true) {
     lastPainter = boardData[currentBoard].map[tileId].landType[currentYear];
     painter = previousPainter[previousPainter.length - 1];
     previousTileId.splice(previousTileId.length - 1, 1);
@@ -204,20 +204,20 @@ function changeLandTypeTile(tileId) {
     paintSwitch = false;
   }
   //store previous tile data only if it's not a previously-listed tile in the array
-  else if (previous == false) {
+  else if (previous === false) {
     //save previous tile information
     previousTileId = previousTileId.concat(tileId);
     previousPainter = previousPainter.concat(boardData[currentBoard].map[tileId].landType[currentYear]);
     previous = true;
     //since the undo function assumes the paint switched to another type (even when the user didn't), the painter will
     // will equal the actual selected painter after the undo function is performed.
-    if (lastPainter != null && !paintSwitch) {
+    if (lastPainter !== null && !paintSwitch) {
       painter = lastSelectedPainter;
       lastPainter = null;
     }
   }
   //if land type of tile is nonzero
-  if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
+  if (boardData[currentBoard].map[tileId].landType[currentYear] !== 0) {
 
     //change the materials of the faces in the meshMaterials array and update the boardData
     if (!multiplayerAssigningModeOn) {
@@ -239,37 +239,41 @@ function changeLandTypeTile(tileId) {
 function getTileID(x, y) {
 
   //x and y in terms of three.js 3d coordinates, not screen coordinates
+  if (boardData[currentBoard] !== 'undefined') {
 
-  var tilesWide = boardData[currentBoard].width;
-  var tilesHigh = boardData[currentBoard].height;
+    var tilesWide = boardData[currentBoard].width;
+    var tilesHigh = boardData[currentBoard].height;
 
-  //calculate which column the tile is in
-  var col = 0;
+    //calculate which column the tile is in
+    var col = 0;
 
-  if (x < columnCutOffs[0] || x > columnCutOffs[columnCutOffs.length - 1]) {
-    col = 0;
-  } else {
-    while (x > columnCutOffs[col]) {
-      col += 1;
+    if (x < columnCutOffs[0] || x > columnCutOffs[columnCutOffs.length - 1]) {
+      col = 0;
+    } else {
+      while (x > columnCutOffs[col]) {
+        col += 1;
+      }
     }
-  }
 
-  //calculate which row the tile is in
-  var row = 0;
+    //calculate which row the tile is in
+    var row = 0;
 
-  if (y > rowCutOffs[0] || y < rowCutOffs[rowCutOffs.length - 1]) {
-    row = 0;
-  } else {
-    while (y < rowCutOffs[row]) {
-      row += 1;
+    if (y > rowCutOffs[0] || y < rowCutOffs[rowCutOffs.length - 1]) {
+      row = 0;
+    } else {
+      while (y < rowCutOffs[row]) {
+        row += 1;
+      }
     }
-  }
 
-  if (col == 0 || row == 0) {
-    return -1;
-  }
+    if (col === 0 || row === 0) {
+      return -1;
+    }
 
-  return (getTileIDFromRC(row, col) - 1);
+    return (getTileIDFromRC(row, col) - 1);
+  } else {
+    console.log("getID is called but boardData[currentBoard] is undefined!! ");
+  }
 
 } //end getTileID
 
@@ -339,7 +343,7 @@ function getGrid(startTile, endTile) {
     //for applicable columns in the row
     for (var col = startCol; col <= endCol; col++) {
       var id = getTileIDFromRC(row, col);
-      if (boardData[currentBoard].map[id - 1].landType[0] != 0) {
+      if (boardData[currentBoard].map[id - 1].landType[0] !== 0) {
         tileArray.push(id);
       }
     }
@@ -369,7 +373,7 @@ function getGridOutline(startTile, endTile) {
   //check for bad tiles
   var goodTiles = [];
   for (var i = 0; i < tileArray.length; i++) {
-    if (boardData[currentBoard].map[tileArray[i] - 1].landType[0] != 0) goodTiles.push(tileArray[i]);
+    if (boardData[currentBoard].map[tileArray[i] - 1].landType[0] !== 0) goodTiles.push(tileArray[i]);
   }
   tileArray = goodTiles;
 
@@ -440,7 +444,7 @@ function addTile(tile) {
 
 
   //choose the relevant texture to add to the tile faces
-  if (tile.landType[0] == 0) {
+  if (tile.landType[0] === 0) {
 
     tileMaterial = new THREE.MeshBasicMaterial({
       color: 0x000000,
@@ -476,7 +480,7 @@ function addTile(tile) {
   }
 
   //if this tile is the first in its row that is a streamNetwork tile add it to the riverPoints array
-  if (tile.riverStreams != 0) {
+  if (tile.riverStreams !== 0) {
     var streams = tile.riverStreams.split("*");
     for (var i = 0; i < streams.length; i++) {
       if (!riverPoints[Number(streams[i]) - 1]) {
@@ -514,7 +518,7 @@ function addTile(tile) {
 //  to change topography and random tiles, but keep the board highlighted
 function refreshBoard(bypassFromKeyEvent) {
 
-  if (mesh != null) {
+  if (mesh !== null) {
     scene.remove(mesh);
   }
 
@@ -573,7 +577,7 @@ function transitionToYear(year) {
 //addYearAndTransition updates the years to switch between in the left console and transitions to the new year
 function addYearAndTransition() {
 
-  var totalYearsAllowed = 3
+  var totalYearsAllowed = 3;
   var nextYear = currentYear + 1;
   if (curTracking) {
     pushClick(0, getStamp(), 41, 0, null);
@@ -671,7 +675,7 @@ function onDocumentMouseMove(event) {
       //  so it should consistently not highlight
       // in reality, there is a distinction between space outside the board and a
       //  tile on the board with no land type
-      if (currentTile && boardData[currentBoard].map[currentTile].landType[0] != 0) {
+      if (currentTile && boardData[currentBoard].map[currentTile].landType[0] !== 0) {
 
         for (var i = 0; i < tilesToHighlight.length; i++) {
           highlightTile(tilesToHighlight[i] - 1);
@@ -690,7 +694,7 @@ function onDocumentMouseMove(event) {
       } else {
         previous = false;
       }
-      if (boardData[currentBoard].map[currentTile].landType[0] != 0) changeLandTypeTile(currentTile);
+      if (boardData[currentBoard].map[currentTile].landType[0] !== 0) changeLandTypeTile(currentTile);
     } else {
       //just a normal highlighting
       highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
@@ -737,7 +741,7 @@ function onDocumentMouseDown(event) {
               //end painterTool.status function if
               var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
 
-              if (boardData[currentBoard].map[currentTile].landType[0] != 0) {
+              if (boardData[currentBoard].map[currentTile].landType[0] !== 0) {
                 //then paint since it's an actual tile
                 painterTool.endTile = currentTile;
                 var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
@@ -783,7 +787,7 @@ function onDocumentMouseDown(event) {
 
           for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
-            if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+            if (boardData[currentBoard].map[i].landType[currentYear] !== 0) {
 
               changeLandTypeTile(i);
 
@@ -811,7 +815,7 @@ function onDocumentMouseUp(event) {
     // update each tile on the board with its corresponding color
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
-      if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+      if (boardData[currentBoard].map[i].landType[currentYear] !== 0) {
         meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
       }
     } //end for
@@ -828,11 +832,11 @@ function onDocumentKeyDown(event) {
       break;
       //case t - toggle topography
     case 84:
-      if (modalUp != true) {
+      if (modalUp !== true) {
         if (curTracking) {
           pushClick(0, getStamp(), 32, 0, null);
         }
-        tToggle ? tToggle = false : tToggle = true;
+        (tToggle) ? (tToggle = false) : (tToggle = true);
 
         //in the case when the map is highlighted:
         if (mapIsHighlighted) {
@@ -858,7 +862,7 @@ function onDocumentKeyDown(event) {
       break;
       //case r - randomize land types
     case 82:
-      if (modalUp != true && currentHighlightType < 4) {
+      if (modalUp !== true && currentHighlightType < 4) {
         if (curTracking) {
           pushClick(0, getStamp(), 52, 0, null);
         }
@@ -923,7 +927,7 @@ function onDocumentKeyDown(event) {
       break;
 
     case 79:
-      if (previousOverlay != null) {
+      if (previousOverlay !== null) {
         if (curTracking) {
           pushClick(0, getStamp(), 31, 0, null);
         }
@@ -1159,7 +1163,7 @@ function roll(value) {
       }
       document.getElementById('toolsButton').style.left = "0px";
       // document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')";
-      document.getElementById('pick').src = "./imgs/pickIn.png"
+      document.getElementById('pick').src = "./imgs/pickIn.png";
       document.getElementById('tabButtons').className = "tabButtonsRolled";
       document.getElementById('leftConsole').className = "leftConsoleRolled";
 
@@ -1171,7 +1175,7 @@ function roll(value) {
       // document.getElementById('toolsButton').style.left = "9.6vw";
       document.getElementById('toolsButton').style.left = document.getElementById('leftConsole').style.width;
       // document.getElementById('toolsButton').style.backgroundImage = "none";
-      document.getElementById('pick').src = "./imgs/pickOut.png"
+      document.getElementById('pick').src = "./imgs/pickOut.png";
       document.getElementById('tabButtons').className = "tabButtons";
       document.getElementById('leftConsole').className = "leftConsole";
 
@@ -1308,7 +1312,7 @@ function showLevelDetails(value) {
 //updatePrecip updates the currentBoard with the precipitation values selected in the drop down boxes
 function updatePrecip(year) {
 
-  if (year == 0) {
+  if (year === 0) {
     if (curTracking) {
       pushClick(0, getStamp(), 34, 0, document.getElementById("year0Precip").value);
     }
@@ -1409,7 +1413,7 @@ function switchConsoleTab(value) {
       pushClick(0, getStamp(), 68, 0, null);
     }
     document.getElementById('yieldImg').className = "imgSelected";
-    document.getElementById('yieldTab').style.display = "block"
+    document.getElementById('yieldTab').style.display = "block";
   }
 
 
@@ -1445,7 +1449,7 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
   //for each tile in the board
   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
     //if there is an actual tile there
-    if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+    if (boardData[currentBoard].map[i].landType[currentYear] !== 0) {
       //then change mesh material
       meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
     } //end if
@@ -1637,7 +1641,7 @@ function displayLevels(overlayHighlightType) {
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
-  if (selectionHighlightNumber != 0) {
+  if (selectionHighlightNumber !== 0) {
     previousOverlay = overlayHighlightType;
   }
 
@@ -1648,7 +1652,7 @@ function displayLevels(overlayHighlightType) {
   //if the map is previously highlighted
   else {
     //if the highlight is the same... turn it off
-    if (currentHighlightType == selectionHighlightNumber || selectionHighlightNumber == 0) {
+    if (currentHighlightType == selectionHighlightNumber || selectionHighlightNumber === 0) {
 
       mapIsHighlighted = false;
       refreshBoard();
@@ -1669,7 +1673,7 @@ function displayLevels(overlayHighlightType) {
 
 //toggleOverlay allows the user to quickly switch between an overlay map and the land type mode
 function toggleOverlay() {
-  if (overlayedToggled == false) {
+  if (overlayedToggled === false) {
     switchConsoleTab(previousTab);
     displayLevels(previousOverlay);
     overlayedToggled = true;
@@ -2237,7 +2241,7 @@ function contaminatedRiver(riverColor) {
 function objectiveCheck() {
 
   //if level is not yet started
-  if (levelSpecs.started == 0) {
+  if (levelSpecs.started === 0) {
 
     updatePopup(levelSpecs.begin);
     levelSpecs.started = 1;
@@ -2245,7 +2249,7 @@ function objectiveCheck() {
   }
 
   //if level is started but not finished
-  if (levelSpecs.started == 1 && levelSpecs.finished == 0) {
+  if (levelSpecs.started == 1 && levelSpecs.finished === 0) {
 
     var numAccomplished = 0;
 
@@ -2263,17 +2267,17 @@ function objectiveCheck() {
         }
 
         //if this objective is not currently accomplished
-        if (objectives[i].accomplished == 0 && objectives[i].previouslyDisplayed == 0) {
+        if (objectives[i].accomplished === 0 && objectives[i].previouslyDisplayed === 0) {
 
           objectives[i].previouslyDisplayed = 1;
 
-          if (objectives[i].script != "" && objectives[i].script != "none") {
+          if (objectives[i].script !== "" && objectives[i].script != "none") {
 
             updatePopup(objectives[i].script);
 
           }
 
-          if (objectives[i].animation != "" && objectives[i].animation != "none") {
+          if (objectives[i].animation !== "" && objectives[i].animation != "none") {
 
             selectAnimation(objectives[i].animation);
 
@@ -2361,7 +2365,7 @@ function displayFirework() {
 function flyLark() {
   document.getElementById("meadowlark").className = "meadowlarkhidden";
   setTimeout(function() {
-    document.getElementById("meadowlark").className = "meadowlarkfly"
+    document.getElementById("meadowlark").className = "meadowlarkfly";
   }, 1);
 } //end flyLark
 
@@ -2380,7 +2384,7 @@ function createFlock() {
 //rain makes a storm blow over pewi
 function rainOnPewi() {
   //specify the number of raindrops -- could be related to precipitation values
-  if (rain == null) {
+  if (rain === null) {
     makeItRain(Math.pow(Number(boardData[currentBoard].precipitation[currentYear]), 2) * (Number(boardData[currentBoard].precipitation[currentYear]) / 24));
     setTimeout(function() {
       scene.remove(rain);
@@ -2410,8 +2414,8 @@ function writeFileToDownloadString(mapPlayerNumber) {
         boardData[currentBoard].map[i].area + ",";
 
       if (mapPlayerNumber > 0) {
-        if (boardData[currentBoard].map[i].landType[0] == 0) string += "0,";
-        else string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "-1,")
+        if (boardData[currentBoard].map[i].landType[0] === 0) string += "0,";
+        else string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "-1,");
       } else {
         string += boardData[currentBoard].map[i].baseLandUseType + ",";
       }
@@ -2512,11 +2516,11 @@ function uploadClicked(e) {
           try {
             //This variable 'string' stores the extracted data from the .json file
             string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + "," +
-              ((obj["1"].area.data[i] == null) ? 0 : obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," + ((obj["1"].carbonmax.data[i] == null) ? "NA" : obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i] == null) ? "NA" : obj["1"].carbonmin.data[i]) +
-              "," + ((obj["1"].cattle.data[i] == null) ? "NA" : obj["1"].cattle.data[i]) + "," + ((obj["1"].cornyield.data[i] == null) ? "NA" : obj["1"].cornyield.data[i]) + "," + ((obj["1"].drainageclass.data[i] == null) ? "NA" : obj["1"].drainageclass.data[i]) + "," + ((obj["1"].erosion.data[i] == null) ? "NA" : obj["1"].erosion.data[i]) + "," + ((obj["1"].floodfrequency.data[i] == null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
-              ((obj["1"].group.data[i] == null && obj["1"].floodfrequency.data[i] != 0) ? "NA" : " ") + "," + ((obj["1"].nitratespmm.data[i] == null) ? "NA" : obj["1"].nitratespmm.data[i]) + "," + ((obj["1"].pindex.data[i] == null) ? "NA" : obj["1"].pindex.data[i]) + "," + ((obj["1"].sediment.data[i] == null) ? "NA" : obj["1"].sediment.data[i]) + "," + ((obj["1"].soiltype.data[i] == null) ? 0 : obj["1"].soiltype.data[i]) + "," + ((obj["1"].soybeanyield.data[i] == null) ? "NA" : obj["1"].soybeanyield.data[i]) + "," +
-              ((obj["1"].streamnetwork.data[i] == null) ? "NA" : obj["1"].streamnetwork.data[i]) + "," + ((obj["1"].subwatershed.data[i] == null) ? 0 : obj["1"].subwatershed.data[i]) + "," + ((obj["1"].timber.data[i] == null) ? "NA" : obj["1"].timber.data[i]) + "," + ((obj["1"].topography.data[i] == null) ? 0 : obj["1"].topography.data[i]) + "," + ((obj["1"].watershednitrogencontribution.data[i] == null) ? "NA" : obj["1"].watershednitrogencontribution.data[i]) + "," +
-              ((obj["1"].wetland.data[i] == null) ? "NA" : obj["1"].wetland.data[i]) + "," + boardData[currentBoard].map[i].riverStreams + "," /** riverStreams is taken from the rever stream of currrent board*/ ;
+              ((obj["1"].area.data[i] === null) ? 0 : obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i] === null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," + ((obj["1"].carbonmax.data[i] === null) ? "NA" : obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i] === null) ? "NA" : obj["1"].carbonmin.data[i]) +
+              "," + ((obj["1"].cattle.data[i] === null) ? "NA" : obj["1"].cattle.data[i]) + "," + ((obj["1"].cornyield.data[i] === null) ? "NA" : obj["1"].cornyield.data[i]) + "," + ((obj["1"].drainageclass.data[i] === null) ? "NA" : obj["1"].drainageclass.data[i]) + "," + ((obj["1"].erosion.data[i] === null) ? "NA" : obj["1"].erosion.data[i]) + "," + ((obj["1"].floodfrequency.data[i] === null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
+              ((obj["1"].group.data[i] === null && obj["1"].floodfrequency.data[i] !== 0) ? "NA" : " ") + "," + ((obj["1"].nitratespmm.data[i] === null) ? "NA" : obj["1"].nitratespmm.data[i]) + "," + ((obj["1"].pindex.data[i] === null) ? "NA" : obj["1"].pindex.data[i]) + "," + ((obj["1"].sediment.data[i] === null) ? "NA" : obj["1"].sediment.data[i]) + "," + ((obj["1"].soiltype.data[i] === null) ? 0 : obj["1"].soiltype.data[i]) + "," + ((obj["1"].soybeanyield.data[i] === null) ? "NA" : obj["1"].soybeanyield.data[i]) + "," +
+              ((obj["1"].streamnetwork.data[i] === null) ? "NA" : obj["1"].streamnetwork.data[i]) + "," + ((obj["1"].subwatershed.data[i] === null) ? 0 : obj["1"].subwatershed.data[i]) + "," + ((obj["1"].timber.data[i] === null) ? "NA" : obj["1"].timber.data[i]) + "," + ((obj["1"].topography.data[i] === null) ? 0 : obj["1"].topography.data[i]) + "," + ((obj["1"].watershednitrogencontribution.data[i] === null) ? "NA" : obj["1"].watershednitrogencontribution.data[i]) + "," +
+              ((obj["1"].wetland.data[i] === null) ? "NA" : obj["1"].wetland.data[i]) + "," + boardData[currentBoard].map[i].riverStreams + "," /** riverStreams is taken from the rever stream of currrent board*/ ;
           } catch (except) //catches for a wrong json file type error
           {
             alert("This file format is not compatible");
@@ -2524,9 +2528,9 @@ function uploadClicked(e) {
           }
 
           try {
-            string = string + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + ",";
-            string = string + ((obj["2"].area.data[i] == null) ? 0 : 1) + ",";
-            string = string + ((obj["3"].area.data[i] == null) ? 0 : 1) + "," /** landType + landType + landType*/ ;
+            string = string + ((obj["1"].area.data[i] === null) ? 0 : obj["1"].baseLandUseType.data[i]) + ",";
+            string = string + ((obj["2"].area.data[i] === null) ? 0 : 1) + ",";
+            string = string + ((obj["3"].area.data[i] === null) ? 0 : 1) + "," /** landType + landType + landType*/ ;
           } catch (except) {
 
             if (except.message == "obj[2].area is undefined") {
@@ -2550,7 +2554,7 @@ function uploadClicked(e) {
         initData = [];
 
 
-      }
+      };
 
     } else {
 
@@ -2564,7 +2568,7 @@ function uploadClicked(e) {
 
       //clear initData
       initData = [];
-    }
+    };
   } //end else
 
   closeUploadDownloadFrame();
@@ -2667,7 +2671,7 @@ function toggleIndex() {
     if (document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd();
 
     if (curTracking) {
-      pushClick(0, getStamp(), 78, 0, null)
+      pushClick(0, getStamp(), 78, 0, null);
     }
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
@@ -2676,7 +2680,7 @@ function toggleIndex() {
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
 
     if (curTracking) {
-      pushClick(0, getStamp(), 79, 0, null)
+      pushClick(0, getStamp(), 79, 0, null);
     }
     modalUp = false;
 
@@ -3063,7 +3067,7 @@ function multiplayerAggregateBaseMapping(file) {
     setupBoardFromUpload(reader.result);
     //clear initData
     initData = [];
-  }
+  };
 } //end multiplayerAggregateBaseMapping
 
 //here we facilitate the aggregation of multiplayer boards
@@ -3083,7 +3087,7 @@ function multiplayerAggregateOverlayMapping(file) {
     }
     //clear initData
     initData = [];
-  }
+  };
 } //end multiplayerAggregateOverlayMapping
 
 //toggleChangeLandType toggles a boolean that tracks the state which is required to change land type
@@ -3234,7 +3238,7 @@ function getNumberOfPlayers() {
 
 //Gets the current timestamp for the click (event)
 function getStamp() {
-  curTime = new Date()
+  curTime = new Date();
   return (curTime - startTime);
 } //end getStamp
 
@@ -3243,7 +3247,7 @@ function finishProperties() {
   var tempClicks = [];
   tempClicks.push(clickTrackings[0]);
   for (var i = 1; i < clickTrackings.length; i++) {
-    if (clickTrackings[i].tileID != clickTrackings[i - 1].tileID || clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
+    if (clickTrackings[i].tileID != clickTrackings[i - 1].tileID || clickTrackings[i].tileID === null || clickTrackings[i - 1].tileID === null) {
       clickTrackings[i].clickID = i;
       clickTrackings[i].timeGap = (clickTrackings[i].timeStamp - clickTrackings[i - 1].timeStamp);
       tempClicks.push(clickTrackings[i]);
@@ -3263,7 +3267,7 @@ function exportTracking() {
     ['ClickID', 'Time Stamp (Milliseconds)', 'Click Type', 'Time Gap (Milliseconds)', 'Description of click', 'TileID/Precip', startTime, endTime, startTime.getTime(), endTime.getTime()]
   ];
   for (var j = 0; j < clickTrackings.length; j++) {
-    A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
+    A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID]);
   }
   var csvRows = [];
   for (var i = 0; i < A.length; i++) {
@@ -3296,7 +3300,7 @@ function loadSimulation(e) {
       var sim = reader.result.split("\n");
       simulationData = sim;
       promptUserSim();
-    }
+    };
   }
 } //end loadSimulation
 
@@ -3380,7 +3384,7 @@ function pauseSim() {
 
 //Resumes the sim (and related times)
 function resumeSim() {
-  timeResumed = new Date()
+  timeResumed = new Date();
   //Amount of time the user was paused (total for session)
   pauseDuration = pauseDuration + (timeResumed - timeStopped);
   //Amount of simulation time that has passed
@@ -3474,7 +3478,7 @@ function resetPresets() {
   painterSelect(1);
   //Resets the year selections
   resetYearDisplay();
-  document.getElementById("year1Image").className = "yearSelected"
+  document.getElementById("year1Image").className = "yearSelected";
   currentYear = 1;
   //Resets the scroll in the results tab
   window.frames[3].scrollTo(0, 0);
@@ -3488,7 +3492,7 @@ function resetPresets() {
   closeUploadDownloadFrame();
   //Rolls out the left console
   if (document.getElementById('tabButtons').className != "tabButtons") {
-    roll(1)
+    roll(1);
   }
 } //end resetPresets()
 
