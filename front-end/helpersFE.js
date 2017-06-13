@@ -2824,23 +2824,11 @@ function randomizeBoard() {
             {
               if(removedIndex == x)
               {
-                //randomPainterTile.splice(removedIndex, 1)
-                delete randomPainterTile[removedIndex]
-                 randomPainterTile[removedIndex] = 1
+                randomPainterTile.splice(removedIndex, 1)
+                /*delete randomPainterTile[removedIndex]
+                 randomPainterTile[removedIndex] = 1*/
               }
             }
-            /*if(removedIndex == 0)
-             {
-            //randomPainterTile.splice(0, 1)
-             for(removedIndex = randomPainterTile.length - 1; removedIndex >= 0; removedIndex--)
-              {
-              if(randomPainterTile[removedIndex] == 1)
-              {
-                //randomPainterTile.splice(k, 1)
-                delete randomPainterTile[removedIndex]
-              }
-            }
-            }*/
         }         
       }
          painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)]  
