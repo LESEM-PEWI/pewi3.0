@@ -1100,6 +1100,10 @@ function resultsStart() {
       togglePopupDisplay();
       rightPopupWasOpen = true;
     }
+    if(document.getElementById("popup2").className == "popup2"){
+      indexPopupDisplay();
+      rightPopupWasOpen = true;
+    }
 
     //prevent background land changes and so forth
     modalUp = true;
@@ -2768,14 +2772,17 @@ function clearPopup() {
 //togglePopupDisplay allows for displaying and hiding the popup dialogue
 function togglePopupDisplay() {
   if (!modalUp) {
-    if (document.getElementById("popup").className == "popup") {
+    if (document.getElementById("popup").className == "popup") 
+    {
       if (curTracking)
       {
         pushClick(0,getStamp(),14,0,null);
       }
       document.getElementById("popup").className = "popupHidden";
       document.getElementById("dialogueButton").className = "dialogueButtonRolled";
-    } else {
+    } 
+    else 
+    {
       if (curTracking)
       {
         pushClick(0,getStamp(),54,0,null);
@@ -2785,6 +2792,30 @@ function togglePopupDisplay() {
     }
   } //end if
 } // togglePopupDisplay()
+
+function indexPopupDisplay()
+{
+  if (!modalUp) {
+    if (document.getElementById("popup2").className == "popup2") 
+    {
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),14,0,null);
+      }
+      document.getElementById("popup2").className = "popup2Hidden";
+      document.getElementById("backgroundInfoButton").className = "backgroundInfoButtonRolled";
+    } 
+    else 
+    {
+      if (curTracking)
+      {
+        pushClick(0,getStamp(),54,0,null);
+      }
+      document.getElementById("popup2").className = "popup2";
+      document.getElementById("backgroundInfoButton").className = "backgroundInfoButtonRolled";
+    }
+  } //end if
+}
 
 //randomAllowed determines whether or not the current mode permits tile randomization
 function randomAllowed(modeName) {
@@ -2827,23 +2858,11 @@ function randomizeBoard() {
             {
               if(removedIndex == x)
               {
-                //randomPainterTile.splice(removedIndex, 1)
-                delete randomPainterTile[removedIndex]
-                 randomPainterTile[removedIndex] = 1
+                randomPainterTile.splice(removedIndex, 1)
+                //delete randomPainterTile[removedIndex]
+                 //randomPainterTile[removedIndex] = 1
               }
             }
-            /*if(removedIndex == 0)
-             {
-            //randomPainterTile.splice(0, 1)
-             for(removedIndex = randomPainterTile.length - 1; removedIndex >= 0; removedIndex--)
-              {
-              if(randomPainterTile[removedIndex] == 1)
-              {
-                //randomPainterTile.splice(k, 1)
-                delete randomPainterTile[removedIndex]
-              }
-            }
-            }*/
         }         
       }
          painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)]  

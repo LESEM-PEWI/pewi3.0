@@ -979,6 +979,7 @@
 
     <!-- Create results button -->
     <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
+    <!--img src="./imgs/backgroundinfo.png"></div>-->
 
     <!-- Create dialogue popup box (message box) -->
     <!-- "Bubble, speech icon" by http://www.iconsolid.com/ with free commercial usage / Inverted from original and resized -->
@@ -988,6 +989,14 @@
       <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>
       <p id="popupText"></p>
     </div>
+    <div id="popup2" class="popupHidden" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
+    <div id="backgroundInfoButton" class="dialogueButtonRolled"><img src="./imgs/indexIcon.png"></div>
+    <div id="backgroundInfoBox" class="dialogueButtonRolled"></div>
+
+    <!--<div id="backgroundInfoButton" class="backgroundInfoButtonRolled"><img src="./imgs/backgroundinfo.png"></div>-->
+    <!-- Picture appears to be fine... For some reason when new button is made, errors occur-->
+
+    <!--<div id="backgroundInfoButton" class="backgroundInfoButtonRolled" onclick="indexPopupDisplay();"><img src="./imgs/indexIcon.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>-->
 
     <!-- **END Right Side Component** -->
 
@@ -999,6 +1008,7 @@
 
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
     <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+
 
 
     <!-- order now becomes important to make sure elements stack and cover correctly -->
