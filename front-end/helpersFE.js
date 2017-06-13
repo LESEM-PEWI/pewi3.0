@@ -1,6 +1,4 @@
-/**
- * @Last modified time: 2017-06-09T14:47:03-05:00
- */
+
 
 /* global camera, scene, boardData,
           renderer, currentBoard, THREE,
@@ -94,7 +92,7 @@ function getTracking() {
 
 //Creates a click object and pushes it into the click array (Useful for remote functions)
 function pushClick(id, stamp, type, gap, tile) {
-  click = new Click(id, stamp, type, gap, tile)
+  click = new Click(id, stamp, type, gap, tile);
   clickTrackings.push(click);
 } //end pushClick()
 
@@ -573,7 +571,7 @@ function transitionToYear(year) {
 //addYearAndTransition updates the years to switch between in the left console and transitions to the new year
 function addYearAndTransition() {
 
-  var totalYearsAllowed = 3
+  var totalYearsAllowed = 3;
   var nextYear = currentYear + 1;
   if (curTracking) {
     pushClick(0, getStamp(), 41, 0, null);
@@ -625,7 +623,7 @@ function onDocumentMouseMove(event) {
   var x = event.clientX;
   var y = event.clientY;
   if (x != 'undefined' && y != 'undefined') {
-    // 20 must be the footer id="bottomHUD" height. Might encounter problems sometimes
+    // XXX 20 must be the footer id="bottomHUD" height. Might encounter problems sometimes
     document.getElementById('hover-div').style.left = (x + 20) + "px";
     document.getElementById('hover-div').style.top = (y + 20) + "px";
   }
@@ -1097,11 +1095,15 @@ function resultsStart() {
     calculateResults();
     displayResults();
     animateResults();
+    //Event Listener for closing reslts tab
+        document.addEventListener('keyup', resultsEsc);
   } //end if
 } //end resultsStart
 
 //resultsEnd hides the results and returns the menus to the screens
 function resultsEnd() {
+    //Fucntion for removing event listener when resluts is closed
+    document.removeEventListener('keyup', resultsEsc);
   inResults = false;
   //modal is no longer up
   modalUp = false;
@@ -1567,6 +1569,70 @@ function displayLevels(overlayHighlightType) {
         pushClick(0, getStamp(), 77, 0, null);
       }
       break;
+
+       case 'cornGrain':
+            selectionHighlightNumber = 9;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),69,0,null);
+            }
+            break;
+        case 'soy':
+            selectionHighlightNumber = 10;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),70,0,null);
+            }
+            break;
+        case 'fruit':
+            selectionHighlightNumber = 11;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),71,0,null);
+            }
+            break;
+        case 'cattle':
+            selectionHighlightNumber = 12;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),72,0,null);
+            }
+            break;
+        case 'alfalfa':
+            selectionHighlightNumber = 13;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),73,0,null);
+            }
+            break;
+        case 'grassHay':
+            selectionHighlightNumber = 14;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),74,0,null);
+            }
+            break;
+        case 'switchGrass':
+            selectionHighlightNumber = 15;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),75,0,null);
+            }
+            break;
+        case 'wood':
+            selectionHighlightNumber = 16;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),76,0,null);
+            }
+            break;
+        case 'short':
+            selectionHighlightNumber = 17;
+            if (curTracking)
+            {
+              pushClick(0,getStamp(),77,0,null);
+            }
+            break;
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -1743,278 +1809,306 @@ function getHighlightColor(highlightType, tileId) {
         //color 87ceee
         return 18;
     }
-  } else if (highlightType == "cornGrain") {
-    var soil = boardData[currentBoard].map[tileId].soilType;
-    switch (soil) {
-      case "A":
-        return 35;
-      case "B":
-        return 5;
-      case "C":
-        return 0;
-      case "D":
-        return 22;
-      case "G":
-        return 5;
-      case "K":
-        return 22;
-      case "L":
-        return 0;
-      case "M":
-        return 35;
-      case "N":
-        return 35;
-      case "O":
-        return 22;
-      case "Q":
-        return 35;
-      case "T":
-        return 35;
-      case "Y":
-        return 22;
+  }
+   else if(highlightType == "cornGrain"){
+        var soil = boardData[currentBoard].map[tileId].soilType;
+        switch(soil)
+            {
+            case "A":
+                return 35;
+            case "B":
+                return 5;
+            case "C":
+                return 0;
+            case "D":
+                return 22;
+            case "G":
+                return 5;
+            case "K":
+                return 22;
+            case "L":
+                return 0;
+            case "M":
+                return 35;
+            case "N":
+                return 35;
+            case "O":
+                return 22;
+            case "Q":
+                return 35;
+            case "T":
+                return 35;
+            case "Y":
+                return 22;
+        }
     }
-  } else if (highlightType == "soy") {
-    var soil = boardData[currentBoard].map[tileId].soilType;
-    switch (soil) {
-      case "A":
-        return 46;
-      case "B":
-        return 43;
-      case "C":
-        return 45;
-      case "D":
-        return 45;
-      case "G":
-        return 43;
-      case "K":
-        return 45;
-      case "L":
-        return 45;
-      case "M":
-        return 46;
-      case "N":
-        return 46;
-      case "O":
-        return 44;
-      case "Q":
-        return 46;
-      case "T":
-        return 46;
-      case "Y":
-        return 45;
+    else if(highlightType == "soy")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil)
+            {
+            case "A":
+                return 46;
+            case "B":
+                return 43;
+            case "C":
+                return 45;
+            case "D":
+                return 45;
+            case "G":
+                return 43;
+            case "K":
+                return 45;
+            case "L":
+                return 45;
+            case "M":
+                return 46;
+            case "N":
+                return 46;
+            case "O":
+                return 44;
+            case "Q":
+                return 46;
+            case "T":
+                return 46;
+            case "Y":
+                return 45;
+            }
+
+    }
+    else if(highlightType == "alfalfa")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil)
+            {
+            case "A":
+                return 42;
+            case "B":
+                return 13;
+            case "C":
+                return 25;
+            case "D":
+                return 42;
+            case "G":
+                return 13;
+            case "K":
+                return 13;
+            case "L":
+                return 25;
+            case "M":
+                return 17;
+            case "N":
+                return 42;
+            case "O":
+                return 13;
+            case "Q":
+                return 17;
+            case "T":
+                return 17;
+            case "Y":
+                return 42;
+            }
+    }
+    else if(highlightType == "grassHay")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil)
+            {
+            case "A":
+                return 46;
+            case "B":
+                return 47;
+            case "C":
+                return 45;
+            case "D":
+                return 46;
+            case "G":
+                return 47;
+            case "K":
+                return 47;
+            case "L":
+                return 45;
+            case "M":
+                return 29;
+            case "N":
+                return 46;
+            case "O":
+                return 47;
+            case "Q":
+                return 29;
+            case "T":
+                return 29;
+            case "Y":
+                return 46;
+            }
+    }
+    else if(highlightType == "switchGrass")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil)
+            {
+            case "A":
+                return 49;
+            case "B":
+                return 45;
+            case "C":
+                return 49;
+            case "D":
+                return 45;
+            case "G":
+                return 45;
+            case "K":
+                return 45;
+            case "L":
+                return 49;
+            case "M":
+                return 49;
+            case "N":
+                return 51;
+            case "O":
+                return 45;
+            case "Q":
+                return 51;
+            case "T":
+                return 51;
+            case "Y":
+                return 50;
+            }
+    }
+    else if(highlightType == "wood")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil)
+            {
+            case "A":
+                return 55;
+            case "B":
+                return 53;
+            case "C":
+                return 52;
+            case "D":
+                return 55;
+            case "G":
+                return 55;
+            case "K":
+                return 53;
+            case "L":
+                return 52;
+            case "M":
+                return 55;
+            case "N":
+                return 54;
+            case "O":
+                return 52;
+            case "Q":
+                return 55;
+            case "T":
+                return 54;
+            case "Y":
+                return 55;
+            }
+    }
+     else if(highlightType == "fruit")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil)
+            {
+            case "A":
+                return 0;
+            case "B":
+                return 25;
+            case "C":
+                return 56;
+            case "D":
+                return 45;
+            case "G":
+                return 0;
+            case "K":
+                return 45;
+            case "L":
+                return 56;
+            case "M":
+                return 56;
+            case "N":
+                return 0;
+            case "O":
+                return 56;
+            case "Q":
+                return 56;
+            case "T":
+                return 56;
+            case "Y":
+                return 45;
+            }
+    }
+    else if(highlightType == "cattle")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil)
+            {
+            case "A":
+                return 57;
+            case "B":
+                return 43;
+            case "C":
+                return 58;
+            case "D":
+                return 33;
+            case "G":
+                return 43;
+            case "K":
+                return 58;
+            case "L":
+                return 58;
+            case "M":
+                return 57;
+            case "N":
+                return 57;
+            case "O":
+                return 43;
+            case "Q":
+                return 57;
+            case "T":
+                return 57;
+            case "Y":
+                return 57;
+            }
     }
 
-  } else if (highlightType == "alfalfa") {
-    var soil = boardData[currentBoard].map[tileId].soilType;
-    switch (soil) {
-      case "A":
-        return 42;
-      case "B":
-        return 13;
-      case "C":
-        return 25;
-      case "D":
-        return 42;
-      case "G":
-        return 13;
-      case "K":
-        return 13;
-      case "L":
-        return 25;
-      case "M":
-        return 17;
-      case "N":
-        return 42;
-      case "O":
-        return 13;
-      case "Q":
-        return 17;
-      case "T":
-        return 17;
-      case "Y":
-        return 42;
+    else if(highlightType == "short")
+    {
+        var soil = boardData[currentBoard].map[tileId].soilType;
+         switch(soil)
+            {
+            case "A":
+                return 55;
+            case "B":
+                return 55;
+            case "C":
+                return 55;
+            case "D":
+                return 55;
+            case "G":
+                return 55;
+            case "K":
+                return 55;
+            case "L":
+                return 55;
+            case "M":
+                return 55;
+            case "N":
+                return 55;
+            case "O":
+                return 55;
+            case "Q":
+                return 55;
+            case "T":
+                return 55;
+            case "Y":
+                return 55;
+            }
     }
-  } else if (highlightType == "grassHay") {
-    var soil = boardData[currentBoard].map[tileId].soilType;
-    switch (soil) {
-      case "A":
-        return 46;
-      case "B":
-        return 47;
-      case "C":
-        return 45;
-      case "D":
-        return 46;
-      case "G":
-        return 47;
-      case "K":
-        return 47;
-      case "L":
-        return 45;
-      case "M":
-        return 29;
-      case "N":
-        return 46;
-      case "O":
-        return 47;
-      case "Q":
-        return 29;
-      case "T":
-        return 29;
-      case "Y":
-        return 46;
-    }
-  } else if (highlightType == "switchGrass") {
-    var soil = boardData[currentBoard].map[tileId].soilType;
-    switch (soil) {
-      case "A":
-        return 49;
-      case "B":
-        return 45;
-      case "C":
-        return 49;
-      case "D":
-        return 45;
-      case "G":
-        return 45;
-      case "K":
-        return 45;
-      case "L":
-        return 49;
-      case "M":
-        return 49;
-      case "N":
-        return 51;
-      case "O":
-        return 45;
-      case "Q":
-        return 51;
-      case "T":
-        return 51;
-      case "Y":
-        return 50;
-    }
-  } else if (highlightType == "wood") {
-    var soil = boardData[currentBoard].map[tileId].soilType;
-    switch (soil) {
-      case "A":
-        return 55;
-      case "B":
-        return 53;
-      case "C":
-        return 52;
-      case "D":
-        return 55;
-      case "G":
-        return 55;
-      case "K":
-        return 53;
-      case "L":
-        return 52;
-      case "M":
-        return 55;
-      case "N":
-        return 54;
-      case "O":
-        return 52;
-      case "Q":
-        return 55;
-      case "T":
-        return 54;
-      case "Y":
-        return 55;
-    }
-  } else if (highlightType == "fruit") {
-    var soil = boardData[currentBoard].map[tileId].soilType;
-    switch (soil) {
-      case "A":
-        return 0;
-      case "B":
-        return 25;
-      case "C":
-        return 56;
-      case "D":
-        return 45;
-      case "G":
-        return 0;
-      case "K":
-        return 45;
-      case "L":
-        return 56;
-      case "M":
-        return 56;
-      case "N":
-        return 0;
-      case "O":
-        return 56;
-      case "Q":
-        return 56;
-      case "T":
-        return 56;
-      case "Y":
-        return 45;
-    }
-  } else if (highlightType == "cattle") {
-    var soil = boardData[currentBoard].map[tileId].soilType;
-    switch (soil) {
-      case "A":
-        return 57;
-      case "B":
-        return 43;
-      case "C":
-        return 58;
-      case "D":
-        return 33;
-      case "G":
-        return 43;
-      case "K":
-        return 58;
-      case "L":
-        return 58;
-      case "M":
-        return 57;
-      case "N":
-        return 57;
-      case "O":
-        return 43;
-      case "Q":
-        return 57;
-      case "T":
-        return 57;
-      case "Y":
-        return 57;
-    }
-  } else if (highlightType == "short") {
-    var soil = boardData[currentBoard].map[tileId].soilType;
-    switch (soil) {
-      case "A":
-        return 55;
-      case "B":
-        return 55;
-      case "C":
-        return 55;
-      case "D":
-        return 55;
-      case "G":
-        return 55;
-      case "K":
-        return 55;
-      case "L":
-        return 55;
-      case "M":
-        return 55;
-      case "N":
-        return 55;
-      case "O":
-        return 55;
-      case "Q":
-        return 55;
-      case "T":
-        return 55;
-      case "Y":
-        return 55;
-    }
-  }
+
 } //end getHighlightColor
 
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
@@ -2508,9 +2602,6 @@ function uploadClicked(e) {
 } //end uploadClicked
 
 
-
-
-
 //downloadClicked() is called by child frame uploadDownload
 // since downloading must be handeled in the active frame,
 // much of the function is taken care of there.
@@ -2547,7 +2638,9 @@ function showCredits() {
     document.getElementById('closeCredits').style.display = "block";
     document.getElementById('modalCreditsFrame').style.display = "block";
     modalUp = true;
-  }
+ }
+   //Event Listner to close the credits page
+        document.addEventListener('keyup',aboutsEsc);
 } //end showCredits
 
 //closeCreditFrame closes the credits iframe
@@ -2559,6 +2652,8 @@ function closeCreditFrame() {
   document.getElementById('closeCredits').style.display = "none";
   document.getElementById('modalCreditsFrame').style.display = "none";
   modalUp = false;
+    //Event listner that closes escape key
+    document.removeEventListener('keyup', aboutsEsc);
 } //end closeCreditFrame
 
 //showUploadDownload opens the credits iframe
@@ -2572,7 +2667,7 @@ function showUploadDownload() {
     document.getElementById('modalUploadFrame').style.display = "block";
     modalUp = true;
   }
-
+    document.addEventListener('keyup', downuploadEsc);
   if (mapIsHighlighted) {
     displayLevels();
   }
@@ -2586,8 +2681,8 @@ function closeUploadDownloadFrame() {
   document.getElementById('closeUploadDownload').style.display = "none";
   document.getElementById('uploadDownloadFrame').style.display = "none";
   document.getElementById('modalUploadFrame').style.display = "none";
-
   modalUp = false;
+  document.removeEventListener('keyup', downuploadEsc);
 } //end closeUploadDownloadFrame
 
 //toggleIndex displays and hides the codex
@@ -2604,6 +2699,7 @@ function toggleIndex() {
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
     document.getElementById('index').style.display = "block";
+     document.addEventListener('keyup', indexEsc);
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
 
     if (curTracking) {
@@ -2622,9 +2718,36 @@ function toggleIndex() {
     document.getElementById('index').contentWindow.document.getElementById('title').innerHTML = "";
 
     document.getElementById('index').contentWindow.resetHighlighting();
+    document.removeEventListener('keyup', indexEsc);
 
   }
 } //end toggleIndex
+function resultsEsc(e){
+    if (e.keyCode == 27){
+        resultsEnd();
+    }
+}
+
+//Function that closes the about dialog when escape key is pressed
+function aboutsEsc(e){
+    if (e.keyCode == 27){
+        closeCreditFrame();
+    }
+}
+
+//Function that closes the Download dialog when the escape key is pressed
+function downuploadEsc(e){
+    if (e.keyCode == 27){
+       closeUploadDownloadFrame();
+    }
+}
+//Function that closes the download index dialog when escape key is pressed
+function indexEsc(e){
+    if (e.keyCode == 27){
+        toggleIndex();
+    }
+}
+
 
 //printLandUseType returns a display-worthy string of land type from numeric key
 function printLandUseType(type) {
@@ -2922,9 +3045,9 @@ function startOptions() {
     modalUp = true;
     document.getElementById('options').style.visibility = "visible";
     //setup options page with the current parameter selection
-    document.getElementById('options').contentWindow.getCurrentOptionsState();
-  } //end if
-} //end startOptions
+    document.getElementById('options').contentWindow.getCurrentOptionsState();}
+      }
+ //end startOptions
 
 //endMultiAssignMode displays the multiPlayer element
 function endMultiplayerAssignMode() {
@@ -3158,31 +3281,32 @@ function finishProperties() {
 
 //Handles exporting the clicks given by the user
 function exportTracking() {
-  //Initial action is equal to time elapsed at that point
-  if (clickTrackings.length > 0) {
-    clickTrackings[0].timeGap = clickTrackings[0].timeStamp;
-  }
-  finishProperties();
-  var A = [
-    ['ClickID', 'Time Stamp (Milliseconds)', 'Click Type', 'Time Gap (Milliseconds)', 'Description of click', 'TileID/Precip', startTime, endTime, startTime.getTime(), endTime.getTime()]
-  ];
-  for (var j = 0; j < clickTrackings.length; j++) {
-    A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
-  }
-  var csvRows = [];
-  for (var i = 0; i < A.length; i++) {
-    csvRows.push(A[i].join(','));
-  }
-  var csvString = csvRows.join("\n");
-  //Get ready to prompt for file
-  var a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8;base64,' + window.btoa(csvString);
-  a.target = '_blank';
-  var fileID = Math.round(Math.random() * 100000000000000000000);
-  a.download = 'PEWI_UserExperienceFile_' + fileID + '.csv';
-  document.body.appendChild(a);
-  a.click();
-  clickTrackings = [];
+    //Initial action is equal to time elapsed at that point
+    if(clickTrackings.length>0)
+    {
+        clickTrackings[0].timeGap = clickTrackings[0].timeStamp;
+    }
+    finishProperties();
+    var A = [['ClickID','Time Stamp (Milliseconds)','Click Type','Time Gap (Milliseconds)','Description of click','TileID/Precip',startTime,endTime,startTime.getTime(),endTime.getTime()]];
+    for(var j=0;j<clickTrackings.length;j++)
+    {
+        A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
+    }
+    var csvRows = [];
+    for(var i=0; i<A.length; i++)
+    {
+        csvRows.push(A[i].join(','));
+    }
+    var csvString = csvRows.join("\n");
+    //Get ready to prompt for file
+    var a = document.createElement('a');
+    a.href     = 'data:text/csv;charset=utf-8;base64,' + window.btoa(csvString);
+    a.target   = '_blank';
+    var fileID = Math.round(Math.random()*100000000000000000000);
+    a.download = 'PEWI_UserExperienceFile_'+fileID+'.csv';
+    document.body.appendChild(a);
+    a.click();
+    clickTrackings = [];
 } //end exportTracking
 
 //Handles the simulation file
@@ -3378,7 +3502,7 @@ function resetPresets() {
   painterSelect(1);
   //Resets the year selections
   resetYearDisplay();
-  document.getElementById("year1Image").className = "yearSelected"
+  document.getElementById("year1Image").className = "icon yearSelected"
   currentYear = 1;
   //Resets the scroll in the results tab
   window.frames[3].scrollTo(0, 0);

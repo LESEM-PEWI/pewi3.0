@@ -2,13 +2,13 @@
 
 <!--
 This page is not uber-complicated. It is an iframe displayed within index.html
-   after webGL canvas is active. Users trigger this page with the V key on the 
+   after webGL canvas is active. Users trigger this page with the V key on the
    keyboard. why v? who knows?
-   
+
 Users then select the number of players they have assigned, which is an important aspect.
   If the user intends to assign 3 players, he or she must make these assignments
   from the numbers 1 through 3.
-  
+
 Upon ending, this page reloads the entire program since the cleanup work
   to send them back to the main menu is not worth the 4 seconds saved.
 
@@ -19,7 +19,7 @@ Cleaned and Prepared - August 2016
 <head>
     <meta charset="utf-8">
     <title>Workspace - Multiplayer (multi-map) Export</title>
-    
+
     <!-- INCLUDES -->
     <!--css-->
     <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
@@ -47,7 +47,7 @@ Cleaned and Prepared - August 2016
         <div id="multiplayerInnerContainer">
 
             <div id="multiplayerInfoText">
-                Select the number of players you have assigned. Note that the players must be assigned in order. 
+                Select the number of players you have assigned. Note that the players must be assigned in order.
                 That is, if you are using a maximum of 4 players, it should be assigned with players 1 through 4 and not 3 through 6.
                 Click download to save the zipped file.
                 <br><br>
@@ -55,13 +55,13 @@ Cleaned and Prepared - August 2016
                 Then recombine them via PEWI’s “Utilities” to view aggregate results.
             </div>
 
-            
+
 
             <div id="multiplayerDownloadButton" onclick="createMultimapDownload();" class="mainButton">Download Multi-Map File</div>
         </div>
         <div id="multiplayerExitButton" style="visibility:hidden;" onclick="exitToMain();" class="mainButton">Return to Start</div>
     </div>
- <script src="/mainFE.js"></script>   
+ <script src="/mainFE.js"></script>
 <script>
 //page-global zip file
 var zip = new JSZip();
@@ -69,11 +69,11 @@ var zip = new JSZip();
 var maxPlayers = 6;
 
 //this function adds a file to the zip file
-// the map added corresponds to the player number 
+// the map added corresponds to the player number
 function addToZip(playerNumber) {
     //player map creation, helperFE.js
     var data = parent.writeFileToDownloadString(playerNumber);
-    //jszip 
+    //jszip
     zip.file("player" + playerNumber + ".csv", data);
 }//end addToZip
 
@@ -84,7 +84,7 @@ function createMultimapDownload() {
     for (var k = 1; k <= assignedPlayers; k++) {
         addToZip(k);
     }
-    
+
     //generate blob, then force browser to save it
     zip.generateAsync({
             type: "blob"
@@ -98,13 +98,15 @@ function createMultimapDownload() {
     document.getElementById('backButton').style.display = "none";
     document.getElementById('multiplayerInnerContainer').style.display = "none";
     document.getElementById('multiplayerExitButton').style.visibility = "visible";
+    // turn this off since save/upload window prompts according to this
+    parent.document.getElementById("page").style.visibility = 'hidden';
 }//end createMultimapDownload
 
 function changeNumberOfPlayersBy(amountToChange) {
 
     var currentNumberOfPlayers = Number(document.getElementById('playerNumber').innerHTML);
     currentNumberOfPlayers += amountToChange;
-    
+
     //reset both toggles to visible, then check limits
     document.getElementById('addPlayer').style.visibility = "visible";
     document.getElementById('subtractPlayer').style.visibility = "visible";
@@ -115,17 +117,18 @@ function changeNumberOfPlayersBy(amountToChange) {
     else if (currentNumberOfPlayers == 1) {
         document.getElementById('subtractPlayer').style.visibility = "hidden";
     }
-    
+
     //update page to reflect new current number
     document.getElementById('playerNumber').innerHTML = currentNumberOfPlayers;
-}//end changeNumberOfPlayersBy() 
+}//end changeNumberOfPlayersBy()
 
 //surprisingly, this function does exactly what its name might imply
 function exitToMain() {
     //start from scratch
     window.top.location.reload();
 }//end exitToMain()
-</script>  
 
-</body>    
+</script>
+
+</body>
 </html>

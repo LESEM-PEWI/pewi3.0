@@ -1117,24 +1117,41 @@
 
   <!-- Javascript to stop event propogation for bug fix in modalEscapeFrame (above) -->
   <script>
-    // prompt before user exit the program two methods for different browsers
-    $(window).bind("beforeunload", function(event) {
-      showUploadDownload();
-      return "Are you sure to leave? Make sure if you saved changes.";
-    });
-    $(window).bind("onunload", function(event) {
-      showUploadDownload();
-      if (confirm("Are you sure to leave? Make sure if you saved changes.") == true) {
-        boardData = null; // clean data
-        console.log("finished clean data");
-      }
-    });
-
     //prevent modalEscapeFrame from being clicked on when using the buttons stored in the frame
     $("#escapeMenu").click(function(e) {
       e.stopPropagation();
       return false;
     });
+
+    // Prompt save changes before user exit the program
+    var page = document.getElementById("page");
+
+    $(window).bind("beforeunload", function(event) {
+      if (page.style.visibility == 'visible') {
+        // on the main page, ask the user to save changes
+        showUploadDownload();
+        return "Are you sure to leave? Make sure if you saved changes.";
+      } else {
+        // not on the main page, exit the app directly
+        return;
+      }
+
+    });
+
+    // // for different browsers
+    // $(window).bind("onunload", function(event) {
+    // if (page.style.visibility == 'hidden') {
+    //   // not on the main page, exit the app directly
+    //
+    //   page = null; // XXX should clean more objects (everything) here
+    //
+    //   return ;
+    // }
+    //
+    // // on the main page, ask the user to save changes
+    // showUploadDownload();
+    //   confirm("Are you sure to leave? Make sure if you saved changes.");
+    // });
   </script>
 
   <!-- Add spinning circle loading gif, this loader is visible during transitions-->

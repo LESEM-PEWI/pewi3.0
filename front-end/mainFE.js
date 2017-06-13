@@ -1,6 +1,3 @@
-/**
- * @Last modified time: 2017-06-08T12:12:25-05:00
- */
 
 //================
 //global vars
@@ -136,7 +133,6 @@ function loadingManager() {
 
     //show main PEWI page elements
     // document.getElementById('page').style.visibility = "visible";
-    document.getElementById('page').style.display = "block";
     document.getElementById('firefoxWorkaround').focus();
   };
 } //end loadingManager
@@ -169,8 +165,8 @@ function initWorkspace(file) {
     }
     //hide loading animation and make the PEWI main page visible
     document.getElementById('loading').style.display = "none";
-    // document.getElementById('page').style.visibility = "visible";
-    document.getElementById('page').style.display = "block";
+    document.getElementById('page').style.visibility = "visible";
+    // document.getElementById('page').style.display = "block";
   }
   checkIfSceneLoaded();
 } //end initWorkspace
@@ -510,7 +506,7 @@ function setupHighlight() {
   document.addEventListener('keydown', onDocumentKeyDown, false);
   document.addEventListener('keyup', onDocumentKeyUp, false);
 
-}; //end setupHighlight
+} //end setupHighlight
 
 //expand or collapse the div holding tools for confirming escape to main menu
 function confirmEscape() {
@@ -530,7 +526,7 @@ function confirmEscape() {
       if (!multiplayerAssigningModeOn) {
         toggleEscapeFrame();
         startOptions();
-      };
+      }
     };
     document.getElementById('directoryButton').onclick = function() {
       toggleEscapeFrame();
@@ -582,8 +578,8 @@ function showMainMenu() {
       levelGlobal = 0;
     }
 
-    // document.getElementById('page').style.visibility = "hidden";
-    document.getElementById('page').style.display = "none";
+    document.getElementById('page').style.visibility = "hidden";
+    // document.getElementById('page').style.display = "none";
 
     // set boardData[currentBoard] as undefined
     boardData[currentBoard] = void 0; //XXX getTileID() & printPrecipYearType() are fired
