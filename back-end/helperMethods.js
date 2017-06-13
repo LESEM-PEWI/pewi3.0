@@ -103,7 +103,7 @@ function convertPrecipToIndex(precip) {
 //helper method for calculations of log base 10
 Math.log10 = function(n) {
   return (Math.log(n)) / (Math.log(10));
-} //end log10
+}; //end log10
 
 //load the data from given fileString into the given board object
 function loadBoard(board, fileString) {
@@ -135,7 +135,13 @@ function getRandomInt(min, max) {
 // returns true/false
 function initDataIsCorrupt() {
   // check length
-  if (initData.length != 828) return 1;
+  if (initData.length != 828) {
+    console.log("I throught this will never be triggered");
+    console.log("initData.length: " + initData.length);
+    console.log("initData ");
+    console.log(initData);
+    return 1;
+  }
   // Each cell is an array, check the length of each cell
   for (var i = 0; i < initData.length; i++) {
     if (initData[i].length != 32) {

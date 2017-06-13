@@ -22,6 +22,7 @@ function propogateBoard(board) {
   //board.precipitationIndex = [0,2,4,1] ;
 
   //loop through initData array and assign values to Tiles
+  console.log("initData.length " + initData.length);
   for (var i = 0; i < initData.length; i++) {
     var tile = new Tile(initData[i], board);
     board.map.push(tile);
@@ -29,7 +30,6 @@ function propogateBoard(board) {
 
   //set up board1.watershedArea parameter for some tile level calculations
   board.init();
-
 } //end propogateBoard()
 
 
@@ -37,6 +37,7 @@ function propogateBoard(board) {
 // into board. The first argument is passed by reference, so nothing need be returned
 function overlayBoard(board) {
   // for each data entry
+  console.log("initData.length " + initData.length);
   for (var i = 0; i < initData.length; i++) {
     //get the tile set up
     var tile = new Tile(initData[i], board);
