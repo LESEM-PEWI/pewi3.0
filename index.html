@@ -989,17 +989,12 @@
       <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>
       <p id="popupText"></p>
     </div>
-    <div id="popup2" class="popupHidden" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
+
+    <!--Chat box for Index information -->
     <div id="backgroundInfoButton" class="dialogueButtonRolled"><img src="./imgs/indexIcon.png"></div>
-    
-    <div id="backgroundInfoBox" class="dialogueButtonRolled">
-      <!--<font color = "white"><br> <center> Test Chicken Nuggets</center></font>-->
+    <div id="backgroundInfoBox" class="dialogueButtonRolled" onclick="toggleBackgroundInfoDisplay()">
       <p id = "indexPopupText"></p>
     </div>
-
-    <!--<div id="backgroundInfoButton" class="backgroundInfoButtonRolled"><img src="./imgs/backgroundinfo.png"></div>-->
-
-    <!--<div id="backgroundInfoButton" class="backgroundInfoButtonRolled" onclick="indexPopupDisplay();"><img src="./imgs/indexIcon.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>-->
 
     <!-- **END Right Side Component** -->
 
@@ -1011,8 +1006,6 @@
 
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
     <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-
-
 
     <!-- order now becomes important to make sure elements stack and cover correctly -->
 

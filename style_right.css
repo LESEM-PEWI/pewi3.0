@@ -201,23 +201,38 @@
   border-bottom-left-radius: 4px;
   background-image: url('./imgs/consoleTexture.png');
 }
-#backgroundInfoBox{
+#backgroundInfoBox, #backgroundInfoboxRolled{
   right: 0%;
   top: 34vw;
   width: 15%;
-  height: 25%;
+  height: 18%;
   border-radius: 0px;
   border-right: 0px solid #F0A61D;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 12px;
   background-image: url('./imgs/consoleTexture.png');
+   -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-name: rollUp;
+  animation-name: rollUp;
 }
+
+#backgroundInfoButtonRolled {
+  bottom: 0px;
+  right: -3%;
+  -webkit-animation-name: rollButtonDown;
+  animation-name: rollButtonDown;
+  -webkit-animation-duration: 1.2s;
+  animation-duration: 1.2s;
+}
+
 #indexPopupText{
   position: relative;
   text-align: center;
   color: white;
   top: 10px;
 }
+
 /*.backgroundInfoButton, .backgroundInfoButtonRolled{
    -webkit-animation-duration: 1s;
   animation-duration: 1s;

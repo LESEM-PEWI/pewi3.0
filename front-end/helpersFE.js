@@ -1035,49 +1035,49 @@ function changeSelectedPaintTo(newPaintValue) {
     painter = newPaintValue;
     //Index chat box entries for each landuse type
     if(painterElementId == 'paint1'){
-      updateIndexPopup('This is corn');
+      updateIndexPopup('These are the 15 different land use types. To learn more about them, go to the Index and select "Land Use".');
     }
      else if(painterElementId == 'paint2'){
-      updateIndexPopup('This is other corn');
+      updateIndexPopup('To learn more about Conservation Corn, go to the Index and select "Land Use".');
     }
      else if(painterElementId == 'paint3'){
-      updateIndexPopup('This is soy');
+      updateIndexPopup('To learn more about Conventional Soybean, go to the Index and select "Land Use".');
     }
      else if(painterElementId == 'paint4'){
-      updateIndexPopup('This is other soy');
+      updateIndexPopup('To learn more about Conservation Soybean, go to the Index and select "Land Use".');
     }
      else if(painterElementId == 'paint15'){
-      updateIndexPopup('This is fruits and vegetables');
+      updateIndexPopup('To learn more about Mixed Fruits and Vegetables, go to the Index and select "Land Use".');
     }
     else if(painterElementId == 'paint5'){
-      updateIndexPopup('This is Alfalfa');
+      updateIndexPopup('To learn more about Alfalfa Hay, go to the Index and select "Land Use".');
     }
     else if(painterElementId == 'paint8'){
-      updateIndexPopup('This is grassHay');
+      updateIndexPopup('To learn more about Grass Hay, go to the Index and select "Land Use".');
     }
     else if(painterElementId == 'paint12'){
-      updateIndexPopup('This is SwitchGrass');
+      updateIndexPopup('To learn more about Switch Grass, go to the Index and select "Land Use".');
     }
     else if(painterElementId == 'paint6'){
-      updateIndexPopup('This is Permanent Pasture');
+      updateIndexPopup('To learn more about Permanent Pasture, go to the Index and select "Land Use".');
     }
     else if(painterElementId == 'paint7'){
-      updateIndexPopup('This is Rotational Grazing');
+      updateIndexPopup('To learm more about Rotational Grazing, go to the Index and select "Land Use".');
     }
     else if(painterElementId == 'paint14'){
-      updateIndexPopup('This is Wetland');
+      updateIndexPopup('To learn more about Wetland, go to the Index and select "Land Use".');
     }
     else if(painterElementId == 'paint9'){
-      updateIndexPopup('This is Prairie');
+      updateIndexPopup('To learn more about Prarie, go to the Index and select "Land Use".');
     }
     else if(painterElementId == 'paint11'){
-      updateIndexPopup('This is Conventional Forest');
+      updateIndexPopup('To learn more about Conventional Forest, go to the Index and select "Land Use".');
     }
     else if(painterElementId == 'paint10'){
-      updateIndexPopup('This is Conservation Forest');
+      updateIndexPopup('To learn more about Conservation Forest, go to the Index and select "Land Use".');
     }
     else if(painterElementId == 'paint13'){
-      updateIndexPopup('This is Woody Bioenergy');
+      updateIndexPopup('To learn more about Short Rotation Woody Bioenergy, go to the Index and select "Land Use".');
     }
     else{
       updateIndexPopup('');
@@ -1150,10 +1150,6 @@ function resultsStart() {
     rightPopupWasOpen = false;
     if (document.getElementById("popup").className == "popup") {
       togglePopupDisplay();
-      rightPopupWasOpen = true;
-    }
-    if(document.getElementById("popup2").className == "popup2"){
-      indexPopupDisplay();
       rightPopupWasOpen = true;
     }
 
@@ -1309,39 +1305,47 @@ function showLevelDetails(value) {
     else if(value == 9){
         document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
         document.getElementById('cornClass').className = "yieldSelectorIconSelected";
-        updateIndexPopup("This is corn grain yield");
+        updateIndexPopup('Conventional Corn and Conservation Corn produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 10){
         document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
         document.getElementById('soyClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Conventional Soy and Conservation Soy produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 11){
         document.getElementById('fruitDetailsList').className = "yieldDetailsList";
         document.getElementById('fruitClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Mixed Fruits and Vegetable Yield, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 12){
         document.getElementById('cattleDetailsList').className = "yieldDetailsList";
         document.getElementById('cattleClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Permanent Pasture and Rotational Grazing produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".')
     }
     else if(value == 13){
         document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
         document.getElementById('alfalfaClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Alfalfa Hay Yield, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 14){
         document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
         document.getElementById('grassHayClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Grass Hay Yield, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 15){
         document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
         document.getElementById('switchGrassClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Switch Grass Yield, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 16){
         document.getElementById('woodDetailsList').className = "yieldDetailsList";
         document.getElementById('woodClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Conventional Forest and Conservation Forest produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 17){
         document.getElementById('shortDetailsList').className = "yieldDetailsList";
         document.getElementById('shortClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Short-Rotation Woody Biomass produces the same output, no matter the soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
     }
 
   //hide ecosystem indicator legends
@@ -1449,7 +1453,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('terrainImg').className = "imgSelected";
     document.getElementById('painterTab').style.display = "block";
-    updateIndexPopup('Landuse type tab! Wooh!')
+    updateIndexPopup('These are the 15 different land use types. To learn more about them, go to the Index and select "Land Use".');
   } else if (value == 2) {
     inDispLevels = false;
     if (curTracking)
@@ -1458,7 +1462,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('precipImg').className = "imgSelected";
     document.getElementById('precipTab').style.display = "block";
-    updateIndexPopup('Precip Tabs! Wooh!');
+    updateIndexPopup('This is the Precipitation Tab. To learn more, go to the Index and select "Precipitation".');
   } else if (value == 3) {
     inDispLevels = true;
     if (curTracking)
@@ -1467,7 +1471,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('levelsImg').className = "imgSelected";
     document.getElementById('levelsTab').style.display = "block";
-    updateIndexPopup('Levels Tab! Wooh!');
+    updateIndexPopup('This is the Levels Tab, where you can learn about Soil Quality and Water Quality.');
   } else if (value == 4) {
     inDispLevels = true;
     if (curTracking)
@@ -1476,7 +1480,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('featuresImg').className = "imgSelected";
     document.getElementById('featuresTab').style.display = "block";
-    updateIndexPopup('Physical Features Tab! Woot!');
+    updateIndexPopup('This is the Physical Features Tab, where you will find information on topography, soil properties, subwatershed boundaries, and strategic wetland areas.');
   } else if (value == 5) {
     inDispLevels = false;
     if (curTracking)
@@ -1493,7 +1497,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('calendarImg').className = "imgSelected";
     document.getElementById('yearsTab').style.display = "block";
-    updateIndexPopup('Year tab! Wooh!');
+    updateIndexPopup('The Years Tab allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
   } else if(value == 7){
     inDispLevels = true;
     if (curTracking)
@@ -1502,7 +1506,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('yieldImg').className = "imgSelected";
     document.getElementById('yieldTab').style.display = "block"
-    updateIndexPopup('Yield Tab! Wooh!');
+    updateIndexPopup('The Yield Tab allows you to see different yield base rates based on soil type for different landuse types.');
   }
 
 
@@ -1564,6 +1568,7 @@ function displayLevels(overlayHighlightType) {
   switch (overlayHighlightType) {
     case 'nitrate':
       selectionHighlightNumber = 1;
+      updateIndexPopup('To learn more about Nitrate, go to the Index, select "Modules" and then "Water Quality".');
       if (curTracking)
       {
         pushClick(0,getStamp(),42,0,null);
@@ -1571,6 +1576,7 @@ function displayLevels(overlayHighlightType) {
       break;
     case 'erosion':
       selectionHighlightNumber = 2;
+      updateIndexPopup('To learn more about Erosion, go to the Index, select "Modules" and then "Soil Quality".');
       if (curTracking)
       {
         pushClick(0,getStamp(),43,0,null);
@@ -1578,6 +1584,7 @@ function displayLevels(overlayHighlightType) {
       break;
     case 'phosphorus':
       selectionHighlightNumber = 3;
+      updateIndexPopup('To learn more about Phosphorus, go to the Index, select "Modules" and then "Water Quality".');
       if (curTracking)
       {
         pushClick(0,getStamp(),44,0,null);
@@ -1585,6 +1592,7 @@ function displayLevels(overlayHighlightType) {
       break;
     case 'flood':
       selectionHighlightNumber = 4;
+      updateIndexPopup('This map shows the frequency of flooding for each grid cell. To learn more, go to the Index and select "Physical Features".');
       if (curTracking)
       {
         pushClick(0,getStamp(),45,0,null);
@@ -1592,6 +1600,7 @@ function displayLevels(overlayHighlightType) {
       break;
     case 'drainage':
       selectionHighlightNumber = 5;
+      updateIndexPopup('This map shows the drainage for each pixel. To learn more, go to the Index and select "Physical Features".');
       if (curTracking)
       {
         pushClick(0,getStamp(),48,0,null);
@@ -1599,6 +1608,7 @@ function displayLevels(overlayHighlightType) {
       break;
     case 'wetland':
       selectionHighlightNumber = 6;
+      updateIndexPopup('This map shows the locations for each strategic wetland. To learn more, go to the Index and select "Physical Features".');
       if (curTracking)
       {
         pushClick(0,getStamp(),46,0,null);
@@ -1606,6 +1616,7 @@ function displayLevels(overlayHighlightType) {
       break;
     case 'subwatershed':
       selectionHighlightNumber = 7;
+      updateIndexPopup('This map shows the boundaries of each subwatershed. To learn more, go to the Index and select "Physical Features".');
       if (curTracking)
       {
         pushClick(0,getStamp(),47,0,null);
@@ -1613,6 +1624,7 @@ function displayLevels(overlayHighlightType) {
       break;
     case 'soil':
       selectionHighlightNumber = 8;
+      updateIndexPopup('There are thirteen different soil classes that each have different properties. To learn more, go to the Index and select "Physical Features".');
       if (curTracking)
       {
         pushClick(0,getStamp(),49,0,null);
@@ -2856,28 +2868,19 @@ function togglePopupDisplay() {
   } //end if
 } // togglePopupDisplay()
 
-function indexPopupDisplay()
+//Allows user to 
+function toggleBackgroundInfoDisplay()
 {
-  if (!modalUp) {
-    if (document.getElementById("popup2").className == "popup2") 
+  if(!modalUp){
+    if(document.getElementById('backgroundInfoBox').className == "backgroundInfoBox")
     {
-      if (curTracking)
-      {
-        pushClick(0,getStamp(),14,0,null);
-      }
-      document.getElementById("popup2").className = "popup2Hidden";
-      document.getElementById("backgroundInfoButton").className = "backgroundInfoButtonRolled";
-    } 
-    else 
-    {
-      if (curTracking)
-      {
-        pushClick(0,getStamp(),54,0,null);
-      }
-      document.getElementById("popup2").className = "popup2";
-      document.getElementById("backgroundInfoButton").className = "backgroundInfoButtonRolled";
+      document.getElementById('backgroundInfoBox').className == "backgroundInfoBoxRolled";
     }
-  } //end if
+    else
+    {
+      document.getElementById('backgroundInfoBox').className == "backgroundInfoBox";
+    }
+  }
 }
 
 //randomAllowed determines whether or not the current mode permits tile randomization
