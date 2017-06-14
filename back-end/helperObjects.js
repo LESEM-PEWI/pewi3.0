@@ -371,14 +371,14 @@ function Tile(tileArray, board) {
   this.slopeLengthSteepnessFactor = function(year) {
     if (this.landType[year] > LandUseType.none) {
       if ((this.landType[year] > LandUseType.none && this.landType[year] < LandUseType.permanentPasture) || this.landType[year] == LandUseType.mixedFruitsVegetables) {
-        if (this.topography == 0) return 0.05;
+        if (this.topography === 0) return 0.05;
         else if (this.topography == 1) return 0.31;
         else if (this.topography == 2) return 0.67;
         else if (this.topography == 3) return 1.26;
         else if (this.topography == 4) return 1.79;
         else if (this.topography == 5) return 2.2;
       } else if (this.landType[year] == LandUseType.permanentPasture || this.landType[year] == LandUseType.rotationalGrazing) {
-        if (this.topography == 0) return 0.05;
+        if (this.topography === 0) return 0.05;
         else if (this.topography == 1) return 0.28;
         else if (this.topography == 2) return 0.58;
         else if (this.topography == 3) return 1.12;
@@ -550,7 +550,7 @@ function Tile(tileArray, board) {
 
   //Calculate slopeSteepnessFactor for contourSubfactor
   this.slopeSteepnessFactor = function() {
-    if (this.topography == 0) return 0.002;
+    if (this.topography === 0) return 0.002;
     else if (this.topography == 1) return 0.02;
     else if (this.topography == 2) return 0.04;
     else if (this.topography == 3) return 0.08;
@@ -745,75 +745,71 @@ function Tile(tileArray, board) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 72;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 81;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 88;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 88;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 91;
     } else if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean) {
-      if (this.topography == 0 || this.topography == 1 || this.topography == 2 || this.topography == 3) {
+      if (this.topography === 0 || this.topography == 1 || this.topography == 2 || this.topography == 3) {
         if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 64;
         else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
             'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 74;
-        else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 81;
-        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor ==
-          0) this.runoffCurveNumber[year] = 85;
+        else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 81;
+        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0) this.runoffCurveNumber[year] = 85;
       } else if (this.topography == 4 || this.topography == 5) {
         if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 61;
         else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
             'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 70;
-        else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 77;
-        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor ==
-          0) this.runoffCurveNumber[year] = 80;
+        else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 77;
+        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0) this.runoffCurveNumber[year] = 80;
       }
     } else if (this.landType[year] == LandUseType.alfalfa) {
-      if (this.topography == 0 || this.topography == 1 || this.topography == 2 || this.topography == 3) {
+      if (this.topography === 0 || this.topography == 1 || this.topography == 2 || this.topography == 3) {
         if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 58;
         else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
             'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 72;
-        else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 81;
-        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor ==
-          0) this.runoffCurveNumber[year] = 85;
+        else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 81;
+        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0) this.runoffCurveNumber[year] = 85;
       } else if (this.topography == 4 || this.topography == 5) {
         if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 55;
         else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
             'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 69;
-        else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 78;
-        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor ==
-          0) this.runoffCurveNumber[year] = 83;
+        else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 78;
+        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0) this.runoffCurveNumber[year] = 83;
       }
     } else if (this.landType[year] == LandUseType.permanentPasture) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 68;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 79;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 86;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 86;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 89;
     } else if (this.landType[year] == LandUseType.rotationalGrazing) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 49;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 69;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 79;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 79;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 84;
     } else if (this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 30;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 58;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 71;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 71;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 78;
     } else if (this.landType[year] == LandUseType.prairie || this.landType[year] == LandUseType.wetland) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 30;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 48;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 65;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 65;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 73;
     } else if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.conventionalForest || this.landType[year] == LandUseType.shortRotationWoodyBioenergy) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 30;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 55;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 70;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 70;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 77;
     } else {
       this.runoffCurveNumber[year] = 1;
@@ -1104,7 +1100,7 @@ function Tile(tileArray, board) {
       else return 0.95;
     } else if (this.landType[year] == LandUseType.mixedFruitsVegetables) {
       if (board.precipitation[year] < 36.47) return 1;
-      else if (board.precipitation[year] == 36.47) return 0.9
+      else if (board.precipitation[year] == 36.47) return 0.9;
       else return 0.75;
     }
     return 1;
@@ -1260,7 +1256,7 @@ function Tile(tileArray, board) {
   //End Methods that assist yieldTile
   //--------------------------------------------------------------
 
-};
+}
 //end construction of Tile
 
 //######################################################################################
@@ -1574,7 +1570,7 @@ function Results(board) {
     this.sumFlagPercentages();
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
-      var tempScore = 0
+      var tempScore = 0;
 
       //native vegetation and other high diversity land uses points
       if (this.nativeVegetationHDPercent[y] == 100) {
@@ -1595,7 +1591,7 @@ function Results(board) {
       } else if (this.nativeVegetationHDorLIPercent[y] > 50) {
         tempScore += 1;
       } else if (this.nativeVegetationHDorLIPercent[y] > 10) {
-        tempScore += .5;
+        tempScore += 0.5;
       } else {
         tempScore += 0;
       }
@@ -1643,7 +1639,7 @@ function Results(board) {
   this.calculateBiodiversityPoints = function() {
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
-      var tempScore = 0
+      var tempScore = 0;
 
       //native vegetation points
       if (this.nativeVegetationPercent[y] == 100) {
@@ -1675,7 +1671,7 @@ function Results(board) {
       } else if (this.nativeVegetationHDorLIPercent[y] > 50) {
         tempScore += 1;
       } else if (this.nativeVegetationHDorLIPercent[y] > 10) {
-        tempScore += .5;
+        tempScore += 0.5;
       } else {
         tempScore += 0;
       }
@@ -2040,7 +2036,7 @@ function Results(board) {
     else if (pindex > 5 && pindex <= 15) return 4;
     else if (pindex > 15) return 5;
     return "";
-  }
+  };
 
 
   this.updateScores = function() {
@@ -2086,7 +2082,7 @@ function Results(board) {
     }
 
 
-  }
+  };
 
 
 
@@ -2115,7 +2111,7 @@ function Results(board) {
 
   }; //end this.update()
 
-}; //end construction of results
+} //end construction of results
 
 
 //######################################################################################
@@ -2146,7 +2142,7 @@ function GameBoard() {
       }
 
     }
-  } //end updateBoard
+  }; //end updateBoard
 
   //this function establishes the board area for calculations that depend on it
   //and determines the dimensions of the board
@@ -2223,7 +2219,7 @@ function GameBoard() {
       this.map[i].ephemeralGullyErosion(5);
       erosionMax += (this.map[i].rusleValues[5] + this.map[i].ephemeralGullyErosionValue[5]) * this.map[i].area;
 
-      if (this.map[i].soilType != "NA" && this.map[i].soilType != "0" && this.map[i].soilType != 0) {
+      if (this.map[i].soilType != "NA" && this.map[i].soilType != "0" && this.map[i].soilType !== 0) {
 
         this.map[i].updatePhosphorusParameters(4);
         phosphorusMin += this.map[i].area * (this.map[i].erosionComponent(4) + this.map[i].drainageComponent(4) + this.map[i].runoffComponent(4)) / 2000;
@@ -2270,7 +2266,7 @@ function GameBoard() {
 
   }; //end init
 
-}; //end GameBoard construction
+} //end GameBoard construction
 
 
 //######################################################################################
@@ -2322,7 +2318,7 @@ function Click(c1,c2,c3,c4,c5) {
 					break;
 				}
 				else
-				{ 
+				{
 					return "User tried closing the window";
 					break;
 				}

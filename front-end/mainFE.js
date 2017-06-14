@@ -62,8 +62,11 @@ function createThreeFramework() {
 function initializeCamera() {
 
   //camera
-  SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
-  ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
+  SCREEN_WIDTH = window.innerWidth;
+  SCREEN_HEIGHT = window.innerHeight;
+  ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT;
+  FAR = 10000;
+  NEAR = 0.1;
   camera = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
   scene.add(camera);
 
@@ -182,7 +185,7 @@ function animationFrames() {
     zoomAnimation();
 
     //rain animations (change y position of each raindrop)
-    if (rain != null) {
+    if (rain !== null) {
       for (var i = 0; i < rain.geometry.vertices.length; i++) {
         //update position
         rain.geometry.vertices[i].y = rain.geometry.vertices[i].y - (rain.geometry.vertices[i].speed);
@@ -194,7 +197,7 @@ function animationFrames() {
     }
 
     renderer.autoClear = false;
-    if (bgScene != null) {
+    if (bgScene !== null) {
       renderer.render(bgScene, bgCam);
     }
 
@@ -216,7 +219,7 @@ function animationFrames() {
 //birdAnimation updates bird and boid positions
 function birdAnimation() {
 
-  if (birds != null) {
+  if (birds !== null) {
 
     for (var i = 0, il = birds.length; i < il; i++) {
 
@@ -429,7 +432,7 @@ function switchToUnzoomedView(tile, shouldResetBoard) {
 function setupRiver() {
 
   //remove any previously rendered river
-  if (river != null) {
+  if (river !== null) {
     scene.remove(river);
   }
 

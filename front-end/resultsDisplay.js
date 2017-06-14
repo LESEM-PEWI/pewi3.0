@@ -1,7 +1,3 @@
-/**
- * @Last modified time: 2017-05-31T17:30:44-05:00
- */
-
 
 
 //displayResults writes the html for the results iframe with updates results from Totals
