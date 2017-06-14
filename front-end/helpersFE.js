@@ -694,9 +694,10 @@ function onDocumentMouseMove(event) {
 
   raycaster.setFromCamera(mouse, camera);
 
+  //FIXME intersects indicates when mouse is hover on tiles, however when the land's angle change, it appears not correct. I think this affects the correctness of coordinates
   var intersects = raycaster.intersectObjects(scene.children);
 
-  //Remove highlighting if clicking and dragging
+  //Remove highlighting if clicking and dragging (painter tool/brush 1)
   if (clickAndDrag) {
     highlightTile(-1);
   }
@@ -715,6 +716,7 @@ function onDocumentMouseMove(event) {
     highlightTile(-1);
   }
 
+  // mouse hovered on tiles and no iframe pops
   if (intersects.length > 0 && !modalUp) {
 
     //if painter tool type is the rectangle painter
@@ -733,17 +735,19 @@ function onDocumentMouseMove(event) {
       //  so it should consistently not highlight
       // in reality, there is a distinction between space outside the board and a
       //  tile on the board with no land type
-      if (currentTile && boardData[currentBoard].map[currentTile].landType[0] != 0) {
 
+      // if the tile the mouse hover on has landUseType, that means it is a paintable land
+      if (boardData[currentBoard].map[currentTile].landType[0] !== 0) {
+        // grid painter mode highlighting tiles here
         for (var i = 0; i < tilesToHighlight.length; i++) {
           highlightTile(tilesToHighlight[i] - 1);
           //prevent highlighting from overwritting...
           previousHover = null;
         }
-
         highlightedTiles = tilesToHighlight;
-      }
-    }
+      } // end if highlighting tiles
+    } // end if grid painter brush
+
     //if painter tool type is the clickAndDrag painter
     else if (clickAndDrag) {
       var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
