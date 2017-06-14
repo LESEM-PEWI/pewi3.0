@@ -728,7 +728,7 @@ function onDocumentMouseDown(event) {
               painterTool.status = 2;
               //set start tile
               painterTool.startTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-            }
+            } // end if painterTool.status == 1
             //else if the painter is active, then complete grid paint
             else if (painterTool.status == 2) {
               //end painterTool.status function if
@@ -765,11 +765,11 @@ function onDocumentMouseDown(event) {
               changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
               //Change variable for painting click and drag status
               clickAndDrag = true;
-            }
+            } // end if/else
 
-          }
+          } // end if/else
 
-        }
+        } // end if !modalUp && (!painterTool.hover || mapIsHighlighted)
 
       } // end if shift is not down
       //else, if shift is down, then we want to just change the whole board
@@ -780,14 +780,14 @@ function onDocumentMouseDown(event) {
 
           for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
-          if (boardData[currentBoard].map[i].landType[currentYear] !== 0) {
+            if (boardData[currentBoard].map[i].landType[currentYear] !== 0) {
 
               changeLandTypeTile(i);
 
-            }
-          }
-        }
-      }
+            } // end if
+          } // end for
+        } // end if !mapIsHighlighted
+      } // if/else
     } //end else/if group
   }
 } //end onDocumentMouseDown(event)
@@ -1298,6 +1298,7 @@ function showLevelDetails(value) {
     document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
     document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
   }
+<<<<<<< HEAD
   //Corn class legend
     else if(value == 9){
         document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
@@ -1345,6 +1346,61 @@ function showLevelDetails(value) {
         updateIndexPopup('Short-Rotation Woody Biomass produces the same output, no matter the soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
     }
 
+=======
+  //show Corn class legend
+  else if (value == 9) {
+    document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
+  }
+
+  //show soy class legend
+  else if (value == 10) {
+    document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
+  }
+
+  //show fruit class legend
+  else if (value == 11) {
+    document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
+  }
+
+  //show cattle class legend
+  else if (value == 12) {
+    document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
+  }
+
+  //show alfalfa class legend
+  else if (value == 13) {
+    document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
+  }
+
+  //show grasshay class legend
+  else if (value == 14) {
+    document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
+  }
+
+  //show switch grass class legend
+  else if (value == 15) {
+    document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
+  }
+
+  //show wood class legend
+  else if (value == 16) {
+    document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
+  }
+
+  //show short class legend
+  else if (value == 17) {
+    document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
+    document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
+  }
+>>>>>>> Format some code
 
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
@@ -1671,6 +1727,7 @@ function displayLevels(overlayHighlightType) {
         pushClick(0, getStamp(), 77, 0, null);
       }
       break;
+<<<<<<< HEAD
 
     case 'cornGrain':
       selectionHighlightNumber = 9;
@@ -1726,6 +1783,8 @@ function displayLevels(overlayHighlightType) {
         pushClick(0, getStamp(), 77, 0, null);
       }
       break;
+=======
+>>>>>>> Format some code
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -2174,7 +2233,10 @@ function getHighlightColor(highlightType, tileId) {
         return 55;
     }
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> Format some code
 } //end getHighlightColor
 
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
@@ -2788,8 +2850,11 @@ function toggleIndex() {
 
   }
 } //end toggleIndex
+<<<<<<< HEAD
 
 // execute when Esc is pressed while on the result page
+=======
+>>>>>>> Format some code
 function resultsEsc(e) {
   if (e.keyCode == 27) {
     resultsEnd();
@@ -3169,6 +3234,7 @@ function startOptions() {
     document.getElementById('options').style.visibility = "visible";
     //setup options page with the current parameter selection
     document.getElementById('options').contentWindow.getCurrentOptionsState();
+<<<<<<< HEAD
     // add Esc key event listener
     document.addEventListener('keyup', optionsEsc);
   }
@@ -3181,6 +3247,11 @@ function optionsEsc(e) {
     resetOptions();
   }
 }
+=======
+  }
+}
+//end startOptions
+>>>>>>> Format some code
 
 //endMultiAssignMode displays the multiPlayer element
 function endMultiplayerAssignMode() {
@@ -3423,7 +3494,11 @@ function exportTracking() {
     ['ClickID', 'Time Stamp (Milliseconds)', 'Click Type', 'Time Gap (Milliseconds)', 'Description of click', 'TileID/Precip', startTime, endTime, startTime.getTime(), endTime.getTime()]
   ];
   for (var j = 0; j < clickTrackings.length; j++) {
+<<<<<<< HEAD
     A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
+=======
+    A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID]);
+>>>>>>> Format some code
   }
   var csvRows = [];
   for (var i = 0; i < A.length; i++) {

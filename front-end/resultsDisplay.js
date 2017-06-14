@@ -1,5 +1,3 @@
-
-
 //displayResults writes the html for the results iframe with updates results from Totals
 function displayResults() {
 
