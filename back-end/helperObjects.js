@@ -2291,12 +2291,12 @@ function Click(c1, c2, c3, c4, c5) {
   this.timeGap = c4;
   this.tileID = c5;
 
-	var CODEX_HTML = window.frames[2];
 
   //Retrieves the function performed in accordance to the click type [As a string]
   this.getAction = function() {
     var action = isSimRunning();
     var caseInput = parseInt(this.functionType);
+    var CODEX_HTML = window.frames[2];
     switch (caseInput) {
       //When the user hit the escape key
       case 1:
@@ -3014,23 +3014,26 @@ function Click(c1, c2, c3, c4, c5) {
         } else {
           return "Woody Biomass yield selected";
         }
+
+        // Action for index page, Index open
       case 78:
         if (action) {
           return toggleIndex();
         } else {
           return "Index opened";
         }
+        break;
+
+        // Action for index page, Index closed
       case 79:
         if (action) {
           return toggleIndex();
         } else {
           return "Index closed";
         }
-
+        break;
         // Action inside index page, click on entry
       case 80:
-        console.log("Entry ID: " + this.tileID);
-        // console.log(CODEX_HTML.document.getElementById(this.tileID).className);
         // simulation is running, do what we recorded (what the user did)
         if (action) {
           if (CODEX_HTML.document.getElementById(this.tileID).className == "groupHeader" ||
@@ -3046,13 +3049,10 @@ function Click(c1, c2, c3, c4, c5) {
         // record the event description in csv file
         else
           return "Click an entry in index page";
-
         break;
 
         // Action inside index page, switch to Advanced
       case 81:
-				console.log("Case 81 ID: " + this.tileID);
-
         // simulation is running, do what we recorded (what the user did)
         if (action)
           return CODEX_HTML.showAdvancedDetail(this.tileID);
@@ -3063,8 +3063,6 @@ function Click(c1, c2, c3, c4, c5) {
 
         // Action inside index page, switch to General
       case 82:
-			console.log("Case 82 ID: " + this.tileID);
-
         // simulation is running, do what we recorded (what the user did)
         if (action)
           return CODEX_HTML.showLessDetail(this.tileID);

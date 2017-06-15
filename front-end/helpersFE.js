@@ -2753,14 +2753,18 @@ function closeUploadDownloadFrame() {
 
 //toggleIndex displays and hides the codex
 function toggleIndex() {
+  // shrink all index entries
+  window.frames[2].resetIndexElements();
 
   if (document.getElementById('index').style.display != "block" && !modalUp) {
     closeCreditFrame();
     closeUploadDownloadFrame();
     if (document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd();
 
-    if (curTracking) {
-      pushClick(0, getStamp(), 78, 0, null)
+    // if click tracking mode, then record the action
+    if(curTracking) {
+      // record for click tracking system
+      pushClick(0, getStamp(), 78, 0, null);
     }
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
@@ -2768,8 +2772,10 @@ function toggleIndex() {
     document.addEventListener('keyup', indexEsc);
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
 
-    if (curTracking) {
-      pushClick(0, getStamp(), 79, 0, null)
+    // if click tracking mode, then record the action
+    if(curTracking) {
+      // record for click tracking system
+      pushClick(0, getStamp(), 79, 0, null);
     }
     modalUp = false;
 
