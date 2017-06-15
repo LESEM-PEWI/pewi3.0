@@ -1,6 +1,6 @@
 /**
  * @Date:   2017-05-25T11:01:34-05:00
- * @Last modified time: 2017-05-31T14:44:43-05:00
+ * @Last modified time: 2017-06-08T15:10:48-05:00
  */
 
 
@@ -29,7 +29,7 @@ font-family: 'Amatic SC', cursive;
 **/
 
 
-/* css variable declaration */
+/* css global variable declaration */
 
 :root {
   --button-font-family: 'Amatic SC', cursive;
@@ -170,7 +170,6 @@ body {
 }
 
 #uploadDownloadButton {
-  cursor: pointer;
   right: 42px;
 }
 
@@ -182,18 +181,21 @@ body {
 #logoBase {
   right: 82px;
 }
+
 #pewiLogo{
   right: 206px;
 }
 .closeButton {
   cursor: pointer;
+}
+
+.closeButton {  
+  height: 40px;
   position: absolute;
-  width: 2.5vw;
-  -webkit-transition-duration: 0.1s;
-  /* Safari */
+  width: 40px;
+    
+  -webkit-transition-duration: 0.1s; /* Safari */
   transition-duration: 0.1s;
-  /*height: 40px;
-    width: 40px;*/
 }
 
 .closeButton:hover {
@@ -207,11 +209,9 @@ body {
 }
 
 #closeUploadDownload {
-  cursor: pointer;
-  left: 50%;
-  padding-left: 140px;
   position: fixed;
-  top: 21%;
+  left: 55.5%;
+  top: 20%;
 }
 
 #closeCredits {

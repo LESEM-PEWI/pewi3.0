@@ -1,5 +1,5 @@
 /**
- * @Last modified time: 2017-06-01T17:38:24-05:00
+ * @Last modified time: 2017-06-12T12:59:38-05:00
  */
 
 
@@ -629,7 +629,7 @@ function onDocumentMouseMove(event) {
   var x = event.clientX;
   var y = event.clientY;
   if (x != 'undefined' && y != 'undefined') {
-    // 20 must be the footer id="bottomHUD" height. Might encounter problem sometimes
+    // 20 must be the footer id="bottomHUD" height. Might encounter problems sometimes
     document.getElementById('hover-div').style.left = (x + 20) + "px";
     document.getElementById('hover-div').style.top = (y + 20) + "px";
   }
@@ -1161,11 +1161,15 @@ function resultsStart() {
     calculateResults();
     displayResults();
     animateResults();
+    //Event Listener for closing reslts tab
+        document.addEventListener('keyup', resultsEsc);
   } //end if
 } //end resultsStart
 
 //resultsEnd hides the results and returns the menus to the screens
 function resultsEnd() {
+    //Fucntion for removing event listener when resluts is closed
+    document.removeEventListener('keyup', resultsEsc);
   inResults = false;
   //modal is no longer up
   modalUp = false;
@@ -1693,7 +1697,7 @@ function displayLevels(overlayHighlightType) {
             {
               pushClick(0,getStamp(),77,0,null);
             }
-            break;  
+            break;
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -1873,7 +1877,7 @@ function getHighlightColor(highlightType, tileId) {
   }
    else if(highlightType == "cornGrain"){
         var soil = boardData[currentBoard].map[tileId].soilType;
-        switch(soil) 
+        switch(soil)
             {
             case "A":
                 return 35;
@@ -1906,7 +1910,7 @@ function getHighlightColor(highlightType, tileId) {
     else if(highlightType == "soy")
     {
         var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil) 
+         switch(soil)
             {
             case "A":
                 return 46;
@@ -1940,7 +1944,7 @@ function getHighlightColor(highlightType, tileId) {
     else if(highlightType == "alfalfa")
     {
         var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil) 
+         switch(soil)
             {
             case "A":
                 return 42;
@@ -1973,7 +1977,7 @@ function getHighlightColor(highlightType, tileId) {
     else if(highlightType == "grassHay")
     {
         var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil) 
+         switch(soil)
             {
             case "A":
                 return 46;
@@ -2006,7 +2010,7 @@ function getHighlightColor(highlightType, tileId) {
     else if(highlightType == "switchGrass")
     {
         var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil) 
+         switch(soil)
             {
             case "A":
                 return 49;
@@ -2039,7 +2043,7 @@ function getHighlightColor(highlightType, tileId) {
     else if(highlightType == "wood")
     {
         var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil) 
+         switch(soil)
             {
             case "A":
                 return 55;
@@ -2072,7 +2076,7 @@ function getHighlightColor(highlightType, tileId) {
      else if(highlightType == "fruit")
     {
         var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil) 
+         switch(soil)
             {
             case "A":
                 return 0;
@@ -2105,7 +2109,7 @@ function getHighlightColor(highlightType, tileId) {
     else if(highlightType == "cattle")
     {
         var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil) 
+         switch(soil)
             {
             case "A":
                 return 57;
@@ -2135,11 +2139,11 @@ function getHighlightColor(highlightType, tileId) {
                 return 57;
             }
     }
-   
+
     else if(highlightType == "short")
     {
         var soil = boardData[currentBoard].map[tileId].soilType;
-         switch(soil) 
+         switch(soil)
             {
             case "A":
                 return 55;
@@ -2556,115 +2560,101 @@ function writeFileToDownloadString(mapPlayerNumber) {
 function uploadClicked(e) {
 
 
-    files = e.target.files;
+  files = e.target.files;
 
-    if (files[0].name && !files[0].name.match(/\.csv/)) {
-        if(files[0].name.match(/\.json/))//. json is file format from pewi2.1
-        {
-
-
-                var reader = new FileReader();
-                reader.readAsText(files[0]);
+  if (files[0].name && !files[0].name.match(/\.csv/)) {
+    if (files[0].name.match(/\.json/)) //. json is file format from pewi2.1
+    {
 
 
-            var trialObj=e.target;
-            console.log("stack trace %s", trialObj);
-
-    var string = "";
+      var reader = new FileReader();
+      reader.readAsText(files[0]);
 
 
-  reader.onload = function(event) {
+      var trialObj = e.target;
+      console.log("stack trace %s", trialObj);
+
+      var string = "";
 
 
-string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
-  console.log("reader created");
-
-   console.log("loading the json %s");
-    var obj = JSON.parse(event.target.result);
+      reader.onload = function(event) {
 
 
+        string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
+        console.log("reader created");
+
+        console.log("loading the json %s");
+        var obj = JSON.parse(event.target.result);
 
 
 
-    for(var i=0; i<828; i++){
-      try{
-        //This variable 'string' stores the extracted data from the .json file
-        string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + ","
-        + ((obj["1"].area.data[i]== null)? 0 :obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i]== null)? 0:obj["1"].baseLandUseType.data[i]) + "," +  ((obj["1"].carbonmax.data[i]==null)?"NA":obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i]==null)?"NA":obj["1"].carbonmin.data[i])
-        + "," + ((obj["1"].cattle.data[i]==null)?"NA":obj["1"].cattle.data[i]) + ","  + ((obj["1"].cornyield.data[i]==null)?"NA":obj["1"].cornyield.data[i]) + "," +  ((obj["1"].drainageclass.data[i]==null)?"NA":obj["1"].drainageclass.data[i]) + ","  + ((obj["1"].erosion.data[i]==null)?"NA":obj["1"].erosion.data[i]) + ","  + ((obj["1"].floodfrequency.data[i]==null)?"NA":obj["1"].floodfrequency.data[i]) + ","
-        +  ((obj["1"].group.data[i]==null && obj["1"].floodfrequency.data[i]!=0)?"NA":" ") + ","  + ((obj["1"].nitratespmm.data[i]==null)?"NA":obj["1"].nitratespmm.data[i]) + ","  + ((obj["1"].pindex.data[i]==null)?"NA":obj["1"].pindex.data[i]) + "," +  ((obj["1"].sediment.data[i]==null)?"NA": obj["1"].sediment.data[i]) + "," +  ((obj["1"].soiltype.data[i]==null)?0:obj["1"].soiltype.data[i]) + "," + ((obj["1"].soybeanyield.data[i]==null)?"NA":obj["1"].soybeanyield.data[i]) + ","
-        +((obj["1"].streamnetwork.data[i]==null)?"NA":obj["1"].streamnetwork.data[i]) + "," +((obj["1"].subwatershed.data[i]==null)?0:obj["1"].subwatershed.data[i]) + "," +((obj["1"].timber.data[i]==null)?"NA":obj["1"].timber.data[i]) + "," +((obj["1"].topography.data[i]==null)?0:obj["1"].topography.data[i]) +"," + ((obj["1"].watershednitrogencontribution.data[i]==null)?"NA":obj["1"].watershednitrogencontribution.data[i]) +","
-        + ((obj["1"].wetland.data[i]==null)?"NA":obj["1"].wetland.data[i]) +"," + boardData[currentBoard].map[i].riverStreams+","/** riverStreams is taken from the rever stream of currrent board*/ ;
-      }
-      catch(except)//catches for a wrong json file type error
-      {
-        alert("This file format is not compatible");
-        return;
-      }
 
-        try
-        {
-        string=string +((obj["1"].area.data[i]== null)? 0:obj["1"].baseLandUseType.data[i])+",";
-        string=string + ((obj["2"].area.data[i]== null)? 0:1)+",";
-        string=string + ((obj["3"].area.data[i]== null)? 0:1)+"," /** landType + landType + landType*/;
-       }
-       catch(except)
-        {
 
-                if(except.message=="obj[2].area is undefined")
-                {
-                            string=string + "0,";
-                            string=string + "0,";
-                }
-                else if(except.message=="obj[3].area is undefined")
-                {
-                    string=string + "0,";
-               }
-        }
-        string = string + obj.precipitation[0] + "," +obj.precipitation[1] +"," +obj.precipitation[2] +"," +obj.precipitation[3];
-        if(i<827)
-        {
+        for (var i = 0; i < 828; i++) {
+          try {
+            //This variable 'string' stores the extracted data from the .json file
+            string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + "," +
+              ((obj["1"].area.data[i] == null) ? 0 : obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," + ((obj["1"].carbonmax.data[i] == null) ? "NA" : obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i] == null) ? "NA" : obj["1"].carbonmin.data[i]) +
+              "," + ((obj["1"].cattle.data[i] == null) ? "NA" : obj["1"].cattle.data[i]) + "," + ((obj["1"].cornyield.data[i] == null) ? "NA" : obj["1"].cornyield.data[i]) + "," + ((obj["1"].drainageclass.data[i] == null) ? "NA" : obj["1"].drainageclass.data[i]) + "," + ((obj["1"].erosion.data[i] == null) ? "NA" : obj["1"].erosion.data[i]) + "," + ((obj["1"].floodfrequency.data[i] == null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
+              ((obj["1"].group.data[i] == null && obj["1"].floodfrequency.data[i] != 0) ? "NA" : " ") + "," + ((obj["1"].nitratespmm.data[i] == null) ? "NA" : obj["1"].nitratespmm.data[i]) + "," + ((obj["1"].pindex.data[i] == null) ? "NA" : obj["1"].pindex.data[i]) + "," + ((obj["1"].sediment.data[i] == null) ? "NA" : obj["1"].sediment.data[i]) + "," + ((obj["1"].soiltype.data[i] == null) ? 0 : obj["1"].soiltype.data[i]) + "," + ((obj["1"].soybeanyield.data[i] == null) ? "NA" : obj["1"].soybeanyield.data[i]) + "," +
+              ((obj["1"].streamnetwork.data[i] == null) ? "NA" : obj["1"].streamnetwork.data[i]) + "," + ((obj["1"].subwatershed.data[i] == null) ? 0 : obj["1"].subwatershed.data[i]) + "," + ((obj["1"].timber.data[i] == null) ? "NA" : obj["1"].timber.data[i]) + "," + ((obj["1"].topography.data[i] == null) ? 0 : obj["1"].topography.data[i]) + "," + ((obj["1"].watershednitrogencontribution.data[i] == null) ? "NA" : obj["1"].watershednitrogencontribution.data[i]) + "," +
+              ((obj["1"].wetland.data[i] == null) ? "NA" : obj["1"].wetland.data[i]) + "," + boardData[currentBoard].map[i].riverStreams + "," /** riverStreams is taken from the rever stream of currrent board*/ ;
+          } catch (except) //catches for a wrong json file type error
+          {
+            alert("This file format is not compatible");
+            return;
+          }
+
+          try {
+            string = string + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + ",";
+            string = string + ((obj["2"].area.data[i] == null) ? 0 : 1) + ",";
+            string = string + ((obj["3"].area.data[i] == null) ? 0 : 1) + "," /** landType + landType + landType*/ ;
+          } catch (except) {
+
+            if (except.message == "obj[2].area is undefined") {
+              string = string + "0,";
+              string = string + "0,";
+            } else if (except.message == "obj[3].area is undefined") {
+              string = string + "0,";
+            }
+          }
+          string = string + obj.precipitation[0] + "," + obj.precipitation[1] + "," + obj.precipitation[2] + "," + obj.precipitation[3];
+          if (i < 827) {
             string = string + '\n';
-        }
+          }
 
+        }
+        console.log("got the json obj %s", string);
+
+        setupBoardFromUpload(string);
+        setupRiver();
+        //clear initData
+        initData = [];
+
+
+      }
+
+    } else {
+
+      alert("Incorrect File Type!");
     }
-    console.log("got the json obj %s",string);
+  } else {
+    var reader = new FileReader();
+    reader.readAsText(files[0]);
+    reader.onload = function(e) {
+      setupBoardFromUpload(reader.result);
 
-    setupBoardFromUpload(string);
-    setupRiver();
-            //clear initData
-            initData = [];
-
-
-  }
-
-        }
-        else
-        {
-
-        alert("Incorrect File Type!");
-        }
+      //clear initData
+      initData = [];
     }
-    else {
-        var reader = new FileReader();
-        reader.readAsText(files[0]);
-        reader.onload = function(e) {
-            setupBoardFromUpload(reader.result);
+  } //end else
 
-            //clear initData
-            initData = [];
-        }
-    } //end else
+  closeUploadDownloadFrame();
 
-    closeUploadDownloadFrame();
-
-    //reset keylistening frame (ie give up focus on iframe)
-    //no more conch for us
-    document.activeElement.blur();
+  //reset keylistening frame (ie give up focus on iframe)
+  //no more conch for us
+  document.activeElement.blur();
 } //end uploadClicked
-
-
-
 
 
 //downloadClicked() is called by child frame uploadDownload
@@ -2704,7 +2694,9 @@ function showCredits() {
     document.getElementById('closeCredits').style.display = "block";
     document.getElementById('modalCreditsFrame').style.display = "block";
     modalUp = true;
-  }
+ }
+   //Event Listner to close the credits page
+        document.addEventListener('keyup',aboutsEsc);
 } //end showCredits
 
 //closeCreditFrame closes the credits iframe
@@ -2717,6 +2709,8 @@ function closeCreditFrame() {
   document.getElementById('closeCredits').style.display = "none";
   document.getElementById('modalCreditsFrame').style.display = "none";
   modalUp = false;
+    //Event listner that closes escape key
+    document.removeEventListener('keyup', aboutsEsc);
 } //end closeCreditFrame
 
 //showUploadDownload opens the credits iframe
@@ -2731,7 +2725,7 @@ function showUploadDownload() {
     document.getElementById('modalUploadFrame').style.display = "block";
     modalUp = true;
   }
-
+    document.addEventListener('keyup', downuploadEsc);
   if (mapIsHighlighted) {
     displayLevels();
   }
@@ -2746,8 +2740,8 @@ function closeUploadDownloadFrame() {
   document.getElementById('closeUploadDownload').style.display = "none";
   document.getElementById('uploadDownloadFrame').style.display = "none";
   document.getElementById('modalUploadFrame').style.display = "none";
-
   modalUp = false;
+  document.removeEventListener('keyup', downuploadEsc);
 } //end closeUploadDownloadFrame
 
 //toggleIndex displays and hides the codex
@@ -2764,6 +2758,7 @@ function toggleIndex() {
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
     document.getElementById('index').style.display = "block";
+     document.addEventListener('keyup', indexEsc);
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
 
     if(curTracking) {
@@ -2782,9 +2777,36 @@ function toggleIndex() {
     document.getElementById('index').contentWindow.document.getElementById('title').innerHTML = "";
 
     document.getElementById('index').contentWindow.resetHighlighting();
+    document.removeEventListener('keyup', indexEsc);
 
   }
 } //end toggleIndex
+function resultsEsc(e){
+    if (e.keyCode == 27){
+        resultsEnd();
+    }
+}
+
+//Function that closes the about dialog when escape key is pressed
+function aboutsEsc(e){
+    if (e.keyCode == 27){
+        closeCreditFrame();
+    }
+}
+
+//Function that closes the Download dialog when the escape key is pressed
+function downuploadEsc(e){
+    if (e.keyCode == 27){
+       closeUploadDownloadFrame();
+    }
+}
+//Function that closes the download index dialog when escape key is pressed
+function indexEsc(e){
+    if (e.keyCode == 27){
+        toggleIndex();
+    }
+}
+
 
 //printLandUseType returns a display-worthy string of land type from numeric key
 function printLandUseType(type) {
@@ -3136,9 +3158,9 @@ function startOptions() {
     modalUp = true;
     document.getElementById('options').style.visibility = "visible";
     //setup options page with the current parameter selection
-    document.getElementById('options').contentWindow.getCurrentOptionsState();
-  } //end if
-} //end startOptions
+    document.getElementById('options').contentWindow.getCurrentOptionsState();}
+      }
+ //end startOptions
 
 //endMultiAssignMode displays the multiPlayer element
 function endMultiplayerAssignMode() {
@@ -3389,7 +3411,7 @@ function exportTracking() {
     finishProperties();
     var A = [['ClickID','Time Stamp (Milliseconds)','Click Type','Time Gap (Milliseconds)','Description of click','TileID/Precip',startTime,endTime,startTime.getTime(),endTime.getTime()]];
     for(var j=0;j<clickTrackings.length;j++)
-    { 
+    {
         A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
     }
     var csvRows = [];
