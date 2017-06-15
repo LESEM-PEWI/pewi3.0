@@ -1081,14 +1081,14 @@ function changeSelectedPaintTo(newPaintValue) {
     }
 
     // if it's grid painting mode and the user click to switch painter, erase the first seleted tile
-    if (painterTool.status == 2) 
+    if (painterTool.status == 2)
     {
       painterTool.status = 1;// ready to do grid paint
     }
 
     //have land type update immediately, well, pretend the mouse moved...
     highlightTile(-1);
-  } 
+  }
   else {
     //reset the playerSelected back to a normal playerNotSelected
     var painterElementId = "player" + painter + "Image";
@@ -2879,7 +2879,7 @@ function clearPopup() {
 //togglePopupDisplay allows for displaying and hiding the popup dialogue
 function togglePopupDisplay() {
   if (!modalUp) {
-    if (document.getElementById("popup").className == "popup") 
+    if (document.getElementById("popup").className == "popup")
     {
       if (curTracking)
       {
@@ -2887,8 +2887,8 @@ function togglePopupDisplay() {
       }
       document.getElementById("popup").className = "popupHidden";
       document.getElementById("dialogueButton").className = "dialogueButtonRolled";
-    } 
-    else 
+    }
+    else
     {
       if (curTracking)
       {
@@ -2900,7 +2900,7 @@ function togglePopupDisplay() {
   } //end if
 } // togglePopupDisplay()
 
-//Allows user to 
+//Allows user to
 function toggleBackgroundInfoDisplay()
 {
   if(!modalUp){
@@ -2944,7 +2944,7 @@ function randomizeBoard() {
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
-      if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) 
+      if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none)
       {
         //getRandomInt is in back-end helperMethods
         for(var j = 1; j <= 15; j++)
@@ -2963,9 +2963,9 @@ function randomizeBoard() {
                  //randomPainterTile[removedIndex] = 1
               }
             }
-        }         
+        }
       }
-         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)]  
+         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)]
         changeLandTypeTile(i);
       }
     } //end for all tiles

@@ -1,10 +1,3 @@
-/**
- * @Date:   2017-06-06T17:00:14-05:00
- * @Last modified time: 2017-06-07T13:24:34-05:00
- */
-
-
-
 /*
 Constructed in June 2016 as an object focused approach to calculation methods based on
   code from pewi v2.0.
@@ -2276,6 +2269,7 @@ function GameBoard() {
 //######################################################################################
 //######################################################################################
 
+
 //Function to construct a click object
 //This is used for the user simulation in Sandbox mode
 //
@@ -2290,1001 +2284,800 @@ function GameBoard() {
 // this property can be changed in later updates].
 // #5.) TileID [Null if click is not a tile (or precip)]
 
-function Click(c1,c2,c3,c4,c5) {
-	this.clickID = c1;
-	this.timeStamp = c2;
-	this.functionType = c3;
-	this.timeGap = c4;
-	this.tileID = c5;
+function Click(c1, c2, c3, c4, c5) {
+  this.clickID = c1;
+  this.timeStamp = c2;
+  this.functionType = c3;
+  this.timeGap = c4;
+  this.tileID = c5;
 
-	//Retrieves the function performed in accordance to the click type [As a string]
-	this.getAction = function() {
-		var action = isSimRunning();
-		var caseInput = parseInt(this.functionType);
-		switch(caseInput) {
-			//When the user hit the escape key
-			case 1:
-				if(action)
-				{
-					return onDocumentKeyDown(27);
-					break;
-				}
-				else
-				{
-					return "Escape was pressed";
-					break;
-				}
-			//When the user attempts to leave the environment ***COME BACK AND FIX FOR SIMULATIONS***
-			case 2:
-				if(action)
-				{
-					return null;
-					break;
-				}
-				else
-				{ 
-					return "User tried closing the window";
-					break;
-				}
-			//When the user collapses the pickaxe
-			case 3:
-				if(action)
-				{
-					return roll(1);
-					break;
-				}
-				else
-				{
-					return "Pickaxe was collapsed";
-					break;
-				}
-			//When the user clicks the land-type icon
-			case 4:
-				if(action)
-				{
-					return switchConsoleTab(1);
-					break;
-				}
-				else
-				{
-					return "Land-use icon was clicked";
-					break;
-				}
-			//When the user clicks the precipitation icon
-			case 5:
-				if(action)
-				{
-					return switchConsoleTab(2);
-					break;
-				}
-				else
-				{
-					return "Precipitation tab was clicked";
-					break;
-				}
-			//When the user clicks the calender icon
-			case 6:
-				if(action)
-				{
-					return switchConsoleTab(6);
-					break;
-				}
-				else
-				{
-					return "Year selection tab was clicked";
-					break;
-				}
-			//When the user clicks the assessment icon
-			case 7:
-				if(action)
-				{
-					return switchConsoleTab(3);
-					break;
-				}
-				else
-				{
-					return "Assessment tab was clicked";
-					break;
-				}
-			//When the user clicks landscape feature tab
-			case 8:
-				if(action)
-				{
-					return switchConsoleTab(4);
-					break;
-				}
-				else
-				{
-					return "Landscape feature tab was clicked";
-					break;
-				}
-			//When the user clicks the settings tab
-			case 9:
-				if(action)
-				{
-					return switchConsoleTab(5);
-					break;
-				}
-				return "Land selection setting was clicked";
-				break;
-			//When the user clicks the download/upload button
-			case 10:
-				if(action)
-				{
-					return showUploadDownload();
-					break;
-				}
-				else
-				{
-					return "Download icon was clicked";
-					break;
-				}
-			//When the user clicks the information icon
-			case 11:
-				if(action)
-				{
-					return showCredits();
-					break;
-				}
-				else
-				{
-					return "Information icon was clicked";
-					break;
-				}
-			//When the user clicks the results tab
-			case 12:
-				if(action)
-				{
-					return resultsStart();
-					break;
-				}
-				else
-				{
-					return "Results tab was clicked";
-					break;
-				}
-			//When the user clicks out of the results tab
-			case 13:
-				if(action)
-				{
-					return resultsEnd();
-					break;
-				}
-				else
-				{
-					return "Results tab was closed";
-					break;
-				}
-			//When the user clicks the speech bubble
-			case 14:
-				if(action)
-				{
-					return togglePopupDisplay();
-					break;
-				}
-				else
-				{
-					return "Speech bubble selected";
-					break;
-				}
-			//When the user selects conventional corn
-			case 15:
-				if(action)
-				{
-					return changeSelectedPaintTo(1);
-					break;
-				}
-				else
-				{
-					return "Conventional corn was selected";
-					break;
-				}
-			//When the user selects conservation corn
-			case 16:
-				if(action)
-				{
-					return changeSelectedPaintTo(2);
-					break;
-				}
-				else
-				{
-					return "Conservation corn was selected";
-					break;
-				}
-			//When the user selects conventional soybean
-			case 17:
-				if(action)
-				{
-					return changeSelectedPaintTo(3);
-					break;
-				}
-				else
-				{
-					return "Conventional soybean was selected";
-					break;
-				}
-			//When the user selects conservation soybean
-			case 18:
-				if(action)
-				{
-					return changeSelectedPaintTo(4);
-					break;
-				}
-				else
-				{
-					return "Conservation soybean was selected";
-					break;
-				}
-			//When the user selects Mixed Fruits and Vegetables
-			case 19:
-				if(action)
-				{
-					return changeSelectedPaintTo(5);
-					break;
-				}
-				else
-				{
-					return "Mixed Fruits and Vegetables was selected";
-					break;
-				}
-			//When the user selects Alfalfa
-			case 20:
-				if(action)
-				{
-					return changeSelectedPaintTo(6);
-					break;
-				}
-				else
-				{
-					return "Alfalfa was selected";
-					break;
-				}
-			//When the user selects Grass Hay
-			case 21:
-				if(action)
-				{
-					return changeSelectedPaintTo(7);
-					break;
-				}
-				else
-				{
-					return "Grass Hay was selected";
-					break;
-				}
-			//When the user selects Switchgrass
-			case 22:
-				if(action)
-				{
-					return changeSelectedPaintTo(8);
-					break;
-				}
-				else
-				{
-					return "Switchgrass was selected";
-					break;
-				}
-			//When the user selects Permanent Pasture
-			case 23:
-				if(action)
-				{
-					return changeSelectedPaintTo(9);
-					break;
-				}
-				else
-				{
-					return "Permanent Pasture was selected";
-					break;
-				}
-			//When the user selects Rotational Grazing
-			case 24:
-				if(action)
-				{
-					return changeSelectedPaintTo(10);
-					break;
-				}
-				else
-				{
-					return "Rotational Grazing was selected";
-					break;
-				}
-			//When the user selects Wetland
-			case 25:
-				if(action)
-				{
-					return changeSelectedPaintTo(11);
-					break;
-				}
-				else
-				{
-					return "Wetland was selected";
-					break;
-				}
-			//When the user selects Prairie
-			case 26:
-				if(action)
-				{
-					return changeSelectedPaintTo(12);
-					break;
-				}
-				else
-				{
-					return "Prairie was selected";
-					break;
-				}
-			//When the user selects Conventional Forest
-			case 27:
-				if(action)
-				{
-					return changeSelectedPaintTo(13);
-					break;
-				}
-				else
-				{
-					return "Conventional Forest was selected";
-					break;
-				}
-			//When the user selects Conservation Forest
-			case 28:
-				if(action)
-				{
-					return changeSelectedPaintTo(14);
-					break;
-				}
-				else
-				{
-					return "Conservation Forest was selected";
-					break;
-				}
-			//When the user selects Short Rotation Woody Bioenergy
-			case 29:
-				if(action)
-				{
-					return changeSelectedPaintTo(15);
-					break;
-				}
-				else
-				{
-					return "Short Rotation Woody Bioenergy";
-					break;
-				}
-			//When the user clicks the undo button
-			case 30:
-				if(action)
-				{
-					return revertChanges();
-					break;
-				}
-				else
-				{
-					return "Undo button was toggled";
-					break;
-				}
-			//When the user uses the overlay hotkey
-			case 31:
-				if(action)
-				{
-					return toggleOverlay();
-					break;
-				}
-				else
-				{
-					return "Overlay hotkey was toggled";
-					break;
-				}
-			//When the user uses the topography hotkey
-			case 32:
-				if(action)
-				{
-					if (modalUp != true) {
-                	tToggle ? tToggle = false : tToggle = true;
-                	//in the case when the map is highlighted:
-                	if(mapIsHighlighted) { refreshBoard(true); }
-                	//if the map is not highlighted:
-                	else { refreshBoard(); }
-                	setupRiver();
-            		}
-					break;
-				}
-				else
-				{
-					return "Topography hotkey was toggled";
-					break;
-				}
-			//When the user closes the information window
-			case 33:
-				if(action)
-				{
-					return closeCreditFrame();
-					break;
-				}
-				else
-				{
-					return "Information tab was closed";
-					break;
-				}
-			//When the user modifies the year 0 precip
-			case 34:
-				if(action)
-				{
-					document.getElementById("year0Precip").value = this.tileID;
-					updatePrecip(0);
-					return rainOnPewi();
-					break;
-				}
-				else
-				{
-					return "Year 0 Precip Modified";
-					break;
-				}
-			//When the user modifies the year 1 precip
-			case 35:
-				if(action)
-				{
-					document.getElementById("year1Precip").value = this.tileID;
-					updatePrecip(1);
-					return rainOnPewi();
-					break;
-				}
-				else
-				{
-					return "Year 1 Precip Modified";
-					break;
-				}
-			//When the user modifies the year 2 precip
-			case 36:
-				if(action)
-				{
-					document.getElementById("year2Precip").value = this.tileID;
-					updatePrecip(2);
-					return rainOnPewi();
-					break;
-				}
-				else
-				{
-					return "Year 2 Precip Modified";
-					break;
-				}
-			//When the user modifies the year 3 precip
-			case 37:
-				if(action)
-				{
-					document.getElementById("year3Precip").value = this.tileID;
-					updatePrecip(3);
-					return rainOnPewi();
-					break;
-				}
-				else
-				{
-					return "Year 3 Precip Modified";
-					break;
-				}
-			//When the user selects year 1
-			case 38:
-				if(action)
-				{
-					transitionToYear(1)
-					return switchYearTab(1);
-					break;
-				}
-				else
-				{
-					return "Year 1 Selected";
-					break;
-				}
-			//When the user selects year 2
-			case 39:
-				if(action)
-				{
-					transitionToYear(2)
-					return switchYearTab(2);
-					break;
-				}
-				else
-				{
-					return "Year 2 Selected";
-					break;
-				}
-			//When the user selects year 3
-			case 40:
-				if(action)
-				{
-					transitionToYear(3)
-					return switchYearTab(3);
-					break;
-				}
-				else
-				{
-					return "Year 3 Selected";
-					break;
-				}
-			//When the user adds a new year
-			case 41:
-				if(action)
-				{
-					return addYearAndTransition();
-					break;
-				}
-				else
-				{
-					return "Additional year was added";
-					break;
-				}
-			//When the user selects Subwatershed Nitrate icon
-			case 42:
-				if(action)
-				{
-					return displayLevels('nitrate');
-					break;
-				}
-				else
-				{
-					return "Nitrate Percent was clicked";
-					break;
-				}
-			//When the user selects Gross Erosion icon
-			case 43:
-				if(action)
-				{
-					return displayLevels('erosion');
-					break;
-				}
-				else
-				{
-					return "Gross Erosion was clicked";
-					break;
-				}
-			//When the user selects Phosphorus Index Risk
-			case 44:
-				if(action)
-				{
-					return displayLevels('phosphorus');
-					break;
-				}
-				else
-				{
-					return "Phosphorus Index Risk was clicked";
-					break;
-				}
-			//When the user selects Flood Frequency
-			case 45:
-				if(action)
-				{
-					return displayLevels('flood');
-					break;
-				}
-				else
-				{
-					return "Flood Frequency was clicked";
-					break;
-				}
-			//When the user selects Strategic Wetlands
-			case 46:
-				if(action)
-				{
-					return displayLevels('wetland');
-					break;
-				}
-				else
-				{
-					return "Strategic Wetlands was clicked";
-					break;
-				}
-			//When the user selects Subwatershed Boundaries
-			case 47:
-				if(action)
-				{
-					return displayLevels('subwatershed');
-					break;
-				}
-				else
-				{
-					return "Subwatershed Boundaries";
-					break;
-				}
-			//When the user selects Drainage Class
-			case 48:
-				if(action)
-				{
-					return displayLevels('drainage');
-					break;
-				}
-				else
-				{
-					return "Drainage Class was clicked";
-					break;
-				}
-			//When the user selects Soil Class
-			case 49:
-				if(action)
-				{
-					return displayLevels('soil');
-					break;
-				}
-				else
-				{
-					return "Soil Class was clicked";
-					break;
-				}
-			//When the user clicks the single land-type icon
-			case 50:
-				if(action)
-				{
-					return painterSelect(1);
-					break;
-				}
-				else
-				{
-					return "Single land-type selector clicked";
-					break;
-				}
-			//When the user clicks the multi land-type icon
-			case 51:
-				if(action)
-				{
-					return painterSelect(2);
-					break;
-				}
-				else
-				{
-					return "Multi land-type selector clicked";
-					break;
-				}
-			//When the user randomizes the board (via hotkey)
-			case 52:
-				if(action)
-				{
-					return randomizeBoard();
-					break;
-				}
-				else
-				{
-					return "Board randomization hotkey pressed";
-					break;
-				}
-			//When the user closes the download window
-			case 53:
-				if(action)
-				{
-					return closeUploadDownloadFrame();
-					break;
-				}
-				else
-				{
-					return "Download window was closed";
-					break;
-				}
-			//When the user collapses the speech bubble
-			case 54:
-				if(action)
-				{
-					return togglePopupDisplay();
-					break;
-				}
-				else
-				{
-					return "Speech bubble was collapsed";
-					break;
-				}
-			//When the user paints a tile (single seleciton)
-			case 55:
-				if(action)
-				{
-					return changeLandTypeTile(this.tileID);
-					break;
-				}
-				else
-				{
-					return "A tile was painted (single selection)";
-					break;
-				}
-			//When the user paints a tile (multi selection)
-			case 56:
-				if(action)
-				{
-					return changeLandTypeTile(this.tileID);
-					break;
-				}
-				else
-				{
-					return "A tile was painted (multi selection)";
-					break;
-				}
-			//When the user expands the pickaxe
-			case 57:
-				if(action)
-				{
-					return roll(1);
-					break;
-				}
-				else
-				{
-					return "Pickaxe was expanded";
-					break;
-				}
-			case 58:
-				if(action)
-				{
-					window.frames[3].scrollTo(0,0);
-					return window.frames[3].toggleToTab(1);
-					break;
-				}
-				else
-				{
-					return "First results tab clicked";
-					break;
-				}
-			case 59:
-				if(action)
-				{
-					window.frames[3].scrollTo(0,0);
-					return  window.frames[3].toggleToTab(2);
-					break;
-				}
-				else
-				{
-					return "Second results tab clicked";
-					break;
-				}
-			case 60:
-				if(action)
-				{
-					window.frames[3].scrollTo(0,0);
-					return window.frames[3].changeLandPieBy(1);
-					break;
-				}
-				else
-				{
-					return "Up arrow on results pie toggled";
-					break;
-				}
-			case 61:
-				if(action)
-				{
-					window.frames[3].scrollTo(0,0);
-					return window.frames[3].changeLandPieBy(-1);
-					break;
-				}
-				else
-				{
-					return "Down arrow on results pie toggled";
-					break;
-				}
-			case 62:
-				if(action)
-				{
-					window.frames[3].scrollTo(0,500);
-					if(window.frames[3].document.getElementById("checkboxYear1").checked)
-					{
-						window.frames[3].document.getElementById("checkboxYear1").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("checkboxYear1").checked = true;
-					}
-					return window.frames[3].radarPlotYearToggle(1);
-					break;
-				}
-				else
-				{
-					return "Radar plot year 1 toggled";
-					break;
-				}
-			case 63:
-				if(action)
-				{
-					if(window.frames[3].document.getElementById("checkboxYear2").checked)
-					{
-						window.frames[3].document.getElementById("checkboxYear2").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("checkboxYear2").checked = true;
-					}
-					window.frames[3].scrollTo(0,500);
-					return window.frames[3].radarPlotYearToggle(2);
-					break;
-				}
-				else
-				{
-					return "Radar plot year 2 toggled";
-					break;
-				}
-			case 64:
-				if(action)
-				{
-					if(window.frames[3].document.getElementById("checkboxYear3").checked)
-					{
-						window.frames[3].document.getElementById("checkboxYear3").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("checkboxYear3").checked = true;
-					}
-					window.frames[3].scrollTo(0,500);
-					return window.frames[3].radarPlotYearToggle(3);
-					break;
-				}
-				else
-				{
-					return "Radar plot year 3 toggled";
-					break;
-				}
-			case 65:
-				if(action)
-				{
-					if(window.frames[3].document.getElementById("yieldCheckboxYear1").checked)
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear1").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear1").checked = true;
-					}
-					window.frames[3].scrollTo(0,1000);
-					return window.frames[3].yieldRadarPlotYearToggle(1);
-					break;
-				}
-				else
-				{
-					return "Annual yield results year 1 toggled";
-					break;
-				}
-			case 66:
-				if(action)
-				{
-					if(window.frames[3].document.getElementById("yieldCheckboxYear2").checked)
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear2").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear2").checked = true;
-					}
-					window.frames[3].scrollTo(0,1000);
-					return window.frames[3].yieldRadarPlotYearToggle(2);
-					break;
-				}
-				else
-				{
-					return "Annual yield results year 2 toggled";
-					break;
-				}
-			case 67:
-				if(action)
-				{
-					if(window.frames[3].document.getElementById("yieldCheckboxYear3").checked)
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear3").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear3").checked = true;
-					}
-					window.frames[3].scrollTo(0,1000);
-					return window.frames[3].yieldRadarPlotYearToggle(3);
-					break;
-				}
-				else
-				{
-					return "Annual yield results year 3 toggled";
-					break;
-				}
-			case 68:
-				if(action)
-				{
-					return switchConsoleTab(7);
-					break;
-				}
-				else
-				{
-					return "Yield tab selected";
-					break;
-				}
-			case 69:
-				if(action)
-				{
-					return displayLevels('cornGrain');
-				}
-				else
-				{
-					return "Corn Grain yield selected";
-				}
-			case 70:
-				if(action)
-				{
-					return displayLevels('soy');
-				}
-				else
-				{
-					return "Soy yield selected";
-				}
-			case 71:
-				if(action)
-				{
-					return displayLevels('fruit');
-				}
-				else
-				{
-					return "Mixed Fruit and Vegetables yield selected";
-				}
-			case 72:
-				if(action)
-				{
-					return displayLevels('cattle');
-				}
-				else
-				{
-					return "Cattle yield selected";
-				}
-			case 73:
-				if(action)
-				{
-					return displayLevels('alfalfa');
-				}
-				else
-				{
-					return "Alfalfa yield selected";
-				}
-			case 74:
-				if(action)
-				{
-					return displayLevels('grassHay');
-				}
-				else
-				{
-					return "Grass hay yield selected";
-				}
-			case 75:
-				if(action)
-				{
-					return displayLevels('switchGrass');
-				}
-				else
-				{
-					return "Switchgrass yield selected";
-				}
-			case 76:
-				if(action)
-				{
-					return displayLevels('wood');
-				}
-				else
-				{
-					return "Wood yield selected";
-				}
-			case 77:
-				if(action)
-				{
-					return displayLevels('short');
-				}
-				else
-				{
-					return "Woody Biomass yield selected";
-				}
-			case 78:
-				if(action)
-				{
-					return toggleIndex();
-				}
-				else
-				{
-					return "Index opened";
-				}
-			case 79:
-				if(action)
-				{
-					return toggleIndex();
-				}
-				else
-				{
-					return "Index closed";
-				}
-			//Should not go here, alerts the dev that there is a user experience case that has not been implemented.
-			default:
-				alert("This user click has not been configured yet. Please add this click to the cases in helperObjects.js");
-				break;
-		}
-	}
+	var CODEX_HTML = window.frames[2];
+
+  //Retrieves the function performed in accordance to the click type [As a string]
+  this.getAction = function() {
+    var action = isSimRunning();
+    var caseInput = parseInt(this.functionType);
+    switch (caseInput) {
+      //When the user hit the escape key
+      case 1:
+        if (action) {
+          return onDocumentKeyDown(27);
+          break;
+        } else {
+          return "Escape was pressed";
+          break;
+        }
+        //When the user attempts to leave the environment ***COME BACK AND FIX FOR SIMULATIONS***
+      case 2:
+        if (action) {
+          return null;
+          break;
+        } else {
+          return "User tried closing the window";
+          break;
+        }
+        //When the user collapses the pickaxe
+      case 3:
+        if (action) {
+          return roll(1);
+          break;
+        } else {
+          return "Pickaxe was collapsed";
+          break;
+        }
+        //When the user clicks the land-type icon
+      case 4:
+        if (action) {
+          return switchConsoleTab(1);
+          break;
+        } else {
+          return "Land-use icon was clicked";
+          break;
+        }
+        //When the user clicks the precipitation icon
+      case 5:
+        if (action) {
+          return switchConsoleTab(2);
+          break;
+        } else {
+          return "Precipitation tab was clicked";
+          break;
+        }
+        //When the user clicks the calender icon
+      case 6:
+        if (action) {
+          return switchConsoleTab(6);
+          break;
+        } else {
+          return "Year selection tab was clicked";
+          break;
+        }
+        //When the user clicks the assessment icon
+      case 7:
+        if (action) {
+          return switchConsoleTab(3);
+          break;
+        } else {
+          return "Assessment tab was clicked";
+          break;
+        }
+        //When the user clicks landscape feature tab
+      case 8:
+        if (action) {
+          return switchConsoleTab(4);
+          break;
+        } else {
+          return "Landscape feature tab was clicked";
+          break;
+        }
+        //When the user clicks the settings tab
+      case 9:
+        if (action) {
+          return switchConsoleTab(5);
+          break;
+        }
+        return "Land selection setting was clicked";
+        break;
+        //When the user clicks the download/upload button
+      case 10:
+        if (action) {
+          return showUploadDownload();
+          break;
+        } else {
+          return "Download icon was clicked";
+          break;
+        }
+        //When the user clicks the information icon
+      case 11:
+        if (action) {
+          return showCredits();
+          break;
+        } else {
+          return "Information icon was clicked";
+          break;
+        }
+        //When the user clicks the results tab
+      case 12:
+        if (action) {
+          return resultsStart();
+          break;
+        } else {
+          return "Results tab was clicked";
+          break;
+        }
+        //When the user clicks out of the results tab
+      case 13:
+        if (action) {
+          return resultsEnd();
+          break;
+        } else {
+          return "Results tab was closed";
+          break;
+        }
+        //When the user clicks the speech bubble
+      case 14:
+        if (action) {
+          return togglePopupDisplay();
+          break;
+        } else {
+          return "Speech bubble selected";
+          break;
+        }
+        //When the user selects conventional corn
+      case 15:
+        if (action) {
+          return changeSelectedPaintTo(1);
+          break;
+        } else {
+          return "Conventional corn was selected";
+          break;
+        }
+        //When the user selects conservation corn
+      case 16:
+        if (action) {
+          return changeSelectedPaintTo(2);
+          break;
+        } else {
+          return "Conservation corn was selected";
+          break;
+        }
+        //When the user selects conventional soybean
+      case 17:
+        if (action) {
+          return changeSelectedPaintTo(3);
+          break;
+        } else {
+          return "Conventional soybean was selected";
+          break;
+        }
+        //When the user selects conservation soybean
+      case 18:
+        if (action) {
+          return changeSelectedPaintTo(4);
+          break;
+        } else {
+          return "Conservation soybean was selected";
+          break;
+        }
+        //When the user selects Mixed Fruits and Vegetables
+      case 19:
+        if (action) {
+          return changeSelectedPaintTo(5);
+          break;
+        } else {
+          return "Mixed Fruits and Vegetables was selected";
+          break;
+        }
+        //When the user selects Alfalfa
+      case 20:
+        if (action) {
+          return changeSelectedPaintTo(6);
+          break;
+        } else {
+          return "Alfalfa was selected";
+          break;
+        }
+        //When the user selects Grass Hay
+      case 21:
+        if (action) {
+          return changeSelectedPaintTo(7);
+          break;
+        } else {
+          return "Grass Hay was selected";
+          break;
+        }
+        //When the user selects Switchgrass
+      case 22:
+        if (action) {
+          return changeSelectedPaintTo(8);
+          break;
+        } else {
+          return "Switchgrass was selected";
+          break;
+        }
+        //When the user selects Permanent Pasture
+      case 23:
+        if (action) {
+          return changeSelectedPaintTo(9);
+          break;
+        } else {
+          return "Permanent Pasture was selected";
+          break;
+        }
+        //When the user selects Rotational Grazing
+      case 24:
+        if (action) {
+          return changeSelectedPaintTo(10);
+          break;
+        } else {
+          return "Rotational Grazing was selected";
+          break;
+        }
+        //When the user selects Wetland
+      case 25:
+        if (action) {
+          return changeSelectedPaintTo(11);
+          break;
+        } else {
+          return "Wetland was selected";
+          break;
+        }
+        //When the user selects Prairie
+      case 26:
+        if (action) {
+          return changeSelectedPaintTo(12);
+          break;
+        } else {
+          return "Prairie was selected";
+          break;
+        }
+        //When the user selects Conventional Forest
+      case 27:
+        if (action) {
+          return changeSelectedPaintTo(13);
+          break;
+        } else {
+          return "Conventional Forest was selected";
+          break;
+        }
+        //When the user selects Conservation Forest
+      case 28:
+        if (action) {
+          return changeSelectedPaintTo(14);
+          break;
+        } else {
+          return "Conservation Forest was selected";
+          break;
+        }
+        //When the user selects Short Rotation Woody Bioenergy
+      case 29:
+        if (action) {
+          return changeSelectedPaintTo(15);
+          break;
+        } else {
+          return "Short Rotation Woody Bioenergy";
+          break;
+        }
+        //When the user clicks the undo button
+      case 30:
+        if (action) {
+          return revertChanges();
+          break;
+        } else {
+          return "Undo button was toggled";
+          break;
+        }
+        //When the user uses the overlay hotkey
+      case 31:
+        if (action) {
+          return toggleOverlay();
+          break;
+        } else {
+          return "Overlay hotkey was toggled";
+          break;
+        }
+        //When the user uses the topography hotkey
+      case 32:
+        if (action) {
+          if (modalUp != true) {
+            tToggle ? tToggle = false : tToggle = true;
+            //in the case when the map is highlighted:
+            if (mapIsHighlighted) {
+              refreshBoard(true);
+            }
+            //if the map is not highlighted:
+            else {
+              refreshBoard();
+            }
+            setupRiver();
+          }
+          break;
+        } else {
+          return "Topography hotkey was toggled";
+          break;
+        }
+        //When the user closes the information window
+      case 33:
+        if (action) {
+          return closeCreditFrame();
+          break;
+        } else {
+          return "Information tab was closed";
+          break;
+        }
+        //When the user modifies the year 0 precip
+      case 34:
+        if (action) {
+          document.getElementById("year0Precip").value = this.tileID;
+          updatePrecip(0);
+          return rainOnPewi();
+          break;
+        } else {
+          return "Year 0 Precip Modified";
+          break;
+        }
+        //When the user modifies the year 1 precip
+      case 35:
+        if (action) {
+          document.getElementById("year1Precip").value = this.tileID;
+          updatePrecip(1);
+          return rainOnPewi();
+          break;
+        } else {
+          return "Year 1 Precip Modified";
+          break;
+        }
+        //When the user modifies the year 2 precip
+      case 36:
+        if (action) {
+          document.getElementById("year2Precip").value = this.tileID;
+          updatePrecip(2);
+          return rainOnPewi();
+          break;
+        } else {
+          return "Year 2 Precip Modified";
+          break;
+        }
+        //When the user modifies the year 3 precip
+      case 37:
+        if (action) {
+          document.getElementById("year3Precip").value = this.tileID;
+          updatePrecip(3);
+          return rainOnPewi();
+          break;
+        } else {
+          return "Year 3 Precip Modified";
+          break;
+        }
+        //When the user selects year 1
+      case 38:
+        if (action) {
+          transitionToYear(1)
+          return switchYearTab(1);
+          break;
+        } else {
+          return "Year 1 Selected";
+          break;
+        }
+        //When the user selects year 2
+      case 39:
+        if (action) {
+          transitionToYear(2)
+          return switchYearTab(2);
+          break;
+        } else {
+          return "Year 2 Selected";
+          break;
+        }
+        //When the user selects year 3
+      case 40:
+        if (action) {
+          transitionToYear(3)
+          return switchYearTab(3);
+          break;
+        } else {
+          return "Year 3 Selected";
+          break;
+        }
+        //When the user adds a new year
+      case 41:
+        if (action) {
+          return addYearAndTransition();
+          break;
+        } else {
+          return "Additional year was added";
+          break;
+        }
+        //When the user selects Subwatershed Nitrate icon
+      case 42:
+        if (action) {
+          return displayLevels('nitrate');
+          break;
+        } else {
+          return "Nitrate Percent was clicked";
+          break;
+        }
+        //When the user selects Gross Erosion icon
+      case 43:
+        if (action) {
+          return displayLevels('erosion');
+          break;
+        } else {
+          return "Gross Erosion was clicked";
+          break;
+        }
+        //When the user selects Phosphorus Index Risk
+      case 44:
+        if (action) {
+          return displayLevels('phosphorus');
+          break;
+        } else {
+          return "Phosphorus Index Risk was clicked";
+          break;
+        }
+        //When the user selects Flood Frequency
+      case 45:
+        if (action) {
+          return displayLevels('flood');
+          break;
+        } else {
+          return "Flood Frequency was clicked";
+          break;
+        }
+        //When the user selects Strategic Wetlands
+      case 46:
+        if (action) {
+          return displayLevels('wetland');
+          break;
+        } else {
+          return "Strategic Wetlands was clicked";
+          break;
+        }
+        //When the user selects Subwatershed Boundaries
+      case 47:
+        if (action) {
+          return displayLevels('subwatershed');
+          break;
+        } else {
+          return "Subwatershed Boundaries";
+          break;
+        }
+        //When the user selects Drainage Class
+      case 48:
+        if (action) {
+          return displayLevels('drainage');
+          break;
+        } else {
+          return "Drainage Class was clicked";
+          break;
+        }
+        //When the user selects Soil Class
+      case 49:
+        if (action) {
+          return displayLevels('soil');
+          break;
+        } else {
+          return "Soil Class was clicked";
+          break;
+        }
+        //When the user clicks the single land-type icon
+      case 50:
+        if (action) {
+          return painterSelect(1);
+          break;
+        } else {
+          return "Single land-type selector clicked";
+          break;
+        }
+        //When the user clicks the multi land-type icon
+      case 51:
+        if (action) {
+          return painterSelect(2);
+          break;
+        } else {
+          return "Multi land-type selector clicked";
+          break;
+        }
+        //When the user randomizes the board (via hotkey)
+      case 52:
+        if (action) {
+          return randomizeBoard();
+          break;
+        } else {
+          return "Board randomization hotkey pressed";
+          break;
+        }
+        //When the user closes the download window
+      case 53:
+        if (action) {
+          return closeUploadDownloadFrame();
+          break;
+        } else {
+          return "Download window was closed";
+          break;
+        }
+        //When the user collapses the speech bubble
+      case 54:
+        if (action) {
+          return togglePopupDisplay();
+          break;
+        } else {
+          return "Speech bubble was collapsed";
+          break;
+        }
+        //When the user paints a tile (single seleciton)
+      case 55:
+        if (action) {
+          return changeLandTypeTile(this.tileID);
+          break;
+        } else {
+          return "A tile was painted (single selection)";
+          break;
+        }
+        //When the user paints a tile (multi selection)
+      case 56:
+        if (action) {
+          return changeLandTypeTile(this.tileID);
+          break;
+        } else {
+          return "A tile was painted (multi selection)";
+          break;
+        }
+        //When the user expands the pickaxe
+      case 57:
+        if (action) {
+          return roll(1);
+          break;
+        } else {
+          return "Pickaxe was expanded";
+          break;
+        }
+      case 58:
+        if (action) {
+          window.frames[3].scrollTo(0, 0);
+          return window.frames[3].toggleToTab(1);
+          break;
+        } else {
+          return "First results tab clicked";
+          break;
+        }
+      case 59:
+        if (action) {
+          window.frames[3].scrollTo(0, 0);
+          return window.frames[3].toggleToTab(2);
+          break;
+        } else {
+          return "Second results tab clicked";
+          break;
+        }
+      case 60:
+        if (action) {
+          window.frames[3].scrollTo(0, 0);
+          return window.frames[3].changeLandPieBy(1);
+          break;
+        } else {
+          return "Up arrow on results pie toggled";
+          break;
+        }
+      case 61:
+        if (action) {
+          window.frames[3].scrollTo(0, 0);
+          return window.frames[3].changeLandPieBy(-1);
+          break;
+        } else {
+          return "Down arrow on results pie toggled";
+          break;
+        }
+      case 62:
+        if (action) {
+          window.frames[3].scrollTo(0, 500);
+          if (window.frames[3].document.getElementById("checkboxYear1").checked) {
+            window.frames[3].document.getElementById("checkboxYear1").checked = false;
+          } else {
+            window.frames[3].document.getElementById("checkboxYear1").checked = true;
+          }
+          return window.frames[3].radarPlotYearToggle(1);
+          break;
+        } else {
+          return "Radar plot year 1 toggled";
+          break;
+        }
+      case 63:
+        if (action) {
+          if (window.frames[3].document.getElementById("checkboxYear2").checked) {
+            window.frames[3].document.getElementById("checkboxYear2").checked = false;
+          } else {
+            window.frames[3].document.getElementById("checkboxYear2").checked = true;
+          }
+          window.frames[3].scrollTo(0, 500);
+          return window.frames[3].radarPlotYearToggle(2);
+          break;
+        } else {
+          return "Radar plot year 2 toggled";
+          break;
+        }
+      case 64:
+        if (action) {
+          if (window.frames[3].document.getElementById("checkboxYear3").checked) {
+            window.frames[3].document.getElementById("checkboxYear3").checked = false;
+          } else {
+            window.frames[3].document.getElementById("checkboxYear3").checked = true;
+          }
+          window.frames[3].scrollTo(0, 500);
+          return window.frames[3].radarPlotYearToggle(3);
+          break;
+        } else {
+          return "Radar plot year 3 toggled";
+          break;
+        }
+      case 65:
+        if (action) {
+          if (window.frames[3].document.getElementById("yieldCheckboxYear1").checked) {
+            window.frames[3].document.getElementById("yieldCheckboxYear1").checked = false;
+          } else {
+            window.frames[3].document.getElementById("yieldCheckboxYear1").checked = true;
+          }
+          window.frames[3].scrollTo(0, 1000);
+          return window.frames[3].yieldRadarPlotYearToggle(1);
+          break;
+        } else {
+          return "Annual yield results year 1 toggled";
+          break;
+        }
+      case 66:
+        if (action) {
+          if (window.frames[3].document.getElementById("yieldCheckboxYear2").checked) {
+            window.frames[3].document.getElementById("yieldCheckboxYear2").checked = false;
+          } else {
+            window.frames[3].document.getElementById("yieldCheckboxYear2").checked = true;
+          }
+          window.frames[3].scrollTo(0, 1000);
+          return window.frames[3].yieldRadarPlotYearToggle(2);
+          break;
+        } else {
+          return "Annual yield results year 2 toggled";
+          break;
+        }
+      case 67:
+        if (action) {
+          if (window.frames[3].document.getElementById("yieldCheckboxYear3").checked) {
+            window.frames[3].document.getElementById("yieldCheckboxYear3").checked = false;
+          } else {
+            window.frames[3].document.getElementById("yieldCheckboxYear3").checked = true;
+          }
+          window.frames[3].scrollTo(0, 1000);
+          return window.frames[3].yieldRadarPlotYearToggle(3);
+          break;
+        } else {
+          return "Annual yield results year 3 toggled";
+          break;
+        }
+      case 68:
+        if (action) {
+          return switchConsoleTab(7);
+          break;
+        } else {
+          return "Yield tab selected";
+          break;
+        }
+      case 69:
+        if (action) {
+          return displayLevels('cornGrain');
+        } else {
+          return "Corn Grain yield selected";
+        }
+      case 70:
+        if (action) {
+          return displayLevels('soy');
+        } else {
+          return "Soy yield selected";
+        }
+      case 71:
+        if (action) {
+          return displayLevels('fruit');
+        } else {
+          return "Mixed Fruit and Vegetables yield selected";
+        }
+      case 72:
+        if (action) {
+          return displayLevels('cattle');
+        } else {
+          return "Cattle yield selected";
+        }
+      case 73:
+        if (action) {
+          return displayLevels('alfalfa');
+        } else {
+          return "Alfalfa yield selected";
+        }
+      case 74:
+        if (action) {
+          return displayLevels('grassHay');
+        } else {
+          return "Grass hay yield selected";
+        }
+      case 75:
+        if (action) {
+          return displayLevels('switchGrass');
+        } else {
+          return "Switchgrass yield selected";
+        }
+      case 76:
+        if (action) {
+          return displayLevels('wood');
+        } else {
+          return "Wood yield selected";
+        }
+      case 77:
+        if (action) {
+          return displayLevels('short');
+        } else {
+          return "Woody Biomass yield selected";
+        }
+      case 78:
+        if (action) {
+          return toggleIndex();
+        } else {
+          return "Index opened";
+        }
+      case 79:
+        if (action) {
+          return toggleIndex();
+        } else {
+          return "Index closed";
+        }
+
+        // Action inside index page, click on entry
+      case 80:
+        console.log("Entry ID: " + this.tileID);
+        // console.log(CODEX_HTML.document.getElementById(this.tileID).className);
+        // simulation is running, do what we recorded (what the user did)
+        if (action) {
+          if (CODEX_HTML.document.getElementById(this.tileID).className == "groupHeader" ||
+            CODEX_HTML.document.getElementById(this.tileID).className == "selectedGroupHeader") {
+            CODEX_HTML.toggleChildElements(this.tileID);
+            CODEX_HTML.arrangeContent(this.tileID);
+          } else if (CODEX_HTML.document.getElementById(this.tileID).className == "groupElement" ||
+            CODEX_HTML.document.getElementById(this.tileID).className == "selectedGroupElement") {
+            CODEX_HTML.arrangeContent(this.tileID);
+          }
+          return;
+        }
+        // record the event description in csv file
+        else
+          return "Click an entry in index page";
+
+        break;
+
+        // Action inside index page, switch to Advanced
+      case 81:
+				console.log("Case 81 ID: " + this.tileID);
+
+        // simulation is running, do what we recorded (what the user did)
+        if (action)
+          return CODEX_HTML.showAdvancedDetail(this.tileID);
+        // record the event description in csv file
+        else
+          return "Click Advanced tab";
+        break;
+
+        // Action inside index page, switch to General
+      case 82:
+			console.log("Case 82 ID: " + this.tileID);
+
+        // simulation is running, do what we recorded (what the user did)
+        if (action)
+          return CODEX_HTML.showLessDetail(this.tileID);
+        // record the event description in csv file
+        else
+          return "Click General tab";
+        break;
+        //Should not go here, alerts the dev that there is a user experience case that has not been implemented.
+      default:
+        alert("This user click has not been configured yet. Please add this click to the cases in helperObjects.js");
+        break;
+    }
+  }
 }
 
 //######################################################################################
