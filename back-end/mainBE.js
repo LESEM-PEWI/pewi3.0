@@ -1,3 +1,7 @@
+/**
+ * @Last modified time: 2017-06-07T14:40:06-05:00
+ */
+
 /*global initData*/
 /*global precip*/
 
@@ -9,23 +13,23 @@ function propogateBoard(board) {
   for (var y = 0; y < 4; y++) {
     var precipIndex = setPrecipitation();
     board.precipitation[y] = precip[precipIndex];
-    
+
     board.precipitationIndex[y] = precipIndex ; //store precip indices
   }
-  
+
   //overwrite the precipitation values, used for testing
   //board.precipitation = [24.58, 30.39, 34.34, 28.18, 24.58, 45.1];
   //board.precipitationIndex = [0,2,4,1] ;
 
   //loop through initData array and assign values to Tiles
+  console.log("initData.length " + initData.length);
   for (var i = 0; i < initData.length; i++) {
     var tile = new Tile(initData[i], board);
     board.map.push(tile);
-  } //end for : each entry in initData 
+  } //end for : each entry in initData
 
   //set up board1.watershedArea parameter for some tile level calculations
   board.init();
-
 } //end propogateBoard()
 
 
@@ -33,16 +37,17 @@ function propogateBoard(board) {
 // into board. The first argument is passed by reference, so nothing need be returned
 function overlayBoard(board) {
   // for each data entry
+  console.log("initData.length " + initData.length);
   for (var i = 0; i < initData.length; i++) {
     //get the tile set up
     var tile = new Tile(initData[i], board);
-    
+
     //if tile has meaningful data...
     if(tile.baseLandUseType == 1){
       //then overwrite the tile in old board with new board stuffaroo
       board.map[tile.id - 1] = tile ;
     }
-  } //end for : each entry in initData 
+  } //end for : each entry in initData
 }//end overlayBoard()
 
 
@@ -67,7 +72,7 @@ function display() {
   // var Py1 = document.createTextNode("Year 1: " + board1.precipitation[0]);
   // x.appendChild(P);
   // x.appendChild(Py1);
-  // document.body.appendChild(x);   
+  // document.body.appendChild(x);
 
   document.write("Precipitation:" + "<BR>" +
     "Year 0: " + board1.precipitation[0] + "<BR>" +

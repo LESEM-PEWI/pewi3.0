@@ -1,9 +1,3 @@
-/**
- * @Date:   2017-06-08T14:46:42-05:00
- * @Last modified time: 2017-06-08T15:51:54-05:00
- */
-
-
 
 //================
 //global vars
@@ -148,7 +142,8 @@ function initWorkspace(file) {
 
   //hide the startup page and show the loading animation
   document.getElementById('startupSequence').style.display = "none";
-  document.getElementById('loading').style.visibility = "visible";
+  // document.getElementById('loading').style.visibility = "visible";
+  document.getElementById('loading').style.display = "block";
 
   //reset key functions on page
   document.activeElement.blur();
@@ -171,6 +166,7 @@ function initWorkspace(file) {
     //hide loading animation and make the PEWI main page visible
     document.getElementById('loading').style.display = "none";
     document.getElementById('page').style.visibility = "visible";
+    // document.getElementById('page').style.display = "block";
   }
   checkIfSceneLoaded();
 } //end initWorkspace
@@ -352,11 +348,12 @@ function setupBoardFromUpload(data) {
     uploadedBoard = true;
     simUpload = data;
     var boardFromUpload = new GameBoard();
-    parseInitial(simUpload);
-    propogateBoard(boardFromUpload);
+    if (parseInitial(data)) {
+      propogateBoard(boardFromUpload);
 
-    switchBoards(boardFromUpload);
-    previousHover = null;
+      switchBoards(boardFromUpload);
+      previousHover = null;
+    }
   }
   //If file is empty, load the default level
   else if (!multiplayerAssigningModeOn) {
@@ -509,7 +506,7 @@ function setupHighlight() {
   document.addEventListener('keydown', onDocumentKeyDown, false);
   document.addEventListener('keyup', onDocumentKeyUp, false);
 
-}; //end setupHighlight
+} //end setupHighlight
 
 //expand or collapse the div holding tools for confirming escape to main menu
 function confirmEscape() {
@@ -529,7 +526,7 @@ function confirmEscape() {
       if (!multiplayerAssigningModeOn) {
         toggleEscapeFrame();
         startOptions();
-      };
+      }
     };
     document.getElementById('directoryButton').onclick = function() {
       toggleEscapeFrame();
@@ -558,9 +555,13 @@ function showMainMenu() {
     if (zoomedIn) switchToUnzoomedView(1, false);
     previousHover = null;
     currentYear = 1;
+    //Goes back to the default land-use selection
     changeSelectedPaintTo(1);
+    //Goes back to the land-type selection
     switchConsoleTab(1);
+    //Goes back to the default year selection
     switchYearTab(1);
+    //Resets the year selections
     resetYearDisplay();
     controls.reset();
 
@@ -571,14 +572,19 @@ function showMainMenu() {
     //clean up from level
     if (levelGlobal > 0 || levelGlobal < 0) {
       //clean up from a level
-      console.log("---cleaning up from exit---");
+      // console.log("---cleaning up from exit---");
       resetLevel();
-      clearPopup();
+      // clearPopup();
       levelGlobal = 0;
     }
 
     document.getElementById('page').style.visibility = "hidden";
+    // document.getElementById('page').style.display = "none";
+
+    // set boardData[currentBoard] as undefined
+    boardData[currentBoard] = void 0; //XXX getTileID() & printPrecipYearType() are fired
   }, 1000);
+
 
 } //end showMainMenu
 
