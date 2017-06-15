@@ -203,9 +203,8 @@ body {
 
 #closeUploadDownload {
   position: fixed;
-  left: 50%;
-  padding-left: 140px;
-  top: 21%;
+  left: 55.5%;
+  top: 20%;
 }
 
 #closeCredits {
