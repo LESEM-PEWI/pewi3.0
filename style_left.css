@@ -945,3 +945,6 @@ table #yieldGrainTable {
     left: 78px;
   }
 }
+.header h1{
+  margin: 0;
+}

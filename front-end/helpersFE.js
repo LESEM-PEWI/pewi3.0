@@ -112,6 +112,7 @@ function onResize() {
 //tile is created from scratch
 function displayBoard() {
 
+  updateIndexPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
   riverPoints = [];
 
   //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
@@ -2872,13 +2873,15 @@ function togglePopupDisplay() {
 function toggleBackgroundInfoDisplay()
 {
   if(!modalUp){
-    if(document.getElementById('backgroundInfoBox').className == "backgroundInfoBox")
+    if(document.getElementById("backgroundInfoBox").className == "backgroundInfoBox")
     {
-      document.getElementById('backgroundInfoBox').className == "backgroundInfoBoxRolled";
+      document.getElementById("backgroundInfoBox").className = "backgroundInfoBoxRolled";
+      document.getElementById("backgroundInfoButton").className = "backgroundInfoButtonRolled";
     }
     else
     {
-      document.getElementById('backgroundInfoBox').className == "backgroundInfoBox";
+      document.getElementById("backgroundInfoBox").className = "backgroundInfoBox";
+      document.getElementById("backgroundInfoButton").className = "backgroundInfoButton";
     }
   }
 }
