@@ -187,6 +187,7 @@ Cleaned and Prepared - July 2016
       //Update Buttons appropriately
       document.getElementById('startupButton2').style.display = "none";
       document.getElementById('startupButton3').style.display = "none";
+      document.getElementById('newPewiLogo').style.display = "none";
       document.getElementById('startupButton1').style.left = "50%";
       document.getElementById('startupButton1').style.backgroundColor = "#003d4d";
       //prevent pewiTitle from pressing against the top of the screen
@@ -211,6 +212,7 @@ Cleaned and Prepared - July 2016
       //Update Buttons appropriately
       document.getElementById('startupButton1').style.display = "none";
       document.getElementById('startupButton2').style.display = "none";
+      document.getElementById('newPewiLogo').style.display = "none";
       document.getElementById('startupButton3').style.left = "50%";
       document.getElementById('startupButton3').style.backgroundColor = "#003d4d";
       //prevent pewiTitle from pressing against the top of the screen
@@ -243,10 +245,12 @@ Cleaned and Prepared - July 2016
       //Update Buttons appropriately
       document.getElementById('startupButton1').style.display = "none";
       document.getElementById('startupButton3').style.display = "none";
+      document.getElementById('newPewiLogo').style.display = "none";
       document.getElementById('startupButton2').style.top = "50%";
       document.getElementById('startupButton2').style.backgroundColor = "#003d4d";
       //prevent pewiTitle from pressing against the top of the screen
       document.getElementById('pewiTitle').style.marginTop = "100px";
+      document.getElementById('newPewiLogo').style.marginTop = "100px";
       //open up background curtain (entirely transparent here)
       document.getElementById('startupContentsHolder').style.marginTop = "0px";
       document.getElementById('startupContentsHolder').style.top = "0%";
@@ -280,6 +284,7 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupButton2').style.visibility = "hidden";
       document.getElementById('startupButton3').style.visibility = "hidden";
       document.getElementById('pewiTitle').style.visibility = "hidden";
+      document.getElementById('newPewiLogo').style.visibility = "hidden";
     } //end function
     //resetElements moves the elements around on the page and resets the colors of elements
     //  in preparation for returning to the page
@@ -294,6 +299,7 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupButton2').style.top = "50%";
       document.getElementById('startupButton3').style.left = "75%";
       document.getElementById('pewiTitle').style.marginTop = "0px";
+      document.getElementById('newPewiLogo').style.marginTop = "0px";
     } //end resetElements
     //reset makes the changes necessary for displaying the main page again
     // this is necessary to be separated so that the elements can be moved prior to being
@@ -314,6 +320,7 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupButton2').style.visibility = "visible";
       document.getElementById('startupButton3').style.visibility = "visible";
       document.getElementById('pewiTitle').style.visibility = "visible";
+      document.getElementById('newPewiLogo').style.visibility = "visible";
     } //end reset
     //chains the two functions needed for resetting the page completely. Called by helpersFE.js
     function recallMain() {
