@@ -1,7 +1,3 @@
-/**
- * @Date:   2017-05-25T11:01:34-05:00
- * @Last modified time: 2017-06-08T15:10:48-05:00
- */
 
 
 /**
@@ -182,18 +178,15 @@ body {
   right: 82px;
 }
 
+
 #pewiLogo{
   right: 206px;
 }
-.closeButton {
-  cursor: pointer;
-}
-
 .closeButton {  
   height: 40px;
   position: absolute;
   width: 40px;
-    
+
   -webkit-transition-duration: 0.1s; /* Safari */
   transition-duration: 0.1s;
 }
@@ -269,10 +262,11 @@ body {
 }
 
 #loading {
+  background: black;
+  display: none;
+  height: 100%;
   position: absolute;
   width: 100%;
-  height: 100%;
-  background: black;
 }
 
 #loadingContainer {
