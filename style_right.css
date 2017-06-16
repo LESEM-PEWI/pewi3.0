@@ -146,9 +146,6 @@
   top: 14vw;
   -webkit-animation-duration: 1.2s;
   animation-duration: 1.2s;
-  top: 18vw;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
   -webkit-animation-name: rollDown;
   animation-name: rollDown;
 }
@@ -198,8 +195,9 @@
   right: 12%;
   top: 14vw;
   width: 6vw;
+}
 /*Dialogue button will roll off the screen when clicked on*/
-.dialogueButtonRolled {
+.dialogueButtonRolled{
   bottom: 0px;
   right: -3%;
   -webkit-animation-name: rollButtonDown;
@@ -232,7 +230,7 @@
   animation-name: rollButtonUp;
 }
 
-.backgroundInfoButtonRolled {
+#backgroundInfoButtonRolled {
   right: -3%;
   -webkit-animation-name: rollButtonDown;
   animation-name: rollButtonDown;
