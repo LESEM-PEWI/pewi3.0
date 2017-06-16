@@ -4,12 +4,11 @@
  */
 
 
-/* css variable declaration */
+/* css global variable declaration */
 
 :root {
   --consoleButton-height: 2.81vw;
   --first-consoleButton-top: 15.47vw;
-  --font-size: 1vw;
   --left-console-top-value: 10.7vw;
   --left-console-width: 9.6vw;
   --left-console-height: 30vw;
@@ -18,19 +17,15 @@
   --left-console-button-image-margin: 0.5vw;
   --level-indicator-length: 1vw;
   --selector-icon-length: 2.5vw;
-  --title-font-weight: 900;
-  --transition-duration: 0.4s;
 }
 
 * {
   box-sizing: border-box;
 }
 
-
 /**left console buttons or toolbar**/
 
 /**Styling for index Menu**/
-
 #indexmenu {
   background-image: url('./imgs/consoleTexture.png');
   border: none;
@@ -52,6 +47,7 @@
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
 }
 
+/* left console clickable buttons */
 .consoleButton {
   background-color: rgba(0, 0, 0, 0.9);
   background-image: url('./imgs/consoleTexture.png');
@@ -68,11 +64,11 @@
   /* Safari */
   transition-duration: var(--transition-duration);
 }
-
 .consoleButton:hover {
   box-shadow: 8px 0px 10px -4px rgba(240, 166, 29, 0.8);
 }
 
+/* undo button */
 #undoButton {
   /*border-bottom-right-radius: 5px;*/
   height: var(--left-console-button-length);
@@ -80,11 +76,11 @@
   top: 40.75vw;
   border-radius: 50%;
 }
-
 #undoButton:hover {
   box-shadow: 0 0px 8px 2px rbg(0, 0, 0, 0.8);
 }
 
+/* toolsButton to slide the left console */
 #toolsButton {
   top: var(--left-console-top-value);
   background-image: none;
@@ -95,13 +91,14 @@
 #toolsButton:hover {
   box-shadow: 0 0px 8px 2px rgba(0, 0, 0, 0.8);
 }
-
+/* img for toolsButton*/
 #pick {
   cursor: pointer;
   margin: var(--left-console-button-image-margin);
   width: var(--left-console-button-image-length);
 }
 
+/* tabButtons class: container for consoleButton class */
 .tabButtons, #toolsButton, #undoButton {
   cursor: pointer;
   left: var(--left-console-width);
@@ -119,34 +116,36 @@
   transition-duration: var(--transition-duration);
 }
 
+/* img for consoleButton class. button selected */
 .imgSelected {
   border-right: 2px solid #F0A61D;
   margin: var(--left-console-button-image-margin);
   width: var(--left-console-button-image-length);
 }
-
+/* img for consoleButton class. button not selected */
 .imgNotSelected {
   border-right: 0px solid #F0A61D;
   margin: var(--left-console-button-image-margin);
   width: var(--left-console-button-image-length);
 }
 
+ /* left consoleButton, terrain button */
 #terrainButton {
   top: var(--first-consoleButton-top);
 }
-
+/* left consoleButton, precipatation button */
 #precipButton {
   top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
 }
-
+/* left consoleButton, year button */
 #yearButton {
   top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
 }
-
+/* left consoleButton, levels button */
 #levelsButton {
   top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
 }
-
+/* left consoleButton, features button */
 #featuresButton {
   top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
 }
@@ -170,10 +169,8 @@
   /* Safari */
   transition-duration: var(--transition-duration);
 }
-
-
+/**left console content container**/
 /* needed for sliding  */
-
 .leftConsole {
   left: 0px;
 }
@@ -184,7 +181,6 @@
 
 
 /* The content of each tab */
-
 .consoleTab {
   left: 0px;
   padding: 4px;
@@ -210,7 +206,6 @@
 
 
 /*terrain selector*/
-
 #painterTab {
   /*display: inline-block;*/
   height: 100%;
@@ -555,6 +550,7 @@ select {
   background-color: #bc892f;
 }
 
+/* detail lists */
 .physicalDetailsList, .physicalDetailsListRolled {
   background-color: black;
   background-image: url('./imgs/consoleTexture.png');

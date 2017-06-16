@@ -128,6 +128,9 @@
   top: 14vw;
   -webkit-animation-duration: 1.2s;
   animation-duration: 1.2s;
+  top: 18vw;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
   -webkit-animation-name: rollDown;
   animation-name: rollDown;
 }
