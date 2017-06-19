@@ -1,3 +1,10 @@
+/**
+ * @Date:   2017-06-01T16:49:42-05:00
+ * @Last modified time: 2017-06-08T11:05:52-05:00
+ */
+
+
+
 //levelLoader keeps track of all the various parameters involved in a level
 // it is also called for sandbox, with no parameters assigned
 
@@ -59,7 +66,7 @@ function loadLevel(level) {
         }, 5000);
       }
       break;
-      //multiplayer assigning mode
+    //multiplayer assigning mode
     case -1:
       multiplayerAssigningModeOn = true;
 
