@@ -2840,7 +2840,7 @@ function randomizeBoard() {
   var prevPainter = painter;
   randomizing = true;
   //for whole board (as long as randomization is allowed)
-  if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
+  if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn || runningSim) {
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
