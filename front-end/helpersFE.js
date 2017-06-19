@@ -585,8 +585,9 @@ function addYearAndTransition() {
   //make next button appear (has some prebuilt functionality for expanded number of years)
   if (currentYear < totalYearsAllowed - 1) {
 
-    document.getElementById("year" + nextYear + "Button").className = "icon yearButton";
-    document.getElementById("year" + nextYear + "Image").className = "yearNotSelected";
+    // document.getElementById("year" + nextYear + "Button").className = "icon yearNotSelected";
+    document.getElementById("year" + nextYear + "Button").className = "yearButton";
+    document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
 
   }
 
@@ -594,7 +595,7 @@ function addYearAndTransition() {
   if (currentYear == totalYearsAllowed - 1) {
 
     document.getElementById("year3Button").className = "yearButton";
-    document.getElementById("year3Image").className = "yearNotSelected";
+    document.getElementById("year3Image").className = "icon yearNotSelected";
     document.getElementById("yearAddButton").style.display = "none";
 
   }
@@ -1028,11 +1029,11 @@ function changeSelectedPaintTo(newPaintValue) {
     }
     //change current painter to regular
     var painterElementId = "paint" + painter;
-    document.getElementById(painterElementId).className = "landSelectorIcon";
+    document.getElementById(painterElementId).className = "landSelectorIcon icon";
 
     //change new paiter to current
     painterElementId = "paint" + newPaintValue;
-    document.getElementById(painterElementId).className = "landSelectedIcon";
+    document.getElementById(painterElementId).className = "landSelectorIcon iconSelected";
     painter = newPaintValue;
     //Index chat box entries for each landuse type
     if(painterElementId == 'paint1'){
@@ -1085,14 +1086,14 @@ function changeSelectedPaintTo(newPaintValue) {
     }
 
     // if it's grid painting mode and the user click to switch painter, erase the first seleted tile
-    if (painterTool.status == 2) 
+    if (painterTool.status == 2)
     {
       painterTool.status = 1;// ready to do grid paint
     }
 
     //have land type update immediately, well, pretend the mouse moved...
     highlightTile(-1);
-  } 
+  }
   else {
     //reset the playerSelected back to a normal playerNotSelected
     var painterElementId = "player" + painter + "Image";
@@ -1261,128 +1262,128 @@ function showLevelDetails(value) {
 
   //show nitrate legend
   if (value == 1) {
-    document.getElementById("nitrateDetailsList").className = "levelDetailsList";
-    document.getElementById('nitrateIcon').className = "levelSelectorIconSelected";
+    document.getElementById("nitrateDetailsList").className = "DetailsList levelDetailsList";
+    document.getElementById('nitrateIcon').className = "levelsSelectorIcon iconSelected";
   }
 
   //show erosion legend
   else if (value == 2) {
-    document.getElementById("erosionDetailsList").className = "levelDetailsList";
-    document.getElementById('erosionIcon').className = "levelSelectorIconSelected";
+    document.getElementById("erosionDetailsList").className = "DetailsList levelDetailsList";
+    document.getElementById('erosionIcon').className = "levelsSelectorIcon iconSelected";
   }
 
   //show phosphorus legend
   else if (value == 3) {
-    document.getElementById("phosphorusDetailsList").className = "levelDetailsList";
-    document.getElementById('phoshorusIcon').className = "levelSelectorIconSelected";
+    document.getElementById("phosphorusDetailsList").className = "DetailsList levelDetailsList";
+    document.getElementById('phoshorusIcon').className = "levelsSelectorIcon iconSelected";
   }
 
   //show flood frequency legend
   else if (value == 4) {
-    document.getElementById('floodFrequency').className = "featureSelectorIconSelected";
-    document.getElementById("floodFrequencyDetailsList").className = "physicalDetailsList";
+    document.getElementById('floodFrequency').className = "featureSelectorIcon iconSelected";
+    document.getElementById("floodFrequencyDetailsList").className = "DetailsList physicalDetailsList";
   }
 
   //show drainage class legend
   else if (value == 5) {
-    document.getElementById('drainageClass').className = "featureSelectorIconSelected";
-    document.getElementById("drainageClassDetailsList").className = "physicalDetailsList";
+    document.getElementById('drainageClass').className = "featureSelectorIcon iconSelected";
+    document.getElementById("drainageClassDetailsList").className = "DetailsList physicalDetailsList";
   }
 
   //show strategic wetlands legend
   else if (value == 6) {
-    document.getElementById('strategicWetlands').className = "featureSelectorIconSelected";
-    document.getElementById("wetlandClassDetailsList").className = "physicalDetailsList";
+    document.getElementById('strategicWetlands').className = "featureSelectorIcon iconSelected";
+    document.getElementById("wetlandClassDetailsList").className = "DetailsList physicalDetailsList";
   }
 
   //show subwatershed legend
   else if (value == 7) {
-    document.getElementById('subwatershedBoundaries').className = "featureSelectorIconSelected";
-    document.getElementById("subwatershedClassDetailsList").className = "physicalDetailsList";
+    document.getElementById('subwatershedBoundaries').className = "featureSelectorIcon iconSelected";
+    document.getElementById("subwatershedClassDetailsList").className = "DetailsList physicalDetailsList";
   } //end else/if group
 
   //show soil class legend
   else if (value == 8) {
-    document.getElementById('soilClass').className = "featureSelectorIconSelected";
-    document.getElementById('soilClassDetailsList').className = "physicalDetailsList";
+    document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
+    document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
   }
   //Corn class legend
     else if(value == 9){
-        document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
-        document.getElementById('cornClass').className = "yieldSelectorIconSelected";
+        document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
+        document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
         updateIndexPopup('Conventional Corn and Conservation Corn produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 10){
-        document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
-        document.getElementById('soyClass').className = "yieldSelectorIconSelected";
+        document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
+        document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
         updateIndexPopup('Conventional Soy and Conservation Soy produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 11){
-        document.getElementById('fruitDetailsList').className = "yieldDetailsList";
-        document.getElementById('fruitClass').className = "yieldSelectorIconSelected";
+        document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
+        document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
         updateIndexPopup('To learn more about Mixed Fruits and Vegetable Yield, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 12){
-        document.getElementById('cattleDetailsList').className = "yieldDetailsList";
-        document.getElementById('cattleClass').className = "yieldSelectorIconSelected";
+        document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
+        document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
         updateIndexPopup('Permanent Pasture and Rotational Grazing produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".')
     }
     else if(value == 13){
-        document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
-        document.getElementById('alfalfaClass').className = "yieldSelectorIconSelected";
+        document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
+        document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
         updateIndexPopup('To learn more about Alfalfa Hay Yield, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 14){
-        document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
-        document.getElementById('grassHayClass').className = "yieldSelectorIconSelected";
+        document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
+        document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
         updateIndexPopup('To learn more about Grass Hay Yield, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 15){
-        document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
-        document.getElementById('switchGrassClass').className = "yieldSelectorIconSelected";
+        document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
+        document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
         updateIndexPopup('To learn more about Switch Grass Yield, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 16){
-        document.getElementById('woodDetailsList').className = "yieldDetailsList";
-        document.getElementById('woodClass').className = "yieldSelectorIconSelected";
+        document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
+        document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
         updateIndexPopup('Conventional Forest and Conservation Forest produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
     }
     else if(value == 17){
-        document.getElementById('shortDetailsList').className = "yieldDetailsList";
-        document.getElementById('shortClass').className = "yieldSelectorIconSelected";
+        document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
+        document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
         updateIndexPopup('Short-Rotation Woody Biomass produces the same output, no matter the soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
     }
 
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
-    var element = document.getElementsByClassName('levelDetailsList');
+    var element = document.getElementsByClassName('DetailsList');
     if (element.length > 0) {
-      element[0].className = 'levelDetailsListRolled';
+      element[0].className = 'DetailsListRolled';
     }
-    element = document.getElementsByClassName('levelSelectorIconSelected');
+    element = document.getElementsByClassName('levelsSelectorIcon iconSelected');
     if (element.length > 0) {
-      element[0].className = 'levelsSelectorIcon';
+      element[0].className = 'levelsSelectorIcon icon';
     }
   }
 
   //hide watershed feature legends
   else if (value < -3 && value > -9) {
-    var element = document.getElementsByClassName('physicalDetailsList');
+    var element = document.getElementsByClassName('DetailsList physicalDetailsList');
     if (element.length > 0) {
-      element[0].className = 'physicalDetailsListRolled';
+      element[0].className = 'DetailsListRolled physicalDetailsList';
     }
-    element = document.getElementsByClassName('featureSelectorIconSelected');
+    element = document.getElementsByClassName('featureSelectorIcon iconSelected');
     if (element.length > 0) {
-      element[0].className = 'featureSelectorIcon';
+      element[0].className = 'featureSelectorIcon icon';
     }
   } //end else/if group
 
   else if(value < -8){
-        var element = document.getElementsByClassName('yieldDetailsList');
+        var element = document.getElementsByClassName('DetailsList yieldDetailsList');
         if(element.length > 0) {
-            element[0].className = 'yieldDetailsListRolled';
+            element[0].className = 'DetailsListRolled yieldDetailsList';
         }
-        element = document.getElementsByClassName('yieldSelectorIconSelected');
+        element = document.getElementsByClassName('yieldSelectorIcon iconSelected');
         if(element.length > 0){
             element[0].ckassName = 'yieldSelectorIcon';
         }
@@ -1525,12 +1526,12 @@ function switchConsoleTab(value) {
 function switchYearTab(yearNumberToChangeTo) {
 
   //get the currently selected year and make it not selected
-  var elements = document.getElementsByClassName("yearSelected");
-  elements[0].className = "yearNotSelected";
+  var elements = document.getElementsByClassName("icon yearSelected");
+  elements[0].className = "icon yearNotSelected";
 
   //then toggle on the selected year
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
-  document.getElementById(yearIdString).className = "yearSelected";
+  document.getElementById(yearIdString).className = "icon yearSelected";
 } //end switchYearTab
 
 //here we draw the correct tile colors onto the board material mesh
@@ -1563,10 +1564,10 @@ function displayLevels(overlayHighlightType) {
   var selectionHighlightNumber = 0;
 
   //update console tabs
-  var element = document.getElementsByClassName('featureSelectorIconSelected');
-  if (element[0]) element[0].className = 'featureSelectorIcon';
-  element = document.getElementsByClassName('levelSelectorIconSelected');
-  if (element[0]) element[0].className = 'levelsSelectorIcon';
+  var element = document.getElementsByClassName('featureSelectorIcon iconSelected');
+  if (element[0]) element[0].className = 'featureSelectorIcon icon';
+  element = document.getElementsByClassName('levelsSelectorIcon iconSelected');
+  if (element[0]) element[0].className = 'levelsSelectorIcon icon';
   //When an overlay is toggled, set toggledOverlay to true
   overlayedToggled = true;
   //record new highlighting selection
@@ -2870,7 +2871,7 @@ function clearPopup() {
 //togglePopupDisplay allows for displaying and hiding the popup dialogue
 function togglePopupDisplay() {
   if (!modalUp) {
-    if (document.getElementById("popup").className == "popup") 
+    if (document.getElementById("popup").className == "popup")
     {
       if (curTracking)
       {
@@ -2878,8 +2879,8 @@ function togglePopupDisplay() {
       }
       document.getElementById("popup").className = "popupHidden";
       document.getElementById("dialogueButton").className = "dialogueButtonRolled";
-    } 
-    else 
+    }
+    else
     {
       if (curTracking)
       {
@@ -2891,7 +2892,7 @@ function togglePopupDisplay() {
   } //end if
 } // togglePopupDisplay()
 
-//Allows user to 
+//Allows user to
 function toggleBackgroundInfoDisplay()
 {
   if(!modalUp){
@@ -2926,7 +2927,6 @@ function randomAllowed(modeName) {
 function randomizeBoard() {
 
   var prevPainter = painter;
-
   //Range of values for each land-use type
   var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
   randomizing = true
@@ -2935,7 +2935,7 @@ function randomizeBoard() {
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
-      if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) 
+      if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none)
       {
         //getRandomInt is in back-end helperMethods
         for(var j = 1; j <= 15; j++)
@@ -2954,9 +2954,9 @@ function randomizeBoard() {
                  //randomPainterTile[removedIndex] = 1
               }
             }
-        }         
+        }
       }
-         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)]  
+         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)]
         changeLandTypeTile(i);
       }
     } //end for all tiles
@@ -3107,8 +3107,8 @@ function toggleVisibility() {
 function painterSelect(brushNumberValue) {
 
   //reset the functionality to default, then change as needed
-  var selectedElement = document.getElementsByClassName('painterIconSelected');
-  selectedElement[0].className = "painterIcon";
+  var selectedElement = document.getElementsByClassName('painterIcon iconSelected');
+  selectedElement[0].className = "painterIcon icon";
   painterTool.hover = false;
 
   //if the brush is a normal cell paint
@@ -3117,7 +3117,7 @@ function painterSelect(brushNumberValue) {
     {
       pushClick(0,getStamp(),50,0,null);
     }
-    document.getElementById('cellPaint').className = 'painterIconSelected';
+    document.getElementById('cellPaint').className = 'painterIcon iconSelected';
     if (painterTool.status == 2) refreshBoard();
     painterTool.status = 0;
   }
@@ -3132,7 +3132,7 @@ function painterSelect(brushNumberValue) {
     //painterTool.status 2 indicates grid drag activity
     painterTool.status = 1;
     //ready for double click
-    document.getElementById('gridPaint').className = "painterIconSelected";
+    document.getElementById('gridPaint').className = "painterIcon iconSelected";
   } //end else/if group
 } //end painterSelect()
 
@@ -3634,7 +3634,7 @@ function resetPresets() {
     painterSelect(1);
     //Resets the year selections
     resetYearDisplay();
-    document.getElementById("year1Image").className = "yearSelected"
+    document.getElementById("year1Image").className = "icon yearSelected"
     currentYear = 1;
     //Resets the scroll in the results tab
     window.frames[3].scrollTo(0,0);
