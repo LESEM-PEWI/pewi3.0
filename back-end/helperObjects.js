@@ -1,10 +1,3 @@
-/**
- * @Date:   2017-06-06T17:00:14-05:00
- * @Last modified time: 2017-06-07T13:24:34-05:00
- */
-
-
-
 /*
 Constructed in June 2016 as an object focused approach to calculation methods based on
   code from pewi v2.0.
@@ -371,14 +364,14 @@ function Tile(tileArray, board) {
   this.slopeLengthSteepnessFactor = function(year) {
     if (this.landType[year] > LandUseType.none) {
       if ((this.landType[year] > LandUseType.none && this.landType[year] < LandUseType.permanentPasture) || this.landType[year] == LandUseType.mixedFruitsVegetables) {
-        if (this.topography == 0) return 0.05;
+        if (this.topography === 0) return 0.05;
         else if (this.topography == 1) return 0.31;
         else if (this.topography == 2) return 0.67;
         else if (this.topography == 3) return 1.26;
         else if (this.topography == 4) return 1.79;
         else if (this.topography == 5) return 2.2;
       } else if (this.landType[year] == LandUseType.permanentPasture || this.landType[year] == LandUseType.rotationalGrazing) {
-        if (this.topography == 0) return 0.05;
+        if (this.topography === 0) return 0.05;
         else if (this.topography == 1) return 0.28;
         else if (this.topography == 2) return 0.58;
         else if (this.topography == 3) return 1.12;
@@ -550,7 +543,7 @@ function Tile(tileArray, board) {
 
   //Calculate slopeSteepnessFactor for contourSubfactor
   this.slopeSteepnessFactor = function() {
-    if (this.topography == 0) return 0.002;
+    if (this.topography === 0) return 0.002;
     else if (this.topography == 1) return 0.02;
     else if (this.topography == 2) return 0.04;
     else if (this.topography == 3) return 0.08;
@@ -745,75 +738,71 @@ function Tile(tileArray, board) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 72;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 81;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 88;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 88;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 91;
     } else if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean) {
-      if (this.topography == 0 || this.topography == 1 || this.topography == 2 || this.topography == 3) {
+      if (this.topography === 0 || this.topography == 1 || this.topography == 2 || this.topography == 3) {
         if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 64;
         else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
             'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 74;
-        else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 81;
-        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor ==
-          0) this.runoffCurveNumber[year] = 85;
+        else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 81;
+        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0) this.runoffCurveNumber[year] = 85;
       } else if (this.topography == 4 || this.topography == 5) {
         if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 61;
         else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
             'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 70;
-        else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 77;
-        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor ==
-          0) this.runoffCurveNumber[year] = 80;
+        else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 77;
+        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0) this.runoffCurveNumber[year] = 80;
       }
     } else if (this.landType[year] == LandUseType.alfalfa) {
-      if (this.topography == 0 || this.topography == 1 || this.topography == 2 || this.topography == 3) {
+      if (this.topography === 0 || this.topography == 1 || this.topography == 2 || this.topography == 3) {
         if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 58;
         else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
             'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 72;
-        else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 81;
-        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor ==
-          0) this.runoffCurveNumber[year] = 85;
+        else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 81;
+        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0) this.runoffCurveNumber[year] = 85;
       } else if (this.topography == 4 || this.topography == 5) {
         if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 55;
         else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
             'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 69;
-        else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 78;
-        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor ==
-          0) this.runoffCurveNumber[year] = 83;
+        else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 78;
+        else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0) this.runoffCurveNumber[year] = 83;
       }
     } else if (this.landType[year] == LandUseType.permanentPasture) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 68;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 79;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 86;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 86;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 89;
     } else if (this.landType[year] == LandUseType.rotationalGrazing) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 49;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 69;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 79;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 79;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 84;
     } else if (this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 30;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 58;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 71;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 71;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 78;
     } else if (this.landType[year] == LandUseType.prairie || this.landType[year] == LandUseType.wetland) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 30;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 48;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 65;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 65;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 73;
     } else if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.conventionalForest || this.landType[year] == LandUseType.shortRotationWoodyBioenergy) {
       if (this.hydrogroup == 'A') this.runoffCurveNumber[year] = 30;
       else if (this.hydrogroup == 'B' || ((this.hydrogroup == 'C' || this.hydrogroup ==
           'D' || this.hydrogroup == 'B/D') && flowfactor > 0)) this.runoffCurveNumber[year] = 55;
-      else if (this.hydrogroup == 'C' && flowfactor == 0) this.runoffCurveNumber[year] = 70;
-      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor == 0)
+      else if (this.hydrogroup == 'C' && flowfactor === 0) this.runoffCurveNumber[year] = 70;
+      else if ((this.hydrogroup == 'D' || this.hydrogroup == 'B/D') && flowfactor === 0)
         this.runoffCurveNumber[year] = 77;
     } else {
       this.runoffCurveNumber[year] = 1;
@@ -1005,8 +994,9 @@ function Tile(tileArray, board) {
 
   this.getPApplicationFactor = function(year) {
 
-    if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean || this.landType[year] == LandUseType.permanentPasture ||
-      this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.grassHay) {
+    if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean ||
+      this.landType[year] == LandUseType.permanentPasture || this.landType[year] == LandUseType.rotationalGrazing ||
+      this.landType[year] == LandUseType.grassHay) {
       return (this.PApplicationRate[year] / 4.58) * 0.5 * 1 * 0.005;
     } else if (this.landType[year] == LandUseType.alfalfa) {
       return (this.PApplicationRate[year] / 4.58) * 0.5 * 0.9 * 0.005;
@@ -1104,7 +1094,7 @@ function Tile(tileArray, board) {
       else return 0.95;
     } else if (this.landType[year] == LandUseType.mixedFruitsVegetables) {
       if (board.precipitation[year] < 36.47) return 1;
-      else if (board.precipitation[year] == 36.47) return 0.9
+      else if (board.precipitation[year] == 36.47) return 0.9;
       else return 0.75;
     }
     return 1;
@@ -1260,7 +1250,7 @@ function Tile(tileArray, board) {
   //End Methods that assist yieldTile
   //--------------------------------------------------------------
 
-};
+}
 //end construction of Tile
 
 //######################################################################################
@@ -1574,7 +1564,7 @@ function Results(board) {
     this.sumFlagPercentages();
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
-      var tempScore = 0
+      var tempScore = 0;
 
       //native vegetation and other high diversity land uses points
       if (this.nativeVegetationHDPercent[y] == 100) {
@@ -1595,7 +1585,7 @@ function Results(board) {
       } else if (this.nativeVegetationHDorLIPercent[y] > 50) {
         tempScore += 1;
       } else if (this.nativeVegetationHDorLIPercent[y] > 10) {
-        tempScore += .5;
+        tempScore += 0.5;
       } else {
         tempScore += 0;
       }
@@ -1643,7 +1633,7 @@ function Results(board) {
   this.calculateBiodiversityPoints = function() {
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
-      var tempScore = 0
+      var tempScore = 0;
 
       //native vegetation points
       if (this.nativeVegetationPercent[y] == 100) {
@@ -1675,7 +1665,7 @@ function Results(board) {
       } else if (this.nativeVegetationHDorLIPercent[y] > 50) {
         tempScore += 1;
       } else if (this.nativeVegetationHDorLIPercent[y] > 10) {
-        tempScore += .5;
+        tempScore += 0.5;
       } else {
         tempScore += 0;
       }
@@ -2040,7 +2030,7 @@ function Results(board) {
     else if (pindex > 5 && pindex <= 15) return 4;
     else if (pindex > 15) return 5;
     return "";
-  }
+  };
 
 
   this.updateScores = function() {
@@ -2086,7 +2076,7 @@ function Results(board) {
     }
 
 
-  }
+  };
 
 
 
@@ -2115,7 +2105,7 @@ function Results(board) {
 
   }; //end this.update()
 
-}; //end construction of results
+} //end construction of results
 
 
 //######################################################################################
@@ -2146,7 +2136,7 @@ function GameBoard() {
       }
 
     }
-  } //end updateBoard
+  }; //end updateBoard
 
   //this function establishes the board area for calculations that depend on it
   //and determines the dimensions of the board
@@ -2223,7 +2213,7 @@ function GameBoard() {
       this.map[i].ephemeralGullyErosion(5);
       erosionMax += (this.map[i].rusleValues[5] + this.map[i].ephemeralGullyErosionValue[5]) * this.map[i].area;
 
-      if (this.map[i].soilType != "NA" && this.map[i].soilType != "0" && this.map[i].soilType != 0) {
+      if (this.map[i].soilType != "NA" && this.map[i].soilType != "0" && this.map[i].soilType !== 0) {
 
         this.map[i].updatePhosphorusParameters(4);
         phosphorusMin += this.map[i].area * (this.map[i].erosionComponent(4) + this.map[i].drainageComponent(4) + this.map[i].runoffComponent(4)) / 2000;
@@ -2270,7 +2260,7 @@ function GameBoard() {
 
   }; //end init
 
-}; //end GameBoard construction
+} //end GameBoard construction
 
 
 //######################################################################################
@@ -2290,1001 +2280,696 @@ function GameBoard() {
 // this property can be changed in later updates].
 // #5.) TileID [Null if click is not a tile (or precip)]
 
-function Click(c1,c2,c3,c4,c5) {
-	this.clickID = c1;
-	this.timeStamp = c2;
-	this.functionType = c3;
-	this.timeGap = c4;
-	this.tileID = c5;
+function Click(c1, c2, c3, c4, c5) {
+  this.clickID = c1;
+  this.timeStamp = c2;
+  this.functionType = c3;
+  this.timeGap = c4;
+  this.tileID = c5;
 
-	//Retrieves the function performed in accordance to the click type [As a string]
-	this.getAction = function() {
-		var action = isSimRunning();
-		var caseInput = parseInt(this.functionType);
-		switch(caseInput) {
-			//When the user hit the escape key
-			case 1:
-				if(action)
-				{
-					return onDocumentKeyDown(27);
-					break;
-				}
-				else
-				{
-					return "Escape was pressed";
-					break;
-				}
-			//When the user attempts to leave the environment ***COME BACK AND FIX FOR SIMULATIONS***
-			case 2:
-				if(action)
-				{
-					return null;
-					break;
-				}
-				else
-				{ 
-					return "User tried closing the window";
-					break;
-				}
-			//When the user collapses the pickaxe
-			case 3:
-				if(action)
-				{
-					return roll(1);
-					break;
-				}
-				else
-				{
-					return "Pickaxe was collapsed";
-					break;
-				}
-			//When the user clicks the land-type icon
-			case 4:
-				if(action)
-				{
-					return switchConsoleTab(1);
-					break;
-				}
-				else
-				{
-					return "Land-use icon was clicked";
-					break;
-				}
-			//When the user clicks the precipitation icon
-			case 5:
-				if(action)
-				{
-					return switchConsoleTab(2);
-					break;
-				}
-				else
-				{
-					return "Precipitation tab was clicked";
-					break;
-				}
-			//When the user clicks the calender icon
-			case 6:
-				if(action)
-				{
-					return switchConsoleTab(6);
-					break;
-				}
-				else
-				{
-					return "Year selection tab was clicked";
-					break;
-				}
-			//When the user clicks the assessment icon
-			case 7:
-				if(action)
-				{
-					return switchConsoleTab(3);
-					break;
-				}
-				else
-				{
-					return "Assessment tab was clicked";
-					break;
-				}
-			//When the user clicks landscape feature tab
-			case 8:
-				if(action)
-				{
-					return switchConsoleTab(4);
-					break;
-				}
-				else
-				{
-					return "Landscape feature tab was clicked";
-					break;
-				}
-			//When the user clicks the settings tab
-			case 9:
-				if(action)
-				{
-					return switchConsoleTab(5);
-					break;
-				}
-				return "Land selection setting was clicked";
-				break;
-			//When the user clicks the download/upload button
-			case 10:
-				if(action)
-				{
-					return showUploadDownload();
-					break;
-				}
-				else
-				{
-					return "Download icon was clicked";
-					break;
-				}
-			//When the user clicks the information icon
-			case 11:
-				if(action)
-				{
-					return showCredits();
-					break;
-				}
-				else
-				{
-					return "Information icon was clicked";
-					break;
-				}
-			//When the user clicks the results tab
-			case 12:
-				if(action)
-				{
-					return resultsStart();
-					break;
-				}
-				else
-				{
-					return "Results tab was clicked";
-					break;
-				}
-			//When the user clicks out of the results tab
-			case 13:
-				if(action)
-				{
-					return resultsEnd();
-					break;
-				}
-				else
-				{
-					return "Results tab was closed";
-					break;
-				}
-			//When the user clicks the speech bubble
-			case 14:
-				if(action)
-				{
-					return togglePopupDisplay();
-					break;
-				}
-				else
-				{
-					return "Speech bubble selected";
-					break;
-				}
-			//When the user selects conventional corn
-			case 15:
-				if(action)
-				{
-					return changeSelectedPaintTo(1);
-					break;
-				}
-				else
-				{
-					return "Conventional corn was selected";
-					break;
-				}
-			//When the user selects conservation corn
-			case 16:
-				if(action)
-				{
-					return changeSelectedPaintTo(2);
-					break;
-				}
-				else
-				{
-					return "Conservation corn was selected";
-					break;
-				}
-			//When the user selects conventional soybean
-			case 17:
-				if(action)
-				{
-					return changeSelectedPaintTo(3);
-					break;
-				}
-				else
-				{
-					return "Conventional soybean was selected";
-					break;
-				}
-			//When the user selects conservation soybean
-			case 18:
-				if(action)
-				{
-					return changeSelectedPaintTo(4);
-					break;
-				}
-				else
-				{
-					return "Conservation soybean was selected";
-					break;
-				}
-			//When the user selects Mixed Fruits and Vegetables
-			case 19:
-				if(action)
-				{
-					return changeSelectedPaintTo(5);
-					break;
-				}
-				else
-				{
-					return "Mixed Fruits and Vegetables was selected";
-					break;
-				}
-			//When the user selects Alfalfa
-			case 20:
-				if(action)
-				{
-					return changeSelectedPaintTo(6);
-					break;
-				}
-				else
-				{
-					return "Alfalfa was selected";
-					break;
-				}
-			//When the user selects Grass Hay
-			case 21:
-				if(action)
-				{
-					return changeSelectedPaintTo(7);
-					break;
-				}
-				else
-				{
-					return "Grass Hay was selected";
-					break;
-				}
-			//When the user selects Switchgrass
-			case 22:
-				if(action)
-				{
-					return changeSelectedPaintTo(8);
-					break;
-				}
-				else
-				{
-					return "Switchgrass was selected";
-					break;
-				}
-			//When the user selects Permanent Pasture
-			case 23:
-				if(action)
-				{
-					return changeSelectedPaintTo(9);
-					break;
-				}
-				else
-				{
-					return "Permanent Pasture was selected";
-					break;
-				}
-			//When the user selects Rotational Grazing
-			case 24:
-				if(action)
-				{
-					return changeSelectedPaintTo(10);
-					break;
-				}
-				else
-				{
-					return "Rotational Grazing was selected";
-					break;
-				}
-			//When the user selects Wetland
-			case 25:
-				if(action)
-				{
-					return changeSelectedPaintTo(11);
-					break;
-				}
-				else
-				{
-					return "Wetland was selected";
-					break;
-				}
-			//When the user selects Prairie
-			case 26:
-				if(action)
-				{
-					return changeSelectedPaintTo(12);
-					break;
-				}
-				else
-				{
-					return "Prairie was selected";
-					break;
-				}
-			//When the user selects Conventional Forest
-			case 27:
-				if(action)
-				{
-					return changeSelectedPaintTo(13);
-					break;
-				}
-				else
-				{
-					return "Conventional Forest was selected";
-					break;
-				}
-			//When the user selects Conservation Forest
-			case 28:
-				if(action)
-				{
-					return changeSelectedPaintTo(14);
-					break;
-				}
-				else
-				{
-					return "Conservation Forest was selected";
-					break;
-				}
-			//When the user selects Short Rotation Woody Bioenergy
-			case 29:
-				if(action)
-				{
-					return changeSelectedPaintTo(15);
-					break;
-				}
-				else
-				{
-					return "Short Rotation Woody Bioenergy";
-					break;
-				}
-			//When the user clicks the undo button
-			case 30:
-				if(action)
-				{
-					return revertChanges();
-					break;
-				}
-				else
-				{
-					return "Undo button was toggled";
-					break;
-				}
-			//When the user uses the overlay hotkey
-			case 31:
-				if(action)
-				{
-					return toggleOverlay();
-					break;
-				}
-				else
-				{
-					return "Overlay hotkey was toggled";
-					break;
-				}
-			//When the user uses the topography hotkey
-			case 32:
-				if(action)
-				{
-					if (modalUp != true) {
-                	tToggle ? tToggle = false : tToggle = true;
-                	//in the case when the map is highlighted:
-                	if(mapIsHighlighted) { refreshBoard(true); }
-                	//if the map is not highlighted:
-                	else { refreshBoard(); }
-                	setupRiver();
-            		}
-					break;
-				}
-				else
-				{
-					return "Topography hotkey was toggled";
-					break;
-				}
-			//When the user closes the information window
-			case 33:
-				if(action)
-				{
-					return closeCreditFrame();
-					break;
-				}
-				else
-				{
-					return "Information tab was closed";
-					break;
-				}
-			//When the user modifies the year 0 precip
-			case 34:
-				if(action)
-				{
-					document.getElementById("year0Precip").value = this.tileID;
-					updatePrecip(0);
-					return rainOnPewi();
-					break;
-				}
-				else
-				{
-					return "Year 0 Precip Modified";
-					break;
-				}
-			//When the user modifies the year 1 precip
-			case 35:
-				if(action)
-				{
-					document.getElementById("year1Precip").value = this.tileID;
-					updatePrecip(1);
-					return rainOnPewi();
-					break;
-				}
-				else
-				{
-					return "Year 1 Precip Modified";
-					break;
-				}
-			//When the user modifies the year 2 precip
-			case 36:
-				if(action)
-				{
-					document.getElementById("year2Precip").value = this.tileID;
-					updatePrecip(2);
-					return rainOnPewi();
-					break;
-				}
-				else
-				{
-					return "Year 2 Precip Modified";
-					break;
-				}
-			//When the user modifies the year 3 precip
-			case 37:
-				if(action)
-				{
-					document.getElementById("year3Precip").value = this.tileID;
-					updatePrecip(3);
-					return rainOnPewi();
-					break;
-				}
-				else
-				{
-					return "Year 3 Precip Modified";
-					break;
-				}
-			//When the user selects year 1
-			case 38:
-				if(action)
-				{
-					transitionToYear(1)
-					return switchYearTab(1);
-					break;
-				}
-				else
-				{
-					return "Year 1 Selected";
-					break;
-				}
-			//When the user selects year 2
-			case 39:
-				if(action)
-				{
-					transitionToYear(2)
-					return switchYearTab(2);
-					break;
-				}
-				else
-				{
-					return "Year 2 Selected";
-					break;
-				}
-			//When the user selects year 3
-			case 40:
-				if(action)
-				{
-					transitionToYear(3)
-					return switchYearTab(3);
-					break;
-				}
-				else
-				{
-					return "Year 3 Selected";
-					break;
-				}
-			//When the user adds a new year
-			case 41:
-				if(action)
-				{
-					return addYearAndTransition();
-					break;
-				}
-				else
-				{
-					return "Additional year was added";
-					break;
-				}
-			//When the user selects Subwatershed Nitrate icon
-			case 42:
-				if(action)
-				{
-					return displayLevels('nitrate');
-					break;
-				}
-				else
-				{
-					return "Nitrate Percent was clicked";
-					break;
-				}
-			//When the user selects Gross Erosion icon
-			case 43:
-				if(action)
-				{
-					return displayLevels('erosion');
-					break;
-				}
-				else
-				{
-					return "Gross Erosion was clicked";
-					break;
-				}
-			//When the user selects Phosphorus Index Risk
-			case 44:
-				if(action)
-				{
-					return displayLevels('phosphorus');
-					break;
-				}
-				else
-				{
-					return "Phosphorus Index Risk was clicked";
-					break;
-				}
-			//When the user selects Flood Frequency
-			case 45:
-				if(action)
-				{
-					return displayLevels('flood');
-					break;
-				}
-				else
-				{
-					return "Flood Frequency was clicked";
-					break;
-				}
-			//When the user selects Strategic Wetlands
-			case 46:
-				if(action)
-				{
-					return displayLevels('wetland');
-					break;
-				}
-				else
-				{
-					return "Strategic Wetlands was clicked";
-					break;
-				}
-			//When the user selects Subwatershed Boundaries
-			case 47:
-				if(action)
-				{
-					return displayLevels('subwatershed');
-					break;
-				}
-				else
-				{
-					return "Subwatershed Boundaries";
-					break;
-				}
-			//When the user selects Drainage Class
-			case 48:
-				if(action)
-				{
-					return displayLevels('drainage');
-					break;
-				}
-				else
-				{
-					return "Drainage Class was clicked";
-					break;
-				}
-			//When the user selects Soil Class
-			case 49:
-				if(action)
-				{
-					return displayLevels('soil');
-					break;
-				}
-				else
-				{
-					return "Soil Class was clicked";
-					break;
-				}
-			//When the user clicks the single land-type icon
-			case 50:
-				if(action)
-				{
-					return painterSelect(1);
-					break;
-				}
-				else
-				{
-					return "Single land-type selector clicked";
-					break;
-				}
-			//When the user clicks the multi land-type icon
-			case 51:
-				if(action)
-				{
-					return painterSelect(2);
-					break;
-				}
-				else
-				{
-					return "Multi land-type selector clicked";
-					break;
-				}
-			//When the user randomizes the board (via hotkey)
-			case 52:
-				if(action)
-				{
-					return randomizeBoard();
-					break;
-				}
-				else
-				{
-					return "Board randomization hotkey pressed";
-					break;
-				}
-			//When the user closes the download window
-			case 53:
-				if(action)
-				{
-					return closeUploadDownloadFrame();
-					break;
-				}
-				else
-				{
-					return "Download window was closed";
-					break;
-				}
-			//When the user collapses the speech bubble
-			case 54:
-				if(action)
-				{
-					return togglePopupDisplay();
-					break;
-				}
-				else
-				{
-					return "Speech bubble was collapsed";
-					break;
-				}
-			//When the user paints a tile (single seleciton)
-			case 55:
-				if(action)
-				{
-					return changeLandTypeTile(this.tileID);
-					break;
-				}
-				else
-				{
-					return "A tile was painted (single selection)";
-					break;
-				}
-			//When the user paints a tile (multi selection)
-			case 56:
-				if(action)
-				{
-					return changeLandTypeTile(this.tileID);
-					break;
-				}
-				else
-				{
-					return "A tile was painted (multi selection)";
-					break;
-				}
-			//When the user expands the pickaxe
-			case 57:
-				if(action)
-				{
-					return roll(1);
-					break;
-				}
-				else
-				{
-					return "Pickaxe was expanded";
-					break;
-				}
-			case 58:
-				if(action)
-				{
-					window.frames[3].scrollTo(0,0);
-					return window.frames[3].toggleToTab(1);
-					break;
-				}
-				else
-				{
-					return "First results tab clicked";
-					break;
-				}
-			case 59:
-				if(action)
-				{
-					window.frames[3].scrollTo(0,0);
-					return  window.frames[3].toggleToTab(2);
-					break;
-				}
-				else
-				{
-					return "Second results tab clicked";
-					break;
-				}
-			case 60:
-				if(action)
-				{
-					window.frames[3].scrollTo(0,0);
-					return window.frames[3].changeLandPieBy(1);
-					break;
-				}
-				else
-				{
-					return "Up arrow on results pie toggled";
-					break;
-				}
-			case 61:
-				if(action)
-				{
-					window.frames[3].scrollTo(0,0);
-					return window.frames[3].changeLandPieBy(-1);
-					break;
-				}
-				else
-				{
-					return "Down arrow on results pie toggled";
-					break;
-				}
-			case 62:
-				if(action)
-				{
-					window.frames[3].scrollTo(0,500);
-					if(window.frames[3].document.getElementById("checkboxYear1").checked)
-					{
-						window.frames[3].document.getElementById("checkboxYear1").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("checkboxYear1").checked = true;
-					}
-					return window.frames[3].radarPlotYearToggle(1);
-					break;
-				}
-				else
-				{
-					return "Radar plot year 1 toggled";
-					break;
-				}
-			case 63:
-				if(action)
-				{
-					if(window.frames[3].document.getElementById("checkboxYear2").checked)
-					{
-						window.frames[3].document.getElementById("checkboxYear2").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("checkboxYear2").checked = true;
-					}
-					window.frames[3].scrollTo(0,500);
-					return window.frames[3].radarPlotYearToggle(2);
-					break;
-				}
-				else
-				{
-					return "Radar plot year 2 toggled";
-					break;
-				}
-			case 64:
-				if(action)
-				{
-					if(window.frames[3].document.getElementById("checkboxYear3").checked)
-					{
-						window.frames[3].document.getElementById("checkboxYear3").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("checkboxYear3").checked = true;
-					}
-					window.frames[3].scrollTo(0,500);
-					return window.frames[3].radarPlotYearToggle(3);
-					break;
-				}
-				else
-				{
-					return "Radar plot year 3 toggled";
-					break;
-				}
-			case 65:
-				if(action)
-				{
-					if(window.frames[3].document.getElementById("yieldCheckboxYear1").checked)
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear1").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear1").checked = true;
-					}
-					window.frames[3].scrollTo(0,1000);
-					return window.frames[3].yieldRadarPlotYearToggle(1);
-					break;
-				}
-				else
-				{
-					return "Annual yield results year 1 toggled";
-					break;
-				}
-			case 66:
-				if(action)
-				{
-					if(window.frames[3].document.getElementById("yieldCheckboxYear2").checked)
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear2").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear2").checked = true;
-					}
-					window.frames[3].scrollTo(0,1000);
-					return window.frames[3].yieldRadarPlotYearToggle(2);
-					break;
-				}
-				else
-				{
-					return "Annual yield results year 2 toggled";
-					break;
-				}
-			case 67:
-				if(action)
-				{
-					if(window.frames[3].document.getElementById("yieldCheckboxYear3").checked)
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear3").checked = false;
-					}
-					else
-					{
-						window.frames[3].document.getElementById("yieldCheckboxYear3").checked = true;
-					}
-					window.frames[3].scrollTo(0,1000);
-					return window.frames[3].yieldRadarPlotYearToggle(3);
-					break;
-				}
-				else
-				{
-					return "Annual yield results year 3 toggled";
-					break;
-				}
-			case 68:
-				if(action)
-				{
-					return switchConsoleTab(7);
-					break;
-				}
-				else
-				{
-					return "Yield tab selected";
-					break;
-				}
-			case 69:
-				if(action)
-				{
-					return displayLevels('cornGrain');
-				}
-				else
-				{
-					return "Corn Grain yield selected";
-				}
-			case 70:
-				if(action)
-				{
-					return displayLevels('soy');
-				}
-				else
-				{
-					return "Soy yield selected";
-				}
-			case 71:
-				if(action)
-				{
-					return displayLevels('fruit');
-				}
-				else
-				{
-					return "Mixed Fruit and Vegetables yield selected";
-				}
-			case 72:
-				if(action)
-				{
-					return displayLevels('cattle');
-				}
-				else
-				{
-					return "Cattle yield selected";
-				}
-			case 73:
-				if(action)
-				{
-					return displayLevels('alfalfa');
-				}
-				else
-				{
-					return "Alfalfa yield selected";
-				}
-			case 74:
-				if(action)
-				{
-					return displayLevels('grassHay');
-				}
-				else
-				{
-					return "Grass hay yield selected";
-				}
-			case 75:
-				if(action)
-				{
-					return displayLevels('switchGrass');
-				}
-				else
-				{
-					return "Switchgrass yield selected";
-				}
-			case 76:
-				if(action)
-				{
-					return displayLevels('wood');
-				}
-				else
-				{
-					return "Wood yield selected";
-				}
-			case 77:
-				if(action)
-				{
-					return displayLevels('short');
-				}
-				else
-				{
-					return "Woody Biomass yield selected";
-				}
-			case 78:
-				if(action)
-				{
-					return toggleIndex();
-				}
-				else
-				{
-					return "Index opened";
-				}
-			case 79:
-				if(action)
-				{
-					return toggleIndex();
-				}
-				else
-				{
-					return "Index closed";
-				}
-			//Should not go here, alerts the dev that there is a user experience case that has not been implemented.
-			default:
-				alert("This user click has not been configured yet. Please add this click to the cases in helperObjects.js");
-				break;
-		}
-	}
+  //Retrieves the function performed in accordance to the click type [As a string]
+  this.getAction = function() {
+    var action = isSimRunning();
+    var caseInput = parseInt(this.functionType);
+    switch (caseInput) {
+      //When the user hit the escape key
+      case 1:
+        if (action) {
+          return onDocumentKeyDown(27);
+        } else {
+          return "Escape was pressed";
+        }
+        break;
+        //When the user attempts to leave the environment ***COME BACK AND FIX FOR SIMULATIONS***
+      case 2:
+        if (action) {
+          return null;
+        } else {
+          return "User tried closing the window";
+        }
+        break;
+        //When the user collapses the pickaxe
+      case 3:
+        if (action) {
+          return roll(1);
+        } else {
+          return "Pickaxe was collapsed";
+        }
+        break;
+        //When the user clicks the land-type icon
+      case 4:
+        if (action) {
+          return switchConsoleTab(1);
+        } else {
+          return "Land-use icon was clicked";
+        }
+        break;
+        //When the user clicks the precipitation icon
+      case 5:
+        if (action) {
+          return switchConsoleTab(2);
+        } else {
+          return "Precipitation tab was clicked";
+        }
+        break;
+        //When the user clicks the calender icon
+      case 6:
+        if (action) {
+          return switchConsoleTab(6);
+        } else {
+          return "Year selection tab was clicked";
+        }
+        break;
+        //When the user clicks the assessment icon
+      case 7:
+        if (action) {
+          return switchConsoleTab(3);
+        } else {
+          return "Assessment tab was clicked";
+        }
+        break;
+        //When the user clicks landscape feature tab
+      case 8:
+        if (action) {
+          return switchConsoleTab(4);
+        } else {
+          return "Landscape feature tab was clicked";
+        }
+        break;
+        //When the user clicks the settings tab
+      case 9:
+        if (action) {
+          return switchConsoleTab(5);
+        } else {
+          return "Land selection setting was clicked";
+        }
+        break;
+        //When the user clicks the download/upload button
+      case 10:
+        if (action) {
+          return showUploadDownload();
+        } else {
+          return "Download icon was clicked";
+        }
+        break;
+        //When the user clicks the information icon
+      case 11:
+        if (action) {
+          return showCredits();
+        } else {
+          return "Information icon was clicked";
+        }
+        break;
+        //When the user clicks the results tab
+      case 12:
+        if (action) {
+          return resultsStart();
+        } else {
+          return "Results tab was clicked";
+        }
+        break;
+        //When the user clicks out of the results tab
+      case 13:
+        if (action) {
+          return resultsEnd();
+        } else {
+          return "Results tab was closed";
+        }
+        break;
+        //When the user clicks the speech bubble
+      case 14:
+        if (action) {
+          return togglePopupDisplay();
+        } else {
+          return "Speech bubble selected";
+        }
+        break;
+        //When the user selects conventional corn
+      case 15:
+        if (action) {
+          return changeSelectedPaintTo(1);
+        } else {
+          return "Conventional corn was selected";
+        }
+        break;
+        //When the user selects conservation corn
+      case 16:
+        if (action) {
+          return changeSelectedPaintTo(2);
+        } else {
+          return "Conservation corn was selected";
+        }
+        break;
+        //When the user selects conventional soybean
+      case 17:
+        if (action) {
+          return changeSelectedPaintTo(3);
+        } else {
+          return "Conventional soybean was selected";
+        }
+        break;
+        //When the user selects conservation soybean
+      case 18:
+        if (action) {
+          return changeSelectedPaintTo(4);
+        } else {
+          return "Conservation soybean was selected";
+        }
+        break;
+        //When the user selects Mixed Fruits and Vegetables
+      case 19:
+        if (action) {
+          return changeSelectedPaintTo(5);
+        } else {
+          return "Mixed Fruits and Vegetables was selected";
+        }
+        break;
+        //When the user selects Alfalfa
+      case 20:
+        if (action) {
+          return changeSelectedPaintTo(6);
+        } else {
+          return "Alfalfa was selected";
+        }
+        break;
+        //When the user selects Grass Hay
+      case 21:
+        if (action) {
+          return changeSelectedPaintTo(7);
+        } else {
+          return "Grass Hay was selected";
+        }
+        break;
+        //When the user selects Switchgrass
+      case 22:
+        if (action) {
+          return changeSelectedPaintTo(8);
+        } else {
+          return "Switchgrass was selected";
+        }
+        break;
+        //When the user selects Permanent Pasture
+      case 23:
+        if (action) {
+          return changeSelectedPaintTo(9);
+        } else {
+          return "Permanent Pasture was selected";
+        }
+        break;
+        //When the user selects Rotational Grazing
+      case 24:
+        if (action) {
+          return changeSelectedPaintTo(10);
+        } else {
+          return "Rotational Grazing was selected";
+        }
+        break;
+        //When the user selects Wetland
+      case 25:
+        if (action) {
+          return changeSelectedPaintTo(11);
+        } else {
+          return "Wetland was selected";
+        }
+        break;
+        //When the user selects Prairie
+      case 26:
+        if (action) {
+          return changeSelectedPaintTo(12);
+        } else {
+          return "Prairie was selected";
+        }
+        break;
+        //When the user selects Conventional Forest
+      case 27:
+        if (action) {
+          return changeSelectedPaintTo(13);
+        } else {
+          return "Conventional Forest was selected";
+        }
+        break;
+        //When the user selects Conservation Forest
+      case 28:
+        if (action) {
+          return changeSelectedPaintTo(14);
+        } else {
+          return "Conservation Forest was selected";
+        }
+        break;
+        //When the user selects Short Rotation Woody Bioenergy
+      case 29:
+        if (action) {
+          return changeSelectedPaintTo(15);
+        } else {
+          return "Short Rotation Woody Bioenergy";
+        }
+        break;
+        //When the user clicks the undo button
+      case 30:
+        if (action) {
+          return revertChanges();
+        } else {
+          return "Undo button was toggled";
+        }
+        break;
+        //When the user uses the overlay hotkey
+      case 31:
+        if (action) {
+          return toggleOverlay();
+        } else {
+          return "Overlay hotkey was toggled";
+        }
+        break;
+        //When the user uses the topography hotkey
+      case 32:
+        if (action) {
+          if (modalUp !== true) {
+            tToggle ? tToggle = false : tToggle = true;
+            //in the case when the map is highlighted:
+            if (mapIsHighlighted) {
+              refreshBoard(true);
+            }
+            //if the map is not highlighted:
+            else {
+              refreshBoard();
+            }
+            setupRiver();
+          }
+        } else {
+          return "Topography hotkey was toggled";
+        }
+        break;
+        //When the user closes the information window
+      case 33:
+        if (action) {
+          return closeCreditFrame();
+        } else {
+          return "Information tab was closed";
+        }
+        break;
+        //When the user modifies the year 0 precip
+      case 34:
+        if (action) {
+          document.getElementById("year0Precip").value = this.tileID;
+          updatePrecip(0);
+          return rainOnPewi();
+        } else {
+          return "Year 0 Precip Modified";
+        }
+        break;
+        //When the user modifies the year 1 precip
+      case 35:
+        if (action) {
+          document.getElementById("year1Precip").value = this.tileID;
+          updatePrecip(1);
+          return rainOnPewi();
+        } else {
+          return "Year 1 Precip Modified";
+        }
+        break;
+        //When the user modifies the year 2 precip
+      case 36:
+        if (action) {
+          document.getElementById("year2Precip").value = this.tileID;
+          updatePrecip(2);
+          return rainOnPewi();
+        } else {
+          return "Year 2 Precip Modified";
+        }
+        break;
+        //When the user modifies the year 3 precip
+      case 37:
+        if (action) {
+          document.getElementById("year3Precip").value = this.tileID;
+          updatePrecip(3);
+          return rainOnPewi();
+        } else {
+          return "Year 3 Precip Modified";
+        }
+        break;
+        //When the user selects year 1
+      case 38:
+        if (action) {
+          transitionToYear(1);
+          return switchYearTab(1);
+        } else {
+          return "Year 1 Selected";
+        }
+        break;
+        //When the user selects year 2
+      case 39:
+        if (action) {
+          transitionToYear(2);
+          return switchYearTab(2);
+        } else {
+          return "Year 2 Selected";
+        }
+        break;
+        //When the user selects year 3
+      case 40:
+        if (action) {
+          transitionToYear(3);
+          return switchYearTab(3);
+        } else {
+          return "Year 3 Selected";
+        }
+        break;
+        //When the user adds a new year
+      case 41:
+        if (action) {
+          return addYearAndTransition();
+        } else {
+          return "Additional year was added";
+        }
+        break;
+        //When the user selects Subwatershed Nitrate icon
+      case 42:
+        if (action) {
+          return displayLevels('nitrate');
+        } else {
+          return "Nitrate Percent was clicked";
+        }
+        break;
+        //When the user selects Gross Erosion icon
+      case 43:
+        if (action) {
+          return displayLevels('erosion');
+        } else {
+          return "Gross Erosion was clicked";
+        }
+        break;
+        //When the user selects Phosphorus Index Risk
+      case 44:
+        if (action) {
+          return displayLevels('phosphorus');
+        } else {
+          return "Phosphorus Index Risk was clicked";
+        }
+        break;
+        //When the user selects Flood Frequency
+      case 45:
+        if (action) {
+          return displayLevels('flood');
+        } else {
+          return "Flood Frequency was clicked";
+        }
+        break;
+        //When the user selects Strategic Wetlands
+      case 46:
+        if (action) {
+          return displayLevels('wetland');
+        } else {
+          return "Strategic Wetlands was clicked";
+        }
+        break;
+        //When the user selects Subwatershed Boundaries
+      case 47:
+        if (action) {
+          return displayLevels('subwatershed');
+        } else {
+          return "Subwatershed Boundaries";
+        }
+        break;
+        //When the user selects Drainage Class
+      case 48:
+        if (action) {
+          return displayLevels('drainage');
+        } else {
+          return "Drainage Class was clicked";
+        }
+        break;
+        //When the user selects Soil Class
+      case 49:
+        if (action) {
+          return displayLevels('soil');
+        } else {
+          return "Soil Class was clicked";
+        }
+        break;
+        //When the user clicks the single land-type icon
+      case 50:
+        if (action) {
+          return painterSelect(1);
+        } else {
+          return "Single land-type selector clicked";
+        }
+        break;
+        //When the user clicks the multi land-type icon
+      case 51:
+        if (action) {
+          return painterSelect(2);
+        } else {
+          return "Multi land-type selector clicked";
+        }
+        break;
+        //When the user randomizes the board (via hotkey)
+      case 52:
+        if (action) {
+          return randomizeBoard();
+        } else {
+          return "Board randomization hotkey pressed";
+        }
+        break;
+        //When the user closes the download window
+      case 53:
+        if (action) {
+          return closeUploadDownloadFrame();
+        } else {
+          return "Download window was closed";
+        }
+        break;
+        //When the user collapses the speech bubble
+      case 54:
+        if (action) {
+          return togglePopupDisplay();
+        } else {
+          return "Speech bubble was collapsed";
+        }
+        break;
+        //When the user paints a tile (single seleciton)
+      case 55:
+        if (action) {
+          return changeLandTypeTile(this.tileID);
+        } else {
+          return "A tile was painted (single selection)";
+        }
+        break;
+        //When the user paints a tile (multi selection)
+      case 56:
+        if (action) {
+          return changeLandTypeTile(this.tileID);
+        } else {
+          return "A tile was painted (multi selection)";
+        }
+        break;
+        //When the user expands the pickaxe
+      case 57:
+        if (action) {
+          return roll(1);
+        } else {
+          return "Pickaxe was expanded";
+        }
+        break;
+      case 58:
+        if (action) {
+          window.frames[3].scrollTo(0, 0);
+          return window.frames[3].toggleToTab(1);
+        } else {
+          return "First results tab clicked";
+        }
+        break;
+      case 59:
+        if (action) {
+          window.frames[3].scrollTo(0, 0);
+          return window.frames[3].toggleToTab(2);
+        } else {
+          return "Second results tab clicked";
+        }
+        break;
+      case 60:
+        if (action) {
+          window.frames[3].scrollTo(0, 0);
+          return window.frames[3].changeLandPieBy(1);
+        } else {
+          return "Up arrow on results pie toggled";
+        }
+        break;
+      case 61:
+        if (action) {
+          window.frames[3].scrollTo(0, 0);
+          return window.frames[3].changeLandPieBy(-1);
+        } else {
+          return "Down arrow on results pie toggled";
+        }
+        break;
+      case 62:
+        if (action) {
+          window.frames[3].scrollTo(0, 500);
+          if (window.frames[3].document.getElementById("checkboxYear1").checked) {
+            window.frames[3].document.getElementById("checkboxYear1").checked = false;
+          } else {
+            window.frames[3].document.getElementById("checkboxYear1").checked = true;
+          }
+          return window.frames[3].radarPlotYearToggle(1);
+        } else {
+          return "Radar plot year 1 toggled";
+        }
+        break;
+      case 63:
+        if (action) {
+          if (window.frames[3].document.getElementById("checkboxYear2").checked) {
+            window.frames[3].document.getElementById("checkboxYear2").checked = false;
+          } else {
+            window.frames[3].document.getElementById("checkboxYear2").checked = true;
+          }
+          window.frames[3].scrollTo(0, 500);
+          return window.frames[3].radarPlotYearToggle(2);
+        } else {
+          return "Radar plot year 2 toggled";
+        }
+        break;
+      case 64:
+        if (action) {
+          if (window.frames[3].document.getElementById("checkboxYear3").checked) {
+            window.frames[3].document.getElementById("checkboxYear3").checked = false;
+          } else {
+            window.frames[3].document.getElementById("checkboxYear3").checked = true;
+          }
+          window.frames[3].scrollTo(0, 500);
+          return window.frames[3].radarPlotYearToggle(3);
+        } else {
+          return "Radar plot year 3 toggled";
+        }
+        break;
+      case 65:
+        if (action) {
+          if (window.frames[3].document.getElementById("yieldCheckboxYear1").checked) {
+            window.frames[3].document.getElementById("yieldCheckboxYear1").checked = false;
+          } else {
+            window.frames[3].document.getElementById("yieldCheckboxYear1").checked = true;
+          }
+          window.frames[3].scrollTo(0, 1000);
+          return window.frames[3].yieldRadarPlotYearToggle(1);
+        } else {
+          return "Annual yield results year 1 toggled";
+        }
+        break;
+      case 66:
+        if (action) {
+          if (window.frames[3].document.getElementById("yieldCheckboxYear2").checked) {
+            window.frames[3].document.getElementById("yieldCheckboxYear2").checked = false;
+          } else {
+            window.frames[3].document.getElementById("yieldCheckboxYear2").checked = true;
+          }
+          window.frames[3].scrollTo(0, 1000);
+          return window.frames[3].yieldRadarPlotYearToggle(2);
+        } else {
+          return "Annual yield results year 2 toggled";
+        }
+        break;
+      case 67:
+        if (action) {
+          if (window.frames[3].document.getElementById("yieldCheckboxYear3").checked) {
+            window.frames[3].document.getElementById("yieldCheckboxYear3").checked = false;
+          } else {
+            window.frames[3].document.getElementById("yieldCheckboxYear3").checked = true;
+          }
+          window.frames[3].scrollTo(0, 1000);
+          return window.frames[3].yieldRadarPlotYearToggle(3);
+        } else {
+          return "Annual yield results year 3 toggled";
+        }
+        break;
+      case 68:
+        if (action) {
+          return switchConsoleTab(7);
+        } else {
+          return "Yield tab selected";
+        }
+        break;
+      case 69:
+        if (action) {
+          return displayLevels('cornGrain');
+        } else {
+          return "Corn Grain yield selected";
+        }
+        break;
+      case 70:
+        if (action) {
+          return displayLevels('soy');
+        } else {
+          return "Soy yield selected";
+        }
+        break;
+      case 71:
+        if (action) {
+          return displayLevels('fruit');
+        } else {
+          return "Mixed Fruit and Vegetables yield selected";
+        }
+        break;
+      case 72:
+        if (action) {
+          return displayLevels('cattle');
+        } else {
+          return "Cattle yield selected";
+        }
+        break;
+      case 73:
+        if (action) {
+          return displayLevels('alfalfa');
+        } else {
+          return "Alfalfa yield selected";
+        }
+        break;
+      case 74:
+        if (action) {
+          return displayLevels('grassHay');
+        } else {
+          return "Grass hay yield selected";
+        }
+        break;
+      case 75:
+        if (action) {
+          return displayLevels('switchGrass');
+        } else {
+          return "Switchgrass yield selected";
+        }
+        break;
+      case 76:
+        if (action) {
+          return displayLevels('wood');
+        } else {
+          return "Wood yield selected";
+        }
+        break;
+      case 77:
+        if (action) {
+          return displayLevels('short');
+        } else {
+          return "Woody Biomass yield selected";
+        }
+        break;
+      case 78:
+        if (action) {
+          return toggleIndex();
+        } else {
+          return "Index opened";
+        }
+        break;
+      case 79:
+        if (action) {
+          return toggleIndex();
+        } else {
+          return "Index closed";
+        }
+        break;
+        //Should not go here, alerts the dev that there is a user experience case that has not been implemented.
+      default:
+        alert("This user click has not been configured yet. Please add this click to the cases in helperObjects.js");
+        break;
+    }
+  };
 }
 
 //######################################################################################

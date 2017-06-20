@@ -270,7 +270,7 @@ function arrangeContent(idOfElement) {
     document.getElementById('switchGeneral').className = "switchContentDepthSelected";
 
     document.getElementById('switchAdvanced').onclick = function() {
-      showAdvancedDetail(idOfElement)
+      showAdvancedDetail(idOfElement);
     };
   } else {
     document.getElementById('switchAdvanced').style.display = "none";
