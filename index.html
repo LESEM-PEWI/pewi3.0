@@ -1037,6 +1037,7 @@
 
     <!-- Create results button -->
     <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
+    <!--img src="./imgs/backgroundinfo.png"></div>-->
 
     <!-- Create dialogue popup box (message box) -->
     <!-- "Bubble, speech icon" by http://www.iconsolid.com/ with free commercial usage / Inverted from original and resized -->
@@ -1047,6 +1048,12 @@
       <p id="popupText"></p>
     </div>
 
+    <!--Chat box for Index information -->
+    <div id="backgroundInfoButton" class="backgroundInfoButtonRolled" onclick="toggleBackgroundInfoDisplay();"><img src="./imgs/indexIcon.png"></div>
+    <div id="backgroundInfoBox" class="backgroundInfoBoxRolled">
+      <p id = "indexPopupText"></p>
+    </div>
+
     <!-- **END Right Side Component** -->
 
     <!-- Create buttons in upper right corner: upperHud-->
@@ -1055,6 +1062,9 @@
     <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="recordIcon" class="upperButton" style="visibility:hidden;" width="40px" src="./imgs/recordingIcon.gif">
 
+
+    <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+    <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
     <!-- order now becomes important to make sure elements stack and cover correctly -->
 
