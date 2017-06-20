@@ -2937,7 +2937,6 @@ function randomizeBoard() {
       //Random tiles will keep getting added to the map as long as the tile exists
       if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none)
       {
-        //getRandomInt is in back-end helperMethods
         for(var j = 1; j <= 15; j++)
         { //Check to see if the landuse type is toggled off or not
           if(document.getElementById('parameters').innerHTML.indexOf('paint' + j) != -1)
@@ -2952,6 +2951,47 @@ function randomizeBoard() {
                 randomPainterTile.splice(removedIndex, 1)
                 //delete randomPainterTile[removedIndex]
                  //randomPainterTile[removedIndex] = 1
+              }
+            }
+        }
+      }
+         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)]
+        changeLandTypeTile(i);
+      }
+    } //end for all tiles
+  }
+  randomizing = false;
+  painter = prevPainter;
+
+} //end randomizeBoard
+
+function saveAndRandomize(){
+
+  var prevPainter = painter;
+  //Range of values for each land-use type
+  var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  randomizing = true
+  //for whole board (as long as randomization is allowed)
+  if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      //if tile exists
+      //Random tiles will keep getting added to the map as long as the tile exists
+      if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none)
+      {
+        //getRandomInt is in back-end helperMethods
+        for(var j = 1; j <= 15; j++)
+        { //Check to see if the landuse type is toggled off or not
+          if(document.getElementById('parameters').innerHTML.indexOf('paint' + j) != -1)
+          {
+            //If it's toggled off, remove the landuse type for randomization
+            var removedIndex = randomPainterTile.indexOf(j)
+             for(var x = 1; x <= 15; x++)
+            //for(var x = randomPainterTile.length; x >= 1; x--)
+            {
+              if(removedIndex == x)
+              {
+                 delete randomPainterTile[removedIndex]
+                 randomPainterTile[removedIndex] = 1
               }
             }
         }
