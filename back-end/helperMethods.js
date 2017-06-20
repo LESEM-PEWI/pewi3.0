@@ -159,9 +159,8 @@ function initDataIsCorrupt() {
     //
     // } // end for
   } // end for
-
-
   // console.log("initData passed checking!");
   // not corrupt
   return 0;
 } // end initDataIsCorrupt()
+
