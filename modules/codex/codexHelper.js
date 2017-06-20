@@ -218,7 +218,6 @@ function toggleChildElements(idOfHeader) {
   //the sub div is named with the parent id and 'sub' appended
   var childString = idOfHeader + "sub";
 
-  // heightString = elementHeight[idOfHeader] + "px" ;
   heightString = elementHeight[idOfHeader] + "vw";
 
   //if it is an unopened group Header, open it
@@ -255,6 +254,11 @@ function toggleChildElements(idOfHeader) {
 //this function adds the content to the right pane, namely
 //  the image/video in square1, the text frame in square2, and the title
 function arrangeContent(idOfElement) {
+  // if click tracking mode, then record the action
+  if (parent.getTracking()) {
+    // record for click tracking system
+    parent.pushClick(0, parent.getStamp(), 80, 0, idOfElement);
+  }
 
   document.getElementById('square1').innerHTML = dataHolder[idOfElement].square1;
   document.getElementById('square2frame').src = dataHolder[idOfElement].square2;
@@ -269,8 +273,14 @@ function arrangeContent(idOfElement) {
     document.getElementById('switchGeneral').style.display = "block";
     document.getElementById('switchGeneral').className = "switchContentDepthSelected";
 
+    // make Advanced tab clickable
     document.getElementById('switchAdvanced').onclick = function() {
-      showAdvancedDetail(idOfElement)
+      showAdvancedDetail(idOfElement);
+      // if click tracking mode, then record the action
+      if (parent.getTracking()) {
+        // record for click tracking system
+        parent.pushClick(0, parent.getStamp(), 81, 0, idOfElement);
+      }
     };
   } else {
     document.getElementById('switchAdvanced').style.display = "none";
@@ -304,7 +314,6 @@ function resizeAffectedElements(idOfClickedElement, operationToPerform) {
   //find open group headers above us by going through all of the elements
   //resize them accordingly
   while (i >= 0 && onwards) {
-
     //if the element is an open group header
     if (document.getElementById(i) && document.getElementById(i).className == "selectedGroupHeader") {
       //painstakingly get the element padding...
@@ -321,7 +330,6 @@ function resizeAffectedElements(idOfClickedElement, operationToPerform) {
         // slice off "vw"
         string = string.slice(0, -1);
         string = string.slice(0, -1);
-
         //here's where the magic happens, add or subtract the height of current element from parent holder
         if (operationToPerform == 'expand') string = Number(string) + elementHeight[idOfClickedElement];
         if (operationToPerform == 'shrink') string = Number(string) - elementHeight[idOfClickedElement];
@@ -342,6 +350,7 @@ function resizeAffectedElements(idOfClickedElement, operationToPerform) {
 
 //listen for the 'i' key and trigger exit in parent (helpersFE.js)
 function onDocumentKeyDown(event) {
+  console.log("Does onDocumentKeyDown even triggered???");
   switch (event.keyCode) {
     case 73:
       parent.toggleIndex();
@@ -364,8 +373,14 @@ function showAdvancedDetail(idOfCurrentElement) {
   document.getElementById('switchAdvanced').className = "switchContentDepthSelected";
   document.getElementById('switchGeneral').className = "switchContentDepth";
 
+  // make general tab clickable
   document.getElementById('switchGeneral').onclick = function() {
     showLessDetail(idOfCurrentElement);
+    // if click tracking mode, then record the action
+    if (parent.getTracking()) {
+      // record for click tracking system
+      parent.pushClick(0, parent.getStamp(), 82, 0, idOfCurrentElement);
+    }
   };
 } //end showAdvancedDetail
 
@@ -380,8 +395,14 @@ function showLessDetail(idOfCurrentElement) {
   //reset square 1
   document.getElementById('square1').innerHTML = dataHolder[idOfCurrentElement].square1;
 
+  // make Advanced tab clickable
   document.getElementById('switchAdvanced').onclick = function() {
     showAdvancedDetail(idOfCurrentElement);
+    // if click tracking mode, then record the action
+    if (parent.getTracking()) {
+      // record for click tracking system
+      parent.pushClick(0, parent.getStamp(), 81, 0, idOfCurrentElement);
+    }
   };
 } //end showLessDetail
 
@@ -391,5 +412,30 @@ function resetHighlighting() {
   //unhighlight the current selected element
   if (currentSelectedGroupElements.length > 0) {
     currentSelectedGroupElements[0].className = 'groupElement';
+  }
+}
+
+// shrink all expanded elements
+function resetIndexElements() {
+  var idOfHeader; // group header id
+  var childString; // group elements id
+  var currentSelectedGroupHeaders = document.getElementsByClassName('selectedGroupHeader');
+
+  for (var i = 0; i < currentSelectedGroupHeaders.length; i++) {
+    // update id
+    idOfHeader = currentSelectedGroupHeaders[i].id;
+    childString = idOfHeader + "sub";
+    // hide child elements
+    document.getElementById(childString).style.height = "0px";
+    document.getElementById(childString).style.visibility = "hidden";
+    // unhighlight the current selected element
+    document.getElementById(idOfHeader).className = "groupHeader";
+    // change - text to +
+    var text = document.getElementById(idOfHeader).innerHTML;
+    text = text.slice(1);
+    text = "+" + text;
+    document.getElementById(idOfHeader).innerHTML = text;
+    // resize all other frames involved in the collapse
+    resizeAffectedElements(idOfHeader, 'shrink');
   }
 }
