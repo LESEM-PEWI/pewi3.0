@@ -227,7 +227,7 @@
   animation-name: rollButtonUp;
 }
 
-.backgroundInfoButtonRolled {
+#backgroundInfoButtonRolled {
   right: -3%;
   -webkit-animation-name: rollButtonDown;
   animation-name: rollButtonDown;
