@@ -1,9 +1,3 @@
-/**
- * @Date:   2017-05-23T15:09:56-05:00
- * @Last modified time: 2017-05-31T16:52:59-05:00
- */
-
-
 
   //global boolean for first pie chart, default to list
   var isLandPlotOnCategories = false;
@@ -74,13 +68,13 @@
     if (toggleSelectionValue == 1) {
       document.getElementById('toggleYearPie').innerHTML = "To List";
       document.getElementById('toggleYearPie').onclick = function() {
-        toggleCategoriesPie(0)
+        toggleCategoriesPie(0);
       };
       isLandPlotOnCategories = true;
     } else {
       document.getElementById('toggleYearPie').innerHTML = "To Categories";
       document.getElementById('toggleYearPie').onclick = function() {
-        toggleCategoriesPie(1)
+        toggleCategoriesPie(1);
       };
       isLandPlotOnCategories = false;
     }
@@ -93,7 +87,7 @@
   function refreshPie() {
     document.getElementById('toggleYearPie').innerHTML = "To Categories";
     document.getElementById('toggleYearPie').onclick = function() {
-      toggleCategoriesPie(1)
+      toggleCategoriesPie(1);
     };
     isLandPlotOnCategories = false;
   } //end refreshPie()
