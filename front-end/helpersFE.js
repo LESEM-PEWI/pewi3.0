@@ -3507,7 +3507,9 @@ function runSimulation() {
     tempStamp = tempArr[1];
     tempType = tempArr[2];
     tempGap = tempArr[3];
-    if (tempType == 55 || tempType == 56 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37) {
+    // add the case here to read the special argument　(tileID)
+    if (tempType == 55 || tempType == 56 || tempType == 34 || tempType == 35 || tempType == 36 ||
+      tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82) {
       tempTile = tempArr[5];
     } else {
       tempTile = null;
