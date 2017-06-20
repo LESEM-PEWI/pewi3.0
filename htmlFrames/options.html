@@ -44,6 +44,7 @@ Cleaned and Prepared - July 2016
     //as needed
     //the parent page is then called to hide the options iframe
     function saveCurrentOptionsState() {
+      console.log("saveCurrentOptionsState ");
       //find the elements that are able to be checked
       var toggledElements = document.getElementsByClassName('toggle');
       var tempString = "";
@@ -101,7 +102,7 @@ Cleaned and Prepared - July 2016
       //hide the options frame from the top frame (index.html)
       parent.resetOptions();
       //scroll page to top, so that next time options is loaded it starts there
-      window.scrollTo(0, 0); 
+      window.scrollTo(0, 0);
     } //end function saveCurrentOptionsState
 
 
