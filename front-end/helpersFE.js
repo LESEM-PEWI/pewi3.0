@@ -2717,13 +2717,17 @@ function closeUploadDownloadFrame() {
 
 //toggleIndex displays and hides the codex
 function toggleIndex() {
+  // shrink all index entries
+  window.frames[2].resetIndexElements();
 
   if (document.getElementById('index').style.display != "block" && !modalUp) {
     closeCreditFrame();
     closeUploadDownloadFrame();
     if (document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd();
 
-    if (curTracking) {
+    // if click tracking mode, then record the action
+    if(curTracking) {
+      // record for click tracking system
       pushClick(0, getStamp(), 78, 0, null);
     }
     modalUp = true;
@@ -2732,7 +2736,9 @@ function toggleIndex() {
     document.addEventListener('keyup', indexEsc);
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
 
-    if (curTracking) {
+    // if click tracking mode, then record the action
+    if(curTracking) {
+      // record for click tracking system
       pushClick(0, getStamp(), 79, 0, null);
     }
     modalUp = false;
@@ -3465,7 +3471,9 @@ function runSimulation() {
     tempStamp = tempArr[1];
     tempType = tempArr[2];
     tempGap = tempArr[3];
-    if (tempType == 55 || tempType == 56 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37) {
+    // add the case here to read the special argument　(tileID)
+    if (tempType == 55 || tempType == 56 || tempType == 34 || tempType == 35 || tempType == 36 ||
+      tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82) {
       tempTile = tempArr[5];
     } else {
       tempTile = null;

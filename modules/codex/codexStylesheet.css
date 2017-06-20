@@ -6,17 +6,17 @@
 
 
 * {
-  -webkit-touch-callout: none;
+  -webkit-touch-callout: auto;
   /* iOS Safari */
-  -webkit-user-select: none;
+  -webkit-user-select: auto;
   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;
+  -khtml-user-select: auto;
   /* Konqueror */
-  -moz-user-select: none;
+  -moz-user-select: auto;
   /* Firefox */
-  -ms-user-select: none;
+  -ms-user-select: auto;
   /* Internet Explorer/Edge */
-  user-select: none;
+  user-select: auto;
   /* Non-prefixed version, currently not supported by any browser */
 }
 
@@ -151,19 +151,15 @@ body {
   border-radius: 5px;
 }
 
-.groupHeader:hover {
+.groupHeader:hover, .groupElement:hover {
   background-color: rgba(192, 192, 192, .5);
   border: 2px solid gray;
+  cursor: pointer;
 }
 
 .groupElement {
   background-color: rgba(255, 255, 102, 0);
   border-radius: 0px;
-}
-
-.groupElement:hover {
-  background-color: rgba(192, 192, 192, .5);
-  border: 2px solid gray;
 }
 
 .selectedGroupHeader {
@@ -299,6 +295,7 @@ img {
 
 .switchContentDepth:hover {
   background-color: rgba(0, 0, 90, 1);
+  cursor: pointer;
 }
 
 #switchAdvanced {
@@ -312,6 +309,7 @@ img {
 }
 
 .closeButton {
+  cursor: pointer;
   height: 5.7%;
   position: absolute;
   width: 4%;
