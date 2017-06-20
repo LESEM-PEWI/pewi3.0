@@ -27,7 +27,7 @@
   <link rel="stylesheet" type="text/css" href="style_left.css">
   <link rel="stylesheet" type="text/css" href="style_right.css">
   <!--favicon-->
-  <link rel='shortcut icon' href='./imgs/pewi_favicon.ico' type='image/x-icon' />
+  <link rel='shortcut icon' href='./imgs/updatedPewiLogo.png' type='image/x-icon' />
 
   <!-- three.js framework and javascript libraries -->
   <script src="./lib/d3.min.js"></script>
@@ -333,7 +333,7 @@
             <p class="levelsTextDetails">10 - 20 %</p>
           </div>
           <div class="levelColor4" style="background-color: #0053b3">
-            <p class="levelsTextDetails">10 - 25 %</p>
+            <p class="levelsTextDetails">20 - 25 %</p>
           </div>
           <div class="levelColor5" style="background-color: #302486">
             <p class="levelsTextDetails">> 25 %</p>
@@ -669,7 +669,7 @@
           <div class="cattle1">
             <p class="levelsTextDetails">3.4-4.0 animals/acre/yr</p>
           </div>
-          <div class="cattle2">m
+          <div class="cattle2">
             <p class="levelsTextDetails">4.0-5.4 animals/acre/yr</p>
           </div>
           <div class="cattle3">
@@ -1057,11 +1057,14 @@
     <!-- **END Right Side Component** -->
 
     <!-- Create buttons in upper right corner: upperHud-->
+    <img id="pewiLogo" src="./imgs/updatedPewiLogo.png">
     <img id="logoBase" src="./imgs/inGameLogo.png">
     <img id="uploadDownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="recordIcon" class="upperButton" style="visibility:hidden;" width="40px" src="./imgs/recordingIcon.gif">
 
+    <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+    <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
     <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">

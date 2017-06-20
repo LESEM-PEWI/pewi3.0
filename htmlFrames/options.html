@@ -34,6 +34,7 @@ Cleaned and Prepared - July 2016
   <!-- /INCLUDES -->
   <!--additional styling-->
 
+
   <!--page scripting-->
   <script type= "text/javascript" src="./front-end/helpersFE.js"></script>
   <script>
@@ -77,6 +78,7 @@ Cleaned and Prepared - July 2016
             default:
               if (toggledElements[i].checked) {
                 tempString += toggledElements[i].id + "\n"
+                parent.saveAndRandomize();
               }
           } //end switch
         } //end for elements of class toggle
@@ -100,7 +102,7 @@ Cleaned and Prepared - July 2016
       } //end if
 
       //hide the options frame from the top frame (index.html)
-      parent.resetOptions();
+     parent.resetOptions();
       //scroll page to top, so that next time options is loaded it starts there
       window.scrollTo(0, 0);
     } //end function saveCurrentOptionsState
@@ -247,8 +249,6 @@ Cleaned and Prepared - July 2016
       <input id="paint13" class="toggle" type="checkbox">
       <label for="paint13">Woody Bioenergy</label>
 
-     <!--<input id="paint16" class = "toggle" type = "checkbox">
-      <label for = "paint16">Corn Grain</label>-->
     </div>
     <div class="optionsHeader">
       Annual Options
@@ -286,8 +286,12 @@ Cleaned and Prepared - July 2016
       <label for="statFrame"> Application Statistics On </label>
     </div>
 
+  <!--  <div style="width:100%;height:200px;position:relative;">
+      <div id="randomizeTilesButton" class="mainButton" onclick="parent.saveAndRandomize();">Randomize</div>
+    </div>-->
+
     <div style="width:100%;height:200px;position:relative;">
-      <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState(); randomizeBoard();">Save & Exit</div>
+      <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState();">Save & Exit</div>
     </div>
 
   </div>
