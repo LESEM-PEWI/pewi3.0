@@ -64,7 +64,10 @@
 
 
 /* message console */
+
+
 /*Message will stay on the screen by default */
+
 .popup, .popupHidden {
   background-color: rgba(0, 0, 0, 0.7);
   background-image: url('./imgs/consoleTexture.png');
@@ -74,6 +77,7 @@
   /*font-size: 14px;*/
   height: 40%;
   /*margin: 0px;*/
+  overflow-y: auto;
   overflow-x: hidden;
   overflow-y: auto;
   position: absolute;
@@ -186,9 +190,8 @@
   top: 14vw;
   width: 6vw;
 }
-
 /*Dialogue button will roll off the screen when clicked on*/
-.dialogueButtonRolled {
+.dialogueButtonRolled{
   bottom: 0px;
   right: -3%;
   -webkit-animation-name: rollButtonDown;
