@@ -2266,6 +2266,7 @@ function GameBoard() {
 //######################################################################################
 //######################################################################################
 
+
 //Function to construct a click object
 //This is used for the user simulation in Sandbox mode
 //
@@ -2291,6 +2292,7 @@ function Click(c1, c2, c3, c4, c5) {
   this.getAction = function() {
     var action = isSimRunning();
     var caseInput = parseInt(this.functionType);
+    var CODEX_HTML = window.frames[2];
     switch (caseInput) {
       //When the user hit the escape key
       case 1:
@@ -2957,6 +2959,8 @@ function Click(c1, c2, c3, c4, c5) {
           return "Index opened";
         }
         break;
+
+        // Action for index page, Index closed
       case 79:
         if (action) {
           return toggleIndex();
@@ -2964,13 +2968,51 @@ function Click(c1, c2, c3, c4, c5) {
           return "Index closed";
         }
         break;
+        // Action inside index page, click on entry
+      case 80:
+        // simulation is running, do what we recorded (what the user did)
+        if (action) {
+          if (CODEX_HTML.document.getElementById(this.tileID).className == "groupHeader" ||
+            CODEX_HTML.document.getElementById(this.tileID).className == "selectedGroupHeader") {
+            CODEX_HTML.toggleChildElements(this.tileID);
+            CODEX_HTML.arrangeContent(this.tileID);
+          } else if (CODEX_HTML.document.getElementById(this.tileID).className == "groupElement" ||
+            CODEX_HTML.document.getElementById(this.tileID).className == "selectedGroupElement") {
+            CODEX_HTML.arrangeContent(this.tileID);
+          }
+          return;
+        }
+        // record the event description in csv file
+        else
+          return "Click an entry in index page";
+        break;
+
+        // Action inside index page, switch to Advanced
+      case 81:
+        // simulation is running, do what we recorded (what the user did)
+        if (action)
+          return CODEX_HTML.showAdvancedDetail(this.tileID);
+        // record the event description in csv file
+        else
+          return "Click Advanced tab";
+        break;
+
+        // Action inside index page, switch to General
+      case 82:
+        // simulation is running, do what we recorded (what the user did)
+        if (action)
+          return CODEX_HTML.showLessDetail(this.tileID);
+        // record the event description in csv file
+        else
+          return "Click General tab";
+        break;
         //Should not go here, alerts the dev that there is a user experience case that has not been implemented.
       default:
         alert("This user click has not been configured yet. Please add this click to the cases in helperObjects.js");
         break;
-    }
+    } // end switch
   };
-}
+} // end Click
 
 //######################################################################################
 //######################################################################################

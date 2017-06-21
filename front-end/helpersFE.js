@@ -2735,21 +2735,27 @@ function closeUploadDownloadFrame() {
 
 //toggleIndex displays and hides the codex
 function toggleIndex() {
+  // shrink all index entries
+  window.frames[2].resetIndexElements();
 
   if (document.getElementById('index').style.display != "block" && !modalUp) {
     closeCreditFrame();
     closeUploadDownloadFrame();
     if (document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd();
+    // if click tracking mode, then record the action
     if(curTracking) {
-      pushClick(0,getStamp(),78,0,null)
+      // record for click tracking system
+      pushClick(0, getStamp(), 78, 0, null);
     }
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
     document.getElementById('index').style.display = "block";
     document.addEventListener('keyup', indexEsc);
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
+    // if click tracking mode, then record the action
     if(curTracking) {
-      pushClick(0,getStamp(),79,0,null)
+      // record for click tracking system
+      pushClick(0, getStamp(), 79, 0, null);
     }
     modalUp = false;
 
@@ -3516,33 +3522,29 @@ function setSimBoolean(newValue) {
 
 //Handles the click tracking simulation replay
 function runSimulation() {
-    //Begin simulation: Initial step is to clear preset variables before using them.
-    runningSim = true;
-    clickTrackings = [];
-    elapsedTime = 0;
-    pauseDuration = 0;
-    document.getElementById("simSlider").style.zIndex = "1002";
-    //Obtain end time for the simulation
-    tempArr = simulationData[0].split(',');
-    endTime = parseInt(tempArr[9])-parseInt(tempArr[8]);
-    document.getElementById("simSlider").max = endTime;
-    //First, populate the clicks
-    for(var i = 1; i < simulationData.length; i++)
-    {
-        tempArr = simulationData[i].split(',');
-        tempID = tempArr[0];
-        tempStamp = tempArr[1];
-        tempType = tempArr[2];
-        tempGap = tempArr[3];
-        if(tempType == 55 || tempType == 56 || tempType == 34 ||tempType == 35 || tempType == 36 || tempType == 37)
-        {
-            tempTile = tempArr[5];
-        }
-        else
-        {
-            tempTile = null;
-        }
-        pushClick(tempID,tempStamp,tempType,tempGap,tempTile);
+  //Begin simulation: Initial step is to clear preset variables before using them.
+  runningSim = true;
+  clickTrackings = [];
+  elapsedTime = 0;
+  pauseDuration = 0;
+  document.getElementById("simSlider").style.zIndex = "1002";
+  //Obtain end time for the simulation
+  tempArr = simulationData[0].split(',');
+  endTime = parseInt(tempArr[9]) - parseInt(tempArr[8]);
+  document.getElementById("simSlider").max = endTime;
+  //First, populate the clicks
+  for (var i = 1; i < simulationData.length; i++) {
+    tempArr = simulationData[i].split(',');
+    tempID = tempArr[0];
+    tempStamp = tempArr[1];
+    tempType = tempArr[2];
+    tempGap = tempArr[3];
+    // add the case here to read the special argument　(tileID)
+    if (tempType == 55 || tempType == 56 || tempType == 34 || tempType == 35 || tempType == 36 ||
+      tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82) {
+      tempTile = tempArr[5];
+    } else {
+      tempTile = null;
     }
     //Beginning time of simulation
     startTime = new Date();
