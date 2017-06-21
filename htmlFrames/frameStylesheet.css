@@ -283,13 +283,13 @@
  -------------------------
  **/
 
-#levelDesignerButton, #setupButton, #aggregateButton, #addFile, #downloadFile, #simulationButton {
+#levelDesignerButton, #setupButton, #aggregateButton, #addFile, #downloadFile, #simulationButton, #goalOptimizationButton {
   display: inline-block;
   margin-top: 7%;
   position: relative;
 }
 
-#levelDesignerButton, #setupButton, #aggregateButton, #simulationButton {
+#levelDesignerButton, #setupButton, #aggregateButton, #simulationButton, #goalOptimizationButton {
   width: 96.2%;
   /*width: 400px;*/
 }

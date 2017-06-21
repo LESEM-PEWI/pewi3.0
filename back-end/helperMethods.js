@@ -35,7 +35,7 @@ function checkFileCorrectness(file, callback) {
     callback(result);
   }; // end onload()
 
-}
+} // end checkFileCorrectness()
 
 //parseInitial takes the data from on server text file and fills global array
 // return true/false

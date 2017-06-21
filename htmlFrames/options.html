@@ -45,6 +45,7 @@ Cleaned and Prepared - July 2016
     //as needed
     //the parent page is then called to hide the options iframe
     function saveCurrentOptionsState() {
+      console.log("saveCurrentOptionsState ");
       //find the elements that are able to be checked
       var toggledElements = document.getElementsByClassName('toggle');
       var tempString = "";
@@ -103,6 +104,7 @@ Cleaned and Prepared - July 2016
       //hide the options frame from the top frame (index.html)
       parent.resetOptions();
       //scroll page to top, so that next time options is loaded it starts there
+      parent.saveAndRandomize();
       window.scrollTo(0, 0);
     } //end function saveCurrentOptionsState
 
@@ -287,8 +289,16 @@ Cleaned and Prepared - July 2016
       <label for="statFrame"> Application Statistics On </label>
     </div>
 
+<<<<<<< HEAD
+=======
+    <!--<div style="width:100%;height:200px;position:relative;">
+      <div id="randomizeTilesButton" class="mainButton" onclick="randomizeBoard();">Randomize</div>
+    </div>-->
+
+>>>>>>> 0f54b96c055048b4f209e0ab2aab420496322a54
     <div style="width:100%;height:200px;position:relative;">
       <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState();">Save & Exit</div>
+
     </div>
 
   </div>
