@@ -2974,7 +2974,6 @@ function randomizeBoard() {
 
 } //end randomizeBoard
 
-<<<<<<< HEAD
 function saveAndRandomize(){
 
   var prevPainter = painter;
@@ -3017,8 +3016,6 @@ function saveAndRandomize(){
 } //end randomizeBoard
 
 
-=======
->>>>>>> parent of fc6c4b2... Added randomization features
 //toggleVisibility parses the options stored in the parameters div and toggles their visibility
 //elements that are on by default can be turned off with their id
 //some elements that are off by default can be toggled on with specific keywords
