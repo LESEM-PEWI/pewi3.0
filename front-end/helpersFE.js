@@ -2945,6 +2945,7 @@ function randomizeBoard() {
       //Random tiles will keep getting added to the map as long as the tile exists
       if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none)
       {
+        //getRandomInt is in back-end helperMethods
         for(var j = 1; j <= 15; j++)
         { //Check to see if the landuse type is toggled off or not
           if(document.getElementById('parameters').innerHTML.indexOf('paint' + j) != -1)
@@ -2973,6 +2974,7 @@ function randomizeBoard() {
 
 } //end randomizeBoard
 
+<<<<<<< HEAD
 function saveAndRandomize(){
 
   var prevPainter = painter;
@@ -3015,6 +3017,8 @@ function saveAndRandomize(){
 } //end randomizeBoard
 
 
+=======
+>>>>>>> parent of fc6c4b2... Added randomization features
 //toggleVisibility parses the options stored in the parameters div and toggles their visibility
 //elements that are on by default can be turned off with their id
 //some elements that are off by default can be toggled on with specific keywords

@@ -78,6 +78,7 @@ Cleaned and Prepared - July 2016
             default:
               if (toggledElements[i].checked) {
                 tempString += toggledElements[i].id + "\n"
+                parent.saveAndRandomize();
               }
           } //end switch
         } //end for elements of class toggle
@@ -288,9 +289,9 @@ Cleaned and Prepared - July 2016
       <label for="statFrame"> Application Statistics On </label>
     </div>
 
-    <div style="width:100%;height:200px;position:relative;">
+    <!--<div style="width:100%;height:200px;position:relative;">
       <div id="randomizeTilesButton" class="mainButton" onclick="randomizeBoard();">Randomize</div>
-    </div>
+    </div>-->
 
     <div style="width:100%;height:200px;position:relative;">
       <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState();">Save & Exit</div>
