@@ -222,9 +222,17 @@
   animation-duration: 1s;
   -webkit-animation-name: rollButtonUp;
   animation-name: rollButtonUp;
+  cursor: pointer;
 }
 
 #backgroundInfoButtonRolled {
+  right: -3%;
+  -webkit-animation-name: rollButtonDown;
+  animation-name: rollButtonDown;
+  -webkit-animation-duration: 1.2s;
+  animation-duration: 1.2s;
+}
+#backgroundInfoBoxRolled{
   right: -3%;
   -webkit-animation-name: rollButtonDown;
   animation-name: rollButtonDown;
@@ -332,17 +340,17 @@
     margin: 4px;
     width: 12px;
   }
-  .backgroundInfoButton, .backgroundInfoButtonRolled{
+  #backgroundInfoButton, #backgroundInfoButtonRolled{
      height: 18px;
     width: 18px;
     top: 108px;
   }
 
-  .backgroundInfoButton{
+  #backgroundInfoButton{
     right: 72px;
   }
 
-  .backgroundInfoButton img, .backgroundInfoButtonRolled img{
+  #backgroundInfoButton img, #backgroundInfoButtonRolled img{
      height: 10px;
     margin: 4px;
     width: 12px;
