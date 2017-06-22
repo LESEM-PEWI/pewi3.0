@@ -206,7 +206,7 @@
 }
 #backgroundInfoButton, #backgroundInfoButtonRolled{
   right: 15%;
-  top: 34vw;
+  top: 36vw;
   width: 3vw;
   border-radius: 0px;
   border-right: 0px solid #F0A61D;
@@ -241,7 +241,7 @@
 }
 #backgroundInfoBox, #backgroundInfoboxRolled{
   right: 0%;
-  top: 34vw;
+  top: 36vw;
   width: 15%;
   height: 17%;
   border-radius: 0px;
