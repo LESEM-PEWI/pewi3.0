@@ -137,8 +137,10 @@ body {
 #page {
   visibility: hidden;
 }
-
-.upperButton, #logoBase {
+#pewiLogo{
+  right: 16vw;
+}
+.upperButton, #logoBase, #pewiLogo {
   height: 3vw;
   position: absolute;
   top: 0.1vw;
@@ -491,15 +493,15 @@ body {
 }
 
 #overlayMessage, #overlayMessage2, #exitSim, #repeatSim {
-  color: white;
-  font-family: var(--button-font-family);
-  font-size: 2vw;
-  padding-top: 1vw;
+    padding-top: 20px;
+    color: white;
+    font-family: 'Amatic SC', cursive;
+    font-size: 28px;
 }
 
 #overlay-message:hover , #overlay-message-2:hover, #sim-message-exit:hover, #sim-message-repeat:hover {
     background-color: #7cc1e9;
-    cursor: pointer;
+    cursor: default;
 }
 
 #currentInfo {
