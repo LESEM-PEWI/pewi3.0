@@ -2461,6 +2461,32 @@ function writeFileToDownloadString(mapPlayerNumber) {
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
+      //If the tile really shouldn't be there (-1 for BaseLandUseType)...
+      // If the user made a multipler map, and a tile still has values when it's not that player's tile
+      if(boardData[currentBoard].map[i].landType[1] != mapPlayerNumber) {
+        boardData[currentBoard].map[i].area = "NA";
+        boardData[currentBoard].map[i].carbonMax = "NA";
+        boardData[currentBoard].map[i].carbonMin = "NA";
+        boardData[currentBoard].map[i].cattle = "NA";
+        boardData[currentBoard].map[i].cornYield  = "NA";
+        boardData[currentBoard].map[i].drainageClass = "NA";
+        boardData[currentBoard].map[i].erosion = "NA";
+        boardData[currentBoard].map[i].floodFrequency = "NA";
+        boardData[currentBoard].map[i].group = "NA";
+        boardData[currentBoard].map[i].nitratesPPM = "NA";
+        boardData[currentBoard].map[i].pIndex = "NA"; 
+        boardData[currentBoard].map[i].sediment = "NA";
+        boardData[currentBoard].map[i].soilType = 0;
+        boardData[currentBoard].map[i].soybeanYield = "NA"; 
+        boardData[currentBoard].map[i].streamNetwork = "NA";
+        boardData[currentBoard].map[i].subwatershed = "NA"; 
+        boardData[currentBoard].map[i].timber = "NA";
+        boardData[currentBoard].map[i].topography = 0; 
+        boardData[currentBoard].map[i].watershedNitrogenContribution = "NA"; 
+        boardData[currentBoard].map[i].strategicWetland = "NA";
+        boardData[currentBoard].map[i].riverStreams = 0; 
+      } 
+      
       string = string + boardData[currentBoard].map[i].id + "," +
         boardData[currentBoard].map[i].row + "," +
         boardData[currentBoard].map[i].column + "," +
