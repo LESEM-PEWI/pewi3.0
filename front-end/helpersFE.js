@@ -2759,10 +2759,6 @@ function toggleIndex() {
   }
 } //end toggleIndex
 
-function toggleIndexFeatures(){
-  toggleIndex();
-  arrangeContent(12);
-}
 // execute when Esc is pressed while on the result page
 function resultsEsc(e) {
   if (e.keyCode == 27) {
@@ -2962,13 +2958,13 @@ function saveAndRandomize(){
       if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none)
       {
         //getRandomInt is in back-end helperMethods
-        for(var j = 1; j < 16; j++)
+        for(var j = 1; j <= 15; j++)
         { //Check to see if the landuse type is toggled off or not
           if(document.getElementById('parameters').innerHTML.indexOf('paint' + j) != -1)
           {
             //If it's toggled off, remove the landuse type for randomization
             var removedIndex = randomPainterTile.indexOf(j)
-             for(var x = 1; x < 16; x++)
+             for(var x = 1; x <= 15; x++)
             //for(var x = randomPainterTile.length; x >= 1; x--)
             {
               if(removedIndex == x)
