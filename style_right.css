@@ -1,3 +1,9 @@
+/**
+ * @Date:   2017-05-18T10:17:38-05:00
+ * @Last modified time: 2017-06-12T16:50:47-05:00
+ */
+
+
 /**results right styling**/
 .resultsButton, .resultsButtonRolled {
   background-color: rgba(14, 71, 204, 0.8);
@@ -65,6 +71,7 @@
 
 /* message console */
 
+
 /*Message will stay on the screen by default */
 
 .popup, .popupHidden {
@@ -77,6 +84,7 @@
   height: 40%;
   /*margin: 0px;*/
   overflow-y: auto;
+  overflow-x: hidden;
   overflow-y: auto;
   position: absolute;
   right: 0px;
@@ -188,7 +196,6 @@
   top: 14vw;
   width: 6vw;
 }
-
 /*Dialogue button will roll off the screen when clicked on*/
 .dialogueButtonRolled{
   bottom: 0px;
@@ -222,7 +229,6 @@
   -webkit-animation-name: rollButtonUp;
   animation-name: rollButtonUp;
 }
-
 
 #backgroundInfoButtonRolled {
   right: -3%;

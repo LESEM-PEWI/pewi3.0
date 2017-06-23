@@ -84,6 +84,7 @@ function createMultimapDownload() {
     for (var k = 1; k <= assignedPlayers; k++) {
         addToZip(k);
     }
+    parent.cleanCurrentBoardData();
 
     //generate blob, then force browser to save it
     zip.generateAsync({

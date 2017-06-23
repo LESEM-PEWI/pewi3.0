@@ -72,6 +72,10 @@ var cur;
 var paused = false;
 var randomizing = false;
 var simBoard;
+var playerCombo = [];
+var totalPlayers = 0;
+var merging = false;
+var resetting = false;
 
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
@@ -133,12 +137,12 @@ function highlightTile(tileId) {
 
   //clear the information in the delayed information hover div
   document.getElementById("hover-info").innerHTML = "";
-  if (myTimer !== null) {
+  if (myTimer != null) {
     clearTimeout(myTimer);
   }
 
   //if a previous tile was selected for highlighting, unhighlight that tile
-  if (previousHover !== null) {
+  if (previousHover != null) {
     meshMaterials[previousHover].emissive.setHex(0x000000);
   }
 
@@ -147,7 +151,7 @@ function highlightTile(tileId) {
   if (tileId != -1 && !modalUp) {
 
     //remove currently highlighted land type from HUD if over a clear tile
-    if (boardData[currentBoard].map[tileId].landType[currentYear] === 0 ||
+    if (boardData[currentBoard].map[tileId].landType[currentYear] == 0 ||
       boardData[currentBoard].map[tileId].landType[0] == -1) {
 
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
@@ -192,7 +196,7 @@ function changeLandTypeTile(tileId) {
     previous = false;
   }
   //set tiles to change as the previous tile in that position (undo function).
-  if (previousTileId[previousTileId.length - 1] == tileId && undo === true) {
+  if (previousTileId[previousTileId.length - 1] == tileId && undo == true) {
     lastPainter = boardData[currentBoard].map[tileId].landType[currentYear];
     painter = previousPainter[previousPainter.length - 1];
     previousTileId.splice(previousTileId.length - 1, 1);
@@ -201,20 +205,20 @@ function changeLandTypeTile(tileId) {
     paintSwitch = false;
   }
   //store previous tile data only if it's not a previously-listed tile in the array
-  else if (previous === false) {
+  else if (previous == false) {
     //save previous tile information
     previousTileId = previousTileId.concat(tileId);
     previousPainter = previousPainter.concat(boardData[currentBoard].map[tileId].landType[currentYear]);
     previous = true;
     //since the undo function assumes the paint switched to another type (even when the user didn't), the painter will
     // will equal the actual selected painter after the undo function is performed.
-    if (lastPainter !== null && !paintSwitch) {
+    if (lastPainter != null && !paintSwitch) {
       painter = lastSelectedPainter;
       lastPainter = null;
     }
   }
   //if land type of tile is nonzero
-  if (boardData[currentBoard].map[tileId].landType[currentYear] !== 0) {
+  if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
 
     //change the materials of the faces in the meshMaterials array and update the boardData
     if (!multiplayerAssigningModeOn) {
@@ -262,7 +266,7 @@ function getTileID(x, y) {
     }
   }
 
-  if (col === 0 || row === 0) {
+  if (col == 0 || row == 0) {
     return -1;
   }
 
@@ -336,7 +340,7 @@ function getGrid(startTile, endTile) {
     //for applicable columns in the row
     for (var col = startCol; col <= endCol; col++) {
       var id = getTileIDFromRC(row, col);
-      if (boardData[currentBoard].map[id - 1].landType[0] !== 0) {
+      if (boardData[currentBoard].map[id - 1].landType[0] != 0) {
         tileArray.push(id);
       }
     }
@@ -366,7 +370,7 @@ function getGridOutline(startTile, endTile) {
   //check for bad tiles
   var goodTiles = [];
   for (var i = 0; i < tileArray.length; i++) {
-    if (boardData[currentBoard].map[tileArray[i] - 1].landType[0] !== 0) goodTiles.push(tileArray[i]);
+    if (boardData[currentBoard].map[tileArray[i] - 1].landType[0] != 0) goodTiles.push(tileArray[i]);
   }
   tileArray = goodTiles;
 
@@ -437,7 +441,7 @@ function addTile(tile) {
 
 
   //choose the relevant texture to add to the tile faces
-  if (tile.landType[0] === 0) {
+  if (tile.landType[0] == 0) {
 
     tileMaterial = new THREE.MeshBasicMaterial({
       color: 0x000000,
@@ -473,7 +477,7 @@ function addTile(tile) {
   }
 
   //if this tile is the first in its row that is a streamNetwork tile add it to the riverPoints array
-  if (tile.riverStreams !== 0) {
+  if (tile.riverStreams != 0) {
     var streams = tile.riverStreams.split("*");
     for (var i = 0; i < streams.length; i++) {
       if (!riverPoints[Number(streams[i]) - 1]) {
@@ -511,7 +515,7 @@ function addTile(tile) {
 //  to change topography and random tiles, but keep the board highlighted
 function refreshBoard(bypassFromKeyEvent) {
 
-  if (mesh !== null) {
+  if (mesh != null) {
     scene.remove(mesh);
   }
 
@@ -629,10 +633,9 @@ function onDocumentMouseMove(event) {
 
   raycaster.setFromCamera(mouse, camera);
 
-  //FIXME intersects indicates when mouse is hover on tiles, however when the land's angle change, it appears not correct. I think this affects the correctness of coordinates
   var intersects = raycaster.intersectObjects(scene.children);
 
-  //Remove highlighting if clicking and dragging (painter tool/brush 1)
+  //Remove highlighting if clicking and dragging
   if (clickAndDrag) {
     highlightTile(-1);
   }
@@ -651,7 +654,6 @@ function onDocumentMouseMove(event) {
     highlightTile(-1);
   }
 
-  // mouse hovered on tiles and no iframe pops
   if (intersects.length > 0 && !modalUp) {
 
     //if painter tool type is the rectangle painter
@@ -670,19 +672,17 @@ function onDocumentMouseMove(event) {
       //  so it should consistently not highlight
       // in reality, there is a distinction between space outside the board and a
       //  tile on the board with no land type
+      if (currentTile && boardData[currentBoard].map[currentTile].landType[0] != 0) {
 
-      // if the tile the mouse hover on has landUseType, that means it is a paintable land
-      if (boardData[currentBoard].map[currentTile].landType[0] !== 0) {
-        // grid painter mode highlighting tiles here
         for (var i = 0; i < tilesToHighlight.length; i++) {
           highlightTile(tilesToHighlight[i] - 1);
           //prevent highlighting from overwritting...
           previousHover = null;
         }
-        highlightedTiles = tilesToHighlight;
-      } // end if highlighting tiles
-    } // end if grid painter brush
 
+        highlightedTiles = tilesToHighlight;
+      }
+    }
     //if painter tool type is the clickAndDrag painter
     else if (clickAndDrag) {
       var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
@@ -691,7 +691,7 @@ function onDocumentMouseMove(event) {
       } else {
         previous = false;
       }
-      if (boardData[currentBoard].map[currentTile].landType[0] !== 0) changeLandTypeTile(currentTile);
+      if (boardData[currentBoard].map[currentTile].landType[0] != 0) changeLandTypeTile(currentTile);
     } else {
       //just a normal highlighting
       highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
@@ -732,13 +732,13 @@ function onDocumentMouseDown(event) {
               painterTool.status = 2;
               //set start tile
               painterTool.startTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-            } // end if painterTool.status == 1
+            }
             //else if the painter is active, then complete grid paint
             else if (painterTool.status == 2) {
               //end painterTool.status function if
               var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
 
-              if (boardData[currentBoard].map[currentTile].landType[0] !== 0) {
+              if (boardData[currentBoard].map[currentTile].landType[0] != 0) {
                 //then paint since it's an actual tile
                 painterTool.endTile = currentTile;
                 var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
@@ -749,7 +749,7 @@ function onDocumentMouseDown(event) {
                     pushClick(0, getStamp(), 56, 0, changedTiles[i]);
                   }
                   changeLandTypeTile(changedTiles[i] - 1);
-                } // end for
+                }
 
                 //reset highlighting, computationally intensive
                 //  but a working solution
@@ -769,11 +769,11 @@ function onDocumentMouseDown(event) {
               changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
               //Change variable for painting click and drag status
               clickAndDrag = true;
-            } // end if/else
+            }
 
-          } // end if/else
+          }
 
-        } // end if !modalUp && (!painterTool.hover || mapIsHighlighted)
+        }
 
       } // end if shift is not down
       //else, if shift is down, then we want to just change the whole board
@@ -784,14 +784,14 @@ function onDocumentMouseDown(event) {
 
           for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
-            if (boardData[currentBoard].map[i].landType[currentYear] !== 0) {
+            if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
 
               changeLandTypeTile(i);
 
-            } // end if
-          } // end for
-        } // end if !mapIsHighlighted
-      } // if/else
+            }
+          }
+        }
+      }
     } //end else/if group
   }
 } //end onDocumentMouseDown(event)
@@ -812,7 +812,7 @@ function onDocumentMouseUp(event) {
     // update each tile on the board with its corresponding color
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
-      if (boardData[currentBoard].map[i].landType[currentYear] !== 0) {
+      if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
         meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
       }
     } //end for
@@ -933,7 +933,7 @@ function onDocumentKeyDown(event) {
 
       // case o - toggleOverlay
     case 79:
-      if (previousOverlay !== null) {
+      if (previousOverlay != null) {
         if (curTracking) {
           pushClick(0, getStamp(), 31, 0, null);
         }
@@ -1094,14 +1094,33 @@ function changeSelectedPaintTo(newPaintValue) {
     highlightTile(-1);
   }
   else {
-    //reset the playerSelected back to a normal playerNotSelected
-    var painterElementId = "player" + painter + "Image";
-    document.getElementById(painterElementId).className = "playerIcon icon";
 
-    //change new painter to the current corresponding paintPlayer
-    painterElementId = "player" + newPaintValue + "Image";
-    document.getElementById(painterElementId).className = "playerIcon iconSelected";
+    //If we are merging players together
+    if(document.getElementById("combineButton").innerHTML == "Merge" && merging == false) {
+      //If we already selected that player, deselect and remove it from the list to combine
+      var playerIndex = playerCombo.indexOf(newPaintValue);
+      if(playerIndex != -1) {
+        var painterElementId = "player" + newPaintValue + "Image";
+        document.getElementById(painterElementId).className = "playerIcon icon";
+        playerCombo.splice(playerIndex, 1);
+        //Otherwise, select and add it to the list to combine
+      } else {
+        var painterElementId = "player" + newPaintValue + "Image";
+        document.getElementById(painterElementId).className = "playerIcon iconSelected";
+        playerCombo.push(newPaintValue);
+      }
+      //If we aren't merging players
+    } else {
+      //reset the playerSelected back to a normal playerNotSelected
+      var painterElementId = "player" + painter + "Image";
+      document.getElementById(painterElementId).className = "playerIcon icon";
 
+      //change new painter to the current corresponding paintPlayer
+      painterElementId = "player" + newPaintValue + "Image";
+      document.getElementById(painterElementId).className = "playerIcon iconSelected";
+      switchCurrentPlayer(newPaintValue);
+
+    }
     //update the current painter to the value
     painter = newPaintValue;
   } //end if/else group
@@ -1222,7 +1241,7 @@ function roll(value) {
       }
       document.getElementById('toolsButton').style.left = "0px";
       // document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')";
-      document.getElementById('pick').src = "./imgs/pickIn.png";
+      document.getElementById('pick').src = "./imgs/pickIn.png"
       document.getElementById('tabButtons').className = "tabButtonsRolled";
       document.getElementById('leftConsole').className = "leftConsoleRolled";
 
@@ -1234,7 +1253,7 @@ function roll(value) {
       // document.getElementById('toolsButton').style.left = "9.6vw";
       document.getElementById('toolsButton').style.left = document.getElementById('leftConsole').style.width;
       // document.getElementById('toolsButton').style.backgroundImage = "none";
-      document.getElementById('pick').src = "./imgs/pickOut.png";
+      document.getElementById('pick').src = "./imgs/pickOut.png"
       document.getElementById('tabButtons').className = "tabButtons";
       document.getElementById('leftConsole').className = "leftConsole";
 
@@ -1302,69 +1321,54 @@ function showLevelDetails(value) {
     document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
     document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
   }
+  //Corn class legend
+    else if(value == 9){
+        document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
+        document.getElementById('cornClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Conventional Corn and Conservation Corn produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 10){
+        document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
+        document.getElementById('soyClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Conventional Soy and Conservation Soy produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 11){
+        document.getElementById('fruitDetailsList').className = "yieldDetailsList";
+        document.getElementById('fruitClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Mixed Fruits and Vegetable Yield, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 12){
+        document.getElementById('cattleDetailsList').className = "yieldDetailsList";
+        document.getElementById('cattleClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Permanent Pasture and Rotational Grazing produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".')
+    }
+    else if(value == 13){
+        document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
+        document.getElementById('alfalfaClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Alfalfa Hay Yield, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 14){
+        document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
+        document.getElementById('grassHayClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Grass Hay Yield, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 15){
+        document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
+        document.getElementById('switchGrassClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Switch Grass Yield, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 16){
+        document.getElementById('woodDetailsList').className = "yieldDetailsList";
+        document.getElementById('woodClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Conventional Forest and Conservation Forest produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 17){
+        document.getElementById('shortDetailsList').className = "yieldDetailsList";
+        document.getElementById('shortClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Short-Rotation Woody Biomass produces the same output, no matter the soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
+    }
 
-  //show Corn class legend
-  else if (value == 9) {
-    document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('Conventional Corn and Conservation Corn produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
-  }
 
-  //show soy class legend
-  else if (value == 10) {
-    document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('Conventional Soy and Conservation Soy produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show fruit class legend
-  else if (value == 11) {
-    document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about Mixed Fruits and Vegetable Yield, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show cattle class legend
-  else if (value == 12) {
-    document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('Permanent Pasture and Rotational Grazing produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".')
-  }
-
-  //show alfalfa class legend
-  else if (value == 13) {
-    document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about Alfalfa Hay Yield, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show grasshay class legend
-  else if (value == 14) {
-    document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about Grass Hay Yield, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show switch grass class legend
-  else if (value == 15) {
-    document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about Switch Grass Yield, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show wood class legend
-  else if (value == 16) {
-    document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('Conventional Forest and Conservation Forest produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show short class legend
-  else if (value == 17) {
-    document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('Short-Rotation Woody Biomass produces the same output, no matter the soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
-  }
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
     var element = document.getElementsByClassName('DetailsList');
@@ -1404,7 +1408,7 @@ function showLevelDetails(value) {
 //updatePrecip updates the currentBoard with the precipitation values selected in the drop down boxes
 function updatePrecip(year) {
 
-  if (year === 0) {
+  if (year == 0) {
     if (curTracking) {
       pushClick(0, getStamp(), 34, 0, document.getElementById("year0Precip").value);
     }
@@ -1504,7 +1508,8 @@ function switchConsoleTab(value) {
     document.getElementById('calendarImg').className = "imgSelected";
     document.getElementById('yearsTab').style.display = "block";
     updateIndexPopup('The Years Tab allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
-  } else if(value == 7){
+  } else if (value == 7) {
+
     inDispLevels = true;
     if (curTracking) {
       pushClick(0, getStamp(), 68, 0, null);
@@ -1547,7 +1552,7 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
   //for each tile in the board
   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
     //if there is an actual tile there
-    if (boardData[currentBoard].map[i].landType[currentYear] !== 0) {
+    if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
       //then change mesh material
       meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
     } //end if
@@ -1689,10 +1694,65 @@ function displayLevels(overlayHighlightType) {
         pushClick(0, getStamp(), 77, 0, null);
       }
       break;
+
+    case 'cornGrain':
+      selectionHighlightNumber = 9;
+      if (curTracking) {
+        pushClick(0, getStamp(), 69, 0, null);
+      }
+      break;
+    case 'soy':
+      selectionHighlightNumber = 10;
+      if (curTracking) {
+        pushClick(0, getStamp(), 70, 0, null);
+      }
+      break;
+    case 'fruit':
+      selectionHighlightNumber = 11;
+      if (curTracking) {
+        pushClick(0, getStamp(), 71, 0, null);
+      }
+      break;
+    case 'cattle':
+      selectionHighlightNumber = 12;
+      if (curTracking) {
+        pushClick(0, getStamp(), 72, 0, null);
+      }
+      break;
+    case 'alfalfa':
+      selectionHighlightNumber = 13;
+      if (curTracking) {
+        pushClick(0, getStamp(), 73, 0, null);
+      }
+      break;
+    case 'grassHay':
+      selectionHighlightNumber = 14;
+      if (curTracking) {
+        pushClick(0, getStamp(), 74, 0, null);
+      }
+      break;
+    case 'switchGrass':
+      selectionHighlightNumber = 15;
+      if (curTracking) {
+        pushClick(0, getStamp(), 75, 0, null);
+      }
+      break;
+    case 'wood':
+      selectionHighlightNumber = 16;
+      if (curTracking) {
+        pushClick(0, getStamp(), 76, 0, null);
+      }
+      break;
+    case 'short':
+      selectionHighlightNumber = 17;
+      if (curTracking) {
+        pushClick(0, getStamp(), 77, 0, null);
+      }
+      break;
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
-  if (selectionHighlightNumber !== 0) {
+  if (selectionHighlightNumber != 0) {
     previousOverlay = overlayHighlightType;
   }
 
@@ -1703,7 +1763,7 @@ function displayLevels(overlayHighlightType) {
   //if the map is previously highlighted
   else {
     //if the highlight is the same... turn it off
-    if (currentHighlightType == selectionHighlightNumber || selectionHighlightNumber === 0) {
+    if (currentHighlightType == selectionHighlightNumber || selectionHighlightNumber == 0) {
 
       mapIsHighlighted = false;
       refreshBoard();
@@ -1724,7 +1784,7 @@ function displayLevels(overlayHighlightType) {
 
 //toggleOverlay allows the user to quickly switch between an overlay map and the land type mode
 function toggleOverlay() {
-  if (overlayedToggled === false) {
+  if (overlayedToggled == false) {
     switchConsoleTab(previousTab);
     displayLevels(previousOverlay);
     overlayedToggled = true;
@@ -2137,6 +2197,7 @@ function getHighlightColor(highlightType, tileId) {
         return 55;
     }
   }
+
 } //end getHighlightColor
 
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
@@ -2292,7 +2353,7 @@ function contaminatedRiver(riverColor) {
 function objectiveCheck() {
 
   //if level is not yet started
-  if (levelSpecs.started === 0) {
+  if (levelSpecs.started == 0) {
 
     updatePopup(levelSpecs.begin);
     levelSpecs.started = 1;
@@ -2300,7 +2361,7 @@ function objectiveCheck() {
   }
 
   //if level is started but not finished
-  if (levelSpecs.started == 1 && levelSpecs.finished === 0) {
+  if (levelSpecs.started == 1 && levelSpecs.finished == 0) {
 
     var numAccomplished = 0;
 
@@ -2318,17 +2379,17 @@ function objectiveCheck() {
         }
 
         //if this objective is not currently accomplished
-        if (objectives[i].accomplished === 0 && objectives[i].previouslyDisplayed === 0) {
+        if (objectives[i].accomplished == 0 && objectives[i].previouslyDisplayed == 0) {
 
           objectives[i].previouslyDisplayed = 1;
 
-          if (objectives[i].script !== "" && objectives[i].script != "none") {
+          if (objectives[i].script != "" && objectives[i].script != "none") {
 
             updatePopup(objectives[i].script);
 
           }
 
-          if (objectives[i].animation !== "" && objectives[i].animation != "none") {
+          if (objectives[i].animation != "" && objectives[i].animation != "none") {
 
             selectAnimation(objectives[i].animation);
 
@@ -2416,7 +2477,7 @@ function displayFirework() {
 function flyLark() {
   document.getElementById("meadowlark").className = "meadowlarkhidden";
   setTimeout(function() {
-    document.getElementById("meadowlark").className = "meadowlarkfly";
+    document.getElementById("meadowlark").className = "meadowlarkfly"
   }, 1);
 } //end flyLark
 
@@ -2435,7 +2496,7 @@ function createFlock() {
 //rain makes a storm blow over pewi
 function rainOnPewi() {
   //specify the number of raindrops -- could be related to precipitation values
-  if (rain === null) {
+  if (rain == null) {
     makeItRain(Math.pow(Number(boardData[currentBoard].precipitation[currentYear]), 2) * (Number(boardData[currentBoard].precipitation[currentYear]) / 24));
     setTimeout(function() {
       scene.remove(rain);
@@ -2446,13 +2507,13 @@ function rainOnPewi() {
 
 //writeFileToDownloadString creates a string in csv format that describes the current board
 function writeFileToDownloadString(mapPlayerNumber) {
-
   //IF mapPlayerNumber is 0, then the map is written out as is.
   //  this is the desired use in all cases apart from the multiplayer mode
   //Otherwise, if a player number is specified, the map of that player is distinguished
   //  when the year 1 land use is equal to that player's number
 
   var string = "";
+  console.log(boardData[currentBoard]);
   if (typeof boardData[currentBoard] !== 'undefined') {
 
     string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
@@ -2484,15 +2545,15 @@ function writeFileToDownloadString(mapPlayerNumber) {
         boardData[currentBoard].map[i].strategicWetland = "NA";
         boardData[currentBoard].map[i].riverStreams = 0; 
       } 
-      
+
       string = string + boardData[currentBoard].map[i].id + "," +
         boardData[currentBoard].map[i].row + "," +
         boardData[currentBoard].map[i].column + "," +
         boardData[currentBoard].map[i].area + ",";
 
       if (mapPlayerNumber > 0) {
-        if (boardData[currentBoard].map[i].landType[0] === 0) string += "0,";
-        else string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "-1,");
+        if (boardData[currentBoard].map[i].landType[0] == 0) string += "0,";
+        else string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "-1,")
       } else {
         string += boardData[currentBoard].map[i].baseLandUseType + ",";
       }
@@ -2541,7 +2602,9 @@ function writeFileToDownloadString(mapPlayerNumber) {
     } //end for
 
     // finish processing, set boardData as undefined
-    cleanCurrentBoardData();
+    if(!multiplayerAssigningModeOn) {
+      cleanCurrentBoardData();
+    }
 
   } // end if
 
@@ -2593,11 +2656,11 @@ function uploadClicked(e) {
           try {
             //This variable 'string' stores the extracted data from the .json file
             string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + "," +
-              ((obj["1"].area.data[i] === null) ? 0 : obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i] === null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," + ((obj["1"].carbonmax.data[i] === null) ? "NA" : obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i] === null) ? "NA" : obj["1"].carbonmin.data[i]) +
-              "," + ((obj["1"].cattle.data[i] === null) ? "NA" : obj["1"].cattle.data[i]) + "," + ((obj["1"].cornyield.data[i] === null) ? "NA" : obj["1"].cornyield.data[i]) + "," + ((obj["1"].drainageclass.data[i] === null) ? "NA" : obj["1"].drainageclass.data[i]) + "," + ((obj["1"].erosion.data[i] === null) ? "NA" : obj["1"].erosion.data[i]) + "," + ((obj["1"].floodfrequency.data[i] === null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
-              ((obj["1"].group.data[i] === null && obj["1"].floodfrequency.data[i] !== 0) ? "NA" : " ") + "," + ((obj["1"].nitratespmm.data[i] === null) ? "NA" : obj["1"].nitratespmm.data[i]) + "," + ((obj["1"].pindex.data[i] === null) ? "NA" : obj["1"].pindex.data[i]) + "," + ((obj["1"].sediment.data[i] === null) ? "NA" : obj["1"].sediment.data[i]) + "," + ((obj["1"].soiltype.data[i] === null) ? 0 : obj["1"].soiltype.data[i]) + "," + ((obj["1"].soybeanyield.data[i] === null) ? "NA" : obj["1"].soybeanyield.data[i]) + "," +
-              ((obj["1"].streamnetwork.data[i] === null) ? "NA" : obj["1"].streamnetwork.data[i]) + "," + ((obj["1"].subwatershed.data[i] === null) ? 0 : obj["1"].subwatershed.data[i]) + "," + ((obj["1"].timber.data[i] === null) ? "NA" : obj["1"].timber.data[i]) + "," + ((obj["1"].topography.data[i] === null) ? 0 : obj["1"].topography.data[i]) + "," + ((obj["1"].watershednitrogencontribution.data[i] === null) ? "NA" : obj["1"].watershednitrogencontribution.data[i]) + "," +
-              ((obj["1"].wetland.data[i] === null) ? "NA" : obj["1"].wetland.data[i]) + "," + boardData[currentBoard].map[i].riverStreams + "," /** riverStreams is taken from the rever stream of currrent board*/ ;
+              ((obj["1"].area.data[i] == null) ? 0 : obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," + ((obj["1"].carbonmax.data[i] == null) ? "NA" : obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i] == null) ? "NA" : obj["1"].carbonmin.data[i]) +
+              "," + ((obj["1"].cattle.data[i] == null) ? "NA" : obj["1"].cattle.data[i]) + "," + ((obj["1"].cornyield.data[i] == null) ? "NA" : obj["1"].cornyield.data[i]) + "," + ((obj["1"].drainageclass.data[i] == null) ? "NA" : obj["1"].drainageclass.data[i]) + "," + ((obj["1"].erosion.data[i] == null) ? "NA" : obj["1"].erosion.data[i]) + "," + ((obj["1"].floodfrequency.data[i] == null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
+              ((obj["1"].group.data[i] == null && obj["1"].floodfrequency.data[i] != 0) ? "NA" : " ") + "," + ((obj["1"].nitratespmm.data[i] == null) ? "NA" : obj["1"].nitratespmm.data[i]) + "," + ((obj["1"].pindex.data[i] == null) ? "NA" : obj["1"].pindex.data[i]) + "," + ((obj["1"].sediment.data[i] == null) ? "NA" : obj["1"].sediment.data[i]) + "," + ((obj["1"].soiltype.data[i] == null) ? 0 : obj["1"].soiltype.data[i]) + "," + ((obj["1"].soybeanyield.data[i] == null) ? "NA" : obj["1"].soybeanyield.data[i]) + "," +
+              ((obj["1"].streamnetwork.data[i] == null) ? "NA" : obj["1"].streamnetwork.data[i]) + "," + ((obj["1"].subwatershed.data[i] == null) ? 0 : obj["1"].subwatershed.data[i]) + "," + ((obj["1"].timber.data[i] == null) ? "NA" : obj["1"].timber.data[i]) + "," + ((obj["1"].topography.data[i] == null) ? 0 : obj["1"].topography.data[i]) + "," + ((obj["1"].watershednitrogencontribution.data[i] == null) ? "NA" : obj["1"].watershednitrogencontribution.data[i]) + "," +
+              ((obj["1"].wetland.data[i] == null) ? "NA" : obj["1"].wetland.data[i]) + "," + boardData[currentBoard].map[i].riverStreams + "," /** riverStreams is taken from the rever stream of currrent board*/ ;
           } catch (except) //catches for a wrong json file type error
           {
             alert("This file format is not compatible");
@@ -2605,9 +2668,9 @@ function uploadClicked(e) {
           }
 
           try {
-            string = string + ((obj["1"].area.data[i] === null) ? 0 : obj["1"].baseLandUseType.data[i]) + ",";
-            string = string + ((obj["2"].area.data[i] === null) ? 0 : 1) + ",";
-            string = string + ((obj["3"].area.data[i] === null) ? 0 : 1) + "," /** landType + landType + landType*/ ;
+            string = string + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + ",";
+            string = string + ((obj["2"].area.data[i] == null) ? 0 : 1) + ",";
+            string = string + ((obj["3"].area.data[i] == null) ? 0 : 1) + "," /** landType + landType + landType*/ ;
           } catch (except) {
 
             if (except.message == "obj[2].area is undefined") {
@@ -2631,7 +2694,7 @@ function uploadClicked(e) {
         initData = [];
 
 
-      };
+      }
 
     } else {
 
@@ -2645,7 +2708,7 @@ function uploadClicked(e) {
 
       //clear initData
       initData = [];
-    };
+    }
   } //end else
 
   closeUploadDownloadFrame();
@@ -2741,18 +2804,14 @@ function closeUploadDownloadFrame() {
 
 //toggleIndex displays and hides the codex
 function toggleIndex() {
-  // shrink all index entries
-  window.frames[2].resetIndexElements();
 
   if (document.getElementById('index').style.display != "block" && !modalUp) {
     closeCreditFrame();
     closeUploadDownloadFrame();
     if (document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd();
 
-    // if click tracking mode, then record the action
-    if(curTracking) {
-      // record for click tracking system
-      pushClick(0, getStamp(), 78, 0, null);
+    if (curTracking) {
+      pushClick(0, getStamp(), 78, 0, null)
     }
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
@@ -2760,10 +2819,8 @@ function toggleIndex() {
     document.addEventListener('keyup', indexEsc);
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
 
-    // if click tracking mode, then record the action
-    if(curTracking) {
-      // record for click tracking system
-      pushClick(0, getStamp(), 79, 0, null);
+    if (curTracking) {
+      pushClick(0, getStamp(), 79, 0, null)
     }
     modalUp = false;
 
@@ -3027,13 +3084,13 @@ function toggleVisibility() {
   //reset default off items
   document.getElementById('statFrame').style.display = "none";
   //document.getElementById('year0Button').style.display = "none";
-  document.getElementById('paintPlayer1').style.display = "none";
-  document.getElementById('paintPlayer2').style.display = "none";
-  document.getElementById('paintPlayer3').style.display = "none";
-  document.getElementById('paintPlayer4').style.display = "none";
-  document.getElementById('paintPlayer5').style.display = "none";
-  document.getElementById('paintPlayer6').style.display = "none";
-  document.getElementById('playerAddButton').style.display = "none";
+  //document.getElementById('paintPlayer1').style.display = "none";
+  //document.getElementById('paintPlayer2').style.display = "none";
+  //document.getElementById('paintPlayer3').style.display = "none";
+  //document.getElementById('paintPlayer4').style.display = "none";
+  //document.getElementById('paintPlayer5').style.display = "none";
+  //document.getElementById('paintPlayer6').style.display = "none";
+  //document.getElementById('playerAddButton').style.display = "none";
   //currentPlayer=1;
 
 
@@ -3082,7 +3139,7 @@ function toggleVisibility() {
         case "multiAssign":
 
           for (var j = 1; j <= 6; j++) {
-            document.getElementById('paintPlayer' + j).style.display = "inline-block";
+            //document.getElementById('paintPlayer' + j).style.display = "inline-block";
           }
           document.getElementById('playerAddButton').style.display = "inline-block";
           break;
@@ -3106,7 +3163,7 @@ function toggleVisibility() {
     //  then we know the precip was immutable before and we need to cut
     //  this text off
     if (!isNaN(currentInnerHtml[currentInnerHtml.length - 1])) {
-      while (!(currentInnerHtml[currentInnerHtml.length - 1] == '>')) { // XXX says confusing use of '!'
+      while (!(currentInnerHtml[currentInnerHtml.length - 1] == '>')) {
         //keep cutting off characters until we come back to the end tag of the
         // selector element
         currentInnerHtml = currentInnerHtml.slice(0, -1);
@@ -3148,7 +3205,7 @@ function toggleVisibility() {
   if (boardData[currentBoard].calculatedToYear > yearMax) boardData[currentBoard].calculatedToYear = yearMax;
 
   //check to see if the painter selected is no longer a painter...
-  if (document.getElementById('paint' + painter).style.display == "none") {
+  if (document.getElementById('paint' + painter).style.display == "none" && !multiplayerAssigningModeOn) {
     changeSelectedPaintTo(1);
   }
 
@@ -3229,8 +3286,23 @@ function optionsEsc(e) {
 function endMultiplayerAssignMode() {
   //create an iframe, select up to 6 players
   //then downloads
-
-  document.getElementById('multiplayer').style.visibility = "visible";
+  var currentPlayers = document.getElementsByClassName("players");
+  for(var i = 1; i < currentPlayers.length+1; i++) {
+    var foundPlayerTile = false;
+    for(var j = 0; j < boardData[currentBoard].map.length; j++) {
+      if(boardData[currentBoard].map[j].landType[1] == i) {
+        foundPlayerTile = true;
+      }
+    }
+    if(foundPlayerTile == false) {
+      break;
+    }
+  }
+  if(foundPlayerTile) {
+    document.getElementById('multiplayer').style.visibility = "visible";
+  } else {
+    alert("Not all players have allocated land plots; please delete or add land plots for these players.");
+  }
 
 } //end endMultiAssignMode
 
@@ -3266,7 +3338,7 @@ function multiplayerAggregateBaseMapping(file) {
     setupBoardFromUpload(reader.result);
     //clear initData
     initData = [];
-  };
+  }
 } //end multiplayerAggregateBaseMapping
 
 //here we facilitate the aggregation of multiplayer boards
@@ -3286,7 +3358,7 @@ function multiplayerAggregateOverlayMapping(file) {
     }
     //clear initData
     initData = [];
-  };
+  }
 } //end multiplayerAggregateOverlayMapping
 
 //toggleChangeLandType toggles a boolean that tracks the state which is required to change land type
@@ -3296,122 +3368,138 @@ function toggleChangeLandType() {
     (clearToChangeLandType) ? false : true;
 } //end toggleChangeLandType
 
-function addPlayerAndTransition() {
-
-  // console.log("Add button was hit");
-  var totalPlayersAllowed = 6;
-  var nextPlayer = currentPlayer + 1;
-
-  //make next button appear (has some prebuilt functionality for expanded number of players)
-  if (currentPlayer < totalPlayersAllowed - 1) {
-
-    document.getElementById("paintPlayer" + nextPlayer).className = "playerButton";
-    document.getElementById("player" + nextPlayer + "Image").className = "playerIcon iconSelected";
-    // document.getElementById("player" + nextPlayer + "Image").className = "landSelectorIcon";
-    document.getElementById("player" + nextPlayer + "Image").style.display = "inline-block";
-
-
+function addPlayer(givenPlayer) {
+  if(totalPlayers<6) {
+    totalPlayers++;
+    //Toggled when you press the "Add player" button
+    if(givenPlayer==null) {
+      var tempPlayer = document.createElement("paintPlayer" + totalPlayers);
+      tempPlayer.id = "paintPlayer"+totalPlayers;
+      var playerString =  "<div id='paintPlayer"+totalPlayers+"' class='players' onclick='changeSelectedPaintTo("+totalPlayers+");'" +
+    "onmouseover='toggleChangeLandType();'' onmouseout='toggleChangeLandType();'>";
+    playerString += "<img id='player"+totalPlayers+"Image' style='display:inline-block;' class='playerIcon iconSelected'" +
+    " src='./imgs/player"+totalPlayers+"a.png'></div>";
+    //Toggled when you are sorting boards
+    } else {
+      var tempPlayer = document.createElement("paintPlayer" + givenPlayer);
+      tempPlayer.id = "paintPlayer"+givenPlayer;
+      var playerString =  "<div id='paintPlayer"+givenPlayer+"' class='players' onclick='changeSelectedPaintTo("+givenPlayer+");'" +
+    "onmouseover='toggleChangeLandType();'' onmouseout='toggleChangeLandType();'>";
+    playerString += "<img id='player"+givenPlayer+"Image' style='display:inline-block;' class='playerIcon iconSelected'" +
+    " src='./imgs/player"+givenPlayer+"a.png'></div>";
+    }
+    tempPlayer.innerHTML = playerString;
+    var whichSide = parseInt(tempPlayer.id.substr(11,1));
+    //On the left side
+    if(whichSide%2!=0 || whichSide==1) {
+      document.getElementById("leftPlayerCon").appendChild(tempPlayer);
+    //On the right side
+    } else {
+      document.getElementById("rightPlayerCon").appendChild(tempPlayer);
+    }
+    changeSelectedPaintTo(totalPlayers);
   }
-
-  //make last button appear and remove the "+" Button (has some prebuilt functionality for expanded number of years)
-  if (currentPlayer == totalPlayersAllowed - 1) {
-
-    // document.getElementById("paintPlayer6").className = "playerButton";
-    document.getElementById("player6Image").className = "playerIcon iconSelected";
-    document.getElementById("player6Image").style.display = "inline-block";
-    document.getElementById("playerAddButton").style.display = "none";
-
-
-  }
-
-  switchPlayerTab(nextPlayer);
-
-  // console.log("Current player %s", document.getElementsByClassName("playerNotSelected")[0].id);
-  // console.log("Next player %s", document.getElementsByClassName("playerSelected")[0].id);
-  transitionToPlayer(nextPlayer);
-  changeSelectedPaintTo(nextPlayer);
-
-} //end addPlayerAndTransition
-
-
-//switches between players
-function switchPlayerTab(playerNumberToChangeTo) {
-
-  //get the currently selected year and make it not selected
-  //var elements = document.getElementsByClassName("playerSelected");
-
-  //elements[0].className = "playerNotSelected";
-  document.getElementById("player" + currentPlayer + "Image").className = "playerIcon icon";
-  //then toggle on the selected year
-  var playerIdString = "player" + playerNumberToChangeTo + "Image";
-  document.getElementById(playerIdString).className = "playerIcon iconSelected";
 }
 
+//Handles the delete button feature
+function deleteAndSort() {
+  //Saves the previous current player
+  var tempCurrentPlayer = getCurrentPlayer();
+  combineMulti([1,getCurrentPlayer()]);
+  sortPlayers();
+  if(tempCurrentPlayer < totalPlayers) {
+    changeSelectedPaintTo(tempCurrentPlayer);
+  } else {
+    changeSelectedPaintTo(totalPlayers);
+  }
+}
 
+//Allows the user to delete a player
+function deletePlayer(givenPlayer) {
+  if(totalPlayers>1) {
+    document.getElementById("paintPlayer"+givenPlayer).remove();
+    totalPlayers--;
+  }
+} //end deletePlayer()
 
-function transitionToPlayer(playerNumber) {
+//Reorders the players and reallocates the board
+//When a merge happens (Say, you merge 2 and 4 together [and you have all players open], the player list is now 1,2,3,4,5)
+// 1-> Tiles still "1"
+// 2-> Tiles still "2" (and "4"'s are now "2"'s)
+// 3-> Tiles still "3"
+// 4-> Tiles are now "4", but were "5"
+// 5-> Tile are now "5", but were "6"
+// 6-> Now deleted
+//Also, since 2 and 4 were merged, the 4th player was deleted. But since the players were shifted, the 4th player must now reappear
+function sortPlayers() {
+  //Get the current players on the board (using the above example, we should have 1,2,3,5,6)
+  var curPlayers = document.getElementsByClassName("players");
+  var curPlayersArr = Array.prototype.slice.call(curPlayers);
+  //Sorts the players in order (For the above example, it will output 1,2,3,5,6)
+  curPlayersArr.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);} );
+  for(var i = 0; i < curPlayersArr.length; i++) {
+    tempPlayer = curPlayersArr[i]
+    //If the player doesn't exist, but later players do, cascade them down
+    if(tempPlayer.id != "paintPlayer"+(i+1)) {
+      addPlayer(i+1);
+      //Find the next actual player
+      for(var j = i; j < curPlayersArr.length; j++) {
+        tempPlayer = curPlayersArr[j];
+        //For the example above, this will first find 5, then make all the player 5 tiles as player 4's. This will also make all of player 6's
+        //  tiles as player 5's. At the end of this method, player 6 will be deleted, leaving you with players 1,2,3,4, and 5
+        if(tempPlayer!=null) {
+          var changedPlayer = parseInt(tempPlayer.id.substr(11,1));
+          combineMulti([i+1,changedPlayer]);
+          break;
+        }
+      }
+    }
+  }
+} //end sortPlayers()
 
+function switchCurrentPlayer(playerNumber) {
   currentPlayer = playerNumber;
-  // console.log("Total number of players : %s", currentPlayer);
-  boardData[currentBoard].updateBoard();
-
-
-
-
-
-
-
-  // refreshBoard();
+  //boardData[currentBoard].updateBoard();
 } //end transitionToYear
+
+//Returns the currentPlayer value
+function getCurrentPlayer() {
+  return currentPlayer;
+} //end getCurrentPlayer()
+
+//Resets the player count
+function resetPlayers() {
+  var currentPlayers = document.getElementsByClassName("players");
+  for(var i = currentPlayers.length; i > 0; i--) {
+    deletePlayer(i);
+  }
+} //end resetPlayers()
 
 //resetMultiplayer() undos the display-changes made while assigning multiplayers
 function resetMultiPlayer() {
-
-  for (var i = 1; i <= 6; i++) {
-    document.getElementById("player" + i + "Image").className = "playerIcon icon";
-    document.getElementById("player" + i + "Image").style.display = "none";
-    // document.getElementById("paintPlayer" + i).className = "playerButtonHidden";
-  }
-
-  currentPlayer = 1;
-  document.getElementById("player1Image").style.display = "inline-block";
-  document.getElementById("player1Image").className = "playerIcon iconSelected";
-  document.getElementById("playerAddButton").style.display = "inline-block";
-  // document.getElementById("paintPlayer1").className = "playerButton";
-
+  //Eliminates all players except for player 1
+  resetPlayers();
+  resetting = true;
+  //Reloads the default multiplayer map
   parent.loadLevel(-1);
-
-
-  //document.getElementById('calendarImg').style.display="block";
-  // document.getElementById('yearsTab').style.display="none";
-  //document.getElementById('levelsImg').style.display="block";
-  //document.getElementById('levelsImg').onclick="";
-  // document.getElementById("levelsTab").style.display="none";
-
-
-  // document.getElementById("hiddenYear").id="yearButton";
-  // document.getElementById("hiddenLevels").id="levelsButton";
-
-  //$("tabButtons").replaceWith=originalDiv;
 }
 //multiplayerMode hides all unnecessary options from screen
 function multiplayerMode() {
   if (multiplayerAssigningModeOn) {
 
-    // document.getElementById('calendarImg').style.display="none";
-    // document.getElementById('yearsTab').style.display="none";
-    // document.getElementById('levelsImg').style.display="none";
-    //document.getElementById('levelsImg').onclick="";
-    // document.getElementById("levelsTab").style.display="none";
     document.getElementById("message").style.display = "block";
-    document.getElementById("player1Image").style.display = "inline-block";
-    // document.getElementById("paintPlayer1").className = "playerButton";
-    document.getElementById("player1Image").className = "playerIcon iconSelected";
+    //Don't add an aditional player if the level was only reset
+    if(!resetting) {
+      addPlayer();
+    } else {
+      resetting = false;
+    }
+    document.getElementById("combineButton").style.visibility = "visible";
+    document.getElementById("playerOptions").style.visibility = "visible";
     document.getElementById("playerAddButton").style.display = "inline-block";
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
     document.getElementById("yearButton").style.display = "none";
-    // document.getElementById("playerResetImage").style.display = "inline-block";
 
   }
 
@@ -3419,25 +3507,83 @@ function multiplayerMode() {
 }
 
 function multiplayerExit() {
+  document.getElementById("combineButton").style.visibility = "hidden";
+  document.getElementById("playerOptions").style.visibility = "hidden";
   document.getElementById("levelsButton").style.display = "block";
   document.getElementById("yearButton").style.display = "block";
   document.getElementById("playerResetButton").style.display = "none";
   // document.getElementById("playerResetImage").style.display = "none";
-  //resetMultiPlayer();
-  //document.getElementById("message").style.display = "none";
+  resetPlayers();
+  //Elimnate player 1 (since we are actually leaving multiplayer) and reduce totalPlayers count to 0
+  if(multiplayerAssigningModeOn) {
+    document.getElementById("paintPlayer1").remove();
+    totalPlayers--;
+  }
   multiplayerAssigningModeOn = false;
-  //boardData[currentBoard].updateBoard();
 
 
 }
 
 function getNumberOfPlayers() {
-  return currentPlayer;
+  return totalPlayers;
 }
+
+//Function that allows for multiple players to be combined into one player
+function combinePlayers() {
+  if(document.getElementById("combineButton").innerHTML == "Combine Players") {
+    console.log("Combining players...");
+    document.getElementById("combineButton").innerHTML = "Merge";
+    document.getElementById("genOverlay").style.visibility = "visible";
+    //Makes it so the user can only click the player paint when merging players
+    document.getElementById("painterTab-leftcol").style.zIndex = "1002";
+    document.getElementById("painterTab-rightcol").style.zIndex = "1002";
+    document.getElementById("playerResetButton").style.zIndex = "0";
+    document.getElementById("playerAddButton").style.zIndex = "0";
+    document.getElementById("combineButton").style.zIndex = "1002";
+    var painterElementId = "player" + painter + "Image";
+    document.getElementById(painterElementId).className = "playerIcon icon";
+  } else {
+    console.log("Merging players...");
+    //Reset selections
+    for(var i = 0; i < playerCombo.length; i++) {
+      var painterElementId = "player" + playerCombo[i] + "Image";
+      document.getElementById(painterElementId).className = "playerIcon icon";
+    }
+    if(playerCombo.length>1) {
+      combineMulti(playerCombo);
+    }
+    playerCombo = [];
+    document.getElementById("combineButton").innerHTML = "Combine Players";
+    document.getElementById("genOverlay").style.visibility = "hidden";
+    document.getElementById("painterTab-leftcol").style.zIndex = "auto";
+    document.getElementById("painterTab-rightcol").style.zIndex = "auto";
+    document.getElementById("combineButton").style.zIndex = "auto";
+    sortPlayers();
+  }
+} //end combinePlayers()
+
+//Combines players
+function combineMulti(givenPlayers) {
+  merging = true;
+  givenPlayers.sort();
+  changeSelectedPaintTo(givenPlayers[0]);
+  for(var i = 0; i < boardData[currentBoard].map.length; i++) {
+    var curValue = boardData[currentBoard].map[i].landType[currentYear];
+    if(givenPlayers.indexOf(curValue) != -1) {
+      changeLandTypeTile(i);
+    }
+  }
+  //Delete the other (now unused) players
+  givenPlayers.shift();
+  for(var i = 0; i < givenPlayers.length; i++) {
+    deletePlayer(givenPlayers[i]);
+  }
+  merging = false;
+} //end combineMulti(givenPlayers)
 
 //Gets the current timestamp for the click (event)
 function getStamp() {
-  curTime = new Date();
+  curTime = new Date()
   return (curTime - startTime);
 } //end getStamp
 
@@ -3446,12 +3592,12 @@ function finishProperties() {
   var tempClicks = [];
   tempClicks.push(clickTrackings[0]);
   for (var i = 1; i < clickTrackings.length; i++) {
-    if (clickTrackings[i].tileID != clickTrackings[i - 1].tileID || clickTrackings[i].tileID === null || clickTrackings[i - 1].tileID === null) {
+    if (clickTrackings[i].tileID != clickTrackings[i - 1].tileID || clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
       clickTrackings[i].clickID = i;
       clickTrackings[i].timeGap = (clickTrackings[i].timeStamp - clickTrackings[i - 1].timeStamp);
       tempClicks.push(clickTrackings[i]);
-    } // end if
-  } // end for
+    }
+  }
   clickTrackings = tempClicks;
 } //end finishProperties
 
@@ -3466,7 +3612,7 @@ function exportTracking() {
     ['ClickID', 'Time Stamp (Milliseconds)', 'Click Type', 'Time Gap (Milliseconds)', 'Description of click', 'TileID/Precip', startTime, endTime, startTime.getTime(), endTime.getTime()]
   ];
   for (var j = 0; j < clickTrackings.length; j++) {
-    A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID]);
+    A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
   }
   var csvRows = [];
   for (var i = 0; i < A.length; i++) {
@@ -3499,8 +3645,8 @@ function loadSimulation(e) {
       var sim = reader.result.split("\n");
       simulationData = sim;
       promptUserSim();
-    };
-  } // end if/else
+    }
+  }
 } //end loadSimulation
 
 //Prompts user to begin the simulation
@@ -3544,9 +3690,7 @@ function runSimulation() {
     tempStamp = tempArr[1];
     tempType = tempArr[2];
     tempGap = tempArr[3];
-    // add the case here to read the special argument　(tileID)
-    if (tempType == 55 || tempType == 56 || tempType == 34 || tempType == 35 || tempType == 36 ||
-      tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82) {
+    if (tempType == 55 || tempType == 56 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37) {
       tempTile = tempArr[5];
     } else {
       tempTile = null;
@@ -3585,7 +3729,7 @@ function pauseSim() {
 
 //Resumes the sim (and related times)
 function resumeSim() {
-  timeResumed = new Date();
+  timeResumed = new Date()
   //Amount of time the user was paused (total for session)
   pauseDuration = pauseDuration + (timeResumed - timeStopped);
   //Amount of simulation time that has passed
@@ -3679,7 +3823,7 @@ function resetPresets() {
   painterSelect(1);
   //Resets the year selections
   resetYearDisplay();
-  document.getElementById("year1Image").className = "icon yearSelected";
+  document.getElementById("year1Image").className = "icon yearSelected"
   currentYear = 1;
   //Resets the scroll in the results tab
   window.frames[3].scrollTo(0, 0);
