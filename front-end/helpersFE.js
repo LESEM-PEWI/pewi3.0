@@ -3020,7 +3020,7 @@ function randomizeBoard() {
       }
     } //end for all tiles
   }
-  randomizing = false;
+  //randomizing = false;
   painter = prevPainter;
 
 } //end randomizeBoard
@@ -3029,7 +3029,7 @@ function saveAndRandomize(){
   var prevPainter = painter;
   //Range of values for each land-use type
   var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-  randomizing = true
+  //randomizing = true
   //for whole board (as long as randomization is allowed)
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     //getRandomInt is in back-end helperMethods
@@ -3059,21 +3059,39 @@ function saveAndRandomize(){
         }
       }
     }//end for
-
+    var newDefaultLandUse=1;
+    //finding a new default
+    for(var r=1; r<=15; r++)
+    { 
+      if(randomPainterTile.indexOf(r)!=-1)
+      {
+        newDefaultLandUse=r;
+        break;
+      }
+    }
+    console.log(newDefaultLandUse);
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
-      if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none)
+      if ((boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none )&&(randomizing==false))
       {
-         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)]
+         painter = newDefaultLandUse
         changeLandTypeTile(i);
       }
-    } //end for all tiles
-  }
-  randomizing = false;
-  painter = prevPainter;
+      else if(randomizing)
+      {
+        painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
+        changeLandTypeTile(i);
+        
+      }
 
-} //end randomizeBoard
+    }
+    painter=newDefaultLandUse; //end for all tiles
+  }
+  
+  
+
+} //end saveandRandomize
 
 //toggleVisibility parses the options stored in the parameters div and toggles their visibility
 //elements that are on by default can be turned off with their id
