@@ -41,7 +41,7 @@ var optionTypes = ["paint1", "paint2", "paint3", "paint4",
 //Contains strings to display for toggleable options
 var optionLabels = ["Hide conventional corn", "Hide conservation corn", "Hide conventional soybean",
 "Hide conservation soybean", "Hide alfalfa", "Hide permanent pasture",
-"Hide rotational grazing", "Hide grass hay", "Hide prairie",
+"Hide rotational grazing", "Hide grass hay", "Hide prairie", 
 "Hide conservation forest", "Hide conventional forest", "Hide switchgrass",
 "Hide short rotation woody bioenergy", "Hide wetland", "Hide mixed fruits and veggies",
 "Prevent precipitation changes", "Hide year 2", "Hide year 3"];
@@ -62,11 +62,11 @@ function deleteObjective() {
     if(objectiveNumber>0)
     {
         var objectiveToDelete = prompt("Please enter an objective number:", objectiveNumber);
-        if(objectiveToDelete === "" || objectiveToDelete<0 || objectiveToDelete>objectiveNumber)
+        if(objectiveToDelete == "" || objectiveToDelete<0 || objectiveToDelete>objectiveNumber)
         {
             objectiveToDelete = prompt("Please enter a valid objective number:", objectiveNumber);
         }
-        if(objectiveToDelete !== null)
+        if(objectiveToDelete!=null)
         {
             var list = document.getElementById("objectiveDiv");
             list.removeChild(list.childNodes[objectiveToDelete-1]);
@@ -75,8 +75,8 @@ function deleteObjective() {
             {
                 var tempInt = i+1;
                 list.childNodes[i].childNodes[0].data = "Objective " + tempInt;
-                list.childNodes[i].childNodes[5].innerHTML = "Objective " + tempInt + " minimum score value:";
-                list.childNodes[i].childNodes[9].innerHTML = "Objective " + tempInt + " maximum score value:";
+                list.childNodes[i].childNodes[5].innerHTML = "Objective " + tempInt + " minimum score value:"
+                list.childNodes[i].childNodes[9].innerHTML = "Objective " + tempInt + " maximum score value:"
                 list.childNodes[i].childNodes[13].childNodes[0].innerHTML = "Select which year to monitor objective " + tempInt;
                 list.childNodes[i].childNodes[13].childNodes[1].childNodes[4].innerHTML = "If the user accomplishes objective " +
                 tempInt + ", PEWI should say:";
@@ -151,7 +151,7 @@ function addRequired() {
 function addOptions() {
     var divToAdd = document.createElement('div');
     var string = "";
-    string += "<br><label>Select which land use types should be hidden from the user:</label>";
+    string += "<br><label>Select which land use types should be hidden from the user:</label>"
     for (var i = 0; i < optionTypes.length; i++) {
         string += "<div><label><input type='checkbox' id='options" + "-" + i + "' value='" + optionTypes[i] + "'>" + optionLabels[i] + "</label></div>";
     }
@@ -200,7 +200,7 @@ function processForm() {
 
         for (var i = 1; i < objectiveNumber + 1; i++) {
 
-            //add the score being monitored
+            //add the score being monitored    
             var objectiveScoreType = document.getElementById("scoretype-" + i);
 
             string += objectiveScoreType.options[objectiveScoreType.selectedIndex].value + "*";
@@ -233,7 +233,7 @@ function processForm() {
             string += document.getElementById("max-" + i).value + "*";
 
             //add the objective script
-            if (document.getElementById("objectiveScript-" + i).value !== "") {
+            if (document.getElementById("objectiveScript-" + i).value != "") {
                 string += document.getElementById("objectiveScript-" + i).value.replace(/\n/g, " ") + "*";
             }
             else {
@@ -259,10 +259,10 @@ function processForm() {
 
 //downloadLevel processes the form and saves it to the users computer
 function downloadLevel() {
-
-    //this function doesn't use filesaver.js but should still be compatible
+    
+    //this function doesn't use filesaver.js but should still be compatible 
     //across most browsers. Consider changing this in the future
-
+    
     var data = processForm();
     var fileName = document.getElementById("exerciseNumber").value;
     var uri = 'data:text/csv;charset=UTF-8,' + escape(data);
