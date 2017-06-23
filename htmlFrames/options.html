@@ -97,6 +97,10 @@ Cleaned and Prepared - July 2016
 
         //put all the elements in the parameters div of index.html
         window.top.document.getElementById('parameters').innerHTML = tempString;
+        if(tempString.includes('paint'))
+        {
+          parent.saveAndRandomize();
+        }
       } //end if
 
       //hide the options frame from the top frame (index.html)
@@ -202,7 +206,7 @@ Cleaned and Prepared - July 2016
 
     <div class="optionsSubContainer">
       <input id="paint1" class="toggle" type="checkbox">
-      <label style=" background-color: #4c6167; cursor:pointer ;">Conventional Corn</label>
+      <label for="paint1">Conventional Corn</label>
       <!--<label for="paint1">Conventional Corn</label>-->
 
       <input id="paint2" class="toggle" type="checkbox">
@@ -214,17 +218,8 @@ Cleaned and Prepared - July 2016
       <input id="paint4" class="toggle" type="checkbox">
       <label for="paint4">Conservation Soybean</label>
 
-      <input id="paint15" class="toggle" type="checkbox">
-      <label for="paint15">Mixed Fruits/Vegetables</label>
-
       <input id="paint5" class="toggle" type="checkbox">
       <label for="paint5">Alfalfa</label>
-
-      <input id="paint8" class="toggle" type="checkbox">
-      <label for="paint8">Grass Hay</label>
-
-      <input id="paint12" class="toggle" type="checkbox">
-      <label for="paint12">Switchgrass</label>
 
       <input id="paint6" class="toggle" type="checkbox">
       <label for="paint6">Permanent Pasture</label>
@@ -232,20 +227,29 @@ Cleaned and Prepared - July 2016
       <input id="paint7" class="toggle" type="checkbox">
       <label for="paint7">Rotational Grazing</label>
 
-      <input id="paint14" class="toggle" type="checkbox">
-      <label for="paint14">Wetland</label>
+      <input id="paint8" class="toggle" type="checkbox">
+      <label for="paint8">Grass Hay</label>
 
       <input id="paint9" class="toggle" type="checkbox">
       <label for="paint9">Prairie</label>
 
-      <input id="paint11" class="toggle" type="checkbox">
-      <label for="paint11">Conventional Forest</label>
-
       <input id="paint10" class="toggle" type="checkbox">
       <label for="paint10">Conservation Forest</label>
 
+      <input id="paint11" class="toggle" type="checkbox">
+      <label for="paint11">Conventional Forest</label>
+
+      <input id="paint12" class="toggle" type="checkbox">
+      <label for="paint12">Switchgrass</label>
+
       <input id="paint13" class="toggle" type="checkbox">
       <label for="paint13">Woody Bioenergy</label>
+
+      <input id="paint14" class="toggle" type="checkbox">
+      <label for="paint14">Wetland</label>
+
+      <input id="paint15" class="toggle" type="checkbox">
+      <label for="paint15">Mixed Fruits/Vegetables</label>
 
      <!--<input id="paint16" class = "toggle" type = "checkbox">
       <label for = "paint16">Corn Grain</label>-->
@@ -287,7 +291,7 @@ Cleaned and Prepared - July 2016
     </div>
 
     <div style="width:100%;height:200px;position:relative;">
-      <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState(); randomizeBoard();">Save & Exit</div>
+      <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState();">Save & Exit</div>
     </div>
 
   </div>
