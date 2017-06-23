@@ -38,6 +38,8 @@
   <script src="./lib/controls.js"></script>
   <script src="./lib/jquery-1.12.4.min.js"></script>
   <script src="./lib/stats.min.js"></script>
+  <!-- import jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
 
   <!-- object oriented javascript back-end implementation from PEWI 2.1 -->
   <script src="./back-end/helperMethods.js"></script>
@@ -66,8 +68,7 @@
 
 </head>
 
-<body>
-
+<body id="body">
   <script>
     //Preload gifs and backgrounds on startup
     var img1 = new Image();
@@ -1184,6 +1185,9 @@
   <div id="startupSequence" style="position:absolute; width:100%; height:100%;">
     <iframe id="startUpFrame" src="./htmlFrames/startup.html" style="width:100%; height:100%;"></iframe>
   </div>
+
+  <canvas id="myCanvas" style=""></canvas>
+  <img id="canvas2img" src="" alt="press p to see me" width="1256" height="600"/>
 </body>
 
 </html>
