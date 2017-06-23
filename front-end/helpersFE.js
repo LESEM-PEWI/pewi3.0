@@ -2918,13 +2918,10 @@ function randomizeBoard() {
         //If it's toggled off, remove the landuse type for randomization
         var removedIndex = randomPainterTile.indexOf(j);
          for(var x = 0; x < 15; x++)
-        //for(var x = randomPainterTile.length; x >= 1; x--)
         {
           if(removedIndex == x)
           {
             randomPainterTile.splice(removedIndex, 1);
-            //delete randomPainterTile[removedIndex]
-             //randomPainterTile[removedIndex] = 1
           }
         }
     }
@@ -2966,9 +2963,17 @@ function saveAndRandomize(){
         {
           if(removedIndex == x)
           {
-            console.log("get deleted");
             delete randomPainterTile[removedIndex];
-            randomPainterTile[removedIndex] = 1;
+            for(var k = 1; k <= 15; k++)
+            {
+              if(document.getElementById('parameters').innerHTML.indexOf('paint' + k+"\n") === -1)
+              {
+                delete randomPainterTile[removedIndex];
+                randomPainterTile[removedIndex] = k;
+
+              }
+            }
+
           }
         }
       }
