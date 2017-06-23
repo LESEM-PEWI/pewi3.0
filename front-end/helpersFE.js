@@ -1365,7 +1365,6 @@ function showLevelDetails(value) {
     document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('Short-Rotation Woody Biomass produces the same output, no matter the soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
   }
-
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
     var element = document.getElementsByClassName('DetailsList');
@@ -1505,8 +1504,7 @@ function switchConsoleTab(value) {
     document.getElementById('calendarImg').className = "imgSelected";
     document.getElementById('yearsTab').style.display = "block";
     updateIndexPopup('The Years Tab allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
-  } else if (value == 7) {
-
+  } else if(value == 7){
     inDispLevels = true;
     if (curTracking) {
       pushClick(0, getStamp(), 68, 0, null);

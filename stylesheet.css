@@ -137,8 +137,10 @@ body {
 #page {
   visibility: hidden;
 }
-
-.upperButton, #logoBase {
+#pewiLogo{
+  right: 16vw;
+}
+.upperButton, #logoBase, #pewiLogo {
   height: 3vw;
   position: absolute;
   top: 0.1vw;
@@ -176,7 +178,7 @@ body {
   right: 82px;
 }
 
-.closeButton {
+.closeButton {  
   height: 40px;
   position: absolute;
   width: 40px;
