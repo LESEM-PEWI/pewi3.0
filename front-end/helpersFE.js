@@ -6,52 +6,55 @@
           painter, Totals, river,
           Results, initData, hoveredOver, currentPlayer*/
 
-var currentRow = -1;
-var leftToolConsoleWasOpen;
-var rightPopupWasOpen;
-var meshGeometry = new THREE.Geometry();
+var addingYearFromFile = false;//Boolean used to keep a track of whether or not you're adding a year from file
 var click;
-var meshMaterials = [];
-var tileHeight = 12;
-var tileWidth = 18;
-var rowCutOffs = []; //y coor of top left corner of each tile
+var clickAndDrag = false;
 var columnCutOffs = [];
-var mesh = null;
-var highlightedTiles = [];
-var hoverOverride = false;
 var currentHighlightType = 0;
 var currentHighlightTypeString = null;
+var currentRow = -1;
+var curTime;
+var curTracking = false;
+var endTime;
+var highlightedTiles = [];
+var hoverOverride = false;
 var immutablePrecip = false;
-var clickAndDrag = false;
+var inResults = false;
+var inDispLevels = false;
+var lastPainter = null;
+var lastSelectedPainter = 1;
+var leftToolConsoleWasOpen;
+var mesh = null; // mesh store the whole view on the scene
+var meshGeometry = new THREE.Geometry();
+var meshMaterials = [];
+var overlayedToggled = false;
+var paintSwitch = false;
+var previous = false;
+var previousOverlay = null;
+var previousTab = null;
+var previousTileId = [];
+var previousPainter = [];
+var randomzing = false;
+var rightPopupWasOpen;
+var rowCutOffs = []; //y coor of top left corner of each tile
+var runningSim = false;
+var simulationData;
+var startTime;
+var tileHeight = 12;
+var tileWidth = 18;
+var undo = false;
 var undoArr = [[],[],[],[]];
 var undoGridArr = [];
 var undoGridPainters = [];
-var undo = false;
-var previousTab = null;
-var overlayedToggled = false;
-var inResults = false;
-var inDispLevels = false;
-var curTracking = false;
-var startTime;
-var endTime;
-var curTime;
-var simulationData;
-var runningSim = false;
-var randomzing = false;
-var previousOverlay = null;
-var previousTab = null;
-var overlayedToggled = false;
-var addingYearFromFile=false;//Boolean used to keep a track of whether or not you're adding a year from file
 
-
-var inResults = false;
+var clearToChangeLandType = true;
+var fullBoardBeforeZoom, zIsDown, oneIsDown;
 var inDispLevels = false;
+var inResults = false;
 var birds = [],
   bird;
 var boids = [],
   boid;
-var clearToChangeLandType = true;
-var fullBoardBeforeZoom, zIsDown, oneIsDown;
 
 var painterTool = {
   status: 0,
@@ -214,8 +217,12 @@ function changeLandTypeTile(tileId) {
   if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
     //change the materials of the faces in the meshMaterials array and update the boardData
     if (!multiplayerAssigningModeOn) {
+      // textureArray is a global array that links to each landType image, it was load in loader.js
+      // by changing the reference on meshMaterials array, three.js will draw it on canvas automatically
       meshMaterials[tileId].map = textureArray[painter];
+      // record the data changes in boardData
       boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+      // update boardData figures
       boardData[currentBoard].map[tileId].update(currentYear);
     } else if (multiplayerAssigningModeOn) {
       meshMaterials[tileId].map = multiplayerTextureArray[painter];
@@ -1017,7 +1024,95 @@ function onDocumentKeyDown(event) {
         document.getElementById("recordIcon").style.visibility = "hidden";
         exportTracking(clickTrackings);
       }
+      break;
       //no default handler
+
+      // hit P to pring the map
+    case 80:
+      // var stringmap = "";
+      //
+      // for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      //   stringmap += boardData[currentBoard].map[i].landType[1]; // year 1
+      //   if (i % 23 == 22) {
+      //     stringmap += "\n";
+      //   }
+      // } // end for
+      // console.log(stringmap);
+      //
+      document.getElementById("myCanvas").style.display = "block";
+      //
+      var canvas = document.getElementById('myCanvas'); // create element
+      var context = canvas.getContext('2d');
+
+      var sources = [
+        './imgs/cell_images_bitmaps/LandUse_None.png',
+        './imgs/cell_images_bitmaps/LandUse_Conventional_Corn.png', //1
+        './imgs/cell_images_bitmaps/LandUse_Conservation_Corn.png', //2
+        './imgs/cell_images_bitmaps/LandUse_Conventional_Soybean.png', //3
+        './imgs/cell_images_bitmaps/LandUse_Conservation_Soybean.png', //4
+        './imgs/cell_images_bitmaps/LandUse_Alfalfa.png', //5
+        './imgs/cell_images_bitmaps/LandUse_Permanent_Pasture.png', //6
+        './imgs/cell_images_bitmaps/LandUse_Rotational_Grazing.png', //7
+        './imgs/cell_images_bitmaps/LandUse_Hay.png', //8
+        './imgs/cell_images_bitmaps/LandUse_Prairie.png', //9
+        './imgs/cell_images_bitmaps/LandUse_Conservation_Forest.png', //10
+        './imgs/cell_images_bitmaps/LandUse_Conventional_Forest.png', //11
+        './imgs/cell_images_bitmaps/LandUse_Woody_Bioenergy.png', //12
+        './imgs/cell_images_bitmaps/LandUse_Herbaceous_Perennial_Bioene.png', //13
+        './imgs/cell_images_bitmaps/LandUse_Wetland.png', //14
+        './imgs/cell_images_bitmaps/LandUse_Mixed_Fruits_and_Vegetables.png' //15
+      ];
+
+      loadImages(sources, function(images) {
+        // var tileH = boardData[currentBoard].width;
+        // var tileW = boardData[currentBoard].height;
+        var tileW = 14 * 0.8;
+        var tileH = 5 * 0.8;
+        var padding = 40;
+        var _x = padding;
+        var _y = 3;
+        for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+          var landType = boardData[currentBoard].map[i].landType[1];
+          context.drawImage(images[landType], _x, _y, tileW, tileH);
+          _x += tileW;
+          if (i % 23 == 22) {
+            _x = padding; // start from left again
+            _y += tileH; // change line
+          } // end if
+        } // end for
+      }); // loadImages
+
+      // var img = document.getElementById('canvas2img');
+      // setTimeout(function(){
+      //   img.src = canvas.toDataURL();
+      // }, 80);
+      // img.style.display = "block";
+      canvas.getContext("webgl", {preserveDrawingBuffer: true});
+      // jspdfprinter.imageSrc.mapYear1 = canvas.toDataURL('image/jpeg');
+      // setTimeout(function() {
+      //   jspdfprinter.processing();
+      //
+      // },100);
+
+      break;
+
+      // hit - to see PDF output
+      case 173:
+        takeScreenshot = true;
+        setTimeout(function() {
+          jspdfprinter.processing();
+        },100);
+
+        // var img = document.getElementById('canvas2img');
+        // img.style.display = "block";
+        break;
+
+    case 48:
+      document.getElementById("myCanvas").style.display = "none";
+      var img = document.getElementById('canvas2img');
+      img.src = "";
+      img.style.display = "none";
+      break;
   } //end switch
 } //end onDocumentKeyDown
 
@@ -1142,9 +1237,8 @@ function changeSelectedPaintTo(newPaintValue) {
     }
 
     // if it's grid painting mode and the user click to switch painter, erase the first seleted tile
-    if (painterTool.status == 2)
-    {
-      painterTool.status = 1;// ready to do grid paint
+    if (painterTool.status == 2) {
+      painterTool.status = 1; // ready to do grid paint
     }
 
     //have land type update immediately, well, pretend the mouse moved...
@@ -3265,20 +3359,15 @@ function clearPopup() {
 //togglePopupDisplay allows for displaying and hiding the popup dialogue
 function togglePopupDisplay() {
   if (!modalUp) {
-    if (document.getElementById("popup").className == "popup")
-    {
-      if (curTracking)
-      {
-        pushClick(0,getStamp(),14,0,null);
+    if (document.getElementById("popup").className == "popup") {
+      if (curTracking) {
+        pushClick(0, getStamp(), 14, 0, null);
       }
       document.getElementById("popup").className = "popupHidden";
       document.getElementById("dialogueButton").className = "dialogueButtonRolled";
-    }
-    else
-    {
-      if (curTracking)
-      {
-        pushClick(0,getStamp(),54,0,null);
+    } else {
+      if (curTracking) {
+        pushClick(0, getStamp(), 54, 0, null);
       }
       document.getElementById("popup").className = "popup";
       document.getElementById("dialogueButton").className = "dialogueButton";
@@ -4255,3 +4344,22 @@ function resetPresets() {
 function setUpload(givenValue) {
   uploadedBoard = givenValue;
 } //end setUpload()
+
+function loadImages(sources, callback) {
+  var images = {};
+  var loadedImages = 0;
+  var numImages = 0;
+  // get num of sources
+  for (var src in sources) {
+    numImages++;
+  }
+  for (var src in sources) {
+    images[src] = new Image();
+    images[src].onload = function() {
+      if (++loadedImages >= numImages) {
+        callback(images);
+      }
+    };
+    images[src].src = sources[src];
+  }
+}

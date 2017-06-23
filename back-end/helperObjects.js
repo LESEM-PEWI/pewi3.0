@@ -3084,3 +3084,280 @@ function Click(c1, c2, c3, c4, c5) {
 
 //######################################################################################
 //######################################################################################
+//######################################################################################
+
+// This printer object implements jsPDF library
+
+function Printer2() {
+  /*** attributes ***/
+  /*
+  p: portrait
+  mm: millimeters unit
+  pt: point unit
+  a4: A4
+  */
+  this.doc = new jsPDF('p', 'pt', 'a4');
+  // Optional - set properties of the document
+  this.doc.setProperties({
+    title: "PEWI Results",
+    subject: "All Rights Reserved@",
+    author: 'LESEM LAB',
+    creator: 'PEWI app & jsPDF'
+  });
+  // some parameters
+  this.lineHeight = 12; // pt
+  this.page_margin = 50; // pt
+  // standard A4
+  this.pageHeight = 842; // pt
+  this.pageWidth = 595; // pt
+  // coordinates
+  this.x = this.page_margin; // x keep tracks of current horizontal position
+  this.y = this.page_margin; // y keep tracks of current vertical position
+
+  // imageSrc object
+  this.imageSrc = {};
+
+  // fontSize object
+  this.font = {
+    font: 12,
+    header1_font: 20,
+    header2_font: 16
+  };
+
+  /*** functions ***/
+  // main printing part
+  /*
+   * This function basically stores all the required image as sources to put on the PDF and ( XXX hopefully create legend as well ).
+   */
+  this.preprocessing = function() {
+    var uptoYear = boardData[currentBoard].calculatedToYear;
+    // ----------------------------go through landUse maps----------------------------
+    // // default print the year1 map
+    // transitionToYear(1);
+    // // render the according webgl
+    // renderer.render(scene, camera);
+    // // get the screenshot image in data string form
+    // jspdfprinter.imageSrc.mapYear1 = renderer.domElement.toDataURL('image/jpeg');
+
+    // loop through all available year maps
+    for (var i = 0; i < uptoYear; i++) {
+      // default print the year1 map
+      transitionToYear(i + 1);
+      // render the according webgl
+      renderer.render(scene, camera);
+      // get the screenshot image in data string form
+      jspdfprinter.imageSrc['mapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
+    } // end for
+
+    // ----------------------------go through levels maps----------------------------
+    // loop through all available nitrate maps each year
+    for (var i = 0; i < uptoYear; i++) {
+      transitionToYear(i + 1);
+      displayLevels('nitrate');
+      renderer.render(scene, camera);
+      jspdfprinter.imageSrc['nitrateMapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
+    } // end for
+
+    // loop through all available erosion maps each year
+    for (var i = 0; i < uptoYear; i++) {
+      transitionToYear(i + 1);
+      displayLevels('erosion');
+      renderer.render(scene, camera);
+      jspdfprinter.imageSrc['erosionMapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
+    } // end for
+
+    // loop through all available phosphorus maps each year
+    for (var i = 0; i < uptoYear; i++) {
+      transitionToYear(i + 1);
+      displayLevels('phosphorus');
+      renderer.render(scene, camera);
+      jspdfprinter.imageSrc['phosphorusMapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
+    } // end for
+
+
+    // ----------------------------go through features maps----------------------------
+    this.saveScreenshotMapType("flood", uptoYear);
+    this.saveScreenshotMapType("wetland", uptoYear);
+    this.saveScreenshotMapType("subwatershed", uptoYear);
+    this.saveScreenshotMapType("drainage", uptoYear);
+    this.saveScreenshotMapType("soil", uptoYear);
+
+    // ----------------------------go through yield maps----------------------------
+    this.saveScreenshotMapType("cornGrain", uptoYear);
+    this.saveScreenshotMapType("soy", uptoYear);
+    this.saveScreenshotMapType("fruit", uptoYear);
+    this.saveScreenshotMapType("cattle", uptoYear);
+    this.saveScreenshotMapType("alfalfa", uptoYear);
+    this.saveScreenshotMapType("grassHay", uptoYear);
+    this.saveScreenshotMapType("switchGrass", uptoYear);
+    this.saveScreenshotMapType("wood", uptoYear);
+    this.saveScreenshotMapType("short", uptoYear);
+
+  } // end preprocessing
+
+  /*
+  * This function generates and formats the contents on the PDF and create it in the end
+  */
+  this.processing = function() {
+    var uptoYear = boardData[currentBoard].calculatedToYear;
+    console.log("processing pdf");
+    this.addText("PEWI Result", this.x, this.y, this.font.header1_font);
+    // // Display default mapYear1
+    // this.addText("Year1 LandUse", this.x, this.y, this.font.header2_font);
+    // this.addImage(this.imageSrc.mapYear1, 'JPEG', this.x, this.y, 500, 320);
+    // this.updateY(350 + this.lineHeight * 2);
+
+    // ----------------------------go through landUse maps----------------------------
+    // put year maps on
+    for (var i = 0; i < uptoYear; i++) {
+      this.addText("Year" + (i + 1) + " LandUse Map", this.x, this.y, this.font.header2_font);
+      this.addImage(this.imageSrc['mapYear' + (i + 1)], 'JPEG', this.x, this.y, 500, 320);
+      this.updateY(320 + this.lineHeight * 2);
+    }
+
+    // ----------------------------go through levels maps----------------------------
+    // put nitrates maps on
+    for (var i = 0; i < uptoYear; i++) {
+      this.addText("Year" + (i + 1) + " Nitrate Map", this.x, this.y, this.font.header2_font);
+      this.addImage(this.imageSrc['nitrateMapYear' + (i + 1)], 'JPEG', this.x, this.y, 500, 320);
+      this.updateY(320 + this.lineHeight * 2);
+    }
+
+    // put erosion maps on
+    for (var i = 0; i < uptoYear; i++) {
+      this.addText("Year" + (i + 1) + " Erosion Map", this.x, this.y, this.font.header2_font);
+      this.addImage(this.imageSrc['erosionMapYear' + (i + 1)], 'JPEG', this.x, this.y, 500, 320);
+      this.updateY(320 + this.lineHeight * 2);
+    }
+
+    // put phosphorus maps on
+    for (var i = 0; i < uptoYear; i++) {
+      this.addText("Year" + (i + 1) + " Phosphorus Map", this.x, this.y, this.font.header2_font);
+      this.addImage(this.imageSrc['phosphorusMapYear' + (i + 1)], 'JPEG', this.x, this.y, 500, 320);
+      this.updateY(320 + this.lineHeight * 2);
+    }
+
+    // ----------------------------go through features maps----------------------------
+    this.placeMapType("flood", uptoYear);
+    this.placeMapType("wetland", uptoYear);
+    this.placeMapType("subwatershed", uptoYear);
+    this.placeMapType("drainage", uptoYear);
+    this.placeMapType("soil", uptoYear);
+
+    // ----------------------------go through yield maps----------------------------
+    this.placeMapType("cornGrain", uptoYear);
+    this.placeMapType("soy", uptoYear);
+    this.placeMapType("fruit", uptoYear);
+    this.placeMapType("cattle", uptoYear);
+    this.placeMapType("alfalfa", uptoYear);
+    this.placeMapType("grassHay", uptoYear);
+    this.placeMapType("switchGrass", uptoYear);
+    this.placeMapType("wood", uptoYear);
+    this.placeMapType("short", uptoYear);
+
+    console.log("output pdf");
+    // Output as Data URI on the current page
+    this.doc.output('datauri');
+
+  };
+
+  // helper functions
+  /**
+  * String dataURL
+  * String type: 'JPEG', 'PNG', and so on
+  * int width
+  * int height
+  * int x
+  * int y
+  */
+  this.addImage = function(dataURL, type, x, y, width, height) {
+    // 'PNG' wouldn't work for some reason
+    this.doc.addImage(dataURL, type, x, y, width, height);
+  } // end addImage
+
+  /**
+  * String text
+  * int x
+  * int y
+  * int size
+  * String type
+  * String family
+  */
+  this.addText = function(text, x, y, size, type, family) {
+    if (arguments.length >= 4)
+    this.doc.setFontSize(size);
+
+    if (arguments.length >= 5)
+    this.doc.setFontType(type);
+    // if (arguments.length >= 6)
+
+    this.doc.text(x, y, text);
+    // update y
+    this.y = this.y + size + this.lineHeight;
+    // reset font property
+    this.doc.setFontSize(size);
+    this.doc.setFontType("normal");
+  }; // end addText
+
+  this.saveScreenshotMapType = function(type, uptoYear) {
+    for (var i = 0; i < uptoYear; i++) {
+      transitionToYear(i + 1);
+      displayLevels(type);
+      renderer.render(scene, camera);
+      jspdfprinter.imageSrc[type + 'MapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
+    } // end for
+  }
+
+  this.titleText = function(text) {
+    switch (text) {
+      // levels
+      case 'nitrate': return 'Nitrate'; break;
+      case 'erosion': return 'Erosion'; break;
+      case 'phosphorus': return 'Phosphorus'; break;
+      // features
+      case 'flood': return 'Flood Frequency'; break;
+      case 'wetland': return 'Strategic Wetlands'; break;
+      case 'subwatershed': return 'Subwatershed Boundaries'; break;
+      case 'drainage': return 'Drainage Class'; break;
+      case 'soil': return 'Soil Class'; break;
+      // yields
+      case 'cornGrain': return 'Corn Grain'; break;
+      case 'soy': return 'Soybean'; break;
+      case 'fruit': return 'Mixed Fruits and Vegetables'; break;
+      case 'cattle': return 'Cattle'; break;
+      case 'alfalfa': return 'Alfalfa'; break;
+      case 'grassHay': return 'GrassHay'; break;
+      case 'switchGrass': return 'Switch Grass'; break;
+      case 'wood': return 'Wood'; break;
+      case 'short': return 'Woody Biomass'; break;
+      default:
+        return 'error title';
+        break;
+
+    } // switch
+  } // titleText
+
+  this.placeMapType = function(type, uptoYear) {
+    for (var i = 0; i < uptoYear; i++) {
+      this.addText("Year" + (i + 1) + " " + this.titleText(type), this.x, this.y, this.font.header2_font);
+      this.addImage(this.imageSrc[type + 'MapYear' + (i + 1)], 'JPEG', this.x, this.y, 500, 320);
+      this.updateY(320 + this.lineHeight * 2);
+    }
+  }
+
+  this.updateX = function(value) {}
+
+  this.updateY = function(value) {
+    if (this.y + value > this.pageHeight - this.page_margin) {
+      this.doc.addPage();
+      this.y = this.page_margin;
+    } else {
+      this.y += value;
+    }
+
+  } // end updateY
+
+} // end Printer2()
+
+//######################################################################################
+//######################################################################################
