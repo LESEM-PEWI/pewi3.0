@@ -3038,7 +3038,7 @@ function saveAndRandomize(){
       if(document.getElementById('parameters').innerHTML.indexOf('paint' + j+"\n") != -1)
       {
         //If it's toggled off, remove the landuse type for randomization
-        var removedIndex = randomPainterTile.indexOf(j)
+        var removedIndex = randomPainterTile.indexOf(j)//2
         for(var x = 0; x < 15; x++)
         //for(var x = randomPainterTile.length; x >= 1; x--)
         {
@@ -3051,6 +3051,7 @@ function saveAndRandomize(){
               {
                 delete randomPainterTile[removedIndex];
                 randomPainterTile[removedIndex] = k;
+                break;
 
               }
             }
