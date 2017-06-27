@@ -91,10 +91,10 @@
   text-align: center;
   top: 14vw;
   width: 15%;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-name: rollUp;
-  animation-name: rollUp;
+  -webkit-animation-duration: 0s;
+  animation-duration: 0s;
+  -webkit-animation-name: rollButtonSide;
+  animation-name: rollButtonSide;
 }
 
 .popup p, .popupHidden p {
@@ -144,10 +144,10 @@
   right: -15%;
   /*top: 300px;*/
   top: 14vw;
-  -webkit-animation-duration: 1.2s;
-  animation-duration: 1.2s;
-  -webkit-animation-name: rollDown;
-  animation-name: rollDown;
+  -webkit-animation-duration: 0s;
+  animation-duration: 0s;
+  -webkit-animation-name: rollButtonOff;
+  animation-name: rollButtonOff;
 }
 
 .moveButtonHidden, .moveButtonShow {
@@ -180,10 +180,10 @@
 
 /*By default, the dialogue button stays on the screen */
 .dialogueButton, .dialogueButtonRolled {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-name: rollButtonUp;
-  animation-name: rollButtonUp;
+  -webkit-animation-duration: 0s;
+  animation-duration: 0s;
+  -webkit-animation-name: rollButtonSide;
+  animation-name: rollButtonSide;
   background-color: rgba(0, 0, 0, 0.9);
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
@@ -200,17 +200,17 @@
 .dialogueButtonRolled{
   bottom: 0px;
   right: -3%;
-  -webkit-animation-name: rollButtonDown;
-  animation-name: rollButtonDown;
-  -webkit-animation-duration: 1.2s;
-  animation-duration: 1.2s;
+  -webkit-animation-name: rollButtonOff;
+  animation-name: rollButtonOff;
+  -webkit-animation-duration: 0s;
+  animation-duration: 0s;
 }
 
 .dialogueButton img, .dialogueButtonRolled img {
   width: 2.5vw;
   margin: 0.25vw;
 }
-#backgroundInfoButton, #backgroundInfoButtonRolled{
+.backgroundInfoButton, .backgroundInfoButtonRolled{
   right: 15%;
   top: 36vw;
   width: 3vw;
@@ -224,20 +224,23 @@
   padding: 0px;
   position: absolute;
   background-image: url('./imgs/consoleTexture.png');
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-name: rollButtonUp;
-  animation-name: rollButtonUp;
+  -webkit-animation-duration: 0s;
+  animation-duration: 0s;
+  -webkit-animation-name: rollButtonSide;
+  animation-name: rollButtonSide;
+  cursor: pointer;
 }
-
-#backgroundInfoButtonRolled {
-  right: -3%;
-  -webkit-animation-name: rollButtonDown;
-  animation-name: rollButtonDown;
-  -webkit-animation-duration: 1.2s;
-  animation-duration: 1.2s;
+.backgroundInfoButtonRolled {
+  position: absolute;
+  right: 0%;
+  /*top: 300px;*/
+  top: 36vw;
+  -webkit-animation-duration: 0s;
+  animation-duration: 0s;
+  -webkit-animation-name: rollButtonOff;
+  animation-name: rollButtonOff;
 }
-#backgroundInfoBox, #backgroundInfoboxRolled{
+.backgroundInfoBox, .backgroundInfoboxRolled{
   right: 0%;
   top: 36vw;
   width: 15%;
@@ -248,27 +251,77 @@
   border-bottom-left-radius: 12px;
   background-repeat: repeat;
   background-image: url('./imgs/consoleTexture.png');
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-name: rollButtonUp;
-  animation-name: rollButtonUp;
+  -webkit-animation-duration: 5s;
+  animation-duration: 5s;
+  -webkit-animation-name: rollButtonSide;
+  animation-name: rollButtonSide;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0px;
   position: absolute;
 }
+.backgroundInfoBoxRolled{
+  position: absolute;
+  right: 10%;
+  top: 36vw;
+  -webkit-animation-duration: 5s;
+  animation-duration: 5s;
+  -webkit-animation-name: rollButtonOff;
+  animation-name: rollButtonOff;
+}
 /*This one moves just fine */
-#indexPopupText{
+#indexPopupText, .indexPopupText{
   position: relative;
   text-align: center;
   color: white;
   top: 10px;
+}
+.indexPopupTextHidden{
+  visibility: hidden;
 }
 
 .backgroundInfoButton img, .backgroundInfoButtonRolled img {
   width: 2.5vw;
   margin: 0.25vw;
 }
+.indexPopupText p, .indexPopupTextHidden p {
+  padding: 10px;
+}
+
+/*Animation for backgroundInfoButton*/
+@keyframes rollButtonSide{
+  0% {
+    right: 0%;
+  }
+  100% {
+    right: 0vw;
+  }
+}
+@-webkit-keyframes rollButtonSide{
+  0% {
+    right: 0%;
+  }
+  100% {
+    right: 0vw;
+  }
+}
+@keyframes rollButtonOff{
+  0% {
+    right: 2vw;
+  }
+  100% {
+    right: 0%;
+  }
+}
+@-webkit-keyframes rollButtonOff{
+  0% {
+    right: 2vw;
+  }
+  100% {
+    right: 0%;
+  }
+}
+
 
 /* animation for dialogueButton */
 @keyframes rollButtonUp {
