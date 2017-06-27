@@ -1,3 +1,4 @@
+
 //================
 //global vars
 
@@ -21,7 +22,7 @@ var onYear = "year1";
 var painter = 1;
 var currentBoard = -1;
 var currentYear = 1;
-var currentPlayer = 1;
+var currentPlayer = 0;
 var modalUp = false;
 var isShiftDown = false;
 var counter = 0;
@@ -61,11 +62,8 @@ function createThreeFramework() {
 function initializeCamera() {
 
   //camera
-  SCREEN_WIDTH = window.innerWidth;
-  SCREEN_HEIGHT = window.innerHeight;
-  ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT;
-  FAR = 10000;
-  NEAR = 0.1;
+  SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+  ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
   camera = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
   scene.add(camera);
 
@@ -184,7 +182,7 @@ function animationFrames() {
     zoomAnimation();
 
     //rain animations (change y position of each raindrop)
-    if (rain !== null) {
+    if (rain != null) {
       for (var i = 0; i < rain.geometry.vertices.length; i++) {
         //update position
         rain.geometry.vertices[i].y = rain.geometry.vertices[i].y - (rain.geometry.vertices[i].speed);
@@ -196,7 +194,7 @@ function animationFrames() {
     }
 
     renderer.autoClear = false;
-    if (bgScene !== null) {
+    if (bgScene != null) {
       renderer.render(bgScene, bgCam);
     }
 
@@ -218,7 +216,7 @@ function animationFrames() {
 //birdAnimation updates bird and boid positions
 function birdAnimation() {
 
-  if (birds !== null) {
+  if (birds != null) {
 
     for (var i = 0, il = birds.length; i < il; i++) {
 
@@ -431,7 +429,7 @@ function switchToUnzoomedView(tile, shouldResetBoard) {
 function setupRiver() {
 
   //remove any previously rendered river
-  if (river !== null) {
+  if (river != null) {
     scene.remove(river);
   }
 
@@ -547,7 +545,6 @@ function showMainMenu() {
   //show loading animation and startup page
   document.getElementById('loading').style.display = "block";
   document.getElementById('startUpFrame').contentWindow.recallMain();
-  multiplayerAssigningModeOn = false;
 
   setTimeout(function() {
 

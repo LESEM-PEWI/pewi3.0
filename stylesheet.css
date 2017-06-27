@@ -138,7 +138,8 @@ body {
   visibility: hidden;
 }
 #pewiLogo{
-  right: 16vw;
+  right: 240px;
+  
 }
 .upperButton, #logoBase, #pewiLogo {
   height: 3vw;

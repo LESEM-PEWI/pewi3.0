@@ -26,7 +26,7 @@ var levelSpecs = {
   finished: 0,
   precipitation: [0, 0, 0, 0],
   landTypeMonoculture: [0, 0, 0, 0]
-};
+}
 
 
 var levelGlobal = 0;
@@ -91,7 +91,7 @@ function loadLevel(level) {
 
     //if precipitation was not set, then randomly generate values
     for (var i = 0; i < 4; i++) {
-      if (levelSpecs.precipitation[i] === 0) {
+      if (levelSpecs.precipitation[i] == 0) {
         levelSpecs.precipitation[i] = setPrecipitation();
       } else {
         levelSpecs.precipitation[i] = Number(levelSpecs.precipitation[i]);
@@ -106,11 +106,11 @@ function loadLevel(level) {
     //set up monocultures on each year of the board if it indeed needs a monoculture
     for (var i = 0; i < 4; i++) {
 
-      if (levelSpecs.landTypeMonoculture[i] !== 0) {
+      if (levelSpecs.landTypeMonoculture[i] != 0) {
 
         for (var j = 0; j < boardData[currentBoard].map.length; j++) {
 
-          if (boardData[currentBoard].map[j].landType[i] !== 0) {
+          if (boardData[currentBoard].map[j].landType[i] != 0) {
 
             boardData[currentBoard].map[j].landType[i] = Number(levelSpecs.landTypeMonoculture[i]);
             if (i == currentYear) {
@@ -148,7 +148,7 @@ function resetLevel() {
     finished: 0,
     precipitation: [0, 0, 0, 0],
     landTypeMonoculture: [0, 0, 0, 0]
-  };
+  }
 
   clearPopup();
 
@@ -204,7 +204,7 @@ function parseLevelDetails(data) {
       high: Number(tempParsed[4]),
       script: tempParsed[5],
       animation: tempParsed[6]
-    };
+    }
 
     objectives.push(newObjective);
 
@@ -323,8 +323,8 @@ function populateLevels() {
       tempString += "<div id='cloud_" + i + "_" + k + "' class='cloud' onclick='" + clickStringBuilder + "'><img src='../imgs/Cloud.png'/><p>" + levelContainer[i].data[k].text + "</p></div>";
 
       if (k < levelContainer[i].data.length - 1) {
-        tempString += "<div class='cloudSpacer'></div>";
-      }
+        tempString += "<div class='cloudSpacer'></div>"
+      };
 
     }
 

@@ -1,3 +1,4 @@
+
 /* css global variable declaration */
 :root {
   --consoleButton-height: 2.81vw;
@@ -39,7 +40,26 @@
   width: 12.5vw;
 }
 
-#indexmenu:hover {
+#combineButton {
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 6px 6px 0 0;
+  -webkit-border-radius: 6px 6px 0 0;
+  -moz-border-radius: 6px 6px 0 0;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  font-weight: bold;
+  position: absolute;
+  text-align: center;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+  width: 12.5vw;
+}
+
+#indexmenu:hover, #combineButton:hover {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
