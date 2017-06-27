@@ -2537,7 +2537,6 @@ function writeFileToDownloadString(mapPlayerNumber) {
       //If the tile really shouldn't be there (-1 for BaseLandUseType)...
       // If the user made a multipler map, and a tile still has values when it's not that player's tile
       if(boardData[currentBoard].map[i].landType[1] != mapPlayerNumber) {
-        boardData[currentBoard].map[i].area = "NA";
         boardData[currentBoard].map[i].carbonMax = "NA";
         boardData[currentBoard].map[i].carbonMin = "NA";
         boardData[currentBoard].map[i].cattle = "NA";
@@ -2552,7 +2551,6 @@ function writeFileToDownloadString(mapPlayerNumber) {
         boardData[currentBoard].map[i].soilType = 0;
         boardData[currentBoard].map[i].soybeanYield = "NA"; 
         boardData[currentBoard].map[i].streamNetwork = "NA";
-        boardData[currentBoard].map[i].subwatershed = "NA"; 
         boardData[currentBoard].map[i].timber = "NA";
         boardData[currentBoard].map[i].topography = 0; 
         boardData[currentBoard].map[i].watershedNitrogenContribution = "NA"; 
