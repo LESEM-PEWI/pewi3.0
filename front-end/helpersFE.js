@@ -75,7 +75,7 @@ var simBoard;
 
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
-updateIndexPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
+
 function confirmExit() {
   if (curTracking) {
     pushClick(0, getStamp(), 2, 0, null);
@@ -106,6 +106,7 @@ function onResize() {
 //tile is created from scratch
 function displayBoard() {
 
+  updateIndexPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
   riverPoints = [];
 
   //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
@@ -1035,8 +1036,7 @@ function changeSelectedPaintTo(newPaintValue) {
     painter = newPaintValue;
     //Index chat box entries for each landuse type
     if(painterElementId == 'paint1'){
-      //updateIndexPopup('These are the 15 different land use types. To learn more about them, go to the Index and select "Land Use".');
-      updateIndexPopup('To learn more about Convetional Corn, go to the Index and select "Land Use".');
+      updateIndexPopup('These are the 15 different land use types. To learn more about them, go to the Index and select "Land Use".');
     }
      else if(painterElementId == 'paint2'){
       updateIndexPopup('To learn more about Conservation Corn, go to the Index and select "Land Use".');
@@ -1531,7 +1531,6 @@ function switchYearTab(yearNumberToChangeTo) {
   elements[0].className = "icon yearNotSelected";
 
   //then toggle on the selected year
-  updateIndexPopup('The Years Tab allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
   document.getElementById(yearIdString).className = "icon yearSelected";
 } //end switchYearTab
