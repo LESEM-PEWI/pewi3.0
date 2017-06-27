@@ -190,7 +190,7 @@ function generateResultsTable() {
   //variables for english to metric
   // results are generally in english units as the original thesis
   // had all calculations done this way
-  conversionArray = [1, 1, 0.90718474, 0.90718474, 1, 1, 0.90718474, 0.90718474];
+  conversionArray = [1, 1, 0.90718474, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474];
 
   htmlTableString += "<table class='resultsTable'>";
 
@@ -261,6 +261,10 @@ function generateResultsTable() {
       htmlTableString += "<td>";
 
       var tempString = backendDataIdentifiers[l];
+      //Correction for Carbon Sequestrations
+      if(l==2) {
+        Totals[tempString][y] = Totals[tempString][y]*(1/conversionArray[l]);
+      }
       htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
 
       htmlTableString += "</td>";
@@ -301,7 +305,7 @@ function generateResultsTable() {
   ];
 
   //conversion factors for the yeilds
-  conversionArray = [0.0254, 0.0254, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474, 0.002359737, 0.90718474];
+  conversionArray = [0.0254, 0.0272, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474, 0.002359737, 0.90718474];
 
   //fill in table rows with data
 
