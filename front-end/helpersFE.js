@@ -1316,7 +1316,6 @@ function showLevelDetails(value) {
     document.getElementById("subwatershedClassDetailsList").className = "DetailsList physicalDetailsList";
   } //end else/if group
 
-  //show soil class legend
   else if (value == 8) {
     document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
     document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
@@ -3065,7 +3064,7 @@ function saveAndRandomize(){
     var newDefaultLandUse=1;
     //finding a new default
     for(var r=1; r<=15; r++)
-    { 
+    {
       if(randomPainterTile.indexOf(r)!=-1)
       {
         newDefaultLandUse=r;
@@ -3085,14 +3084,11 @@ function saveAndRandomize(){
       {
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         changeLandTypeTile(i);
-        
       }
 
     }
     painter=newDefaultLandUse; //end for all tiles
   }
-  
-  
 
 } //end saveandRandomize
 
