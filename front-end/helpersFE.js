@@ -1316,7 +1316,7 @@ function showLevelDetails(value) {
     document.getElementById("subwatershedClassDetailsList").className = "DetailsList physicalDetailsList";
   } //end else/if group
 
-  else if (value == 8) {
+    else if (value == 8) {
     document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
     document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
   }
@@ -1419,7 +1419,6 @@ function showLevelDetails(value) {
   }
 
 } //end showLevelDetails
-
 //updatePrecip updates the currentBoard with the precipitation values selected in the drop down boxes
 function updatePrecip(year) {
 
@@ -2548,18 +2547,18 @@ function writeFileToDownloadString(mapPlayerNumber) {
         boardData[currentBoard].map[i].floodFrequency = "NA";
         boardData[currentBoard].map[i].group = "NA";
         boardData[currentBoard].map[i].nitratesPPM = "NA";
-        boardData[currentBoard].map[i].pIndex = "NA";
+        boardData[currentBoard].map[i].pIndex = "NA"; 
         boardData[currentBoard].map[i].sediment = "NA";
         boardData[currentBoard].map[i].soilType = 0;
-        boardData[currentBoard].map[i].soybeanYield = "NA";
+        boardData[currentBoard].map[i].soybeanYield = "NA"; 
         boardData[currentBoard].map[i].streamNetwork = "NA";
-        boardData[currentBoard].map[i].subwatershed = "NA";
+        boardData[currentBoard].map[i].subwatershed = "NA"; 
         boardData[currentBoard].map[i].timber = "NA";
-        boardData[currentBoard].map[i].topography = 0;
-        boardData[currentBoard].map[i].watershedNitrogenContribution = "NA";
+        boardData[currentBoard].map[i].topography = 0; 
+        boardData[currentBoard].map[i].watershedNitrogenContribution = "NA"; 
         boardData[currentBoard].map[i].strategicWetland = "NA";
-        boardData[currentBoard].map[i].riverStreams = 0;
-      }
+        boardData[currentBoard].map[i].riverStreams = 0; 
+      } 
 
       string = string + boardData[currentBoard].map[i].id + "," +
         boardData[currentBoard].map[i].row + "," +
@@ -3100,15 +3099,11 @@ function saveAndRandomize(){
       {
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         changeLandTypeTile(i);
-
       }
 
     }
     painter=newDefaultLandUse; //end for all tiles
   }
-
-
-
 } //end saveandRandomize
 
 //toggleVisibility parses the options stored in the parameters div and toggles their visibility
