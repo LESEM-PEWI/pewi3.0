@@ -110,7 +110,6 @@ function onResize() {
 //tile is created from scratch
 function displayBoard() {
 
-  updateIndexPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
   riverPoints = [];
 
   //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
@@ -1036,7 +1035,7 @@ function changeSelectedPaintTo(newPaintValue) {
     painter = newPaintValue;
     //Index chat box entries for each landuse type
     if(painterElementId == 'paint1'){
-      updateIndexPopup('These are the 15 different land use types. To learn more about them, go to the Index and select "Land Use".');
+      updateIndexPopup('To learn more about Conventional Corn, go to the Index and select "Land Use".');
     }
      else if(painterElementId == 'paint2'){
       updateIndexPopup('To learn more about Conservation Corn, go to the Index and select "Land Use".');
@@ -2928,8 +2927,8 @@ function updatePopup(string) {
   //Will activate an animation on the lower right side of the screen to show that the message box has updated
 } //end updatePopup
 function updateIndexPopup(string){
-  document.getElementById("indexPopupText").innerHTML = string;
-  document.getElementById("backgroundInfoButton").style.background= '#'+Math.random().toString(16).slice(-6)
+  window.parent.document.getElementById("indexPopupText").innerHTML = string;
+  window.parent.document.getElementById("backgroundInfoButton").style.background= '#'+Math.random().toString(16).slice(-6)
 }
 
 //clearPopup removes all text from the popup dialogue and hides it
