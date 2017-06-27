@@ -137,8 +137,11 @@ body {
 #page {
   visibility: hidden;
 }
-
-.upperButton, #logoBase {
+#pewiLogo{
+  right: 240px;
+  
+}
+.upperButton, #logoBase, #pewiLogo {
   height: 3vw;
   position: absolute;
   top: 0.1vw;
@@ -463,13 +466,13 @@ body {
   width: 250px;
 }
 
-#overlay, .simOverlay, #genOverlay {
+#overlay, .simOverlay {
     position:fixed;
     top:0;
     bottom:0;
     left:0;
     right:0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.4);
     z-index:1001;
 }
 
@@ -519,24 +522,4 @@ body {
 
 #file-upload {
     display: none;
-}
-
-#playerOptions {
-  position: absolute;
-  left: 10%;
-  top: 37%;
-}
-
-#playerAddButton {
-  float: right;
-}
-
-#playerDeleteButton {
-  float: left;
-}
-
-#playerResetButton {
-  position: absolute;
-  left: 10%;
-  top: 46%;
 }
