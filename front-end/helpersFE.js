@@ -1320,69 +1320,53 @@ function showLevelDetails(value) {
     document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
     document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
   }
+  //Corn class legend
+    else if(value == 9){
+        document.getElementById('cornGrainDetailsList').className = "yieldDetailsList";
+        document.getElementById('cornClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Conventional Corn and Conservation Corn produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 10){
+        document.getElementById('soyBeanDetailsList').className = "yieldDetailsList";
+        document.getElementById('soyClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Conventional Soy and Conservation Soy produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 11){
+        document.getElementById('fruitDetailsList').className = "yieldDetailsList";
+        document.getElementById('fruitClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Mixed Fruits and Vegetable Yield, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 12){
+        document.getElementById('cattleDetailsList').className = "yieldDetailsList";
+        document.getElementById('cattleClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Permanent Pasture and Rotational Grazing produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".')
+    }
+    else if(value == 13){
+        document.getElementById('alfalfaDetailsList').className = "yieldDetailsList";
+        document.getElementById('alfalfaClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Alfalfa Hay Yield, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 14){
+        document.getElementById('grassHayDetailsList').className = "yieldDetailsList";
+        document.getElementById('grassHayClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Grass Hay Yield, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 15){
+        document.getElementById('switchGrassDetailsList').className = "yieldDetailsList";
+        document.getElementById('switchGrassClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('To learn more about Switch Grass Yield, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 16){
+        document.getElementById('woodDetailsList').className = "yieldDetailsList";
+        document.getElementById('woodClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Conventional Forest and Conservation Forest produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
+    }
+    else if(value == 17){
+        document.getElementById('shortDetailsList').className = "yieldDetailsList";
+        document.getElementById('shortClass').className = "yieldSelectorIconSelected";
+        updateIndexPopup('Short-Rotation Woody Biomass produces the same output, no matter the soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
+    }
 
-  //show Corn class legend
-  else if (value == 9) {
-    document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('Conventional Corn and Conservation Corn produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show soy class legend
-  else if (value == 10) {
-    document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('Conventional Soy and Conservation Soy produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show fruit class legend
-  else if (value == 11) {
-    document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about Mixed Fruits and Vegetable Yield, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show cattle class legend
-  else if (value == 12) {
-    document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('Permanent Pasture and Rotational Grazing produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".')
-  }
-
-  //show alfalfa class legend
-  else if (value == 13) {
-    document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about Alfalfa Hay Yield, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show grasshay class legend
-  else if (value == 14) {
-    document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about Grass Hay Yield, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show switch grass class legend
-  else if (value == 15) {
-    document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about Switch Grass Yield, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show wood class legend
-  else if (value == 16) {
-    document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('Conventional Forest and Conservation Forest produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
-  }
-
-  //show short class legend
-  else if (value == 17) {
-    document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('Short-Rotation Woody Biomass produces the same output, no matter the soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
-  }
 
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
@@ -2548,18 +2532,18 @@ function writeFileToDownloadString(mapPlayerNumber) {
         boardData[currentBoard].map[i].floodFrequency = "NA";
         boardData[currentBoard].map[i].group = "NA";
         boardData[currentBoard].map[i].nitratesPPM = "NA";
-        boardData[currentBoard].map[i].pIndex = "NA";
+        boardData[currentBoard].map[i].pIndex = "NA"; 
         boardData[currentBoard].map[i].sediment = "NA";
         boardData[currentBoard].map[i].soilType = 0;
-        boardData[currentBoard].map[i].soybeanYield = "NA";
+        boardData[currentBoard].map[i].soybeanYield = "NA"; 
         boardData[currentBoard].map[i].streamNetwork = "NA";
-        boardData[currentBoard].map[i].subwatershed = "NA";
+        boardData[currentBoard].map[i].subwatershed = "NA"; 
         boardData[currentBoard].map[i].timber = "NA";
-        boardData[currentBoard].map[i].topography = 0;
-        boardData[currentBoard].map[i].watershedNitrogenContribution = "NA";
+        boardData[currentBoard].map[i].topography = 0; 
+        boardData[currentBoard].map[i].watershedNitrogenContribution = "NA"; 
         boardData[currentBoard].map[i].strategicWetland = "NA";
-        boardData[currentBoard].map[i].riverStreams = 0;
-      }
+        boardData[currentBoard].map[i].riverStreams = 0; 
+      } 
 
       string = string + boardData[currentBoard].map[i].id + "," +
         boardData[currentBoard].map[i].row + "," +
@@ -3100,14 +3084,11 @@ function saveAndRandomize(){
       {
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         changeLandTypeTile(i);
-
       }
 
     }
     painter=newDefaultLandUse; //end for all tiles
   }
-
-
 
 } //end saveandRandomize
 
