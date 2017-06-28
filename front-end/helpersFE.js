@@ -1027,91 +1027,14 @@ function onDocumentKeyDown(event) {
       break;
       //no default handler
 
-      // hit P to pring the map
+      // hit P to see pdf output
     case 80:
-      // var stringmap = "";
-      //
-      // for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-      //   stringmap += boardData[currentBoard].map[i].landType[1]; // year 1
-      //   if (i % 23 == 22) {
-      //     stringmap += "\n";
-      //   }
-      // } // end for
-      // console.log(stringmap);
-      //
-      document.getElementById("myCanvas").style.display = "block";
-      //
-      var canvas = document.getElementById('myCanvas'); // create element
-      var context = canvas.getContext('2d');
-
-      var sources = [
-        './imgs/cell_images_bitmaps/LandUse_None.png',
-        './imgs/cell_images_bitmaps/LandUse_Conventional_Corn.png', //1
-        './imgs/cell_images_bitmaps/LandUse_Conservation_Corn.png', //2
-        './imgs/cell_images_bitmaps/LandUse_Conventional_Soybean.png', //3
-        './imgs/cell_images_bitmaps/LandUse_Conservation_Soybean.png', //4
-        './imgs/cell_images_bitmaps/LandUse_Alfalfa.png', //5
-        './imgs/cell_images_bitmaps/LandUse_Permanent_Pasture.png', //6
-        './imgs/cell_images_bitmaps/LandUse_Rotational_Grazing.png', //7
-        './imgs/cell_images_bitmaps/LandUse_Hay.png', //8
-        './imgs/cell_images_bitmaps/LandUse_Prairie.png', //9
-        './imgs/cell_images_bitmaps/LandUse_Conservation_Forest.png', //10
-        './imgs/cell_images_bitmaps/LandUse_Conventional_Forest.png', //11
-        './imgs/cell_images_bitmaps/LandUse_Woody_Bioenergy.png', //12
-        './imgs/cell_images_bitmaps/LandUse_Herbaceous_Perennial_Bioene.png', //13
-        './imgs/cell_images_bitmaps/LandUse_Wetland.png', //14
-        './imgs/cell_images_bitmaps/LandUse_Mixed_Fruits_and_Vegetables.png' //15
-      ];
-
-      loadImages(sources, function(images) {
-        // var tileH = boardData[currentBoard].width;
-        // var tileW = boardData[currentBoard].height;
-        var tileW = 14 * 0.8;
-        var tileH = 5 * 0.8;
-        var padding = 40;
-        var _x = padding;
-        var _y = 3;
-        for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-          var landType = boardData[currentBoard].map[i].landType[1];
-          context.drawImage(images[landType], _x, _y, tileW, tileH);
-          _x += tileW;
-          if (i % 23 == 22) {
-            _x = padding; // start from left again
-            _y += tileH; // change line
-          } // end if
-        } // end for
-      }); // loadImages
-
-      // var img = document.getElementById('canvas2img');
-      // setTimeout(function(){
-      //   img.src = canvas.toDataURL();
-      // }, 80);
-      // img.style.display = "block";
-      canvas.getContext("webgl", {preserveDrawingBuffer: true});
-      // jspdfprinter.imageSrc.mapYear1 = canvas.toDataURL('image/jpeg');
-      // setTimeout(function() {
-      //   jspdfprinter.processing();
-      //
-      // },100);
-
-      break;
-
-      // hit - to see PDF output
-      case 173:
-        takeScreenshot = true;
-        setTimeout(function() {
-          jspdfprinter.processing();
-        },100);
-
-        // var img = document.getElementById('canvas2img');
-        // img.style.display = "block";
-        break;
-
-    case 48:
-      document.getElementById("myCanvas").style.display = "none";
-      var img = document.getElementById('canvas2img');
-      img.src = "";
-      img.style.display = "none";
+      takeScreenshot = true; // triggers if statement in animationFrames() in mainFE.js
+      alert("Creating PDF...");
+      setTimeout(function() {
+        // wait for preprocessing
+        jspdfprinter.processing();
+      },100);
       break;
   } //end switch
 } //end onDocumentKeyDown
@@ -1446,13 +1369,13 @@ function showLevelDetails(value) {
   //show flood frequency legend
   else if (value == 4) {
     document.getElementById('floodFrequency').className = "featureSelectorIcon iconSelected";
-    document.getElementById("floodFrequencyDetailsList").className = "DetailsList physicalDetailsList";
+    document.getElementById("floodDetailsList").className = "DetailsList physicalDetailsList";
   }
 
   //show drainage class legend
   else if (value == 5) {
     document.getElementById('drainageClass').className = "featureSelectorIcon iconSelected";
-    document.getElementById("drainageClassDetailsList").className = "DetailsList physicalDetailsList";
+    document.getElementById("drainageDetailsList").className = "DetailsList physicalDetailsList";
   }
 
   //show strategic wetlands legend
@@ -1469,7 +1392,7 @@ function showLevelDetails(value) {
 
     else if (value == 8) {
     document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
-    document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
+    document.getElementById('soilDetailsList').className = "DetailsList physicalDetailsList";
   }
 
   //show Corn class legend
@@ -1811,7 +1734,7 @@ function displayLevels(overlayHighlightType) {
         pushClick(0, getStamp(), 69, 0, null);
       }
       break;
-    case 'soy':
+    case 'soyBean':
       selectionHighlightNumber = 10;
       if (curTracking) {
         pushClick(0, getStamp(), 70, 0, null);
@@ -2120,7 +2043,7 @@ function getHighlightColor(highlightType, tileId) {
       case "Y":
         return 22;
     }
-  } else if (highlightType == "soy") {
+  } else if (highlightType == "soyBean") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
       case "A":
