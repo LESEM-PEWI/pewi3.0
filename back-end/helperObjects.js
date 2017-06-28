@@ -3086,16 +3086,12 @@ function Click(c1, c2, c3, c4, c5) {
 //######################################################################################
 //######################################################################################
 
-// This printer object implements jsPDF library
+// This Printer object implements jsPDF library
 
 function Printer2() {
   /*** attributes ***/
-  /*
-  p: portrait
-  mm: millimeters unit
-  pt: point unit
-  a4: A4
-  */
+
+  /* p: portrai, mm: millimeters unit, pt: point unit, a4: A4 */
   this.doc = new jsPDF('p', 'pt', 'a4');
   // Optional - set properties of the document
   this.doc.setProperties({
@@ -3104,30 +3100,43 @@ function Printer2() {
     author: 'LESEM LAB',
     creator: 'PEWI app & jsPDF'
   });
-  // some parameters
-  this.lineHeight = 12; // pt
-  this.page_margin = 50; // pt
+
+  // some parameters // in pt
+  var
+  indicatorLength = 8, // legend
+  lineHeight = 12,
+  // map
+  mapWidth = 500,
+  mapHeight = 320,
   // standard A4
-  this.pageHeight = 842; // pt
-  this.pageWidth = 595; // pt
+  pageHeight = 842,
+  pageWidth = 595,
+
+  pageMargin = 50,
+  padding = 3.5,
   // coordinates
-  this.x = this.page_margin; // x keep tracks of current horizontal position
-  this.y = this.page_margin; // y keep tracks of current vertical position
+  x = pageMargin, // x keep tracks of current horizontal position
+  y = pageMargin, // y keep tracks of current vertical position
 
   // imageSrc object
-  this.imageSrc = {};
-
+  imageSrc = {},
   // fontSize object
-  this.font = {
+  font = {
     font: 12,
     header1_font: 20,
     header2_font: 16
   };
 
+
+  // legend object
+  this.legendObjs = {};
+
   /*** functions ***/
+
   // main printing part
+
   /*
-   * This function basically stores all the required image as sources to put on the PDF and ( XXX hopefully create legend as well ).
+   * This function basically stores all the required image as sources to put on the PDF and create legend as well.
    */
   this.preprocessing = function() {
     var uptoYear = boardData[currentBoard].calculatedToYear;
@@ -3137,153 +3146,161 @@ function Printer2() {
     // // render the according webgl
     // renderer.render(scene, camera);
     // // get the screenshot image in data string form
-    // jspdfprinter.imageSrc.mapYear1 = renderer.domElement.toDataURL('image/jpeg');
+    // imageSrc.mapYear1 = renderer.domElement.toDataURL('image/jpeg');
 
     // loop through all available year maps
     for (var i = 0; i < uptoYear; i++) {
-      // default print the year1 map
       transitionToYear(i + 1);
       // render the according webgl
       renderer.render(scene, camera);
       // get the screenshot image in data string form
-      jspdfprinter.imageSrc['mapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
+      imageSrc['mapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
     } // end for
+
 
     // ----------------------------go through levels maps----------------------------
-    // loop through all available nitrate maps each year
-    for (var i = 0; i < uptoYear; i++) {
-      transitionToYear(i + 1);
-      displayLevels('nitrate');
-      renderer.render(scene, camera);
-      jspdfprinter.imageSrc['nitrateMapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
-    } // end for
+    this.saveScreenshotMapType("nitrate", uptoYear);
+    this.makeLegendBox('nitrate');
+    // this.addLegendLine('nitrate', '#87ceee', '0 - 5 %');
+    // this.addLegendLine('nitrate', '#41b7c5', '5 - 10 %');
+    // this.addLegendLine('nitrate', '#2f7eb7', '10 - 20 %');
+    // this.addLegendLine('nitrate', '#0053b3', '20 - 25 %');
+    // this.addLegendLine('nitrate', '#302486', '> 25 %');
 
-    // loop through all available erosion maps each year
-    for (var i = 0; i < uptoYear; i++) {
-      transitionToYear(i + 1);
-      displayLevels('erosion');
-      renderer.render(scene, camera);
-      jspdfprinter.imageSrc['erosionMapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
-    } // end for
+    this.saveScreenshotMapType("erosion", uptoYear);
+    this.makeLegendBox('erosion');
 
-    // loop through all available phosphorus maps each year
-    for (var i = 0; i < uptoYear; i++) {
-      transitionToYear(i + 1);
-      displayLevels('phosphorus');
-      renderer.render(scene, camera);
-      jspdfprinter.imageSrc['phosphorusMapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
-    } // end for
+    this.saveScreenshotMapType("phosphorus", uptoYear);
+    this.makeLegendBox('phosphorus');
 
-
-    // ----------------------------go through features maps----------------------------
-    this.saveScreenshotMapType("flood", uptoYear);
-    this.saveScreenshotMapType("wetland", uptoYear);
-    this.saveScreenshotMapType("subwatershed", uptoYear);
-    this.saveScreenshotMapType("drainage", uptoYear);
-    this.saveScreenshotMapType("soil", uptoYear);
+    // // ----------------------------go through features maps----------------------------
+    this.saveScreenshotMapType("flood", 1);
+    this.makeLegendBox('flood');
+    this.saveScreenshotMapType("wetland", 1);
+    this.saveScreenshotMapType("subwatershed", 1);
+    this.saveScreenshotMapType("drainage", 1);
+    this.makeLegendBox('drainage');
+    this.saveScreenshotMapType("soil", 1);
+    this.makeLegendBox('soil');
 
     // ----------------------------go through yield maps----------------------------
-    this.saveScreenshotMapType("cornGrain", uptoYear);
-    this.saveScreenshotMapType("soy", uptoYear);
-    this.saveScreenshotMapType("fruit", uptoYear);
-    this.saveScreenshotMapType("cattle", uptoYear);
-    this.saveScreenshotMapType("alfalfa", uptoYear);
-    this.saveScreenshotMapType("grassHay", uptoYear);
-    this.saveScreenshotMapType("switchGrass", uptoYear);
-    this.saveScreenshotMapType("wood", uptoYear);
-    this.saveScreenshotMapType("short", uptoYear);
+    this.saveScreenshotMapType("cornGrain", 1);
+    this.makeLegendBox('cornGrain');
+    this.saveScreenshotMapType("soyBean", 1);
+    this.makeLegendBox('soyBean');
+    this.saveScreenshotMapType("fruit", 1);
+    this.makeLegendBox('fruit');
 
-  } // end preprocessing
+    this.saveScreenshotMapType("cattle", 1);
+    this.makeLegendBox('cattle');
+    this.saveScreenshotMapType("alfalfa", 1);
+    this.makeLegendBox('alfalfa');
+    this.saveScreenshotMapType("grassHay", 1);
+    this.makeLegendBox('grassHay');
+
+    this.saveScreenshotMapType("switchGrass", 1);
+    this.makeLegendBox('switchGrass');
+    this.saveScreenshotMapType("wood", 1);
+    this.makeLegendBox('wood');
+    this.saveScreenshotMapType("short", 1);
+    this.makeLegendBox('short');
+
+  }; // end preprocessing
 
   /*
   * This function generates and formats the contents on the PDF and create it in the end
   */
   this.processing = function() {
+    console.log(this.legendObjs);
+
     var uptoYear = boardData[currentBoard].calculatedToYear;
-    console.log("processing pdf");
-    this.addText("PEWI Result", this.x, this.y, this.font.header1_font);
-    // // Display default mapYear1
-    // this.addText("Year1 LandUse", this.x, this.y, this.font.header2_font);
-    // this.addImage(this.imageSrc.mapYear1, 'JPEG', this.x, this.y, 500, 320);
-    // this.updateY(350 + this.lineHeight * 2);
+    this.addText(1, "PEWI Result", x, y, font.header1_font);
+    // Display default mapYear1
+    // this.addText(1, "Year1 LandUse", x, y, font.header2_font);
+    // this.addImage(imageSrc.mapYear1, 'JPEG', x, y, mapWidth, mapHeight);
+    // this.updateY(350 + lineHeight * 2);
 
     // ----------------------------go through landUse maps----------------------------
     // put year maps on
     for (var i = 0; i < uptoYear; i++) {
-      this.addText("Year" + (i + 1) + " LandUse Map", this.x, this.y, this.font.header2_font);
-      this.addImage(this.imageSrc['mapYear' + (i + 1)], 'JPEG', this.x, this.y, 500, 320);
-      this.updateY(320 + this.lineHeight * 2);
+      this.addText(1, "Year" + (i + 1) + " LandUse Map", x, y, font.header2_font);
+      this.addImage(imageSrc['mapYear' + (i + 1)], 'JPEG', x, y, mapWidth, mapHeight);
+      this.updateY(mapHeight + lineHeight * 2);
     }
 
     // ----------------------------go through levels maps----------------------------
-    // put nitrates maps on
-    for (var i = 0; i < uptoYear; i++) {
-      this.addText("Year" + (i + 1) + " Nitrate Map", this.x, this.y, this.font.header2_font);
-      this.addImage(this.imageSrc['nitrateMapYear' + (i + 1)], 'JPEG', this.x, this.y, 500, 320);
-      this.updateY(320 + this.lineHeight * 2);
-    }
-
-    // put erosion maps on
-    for (var i = 0; i < uptoYear; i++) {
-      this.addText("Year" + (i + 1) + " Erosion Map", this.x, this.y, this.font.header2_font);
-      this.addImage(this.imageSrc['erosionMapYear' + (i + 1)], 'JPEG', this.x, this.y, 500, 320);
-      this.updateY(320 + this.lineHeight * 2);
-    }
-
-    // put phosphorus maps on
-    for (var i = 0; i < uptoYear; i++) {
-      this.addText("Year" + (i + 1) + " Phosphorus Map", this.x, this.y, this.font.header2_font);
-      this.addImage(this.imageSrc['phosphorusMapYear' + (i + 1)], 'JPEG', this.x, this.y, 500, 320);
-      this.updateY(320 + this.lineHeight * 2);
-    }
+    this.placeMapType("nitrate", uptoYear);
+    this.placeMapType("erosion", uptoYear);
+    this.placeMapType("phosphorus", uptoYear);
 
     // ----------------------------go through features maps----------------------------
-    this.placeMapType("flood", uptoYear);
-    this.placeMapType("wetland", uptoYear);
-    this.placeMapType("subwatershed", uptoYear);
-    this.placeMapType("drainage", uptoYear);
-    this.placeMapType("soil", uptoYear);
+    this.placeMapType("flood", 1);
+    this.placeMapType("wetland", 1);
+    this.placeMapType("subwatershed", 1);
+    this.placeMapType("drainage", 1);
+    this.placeMapType("soil", 1);
 
     // ----------------------------go through yield maps----------------------------
-    this.placeMapType("cornGrain", uptoYear);
-    this.placeMapType("soy", uptoYear);
-    this.placeMapType("fruit", uptoYear);
-    this.placeMapType("cattle", uptoYear);
-    this.placeMapType("alfalfa", uptoYear);
-    this.placeMapType("grassHay", uptoYear);
-    this.placeMapType("switchGrass", uptoYear);
-    this.placeMapType("wood", uptoYear);
-    this.placeMapType("short", uptoYear);
-
+    this.placeMapType("cornGrain", 1);
+    this.placeMapType("soyBean", 1);
+    this.placeMapType("fruit", 1);
+    this.placeMapType("cattle", 1);
+    this.placeMapType("alfalfa", 1);
+    this.placeMapType("grassHay", 1);
+    this.placeMapType("switchGrass", 1);
+    this.placeMapType("wood", 1);
+    this.placeMapType("short", 1);
     console.log("output pdf");
-    // Output as Data URI on the current page
     this.doc.output('datauri');
 
-  };
+    // Output as Data URI on the current page
+    // this.doc.output('datauri');
+
+
+    // clean everything XXX clean jsPDF?
+    this.doc = {};
+    this.legendObjs = {};
+    imageSrc = {};
+  }; // end processing
 
   // helper functions
+
   /**
-  * String dataURL
-  * String type: 'JPEG', 'PNG', and so on
-  * int width
-  * int height
-  * int x
-  * int y
+  * Place image on the pdf
+  *
+  * String dataURL, String type: 'JPEG', 'PNG', and so on
+  * Number width, Number height, Number x, sNumber y
   */
   this.addImage = function(dataURL, type, x, y, width, height) {
     // 'PNG' wouldn't work for some reason
     this.doc.addImage(dataURL, type, x, y, width, height);
-  } // end addImage
+  }; // end addImage
 
   /**
-  * String text
-  * int x
-  * int y
-  * int size
-  * String type
-  * String family
+  * Create and store the legend indicator and description in legendObjs per line
+  *
+  * String legendName: the name that will be stored as the keyword refer to the legend object
+  * String color: legend indicator color in rgb()
+  * String text: legend description
   */
-  this.addText = function(text, x, y, size, type, family) {
+  this.addLegendLine = function(legendName, color, text) {
+    if (typeof this.legendObjs[legendName] === 'undefined') {
+      // Create Object
+      this.legendObjs[legendName] = {
+        indicator: [],
+        description: []
+      };
+    }
+    this.legendObjs[legendName].indicator.push(color);
+    this.legendObjs[legendName].description.push(text);
+  }; // end addLegendLine
+
+  /**
+  * Place text on the pdf
+  *
+  * String text, Number x, Number y, [Number size, String type, String family]
+  */
+  this.addText = function(updateY, text, x, y, size, type, family) {
     if (arguments.length >= 4)
     this.doc.setFontSize(size);
 
@@ -3292,70 +3309,185 @@ function Printer2() {
     // if (arguments.length >= 6)
 
     this.doc.text(x, y, text);
-    // update y
-    this.y = this.y + size + this.lineHeight;
+    if (updateY) {
+      // update y
+      this.updateY(size+lineHeight);
+    }
     // reset font property
-    this.doc.setFontSize(size);
+    this.doc.setFontSize(font.font);
     this.doc.setFontType("normal");
   }; // end addText
 
+  /**
+  * Take legend object as a source to draw the according legend image
+  *
+  * Object legendObj: the property stored in legendObjs
+  * Number x, Number y: coordinates
+  */
+  this.drawLegendBox = function(legendObj, x, y) {
+    console.log("draw legend box " + legendObj.name);
+    var rectX, rectY, textX, textY, i;
+    rectX = x + padding;
+    rectY = y + padding;
+    textX = rectX + indicatorLength + padding;
+    textY = rectY + padding*2;
+
+    // first draw the container
+    this.doc.setDrawColor(0);
+    this.doc.setFillColor(172, 172, 172); // light gray
+    this.doc.rect(x, y, legendObj.width, legendObj.height, 'F');
+
+    var matches_array; // size 3, stores values of RGB
+    var regexp = /\d+/g; // regexp to extract RGB values from String
+
+    // then draw the content line by line
+    for (i = 0; i < legendObj.indicator.length; i++) {
+      // trim to have values
+      matches_array = legendObj.indicator[i].match(regexp).map(Number);
+      this.doc.setFillColor(matches_array[0], matches_array[1], matches_array[2]);
+      this.doc.rect(rectX, rectY, indicatorLength, indicatorLength, 'F'); // filled square
+      // put on the text
+      this.addText(0, legendObj.description[i], textX, textY, 8);
+      // update parameters
+      rectY += indicatorLength + padding;
+      textY = rectY + padding*2;
+    }
+  }; // end drawLegendBox
+
+  /**
+  * Loop through a string array and return the longest line's length
+  *
+  * String Array sArray
+  */
+  this.longestLine = function(sArray) {
+    var maxlength = 0,index;
+    for (var i = 0; i < sArray.length; i++) {
+      if (maxlength < sArray[i].length) {
+        maxlength = sArray[i].length;
+        index = i;
+      }
+    }
+    return maxlength;
+  }; // end longestLine
+
+  /**
+  * Create LegendBox Object
+  *
+  * String type
+  */
+  this.makeLegendBox = function(type) {
+    var color, text, i;
+    for (i = 0; i < document.getElementById(type+'DetailsList').childElementCount; i++) {
+      color = void 0;
+      text = void 0;
+      // loop through the data from detail lists and store in color & text line by line
+      // color = document.getElementById(type + 'DetailsList').getElementsByClassName('levelColor'+(i+1) )[0].style.backgroundColor;
+      var colorDiv = document.getElementById(type + 'DetailsList').getElementsByClassName('legendColor')[i];
+      if (colorDiv instanceof HTMLElement) {
+        color = getComputedStyle(colorDiv, null).getPropertyValue("background-color");
+        text = colorDiv.getElementsByTagName('p')[0].innerText;
+      }
+      if (typeof color !== 'undefined' && typeof text !== 'undefined') {
+        this.addLegendLine(type, color, text);
+      }
+    }
+    // XXX result page should use different code to get color and text
+
+    // store width & height
+    this.legendObjs[type].height = padding + this.legendObjs[type].indicator.length * (indicatorLength + padding);
+    this.legendObjs[type].width = padding + indicatorLength + padding + (this.longestLine(this.legendObjs[type].description) * 4.5);
+    this.legendObjs[type].name = type;
+  };
+
+  /**
+  * Loop through all available image src for each year and put them on pdf
+  *
+  * String type, Number uptoYear
+  */
+  this.placeMapType = function(type, uptoYear) {
+    var legend;
+    // loop through all available year
+    for (var i = 0; i < uptoYear; i++) {
+      if (type == 'nitrate' || type == 'erosion' || type == 'phosphorus') {
+        this.addText(1, "Year" + (i + 1) + " " + this.titleText(type), x, y, font.header2_font);
+      } else {
+        this.addText(1, this.titleText(type), x, y, font.header2_font);
+      }
+      this.addImage(imageSrc[type + (i + 1)], 'JPEG', x, y, mapWidth, mapHeight);
+      // place legend
+      if (legend = this.legendObjs[type]) {
+        this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+      }
+      this.updateY(mapHeight + lineHeight * 2);
+    }
+  };
+
+  /**
+  * Loop through each year and get according image src
+  *
+  * String text, Number uptoYear
+  */
   this.saveScreenshotMapType = function(type, uptoYear) {
+    // loop through all available year
     for (var i = 0; i < uptoYear; i++) {
       transitionToYear(i + 1);
       displayLevels(type);
       renderer.render(scene, camera);
-      jspdfprinter.imageSrc[type + 'MapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
+      imageSrc[type + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
     } // end for
-  }
+  }; // end saveScreenshotMapType
 
+  /**
+  * Just convert the type to the proper title
+  *
+  * String text
+  */
   this.titleText = function(text) {
     switch (text) {
       // levels
-      case 'nitrate': return 'Nitrate'; break;
-      case 'erosion': return 'Erosion'; break;
-      case 'phosphorus': return 'Phosphorus'; break;
+      case 'nitrate': return 'Nitrate';
+      case 'erosion': return 'Erosion';
+      case 'phosphorus': return 'Phosphorus';
       // features
-      case 'flood': return 'Flood Frequency'; break;
-      case 'wetland': return 'Strategic Wetlands'; break;
-      case 'subwatershed': return 'Subwatershed Boundaries'; break;
-      case 'drainage': return 'Drainage Class'; break;
-      case 'soil': return 'Soil Class'; break;
+      case 'flood': return 'Flood Frequency';
+      case 'wetland': return 'Strategic Wetlands';
+      case 'subwatershed': return 'Subwatershed Boundaries';
+      case 'drainage': return 'Drainage Class';
+      case 'soil': return 'Soil Class';
       // yields
-      case 'cornGrain': return 'Corn Grain'; break;
-      case 'soy': return 'Soybean'; break;
-      case 'fruit': return 'Mixed Fruits and Vegetables'; break;
-      case 'cattle': return 'Cattle'; break;
-      case 'alfalfa': return 'Alfalfa'; break;
-      case 'grassHay': return 'GrassHay'; break;
-      case 'switchGrass': return 'Switch Grass'; break;
-      case 'wood': return 'Wood'; break;
-      case 'short': return 'Woody Biomass'; break;
-      default:
-        return 'error title';
-        break;
-
+      case 'cornGrain': return 'Corn Grain';
+      case 'soyBean': return 'Soybean';
+      case 'fruit': return 'Mixed Fruits and Vegetables';
+      case 'cattle': return 'Cattle';
+      case 'alfalfa': return 'Alfalfa';
+      case 'grassHay': return 'GrassHay';
+      case 'switchGrass': return 'Switch Grass';
+      case 'wood': return 'Wood';
+      case 'short': return 'Woody Biomass';
+      default: return 'error type for title';
     } // switch
-  } // titleText
+  }; // end titleText
 
-  this.placeMapType = function(type, uptoYear) {
-    for (var i = 0; i < uptoYear; i++) {
-      this.addText("Year" + (i + 1) + " " + this.titleText(type), this.x, this.y, this.font.header2_font);
-      this.addImage(this.imageSrc[type + 'MapYear' + (i + 1)], 'JPEG', this.x, this.y, 500, 320);
-      this.updateY(320 + this.lineHeight * 2);
-    }
-  }
+  /**
+  * Update x coordinates by value
+  *
+  * Number value
+  */
+  this.updateX = function(value) {};
 
-  this.updateX = function(value) {}
-
+  /**
+  * Update y coordinates by value. Add page when needed.
+  *
+  * Number value
+  */
   this.updateY = function(value) {
-    if (this.y + value > this.pageHeight - this.page_margin) {
+    if (y + value > pageHeight - pageMargin) {
       this.doc.addPage();
-      this.y = this.page_margin;
+      y = pageMargin;
     } else {
-      this.y += value;
+      y += value;
     }
-
-  } // end updateY
+  }; // end updateY
 
 } // end Printer2()
 

@@ -45,7 +45,7 @@ var zoomingInNow = false;
 var zoomingOutNow = false;
 
 var rain = null;
-
+// global variable for print function
 takeScreenshot = false;
 
 //===================
@@ -462,7 +462,7 @@ function animationFrames() {
     // render the according webgl
     renderer.render(scene, camera);
 
-    // // takeScreenshot is global variable. Is set to true when pressing print key
+    // takeScreenshot is global variable. Is set to true when pressing print key 'p' ( helpersFE.js )
     if (takeScreenshot) {
       // reset takeScreenshot to false
       takeScreenshot = false;
