@@ -171,7 +171,7 @@ function highlightTile(tileId) {
 
       //update the information displayed in the delayed hover div by cursor
       myTimer = setTimeout(function() {
-        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + boardData[currentBoard].map[tileId].soilType;
+        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
       }, 500);
     }
 
@@ -2236,36 +2236,36 @@ function getHighlightedInfo(tileId) {
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%";
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>";
         break;
         //create string for gross erosion levels
       case 2:
-        highlightString = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr";
+        highlightString = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>";
         break;
         //create string for phosphorus load levels
       case 3:
-        highlightString = (boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr";
+        highlightString = (boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>";
         break;
         //create string for flood frequency levels
       case 4:
         switch (Number(boardData[currentBoard].map[tileId].floodFrequency)) {
           case 0:
-            highlightString = "None";
+            highlightString = "None" + "<br>";
             break;
           case 10:
-            highlightString = "None";
+            highlightString = "None" + "<br>";
             break;
           case 20:
-            highlightString = "Rare";
+            highlightString = "Rare" + "<br>";
             break;
           case 30:
-            highlightString = "Occasionally";
+            highlightString = "Occasionally" + "<br>";
             break;
           case 40:
-            highlightString = "Frequently";
+            highlightString = "Frequently" + "<br>";
             break;
           case 50:
-            highlightString = "Ponded";
+            highlightString = "Ponded" + "<br>";
             break;
         }
         break;
@@ -2274,71 +2274,84 @@ function getHighlightedInfo(tileId) {
         var drainage = Number(boardData[currentBoard].map[tileId].drainageClass);
         switch (drainage) {
           case 70:
-            highlightString = "Very Poor";
+            highlightString = "Very Poor" + "<br>";
             break;
           case 60:
-            highlightString = "Poor";
+            highlightString = "Poor" + "<br>";
             break;
           case 50:
-            highlightString = "Somewhat Poor";
+            highlightString = "Somewhat Poor" + "<br>";
             break;
           case 45:
-            highlightString = "Somewhat Poor";
+            highlightString = "Somewhat Poor" + "<br>";
             break;
           case 40:
-            highlightString = "Moderate / Well";
+            highlightString = "Moderate / Well" + "<br>";
             break;
           case 30:
-            highlightString = "Moderate / Well";
+            highlightString = "Moderate / Well" + "<br>";
             break;
           case 10:
-            highlightString = "Excessive";
+            highlightString = "Excessive" + "<br>";
             break;
           case 0:
-            highlightString = "Excessive";
+            highlightString = "Excessive" + "<br>";
             break;
         } //end switch
         break;
         //create string for strategic wetlands
       case 6:
         if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
-          highlightString = "Strategic wetland";
+          highlightString = "Strategic wetland" + "<br>";
         }
         break;
         //create string for subwatershed number
       case 7:
-        highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed;
+        highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>";
         break;
         //create string for soil class
       case 8:
         soil = boardData[currentBoard].map[tileId].soilType;
         switch (soil) {
           case "A":
-            return "Clarion 138B";
+            highlightString = "Clarion 138B" + "<br>";
+            break;
           case "B":
-            return "Buckney 1636";
+            highlightString = "Buckney 1636" + "<br>";
+            break;
           case "C":
-            return "Canisteo 507";
+            highlightString = "Canisteo 507" + "<br>";
+            break;
           case "D":
-            return "Downs 162D2";
+            highlightString = "Downs 162D2" + "<br>";
+            break;
           case "G":
-            return "Gara-Armstrong 993E2";
+            highlightString = "Gara-Armstrong 993E2" + "<br>";
+            break;
           case "K":
-            return "Ackmore-Colo 5B";
+            highlightString = "Ackmore-Colo 5B" + "<br>";
+            break;
           case "L":
-            return "Coland 135";
+            highlightString = "Coland 135" + "<br>";
+            break;
           case "M":
-            return "Tama 120C2";
+            highlightString = "Tama 120C2" + "<br>";
+            break;
           case "N":
-            return "Nicollet 55";
+            highlightString = "Nicollet 55" + "<br>";
+            break;
           case "O":
-            return "Okoboji 90";
+            highlightString = "Okoboji 90" + "<br>";
+            break;
           case "Q":
-            return "Tama 120B";
+            highlightString = "Tama 120B" + "<br>";
+            break;
           case "T":
-            return "Muscatine 119";
+            highlightString = "Muscatine 119" + "<br>";
+            break;
           case "Y":
-            return "Noadaway 220";
+            highlightString = "Noadaway 220" + "<br>";
+            break;
         }
 
     }
@@ -2349,6 +2362,52 @@ function getHighlightedInfo(tileId) {
 
 } //end getHighlightedInfo
 
+function printSoilType(tileId){
+var soil = boardData[currentBoard].map[tileId].soilType;
+switch (soil)
+{
+  case "A":
+    highlightString = "Clarion 138B" + "<br>";
+    break;
+  case "B":
+    highlightString = "Buckney 1636" + "<br>";
+    break;
+  case "C":
+    highlightString = "Canisteo 507" + "<br>";
+    break;
+  case "D":
+    highlightString = "Downs 162D2" + "<br>";
+    break;
+  case "G":
+    highlightString = "Gara-Armstrong 993E2" + "<br>";
+    break;
+  case "K":
+    highlightString = "Ackmore-Colo 5B" + "<br>";
+    break;
+  case "L":
+    highlightString = "Coland 135" + "<br>";
+    break;
+  case "M":
+    highlightString = "Tama 120C2" + "<br>";
+    break;
+  case "N":
+    highlightString = "Nicollet 55" + "<br>";
+    break;
+  case "O":
+    highlightString = "Okoboji 90" + "<br>";
+    break;
+  case "Q":
+    highlightString = "Tama 120B" + "<br>";
+    break;
+  case "T":
+    highlightString = "Muscatine 119" + "<br>";
+    break;
+  case "Y":
+    highlightString = "Noadaway 220" + "<br>";
+    break;
+  }
+  return highlightString;
+}
 //contaminatedRiver changes the color of the river dependent on current phosphorus level
 function contaminatedRiver(riverColor) {
 
