@@ -208,7 +208,6 @@ function changeLandTypeTile(tileId) {
 
 //Clumps and undo's multiple tiles
 function undoGrid(givenTilesAndPainter) {
-  console.log(givenTilesAndPainter);
   //Go through each tile and replace the paint with the paint previously there
   while(givenTilesAndPainter[1].length > 0) {
     painter = givenTilesAndPainter[1].pop();
@@ -221,12 +220,9 @@ function addChange(tileId) {
   if(uniqueTileChange(tileId)) {
     //Paint selector is a grid
     if(painterTool.status == 2) {
-      console.log("Grid selection added!");
       undoGridArr.push(tileId);
     //Paint selector is regular
     } else {
-      console.log("Single selector added!");
-      console.log(undoArr);
       undoArr[currentYear].push([tileId,boardData[currentBoard].map[tileId].landType[currentYear]]);
     }
   }
@@ -254,6 +250,13 @@ function uniqueTileChange(tileId) {
       return true;
     }
 } //end uniqueTileChange(tileId)
+
+//Resets the undo function arrays
+function resetUndo() {
+  undoArr = [[],[],[],[]];
+  undoGridArr = [];
+  undoGridPainters = [];
+} //end resetUndo()
 
 //getTileID calculates the id of the tile give the raycaster intersection coordinates
 function getTileID(x, y) {
@@ -569,11 +572,9 @@ function revertChanges() {
     var tempTileAndPainter = undoArr[currentYear].pop();
     //If the undo function is undoing a grid
     if(tempTileAndPainter[0].length > 1) {
-      console.log("Undoing grid selection...");
       undoGrid(tempTileAndPainter);
     //If the undo function is undoing a normal selection
     } else {
-      console.log("Undoing single selection...");
       painter = tempTileAndPainter[1];
       changeLandTypeTile(tempTileAndPainter[0]);
     }
@@ -1049,8 +1050,6 @@ function toggleEscapeFrame() {
 
 //paintChange changes the highlighted color of the selected painter and updates painter
 function changeSelectedPaintTo(newPaintValue) {
-  //paint color has been switched
-  paintSwitch = true;
   //check to see if multiplayer Assignment Mode is On
   if (!multiplayerAssigningModeOn) {
     //Store paint change if click-tracking is on
@@ -3717,7 +3716,6 @@ function multiplayerExit() {
     totalPlayers--;
   }
   multiplayerAssigningModeOn = false;
-
 
 }
 

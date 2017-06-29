@@ -576,7 +576,7 @@ function showMainMenu() {
       // clearPopup();
       levelGlobal = 0;
     }
-
+    resetUndo();
     document.getElementById('page').style.visibility = "hidden";
     // document.getElementById('page').style.display = "none";
 
