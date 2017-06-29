@@ -1136,7 +1136,7 @@ function Tile(tileArray, board) {
         return this.getSwitchgrassYield();
       case "shortRotationWoodyBioenergy":
         //shortRotationWoodyBioenergy is not dependent on soil type
-        return 60.8608;
+        return 9.992447095;
       case "wetland":
         return 0;
       case "mixedFruitsVegetables":

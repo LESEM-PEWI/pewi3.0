@@ -44,6 +44,8 @@ var randomzing = false;
 var previousOverlay = null;
 var previousTab = null;
 var overlayedToggled = false;
+var addingYearFromFile=false;//Boolean used to keep a track of whether or not you're adding a year from file
+
 
 var inResults = false;
 var inDispLevels = false;
@@ -110,7 +112,6 @@ function onResize() {
 //tile is created from scratch
 function displayBoard() {
 
-  updateIndexPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
   riverPoints = [];
 
   //loop through all tiles and addTile to the meshGeometry and meshMaterials objects
@@ -165,11 +166,12 @@ function highlightTile(tileId) {
       previousHover = tileId;
 
       //update HUD with current information
+      //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
 
       //update the information displayed in the delayed hover div by cursor
       myTimer = setTimeout(function() {
-        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId);
+        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + boardData[currentBoard].map[tileId].soilType;
       }, 500);
     }
 
@@ -554,21 +556,27 @@ function revertChanges() {
 function transitionToYear(year) {
 
   currentYear = year;
-  var tempNum = year + 37;
-  if (curTracking) {
-    pushClick(0, getStamp(), tempNum, 0, null);
-  }
-  if (year > boardData[currentBoard].calculatedToYear) {
-    boardData[currentBoard].calculatedToYear = year;
+    var tempNum = year + 37;
+    if (curTracking) {
+      pushClick(0,getStamp(),tempNum,0,null);
+    }
+    if (year > boardData[currentBoard].calculatedToYear && addingYearFromFile==false) {
+      boardData[currentBoard].calculatedToYear = year;
 
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-      boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
+      for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+        boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
+      }
+     if(addingYearFromFile==true)
+      {
+        for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+        boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year];
+      }
+      }
+
+      boardData[currentBoard].updateBoard();
     }
 
-    boardData[currentBoard].updateBoard();
-  }
-
-  refreshBoard();
+    refreshBoard();
 } //end transitionToYear
 
 //addYearAndTransition updates the years to switch between in the left console and transitions to the new year
@@ -1036,7 +1044,7 @@ function changeSelectedPaintTo(newPaintValue) {
     painter = newPaintValue;
     //Index chat box entries for each landuse type
     if(painterElementId == 'paint1'){
-      updateIndexPopup('These are the 15 different land use types. To learn more about them, go to the Index and select "Land Use".');
+      updateIndexPopup('To learn more about Conventional Corn, go to the Index and select "Land Use".');
     }
      else if(painterElementId == 'paint2'){
       updateIndexPopup('To learn more about Conservation Corn, go to the Index and select "Land Use".');
@@ -1316,7 +1324,7 @@ function showLevelDetails(value) {
     document.getElementById("subwatershedClassDetailsList").className = "DetailsList physicalDetailsList";
   } //end else/if group
 
-  else if (value == 8) {
+    else if (value == 8) {
     document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
     document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
   }
@@ -1419,7 +1427,6 @@ function showLevelDetails(value) {
   }
 
 } //end showLevelDetails
-
 //updatePrecip updates the currentBoard with the precipitation values selected in the drop down boxes
 function updatePrecip(year) {
 
@@ -2216,6 +2223,7 @@ function getHighlightColor(highlightType, tileId) {
 } //end getHighlightColor
 
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
+//More hover information
 function getHighlightedInfo(tileId) {
 
   //return information about the tile that is highlighted
@@ -2538,7 +2546,6 @@ function writeFileToDownloadString(mapPlayerNumber) {
       //If the tile really shouldn't be there (-1 for BaseLandUseType)...
       // If the user made a multipler map, and a tile still has values when it's not that player's tile
       if(boardData[currentBoard].map[i].landType[1] != mapPlayerNumber) {
-        boardData[currentBoard].map[i].area = "NA";
         boardData[currentBoard].map[i].carbonMax = "NA";
         boardData[currentBoard].map[i].carbonMin = "NA";
         boardData[currentBoard].map[i].cattle = "NA";
@@ -2553,12 +2560,11 @@ function writeFileToDownloadString(mapPlayerNumber) {
         boardData[currentBoard].map[i].soilType = 0;
         boardData[currentBoard].map[i].soybeanYield = "NA";
         boardData[currentBoard].map[i].streamNetwork = "NA";
-        boardData[currentBoard].map[i].subwatershed = "NA";
         boardData[currentBoard].map[i].timber = "NA";
         boardData[currentBoard].map[i].topography = 0;
         boardData[currentBoard].map[i].watershedNitrogenContribution = "NA";
         boardData[currentBoard].map[i].strategicWetland = "NA";
-        boardData[currentBoard].map[i].riverStreams = 0;
+        //boardData[currentBoard].map[i].riverStreams = 0;
       }
 
       string = string + boardData[currentBoard].map[i].id + "," +
@@ -2616,10 +2622,10 @@ function writeFileToDownloadString(mapPlayerNumber) {
 
     } //end for
 
-    // finish processing, set boardData as undefined
-    if(!multiplayerAssigningModeOn) {
-      cleanCurrentBoardData();
-    }
+
+    // finish processing, set boardData as undefined ****** commented for now to avoid error after the file is downloaded
+   // cleanCurrentBoardData();
+
 
   } // end if
 
@@ -2636,40 +2642,42 @@ function cleanCurrentBoardData() {
 // this function is called from child frame uploadDownload
 function uploadClicked(e) {
 
+files = e.target.files;
 
-  files = e.target.files;
-
-  if (files[0].name && !files[0].name.match(/\.csv/)) {
-    if (files[0].name.match(/\.json/)) //. json is file format from pewi2.1
+    if (files[0].name && !files[0].name.match(/\.csv/)) //if there is a file name and it's not a csv
     {
+      if(files[0].name.match(/\.json/))//. json is file format from pewi2.1
+      {
+        //This piece of code converts files from pewi2.1 to fileformat of pewi 3.0
+
+        var reader = new FileReader();
+        reader.readAsText(files[0]);
 
 
-      var reader = new FileReader();
-      reader.readAsText(files[0]);
 
 
-      var trialObj = e.target;
-      console.log("stack trace %s", trialObj);
-
-      var string = "";
+        var string = "";
 
 
-      reader.onload = function(event) {
+        reader.onload = function(event) {
 
 
         string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
         console.log("reader created");
 
-        console.log("loading the json %s");
+
         var obj = JSON.parse(event.target.result);
+        var year2Available=false;
+        var year3Available=false;
 
 
 
 
 
-        for (var i = 0; i < 828; i++) {
-          try {
+        for(var i=0; i<828; i++){//there are 828 tiles on the board (hidden+visible)
+            try{
             //This variable 'string' stores the extracted data from the .json file
+
             string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + "," +
               ((obj["1"].area.data[i] == null) ? 0 : obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," + ((obj["1"].carbonmax.data[i] == null) ? "NA" : obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i] == null) ? "NA" : obj["1"].carbonmin.data[i]) +
               "," + ((obj["1"].cattle.data[i] == null) ? "NA" : obj["1"].cattle.data[i]) + "," + ((obj["1"].cornyield.data[i] == null) ? "NA" : obj["1"].cornyield.data[i]) + "," + ((obj["1"].drainageclass.data[i] == null) ? "NA" : obj["1"].drainageclass.data[i]) + "," + ((obj["1"].erosion.data[i] == null) ? "NA" : obj["1"].erosion.data[i]) + "," + ((obj["1"].floodfrequency.data[i] == null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
@@ -2693,37 +2701,174 @@ function uploadClicked(e) {
               string = string + "0,";
             } else if (except.message == "obj[3].area is undefined") {
               string = string + "0,";
+
             }
-          }
-          string = string + obj.precipitation[0] + "," + obj.precipitation[1] + "," + obj.precipitation[2] + "," + obj.precipitation[3];
-          if (i < 827) {
-            string = string + '\n';
-          }
 
-        }
-        console.log("got the json obj %s", string);
+            try
+            {
+                string=string +((obj["1"].area.data[i]== null)? 1:obj["1"].baseLandUseType.data[i])+",";
+                string=string + ((obj["2"].area.data[i]== null)? 0:obj["2"].baseLandUseType.data[i])+",";
+                string=string + ((obj["3"].area.data[i]== null)? 0:obj["3"].baseLandUseType.data[i])+"," /** landType + landType + landType*/;
+                if((obj["2"].area.data[i]!= null))//If data for year 2 is included in the file
+                {
+                addingYearFromFile=true;
+                year2Available=true;
 
-        setupBoardFromUpload(string);
-        setupRiver();
-        //clear initData
-        initData = [];
+                }
+                if((obj["3"].area.data[i]!= null))
+                {
+                addingYearFromFile=true;
+                year3Available=true;
+                }
+            }
+            catch(except)
+            {
+
+                if(except.message=="obj[2].area is undefined")
+                {
+                  string=string + "0,";
+                  string=string + "0,";
+                }
+                else if(except.message=="obj[3].area is undefined")
+                {
+                  string=string + "0,";
+                }
+            }
+            string = string + obj.precipitation[0] + "," +obj.precipitation[1] +"," +obj.precipitation[2] +"," +obj.precipitation[3];
+            if(i<827)
+             {
+                string = string + '\n';
+             }
+
+            }
+          console.log("got the json obj %s",string);
+          initWorkspace("./data.csv");//to fix the unusual loading of the river
+          setupBoardFromUpload(string);
+          if(year2Available)//If data for years is included, add the year
+          {
+          addYearAndTransition();
+          }
+          if(year3Available)
+          {
+          addYearAndTransition();
+          }
+            //updating the precip levels from the values in the uploaded file
+            boardData[currentBoard].precipitation[0]=obj.precipitation[0];
+            boardData[currentBoard].precipitation[1]=obj.precipitation[1];
+            boardData[currentBoard].precipitation[2]=obj.precipitation[2];
+            boardData[currentBoard].precipitation[3]=obj.precipitation[3];
+            document.getElementById("year0Precip").value=(boardData[currentBoard].precipitation[0]==24.58)?0:((boardData[currentBoard].precipitation[0]==28.18)?1:((boardData[currentBoard].precipitation[0]==30.39)?2:((boardData[currentBoard].precipitation[0]==32.16)?3:(boardData[currentBoard].precipitation[0]==34.34)?4:((boardData[currentBoard].precipitation[0]==36.47)?5:6))));
+            document.getElementById("year1Precip").value=(boardData[currentBoard].precipitation[1]==24.58)?0:((boardData[currentBoard].precipitation[1]==28.18)?1:((boardData[currentBoard].precipitation[1]==30.39)?2:((boardData[currentBoard].precipitation[1]==32.16)?3:(boardData[currentBoard].precipitation[1]==34.34)?4:((boardData[currentBoard].precipitation[1]==36.47)?5:6))));
+            document.getElementById("year2Precip").value=(boardData[currentBoard].precipitation[2]==24.58)?0:((boardData[currentBoard].precipitation[2]==28.18)?1:((boardData[currentBoard].precipitation[2]==30.39)?2:((boardData[currentBoard].precipitation[2]==32.16)?3:(boardData[currentBoard].precipitation[2]==34.34)?4:((boardData[currentBoard].precipitation[2]==36.47)?5:6))));
+            document.getElementById("year3Precip").value=(boardData[currentBoard].precipitation[3]==24.58)?0:((boardData[currentBoard].precipitation[3]==28.18)?1:((boardData[currentBoard].precipitation[3]==30.39)?2:((boardData[currentBoard].precipitation[3]==32.16)?3:(boardData[currentBoard].precipitation[3]==34.34)?4:((boardData[currentBoard].precipitation[3]==36.47)?5:6))));
+            transitionToYear(1);
+            switchYearTab(1);
+          //clear initData
+          initData = [];
 
 
       }
 
-    } else {
 
+          }
+
+        }
+   else//if the file isn't csv or json
+   {
       alert("Incorrect File Type!");
     }
-  } else {
+  }
+  else {//it's csv
+  //console.log("Else entered");
     var reader = new FileReader();
     reader.readAsText(files[0]);
-    reader.onload = function(e) {
-      setupBoardFromUpload(reader.result);
 
-      //clear initData
-      initData = [];
-    }
+      reader.onload = function(e) {
+
+
+        setupBoardFromUpload(reader.result);
+
+        //Code to check if data multiple years are present in the file
+          var allText=reader.result;
+
+
+          //converting the csv into an array
+            var allTextLines = allText.split(/\r\n|\n/);
+            var headers = allTextLines[0].split(',');
+            var lines = [];
+
+            for (var i=1; i<allTextLines.length; i++) {
+            var data = allTextLines[i].split(',');
+             if (data.length == headers.length) {
+
+            var tarr = [];
+            for (var j=0; j<headers.length; j++) {
+                tarr.push(data[j]);
+                    }
+            lines.push(tarr);
+                  }
+            }
+            var multipleYearFlag=1;
+
+
+          for(var i=0;i<lines.length;i++)//This for loop iterates through the uploaded csv data file and cheks if year 2 and 3 are present in the file
+            {
+
+
+              if((lines[i][26] != lines[i][27]))
+              {
+                if(lines[i][26]!=1 && lines[i][26]!=0)
+                  multipleYearFlag=2;
+                if(lines[i][27]!=1 && lines[i][27]!=0)
+                  multipleYearFlag=3;
+
+
+                break;
+              }
+
+
+
+            }
+
+            if(multipleYearFlag==2)
+            {
+
+              addingYearFromFile=true;
+              addYearAndTransition();
+
+            }
+            if(multipleYearFlag==3)
+            {
+              addingYearFromFile=true;
+              addYearAndTransition();
+              addYearAndTransition();
+
+            }
+            //updating the precip levels from the values in the uploaded file
+            boardData[currentBoard].precipitation[0]=lines[1][28];
+            boardData[currentBoard].precipitation[1]=lines[1][29];
+            boardData[currentBoard].precipitation[2]=lines[1][30];
+            boardData[currentBoard].precipitation[3]=lines[1][31];
+            document.getElementById("year0Precip").value=(boardData[currentBoard].precipitation[0]==24.58)?0:((boardData[currentBoard].precipitation[0]==28.18)?1:((boardData[currentBoard].precipitation[0]==30.39)?2:((boardData[currentBoard].precipitation[0]==32.16)?3:(boardData[currentBoard].precipitation[0]==34.34)?4:((boardData[currentBoard].precipitation[0]==36.47)?5:6))));
+            document.getElementById("year1Precip").value=(boardData[currentBoard].precipitation[1]==24.58)?0:((boardData[currentBoard].precipitation[1]==28.18)?1:((boardData[currentBoard].precipitation[1]==30.39)?2:((boardData[currentBoard].precipitation[1]==32.16)?3:(boardData[currentBoard].precipitation[1]==34.34)?4:((boardData[currentBoard].precipitation[1]==36.47)?5:6))));
+            document.getElementById("year2Precip").value=(boardData[currentBoard].precipitation[2]==24.58)?0:((boardData[currentBoard].precipitation[2]==28.18)?1:((boardData[currentBoard].precipitation[2]==30.39)?2:((boardData[currentBoard].precipitation[2]==32.16)?3:(boardData[currentBoard].precipitation[2]==34.34)?4:((boardData[currentBoard].precipitation[2]==36.47)?5:6))));
+            document.getElementById("year3Precip").value=(boardData[currentBoard].precipitation[3]==24.58)?0:((boardData[currentBoard].precipitation[3]==28.18)?1:((boardData[currentBoard].precipitation[3]==30.39)?2:((boardData[currentBoard].precipitation[3]==32.16)?3:(boardData[currentBoard].precipitation[3]==34.34)?4:((boardData[currentBoard].precipitation[3]==36.47)?5:6))));
+            transitionToYear(1);//transition to year one
+            switchYearTab(1);
+
+
+
+
+
+
+
+
+
+
+        //clear initData
+        initData = [];
+    }//end onload
+
   } //end else
 
   closeUploadDownloadFrame();
@@ -2731,17 +2876,8 @@ function uploadClicked(e) {
   //reset keylistening frame (ie give up focus on iframe)
   //no more conch for us
   document.activeElement.blur();
-} //end uploadClicked
 
 
-//downloadClicked() is called by child frame uploadDownload
-// since downloading must be handeled in the active frame,
-// much of the function is taken care of there.
-//This function closes the download frame and tidies up
-function downloadClicked() {
-  closeUploadDownloadFrame();
-  //reset keylistening frame (ie give up focus on iframe)
-  document.activeElement.blur();
 } //end downloadClicked()
 
 //animateResults() frame
@@ -2931,8 +3067,8 @@ function updatePopup(string) {
   //Will activate an animation on the lower right side of the screen to show that the message box has updated
 } //end updatePopup
 function updateIndexPopup(string){
-  document.getElementById("indexPopupText").innerHTML = string;
-  document.getElementById("backgroundInfoButton").style.background= '#'+Math.random().toString(16).slice(-6)
+  window.parent.document.getElementById("indexPopupText").innerHTML = string;
+  window.parent.document.getElementById("backgroundInfoButton").style.background= '#'+Math.random().toString(16).slice(-6)
 }
 
 //clearPopup removes all text from the popup dialogue and hides it
@@ -3100,15 +3236,11 @@ function saveAndRandomize(){
       {
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         changeLandTypeTile(i);
-
       }
 
     }
     painter=newDefaultLandUse; //end for all tiles
   }
-
-
-
 } //end saveandRandomize
 
 //toggleVisibility parses the options stored in the parameters div and toggles their visibility
