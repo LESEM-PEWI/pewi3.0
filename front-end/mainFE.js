@@ -51,7 +51,7 @@ takeScreenshot = false;
 //===================
 
 /** createThreeFramework instantiates the renderer and scene to render 3D environment
- *   renderer = new THREE.WebGLRenderer();
+ *   renderer = new THREE.WebGLRenderer(); above
  *
  */
 function createThreeFramework() {
@@ -59,7 +59,7 @@ function createThreeFramework() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   //add renderer (canvas element) to html page
-  document.body.appendChild(renderer.domElement).setAttribute("id", "mapCanvas");
+  document.body.appendChild(renderer.domElement);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 

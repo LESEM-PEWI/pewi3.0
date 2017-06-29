@@ -120,17 +120,6 @@ body {
   position: fixed;
 }
 
-#myCanvas {
-  display: none;
-  position: absolute;
-  background-color: black;
-  bottom: 10px;
-  left: 380px;
-  width: 780px;
-  height: 700px;
-  /*margin: 0 20%;*/
-}
-
 /** Other elements **/
 
 #settingsHolder {
@@ -329,7 +318,7 @@ body {
 
 /* Some of the iframes */
 
-#options, #multiplayer {
+.fullPageIframe {
   height: 100%;
   left: 0px;
   position: fixed;

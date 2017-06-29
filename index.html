@@ -86,7 +86,10 @@
   <!-- Create hidden div to contain settings/options for in-game updates -->
   <div id="settingsHolder">
     <input id="firefoxWorkaround"></input>
+    <!-- parameters div stores the parameters in options.html -->
     <div id="parameters"></div>
+    <!-- print-option-parameters div stores the parameters in printOptions.html -->
+    <div id="print-option-parameters"></div>
   </div>
 
   <!-- Main webpage element containing pewi -->
@@ -1096,8 +1099,9 @@
   <!-- Create iframes for the results, options and multiplayer screens -->
   <div id="modalResultsFrame"><iframe id="resultsFrame" class="resultsFrameRolled" src="./htmlFrames/results.html"></iframe></div>
   <img id="closeResults" class="closeButton" style="opacity:0; visibility:hidden; right:9%;" src="./imgs/close_black.png" onclick="resultsEnd() ;">
-  <iframe id="options" src="./htmlFrames/options.html"></iframe>
-  <iframe id="multiplayer" src="./htmlFrames/multiDownload.html"></iframe>
+  <iframe id="multiplayer" class="fullPageIframe" src="./htmlFrames/multiDownload.html"></iframe>
+  <iframe id="options" class="fullPageIframe" src="./htmlFrames/options.html"></iframe>
+  <iframe id="printOptions" class="fullPageIframe" src="./htmlFrames/printOptions.html"></iframe>
 
   </div>
   <!-- End of page div, this is all of the meaningful content for in-game -->
