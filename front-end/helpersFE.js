@@ -2540,35 +2540,17 @@ function writeFileToDownloadString(mapPlayerNumber) {
     string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
-      //If the tile really shouldn't be there (-1 for BaseLandUseType)...
-      // If the user made a multipler map, and a tile still has values when it's not that player's tile
-      if(boardData[currentBoard].map[i].landType[1] != mapPlayerNumber) {
-        boardData[currentBoard].map[i].carbonMax = "NA";
-        boardData[currentBoard].map[i].carbonMin = "NA";
-        boardData[currentBoard].map[i].cattle = "NA";
-        boardData[currentBoard].map[i].cornYield  = "NA";
-        boardData[currentBoard].map[i].drainageClass = "NA";
-        boardData[currentBoard].map[i].erosion = "NA";
-        boardData[currentBoard].map[i].floodFrequency = "NA";
-        boardData[currentBoard].map[i].group = "NA";
-        boardData[currentBoard].map[i].nitratesPPM = "NA";
-        boardData[currentBoard].map[i].pIndex = "NA"; 
-        boardData[currentBoard].map[i].sediment = "NA";
-        boardData[currentBoard].map[i].soilType = 0;
-        boardData[currentBoard].map[i].soybeanYield = "NA"; 
-        boardData[currentBoard].map[i].streamNetwork = "NA";
-        boardData[currentBoard].map[i].timber = "NA";
-        boardData[currentBoard].map[i].topography = 0; 
-        boardData[currentBoard].map[i].watershedNitrogenContribution = "NA"; 
-        boardData[currentBoard].map[i].strategicWetland = "NA";
-        //boardData[currentBoard].map[i].riverStreams = 0; 
-      } 
-
+  
+      if(boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
+        string = string + boardData[currentBoard].map[i].id + "," +
+        boardData[currentBoard].map[i].row + "," +
+        boardData[currentBoard].map[i].column + "," +
+        "0" + ","; 
+      } else {
       string = string + boardData[currentBoard].map[i].id + "," +
         boardData[currentBoard].map[i].row + "," +
         boardData[currentBoard].map[i].column + "," +
-        boardData[currentBoard].map[i].area + ",";
+        boardData[currentBoard].map[i].area + ","; }
 
       if (mapPlayerNumber > 0) {
         if (boardData[currentBoard].map[i].landType[0] == 0) string += "0,";
@@ -2577,6 +2559,30 @@ function writeFileToDownloadString(mapPlayerNumber) {
         string += boardData[currentBoard].map[i].baseLandUseType + ",";
       }
 
+      //If the tile really shouldn't be there (-1 for BaseLandUseType)...
+      // If the user made a multipler map, and a tile still has values when it's not that player's tile
+      if(boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
+      string += "NA" + "," +
+        "NA" + "," +
+        "NA" + "," +
+        "NA" + "," +
+        "NA" + "," +
+        "NA" + "," +
+        "NA" + "," +
+        "NA" + "," +
+        "NA" + "," +
+        "NA" + "," +
+        "NA" + "," +
+        "0" + "," +
+        "NA" + "," +
+        "NA" + "," +
+        "0" + "," +
+        "NA" + "," +
+        boardData[currentBoard].map[i].topography + "," +
+        "NA" + "," +
+        "NA" + "," +
+        boardData[currentBoard].map[i].riverStreams + ",";
+      } else {
       string += boardData[currentBoard].map[i].carbonMax + "," +
         boardData[currentBoard].map[i].carbonMin + "," +
         boardData[currentBoard].map[i].cattle + "," +
@@ -2596,7 +2602,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
         boardData[currentBoard].map[i].topography + "," +
         boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
         boardData[currentBoard].map[i].strategicWetland + "," +
-        boardData[currentBoard].map[i].riverStreams + ",";
+        boardData[currentBoard].map[i].riverStreams + ","; }
 
       if (mapPlayerNumber > 0) {
         string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year1

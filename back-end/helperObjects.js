@@ -1407,7 +1407,6 @@ function Results(board) {
 
         subWatershedNitrate[board.map[i].subwatershed] += board.map[i].results[y].cropMultiplier;
 
-
         if ((board.map[i].landType[y] == LandUseType.wetland) && board.map[i].strategicWetland == 1) {
 
           wetlandMultiplier[board.map[i].subwatershed] = 0.48;
@@ -1415,24 +1414,24 @@ function Results(board) {
 
       } //end for all cells, adding Crop Multipliers
 
-
       for (var s = 1; s < this.subwatershedArea.length; s++) {
-
         //divide to accomodate for row crop multiplier
-        subWatershedNitrate[s] = subWatershedNitrate[s] / this.subwatershedArea[s];
+        if(subWatershedNitrate[s] == 0 && this.subwatershedArea[s] == 0) {
+          subWatershedNitrate[s] = 0;
+        } else {
+          subWatershedNitrate[s] = subWatershedNitrate[s] / this.subwatershedArea[s];
+          subWatershedNitrate[s] = 100 * this.precipitationMultiplier(y) * wetlandMultiplier[s] * subWatershedNitrate[s];
 
-        subWatershedNitrate[s] = 100 * this.precipitationMultiplier(y) * wetlandMultiplier[s] * subWatershedNitrate[s];
+          //Take the maximum between the calculated value and 2
+          //see thesis for this imposition of a floor value at 2
+          subWatershedNitrate[s] = (subWatershedNitrate[s] < 2) ? 2 : subWatershedNitrate[s];
 
-        //Take the maximum between the calculated value and 2
-        //see thesis for this imposition of a floor value at 2
-        subWatershedNitrate[s] = (subWatershedNitrate[s] < 2) ? 2 : subWatershedNitrate[s];
-
-        //max between calculated and 2, now multiply times subwatershed area divided by total area
-        subWatershedNitrate[s] = (subWatershedNitrate[s] * this.subwatershedArea[s]) / this.totalArea;
+          //max between calculated and 2, now multiply times subwatershed area divided by total area
+          subWatershedNitrate[s] = (subWatershedNitrate[s] * this.subwatershedArea[s]) / this.totalArea;
+        }
 
         //keep a running total of the amount each year by adding together subWatershed values
         tempNitrateConcentration[y] += subWatershedNitrate[s];
-
       } //end for all watersheds
 
       this.subWatershedNitrate[y] = subWatershedNitrate;
