@@ -957,13 +957,7 @@ function onDocumentKeyDown(event) {
       break;
       // case u - undo key
     case 85:
-
-      if (!inResults && !inDispLevels && !overlayedToggled)
-
-      {
         revertChanges();
-      }
-      undo = false;
       break;
 
       // case o - toggleOverlay
