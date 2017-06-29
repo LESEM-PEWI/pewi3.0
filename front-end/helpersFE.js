@@ -1034,12 +1034,13 @@ function onDocumentKeyDown(event) {
 
       // hit P to see pdf output
     case 80:
-      takeScreenshot = true; // triggers if statement in animationFrames() in mainFE.js
-      alert("Creating PDF...");
-      setTimeout(function() {
-        // wait for preprocessing
-        jspdfprinter.processing();
-      },100);
+      // takeScreenshot = true; // triggers if statement in animationFrames() in mainFE.js
+      // alert("Creating PDF...");
+      // setTimeout(function() {
+      //   // wait for preprocessing
+      //   jspdfprinter.processing();
+      // },100);
+      startprintOptions();
       break;
   } //end switch
 } //end onDocumentKeyDown
@@ -3224,7 +3225,6 @@ function indexEsc(e) {
   }
 }
 
-
 //printLandUseType returns a display-worthy string of land type from numeric key
 function printLandUseType(type) {
   //completely redundant, but preserved for ease of use
@@ -3629,6 +3629,82 @@ function resetOptions() {
   document.removeEventListener('keyup', optionsEsc);
   window.frames[4].document.removeEventListener('keyup', optionsEsc);
 } //end resetOptions
+
+function closePrintOptions() {
+
+  //close frame
+  modalUp = false;
+  document.getElementById('printOptions').style.visibility = "hidden";
+  //make sure the frame is no longer accepting input such as keyboard or mouse events
+  document.activeElement.blur();
+
+  var strRawContents = document.getElementById('print-option-parameters').innerHTML;
+
+  //split based on escape chars
+  while (strRawContents.indexOf("\r") >= 0) {
+    strRawContents = strRawContents.replace("\r", "");
+  }
+  console.log(strRawContents);
+  var arrLines = strRawContents.split("\n");
+  // global array to record the print options
+  toPrint = {
+    // map
+    year1: false,
+    year2: false,
+    year3: false,
+    // levels
+    nitrate: false,
+    erosion: false,
+    phosphorus: false,
+    // features
+    flood: false,
+    wetlands: false,
+    boundary: false,
+    drainage: false,
+    soil: false,
+    // yields
+    corn: false,
+    soybean: false,
+    fruit: false,
+    cattle: false,
+    alfalfa: false,
+    grasshay: false,
+    switchgrass: false,
+    wood: false,
+    short: false
+  };
+  for (var i = 0; i < arrLines.length; i++) {
+    toPrint[arrLines[i].substr(0, arrLines[i].indexOf("-"))] = true;
+  }
+
+  takeScreenshot = true; // triggers if statement in animationFrames() in mainFE.js
+  alert("Creating PDF...");
+  setTimeout(function() {
+    // wait for preprocessing
+    jspdfprinter.processing();
+  },100);
+
+  //setup page according to the parameters
+  // toggleVisibility();
+  // remove Esc key event listener
+  // document.removeEventListener('keyup', optionsEsc);
+
+} //end resetPrintOptions
+
+
+
+//startOptions displays the printOptions page
+function startprintOptions() {
+  //if nothing else has precedence
+  if (!modalUp) {
+    modalUp = true;
+    document.getElementById('printOptions').style.visibility = "visible";
+    // //setup options page with the current parameter selection
+    // document.getElementById('printOptions').contentWindow.getCurrentOptionsState();
+    // // add Esc key event listener
+    // document.addEventListener('keyup', optionsEsc);
+  }
+} // end startprintOptions
 
 //startOptions displays the options page
 function startOptions() {
@@ -4273,21 +4349,21 @@ function setUpload(givenValue) {
   uploadedBoard = givenValue;
 } //end setUpload()
 
-function loadImages(sources, callback) {
-  var images = {};
-  var loadedImages = 0;
-  var numImages = 0;
-  // get num of sources
-  for (var src in sources) {
-    numImages++;
-  }
-  for (var src in sources) {
-    images[src] = new Image();
-    images[src].onload = function() {
-      if (++loadedImages >= numImages) {
-        callback(images);
-      }
-    };
-    images[src].src = sources[src];
-  }
-}
+// function loadImages(sources, callback) {
+//   var images = {};
+//   var loadedImages = 0;
+//   var numImages = 0;
+//   // get num of sources
+//   for (var src in sources) {
+//     numImages++;
+//   }
+//   for (var src in sources) {
+//     images[src] = new Image();
+//     images[src].onload = function() {
+//       if (++loadedImages >= numImages) {
+//         callback(images);
+//       }
+//     };
+//     images[src].src = sources[src];
+//   }
+// }

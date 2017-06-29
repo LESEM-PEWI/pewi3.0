@@ -3087,7 +3087,7 @@ function Click(c1, c2, c3, c4, c5) {
 //######################################################################################
 
 // This Printer object implements jsPDF library
-
+// Called
 function Printer2() {
   /*** attributes ***/
 
@@ -3137,6 +3137,8 @@ function Printer2() {
 
   /*
    * This function basically stores all the required image as sources to put on the PDF and create legend as well.
+   *
+   * Boolean Array toPrint
    */
   this.preprocessing = function() {
     var uptoYear = boardData[currentBoard].calculatedToYear;
@@ -3149,61 +3151,116 @@ function Printer2() {
     // imageSrc.mapYear1 = renderer.domElement.toDataURL('image/jpeg');
 
     // loop through all available year maps
-    for (var i = 0; i < uptoYear; i++) {
-      transitionToYear(i + 1);
+    // for (var i = 0; i < uptoYear; i++) {
+    //   transitionToYear(i + 1);
+    //   // render the according webgl
+    //   renderer.render(scene, camera);
+    //   // get the screenshot image in data string form
+    //   imageSrc['mapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
+    // } // end for
+
+    if (toPrint.year1 === true) {
+      console.log("year1 correct");
+      transitionToYear(1);
       // render the according webgl
       renderer.render(scene, camera);
       // get the screenshot image in data string form
-      imageSrc['mapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
-    } // end for
+      imageSrc.mapYear1 = renderer.domElement.toDataURL('image/jpeg');
+    }
+    if (toPrint.year2 === true) {
+      transitionToYear(2);
+      // render the according webgl
+      renderer.render(scene, camera);
+      // get the screenshot image in data string form
+      imageSrc.mapYear2 = renderer.domElement.toDataURL('image/jpeg');
+    }
+    if (toPrint.year3 === true) {
+      transitionToYear(3);
+      // render the according webgl
+      renderer.render(scene, camera);
+      // get the screenshot image in data string form
+      imageSrc.mapYear3 = renderer.domElement.toDataURL('image/jpeg');
+    }
 
 
     // ----------------------------go through levels maps----------------------------
-    this.saveScreenshotMapType("nitrate", uptoYear);
-    this.makeLegendBox('nitrate');
+    if(toPrint.nitrate === true) {
+      this.saveScreenshotMapType("nitrate");
+      this.makeLegendBox('nitrate');
+    }
     // this.addLegendLine('nitrate', '#87ceee', '0 - 5 %');
     // this.addLegendLine('nitrate', '#41b7c5', '5 - 10 %');
     // this.addLegendLine('nitrate', '#2f7eb7', '10 - 20 %');
     // this.addLegendLine('nitrate', '#0053b3', '20 - 25 %');
     // this.addLegendLine('nitrate', '#302486', '> 25 %');
 
-    this.saveScreenshotMapType("erosion", uptoYear);
-    this.makeLegendBox('erosion');
+    if(toPrint.erosion === true) {
+      this.saveScreenshotMapType("erosion");
+      this.makeLegendBox('erosion');
+    }
 
-    this.saveScreenshotMapType("phosphorus", uptoYear);
-    this.makeLegendBox('phosphorus');
+    if(toPrint.phosphorus === true) {
+      this.saveScreenshotMapType("phosphorus");
+      this.makeLegendBox('phosphorus');
+    }
 
     // // ----------------------------go through features maps----------------------------
-    this.saveScreenshotMapType("flood", 1);
-    this.makeLegendBox('flood');
-    this.saveScreenshotMapType("wetland", 1);
-    this.saveScreenshotMapType("subwatershed", 1);
-    this.saveScreenshotMapType("drainage", 1);
-    this.makeLegendBox('drainage');
-    this.saveScreenshotMapType("soil", 1);
-    this.makeLegendBox('soil');
+    if(toPrint.flood === true) {
+      this.saveScreenshotMapType("flood");
+      this.makeLegendBox('flood');
+    }
+    if(toPrint.wetlands === true) {
+      this.saveScreenshotMapType("wetland");
+    }
+    if(toPrint.boundary === true) {
+      this.saveScreenshotMapType("subwatershed");
+    }
+    if(toPrint.drainage === true) {
+      this.saveScreenshotMapType("drainage");
+      this.makeLegendBox('drainage');
+    }
+    if(toPrint.soil === true) {
+      this.saveScreenshotMapType("soil");
+      this.makeLegendBox('soil');
+    }
 
     // ----------------------------go through yield maps----------------------------
-    this.saveScreenshotMapType("cornGrain", 1);
-    this.makeLegendBox('cornGrain');
-    this.saveScreenshotMapType("soyBean", 1);
-    this.makeLegendBox('soyBean');
-    this.saveScreenshotMapType("fruit", 1);
-    this.makeLegendBox('fruit');
-
-    this.saveScreenshotMapType("cattle", 1);
-    this.makeLegendBox('cattle');
-    this.saveScreenshotMapType("alfalfa", 1);
-    this.makeLegendBox('alfalfa');
-    this.saveScreenshotMapType("grassHay", 1);
-    this.makeLegendBox('grassHay');
-
-    this.saveScreenshotMapType("switchGrass", 1);
-    this.makeLegendBox('switchGrass');
-    this.saveScreenshotMapType("wood", 1);
-    this.makeLegendBox('wood');
-    this.saveScreenshotMapType("short", 1);
-    this.makeLegendBox('short');
+    if(toPrint.corn === true) {
+      this.saveScreenshotMapType("cornGrain");
+      this.makeLegendBox('cornGrain');
+    }
+    if(toPrint.soybean === true) {
+      this.saveScreenshotMapType("soyBean");
+      this.makeLegendBox('soyBean');
+    }
+    if(toPrint.fruit === true) {
+      this.saveScreenshotMapType("fruit");
+      this.makeLegendBox('fruit');
+    }
+    if(toPrint.cattle === true) {
+      this.saveScreenshotMapType("cattle");
+      this.makeLegendBox('cattle');
+    }
+    if(toPrint.alfalfa === true) {
+      this.saveScreenshotMapType("alfalfa");
+      this.makeLegendBox('alfalfa');
+    }
+    if(toPrint.grasshay === true) {
+      this.saveScreenshotMapType("grassHay");
+      this.makeLegendBox('grassHay');
+    }
+    if(toPrint.switchgrass === true) {
+      this.saveScreenshotMapType("switchGrass");
+      this.makeLegendBox('switchGrass');
+    }
+    if(toPrint.wood === true) {
+      this.saveScreenshotMapType("wood");
+      this.makeLegendBox('wood');
+    }
+    if(toPrint.short === true) {
+      this.saveScreenshotMapType("short");
+      this.makeLegendBox('short');
+    }
 
   }; // end preprocessing
 
@@ -3222,34 +3279,83 @@ function Printer2() {
 
     // ----------------------------go through landUse maps----------------------------
     // put year maps on
-    for (var i = 0; i < uptoYear; i++) {
-      this.addText(1, "Year" + (i + 1) + " LandUse Map", x, y, font.header2_font);
-      this.addImage(imageSrc['mapYear' + (i + 1)], 'JPEG', x, y, mapWidth, mapHeight);
+    // for (var i = 0; i < uptoYear; i++) {
+    //   this.addText(1, "Year" + (i + 1) + " LandUse Map", x, y, font.header2_font);
+    //   this.addImage(imageSrc['mapYear' + (i + 1)], 'JPEG', x, y, mapWidth, mapHeight);
+    //   this.updateY(mapHeight + lineHeight * 2);
+    // }
+    if (toPrint.year1 === true) {
+      this.addText(1, "Year 1 LandUse Map", x, y, font.header2_font);
+      this.addImage(imageSrc.mapYear1, 'JPEG', x, y, mapWidth, mapHeight);
+      this.updateY(mapHeight + lineHeight * 2);
+    }
+    if (toPrint.year2 === true) {
+      this.addText(1, "Year 2 LandUse Map", x, y, font.header2_font);
+      this.addImage(imageSrc.mapYear2, 'JPEG', x, y, mapWidth, mapHeight);
+      this.updateY(mapHeight + lineHeight * 2);
+    }
+    if (toPrint.year3 === true) {
+      this.addText(1, "Year 3 LandUse Map", x, y, font.header2_font);
+      this.addImage(imageSrc.mapYear3, 'JPEG', x, y, mapWidth, mapHeight);
       this.updateY(mapHeight + lineHeight * 2);
     }
 
     // ----------------------------go through levels maps----------------------------
-    this.placeMapType("nitrate", uptoYear);
-    this.placeMapType("erosion", uptoYear);
-    this.placeMapType("phosphorus", uptoYear);
+    if (toPrint.nitrate === true) {
+      this.placeMapType("nitrate");
+    }
+    if (toPrint.erosion === true) {
+      this.placeMapType("erosion");
+    }
+    if (toPrint.phosphorus === true) {
+      this.placeMapType("phosphorus");
+    }
 
     // ----------------------------go through features maps----------------------------
-    this.placeMapType("flood", 1);
-    this.placeMapType("wetland", 1);
-    this.placeMapType("subwatershed", 1);
-    this.placeMapType("drainage", 1);
-    this.placeMapType("soil", 1);
+    if (toPrint.flood === true) {
+      this.placeMapType("flood");
+    }
+    if (toPrint.wetlands === true) {
+      this.placeMapType("wetland");
+    }
+    if (toPrint.subwatershed === true) {
+      this.placeMapType("subwatershed");
+    }
+    if (toPrint.drainage === true) {
+      this.placeMapType("drainage");
+    }
+    if (toPrint.soil === true) {
+      this.placeMapType("soil");
+    }
 
     // ----------------------------go through yield maps----------------------------
-    this.placeMapType("cornGrain", 1);
-    this.placeMapType("soyBean", 1);
-    this.placeMapType("fruit", 1);
-    this.placeMapType("cattle", 1);
-    this.placeMapType("alfalfa", 1);
-    this.placeMapType("grassHay", 1);
-    this.placeMapType("switchGrass", 1);
-    this.placeMapType("wood", 1);
-    this.placeMapType("short", 1);
+    if (toPrint.corn === true) {
+      this.placeMapType("cornGrain");
+    }
+    if (toPrint.soybean === true) {
+      this.placeMapType("soyBean");
+    }
+    if (toPrint.fruit === true) {
+      this.placeMapType("fruit");
+    }
+    if (toPrint.cattle === true) {
+      this.placeMapType("cattle");
+    }
+    if (toPrint.alfalfa === true) {
+      this.placeMapType("alfalfa");
+    }
+    if (toPrint.grasshay === true) {
+      this.placeMapType("grassHay");
+    }
+    if (toPrint.switchgrass === true) {
+      this.placeMapType("switchGrass");
+    }
+    if (toPrint.wood === true) {
+      this.placeMapType("wood");
+    }
+    if (toPrint.short === true) {
+      this.placeMapType("short");
+    }
     console.log("output pdf");
     this.doc.output('datauri');
 
@@ -3407,13 +3513,51 @@ function Printer2() {
   this.placeMapType = function(type, uptoYear) {
     var legend;
     // loop through all available year
-    for (var i = 0; i < uptoYear; i++) {
-      if (type == 'nitrate' || type == 'erosion' || type == 'phosphorus') {
-        this.addText(1, "Year" + (i + 1) + " " + this.titleText(type), x, y, font.header2_font);
-      } else {
-        this.addText(1, this.titleText(type), x, y, font.header2_font);
+    // for (var i = 0; i < uptoYear; i++) {
+    //   if (type == 'nitrate' || type == 'erosion' || type == 'phosphorus') {
+    //     this.addText(1, "Year" + (i + 1) + " " + this.titleText(type), x, y, font.header2_font);
+    //   } else {
+    //     this.addText(1, this.titleText(type), x, y, font.header2_font);
+    //   }
+    //   this.addImage(imageSrc[type + (i + 1)], 'JPEG', x, y, mapWidth, mapHeight);
+    //   // place legend
+    //   if (legend = this.legendObjs[type]) {
+    //     this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+    //   }
+    //   this.updateY(mapHeight + lineHeight * 2);
+    // }
+
+    if (type == 'nitrate' || type == 'erosion' || type == 'phosphorus') {
+      if (toPrint.year1 === true) {
+        this.addText(1, "Year 1 " + this.titleText(type), x, y, font.header2_font);
+        this.addImage(imageSrc[type + 1], 'JPEG', x, y, mapWidth, mapHeight);
+        // place legend
+        if (legend = this.legendObjs[type]) {
+          this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+        }
+        this.updateY(mapHeight + lineHeight * 2);
       }
-      this.addImage(imageSrc[type + (i + 1)], 'JPEG', x, y, mapWidth, mapHeight);
+      if (toPrint.year2 === true) {
+        this.addText(1, "Year 2 " + this.titleText(type), x, y, font.header2_font);
+        this.addImage(imageSrc[type + 2], 'JPEG', x, y, mapWidth, mapHeight);
+        // place legend
+        if (legend = this.legendObjs[type]) {
+          this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+        }
+        this.updateY(mapHeight + lineHeight * 2);
+      }
+      if (toPrint.year3 === true) {
+        this.addText(1, "Year 3 " + this.titleText(type), x, y, font.header2_font);
+        this.addImage(imageSrc[type + 3], 'JPEG', x, y, mapWidth, mapHeight);
+        // place legend
+        if (legend = this.legendObjs[type]) {
+          this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+        }
+        this.updateY(mapHeight + lineHeight * 2);
+      }
+    } else {
+      this.addText(1, this.titleText(type), x, y, font.header2_font);
+      this.addImage(imageSrc[type + 1], 'JPEG', x, y, mapWidth, mapHeight);
       // place legend
       if (legend = this.legendObjs[type]) {
         this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
@@ -3427,14 +3571,40 @@ function Printer2() {
   *
   * String text, Number uptoYear
   */
-  this.saveScreenshotMapType = function(type, uptoYear) {
+  this.saveScreenshotMapType = function(type) {
     // loop through all available year
-    for (var i = 0; i < uptoYear; i++) {
-      transitionToYear(i + 1);
+    // for (var i = 0; i < uptoYear; i++) {
+    //   transitionToYear(i + 1);
+    //   displayLevels(type);
+    //   renderer.render(scene, camera);
+    //   imageSrc[type + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
+    // } // end for
+
+    if (type == 'nitrate' || type == 'erosion' || type == 'phosphorus') {
+      if (toPrint.year1 === true) {
+        transitionToYear(1);
+        displayLevels(type);
+        renderer.render(scene, camera);
+        imageSrc[type + 1] = renderer.domElement.toDataURL('image/jpeg');
+      }
+      if (toPrint.year2 === true) {
+        transitionToYear(2);
+        displayLevels(type);
+        renderer.render(scene, camera);
+        imageSrc[type + 2] = renderer.domElement.toDataURL('image/jpeg');
+      }
+      if (toPrint.year3 === true) {
+        transitionToYear(3);
+        displayLevels(type);
+        renderer.render(scene, camera);
+        imageSrc[type + 3] = renderer.domElement.toDataURL('image/jpeg');
+      }
+    } else {
       displayLevels(type);
       renderer.render(scene, camera);
-      imageSrc[type + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
-    } // end for
+      imageSrc[type + 1] = renderer.domElement.toDataURL('image/jpeg');
+    }
+
   }; // end saveScreenshotMapType
 
   /**

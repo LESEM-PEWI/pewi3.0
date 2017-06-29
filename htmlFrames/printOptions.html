@@ -1,0 +1,331 @@
+<!doctype html>
+
+<!--
+The printOptions page is accessible from the parent document index.html
+  It interfaces with methods in helpersFE.js
+XXX
+Options are propogated and stored in the index.html parameters div, an invisible div.
+Each parameter is designated by some text and then a newline.
+In order to avoid a comprehensive toggling of each element our system will work as such:
+  elements on by default can be toggled off with their id
+  elements off by default can be toggled on with keywords
+  other special features (off by default), such as precip unchangeable,
+      are added with keywords
+
+This page page contains most of the current options keywords as toggle buttons or
+numerical select. State is saved to the parameters div on close and pulled from that
+div on open.
+
+Cleaned and Prepared - July 2016 XXX
+-->
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Workspace - Print Options</title>
+  <!-- INCLUDES -->
+
+  <!--css-->
+  <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+  <link rel="stylesheet" type="text/css" href="./style_PrintOptions.css">
+
+  <!--external fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+  <!-- /INCLUDES -->
+  <!--additional styling-->
+
+  <!--page scripting-->
+  <script type= "text/javascript" src="./front-end/helpersFE.js"></script>
+  <script>
+    var maxYear = 3; //for settings, defines the number of year buttons specified
+
+    //the saveCurrentOptionsState function is called when the save/exit button is pressed
+    //each of the options is evaluated and the text for the parameters div is generated
+    //as needed
+    //the parent page is then called to hide the options iframe
+    function saveCurrentOptionsState() {
+      console.log("saveCurrentOptionsState ");
+      //find the elements that are able to be checked
+      var toggledElements = document.getElementsByClassName('print-options-checkbox');
+      var tempString = "";
+
+      //if there are toggle elements
+      if (toggledElements) {
+        for (var i = 0; i < toggledElements.length; i++) {
+          if (toggledElements[i].checked) {
+            tempString += toggledElements[i].id + "\n"
+          }
+        } //end for elements of class toggle
+
+        //put all the elements in the print-option-parameters div of index.html
+        window.top.document.getElementById('print-option-parameters').innerHTML = tempString;
+      } //end if
+
+      //hide the options frame from the top frame (index.html)
+      parent.closePrintOptions();
+      //scroll page to top, so that next time options is loaded it starts there
+      window.scrollTo(0, 0);
+    } //end function saveCurrentOptionsState
+
+
+    //this function gets the current option parameters which are stored as text in
+    // the parameter div
+    // it then updates the options page accordingly, since the iframe has no memory of
+    // it's state
+    // This function is called by the parent page in helpers.js
+    function getCurrentOptionsState() {
+      //raw text content in print-option-parameters div
+      var strRawContents = window.top.document.getElementById('print-option-parameters').innerHTML;
+
+      //split based on escape chars
+      while (strRawContents.indexOf("\r") >= 0) {
+        strRawContents = strRawContents.replace("\r", "");
+      }
+      var arrLines = strRawContents.split("\n");
+
+      var yearCounter = 0;
+      //for each line attribute in the parameters div, see what needs to be done
+      for (var i = 0; i < arrLines.length; i++) {
+        var string = arrLines[i];
+
+        switch (string) {
+          case "year0On":
+            document.getElementById('year0').checked = 1;
+            break;
+          case "statsOn":
+            document.getElementById('statFrame').checked = 1;
+            break;
+          case "skyboxOn":
+            document.getElementById('skybox').checked = 1;
+            break;
+          case "precipOff":
+            document.getElementById('precip').checked = 1;
+            break;
+            //case nothing, do nothing (error protection)
+          case "":
+            break;
+          default:
+            //workaroundy, but let's see if it's a year, if not, just toggle the element
+            if (string.slice(0, 4) == "year") {
+              //filter out the precip containers that have been generated off
+              if (string.length < 12) {
+                yearCounter += 1;
+              }
+            } else {
+              if (document.getElementById(string)) document.getElementById(string).checked = 1;
+            }
+        } //end switch
+      } //end for each line in the parameters div
+
+      //set year values
+      document.getElementById('yearNumber').innerHTML = (3 - yearCounter);
+      //make sure that correct +/- arrows are displayed
+      changeYearValueBy(0);
+    }
+
+    //assists in toggling year value up and down on the options page
+    //  checks limits and toggles the up/down options off if needed
+    function changeYearValueBy(amountToChange) {
+
+      var currentNumber = Number(document.getElementById('yearNumber').innerHTML);
+      currentNumber += amountToChange;
+
+      //reset visibility, then turn off as needed
+      document.getElementById('addYear').style.visibility = "visible";
+      document.getElementById('subtractYear').style.visibility = "visible";
+      //turning off to prevent users from exceeding
+      if (currentNumber == maxYear) {
+        document.getElementById('addYear').style.visibility = "hidden";
+      } else if (currentNumber == 1) {
+        document.getElementById('subtractYear').style.visibility = "hidden";
+      }
+
+      //alright now, let's put the year number back in the document
+      document.getElementById('yearNumber').innerHTML = currentNumber;
+    }
+  </script>
+
+</head>
+
+<body>
+
+  <img id="optionsBackroundImage" alt="" src="./imgs/floodBack.png">
+
+  <!--Credit for functionality of hidden checkboxes
+  http://codersblock.com/blog/checkbox-trickery-with-css/
+  -->
+
+  <div class="print-options-content-holder">
+    <div id="optionsMainHolder">
+      <div class="optionsHeader">
+        <h4>Default: Land Use Type Map</h4>
+        <hr>
+      </div>
+
+      <div class="optionsSubContainer">
+        <input id="year1-checkbox" class="print-options-checkbox" checked>
+        <label style="background-color: #4c6167; cursor: not-allowed;">
+          <img src="../imgs/one.png">
+          Year 1
+        </label>
+        <!-- <label for="">Year 1</label> -->
+
+        <input id="year2-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="year2-checkbox">
+          <img src="../imgs/two.png">
+          Year 2
+        </label>
+
+        <input id="year3-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="year3-checkbox">
+          <img src="../imgs/three.png">
+          Year 3
+        </label>
+
+      </div>
+      <div class="optionsHeader">
+        <h4>Results</h4>
+        <hr>
+      </div>
+
+      <!-- <div class="optionsSubContainer">
+        <label for="-checkbox"></label>
+        <input id="-checkbox" class="print-options-checkbox" type="checkbox">
+      <!-- </div> -->
+
+      <div class="optionsHeader">
+        <h4>Levels Map</h4>
+        <hr>
+      </div>
+
+      <div class="optionsSubContainer">
+        <input id="nitrate-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="nitrate-checkbox">
+          <img src="../imgs/N.png">
+          Subwatershed <br>Nitrate-N Percent <br>Contribution
+        </label>
+
+        <input id="erosion-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="erosion-checkbox">
+          <img src="../imgs/E.png">
+          <br> <br>Gross Erosion
+        </label>
+
+        <input id="phosphorus-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="phosphorus-checkbox">
+          <img src="../imgs/P.png">
+          Phosphorus <br>Index Risk <br>Assessment
+        </label>
+      </div>
+
+      <div class="optionsHeader">
+        <h4>Features Map</h4>
+        <hr>
+      </div>
+
+      <div class="optionsSubContainer">
+        <input id="flood-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="flood-checkbox">
+          <img src="../imgs/Icon_Flood_Frequency.svg">
+          Flood Frequency
+        </label>
+
+        <input id="wetlands-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="wetlands-checkbox">
+          <img src="../imgs/Icon_Strategic_Wetlands.svg">
+          Strategic Wetlands
+        </label>
+
+        <input id="boundary-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="boundary-checkbox">
+          <img src="../imgs/Icon_Subwatershed_Boundaries.svg">
+          Subwatershed Boundaries
+        </label>
+
+        <input id="drainage-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="drainage-checkbox">
+          <img src="../imgs/Icon_Drainage_Class.svg">
+          Drainage Class
+        </label>
+
+        <input id="soil-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="soil-checkbox">
+          <img src="../imgs/Icon_Soil_Class.svg">
+          Soil Class
+        </label>
+      </div>
+
+      <div class="optionsHeader">
+        <h4>Yields Map</h4>
+        <hr>
+      </div>
+
+      <div class="optionsSubContainer">
+        <input id="corn-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="corn-checkbox">
+          <img src="../imgs/cornGrainIcon.png">
+          Corn Grain
+        </label>
+
+        <input id="soybean-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="soybean-checkbox">
+          <img src="../imgs/soybeanIcon.png">
+          Soybean
+        </label>
+
+        <input id="fruit-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="fruit-checkbox">
+          <img src="../imgs/fruitIcon.png">
+          Mixed Fruit and Vegetables
+        </label>
+
+        <input id="cattle-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="cattle-checkbox">
+          <img src="../imgs/cowIcon.png">
+          Cattle
+        </label>
+
+        <input id="alfalfa-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="alfalfa-checkbox">
+          <img src="../imgs/alfalfaIcon.png">
+          Alfalfa
+        </label>
+
+        <input id="grasshay-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="grasshay-checkbox">
+          <img src="../imgs/grassHayIcon.png">
+          Grass Hay
+        </label>
+
+        <input id="switchgrass-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="switchgrass-checkbox">
+          <img src="../imgs/switchGrassIcon.png">
+          switchgrass
+        </label>
+
+        <input id="wood-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="wood-checkbox">
+          <img src="../imgs/woodIcon.png">
+          Wood
+        </label>
+
+        <input id="short-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="short-checkbox">
+          <img src="../imgs/woodyBiomassIcon.png">
+          Short-Rotation Woody Biomass
+        </label>
+      </div>
+
+    </div>
+
+    <iframe id="pdf_preview" class="pdf_preview" type="application/pdf" src=""></iframe>
+  </div>
+
+  <div>
+    <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState(); randomizeBoard();">Save & Exit</div>
+  </div>
+
+</body>
+
+</html>
