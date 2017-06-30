@@ -73,6 +73,11 @@ Cleaned and Prepared - July 2016
                 tempString += "precipOff" + "\n";
               }
               break;
+              case "landCover":
+                if (toggledElements[i].checked) {
+                  tempString += "landCover" + "\n";
+                }
+                break;
               //default case, just add a new line with parameter
             default:
               if (toggledElements[i].checked) {
