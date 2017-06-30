@@ -23,13 +23,10 @@ var currentHighlightType = 0;
 var currentHighlightTypeString = null;
 var immutablePrecip = false;
 var clickAndDrag = false;
-var previousTileId = [];
-var previousPainter = [];
-var lastPainter = null;
-var lastSelectedPainter = 1;
-var paintSwitch = false;
+var undoArr = [[],[],[],[]];
+var undoGridArr = [];
+var undoGridPainters = [];
 var undo = false;
-var previous = false;
 var previousTab = null;
 var overlayedToggled = false;
 var inResults = false;
@@ -187,40 +184,12 @@ function highlightTile(tileId) {
 
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(tileId) {
-
-  //determines whether or not the given tile should be added to the tile history (for undo function)
-  if (previousTileId.length > 0) {
-    if (!previousTileId.includes(tileId)) {
-      previous = false;
-    }
-  } else {
-    previous = false;
-  }
-  //set tiles to change as the previous tile in that position (undo function).
-  if (previousTileId[previousTileId.length - 1] == tileId && undo == true) {
-    lastPainter = boardData[currentBoard].map[tileId].landType[currentYear];
-    painter = previousPainter[previousPainter.length - 1];
-    previousTileId.splice(previousTileId.length - 1, 1);
-    previousPainter.splice(previousPainter.length - 1, 1);
-    undo = false;
-    paintSwitch = false;
-  }
-  //store previous tile data only if it's not a previously-listed tile in the array
-  else if (previous == false) {
-    //save previous tile information
-    previousTileId = previousTileId.concat(tileId);
-    previousPainter = previousPainter.concat(boardData[currentBoard].map[tileId].landType[currentYear]);
-    previous = true;
-    //since the undo function assumes the paint switched to another type (even when the user didn't), the painter will
-    // will equal the actual selected painter after the undo function is performed.
-    if (lastPainter != null && !paintSwitch) {
-      painter = lastSelectedPainter;
-      lastPainter = null;
-    }
+  //Add tile to the undoArr
+  if(!undo) {
+    addChange(tileId);
   }
   //if land type of tile is nonzero
   if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
-
     //change the materials of the faces in the meshMaterials array and update the boardData
     if (!multiplayerAssigningModeOn) {
       meshMaterials[tileId].map = textureArray[painter];
@@ -236,6 +205,58 @@ function changeLandTypeTile(tileId) {
   }
 
 } //end changeLandTypeTile
+
+//Clumps and undo's multiple tiles
+function undoGrid(givenTilesAndPainter) {
+  //Go through each tile and replace the paint with the paint previously there
+  while(givenTilesAndPainter[1].length > 0) {
+    painter = givenTilesAndPainter[1].pop();
+    changeLandTypeTile(givenTilesAndPainter[0].pop());
+  }
+} //end givenTilesAndPainter
+
+//Adds the given tileId and painter to the undoArr
+function addChange(tileId) {
+  if(uniqueTileChange(tileId)) {
+    //Paint selector is a grid
+    if(painterTool.status == 2) {
+      undoGridArr.push(tileId);
+    //Paint selector is regular
+    } else {
+      undoArr[currentYear].push([tileId,boardData[currentBoard].map[tileId].landType[currentYear]]);
+    }
+  }
+} //end addChange(gridBoolean,tileId)
+
+//Inserts the land type changes from a grid into the undoArr
+function insertChange() {
+  undoArr[currentYear].push([undoGridArr,undoGridPainters]);
+  undoGridArr = [];
+  undoGridPainters = [];
+} //end insertChange()
+
+//Determines if the tile to be added is unique (non-repeated in paint and tileId)
+function uniqueTileChange(tileId) {
+    //If there are no tiles yet, it is unique
+    if(undoArr[currentYear].length == 0) {
+      return true;
+    }
+    //Retrieves the last item in the array without deleting it
+    var tempTileAndPainter = undoArr[currentYear].slice(-1).pop();
+    //If the previously added tileId/Paint combo was the same tile and the same paint, it's not a unique change.
+    if(tileId == tempTileAndPainter[0] && boardData[currentBoard].map[tileId].landType[currentYear] == painter) {
+      return false;
+    } else {
+      return true;
+    }
+} //end uniqueTileChange(tileId)
+
+//Resets the undo function arrays
+function resetUndo() {
+  undoArr = [[],[],[],[]];
+  undoGridArr = [];
+  undoGridPainters = [];
+} //end resetUndo()
 
 //getTileID calculates the id of the tile give the raycaster intersection coordinates
 function getTileID(x, y) {
@@ -544,10 +565,21 @@ function revertChanges() {
   if (curTracking) {
     pushClick(0, getStamp(), 30, 0, null);
   }
-  if (previousTileId.length > 0 && !inResults && !inDispLevels) {
+  //Only undo if there is a tile to undo (or you are free to do so)
+  if (undoArr[currentYear].length > 0 && !inResults && !inDispLevels) {
+    var tempPainter = painter;
     undo = true;
-    changeLandTypeTile(previousTileId[previousTileId.length - 1]);
+    var tempTileAndPainter = undoArr[currentYear].pop();
+    //If the undo function is undoing a grid
+    if(Array.isArray(tempTileAndPainter[0])) {
+      undoGrid(tempTileAndPainter);
+    //If the undo function is undoing a normal selection
+    } else {
+      painter = tempTileAndPainter[1];
+      changeLandTypeTile(tempTileAndPainter[0]);
+    }
     undo = false;
+    painter = tempPainter;
   }
 }
 
@@ -693,11 +725,6 @@ function onDocumentMouseMove(event) {
     //if painter tool type is the clickAndDrag painter
     else if (clickAndDrag) {
       var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-      if (currentTile == previousTileId[previousTileId.length - 1] && previousPainter.length > 0) {
-        previous = true;
-      } else {
-        previous = false;
-      }
       if (boardData[currentBoard].map[currentTile].landType[0] != 0) changeLandTypeTile(currentTile);
     } else {
       //just a normal highlighting
@@ -751,13 +778,14 @@ function onDocumentMouseDown(event) {
                 var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
 
                 for (var i = 0; i < changedTiles.length; i++) {
-                  previous = false;
                   if (curTracking) {
                     pushClick(0, getStamp(), 56, 0, changedTiles[i]);
                   }
+                  undoGridPainters.push(boardData[currentBoard].map[changedTiles[i] - 1].landType[currentYear]);
                   changeLandTypeTile(changedTiles[i] - 1);
                 }
-
+                //Inserts the block of land use types into the undoArr
+                insertChange();
                 //reset highlighting, computationally intensive
                 //  but a working solution
                 refreshBoard();
@@ -929,13 +957,7 @@ function onDocumentKeyDown(event) {
       break;
       // case u - undo key
     case 85:
-
-      if (!inResults && !inDispLevels && !overlayedToggled)
-
-      {
         revertChanges();
-      }
-      undo = false;
       break;
 
       // case o - toggleOverlay
@@ -1022,10 +1044,6 @@ function toggleEscapeFrame() {
 
 //paintChange changes the highlighted color of the selected painter and updates painter
 function changeSelectedPaintTo(newPaintValue) {
-  //paint color has been switched
-  paintSwitch = true;
-  painter = lastSelectedPainter;
-  lastSelectedPainter = newPaintValue;
   //check to see if multiplayer Assignment Mode is On
   if (!multiplayerAssigningModeOn) {
     //Store paint change if click-tracking is on
@@ -3692,7 +3710,6 @@ function multiplayerExit() {
     totalPlayers--;
   }
   multiplayerAssigningModeOn = false;
-
 
 }
 
