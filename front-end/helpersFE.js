@@ -2229,7 +2229,8 @@ function getHighlightedInfo(tileId) {
   //return information about the tile that is highlighted
   if (currentHighlightType <= 0) {
     return "";
-  } else {
+  }
+  else {
 
     var highlightString = "";
 
@@ -2302,7 +2303,10 @@ function getHighlightedInfo(tileId) {
         //create string for strategic wetlands
       case 6:
         if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
-          highlightString = "Strategic wetland" + "<br>";
+          highlightString = "Strategic Wetland" + "<br>";
+        }
+        else{
+          highlightString = "Non-Strategic Wetland" + "<br>";
         }
         break;
         //create string for subwatershed number
@@ -2310,7 +2314,7 @@ function getHighlightedInfo(tileId) {
         highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>";
         break;
         //create string for soil class
-      case 8:
+      /*case 8:
         soil = boardData[currentBoard].map[tileId].soilType;
         switch (soil) {
           case "A":
@@ -2352,7 +2356,51 @@ function getHighlightedInfo(tileId) {
           case "Y":
             highlightString = "Noadaway 220" + "<br>";
             break;
-        }
+        }*/
+        case 8:
+        var soil = boardData[currentBoard].map[tileId].soilType;
+        switch(soil)
+          {
+            case "A":
+              highlightString = "13.2-13.9 Mg/hr/yr" + "<br>";
+              break;
+            case "B":
+              highlightString = "0 Mg/hr/yr" + "<br>";
+              break;
+            case "C":
+                highlightString = "13.9-15.1 Mg/hr/yr" + "<br>";
+                break;
+            case "D":
+              highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
+              break;
+            case "G":
+              highlightString = "0 Mg/hr/yr" + "<br>";
+              break;
+            case "K":
+              highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
+              break;
+            case "L":
+              highlightString = "13.9-15.1 Mg/hr/yr" + "<br>";
+              break;
+            case "M":
+            highlightString = "13.2-13.9 Mg/hr/yr" + "<br>";
+            break;
+            case "N":
+            highlightString = "13.2-13.9 Mg/hr/yr" + "<br>";
+            break;
+            case "O":
+            highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
+            break;
+            case "Q":
+              highlightString = "13.2-13.9 Mg/hr/yr" + "<br>";
+              break;
+            case "T":
+              highlightString = "13.2-13.9 Mg/hr/yr" + "<br>";
+              break;
+            case "Y":
+              highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
+             break;
+          }
 
     }
 
