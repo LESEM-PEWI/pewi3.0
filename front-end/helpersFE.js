@@ -229,7 +229,7 @@ function addChange(tileId) {
 } //end addChange(gridBoolean,tileId)
 
 //Inserts the land type changes from a grid into the undoArr
-function insertChange(givenPainter) {
+function insertChange() {
   undoArr[currentYear].push([undoGridArr,undoGridPainters]);
   undoGridArr = [];
   undoGridPainters = [];
@@ -571,7 +571,7 @@ function revertChanges() {
     undo = true;
     var tempTileAndPainter = undoArr[currentYear].pop();
     //If the undo function is undoing a grid
-    if(tempTileAndPainter[0].length > 1) {
+    if(Array.isArray(tempTileAndPainter[0])) {
       undoGrid(tempTileAndPainter);
     //If the undo function is undoing a normal selection
     } else {
@@ -579,7 +579,7 @@ function revertChanges() {
       changeLandTypeTile(tempTileAndPainter[0]);
     }
     undo = false;
-    changeSelectedPaintTo(tempPainter);
+    painter = tempPainter;
   }
 }
 
