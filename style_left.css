@@ -59,6 +59,23 @@
   width: 12.5vw;
 }
 
+#playerAddButton {
+  position: absolute;
+  top:40%;
+  right:58%;
+}
+
+#playerDeleteButton {
+  position: absolute;
+  top:40%;
+  left:50%;
+}
+
+#playerResetButton {
+  position: absolute;
+  top:55%;
+}
+
 #indexmenu:hover, #combineButton:hover {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }

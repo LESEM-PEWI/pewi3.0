@@ -467,7 +467,7 @@ body {
   width: 250px;
 }
 
-#overlay, .simOverlay {
+#overlay, .simOverlay, #genOverlay {
     position:fixed;
     top:0;
     bottom:0;
