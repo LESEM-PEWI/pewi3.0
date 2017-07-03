@@ -222,6 +222,7 @@
   animation-duration: 0s;
   -webkit-animation-name: rollButtonSide;
   animation-name: rollButtonSide;
+  cursor: pointer;
 }
 .backgroundInfoButtonRolled {
   position: absolute;

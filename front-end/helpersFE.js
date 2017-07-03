@@ -41,7 +41,7 @@ var randomzing = false;
 var previousOverlay = null;
 var previousTab = null;
 var overlayedToggled = false;
-var addingYearFromFile=false;//Boolean used to keep a track of whether or not you're adding a year from file 
+var addingYearFromFile=false;//Boolean used to keep a track of whether or not you're adding a year from file
 
 
 var inResults = false;
@@ -163,11 +163,32 @@ function highlightTile(tileId) {
       previousHover = tileId;
 
       //update HUD with current information
+      //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
 
       //update the information displayed in the delayed hover div by cursor
-      myTimer = setTimeout(function() {
-        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId);
+      myTimer = setTimeout(function()
+      {
+        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+      //May use strings and iterate through them for removing hover information
+      var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) ;
+      var info2 = "Precipitation: " + printPrecipYearType();
+      var info3 = "Soil Type: " + printSoilType(tileId);
+          if(document.getElementById('parameters').innerHTML.includes('hover1'))
+          {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info1 + "<br>", '');
+            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
+          if(document.getElementById('parameters').innerHTML.includes('hover2'))
+          {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info2 + "<br>", '');
+            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
+          if(document.getElementById('parameters').innerHTML.includes('hover3'))
+          {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info3, '');
+            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
       }, 500);
     }
 
@@ -2240,48 +2261,50 @@ function getHighlightColor(highlightType, tileId) {
 } //end getHighlightColor
 
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
+//More hover information
 function getHighlightedInfo(tileId) {
 
   //return information about the tile that is highlighted
   if (currentHighlightType <= 0) {
     return "";
-  } else {
+  }
+  else {
 
     var highlightString = "";
 
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%";
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>";
         break;
         //create string for gross erosion levels
       case 2:
-        highlightString = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr";
+        highlightString = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>";
         break;
         //create string for phosphorus load levels
       case 3:
-        highlightString = (boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr";
+        highlightString = (boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>";
         break;
         //create string for flood frequency levels
       case 4:
         switch (Number(boardData[currentBoard].map[tileId].floodFrequency)) {
           case 0:
-            highlightString = "None";
+            highlightString = "None" + "<br>";
             break;
           case 10:
-            highlightString = "None";
+            highlightString = "None" + "<br>";
             break;
           case 20:
-            highlightString = "Rare";
+            highlightString = "Rare" + "<br>";
             break;
           case 30:
-            highlightString = "Occasionally";
+            highlightString = "Occasionally" + "<br>";
             break;
           case 40:
-            highlightString = "Frequently";
+            highlightString = "Frequently" + "<br>";
             break;
           case 50:
-            highlightString = "Ponded";
+            highlightString = "Ponded" + "<br>";
             break;
         }
         break;
@@ -2290,72 +2313,88 @@ function getHighlightedInfo(tileId) {
         var drainage = Number(boardData[currentBoard].map[tileId].drainageClass);
         switch (drainage) {
           case 70:
-            highlightString = "Very Poor";
+            highlightString = "Very Poor" + "<br>";
             break;
           case 60:
-            highlightString = "Poor";
+            highlightString = "Poor" + "<br>";
             break;
           case 50:
-            highlightString = "Somewhat Poor";
+            highlightString = "Somewhat Poor" + "<br>";
             break;
           case 45:
-            highlightString = "Somewhat Poor";
+            highlightString = "Somewhat Poor" + "<br>";
             break;
           case 40:
-            highlightString = "Moderate / Well";
+            highlightString = "Moderate / Well" + "<br>";
             break;
           case 30:
-            highlightString = "Moderate / Well";
+            highlightString = "Moderate / Well" + "<br>";
             break;
           case 10:
-            highlightString = "Excessive";
+            highlightString = "Excessive" + "<br>";
             break;
           case 0:
-            highlightString = "Excessive";
+            highlightString = "Excessive" + "<br>";
             break;
         } //end switch
         break;
         //create string for strategic wetlands
       case 6:
         if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
-          highlightString = "Strategic wetland";
+          highlightString = "Strategic Wetland" + "<br>";
+        }
+        else{
+          highlightString = "Non-Strategic Wetland" + "<br>";
         }
         break;
         //create string for subwatershed number
       case 7:
-        highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed;
+        highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>";
         break;
-        //create string for soil class
-      case 8:
-        soil = boardData[currentBoard].map[tileId].soilType;
-        switch (soil) {
-          case "A":
-            return "Clarion 138B";
-          case "B":
-            return "Buckney 1636";
-          case "C":
-            return "Canisteo 507";
-          case "D":
-            return "Downs 162D2";
-          case "G":
-            return "Gara-Armstrong 993E2";
-          case "K":
-            return "Ackmore-Colo 5B";
-          case "L":
-            return "Coland 135";
-          case "M":
-            return "Tama 120C2";
-          case "N":
-            return "Nicollet 55";
-          case "O":
-            return "Okoboji 90";
-          case "Q":
-            return "Tama 120B";
-          case "T":
-            return "Muscatine 119";
-          case "Y":
-            return "Noadaway 220";
-        }
+      /*case 8:
+        var soil = boardData[currentBoard].map[tileId].soilType;
+        switch(soil)
+          {
+            case "A":
+              highlightString = "13.2-13.9 Mg/hr/yr" + "<br>";
+              break;
+            case "B":
+              highlightString = "0 Mg/hr/yr" + "<br>";
+              break;
+            case "C":
+                highlightString = "13.9-15.1 Mg/hr/yr" + "<br>";
+                break;
+            case "D":
+              highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
+              break;
+            case "G":
+              highlightString = "0 Mg/hr/yr" + "<br>";
+              break;
+            case "K":
+              highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
+              break;
+            case "L":
+              highlightString = "13.9-15.1 Mg/hr/yr" + "<br>";
+              break;
+            case "M":
+            highlightString = "13.2-13.9 Mg/hr/yr" + "<br>";
+            break;
+            case "N":
+            highlightString = "13.2-13.9 Mg/hr/yr" + "<br>";
+            break;
+            case "O":
+            highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
+            break;
+            case "Q":
+              highlightString = "13.2-13.9 Mg/hr/yr" + "<br>";
+              break;
+            case "T":
+              highlightString = "13.2-13.9 Mg/hr/yr" + "<br>";
+              break;
+            case "Y":
+              highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
+             break;
+          }*/
 
     }
 
@@ -2365,6 +2404,83 @@ function getHighlightedInfo(tileId) {
 
 } //end getHighlightedInfo
 
+function printSoilType(tileId){
+var soil = boardData[currentBoard].map[tileId].soilType;
+switch (soil)
+{
+  case "A":
+    highlightString = "Clarion 138B" + "<br>";
+    break;
+  case "B":
+    highlightString = "Buckney 1636" + "<br>";
+    break;
+  case "C":
+    highlightString = "Canisteo 507" + "<br>";
+    break;
+  case "D":
+    highlightString = "Downs 162D2" + "<br>";
+    break;
+  case "G":
+    highlightString = "Gara-Armstrong 993E2" + "<br>";
+    break;
+  case "K":
+    highlightString = "Ackmore-Colo 5B" + "<br>";
+    break;
+  case "L":
+    highlightString = "Coland 135" + "<br>";
+    break;
+  case "M":
+    highlightString = "Tama 120C2" + "<br>";
+    break;
+  case "N":
+    highlightString = "Nicollet 55" + "<br>";
+    break;
+  case "O":
+    highlightString = "Okoboji 90" + "<br>";
+    break;
+  case "Q":
+    highlightString = "Tama 120B" + "<br>";
+    break;
+  case "T":
+    highlightString = "Muscatine 119" + "<br>";
+    break;
+  case "Y":
+    highlightString = "Noadaway 220" + "<br>";
+    break;
+  }
+  if(document.getElementById('parameters').innerHTML.includes('hover4'))
+  {
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>", '');
+  }
+  if(document.getElementById('parameters').innerHTML.includes('hover5'))
+  {
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>", '');
+  }
+  if(document.getElementById('parameters').innerHTML.includes('hover6'))
+  {
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("None" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Rare" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Occasionally" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Frequently" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Ponded" + "<br>", '');
+  }
+  if(document.getElementById('parameters').innerHTML.includes('hover7'))
+  {
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Very Poor" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Poor" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Somewhat Poor" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Moderate / Well" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Excessive" + "<br>", '');
+  }
+  if(document.getElementById('parameters').innerHTML.includes('hover8'))
+  {
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Strategic Wetland" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Non-Strategic Wetland", '');
+  }
+  return highlightString;
+}
 //contaminatedRiver changes the color of the river dependent on current phosphorus level
 function contaminatedRiver(riverColor) {
 
@@ -2558,7 +2674,6 @@ function writeFileToDownloadString(mapPlayerNumber) {
     string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-  
       if(boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
         string = string + boardData[currentBoard].map[i].id + "," +
         boardData[currentBoard].map[i].row + "," +
@@ -2675,9 +2790,6 @@ files = e.target.files;
         var reader = new FileReader();
         reader.readAsText(files[0]);
 
-
-      
-
         var string = "";
 
 
@@ -2766,7 +2878,7 @@ files = e.target.files;
           console.log("got the json obj %s",string);
           initWorkspace("./data.csv");//to fix the unusual loading of the river
           setupBoardFromUpload(string);
-          if(year2Available)//If data for years is included, add the year 
+          if(year2Available)//If data for years is included, add the year
           {
           addYearAndTransition();
           }
@@ -2804,7 +2916,6 @@ files = e.target.files;
   //console.log("Else entered");
     var reader = new FileReader();
     reader.readAsText(files[0]);
-   
       reader.onload = function(e) {
 
 
@@ -2890,7 +3001,6 @@ files = e.target.files;
         //clear initData
         initData = [];
     }//end onload
-
   } //end else
 
   closeUploadDownloadFrame();

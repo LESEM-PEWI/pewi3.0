@@ -73,6 +73,46 @@ Cleaned and Prepared - July 2016
                 tempString += "precipOff" + "\n";
               }
               break;
+              case "hover1":
+                if (toggledElements[i].checked) {
+                  tempString += "hover1" + "\n";
+                }
+                break;
+              case "hover2":
+                  if (toggledElements[i].checked) {
+                    tempString += "hover2" + "\n";
+                  }
+               break;
+              case "hover3":
+                 if (toggledElements[i].checked) {
+                   tempString += "hover3" + "\n";
+                 }
+              break;
+              case "hover4":
+                if (toggledElements[i].checked) {
+                  tempString += "hover4" + "\n";
+                }
+              break;
+              case "hover5":
+                if (toggledElements[i].checked) {
+                  tempString += "hover5" + "\n";
+                }
+              break;
+              case "hover6":
+                if (toggledElements[i].checked) {
+                  tempString += "hover6" + "\n";
+                }
+              break;
+              case "hover7":
+                if (toggledElements[i].checked) {
+                  tempString += "hover7" + "\n";
+                }
+              break;
+              case "hover8":
+                if (toggledElements[i].checked) {
+                  tempString += "hover8" + "\n";
+                }
+              break;
               //default case, just add a new line with parameter
             default:
               if (toggledElements[i].checked) {
@@ -254,6 +294,38 @@ Cleaned and Prepared - July 2016
      <!--<input id="paint16" class = "toggle" type = "checkbox">
       <label for = "paint16">Corn Grain</label>-->
     </div>
+    <div class="optionsHeader">
+      Hover options
+      <br>
+      <hr>
+    </div>
+
+    <div class = "optionsSubContainer">
+      <input id="hover1" class="toggle" type="checkbox">
+      <label for="hover1">Current Land Cover</label>
+
+      <input id="hover2" class="toggle" type="checkbox">
+      <label for="hover2">Current Precipitation</label>
+
+      <input id="hover3" class="toggle" type="checkbox">
+      <label for="hover3">Tile Soil Type</label>
+
+      <input id="hover4" class="toggle" type="checkbox">
+      <label for="hover4">Overlay Map Raw Score</label>
+
+      <input id="hover5" class="toggle" type="checkbox">
+      <label for="hover5">Subwatershed Number</label>
+
+      <input id="hover6" class="toggle" type="checkbox">
+      <label for="hover6">Flood Frequency</label>
+
+      <input id="hover7" class="toggle" type="checkbox">
+      <label for="hover7">Drainage Level</label>
+
+      <input id="hover8" class="toggle" type="checkbox">
+      <label for="hover8">Strategic Wetlands</label>
+    </div>
+
     <div class="optionsHeader">
       Annual Options
       <br>
