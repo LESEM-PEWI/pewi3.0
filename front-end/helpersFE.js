@@ -170,12 +170,28 @@ function highlightTile(tileId) {
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
 
       //update the information displayed in the delayed hover div by cursor
-      myTimer = setTimeout(function() {
+      myTimer = setTimeout(function()
+      {
         document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
-        if(document.getElementById('parameters').innerHTML.includes('landCover'))
-        {
-          document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
-        }
+      //May use strings and iterate through them for removing hover information
+      var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) ;
+      var info2 = "Precipitation: " + printPrecipYearType();
+      var info3 = "Soil Type: " + printSoilType(tileId);
+          if(document.getElementById('parameters').innerHTML.includes('hover1'))
+          {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info1 + "<br>", '');
+            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
+          if(document.getElementById('parameters').innerHTML.includes('hover2'))
+          {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info2 + "<br>", '');
+            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
+          if(document.getElementById('parameters').innerHTML.includes('hover3'))
+          {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info3, '');
+            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
       }, 500);
     }
 
@@ -2317,51 +2333,7 @@ function getHighlightedInfo(tileId) {
       case 7:
         highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>";
         break;
-        //create string for soil class
       /*case 8:
-        soil = boardData[currentBoard].map[tileId].soilType;
-        switch (soil) {
-          case "A":
-            highlightString = "Clarion 138B" + "<br>";
-            break;
-          case "B":
-            highlightString = "Buckney 1636" + "<br>";
-            break;
-          case "C":
-            highlightString = "Canisteo 507" + "<br>";
-            break;
-          case "D":
-            highlightString = "Downs 162D2" + "<br>";
-            break;
-          case "G":
-            highlightString = "Gara-Armstrong 993E2" + "<br>";
-            break;
-          case "K":
-            highlightString = "Ackmore-Colo 5B" + "<br>";
-            break;
-          case "L":
-            highlightString = "Coland 135" + "<br>";
-            break;
-          case "M":
-            highlightString = "Tama 120C2" + "<br>";
-            break;
-          case "N":
-            highlightString = "Nicollet 55" + "<br>";
-            break;
-          case "O":
-            highlightString = "Okoboji 90" + "<br>";
-            break;
-          case "Q":
-            highlightString = "Tama 120B" + "<br>";
-            break;
-          case "T":
-            highlightString = "Muscatine 119" + "<br>";
-            break;
-          case "Y":
-            highlightString = "Noadaway 220" + "<br>";
-            break;
-        }*/
-        case 8:
         var soil = boardData[currentBoard].map[tileId].soilType;
         switch(soil)
           {
@@ -2404,7 +2376,7 @@ function getHighlightedInfo(tileId) {
             case "Y":
               highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
              break;
-          }
+          }*/
 
     }
 
@@ -2457,6 +2429,32 @@ switch (soil)
   case "Y":
     highlightString = "Noadaway 220" + "<br>";
     break;
+  }
+  if(document.getElementById('parameters').innerHTML.includes('hover4'))
+  {
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>", '');
+  }
+  if(document.getElementById('parameters').innerHTML.includes('hover5'))
+  {
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>", '');
+  }
+  if(document.getElementById('parameters').innerHTML.includes('hover6'))
+  {
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("None" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Rare" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Occasionally" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Frequently" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Ponded" + "<br>", '');
+  }
+  if(document.getElementById('parameters').innerHTML.includes('hover7'))
+  {
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Very Poor" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Poor" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Somewhat Poor" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Moderate / Well" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Excessive" + "<br>", '');
   }
   return highlightString;
 }
