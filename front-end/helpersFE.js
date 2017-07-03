@@ -2456,6 +2456,11 @@ switch (soil)
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Moderate / Well" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Excessive" + "<br>", '');
   }
+  if(document.getElementById('parameters').innerHTML.includes('hover8'))
+  {
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Strategic Wetland" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Non-Strategic Wetland", '');
+  }
   return highlightString;
 }
 //contaminatedRiver changes the color of the river dependent on current phosphorus level
