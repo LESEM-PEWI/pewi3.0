@@ -2271,7 +2271,6 @@ function getHighlightedInfo(tileId) {
   else {
 
     var highlightString = "";
-
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
@@ -2395,9 +2394,44 @@ function getHighlightedInfo(tileId) {
               highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
              break;
           }*/
-
+    //Raw numbers are for conversion of the units (conversion doesn't exist in the back end)
+    //create string for corn grain yield
+    case 9:
+      highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield()/15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>";
+      break;
+    //create string for soybean yield
+    case 10:
+      highlightString = Number(boardData[currentBoard].map[tileId].getSoybeanYield()/14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>";
+      break;
+    //create string for  mixed fruit and vegetable yield
+    case 11:
+      highlightString = Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield()/0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>";
+      break;
+    //create string for cattle yield
+    case 12:
+      highlightString = Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(1) + " animals/acre/yr" + "<br>";
+      break;
+    //create string for alfalfa yield
+    case 13:
+      highlightString = Number(boardData[currentBoard].map[tileId].getHayYield()/0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
+      break;
+     //create string for grass hay yield (same as alfalfa)
+    case 14:
+      highlightString = Number(boardData[currentBoard].map[tileId].getHayYield()/0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
+      break;
+    //create string for switchgrass yield
+    case 15:
+      highlightString = Number(boardData[currentBoard].map[tileId].getSwitchgrassYield()/0.445407279029).toFixed(2) + " Mg/ha/yr" + "<br>";
+      break;
+    //create string for wood yield
+    case 16:
+      highlightString = Number(boardData[currentBoard].map[tileId].getWoodYield()/171.875).toFixed(2) + " m3/ha/yr" + "<br>";
+      break;
+    //create string for short-rotation woody biomass yield
+    case 17:
+      highlightString = "608.6 tons/acre/yr" + "<br>";
+      break;
     }
-
     return highlightString;
   }
 
@@ -2448,11 +2482,19 @@ switch (soil)
     highlightString = "Noadaway 220" + "<br>";
     break;
   }
-  if(document.getElementById('parameters').innerHTML.includes('hover4'))
+  if(document.getElementById('parameters').innerHTML.includes('hover4') && currentHighlightType!=0)
   {
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCornGrainYield()/15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSoybeanYield()/14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield()/0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(1) + " animals/acre/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getHayYield()/0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSwitchgrassYield()/0.445407279029).toFixed(2) + " Mg/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getWoodYield()/171.875).toFixed(2) + " m3/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("608.6 tons/acre/yr" + "<br>", '');
   }
   if(document.getElementById('parameters').innerHTML.includes('hover5'))
   {
