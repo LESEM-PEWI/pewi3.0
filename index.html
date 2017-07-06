@@ -88,7 +88,7 @@
     <input id="firefoxWorkaround"></input>
     <!-- parameters div stores the parameters in options.html -->
     <div id="parameters"></div>
-    <!-- print-option-parameters div stores the parameters in printOptions.html -->
+    <!-- print-option-parameters div stores the toggled options in printOptions.html -->
     <div id="print-option-parameters"></div>
   </div>
 
@@ -427,9 +427,9 @@
           </div>
         </div>
 
-        <div id="wetlandClassDetailsList" class="DetailsListRolled physicalDetailsList">
+        <div id="wetlandsDetailsList" class="DetailsListRolled physicalDetailsList">
         </div>
-        <div id="subwatershedClassDetailsList" class="DetailsListRolled physicalDetailsList">
+        <div id="boundaryDetailsList" class="DetailsListRolled physicalDetailsList">
         </div>
         <div id="soilDetailsList" class="DetailsListRolled physicalDetailsList">
           <div class="legendColor" style="background-color: #097c2f">
@@ -473,15 +473,15 @@
           </div>
         </div>
         <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon icon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
-        <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetland');">
-        <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('subwatershed');">
+        <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetlands');">
+        <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('boundary');">
         <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon icon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
         <p class="featuresText">Soil Class</p><img id="soilClass" class="featureSelectorIcon icon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
       </div>
 
       <!--Yield Productivity Overlay Maps -->
       <div id="yieldTab" class="consoleTab" style="display: none;">
-        <div id="cornGrainDetailsList" class="DetailsListRolled yieldDetailsList">
+        <div id="cornDetailsList" class="DetailsListRolled yieldDetailsList">
           <font size="1" color="white">
             <center>Corn Grain Yield Key</center>
           </font>
@@ -531,7 +531,7 @@
           </table>
         </div>
 
-        <div id="soyBeanDetailsList" class="DetailsListRolled yieldDetailsList">
+        <div id="soybeanDetailsList" class="DetailsListRolled yieldDetailsList">
           <br>
           <font size="1" color="white">
             <center>Soybean Yield Key</center>
@@ -557,36 +557,28 @@
           </font>
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.75</td>
-              <td>24.6</td>
+              <td>0.75</td><td>24.6</td>
             </tr>
             <tr>
-              <td>0.90</td>
-              <td>28.2</td>
+              <td>0.90</td><td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>30.4</td>
+              <td>1.00</td><td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>32.2</td>
+              <td>1.00</td><td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>34.3</td>
+              <td>1.00</td><td>34.3</td>
             </tr>
             <tr>
-              <td>0.90</td>
-              <td>36.5</td>
+              <td>0.90</td><td>36.5</td>
             </tr>
             <tr>
-              <td>0.75</td>
-              <td>45.1</td>
+              <td>0.75</td><td>45.1</td>
             </tr>
           </table>
         </div>
@@ -617,36 +609,28 @@
           </font>
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>24.6</td>
+              <td>1.00</td><td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>28.2</td>
+              <td>1.00</td><td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>30.4</td>
+              <td>1.00</td><td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>32.2</td>
+              <td>1.00</td><td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>34.3</td>
+              <td>1.00</td><td>34.3</td>
             </tr>
             <tr>
-              <td>0.90</td>
-              <td>36.5</td>
+              <td>0.90</td><td>36.5</td>
             </tr>
             <tr>
-              <td>0.75</td>
-              <td>45.1</td>
+              <td>0.75</td><td>45.1</td>
             </tr>
           </table>
         </div>
@@ -677,36 +661,28 @@
           </font>
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.95</td>
-              <td>24.6</td>
+              <td>0.95</td><td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>28.2</td>
+              <td>1.00</td><td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>30.4</td>
+              <td>1.00</td><td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>32.2</td>
+              <td>1.00</td><td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>34.3</td>
+              <td>1.00</td><td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>36.5</td>
+              <td>1.00</td><td>36.5</td>
             </tr>
             <tr>
-              <td>0.95</td>
-              <td>45.1</td>
+              <td>0.95</td><td>45.1</td>
             </tr>
           </table>
         </div>
@@ -737,41 +713,33 @@
           </font>
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.95</td>
-              <td>24.6</td>
+              <td>0.95</td><td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>28.2</td>
+              <td>1.00</td><td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>30.4</td>
+              <td>1.00</td><td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>32.2</td>
+              <td>1.00</td><td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>34.3</td>
+              <td>1.00</td><td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>36.5</td>
+              <td>1.00</td><td>36.5</td>
             </tr>
             <tr>
-              <td>0.95</td>
-              <td>45.1</td>
+              <td>0.95</td><td>45.1</td>
             </tr>
           </table>
         </div>
 
-        <div id="grassHayDetailsList" class="DetailsListRolled yieldDetailsList">
+        <div id="grasshayDetailsList" class="DetailsListRolled yieldDetailsList">
           <br>
           <font size="1" color="white">
             <center>Grass Hay Yield Key</center>
@@ -797,41 +765,33 @@
           </font>
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.95</td>
-              <td>24.6</td>
+              <td>0.95</td><td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>28.2</td>
+              <td>1.00</td><td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>30.4</td>
+              <td>1.00</td><td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>32.2</td>
+              <td>1.00</td><td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>34.3</td>
+              <td>1.00</td><td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>36.5</td>
+              <td>1.00</td><td>36.5</td>
             </tr>
             <tr>
-              <td>0.95</td>
-              <td>45.1</td>
+              <td>0.95</td><td>45.1</td>
             </tr>
           </table>
         </div>
 
-        <div id="switchGrassDetailsList" class="DetailsListRolled yieldDetailsList">
+        <div id="switchgrassDetailsList" class="DetailsListRolled yieldDetailsList">
           <br>
           <font size="1" color="white">
             <center>Switchgrass Yield Key</center>
@@ -857,36 +817,28 @@
           </font>
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.95</td>
-              <td>24.6</td>
+              <td>0.95</td><td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>28.2</td>
+              <td>1.00</td><td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>30.4</td>
+              <td>1.00</td><td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>32.2</td>
+              <td>1.00</td><td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>34.3</td>
+              <td>1.00</td><td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>36.5</td>
+              <td>1.00</td><td>36.5</td>
             </tr>
             <tr>
-              <td>0.95</td>
-              <td>45.1</td>
+              <td>0.95</td><td>45.1</td>
             </tr>
           </table>
         </div>
@@ -917,36 +869,28 @@
           </font>
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>24.6</td>
+              <td>1.00</td><td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>28.2</td>
+              <td>1.00</td><td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>30.4</td>
+              <td>1.00</td><td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>32.2</td>
+              <td>1.00</td><td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>34.3</td>
+              <td>1.00</td><td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>36.5</td>
+              <td>1.00</td><td>36.5</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>45.1</td>
+              <td>1.00</td><td>45.1</td>
             </tr>
           </table>
         </div>
@@ -968,47 +912,39 @@
           </font>
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (id)/yr</th>
+              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (id)/yr</th>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>24.6</td>
+              <td>1.00</td><td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>28.2</td>
+              <td>1.00</td><td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>30.4</td>
+              <td>1.00</td><td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>32.2</td>
+              <td>1.00</td><td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>34.3</td>
+              <td>1.00</td><td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>36.5</td>
+              <td>1.00</td><td>36.5</td>
             </tr>
             <tr>
-              <td>1.00</td>
-              <td>45.1</td>
+              <td>1.00</td><td>45.1</td>
             </tr>
           </table>
         </div>
 
-        <p class="featuresText"></p><img id="cornClass" class="yieldSelectorIcon icon" src="./imgs/cornGrainIcon.png" title="Corn Grain" onclick="displayLevels('cornGrain');">
-        <p class="featuresText"></p><img id="soyClass" class="yieldSelectorIcon icon" src="./imgs/soybeanIcon.png" title="Soybean" onclick="displayLevels('soyBean');">
+        <p class="featuresText"></p><img id="cornClass" class="yieldSelectorIcon icon" src="./imgs/cornGrainIcon.png" title="Corn Grain" onclick="displayLevels('corn');">
+        <p class="featuresText"></p><img id="soyClass" class="yieldSelectorIcon icon" src="./imgs/soybeanIcon.png" title="Soybean" onclick="displayLevels('soybean');">
         <p class="featuresText"></p><img id="fruitClass" class="yieldSelectorIcon icon" src="./imgs/fruitIcon.png" title="Mixed Fruits and Vegetables" onclick="displayLevels('fruit');">
         <p class="featuresText"></p><img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" title="Cattle" onclick="displayLevels('cattle');">
         <p class="featuresText"></p><img id="alfalfaClass" class="yieldSelectorIcon icon" src="./imgs/alfalfaIcon.png" title="Alfalfa" onclick="displayLevels('alfalfa');">
-        <p class="featuresText"></p><img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" title="GrassHay" onclick="displayLevels('grassHay');">
-        <p class="featuresText"></p><img id="switchGrassClass" class="yieldSelectorIcon icon" src="./imgs/switchGrassIcon.png" title="Switch Grass" onclick="displayLevels('switchGrass');">
+        <p class="featuresText"></p><img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" title="GrassHay" onclick="displayLevels('grasshay');">
+        <p class="featuresText"></p><img id="switchGrassClass" class="yieldSelectorIcon icon" src="./imgs/switchGrassIcon.png" title="Switch Grass" onclick="displayLevels('switchgrass');">
         <p class="featuresText"></p><img id="woodClass" class="yieldSelectorIcon icon" src="./imgs/woodIcon.png" title="Wood" onclick="displayLevels('wood');">
         <p class="featuresText"></p><img id="shortClass" class="yieldSelectorIcon icon" src="./imgs/woodyBiomassIcon.png" title="Woody Biomass" onclick="displayLevels('short');">
 
@@ -1045,7 +981,7 @@
     <!--Chat box for Index information -->
     <div id="backgroundInfoButton" class="backgroundInfoButton" onclick="toggleBackgroundInfoDisplay();"><img src="./imgs/indexIcon.png"></div>
     <div id="backgroundInfoBox" class="backgroundInfoBox">
-      <p id = "indexPopupText"></p>
+      <p id="indexPopupText"></p>
     </div>
 
     <!-- **END Right Side Component** -->

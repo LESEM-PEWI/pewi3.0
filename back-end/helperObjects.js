@@ -2372,13 +2372,6 @@ function Click(c1, c2, c3, c4, c5) {
           return "Landscape feature tab was clicked";
           break;
         }
-        //When the user clicks the settings tab
-      case 9:
-        if (action) {
-          return switchConsoleTab(5);
-          break;
-        }
-        return "Land selection setting was clicked";
         break;
         //When the user clicks the download/upload button
       case 10:
@@ -3087,14 +3080,14 @@ function Click(c1, c2, c3, c4, c5) {
 //######################################################################################
 
 // This Printer object implements jsPDF library
-// Called
-function Printer2() {
+// Called by executePrintOptions() in helpersFE.js
+function Printer() {
   /*** attributes ***/
 
   /* p: portrai, mm: millimeters unit, pt: point unit, a4: A4 */
-  this.doc = new jsPDF('p', 'pt', 'a4');
+  var doc = new jsPDF('p', 'pt', 'a4');
   // Optional - set properties of the document
-  this.doc.setProperties({
+  doc.setProperties({
     title: "PEWI Results",
     subject: "All Rights Reserved@",
     author: 'LESEM LAB',
@@ -3127,249 +3120,78 @@ function Printer2() {
     header2_font: 16
   };
 
-
   // legend object
-  this.legendObjs = {};
+  var legendObjs = {};
 
   /*** functions ***/
 
-  // main printing part
+  // main printing part ( public )
 
   /*
    * This function basically stores all the required image as sources to put on the PDF and create legend as well.
-   *
-   * Boolean Array toPrint
    */
   this.preprocessing = function() {
-    var uptoYear = boardData[currentBoard].calculatedToYear;
-    // ----------------------------go through landUse maps----------------------------
-    // // default print the year1 map
-    // transitionToYear(1);
-    // // render the according webgl
-    // renderer.render(scene, camera);
-    // // get the screenshot image in data string form
-    // imageSrc.mapYear1 = renderer.domElement.toDataURL('image/jpeg');
+    // loop through all intended-to-print type, and place them on the doc
+    for (var property in toPrint) {
+      if (toPrint[property] === true && property !== "yearUserViewpoint"  &&
+          property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
+          property !== "yieldUserViewpoint") {
 
-    // loop through all available year maps
-    // for (var i = 0; i < uptoYear; i++) {
-    //   transitionToYear(i + 1);
-    //   // render the according webgl
-    //   renderer.render(scene, camera);
-    //   // get the screenshot image in data string form
-    //   imageSrc['mapYear' + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
-    // } // end for
+        // take screen shot and save as image source
+        // TODO: set standard view before take screen shot
+        saveScreenshotMapType(property);
 
-    if (toPrint.year1 === true) {
-      console.log("year1 correct");
-      transitionToYear(1);
-      // render the according webgl
-      renderer.render(scene, camera);
-      // get the screenshot image in data string form
-      imageSrc.mapYear1 = renderer.domElement.toDataURL('image/jpeg');
-    }
-    if (toPrint.year2 === true) {
-      transitionToYear(2);
-      // render the according webgl
-      renderer.render(scene, camera);
-      // get the screenshot image in data string form
-      imageSrc.mapYear2 = renderer.domElement.toDataURL('image/jpeg');
-    }
-    if (toPrint.year3 === true) {
-      transitionToYear(3);
-      // render the according webgl
-      renderer.render(scene, camera);
-      // get the screenshot image in data string form
-      imageSrc.mapYear3 = renderer.domElement.toDataURL('image/jpeg');
-    }
-
-
-    // ----------------------------go through levels maps----------------------------
-    if(toPrint.nitrate === true) {
-      this.saveScreenshotMapType("nitrate");
-      this.makeLegendBox('nitrate');
-    }
-    // this.addLegendLine('nitrate', '#87ceee', '0 - 5 %');
-    // this.addLegendLine('nitrate', '#41b7c5', '5 - 10 %');
-    // this.addLegendLine('nitrate', '#2f7eb7', '10 - 20 %');
-    // this.addLegendLine('nitrate', '#0053b3', '20 - 25 %');
-    // this.addLegendLine('nitrate', '#302486', '> 25 %');
-
-    if(toPrint.erosion === true) {
-      this.saveScreenshotMapType("erosion");
-      this.makeLegendBox('erosion');
-    }
-
-    if(toPrint.phosphorus === true) {
-      this.saveScreenshotMapType("phosphorus");
-      this.makeLegendBox('phosphorus');
-    }
-
-    // // ----------------------------go through features maps----------------------------
-    if(toPrint.flood === true) {
-      this.saveScreenshotMapType("flood");
-      this.makeLegendBox('flood');
-    }
-    if(toPrint.wetlands === true) {
-      this.saveScreenshotMapType("wetland");
-    }
-    if(toPrint.boundary === true) {
-      this.saveScreenshotMapType("subwatershed");
-    }
-    if(toPrint.drainage === true) {
-      this.saveScreenshotMapType("drainage");
-      this.makeLegendBox('drainage');
-    }
-    if(toPrint.soil === true) {
-      this.saveScreenshotMapType("soil");
-      this.makeLegendBox('soil');
-    }
-
-    // ----------------------------go through yield maps----------------------------
-    if(toPrint.corn === true) {
-      this.saveScreenshotMapType("cornGrain");
-      this.makeLegendBox('cornGrain');
-    }
-    if(toPrint.soybean === true) {
-      this.saveScreenshotMapType("soyBean");
-      this.makeLegendBox('soyBean');
-    }
-    if(toPrint.fruit === true) {
-      this.saveScreenshotMapType("fruit");
-      this.makeLegendBox('fruit');
-    }
-    if(toPrint.cattle === true) {
-      this.saveScreenshotMapType("cattle");
-      this.makeLegendBox('cattle');
-    }
-    if(toPrint.alfalfa === true) {
-      this.saveScreenshotMapType("alfalfa");
-      this.makeLegendBox('alfalfa');
-    }
-    if(toPrint.grasshay === true) {
-      this.saveScreenshotMapType("grassHay");
-      this.makeLegendBox('grassHay');
-    }
-    if(toPrint.switchgrass === true) {
-      this.saveScreenshotMapType("switchGrass");
-      this.makeLegendBox('switchGrass');
-    }
-    if(toPrint.wood === true) {
-      this.saveScreenshotMapType("wood");
-      this.makeLegendBox('wood');
-    }
-    if(toPrint.short === true) {
-      this.saveScreenshotMapType("short");
-      this.makeLegendBox('short');
-    }
+        // make legend if needed
+        if (property !== 'year1' && property !== 'year2' && property !== 'year3' &&
+            property !== 'wetlands' && property !== 'boundary' && property !== "yearUserViewpoint"  &&
+                property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
+                property !== "yieldUserViewpoint") {
+          makeLegendBox(property); // create legend object
+        }
+      } // END outter if
+    } // end for
 
   }; // end preprocessing
 
   /*
   * This function generates and formats the contents on the PDF and create it in the end
+  *
+  * Number isDownload: 0 not downloadingm, 1: is downloading
   */
-  this.processing = function() {
-    console.log(this.legendObjs);
+  this.processing = function(isDownload) {
+    // var uptoYear = boardData[currentBoard].calculatedToYear;
+    addText(1, "PEWI Result", x, y, font.header1_font);
 
-    var uptoYear = boardData[currentBoard].calculatedToYear;
-    this.addText(1, "PEWI Result", x, y, font.header1_font);
-    // Display default mapYear1
-    // this.addText(1, "Year1 LandUse", x, y, font.header2_font);
-    // this.addImage(imageSrc.mapYear1, 'JPEG', x, y, mapWidth, mapHeight);
-    // this.updateY(350 + lineHeight * 2);
+    // loop through all intended-to-print type, and place them on the doc
+    for (var property in toPrint) {
+      if (toPrint[property] === true && property !== "yearUserViewpoint"  &&
+          property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
+          property !== "yieldUserViewpoint") {
+        placeMapType(property);
+      }
+    } // end for
 
-    // ----------------------------go through landUse maps----------------------------
-    // put year maps on
-    // for (var i = 0; i < uptoYear; i++) {
-    //   this.addText(1, "Year" + (i + 1) + " LandUse Map", x, y, font.header2_font);
-    //   this.addImage(imageSrc['mapYear' + (i + 1)], 'JPEG', x, y, mapWidth, mapHeight);
-    //   this.updateY(mapHeight + lineHeight * 2);
-    // }
-    if (toPrint.year1 === true) {
-      this.addText(1, "Year 1 LandUse Map", x, y, font.header2_font);
-      this.addImage(imageSrc.mapYear1, 'JPEG', x, y, mapWidth, mapHeight);
-      this.updateY(mapHeight + lineHeight * 2);
+    // output PDF
+    if (isDownload == 1) {
+      // download
+      doc.save('PWEI.pdf');
+    } else {
+      // preview
+      window.frames[6].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
+      // new window
+      // doc.output('dataurlnewwindow');
     }
-    if (toPrint.year2 === true) {
-      this.addText(1, "Year 2 LandUse Map", x, y, font.header2_font);
-      this.addImage(imageSrc.mapYear2, 'JPEG', x, y, mapWidth, mapHeight);
-      this.updateY(mapHeight + lineHeight * 2);
-    }
-    if (toPrint.year3 === true) {
-      this.addText(1, "Year 3 LandUse Map", x, y, font.header2_font);
-      this.addImage(imageSrc.mapYear3, 'JPEG', x, y, mapWidth, mapHeight);
-      this.updateY(mapHeight + lineHeight * 2);
-    }
-
-    // ----------------------------go through levels maps----------------------------
-    if (toPrint.nitrate === true) {
-      this.placeMapType("nitrate");
-    }
-    if (toPrint.erosion === true) {
-      this.placeMapType("erosion");
-    }
-    if (toPrint.phosphorus === true) {
-      this.placeMapType("phosphorus");
-    }
-
-    // ----------------------------go through features maps----------------------------
-    if (toPrint.flood === true) {
-      this.placeMapType("flood");
-    }
-    if (toPrint.wetlands === true) {
-      this.placeMapType("wetland");
-    }
-    if (toPrint.subwatershed === true) {
-      this.placeMapType("subwatershed");
-    }
-    if (toPrint.drainage === true) {
-      this.placeMapType("drainage");
-    }
-    if (toPrint.soil === true) {
-      this.placeMapType("soil");
-    }
-
-    // ----------------------------go through yield maps----------------------------
-    if (toPrint.corn === true) {
-      this.placeMapType("cornGrain");
-    }
-    if (toPrint.soybean === true) {
-      this.placeMapType("soyBean");
-    }
-    if (toPrint.fruit === true) {
-      this.placeMapType("fruit");
-    }
-    if (toPrint.cattle === true) {
-      this.placeMapType("cattle");
-    }
-    if (toPrint.alfalfa === true) {
-      this.placeMapType("alfalfa");
-    }
-    if (toPrint.grasshay === true) {
-      this.placeMapType("grassHay");
-    }
-    if (toPrint.switchgrass === true) {
-      this.placeMapType("switchGrass");
-    }
-    if (toPrint.wood === true) {
-      this.placeMapType("wood");
-    }
-    if (toPrint.short === true) {
-      this.placeMapType("short");
-    }
-    console.log("output pdf");
-    this.doc.output('datauri');
 
     // Output as Data URI on the current page
-    // this.doc.output('datauri');
-
+    // doc.output('datauri');
 
     // clean everything XXX clean jsPDF?
-    this.doc = {};
-    this.legendObjs = {};
+    doc = {};
+    legendObjs = {};
     imageSrc = {};
   }; // end processing
 
-  // helper functions
+  // helper functions ( private )
 
   /**
   * Place image on the pdf
@@ -3377,10 +3199,10 @@ function Printer2() {
   * String dataURL, String type: 'JPEG', 'PNG', and so on
   * Number width, Number height, Number x, sNumber y
   */
-  this.addImage = function(dataURL, type, x, y, width, height) {
+  function addImage(dataURL, type, x, y, width, height) {
     // 'PNG' wouldn't work for some reason
-    this.doc.addImage(dataURL, type, x, y, width, height);
-  }; // end addImage
+    doc.addImage(dataURL, type, x, y, width, height);
+  } // end addImage
 
   /**
   * Create and store the legend indicator and description in legendObjs per line
@@ -3389,40 +3211,41 @@ function Printer2() {
   * String color: legend indicator color in rgb()
   * String text: legend description
   */
-  this.addLegendLine = function(legendName, color, text) {
-    if (typeof this.legendObjs[legendName] === 'undefined') {
+  // addLegendLine = function(legendName, color, text) {
+  function addLegendLine(legendName, color, text) {
+    if (typeof legendObjs[legendName] === 'undefined') {
       // Create Object
-      this.legendObjs[legendName] = {
+      legendObjs[legendName] = {
         indicator: [],
         description: []
       };
     }
-    this.legendObjs[legendName].indicator.push(color);
-    this.legendObjs[legendName].description.push(text);
-  }; // end addLegendLine
+    legendObjs[legendName].indicator.push(color);
+    legendObjs[legendName].description.push(text);
+  } // end addLegendLine
 
   /**
   * Place text on the pdf
   *
+  * Number updateY: 0: don't update y, other: do update y
   * String text, Number x, Number y, [Number size, String type, String family]
   */
-  this.addText = function(updateY, text, x, y, size, type, family) {
-    if (arguments.length >= 4)
-    this.doc.setFontSize(size);
-
+  function addText(needUpdateY, text, x, y, size, type, family) {
     if (arguments.length >= 5)
-    this.doc.setFontType(type);
-    // if (arguments.length >= 6)
+      doc.setFontSize(size);
 
-    this.doc.text(x, y, text);
-    if (updateY) {
+    if (arguments.length >= 6)
+      doc.setFontType(type);
+
+    doc.text(x, y, text);
+    if (needUpdateY) {
       // update y
-      this.updateY(size+lineHeight);
+      updateY(size+lineHeight);
     }
     // reset font property
-    this.doc.setFontSize(font.font);
-    this.doc.setFontType("normal");
-  }; // end addText
+    doc.setFontSize(font.font);
+    doc.setFontType("normal");
+  } // end addText
 
   /**
   * Take legend object as a source to draw the according legend image
@@ -3430,8 +3253,7 @@ function Printer2() {
   * Object legendObj: the property stored in legendObjs
   * Number x, Number y: coordinates
   */
-  this.drawLegendBox = function(legendObj, x, y) {
-    console.log("draw legend box " + legendObj.name);
+  function drawLegendBox(legendObj, x, y) {
     var rectX, rectY, textX, textY, i;
     rectX = x + padding;
     rectY = y + padding;
@@ -3439,9 +3261,9 @@ function Printer2() {
     textY = rectY + padding*2;
 
     // first draw the container
-    this.doc.setDrawColor(0);
-    this.doc.setFillColor(172, 172, 172); // light gray
-    this.doc.rect(x, y, legendObj.width, legendObj.height, 'F');
+    doc.setDrawColor(0);
+    doc.setFillColor(172, 172, 172); // light gray
+    doc.rect(x, y, legendObj.width, legendObj.height, 'F');
 
     var matches_array; // size 3, stores values of RGB
     var regexp = /\d+/g; // regexp to extract RGB values from String
@@ -3450,22 +3272,22 @@ function Printer2() {
     for (i = 0; i < legendObj.indicator.length; i++) {
       // trim to have values
       matches_array = legendObj.indicator[i].match(regexp).map(Number);
-      this.doc.setFillColor(matches_array[0], matches_array[1], matches_array[2]);
-      this.doc.rect(rectX, rectY, indicatorLength, indicatorLength, 'F'); // filled square
+      doc.setFillColor(matches_array[0], matches_array[1], matches_array[2]);
+      doc.rect(rectX, rectY, indicatorLength, indicatorLength, 'F'); // filled square
       // put on the text
-      this.addText(0, legendObj.description[i], textX, textY, 8);
+      addText(0, legendObj.description[i], textX, textY, 8);
       // update parameters
       rectY += indicatorLength + padding;
       textY = rectY + padding*2;
     }
-  }; // end drawLegendBox
+  } // end drawLegendBox
 
   /**
   * Loop through a string array and return the longest line's length
   *
   * String Array sArray
   */
-  this.longestLine = function(sArray) {
+  function longestLine(sArray) {
     var maxlength = 0,index;
     for (var i = 0; i < sArray.length; i++) {
       if (maxlength < sArray[i].length) {
@@ -3474,14 +3296,14 @@ function Printer2() {
       }
     }
     return maxlength;
-  }; // end longestLine
+  } // end longestLine
 
   /**
   * Create LegendBox Object
   *
   * String type
   */
-  this.makeLegendBox = function(type) {
+  function makeLegendBox(type) {
     var color, text, i;
     for (i = 0; i < document.getElementById(type+'DetailsList').childElementCount; i++) {
       color = void 0;
@@ -3494,125 +3316,205 @@ function Printer2() {
         text = colorDiv.getElementsByTagName('p')[0].innerText;
       }
       if (typeof color !== 'undefined' && typeof text !== 'undefined') {
-        this.addLegendLine(type, color, text);
+        addLegendLine(type, color, text);
       }
     }
     // XXX result page should use different code to get color and text
 
     // store width & height
-    this.legendObjs[type].height = padding + this.legendObjs[type].indicator.length * (indicatorLength + padding);
-    this.legendObjs[type].width = padding + indicatorLength + padding + (this.longestLine(this.legendObjs[type].description) * 4.5);
-    this.legendObjs[type].name = type;
-  };
+    legendObjs[type].height = padding + legendObjs[type].indicator.length * (indicatorLength + padding);
+    legendObjs[type].width = padding + indicatorLength + padding + (longestLine(legendObjs[type].description) * 4.5);
+    legendObjs[type].name = type;
+  } // end makeLegendBox
 
   /**
   * Loop through all available image src for each year and put them on pdf
   *
   * String type, Number uptoYear
   */
-  this.placeMapType = function(type, uptoYear) {
+  function placeMapType(type) {
     var legend;
-    // loop through all available year
-    // for (var i = 0; i < uptoYear; i++) {
-    //   if (type == 'nitrate' || type == 'erosion' || type == 'phosphorus') {
-    //     this.addText(1, "Year" + (i + 1) + " " + this.titleText(type), x, y, font.header2_font);
-    //   } else {
-    //     this.addText(1, this.titleText(type), x, y, font.header2_font);
-    //   }
-    //   this.addImage(imageSrc[type + (i + 1)], 'JPEG', x, y, mapWidth, mapHeight);
-    //   // place legend
-    //   if (legend = this.legendObjs[type]) {
-    //     this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
-    //   }
-    //   this.updateY(mapHeight + lineHeight * 2);
-    // }
 
-    if (type == 'nitrate' || type == 'erosion' || type == 'phosphorus') {
-      if (toPrint.year1 === true) {
-        this.addText(1, "Year 1 " + this.titleText(type), x, y, font.header2_font);
-        this.addImage(imageSrc[type + 1], 'JPEG', x, y, mapWidth, mapHeight);
-        // place legend
-        if (legend = this.legendObjs[type]) {
-          this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+    // if type is year category
+    switch (type) {
+      case 'year1':
+      case 'year2':
+      case 'year3':
+        // place text and image
+        addText(1, "Year "+ type.substr(type.length - 1) +" LandUse Map", x, y, font.header2_font);
+        addImage(imageSrc[type], 'JPEG', x, y, mapWidth, mapHeight);
+        // update y
+        updateY(mapHeight + lineHeight * 2);
+        break;
+
+      // if type is level category
+      case 'nitrate':
+      case 'erosion':
+      case 'phosphorus':
+        // paste Year 1 level map
+        if (toPrint.year1 === true) {
+          // place text and image
+          addText(1, "Year 1 " + titleText(type), x, y, font.header2_font);
+          addImage(imageSrc[type + 1], 'JPEG', x, y, mapWidth, mapHeight);
+          // place legend
+          if (legend = legendObjs[type]) {
+            drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+          }
+          updateY(mapHeight + lineHeight * 2);
         }
-        this.updateY(mapHeight + lineHeight * 2);
-      }
-      if (toPrint.year2 === true) {
-        this.addText(1, "Year 2 " + this.titleText(type), x, y, font.header2_font);
-        this.addImage(imageSrc[type + 2], 'JPEG', x, y, mapWidth, mapHeight);
-        // place legend
-        if (legend = this.legendObjs[type]) {
-          this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+
+        // paste Year 2 level map
+        if (toPrint.year2 === true) {
+          // place text and image
+          addText(1, "Year 2 " + titleText(type), x, y, font.header2_font);
+          addImage(imageSrc[type + 2], 'JPEG', x, y, mapWidth, mapHeight);
+          // place legend
+          if (legend = legendObjs[type]) {
+            drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+          }
+          updateY(mapHeight + lineHeight * 2);
         }
-        this.updateY(mapHeight + lineHeight * 2);
-      }
-      if (toPrint.year3 === true) {
-        this.addText(1, "Year 3 " + this.titleText(type), x, y, font.header2_font);
-        this.addImage(imageSrc[type + 3], 'JPEG', x, y, mapWidth, mapHeight);
-        // place legend
-        if (legend = this.legendObjs[type]) {
-          this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+
+        // paste Year 3 level map
+        if (toPrint.year3 === true) {
+          // place text and image
+          addText(1, "Year 3 " + titleText(type), x, y, font.header2_font);
+          addImage(imageSrc[type + 3], 'JPEG', x, y, mapWidth, mapHeight);
+          // place legend
+          if (legend = legendObjs[type]) {
+            drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+          }
+          updateY(mapHeight + lineHeight * 2);
         }
-        this.updateY(mapHeight + lineHeight * 2);
-      }
-    } else {
-      this.addText(1, this.titleText(type), x, y, font.header2_font);
-      this.addImage(imageSrc[type + 1], 'JPEG', x, y, mapWidth, mapHeight);
-      // place legend
-      if (legend = this.legendObjs[type]) {
-        this.drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
-      }
-      this.updateY(mapHeight + lineHeight * 2);
-    }
-  };
+        break;
+
+      // if type is other category
+      default:
+        // place text and image
+        addText(1, titleText(type), x, y, font.header2_font);
+        addImage(imageSrc[type], 'JPEG', x, y, mapWidth, mapHeight);
+        // place legend
+        if (legend = legendObjs[type]) {
+          drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+        }
+        updateY(mapHeight + lineHeight * 2);
+        break;
+    } // END switch
+
+  } // end placeMapType
 
   /**
   * Loop through each year and get according image src
   *
   * String text, Number uptoYear
   */
-  this.saveScreenshotMapType = function(type) {
-    // loop through all available year
-    // for (var i = 0; i < uptoYear; i++) {
-    //   transitionToYear(i + 1);
-    //   displayLevels(type);
-    //   renderer.render(scene, camera);
-    //   imageSrc[type + (i + 1)] = renderer.domElement.toDataURL('image/jpeg');
-    // } // end for
+  function saveScreenshotMapType(type) {
 
-    if (type == 'nitrate' || type == 'erosion' || type == 'phosphorus') {
-      if (toPrint.year1 === true) {
-        transitionToYear(1);
-        displayLevels(type);
+    // if type is year category
+    switch (type) {
+      case 'year1':
+      case 'year2':
+      case 'year3':
+        transitionToYear(type.substr(type.length - 1));
+        // if (toPrint.yearUserViewpoint === true ) {
+        //   console.log("restore last state");
+        //
+        //   // TODO: camera set to last user session
+        //   controls.restoreLastState();
+        // //   renderer.render(scene, camera);
+        // //   imageSrc[type] = renderer.domElement.toDataURL('image/jpeg');
+        // //
+        // } else {
+        //   console.log("reset camera position");
+        //   // reset camera position
+        //   controls.value = 100; // reset 10 times
+        //   controls.reset();
+        //   setTimeout(function() {
+        //     controls.value = 1; // reset to 1
+        //   }, 100);
+        // }
+        // render the according webgl
         renderer.render(scene, camera);
-        imageSrc[type + 1] = renderer.domElement.toDataURL('image/jpeg');
-      }
-      if (toPrint.year2 === true) {
-        transitionToYear(2);
-        displayLevels(type);
-        renderer.render(scene, camera);
-        imageSrc[type + 2] = renderer.domElement.toDataURL('image/jpeg');
-      }
-      if (toPrint.year3 === true) {
-        transitionToYear(3);
-        displayLevels(type);
-        renderer.render(scene, camera);
-        imageSrc[type + 3] = renderer.domElement.toDataURL('image/jpeg');
-      }
-    } else {
-      displayLevels(type);
-      renderer.render(scene, camera);
-      imageSrc[type + 1] = renderer.domElement.toDataURL('image/jpeg');
-    }
+        // get the screenshot image in data string form
+        imageSrc[type] = renderer.domElement.toDataURL('image/jpeg');
+        break;
 
-  }; // end saveScreenshotMapType
+      // if type is level category
+      case 'nitrate':
+      case 'erosion':
+      case 'phosphorus':
+        if (toPrint.year1 === true) {
+          transitionToYear(1);
+          displayLevels(type);
+          // if (toPrint.levelUserViewpoint === true ) {
+          //   // TODO: camera set to last user session
+          // } else {
+          //   // reset camera position
+          //   controls.value = 10;
+          //   controls.reset();
+          //   setTimeout(function() {
+          //     controls.value = 1;
+          //   }, 100);
+          // }
+          renderer.render(scene, camera);
+          imageSrc[type + 1] = renderer.domElement.toDataURL('image/jpeg');
+        }
+        if (toPrint.year2 === true) {
+          transitionToYear(2);
+          displayLevels(type);
+          // if (toPrint.levelUserViewpoint === true ) {
+          //   // TODO: camera set to last user session
+          // } else {
+          //   // reset camera position
+          //   controls.value = 10;
+          //   controls.reset();
+          //   setTimeout(function() {
+          //     controls.value = 1;
+          //   }, 100);
+          // }
+          renderer.render(scene, camera);
+          imageSrc[type + 2] = renderer.domElement.toDataURL('image/jpeg');
+        }
+        if (toPrint.year3 === true) {
+          transitionToYear(3);
+          displayLevels(type);
+          // if (toPrint.levelUserViewpoint === true ) {
+          //   // TODO: camera set to last user session
+          // } else {
+          //   // reset camera position
+          //   controls.value = 10;
+          //   controls.reset();
+          //   setTimeout(function() {
+          //     controls.value = 1;
+          //   }, 100);
+          // }
+          renderer.render(scene, camera);
+          imageSrc[type + 3] = renderer.domElement.toDataURL('image/jpeg');
+        }
+        break;
+
+      // if type is other category
+      default:
+        displayLevels(type);
+        // // reset camera position
+        // controls.value = 10;
+        // controls.reset();
+        // setTimeout(function() {
+        //   controls.value = 1;
+        // }, 100);
+        renderer.render(scene, camera);
+        imageSrc[type] = renderer.domElement.toDataURL('image/jpeg');
+        break;
+    } // END switch
+
+  } // end saveScreenshotMapType
 
   /**
   * Just convert the type to the proper title
   *
   * String text
   */
-  this.titleText = function(text) {
+  function titleText(text) {
     switch (text) {
       // levels
       case 'nitrate': return 'Nitrate';
@@ -3620,26 +3522,26 @@ function Printer2() {
       case 'phosphorus': return 'Phosphorus';
       // features
       case 'flood': return 'Flood Frequency';
-      case 'wetland': return 'Strategic Wetlands';
-      case 'subwatershed': return 'Subwatershed Boundaries';
+      case 'wetlands': return 'Strategic Wetlands';
+      case 'boundary': return 'Subwatershed Boundaries';
       case 'drainage': return 'Drainage Class';
       case 'soil': return 'Soil Class';
       // yields
-      case 'cornGrain': return 'Corn Grain';
-      case 'soyBean': return 'Soybean';
+      case 'corn': return 'Corn Grain';
+      case 'soybean': return 'Soybean';
       case 'fruit': return 'Mixed Fruits and Vegetables';
       case 'cattle': return 'Cattle';
       case 'alfalfa': return 'Alfalfa';
-      case 'grassHay': return 'GrassHay';
-      case 'switchGrass': return 'Switch Grass';
+      case 'grasshay': return 'GrassHay';
+      case 'switchgrass': return 'Switch Grass';
       case 'wood': return 'Wood';
       case 'short': return 'Woody Biomass';
-      default: return 'error type for title';
+      default: return 'error type for title:'+text;
     } // switch
-  }; // end titleText
+  } // end titleText
 
   /**
-  * Update x coordinates by value
+  * Update x coordinates by value, not used so far
   *
   * Number value
   */
@@ -3650,16 +3552,16 @@ function Printer2() {
   *
   * Number value
   */
-  this.updateY = function(value) {
+  function updateY(value) {
     if (y + value > pageHeight - pageMargin) {
-      this.doc.addPage();
+      doc.addPage();
       y = pageMargin;
     } else {
       y += value;
     }
-  }; // end updateY
+  } // end updateY
 
-} // end Printer2()
+} // end Printer()
 
 //######################################################################################
 //######################################################################################

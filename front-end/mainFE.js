@@ -46,7 +46,8 @@ var zoomingOutNow = false;
 
 var rain = null;
 // global variable for print function
-takeScreenshot = false;
+var takeScreenshot = false;
+var jspdfprinter;
 
 //===================
 
@@ -391,8 +392,6 @@ function loadingManager() {
 
 //initWorkspace initializes a sandbox game in the threeFramework
 function initWorkspace(file) {
-  jspdfprinter = new Printer2();
-
   //hide the startup page and show the loading animation
   document.getElementById('startupSequence').style.display = "none";
   // document.getElementById('loading').style.visibility = "visible";
