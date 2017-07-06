@@ -62,23 +62,34 @@ var painterTool = {
   endTile: 0,
   hover: false
 };
+// simulation variables
+var cur;
+var exitTimer;
+var elapsedTime;
 var myTimer = null;
 var mainTimer = [];
-var exitTimer;
+var paused = false;
+var pauseDuration = 0;
+var randomizing = false;
+var simBoard;
 var sliderTimer;
 var timeStopped;
 var timeResumed;
-var pauseDuration = 0;
-var elapsedTime;
-var cur;
-var paused = false;
-var randomizing = false;
-var simBoard;
-var playerCombo = [];
-var totalPlayers = 0;
+
+// for multiplayer mode
 var merging = false;
+var playerCombo = [];
 var resetting = false;
+var totalPlayers = 0;
+// customize hotkeys
 var hotkeyArr = [[69,null],[82,null],[84,null],[85,null],[66,null],[86,null],[68,null],[65,null],[87,null],[83,null],[79,null],[81,null]];
+
+// object to store user actions ( print function )
+var session = {
+  changeSelectedPaintTo: 1, // deafault choose conventional corn/player 1
+  switchConsoleTab: 1, //default land use map
+  switchYearTab: 1 // default year 1
+};
 
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
@@ -1029,13 +1040,7 @@ function onDocumentKeyDown(event) {
 
       // hit P to see pdf output
     case 80:
-      // takeScreenshot = true; // triggers if statement in animationFrames() in mainFE.js
-      // alert("Creating PDF...");
-      // setTimeout(function() {
-      //   // wait for preprocessing
-      //   jspdfprinter.processing();
-      // },100);
-      startprintOptions();
+      startPrintOptions();
       break;
   } //end switch
 } //end onDocumentKeyDown
@@ -1110,7 +1115,7 @@ function changeSelectedPaintTo(newPaintValue) {
     painterElementId = "paint" + newPaintValue;
     document.getElementById(painterElementId).className = "landSelectorIcon iconSelected";
     painter = newPaintValue;
-    //Index chat box entries for each landuse type
+    //Index chat box entries for each landuse type XXX should use switch instead
     if(painterElementId == 'paint1'){
       updateIndexPopup('To learn more about Conventional Corn, go to the Index and select "Land Use".');
     }
@@ -1167,6 +1172,11 @@ function changeSelectedPaintTo(newPaintValue) {
 
     //have land type update immediately, well, pretend the mouse moved...
     highlightTile(-1);
+
+    // store last users action ( print function )
+    if (!modalUp) {
+      storeCurrentCameraSession(0, newPaintValue);
+    } // END if
   }
   else {
 
@@ -1382,13 +1392,13 @@ function showLevelDetails(value) {
   //show strategic wetlands legend
   else if (value == 6) {
     document.getElementById('strategicWetlands').className = "featureSelectorIcon iconSelected";
-    document.getElementById("wetlandClassDetailsList").className = "DetailsList physicalDetailsList";
+    document.getElementById("wetlandsDetailsList").className = "DetailsList physicalDetailsList";
   }
 
   //show subwatershed legend
   else if (value == 7) {
     document.getElementById('subwatershedBoundaries').className = "featureSelectorIcon iconSelected";
-    document.getElementById("subwatershedClassDetailsList").className = "DetailsList physicalDetailsList";
+    document.getElementById("boundaryDetailsList").className = "DetailsList physicalDetailsList";
   } //end else/if group
 
     else if (value == 8) {
@@ -1399,14 +1409,14 @@ function showLevelDetails(value) {
   //show Corn class legend
   else if (value == 9) {
     document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('cornDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('Conventional Corn and Conservation Corn produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
   }
 
   //show soy class legend
   else if (value == 10) {
     document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('soybeanDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('Conventional Soy and Conservation Soy produce the same output based on soil type. To learn more, go to the Index, select "Modules", and then "Yield".');
   }
 
@@ -1434,14 +1444,14 @@ function showLevelDetails(value) {
   //show grasshay class legend
   else if (value == 14) {
     document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('grasshayDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('To learn more about Grass Hay Yield, go to the Index, select "Modules", and then "Yield".');
   }
 
   //show switch grass class legend
   else if (value == 15) {
     document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
+    document.getElementById('switchgrassDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('To learn more about Switch Grass Yield, go to the Index, select "Modules", and then "Yield".');
   }
 
@@ -1582,13 +1592,6 @@ function switchConsoleTab(value) {
     document.getElementById('featuresImg').className = "imgSelected";
     document.getElementById('featuresTab').style.display = "block";
     updateIndexPopup('This is the Physical Features Tab, where you will find information on topography, soil properties, subwatershed boundaries, and strategic wetland areas.');
-  } else if (value == 5) {
-    inDispLevels = false;
-    if (curTracking) {
-      pushClick(0, getStamp(), 9, 0, null);
-    }
-    document.getElementById('settingsImg').className = "imgSelected";
-    document.getElementById('settingsTab').style.display = "block";
   } else if (value == 6) {
     inDispLevels = false;
     if (curTracking) {
@@ -1604,27 +1607,37 @@ function switchConsoleTab(value) {
       pushClick(0, getStamp(), 68, 0, null);
     }
     document.getElementById('yieldImg').className = "imgSelected";
-    document.getElementById('yieldTab').style.display = "block"
+    document.getElementById('yieldTab').style.display = "block";
     updateIndexPopup('The Yield Tab allows you to see different yield base rates based on soil type for different landuse types.');
   }
-
 
   //check if the map needs the levels legend displayed
   if (mapIsHighlighted) {
     displayLevels();
   }
+
+  // store last users action ( print function )
+  if (!modalUp) {
+    storeCurrentCameraSession(2, value);
+  } // END if
 } //end switchConsoleTab
 
 //switchYearTab changes the highlighted year
 function switchYearTab(yearNumberToChangeTo) {
-
   //get the currently selected year and make it not selected
   var elements = document.getElementsByClassName("icon yearSelected");
-  elements[0].className = "icon yearNotSelected";
+  if (elements !== null ) {
+    elements[0].className = "icon yearNotSelected";
+  }
 
   //then toggle on the selected year
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
   document.getElementById(yearIdString).className = "icon yearSelected";
+
+  // store last users action ( print function )
+  if (!modalUp) {
+    storeCurrentCameraSession(3, yearNumberToChangeTo);
+  } // END if
 } //end switchYearTab
 
 //here we draw the correct tile colors onto the board material mesh
@@ -1705,7 +1718,7 @@ function displayLevels(overlayHighlightType) {
         pushClick(0,getStamp(),48,0,null);
       }
       break;
-    case 'wetland':
+    case 'wetlands':
       selectionHighlightNumber = 6;
       updateIndexPopup('This map shows the locations for each strategic wetland. To learn more, go to the Index and select "Physical Features".');
       if (curTracking)
@@ -1713,7 +1726,7 @@ function displayLevels(overlayHighlightType) {
         pushClick(0,getStamp(),46,0,null);
       }
       break;
-    case 'subwatershed':
+    case 'boundary':
       selectionHighlightNumber = 7;
       updateIndexPopup('This map shows the boundaries of each subwatershed. To learn more, go to the Index and select "Physical Features".');
       if (curTracking)
@@ -1729,13 +1742,13 @@ function displayLevels(overlayHighlightType) {
         pushClick(0,getStamp(),49,0,null);
       }
       break;
-    case 'cornGrain':
+    case 'corn':
       selectionHighlightNumber = 9;
       if (curTracking) {
         pushClick(0, getStamp(), 69, 0, null);
       }
       break;
-    case 'soyBean':
+    case 'soybean':
       selectionHighlightNumber = 10;
       if (curTracking) {
         pushClick(0, getStamp(), 70, 0, null);
@@ -1759,13 +1772,13 @@ function displayLevels(overlayHighlightType) {
         pushClick(0, getStamp(), 73, 0, null);
       }
       break;
-    case 'grassHay':
+    case 'grasshay':
       selectionHighlightNumber = 14;
       if (curTracking) {
         pushClick(0, getStamp(), 74, 0, null);
       }
       break;
-    case 'switchGrass':
+    case 'switchgrass':
       selectionHighlightNumber = 15;
       if (curTracking) {
         pushClick(0, getStamp(), 75, 0, null);
@@ -1869,6 +1882,11 @@ function displayLevels(overlayHighlightType) {
       drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
     } //end else/if group
   } //end else/if mapIsHighlighted
+
+  // store last users action ( print function )
+  if (!modalUp) {
+    storeCurrentCameraSession(1, overlayHighlightType);
+  } // END if
 } //end displayLevels()
 
 //toggleOverlay allows the user to quickly switch between an overlay map and the land type mode
@@ -1929,7 +1947,7 @@ function getHighlightColor(highlightType, tileId) {
     } //end switch
   }
   //wetland highlight color indicies
-  else if (highlightType == "wetland") {
+  else if (highlightType == "wetlands") {
 
     if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
       return 26;
@@ -1939,7 +1957,7 @@ function getHighlightColor(highlightType, tileId) {
   }
   // loader
   //subwatershed highlight color indicies
-  else if (highlightType == "subwatershed") {
+  else if (highlightType == "boundary") {
 
     var watershed = Number(boardData[currentBoard].map[tileId].subwatershed);
     return watershed + 9;
@@ -2014,276 +2032,159 @@ function getHighlightColor(highlightType, tileId) {
         //color 87ceee
         return 18;
     }
-  } else if (highlightType == "cornGrain") {
+  } else if (highlightType == "corn") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A":
-        return 35;
-      case "B":
-        return 5;
-      case "C":
-        return 0;
-      case "D":
-        return 22;
-      case "G":
-        return 5;
-      case "K":
-        return 22;
-      case "L":
-        return 0;
-      case "M":
-        return 35;
-      case "N":
-        return 35;
-      case "O":
-        return 22;
-      case "Q":
-        return 35;
-      case "T":
-        return 35;
-      case "Y":
-        return 22;
+      case "A": return 35;
+      case "B": return 5;
+      case "C": return 0;
+      case "D": return 22;
+      case "G": return 5;
+      case "K": return 22;
+      case "L": return 0;
+      case "M": return 35;
+      case "N": return 35;
+      case "O": return 22;
+      case "Q": return 35;
+      case "T": return 35;
+      case "Y": return 22;
     }
-  } else if (highlightType == "soyBean") {
+  } else if (highlightType == "soybean") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A":
-        return 46;
-      case "B":
-        return 43;
-      case "C":
-        return 45;
-      case "D":
-        return 45;
-      case "G":
-        return 43;
-      case "K":
-        return 45;
-      case "L":
-        return 45;
-      case "M":
-        return 46;
-      case "N":
-        return 46;
-      case "O":
-        return 44;
-      case "Q":
-        return 46;
-      case "T":
-        return 46;
-      case "Y":
-        return 45;
+      case "A": return 46;
+      case "B": return 43;
+      case "C": return 45;
+      case "D": return 45;
+      case "G": return 43;
+      case "K": return 45;
+      case "L": return 45;
+      case "M": return 46;
+      case "N": return 46;
+      case "O": return 44;
+      case "Q": return 46;
+      case "T": return 46;
+      case "Y": return 45;
     }
 
   } else if (highlightType == "alfalfa") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A":
-        return 42;
-      case "B":
-        return 13;
-      case "C":
-        return 25;
-      case "D":
-        return 42;
-      case "G":
-        return 13;
-      case "K":
-        return 13;
-      case "L":
-        return 25;
-      case "M":
-        return 17;
-      case "N":
-        return 42;
-      case "O":
-        return 13;
-      case "Q":
-        return 17;
-      case "T":
-        return 17;
-      case "Y":
-        return 42;
+      case "A": return 42;
+      case "B": return 13;
+      case "C": return 25;
+      case "D": return 42;
+      case "G": return 13;
+      case "K": return 13;
+      case "L": return 25;
+      case "M": return 17;
+      case "N": return 42;
+      case "O": return 13;
+      case "Q": return 17;
+      case "T": return 17;
+      case "Y": return 42;
     }
-  } else if (highlightType == "grassHay") {
+  } else if (highlightType == "grasshay") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A":
-        return 46;
-      case "B":
-        return 47;
-      case "C":
-        return 45;
-      case "D":
-        return 46;
-      case "G":
-        return 47;
-      case "K":
-        return 47;
-      case "L":
-        return 45;
-      case "M":
-        return 29;
-      case "N":
-        return 46;
-      case "O":
-        return 47;
-      case "Q":
-        return 29;
-      case "T":
-        return 29;
-      case "Y":
-        return 46;
+      case "A": return 46;
+      case "B": return 47;
+      case "C": return 45;
+      case "D": return 46;
+      case "G": return 47;
+      case "K": return 47;
+      case "L": return 45;
+      case "M": return 29;
+      case "N": return 46;
+      case "O": return 47;
+      case "Q": return 29;
+      case "T": return 29;
+      case "Y": return 46;
     }
-  } else if (highlightType == "switchGrass") {
+  } else if (highlightType == "switchgrass") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A":
-        return 49;
-      case "B":
-        return 45;
-      case "C":
-        return 49;
-      case "D":
-        return 45;
-      case "G":
-        return 45;
-      case "K":
-        return 45;
-      case "L":
-        return 49;
-      case "M":
-        return 49;
-      case "N":
-        return 51;
-      case "O":
-        return 45;
-      case "Q":
-        return 51;
-      case "T":
-        return 51;
-      case "Y":
-        return 50;
+      case "A": return 49;
+      case "B": return 45;
+      case "C": return 49;
+      case "D": return 45;
+      case "G": return 45;
+      case "K": return 45;
+      case "L": return 49;
+      case "M": return 49;
+      case "N": return 51;
+      case "O": return 45;
+      case "Q": return 51;
+      case "T": return 51;
+      case "Y": return 50;
     }
   } else if (highlightType == "wood") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A":
-        return 55;
-      case "B":
-        return 53;
-      case "C":
-        return 52;
-      case "D":
-        return 55;
-      case "G":
-        return 55;
-      case "K":
-        return 53;
-      case "L":
-        return 52;
-      case "M":
-        return 55;
-      case "N":
-        return 54;
-      case "O":
-        return 52;
-      case "Q":
-        return 55;
-      case "T":
-        return 54;
-      case "Y":
-        return 55;
+      case "A": return 55;
+      case "B": return 53;
+      case "C": return 52;
+      case "D": return 55;
+      case "G": return 55;
+      case "K": return 53;
+      case "L": return 52;
+      case "M": return 55;
+      case "N": return 54;
+      case "O": return 52;
+      case "Q": return 55;
+      case "T": return 54;
+      case "Y": return 55;
     }
   } else if (highlightType == "fruit") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A":
-        return 0;
-      case "B":
-        return 25;
-      case "C":
-        return 56;
-      case "D":
-        return 45;
-      case "G":
-        return 0;
-      case "K":
-        return 45;
-      case "L":
-        return 56;
-      case "M":
-        return 56;
-      case "N":
-        return 0;
-      case "O":
-        return 56;
-      case "Q":
-        return 56;
-      case "T":
-        return 56;
-      case "Y":
-        return 45;
+      case "A": return 0;
+      case "B": return 25;
+      case "C": return 56;
+      case "D": return 45;
+      case "G": return 0;
+      case "K": return 45;
+      case "L": return 56;
+      case "M": return 56;
+      case "N": return 0;
+      case "O": return 56;
+      case "Q": return 56;
+      case "T": return 56;
+      case "Y": return 45;
     }
   } else if (highlightType == "cattle") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A":
-        return 57;
-      case "B":
-        return 43;
-      case "C":
-        return 58;
-      case "D":
-        return 33;
-      case "G":
-        return 43;
-      case "K":
-        return 58;
-      case "L":
-        return 58;
-      case "M":
-        return 57;
-      case "N":
-        return 57;
-      case "O":
-        return 43;
-      case "Q":
-        return 57;
-      case "T":
-        return 57;
-      case "Y":
-        return 57;
+      case "A": return 57;
+      case "B": return 43;
+      case "C": return 58;
+      case "D": return 33;
+      case "G": return 43;
+      case "K": return 58;
+      case "L": return 58;
+      case "M": return 57;
+      case "N": return 57;
+      case "O": return 43;
+      case "Q": return 57;
+      case "T": return 57;
+      case "Y": return 57;
     }
   } else if (highlightType == "short") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A":
-        return 55;
-      case "B":
-        return 55;
-      case "C":
-        return 55;
-      case "D":
-        return 55;
-      case "G":
-        return 55;
-      case "K":
-        return 55;
-      case "L":
-        return 55;
-      case "M":
-        return 55;
-      case "N":
-        return 55;
-      case "O":
-        return 55;
-      case "Q":
-        return 55;
-      case "T":
-        return 55;
-      case "Y":
-        return 55;
+      case "A": return 55;
+      case "B": return 55;
+      case "C": return 55;
+      case "D": return 55;
+      case "G": return 55;
+      case "K": return 55;
+      case "L": return 55;
+      case "M": return 55;
+      case "N": return 55;
+      case "O": return 55;
+      case "Q": return 55;
+      case "T": return 55;
+      case "Y": return 55;
     }
   }
 
@@ -2316,64 +2217,34 @@ function getHighlightedInfo(tileId) {
         //create string for flood frequency levels
       case 4:
         switch (Number(boardData[currentBoard].map[tileId].floodFrequency)) {
-          case 0:
-            highlightString = "None" + "<br>";
-            break;
-          case 10:
-            highlightString = "None" + "<br>";
-            break;
-          case 20:
-            highlightString = "Rare" + "<br>";
-            break;
-          case 30:
-            highlightString = "Occasionally" + "<br>";
-            break;
-          case 40:
-            highlightString = "Frequently" + "<br>";
-            break;
-          case 50:
-            highlightString = "Ponded" + "<br>";
-            break;
+          case 0: highlightString = "None" + "<br>"; break;
+          case 10: highlightString = "None" + "<br>"; break;
+          case 20: highlightString = "Rare" + "<br>"; break;
+          case 30: highlightString = "Occasionally" + "<br>"; break;
+          case 40: highlightString = "Frequently" + "<br>"; break;
+          case 50: highlightString = "Ponded" + "<br>"; break;
         }
         break;
         //create string for drainage classification
       case 5:
         var drainage = Number(boardData[currentBoard].map[tileId].drainageClass);
         switch (drainage) {
-          case 70:
-            highlightString = "Very Poor" + "<br>";
-            break;
-          case 60:
-            highlightString = "Poor" + "<br>";
-            break;
-          case 50:
-            highlightString = "Somewhat Poor" + "<br>";
-            break;
-          case 45:
-            highlightString = "Somewhat Poor" + "<br>";
-            break;
-          case 40:
-            highlightString = "Moderate / Well" + "<br>";
-            break;
-          case 30:
-            highlightString = "Moderate / Well" + "<br>";
-            break;
-          case 10:
-            highlightString = "Excessive" + "<br>";
-            break;
-          case 0:
-            highlightString = "Excessive" + "<br>";
-            break;
+          case 70: highlightString = "Very Poor" + "<br>"; break;
+          case 60: highlightString = "Poor" + "<br>"; break;
+          case 50: highlightString = "Somewhat Poor" + "<br>"; break;
+          case 45: highlightString = "Somewhat Poor" + "<br>"; break;
+          case 40: highlightString = "Moderate / Well" + "<br>"; break;
+          case 30: highlightString = "Moderate / Well" + "<br>"; break;
+          case 10: highlightString = "Excessive" + "<br>"; break;
+          case 0: highlightString = "Excessive" + "<br>"; break;
         } //end switch
         break;
         //create string for strategic wetlands
       case 6:
-        if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
+        if (boardData[currentBoard].map[tileId].strategicWetland == 1)
           highlightString = "Strategic Wetland" + "<br>";
-        }
-        else{
+        else
           highlightString = "Non-Strategic Wetland" + "<br>";
-        }
         break;
         //create string for subwatershed number
       case 7:
@@ -2460,10 +2331,9 @@ function getHighlightedInfo(tileId) {
     case 17:
       highlightString = "608.6 tons/acre/yr" + "<br>";
       break;
-    }
+    } // END switch
     return highlightString;
-  }
-
+  } // END if/else
 
 } //end getHighlightedInfo
 
@@ -2659,27 +2529,13 @@ function objectiveCheck() {
 function selectAnimation(animation) {
 
   switch (animation) {
-    case "bird":
-      flyLark();
-      break;
-    case "fireworks":
-      launchFireworks();
-      break;
-    case "flock":
-      createFlock();
-      break;
-    case "brownRiver":
-      contaminatedRiver("brown");
-      break;
-    case "blueRiver":
-      contaminatedRiver("blue");
-      break;
-    case "greenRiver":
-      contaminatedRiver("green");
-      break;
-    case "rain":
-      rainOnPewi();
-      break;
+    case "bird": flyLark(); break;
+    case "fireworks": launchFireworks(); break;
+    case "flock": createFlock(); break;
+    case "brownRiver": contaminatedRiver("brown"); break;
+    case "blueRiver": contaminatedRiver("blue"); break;
+    case "greenRiver": contaminatedRiver("green"); break;
+    case "rain": rainOnPewi(); break;
   } //end switch
 } //end selectAnimation
 
@@ -3625,39 +3481,40 @@ function resetOptions() {
   window.frames[4].document.removeEventListener('keyup', optionsEsc);
 } //end resetOptions
 
-function closePrintOptions() {
+// triggers PDF generating process according to chosen print options
+// And either render it in the preview or prompt download dialogue
+function executePrintOptions(isDownload) {
+  // initialize jspdfprinter as a global object
+  jspdfprinter = new Printer();
 
-  //close frame
-  modalUp = false;
-  document.getElementById('printOptions').style.visibility = "hidden";
-  //make sure the frame is no longer accepting input such as keyboard or mouse events
-  document.activeElement.blur();
-
+  // process chosen print options
   var strRawContents = document.getElementById('print-option-parameters').innerHTML;
-
   //split based on escape chars
   while (strRawContents.indexOf("\r") >= 0) {
     strRawContents = strRawContents.replace("\r", "");
   }
-  console.log(strRawContents);
   var arrLines = strRawContents.split("\n");
-  // global array to record the print options
+  // global array that record the print options
   toPrint = {
     // map
+    yearUserViewpoint: false,
     year1: false,
     year2: false,
     year3: false,
     // levels
+    levelUserViewpoint: false,
     nitrate: false,
     erosion: false,
     phosphorus: false,
     // features
+    featureUserViewpoint: false,
     flood: false,
     wetlands: false,
     boundary: false,
     drainage: false,
     soil: false,
     // yields
+    yieldUserViewpoint: false,
     corn: false,
     soybean: false,
     fruit: false,
@@ -3668,40 +3525,106 @@ function closePrintOptions() {
     wood: false,
     short: false
   };
-  for (var i = 0; i < arrLines.length; i++) {
+
+  // set chosen ones to true
+  for (var i = 0; i < arrLines.length-1; i++) {
     toPrint[arrLines[i].substr(0, arrLines[i].indexOf("-"))] = true;
   }
 
-  takeScreenshot = true; // triggers if statement in animationFrames() in mainFE.js
-  alert("Creating PDF...");
+  // trigger preprocessing
+  takeScreenshot = true; // triggers the if statement in animationFrames() in mainFE.js
+  alert("Creating PDF... \n(click to continue)");
   setTimeout(function() {
     // wait for preprocessing
-    jspdfprinter.processing();
+    jspdfprinter.processing(isDownload);
+    jspdfprinter = {}; // clean object
   },100);
 
-  //setup page according to the parameters
-  // toggleVisibility();
+} //end executePrintOptions
+
+// close printOptions frame
+function closePrintOptions() {
+  //scroll page to top, so that next time options is loaded it starts there
+  window.frames[6].scrollTo(0, 0);
+
+  //close frame
+  document.getElementById('printOptions').style.visibility = "hidden";
+  // restore previous user state
+  restoreCurrentCameraSession();
+  modalUp = false;
+  //make sure the frame is no longer accepting input such as keyboard or mouse events
+  document.activeElement.blur();
   // remove Esc key event listener
-  // document.removeEventListener('keyup', optionsEsc);
+  document.removeEventListener('keyup', printOptionsEsc);
 
-} //end resetPrintOptions
+} // end closePrintOptions
 
+//
+function storeCurrentCameraSession(actionCode, value) {
 
+  // store the last map the user viewed
+  switch (actionCode) {
+    case 0:
+      // save the LandUseType or player
+      session.changeSelectedPaintTo = value;
+      break;
+    case 1:
+      // save the specific level, feature or yield
+      session.displayLevels = value;
+      break;
+    case 2:
+      // save last consle tab
+      session.switchConsoleTab = value;
+      break;
+    case 3:
+      // save the exact year
+      session.switchYearTab = value;
+      break;
+    default:
+      // store the last camera degree, view, zoom
+      controls.storeCurrentState();
+      break;
+  }
+  // console.log(session);
+} // end storeCurrentCameraSession
 
-//startOptions displays the printOptions page
-function startprintOptions() {
+// switch to the setting last stored in session object
+function restoreCurrentCameraSession() {
+  // restore the last camera degree, view
+  controls.restoreLastState();
+
+  // switch to the last year, tab or level
+  switchConsoleTab(6);// switch to year tab
+  switchYearTab(session.switchYearTab); // swithch to the exact year
+  // swithch last consle tab
+  switchConsoleTab(session.switchConsoleTab);
+  // choose the LandUseType or player
+  if (typeof session.changeSelectedPaintTo !== 'undefined' )
+    changeSelectedPaintTo(session.changeSelectedPaintTo);
+  // displays specific level, feature or yield
+  if (typeof session.displayLevels !== 'undefined' )
+    displayLevels(session.displayLevels);
+
+} // end restoreCurrentCameraSession
+
+// startPrintOptions displays the printOptions page
+function startPrintOptions() {
+
   //if nothing else has precedence
   if (!modalUp) {
+    // save the last state that user have
+    storeCurrentCameraSession();
     modalUp = true;
     document.getElementById('printOptions').style.visibility = "visible";
-    // //setup options page with the current parameter selection
-    // document.getElementById('printOptions').contentWindow.getCurrentOptionsState();
-    // // add Esc key event listener
-    // document.addEventListener('keyup', optionsEsc);
+    // add Esc key event listener
+    document.addEventListener('keyup', printOptionsEsc);
+    // pass the current uplimit year
+    var uptoYear = boardData[currentBoard].calculatedToYear;
+    window.frames[6].initPrintOptions(uptoYear);
   }
-} // end startprintOptions
+} // end startPrintOptions
 
-//startOptions displays the options page
+// startOptions displays the options page
 function startOptions() {
   //if nothing else has precedence
   if (!modalUp) {
@@ -3723,6 +3646,13 @@ function optionsEsc(e) {
   }
 }
 
+// Execute when Esc key is pressed while on the printOptions page
+function printOptionsEsc(e) {
+  if (e.keyCode == 27) {
+    // turn off printOptions page
+    closePrintOptions();
+  }
+}
 //Returns the hotkey array
 function giveHotkeys() {
   return hotkeyArr;
