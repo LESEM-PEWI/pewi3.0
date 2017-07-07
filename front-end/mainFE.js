@@ -3,7 +3,7 @@
 //global vars
 
 //webGL stuff
-var camera, scene, raycaster, mouse, hoveredOver, bgCam, camera2, camera1, ToggleCam;
+var camera, scene, raycaster, mouse, hoveredOver, bgCam, camera2, camera1, ToggleCam, cam2x, cam2y, cam2z;
 var player = { speed:5, turnSpeed:Math.PI*0.02 };
 var keyboard ={};
 var bgScene = null;
@@ -101,9 +101,9 @@ function initializeCamera() {
     camera2 = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
     scene.add(camera2);
     //Second camera view
-    camera2.position.x = -90;
+    camera2.position.x = 70;
     camera2.position.y = 25;
-    camera2.position.z = 10;
+    camera2.position.z = 244;
     camera2.rotation.y = 0;
 
     //set camera field of view for zoom functions
@@ -127,6 +127,14 @@ function initializeCamera() {
     animate(); 
 } //end initializeCamera
 
+      
+function RestorePosition(){
+    console.log(cam2x);
+    camera2.position.x = cam2x;
+    camera2.position.y = cam2y;
+    camera2.position.z = cam2z;
+}
+
 //Event function that is called when screen is changed
 function CamView(e) {
   if (e.keyCode == 81) {
@@ -139,20 +147,23 @@ function toggleCameraView(){
     if (ToggleCam == 1){changeCam2();}
     else{ChangeCam();}
 }
-
-//Changing Camera views
+//Changs camera from birds-eye view to first person view
 function ChangeCam (){
    //Switching to second camera view
    camera = camera2;
    //Changing flag variable
     ToggleCam = 1;
     //Reseting camera twos position
-//    camera2.position.x = -90;
-//    camera2.position.y = 30;
-//    camera2.position.z = 10;
-//    camera2.rotation.y = 0;
+    if(cam2x)
+    RestorePosition();
 }
+
+//Changs camera from first person  view to birds-eye view
 function changeCam2(){
+    //saving camera2 old position
+    cam2x = camera2.position.x;
+    cam2y = camera2.position.y;
+    cam2z = camera2.position.z;
     //Changes Camera to second camera view
     camera = camera1;
     //Flag variable for changing camera views
@@ -175,18 +186,18 @@ function animate(){
 	// Keyboard movement inputs
     if(keyboard[87]){ // W key
         //Movements Restrictions and setting bounds
-         if(camera2.position.x-Math.sin(camera2.rotation.y) * player.speed >= 265)
-            camera2.position.x=264;
-        if(camera2.position.x-Math.sin(camera2.rotation.y) * player.speed  <= -265)
-            camera2.position.x=-264;
-        if(camera2.position.z-Math.cos(camera2.rotation.y) * player.speed >= 300)
-            camera2.position.z=299;
+         if(camera2.position.x - Math.sin(camera2.rotation.y) * player.speed >= 265)
+            camera2.position.x = 264;
+        if(camera2.position.x - Math.sin(camera2.rotation.y) * player.speed  <= -265)
+            camera2.position.x =-264;
+        if(camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)
+            camera2.position.z = 299;
         if(camera2.position.z-Math.cos(camera2.rotation.y) * player.speed  <= -300)
-            camera2.position.z=-299;
+            camera2.position.z =- 299;
         else
             camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
 		camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-        //console.log(camera2.position.x + " "+ camera2.position.z);
+        console.log(camera2.position);
     }
     
 	if(keyboard[83]){ // S key
@@ -203,7 +214,7 @@ function animate(){
         else
             camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
 		camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
-        //console.log(camera2.position.x + " "+ camera2.position.z);
+        console.log(camera2.position);
 	}
 	if(keyboard[65]){ // A key
         
@@ -219,7 +230,7 @@ function animate(){
         else
             camera2.position.z -= Math.cos(camera2.rotation.y + Math.PI/2) * player.speed;
 		camera2.position.x -= Math.sin(camera2.rotation.y + Math.PI/2) * player.speed;
-        //console.log(camera2.position.x + " "+ camera2.position.z);
+        console.log(camera2.position);
 	}
 	
     if(keyboard[68]){ // D key
@@ -236,7 +247,7 @@ function animate(){
         else
 		  camera2.position.z -= Math.cos(camera.rotation.y - Math.PI/2) * player.speed;
 		camera2.position.x -= Math.sin(camera.rotation.y - Math.PI/2) * player.speed;
-         //console.log(camera2.position.x + " "+ camera2.position.z);
+         console.log(camera2.position);
 	}
    
     // Keyboard turn inputs
@@ -249,9 +260,11 @@ function animate(){
 	
     if(keyboard[38]){ // Up arrow key
          camera2.position.y += 1;
+        console.log(camera2.position.y);
     }
     if(keyboard[40]){ // Down arrow key
          camera2.position.y -= 1;
+        console.log(camera2.position.y);
     }
 	renderer.render(scene, camera);
 }
