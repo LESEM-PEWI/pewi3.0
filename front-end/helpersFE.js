@@ -3556,7 +3556,7 @@ function closePrintOptions() {
   document.activeElement.blur();
   // remove Esc key event listener
   document.removeEventListener('keyup', printOptionsEsc);
-
+  window.frames[6].document.removeEventListener('keyup', printOptionsEsc);
 } // end closePrintOptions
 
 //
@@ -3618,6 +3618,7 @@ function startPrintOptions() {
     document.getElementById('printOptions').style.visibility = "visible";
     // add Esc key event listener
     document.addEventListener('keyup', printOptionsEsc);
+    window.frames[6].document.addEventListener('keyup', printOptionsEsc);
     // pass the current uplimit year
     var uptoYear = boardData[currentBoard].calculatedToYear;
     window.frames[6].initPrintOptions(uptoYear);
