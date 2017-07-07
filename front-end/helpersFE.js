@@ -2720,7 +2720,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
         string = string + boardData[currentBoard].map[i].id + "," +
         boardData[currentBoard].map[i].row + "," +
         boardData[currentBoard].map[i].column + "," +
-        "0" + ","; 
+        "0" + ",";
       } else {
       string = string + boardData[currentBoard].map[i].id + "," +
         boardData[currentBoard].map[i].row + "," +
@@ -2827,7 +2827,7 @@ files = e.target.files;
     {
       if(files[0].name.match(/\.json/))//. json is file format from pewi2.1
       {
-        //This piece of code converts files from pewi2.1 to fileformat of pewi 3.0 
+        //This piece of code converts files from pewi2.1 to fileformat of pewi 3.0
 
         var reader = new FileReader();
         reader.readAsText(files[0]);
@@ -2966,7 +2966,7 @@ files = e.target.files;
         //Code to check if data multiple years are present in the file
           var allText=reader.result;
 
-              
+
           //converting the csv into an array
             var allTextLines = allText.split(/\r\n|\n/);
             var headers = allTextLines[0].split(',');
@@ -2984,40 +2984,40 @@ files = e.target.files;
                   }
             }
             var multipleYearFlag=1;
-           
-          
+
+
           for(var i=0;i<lines.length;i++)//This for loop iterates through the uploaded csv data file and cheks if year 2 and 3 are present in the file
             {
 
 
               if((lines[i][26] != lines[i][27]))
-              { 
+              {
                 if(lines[i][26]!=1 && lines[i][26]!=0)
                   multipleYearFlag=2;
                 if(lines[i][27]!=1 && lines[i][27]!=0)
                   multipleYearFlag=3;
 
-                
+
                 break;
               }
-            
-              
+
+
 
             }
 
             if(multipleYearFlag==2)
             {
-              
+
               addingYearFromFile=true;
               addYearAndTransition();
-              
-            }                        
-            if(multipleYearFlag==3)              
+
+            }
+            if(multipleYearFlag==3)
             {
               addingYearFromFile=true;
               addYearAndTransition();
               addYearAndTransition();
-             
+
             }
             //updating the precip levels from the values in the uploaded file
             boardData[currentBoard].precipitation[0]=lines[1][28];
@@ -3031,7 +3031,7 @@ files = e.target.files;
             transitionToYear(1);//transition to year one
             switchYearTab(1);
 
-            
+
 
 
 
@@ -3600,7 +3600,7 @@ function resetOptions() {
   toggleVisibility();
   // remove Esc key event listener
   document.removeEventListener('keyup', optionsEsc);
-
+  window.frames[4].document.removeEventListener('keyup', optionsEsc);
 } //end resetOptions
 
 //startOptions displays the options page
@@ -3613,6 +3613,7 @@ function startOptions() {
     document.getElementById('options').contentWindow.getCurrentOptionsState();
     // add Esc key event listener
     document.addEventListener('keyup', optionsEsc);
+    window.frames[4].document.addEventListener('keyup', optionsEsc);
   }
 } // end startOptions
 
