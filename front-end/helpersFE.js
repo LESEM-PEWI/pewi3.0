@@ -909,6 +909,7 @@ function onDocumentKeyDown(event) {
       break;
       //case e - reset camera position
     case hotkeyArr[0][0]: case hotkeyArr[0][1]:
+    console.log(ToggleCam);
       //update scope across 10 turns,
       // it seeems that controls.js scope doesn't bring us all the way back
       // with just a controls value of 1
