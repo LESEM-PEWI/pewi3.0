@@ -80,6 +80,20 @@
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
+.fly{
+    /* background-image: url(./imgs/consoleTexture.png); */
+    position: absolute;
+    
+    height: vw;
+    left: vw;
+    width: 12.5vw
+    text-align: center;
+    font-family: var(--button-font-family);
+    font-size: var(--button-font-size);
+    color: #fff;
+    display: none;
+    
+}
 
 /* left console clickable buttons */
 .consoleButton {

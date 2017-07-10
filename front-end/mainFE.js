@@ -152,6 +152,8 @@ function toggleCameraView(){
     //Checking the flag variable to know which camera is functional.
     if (ToggleCam == 1){changeCam2();}
     else{ChangeCam();}
+    if (ToggleCam == 1){document.getElementById('flyover').style.display = "block"}
+    else{document.getElementById('flyover').style.display = "none";}
 }
 
 //Changes camera from birds-eye view to first person view
