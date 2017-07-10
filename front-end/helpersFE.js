@@ -886,6 +886,9 @@ function onDocumentKeyDown(event) {
 
       //case t - toggle topography
     case 84:
+    //setting the camera y position to a specific hight when toggle is pressed.
+    if (camera2.position.y < 27)
+        camera2.position.y = 27;
       if (modalUp !== true) {
         if (curTracking) {
           pushClick(0, getStamp(), 32, 0, null);
@@ -903,17 +906,24 @@ function onDocumentKeyDown(event) {
         setupRiver();
       }
       break;
-
       //case e - reset camera position
     case 69:
       //update scope across 10 turns,
       // it seeems that controls.js scope doesn't bring us all the way back
       // with just a controls value of 1
+    //Reseting camera postion to specific views depending on which camera is on use now.
+    if(ToggleCam == 2){
       controls.value = 10;
       controls.reset();
       setTimeout(function() {
         controls.value = 1;
       }, 100);
+    }else{
+        camera2.position.x = 70;
+        camera2.position.y = 25;
+        camera2.position.z = 244;
+        camera2.rotation.y = 0;
+    }
       break;
 
       //case r - randomize land types
