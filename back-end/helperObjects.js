@@ -3142,8 +3142,7 @@ function Printer() {
         saveScreenshotMapType(property);
 
         // make legend if needed
-        if (property !== 'year1' && property !== 'year2' && property !== 'year3' &&
-            property !== 'wetlands' && property !== 'boundary' && property !== "yearUserViewpoint"  &&
+        if (property !== 'wetlands' && property !== 'boundary' && property !== "yearUserViewpoint"  &&
                 property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
                 property !== "yieldUserViewpoint") {
           makeLegendBox(property); // create legend object
@@ -3174,7 +3173,7 @@ function Printer() {
     // output PDF
     if (isDownload == 1) {
       // download
-      doc.save('PWEI.pdf');
+      doc.save(promptFileName()+".pdf");
     } else {
       // preview
       window.frames[6].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
@@ -3305,23 +3304,39 @@ function Printer() {
   */
   function makeLegendBox(type) {
     var color, text, i;
-    for (i = 0; i < document.getElementById(type+'DetailsList').childElementCount; i++) {
-      color = void 0;
-      text = void 0;
-      // loop through the data from detail lists and store in color & text line by line
-      // color = document.getElementById(type + 'DetailsList').getElementsByClassName('levelColor'+(i+1) )[0].style.backgroundColor;
-      var colorDiv = document.getElementById(type + 'DetailsList').getElementsByClassName('legendColor')[i];
-      if (colorDiv instanceof HTMLElement) {
-        color = getComputedStyle(colorDiv, null).getPropertyValue("background-color");
-        text = colorDiv.getElementsByTagName('p')[0].innerText;
-      }
-      if (typeof color !== 'undefined' && typeof text !== 'undefined') {
-        addLegendLine(type, color, text);
-      }
-    }
-    // XXX result page should use different code to get color and text
 
-    // store width & height
+    switch (type.slice(0,4)) {
+      case 'year':
+      // Create precipitation info as legend box for LandUse Map
+        text = "Precipitation: " + boardData[currentBoard].precipitation[type.substr(-1)];
+        color = "rgb(29, 187, 245)";
+        addLegendLine(type, color, text);
+
+        break;
+
+        // XXX result page should use different code to get color and text
+
+      default:
+      // those who have "xxxDetailsList" in index.html
+        for (i = 0; i < document.getElementById(type+'DetailsList').childElementCount; i++) {
+          color = void 0;
+          text = void 0;
+          // loop through the data from detail lists and store in color & text line by line
+          // color = document.getElementById(type + 'DetailsList').getElementsByClassName('levelColor'+(i+1) )[0].style.backgroundColor;
+          var colorDiv = document.getElementById(type + 'DetailsList').getElementsByClassName('legendColor')[i];
+          if (colorDiv instanceof HTMLElement) {
+            color = getComputedStyle(colorDiv, null).getPropertyValue("background-color");
+            text = colorDiv.getElementsByTagName('p')[0].innerText;
+          }
+          if (typeof color !== 'undefined' && typeof text !== 'undefined') {
+            addLegendLine(type, color, text);
+          }
+        } // END for
+
+        break;
+    } // END switch
+
+    // store width & height according to its line numbers
     legendObjs[type].height = padding + legendObjs[type].indicator.length * (indicatorLength + padding);
     legendObjs[type].width = padding + indicatorLength + padding + (longestLine(legendObjs[type].description) * 4.5);
     legendObjs[type].name = type;
@@ -3343,6 +3358,10 @@ function Printer() {
         // place text and image
         addText(1, "Year "+ type.substr(type.length - 1) +" LandUse Map", x, y, font.header2_font);
         addImage(imageSrc[type], 'JPEG', x, y, mapWidth, mapHeight);
+        // place legend
+        if (legend = legendObjs[type]) {
+          drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+        }
         // update y
         updateY(mapHeight + lineHeight * 2);
         break;

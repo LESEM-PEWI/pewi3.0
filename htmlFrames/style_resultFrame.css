@@ -65,6 +65,7 @@ tr:hover {
 .tab, .tabSelected {
   background-color: rgba(40, 44, 42, 0.03);
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  cursor: pointer;
   display: inline-block;
   float: left;
   height: var(--tab-height);
@@ -87,10 +88,6 @@ tr:hover {
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, */
-}
-
-.tab {
-  cursor: pointer;
 }
 
 .tabSelected {
