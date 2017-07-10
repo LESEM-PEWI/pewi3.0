@@ -654,14 +654,18 @@ function transitionToYear(year) {
 function addYearAndTransition() {
 
   var totalYearsAllowed = 3;
-  var nextYear = currentYear + 1;
+  var nextYear = Number(currentYear) + 1;
+  console.log("currentYear "+currentYear);
+  console.log("nextYear "+nextYear);
   if (curTracking) {
     pushClick(0, getStamp(), 41, 0, null);
   }
   //make next button appear (has some prebuilt functionality for expanded number of years)
   if (currentYear < totalYearsAllowed - 1) {
 
+    console.log("year" + nextYear + "Button");
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
+    console.log("year" + nextYear + "Image");
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
 
   }
@@ -1626,7 +1630,7 @@ function switchConsoleTab(value) {
 function switchYearTab(yearNumberToChangeTo) {
   //get the currently selected year and make it not selected
   var elements = document.getElementsByClassName("icon yearSelected");
-  if (elements !== null ) {
+  if (elements) {
     elements[0].className = "icon yearNotSelected";
   }
 

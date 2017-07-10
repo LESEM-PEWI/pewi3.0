@@ -164,3 +164,22 @@ function initDataIsCorrupt() {
   return 0;
 } // end initDataIsCorrupt()
 
+// Prompt a dialogue to ask for filename
+function promptFileName() {
+  var today = new Date();
+  var str = today.toString();  // deprecated! use toUTCString()
+
+  //split based on escape chars
+  while (str.indexOf(" ") >= 0) {
+    str = str.replace(" ", "_");
+  }
+  str = str.slice(0,-33);
+
+  var filename = prompt("Enter the file name:", "PEWI-"+str);
+  if (filename === null || filename === "") {
+    filename = "PEWI-"+str;
+  }
+
+  return filename;
+
+} // END promptFileName

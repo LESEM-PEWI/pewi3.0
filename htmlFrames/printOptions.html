@@ -39,9 +39,40 @@ Cleaned and Prepared - July 2016 XXX
   <!-- /INCLUDES -->
 
   <script>
+    var yearAvailable;
+    // download from preview if there is preview src, or create new PDF according to print options
+    function downloadControl() {
+      var preview = document.getElementById('pdf_preview');
+
+      switch (preview.getAttribute('src')) {
+
+        case '':
+        // run creating PDF process if nothing is in preview
+          saveCurrentPrintOptions(1);
+          break;
+
+        default:
+        // directly download from the preview XXX doesn't work in safari
+          // Construct the <a> element
+          var link = document.createElement("a");
+
+          link.download = parent.promptFileName()+".pdf";
+          // Construct the uri
+          link.href = preview.getAttribute('src');
+          document.body.appendChild(link);
+          link.click();
+          // Cleanup the DOM
+          document.body.removeChild(link);
+          delete link;
+          break;
+      } // END switch
+
+    } // END downloadControl
 
     // initialize settings such as reset map position and display years so far
     function initPrintOptions(upToYear) {
+      yearAvailable = upToYear;
+
       // make it easier to get the associated label
       var labels = document.getElementsByTagName('LABEL');
       for (var i = 0; i < labels.length; i++) {
@@ -54,6 +85,8 @@ Cleaned and Prepared - July 2016 XXX
 
       // display year icon accoding to current abled year
       if (upToYear > 1) {
+        document.getElementById('year-toggle').style.display = 'inline-block';
+        document.getElementById('year-select-all-label').style.display = 'inline-block';
         for (var i = 2; i <= upToYear; i++) {
           document.getElementById('year'+i+'-checkbox').style.display = 'inline-block';
           document.getElementById('year'+i+'-checkbox').label.style.display = 'inline-block';
@@ -118,8 +151,20 @@ Cleaned and Prepared - July 2016 XXX
       var options = document.getElementById(group + "-group-checkbox").getElementsByTagName('input');
       var groupCheckboxIcon = document.getElementById(group+"-checked-icon");
 
-      for (var i = 0; i < options.length; i++) {
-        options[i].checked = document.getElementById(group+'-toggle').checked;
+      switch (group) {
+        case 'year':
+          for (var i = 0; i < yearAvailable; i++) {
+            if (options[i].id == "year1-checkbox")
+              continue;
+            options[i].checked = document.getElementById(group+'-toggle').checked;
+          }
+          break;
+
+        default:
+          for (var i = 0; i < options.length; i++) {
+            options[i].checked = document.getElementById(group+'-toggle').checked;
+          }
+          break;
       }
 
       // deal with element style
@@ -150,8 +195,7 @@ Cleaned and Prepared - July 2016 XXX
           // set css
           groupUserViewpoint.setAttribute('src',"../imgs/refresh_white.png");
           groupUserViewpoint.setAttribute('style', "box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);");
-          // console.log("restoreLastState");
-          // reset user view point
+          // reset to user view point
           parent.controls.restoreLastState();
           break;
 
@@ -160,7 +204,6 @@ Cleaned and Prepared - July 2016 XXX
           // set css
           document.getElementById(group+"UserViewpoint").setAttribute('src', "../imgs/refresh_yellow.png");
           document.getElementById(group+"UserViewpoint").setAttribute('style', "");
-          // console.log("reset camera position");
           // reset camera position
           parent.controls.value = 100; // reset 10 times
           parent.controls.reset();
@@ -171,6 +214,58 @@ Cleaned and Prepared - July 2016 XXX
       } // END switch
 
     } // END toggleViewpoint
+
+    // reset all print options and clean the preview
+    function resetPrintOptions() {
+      var group = ['year', 'level', 'feature', 'yield'];
+      var toggledElements = document.getElementsByClassName('print-options-checkbox');
+      var viewpointIcons = document.getElementsByClassName('viewpoint-icons');
+
+      // clean the preview
+      document.getElementById('pdf_preview').setAttribute('src', '')
+
+      //reset groupCheckboxIcon
+      for (var i = 0; i < group.length; i++) {
+        var inputGroupCheckbox = document.getElementById(group[i]+"-toggle");
+        var groupCheckboxIcon = document.getElementById(group[i]+"-checked-icon");
+        // find checked groupCheckboxIcon
+        if (inputGroupCheckbox.checked) {
+          // uncheck it
+          inputGroupCheckbox.checked = false;
+          groupCheckboxIcon.setAttribute('src', '../imgs/checked_yellow.png')
+          groupCheckboxIcon.setAttribute('style', "");
+        } // END if
+      } // END outter if
+
+      //if there are viewpointIcons
+      if (viewpointIcons) {
+        for (var i = 0; i < viewpointIcons.length; i++) {
+          // record the ones set to user's viewpoint
+          if (viewpointIcons[i].getAttribute('src') == "../imgs/refresh_white.png") {
+            // reset viewpoint icons
+            viewpointIcons[i].setAttribute('src', '../imgs/refresh_yellow.png')
+            viewpointIcons[i].setAttribute('style', "");
+            // reset camera position
+            parent.controls.value = 100; // reset 10 times
+            parent.controls.reset();
+            setTimeout(function() {
+              parent.controls.value = 1; // reset to 1
+            }, 100);
+          }
+        } // END for
+      }  // END if
+
+      //if there are toggled elements
+      if (toggledElements) {
+        for (var i = 0; i < toggledElements.length; i++) {
+          if (toggledElements[i].checked && toggledElements[i].id !== "year1-checkbox" ) {
+            // uncheck toggledElements
+            toggledElements[i].checked = false;
+          }
+        } //end for
+      } //end if
+
+    } // END resetPrintOptions
 
   </script>
 
@@ -189,21 +284,35 @@ Cleaned and Prepared - July 2016 XXX
 
       <div class="optionsHeader">
         <h4>Land Use Type Map</h4>
+        <input id="year-toggle" onclick="toggleGroupCheckbox('year');" type="checkbox" style="display: none;">
         <div class="print-options-tool">
+          <label id="year-select-all-label" for="year-toggle" class="print-options-tool-icon" style="display: none;">
+            <!-- "Checked" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+            <img id="year-checked-icon" src="../imgs/checked_yellow.png" >
+            <span class="tooltiptext">select all</span>
+          </label>
+
           <div class="print-options-tool-icon" onclick="toggleViewpoint('year');">
+            <!-- "Refresh" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
             <img id="yearUserViewpoint" class="viewpoint-icons" src="../imgs/refresh_yellow.png" >
             <span class="tooltiptext">toggle viewpoint</span>
+          </div>
+
+          <div class="print-options-tool-icon" onclick="resetPrintOptions()">
+            <!-- "Cancel" icon made by Gregor Cresnar http://www.flaticon.com/authors/gregor-cresnar from http://www.flaticon.com/packs/creative-outlines -->
+            <img class="viewpoint-icons" src="../imgs/cancel.png" >
+            <span class="tooltiptext">reset</span>
           </div>
         </div>
         <hr>
       </div>
 
-      <div class="optionsSubContainer">
+      <div id="year-group-checkbox" class="optionsSubContainer">
         <input id="year1-checkbox" class="print-options-checkbox" style="inline-block" checked>
         <!-- <label style="background-color: #4c6167; cursor: not-allowed;"> -->
         <label style="color: #fff; cursor: not-allowed; display: inline-block;">
           <div>
-            <img src="../imgs/one.png">
+            <img src="../imgs/one.png" style="box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);">
             <span>Year 1</span>
           </div>
         </label>
@@ -225,6 +334,7 @@ Cleaned and Prepared - July 2016 XXX
         </label>
 
       </div>
+
       <div class="optionsHeader">
         <h4>Results</h4>
         <!-- "Checked" & "Refresh" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
@@ -440,7 +550,7 @@ Cleaned and Prepared - July 2016 XXX
 
   <div>
     <div id="" class="mainButton preview-btn" onclick="saveCurrentPrintOptions(0);">Preview PDF</div>
-    <div id="" class="mainButton print-btn" onclick="saveCurrentPrintOptions(1);">Download</div>
+    <div id="" class="mainButton print-btn" onclick="downloadControl();">Download</div>
     <div id="" class="mainButton exit-btn" onclick="parent.closePrintOptions();">Exit</div>
   </div>
 
