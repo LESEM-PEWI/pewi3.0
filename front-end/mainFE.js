@@ -132,7 +132,8 @@ function initializeCamera() {
 
 //Event function that is called when screen is changed
 function CamView(e) {
-  if (e.keyCode == 81) {
+  tempKeys = giveHotkeys();
+  if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
     toggleCameraView();
   }
 }
