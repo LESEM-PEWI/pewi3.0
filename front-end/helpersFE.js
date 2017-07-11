@@ -75,6 +75,7 @@ var playerCombo = [];
 var totalPlayers = 0;
 var merging = false;
 var resetting = false;
+var hotkeyArr = [[69,null],[82,null],[84,null],[85,null],[66,null],[86,null],[68,null],[65,null],[87,null],[83,null],[79,null],[81,null]];
 
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
@@ -885,7 +886,7 @@ function onDocumentKeyDown(event) {
       break;
 
       //case t - toggle topography
-    case 84:
+    case hotkeyArr[2][0]: case hotkeyArr[2][1]:
     //setting the camera y position to a specific hight when toggle is pressed.
     if (camera2.position.y < 27)
         camera2.position.y = 27;
@@ -907,7 +908,7 @@ function onDocumentKeyDown(event) {
       }
       break;
       //case e - reset camera position
-    case 69:
+    case hotkeyArr[0][0]: case hotkeyArr[0][1]:
       //update scope across 10 turns,
       // it seeems that controls.js scope doesn't bring us all the way back
       // with just a controls value of 1
@@ -927,7 +928,7 @@ function onDocumentKeyDown(event) {
       break;
 
       //case r - randomize land types
-    case 82:
+    case hotkeyArr[1][0]: case hotkeyArr[1][1]:
       if (modalUp !== true && currentHighlightType < 4) {
         if (curTracking) {
           pushClick(0, getStamp(), 52, 0, null);
@@ -962,7 +963,7 @@ function onDocumentKeyDown(event) {
       break;
 
       //case v - key to record multiplayer fields
-    case 86:
+    case hotkeyArr[5][0]: case hotkeyArr[5][1]:
       if (multiplayerAssigningModeOn) {
         endMultiplayerAssignMode();
       }
@@ -987,12 +988,12 @@ function onDocumentKeyDown(event) {
       }
       break;
       // case u - undo key
-    case 85:
+    case hotkeyArr[3][0]: case hotkeyArr[3][1]:
         revertChanges();
       break;
 
       // case o - toggleOverlay
-    case 79:
+    case hotkeyArr[10][0]: case hotkeyArr[10][1]:
       if (previousOverlay != null) {
         if (curTracking) {
           pushClick(0, getStamp(), 31, 0, null);
@@ -1002,7 +1003,7 @@ function onDocumentKeyDown(event) {
       break;
 
       // key b - clickTrackings
-    case 66:
+    case hotkeyArr[4][0]: case hotkeyArr[4][1]:
       if (!curTracking) {
         curTracking = true;
         //Starting date is recorded
@@ -2720,7 +2721,6 @@ function writeFileToDownloadString(mapPlayerNumber) {
   //  when the year 1 land use is equal to that player's number
 
   var string = "";
-  console.log(boardData[currentBoard]);
   if (typeof boardData[currentBoard] !== 'undefined') {
 
     string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
@@ -3634,6 +3634,64 @@ function optionsEsc(e) {
     resetOptions();
   }
 }
+
+//Returns the hotkey array
+function giveHotkeys() {
+  return hotkeyArr;
+} //end giveHotkeys()
+
+//Resets the hotkey array to its default state
+function resetHotkeys() {
+  hotkeyArr = [[69,null],[82,null],[84,null],[85,null],[66,null],[86,null],[68,null],[65,null],[87,null],[83,null],[79,null],[81,null]];
+  updateKeys();
+} //end resetHotkeys()
+
+//Checks other hotkey bindings
+//
+//givenKey: Key they want to bind
+//givenFunc: The command for binding
+//givenSlot: Primary or Secondary hotkey binding
+
+function setHotkey(givenKey,givenFunc,givenSlot) {
+  //For each hotkey possible
+  givenKey = (givenKey.toUpperCase()).charCodeAt(0);
+  //Make sure it's an appropriate keycode character
+  if(!isNaN(givenKey) || givenKey < 10) {
+    for(var i = 0; i < hotkeyArr.length; i++) {
+      //For each assigned hotkey for that type (2 is maximum)
+      for(var j = 0; j < 2; j++) {
+        //If the given hotkey matches one of the existing ones, replace the old with null
+        if(hotkeyArr[i][j] == givenKey) {
+          hotkeyArr[i][j] = null;
+        }
+      }
+    }
+    //Set the new hotkey
+    if(hotkeyArr[givenFunc][0] != givenKey && givenSlot == 1 || givenSlot == 2 && hotkeyArr[givenFunc][0] == null) {
+      hotkeyArr[givenFunc][0] = givenKey;
+    } else {
+      hotkeyArr[givenFunc][1] = givenKey;
+    }
+    updateKeys();
+  }
+} //end setHotkey(givenKey, givenFunc, givenSlot)
+
+//Updates the visuals for the user
+function updateKeys() {
+  for(var i = 0; i < hotkeyArr.length; i++) {
+    for(var j = 0; j < 2; j++) {
+      var temp = j+1;
+      if(hotkeyArr[i][j]==null){
+        window.frames[4].document.getElementById("hki"+i+"e"+temp).value = "";
+        window.frames[4].document.getElementById("hki"+i+"e"+temp).placeholder = "N/A";
+      } else {
+        window.frames[4].document.getElementById("hki"+i+"e"+temp).value = "";
+        window.frames[4].document.getElementById("hki"+i+"e"+temp).placeholder = String.fromCharCode(hotkeyArr[i][j]);
+      }
+    }
+  }
+} //end updateKeys()
+
 
 //endMultiAssignMode displays the multiPlayer element
 function endMultiplayerAssignMode() {
