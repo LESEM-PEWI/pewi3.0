@@ -59,15 +59,40 @@ Cleaned and Prepared - July 2016
       transition-duration: 7s
     }
     #startup-buttons {
-      position: relative;
-      top: 50%;
-    }
-    #newPewiLogo{
       position: absolute;
-      padding: 0px;
-      left: 41%;
-      bottom: 80%;
+      top: 45%;
+      height: 7vw;
+      width: 75%;
+      left: 25%;
     }
+
+    #pewiTitleText {
+      float: right;
+    }
+
+     #pewiTitleLogo {
+      float: left;
+    }
+     #pewiTitleText img{
+      width: 16vw;
+    }
+
+     #pewiTitleLogo img{
+      width: 7vw;
+    }
+
+     #infoHolder{
+      position: fixed;
+      left: 40%;
+      top: 37%;
+      height: 2vw;
+      width: 75%;
+    }
+
+     #startupInformationText {
+       font-size: 2vw; 
+    }
+
   </style>
 
 </head>
@@ -85,11 +110,12 @@ Cleaned and Prepared - July 2016
 
       <div id="pewiTitle">
         <!-- hidden -->
-        <img src="./imgs/pewiLogoLarge.png" />
+        <div id = "pewiTitleLogo"><img src="./imgs/updatedPewiLogo.png"/></div>
+        <div id = "pewiTitleText"><img src="./imgs/pewiLogoLarge.png" /></div>
       </div>
 
-      <div id = "newPewiLogo">
-        <img src="./imgs/updatedPewiLogo.png"/>
+      <div id="infoHolder">
+        <div id="startupInformationText"></div>
       </div>
 
       <div id="startup-buttons">
@@ -97,8 +123,6 @@ Cleaned and Prepared - July 2016
         <div id="startupButton2" onmouseover="highlightButtonAndShowInfo(2,1);" onmouseout="highlightButtonAndShowInfo(2,0);" class="mainButton" onclick="startPlay();">Play</div>
         <div id="startupButton3" onmouseover="highlightButtonAndShowInfo(3,1);" onmouseout="highlightButtonAndShowInfo(3,0);" class="mainButton" onclick="startUtilities();">Utilities</div>
       </div>
-
-      <div id="startupInformationText"></div>
 
     </div>
   </div>
@@ -155,8 +179,8 @@ Cleaned and Prepared - July 2016
       document.getElementById('pewiTitle').style.opacity = "1";
       document.getElementById('pewiTitle').style.marginTop = "0";
       //Add the pewiLogo stuff here
-      document.getElementById('newPewiLogo').style.opacity = "1";
-      document.getElementById('newPewiLogo').style.marginTop = "0";
+      ///document.getElementById('newPewiLogo').style.opacity = "1";
+      ///document.getElementById('newPewiLogo').style.marginTop = "0";
       document.getElementById('startupButton1').style.opacity = "1";
       document.getElementById('startupButton2').style.opacity = "1";
       document.getElementById('startupButton3').style.opacity = "1";
@@ -169,7 +193,7 @@ Cleaned and Prepared - July 2016
         document.getElementById('startupButton2').style.transitionDuration = ".4s";
         document.getElementById('startupButton3').style.transitionDuration = ".4s";
         document.getElementById('pewiTitle').style.transitionDuration = ".4s";
-        document.getElementById('newPewiLogo').style.transitionDuration = ".4s";
+        ///document.getElementById('newPewiLogo').style.transitionDuration = ".4s";
         document.getElementById('startupContentsHolder').style.transitionDuration = ".4s";
       }, 10);
     } //end endOfVideo
@@ -178,12 +202,12 @@ Cleaned and Prepared - July 2016
       //Update Buttons appropriately
       document.getElementById('startupButton2').style.display = "none";
       document.getElementById('startupButton3').style.display = "none";
-      document.getElementById('newPewiLogo').style.display = "none";
-      document.getElementById('startupButton1').style.left = "50%";
+      ///document.getElementById('newPewiLogo').style.display = "none";
+      document.getElementById('startupButton1').style.left = "25%";
       document.getElementById('startupButton1').style.backgroundColor = "#003d4d";
       //prevent pewiTitle from pressing against the top of the screen
-      document.getElementById('pewiTitle').style.marginTop = "100px";
-      document.getElementById('newPewiLogo').style.marginTop = "100px";
+      document.getElementById('pewiTitle').style.marginTop = "10%";
+      ///document.getElementById('newPewiLogo').style.marginTop = "100px";
       //open up background curtain
       document.getElementById('startupContentsHolder').style.marginTop = "0px";
       document.getElementById('startupContentsHolder').style.top = "0%";
@@ -207,11 +231,11 @@ Cleaned and Prepared - July 2016
       //Update Buttons appropriately
       document.getElementById('startupButton1').style.display = "none";
       document.getElementById('startupButton2').style.display = "none";
-      document.getElementById('newPewiLogo').style.display = "none";
-      document.getElementById('startupButton3').style.left = "50%";
+      ///document.getElementById('newPewiLogo').style.display = "none";
+      document.getElementById('startupButton3').style.left = "25%";
       document.getElementById('startupButton3').style.backgroundColor = "#003d4d";
       //prevent pewiTitle from pressing against the top of the screen
-      document.getElementById('pewiTitle').style.marginTop = "100px";
+      document.getElementById('pewiTitle').style.marginTop = "10%";
       //open up background curtain (entirely transparent here)
       document.getElementById('startupContentsHolder').style.marginTop = "0px";
       document.getElementById('startupContentsHolder').style.top = "0%";
@@ -251,12 +275,12 @@ Cleaned and Prepared - July 2016
       //Update Buttons appropriately
       document.getElementById('startupButton1').style.display = "none";
       document.getElementById('startupButton3').style.display = "none";
-      document.getElementById('newPewiLogo').style.display = "none";
+      ///document.getElementById('newPewiLogo').style.display = "none";
       document.getElementById('startupButton2').style.top = "50%";
       document.getElementById('startupButton2').style.backgroundColor = "#003d4d";
       //prevent pewiTitle from pressing against the top of the screen
-      document.getElementById('pewiTitle').style.marginTop = "100px";
-      document.getElementById('newPewiLogo').style.marginTop = "100px";
+      document.getElementById('pewiTitle').style.marginTop = "10%";
+      ///document.getElementById('newPewiLogo').style.marginTop = "100px";
       //open up background curtain (entirely transparent here)
       document.getElementById('startupContentsHolder').style.marginTop = "0px";
       document.getElementById('startupContentsHolder').style.top = "0%";
@@ -296,7 +320,7 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupButton2').style.visibility = "hidden";
       document.getElementById('startupButton3').style.visibility = "hidden";
       document.getElementById('pewiTitle').style.visibility = "hidden";
-      document.getElementById('newPewiLogo').style.visibility = "hidden";
+      ///document.getElementById('newPewiLogo').style.visibility = "hidden";
     } //end function
     //resetElements moves the elements around on the page and resets the colors of elements
     //  in preparation for returning to the page
@@ -304,15 +328,15 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupButton1').style.display = "block";
       document.getElementById('startupButton2').style.display = "block";
       document.getElementById('startupButton3').style.display = "block";
-      document.getElementById('newPewiLogo').style.display = "block";
+      ///document.getElementById('newPewiLogo').style.display = "block";
       document.getElementById('startupButton1').style.backgroundColor = "#40A4DF";
       document.getElementById('startupButton2').style.backgroundColor = "#40A4DF";
       document.getElementById('startupButton3').style.backgroundColor = "#40A4DF";
-      document.getElementById('startupButton1').style.left = "25%";
-      document.getElementById('startupButton2').style.top = "50%";
-      document.getElementById('startupButton3').style.left = "75%";
+      document.getElementById('startupButton1').style.left = "0%";
+      document.getElementById('startupButton2').style.left = "25%";
+      document.getElementById('startupButton3').style.left = "50%";
       document.getElementById('pewiTitle').style.marginTop = "0px";
-      document.getElementById('newPewiLogo').style.marginTop = "0px";
+      ///document.getElementById('newPewiLogo').style.marginTop = "0px";
     } //end resetElements
     //reset makes the changes necessary for displaying the main page again
     // this is necessary to be separated so that the elements can be moved prior to being
@@ -329,7 +353,7 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupButton2').style.visibility = "visible";
       document.getElementById('startupButton3').style.visibility = "visible";
       document.getElementById('pewiTitle').style.visibility = "visible";
-      document.getElementById('newPewiLogo').style.visibility = "visible";
+      ///document.getElementById('newPewiLogo').style.visibility = "visible";
     } //end reset
     //chains the two functions needed for resetting the page completely. Called by helpersFE.js
     function recallMain() {
