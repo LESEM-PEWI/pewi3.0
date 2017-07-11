@@ -3,7 +3,8 @@
 //global vars
 
 //webGL stuff
-var camera, scene, raycaster, mouse, hoveredOver, bgCam, camera2, camera1, ToggleCam, cam2x, cam2y, cam2z;
+var camera, scene, raycaster, mouse, hoveredOver, bgCam, camera2, camera1, cam2x, cam2y, cam2z;
+var ToggleCam = 1;
 var player = { speed:3, turnSpeed:Math.PI*0.02 };
 var keyboard ={};
 var bgScene = null;
@@ -140,7 +141,6 @@ function CamView(e) {
 
 // Function to restore camera2 last position after changing views.    
 function RestorePosition(){
-    console.log(cam2x);
     //Storing the camera2 values to global variables
     camera2.position.x = cam2x;
     camera2.position.y = cam2y;
@@ -307,7 +307,6 @@ function animate(){
             camera2.position.z = 299;
         if(camera2.position.y >= 60){ 
             camera2.position.y = 60;
-             console.log("hi");
             console.log(camera2.position.y +" "+ camera.position.z);
         }
         else {

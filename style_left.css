@@ -85,7 +85,8 @@
     position: absolute;
     
     height: vw;
-    left: vw;
+    left: 40%;
+    top: 30%;
     width: 12.5vw
     text-align: center;
     font-family: var(--button-font-family);
