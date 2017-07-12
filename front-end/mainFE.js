@@ -3,13 +3,13 @@
 //global vars
 
 //webGL stuff
-var camera, scene, raycaster, mouse, hoveredOver, bgCam, camera2, camera1, cam2x, cam2y, cam2z;
-var ToggleCam = 1;
+var camera, scene, raycaster, mouse, hoveredOver, bgCam, camera2, camera1, ToggleCam, cam2x, cam2y, cam2z;
+var cam2Roy, cam2Rox, cam2Roz;
 var player = { speed:3, turnSpeed:Math.PI*0.02 };
 var keyboard ={};
 var bgScene = null;
 var renderer = new THREE.WebGLRenderer();
-var controls;
+var controls, controls1;
 var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
 //application data
@@ -112,11 +112,13 @@ function initializeCamera() {
 
     //set up controls for camera one and camera1
     controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls = new THREE.OrbitControls(camera1, renderer.domElement);
+    controls1 = new THREE.OrbitControls(camera1, renderer.domElement);
 
     //Zoom in and zoom out restrictions for camera one
     controls.minDistance = 120;
     controls.maxDistance = 500;
+    controls1.minDistance = 120;
+    controls1.maxDistance = 500;
 
     //add resize listener, so we can keep the aspect ratio correct.
     window.addEventListener('resize', onResize, false);
@@ -144,9 +146,11 @@ function RestorePosition(){
     //Storing the camera2 values to global variables
     camera2.position.x = cam2x;
     camera2.position.y = cam2y;
-    camera2.position.z = cam2z;
+    camera2.position.z = cam2z;   
+    camera2.rotation.x = cam2Rox;
+    camera2.rotation.y = cam2Roy;
+    camera2.rotation.z = cam2Roz;
 }
-
 
 //Function to change camera views.This function is called when the button Q is pressed.
 function toggleCameraView(){
@@ -174,15 +178,18 @@ function changeCam2(){
     cam2x = camera2.position.x;
     cam2y = camera2.position.y;
     cam2z = camera2.position.z;
+    cam2Roy = camera2.rotation.y;
+    cam2Rox = camera2.rotation.x;
+    cam2Roz = camera2.rotation.z;
     //Changes Camera to second camera view
     camera = camera1;
     //Flag variable for changing camera views
     ToggleCam = 2;
     //Reseting camera to original position after switching
-    controls.value = 10;
-    controls.reset();
+    controls1.value = 10;
+    controls1.reset();
     setTimeout(function() {
-    controls.value = 1;
+    controls1.value = 1;
       }, 100);
 }
 
@@ -209,7 +216,7 @@ function animate(){
 		camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
         console.log(camera2.position);
     }
-    
+
 	if(keyboard[83]){ // S key Back Words movements
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
