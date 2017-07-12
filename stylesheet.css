@@ -37,6 +37,9 @@ font-family: 'Amatic SC', cursive;
 
 
 /******CSS RESET*****/
+/* XXX some of these redundant tag actually slow down some speeds
+https://developers.google.com/speed/docs/insights/PrioritizeVisibleContent?csw=1#UseEfficientCSSSelectors
+https://stackoverflow.com/questions/8640692/slow-response-when-the-html-table-is-big */
 
 
 /* http://meyerweb.com/eric/tools/css/reset/

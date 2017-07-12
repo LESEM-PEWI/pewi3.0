@@ -655,17 +655,13 @@ function addYearAndTransition() {
 
   var totalYearsAllowed = 3;
   var nextYear = Number(currentYear) + 1;
-  console.log("currentYear "+currentYear);
-  console.log("nextYear "+nextYear);
   if (curTracking) {
     pushClick(0, getStamp(), 41, 0, null);
   }
   //make next button appear (has some prebuilt functionality for expanded number of years)
   if (currentYear < totalYearsAllowed - 1) {
 
-    console.log("year" + nextYear + "Button");
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
-    console.log("year" + nextYear + "Image");
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
 
   }
@@ -3505,6 +3501,10 @@ function executePrintOptions(isDownload) {
     year1: false,
     year2: false,
     year3: false,
+    // results
+    resultsTable1: false,
+    resultsTable2: false,
+    resultsTable4: false,
     // levels
     levelUserViewpoint: false,
     nitrate: false,
@@ -4278,22 +4278,3 @@ function resetPresets() {
 function setUpload(givenValue) {
   uploadedBoard = givenValue;
 } //end setUpload()
-
-// function loadImages(sources, callback) {
-//   var images = {};
-//   var loadedImages = 0;
-//   var numImages = 0;
-//   // get num of sources
-//   for (var src in sources) {
-//     numImages++;
-//   }
-//   for (var src in sources) {
-//     images[src] = new Image();
-//     images[src].onload = function() {
-//       if (++loadedImages >= numImages) {
-//         callback(images);
-//       }
-//     };
-//     images[src].src = sources[src];
-//   }
-// }
