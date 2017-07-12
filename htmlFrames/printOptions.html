@@ -217,7 +217,7 @@ Cleaned and Prepared - July 2016 XXX
 
     // reset all print options and clean the preview
     function resetPrintOptions() {
-      var group = ['year', 'level', 'feature', 'yield'];
+      var group = ['year', 'result', 'level', 'feature', 'yield'];
       var toggledElements = document.getElementsByClassName('print-options-checkbox');
       var viewpointIcons = document.getElementsByClassName('viewpoint-icons');
 
@@ -342,16 +342,43 @@ Cleaned and Prepared - July 2016 XXX
         <div class="print-options-tool">
           <label for="result-toggle" class="print-options-tool-icon">
               <img id="result-checked-icon" src="../imgs/checked_yellow.png" >
-              <span class="tooltiptext">select all</span>
+              <span class="tooltiptext">select all<hr>Note: <br>It takes more time <br>to process table</span>
           </label>
         </div>
         <hr>
       </div>
 
-      <!-- <div id="result-group-checkbox" class="optionsSubContainer">
-        <label for="-checkbox"></label>
-        <input id="-checkbox" class="print-options-checkbox" type="checkbox">
-       </div> -->
+      <div id="result-group-checkbox" class="optionsSubContainer">
+        <input id="resultsTable1-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="resultsTable1-checkbox">
+          <div>
+            <!-- "Research" icon made by Becris on http://www.flaticon.com/authors/becris from http://www.flaticon.com/packs/stem -->
+            <img src="../imgs/research.png">
+            <p>Results Table 1</p>
+          </div>
+          <span class="tooltiptext">Note: <br>It takes more time <br>to process table</span>
+        </label>
+
+        <input id="resultsTable2-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="resultsTable2-checkbox">
+          <div>
+            <!-- "Research" icon made by Becris on http://www.flaticon.com/authors/becris from http://www.flaticon.com/packs/stem -->
+            <img src="../imgs/research.png">
+            <p>Results Table 2</p>
+          </div>
+          <span class="tooltiptext">Note: <br>It takes more time <br>to process table</span>
+        </label>
+
+        <!-- "Research" icon made by Becris on http://www.flaticon.com/authors/becris from http://www.flaticon.com/packs/stem -->
+        <input id="resultsTable4-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="resultsTable4-checkbox">
+          <div>
+            <img src="../imgs/research.png">
+            <p>Results Table 4</p>
+          </div>
+          <span class="tooltiptext">Note: <br>It takes more time <br>to process table</span>
+        </label>
+     </div>
 
       <div class="optionsHeader">
         <h4>Levels Map</h4>

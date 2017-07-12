@@ -3123,39 +3123,79 @@ function Printer() {
   // legend object
   var legendObjs = {};
 
+  // results table object
+  var resultsTableObjs = {};
+
   /*** functions ***/
 
   // main printing part ( public )
 
-  /*
+  /**
    * This function basically stores all the required image as sources to put on the PDF and create legend as well.
    */
   this.preprocessing = function() {
     // loop through all intended-to-print type, and place them on the doc
     for (var property in toPrint) {
-      if (toPrint[property] === true && property !== "yearUserViewpoint"  &&
-          property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
-          property !== "yieldUserViewpoint") {
 
-        // take screen shot and save as image source
-        // TODO: set standard view before take screen shot
-        saveScreenshotMapType(property);
+      if (toPrint[property]) {
 
-        // make legend if needed
-        if (property !== 'wetlands' && property !== 'boundary' && property !== "yearUserViewpoint"  &&
+        switch (property) {
+          case 'yearUserViewpoint':
+          case 'levelUserViewpoint':
+          case 'featureUserViewpoint':
+          case 'yieldUserViewpoint':
+          // TODO implement view point for each section
+            break;
+
+          case 'resultsTable1':
+          case 'resultsTable2':
+          case 'resultsTable4':
+          // resultsTables
+
+            // pull up the result page
+            modalUp = false; // set to false to open the result page
+            resultsStart();
+            var RESULTS_HTML = window.frames[3];
+            RESULTS_HTML.toggleToTab(2); // switch to table tab
+
+            // grab the table that we want to print
+            var elem = RESULTS_HTML.document.getElementById("table"+property.substr(-1));
+            // use autoTable lib and add to resultsTableObjs
+            resultsTableObjs[ 'table'+property.substr(-1) ] = doc.autoTableHtmlToJson(elem);
+
+            // close the result page
+            resultsEnd();
+            modalUp = true; // since printOptions page is still up
+
+            break;
+
+          default:
+          // other map stuff
+            // take screen shot and save as image source
+            // TODO: set standard view before take screen shot
+            saveScreenshotMapType(property);
+
+            // make legend if needed
+            if (property !== 'wetlands' && property !== 'boundary' && property !== "yearUserViewpoint"  &&
                 property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
                 property !== "yieldUserViewpoint") {
-          makeLegendBox(property); // create legend object
-        }
+              makeLegendBox(property); // create legend object
+            } // END if
+
+            break;
+
+        } // END switch
+
       } // END outter if
+
     } // end for
 
   }; // end preprocessing
 
-  /*
+  /**
   * This function generates and formats the contents on the PDF and create it in the end
   *
-  * Number isDownload: 0 not downloadingm, 1: is downloading
+  * @param isDownload: 0 not downloadingm, 1: is downloading
   */
   this.processing = function(isDownload) {
     // var uptoYear = boardData[currentBoard].calculatedToYear;
@@ -3163,11 +3203,55 @@ function Printer() {
 
     // loop through all intended-to-print type, and place them on the doc
     for (var property in toPrint) {
-      if (toPrint[property] === true && property !== "yearUserViewpoint"  &&
-          property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
-          property !== "yieldUserViewpoint") {
-        placeMapType(property);
-      }
+
+      if (toPrint[property]) {
+        switch (property) {
+          case 'yearUserViewpoint':
+          case 'levelUserViewpoint':
+          case 'featureUserViewpoint':
+          case 'yieldUserViewpoint':
+          // do nothing
+            break;
+
+          case 'resultsTable1':
+          case 'resultsTable2':
+          case 'resultsTable4':
+          // resultsTables
+
+            addText(1, "Result Table "+property.substr(-1), x, y, font.header2_font);
+            // place the table
+            doc.autoTable(resultsTableObjs[ 'table'+[property.substr(-1)] ].columns, resultsTableObjs[ 'table'+[property.substr(-1)] ].data, {
+              startY: y,
+              // margin: {horizontal: 7},
+              styles: {	cellPadding: 1.5, // a number, array or object (see margin below)
+                fontSize: 8,
+                // font: "helvetica", // helvetica, times, courier
+                // lineColor: 200,
+                // lineWidth: 0,
+                // fontStyle: 'normal', // normal, bold, italic, bolditalic
+                overflow: 'linebreak', // visible, hidden, ellipsize or linebreak
+                // fillColor: false, // false for transparent or a color as described below
+                // textColor: 20,
+                halign: 'center', // left, center, right
+                valign: 'middle', // top, middle, bottom
+                // columnWidth: 'auto' // 'auto', 'wrap' or a number
+              },
+              // bodyStyles: { fontSize: 8 },
+              // headerStyles: { halign: 'center' },
+              columnStyles: { 0: { halign: 'left' } }
+             });
+            // update y
+            y = doc.autoTable.previous.finalY + lineHeight;
+            break;
+
+          default:
+          // other map stuff
+            placeMapType(property);
+            break;
+
+        } // END switch
+      } // END if
+
     } // end for
 
     // output PDF
@@ -3176,9 +3260,9 @@ function Printer() {
       doc.save(promptFileName()+".pdf");
     } else {
       // preview
-      window.frames[6].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
+      // window.frames[6].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
       // new window
-      // doc.output('dataurlnewwindow');
+      doc.output('dataurlnewwindow');
     }
 
     // Output as Data URI on the current page
@@ -3195,8 +3279,8 @@ function Printer() {
   /**
   * Place image on the pdf
   *
-  * String dataURL, String type: 'JPEG', 'PNG', and so on
-  * Number width, Number height, Number x, sNumber y
+  * @param dataURL, String type: 'JPEG', 'PNG', and so on
+  * @param width, Number height, Number x, sNumber y
   */
   function addImage(dataURL, type, x, y, width, height) {
     // 'PNG' wouldn't work for some reason
@@ -3206,11 +3290,10 @@ function Printer() {
   /**
   * Create and store the legend indicator and description in legendObjs per line
   *
-  * String legendName: the name that will be stored as the keyword refer to the legend object
-  * String color: legend indicator color in rgb()
-  * String text: legend description
+  * @param legendName: the name that will be stored as the keyword refer to the legend object
+  * @param color: legend indicator color in rgb()
+  * @param text: legend description
   */
-  // addLegendLine = function(legendName, color, text) {
   function addLegendLine(legendName, color, text) {
     if (typeof legendObjs[legendName] === 'undefined') {
       // Create Object
@@ -3226,8 +3309,8 @@ function Printer() {
   /**
   * Place text on the pdf
   *
-  * Number updateY: 0: don't update y, other: do update y
-  * String text, Number x, Number y, [Number size, String type, String family]
+  * @param updateY: 0: don't update y, other: do update y
+  * @param String text, Number x, Number y, [Number size, String type, String family]
   */
   function addText(needUpdateY, text, x, y, size, type, family) {
     if (arguments.length >= 5)
@@ -3249,8 +3332,8 @@ function Printer() {
   /**
   * Take legend object as a source to draw the according legend image
   *
-  * Object legendObj: the property stored in legendObjs
-  * Number x, Number y: coordinates
+  * @param Object legendObj: the property stored in legendObjs
+  * @param x, Number y: coordinates
   */
   function drawLegendBox(legendObj, x, y) {
     var rectX, rectY, textX, textY, i;
@@ -3284,7 +3367,8 @@ function Printer() {
   /**
   * Loop through a string array and return the longest line's length
   *
-  * String Array sArray
+  * @param String Array sArray
+  * @returns maxlength the longest line's length
   */
   function longestLine(sArray) {
     var maxlength = 0,index;
@@ -3300,7 +3384,7 @@ function Printer() {
   /**
   * Create LegendBox Object
   *
-  * String type
+  * @param String type
   */
   function makeLegendBox(type) {
     var color, text, i;
@@ -3345,7 +3429,7 @@ function Printer() {
   /**
   * Loop through all available image src for each year and put them on pdf
   *
-  * String type, Number uptoYear
+  * @param String type, Number uptoYear
   */
   function placeMapType(type) {
     var legend;
@@ -3425,7 +3509,7 @@ function Printer() {
   /**
   * Loop through each year and get according image src
   *
-  * String text, Number uptoYear
+  * @param String text, Number uptoYear
   */
   function saveScreenshotMapType(type) {
 
@@ -3531,7 +3615,8 @@ function Printer() {
   /**
   * Just convert the type to the proper title
   *
-  * String text
+  * @param String text the type pass into toPrint array
+  * @returns the proper title
   */
   function titleText(text) {
     switch (text) {
@@ -3562,14 +3647,14 @@ function Printer() {
   /**
   * Update x coordinates by value, not used so far
   *
-  * Number value
+  * @param Number value
   */
   this.updateX = function(value) {};
 
   /**
   * Update y coordinates by value. Add page when needed.
   *
-  * Number value
+  * @param Number value
   */
   function updateY(value) {
     if (y + value > pageHeight - pageMargin) {

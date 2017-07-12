@@ -68,7 +68,7 @@ function generateResultsTable() {
 
   //FIRST TABLE, LAND USE
 
-  htmlTableString += "<table class='resultsTable'>";
+  htmlTableString += "<table id='table1' class='resultsTable'>";
 
   //add header row--------------
 
@@ -192,7 +192,7 @@ function generateResultsTable() {
   // had all calculations done this way
   conversionArray = [1, 1, 0.90718474, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474];
 
-  htmlTableString += "<table class='resultsTable'>";
+  htmlTableString += "<table id='table2' class='resultsTable'>";
 
   //add header row
 
@@ -375,7 +375,7 @@ function generateResultsTable() {
   //============================
   //TABLE FOUR, SPECIAL INDICATORS
 
-  htmlTableString += "<table class='resultsTable'>";
+  htmlTableString += "<table id='table4' class='resultsTable'>";
 
   //add header row
 
