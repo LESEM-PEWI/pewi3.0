@@ -272,14 +272,14 @@
   /*column-gap: 1em;*/
 }
 
-.painterTab-leftcol {
+.leftcol {
   width: calc(var(--left-console-width) / 2);
   display: block;
   left: 0.5vw;
   position: absolute;
 }
 
-.painterTab-rightcol {
+.rightcol {
   width: calc(var(--left-console-width) / 2);
   display: block;
   left: 5vw;

@@ -205,7 +205,7 @@
 
       <!-- Land type painter display -->
       <div id="painterTab" class="consoleTab">
-        <div class=painterTab-leftcol>
+        <div id="painterTab-leftcol" class="leftcol">
           <img id="paint1" class="landSelectorIcon iconSelected" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);">
           <img id="paint3" class="landSelectorIcon icon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);">
           <img id="paint15" class="landSelectorIcon icon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);">
@@ -220,7 +220,7 @@
 
         </div>
 
-        <div class=painterTab-rightcol>
+        <div id="painterTab-rightcol" class="rightcol">
           <img id="paint2" class="landSelectorIcon icon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
           <img id="paint4" class="landSelectorIcon icon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
           <img id="paint5" class="landSelectorIcon icon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
@@ -1010,14 +1010,14 @@
           </table>
         </div>
 
-        <div class="painterTab-leftcol">
+        <div class="leftcol">
           <img id="cornClass" class="yieldSelectorIcon icon" src="./imgs/cornGrainIcon.png" title="Corn Grain" onclick="displayLevels('cornGrain');">
           <img id="fruitClass" class="yieldSelectorIcon icon" src="./imgs/fruitIcon.png" title="Mixed Fruits and Vegetables" onclick="displayLevels('fruit');">
           <img id="alfalfaClass" class="yieldSelectorIcon icon" src="./imgs/alfalfaIcon.png" title="Alfalfa" onclick="displayLevels('alfalfa');">
           <img id="switchGrassClass" class="yieldSelectorIcon icon" src="./imgs/switchGrassIcon.png" title="Switch Grass" onclick="displayLevels('switchGrass');">
           <img id="shortClass" class="yieldSelectorIcon icon" src="./imgs/woodyBiomassIcon.png" title="Woody Biomass" onclick="displayLevels('short');">
         </div>
-        <div class="painterTab-rightcol">
+        <div class="rightcol">
           <img id="soyClass" class="yieldSelectorIcon icon" src="./imgs/soybeanIcon.png" title="Soybean" onclick="displayLevels('soy');">
           <img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" title="Cattle" onclick="displayLevels('cattle');">
           <img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" title="GrassHay" onclick="displayLevels('grassHay');">
