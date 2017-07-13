@@ -607,7 +607,6 @@ function revertChanges() {
 
 //transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
-
   currentYear = year;
     var tempNum = year + 37;
     if (curTracking) {
@@ -2937,10 +2936,12 @@ files = e.target.files;
           if(year2Available)//If data for years is included, add the year
           {
           addYearAndTransition();
+          boardData[currentBoard].calculatedToYear=2;
           }
           if(year3Available)
           {
           addYearAndTransition();
+          boardData[currentBoard].calculatedToYear=3;
           }
             //updating the precip levels from the values in the uploaded file
             boardData[currentBoard].precipitation[0]=obj.precipitation[0];
@@ -2953,6 +2954,8 @@ files = e.target.files;
             document.getElementById("year3Precip").value=(boardData[currentBoard].precipitation[3]==24.58)?0:((boardData[currentBoard].precipitation[3]==28.18)?1:((boardData[currentBoard].precipitation[3]==30.39)?2:((boardData[currentBoard].precipitation[3]==32.16)?3:(boardData[currentBoard].precipitation[3]==34.34)?4:((boardData[currentBoard].precipitation[3]==36.47)?5:6))));
             transitionToYear(1);
             switchYearTab(1);
+            boardData[currentBoard].updateBoard();
+            refreshBoard();
           //clear initData
           initData = [];
 
@@ -3033,7 +3036,9 @@ files = e.target.files;
             document.getElementById("year3Precip").value=(boardData[currentBoard].precipitation[3]==24.58)?0:((boardData[currentBoard].precipitation[3]==28.18)?1:((boardData[currentBoard].precipitation[3]==30.39)?2:((boardData[currentBoard].precipitation[3]==32.16)?3:(boardData[currentBoard].precipitation[3]==34.34)?4:((boardData[currentBoard].precipitation[3]==36.47)?5:6))));
             transitionToYear(1);//transition to year one
             switchYearTab(1);
-            calculateResults();
+            boardData[currentBoard].updateBoard();
+            //calculateResults();
+            //generateResultsTable();
         //clear initData
         initData = [];
     }//end onload
