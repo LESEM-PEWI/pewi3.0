@@ -180,6 +180,7 @@ body {
 }
 
 .closeButton {
+  cursor: pointer;
   height: 40px;
   position: absolute;
   width: 40px;

@@ -83,7 +83,7 @@
 .fly{
     /* background-image: url(./imgs/consoleTexture.png); */
     position: absolute;
-    
+
     height: vw;
     left: 40%;
     top: 30%;
@@ -93,7 +93,7 @@
     font-size: var(--button-font-size);
     color: #fff;
     display: none;
-    
+
 }
 
 /* left console clickable buttons */
@@ -272,14 +272,14 @@
   /*column-gap: 1em;*/
 }
 
-#painterTab-leftcol {
+.painterTab-leftcol {
   width: calc(var(--left-console-width) / 2);
   display: block;
   left: 0.5vw;
   position: absolute;
 }
 
-#painterTab-rightcol {
+.painterTab-rightcol {
   width: calc(var(--left-console-width) / 2);
   display: block;
   left: 5vw;
