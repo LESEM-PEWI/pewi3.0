@@ -205,7 +205,7 @@
 
       <!-- Land type painter display -->
       <div id="painterTab" class="consoleTab">
-        <div id=painterTab-leftcol>
+        <div id="painterTab-leftcol" class="leftcol">
           <img id="paint1" class="landSelectorIcon iconSelected" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);">
           <img id="paint3" class="landSelectorIcon icon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);">
           <img id="paint15" class="landSelectorIcon icon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);">
@@ -220,7 +220,7 @@
 
         </div>
 
-        <div id=painterTab-rightcol>
+        <div id="painterTab-rightcol" class="rightcol">
           <img id="paint2" class="landSelectorIcon icon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
           <img id="paint4" class="landSelectorIcon icon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
           <img id="paint5" class="landSelectorIcon icon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
@@ -1010,15 +1010,19 @@
           </table>
         </div>
 
-        <p class="featuresText"></p><img id="cornClass" class="yieldSelectorIcon icon" src="./imgs/cornGrainIcon.png" title="Corn Grain" onclick="displayLevels('cornGrain');">
-        <p class="featuresText"></p><img id="soyClass" class="yieldSelectorIcon icon" src="./imgs/soybeanIcon.png" title="Soybean" onclick="displayLevels('soy');">
-        <p class="featuresText"></p><img id="fruitClass" class="yieldSelectorIcon icon" src="./imgs/fruitIcon.png" title="Mixed Fruits and Vegetables" onclick="displayLevels('fruit');">
-        <p class="featuresText"></p><img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" title="Cattle" onclick="displayLevels('cattle');">
-        <p class="featuresText"></p><img id="alfalfaClass" class="yieldSelectorIcon icon" src="./imgs/alfalfaIcon.png" title="Alfalfa" onclick="displayLevels('alfalfa');">
-        <p class="featuresText"></p><img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" title="GrassHay" onclick="displayLevels('grassHay');">
-        <p class="featuresText"></p><img id="switchGrassClass" class="yieldSelectorIcon icon" src="./imgs/switchGrassIcon.png" title="Switch Grass" onclick="displayLevels('switchGrass');">
-        <p class="featuresText"></p><img id="woodClass" class="yieldSelectorIcon icon" src="./imgs/woodIcon.png" title="Wood" onclick="displayLevels('wood');">
-        <p class="featuresText"></p><img id="shortClass" class="yieldSelectorIcon icon" src="./imgs/woodyBiomassIcon.png" title="Woody Biomass" onclick="displayLevels('short');">
+        <div class="leftcol">
+          <img id="cornClass" class="yieldSelectorIcon icon" src="./imgs/cornGrainIcon.png" title="Corn Grain" onclick="displayLevels('cornGrain');">
+          <img id="fruitClass" class="yieldSelectorIcon icon" src="./imgs/fruitIcon.png" title="Mixed Fruits and Vegetables" onclick="displayLevels('fruit');">
+          <img id="alfalfaClass" class="yieldSelectorIcon icon" src="./imgs/alfalfaIcon.png" title="Alfalfa" onclick="displayLevels('alfalfa');">
+          <img id="switchGrassClass" class="yieldSelectorIcon icon" src="./imgs/switchGrassIcon.png" title="Switch Grass" onclick="displayLevels('switchGrass');">
+          <img id="shortClass" class="yieldSelectorIcon icon" src="./imgs/woodyBiomassIcon.png" title="Woody Biomass" onclick="displayLevels('short');">
+        </div>
+        <div class="rightcol">
+          <img id="soyClass" class="yieldSelectorIcon icon" src="./imgs/soybeanIcon.png" title="Soybean" onclick="displayLevels('soy');">
+          <img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" title="Cattle" onclick="displayLevels('cattle');">
+          <img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" title="GrassHay" onclick="displayLevels('grassHay');">
+          <img id="woodClass" class="yieldSelectorIcon icon" src="./imgs/woodIcon.png" title="Wood" onclick="displayLevels('wood');">
+        </div>
 
       </div>
 
@@ -1053,7 +1057,7 @@
     <!--Chat box for Index information -->
     <div id="backgroundInfoButton" class="backgroundInfoButton" onclick="toggleBackgroundInfoDisplay();"><img src="./imgs/indexIcon.png"></div>
     <div id="backgroundInfoBox" class="backgroundInfoBox">
-      <p id = "indexPopupText"></p>
+      <p id="indexPopupText" class="indexPopupText"></p>
     </div>
 
     <!-- **END Right Side Component** -->
@@ -1105,7 +1109,7 @@
     <img id="meadowlark" class="meadowlarkhidden" src="./imgs/meadowlarkanimation.gif"></div>
 
   <!-- Create iframes for the results, options and multiplayer screens -->
-  <div id="modalResultsFrame"><iframe id="resultsFrame" class="resultsFrameRolled" src="./htmlFrames/results.html"></iframe></div>
+  <div id="modalResultsFrame"><iframe id="resultsFrame" class="resultsFrame" src="./htmlFrames/results.html"></iframe></div>
   <img id="closeResults" class="closeButton" style="opacity:0; visibility:hidden; right:9%;" src="./imgs/close_black.png" onclick="resultsEnd() ;">
   <iframe id="options" src="./htmlFrames/options.html"></iframe>
   <iframe id="multiplayer" src="./htmlFrames/multiDownload.html"></iframe>
