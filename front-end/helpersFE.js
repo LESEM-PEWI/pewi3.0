@@ -1257,7 +1257,6 @@ function resultsEnd() {
     pushClick(0, getStamp(), 13, 0, null);
   }
   //reset functionality
-  // document.getElementById("resultsFrame").className = "resultsFrameRolled";
   document.getElementById("resultsButton").className = "resultsButtonRolled";
   document.getElementById('closeResults').style.opacity = "0";
   document.getElementById("closeResults").style.visibility = "hidden";
@@ -3299,13 +3298,11 @@ function toggleBackgroundInfoDisplay()
     {
       document.getElementById("backgroundInfoBox").className = "backgroundInfoBoxRolled";
       document.getElementById("backgroundInfoButton").className = "backgroundInfoButtonRolled";
-      // document.getElementById("indexPopupText").className = "indexPopupTextHidden";
     }
     else
     {
       document.getElementById("backgroundInfoBox").className = "backgroundInfoBox";
       document.getElementById("backgroundInfoButton").className = "backgroundInfoButton";
-      // document.getElementById("indexPopupText").className = "indexPopupText";
     }
   }
 }
