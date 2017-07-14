@@ -266,7 +266,7 @@ function uniqueTileChange(tileId) {
     //Retrieves the last item in the array without deleting it
     var tempTileAndPainter = undoArr[currentYear].slice(-1).pop();
     //If the previously added tileId/Paint combo was the same tile and the same paint, it's not a unique change.
-    if(tileId == tempTileAndPainter[0] && boardData[currentBoard].map[tileId].landType[currentYear] == painter) {
+    if(tileId == tempTileAndPainter[0] && boardData[currentBoard].map[tileId].landType[currentYear] == painter && painterTool.status!=2) {
       return false;
     } else {
       return true;
