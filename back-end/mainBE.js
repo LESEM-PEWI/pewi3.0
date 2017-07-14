@@ -13,7 +13,6 @@ function propogateBoard(board) {
   for (var y = 0; y < 4; y++) {
     var precipIndex = setPrecipitation();
     board.precipitation[y] = precip[precipIndex];
-
     board.precipitationIndex[y] = precipIndex ; //store precip indices
   }
 
