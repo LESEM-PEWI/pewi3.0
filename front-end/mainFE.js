@@ -556,12 +556,10 @@ function switchBoards(newBoard) {
   if (riverPoints.length > 0) {
     riverPoints = [];
   }
-
   //push into current board
   boardData.push(newBoard);
   currentBoard++;
   boardData[currentBoard].updateBoard();
-
   refreshBoard();
   setupRiver();
   //in case new board is smaller than old board, make sure to reset hover
@@ -597,7 +595,6 @@ function setupBoardFromUpload(data) {
     var boardFromUpload = new GameBoard();
     if (parseInitial(data)) {
       propogateBoard(boardFromUpload);
-
       switchBoards(boardFromUpload);
       previousHover = null;
     }
