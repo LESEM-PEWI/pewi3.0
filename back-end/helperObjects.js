@@ -3078,6 +3078,16 @@ function Click(c1, c2, c3, c4, c5) {
       default:
         alert("This user click has not been configured yet. Please add this click to the cases in helperObjects.js");
         break;
+      //When a user performs a shift-click action
+      case 83:
+        if(action)
+          for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+            if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+              changeLandTypeTile(i);
+            }
+          }
+        else 
+          return "Shift click was performed";
     }
   }
 }

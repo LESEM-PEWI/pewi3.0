@@ -222,7 +222,7 @@ function changeLandTypeTile(tileId) {
       boardData[currentBoard].map[tileId].landType[currentYear] = painter;
     }
   }
-  if (curTracking && painterTool.status != 2 && !undo && !randomizing) {
+  if (curTracking && painterTool.status != 2 && !undo && !randomizing && !isShiftDown) {
     pushClick(0, getStamp(), 55, 0, tileId);
   }
 
@@ -841,7 +841,9 @@ function onDocumentMouseDown(event) {
 
         //if shift is down and map isn't highlighted, change all nonzero landtypes
         if (!mapIsHighlighted) {
-
+          if(curTracking) {
+            pushClick(0,getStamp(),83,0,null);
+          }
           for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
             if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
