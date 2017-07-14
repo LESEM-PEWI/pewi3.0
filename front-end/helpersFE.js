@@ -607,7 +607,6 @@ function revertChanges() {
 
 //transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
-
   currentYear = year;
     var tempNum = year + 37;
     if (curTracking) {
@@ -2853,7 +2852,7 @@ files = e.target.files;
 
 
         string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
-        console.log("reader created");
+      //console.log("reader created");
 
 
         var obj = JSON.parse(event.target.result);
@@ -2937,10 +2936,12 @@ files = e.target.files;
           if(year2Available)//If data for years is included, add the year
           {
           addYearAndTransition();
+          boardData[currentBoard].calculatedToYear=2;
           }
           if(year3Available)
           {
           addYearAndTransition();
+          boardData[currentBoard].calculatedToYear=3;
           }
             //updating the precip levels from the values in the uploaded file
             boardData[currentBoard].precipitation[0]=obj.precipitation[0];
@@ -2953,6 +2954,8 @@ files = e.target.files;
             document.getElementById("year3Precip").value=(boardData[currentBoard].precipitation[3]==24.58)?0:((boardData[currentBoard].precipitation[3]==28.18)?1:((boardData[currentBoard].precipitation[3]==30.39)?2:((boardData[currentBoard].precipitation[3]==32.16)?3:(boardData[currentBoard].precipitation[3]==34.34)?4:((boardData[currentBoard].precipitation[3]==36.47)?5:6))));
             transitionToYear(1);
             switchYearTab(1);
+            boardData[currentBoard].updateBoard();
+            refreshBoard();
           //clear initData
           initData = [];
 
@@ -2998,40 +3001,29 @@ files = e.target.files;
                   }
             }
             var multipleYearFlag=1;
-
-
           for(var i=0;i<lines.length;i++)//This for loop iterates through the uploaded csv data file and cheks if year 2 and 3 are present in the file
             {
-
-
               if((lines[i][26] != lines[i][27]))
               {
                 if(lines[i][26]!=1 && lines[i][26]!=0)
                   multipleYearFlag=2;
                 if(lines[i][27]!=1 && lines[i][27]!=0)
                   multipleYearFlag=3;
-
-
                 break;
               }
-
-
-
             }
-
             if(multipleYearFlag==2)
             {
-
               addingYearFromFile=true;
               addYearAndTransition();
-
+              boardData[currentBoard].calculatedToYear=2;
             }
             if(multipleYearFlag==3)
             {
               addingYearFromFile=true;
               addYearAndTransition();
               addYearAndTransition();
-
+              boardData[currentBoard].calculatedToYear=3;
             }
             //updating the precip levels from the values in the uploaded file
             boardData[currentBoard].precipitation[0]=lines[1][28];
@@ -3044,16 +3036,9 @@ files = e.target.files;
             document.getElementById("year3Precip").value=(boardData[currentBoard].precipitation[3]==24.58)?0:((boardData[currentBoard].precipitation[3]==28.18)?1:((boardData[currentBoard].precipitation[3]==30.39)?2:((boardData[currentBoard].precipitation[3]==32.16)?3:(boardData[currentBoard].precipitation[3]==34.34)?4:((boardData[currentBoard].precipitation[3]==36.47)?5:6))));
             transitionToYear(1);//transition to year one
             switchYearTab(1);
-
-
-
-
-
-
-
-
-
-
+            boardData[currentBoard].updateBoard();
+            //calculateResults();
+            //generateResultsTable();
         //clear initData
         initData = [];
     }//end onload
