@@ -620,7 +620,6 @@ function transitionToYear(year) {
       }
     }
     if(addingYearFromFile==true) {
-        console.log("thinking");
         boardData[currentBoard].calculatedToYear = year;
         for (var i = 0; i < boardData[currentBoard].map.length; i++) {
           boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year];
@@ -635,7 +634,7 @@ function transitionToYear(year) {
 //addYearAndTransition updates the years to switch between in the left console and transitions to the new year
 function addYearAndTransition() {
 
-  var totalYearsAllowed = 3;;
+  var totalYearsAllowed = 3;
   var nextYear = boardData[currentBoard].calculatedToYear + 1;
   if (curTracking) {
     pushClick(0, getStamp(), 41, 0, null);
@@ -1198,7 +1197,6 @@ function changeSelectedPaintTo(newPaintValue) {
 
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
-  console.log(boardData[currentBoard].calculatedToYear);
   inResults = true;
   //if something else does not have precedence
   if (!modalUp) {
