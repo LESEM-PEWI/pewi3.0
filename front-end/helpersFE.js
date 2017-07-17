@@ -618,15 +618,16 @@ function transitionToYear(year) {
       for (var i = 0; i < boardData[currentBoard].map.length; i++) {
         boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
       }
-     if(addingYearFromFile==true)
-      {
-        for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-        boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year];
-      }
-      }
-
-      boardData[currentBoard].updateBoard();
     }
+    if(addingYearFromFile==true) {
+        console.log("thinking");
+        boardData[currentBoard].calculatedToYear = year;
+        for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+          boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year];
+        }
+    }
+
+    boardData[currentBoard].updateBoard();
 
     refreshBoard();
 } //end transitionToYear
@@ -634,13 +635,13 @@ function transitionToYear(year) {
 //addYearAndTransition updates the years to switch between in the left console and transitions to the new year
 function addYearAndTransition() {
 
-  var totalYearsAllowed = 3;
-  var nextYear = currentYear + 1;
+  var totalYearsAllowed = 3;;
+  var nextYear = boardData[currentBoard].calculatedToYear + 1;
   if (curTracking) {
     pushClick(0, getStamp(), 41, 0, null);
   }
   //make next button appear (has some prebuilt functionality for expanded number of years)
-  if (currentYear < totalYearsAllowed - 1) {
+  if (nextYear < totalYearsAllowed) {
 
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
@@ -648,7 +649,7 @@ function addYearAndTransition() {
   }
 
   //make last button appear and remove the "+" Button (has some prebuilt functionality for expanded number of years)
-  if (currentYear == totalYearsAllowed - 1) {
+  if (nextYear == totalYearsAllowed) {
 
     document.getElementById("year3Button").className = "yearButton";
     document.getElementById("year3Image").className = "icon yearNotSelected";
@@ -657,6 +658,7 @@ function addYearAndTransition() {
   }
 
   switchYearTab(nextYear);
+  console.log(nextYear);
   transitionToYear(nextYear);
 
 } //end addYearAndTransition
@@ -1196,6 +1198,7 @@ function changeSelectedPaintTo(newPaintValue) {
 
 //resultsStart begins results calculations and calls functions that display the results
 function resultsStart() {
+  console.log(boardData[currentBoard].calculatedToYear);
   inResults = true;
   //if something else does not have precedence
   if (!modalUp) {
