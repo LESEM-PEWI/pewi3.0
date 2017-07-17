@@ -803,13 +803,17 @@ function onDocumentMouseDown(event) {
                 painterTool.endTile = currentTile;
                 var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
 
+                var tempGridArr = [];
                 for (var i = 0; i < changedTiles.length; i++) {
                   if (curTracking) {
-                    pushClick(0, getStamp(), 56, 0, changedTiles[i]);
+                    tempGridArr.push(changedTiles[i]);
                   }
                   undoGridPainters.push(boardData[currentBoard].map[changedTiles[i] - 1].landType[currentYear]);
                   changeLandTypeTile(changedTiles[i] - 1);
                 }
+                if (curTracking) {
+                    pushClick(0, getStamp(), 56, 0, tempGridArr);
+                  }
                 //Inserts the block of land use types into the undoArr
                 insertChange();
                 //reset highlighting, computationally intensive
@@ -4094,8 +4098,13 @@ function runSimulation() {
     tempStamp = tempArr[1];
     tempType = tempArr[2];
     tempGap = tempArr[3];
-    if (tempType == 55 || tempType == 56 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37) {
+    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37) {
       tempTile = tempArr[5];
+    } if (tempType == 56) {
+      var tempTile = [];
+      for(var j = 5; j < tempArr.length; j++) {
+        tempTile.push(tempArr[j]);
+      }
     } else {
       tempTile = null;
     }
