@@ -31,6 +31,7 @@ var mesh = null;
 var meshGeometry = new THREE.Geometry();
 var myTimer = null;
 var overlayedToggled = false;
+var optionsString="";//string that stores toggeled off options
 var paused = false;
 var pauseDuration = 0;
 var previousOverlay = null;
@@ -1103,7 +1104,7 @@ function toggleEscapeFrame() {
   }
 
   if (multiplayerAssigningModeOn) {
-    document.getElementById('optionsButton').className = "unclickableMainEscapeButton";
+    document.getElementById('optionsButton').className = "mainEscapeButton";
   } else {
     document.getElementById('optionsButton').className = "mainEscapeButton";
   }
@@ -2381,8 +2382,11 @@ function writeFileToDownloadString(mapPlayerNumber) {
 
   var string = "";
   if (typeof boardData[currentBoard] !== 'undefined') {
-
-    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
+      var tempOptions=optionsString.replace(/\n/g,"^");
+      optionsString=tempOptions;
+      //console.log("Options: %s",tempOptions);
+    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3,"+optionsString+",\n";//+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
+      
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       if (boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
@@ -2463,7 +2467,8 @@ function writeFileToDownloadString(mapPlayerNumber) {
       string += boardData[currentBoard].precipitation[0] + "," +
         boardData[currentBoard].precipitation[1] + "," +
         boardData[currentBoard].precipitation[2] + "," +
-        boardData[currentBoard].precipitation[3];
+        boardData[currentBoard].precipitation[3]+","+
+          optionsString;
 
       if (i < boardData[currentBoard].map.length - 1) {
         string = string + '\r\n';
@@ -2625,7 +2630,7 @@ function uploadClicked(e) {
           lines.push(tarr);
         }
       }
-
+//      window.top.document.getElementById('parameters').innerHTML;
       var multipleYearFlag = 1;
       //This for loop iterates through the uploaded csv data file and cheks if year 2 and 3 are present in the file
       for (var i = 0; i < lines.length; i++) {
@@ -2651,6 +2656,23 @@ function uploadClicked(e) {
         addYearAndTransition();
         boardData[currentBoard].calculatedToYear = 3;
         addingYearFromFile=false;
+      }
+        
+    //Clears data so the river isnt redrawn when new files are uploaded
+        initData = [];
+      //load options from the csv
+      //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes 
+      //the options page and shows the page is refreshed on the screen
+       if(headers.length == 32){
+           resetOptionsPage();
+           toggleVisibility();
+       }
+      //else if the file has options, then it takes the options and places it in the parameter div of the html and reloads it.
+      else{
+        var xys=headers[32].replace(/~/g,"\n");// since \n was replaced by '~' replace it back
+        window.top.document.getElementById('parameters').innerHTML=xys;// load the options string in the inner html of parameters
+        //make sure the locked land uses aren't seen on the side tool tab or on the map
+        toggleVisibility();
       }
 
       //updating the precip levels from the values in the uploaded file
@@ -3215,7 +3237,7 @@ function resetOptions() {
 //startOptions displays the options page
 function startOptions() {
   //if nothing else has precedence
-  if (!modalUp) {
+  if (!modalUp) { //commented for debugging
     modalUp = true;
     document.getElementById('options').style.visibility = "visible";
     //setup options page with the current parameter selection

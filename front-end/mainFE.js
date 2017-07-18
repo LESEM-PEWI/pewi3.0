@@ -779,10 +779,10 @@ function confirmEscape() {
   } else {
     document.getElementById('exitToMenuButton').style.backgroundColor = "#40a4df";
     document.getElementById('optionsButton').onclick = function() {
-      if (!multiplayerAssigningModeOn) {
+      //if (!multiplayerAssigningModeOn) {
         toggleEscapeFrame();
         startOptions();
-      }
+      //}
     };
     document.getElementById('directoryButton').onclick = function() {
       toggleEscapeFrame();

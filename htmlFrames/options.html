@@ -119,6 +119,7 @@ Cleaned and Prepared - July 2016
                 tempString += toggledElements[i].id + "\n"
               }
           } //end switch
+            
         } //end for elements of class toggle
 
         var yearNum = Number(document.getElementById('yearNumber').innerHTML);
@@ -137,6 +138,7 @@ Cleaned and Prepared - July 2016
 
         //put all the elements in the parameters div of index.html
         window.top.document.getElementById('parameters').innerHTML = tempString;
+          parent.optionsString=tempString;
         if(tempString.includes('paint'))
         {
           parent.saveAndRandomize();
