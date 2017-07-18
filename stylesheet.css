@@ -139,7 +139,7 @@ body {
 }
 #pewiLogo{
   right: 240px;
-  
+
 }
 .upperButton, #logoBase, #pewiLogo {
   height: 3vw;
@@ -180,6 +180,7 @@ body {
 }
 
 .closeButton {
+  cursor: pointer;
   height: 40px;
   position: absolute;
   width: 40px;
@@ -455,9 +456,10 @@ body {
 #hover-div {
   background: none !important;
   border-radius: 100%;
-  color: #003d4d;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 18px;
+  font-size: 12px;
   height: 100px;
   left: 48.85%;
   pointer-events: none;

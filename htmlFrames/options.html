@@ -38,7 +38,8 @@ Cleaned and Prepared - July 2016
   <script type= "text/javascript" src="./front-end/helpersFE.js"></script>
   <script>
     var maxYear = 3; //for settings, defines the number of year buttons specified
-
+    var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
+    "Rotate Clockwise","Rotate Counterclockwise","Pivot Towards Horizon (Flat)","Pivot Toward the Perpendicular","Toggle Overlay","Toggle Flying Mode"];
     //the saveCurrentOptionsState function is called when the save/exit button is pressed
     //each of the options is evaluated and the text for the parameters div is generated
     //as needed
@@ -72,6 +73,46 @@ Cleaned and Prepared - July 2016
               if (toggledElements[i].checked) {
                 tempString += "precipOff" + "\n";
               }
+              break;
+              case "hover1":
+                if (toggledElements[i].checked) {
+                  tempString += "hover1" + "\n";
+                }
+                break;
+              case "hover2":
+                  if (toggledElements[i].checked) {
+                    tempString += "hover2" + "\n";
+                  }
+               break;
+              case "hover3":
+                 if (toggledElements[i].checked) {
+                   tempString += "hover3" + "\n";
+                 }
+              break;
+              case "hover4":
+                if (toggledElements[i].checked) {
+                  tempString += "hover4" + "\n";
+                }
+              break;
+              case "hover5":
+                if (toggledElements[i].checked) {
+                  tempString += "hover5" + "\n";
+                }
+              break;
+              case "hover6":
+                if (toggledElements[i].checked) {
+                  tempString += "hover6" + "\n";
+                }
+              break;
+              case "hover7":
+                if (toggledElements[i].checked) {
+                  tempString += "hover7" + "\n";
+                }
+              break;
+              case "hover8":
+                if (toggledElements[i].checked) {
+                  tempString += "hover8" + "\n";
+                }
               break;
               //default case, just add a new line with parameter
             default:
@@ -185,6 +226,74 @@ Cleaned and Prepared - July 2016
       //alright now, let's put the year number back in the document
       document.getElementById('yearNumber').innerHTML = currentNumber;
     }
+
+    //Toggles and allows the user to set the hotkeys
+    //To add the hotkey to this list, do the following:
+    //
+    // 1.) Add the hotkey to hotkeyArr in helpersFE.js
+    // 2.) Add the description of the hotkey in this html file
+    // 3.) Format the if-statement for the hotkey appropriately so that each case can be used
+    // 4.) Increase the last hkDiv element number by one in style_options.css so that the bottom is properly stylized
+    
+    function retrieveHotkeys() {
+      if(document.getElementById("hotkeyAggregateTool").style.display == "none") {
+        document.getElementById("hotkeyAggregateTool").style.display = "block";
+        var curHotkeys = parent.giveHotkeys();
+        for(var i = 1; i < curHotkeys.length+1; i++) {
+          var tempIndex = i-1;
+          var tempHotkey = document.createElement("div");
+            tempHotkey.style.overflow = "auto";
+            tempHotkey.id = "hk"+i;
+            tempHotkey.className = "hkDivs";
+            tempHotkey.innerHTML = hotkeyDescrip[i-1];
+          var tempSpan = document.createElement("span");
+            tempHotkey.appendChild(tempSpan);
+          var tempInput1 = document.createElement("INPUT");
+            tempInput1.id = "hki"+tempIndex+"e1";
+            tempInput1.className = "hkInputs1";
+            if(curHotkeys[i-1][0]==null){
+              var tempChar = "N/A";
+            } else {
+              var tempChar = String.fromCharCode(curHotkeys[i-1][0]);
+            }
+            tempInput1.placeholder = tempChar;
+            tempInput1.setAttribute("type","text");
+            tempInput1.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",1)");
+            tempInput1.setAttribute("onkeydown","this.value = this.value");
+            tempInput1.setAttribute("size","5");
+            tempInput1.setAttribute("height","5");
+            tempSpan.appendChild(tempInput1);
+          var tempInput2 = document.createElement("input");
+            tempInput2.id = "hki"+tempIndex+"e2";
+            tempInput2.className = "hkInputs2";
+            if(curHotkeys[i-1][1]==null){
+              tempChar = "N/A";
+            } else {
+              tempChar = String.fromCharCode(curHotkeys[i-1][1]);
+            }
+            tempInput2.placeholder = tempChar;
+            tempInput2.setAttribute("type","text");
+            tempInput2.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",2)");
+            tempInput2.setAttribute("onkeydown","this.value = this.value");
+            tempInput2.setAttribute("size","5");
+            tempInput2.setAttribute("height","5");
+            tempSpan.appendChild(tempInput2);
+          if(i%2==0) {
+            tempHotkey.style.background = "#3a5a82";
+            tempInput1.style.background = "#3a5a82";
+            tempInput2.style.background = "#3a5a82";
+          } else {
+            tempHotkey.style.background = "#436489";
+            tempInput1.style.background = "#436489";
+            tempInput2.style.background = "#436489";
+          }
+          document.getElementById('hotkeySets').appendChild(tempHotkey);
+        }
+      } else {
+        document.getElementById("hotkeyAggregateTool").style.display = "none";
+        document.getElementById("hotkeySets").innerHTML = '';
+      }
+    }
   </script>
 
 </head>
@@ -254,6 +363,60 @@ Cleaned and Prepared - July 2016
      <!--<input id="paint16" class = "toggle" type = "checkbox">
       <label for = "paint16">Corn Grain</label>-->
     </div>
+    <div class="optionsHeader">
+      Hover options
+      <br>
+      <hr>
+    </div>
+
+    <div class = "optionsSubContainer">
+      <input id="hover1" class="toggle" type="checkbox">
+      <label for="hover1">Current Land Cover</label>
+
+      <input id="hover2" class="toggle" type="checkbox">
+      <label for="hover2">Current Precipitation</label>
+
+      <input id="hover3" class="toggle" type="checkbox">
+      <label for="hover3">Tile Soil Type</label>
+
+      <input id="hover4" class="toggle" type="checkbox">
+      <label for="hover4">Overlay Map Raw Score</label>
+
+      <input id="hover5" class="toggle" type="checkbox">
+      <label for="hover5">Subwatershed Number</label>
+
+      <input id="hover6" class="toggle" type="checkbox">
+      <label for="hover6">Flood Frequency</label>
+
+      <input id="hover7" class="toggle" type="checkbox">
+      <label for="hover7">Drainage Level</label>
+
+      <input id="hover8" class="toggle" type="checkbox">
+      <label for="hover8">Strategic Wetlands</label>
+    </div>
+
+    <div class="optionsHeader">
+      Hotkey options
+      <br>
+      <hr>
+    </div>
+
+    <div class = "optionsSubContainer">
+
+      <input id="hotkey1" class="toggle" type="button" onclick="retrieveHotkeys()">
+      <label for="hotkey1">Customize Hotkeys</label>
+
+      <input id="hotkey2" class="toggle" type="button" onclick="parent.resetHotkeys()">
+      <label for="hotkey2">Reset Hotkeys</label>
+
+      <div id="hotkeyAggregateTool" style="display: none">
+      <!-- Dynamically set hotkeys, depending on the size of the hotkeyArr in helpersFE.js -->
+        <div id="hotkeySets">
+        </div>
+      </div>
+
+    </div>
+
     <div class="optionsHeader">
       Annual Options
       <br>

@@ -807,10 +807,11 @@ function drawPrecipitationInformationChart() {
   //this nested function updates the text and images in the left container, mouseover info
   function setupPrecipInfo(year) {
     container.select('.yearLabel').html(data[year].label);
-    container.select('.precipValue').html(data[year].value + " inches");
+    container.select('.precipValue').html(Number(data[year].value) + " inches");
     container.select('.precipType').html(data[year].adj);
 
     var img = " ";
+
     switch (data[year].adj) {
       case "Dry":
         // "Clouds" by https://icons8.com with free commercial use / Inserted oval under cload
@@ -841,6 +842,11 @@ function drawPrecipitationInformationChart() {
   document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo').innerHTML = " ";
 
   //assign data
+  
+  for(var i = 0; i < boardData[currentBoard].precipitation.length-2; i++) {
+    boardData[currentBoard].precipitation[i] = Number(boardData[currentBoard].precipitation[i]);
+  }
+  
   var data = [{
     label: "Year 0",
     value: boardData[currentBoard].precipitation[0],
