@@ -257,7 +257,6 @@ Cleaned and Prepared - July 2016
               var tempChar = String.fromCharCode(curHotkeys[i-1][0]);
             }
             tempInput1.placeholder = tempChar;
-            tempInput1.setAttribute("type","text");
             tempInput1.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",1)");
             tempInput1.setAttribute("onkeydown","this.value = this.value");
             tempInput1.setAttribute("size","5");
@@ -271,7 +270,7 @@ Cleaned and Prepared - July 2016
             } else {
               tempChar = String.fromCharCode(curHotkeys[i-1][1]);
             }
-            tempInput2.placeholder = tempChar;
+            tempInput2.placeholder = tempChar; 
             tempInput2.setAttribute("type","text");
             tempInput2.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",2)");
             tempInput2.setAttribute("onkeydown","this.value = this.value");
@@ -279,13 +278,13 @@ Cleaned and Prepared - July 2016
             tempInput2.setAttribute("height","5");
             tempSpan.appendChild(tempInput2);
           if(i%2==0) {
-            tempHotkey.style.background = "#3a5a82";
-            tempInput1.style.background = "#3a5a82";
-            tempInput2.style.background = "#3a5a82";
+            tempHotkey.style.background = "#2d5986";
+            tempInput1.style.background = "#2d5986";
+            tempInput2.style.background = "#2d5986";
           } else {
-            tempHotkey.style.background = "#436489";
-            tempInput1.style.background = "#436489";
-            tempInput2.style.background = "#436489";
+            tempHotkey.style.background = "#0f4d70";
+            tempInput1.style.background = "#0f4d70";
+            tempInput2.style.background = "#0f4d70";
           }
           document.getElementById('hotkeySets').appendChild(tempHotkey);
         }
