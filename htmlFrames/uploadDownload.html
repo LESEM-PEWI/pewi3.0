@@ -4,10 +4,10 @@
 This page is designed to be used in a spanning iframe with index.html being its parent.
 
 The page consists of a four-cell table (2 rows, 2 cols) with the words 'Download' and
-'Upload' as well as the corresponding images. 
+'Upload' as well as the corresponding images.
 
 As seen in the included script, uploading is taken care of through the parent frame
-while downloading is mostly taken care of here. Ideally, both would be in parent frame, 
+while downloading is mostly taken care of here. Ideally, both would be in parent frame,
 but an issue with communicating back and forth makes it necessary for downloading to occur
 in the child frames.
 
@@ -21,17 +21,17 @@ Cleaned and Prepared - July 2016
     <meta charset="utf-8">
     <title>Workspace - Upload/Download</title>
     <!-- INCLUDES -->
-    
+
     <!--javascript-->
-    <script src=".././lib/jquery-1.12.4.min.js"></script>
+    <!-- <script src=".././lib/jquery-3.2.1.min.js"></script> -->
     <script src=".././lib/filesaver.min.js"></script>
     <!--css-->
     <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
     <!--external fonts (this only loads necessary characters)-->
     <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700&text=Upload%20Download' rel='stylesheet' type='text/css'>
-    
+
     <!-- /INCLUDES -->
-    
+
     <!--additional styling-->
     <style>
         body {
@@ -40,7 +40,7 @@ Cleaned and Prepared - July 2016
     </style>
 
 <script>
-//this function attaches the uploadClicked function from helpersFE.js to 
+//this function attaches the uploadClicked function from helpersFE.js to
 // changes in the file-upload element. When a file is select from the native
 // file dialogue, propertychange is triggered
 function bindUploadFileListener() {
@@ -62,7 +62,7 @@ function triggerDownloadSequence() {
     saveAs(downloadBlob, "pewiMap.csv") ;
 
     //close necessary frames
-    setTimeout(function() {parent.downloadClicked();},1 ); 
+    setTimeout(function() {parent.downloadClicked();},1 );
 }
 </script>
 

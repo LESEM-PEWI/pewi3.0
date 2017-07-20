@@ -107,7 +107,9 @@
     color: #fff;
     cursor: pointer;
     display: inline-block;
+    font-size: 1.2vw;
     font-size: var(--font-size);
+    height: 1vw;
     height: var(--button-height);
     margin: 1vw;
     padding: 15px 30px 15px 30px;
@@ -116,6 +118,7 @@
     transition: background-color .2s, box-shadow .2s;
     user-select: none;
     white-space: nowrap;
+    width: 12vw;
     width: var(--button-width);
     /*font-size: 20px;*/
     /*margin: 20px;*/
