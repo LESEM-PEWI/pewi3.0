@@ -103,9 +103,10 @@
 
 #pewiTitle {
   position: fixed;
-  width: 24vw;
+  width: 25vw;
   padding: 0px;
-  left: 40%;
+  top: 20%;
+  left: 35%;
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
 }
@@ -125,13 +126,6 @@
 #startupInformationText {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   color: #FFFFFF;
-  font-size: 25px;
-  width: 300px;
-  margin-left: -145px;
-  position: absolute;
-  left: 50%;
-  text-align: center;
-  margin-top: 105px;
   opacity: 0;
   -webkit-transition-duration: 4s;
   transition-duration: 4s;
@@ -163,28 +157,25 @@
 }
 
 #startupButton1, #startupButton2, #startupButton3 {
-  margin-left: -100px;
   margin-top: -25px;
-  opacity: 0;
   padding: 0;
   top: 50%;
   width: 15%;
 }
 
 #startupButton1 {
-  left: 25%;
   -webkit-transition-duration: 1.5s;
   transition-duration: 1.5s;
 }
 
 #startupButton2 {
-  left: 50%;
+  left: 25%;
   -webkit-transition-duration: 2.2s;
   transition-duration: 2.2s;
 }
 
 #startupButton3 {
-  left: 75%;
+  left: 50%;
   -webkit-transition-duration: 2.9s;
   transition-duration: 2.9s;
 }

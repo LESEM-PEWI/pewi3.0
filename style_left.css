@@ -80,6 +80,21 @@
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
+.fly{
+    /* background-image: url(./imgs/consoleTexture.png); */
+    position: absolute;
+
+    height: vw;
+    left: 40%;
+    top: 30%;
+    width: 12.5vw
+    text-align: center;
+    font-family: var(--button-font-family);
+    font-size: var(--button-font-size);
+    color: #fff;
+    display: none;
+
+}
 
 /* left console clickable buttons */
 .consoleButton {
@@ -257,14 +272,14 @@
   /*column-gap: 1em;*/
 }
 
-#painterTab-leftcol {
+.leftcol {
   width: calc(var(--left-console-width) / 2);
   display: block;
   left: 0.5vw;
   position: absolute;
 }
 
-#painterTab-rightcol {
+.rightcol {
   width: calc(var(--left-console-width) / 2);
   display: block;
   left: 5vw;

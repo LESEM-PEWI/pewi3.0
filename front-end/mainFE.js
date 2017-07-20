@@ -3,10 +3,13 @@
 //global vars
 
 //webGL stuff
-var camera, scene, raycaster, mouse, hoveredOver, bgCam;
+var camera, scene, raycaster, mouse, hoveredOver, bgCam, camera2, camera1, ToggleCam, cam2x, cam2y, cam2z;
+var cam2Roy, cam2Rox, cam2Roz;
+var player = { speed:3, turnSpeed:Math.PI*0.02 };
+var keyboard ={};
 var bgScene = null;
 var renderer = new THREE.WebGLRenderer();
-var controls;
+var controls, controls1;
 var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
 //application data
@@ -56,12 +59,20 @@ function createThreeFramework() {
 
   //create the main THREE.js scene
   scene = new THREE.Scene();
+    
+ //Creating mesh box around Map.
+ var meshfloor = new THREE.Mesh(
+ new THREE.BoxGeometry(500,100,500),
+ new THREE.MeshBasicMaterial({color:0x0ffffff, wireframe:false}));
+    
+    meshfloor.rotation.y += Math.PI/2;                                                                                              
+    //scene.add(meshfloor);
 } //end createThreeFramework()
 
 //initializeCamera adds the camera object with specifications to the scene
 function initializeCamera() {
 
-  //camera
+  //Setting Up camera (Main camera)
   SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
   ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
   camera = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
@@ -69,22 +80,257 @@ function initializeCamera() {
 
   //point camera in the correct direction
   // we'd hate to have the user looking at nothing
-  camera.position.x = 0;
-  camera.position.y = 320;
-  camera.position.z = 0;
-  camera.rotation.x = -1.570795331865673;
+    camera.position.x = 0;
+    camera.position.y = 320;
+    camera.position.z = 0;
+    camera.rotation.x = -1.570795331865673;
+    
+    //Setting up First Camera 
+    SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+    ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
+    camera1 = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
+    scene.add(camera1);
+     //Camera1 view
+    camera1.position.x = 0;
+    camera1.position.y = 320;
+    camera1.position.z = 0;
+    camera1.rotation.x = -1.570795331865673;
 
-  //set camera field of view for zoom functions
-  fov = camera.fov;
+    //Setting up Second Camera
+    SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+    ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
+    camera2 = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
+    scene.add(camera2);
+    //Second camera view
+    camera2.position.x = 70;
+    camera2.position.y = 25;
+    camera2.position.z = 244;
+    camera2.rotation.y = 0;
 
-  //set up controls
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.minDistance = 120;
-  controls.maxDistance = 500;
+    //set camera field of view for zoom functions
+    fov = camera.fov;
 
-  //add resize listener, so we can keep the aspect ratio correct
-  window.addEventListener('resize', onResize, false);
+    //set up controls for camera one and camera1
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls1 = new THREE.OrbitControls(camera1, renderer.domElement);
+
+    //Zoom in and zoom out restrictions for camera one
+    controls.minDistance = 120;
+    controls.maxDistance = 500;
+    controls1.minDistance = 120;
+    controls1.maxDistance = 500;
+
+    //add resize listener, so we can keep the aspect ratio correct.
+    window.addEventListener('resize', onResize, false);
+    
+    //Event Listners for camera movements
+    window.addEventListener('keydown', keyDown);
+    window.addEventListener('keyup', keyUp); 
+    
+    //Event listners for changing camera views
+    document.addEventListener('keyup', CamView);
+    animate(); 
 } //end initializeCamera
+
+
+//Event function that is called when screen is changed
+function CamView(e) {
+  tempKeys = giveHotkeys();
+  if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
+    toggleCameraView();
+  }
+}
+
+// Function to restore camera2 last position after changing views.    
+function RestorePosition(){
+    //Storing the camera2 values to global variables
+    camera2.position.x = cam2x;
+    camera2.position.y = cam2y;
+    camera2.position.z = cam2z;   
+    camera2.rotation.x = cam2Rox;
+    camera2.rotation.y = cam2Roy;
+    camera2.rotation.z = cam2Roz;
+}
+
+//Function to change camera views.This function is called when the button Q is pressed.
+function toggleCameraView(){
+    //Checking the flag variable to know which camera is functional.
+    if (ToggleCam == 1){changeCam2();}
+    else{ChangeCam();}
+    if (ToggleCam == 1){document.getElementById('flyover').style.display = "block"}
+    else{document.getElementById('flyover').style.display = "none";}
+}
+
+//Changes camera from birds-eye view to first person view
+function ChangeCam (){
+   //Switching to second camera view
+   camera = camera2;
+   //Changing flag variable
+    ToggleCam = 1;
+    //Reseting camera twos position
+    if(cam2x)
+    RestorePosition();
+}
+
+//Changs camera from first person  view to birds-eye view
+function changeCam2(){
+    //saving camera2 old position
+    cam2x = camera2.position.x;
+    cam2y = camera2.position.y;
+    cam2z = camera2.position.z;
+    cam2Roy = camera2.rotation.y;
+    cam2Rox = camera2.rotation.x;
+    cam2Roz = camera2.rotation.z;
+    //Changes Camera to second camera view
+    camera = camera1;
+    //Flag variable for changing camera views
+    ToggleCam = 2;
+    //Reseting camera to original position after switching
+    controls1.value = 10;
+    controls1.reset();
+    setTimeout(function() {
+    controls1.value = 1;
+      }, 100);
+}
+
+//Camera movements Controls for Camera2 ie second view
+function animate(){
+	requestAnimationFrame(animate);
+	
+	//Keyboard movement inputs
+    if(keyboard[87]){ // W key Forward Movements
+        //Movements Restrictions and setting bounds
+        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
+        //and if it does it resets it to that specific position set.
+        //If it doesnt the camera moves normally.
+         if(camera2.position.x - Math.sin(camera2.rotation.y) * player.speed >= 265)
+            camera2.position.x = 264;
+        if(camera2.position.x - Math.sin(camera2.rotation.y) * player.speed  <= -265)
+            camera2.position.x =-264;
+        if(camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)
+            camera2.position.z = 299;
+        if(camera2.position.z-Math.cos(camera2.rotation.y) * player.speed  <= -300)
+            camera2.position.z =- 299;
+        else
+            camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
+		camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
+        console.log(camera2.position);
+    }
+
+	if(keyboard[83]){ // S key Back Words movements
+        //Movements Restrictions and setting bounds
+        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
+        //and if it does it resets it to that specific position set.
+        //If it doesnt the camera moves normally.
+        if(camera2.position.x+Math.sin(camera2.rotation.y) * player.speed >= 265)
+            camera2.position.x=264;
+        if(camera2.position.x+Math.sin(camera2.rotation.y) * player.speed  <= -265)
+            camera2.position.x=-264;
+        if(camera2.position.z+Math.cos(camera2.rotation.y) * player.speed >= 300)
+            camera2.position.z=299;
+        if(camera2.position.z+Math.cos(camera2.rotation.y) * player.speed  <= -300)
+            camera2.position.z=-299;
+        else
+            camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
+		camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
+        console.log(camera2.position);
+	}
+	
+    if(keyboard[65]){ // A key Left Side Movement
+        //Movements Restrictions and setting bounds
+        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
+        //and if it does it resets it to that specific position set.
+        //If it doesnt the camera moves normally.
+         if(camera2.position.x-Math.sin(camera2.rotation.y + Math.PI/2) * player.speed >= 265)
+            camera2.position.x=264;
+        if(camera2.position.x-Math.sin(camera2.rotation.y + Math.PI/2) * player.speed  <= -265)
+            camera2.position.x=-264;
+        if(camera2.position.z - Math.cos(camera2.rotation.y + Math.PI/2) * player.speed >= 300)
+            camera2.position.z=299;
+        if(camera2.position.z - Math.cos(camera2.rotation.y + Math.PI/2) * player.speed  <= -300)
+            camera2.position.z=-299;
+        else
+            camera2.position.z -= Math.cos(camera2.rotation.y + Math.PI/2) * player.speed;
+		camera2.position.x -= Math.sin(camera2.rotation.y + Math.PI/2) * player.speed;
+        console.log(camera2.position);
+	}
+	
+    if(keyboard[68]){ // D key Right side Movements
+        //Movements Restrictions and setting bounds
+        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
+        //and if it does it resets it to that specific position set.
+        //If it doesnt the camera moves normally.
+        if(camera2.position.x-Math.sin(camera2.rotation.y - Math.PI/2) * player.speed >= 265)
+            camera2.position.x=264;
+        if(camera2.position.x-Math.sin(camera2.rotation.y - Math.PI/2) * player.speed  <= -265)
+            camera2.position.x=-264;
+        if(camera2.position.z - Math.cos(camera2.rotation.y - Math.PI/2) * player.speed >= 300)
+            camera2.position.z=299;
+        if(camera2.position.z - Math.cos(camera2.rotation.y - Math.PI/2) * player.speed  <= -300)
+            camera2.position.z=-299;
+        else
+		  camera2.position.z -= Math.cos(camera.rotation.y - Math.PI/2) * player.speed;
+		camera2.position.x -= Math.sin(camera.rotation.y - Math.PI/2) * player.speed;
+         console.log(camera2.position);
+	}
+   
+    // Keyboard turn inputs
+	if(keyboard[39]){ // left arrow key Rotate right
+        //This rotates the camera left
+		camera2.rotation.y -= player.turnSpeed;
+	}
+	if(keyboard[37]){ // right arrow key Rotate left
+        //This rotates the camera right
+		camera2.rotation.y += player.turnSpeed;
+	}
+	
+    //Specific Zooming
+    if(keyboard[38]){ // Up arrow key
+        //Checking if toggle is on and checking if it passes a specific bounds and if it does
+        // It sets it to specific height and restrict it to that heights else if moves normally 
+        if (tToggle){
+        if(camera2.position.y <= 27 )
+            camera2.position.y = 27;
+        else{
+         camera2.position.y -= 1;
+        camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
+		camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
+        console.log(camera2.position.y +" "+ camera.position.z);}
+        }else{
+        if(camera2.position.y <= 9 )
+            camera2.position.y = 9;
+        else{
+         camera2.position.y -= 1;
+        camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
+		camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
+        console.log(camera2.position.y +" "+ camera.position.z);}
+        }
+}
+    
+    if(keyboard[40]){ // Down arrow key 
+       //setting bounds for zooming out and checking the camera y and z position.
+        //If it passes the position, it restricts the camera movement
+        if(camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)
+            camera2.position.z = 299;
+        if(camera2.position.y >= 60){ 
+            camera2.position.y = 60;
+            console.log(camera2.position.y +" "+ camera.position.z);
+        }
+        else {
+        camera2.position.y += 1;
+        camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
+		camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
+        console.log(camera2.position.y +" "+ camera.position.z);}
+    }
+	renderer.render(scene, camera);   
+}
+function keyDown(event){
+	keyboard[event.keyCode] = true;
+}
+
+function keyUp(event){
+	keyboard[event.keyCode] = false;
+}
 
 //initializeLighting adds the lighting with specifications to the scene
 function initializeLighting() {
@@ -207,6 +453,7 @@ function animationFrames() {
 
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+//    renderer.render(scene, camera1);
     stats.update();
 
   }); //end request
@@ -309,12 +556,10 @@ function switchBoards(newBoard) {
   if (riverPoints.length > 0) {
     riverPoints = [];
   }
-
   //push into current board
   boardData.push(newBoard);
   currentBoard++;
   boardData[currentBoard].updateBoard();
-
   refreshBoard();
   setupRiver();
   //in case new board is smaller than old board, make sure to reset hover
@@ -350,7 +595,6 @@ function setupBoardFromUpload(data) {
     var boardFromUpload = new GameBoard();
     if (parseInitial(data)) {
       propogateBoard(boardFromUpload);
-
       switchBoards(boardFromUpload);
       previousHover = null;
     }

@@ -62,6 +62,24 @@
     left: -9999px;
   }
 
+  .hkInputs1 {
+    position: absolute;
+    left: 70%;
+    border: 0;
+  }
+
+  .hkInputs2 {
+    position: absolute;
+    left: 80%;
+    border: 0;
+  }
+
+  .hkDivs {
+    position: relative;
+    height: 25px;
+    text-indent: 5%;
+  }
+
   .maxYearOptions-text {
     cursor:default;
     display:inline-block;
@@ -120,4 +138,23 @@
 
   #maxYearOptions-button {
     border-radius: 0px;
+  }
+
+  #hotkeySets {
+    border: 5px solid white;
+    border-radius: 25px;
+  }
+
+  #hotkeyAggregateTool {
+    width: 50%;
+  }
+
+  #hk1 {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+  }
+
+  #hk12 {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
   }

@@ -75,6 +75,7 @@ var playerCombo = [];
 var totalPlayers = 0;
 var merging = false;
 var resetting = false;
+var hotkeyArr = [[69,null],[82,null],[84,null],[85,null],[66,null],[86,null],[68,null],[65,null],[87,null],[83,null],[79,null],[81,null]];
 
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
@@ -221,7 +222,7 @@ function changeLandTypeTile(tileId) {
       boardData[currentBoard].map[tileId].landType[currentYear] = painter;
     }
   }
-  if (curTracking && painterTool.status != 2 && !undo && !randomizing) {
+  if (curTracking && painterTool.status != 2 && !undo && !randomizing && !isShiftDown) {
     pushClick(0, getStamp(), 55, 0, tileId);
   }
 
@@ -265,7 +266,7 @@ function uniqueTileChange(tileId) {
     //Retrieves the last item in the array without deleting it
     var tempTileAndPainter = undoArr[currentYear].slice(-1).pop();
     //If the previously added tileId/Paint combo was the same tile and the same paint, it's not a unique change.
-    if(tileId == tempTileAndPainter[0] && boardData[currentBoard].map[tileId].landType[currentYear] == painter) {
+    if(tileId == tempTileAndPainter[0] && boardData[currentBoard].map[tileId].landType[currentYear] == painter && painterTool.status!=2) {
       return false;
     } else {
       return true;
@@ -606,7 +607,6 @@ function revertChanges() {
 
 //transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
-
   currentYear = year;
     var tempNum = year + 37;
     if (curTracking) {
@@ -693,9 +693,10 @@ function onDocumentMouseMove(event) {
 
   raycaster.setFromCamera(mouse, camera);
 
+  //FIXME intersects indicates when mouse is hover on tiles, however when the land's angle change, it appears not correct. I think this affects the correctness of coordinates
   var intersects = raycaster.intersectObjects(scene.children);
 
-  //Remove highlighting if clicking and dragging
+  //Remove highlighting if clicking and dragging (painter tool/brush 1)
   if (clickAndDrag) {
     highlightTile(-1);
   }
@@ -714,6 +715,7 @@ function onDocumentMouseMove(event) {
     highlightTile(-1);
   }
 
+  // mouse hovered on tiles and no iframe pops
   if (intersects.length > 0 && !modalUp) {
 
     //if painter tool type is the rectangle painter
@@ -732,17 +734,19 @@ function onDocumentMouseMove(event) {
       //  so it should consistently not highlight
       // in reality, there is a distinction between space outside the board and a
       //  tile on the board with no land type
-      if (currentTile && boardData[currentBoard].map[currentTile].landType[0] != 0) {
 
+      // if the tile the mouse hover on has landUseType, that means it is a paintable land
+      if (boardData[currentBoard].map[currentTile].landType[0] !== 0) {
+        // grid painter mode highlighting tiles here
         for (var i = 0; i < tilesToHighlight.length; i++) {
           highlightTile(tilesToHighlight[i] - 1);
           //prevent highlighting from overwritting...
           previousHover = null;
         }
-
         highlightedTiles = tilesToHighlight;
-      }
-    }
+      } // end if highlighting tiles
+    } // end if grid painter brush
+
     //if painter tool type is the clickAndDrag painter
     else if (clickAndDrag) {
       var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
@@ -837,7 +841,9 @@ function onDocumentMouseDown(event) {
 
         //if shift is down and map isn't highlighted, change all nonzero landtypes
         if (!mapIsHighlighted) {
-
+          if(curTracking) {
+            pushClick(0,getStamp(),83,0,null);
+          }
           for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
             if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
@@ -885,7 +891,10 @@ function onDocumentKeyDown(event) {
       break;
 
       //case t - toggle topography
-    case 84:
+    case hotkeyArr[2][0]: case hotkeyArr[2][1]:
+    //setting the camera y position to a specific hight when toggle is pressed.
+    if (camera2.position.y < 27)
+        camera2.position.y = 27;
       if (modalUp !== true) {
         if (curTracking) {
           pushClick(0, getStamp(), 32, 0, null);
@@ -903,21 +912,33 @@ function onDocumentKeyDown(event) {
         setupRiver();
       }
       break;
-
       //case e - reset camera position
-    case 69:
+    case hotkeyArr[0][0]: case hotkeyArr[0][1]:
       //update scope across 10 turns,
       // it seeems that controls.js scope doesn't bring us all the way back
       // with just a controls value of 1
-      controls.value = 10;
-      controls.reset();
-      setTimeout(function() {
-        controls.value = 1;
+    //Reseting camera postion to specific views depending on which camera is on use now.
+    controls.value = 10;
+    controls.reset();
+    setTimeout(function() {
+    controls.value = 1;
       }, 100);
+    if(ToggleCam == 2){
+      controls1.value = 10;
+      controls1.reset();
+      setTimeout(function() {
+        controls1.value = 1;
+      }, 100);
+    }else{
+        camera2.position.x = 70;
+        camera2.position.y = 25;
+        camera2.position.z = 244;
+        camera2.rotation.y = 0;
+    }
       break;
 
       //case r - randomize land types
-    case 82:
+    case hotkeyArr[1][0]: case hotkeyArr[1][1]:
       if (modalUp !== true && currentHighlightType < 4) {
         if (curTracking) {
           pushClick(0, getStamp(), 52, 0, null);
@@ -952,7 +973,7 @@ function onDocumentKeyDown(event) {
       break;
 
       //case v - key to record multiplayer fields
-    case 86:
+    case hotkeyArr[5][0]: case hotkeyArr[5][1]:
       if (multiplayerAssigningModeOn) {
         endMultiplayerAssignMode();
       }
@@ -977,12 +998,12 @@ function onDocumentKeyDown(event) {
       }
       break;
       // case u - undo key
-    case 85:
+    case hotkeyArr[3][0]: case hotkeyArr[3][1]:
         revertChanges();
       break;
 
       // case o - toggleOverlay
-    case 79:
+    case hotkeyArr[10][0]: case hotkeyArr[10][1]:
       if (previousOverlay != null) {
         if (curTracking) {
           pushClick(0, getStamp(), 31, 0, null);
@@ -992,7 +1013,7 @@ function onDocumentKeyDown(event) {
       break;
 
       // key b - clickTrackings
-    case 66:
+    case hotkeyArr[4][0]: case hotkeyArr[4][1]:
       if (!curTracking) {
         curTracking = true;
         //Starting date is recorded
@@ -1241,7 +1262,6 @@ function resultsEnd() {
     pushClick(0, getStamp(), 13, 0, null);
   }
   //reset functionality
-  document.getElementById("resultsFrame").className = "resultsFrameRolled";
   document.getElementById("resultsButton").className = "resultsButtonRolled";
   document.getElementById('closeResults').style.opacity = "0";
   document.getElementById("closeResults").style.visibility = "hidden";
@@ -2271,7 +2291,6 @@ function getHighlightedInfo(tileId) {
   else {
 
     var highlightString = "";
-
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
@@ -2395,9 +2414,44 @@ function getHighlightedInfo(tileId) {
               highlightString = "11.2-13.2 Mg/hr/yr" + "<br>";
              break;
           }*/
-
+    //Raw numbers are for conversion of the units (conversion doesn't exist in the back end)
+    //create string for corn grain yield
+    case 9:
+      highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield()/15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>";
+      break;
+    //create string for soybean yield
+    case 10:
+      highlightString = Number(boardData[currentBoard].map[tileId].getSoybeanYield()/14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>";
+      break;
+    //create string for  mixed fruit and vegetable yield
+    case 11:
+      highlightString = Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield()/0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>";
+      break;
+    //create string for cattle yield
+    case 12:
+      highlightString = Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(1) + " animals/acre/yr" + "<br>";
+      break;
+    //create string for alfalfa yield
+    case 13:
+      highlightString = Number(boardData[currentBoard].map[tileId].getHayYield()/0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
+      break;
+     //create string for grass hay yield (same as alfalfa)
+    case 14:
+      highlightString = Number(boardData[currentBoard].map[tileId].getHayYield()/0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
+      break;
+    //create string for switchgrass yield
+    case 15:
+      highlightString = Number(boardData[currentBoard].map[tileId].getSwitchgrassYield()/0.445407279029).toFixed(2) + " Mg/ha/yr" + "<br>";
+      break;
+    //create string for wood yield
+    case 16:
+      highlightString = Number(boardData[currentBoard].map[tileId].getWoodYield()/171.875).toFixed(2) + " m3/ha/yr" + "<br>";
+      break;
+    //create string for short-rotation woody biomass yield
+    case 17:
+      highlightString = "608.6 tons/acre/yr" + "<br>";
+      break;
     }
-
     return highlightString;
   }
 
@@ -2448,11 +2502,19 @@ switch (soil)
     highlightString = "Noadaway 220" + "<br>";
     break;
   }
-  if(document.getElementById('parameters').innerHTML.includes('hover4'))
+  if(document.getElementById('parameters').innerHTML.includes('hover4') && currentHighlightType!=0)
   {
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCornGrainYield()/15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSoybeanYield()/14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield()/0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(1) + " animals/acre/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getHayYield()/0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSwitchgrassYield()/0.445407279029).toFixed(2) + " Mg/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getWoodYield()/171.875).toFixed(2) + " m3/ha/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("608.6 tons/acre/yr" + "<br>", '');
   }
   if(document.getElementById('parameters').innerHTML.includes('hover5'))
   {
@@ -2668,7 +2730,6 @@ function writeFileToDownloadString(mapPlayerNumber) {
   //  when the year 1 land use is equal to that player's number
 
   var string = "";
-  console.log(boardData[currentBoard]);
   if (typeof boardData[currentBoard] !== 'undefined') {
 
     string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
@@ -2678,7 +2739,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
         string = string + boardData[currentBoard].map[i].id + "," +
         boardData[currentBoard].map[i].row + "," +
         boardData[currentBoard].map[i].column + "," +
-        "0" + ","; 
+        "0" + ",";
       } else {
       string = string + boardData[currentBoard].map[i].id + "," +
         boardData[currentBoard].map[i].row + "," +
@@ -2785,7 +2846,7 @@ files = e.target.files;
     {
       if(files[0].name.match(/\.json/))//. json is file format from pewi2.1
       {
-        //This piece of code converts files from pewi2.1 to fileformat of pewi 3.0 
+        //This piece of code converts files from pewi2.1 to fileformat of pewi 3.0
 
         var reader = new FileReader();
         reader.readAsText(files[0]);
@@ -2797,7 +2858,7 @@ files = e.target.files;
 
 
         string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
-        console.log("reader created");
+      //console.log("reader created");
 
 
         var obj = JSON.parse(event.target.result);
@@ -2881,10 +2942,12 @@ files = e.target.files;
           if(year2Available)//If data for years is included, add the year
           {
           addYearAndTransition();
+          boardData[currentBoard].calculatedToYear=2;
           }
           if(year3Available)
           {
           addYearAndTransition();
+          boardData[currentBoard].calculatedToYear=3;
           }
             //updating the precip levels from the values in the uploaded file
             boardData[currentBoard].precipitation[0]=obj.precipitation[0];
@@ -2897,6 +2960,8 @@ files = e.target.files;
             document.getElementById("year3Precip").value=(boardData[currentBoard].precipitation[3]==24.58)?0:((boardData[currentBoard].precipitation[3]==28.18)?1:((boardData[currentBoard].precipitation[3]==30.39)?2:((boardData[currentBoard].precipitation[3]==32.16)?3:(boardData[currentBoard].precipitation[3]==34.34)?4:((boardData[currentBoard].precipitation[3]==36.47)?5:6))));
             transitionToYear(1);
             switchYearTab(1);
+            boardData[currentBoard].updateBoard();
+            refreshBoard();
           //clear initData
           initData = [];
 
@@ -2924,7 +2989,7 @@ files = e.target.files;
         //Code to check if data multiple years are present in the file
           var allText=reader.result;
 
-              
+
           //converting the csv into an array
             var allTextLines = allText.split(/\r\n|\n/);
             var headers = allTextLines[0].split(',');
@@ -2942,40 +3007,29 @@ files = e.target.files;
                   }
             }
             var multipleYearFlag=1;
-           
-          
           for(var i=0;i<lines.length;i++)//This for loop iterates through the uploaded csv data file and cheks if year 2 and 3 are present in the file
             {
-
-
               if((lines[i][26] != lines[i][27]))
-              { 
+              {
                 if(lines[i][26]!=1 && lines[i][26]!=0)
                   multipleYearFlag=2;
                 if(lines[i][27]!=1 && lines[i][27]!=0)
                   multipleYearFlag=3;
-
-                
                 break;
               }
-            
-              
-
             }
-
             if(multipleYearFlag==2)
             {
-              
               addingYearFromFile=true;
               addYearAndTransition();
-              
-            }                        
-            if(multipleYearFlag==3)              
+              boardData[currentBoard].calculatedToYear=2;
+            }
+            if(multipleYearFlag==3)
             {
               addingYearFromFile=true;
               addYearAndTransition();
               addYearAndTransition();
-             
+              boardData[currentBoard].calculatedToYear=3;
             }
             //updating the precip levels from the values in the uploaded file
             boardData[currentBoard].precipitation[0]=lines[1][28];
@@ -2988,16 +3042,9 @@ files = e.target.files;
             document.getElementById("year3Precip").value=(boardData[currentBoard].precipitation[3]==24.58)?0:((boardData[currentBoard].precipitation[3]==28.18)?1:((boardData[currentBoard].precipitation[3]==30.39)?2:((boardData[currentBoard].precipitation[3]==32.16)?3:(boardData[currentBoard].precipitation[3]==34.34)?4:((boardData[currentBoard].precipitation[3]==36.47)?5:6))));
             transitionToYear(1);//transition to year one
             switchYearTab(1);
-
-            
-
-
-
-
-
-
-
-
+            boardData[currentBoard].updateBoard();
+            //calculateResults();
+            //generateResultsTable();
         //clear initData
         initData = [];
     }//end onload
@@ -3091,7 +3138,7 @@ function toggleIndex() {
   if (document.getElementById('index').style.display != "block" && !modalUp) {
     closeCreditFrame();
     closeUploadDownloadFrame();
-    if (document.getElementById('resultsFrame').className != "resultsFrameRolled") resultsEnd();
+    if ( document.getElementById('modalResultsFrame').style.display == "block") resultsEnd();
 
     if (curTracking) {
       pushClick(0, getStamp(), 78, 0, null)
@@ -3242,13 +3289,11 @@ function toggleBackgroundInfoDisplay()
     {
       document.getElementById("backgroundInfoBox").className = "backgroundInfoBoxRolled";
       document.getElementById("backgroundInfoButton").className = "backgroundInfoButtonRolled";
-      document.getElementById("indexPopupText").className = "indexPopupTextHidden";
     }
     else
     {
       document.getElementById("backgroundInfoBox").className = "backgroundInfoBox";
       document.getElementById("backgroundInfoButton").className = "backgroundInfoButton";
-      document.getElementById("indexPopupText").className = "indexPopupText";
     }
   }
 }
@@ -3558,7 +3603,7 @@ function resetOptions() {
   toggleVisibility();
   // remove Esc key event listener
   document.removeEventListener('keyup', optionsEsc);
-
+  window.frames[4].document.removeEventListener('keyup', optionsEsc);
 } //end resetOptions
 
 //startOptions displays the options page
@@ -3571,6 +3616,7 @@ function startOptions() {
     document.getElementById('options').contentWindow.getCurrentOptionsState();
     // add Esc key event listener
     document.addEventListener('keyup', optionsEsc);
+    window.frames[4].document.addEventListener('keyup', optionsEsc);
   }
 } // end startOptions
 
@@ -3581,6 +3627,64 @@ function optionsEsc(e) {
     resetOptions();
   }
 }
+
+//Returns the hotkey array
+function giveHotkeys() {
+  return hotkeyArr;
+} //end giveHotkeys()
+
+//Resets the hotkey array to its default state
+function resetHotkeys() {
+  hotkeyArr = [[69,null],[82,null],[84,null],[85,null],[66,null],[86,null],[68,null],[65,null],[87,null],[83,null],[79,null],[81,null]];
+  updateKeys();
+} //end resetHotkeys()
+
+//Checks other hotkey bindings
+//
+//givenKey: Key they want to bind
+//givenFunc: The command for binding
+//givenSlot: Primary or Secondary hotkey binding
+
+function setHotkey(givenKey,givenFunc,givenSlot) {
+  //For each hotkey possible
+  givenKey = (givenKey.toUpperCase()).charCodeAt(0);
+  //Make sure it's an appropriate keycode character
+  if(!isNaN(givenKey) || givenKey < 10) {
+    for(var i = 0; i < hotkeyArr.length; i++) {
+      //For each assigned hotkey for that type (2 is maximum)
+      for(var j = 0; j < 2; j++) {
+        //If the given hotkey matches one of the existing ones, replace the old with null
+        if(hotkeyArr[i][j] == givenKey) {
+          hotkeyArr[i][j] = null;
+        }
+      }
+    }
+    //Set the new hotkey
+    if(hotkeyArr[givenFunc][0] != givenKey && givenSlot == 1 || givenSlot == 2 && hotkeyArr[givenFunc][0] == null) {
+      hotkeyArr[givenFunc][0] = givenKey;
+    } else {
+      hotkeyArr[givenFunc][1] = givenKey;
+    }
+    updateKeys();
+  }
+} //end setHotkey(givenKey, givenFunc, givenSlot)
+
+//Updates the visuals for the user
+function updateKeys() {
+  for(var i = 0; i < hotkeyArr.length; i++) {
+    for(var j = 0; j < 2; j++) {
+      var temp = j+1;
+      if(hotkeyArr[i][j]==null){
+        window.frames[4].document.getElementById("hki"+i+"e"+temp).value = "";
+        window.frames[4].document.getElementById("hki"+i+"e"+temp).placeholder = "N/A";
+      } else {
+        window.frames[4].document.getElementById("hki"+i+"e"+temp).value = "";
+        window.frames[4].document.getElementById("hki"+i+"e"+temp).placeholder = String.fromCharCode(hotkeyArr[i][j]);
+      }
+    }
+  }
+} //end updateKeys()
+
 
 //endMultiAssignMode displays the multiPlayer element
 function endMultiplayerAssignMode() {

@@ -1197,6 +1197,9 @@ function Tile(tileArray, board) {
     var GRAZING_SEASON_LENGTH = 200;
     var cattleAverageDailyIntake = 0.03 * CATTLE_BODY_WEIGHT;
     var yieldBaseRates = [6.3, 3.6, 4.3, 5.6, 3.6, 4.1, 4.2, 6.5, 6.4, 3.6, 6.9, 6.7, 6.3, 0];
+    if(year==-1) {
+      return yieldBaseRates[this.getSoilTypeYieldIndex(this.soilType)];
+    }
     return (this.getSeasonalUtilizationRate(year) / ((cattleAverageDailyIntake / 2000) * GRAZING_SEASON_LENGTH)) * yieldBaseRates[this.getSoilTypeYieldIndex(this.soilType)];
   }; //end this.getCattleSupported
 
@@ -3075,6 +3078,16 @@ function Click(c1, c2, c3, c4, c5) {
       default:
         alert("This user click has not been configured yet. Please add this click to the cases in helperObjects.js");
         break;
+      //When a user performs a shift-click action
+      case 83:
+        if(action)
+          for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+            if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+              changeLandTypeTile(i);
+            }
+          }
+        else 
+          return "Shift click was performed";
     }
   }
 }
