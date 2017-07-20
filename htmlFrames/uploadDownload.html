@@ -50,7 +50,8 @@ function bindUploadFileListener() {
     });
     //small issue: if file selected is same name as previous
     //property change is not triggered, even if file has changed.
-};
+    setTimeout(function() {parent.downloadClicked();},1 ); 
+}
 
 //this function triggers a download of the current data
 function triggerDownloadSequence() {

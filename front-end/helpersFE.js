@@ -976,6 +976,7 @@ function onDocumentKeyDown(event) {
 
       //case esc - view escape menu
     case 27:
+          console.log('Uma');
       if (!curTracking && !runningSim) {
         highlightTile(-1);
         toggleEscapeFrame();
@@ -1071,6 +1072,9 @@ function toggleEscapeFrame() {
     modalUp = false;
   }
 
+//if(document.getElementById('options').style.visibility == "visible"){
+//    document.getElementById('modalEscapeFrame').style.display == "none";
+//}
   if (multiplayerAssigningModeOn) {
     document.getElementById('optionsButton').className = "unclickableMainEscapeButton";
   } else {
@@ -3068,6 +3072,11 @@ files = e.target.files;
 
 } //end downloadClicked()
 
+function downloadClicked(){
+    closeUploadDownloadFrame();
+    document.activeElement.blur();
+    
+}
 //animateResults() frame
 function animateResults() {
   //if it is ever the case that we want to do some fancy zooming or screen
@@ -3491,15 +3500,14 @@ function toggleVisibility() {
           immutablePrecip = true;
           break;
         case "multiAssign":
-
           for (var j = 1; j <= 6; j++) {
             //document.getElementById('paintPlayer' + j).style.display = "inline-block";
           }
           document.getElementById('playerAddButton').style.display = "inline-block";
           break;
         default:
-          document.getElementById(arrLines[i]).style.display = "none";
-
+              console.log(arrLines);
+          document.getElementById('modalEscapeFrame').style.display = "none";
       }
     }
   } //end for
@@ -3627,6 +3635,7 @@ function startOptions() {
     document.addEventListener('keyup', optionsEsc);
     window.frames[4].document.addEventListener('keyup', optionsEsc);
   }
+    
 } // end startOptions
 
 // Execute when Esc key is pressed while on the options page
