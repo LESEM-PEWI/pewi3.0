@@ -1197,7 +1197,7 @@ function Tile(tileArray, board) {
     var GRAZING_SEASON_LENGTH = 200;
     var cattleAverageDailyIntake = 0.03 * CATTLE_BODY_WEIGHT;
     var yieldBaseRates = [6.3, 3.6, 4.3, 5.6, 3.6, 4.1, 4.2, 6.5, 6.4, 3.6, 6.9, 6.7, 6.3, 0];
-    if(year==-1) {
+    if (year == -1) {
       return yieldBaseRates[this.getSoilTypeYieldIndex(this.soilType)];
     }
     return (this.getSeasonalUtilizationRate(year) / ((cattleAverageDailyIntake / 2000) * GRAZING_SEASON_LENGTH)) * yieldBaseRates[this.getSoilTypeYieldIndex(this.soilType)];
@@ -1419,7 +1419,7 @@ function Results(board) {
 
       for (var s = 1; s < this.subwatershedArea.length; s++) {
         //divide to accomodate for row crop multiplier
-        if(subWatershedNitrate[s] == 0 && this.subwatershedArea[s] == 0) {
+        if (subWatershedNitrate[s] == 0 && this.subwatershedArea[s] == 0) {
           subWatershedNitrate[s] = 0;
         } else {
           subWatershedNitrate[s] = subWatershedNitrate[s] / this.subwatershedArea[s];
@@ -2293,7 +2293,7 @@ function Click(c1, c2, c3, c4, c5) {
   this.timeGap = c4;
   this.tileID = c5;
 
-	var CODEX_HTML = window.frames[2];
+  var CODEX_HTML = window.frames[2];
 
   //Retrieves the function performed in accordance to the click type [As a string]
   this.getAction = function() {
@@ -3046,7 +3046,7 @@ function Click(c1, c2, c3, c4, c5) {
 
         // Action inside index page, switch to Advanced
       case 81:
-				console.log("Case 81 ID: " + this.tileID);
+        console.log("Case 81 ID: " + this.tileID);
 
         // simulation is running, do what we recorded (what the user did)
         if (action)
@@ -3058,7 +3058,7 @@ function Click(c1, c2, c3, c4, c5) {
 
         // Action inside index page, switch to General
       case 82:
-			console.log("Case 82 ID: " + this.tileID);
+        console.log("Case 82 ID: " + this.tileID);
 
         // simulation is running, do what we recorded (what the user did)
         if (action)
@@ -3096,29 +3096,33 @@ function Printer() {
 
   // some parameters // in pt
   var
-  indicatorLength = 8, // legend
-  lineHeight = 12,
-  // map
-  mapWidth = 500,
-  mapHeight = 320,
-  // standard A4
-  pageHeight = 842,
-  pageWidth = 595,
+    indicatorLength = 8, // legend
+    lineHeight = 12,
+    // map
+    mapWidth = 500,
+    mapHeight = 320,
+    // standard A4
+    pageHeight = 842,
+    pageWidth = 595,
 
-  pageMargin = 50,
-  padding = 3.5,
-  // coordinates
-  x = pageMargin, // x keep tracks of current horizontal position
-  y = pageMargin, // y keep tracks of current vertical position
+    pageMargin = 50,
+    padding = 3.5,
+    //Width & heigth of the entire pie chart section
+    pieChartWidth=400,
+    pieChartHeight=300,
+    // coordinates
+    x = pageMargin, // x keep tracks of current horizontal position
+    y = pageMargin, // y keep tracks of current vertical position
 
-  // imageSrc object
-  imageSrc = {},
-  // fontSize object
-  font = {
-    font: 12,
-    header1_font: 20,
-    header2_font: 16
-  };
+    // imageSrc object
+    imageSrc = {},
+    // fontSize object
+    font = {
+      font: 12,
+      header1_font: 20,
+      header2_font: 16
+    };
+  var RESULTS_HTML = window.frames[3];
 
   // legend object
   var legendObjs = {};
@@ -3135,6 +3139,7 @@ function Printer() {
    */
   this.preprocessing = function() {
     // loop through all intended-to-print type, and place them on the doc
+    pdfGenerateModeOn = true;
     for (var property in toPrint) {
 
       if (toPrint[property]) {
@@ -3144,41 +3149,81 @@ function Printer() {
           case 'levelUserViewpoint':
           case 'featureUserViewpoint':
           case 'yieldUserViewpoint':
-          // TODO implement view point for each section
+            // TODO implement view point for each section
             break;
 
           case 'resultsTable1':
           case 'resultsTable2':
           case 'resultsTable4':
-          // resultsTables
+            // resultsTables
 
             // pull up the result page
             modalUp = false; // set to false to open the result page
             resultsStart();
-            var RESULTS_HTML = window.frames[3];
+
             RESULTS_HTML.toggleToTab(2); // switch to table tab
 
             // grab the table that we want to print
-            var elem = RESULTS_HTML.document.getElementById("table"+property.substr(-1));
+            var elem = RESULTS_HTML.document.getElementById("table" + property.substr(-1));
             // use autoTable lib and add to resultsTableObjs
-            resultsTableObjs[ 'table'+property.substr(-1) ] = doc.autoTableHtmlToJson(elem);
+            resultsTableObjs['table' + property.substr(-1)] = doc.autoTableHtmlToJson(elem);
 
             // close the result page
             resultsEnd();
             modalUp = true; // since printOptions page is still up
+            break;
 
+            case 'resultsLanduse':
+            //charts in results tab
+            modalUp = false; // set to false to open the result page
+            resultsStart();
+            RESULTS_HTML.toggleToTab(1); // switch to results tab
+            var canvas=drawPieCharts();
+            imageSrc[property]=canvas.toDataURL("image/jpeg");
+            // close the result page
+            resultsEnd();
+            modalUp = true; // since printOptions page is still up
+            break;
+
+            case 'resultsEcosystem':
+            modalUp = false; // set to false to open the result page
+            resultsStart();
+            RESULTS_HTML.toggleToTab(1); // switch to results tab
+            //Toggle the years which are not selected off
+            if(toPrint.year1==false) removeYearFromRadar(1);
+            if(toPrint.year2==false) removeYearFromRadar(2);
+            if(toPrint.year3==false) removeYearFromRadar(3);
+            var canvas=drawRadarChart();
+            imageSrc[property]=canvas.toDataURL("image/jpeg");
+            makeLegendBox('rada');
+            console.log(property);
+            console.log(imageSrc[property]);
+            // close the result page
+            resultsEnd();
+            modalUp = true; // since printOptions page is still up
+            break;
+
+            case 'resultsPrecip':
+            modalUp = false; // set to false to open the result page
+            resultsStart();
+            RESULTS_HTML.toggleToTab(1); // switch to results tab
+            var canvas=drawPrecipChart();
+            imageSrc[property]=canvas.toDataURL("image/jpeg");
+            // close the result page
+            resultsEnd();
+            // modalUp = true; // since printOptions page is still up
             break;
 
           default:
-          // other map stuff
+            // other map stuff
             // take screen shot and save as image source
             // TODO: set standard view before take screen shot
             saveScreenshotMapType(property);
 
             // make legend if needed
-            if (property !== 'wetlands' && property !== 'boundary' && property !== "yearUserViewpoint"  &&
-                property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
-                property !== "yieldUserViewpoint") {
+            if (property !== 'wetlands' && property !== 'boundary' && property !== "yearUserViewpoint" &&
+              property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
+              property !== "yieldUserViewpoint") {
               makeLegendBox(property); // create legend object
             } // END if
 
@@ -3193,10 +3238,10 @@ function Printer() {
   }; // end preprocessing
 
   /**
-  * This function generates and formats the contents on the PDF and create it in the end
-  *
-  * @param isDownload: 0 not downloadingm, 1: is downloading
-  */
+   * This function generates and formats the contents on the PDF and create it in the end
+   *
+   * @param isDownload: 0 not downloadingm, 1: is downloading
+   */
   this.processing = function(isDownload) {
     // var uptoYear = boardData[currentBoard].calculatedToYear;
     addText(1, "PEWI Result", x, y, font.header1_font);
@@ -3210,20 +3255,21 @@ function Printer() {
           case 'levelUserViewpoint':
           case 'featureUserViewpoint':
           case 'yieldUserViewpoint':
-          // do nothing
+            // do nothing
             break;
 
           case 'resultsTable1':
           case 'resultsTable2':
           case 'resultsTable4':
-          // resultsTables
+            // resultsTables
 
-            addText(1, "Result Table "+property.substr(-1), x, y, font.header2_font);
+            addText(1, "Result Table " + property.substr(-1), x, y, font.header2_font);
             // place the table
-            doc.autoTable(resultsTableObjs[ 'table'+[property.substr(-1)] ].columns, resultsTableObjs[ 'table'+[property.substr(-1)] ].data, {
+            doc.autoTable(resultsTableObjs['table' + [property.substr(-1)]].columns, resultsTableObjs['table' + [property.substr(-1)]].data, {
               startY: y,
               // margin: {horizontal: 7},
-              styles: {	cellPadding: 1.5, // a number, array or object (see margin below)
+              styles: {
+                cellPadding: 1.5, // a number, array or object (see margin below)
                 fontSize: 8,
                 // font: "helvetica", // helvetica, times, courier
                 // lineColor: 200,
@@ -3238,14 +3284,51 @@ function Printer() {
               },
               // bodyStyles: { fontSize: 8 },
               // headerStyles: { halign: 'center' },
-              columnStyles: { 0: { halign: 'left' } }
-             });
+              columnStyles: {
+                0: {
+                  halign: 'left'
+                }
+              }
+            });
             // update y
             y = doc.autoTable.previous.finalY + lineHeight;
             break;
 
+          case 'resultsLanduse':
+            //charts on results page
+            // place text and image
+            addText(1, "Landuse Pie-charts", x, y + 15, font.header2_font);
+            //add the image of all required pie charts
+            addImage(imageSrc[property], 'JPEG', x, y, pieChartWidth, pieChartHeight);
+            //drawing legend for one type of pie charts
+            drawLegendBox(legendObjs['pie1'],x +pieChartWidth-10 , y+10);
+            //drawing legends for other tyoe of pie charts
+            drawLegendBox(legendObjs['pie2'],x +pieChartWidth-10 , y+(pieChartHeight/2-10));
+            // update y
+            updateY(pieChartHeight+15 + lineHeight * 2);
+            break;
+
+            case 'resultsEcosystem':
+            addText(1, "Ecosystem radar chart", x, y, font.header2_font);
+            //drawing the radar chart
+            addImage(imageSrc[property], 'JPEG', x, y, 500, 400);
+            drawLegendBox(legendObjs['rada'],x+400,y+100);
+            // update y
+            updateY(400 + lineHeight * 2);
+            break;
+            case 'resultsPrecip':
+            addText(1, "Precipitation", x, y, font.header2_font);
+            addImage(imageSrc[property], 'JPEG', x+155, y, 500, 500);
+            //adding the text and description
+            for (var i = 0; i<4; i++ )
+            addText(1, parent.boardData[parent.currentBoard].precipitation[i]+" inches "+parent.data[i].adj, x,y+15,font.header2_font );
+            // update y
+            updateY(400 + lineHeight * 2);
+            break;
+
+
           default:
-          // other map stuff
+            // other map stuff
             placeMapType(property);
             break;
 
@@ -3257,7 +3340,7 @@ function Printer() {
     // output PDF
     if (isDownload == 1) {
       // download
-      doc.save(promptFileName()+".pdf");
+      doc.save(promptFileName() + ".pdf");
     } else {
       // preview
       // window.frames[6].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
@@ -3272,28 +3355,29 @@ function Printer() {
     doc = {};
     legendObjs = {};
     imageSrc = {};
+    pdfGenerateModeOn = false;
   }; // end processing
 
   // helper functions ( private )
 
   /**
-  * Place image on the pdf
-  *
-  * @param dataURL, String type: 'JPEG', 'PNG', and so on
-  * @param width, Number height, Number x, sNumber y
-  */
+   * Place image on the pdf
+   *
+   * @param dataURL, String type: 'JPEG', 'PNG', and so on
+   * @param width, Number height, Number x, sNumber y
+   */
   function addImage(dataURL, type, x, y, width, height) {
     // 'PNG' wouldn't work for some reason
     doc.addImage(dataURL, type, x, y, width, height);
   } // end addImage
 
   /**
-  * Create and store the legend indicator and description in legendObjs per line
-  *
-  * @param legendName: the name that will be stored as the keyword refer to the legend object
-  * @param color: legend indicator color in rgb()
-  * @param text: legend description
-  */
+   * Create and store the legend indicator and description in legendObjs per line
+   *
+   * @param legendName: the name that will be stored as the keyword refer to the legend object
+   * @param color: legend indicator color in rgb()
+   * @param text: legend description
+   */
   function addLegendLine(legendName, color, text) {
     if (typeof legendObjs[legendName] === 'undefined') {
       // Create Object
@@ -3307,11 +3391,11 @@ function Printer() {
   } // end addLegendLine
 
   /**
-  * Place text on the pdf
-  *
-  * @param updateY: 0: don't update y, other: do update y
-  * @param String text, Number x, Number y, [Number size, String type, String family]
-  */
+   * Place text on the pdf
+   *
+   * @param updateY: 0: don't update y, other: do update y
+   * @param String text, Number x, Number y, [Number size, String type, String family]
+   */
   function addText(needUpdateY, text, x, y, size, type, family) {
     if (arguments.length >= 5)
       doc.setFontSize(size);
@@ -3322,7 +3406,7 @@ function Printer() {
     doc.text(x, y, text);
     if (needUpdateY) {
       // update y
-      updateY(size+lineHeight);
+      updateY(size + lineHeight);
     }
     // reset font property
     doc.setFontSize(font.font);
@@ -3330,17 +3414,17 @@ function Printer() {
   } // end addText
 
   /**
-  * Take legend object as a source to draw the according legend image
-  *
-  * @param Object legendObj: the property stored in legendObjs
-  * @param x, Number y: coordinates
-  */
+   * Take legend object as a source to draw the according legend image
+   *
+   * @param Object legendObj: the property stored in legendObjs
+   * @param x, Number y: coordinates
+   */
   function drawLegendBox(legendObj, x, y) {
     var rectX, rectY, textX, textY, i;
     rectX = x + padding;
     rectY = y + padding;
     textX = rectX + indicatorLength + padding;
-    textY = rectY + padding*2;
+    textY = rectY + padding * 2;
 
     // first draw the container
     doc.setDrawColor(0);
@@ -3360,18 +3444,19 @@ function Printer() {
       addText(0, legendObj.description[i], textX, textY, 8);
       // update parameters
       rectY += indicatorLength + padding;
-      textY = rectY + padding*2;
+      textY = rectY + padding * 2;
     }
   } // end drawLegendBox
 
   /**
-  * Loop through a string array and return the longest line's length
-  *
-  * @param String Array sArray
-  * @returns maxlength the longest line's length
-  */
+   * Loop through a string array and return the longest line's length
+   *
+   * @param String Array sArray
+   * @returns maxlength the longest line's length
+   */
   function longestLine(sArray) {
-    var maxlength = 0,index;
+    var maxlength = 0,
+      index;
     for (var i = 0; i < sArray.length; i++) {
       if (maxlength < sArray[i].length) {
         maxlength = sArray[i].length;
@@ -3382,27 +3467,59 @@ function Printer() {
   } // end longestLine
 
   /**
-  * Create LegendBox Object
-  *
-  * @param String type
-  */
+   * Create LegendBox Object
+   *
+   * @param String type
+   */
   function makeLegendBox(type) {
     var color, text, i;
 
-    switch (type.slice(0,4)) {
+    switch (type.slice(0, 4)) {
       case 'year':
-      // Create precipitation info as legend box for LandUse Map
+        // Create precipitation info as legend box for LandUse Map
         text = "Precipitation: " + boardData[currentBoard].precipitation[type.substr(-1)];
         color = "rgb(29, 187, 245)";
         addLegendLine(type, color, text);
 
         break;
+      case 'pie1': case 'pie2': case 'rada':
+      var tempItemNames=[];
+      var tempColorNames=[];
+      var loopLength=0;
+      if(type=='rada'){//if the legend is being drawn for radar chart
+        tempItemNames=radarLegendItems;
+        tempColorNames=radarLegendColors;
+        loopLength=radarLegendItems.length;
+      }
+      else{// else if it's being drawn for the pie charts
+        tempItemNames=finalLegendItems;
+        tempColorNames=finalLegendColors;
+        loopLength=finalLegendItems.length;
+      }
+      // for creating legend for pie chart
+      for(i=0; i<loopLength; i++)
+      {
 
+        text=tempItemNames[i];
+        var hex=tempColorNames[i];
+
+
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      result="rbg("+parseInt(result[1], 16)+", "+parseInt(result[2], 16)+", "+parseInt(result[3], 16)+")";
+
+          color = result;
+        console.log("color :"+color);
+        //if it's adding radar legend line, it only lets it add the ones with selected number of years
+        if((type=='rada' && ((i==0&&toPrint.year1==true)||(i==1&&toPrint.year2==true)||(i==2&&toPrint.year3==true))|| type!='rada'))
+          addLegendLine(type,color,text);
+      }
+
+      break;
         // XXX result page should use different code to get color and text
 
       default:
-      // those who have "xxxDetailsList" in index.html
-        for (i = 0; i < document.getElementById(type+'DetailsList').childElementCount; i++) {
+        // those who have "xxxDetailsList" in index.html
+        for (i = 0; i < document.getElementById(type + 'DetailsList').childElementCount; i++) {
           color = void 0;
           text = void 0;
           // loop through the data from detail lists and store in color & text line by line
@@ -3427,10 +3544,10 @@ function Printer() {
   } // end makeLegendBox
 
   /**
-  * Loop through all available image src for each year and put them on pdf
-  *
-  * @param String type, Number uptoYear
-  */
+   * Loop through all available image src for each year and put them on pdf
+   *
+   * @param String type, Number uptoYear
+   */
   function placeMapType(type) {
     var legend;
 
@@ -3440,17 +3557,17 @@ function Printer() {
       case 'year2':
       case 'year3':
         // place text and image
-        addText(1, "Year "+ type.substr(type.length - 1) +" LandUse Map", x, y, font.header2_font);
+        addText(1, "Year " + type.substr(type.length - 1) + " LandUse Map", x, y, font.header2_font);
         addImage(imageSrc[type], 'JPEG', x, y, mapWidth, mapHeight);
         // place legend
         if (legend = legendObjs[type]) {
-          drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+          drawLegendBox(legend, x + 5, y + mapHeight - (legend.height + 20));
         }
         // update y
         updateY(mapHeight + lineHeight * 2);
         break;
 
-      // if type is level category
+        // if type is level category
       case 'nitrate':
       case 'erosion':
       case 'phosphorus':
@@ -3461,7 +3578,7 @@ function Printer() {
           addImage(imageSrc[type + 1], 'JPEG', x, y, mapWidth, mapHeight);
           // place legend
           if (legend = legendObjs[type]) {
-            drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+            drawLegendBox(legend, x + 5, y + mapHeight - (legend.height + 20));
           }
           updateY(mapHeight + lineHeight * 2);
         }
@@ -3473,7 +3590,7 @@ function Printer() {
           addImage(imageSrc[type + 2], 'JPEG', x, y, mapWidth, mapHeight);
           // place legend
           if (legend = legendObjs[type]) {
-            drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+            drawLegendBox(legend, x + 5, y + mapHeight - (legend.height + 20));
           }
           updateY(mapHeight + lineHeight * 2);
         }
@@ -3485,20 +3602,20 @@ function Printer() {
           addImage(imageSrc[type + 3], 'JPEG', x, y, mapWidth, mapHeight);
           // place legend
           if (legend = legendObjs[type]) {
-            drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+            drawLegendBox(legend, x + 5, y + mapHeight - (legend.height + 20));
           }
           updateY(mapHeight + lineHeight * 2);
         }
         break;
 
-      // if type is other category
+        // if type is other category
       default:
         // place text and image
         addText(1, titleText(type), x, y, font.header2_font);
         addImage(imageSrc[type], 'JPEG', x, y, mapWidth, mapHeight);
         // place legend
         if (legend = legendObjs[type]) {
-          drawLegendBox(legend, x + 5, y + mapHeight - (legend.height+20) );
+          drawLegendBox(legend, x + 5, y + mapHeight - (legend.height + 20));
         }
         updateY(mapHeight + lineHeight * 2);
         break;
@@ -3507,10 +3624,10 @@ function Printer() {
   } // end placeMapType
 
   /**
-  * Loop through each year and get according image src
-  *
-  * @param String text, Number uptoYear
-  */
+   * Loop through each year and get according image src
+   *
+   * @param String text, Number uptoYear
+   */
   function saveScreenshotMapType(type) {
 
     // if type is year category
@@ -3542,7 +3659,7 @@ function Printer() {
         imageSrc[type] = renderer.domElement.toDataURL('image/jpeg');
         break;
 
-      // if type is level category
+        // if type is level category
       case 'nitrate':
       case 'erosion':
       case 'phosphorus':
@@ -3596,7 +3713,7 @@ function Printer() {
         }
         break;
 
-      // if type is other category
+        // if type is other category
       default:
         displayLevels(type);
         // // reset camera position
@@ -3613,49 +3730,67 @@ function Printer() {
   } // end saveScreenshotMapType
 
   /**
-  * Just convert the type to the proper title
-  *
-  * @param String text the type pass into toPrint array
-  * @returns the proper title
-  */
+   * Just convert the type to the proper title
+   *
+   * @param String text the type pass into toPrint array
+   * @returns the proper title
+   */
   function titleText(text) {
     switch (text) {
       // levels
-      case 'nitrate': return 'Nitrate';
-      case 'erosion': return 'Erosion';
-      case 'phosphorus': return 'Phosphorus';
-      // features
-      case 'flood': return 'Flood Frequency';
-      case 'wetlands': return 'Strategic Wetlands';
-      case 'boundary': return 'Subwatershed Boundaries';
-      case 'drainage': return 'Drainage Class';
-      case 'soil': return 'Soil Class';
-      // yields
-      case 'corn': return 'Corn Grain';
-      case 'soybean': return 'Soybean';
-      case 'fruit': return 'Mixed Fruits and Vegetables';
-      case 'cattle': return 'Cattle';
-      case 'alfalfa': return 'Alfalfa';
-      case 'grasshay': return 'GrassHay';
-      case 'switchgrass': return 'Switch Grass';
-      case 'wood': return 'Wood';
-      case 'short': return 'Woody Biomass';
-      default: return 'error type for title:'+text;
+      case 'nitrate':
+        return 'Nitrate';
+      case 'erosion':
+        return 'Erosion';
+      case 'phosphorus':
+        return 'Phosphorus';
+        // features
+      case 'flood':
+        return 'Flood Frequency';
+      case 'wetlands':
+        return 'Strategic Wetlands';
+      case 'boundary':
+        return 'Subwatershed Boundaries';
+      case 'drainage':
+        return 'Drainage Class';
+      case 'soil':
+        return 'Soil Class';
+        // yields
+      case 'corn':
+        return 'Corn Grain';
+      case 'soybean':
+        return 'Soybean';
+      case 'fruit':
+        return 'Mixed Fruits and Vegetables';
+      case 'cattle':
+        return 'Cattle';
+      case 'alfalfa':
+        return 'Alfalfa';
+      case 'grasshay':
+        return 'GrassHay';
+      case 'switchgrass':
+        return 'Switch Grass';
+      case 'wood':
+        return 'Wood';
+      case 'short':
+        return 'Woody Biomass';
+      default:
+        return 'error type for title:' + text;
     } // switch
   } // end titleText
 
   /**
-  * Update x coordinates by value, not used so far
-  *
-  * @param Number value
-  */
+   * Update x coordinates by value, not used so far
+   *
+   * @param Number value
+   */
   this.updateX = function(value) {};
 
   /**
-  * Update y coordinates by value. Add page when needed.
-  *
-  * @param Number value
-  */
+   * Update y coordinates by value. Add page when needed.
+   *
+   * @param Number value
+   */
   function updateY(value) {
     if (y + value > pageHeight - pageMargin) {
       doc.addPage();
@@ -3664,6 +3799,121 @@ function Printer() {
       y += value;
     }
   } // end updateY
+  /**
+   * rendering pie charts on a canvas
+   */
+
+  function drawPieCharts() {
+    var canvas = RESULTS_HTML.document.getElementById('canvas');
+    //clearing the canvas
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    var xCord = 0,
+      yCord = 0;
+    var mode = true;
+    // Setting up a white background for the canvas
+    clearCanvasBackground(canvas);
+    // Adding the pie charts to the canvas
+    for (var j = 0; j < 2; j++) {
+      for (var i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
+       if((i==1&&toPrint.year1==true)||(i==2&&toPrint.year2==true)||(i==3&&toPrint.year3==true)){ //draws only the years selected
+        drawD3LandPieChart(i, mode);//draw the pie chart
+        var svg = RESULTS_HTML.document.getElementById('pieSVG');
+        var svgStringData = $(svg).html(); // will convert data of SVGSVGElement Object to string
+        svgStringData = "<svg>" + svgStringData + "</svg>";
+        canvg(RESULTS_HTML.document.getElementById('canvasLU1'), svgStringData);
+        canvas.getContext('2d').drawImage(RESULTS_HTML.document.getElementById('canvasLU1'), xCord, yCord, 150, 150);//draws the pie chart on main canvas
+        //writing the required text
+        canvas.getContext('2d').font = "15px Arial";
+        canvas.getContext('2d').fillText("Categories", xCord + 40, 75);
+        canvas.getContext('2d').fillText("Year " + i, xCord + 57, 96);
+        canvas.getContext('2d').fillText("Lists", xCord + 60, 255);
+        canvas.getContext('2d').fillText("Year " + i, xCord + 55, 274);
+        xCord += 160;//transitioning to the next line of pie charts
+      }
+      //check if this legend has the maximum number of elements
+      if(tempLegendItems.length >=maxLegendSize)
+      {
+        finalLegendColors=[];
+        finalLegendItems=[];
+        finalLegendItems=tempLegendItems;
+        finalLegendColors=tempLegendColors;
+        maxLegendSize=tempLegendItems.length;
+      }
+      }
+      if(mode)// to check which legend should be made
+        makeLegendBox('pie1');
+      else
+        makeLegendBox('pie2');
+      finalLegendColors=[];
+      finalLegendItems=[];
+      maxLegendSize=1;
+      xCord = 0;
+      yCord += 180;
+      mode = false;
+    }
+    return canvas;
+  }
+/**
+* Draws radar chart for ecosystem services
+*/
+  function drawRadarChart()
+  {
+      var canvas = RESULTS_HTML.document.getElementById('canvas');
+      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+      // Setting up a white background for the canvas
+      clearCanvasBackground(canvas);
+      var container = RESULTS_HTML.document.getElementById("radarChart");
+      var content = $(container).html().trim();
+      var svgEnd = content.indexOf('</g></svg>');
+      content = content.substring(0, svgEnd + 10);
+      canvg(RESULTS_HTML.document.getElementById('canvasLU2'), content);
+
+      canvas.getContext('2d').drawImage(RESULTS_HTML.document.getElementById('canvasLU2'), 0, 0,400, 250);
+  return canvas;
+  }
+  /**
+  * Draws bar graph for precipitation
+  *
+  */
+  function drawPrecipChart()
+  {
+    var canvas = RESULTS_HTML.document.getElementById('canvas');
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    // Setting up a white background for the canvas
+    clearCanvasBackground(canvas);
+  var precipSvg = RESULTS_HTML.document.getElementById('precipChart');
+  var precipSvgStringData = $(precipSvg).html();
+  precipSvgStringData = "<svg>" + precipSvgStringData + "</svg>";
+  //console.log("Precip chart: %s",precipSvgStringData);
+  canvg(RESULTS_HTML.document.getElementById('canvasLU3'), precipSvgStringData);
+  canvas.getContext('2d').drawImage(RESULTS_HTML.document.getElementById('canvasLU3'), 0, 0, 500, 430);
+  // var k = 0;
+  // for (var i = 0; i<4 ;i++){
+  // canvas.getContext('2d').font = "18 Arial";
+  // canvas.getContext('2d').fillText(parent.boardData[parent.currentBoard].precipitation[i]+" inches "+parent.data[i].adj,30,k);
+  // k = k +32;
+  // }
+  return canvas;
+  }
+  /**
+  * Sets the background of a canvas to white
+  * @param canvas who's background it to be set to white
+  */
+  function clearCanvasBackground(canvas)
+  {
+    var imgData1 = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height);
+    var img_data = imgData1.data;
+    for (var i = 0; i < img_data.length; i += 4) {
+      if (img_data[i + 3] < 255) {
+        img_data[i] = 255 - img_data[i];
+        img_data[i + 1] = 255 - img_data[i + 1];
+        img_data[i + 2] = 255 - img_data[i + 2];
+        img_data[i + 3] = 255 - img_data[i + 3];
+      }
+    }
+    canvas.getContext("2d").putImageData(imgData1, 0, 0);
+    RESULTS_HTML.document.body.appendChild(canvas);
+  }
 
 } // end Printer()
 

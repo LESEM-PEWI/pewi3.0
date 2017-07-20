@@ -46,7 +46,11 @@ var undo = false;
 var undoArr = [[],[],[],[]];
 var undoGridArr = [];
 var undoGridPainters = [];
-
+var data=[];//stores precip data for results page
+var tempLegendItems=[], maxLegendSize=1, finalLegendItems=[];//stores strings of the names in legend for print function
+var radarLegendColors=[], radarLegendItems=[];
+var tempLegendColors=[], finalLegendColors=[];//stores colors of legent items for print function
+var pdfGenerateModeOn=false;
 var clearToChangeLandType = true;
 var fullBoardBeforeZoom, zIsDown, oneIsDown;
 var inDispLevels = false;
@@ -1274,7 +1278,9 @@ function resultsEnd() {
   //Fucntion for removing event listener when resluts is closed
   document.removeEventListener('keyup', resultsEsc);
   inResults = false;
-  //modal is no longer up
+  //console.log(legendItems.toString());
+    //  console.log("\n"+legendColors.toString());
+    //modal is no longer up
   modalUp = false;
   if (curTracking) {
     pushClick(0, getStamp(), 13, 0, null);
@@ -3505,6 +3511,10 @@ function executePrintOptions(isDownload) {
     resultsTable1: false,
     resultsTable2: false,
     resultsTable4: false,
+    resultsLanduse: false,
+    resultsEcosystem: false,
+    resultsPrecip: false,
+
     // levels
     levelUserViewpoint: false,
     nitrate: false,
@@ -3598,16 +3608,16 @@ function restoreCurrentCameraSession() {
   controls.restoreLastState();
 
   // switch to the last year, tab or level
-  switchConsoleTab(6);// switch to year tab
-  switchYearTab(session.switchYearTab); // swithch to the exact year
-  // swithch last consle tab
-  switchConsoleTab(session.switchConsoleTab);
-  // choose the LandUseType or player
-  if (typeof session.changeSelectedPaintTo !== 'undefined' )
-    changeSelectedPaintTo(session.changeSelectedPaintTo);
-  // displays specific level, feature or yield
-  if (typeof session.displayLevels !== 'undefined' )
-    displayLevels(session.displayLevels);
+  // switchConsoleTab(6);// switch to year tab
+  // switchYearTab(session.switchYearTab); // swithch to the exact year
+  // // swithch last consle tab
+  // switchConsoleTab(session.switchConsoleTab);
+  // // choose the LandUseType or player
+  // if (typeof session.changeSelectedPaintTo !== 'undefined' )
+  //   changeSelectedPaintTo(session.changeSelectedPaintTo);
+  // // displays specific level, feature or yield
+  // if (typeof session.displayLevels !== 'undefined' )
+  //   displayLevels(session.displayLevels);
 
 } // end restoreCurrentCameraSession
 

@@ -48,6 +48,7 @@ var rain = null;
 // global variable for print function
 var takeScreenshot = false;
 var jspdfprinter;
+var pdfGenerateModeOn = false;
 
 //===================
 
