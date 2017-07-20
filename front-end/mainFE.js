@@ -135,7 +135,9 @@ function initializeCamera() {
 
 //Event function that is called when screen is changed
 function CamView(e) {
-  tempKeys = giveHotkeys();
+    tempKeys = giveHotkeys();
+    var Uma = String.fromCharCode(tempKeys[11][0]);
+   document.getElementById("flyover").innerHTML = "FlyOver Mode, Hit " + Uma +  " to Exit";
   if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
     toggleCameraView();
   }
