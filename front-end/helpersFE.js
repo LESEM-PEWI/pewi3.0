@@ -3326,7 +3326,7 @@ function randomizeBoard() {
   var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
   randomizing = true
   //for whole board (as long as randomization is allowed)
-  if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
+  if (localStorage.getItem("randAllow") == "true" || runningSim) {
     //getRandomInt is in back-end helperMethods
     for(var j = 1; j <= 15; j++)
     { //Check to see if the landuse type is toggled off or not
