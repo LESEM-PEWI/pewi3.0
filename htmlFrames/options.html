@@ -39,7 +39,7 @@ Cleaned and Prepared - July 2016
   <script>
     var maxYear = 3; //for settings, defines the number of year buttons specified
     var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
-    "Rotate Clockwise","Rotate Counterclockwise","Pivot Towards Horizon (Flat)","Pivot Toward the Perpendicular","Toggle Overlay","Toggle Flying Mode"];
+    "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode"];
     //the saveCurrentOptionsState function is called when the save/exit button is pressed
     //each of the options is evaluated and the text for the parameters div is generated
     //as needed
@@ -232,7 +232,7 @@ Cleaned and Prepared - July 2016
     //
     // 1.) Add the hotkey to hotkeyArr in helpersFE.js
     // 2.) Add the description of the hotkey in this html file
-    // 3.) Format the if-statement for the hotkey appropriately so that each case can be used
+    // 3.) Format the if-statement for the hotkey appropriately so that each case can be used (where the hotkey is used)
     // 4.) Increase the last hkDiv element number by one in style_options.css so that the bottom is properly stylized
     
     function retrieveHotkeys() {

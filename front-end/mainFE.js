@@ -195,10 +195,11 @@ function changeCam2(){
 
 //Camera movements Controls for Camera2 ie second view
 function animate(){
+  var hotkeys = giveHotkeys();
 	requestAnimationFrame(animate);
 	
 	//Keyboard movement inputs
-    if(keyboard[87]){ // W key Forward Movements
+    if(keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]){ // W key Forward Movements
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
         //and if it does it resets it to that specific position set.
@@ -217,7 +218,7 @@ function animate(){
         console.log(camera2.position);
     }
 
-	if(keyboard[83]){ // S key Back Words movements
+	if(keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]){ // S key Back Words movements
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
         //and if it does it resets it to that specific position set.
@@ -236,7 +237,7 @@ function animate(){
         console.log(camera2.position);
 	}
 	
-    if(keyboard[65]){ // A key Left Side Movement
+    if(keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]){ // A key Left Side Movement
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
         //and if it does it resets it to that specific position set.
@@ -255,7 +256,7 @@ function animate(){
         console.log(camera2.position);
 	}
 	
-    if(keyboard[68]){ // D key Right side Movements
+    if(keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]){ // D key Right side Movements
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
         //and if it does it resets it to that specific position set.
