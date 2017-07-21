@@ -2818,8 +2818,11 @@ function Click(c1, c2, c3, c4, c5) {
         }
         //When the user paints a tile (multi selection)
       case 56:
-        if (action) {
-          return changeLandTypeTile(this.tileID);
+        if (action) { 
+          for(var i = 0; i < this.tileID.length; i++) {
+            changeLandTypeTile(this.tileID[i]);
+          }
+          return;
           break;
         } else {
           return "A tile was painted (multi selection)";
