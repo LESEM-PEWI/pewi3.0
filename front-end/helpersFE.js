@@ -241,7 +241,7 @@ function undoGrid(givenTilesAndPainter) {
 function addChange(tileId) {
   if(uniqueTileChange(tileId)) {
     //Paint selector is a grid
-    if(painterTool.status == 2) {
+    if(painterTool.status == 2 || randomizing || isShiftDown) {
       undoGridArr.push(tileId);
     //Paint selector is regular
     } else {
@@ -657,7 +657,6 @@ function addYearAndTransition() {
   }
 
   switchYearTab(nextYear);
-  console.log(nextYear);
   transitionToYear(nextYear);
 
 } //end addYearAndTransition
@@ -852,12 +851,14 @@ function onDocumentMouseDown(event) {
           for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
             if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-
+              undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
               changeLandTypeTile(i);
 
             }
           }
         }
+        //Inserts the block of land use types into the undoArr
+        insertChange();
       }
     } //end else/if group
   }
@@ -3349,6 +3350,7 @@ function randomizeBoard() {
       if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none)
       {
 
+         undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
          painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         //  console.log(painter);
         changeLandTypeTile(i);
@@ -3357,7 +3359,8 @@ function randomizeBoard() {
   }
   //randomizing = false;
   painter = prevPainter;
-
+  //Inserts the block of land use types into the undoArr
+  insertChange();
 } //end randomizeBoard
 
 function saveAndRandomize(){
