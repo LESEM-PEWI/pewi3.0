@@ -206,26 +206,27 @@ function highlightTile(tileId) {
 
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(tileId) {
-  //Add tile to the undoArr
-  if(!undo) {
-    addChange(tileId);
-  }
-  //if land type of tile is nonzero
-  if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
-    //change the materials of the faces in the meshMaterials array and update the boardData
-    if (!multiplayerAssigningModeOn) {
-      meshMaterials[tileId].map = textureArray[painter];
-      boardData[currentBoard].map[tileId].landType[currentYear] = painter;
-      boardData[currentBoard].map[tileId].update(currentYear);
-    } else if (multiplayerAssigningModeOn) {
-      meshMaterials[tileId].map = multiplayerTextureArray[painter];
-      boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+  if(document.getElementById("overlayContainer").style.visibility != "visible") {
+    //Add tile to the undoArr
+    if(!undo) {
+      addChange(tileId);
+    }
+    //if land type of tile is nonzero
+    if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
+      //change the materials of the faces in the meshMaterials array and update the boardData
+      if (!multiplayerAssigningModeOn) {
+        meshMaterials[tileId].map = textureArray[painter];
+        boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+        boardData[currentBoard].map[tileId].update(currentYear);
+      } else if (multiplayerAssigningModeOn) {
+        meshMaterials[tileId].map = multiplayerTextureArray[painter];
+        boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+      }
+    }
+    if (curTracking && painterTool.status != 2 && !undo && !randomizing && !isShiftDown) {
+      pushClick(0, getStamp(), 55, 0, tileId);
     }
   }
-  if (curTracking && painterTool.status != 2 && !undo && !randomizing && !isShiftDown) {
-    pushClick(0, getStamp(), 55, 0, tileId);
-  }
-
 } //end changeLandTypeTile
 
 //Clumps and undo's multiple tiles
@@ -987,18 +988,28 @@ function onDocumentKeyDown(event) {
 
       //case esc - view escape menu
     case 27:
-      if (!curTracking && !runningSim) {
+      if (!curTracking && !runningSim && document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("simContainer").style.visibility != "visible") {
         highlightTile(-1);
         toggleEscapeFrame();
         break;
       }
+      if(document.getElementById("overlayContainer").style.visibility == "visible" && !runningSim) {
+        document.getElementById("overlayContainer").style.visibility = "hidden";
+        document.getElementById("simContainer").style.visibility = "visible";
+        break;
+      }
+      if(document.getElementById("overlayContainer").style.visibility != "visible" && !runningSim) {
+        document.getElementById("simContainer").style.visibility = "hidden";
+        document.getElementById("overlayContainer").style.visibility = "visible";
+        break;
+      } 
       if (runningSim && !paused) {
         endSimPrompt();
         break;
       }
       if (runningSim && paused) {
         document.getElementById("simContainer").style.visibility = "hidden";
-        paused = false;
+        document.getElementById("genOverlay").style.visibility = "visible";
         resumeSim();
         break;
       }
@@ -3290,6 +3301,9 @@ function togglePopupDisplay() {
 //Allows user to
 function toggleBackgroundInfoDisplay()
 {
+  if(curTracking) {
+    pushClick(0,getStamp(),84,0,null);
+  }
   if(!modalUp){
     if(document.getElementById("backgroundInfoBox").className == "backgroundInfoBox")
     {
@@ -3565,7 +3579,7 @@ function toggleVisibility() {
 } //end toggleVisibility()
 
 //painterSelect changes the currenly selected 'brush' of the painter tool
-//  the options are normla click change, hover change, and grid change.
+//  the options are normal click change, hover change, and grid change.
 function painterSelect(brushNumberValue) {
 
   //reset the functionality to default, then change as needed
@@ -4017,28 +4031,28 @@ function exportTracking() {
   //Initial action is equal to time elapsed at that point
   if (clickTrackings.length > 0) {
     clickTrackings[0].timeGap = clickTrackings[0].timeStamp;
+    finishProperties();
+    var A = [
+      ['ClickID', 'Time Stamp (Milliseconds)', 'Click Type', 'Time Gap (Milliseconds)', 'Description of click', 'TileID/Precip', startTime, endTime, startTime.getTime(), endTime.getTime()]
+    ];
+    for (var j = 0; j < clickTrackings.length; j++) {
+      A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
+    }
+    var csvRows = [];
+    for (var i = 0; i < A.length; i++) {
+      csvRows.push(A[i].join(','));
+    }
+    var csvString = csvRows.join("\n");
+    //Get ready to prompt for file
+    var a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8;base64,' + window.btoa(csvString);
+    a.target = '_blank';
+    var fileID = Math.round(Math.random() * 100000000000000000000);
+    a.download = 'PEWI_UserExperienceFile_' + fileID + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    clickTrackings = [];
   }
-  finishProperties();
-  var A = [
-    ['ClickID', 'Time Stamp (Milliseconds)', 'Click Type', 'Time Gap (Milliseconds)', 'Description of click', 'TileID/Precip', startTime, endTime, startTime.getTime(), endTime.getTime()]
-  ];
-  for (var j = 0; j < clickTrackings.length; j++) {
-    A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
-  }
-  var csvRows = [];
-  for (var i = 0; i < A.length; i++) {
-    csvRows.push(A[i].join(','));
-  }
-  var csvString = csvRows.join("\n");
-  //Get ready to prompt for file
-  var a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8;base64,' + window.btoa(csvString);
-  a.target = '_blank';
-  var fileID = Math.round(Math.random() * 100000000000000000000);
-  a.download = 'PEWI_UserExperienceFile_' + fileID + '.csv';
-  document.body.appendChild(a);
-  a.click();
-  clickTrackings = [];
 } //end exportTracking
 
 //Handles the simulation file
@@ -4065,11 +4079,6 @@ function promptUserSim() {
   resetPresets();
   document.getElementById('sliderCon').style.visibility = "visible";
   document.getElementById("overlayContainer").style.visibility = "visible";
-  document.getElementById("overlay").style.visibility = "visible";
-  document.getElementById("overlay-message").style.visibility = "visible";
-  document.getElementById("overlayMessage").style.visibility = "visible";
-  document.getElementById("overlay-message-2").style.visibility = "visible";
-  document.getElementById("overlayMessage2").style.visibility = "visible";
 } //end promptUserSim()
 
 //Returns the value of runningSim
@@ -4085,6 +4094,7 @@ function setSimBoolean(newValue) {
 //Handles the click tracking simulation replay
 function runSimulation() {
   //Begin simulation: Initial step is to clear preset variables before using them.
+  resetUndo();
   runningSim = true;
   clickTrackings = [];
   elapsedTime = 0;
@@ -4096,20 +4106,18 @@ function runSimulation() {
   document.getElementById("simSlider").max = endTime;
   //First, populate the clicks
   for (var i = 1; i < simulationData.length; i++) {
-    tempArr = simulationData[i].split(',');
-    tempID = tempArr[0];
-    tempStamp = tempArr[1];
-    tempType = tempArr[2];
-    tempGap = tempArr[3];
-    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37) {
-      tempTile = tempArr[5];
+    var tempArr = simulationData[i].split(',');
+    var tempID = tempArr[0];
+    var tempStamp = tempArr[1];
+    var tempType = tempArr[2];
+    var tempGap = tempArr[3];
+    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82) {
+      var tempTile = tempArr[5];
     } if (tempType == 56) {
       var tempTile = [];
       for(var j = 5; j < tempArr.length; j++) {
         tempTile.push(tempArr[j]);
       }
-    } else {
-      tempTile = null;
     }
     pushClick(tempID, tempStamp, tempType, tempGap, tempTile);
   }
@@ -4133,6 +4141,7 @@ function performAction(clickValue) {
 function endSimPrompt() {
   paused = true;
   pauseSim();
+  document.getElementById("genOverlay").style.visibility = "hidden";
   document.getElementById("simContainer").style.visibility = "visible";
 } //end endSimPrompt()
 
@@ -4145,6 +4154,7 @@ function pauseSim() {
 
 //Resumes the sim (and related times)
 function resumeSim() {
+  paused = false;
   timeResumed = new Date()
   //Amount of time the user was paused (total for session)
   pauseDuration = pauseDuration + (timeResumed - timeStopped);
@@ -4152,7 +4162,10 @@ function resumeSim() {
   sliderTimer = setInterval(updateTime, 1);
   elapsedTime = timeResumed - startTime - pauseDuration;
   for (var j = 0; j < mainTimer.length; j++) {
-    mainTimer[j] = setTimeout(performAction, parseInt(clickTrackings[j].timeStamp) - elapsedTime, j);
+    //Don't repeat previous steps if you didn't go back in time
+    if(parseInt(clickTrackings[j].timeStamp) - elapsedTime > 0) {
+      mainTimer[j] = setTimeout(performAction, parseInt(clickTrackings[j].timeStamp) - elapsedTime, j);
+    }
   }
   exitTimer = setTimeout(endSimPrompt, endTime - elapsedTime);
   document.getElementById("simSlider").style.zIndex = "1002";
@@ -4199,11 +4212,14 @@ function updateSlider(duration) {
 
 //Updates the current simulation after the slider has been moved
 function updateSim(newTime) {
+  //Variable is true if they went back in time, false if they didn't
+  var backToTheFuture = false;
+  var previousTime = elapsedTime;
   clearTimers();
-  console.log(document.getElementById('simSlider').value);
   //If the user is going back in time, refresh the board so that future changes don't yet happen
   if (elapsedTime > newTime) {
     resetPresets();
+    backToTheFuture = true;
   }
   //New elapsed time (since slider has been moved by user)
   elapsedTime = newTime;
@@ -4216,7 +4232,11 @@ function updateSim(newTime) {
   //Update all timers
   sliderTimer = setInterval(updateTime, 1);
   for (var j = 0; j < mainTimer.length; j++) {
-    mainTimer[j] = setTimeout(performAction, parseInt(clickTrackings[j].timeStamp) - elapsedTime, j);
+    //Don't repeat previous steps if you didn't go back in time
+    console.log(backToTheFuture);
+    if(backToTheFuture || !backToTheFuture && previousTime < parseInt(clickTrackings[j].timeStamp)) {
+      mainTimer[j] = setTimeout(performAction, parseInt(clickTrackings[j].timeStamp) - elapsedTime, j);
+    }
   }
   exitTimer = setTimeout(endSimPrompt, endTime - elapsedTime);
 } //end updateSim()
@@ -4255,6 +4275,12 @@ function resetPresets() {
   if (document.getElementById('tabButtons').className != "tabButtons") {
     roll(1);
   }
+  //Resets index function
+  if(document.getElementById('index').style.display == "block") {
+    document.getElementById('index').style.display = "none";
+  }
+  //Resets the undoArr
+  resetUndo();
 } //end resetPresets()
 
 //Sets the simUpload boolean value

@@ -468,8 +468,8 @@ body {
   width: 250px;
 }
 
-#overlay, .simOverlay, #genOverlay {
-    position:fixed;
+.simOverlay, #genOverlay, #overlay {
+    position: absolute;
     top:0;
     bottom:0;
     left:0;
@@ -478,14 +478,10 @@ body {
     z-index:1001;
 }
 
-#overlay-message, #overlay-message-2, #sim-message-exit, #sim-message-repeat {
-    position: relative;
-    top: 40%;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 200px;
-    height: 100px;
+#overlay-message, #overlay label, #sim-message-exit, #sim-message-repeat {
+    position: absolute;
+    width: 18vw;
+    height: 10vw;
     text-align: center;
     border-radius: 8px;
     border: 2px solid white;
@@ -494,15 +490,24 @@ body {
     z-index:1003;
     margin-top: 20px;
 }
-
-#overlayMessage, #overlayMessage2, #exitSim, #repeatSim {
-    padding-top: 20px;
-    color: white;
-    font-family: 'Amatic SC', cursive;
-    font-size: 28px;
+#overlay-message, #sim-message-exit {
+    left: 42.2vw;
+    bottom: 35vw;
 }
 
-#overlay-message:hover , #overlay-message-2:hover, #sim-message-exit:hover, #sim-message-repeat:hover {
+label[for=file-upload], #sim-message-repeat {
+    left: 42.2vw;
+    bottom: 23vw;
+}
+
+#overlayMessage, #overlayMessage2, #exitSim, #repeatSim {
+    padding-top: 2vw;
+    color: white;
+    font-family: 'Amatic SC', cursive;
+    font-size: 2.5vw;
+}
+
+#overlay-message:hover , #simUpload:hover, #sim-message-exit:hover, #sim-message-repeat:hover {
     background-color: #7cc1e9;
     cursor: default;
 }
@@ -525,3 +530,5 @@ body {
 #file-upload {
     display: none;
 }
+
+

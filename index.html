@@ -49,7 +49,7 @@
   <script src="./front-end/resultsDisplay.js"></script>
   <script src="./front-end/gameLogic.js"></script>
   <script src="./front-end/mainFE.js"></script>
-  <script src="./front-end/helpersFE.js"></script>
+  <script src="./front-end/helpersFE.js"info></script>
   <script src="./front-end/levelLoader.js"></script>
 
   <!--from http://www.schillmania.com/projects/fireworks/ -->
@@ -99,7 +99,7 @@
         <div id="overlay-message">
           <div id="overlayMessage">Click here to begin simulation</div>
         </div>
-        <label for="file-upload">
+        <label for="file-upload" id="simUpload">
                 <div id="overlay-message-2" onclick="bindUploadFileListener();">
                     <div id = "overlayMessage2">Click here to upload a custom PEWI map</div>
                 </div>
@@ -108,7 +108,7 @@
       </div>
     </div>
 
-    <!-- Add banner for when simulation is done -->
+    <!-- Add banner for when simulation is done/paused -->
     <div id="simContainer" style="visibility:hidden;">
       <div class="simOverlay">
         <div id="sim-message-exit">
@@ -134,34 +134,35 @@
       $(document).ready(function() {
 
         $("#overlay-message").click(function() {
-          $("#overlay-message, #overlayMessage, #overlay-message-2, #overlayMessage2").css("visibility", "hidden");
-          $("#overlay").css("background-color", "transparent");
+          $("#overlayContainer").css("visibility", "hidden");
+          $("#genOverlay").css("visibility", "visible");
+          $("#genOverlay").css("background", "transparent");
           runSimulation();
         });
 
         $("#sim-message-exit").click(function() {
-          $("#overlay").css("background", "rgba(0, 0, 0, 0.4)");
-          $("#simContainer, #overlayContainer, #overlay").css("visibility", "hidden");
-          setSimBoolean(false);
+          $("#genOverlay").css("background", "rgba(0, 0, 0, 0.4)");
+          $("#simContainer").css("visibility", "hidden");
+          $("#sliderCon").css("visibility", "hidden");
           //Reset defaults
+          setSimBoolean(false);
           resetPresets();
           resetSlider();
           clearTimers();
           setPause(false);
           setUpload(false);
-          document.getElementById("sliderCon").style.visibility = "hidden";
           showMainMenu();
         });
 
         $("#sim-message-repeat").click(function() {
           $("#simContainer").css("visibility", "hidden");
-          $("#overlay").css("background", "rgba(0, 0, 0, 0.4)");
-          $("#overlay-message").css("visibility", "visible");
+          $("#overlayContainer").css("visibility", "visible");
           //Reset defaults
           resetSlider();
           clearTimers();
           setPause(false);
           setUpload(false);
+          setSimBoolean(false);
           promptUserSim();
         })
       });
