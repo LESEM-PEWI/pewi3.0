@@ -3474,6 +3474,7 @@ function toggleVisibility() {
   document.getElementById('year3PrecipContainer').style.display = 'block';
   document.getElementById('resultsButton').style.display = 'block';
 
+          
   //reset precip
   immutablePrecip = false;
 
