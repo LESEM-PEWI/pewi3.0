@@ -45,7 +45,7 @@ Cleaned and Prepared - July 2016
     //as needed
     //the parent page is then called to hide the options iframe
     function saveCurrentOptionsState() {
-      console.log("saveCurrentOptionsState ");
+      //console.log("saveCurrentOptionsState ");
       //find the elements that are able to be checked
       var toggledElements = document.getElementsByClassName('toggle');
       var tempString = "";
@@ -120,9 +120,9 @@ Cleaned and Prepared - July 2016
                 tempString += toggledElements[i].id + "\n"
               }
           } //end switch
-        } 
-           //end for elements of class toggle
-
+        } //end for elements of class toggle
+ 
+         // console.log(tempString);
         var yearNum = Number(document.getElementById('yearNumber').innerHTML);
 
         //if year number is less than max year then get rid of that year
@@ -149,6 +149,9 @@ Cleaned and Prepared - July 2016
       parent.resetOptions();
       //scroll page to top, so that next time options is loaded it starts there
       window.scrollTo(0, 0);
+    
+     //if (tempString[tempString.length-1] == "")
+         
     } //end function saveCurrentOptionsState
 
 

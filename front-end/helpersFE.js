@@ -42,7 +42,7 @@ var previousOverlay = null;
 var previousTab = null;
 var overlayedToggled = false;
 var addingYearFromFile=false;//Boolean used to keep a track of whether or not you're adding a year from file
-
+var info1, info2, info3;
 
 var inResults = false;
 var inDispLevels = false;
@@ -168,8 +168,7 @@ function highlightTile(tileId) {
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
 
       //update the information displayed in the delayed hover div by cursor
-      myTimer = setTimeout(function()
-      {
+      myTimer = setTimeout(function(){
         document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
       //May use strings and iterate through them for removing hover information
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) ;
@@ -976,7 +975,7 @@ function onDocumentKeyDown(event) {
 
       //case esc - view escape menu
     case 27:
-          console.log('Uma');
+         // console.log('Uma');
       if (!curTracking && !runningSim) {
         highlightTile(-1);
         toggleEscapeFrame();
@@ -3418,7 +3417,7 @@ function saveAndRandomize(){
         break;
       }
     }
-    console.log(newDefaultLandUse);
+    
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
@@ -3432,9 +3431,13 @@ function saveAndRandomize(){
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         changeLandTypeTile(i);
       }
-
     }
     painter=newDefaultLandUse; //end for all tiles
+    //'unselect' the previously selected icon
+    var painterElementId = "paint" + prevPainter;
+    document.getElementById(painterElementId).className = "landSelectorIcon icon";
+    //change the selected painter to the new default land use
+    changeSelectedPaintTo(newDefaultLandUse);
   }
 } //end saveandRandomize
 
@@ -3483,6 +3486,7 @@ function toggleVisibility() {
     strRawContents = strRawContents.replace("\r", "");
   }
   var arrLines = strRawContents.split("\n");
+    arrLines.pop();
 
   //for each line of the parameters div, as each keyword has its own line
   for (var i = 0; i < arrLines.length; i++) {
@@ -3505,9 +3509,54 @@ function toggleVisibility() {
           }
           document.getElementById('playerAddButton').style.display = "inline-block";
           break;
-        default:
-              console.log(arrLines);
-          document.getElementById('modalEscapeFrame').style.display = "none";
+        case "paint1":
+          document.getElementById('paint1').style.display = "none";
+          break;
+         case "paint2":
+          document.getElementById('paint2').style.display = "none";
+          break;
+         case "paint3":
+          document.getElementById('paint3').style.display = "none";
+          break;
+         case "paint4":
+          document.getElementById('paint4').style.display = "none";
+          break;
+         case "paint5":
+          document.getElementById('paint5').style.display = "none";
+          break;
+         case "paint6":
+          document.getElementById('paint6').style.display = "none";
+          break;
+         case "paint7":
+          document.getElementById('paint7').style.display = "none";
+          break;
+         case "paint8":
+          document.getElementById('paint8').style.display = "none";
+          break;
+         case "paint9":
+          document.getElementById('paint9').style.display = "none";
+          break;
+         case "paint10":
+          document.getElementById('paint10').style.display = "none";
+          break;
+         case "paint11":
+          document.getElementById('paint11').style.display = "none";
+          break;
+         case "paint12":
+          document.getElementById('paint12').style.display = "none";
+          break;
+         case "paint13":
+          document.getElementById('paint13').style.display = "none";
+          break;
+        case "paint14":
+          document.getElementById('paint14').style.display = "none";
+          break;
+        case "paint15":
+          document.getElementById('paint15').style.display = "none";
+          break;
+//        default:
+//              console.log(arrLines);
+//          document.getElementById(arrLines[i]).style.display = "none";   
       }
     }
   } //end for
