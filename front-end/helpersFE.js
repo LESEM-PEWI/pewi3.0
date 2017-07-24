@@ -3565,7 +3565,7 @@ function toggleVisibility() {
 //        default:
 //              console.log(arrLines);
 //          document.getElementById(arrLines[i]).style.display = "none";   
->>>>>>> Issue236
+
       }
     }
   } //end for
