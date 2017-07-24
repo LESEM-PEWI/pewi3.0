@@ -42,7 +42,6 @@ var previousOverlay = null;
 var previousTab = null;
 var overlayedToggled = false;
 var addingYearFromFile=false;//Boolean used to keep a track of whether or not you're adding a year from file
-var info1, info2, info3;
 
 var inResults = false;
 var inDispLevels = false;
@@ -168,7 +167,8 @@ function highlightTile(tileId) {
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
 
       //update the information displayed in the delayed hover div by cursor
-      myTimer = setTimeout(function(){
+      myTimer = setTimeout(function()
+      {
         document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
       //May use strings and iterate through them for removing hover information
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) ;
@@ -975,7 +975,6 @@ function onDocumentKeyDown(event) {
 
       //case esc - view escape menu
     case 27:
-         // console.log('Uma');
       if (!curTracking && !runningSim) {
         highlightTile(-1);
         toggleEscapeFrame();
@@ -3417,7 +3416,7 @@ function saveAndRandomize(){
         break;
       }
     }
-    
+    console.log(newDefaultLandUse);
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
@@ -3431,6 +3430,7 @@ function saveAndRandomize(){
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         changeLandTypeTile(i);
       }
+   
     }
     painter=newDefaultLandUse; //end for all tiles
     //'unselect' the previously selected icon
@@ -3486,7 +3486,7 @@ function toggleVisibility() {
     strRawContents = strRawContents.replace("\r", "");
   }
   var arrLines = strRawContents.split("\n");
-    arrLines.pop();
+
 
   //for each line of the parameters div, as each keyword has its own line
   for (var i = 0; i < arrLines.length; i++) {
