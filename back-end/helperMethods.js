@@ -56,11 +56,11 @@ function parseInitial(data) {
   } //end for : each line in the file
 
   // check initData type correctness
-  if (initDataIsCorrupt()) {
-    alert("Cannnot convert the file content!");
-    console.log("Inner content is not correct.");
-    return 0;
-  }
+  // if (initDataIsCorrupt()) {
+  //   alert("Cannnot convert the file content!");
+  //   console.log("Inner content is not correct.");
+  //   return 0;
+  // }
 
   // // success
   return 1;
@@ -127,7 +127,7 @@ function getRandomInt(min, max) {
 function initDataIsCorrupt() {
   // check length
   if (initData.length != 828) {
-    console.log("I throught this will never be triggered");
+    console.log("I thought this will never be triggered");
     console.log("initData.length: " + initData.length);
     console.log("initData ");
     console.log(initData);

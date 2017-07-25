@@ -2386,7 +2386,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
       var tempOptions=optionsString.replace(/\n/g,"~");//replaceing the \n in options string to be '~'
       optionsString=tempOptions;
       string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3,"+optionsString+",\n";//+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
-      
+
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       if (boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
