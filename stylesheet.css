@@ -141,7 +141,7 @@ body {
   right: 240px;
 
 }
-.upperButton, #logoBase, #pewiLogo {
+.upperButton, #logoBase, #pewiLogo, #homebutton{
   height: 3vw;
   position: absolute;
   top: 0.1vw;
@@ -159,6 +159,13 @@ body {
   -webkit-transition-duration: 0.1s;
   /* Safari */
   transition-duration: 0.1s;
+}
+
+#homebutton{
+    position: absolute;
+    height: 3vw;
+    left: 1vw;
+    top: 0.5vw;
 }
 
 #creditsButton {
