@@ -131,6 +131,7 @@ body {
 
 .groupHeader, .groupElement, .selectedGroupHeader, .selectedGroupElement {
   color: #FFFFFF;
+  cursor: pointer;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   /*font-size: 20px;*/
   /*font-size: 80%;*/
@@ -154,7 +155,6 @@ body {
 .groupHeader:hover, .groupElement:hover {
   background-color: rgba(192, 192, 192, .5);
   border: 2px solid gray;
-  cursor: pointer;
 }
 
 .groupElement {

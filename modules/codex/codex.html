@@ -16,7 +16,7 @@ All of these sections are propogated automatically from the info in codexResourc
     <!--css-->
     <link rel="stylesheet" type="text/css" href="./codexStylesheet.css">
     <!--javascript-->
-    <script type="text/javascript" src="../.././lib/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../.././lib/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="./codexHelper.js"></script>
     <!--external fonts-->
     <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
@@ -28,6 +28,8 @@ All of these sections are propogated automatically from the info in codexResourc
         //    Whoever holds the conch gets to speak...
         //    Conch! Conch! We don’t need the conch any more. We know who ought to say things.
         document.addEventListener('keydown', onDocumentKeyDown, false);
+        // parent.addEvent(document, 'keydown', onDocumentKeyDown);
+
         //propogate data onload
         window.onload = init;
     </script>
