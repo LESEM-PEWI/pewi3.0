@@ -30,7 +30,7 @@
   <link rel='shortcut icon' href='./imgs/pewi_favicon.ico' type='image/x-icon' />
 
   <!--<link rel='shortcut icon' href='./imgs/pewi_favicon.ico' type='image/x-icon' />-->
-  <link rel='shortcut icon' href='./imgs/logo_favicon.ico' type='image/x-icon'/>
+  <link rel='shortcut icon' href='./imgs/logo_favicon.ico' type='image/x-icon' />
 
   <!-- three.js framework and javascript libraries -->
   <!-- <script src="./lib/d3.min.js"></script> -->
@@ -172,7 +172,7 @@
     <div id = "flyover" class = "fly" > </div>
     <!--Create index button on screen-->
     <div id="indexmenu" onclick="toggleIndex();">Index</div>
-      
+
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
     <img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
@@ -234,18 +234,18 @@
           <!-- multiplayer mode  -->
           <div id="rightPlayerCon"></div>
         </div>
-          <div id="playerOptions" style="display: inline; visibility: hidden;">
-            <div id="playerDeleteButton" onclick="deleteAndSort();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-              <img id="playerDeleteImage" style="display:inline-block;" class="playerIcon icon" src="./imgs/deleteYear.png"></div>
-            <div id="playerAddButton" onclick="addPlayer(); " onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-              <img id="playerAddImage" style="display:inline-block;" class="playerIcon icon" src="./imgs/addYear.png"></div>
+        <div id="playerOptions" style="display: inline; visibility: hidden;">
+          <div id="playerDeleteButton" onclick="deleteAndSort();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+            <img id="playerDeleteImage" style="display:inline-block;" class="playerIcon icon" src="./imgs/deleteYear.png"></div>
+          <div id="playerAddButton" onclick="addPlayer(); " onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+            <img id="playerAddImage" style="display:inline-block;" class="playerIcon icon" src="./imgs/addYear.png"></div>
+        </div>
+        <div id="playerResetButton" onclick="resetMultiPlayer();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+          <div id="message">
+            <p>RESET</p>
           </div>
-          <div id="playerResetButton" onclick="resetMultiPlayer();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-            <div id="message">
-              <p>RESET</p>
-            </div>
-            <img id="playerResetImage" class="playerIcon icon" src="./imgs/close_black.png">
-          </div>
+          <img id="playerResetImage" class="playerIcon icon" src="./imgs/close_black.png">
+        </div>
       </div>
 
       <!-- Precipitation display -->
@@ -258,50 +258,50 @@
           <div id="year0PrecipContainer" class="styled-select">
             <h4>Year 0:</h4>
             <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
-                        <option value=0>24.58</option>
-                        <option value=1>28.18</option>
-                        <option value=2>30.39</option>
-                        <option value=3>32.16</option>
-                        <option value=4>34.34</option>
-                        <option value=5>36.47</option>
-                        <option value=6>45.10</option>
-                    </select>
+                <option value=0>24.58</option>
+                <option value=1>28.18</option>
+                <option value=2>30.39</option>
+                <option value=3>32.16</option>
+                <option value=4>34.34</option>
+                <option value=5>36.47</option>
+                <option value=6>45.10</option>
+            </select>
           </div>
           <div id="year1PrecipContainer" class="styled-select">
             <h4>Year 1:</h4>
             <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();">
-                        <option value=0>24.58</option>
-                        <option value=1>28.18</option>
-                        <option value=2>30.39</option>
-                        <option value=3>32.16</option>
-                        <option value=4>34.34</option>
-                        <option value=5>36.47</option>
-                        <option value=6>45.10</option>
-                    </select>
+                <option value=0>24.58</option>
+                <option value=1>28.18</option>
+                <option value=2>30.39</option>
+                <option value=3>32.16</option>
+                <option value=4>34.34</option>
+                <option value=5>36.47</option>
+                <option value=6>45.10</option>
+            </select>
           </div>
           <div id="year2PrecipContainer" class="styled-select">
             <h4>Year 2:</h4>
             <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi();">
-                        <option value=0>24.58</option>
-                        <option value=1>28.18</option>
-                        <option value=2>30.39</option>
-                        <option value=3>32.16</option>
-                        <option value=4>34.34</option>
-                        <option value=5>36.47</option>
-                        <option value=6>45.10</option>
-                    </select>
+                <option value=0>24.58</option>
+                <option value=1>28.18</option>
+                <option value=2>30.39</option>
+                <option value=3>32.16</option>
+                <option value=4>34.34</option>
+                <option value=5>36.47</option>
+                <option value=6>45.10</option>
+            </select>
           </div>
           <div id="year3PrecipContainer" class="styled-select">
             <h4>Year 3:</h4>
             <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi();">
-                        <option value=0>24.58</option>
-                        <option value=1>28.18</option>
-                        <option value=2>30.39</option>
-                        <option value=3>32.16</option>
-                        <option value=4>34.34</option>
-                        <option value=5>36.47</option>
-                        <option value=6>45.10</option>
-                    </select>
+                <option value=0>24.58</option>
+                <option value=1>28.18</option>
+                <option value=2>30.39</option>
+                <option value=3>32.16</option>
+                <option value=4>34.34</option>
+                <option value=5>36.47</option>
+                <option value=6>45.10</option>
+            </select>
           </div>
         </form>
 

@@ -6,79 +6,55 @@
           painter, Totals, river,
           Results, initData, hoveredOver, currentPlayer*/
 
-var currentRow = -1;
-var leftToolConsoleWasOpen;
-var rightPopupWasOpen;
-var meshGeometry = new THREE.Geometry();
+var addingYearFromFile = false; //Boolean used to keep a track of whether or not you're adding a year from file
+var clearToChangeLandType = true;
 var click;
-var meshMaterials = [];
-var tileHeight = 12;
-var tileWidth = 18;
-var rowCutOffs = []; //y coor of top left corner of each tile
+var clickAndDrag = false;
 var columnCutOffs = [];
-var mesh = null;
-var highlightedTiles = [];
-var hoverOverride = false;
+var cur;
 var currentHighlightType = 0;
 var currentHighlightTypeString = null;
-var immutablePrecip = false;
-var clickAndDrag = false;
-var undoArr = [
-  [],
-  [],
-  [],
-  []
-];
-var undoGridArr = [];
-var undoGridPainters = [];
-var undo = false;
-var previousTab = null;
-var overlayedToggled = false;
-var inResults = false;
-var inDispLevels = false;
-var curTracking = false;
-var startTime;
-var endTime;
+var currentRow = -1;
 var curTime;
-var simulationData;
-var runningSim = false;
-var randomzing = false;
+var curTracking = false;
+var fullBoardBeforeZoom, zIsDown, oneIsDown;
+var elapsedTime;
+var endTime;
+var exitTimer;
+var hoverOverride = false;
+var inDispLevels = false;
+var inResults = false;
+var immutablePrecip = false;
+var leftToolConsoleWasOpen;
+var merging = false;
+var mesh = null;
+var meshGeometry = new THREE.Geometry();
+var myTimer = null;
+var overlayedToggled = false;
+var paused = false;
+var pauseDuration = 0;
 var previousOverlay = null;
 var previousTab = null;
-var overlayedToggled = false;
-var addingYearFromFile = false; //Boolean used to keep a track of whether or not you're adding a year from file
-
-var inResults = false;
-var inDispLevels = false;
-var birds = [],
-  bird;
-var boids = [],
-  boid;
-var clearToChangeLandType = true;
-var fullBoardBeforeZoom, zIsDown, oneIsDown;
-
-var painterTool = {
-  status: 0,
-  startTile: 0,
-  endTile: 0,
-  hover: false
-};
-var myTimer = null;
-var mainTimer = [];
-var exitTimer;
-var sliderTimer;
-var timeStopped;
-var timeResumed;
-var pauseDuration = 0;
-var elapsedTime;
-var cur;
-var paused = false;
 var randomizing = false;
-var simBoard;
-var playerCombo = [];
-var totalPlayers = 0;
-var merging = false;
 var resetting = false;
+var rightPopupWasOpen;
+var runningSim = false;
+var simBoard;
+var simulationData;
+var sliderTimer;
+var startTime;
+var tileHeight = 12;
+var tileWidth = 18;
+var timeResumed;
+var timeStopped;
+var totalPlayers = 0;
+var undo = false;
+
+var birds = [],
+bird;
+var boids = [],
+boid;
+var highlightedTiles = [];
 var hotkeyArr = [
   [69, null],
   [82, null],
@@ -93,7 +69,25 @@ var hotkeyArr = [
   [79, null],
   [81, null]
 ];
+var mainTimer = [];
+var meshMaterials = [];
+var playerCombo = [];
+var rowCutOffs = []; //y coor of top left corner of each tile
+var undoArr = [
+  [],
+  [],
+  [],
+  []
+];
+var undoGridArr = [];
+var undoGridPainters = [];
 
+var painterTool = {
+  status: 0,
+  startTile: 0,
+  endTile: 0,
+  hover: false
+};
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
 
@@ -906,6 +900,12 @@ function onDocumentMouseUp(event) {
 //onDocumentKeyDown, listener with keyboard bindings
 function onDocumentKeyDown(event) {
   //switch structure on key code (http://keycode.info)
+
+  // if (!event){
+  //   event = window.event;
+  // }
+  // var keycode = event.keyCode || event.charCode;
+
   switch (event.keyCode) {
     //case shift - update isShiftDown
     case 16:
@@ -1067,6 +1067,9 @@ function onDocumentKeyDown(event) {
 //  but you already knew that...
 function onDocumentKeyUp(event) {
   //switch structure for key code (http://keycode.info)
+
+  // var keycode = event.keyCode || event.charCode;
+
   switch (event.keyCode) {
     case 0: isShiftDown = false; break;
       //case release shift
@@ -1272,6 +1275,7 @@ function resultsStart() {
     animateResults();
     //Event Listener for closing reslts tab
     document.addEventListener('keyup', resultsEsc);
+    // addEvent(document, 'keyup', resultsEsc);
   } //end if
 } //end resultsStart
 
@@ -1279,6 +1283,7 @@ function resultsStart() {
 function resultsEnd() {
   //Fucntion for removing event listener when resluts is closed
   document.removeEventListener('keyup', resultsEsc);
+  // removeEvent(document, 'keyup', resultsEsc);
   inResults = false;
   //modal is no longer up
   modalUp = false;
@@ -1331,7 +1336,7 @@ function roll(value) {
       }
       document.getElementById('toolsButton').style.left = "0px";
       // document.getElementById('toolsButton').style.backgroundImage = "url('./imgs/consoleTexture.png')";
-      document.getElementById('pick').src = "./imgs/pickIn.png"
+      document.getElementById('pick').src = "./imgs/pickIn.png";
       document.getElementById('tabButtons').className = "tabButtonsRolled";
       document.getElementById('leftConsole').className = "leftConsoleRolled";
 
@@ -1343,7 +1348,7 @@ function roll(value) {
       // document.getElementById('toolsButton').style.left = "9.6vw";
       document.getElementById('toolsButton').style.left = document.getElementById('leftConsole').style.width;
       // document.getElementById('toolsButton').style.backgroundImage = "none";
-      document.getElementById('pick').src = "./imgs/pickOut.png"
+      document.getElementById('pick').src = "./imgs/pickOut.png";
       document.getElementById('tabButtons').className = "tabButtons";
       document.getElementById('leftConsole').className = "leftConsole";
 
@@ -1426,7 +1431,7 @@ function showLevelDetails(value) {
       //show cattle class legend
       document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
       document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
-      updateIndexPopup('<span style="color:orange;">Permanent Pasture and Rotational Grazing</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.')
+      updateIndexPopup('<span style="color:orange;">Permanent Pasture and Rotational Grazing</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
     case 13:
       //show alfalfa class legend
@@ -1610,7 +1615,7 @@ function switchConsoleTab(value) {
         pushClick(0, getStamp(), 68, 0, null);
       }
       document.getElementById('yieldImg').className = "imgSelected";
-      document.getElementById('yieldTab').style.display = "block"
+      document.getElementById('yieldTab').style.display = "block";
       updateIndexPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
       break;
   } // END switch
@@ -2333,7 +2338,7 @@ function displayFirework() {
 function flyLark() {
   document.getElementById("meadowlark").className = "meadowlarkhidden";
   setTimeout(function() {
-    document.getElementById("meadowlark").className = "meadowlarkfly"
+    document.getElementById("meadowlark").className = "meadowlarkfly";
   }, 1);
 } //end flyLark
 
@@ -2388,7 +2393,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
 
       if (mapPlayerNumber > 0) {
         if (boardData[currentBoard].map[i].landType[0] == 0) string += "0,";
-        else string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "-1,")
+        else string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? boardData[currentBoard].map[i].baseLandUseType + "," : "-1,");
       } else {
         string += boardData[currentBoard].map[i].baseLandUseType + ",";
       }
@@ -2581,7 +2586,7 @@ function uploadClicked(e) {
           //clear initData
           initData = [];
         }
-      }
+      };
     } else {
       //if the file isn't csv or json
       alert("Incorrect File Type!");
@@ -2692,6 +2697,7 @@ function showCredits() {
   }
   //Event Listner to close the credits page
   document.addEventListener('keyup', aboutsEsc);
+  // addEvent(document, 'keyup', aboutsEsc);
 } //end showCredits
 
 //closeCreditFrame closes the credits iframe
@@ -2705,6 +2711,7 @@ function closeCreditFrame() {
   modalUp = false;
   //Event listner that closes escape key
   document.removeEventListener('keyup', aboutsEsc);
+  // removeEvent(document, 'keyup', aboutsEsc);
 } //end closeCreditFrame
 
 //showUploadDownload opens the credits iframe
@@ -2719,6 +2726,7 @@ function showUploadDownload() {
     modalUp = true;
   }
   document.addEventListener('keyup', downuploadEsc);
+  // addEvent(document, 'keyup', downuploadEsc);
   if (mapIsHighlighted) {
     displayLevels();
   }
@@ -2734,6 +2742,7 @@ function closeUploadDownloadFrame() {
   document.getElementById('modalUploadFrame').style.display = "none";
   modalUp = false;
   document.removeEventListener('keyup', downuploadEsc);
+  // removeEvent(document, 'keyup', downuploadEsc);
 } //end closeUploadDownloadFrame
 
 //toggleIndex displays and hides the codex
@@ -2745,16 +2754,17 @@ function toggleIndex() {
     if (document.getElementById('modalResultsFrame').style.display == "block") resultsEnd();
 
     if (curTracking) {
-      pushClick(0, getStamp(), 78, 0, null)
+      pushClick(0, getStamp(), 78, 0, null);
     }
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
     document.getElementById('index').style.display = "block";
     document.addEventListener('keyup', indexEsc);
+    // addEvent(document, 'keyup', indexEsc);
   } else if (document.getElementById('index').style.display == "block" && modalUp) {
 
     if (curTracking) {
-      pushClick(0, getStamp(), 79, 0, null)
+      pushClick(0, getStamp(), 79, 0, null);
     }
     modalUp = false;
 
@@ -2770,6 +2780,7 @@ function toggleIndex() {
 
     document.getElementById('index').contentWindow.resetHighlighting();
     document.removeEventListener('keyup', indexEsc);
+    // removeEvent(document, 'keyup', indexEsc);
   }
 } //end toggleIndex
 
@@ -3091,7 +3102,7 @@ function toggleVisibility() {
     //  then we know the precip was immutable before and we need to cut
     //  this text off
     if (!isNaN(currentInnerHtml[currentInnerHtml.length - 1])) {
-      while (!(currentInnerHtml[currentInnerHtml.length - 1] == '>')) {
+      while ( currentInnerHtml[currentInnerHtml.length - 1] != '>' ) {
         //keep cutting off characters until we come back to the end tag of the
         // selector element
         currentInnerHtml = currentInnerHtml.slice(0, -1);
@@ -3187,6 +3198,8 @@ function resetOptions() {
   // remove Esc key event listener
   document.removeEventListener('keyup', optionsEsc);
   window.frames[4].document.removeEventListener('keyup', optionsEsc);
+  // removeEvent(document, 'keyup', optionsEsc);
+  // removeEvent(window.frames[4].document, 'keyup', optionsEsc);
 } //end resetOptions
 
 //startOptions displays the options page
@@ -3200,6 +3213,8 @@ function startOptions() {
     // add Esc key event listener
     document.addEventListener('keyup', optionsEsc);
     window.frames[4].document.addEventListener('keyup', optionsEsc);
+    // addEvent(document, 'keyup', optionsEsc);
+    // addEvent(window.frames[4].document, 'keyup', optionsEsc);
   }
 } // end startOptions
 
@@ -3338,7 +3353,7 @@ function multiplayerAggregateBaseMapping(file) {
     setupBoardFromUpload(reader.result);
     //clear initData
     initData = [];
-  }
+  };
 } //end multiplayerAggregateBaseMapping
 
 //here we facilitate the aggregation of multiplayer boards
@@ -3358,7 +3373,7 @@ function multiplayerAggregateOverlayMapping(file) {
     }
     //clear initData
     initData = [];
-  }
+  };
 } //end multiplayerAggregateOverlayMapping
 
 //toggleChangeLandType toggles a boolean that tracks the state which is required to change land type
@@ -3581,7 +3596,7 @@ function combineMulti(givenPlayers) {
 
 //Gets the current timestamp for the click (event)
 function getStamp() {
-  curTime = new Date()
+  curTime = new Date();
   return (curTime - startTime);
 } //end getStamp
 
@@ -3643,7 +3658,7 @@ function loadSimulation(e) {
       var sim = reader.result.split("\n");
       simulationData = sim;
       promptUserSim();
-    }
+    };
   }
 } //end loadSimulation
 
@@ -3728,7 +3743,7 @@ function pauseSim() {
 //Resumes the sim (and related times)
 function resumeSim() {
   paused = false;
-  timeResumed = new Date()
+  timeResumed = new Date();
   //Amount of time the user was paused (total for session)
   pauseDuration = pauseDuration + (timeResumed - timeStopped);
   //Amount of simulation time that has passed
@@ -3832,7 +3847,7 @@ function resetPresets() {
   painterSelect(1);
   //Resets the year selections
   resetYearDisplay();
-  document.getElementById("year1Image").className = "icon yearSelected"
+  document.getElementById("year1Image").className = "icon yearSelected";
   currentYear = 1;
   //Resets the scroll in the results tab
   window.frames[3].scrollTo(0, 0);
@@ -3860,3 +3875,45 @@ function resetPresets() {
 function setUpload(givenValue) {
   uploadedBoard = givenValue;
 } //end setUpload()
+
+/**
+* Use two methods to add event listener, help with browser compatibility
+*
+* @param element html DOM which listens to the event
+* @param evName built-in event name, the event that is listening to
+* @param fn callback function, will be triggered if the event is fired
+*/
+// function addEvent(element, evName, fn) {
+//   if (evName == 'resize') {
+//     console.log(element+" has added "+ evName+ " listener");
+//   }
+//   if (element.addEventListener) {
+//     element.addEventListener(evName, fn, false);
+//   } else if (element.attachEvent) {
+//     // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/attachEvent
+//     element.attachEvent('on'+evName, function(e) {
+//         fn(e || window.event);
+//     });
+//     console.log("attachEvent");
+//   }
+// }
+
+/**
+* Use two methods to remove event listener, help with browser compatibility
+*
+* @param element html DOM which listens to the event
+* @param evName built-in event name, the event that is listening to
+* @param fn callback function, will be triggered if the event is fired
+*/
+// function removeEvent(element, evName, fn) {
+//   // console.log(element+" has removed "+ evName+ " listener");
+//   if (element.removeEventListener) {
+//     element.removeEventListener(evName, fn, false);
+//   } else if (element.detachEvent) {
+//   // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/detachEvent
+//     element.detachEvent('on'+evName, function(e) {
+//         fn(e || window.event);
+//     });
+//     console.log("detachEvent");
+//   }
+// }
