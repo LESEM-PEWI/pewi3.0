@@ -153,7 +153,7 @@ $
 ./codexResources/text/waterQuality.html
 0
 @ : Nitrate Pollution Control
-<iframe width="500" height="300" src="https://www.youtube.com/embed/c63ZXfZyfEg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300"src=https://www.youtube.com/embed/dB3-d9UONJc?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/K_nmKowHYRY?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300"src=https://www.youtube.com/embed/dB3-d9UONJc?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/nitratePollutionControl.html
 1
 @ : Phosphorus Pollution Control
@@ -166,7 +166,7 @@ $
 1
 $
 # + Yield
-<iframe width="500" height="300" src="https://www.youtube.com/embed/5cZ4xD4EYU0?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/5SbrIOBypMU?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/g306iZIOlm8?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/5SbrIOBypMU?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/yield.html
 1
 @ : Alfalfa
@@ -276,6 +276,10 @@ $
 @ : Keyboard Shortcuts
 <iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/keyboardShortcuts.html
+0
+@ : Record
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/record.html
 0
 @ : About
 <img src="./codexResources/imgs/about.png" />
