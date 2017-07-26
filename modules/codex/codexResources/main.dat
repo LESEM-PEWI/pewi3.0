@@ -92,6 +92,10 @@ $
 ./codexResources/text/hydrologicGroup.html
 1
 $
+@ : Yield Overlay Maps
+<iframe width="500" height="300" src="https://www.youtube.com/embed/b-jIBLorR6E?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/yieldoverlaymaps.html
+0
 @ : Soil Class
 <iframe width="500" height="300" src="https://www.youtube.com/embed/b-jIBLorR6E?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/soilClass.html
@@ -248,6 +252,10 @@ $
 <iframe width="500" height="300" src="https://www.youtube.com/embed/VdqI3fNfM64?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/commentPanel.html
 0
+@ : Index Information Box
+<iframe width="500" height="300" src="https://www.youtube.com/embed/VdqI3fNfM64?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/indexinformationbox.html
+0
 @ : View Perspective
 <iframe width="500" height="300" src="https://www.youtube.com/embed/2Nq9H5RHMZc?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/viewPerspective.html
@@ -273,9 +281,29 @@ $
 <iframe width="500" height="300" src="https://www.youtube.com/embed/omod9bdpe2Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/pauseMenu.html
 0
-@ : Keyboard Shortcuts
+@ : Instructor Options
+<iframe width="500" height="300" src="https://www.youtube.com/embed/omod9bdpe2Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/instructoroptions.html
+0
+@ : Hover Information
+<iframe width="500" height="300" src="https://www.youtube.com/embed/omod9bdpe2Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/hoverinformation.html
+0
+@ : Hotkeys
 <iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/keyboardShortcuts.html
+0
+@ : Hotkey Customization
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/hotkeycustomization.html
+0
+@ : Randomization
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/randomization.html
+0
+@ : Undo Function
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/undofunction.html
 0
 @ : Record
 <iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
