@@ -50,6 +50,7 @@ var undoGridPainters = [];
 var clearToChangeLandType = true;
 var fullBoardBeforeZoom, zIsDown, oneIsDown;
 var inDispLevels = false;
+
 var inResults = false;
 var birds = [],
   bird;
@@ -83,6 +84,12 @@ var resetting = false;
 var totalPlayers = 0;
 // customize hotkeys
 var hotkeyArr = [[69,null],[82,null],[84,null],[85,null],[66,null],[86,null],[68,null],[65,null],[87,null],[83,null],[79,null],[81,null]];
+
+// for print function
+var data = []; // stores precip data for results page
+var radarLegendColors = [], radarLegendItems = [];
+var tempLegendItems = [], maxLegendSize = 1, finalLegendItems = []; // stores strings of the names in legend for print function
+var tempLegendColors = [], finalLegendColors = []; // stores colors of legent items for print function
 
 // object to store user actions ( print function )
 var session = {
@@ -3510,6 +3517,9 @@ function executePrintOptions(isDownload) {
     resultsTable1: false,
     resultsTable2: false,
     resultsTable4: false,
+    resultsLanduse: false,
+    resultsEcosystem: false,
+    resultsPrecip: false,
     // levels
     levelUserViewpoint: false,
     nitrate: false,

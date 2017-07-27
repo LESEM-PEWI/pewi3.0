@@ -45,9 +45,11 @@ var zoomingInNow = false;
 var zoomingOutNow = false;
 
 var rain = null;
+
 // global variable for print function
-var takeScreenshot = false;
-var jspdfprinter;
+var jspdfprinter; // object that functions all print function stuff
+var printMode = false;
+var takeScreenshot = false; // used in animationFrames
 
 //===================
 
@@ -153,7 +155,7 @@ function RestorePosition(){
     //Storing the camera2 values to global variables
     camera2.position.x = cam2x;
     camera2.position.y = cam2y;
-    camera2.position.z = cam2z;   
+    camera2.position.z = cam2z;
     camera2.rotation.x = cam2Rox;
     camera2.rotation.y = cam2Roy;
     camera2.rotation.z = cam2Roz;

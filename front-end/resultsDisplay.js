@@ -453,7 +453,9 @@ function generateResultsTable() {
 // this function creates the pie chart at the top of the graphics in the results page
 //it uses d3 and has the option to be displayed by categories or by a complete listing
 function drawD3LandPieChart(year, isTheChartInCategoryMode) {
-
+  // RESETTING THE TEMPORARY COLOR AND LEGEND ELEMENT nameArray
+  tempLegendItems = [];
+  tempLegendColors = [];
   //remove the html that's already there, ie clear the chart
   document.getElementById('resultsFrame').contentWindow.document.getElementById('landusePieChart').innerHTML = " ";
   //pass data to the page that it needs, we do this by putting it in hidden divs
@@ -593,6 +595,13 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   // var radius = Math.min(width, height) / 2;
   var w = Math.round(window.innerWidth * 0.38);
   var h = Math.round(window.innerHeight * 0.382);
+
+  // if the pie chart is being drawn to be printed on a pdf then set the fixed size
+  if (printMode) {
+   w = 200;
+   h = 200;
+  }
+
   var pieChart_length = Math.min(w, h);
   var legendW = Math.round(pieChart_length * 1.06);
 
@@ -612,6 +621,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   var svg = d3.select(chart)
     .append('svg')
     .attr("class", "graph-svg-component")
+    .attr("id", "pieSVG")
     // .attr('width', width + legendW) //leave room for legend so add 280
     // .attr('height', height)
     .attr('width', pieChart_length + legendW) //leave room for legend so add 280
@@ -767,6 +777,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
     .attr('width', legendRectSize)
     .attr('height', legendRectSize)
     .style('fill', function(d) {
+     tempLegendColors.push(colorLinker[d]); // adds the legend color to array (for print function)
       return colorLinker[d];
     })
     .style('stroke', function(d) {
@@ -778,6 +789,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
     .attr('x', legendRectSize + legendSpacing)
     .attr('y', legendRectSize - legendSpacing)
     .text(function(d) {
+     tempLegendItems.push(d); // adds the legend element to the array (for print function)
       return d;
     });
 
@@ -806,12 +818,12 @@ function drawPrecipitationInformationChart() {
 
   //this nested function updates the text and images in the left container, mouseover info
   function setupPrecipInfo(year) {
-    container.select('.yearLabel').html(data[year].label);
-    container.select('.precipValue').html(data[year].value + " inches");
-    container.select('.precipType').html(data[year].adj);
+    container.select('.yearLabel').html(parent.data[year].label);
+    container.select('.precipValue').html(parent.data[year].value + " inches");
+    container.select('.precipType').html(parent.data[year].adj);
 
     var img = " ";
-    switch (data[year].adj) {
+    switch (parent.data[year].adj) {
       case "Dry":
         // "Clouds" by https://icons8.com with free commercial use / Inserted oval under cload
         img = "./imgs/dry.png";
@@ -841,7 +853,7 @@ function drawPrecipitationInformationChart() {
   document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo').innerHTML = " ";
 
   //assign data
-  var data = [{
+  parent.data = [{
     label: "Year 0",
     value: boardData[currentBoard].precipitation[0],
     percent: 0,
@@ -873,7 +885,7 @@ function drawPrecipitationInformationChart() {
     var tempPercent;
     var tempAdj;
 
-    switch (data[y].value) {
+    switch (parent.data[y].value) {
       case 24.58:
         tempPercent = 25;
         tempAdj = "Dry";
@@ -898,7 +910,7 @@ function drawPrecipitationInformationChart() {
         tempPercent = 64;
         tempAdj = "Wet";
 
-        if (y > 0 && data[y - 1].adj == "Dry") {
+        if (y > 0 && parent.data[y - 1].adj == "Dry") {
           tempAdj = "Flood";
         }
 
@@ -907,7 +919,7 @@ function drawPrecipitationInformationChart() {
         tempPercent = 89;
         tempAdj = "Wet";
 
-        if (y > 0 && data[y - 1].adj == "Dry") {
+        if (y > 0 && parent.data[y - 1].adj == "Dry") {
           tempAdj = "Flood";
         }
 
@@ -919,8 +931,8 @@ function drawPrecipitationInformationChart() {
     } //end switch
 
     //assign data values
-    data[y].percent = tempPercent;
-    data[y].adj = tempAdj;
+    parent.data[y].percent = tempPercent;
+    parent.data[y].adj = tempAdj;
   }
 
   //d3 stuff, again, I won't comment too heavily since much of this is standard practice
@@ -932,6 +944,11 @@ function drawPrecipitationInformationChart() {
   var width = Math.round(window.innerWidth * 0.3);
   var barHeight = Math.round(window.innerHeight * 0.045);
 
+  //if the pie chart is being drawn to be prionted on a pdf then set a fixed size for graph
+  if (printMode) {
+   width = 500;
+   barHeight = 45;
+  }
 
   //create bar scale for percentages
   var x = d3.scaleLinear()
@@ -1009,7 +1026,7 @@ function drawPrecipitationInformationChart() {
     .attr("x", function(d) {
       return x(d.percent) + 7;
     })
-    .attr("y", barHeight / 2)
+    .attr("y", barHeight / 2 )
     .attr("dy", ".35em")
     .text(function(d) {
       return d.label;
@@ -1026,8 +1043,7 @@ function drawPrecipitationInformationChart() {
 // it also creates the quality indicator gradients to the plot's right
 //======= it's use is currently deprecated
 function drawEcosystemIndicatorsDisplay(year) {
-
-  //clear info
+  // clear info
   document.getElementById('resultsFrame').contentWindow.document.getElementById('asterChart').innerHTML = " ";
   document.getElementById('resultsFrame').contentWindow.document.getElementById('asterContainer').innerHTML = " ";
   //pass parameters along to page via a hidden div
@@ -1368,12 +1384,19 @@ function drawEcosystemIndicatorsDisplay(year) {
 // for each of the years
 // the code here is original, but the Radar object prototype is credited following
 function drawEcosystemRadar(yearArray) {
+  // RESETTING THE TEMPORARY COLOR AND LEGEND ELEMENT nameArray
+  radarLegendItems = [];
+  radarLegendColors = [];
   //clear info already on page
-  document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart').innerHTML = " ";
-  document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend').innerHTML = " ";
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart').innerHTML = "";
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend').innerHTML = "";
 
   var w = Math.round(window.innerWidth * 0.317);
   var h = Math.round(window.innerHeight * 0.319);
+  // set a fixed size for radar for print mode
+  if (printMode) {
+   w = h = 244;
+  }
   var graphLength = Math.min(w, h);
 
   var dataset = [];
@@ -1385,7 +1408,6 @@ function drawEcosystemRadar(yearArray) {
   for (var i = 0; i < yearArray.length; i++) {
 
     var y = yearArray[i];
-
     var obj = [{
       label: "Nitrate Concentration",
       axis: "Nitrate",
@@ -1531,6 +1553,7 @@ function drawEcosystemRadar(yearArray) {
       return colorscale(i);
     })
     .style('stroke', function(d, i) {
+      radarLegendColors.push(colorscale(i)); // pushes the item names in the radar plot chart's legend to items array
       return colorscale(i);
     });
 
@@ -1539,6 +1562,7 @@ function drawEcosystemRadar(yearArray) {
     .attr('x', legendRectSize + legendSpacing)
     .attr('y', legendRectSize - legendSpacing)
     .text(function(d) {
+      radarLegendItems.push(d); // pushes the item names in the radar plot chart's legend to items array
       return d;
     });
 
