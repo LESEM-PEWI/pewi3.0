@@ -3099,8 +3099,8 @@ function Printer() {
   // some parameters // in pt
   var
     // Width & heigth of the entire bar ( precip ) chart section
-    barChartHeight = 500,
-    barChartWidth = 500,
+    barChartHeight = 100,
+    barChartWidth = 250,
     // legend
     indicatorLength = 8,
     lineHeight = 12,
@@ -3191,20 +3191,20 @@ function Printer() {
 
               RESULTS_HTML.toggleToTab(1); // switch to graphs tab
 
-              var canvas;
+              // var canvas;
               switch (property) {
-                case 'resultsLanduse': canvas = drawPieCharts(); break;// putting svg on canvas
+                case 'resultsLanduse': imageSrc[property] = drawPieCharts(); break;// putting svg on canvas
                 case 'resultsEcosystem':
                   //Toggle the years which are not selected off
                   if(toPrint.year1 == false) removeYearFromRadar(1);
                   if(toPrint.year2 == false) removeYearFromRadar(2);
                   if(toPrint.year3 == false) removeYearFromRadar(3);
                   // putting svg on canvas
-                  canvas = drawRadarChart();
+                  imageSrc[property] = drawRadarChart();
                   break;
-                case 'resultsPrecip': canvas = drawPrecipChart(); break;
+                case 'resultsPrecip': imageSrc[property] = drawPrecipChart(); break;
               } // end switch
-              imageSrc[property] = canvas.toDataURL("image/jpeg");
+              // imageSrc[property] = canvas.toDataURL("image/jpeg");
 
               if (property == 'resultsEcosystem')
                 makeLegendBox('rada');// putting svg on canvas
@@ -3355,7 +3355,7 @@ function Printer() {
             addImage(imageSrc[property], 'JPEG', x + 155, y, barChartWidth, barChartHeight);
             //adding the text and description
             for (var i = 0; i < 4; i++)
-              addText(1, parent.boardData[parent.currentBoard].precipitation[i] + " inches " + parent.data[i].adj, x + 20, previousY + 22*(i+1), font.font);
+              addText(1, parent.boardData[parent.currentBoard].precipitation[i] + " inches " + parent.data[i].adj, x + 20, previousY + 20*(i+1), font.font);
             // update y
             updateY(lineHeight*2+padding);
 
@@ -3537,19 +3537,20 @@ function Printer() {
   } // end drawLegendBox
 
   /**
-  * rendering pie charts on a canvas
+  * Rendering pie charts on a canvas and convert to image
+  * then delete the canvas and returns the imageURL
+  *
+  * @returns imageURL of Land Use Type pie graph
   */
   function drawPieCharts() {
     // Construct the <canvas> element
     var canvas = document.createElement("canvas");
     canvas.width = 200;
     canvas.height = 200;
-    canvas.style.display = 'none';
 
     var canvas1 = document.createElement("canvas");
     canvas1.width = 500;
     canvas1.height = 400;
-    canvas1.style.display = 'none';
 
     var xCord = 0,
     yCord = 0;
@@ -3583,7 +3584,6 @@ function Printer() {
           ctx1.fillText("Year " + i, xCord + 57, 96);
           ctx1.fillText("Lists", xCord + 60, 255);
           ctx1.fillText("Year " + i, xCord + 55, 274);
-          // clearCanvasBackground(canvas1);
 
           xCord += 160; //transitioning to the next line of pie charts
         } // end if
@@ -3610,19 +3610,28 @@ function Printer() {
       yCord += 180;
       mode = false;
     } // end outter for
-    return canvas1;
+
+    var image = canvas1.toDataURL("image/jpeg");
+    // Cleanup the DOM
+    canvas.outerHTML = "";
+    delete canvas;
+    canvas1.outerHTML = "";
+    delete canvas1;
+
+    return image;
   } // end drawPieCharts
 
   /**
-  * Draws bar graph for precipitation
+  * Rendering Precipitation charts on a canvas and convert to image
+  * then delete the canvas and returns the imageURL
   *
+  * @returns imageURL of Precipitation bar graph
   */
   function drawPrecipChart() {
     // Construct the <canvas> element
     var canvas = document.createElement("canvas");
-    canvas.width = 900;
-    canvas.height = 900;
-    canvas.style.display = 'none';
+    canvas.width = 500;
+    canvas.height = 200;
 
     // get the html content of svg
     var precipSvg = RESULTS_HTML.document.getElementById('precipChart');
@@ -3634,30 +3643,25 @@ function Printer() {
 
     clearCanvasBackground(canvas);
 
+    var image = canvas.toDataURL("image/jpeg");
     // Cleanup the DOM
-    // document.body.removeChild(canvas);
-    // delete canvas;
+    canvas.outerHTML = "";
+    delete canvas;
 
-    // var k = 0;
-    // for (var i = 0; i<4 ;i++){
-    // canvas.getContext('2d').font = "18 Arial";
-    // canvas.getContext('2d').fillText(parent.boardData[parent.currentBoard].precipitation[i]+" inches "+parent.data[i].adj,30,k);
-    // k = k +32;
-    // }
-    return canvas;
-    //XXX we can actually returns imagedata here
+    return image;
   } // end drawPrecipChart
 
   /**
-  * Draws radar chart for Ecosystem Services
+  * Rendering radar charts on a canvas and convert to image 
+  * then delete the canvas and returns the imageURL
+  *
+  * @returns imageURL of Ecosystem Services radar graph
   */
   function drawRadarChart() {
     // Construct the <canvas> element
     var canvas = document.createElement("canvas");
     canvas.width = 500;
     canvas.height = 500;
-    canvas.style.display = 'none';
-    // document.body.appendChild(canvas);
 
     // get the html content of svg
     var container = RESULTS_HTML.document.getElementById("radarChart");
@@ -3670,12 +3674,12 @@ function Printer() {
 
     clearCanvasBackground(canvas);
 
+    var image = canvas.toDataURL("image/jpeg");
     // Cleanup the DOM
-    // document.body.removeChild(canvas);
-    // delete canvas;
+    canvas.outerHTML = "";
+    delete canvas;
 
-    return canvas;
-    //XXX we can actually returns imagedata here
+    return image;
   } // END drawRadarChart
 
   /**
