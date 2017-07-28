@@ -1629,9 +1629,15 @@ function switchConsoleTab(value) {
 //switchYearTab changes the highlighted year
 function switchYearTab(yearNumberToChangeTo) {
 
+try{
   //get the currently selected year and make it not selected
   var elements = document.getElementsByClassName("icon yearSelected");
   elements[0].className = "icon yearNotSelected";
+}
+catch(except)
+{
+  console.log("No year was selected, selecting the given year now");
+}
 
   //then toggle on the selected year
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
@@ -2502,7 +2508,7 @@ function uploadClicked(e) {
 
         for (var i = 0; i < 828; i++) { //there are 828 tiles on the board (hidden+visible)
           try {
-            //This variable 'string' stores the extracted data from the .json file
+            //This variable 'string' stores the extracted data from the .json file. Won't comment this too much since it's self explainatory 
             string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + "," +
               ((obj["1"].area.data[i] == null) ? 0 : obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," + ((obj["1"].carbonmax.data[i] == null) ? "NA" : obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i] == null) ? "NA" : obj["1"].carbonmin.data[i]) +
               "," + ((obj["1"].cattle.data[i] == null) ? "NA" : obj["1"].cattle.data[i]) + "," + ((obj["1"].cornyield.data[i] == null) ? "NA" : obj["1"].cornyield.data[i]) + "," + ((obj["1"].drainageclass.data[i] == null) ? "NA" : obj["1"].drainageclass.data[i]) + "," + ((obj["1"].erosion.data[i] == null) ? "NA" : obj["1"].erosion.data[i]) + "," + ((obj["1"].floodfrequency.data[i] == null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
@@ -2558,8 +2564,10 @@ function uploadClicked(e) {
 
           }
           // console.log("got the json obj %s", string);
-          initWorkspace("./data.csv"); //to fix the unusual loading of the river
-          setupBoardFromUpload(string);
+          //initWorkspace("./data.csv"); //to fix the unusual loading of the river
+          setupBoardFromFile(string);
+          //setupBoardFromUpload(string);
+           //loadBoard(boardData[currentBoard], string);
 
           //If data for years is included, add the year
           if (year2Available) {
@@ -2593,12 +2601,12 @@ function uploadClicked(e) {
     }
   } else { //it's csv
     //console.log("Else entered");
+
     var reader = new FileReader();
     reader.readAsText(files[0]);
     reader.onload = function(e) {
-
+      resetYearDisplay();
       setupBoardFromUpload(reader.result);
-
       //Code to check if data multiple years are present in the file
       var allText = reader.result;
       //converting the csv into an array
@@ -2634,6 +2642,7 @@ function uploadClicked(e) {
         addingYearFromFile = true;
         addYearAndTransition();
         boardData[currentBoard].calculatedToYear = 2;
+        addingYearFromFile=false;
       }
 
       if (multipleYearFlag == 3) {
@@ -2641,6 +2650,7 @@ function uploadClicked(e) {
         addYearAndTransition();
         addYearAndTransition();
         boardData[currentBoard].calculatedToYear = 3;
+        addingYearFromFile=false;
       }
 
       //updating the precip levels from the values in the uploaded file
@@ -2654,7 +2664,7 @@ function uploadClicked(e) {
       document.getElementById("year3Precip").value = (boardData[currentBoard].precipitation[3] == 24.58) ? 0 : ((boardData[currentBoard].precipitation[3] == 28.18) ? 1 : ((boardData[currentBoard].precipitation[3] == 30.39) ? 2 : ((boardData[currentBoard].precipitation[3] == 32.16) ? 3 : (boardData[currentBoard].precipitation[3] == 34.34) ? 4 : ((boardData[currentBoard].precipitation[3] == 36.47) ? 5 : 6))));
       transitionToYear(1); //transition to year one
       switchYearTab(1);
-      boardData[currentBoard].updateBoard();
+    //  boardData[currentBoard].updateBoard();
       //calculateResults();
       //generateResultsTable();
       //clear initData
