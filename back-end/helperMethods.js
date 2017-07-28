@@ -80,23 +80,14 @@ function setPrecipitation() {
 function convertPrecipToIndex(precip) {
 
   switch (precip) {
-
-    case 24.58:
-      return 0;
-    case 28.18:
-      return 1;
-    case 30.39:
-      return 2;
-    case 32.16:
-      return 3;
-    case 34.34:
-      return 4;
-    case 36.47:
-      return 5;
-    case 45.10:
-      return 6;
+    case 24.58: return 0;
+    case 28.18: return 1;
+    case 30.39: return 2;
+    case 32.16: return 3;
+    case 34.34: return 4;
+    case 36.47: return 5;
+    case 45.10: return 6;
   }
-
 } //end convertPrecipToIndex
 
 
@@ -163,4 +154,3 @@ function initDataIsCorrupt() {
   // not corrupt
   return 0;
 } // end initDataIsCorrupt()
-

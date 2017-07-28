@@ -6,7 +6,7 @@ objectives via score monitoring, animations for user feedback, and guiding scrip
 
 This page is displayed as a separate tab/window so that the user may switch betweeen
 the PEWI sandbox and the level designer in order to create effective levels.
-  
+
 The levelDesigner page is composed of an html form which is set in a div element
 against a night sky background. The form contains generic html form elements.
 
@@ -17,15 +17,15 @@ Cleaned and Prepared - August 2016
 <head>
     <meta charset="utf-8">
     <title>PEWI Goal Optimizer</title>
-    
+
     <!--INCLUDES-->
     <!-- javascript for form element processing -->
     <script src="../front-end/optimizationDesigner.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
     <script src="../back-end/helperObjects.js"></script>
-    <script src="../back-end/mainBE.js"></script> 
-    <script src="../back-end/helperMethods.js"></script> 
+    <script src="../back-end/mainBE.js"></script>
+    <script src="../back-end/helperMethods.js"></script>
 
     <script src="../front-end/helpersFE.js"></script>
     <script src="../front-end/mersenne-twister.js"></script>
@@ -34,13 +34,13 @@ Cleaned and Prepared - August 2016
     <script src="./lib/d3.min.js"></script>
     <script src="./lib/three.min.js"></script>
     <script src="./lib/controls.js"></script>
-    <script src="./lib/jquery-1.12.4.min.js"></script>
+    <script src="./lib/jquery-3.2.1.min.js"></script>
     <script src="./lib/stats.min.js"></script>
 
     <!-- favicon icon -->
     <link rel='shortcut icon' href='../imgs/leveldesignfavicon.ico' type='image/x-icon' />
     <!--/INCLUDES-->
-    
+
     <!-- styling for page -->
     <style>
     body {
@@ -49,12 +49,12 @@ Cleaned and Prepared - August 2016
         background-position: left top;
         background-attachment: fixed;
         font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    }  
-    
+    }
+
     .designGoals {
         padding: 20px;
     }
-    
+
     .optimizationDesignContainer{
         border-radius: 40px ;
         border: 2px solid white;
@@ -70,9 +70,9 @@ Cleaned and Prepared - August 2016
 </head>
 
 <body>
-    
+
     <form class="optimizationDesignContainer">
-    
+
         <div class="designGoals">
             <!-- Input for goal name -->
             <div class="form-group">
@@ -83,9 +83,9 @@ Cleaned and Prepared - August 2016
                     <span style="float: right">Resume optimization: <input id="optUpload" type="file"></span>
                 </div>
             </div>
-    
+
             <br>
-    
+
             <!-- Input for primary goals script -->
             <div id="primaryHeader"><b>Primary Parameters</b></div>
 
@@ -265,7 +265,7 @@ Cleaned and Prepared - August 2016
                 <button type="button" onClick="removeWeight();">Remove weight</button>
             </div>
 
-            <br> 
+            <br>
 
             <button type="button" id="toggleS" onClick="toggleSeed();">Change map generation seed</button>
 

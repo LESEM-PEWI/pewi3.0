@@ -59,13 +59,19 @@ function createThreeFramework() {
 
   //create the main THREE.js scene
   scene = new THREE.Scene();
-    
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
  //Creating mesh box around Map.
  var meshfloor = new THREE.Mesh(
  new THREE.BoxGeometry(500,100,500),
  new THREE.MeshBasicMaterial({color:0x0ffffff, wireframe:false}));
-    
-    meshfloor.rotation.y += Math.PI/2;                                                                                              
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
+    meshfloor.rotation.y += Math.PI/2;
     //scene.add(meshfloor);
 } //end createThreeFramework()
 
@@ -84,8 +90,11 @@ function initializeCamera() {
     camera.position.y = 320;
     camera.position.z = 0;
     camera.rotation.x = -1.570795331865673;
-    
-    //Setting up First Camera 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
+    //Setting up First Camera
     SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
     ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
     camera1 = new THREE.PerspectiveCamera(75, ASPECT, NEAR, FAR);
@@ -122,36 +131,41 @@ function initializeCamera() {
 
     //add resize listener, so we can keep the aspect ratio correct.
     window.addEventListener('resize', onResize, false);
-    
+    // addEvent(document, 'resize', onResize);
+
     //Event Listners for camera movements
     window.addEventListener('keydown', keyDown);
-    window.addEventListener('keyup', keyUp); 
-    
+    window.addEventListener('keyup', keyUp);
+    // addEvent(document, 'keydown', keyDown);
+    // addEvent(document, 'keyup', keyUp);
+
     //Event listners for changing camera views
     document.addEventListener('keyup', CamView);
-    animate(); 
+    // addEvent(document, 'keyup', CamView);
+    animate();
 } //end initializeCamera
 
 
 //Event function that is called when screen is changed
 function CamView(e) {
-  tempKeys = giveHotkeys();
+    tempKeys = giveHotkeys();
+    var Uma = String.fromCharCode(tempKeys[11][0]);
+   document.getElementById("flyover").innerHTML = "FlyOver Mode, Hit " + Uma +  " to Exit";
   if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
     toggleCameraView();
   }
 }
 
-// Function to restore camera2 last position after changing views.    
+// Function to restore camera2 last position after changing views.
 function RestorePosition(){
     //Storing the camera2 values to global variables
     camera2.position.x = cam2x;
     camera2.position.y = cam2y;
-    camera2.position.z = cam2z;   
+    camera2.position.z = cam2z;
     camera2.rotation.x = cam2Rox;
     camera2.rotation.y = cam2Roy;
     camera2.rotation.z = cam2Roz;
 }
-
 //Function to change camera views.This function is called when the button Q is pressed.
 function toggleCameraView(){
     //Checking the flag variable to know which camera is functional.
@@ -195,12 +209,13 @@ function changeCam2(){
 
 //Camera movements Controls for Camera2 ie second view
 function animate(){
+  var hotkeys = giveHotkeys();
 	requestAnimationFrame(animate);
-	
+
 	//Keyboard movement inputs
-    if(keyboard[87]){ // W key Forward Movements
+    if(keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]){ // W key Forward Movements
         //Movements Restrictions and setting bounds
-        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
+        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
         //and if it does it resets it to that specific position set.
         //If it doesnt the camera moves normally.
          if(camera2.position.x - Math.sin(camera2.rotation.y) * player.speed >= 265)
@@ -217,9 +232,9 @@ function animate(){
         console.log(camera2.position);
     }
 
-	if(keyboard[83]){ // S key Back Words movements
+	if(keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]){ // S key Back Words movements
         //Movements Restrictions and setting bounds
-        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
+        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
         //and if it does it resets it to that specific position set.
         //If it doesnt the camera moves normally.
         if(camera2.position.x+Math.sin(camera2.rotation.y) * player.speed >= 265)
@@ -235,10 +250,13 @@ function animate(){
 		camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
         console.log(camera2.position);
 	}
-	
-    if(keyboard[65]){ // A key Left Side Movement
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
+    if(keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // A key Left Side Movement
         //Movements Restrictions and setting bounds
-        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
+        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
         //and if it does it resets it to that specific position set.
         //If it doesnt the camera moves normally.
          if(camera2.position.x-Math.sin(camera2.rotation.y + Math.PI/2) * player.speed >= 265)
@@ -254,10 +272,13 @@ function animate(){
 		camera2.position.x -= Math.sin(camera2.rotation.y + Math.PI/2) * player.speed;
         console.log(camera2.position);
 	}
-	
-    if(keyboard[68]){ // D key Right side Movements
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
+    if(keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // D key Right side Movements
         //Movements Restrictions and setting bounds
-        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set 
+        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
         //and if it does it resets it to that specific position set.
         //If it doesnt the camera moves normally.
         if(camera2.position.x-Math.sin(camera2.rotation.y - Math.PI/2) * player.speed >= 265)
@@ -273,7 +294,10 @@ function animate(){
 		camera2.position.x -= Math.sin(camera.rotation.y - Math.PI/2) * player.speed;
          console.log(camera2.position);
 	}
-   
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     // Keyboard turn inputs
 	if(keyboard[39]){ // left arrow key Rotate right
         //This rotates the camera left
@@ -283,11 +307,14 @@ function animate(){
         //This rotates the camera right
 		camera2.rotation.y += player.turnSpeed;
 	}
-	
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     //Specific Zooming
     if(keyboard[38]){ // Up arrow key
         //Checking if toggle is on and checking if it passes a specific bounds and if it does
-        // It sets it to specific height and restrict it to that heights else if moves normally 
+        // It sets it to specific height and restrict it to that heights else if moves normally
         if (tToggle){
         if(camera2.position.y <= 27 )
             camera2.position.y = 27;
@@ -306,13 +333,16 @@ function animate(){
         console.log(camera2.position.y +" "+ camera.position.z);}
         }
 }
-    
-    if(keyboard[40]){ // Down arrow key 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
+    if(keyboard[40]){ // Down arrow key
        //setting bounds for zooming out and checking the camera y and z position.
         //If it passes the position, it restricts the camera movement
         if(camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)
             camera2.position.z = 299;
-        if(camera2.position.y >= 60){ 
+        if(camera2.position.y >= 60){
             camera2.position.y = 60;
             console.log(camera2.position.y +" "+ camera.position.z);
         }
@@ -322,7 +352,7 @@ function animate(){
 		camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
         console.log(camera2.position.y +" "+ camera.position.z);}
     }
-	renderer.render(scene, camera);   
+	renderer.render(scene, camera);
 }
 function keyDown(event){
 	keyboard[event.keyCode] = true;
@@ -749,6 +779,11 @@ function setupHighlight() {
   document.addEventListener('mouseup', onDocumentMouseUp, false);
   document.addEventListener('keydown', onDocumentKeyDown, false);
   document.addEventListener('keyup', onDocumentKeyUp, false);
+  // addEvent(document, 'mousemove', onDocumentMouseMove);
+  // addEvent(document, 'mousedown', onDocumentMouseDown);
+  // addEvent(document, 'mouseup', onDocumentMouseUp);
+  // addEvent(document, 'keydown', onDocumentKeyDown);
+  // addEvent(document, 'keyup', onDocumentKeyUp);
 
 } //end setupHighlight
 
