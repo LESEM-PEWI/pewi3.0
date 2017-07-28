@@ -397,7 +397,12 @@
 }
 
 #combineButton {
-  top: 10%;
+  top: 80%;
+  font-size: 2vw;
+  width: 9vw;
+  border-radius: 6px;
+  background-color: rgba(50,0,0,.5);
+  background-image: none;
 }
 
 .playerImageHidden {
