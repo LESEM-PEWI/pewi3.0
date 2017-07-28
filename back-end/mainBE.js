@@ -1,7 +1,3 @@
-/**
- * @Last modified time: 2017-06-07T14:40:06-05:00
- */
-
 /*global initData*/
 /*global precip*/
 

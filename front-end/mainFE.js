@@ -45,9 +45,18 @@ var zoomingInNow = false;
 var zoomingOutNow = false;
 
 var rain = null;
+
+// global variable for print function
+var jspdfprinter; // object that functions all print function stuff
+var printMode = false;
+var takeScreenshot = false; // used in animationFrames
+
 //===================
 
-//createThreeFramework instantiates the renderer and scene to render 3D environment
+/** createThreeFramework instantiates the renderer and scene to render 3D environment
+ *   renderer = new THREE.WebGLRenderer(); above
+ *
+ */
 function createThreeFramework() {
   //set up renderer
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -457,7 +466,6 @@ function loadingManager() {
 
 //initWorkspace initializes a sandbox game in the threeFramework
 function initWorkspace(file) {
-
   //hide the startup page and show the loading animation
   document.getElementById('startupSequence').style.display = "none";
   // document.getElementById('loading').style.visibility = "visible";
@@ -524,8 +532,17 @@ function animationFrames() {
     counter += 1;
 
     requestAnimationFrame(animate);
+    // render the according webgl
     renderer.render(scene, camera);
-//    renderer.render(scene, camera1);
+
+    // takeScreenshot is global variable. Is set to true when pressing print key 'p' ( helpersFE.js )
+    if (takeScreenshot) {
+      // reset takeScreenshot to false
+      takeScreenshot = false;
+      // preprocess needed src
+      jspdfprinter.preprocessing();
+
+    } // end if
     stats.update();
 
   }); //end request
@@ -803,7 +820,7 @@ function setupRiver() {
     riverStream = new THREE.Mesh(riverCurve, material);
     river.add(riverStream);
 
-  }
+  } // end for
 
   scene.add(river);
 } //end setupRiver

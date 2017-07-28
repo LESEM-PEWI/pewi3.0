@@ -1,0 +1,194 @@
+/* css variable declaration */
+
+:root {
+  --button-font-size: 2.5vw;
+  /* 20px */
+  --button-height: 1vw;
+  --button-width: 12vw;
+  /* 250px */
+  --font-size: 1.2vw;
+  /*--transition-duration: 0.4s;*/
+}
+
+body {
+  background-color: #000000;
+}
+
+/** Print Options Frame
+  -------------------------
+  **/
+
+#optionsBackroundImage {
+  bottom: 0px;
+  left: 0px;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  width: 100%;
+}
+
+.preview-btn, .print-btn, .exit-btn {
+  position: absolute;
+  top: 180%;
+  width: 12vw;
+}
+
+.preview-btn {
+  left: 50%;
+  /*top: 5%;*/
+}
+
+.print-btn {
+  left: 68%;
+  /*top: 12%;*/
+}
+
+.exit-btn {
+  left: 86%;
+  /*top: 19%;*/
+}
+
+#optionsMainHolder {
+  display: block;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  /*margin: 0px 15% 0px 15%;*/
+  /*top: 0px;*/
+  /*padding-bottom: 0px;*/
+  margin: 1%;
+  position: absolute;
+  width: 48%;
+}
+
+.optionsSubContainer {
+  position: relative;
+  margin: 30px;
+  margin-top: 0px;
+}
+
+.optionsHeader {
+  color: #FFFFFF;
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.8vw;
+  font-weight: bold;
+  /*margin-left: 45px;
+  margin-right: 45px;
+  margin-top:15px;
+  padding: 5px;*/
+  position: relative;
+  width: 100%;
+}
+
+input {
+  height: 0%;
+  position: absolute;
+  left: -9999px;
+  width: 0%;
+}
+
+label {
+  /*background-color: #40A4DF;*/
+  /*border: 3px solid #fff;*/
+  /*border-radius: 100px;*/
+  /*box-shadow: 0 0 20px rgba(0, 0, 0, .2);*/
+  color: #000;
+  cursor: pointer;
+  display: inline-block;
+  /*font-size: var(--font-size);*/
+  /*height: var(--button-height);*/
+  margin: 1vw;
+  /*padding: 15px 30px 15px 30px;*/
+  position: relative;
+  text-align: center;
+  transition: background-color .2s, box-shadow .2s;
+  /*user-select: none;*/
+  white-space: nowrap;
+  /*width: var(--button-width);*/
+}
+
+img {
+  width: 100%;
+}
+
+label div {
+  display: inline-block;
+  font-size: 1vw;
+}
+
+label div img {
+  /*bottom: 10%;*/
+  border-radius: 50%;
+  /*left: 6%;*/
+  width: 2.5vw;
+}
+
+label span {
+  /*left: 2vw;*/
+  padding: 13%;
+}
+
+label:hover img, .print-options-tool-icon:hover img {
+  /*box-shadow: 0 0 30px rgba(255, 255, 255, .7);*/
+  box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
+label .tooltiptext, .print-options-tool-icon .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8vw;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+}
+
+label:hover .tooltiptext, .print-options-tool-icon:hover .tooltiptext {
+  visibility: visible;
+}
+
+input:checked+label {
+  /*background-color: #003d4d;*/
+  color: #fff;
+}
+
+input:checked+label img {
+  box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
+}
+
+.print-options-tool {
+  position: absolute;
+  right: 0%;
+  top: 0%;
+}
+
+.print-options-tool-icon {
+  cursor: pointer;
+  display: inline-block;
+  height: 2vw;
+  margin: 1vw;
+  position: relative;
+  width: 2vw;
+}
+
+.pdf_preview {
+  border: 1px solid #666;
+  background-color: #ddd;
+  display: block;
+  height: 150%;
+  left: 50%;
+  margin: 1%;
+  position: absolute;
+  top: 15%;
+  width: 48%;
+}
+
+.print-options-content-holder {
+  /*height: 80%;*/
+}
