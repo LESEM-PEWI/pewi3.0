@@ -842,11 +842,12 @@ function drawPrecipitationInformationChart() {
   document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo').innerHTML = " ";
 
   //assign data
-
   for(var i = 0; i < boardData[currentBoard].precipitation.length-2; i++) {
     boardData[currentBoard].precipitation[i] = Number(boardData[currentBoard].precipitation[i]);
   }
-
+  for(var i = 0; i < boardData[currentBoard].precipitation.length-2; i++) {
+    boardData[currentBoard].precipitation[i] = Number(boardData[currentBoard].precipitation[i]);
+  }
   var data = [{
     label: "Year 0",
     value: boardData[currentBoard].precipitation[0],
