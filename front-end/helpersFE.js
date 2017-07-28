@@ -628,10 +628,8 @@ function transitionToYear(year) {
   if (curTracking) {
     pushClick(0, getStamp(), tempNum, 0, null);
   }
-
   if (year > boardData[currentBoard].calculatedToYear && addingYearFromFile == false) {
     boardData[currentBoard].calculatedToYear = year;
-
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
     } // end for
@@ -2576,7 +2574,6 @@ function uploadClicked(e) {
           setupBoardFromFile(string);
           //setupBoardFromUpload(string);
            //loadBoard(boardData[currentBoard], string);
-
           //If data for years is included, add the year
           if (year2Available) {
             addYearAndTransition();
