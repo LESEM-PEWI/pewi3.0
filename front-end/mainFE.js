@@ -59,18 +59,10 @@ function createThreeFramework() {
 
   //create the main THREE.js scene
   scene = new THREE.Scene();
-<<<<<<< HEAD
-
-=======
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
  //Creating mesh box around Map.
  var meshfloor = new THREE.Mesh(
  new THREE.BoxGeometry(500,100,500),
  new THREE.MeshBasicMaterial({color:0x0ffffff, wireframe:false}));
-<<<<<<< HEAD
-
-=======
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     meshfloor.rotation.y += Math.PI/2;
     //scene.add(meshfloor);
 } //end createThreeFramework()
@@ -90,10 +82,6 @@ function initializeCamera() {
     camera.position.y = 320;
     camera.position.z = 0;
     camera.rotation.x = -1.570795331865673;
-<<<<<<< HEAD
-
-=======
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     //Setting up First Camera
     SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
     ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
@@ -250,10 +238,6 @@ function animate(){
 		camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
         console.log(camera2.position);
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     if(keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // A key Left Side Movement
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
@@ -272,10 +256,6 @@ function animate(){
 		camera2.position.x -= Math.sin(camera2.rotation.y + Math.PI/2) * player.speed;
         console.log(camera2.position);
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     if(keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // D key Right side Movements
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
@@ -294,10 +274,6 @@ function animate(){
 		camera2.position.x -= Math.sin(camera.rotation.y - Math.PI/2) * player.speed;
          console.log(camera2.position);
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     // Keyboard turn inputs
 	if(keyboard[39]){ // left arrow key Rotate right
         //This rotates the camera left
@@ -307,10 +283,6 @@ function animate(){
         //This rotates the camera right
 		camera2.rotation.y += player.turnSpeed;
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     //Specific Zooming
     if(keyboard[38]){ // Up arrow key
         //Checking if toggle is on and checking if it passes a specific bounds and if it does
@@ -333,10 +305,6 @@ function animate(){
         console.log(camera2.position.y +" "+ camera.position.z);}
         }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     if(keyboard[40]){ // Down arrow key
        //setting bounds for zooming out and checking the camera y and z position.
         //If it passes the position, it restricts the camera movement

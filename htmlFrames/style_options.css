@@ -61,8 +61,6 @@
     position: absolute;
     left: -9999px;
     color: white;
-<<<<<<< HEAD
-=======
   }
 
   .hkInputs1 {
@@ -84,7 +82,27 @@
     height: 25px;
     text-indent: 5%;
     color: white;
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
+  }
+
+  .hkInputs1 {
+    position: absolute;
+    left: 70%;
+    border: 0;
+    color: white;
+  }
+
+  .hkInputs2 {
+    position: absolute;
+    left: 80%;
+    border: 0;
+    color: white;
+  }
+
+  .hkDivs {
+    position: relative;
+    height: 25px;
+    text-indent: 5%;
+    color: white;
   }
 
   .hkInputs1 {

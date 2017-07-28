@@ -625,17 +625,9 @@ function transitionToYear(year) {
   if (curTracking) {
     pushClick(0, getStamp(), tempNum, 0, null);
   }
-<<<<<<< HEAD
 
   if (year > boardData[currentBoard].calculatedToYear && addingYearFromFile == false) {
     boardData[currentBoard].calculatedToYear = year;
-
-=======
-
-  if (year > boardData[currentBoard].calculatedToYear && addingYearFromFile == false) {
-    boardData[currentBoard].calculatedToYear = year;
-
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
     } // end for
@@ -2160,10 +2152,6 @@ function getHighlightedInfo(tileId) {
       case 17:
         highlightString = "608.6 tons/acre/yr" + "<br>";
         break;
-<<<<<<< HEAD
-    }
-=======
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
     return highlightString;
   }
 
@@ -2493,8 +2481,11 @@ function uploadClicked(e) {
   files = e.target.files;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   files = e.target.files;
 
+=======
+>>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
 =======
 >>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
   if (files[0].name && !files[0].name.match(/\.csv/)) //if there is a file name and it's not a csv
@@ -2574,10 +2565,6 @@ function uploadClicked(e) {
           // console.log("got the json obj %s", string);
           initWorkspace("./data.csv"); //to fix the unusual loading of the river
           setupBoardFromUpload(string);
-<<<<<<< HEAD
-
-=======
->>>>>>> 6b51dd862adb5fc50d061a4373b95ad5ef658249
           //If data for years is included, add the year
           if (year2Available) {
             addYearAndTransition();
