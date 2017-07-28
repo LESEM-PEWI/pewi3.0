@@ -3,7 +3,7 @@
 ./codexResources/text/landUse.html
 1
 @ : Conventional Corn
-<iframe width="500" height="300" src="https://www.youtube.com/embed/Gh9BZWPHHWg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/qT5NbVf9eCo?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/eim4vgRLBTw?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/qT5NbVf9eCo?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/conventionalCorn.html
 1
 @ : Conventional Soy
@@ -59,7 +59,7 @@
 ./codexResources/text/conservationForest.html
 1
 @ : Short-Rotation Woody Bioenergy
-<iframe width="500" height="300" src="https://www.youtube.com/embed/-bK5W2iJjT8?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> 
+<iframe width="500" height="300" src="https://www.youtube.com/embed/-bK5W2iJjT8?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/shortRotation.html
 0
 $
@@ -72,7 +72,7 @@ $
 ./codexResources/text/topographicRelief.html
 1
 @ : Flood Frequency
-<iframe width="500" height="300" src="https://www.youtube.com/embed/RQVwwU8l0RM?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/ubiIudGimug?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/floodFrequency.html
 0
 @ : Strategic Wetlands
@@ -84,7 +84,7 @@ $
 ./codexResources/text/subwatershedBoundaries.html
 0
 # + Drainage Class
-<iframe width="500" height="300" src="https://www.youtube.com/embed/E0EufTP9cv0?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/afQExV5mVjY?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/drainageClass.html
 0
 @ : Hydrologic Group
@@ -92,21 +92,25 @@ $
 ./codexResources/text/hydrologicGroup.html
 1
 $
+@ : Yield Overlay Maps
+<iframe width="500" height="300" src="https://www.youtube.com/embed/b-jIBLorR6E?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/yieldoverlaymaps.html
+0
 @ : Soil Class
 <iframe width="500" height="300" src="https://www.youtube.com/embed/b-jIBLorR6E?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/soilClass.html
 0
 @ : Soil Texture
-<iframe width="500" height="300" src="https://www.youtube.com/embed/UfPu7H4qNJw?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/94Qyn23ZFIU?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/soilTexture.html
 0
 @ : Corn Suitability Rating
-<iframe width="500" height="300" src="https://www.youtube.com/embed/a4ilVP2Mis8?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/7Ym6k83frlg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/cornSuitabilityRating.html
 0
 $
 @ : Precipitation
-<iframe width="500" height="300" src="https://www.youtube.com/embed/W5uzvzk3tBA?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src=https://www.youtube.com/embed/7Ulzr18T0SQ?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/precipitation.html
 0
 # + Management Practices
@@ -127,11 +131,11 @@ $
 ./codexResources/text/habitat.html
 0
 @ : Biodiversity
-<iframe width="500" height="300" src="https://www.youtube.com/embed/lfPKEbvWxOg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/YW4BV-lIsvk?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/lfPKEbvWxOg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/TbeBfOeP6aM?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/biodiversity.html
 1
 @ : Game Wildlife
-<iframe width="500" height="300" src="https://www.youtube.com/embed/aH_xS7Td5ls?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/EjTo1W6_PZw?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/aH_xS7Td5ls?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/o66FgMFdvB4?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/gameWildlife.html
 1
 $
@@ -144,33 +148,33 @@ $
 ./codexResources/text/carbonSequestration.html
 1
 @ : Erosion Control
-<iframe width="500" height="300" src="https://www.youtube.com/embed/XVktzbugNvo?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/fnLnv8FwDE4?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/XVktzbugNvo?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/U6XuWTiIIzo?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/erosionControl.html
 1
 $
 # + Water Quality
-<iframe width="500" height="300" src="https://www.youtube.com/embed/MHOh7LyZlV0?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> 
+<iframe width="500" height="300" src="https://www.youtube.com/embed/oknvFAeMFoU?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/waterQuality.html
 0
 @ : Nitrate Pollution Control
-<iframe width="500" height="300" src="https://www.youtube.com/embed/c63ZXfZyfEg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300"src="https://www.youtube.com/embed/ccMThKYFQxE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/K_nmKowHYRY?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300"src=https://www.youtube.com/embed/dB3-d9UONJc?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/nitratePollutionControl.html
 1
 @ : Phosphorus Pollution Control
-<iframe width="500" height="300" src="https://www.youtube.com/embed/2HZDHK8uy7Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/nEa1KeAaIL0?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/2HZDHK8uy7Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/ptQZ9LW-h_c?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/phosphorusPollutionControl.html
 1
 @ : Sediment Control
-<iframe width="500" height="300" src="https://www.youtube.com/embed/vER6hvsQPlg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/jRcfevPEnqM?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/vER6hvsQPlg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/OLFw6DFVQ04?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/sedimentControl.html
 1
 $
 # + Yield
-<iframe width="500" height="300" src="https://www.youtube.com/embed/5cZ4xD4EYU0?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/5SbrIOBypMU?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/g306iZIOlm8?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/5SbrIOBypMU?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/yield.html
 1
 @ : Alfalfa
-<iframe width="500" height="300" src="https://www.youtube.com/embed/l5lm3Lph8r0?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/nUe7FxjYDYI?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/0h0EFGpTqJI?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/x4GuJJy0eHE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/alfalfaYield.html
 1
 @ : Cattle
@@ -178,19 +182,19 @@ $
 ./codexResources/text/cattleYield.html
 1
 @ : Corn Grain
-<iframe width="500" height="300" src="https://www.youtube.com/embed/lhJpVGvgC4k?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/hm6eOmQMfPM?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/lhJpVGvgC4k?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/B4VWgz7ykj8?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/cornYield.html
 1
 @ : Grass Hay
-<iframe width="500" height="300" src="https://www.youtube.com/embed/kfxw8SxRqZE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/VFGW5Mt9hrM?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/bvPx-RCgAEE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/H900e9UHSiI?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/hayYield.html
 1
 @ : Switchgrass
-<iframe width="500" height="300" src="https://www.youtube.com/embed/F7wbTIQBjIg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/YknGumV6o6w?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/F7wbTIQBjIg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/Am4t6uakLKE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/switchgrassYield.html
 1
 @ : Mixed Fruit and Vegetable
-<iframe width="500" height="300" src="https://www.youtube.com/embed/Mt3lKBIYA9Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/f8yziJ0FqjQ?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/Mt3lKBIYA9Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/HTP8i0WEI9k?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/mixedFruitAndVegetableYield.html
 1
 @ : Short-Rotation Woody Biomass
@@ -198,11 +202,11 @@ $
 ./codexResources/text/shortRotationYield.html
 0
 @ : Soybeans
-<iframe width="500" height="300" src="https://www.youtube.com/embed/3kdO-YXHMLI?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/o0SdBQhtCLA?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/8lqtyv93hkY?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/kU674aClwQE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/soybeanYield.html
 1
 @ : Wood
-<iframe width="500" height="300" src="https://www.youtube.com/embed/dUBW069EWxQ?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/faR9cPe-SsU?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/dUBW069EWxQ?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe> + <iframe width="500" height="300" src="https://www.youtube.com/embed/xYNVtzQ3GEg?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/woodYield.html
 1
 $
@@ -240,13 +244,17 @@ $
 ./codexResources/text/annualYieldGraph.html
 0
 @ : Data Sheet
-<iframe width="500" height="300" src="https://www.youtube.com/embed/GdSJMB1XTkI?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="500" height="300" src="https://www.youtube.com/embed/wdH9NYJiVIA?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/dataSheet.html
 0
 $
 @ : Comment Panel
 <iframe width="500" height="300" src="https://www.youtube.com/embed/VdqI3fNfM64?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/commentPanel.html
+0
+@ : Index Information Box
+<iframe width="500" height="300" src="https://www.youtube.com/embed/VdqI3fNfM64?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/indexinformationbox.html
 0
 @ : View Perspective
 <iframe width="500" height="300" src="https://www.youtube.com/embed/2Nq9H5RHMZc?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
@@ -273,12 +281,40 @@ $
 <iframe width="500" height="300" src="https://www.youtube.com/embed/omod9bdpe2Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/pauseMenu.html
 0
-@ : Keyboard Shortcuts
+@ : Instructor Options
+<iframe width="500" height="300" src="https://www.youtube.com/embed/omod9bdpe2Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/instructoroptions.html
+0
+@ : Hover Information
+<iframe width="500" height="300" src="https://www.youtube.com/embed/omod9bdpe2Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/hoverinformation.html
+0
+@ : Hotkeys
 <iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/keyboardShortcuts.html
 0
+@ : Hotkey Customization
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/hotkeycustomization.html
+0
+@ : Randomization
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/randomization.html
+0
+@ : Undo Function
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/undofunction.html
+0
+@ : Print Function
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/printfunction.html
+0
+@ : Record
+<iframe width="500" height="300" src="https://www.youtube.com/embed/3mb35EvPd8A?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/record.html
+0
 @ : About
-<img src="./codexResources/imgs/about.png" />
+<iframe width="500" height="300" src="https://www.youtube.com/embed/b7MlKY-e46s" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/about.html
 0
 @ : Bibliography

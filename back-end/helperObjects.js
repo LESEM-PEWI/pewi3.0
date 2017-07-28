@@ -1197,6 +1197,9 @@ function Tile(tileArray, board) {
     var GRAZING_SEASON_LENGTH = 200;
     var cattleAverageDailyIntake = 0.03 * CATTLE_BODY_WEIGHT;
     var yieldBaseRates = [6.3, 3.6, 4.3, 5.6, 3.6, 4.1, 4.2, 6.5, 6.4, 3.6, 6.9, 6.7, 6.3, 0];
+    if(year==-1) {
+      return yieldBaseRates[this.getSoilTypeYieldIndex(this.soilType)];
+    }
     return (this.getSeasonalUtilizationRate(year) / ((cattleAverageDailyIntake / 2000) * GRAZING_SEASON_LENGTH)) * yieldBaseRates[this.getSoilTypeYieldIndex(this.soilType)];
   }; //end this.getCattleSupported
 
@@ -2607,7 +2610,7 @@ function Click(c1, c2, c3, c4, c5) {
         //When the user modifies the year 0 precip
       case 34:
         if (action) {
-          document.getElementById("year0Precip").value = this.tileID;
+          document.getElementById("year0Precip").selectedIndex = this.tileID;
           updatePrecip(0);
           return rainOnPewi();
           break;
@@ -2618,7 +2621,7 @@ function Click(c1, c2, c3, c4, c5) {
         //When the user modifies the year 1 precip
       case 35:
         if (action) {
-          document.getElementById("year1Precip").value = this.tileID;
+          document.getElementById("year1Precip").selectedIndex = this.tileID;
           updatePrecip(1);
           return rainOnPewi();
           break;
@@ -2629,7 +2632,7 @@ function Click(c1, c2, c3, c4, c5) {
         //When the user modifies the year 2 precip
       case 36:
         if (action) {
-          document.getElementById("year2Precip").value = this.tileID;
+          document.getElementById("year2Precip").selectedIndex = this.tileID;
           updatePrecip(2);
           return rainOnPewi();
           break;
@@ -2640,7 +2643,7 @@ function Click(c1, c2, c3, c4, c5) {
         //When the user modifies the year 3 precip
       case 37:
         if (action) {
-          document.getElementById("year3Precip").value = this.tileID;
+          document.getElementById("year3Precip").selectedIndex = this.tileID;
           updatePrecip(3);
           return rainOnPewi();
           break;
@@ -2815,8 +2818,14 @@ function Click(c1, c2, c3, c4, c5) {
         }
         //When the user paints a tile (multi selection)
       case 56:
-        if (action) {
-          return changeLandTypeTile(this.tileID);
+        if (action) { 
+          painterTool.status = 2;
+          for(var i = 0; i < this.tileID.length; i++) {
+            undoGridPainters.push(boardData[currentBoard].map[this.tileID[i]].landType[currentYear]);
+            changeLandTypeTile(this.tileID[i]);
+          }
+          insertChange();
+          return painterTool.status = 1;
           break;
         } else {
           return "A tile was painted (multi selection)";
@@ -3071,10 +3080,27 @@ function Click(c1, c2, c3, c4, c5) {
         else
           return "Click General tab";
         break;
-        //Should not go here, alerts the dev that there is a user experience case that has not been implemented.
-      default:
-        alert("This user click has not been configured yet. Please add this click to the cases in helperObjects.js");
-        break;
+      //When a user performs a shift-click action
+      case 83:
+        if(action) {
+          isShiftDown = true;
+          for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+            if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+              undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
+              changeLandTypeTile(i);
+            }
+          }
+          //Inserts the block of land use types into the undoArr
+          insertChange();
+          isShiftDown = false;
+        } else { 
+          return "Shift click was performed"; }
+      //When the user clicks on the info tab
+      case 84:
+        if(action) 
+          toggleBackgroundInfoDisplay();
+        else
+          return "Info tab clicked";
     }
   }
 }

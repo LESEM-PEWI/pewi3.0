@@ -1,3 +1,4 @@
+/* IE doesn't support var() function; therefore we add actual value before using var(). Though var() is apparently a better programming way.  */
 
 /* css global variable declaration */
 :root {
@@ -19,7 +20,7 @@
 
 
 /**Styling for index Menu**/
-#indexmenu {
+#indexmenu, #combineButton {
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
   border-radius: 6px 6px 0 0;
@@ -27,36 +28,26 @@
   -moz-border-radius: 6px 6px 0 0;
   color: #FFFFFF;
   cursor: pointer;
+  font-family: 'Amatic SC', cursive;
   font-family: var(--button-font-family);
+  font-size: 2.5vw;
   font-size: var(--button-font-size);
   font-weight: bold;
-  height: 3vw;
+  /*height: 3vw;*/
   position: absolute;
   text-align: center;
+  transition-duration: 0.4s;
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
-  top: 7.7vw;
+  /*top: 7.7vw;*/
   width: 12.5vw;
 }
 
-#combineButton {
-  background-image: url('./imgs/consoleTexture.png');
-  background-repeat: repeat;
-  border-radius: 6px 6px 0 0;
-  -webkit-border-radius: 6px 6px 0 0;
-  -moz-border-radius: 6px 6px 0 0;
-  color: #FFFFFF;
-  cursor: pointer;
-  font-family: var(--button-font-family);
-  font-size: var(--button-font-size);
-  font-weight: bold;
-  position: absolute;
-  text-align: center;
-  -webkit-transition-duration: var(--transition-duration);
-  /* Safari */
-  transition-duration: var(--transition-duration);
-  width: 12.5vw;
+/**Styling for index Menu**/
+#indexmenu {
+  height: 3vw;
+  top: 7.7vw;
 }
 
 #playerAddButton {
@@ -80,6 +71,21 @@
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
+.fly {
+  /* background-image: url(./imgs/consoleTexture.png); */
+  color: #fff;
+  display: none;
+  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
+  font-size: 2.5vw;
+  font-size: var(--button-font-size);
+  height: auto;
+  left: 40%;
+  position: absolute;
+  text-align: center;
+  top: 30%;
+  width: 12.5vw;
+}
 
 /* left console clickable buttons */
 .consoleButton {
@@ -88,9 +94,11 @@
   background-repeat: repeat;
   border-radius: 0 6px 6px 0;
   cursor: pointer;
+  height: 3vw;
   height: var(--left-console-button-length);
   position: absolute;
   transition-property: left;
+  width: 3vw;
   width: var(--left-console-button-length);
   /*transition-duration: var(--transition-duration);*/
   /* Safari */
@@ -106,11 +114,13 @@
   height: 3vw;
   left: 0;
   position: absolute;
+  transition-duration: 0.4s;
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
   top: 4vw;
   /*top: calc(var(--left-console-top-value) + var(--left-console-height));*/
+  width: 9.6vw;
   width: var(--left-console-width);
 }
 
@@ -119,7 +129,9 @@
   /*border-bottom-right-radius: 5px;*/
   border-radius: 50%;
   cursor: pointer;
+  height: 3vw;
   height: var(--left-console-button-length);
+  width: 3vw;
   width: var(--left-console-button-length);
   top: 4vw;
 }
@@ -130,14 +142,17 @@
 /* toolsButton to slide the left console */
 #toolsButton {
   /*border-bottom-right-radius: 5px;*/
+  top: 10.7vw;
   top: var(--left-console-top-value);
 }
 
 
 /* tabButtons class: container for consoleButton class */
 .tabButtons, #toolsButton, #undoButton {
+  left: 9.6vw;
   left: var(--left-console-width);
   position: absolute;
+  transition-duration: 0.4s;
   transition-duration: var(--transition-duration);
   /* Safari */
   -webkit-transition-duration: var(--transition-duration);
@@ -148,6 +163,7 @@
 .tabButtonsRolled {
   left: -4.26vw;
   position: absolute;
+  transition-duration: 0.4s;
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
@@ -156,7 +172,9 @@
 
 /* img for consoleButton class.*/
 .imgSelected, .imgNotSelected, #pick {
+  margin: 0.5vw;
   margin: var(--left-console-button-image-margin);
+  width: 2vw;
   width: var(--left-console-button-image-length);
 }
 
@@ -177,30 +195,35 @@
 
 #terrainButton {
   border-top-right-radius: 5px;
+  top: 15.47vw;
   top: var(--first-consoleButton-top);
 }
 
 
 /* left consoleButton, precipatation button */
 #precipButton {
+  top: 18.28vw;
   top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
 }
 
 
 /* left consoleButton, year button */
 #yearButton {
+  top: 21.09vw;
   top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
 }
 
 
 /* left consoleButton, levels button */
 #levelsButton {
+  top: 23.9vw;
   top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
 }
 
 
 /* left consoleButton, features button */
 #featuresButton {
+  top: 26.71vw;
   top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
 }
 
@@ -208,6 +231,7 @@
 /* left consoleButton, yield button */
 #yieldButton {
   /*border-bottom-right-radius: 5px;*/
+  top: 29.52vw;
   top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
 }
 
@@ -220,10 +244,13 @@
   border-bottom-right-radius: 12px;
   height: 30vw;
   position: absolute;
+  top: 10.7vw;
   top: var(--left-console-top-value);
+  transition-duration: 0.4s;
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
+  width: 9.6vw;
   width: var(--left-console-width);
 }
 /**left console content container**/
@@ -233,6 +260,7 @@
 }
 
 .leftConsoleRolled {
+  left: -9.6vw;
   left: calc( -1*var(--left-console-width));
 }
 /* end left console content container */
@@ -257,18 +285,19 @@
   /*column-gap: 1em;*/
 }
 
-#painterTab-leftcol {
+.leftcol, .rightcol {
+  width: 4.8vw;
   width: calc(var(--left-console-width) / 2);
   display: block;
-  left: 0.5vw;
   position: absolute;
 }
 
-#painterTab-rightcol {
-  width: calc(var(--left-console-width) / 2);
-  display: block;
+.leftcol {
+  left: 0.5vw;
+}
+
+.rightcol {
   left: 5vw;
-  position: absolute;
 }
 
 
@@ -278,11 +307,13 @@
 /* icons & iconSelected class */
 .icon, .iconSelected {
   border-radius: 50%;
-  -webkit-border-radius: 50;
-  -moz-border-radius: 50;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
   cursor: pointer;
   float: left;
+  height: 2.5vw;
   height: var(--selector-icon-length);
+  width: 2.5vw;
   width: var(--selector-icon-length);
 }
 
@@ -347,7 +378,9 @@
 /* multiplayerTab section */
 #message {
   color: white;
+  font-family: 'Amatic SC', cursive;
   font-family: var(--button-font-family);
+  font-size: 2.5vw;
   font-size: var(--button-font-size);
   position: static;
   visibility: hidden;
@@ -375,7 +408,9 @@
 
 #precipTitle, #yearTitle, .levelsText {
   color: #fff;
+  font-size: 1vw;
   font-size: var(--font-size);
+  font-weight: 900;
   font-weight: var(--title-font-weight);
   margin: 0.3vw;
   padding: 0.2vw;
@@ -400,6 +435,7 @@
 }
 
 select {
+  font-size: 1vw;
   font-size: var(--font-size);
   margin: 5%;
 }
@@ -410,6 +446,7 @@ select {
 }
 
 option {
+  font-size: 1vw;
   font-size: var(--font-size);
 }
 /* end precipTab section */
@@ -417,9 +454,11 @@ option {
 
 /** year buttons div**/
 .yearButton {
+  height: 2.5vw;
   height: var(--selector-icon-length);
   margin-left: 3vw;
   margin-top: 1.2vw;
+  width: 2.5vw;
   width: var(--selector-icon-length);
 }
 
@@ -448,6 +487,7 @@ option {
   margin: 15px 0px 0px 0px;
   position: absolute;
   top: 1.4vw;
+  transition-duration: 0.4s;
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
@@ -493,17 +533,17 @@ table, th, td {
     border: 0.1vw solid black;
     border-collapse: collapse;
     color: white;
-    font-size: 6pt;
+    font-size: 0.8vw;
 }
 th, td {
     padding: 0.6vw;
     text-align: left;
 }
-table #yieldGrainTable {
+table {
     width: 100%;
     background-image: url('./imgs/consoleTexture.png');
-    color: white;
-    font-size: 6pt;
+    /*color: white;*/
+    /*font-size: 6pt;*/
 }
 
 /* indicator size and colors on detail lists */
@@ -518,8 +558,10 @@ table #yieldGrainTable {
 .grassHay1, .grassHay2, .grassHay3, .grassHay4,
 .switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4,
 .wood1, .wood2, .wood3, .wood4, .short1 {
+  height: 1vw;
   height: var(--level-indicator-length);
   margin: 5%;
+  width: 1vw;
   width: var(--level-indicator-length);
 }
 
@@ -720,7 +762,7 @@ table #yieldGrainTable {
 }
 /* end indicator size and colors on detail lists */
 
-/* responsive web design. When the window size gets smaller than 600x400 */
+/* responsive web design. When the window size gets smaller than 600x400, set the fixed size or position for it */
 @media screen and (max-width: 600px), screen and (max-height: 400px) {
   .icon, .iconSelected {
     height: 15px;

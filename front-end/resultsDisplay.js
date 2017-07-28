@@ -467,56 +467,56 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
     //data groupings, dummy labels are there to increase color contrast
     dataset = [{
       label: "Annual Grain",
-      count: (Math.round(Totals.landUseResults[year]['conventionalCornLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationCornLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['conventionalCornLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationCornLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year].conservationCornLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conventionalCornLandUse * 10) / 10) + (Math.round(Totals.landUseResults[year].conservationCornLandUse * 10) / 10)
     }, {
       label: "dummy1",
       count: 0,
       number: 0
     }, {
       label: "Annual Legume",
-      count: (Math.round(Totals.landUseResults[year]['conventionalSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['conventionalSoybeanLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationSoybeanLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year].conservationSoybeanLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 10) / 10) + (Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 10) / 10)
     }, {
       label: "dummy2",
       count: 0,
       number: 0
     }, {
       label: 'Mixed Fruits/Vegetables',
-      count: (Math.round(Totals.landUseResults[year]['mixedFruitsVegetablesLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['mixedFruitsVegetablesLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse * 10) / 10)
     }, {
       label: "dummy3",
       count: 0,
       number: 0
     }, {
       label: "Pasture",
-      count: (Math.round(Totals.landUseResults[year]['permanentPastureLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['rotationalGrazingLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['permanentPastureLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['rotationalGrazingLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].permanentPastureLandUse / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year].rotationalGrazingLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].permanentPastureLandUse * 10) / 10) + (Math.round(Totals.landUseResults[year].rotationalGrazingLandUse * 10) / 10)
     }, {
       label: "dummy4",
       count: 0,
       number: 0
     }, {
       label: "Non-pasture Perennial Herbs",
-      count: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['prairieLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['wetlandLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['prairieLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['wetlandLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].grassHayLandUse / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year].switchgrassLandUse / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year].prairieLandUse / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year].wetlandLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].grassHayLandUse * 10) / 10) + (Math.round(Totals.landUseResults[year].switchgrassLandUse * 10) / 10) + (Math.round(Totals.landUseResults[year].prairieLandUse * 10) / 10) + (Math.round(Totals.landUseResults[year].wetlandLandUse * 10) / 10)
     }, {
       label: "dummy5",
       count: 0,
       number: 0
     }, {
       label: 'Perennial Legume',
-      count: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].alfalfaLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].alfalfaLandUse * 10) / 10)
     }, {
       label: "dummy6",
       count: 0,
       number: 0
     }, {
       label: "Perennial Woodland",
-      count: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] * 10) / 10) + (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].conventionalForestLandUse / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year].conservationForestLandUse / Totals.totalArea * 100 * 10) / 10) + (Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conventionalForestLandUse * 10) / 10) + (Math.round(Totals.landUseResults[year].conservationForestLandUse * 10) / 10) + (Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 10) / 10)
     }];
   }
   //else we'll set it up for listing all of the land types
@@ -524,64 +524,64 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
     var dataset = [{
       label: 'Conventional Corn',
-      count: (Math.round(Totals.landUseResults[year]['conventionalCornLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['conventionalCornLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conventionalCornLandUse * 10) / 10)
     }, {
       label: 'Conservation Corn',
-      count: (Math.round(Totals.landUseResults[year]['conservationCornLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['conservationCornLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].conservationCornLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conservationCornLandUse * 10) / 10)
     }, {
       label: 'Conventional Soybean',
-      count: (Math.round(Totals.landUseResults[year]['conventionalSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['conventionalSoybeanLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 10) / 10)
     }, {
       label: 'Conservation Soybean',
-      count: (Math.round(Totals.landUseResults[year]['conservationSoybeanLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['conservationSoybeanLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].conservationSoybeanLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 10) / 10)
     }, {
       label: 'Mixed Fruits/Vegetables',
-      count: (Math.round(Totals.landUseResults[year]['mixedFruitsVegetablesLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['mixedFruitsVegetablesLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse * 10) / 10)
     }, {
       label: 'Permanent Pasture',
-      count: (Math.round(Totals.landUseResults[year]['permanentPastureLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['permanentPastureLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].permanentPastureLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].permanentPastureLandUse * 10) / 10)
     }, {
       label: 'Rotational Grazing',
-      count: (Math.round(Totals.landUseResults[year]['rotationalGrazingLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['rotationalGrazingLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].rotationalGrazingLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].rotationalGrazingLandUse * 10) / 10)
     }, {
       label: 'Grass Hay',
-      count: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['grassHayLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].grassHayLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].grassHayLandUse * 10) / 10)
     }, {
       label: 'Switchgrass',
-      count: (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['switchgrassLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].switchgrassLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].switchgrassLandUse * 10) / 10)
     }, {
       label: 'Prairie',
-      count: (Math.round(Totals.landUseResults[year]['prairieLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['prairieLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].prairieLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].prairieLandUse * 10) / 10)
     }, {
       label: 'Wetland',
-      count: (Math.round(Totals.landUseResults[year]['wetlandLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['wetlandLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].wetlandLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].wetlandLandUse * 10) / 10)
     }, {
       label: 'Alfalfa',
-      count: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['alfalfaLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].alfalfaLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].alfalfaLandUse * 10) / 10)
     }, {
       label: 'Conventional Forest',
-      count: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['conventionalForestLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].conventionalForestLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conventionalForestLandUse * 10) / 10)
     }, {
       label: 'Conservation Forest',
-      count: (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['conservationForestLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].conservationForestLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conservationForestLandUse * 10) / 10)
     }, {
       label: 'Short Rotation Woody Bioenergy',
-      count: (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] / Totals.totalArea * 100 * 10) / 10),
-      number: (Math.round(Totals.landUseResults[year]['shortRotationWoodyBioenergyLandUse'] * 10) / 10)
+      count: (Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 10) / 10)
     }];
   } //dataset is assigned now
 
@@ -664,10 +664,10 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
     .attr('class', 'dataArc')
     .attr('d', arc)
     .attr('count', function(d) {
-      return d.data.number
+      return d.data.number;
     })
     .attr('percent', function(d) {
-      return d.data.count
+      return d.data.count;
     })
     .attr('fill', function(d, i) {
       var hue = color(d.data.label);
@@ -675,7 +675,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
       // for the legend
       if (d.data.count != 0) {
         nameArray.push(d.data.label);
-        colorLinker[d.data.label] = hue
+        colorLinker[d.data.label] = hue;
       }
       return hue;
     })
@@ -787,7 +787,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
     .attr("x", 0)
     .attr("y", 0)
     .attr("text-anchor", "middle")
-    .style("font-size", "1.8vmax")
+    .style("font-size", "1.8vw")
     .style("font-weight", "bold")
     .text("Land Use");
   //also add the year below that
@@ -795,7 +795,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
     .attr("x", 0)
     .attr("y", 25)
     .attr("text-anchor", "middle")
-    .style("font-size", "1.8vmax")
+    .style("font-size", "1.8vw")
     .style("font-weight", "bold")
     .text("Year " + year);
 } //end drawD3LandPieChart()
@@ -807,10 +807,11 @@ function drawPrecipitationInformationChart() {
   //this nested function updates the text and images in the left container, mouseover info
   function setupPrecipInfo(year) {
     container.select('.yearLabel').html(data[year].label);
-    container.select('.precipValue').html(data[year].value + " inches");
+    container.select('.precipValue').html(Number(data[year].value) + " inches");
     container.select('.precipType').html(data[year].adj);
 
     var img = " ";
+
     switch (data[year].adj) {
       case "Dry":
         // "Clouds" by https://icons8.com with free commercial use / Inserted oval under cload
@@ -841,6 +842,11 @@ function drawPrecipitationInformationChart() {
   document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo').innerHTML = " ";
 
   //assign data
+
+  for(var i = 0; i < boardData[currentBoard].precipitation.length-2; i++) {
+    boardData[currentBoard].precipitation[i] = Number(boardData[currentBoard].precipitation[i]);
+  }
+
   var data = [{
     label: "Year 0",
     value: boardData[currentBoard].precipitation[0],
@@ -1227,7 +1233,7 @@ function drawEcosystemIndicatorsDisplay(year) {
     .attr("x", 0)
     .attr("y", 0)
     .attr("text-anchor", "middle")
-    .style("font-size", "1.8vmax")
+    .style("font-size", "1.8vw")
     .style("font-weight", "bold")
     .text("Eco-Scores");
 
@@ -1235,9 +1241,9 @@ function drawEcosystemIndicatorsDisplay(year) {
     .attr("x", 0)
     .attr("y", 25)
     .attr("text-anchor", "middle")
-    .style("font-size", "1.8vmax")
+    .style("font-size", "1.8vw")
     .style("font-weight", "bold")
-    .text("Year " + year)
+    .text("Year " + year);
 
 
   //end of the aster plot creation, now do the indicator gradients
@@ -1439,7 +1445,7 @@ function drawEcosystemRadar(yearArray) {
     ExtraWidthX: graphLength,
     TranslateX: graphLength * 0.487, //95
     TranslateY: graphLength * 0.154 //30
-  }
+  };
 
   var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarChart');
   var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('radarLegend');
@@ -1467,7 +1473,7 @@ function drawEcosystemRadar(yearArray) {
     // .attr("y", -120)
     .attr("y", Math.round(-0.324 * legendHeight))
     .attr("text-anchor", "middle")
-    .style("font-size", "1.8vmax")
+    .style("font-size", "1.8vw")
     .style("font-weight", "bold")
     .text("Ecosystem Services");
 
@@ -1497,7 +1503,7 @@ function drawEcosystemRadar(yearArray) {
         .style("fill-opacity", 0.1);
       g.selectAll(z)
         .transition(200)
-        .style("fill-opacity", .7);
+        .style("fill-opacity", 0.7);
     })
     .on('mouseout', function(d) {
 
@@ -1582,7 +1588,7 @@ var RadarChart = {
       w: 600,
       h: 600,
       factor: 1,
-      factorLegend: .85,
+      factorLegend: 0.85,
       levels: 3,
       maxValue: 0,
       radians: 2 * Math.PI,
@@ -1604,10 +1610,10 @@ var RadarChart = {
     cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i) {
       return d3.max(i.map(function(o) {
         return o.value;
-      }))
+      }));
     }));
     var allAxis = (d[0].map(function(i, j) {
-      return i.axis
+      return i.axis;
     }));
     var total = allAxis.length;
     var radius = cfg.factor * Math.min(cfg.w / 2, cfg.h / 2);
@@ -1619,7 +1625,7 @@ var RadarChart = {
       .attr("width", cfg.w * 1.97) //384
       .attr("height", cfg.h * 1.23) //239
       .append("g")
-      .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");;
+      .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
 
     var mouseoverInfo = d3.select(id)
       .append('g')
@@ -1705,14 +1711,14 @@ var RadarChart = {
     axis.append("text")
       .attr("class", "legend")
       .text(function(d) {
-        return d
+        return d;
       })
       .style("font-family", "sans-serif")
       // .style("font-size", "16px")
       .attr("text-anchor", "middle")
       .attr("dy", "1.5em")
       .attr("transform", function(d, i) {
-        return "translate(0, -17)"
+        return "translate(0, -17)";
       })
       .attr("x", function(d, i) {
         return cfg.w / 2 * (1 - cfg.factorLegend * Math.sin(i * cfg.radians / total)) - 60 * Math.sin(i * cfg.radians / total);
@@ -1750,7 +1756,7 @@ var RadarChart = {
           return str;
         })
         .style("fill", function(j, i) {
-          return cfg.color(series)
+          return cfg.color(series);
         })
         .style("fill-opacity", cfg.opacityArea)
         .on('mouseover', function(d) {
@@ -1778,7 +1784,7 @@ var RadarChart = {
         .attr("class", radarClassElementsString + series)
         .attr('r', cfg.radius)
         .attr("alt", function(j) {
-          return Math.max(j.value, 0)
+          return Math.max(j.value, 0);
         })
         .attr("cx", function(j, i) {
           dataValues.push([
@@ -1791,12 +1797,12 @@ var RadarChart = {
           return cfg.h / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total));
         })
         .attr("data-id", function(j) {
-          return j.axis
+          return j.axis;
         })
         .style("fill", function(d, i) {
           return cfg.color(series);
         })
-        .style("fill-opacity", .9)
+        .style("fill-opacity", 0.9)
         .on('mouseover', function(d) {
           newX = parseFloat(d3.select(this).attr('cx')) - 10;
           newY = parseFloat(d3.select(this).attr('cy')) - 5;
@@ -1807,7 +1813,7 @@ var RadarChart = {
             .style("fill-opacity", 0.1);
           g.selectAll(z)
             .transition(200)
-            .style("fill-opacity", .7);
+            .style("fill-opacity", 0.7);
 
           d3.select(this).attr("r", 15);
 
@@ -1828,7 +1834,7 @@ var RadarChart = {
 
         })
         .text(function(j) {
-          return Math.max(j.value, 0)
+          return Math.max(j.value, 0);
         })
         .transition()
         .duration(900)
@@ -1973,7 +1979,7 @@ function drawYieldRadar(yearArray) {
     ExtraWidthX: 300,
     TranslateX: graphLength * 0.487, //95
     TranslateY: graphLength * 0.154 //30
-  }
+  };
 
   //get elements in the child frame
   var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart');
@@ -2005,7 +2011,7 @@ function drawYieldRadar(yearArray) {
     // .attr("y", -120)
     .attr("y", Math.round(-0.324 * legendHeight))
     .attr("text-anchor", "middle")
-    .style("font-size", "1.8vmax")
+    .style("font-size", "1.8vw")
     .style("font-weight", "bold")
     .text("Annual Yield Results");
 
@@ -2035,7 +2041,7 @@ function drawYieldRadar(yearArray) {
         .style("fill-opacity", 0.1);
       g.selectAll(z)
         .transition(200)
-        .style("fill-opacity", .7);
+        .style("fill-opacity", 0.7);
     })
     .on('mouseout', function(d) {
 
