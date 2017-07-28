@@ -6,81 +6,57 @@
           painter, Totals, river,
           Results, initData, hoveredOver, currentPlayer*/
 
-var addingYearFromFile = false; //Boolean used to keep a track of whether or not you're adding a year from file
-var clearToChangeLandType = true;
+var addingYearFromFile = false;//Boolean used to keep a track of whether or not you're adding a year from file
 var click;
 var clickAndDrag = false;
-var columnCutOffs = [];
-var cur;
 var currentHighlightType = 0;
 var currentHighlightTypeString = null;
 var currentRow = -1;
 var curTime;
 var curTracking = false;
-var fullBoardBeforeZoom, zIsDown, oneIsDown;
-var elapsedTime;
 var endTime;
-var exitTimer;
 var hoverOverride = false;
-var inDispLevels = false;
-var inResults = false;
 var immutablePrecip = false;
+var inResults = false;
+var inDispLevels = false;
+var lastPainter = null;
+var lastSelectedPainter = 1;
 var leftToolConsoleWasOpen;
-var merging = false;
-var mesh = null;
+var mesh = null; // mesh store the whole view on the scene
 var meshGeometry = new THREE.Geometry();
-var myTimer = null;
 var overlayedToggled = false;
-var paused = false;
-var pauseDuration = 0;
+var paintSwitch = false;
+var previous = false;
 var previousOverlay = null;
 var previousTab = null;
-var randomizing = false;
-var resetting = false;
+var previousTileId = [];
+var previousPainter = [];
+var randomzing = false;
 var rightPopupWasOpen;
 var runningSim = false;
-var simBoard;
 var simulationData;
-var sliderTimer;
 var startTime;
 var tileHeight = 12;
 var tileWidth = 18;
-var timeResumed;
-var timeStopped;
-var totalPlayers = 0;
 var undo = false;
 
-var birds = [],
-bird;
-var boids = [],
-boid;
+// arrays
+var birds = [], bird;
+var boids = [], boid;
+var columnCutOffs = [];
 var highlightedTiles = [];
-var hotkeyArr = [
-  [69, null],
-  [82, null],
-  [84, null],
-  [85, null],
-  [66, null],
-  [86, null],
-  [68, null],
-  [65, null],
-  [87, null],
-  [83, null],
-  [79, null],
-  [81, null]
-];
-var mainTimer = [];
 var meshMaterials = [];
-var playerCombo = [];
 var rowCutOffs = []; //y coor of top left corner of each tile
-var undoArr = [
-  [],
-  [],
-  [],
-  []
-];
+var undoArr = [[],[],[],[]];
 var undoGridArr = [];
 var undoGridPainters = [];
+
+// XXX explain
+var clearToChangeLandType = true;
+var fullBoardBeforeZoom, zIsDown, oneIsDown;
+var inDispLevels = false;
+var inResults = false;
+
 
 var painterTool = {
   status: 0,
@@ -88,6 +64,42 @@ var painterTool = {
   endTile: 0,
   hover: false
 };
+
+// simulation variables
+var cur;
+var exitTimer;
+var elapsedTime;
+var myTimer = null;
+var mainTimer = [];
+var paused = false;
+var pauseDuration = 0;
+var randomizing = false;
+var simBoard;
+var sliderTimer;
+var timeStopped;
+var timeResumed;
+
+// for multiplayer mode
+var merging = false;
+var playerCombo = [];
+var resetting = false;
+var totalPlayers = 0;
+// customize hotkeys
+var hotkeyArr = [[69,null],[82,null],[84,null],[85,null],[66,null],[86,null],[68,null],[65,null],[87,null],[83,null],[79,null],[81,null]];
+
+// for print function
+var data = []; // stores precip data for results page
+var radarLegendColors = [], radarLegendItems = [];
+var tempLegendItems = [], maxLegendSize = 1, finalLegendItems = []; // stores strings of the names in legend for print function
+var tempLegendColors = [], finalLegendColors = []; // stores colors of legent items for print function
+
+// object to store user actions ( print function )
+var session = {
+  changeSelectedPaintTo: 1, // deafault choose conventional corn/player 1
+  switchConsoleTab: 1, //default land use map
+  switchYearTab: 1 // default year 1
+};
+
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
 
@@ -222,8 +234,12 @@ function changeLandTypeTile(tileId) {
     if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
       //change the materials of the faces in the meshMaterials array and update the boardData
       if (!multiplayerAssigningModeOn) {
+        // textureArray is a global array that links to each landType image, it was load in loader.js
+        // by changing the reference on meshMaterials array, three.js will draw it on canvas automatically
         meshMaterials[tileId].map = textureArray[painter];
+        // record the data changes in boardData
         boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+        // update boardData figures
         boardData[currentBoard].map[tileId].update(currentYear);
       } else if (multiplayerAssigningModeOn) {
         meshMaterials[tileId].map = multiplayerTextureArray[painter];
@@ -1059,7 +1075,13 @@ function onDocumentKeyDown(event) {
         document.getElementById("recordIcon").style.visibility = "hidden";
         exportTracking(clickTrackings);
       }
+      break;
       //no default handler
+
+      // hit P to see pdf output
+    case 80:
+      startPrintOptions();
+      break;
   } //end switch
 } //end onDocumentKeyDown
 
@@ -1187,7 +1209,13 @@ function changeSelectedPaintTo(newPaintValue) {
 
     //have land type update immediately, well, pretend the mouse moved...
     highlightTile(-1);
-  } else {
+
+    // store last users action ( print function )
+    if (!modalUp) {
+      storeCurrentCameraSession(0, newPaintValue);
+    } // END if
+  }
+  else {
 
     //If we are merging players together
     if (document.getElementById("combineButton").innerHTML == "Merge" && merging == false) {
@@ -1372,53 +1400,53 @@ function showLevelDetails(value) {
   switch (value) {
     case 1:
       //show nitrate legend
-      document.getElementById("nitrateDetailsList").className = "DetailsList levelDetailsList";
       document.getElementById('nitrateIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("nitrateDetailsList").className = "DetailsList levelDetailsList";
       break;
     case 2:
       //show erosion legend
-      document.getElementById("erosionDetailsList").className = "DetailsList levelDetailsList";
       document.getElementById('erosionIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("erosionDetailsList").className = "DetailsList levelDetailsList";
       break;
     case 3:
       //show phosphorus legend
-      document.getElementById("phosphorusDetailsList").className = "DetailsList levelDetailsList";
       document.getElementById('phoshorusIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("phosphorusDetailsList").className = "DetailsList levelDetailsList";
       break;
     case 4:
       //show flood frequency legend
       document.getElementById('floodFrequency').className = "featureSelectorIcon iconSelected";
-      document.getElementById("floodFrequencyDetailsList").className = "DetailsList physicalDetailsList";
+      document.getElementById("floodDetailsList").className = "DetailsList physicalDetailsList";
       break;
     case 5:
       //show drainage class legend
       document.getElementById('drainageClass').className = "featureSelectorIcon iconSelected";
-      document.getElementById("drainageClassDetailsList").className = "DetailsList physicalDetailsList";
+      document.getElementById("drainageDetailsList").className = "DetailsList physicalDetailsList";
       break;
     case 6:
       //show strategic wetlands legend
       document.getElementById('strategicWetlands').className = "featureSelectorIcon iconSelected";
-      document.getElementById("wetlandClassDetailsList").className = "DetailsList physicalDetailsList";
+      document.getElementById("wetlandsDetailsList").className = "DetailsList physicalDetailsList";
       break;
     case 7:
       //show subwatershed legend
       document.getElementById('subwatershedBoundaries').className = "featureSelectorIcon iconSelected";
-      document.getElementById("subwatershedClassDetailsList").className = "DetailsList physicalDetailsList";
+      document.getElementById("boundaryDetailsList").className = "DetailsList physicalDetailsList";
       break;
     case 8:
       document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
-      document.getElementById('soilClassDetailsList').className = "DetailsList physicalDetailsList";
+      document.getElementById('soilDetailsList').className = "DetailsList physicalDetailsList";
       break;
     case 9:
       //show Corn class legend
       document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
-      document.getElementById('cornGrainDetailsList').className = "DetailsList yieldDetailsList";
+      document.getElementById('cornDetailsList').className = "DetailsList yieldDetailsList";
       updateIndexPopup('<span style="color:orange;">Conventional Corn and Conservation Corn</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
     case 10:
       //show soy class legend
       document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
-      document.getElementById('soyBeanDetailsList').className = "DetailsList yieldDetailsList";
+      document.getElementById('soybeanDetailsList').className = "DetailsList yieldDetailsList";
       updateIndexPopup('<span style="color:orange;">Conventional Soy and Conservation Soy</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
     case 11:
@@ -1443,13 +1471,13 @@ function showLevelDetails(value) {
     case 14:
       //show grasshay class legend
       document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
-      document.getElementById('grassHayDetailsList').className = "DetailsList yieldDetailsList";
+      document.getElementById('grasshayDetailsList').className = "DetailsList yieldDetailsList";
       updateIndexPopup('To learn more about <span style="color:orange;">Grass Hay Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
     case 15:
       //show switch grass class legend
       document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
-      document.getElementById('switchGrassDetailsList').className = "DetailsList yieldDetailsList";
+      document.getElementById('switchgrassDetailsList').className = "DetailsList yieldDetailsList";
       updateIndexPopup('To learn more about <span style="color:orange;">Switch Grass Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
     case 16:
@@ -1624,18 +1652,29 @@ function switchConsoleTab(value) {
   if (mapIsHighlighted) {
     displayLevels();
   }
+
+  // store last users action ( print function )
+  if (!modalUp) {
+    storeCurrentCameraSession(2, value);
+  } // END if
 } //end switchConsoleTab
 
 //switchYearTab changes the highlighted year
 function switchYearTab(yearNumberToChangeTo) {
-
   //get the currently selected year and make it not selected
   var elements = document.getElementsByClassName("icon yearSelected");
-  elements[0].className = "icon yearNotSelected";
+  if (elements) {
+    elements[0].className = "icon yearNotSelected";
+  }
 
   //then toggle on the selected year
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
   document.getElementById(yearIdString).className = "icon yearSelected";
+
+  // store last users action ( print function )
+  if (!modalUp) {
+    storeCurrentCameraSession(3, yearNumberToChangeTo);
+  } // END if
 } //end switchYearTab
 
 //here we draw the correct tile colors onto the board material mesh
@@ -1711,14 +1750,14 @@ function displayLevels(overlayHighlightType) {
         pushClick(0, getStamp(), 48, 0, null);
       }
       break;
-    case 'wetland':
+    case 'wetlands':
       selectionHighlightNumber = 6;
       updateIndexPopup('This map shows the locations for each <span style="color:orange;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 46, 0, null);
       }
       break;
-    case 'subwatershed':
+    case 'boundary':
       selectionHighlightNumber = 7;
       updateIndexPopup('This map shows the <span style="color:orange;">boundaries of each subwatershed</span>. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
@@ -1733,13 +1772,13 @@ function displayLevels(overlayHighlightType) {
       }
       break;
     // yield
-    case 'cornGrain':
+    case 'corn':
       selectionHighlightNumber = 9;
       if (curTracking) {
         pushClick(0, getStamp(), 69, 0, null);
       }
       break;
-    case 'soy':
+    case 'soybean':
       selectionHighlightNumber = 10;
       if (curTracking) {
         pushClick(0, getStamp(), 70, 0, null);
@@ -1763,13 +1802,13 @@ function displayLevels(overlayHighlightType) {
         pushClick(0, getStamp(), 73, 0, null);
       }
       break;
-    case 'grassHay':
+    case 'grasshay':
       selectionHighlightNumber = 14;
       if (curTracking) {
         pushClick(0, getStamp(), 74, 0, null);
       }
       break;
-    case 'switchGrass':
+    case 'switchgrass':
       selectionHighlightNumber = 15;
       if (curTracking) {
         pushClick(0, getStamp(), 75, 0, null);
@@ -1818,6 +1857,11 @@ function displayLevels(overlayHighlightType) {
       drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
     } //end else/if group
   } //end else/if mapIsHighlighted
+
+  // store last users action ( print function )
+  if (!modalUp) {
+    storeCurrentCameraSession(1, overlayHighlightType);
+  } // END if
 } //end displayLevels()
 
 //toggleOverlay allows the user to quickly switch between an overlay map and the land type mode
@@ -1871,7 +1915,7 @@ function getHighlightColor(highlightType, tileId) {
     } //end switch
   }
   //wetland highlight color indicies
-  else if (highlightType == "wetland") {
+  else if (highlightType == "wetlands") {
 
     if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
       return 26;
@@ -1881,7 +1925,7 @@ function getHighlightColor(highlightType, tileId) {
   }
   // loader
   //subwatershed highlight color indicies
-  else if (highlightType == "subwatershed") {
+  else if (highlightType == "boundary") {
 
     var watershed = Number(boardData[currentBoard].map[tileId].subwatershed);
     return watershed + 9;
@@ -1932,7 +1976,7 @@ function getHighlightColor(highlightType, tileId) {
         //color 87ceee
       case "Y": return 18;
     }
-  } else if (highlightType == "cornGrain") {
+  } else if (highlightType == "corn") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
       case "A": case "M": case "N": case "Q": case "T": return 35;
@@ -1940,7 +1984,7 @@ function getHighlightColor(highlightType, tileId) {
       case "C": case "L": return 0;
       case "D": case "K": case "O": case "Y": return 22;
     }
-  } else if (highlightType == "soy") {
+  } else if (highlightType == "soybean") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
       case "A": case "M": case "N": case "Q": case "T": return 46;
@@ -1957,7 +2001,7 @@ function getHighlightColor(highlightType, tileId) {
       case "C": case "L": return 25;
       case "M": case "Q": case "T": return 17;
     }
-  } else if (highlightType == "grassHay") {
+  } else if (highlightType == "grasshay") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
       case "A": case "D": case "N": case "Y": return 46;
@@ -1965,7 +2009,7 @@ function getHighlightColor(highlightType, tileId) {
       case "C": case "L": return 45;
       case "M": case "Q": case "T": return 29;
     }
-  } else if (highlightType == "switchGrass") {
+  } else if (highlightType == "switchgrass") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
       case "A": case "C": case "L": case "M": return 49;
@@ -2062,11 +2106,10 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for strategic wetlands
       case 6:
-        if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
+        if (boardData[currentBoard].map[tileId].strategicWetland == 1)
           highlightString = "Strategic Wetland" + "<br>";
-        } else {
+        else
           highlightString = "Non-Strategic Wetland" + "<br>";
-        }
         break;
         //create string for subwatershed number
       case 7:
@@ -2155,8 +2198,7 @@ function getHighlightedInfo(tileId) {
         break;
     }
     return highlightString;
-  }
-
+  } // END if/else
 
 } //end getHighlightedInfo
 
@@ -3202,7 +3244,158 @@ function resetOptions() {
   // removeEvent(window.frames[4].document, 'keyup', optionsEsc);
 } //end resetOptions
 
-//startOptions displays the options page
+// triggers PDF generating process according to chosen print options
+// And either render it in the preview or prompt download dialogue
+function executePrintOptions(isDownload) {
+  // initialize jspdfprinter as a global object
+  jspdfprinter = new Printer();
+
+  // process chosen print options
+  var strRawContents = document.getElementById('print-option-parameters').innerHTML;
+  //split based on escape chars
+  while (strRawContents.indexOf("\r") >= 0) {
+    strRawContents = strRawContents.replace("\r", "");
+  }
+  var arrLines = strRawContents.split("\n");
+  // global array that record the print options
+  toPrint = {
+    // map
+    yearUserViewpoint: false,
+    year1: false,
+    year2: false,
+    year3: false,
+    // results
+    resultsTable1: false,
+    resultsTable2: false,
+    resultsTable4: false,
+    resultsLanduse: false,
+    resultsEcosystem: false,
+    resultsPrecip: false,
+    // levels
+    levelUserViewpoint: false,
+    nitrate: false,
+    erosion: false,
+    phosphorus: false,
+    // features
+    featureUserViewpoint: false,
+    flood: false,
+    wetlands: false,
+    boundary: false,
+    drainage: false,
+    soil: false,
+    // yields
+    yieldUserViewpoint: false,
+    corn: false,
+    soybean: false,
+    fruit: false,
+    cattle: false,
+    alfalfa: false,
+    grasshay: false,
+    switchgrass: false,
+    wood: false,
+    short: false
+  };
+
+  // set chosen ones to true
+  for (var i = 0; i < arrLines.length-1; i++) {
+    toPrint[arrLines[i].substr(0, arrLines[i].indexOf("-"))] = true;
+  }
+
+  // trigger preprocessing
+  takeScreenshot = true; // triggers the if statement in animationFrames() in mainFE.js
+  alert("Creating PDF... \n(click to continue)");
+  setTimeout(function() {
+    // wait for preprocessing
+    jspdfprinter.processing(isDownload);
+    jspdfprinter = {}; // clean object
+  },100);
+
+} //end executePrintOptions
+
+// close printOptions frame
+function closePrintOptions() {
+  //scroll page to top, so that next time options is loaded it starts there
+  window.frames[6].scrollTo(0, 0);
+
+  //close frame
+  document.getElementById('printOptions').style.visibility = "hidden";
+  // restore previous user state
+  restoreCurrentCameraSession();
+  modalUp = false;
+  //make sure the frame is no longer accepting input such as keyboard or mouse events
+  document.activeElement.blur();
+  // remove Esc key event listener
+  document.removeEventListener('keyup', printOptionsEsc);
+  window.frames[6].document.removeEventListener('keyup', printOptionsEsc);
+} // end closePrintOptions
+
+//
+function storeCurrentCameraSession(actionCode, value) {
+
+  // store the last map the user viewed
+  switch (actionCode) {
+    case 0:
+      // save the LandUseType or player
+      session.changeSelectedPaintTo = value;
+      break;
+    case 1:
+      // save the specific level, feature or yield
+      session.displayLevels = value;
+      break;
+    case 2:
+      // save last consle tab
+      session.switchConsoleTab = value;
+      break;
+    case 3:
+      // save the exact year
+      session.switchYearTab = value;
+      break;
+    default:
+      // store the last camera degree, view, zoom
+      controls.storeCurrentState();
+      break;
+  }
+  // console.log(session);
+} // end storeCurrentCameraSession
+
+// switch to the setting last stored in session object
+function restoreCurrentCameraSession() {
+  // restore the last camera degree, view
+  controls.restoreLastState();
+
+  // switch to the last year, tab or level
+  switchConsoleTab(6);// switch to year tab
+  switchYearTab(session.switchYearTab); // swithch to the exact year
+  // swithch last consle tab
+  switchConsoleTab(session.switchConsoleTab);
+  // choose the LandUseType or player
+  if (typeof session.changeSelectedPaintTo !== 'undefined' )
+    changeSelectedPaintTo(session.changeSelectedPaintTo);
+  // displays specific level, feature or yield
+  if (typeof session.displayLevels !== 'undefined' )
+    displayLevels(session.displayLevels);
+
+} // end restoreCurrentCameraSession
+
+// startPrintOptions displays the printOptions page
+function startPrintOptions() {
+
+  //if nothing else has precedence
+  if (!modalUp) {
+    // save the last state that user have
+    storeCurrentCameraSession();
+    modalUp = true;
+    document.getElementById('printOptions').style.visibility = "visible";
+    // add Esc key event listener
+    document.addEventListener('keyup', printOptionsEsc);
+    window.frames[6].document.addEventListener('keyup', printOptionsEsc);
+    // pass the current uplimit year
+    var uptoYear = boardData[currentBoard].calculatedToYear;
+    window.frames[6].initPrintOptions(uptoYear);
+  }
+} // end startPrintOptions
+
+// startOptions displays the options page
 function startOptions() {
   //if nothing else has precedence
   if (!modalUp) {
@@ -3224,7 +3417,15 @@ function optionsEsc(e) {
     // turn off options page without options change
     resetOptions();
   }
-}
+} // end optionsEsc
+
+// Execute when Esc key is pressed while on the printOptions page
+function printOptionsEsc(e) {
+  if (e.keyCode == 27) {
+    // turn off printOptions page
+    closePrintOptions();
+  }
+} // end printOptionsEsc
 
 //Returns the hotkey array
 function giveHotkeys() {

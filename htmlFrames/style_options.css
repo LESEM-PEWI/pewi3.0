@@ -9,11 +9,13 @@
   --font-size: 1.2vw;
   /*--transition-duration: 0.4s;*/
 }
-  body {
-    background-color: #000000;
-  }
 
-  /** Options Frame
+body {
+  background-color: #000000;
+}
+
+
+/** Options Frame
   -------------------------
   **/
 
