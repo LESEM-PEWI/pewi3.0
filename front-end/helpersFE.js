@@ -31,6 +31,7 @@ var mesh = null;
 var meshGeometry = new THREE.Geometry();
 var myTimer = null;
 var overlayedToggled = false;
+var optionsString="";//string that stores toggeled off options
 var paused = false;
 var pauseDuration = 0;
 var previousOverlay = null;
@@ -50,6 +51,7 @@ var timeStopped;
 var totalPlayers = 0;
 var undo = false;
 
+//var arrLines;
 var birds = [],
 bird;
 var boids = [],
@@ -97,6 +99,7 @@ function confirmExit() {
     return "You are currently in click-tracking mode, please stay on the page. To refresh, please leave click-tracking mode";
   }
 }
+
 
 //Returns the value of curTracking
 function getTracking() {
@@ -1101,9 +1104,11 @@ function toggleEscapeFrame() {
     document.getElementById('directoryButton').style.visibility = "hidden";
     modalUp = false;
   }
-
+  //Here I have unlocked the options button on the multiplayer screen. Bear in mind that any changes made to the
+  //land uses IE toggling them on will show up on the multiplayer screen. The options in multiplayer screen are all 
+    //locked.
   if (multiplayerAssigningModeOn) {
-    document.getElementById('optionsButton').className = "unclickableMainEscapeButton";
+    document.getElementById('optionsButton').className = "mainEscapeButton";
   } else {
     document.getElementById('optionsButton').className = "mainEscapeButton";
   }
@@ -2381,8 +2386,11 @@ function writeFileToDownloadString(mapPlayerNumber) {
 
   var string = "";
   if (typeof boardData[currentBoard] !== 'undefined') {
+     //To save options in the file, changing the options string so that it doesn't have \n because csv file will read it differntly
+      var tempOptions=optionsString.replace(/\n/g,"~");//replaceing the \n in options string to be '~'
+      optionsString=tempOptions;
+      string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3,"+optionsString+",\n";//+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
 
-    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       if (boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
@@ -2463,7 +2471,8 @@ function writeFileToDownloadString(mapPlayerNumber) {
       string += boardData[currentBoard].precipitation[0] + "," +
         boardData[currentBoard].precipitation[1] + "," +
         boardData[currentBoard].precipitation[2] + "," +
-        boardData[currentBoard].precipitation[3];
+        boardData[currentBoard].precipitation[3]+","+
+          optionsString;//optionsString added here
 
       if (i < boardData[currentBoard].map.length - 1) {
         string = string + '\r\n';
@@ -2520,7 +2529,6 @@ function uploadClicked(e) {
             alert("This file format is not compatible");
             return;
           }
-
           try {
             string = string + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + ",";
             string = string + ((obj["2"].area.data[i] == null) ? 0 : 1) + ",";
@@ -2601,7 +2609,7 @@ function uploadClicked(e) {
     }
   } else { //it's csv
     //console.log("Else entered");
-
+    //initData = [];
     var reader = new FileReader();
     reader.readAsText(files[0]);
     reader.onload = function(e) {
@@ -2625,7 +2633,7 @@ function uploadClicked(e) {
           lines.push(tarr);
         }
       }
-
+//      window.top.document.getElementById('parameters').innerHTML;
       var multipleYearFlag = 1;
       //This for loop iterates through the uploaded csv data file and cheks if year 2 and 3 are present in the file
       for (var i = 0; i < lines.length; i++) {
@@ -2652,6 +2660,23 @@ function uploadClicked(e) {
         boardData[currentBoard].calculatedToYear = 3;
         addingYearFromFile=false;
       }
+        
+    //Clears data so the river isnt redrawn when new files are uploaded
+        initData = [];
+      //load options from the csv
+      //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes 
+      //the options page and shows the page is refreshed on the screen
+       if(headers.length == 32){
+           resetOptionsPage();
+           toggleVisibility();
+       }
+      //else if the file has options, then it takes the options and places it in the parameter div of the html and reloads it.
+      else{
+        var xys=headers[32].replace(/~/g,"\n");// since \n was replaced by '~' replace it back
+        window.top.document.getElementById('parameters').innerHTML=xys;// load the options string in the inner html of parameters
+        //make sure the locked land uses aren't seen on the side tool tab or on the map
+        toggleVisibility();
+      }
 
       //updating the precip levels from the values in the uploaded file
       boardData[currentBoard].precipitation[0] = lines[1][28];
@@ -2671,9 +2696,7 @@ function uploadClicked(e) {
       initData = [];
     }; //end onload
   } //end else
-
   closeUploadDownloadFrame();
-
   //reset keylistening frame (ie give up focus on iframe)
   //no more conch for us
   document.activeElement.blur();
@@ -3011,7 +3034,7 @@ function saveAndRandomize() {
         break;
       }
     }
-
+      
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
@@ -3071,14 +3094,14 @@ function toggleVisibility() {
 
   //alright, now let's see what the parameters look like
   // abscond them from the index.html page parameters div
+//    if(!multiplayerAssigningModeOn){
   var strRawContents = document.getElementById('parameters').innerHTML;
 
   //split based on escape chars
   while (strRawContents.indexOf("\r") >= 0) {
-    strRawContents = strRawContents.replace("\r", "");
+    strRawContents = strRawContents.replace("\r", "")
   }
   var arrLines = strRawContents.split("\n");
-
 
   //for each line of the parameters div, as each keyword has its own line
   for (var i = 0; i < arrLines.length; i++) {
@@ -3088,14 +3111,13 @@ function toggleVisibility() {
         case "statsOn": document.getElementById('statFrame').style.display = "block"; break;
         case "year0On": document.getElementById('year0Button').style.display = "block"; break;
         case "precipOff": immutablePrecip = true; break;
-        case "multiAssign": document.getElementById('playerAddButton').style.display = "inline-block"; break;
+        case "multiAssign": document.getElementById('playerAddButton').style.display = "inline-block"; break; 
         default:
           if (arrLines[i].slice(0,5) == 'paint') {
             document.getElementById(arrLines[i]).style.display = "none";
           }
           break;
       } // end switch
-
     } // end if
   } //end for
 
@@ -3192,7 +3214,7 @@ function painterSelect(brushNumberValue) {
   } //end else/if group
 } //end painterSelect()
 
-//resetOptions is called when options menu is closed
+//ns is called when options menu is closed
 // this function closes the iframe, blurs the frame, and
 // takes the parameters set by it to order the page elements
 function resetOptions() {
@@ -3215,7 +3237,7 @@ function resetOptions() {
 //startOptions displays the options page
 function startOptions() {
   //if nothing else has precedence
-  if (!modalUp) {
+  if (!modalUp) { //commented for debugging
     modalUp = true;
     document.getElementById('options').style.visibility = "visible";
     //setup options page with the current parameter selection
@@ -3927,3 +3949,26 @@ function setUpload(givenValue) {
 //     console.log("detachEvent");
 //   }
 // }
+
+//This function resetoptionspage by untoggling all the elements in the page
+ function resetOptionsPage(){
+     //This sets the parameter div string to an empty string
+     console.log("called");
+     document.getElementById('parameters').innerHTML = "";
+        optionsString="";
+     //Save ad randomize to make sure that the mao behind the options page is being refreshed when the options are reset
+        saveAndRandomize();
+     //Iterates through all the paints (Land uses) and untoggles them
+        for (var i = 1; i < 16; i++){
+            window.frames[4].document.getElementById("paint"+i).checked = false;
+        }
+        //iterates through the toggled hover elements and untoggles them
+        for (var i = 1; i <9; i ++){
+            window.frames[4].document.getElementById("hover"+i).checked = false;
+        }
+        //Untoggles all the other elements
+        window.frames[4].document.getElementById("year0").checked = false;
+        window.frames[4].document.getElementById("precip").checked = false;
+        window.frames[4].document.getElementById("statFrame").checked = false;
+        
+    }

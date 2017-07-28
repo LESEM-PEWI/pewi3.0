@@ -54,6 +54,13 @@ function loadLevel(level) {
       levelGlobal = 0;
       multiplayerExit();
       initWorkspace('./data.csv');
+        document.getElementById('parameters').innerHTML = "";
+          console.log("window log:"+window.top.document.getElementById('parameters').innerHTML);
+                    console.log("document log:"+document.getElementById('parameters').innerHTML);
+        parent.saveAndRandomize();
+        parent.toggleVisibility();
+           console.log("window log:"+window.top.document.getElementById('parameters').innerHTML);
+          console.log("document log:"+document.getElementById('parameters').innerHTML);
       if (achievedAllLevels) {
         updatePopup("Congratulations! You made it through all the levels. Try out your newfound knowledge in Sandbox mode!");
         setTimeout(function() {
@@ -69,7 +76,7 @@ function loadLevel(level) {
     //multiplayer assigning mode
     case -1:
       multiplayerAssigningModeOn = true;
-
+        
       multiplayerMode();
       levelGlobal = 1;
       loadLevelDetails("./levels/specs/multiplayerAssign.txt");
@@ -77,7 +84,6 @@ function loadLevel(level) {
       break;
       //generic loading for levels
     default:
-
       multiplayerExit();
       levelGlobal = level;
       loadLevelDetails("./levels/specs/" + getFileForExercise(level));
