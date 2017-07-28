@@ -396,6 +396,10 @@
   visibility: visible;
 }
 
+#combineButton {
+  top: 10%;
+}
+
 .playerImageHidden {
   height: 100%;
   width: 100%;
