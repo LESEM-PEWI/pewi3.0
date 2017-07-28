@@ -56,11 +56,11 @@ function parseInitial(data) {
   } //end for : each line in the file
 
   // check initData type correctness
-  if (initDataIsCorrupt()) {
-    alert("Cannnot convert the file content!");
-    console.log("Inner content is not correct.");
-    return 0;
-  }
+  // if (initDataIsCorrupt()) {
+  //   alert("Cannnot convert the file content!");
+  //   console.log("Inner content is not correct.");
+  //   return 0;
+  // }
 
   // // success
   return 1;
@@ -127,7 +127,7 @@ function getRandomInt(min, max) {
 function initDataIsCorrupt() {
   // check length
   if (initData.length != 828) {
-    console.log("I throught this will never be triggered");
+    console.log("I thought this will never be triggered");
     console.log("initData.length: " + initData.length);
     console.log("initData ");
     console.log(initData);
@@ -135,10 +135,11 @@ function initDataIsCorrupt() {
   }
   // Each cell is an array, check the length of each cell
   for (var i = 0; i < initData.length; i++) {
-    if (initData[i].length != 32) {
+  /**
+      if (initData[i].length !=32 && initData[i].length !=33 ) {
       console.log("something wrong inside at row " + i + "in initData");
       return 1;
-    } // end if
+    } // end if*/
 
     // check if there is value in each small cell
     // for (var j = 0; j < initData[i].length; /*32*/ j++) {

@@ -124,7 +124,7 @@ Cleaned and Prepared - July 2016
       </div>
 
       <div id="startup-buttons">
-        <div id="startupButton1" onmouseover="highlightButtonAndShowInfo(1,1);" onmouseout="highlightButtonAndShowInfo(1,0);" class="mainButton" onclick="startSandbox();">Sandbox</div>
+        <div id="startupButton1" onmouseover="highlightButtonAndShowInfo(1,1);" onmouseout="highlightButtonAndShowInfo(1,0);" class="mainButton" onclick="startSandbox(); ">Sandbox</div>
         <div id="startupButton2" onmouseover="highlightButtonAndShowInfo(2,1);" onmouseout="highlightButtonAndShowInfo(2,0);" class="mainButton" onclick="startPlay();">Play</div>
         <div id="startupButton3" onmouseover="highlightButtonAndShowInfo(3,1);" onmouseout="highlightButtonAndShowInfo(3,0);" class="mainButton" onclick="startUtilities();">Utilities</div>
       </div>
@@ -234,7 +234,10 @@ Cleaned and Prepared - July 2016
         // A touch at the main page, for fixing key events for IE,
         // since at the start of the app, IE couldn't sense any keyevent before a click
         parent.document.getElementById("page").focus();
+        //Added this to reset the options page any time when sandbox is opened 
+        parent.resetOptionsPage();
       }, 400);
+          
       //Update the background information box
       updateIndexPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
     } //end startSandbox
