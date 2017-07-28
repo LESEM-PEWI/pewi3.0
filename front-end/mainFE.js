@@ -174,19 +174,19 @@ function ChangeCam (){
    //Changing flag variable
     ToggleCam = 1;
     //Reseting camera twos position
-    if(cam2x)
-    RestorePosition();
+//    if(cam2x)
+//    RestorePosition();
 }
 
 //Changs camera from first person  view to birds-eye view
 function changeCam2(){
     //saving camera2 old position
-    cam2x = camera2.position.x;
-    cam2y = camera2.position.y;
-    cam2z = camera2.position.z;
-    cam2Roy = camera2.rotation.y;
-    cam2Rox = camera2.rotation.x;
-    cam2Roz = camera2.rotation.z;
+//    cam2x = camera2.position.x;
+//    cam2y = camera2.position.y;
+//    cam2z = camera2.position.z;
+//    cam2Roy = camera2.rotation.y;
+//    cam2Rox = camera2.rotation.x;
+//    cam2Roz = camera2.rotation.z;
     //Changes Camera to second camera view
     camera = camera1;
     //Flag variable for changing camera views
@@ -797,7 +797,17 @@ function confirmEscape() {
 
 //showMainMenu uses the esc key to return to the startup screen
 function showMainMenu() {
-
+    //Checking the flag variable to know which camera is functional.
+    if (ToggleCam == 1){
+        changeCam2();
+       document.getElementById("flyover").innerHTML = "";
+        //Reseting camera 2 position when sandbox is reloaded
+        camera2.position.x = 70;
+        camera2.position.y = 25;
+        camera2.position.z = 244;
+        camera2.rotation.y = 0; 
+    }
+    
   //show loading animation and startup page
   document.getElementById('loading').style.display = "block";
   document.getElementById('startUpFrame').contentWindow.recallMain();
