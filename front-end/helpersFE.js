@@ -1022,7 +1022,7 @@ function onDocumentKeyDown(event) {
 
       //case esc - view escape menu
     case 27:
-      if (!curTracking && !runningSim && document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("simContainer").style.visibility != "visible") {
+      if (!curTracking && !runningSim && document.getElementById("combineButton").innerHTML != "Merge" && document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("simContainer").style.visibility != "visible") {
         highlightTile(-1);
         toggleEscapeFrame();
         break;
@@ -1032,7 +1032,7 @@ function onDocumentKeyDown(event) {
         document.getElementById("simContainer").style.visibility = "visible";
         break;
       }
-      if(document.getElementById("overlayContainer").style.visibility != "visible" && !runningSim) {
+      if(document.getElementById("overlayContainer").style.visibility != "visible" && !runningSim && !multiplayerAssigningModeOn) {
         document.getElementById("simContainer").style.visibility = "hidden";
         document.getElementById("overlayContainer").style.visibility = "visible";
         break;
@@ -3773,7 +3773,7 @@ function getNumberOfPlayers() {
 
 //Function that allows for multiple players to be combined into one player
 function combinePlayers() {
-  if (document.getElementById("combineButton").innerHTML == "Combine Players") {
+  if (document.getElementById("combineButton").innerHTML == "Combine Players" && totalPlayers>1) {
     // console.log("Combining players...");
     document.getElementById("combineButton").innerHTML = "Merge";
     document.getElementById("genOverlay").style.visibility = "visible";
