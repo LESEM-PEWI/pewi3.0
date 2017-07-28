@@ -134,6 +134,11 @@ function initializeCamera() {
     document.addEventListener('keyup', CamView);
     // addEvent(document, 'keyup', CamView);
     animate();
+
+    //Event listners for scrolling using the wheel or scroll bar ( Used exclusively by click tracking...for now)
+    window.frames[0].onscroll = onWheelViewCredits;
+    window.frames[3].onscroll = onWheelViewResults;
+
 } //end initializeCamera
 
 
@@ -143,7 +148,43 @@ function CamView(e) {
     var Uma = String.fromCharCode(tempKeys[11][0]);
    document.getElementById("flyover").innerHTML = "FlyOver Mode, Hit " + Uma +  " to Exit";
   if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
+    if(curTracking) {
+      pushClick(0,getStamp(),85,0,null);
+    }
     toggleCameraView();
+  }
+}
+
+//Event function that is called when a user is scrolling in the credits page
+function onWheelViewCredits(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),92,0,window.frames[0].pageYOffset);
+  }
+}
+
+//Event function that is called when a user is scrolling in results
+function onWheelViewResults(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),94,0,window.frames[3].pageYOffset);
+  }
+}
+
+//Event function that is called when a user is scrolling in the index [Unused for now...need to find a way to record scroll bar position in nested iframe within index]
+//function onWheelViewIndex(e) {
+  //if(curTracking && scrollGap) {
+    //pushClick(0,getStamp(),93,0,window.frames[2].frames[0].pageYOffset);
+  //}
+//}
+
+//Handles the time difference in scrolling events while click-tracking
+function scrollGap() {
+  //Change this value if needed
+  var goodGap = 500; //Half a second
+  var timeGap = (clickTrackings[clickTrackings.length-1].timeStamp) - (clickTrackings[clickTrackings.length-2].timeStamp);
+  if(goodGap>timeGap) {
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -206,6 +247,9 @@ function animate(){
 
 	//Keyboard movement inputs
     if(keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]){ // W key Forward Movements
+      if(curTracking) {
+        pushClick(0,getStamp(),86,0,null);
+      }
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
         //and if it does it resets it to that specific position set.
@@ -225,6 +269,9 @@ function animate(){
     }
 
 	if(keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]){ // S key Back Words movements
+    if(curTracking) {
+      pushClick(0,getStamp(),87,0,null);
+    }
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
         //and if it does it resets it to that specific position set.
@@ -244,6 +291,9 @@ function animate(){
 	}
 
     if(keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // A key Left Side Movement
+      if(curTracking) {
+        pushClick(0,getStamp(),89,0,null);
+      }
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
         //and if it does it resets it to that specific position set.
@@ -263,6 +313,9 @@ function animate(){
 	}
 
     if(keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // D key Right side Movements
+      if(curTracking) {
+        pushClick(0,getStamp(),88,0,null);
+      }
         //Movements Restrictions and setting bounds
         //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
         //and if it does it resets it to that specific position set.
@@ -283,16 +336,25 @@ function animate(){
 
     // Keyboard turn inputs
 	if(keyboard[39]){ // left arrow key Rotate right
+    if(curTracking) {
+      pushClick(0,getStamp(),97,0,null);
+    }
         //This rotates the camera left
 		camera2.rotation.y -= player.turnSpeed;
 	}
 	if(keyboard[37]){ // right arrow key Rotate left
+    if(curTracking) {
+      pushClick(0,getStamp(),98,0,null);
+    }
         //This rotates the camera right
 		camera2.rotation.y += player.turnSpeed;
 	}
 
     //Specific Zooming
     if(keyboard[38]){ // Up arrow key
+      if(curTracking) {
+        pushClick(0,getStamp(),95,0,null);
+      }
         //Checking if toggle is on and checking if it passes a specific bounds and if it does
         // It sets it to specific height and restrict it to that heights else if moves normally
         if (tToggle){
@@ -315,6 +377,9 @@ function animate(){
 }
 
     if(keyboard[40]){ // Down arrow key
+      if(curTracking) {
+        pushClick(0,getStamp(),96,0,null);
+      }
        //setting bounds for zooming out and checking the camera y and z position.
         //If it passes the position, it restricts the camera movement
         if(camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)

@@ -21,9 +21,15 @@
     if (tabNumber == 1) {
       document.getElementById('graphics').style.display = "block";
       document.getElementById('tab1').className = "tabSelected";
+      if(parent.getTracking()) {
+        parent.pushClick(0,parent.getStamp(),58,0,null);
+      }
     } else if (tabNumber == 2) {
       document.getElementById('numbers').style.display = "block";
       document.getElementById('tab2').className = "tabSelected";
+      if(parent.getTracking()) {
+        parent.pushClick(0,parent.getStamp(),59,0,null);
+      }
     } //end else if block
   } //end toggleToTab
 

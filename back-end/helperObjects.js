@@ -2842,7 +2842,6 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 58:
         if (action) {
-          window.frames[3].scrollTo(0, 0);
           return window.frames[3].toggleToTab(1);
           break;
         } else {
@@ -2851,7 +2850,6 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 59:
         if (action) {
-          window.frames[3].scrollTo(0, 0);
           return window.frames[3].toggleToTab(2);
           break;
         } else {
@@ -3093,6 +3091,7 @@ function Click(c1, c2, c3, c4, c5) {
           //Inserts the block of land use types into the undoArr
           insertChange();
           isShiftDown = false;
+          break;
         } else { 
           return "Shift click was performed"; }
       //When the user clicks on the info tab
@@ -3101,6 +3100,127 @@ function Click(c1, c2, c3, c4, c5) {
           toggleBackgroundInfoDisplay();
         else
           return "Info tab clicked";
+         break;
+        //When the user toggles flyover mode
+        case 85:
+          if(action)
+            toggleCameraView();
+          else
+            return "Flyover view toggled";
+          break;
+        //When the user pivots upright/moves forward
+        case 86:
+          if(action)
+            return customDirectionalInput("KeyW", 87);
+           else
+            return "User Pivoted Upright/Moved Forward"; 
+          break;
+        //When the user pivots flat/moves backward
+        case 87:
+          if(action)
+            return customDirectionalInput("KeyS", 83);
+          else
+            return "User Pivoted Flat/Moved Backward"; 
+          break;
+        //When the user pivots clockwise/moves right
+        case 88:
+          if(action)
+            return customDirectionalInput("KeyD", 68);
+          else
+            return "User Pivoted Clockwise/Moved Right"; 
+          break;
+        //When the user pivotrs counterclockwise/moves left
+        case 89:
+          if(action)
+            return customDirectionalInput("KeyA", 65);
+          else
+            return "User Pivoted Counterclockwise/Moved Left"; 
+          break;
+        //When the user resets the camera
+        case 90:
+          if(action) {
+            controls.value = 10;
+            controls.reset();
+            setTimeout(function() {
+              controls.value = 1;
+            }, 100);
+            if(ToggleCam == 2){
+              controls1.value = 10;
+              controls1.reset();
+              setTimeout(function() {
+                controls1.value = 1;
+              }, 100);
+            } else {
+              camera2.position.x = 70;
+              camera2.position.y = 25;
+              camera2.position.z = 244;
+              camera2.rotation.y = 0;
+            }
+          } else { 
+            return "Camera reset";
+          }
+          break;
+        //When the user zooms in/out over the main PEWI map
+        case 91:
+          if(action)
+            return customCameraView(this.tileID);
+          else
+            return "User zoomed in/out of PEWI map";
+          break;
+        //When the user scrolls in the about page
+        case 92:
+          if(action) 
+            return window.frames[0].scrollTo(0,parseInt(this.tileID));
+          else
+            return "User scrolled in the about page";
+        //When the user scrolls in the index page
+        case 93:
+          if(action) 
+            return window.frames[2].frames[0].scrollTo(0,parseInt(this.tileID));
+          else
+            return "User scrolled in the index page";
+        //When the user scrolls in the results page
+        case 94:
+          if(action) 
+            return window.frames[3].scrollTo(0,parseInt(this.tileID));
+          else
+            return "User scrolled in the results page";
+        //When the user uses the up arrow
+        case 95:  
+          if(action)
+            return customDirectionalInput("ArrowUp", 38);
+          else 
+            return "User pressed the up arrow";
+        //When the user uses the down arrow
+        case 96:  
+          if(action)
+            return customDirectionalInput("ArrowDown", 40);
+          else 
+            return "User pressed the down arrow";
+        //When the user uses the left arrow
+       case 97:  
+          if(action)
+            return customDirectionalInput("ArrowLeft", 39);
+          else 
+            return "User pressed the left arrow";
+        //When the user uses the right arrow
+        case 98:  
+          if(action)
+            return customDirectionalInput("ArrowRight", 37);
+          else 
+            return "User pressed the right arrow";
+        //When the user right clicks for moving the PEWI map
+        case 99:
+          if(action)
+            return customMouseInput(this.tileID,false);
+          else
+            return "User right clicked on the map";
+        //When the user moves the mouse while holding the right mouse button for moving the PEWI map
+        case 100:
+          if(action)
+            return customMouseInput(this.tileID,true);
+          else
+            return "User dragged mouse while holding the right mouse button";
     }
   }
 }
