@@ -32,6 +32,7 @@ Cleaned and Prepared - July 2016
       overflow: hidden;
       background: black;
     }
+
     .underneathRiverGif {
       height: 10%;
       left: 0px;
@@ -41,12 +42,15 @@ Cleaned and Prepared - July 2016
       -webkit-transition-duration: 10s;
       transition-duration: 10s
     }
+
     #riverBack1 {
       bottom: 0px;
     }
+
     #riverBack2 {
       bottom: 9%;
     }
+
     #riverBackgroundColoring {
       background-color: #40A4DF;
       bottom: 0px;
@@ -58,6 +62,7 @@ Cleaned and Prepared - July 2016
       -webkit-transition-duration: 7s;
       transition-duration: 7s
     }
+
     #startup-buttons {
       position: absolute;
       top: 45%;
@@ -70,18 +75,19 @@ Cleaned and Prepared - July 2016
       float: right;
     }
 
-     #pewiTitleLogo {
+    #pewiTitleLogo {
       float: left;
     }
-     #pewiTitleText img{
+
+    #pewiTitleText img {
       width: 16vw;
     }
 
-     #pewiTitleLogo img{
+    #pewiTitleLogo img {
       width: 7vw;
     }
 
-     #infoHolder{
+    #infoHolder {
       position: fixed;
       left: 40%;
       top: 37%;
@@ -110,8 +116,8 @@ Cleaned and Prepared - July 2016
 
       <div id="pewiTitle">
         <!-- hidden -->
-        <div id = "pewiTitleLogo"><img src="./imgs/updatedPewiLogo.png"/></div>
-        <div id = "pewiTitleText"><img src="./imgs/pewiLogoLarge.png" /></div>
+        <div id="pewiTitleLogo"><img src="./imgs/updatedPewiLogo.png" /></div>
+        <div id="pewiTitleText"><img src="./imgs/pewiLogoLarge.png" /></div>
       </div>
 
       <div id="infoHolder">
@@ -150,6 +156,10 @@ Cleaned and Prepared - July 2016
     document.getElementById('startVideo').addEventListener('ended', function() {
       endOfVideo();
     }, false);
+    // addEvent(document.getElementById('startVideo'), 'ended', function() {
+    //   endOfVideo();
+    // });
+
     //if after 2000milisecs, the video hasn't taken off, well then we just pretend
     // that there's no video and move on
     //This is important for browsers without video playback, otherwise the endOfVideo
@@ -160,6 +170,7 @@ Cleaned and Prepared - July 2016
         endOfVideo();
       }
     }, 2000);
+
     //Create three framework and load textures
     // this takes care of all of the webGL setup that only needs to be done once
     createEnvironment();
@@ -197,6 +208,7 @@ Cleaned and Prepared - July 2016
         document.getElementById('startupContentsHolder').style.transitionDuration = ".4s";
       }, 10);
     } //end endOfVideo
+
     //startSandbox hides the startup page and loads the sandbox
     function startSandbox() {
       //Update Buttons appropriately
@@ -220,14 +232,20 @@ Cleaned and Prepared - July 2016
       //after all of this styling magic, let's actually do something and start the sandbox mode
       setTimeout(function() {
         parent.loadLevel(0);
+        // A touch at the main page, for fixing key events for IE,
+        // since at the start of the app, IE couldn't sense any keyevent before a click
+        parent.document.getElementById("page").focus();
       }, 400);
       //Update the background information box
       updateIndexPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
     } //end startSandbox
+
     //startUtilities hides the startup page elements and displays utilities
     function startUtilities() {
-       //Event Listener for utilities escape. Go back when escape is pressed
-        document.addEventListener('keyup',backUp );
+      //Event Listener for utilities escape. Go back when escape is pressed
+      document.addEventListener('keyup', backUp);
+      // addEvent(document, 'keyup', backUp);
+
       //Update Buttons appropriately
       document.getElementById('startupButton1').style.display = "none";
       document.getElementById('startupButton2').style.display = "none";
@@ -257,21 +275,29 @@ Cleaned and Prepared - July 2016
         setTimeout(function() {
           resetElements();
         }, 500);
+        // A touch at the main page, for fixing key events for IE,
+        // since at the start of the app, IE couldn't sense any keyevent before a click
+        parent.document.getElementById("leftConsole").focus();
       }, 400);
       //Update the background information box
       updateIndexPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
     } //end startUtilities
 
-      //Function to call the back up ie reset the page back to the start up page
-      function backUp(e){
-        if (e.keyCode == 27){
+    //Function to call the back up ie reset the page back to the start up page
+    function backUp(e) {
+      if (e.keyCode == 27) {
         reset();
-            document.removeEventListener('keyup',backUp);
-     }
+        document.removeEventListener('keyup', backUp);
+        // removeEvent(document, 'keyup', backUp);
       }
+    }
+
     //startPlay hides the startup page elements and displays the level selector
     function startPlay() {
-       document.addEventListener('keyup',playbackUp);
+      // add eventlistener
+      document.addEventListener('keyup',playbackUp);
+      // addEvent(document, 'keyup', playbackUp);
+
       //Update Buttons appropriately
       document.getElementById('startupButton1').style.display = "none";
       document.getElementById('startupButton3').style.display = "none";
@@ -302,17 +328,21 @@ Cleaned and Prepared - July 2016
         setTimeout(function() {
           resetElements();
         }, 500);
+        // A touch at the main page, for fixing key events for IE, XXX doesn't seem it's fixed
+        // since at the start of the app, IE couldn't sense any keyevent before a click
+        parent.document.getElementById("leftConsole").focus();
       }, 400);
       //Update the background information box
       updateIndexPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
     } //end startPlay
 
-      function playbackUp(e){
-    if (e.keyCode == 27){
+    function playbackUp(e) {
+      if (e.keyCode == 27) {
         reset();
-        document.removeEventListener('keyup',playbackUp );
-        }
+        document.removeEventListener('keyup', playbackUp);
+        // removeEvent(document, 'keyup', playbackUp);
       }
+    }
 
     // this function simply hides the main content from the startup page
     function hideBackgroundStartupElements() {
@@ -322,6 +352,7 @@ Cleaned and Prepared - July 2016
       document.getElementById('pewiTitle').style.visibility = "hidden";
       ///document.getElementById('newPewiLogo').style.visibility = "hidden";
     } //end function
+
     //resetElements moves the elements around on the page and resets the colors of elements
     //  in preparation for returning to the page
     function resetElements() {
@@ -338,7 +369,8 @@ Cleaned and Prepared - July 2016
       document.getElementById('pewiTitle').style.marginTop = "0px";
       ///document.getElementById('newPewiLogo').style.marginTop = "0px";
     } //end resetElements
-    //reset makes the changes necessary for displaying the main page again
+
+    // reset makes the changes necessary for displaying the main page again
     // this is necessary to be separated so that the elements can be moved prior to being
     // redisplayed in avoidance of carry over transitions
     function reset() {
@@ -355,11 +387,13 @@ Cleaned and Prepared - July 2016
       document.getElementById('pewiTitle').style.visibility = "visible";
       ///document.getElementById('newPewiLogo').style.visibility = "visible";
     } //end reset
+
     //chains the two functions needed for resetting the page completely. Called by helpersFE.js
     function recallMain() {
       resetElements();
       reset();
     } //end recallMain
+
     //highlightButton toggles the color of startup page buttons when hovered over
     // and updates the informational text bar
     // There was some issue with just hover styling, so we'll do the styling here too
@@ -385,6 +419,7 @@ Cleaned and Prepared - July 2016
         document.getElementById(string).style.backgroundColor = "#40A4DF";
       }
     } //end function
+
     //createEnvironment creates scene generic THREE.js elements and loads textures
     // this all is done cleverly in the background when the video and loading are being shown
     function createEnvironment() {

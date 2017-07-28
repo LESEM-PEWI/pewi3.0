@@ -35,17 +35,16 @@ Cleaned and Prepared - July 2016
   <!--additional styling-->
 
   <!--page scripting-->
-  <script type= "text/javascript" src="./front-end/helpersFE.js"></script>
+  <!-- <script type= "text/javascript" src="../front-end/helpersFE.js"></script> -->
   <script>
     var maxYear = 3; //for settings, defines the number of year buttons specified
     var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
-    "Rotate Clockwise","Rotate Counterclockwise","Pivot Towards Horizon (Flat)","Pivot Toward the Perpendicular","Toggle Overlay","Toggle Flying Mode"];
+    "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode"];
     //the saveCurrentOptionsState function is called when the save/exit button is pressed
     //each of the options is evaluated and the text for the parameters div is generated
     //as needed
     //the parent page is then called to hide the options iframe
     function saveCurrentOptionsState() {
-      console.log("saveCurrentOptionsState ");
       //find the elements that are able to be checked
       var toggledElements = document.getElementsByClassName('toggle');
       var tempString = "";
@@ -148,6 +147,7 @@ Cleaned and Prepared - July 2016
       parent.resetOptions();
       //scroll page to top, so that next time options is loaded it starts there
       window.scrollTo(0, 0);
+
     } //end function saveCurrentOptionsState
 
 
@@ -232,9 +232,8 @@ Cleaned and Prepared - July 2016
     //
     // 1.) Add the hotkey to hotkeyArr in helpersFE.js
     // 2.) Add the description of the hotkey in this html file
-    // 3.) Format the if-statement for the hotkey appropriately so that each case can be used
+    // 3.) Format the if-statement for the hotkey appropriately so that each case can be used (where the hotkey is used)
     // 4.) Increase the last hkDiv element number by one in style_options.css so that the bottom is properly stylized
-    
     function retrieveHotkeys() {
       if(document.getElementById("hotkeyAggregateTool").style.display == "none") {
         document.getElementById("hotkeyAggregateTool").style.display = "block";
@@ -257,7 +256,6 @@ Cleaned and Prepared - July 2016
               var tempChar = String.fromCharCode(curHotkeys[i-1][0]);
             }
             tempInput1.placeholder = tempChar;
-            tempInput1.setAttribute("type","text");
             tempInput1.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",1)");
             tempInput1.setAttribute("onkeydown","this.value = this.value");
             tempInput1.setAttribute("size","5");
@@ -279,13 +277,13 @@ Cleaned and Prepared - July 2016
             tempInput2.setAttribute("height","5");
             tempSpan.appendChild(tempInput2);
           if(i%2==0) {
-            tempHotkey.style.background = "#3a5a82";
-            tempInput1.style.background = "#3a5a82";
-            tempInput2.style.background = "#3a5a82";
+            tempHotkey.style.background = "#2d5986";
+            tempInput1.style.background = "#2d5986";
+            tempInput2.style.background = "#2d5986";
           } else {
-            tempHotkey.style.background = "#436489";
-            tempInput1.style.background = "#436489";
-            tempInput2.style.background = "#436489";
+            tempHotkey.style.background = "#0f4d70";
+            tempInput1.style.background = "#0f4d70";
+            tempInput2.style.background = "#0f4d70";
           }
           document.getElementById('hotkeySets').appendChild(tempHotkey);
         }
