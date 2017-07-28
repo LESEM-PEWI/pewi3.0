@@ -37,6 +37,8 @@ Cleaned and Prepared - July 2016
   <!--page scripting-->
   <!-- <script type= "text/javascript" src="../front-end/helpersFE.js"></script> -->
   <script>
+    var tempString;
+    var multiString;
     var maxYear = 3; //for settings, defines the number of year buttons specified
     var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
     "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode"];
@@ -119,7 +121,6 @@ Cleaned and Prepared - July 2016
                 tempString += toggledElements[i].id + "\n"
               }
           } //end switch
-            
         } //end for elements of class toggle
 
         var yearNum = Number(document.getElementById('yearNumber').innerHTML);
@@ -144,7 +145,6 @@ Cleaned and Prepared - July 2016
           parent.saveAndRandomize();
         }
       } //end if
-
       //hide the options frame from the top frame (index.html)
       parent.resetOptions();
       //scroll page to top, so that next time options is loaded it starts there
@@ -161,7 +161,7 @@ Cleaned and Prepared - July 2016
     function getCurrentOptionsState() {
       //raw text content in parameters div
       var strRawContents = window.top.document.getElementById('parameters').innerHTML;
-
+        console.log("in the get current options state method"+strRawContents);
       //split based on escape chars
       while (strRawContents.indexOf("\r") >= 0) {
         strRawContents = strRawContents.replace("\r", "");
@@ -456,6 +456,7 @@ Cleaned and Prepared - July 2016
 
     <div style="width:100%;height:200px;position:relative;">
       <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState();">Save & Exit</div>
+    <div id="resetOptionsPage" class="mainButton" onclick="parent.resetOptionsPage()";>Reset Options</div>
     </div>
 
   </div>

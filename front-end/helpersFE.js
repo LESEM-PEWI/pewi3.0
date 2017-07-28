@@ -51,6 +51,7 @@ var timeStopped;
 var totalPlayers = 0;
 var undo = false;
 
+//var arrLines;
 var birds = [],
 bird;
 var boids = [],
@@ -98,6 +99,7 @@ function confirmExit() {
     return "You are currently in click-tracking mode, please stay on the page. To refresh, please leave click-tracking mode";
   }
 }
+
 
 //Returns the value of curTracking
 function getTracking() {
@@ -1102,7 +1104,9 @@ function toggleEscapeFrame() {
     document.getElementById('directoryButton').style.visibility = "hidden";
     modalUp = false;
   }
-
+  //Here I have unlocked the options button on the multiplayer screen. Bear in mind that any changes made to the
+  //land uses IE toggling them on will show up on the multiplayer screen. The options in multiplayer screen are all 
+    //locked.
   if (multiplayerAssigningModeOn) {
     document.getElementById('optionsButton').className = "mainEscapeButton";
   } else {
@@ -2525,7 +2529,6 @@ function uploadClicked(e) {
             alert("This file format is not compatible");
             return;
           }
-
           try {
             string = string + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + ",";
             string = string + ((obj["2"].area.data[i] == null) ? 0 : 1) + ",";
@@ -2606,7 +2609,7 @@ function uploadClicked(e) {
     }
   } else { //it's csv
     //console.log("Else entered");
-
+    //initData = [];
     var reader = new FileReader();
     reader.readAsText(files[0]);
     reader.onload = function(e) {
@@ -2693,9 +2696,7 @@ function uploadClicked(e) {
       initData = [];
     }; //end onload
   } //end else
-
   closeUploadDownloadFrame();
-
   //reset keylistening frame (ie give up focus on iframe)
   //no more conch for us
   document.activeElement.blur();
@@ -3033,7 +3034,7 @@ function saveAndRandomize() {
         break;
       }
     }
-
+      
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
@@ -3093,14 +3094,14 @@ function toggleVisibility() {
 
   //alright, now let's see what the parameters look like
   // abscond them from the index.html page parameters div
+//    if(!multiplayerAssigningModeOn){
   var strRawContents = document.getElementById('parameters').innerHTML;
 
   //split based on escape chars
   while (strRawContents.indexOf("\r") >= 0) {
-    strRawContents = strRawContents.replace("\r", "");
+    strRawContents = strRawContents.replace("\r", "")
   }
   var arrLines = strRawContents.split("\n");
-
 
   //for each line of the parameters div, as each keyword has its own line
   for (var i = 0; i < arrLines.length; i++) {
@@ -3110,14 +3111,13 @@ function toggleVisibility() {
         case "statsOn": document.getElementById('statFrame').style.display = "block"; break;
         case "year0On": document.getElementById('year0Button').style.display = "block"; break;
         case "precipOff": immutablePrecip = true; break;
-        case "multiAssign": document.getElementById('playerAddButton').style.display = "inline-block"; break;
+        case "multiAssign": document.getElementById('playerAddButton').style.display = "inline-block"; break; 
         default:
           if (arrLines[i].slice(0,5) == 'paint') {
             document.getElementById(arrLines[i]).style.display = "none";
           }
           break;
       } // end switch
-
     } // end if
   } //end for
 
@@ -3214,7 +3214,7 @@ function painterSelect(brushNumberValue) {
   } //end else/if group
 } //end painterSelect()
 
-//resetOptions is called when options menu is closed
+//ns is called when options menu is closed
 // this function closes the iframe, blurs the frame, and
 // takes the parameters set by it to order the page elements
 function resetOptions() {
@@ -3949,3 +3949,26 @@ function setUpload(givenValue) {
 //     console.log("detachEvent");
 //   }
 // }
+
+//This function resetoptionspage by untoggling all the elements in the page
+ function resetOptionsPage(){
+     //This sets the parameter div string to an empty string
+     console.log("called");
+     document.getElementById('parameters').innerHTML = "";
+        optionsString="";
+     //Save ad randomize to make sure that the mao behind the options page is being refreshed when the options are reset
+        saveAndRandomize();
+     //Iterates through all the paints (Land uses) and untoggles them
+        for (var i = 1; i < 16; i++){
+            window.frames[4].document.getElementById("paint"+i).checked = false;
+        }
+        //iterates through the toggled hover elements and untoggles them
+        for (var i = 1; i <9; i ++){
+            window.frames[4].document.getElementById("hover"+i).checked = false;
+        }
+        //Untoggles all the other elements
+        window.frames[4].document.getElementById("year0").checked = false;
+        window.frames[4].document.getElementById("precip").checked = false;
+        window.frames[4].document.getElementById("statFrame").checked = false;
+        
+    }
