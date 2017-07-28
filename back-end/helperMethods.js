@@ -1,6 +1,12 @@
-/**
- * @Last modified time: 2017-06-09T14:46:21-05:00
- */
+// global var for each page
+// CREDIT_HTML = window.frames[0],
+// UPDOWNLOAD_HTML = window.frames[1],
+// CODEX_HTML = window.frames[2],
+// RESULTS_HTML = window.frames[3],
+// MULTIDOWNLOAD_HTML = window.frames[4],
+// OPTIONS_HTML = window.frames[5],
+// PRINTOPTIONS_HTML = window.frames[6],
+// STARTUP_HTML = window.frames[7];
 
 //global variable for initial board state, cleared after use
 var initData = [];
@@ -155,3 +161,28 @@ function initDataIsCorrupt() {
   // not corrupt
   return 0;
 } // end initDataIsCorrupt()
+
+/**
+* Prompt a dialogue to ask for filename
+* If the user did not enter file name then it take date and time stamp as default file name.
+*
+* @returns filename (string) final file name
+*/
+function promptFileName() {
+  var today = new Date();
+  var str = today.toString();  // deprecated! use toUTCString()
+
+  //split based on escape chars
+  while (str.indexOf(" ") >= 0) {
+    str = str.replace(" ", "_");
+  }
+  str = str.slice(0,-33);
+
+  var filename = prompt("Enter the file name:", "PEWI-"+str);
+  if (filename === null || filename === "") {
+    filename = "PEWI-"+str;
+  }
+
+  return filename;
+
+} // END promptFileName

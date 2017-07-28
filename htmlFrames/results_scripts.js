@@ -1,10 +1,3 @@
-/**
- * @Date:   2017-05-23T15:09:56-05:00
- * @Last modified time: 2017-05-31T16:52:59-05:00
- */
-
-
-
   //global boolean for first pie chart, default to list
   var isLandPlotOnCategories = false;
 

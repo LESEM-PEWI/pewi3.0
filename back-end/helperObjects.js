@@ -1197,7 +1197,7 @@ function Tile(tileArray, board) {
     var GRAZING_SEASON_LENGTH = 200;
     var cattleAverageDailyIntake = 0.03 * CATTLE_BODY_WEIGHT;
     var yieldBaseRates = [6.3, 3.6, 4.3, 5.6, 3.6, 4.1, 4.2, 6.5, 6.4, 3.6, 6.9, 6.7, 6.3, 0];
-    if(year==-1) {
+    if (year == -1) {
       return yieldBaseRates[this.getSoilTypeYieldIndex(this.soilType)];
     }
     return (this.getSeasonalUtilizationRate(year) / ((cattleAverageDailyIntake / 2000) * GRAZING_SEASON_LENGTH)) * yieldBaseRates[this.getSoilTypeYieldIndex(this.soilType)];
@@ -1419,7 +1419,7 @@ function Results(board) {
 
       for (var s = 1; s < this.subwatershedArea.length; s++) {
         //divide to accomodate for row crop multiplier
-        if(subWatershedNitrate[s] == 0 && this.subwatershedArea[s] == 0) {
+        if (subWatershedNitrate[s] == 0 && this.subwatershedArea[s] == 0) {
           subWatershedNitrate[s] = 0;
         } else {
           subWatershedNitrate[s] = subWatershedNitrate[s] / this.subwatershedArea[s];
@@ -2293,7 +2293,7 @@ function Click(c1, c2, c3, c4, c5) {
   this.timeGap = c4;
   this.tileID = c5;
 
-	var CODEX_HTML = window.frames[2];
+  var CODEX_HTML = window.frames[2];
 
   //Retrieves the function performed in accordance to the click type [As a string]
   this.getAction = function() {
@@ -2372,13 +2372,6 @@ function Click(c1, c2, c3, c4, c5) {
           return "Landscape feature tab was clicked";
           break;
         }
-        //When the user clicks the settings tab
-      case 9:
-        if (action) {
-          return switchConsoleTab(5);
-          break;
-        }
-        return "Land selection setting was clicked";
         break;
         //When the user clicks the download/upload button
       case 10:
@@ -3059,7 +3052,7 @@ function Click(c1, c2, c3, c4, c5) {
 
         // Action inside index page, switch to Advanced
       case 81:
-				console.log("Case 81 ID: " + this.tileID);
+        console.log("Case 81 ID: " + this.tileID);
 
         // simulation is running, do what we recorded (what the user did)
         if (action)
@@ -3071,7 +3064,7 @@ function Click(c1, c2, c3, c4, c5) {
 
         // Action inside index page, switch to General
       case 82:
-			console.log("Case 82 ID: " + this.tileID);
+        console.log("Case 82 ID: " + this.tileID);
 
         // simulation is running, do what we recorded (what the user did)
         if (action)
@@ -3104,6 +3097,982 @@ function Click(c1, c2, c3, c4, c5) {
     }
   }
 }
+
+//######################################################################################
+//######################################################################################
+//######################################################################################
+
+// This Printer object implements jsPDF library
+// Called by executePrintOptions() in helpersFE.js
+function Printer() {
+  /*** attributes ***/
+
+  /* p: portrai, mm: millimeters unit, pt: point unit, a4: A4 */
+  var doc = new jsPDF('p', 'pt', 'a4');
+  // Optional - set properties of the document
+  doc.setProperties({
+    title: "PEWI Results",
+    subject: "All Rights Reserved@",
+    author: 'LESEM LAB',
+    creator: 'PEWI app & jsPDF'
+  });
+
+  var RESULTS_HTML = window.frames[3];
+
+  // some parameters // in pt
+  var
+    // Width & heigth of the entire bar ( precip ) chart section
+    barChartHeight = 100,
+    barChartWidth = 250,
+    // legend
+    indicatorLength = 8,
+    lineHeight = 12,
+    // map
+    mapWidth = 500,
+    mapHeight = 250,
+    // standard A4
+    pageHeight = 842,
+    pageWidth = 595,
+    // margin & padding
+    padding = 3.5,
+    pageMargin = 50,
+    pageLimit = 20,
+    // Width & heigth of the entire pie chart section
+    pieChartHeight = 300,
+    pieChartWidth = 400,
+    // Width & heigth of the entire radar chart section
+    radarChartHeight = 250,
+    radarChartWidth = 400,
+    // coordinates
+    x = pageMargin, // x keep tracks of current horizontal position
+    y = pageMargin, // y keep tracks of current vertical position
+    previousY = y,
+
+    // imageSrc object
+    imageSrc = {},
+    // fontSize object
+    font = {
+      font: 12,
+      header1_font: 20,
+      header2_font: 16
+    };
+
+  // legend object
+  var legendObjs = {};
+
+  // results table object
+  var resultsTableObjs = {};
+
+  /*** functions ***/
+
+  // main printing part ( public )
+
+  /**
+   * This function basically stores all the required image that is going to be put on the PDF as sources and create legend as well.
+   * All the images are stored in object imageSrc
+   * All the legends are stored in object legendObjs
+   */
+  this.preprocessing = function() {
+    // set global variable printMode to true
+    printMode = true;
+
+    // loop through all intended-to-print type, and place them on the doc
+    for (var property in toPrint) {
+
+      if (toPrint[property]) {
+
+        switch (property) {
+          case 'yearUserViewpoint':
+          case 'levelUserViewpoint':
+          case 'featureUserViewpoint':
+          case 'yieldUserViewpoint':
+          // TODO implement view point for each section
+            break;
+
+          case 'resultsTable1':
+          case 'resultsTable2':
+          case 'resultsTable4':
+          case 'resultsLanduse':
+          case 'resultsEcosystem':
+          case 'resultsPrecip':
+          // results page stuff
+
+            // pull up the result page
+            modalUp = false; // set to false to open the result page
+            resultsStart();
+
+            if (property.slice(7, 12) == 'Table') {
+              // tables in results tab
+
+              RESULTS_HTML.toggleToTab(2); // switch to table tab
+              // grab the table that we want to print
+              var elem = RESULTS_HTML.document.getElementById("table" + property.substr(-1));
+              // use autoTable lib and add to resultsTableObjs
+              resultsTableObjs['table' + property.substr(-1)] = doc.autoTableHtmlToJson(elem);
+            } else {
+              // charts in results tab
+
+              RESULTS_HTML.toggleToTab(1); // switch to graphs tab
+
+              // var canvas;
+              switch (property) {
+                case 'resultsLanduse': imageSrc[property] = drawPieCharts(); break;// putting svg on canvas
+                case 'resultsEcosystem':
+                  //Toggle the years which are not selected off
+                  if(toPrint.year1 == false) removeYearFromRadar(1);
+                  if(toPrint.year2 == false) removeYearFromRadar(2);
+                  if(toPrint.year3 == false) removeYearFromRadar(3);
+                  // putting svg on canvas
+                  imageSrc[property] = drawRadarChart();
+                  break;
+                case 'resultsPrecip': imageSrc[property] = drawPrecipChart(); break;
+              } // end switch
+              // imageSrc[property] = canvas.toDataURL("image/jpeg");
+
+              if (property == 'resultsEcosystem')
+                makeLegendBox('rada');// putting svg on canvas
+
+            }// end if/else
+
+            // close the result page
+            resultsEnd();
+            modalUp = true; // since printOptions page is still up
+            break;
+
+          default:
+            // other map stuff
+            // take screen shot and save as image source
+            // TODO: set standard view before take screen shot
+            saveScreenshotMapType(property);
+
+            // make legend if needed
+            if (property !== 'wetlands' && property !== 'boundary' && property !== "yearUserViewpoint"  &&
+                property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
+                property !== "yieldUserViewpoint") {
+              makeLegendBox(property); // create legend object
+            } // END if
+
+            break;
+
+        } // END switch
+
+      } // END outter if
+
+    } // end for
+
+  }; // end preprocessing
+
+  /**
+  * This function generates and formats all the contents on the PDF and create it in the end
+  *
+  * @param isDownload: 0 not downloadingm, 1: is downloading
+  */
+  this.processing = function(isDownload) {
+    // var uptoYear = boardData[currentBoard].calculatedToYear;
+    addText(1, "PEWI Result", x, y, font.header1_font);
+    updateY(lineHeight*2);
+
+    // loop through all intended-to-print type, and place them on the doc
+    for (var property in toPrint) {
+
+      if (toPrint[property]) {
+        switch (property) {
+          case 'yearUserViewpoint':
+          case 'levelUserViewpoint':
+          case 'featureUserViewpoint':
+          case 'yieldUserViewpoint':
+          // do nothing
+            break;
+
+          case 'resultsTable1':
+          case 'resultsTable2':
+          case 'resultsTable4':
+          // --resultsTables--
+
+            // check if need to add page
+            checkPageHeight((padding+lineHeight*2) + font.header2_font); // this is just for add text since autoTable already take care of y
+
+            // add component
+            updateY(padding+lineHeight*2);
+            addText(1, "Result Table "+ property.substr(-1), x, y, font.header2_font);
+
+            // place the table
+            doc.autoTable(resultsTableObjs[ 'table'+[property.substr(-1)] ].columns, resultsTableObjs[ 'table'+[property.substr(-1)] ].data, {
+              // styling of autotable
+              startY: y,
+              // margin: {horizontal: 7},
+              styles: {
+                cellPadding: 1.5, // a number, array or object (see margin below)
+                fontSize: 8,
+                // font: "helvetica", // helvetica, times, courier
+                // lineColor: 200,
+                // lineWidth: 0,
+                // fontStyle: 'normal', // normal, bold, italic, bolditalic
+                overflow: 'linebreak', // visible, hidden, ellipsize or linebreak
+                // fillColor: false, // false for transparent or a color as described below
+                // textColor: 20,
+                halign: 'center', // left, center, right
+                valign: 'middle', // top, middle, bottom
+                // columnWidth: 'auto' // 'auto', 'wrap' or a number
+              },
+              // bodyStyles: { fontSize: 8 },
+              // headerStyles: { halign: 'center' },
+              columnStyles: { 0: { halign: 'left' } }
+             });
+
+            // update y
+            y = doc.autoTable.previous.finalY;
+            checkPageHeight(lineHeight*2+padding); // check if need to add page
+            updateY(lineHeight*2+padding); // bottom space
+
+            break;
+
+          // --charts on results page--
+          case 'resultsLanduse':
+
+            // check if need to add page
+            checkPageHeight((padding+lineHeight) + font.header2_font + (pieChartHeight+lineHeight) + (lineHeight*2+padding) );
+
+            // put component
+            updateY(padding + lineHeight);
+            // place text and image
+            addText(1, "Landuse Pie-charts", x, y, font.header2_font);
+            //add the image of all required pie charts
+            previousY = y;
+            addImage(imageSrc[property], 'JPEG', x, y, pieChartWidth, pieChartHeight);
+            //drawing legend for one type of pie charts
+            drawLegendBox(legendObjs['pie1'], x + pieChartWidth - 10, previousY);
+            //drawing legends for other tyoe of pie charts
+            drawLegendBox(legendObjs['pie2'], x + pieChartWidth - 10, previousY + (pieChartHeight / 2 - 10));
+            // update y
+            updateY(lineHeight*2+padding);
+
+            break;
+
+          case 'resultsEcosystem':
+
+            // check if need to add page
+            checkPageHeight((padding+lineHeight) + font.header2_font + (pieChartHeight+lineHeight) + (lineHeight*2+padding) );
+
+            // put component
+            updateY(padding + lineHeight);
+            addText(1, "Ecosystem radar chart", x, y, font.header2_font);
+            //drawing the radar chart
+            previousY = y;
+            addImage(imageSrc[property], 'JPEG', x, y, radarChartWidth, radarChartHeight);
+            drawLegendBox(legendObjs['rada'], x + 400, previousY + 100);
+            // update y
+            updateY(lineHeight*2+padding);
+
+            break;
+
+          case 'resultsPrecip':
+
+            // check if need to add page
+            checkPageHeight((padding+lineHeight) + font.header2_font + (pieChartHeight+lineHeight) + (lineHeight*2+padding) );
+
+            // put component
+            updateY(padding + lineHeight);
+            addText(1, "Precipitation", x, y, font.header2_font);
+            previousY = y;
+            addImage(imageSrc[property], 'JPEG', x + 155, y, barChartWidth, barChartHeight);
+            //adding the text and description
+            for (var i = 0; i < 4; i++)
+              addText(1, parent.boardData[parent.currentBoard].precipitation[i] + " inches " + parent.data[i].adj, x + 20, previousY + 20*(i+1), font.font);
+            // update y
+            updateY(lineHeight*2+padding);
+
+            break;
+
+          default:
+            // --other map stuff--
+            placeMapType(property);
+            break;
+        } // END switch
+
+      } // END if
+    } // end for
+
+    // output PDF
+    if (isDownload == 1) {
+      // --user clicked download--
+      doc.save(promptFileName() + ".pdf");
+    } else {
+      // --user clicked preview--
+      window.frames[6].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
+      // new window
+      // doc.output('dataurlnewwindow');
+      // Output as Data URI on the current page
+      // doc.output('datauri');
+    }
+
+    // clean everything XXX clean jsPDF?
+    printMode = false;
+    doc = {};
+    imageSrc = {};
+    legendObjs = {};
+  }; // end processing
+
+  // helper functions ( private )
+
+  /**
+  * Place image on the pdf, the width & height that put here will shrink or enlarge the original image
+  * If does update y value for : height + lineHeight
+  * @param dataURL, String type: 'JPEG', 'PNG', and so on
+  * @param width, Number height, Number x, sNumber y
+  */
+  function addImage(dataURL, type, x, y, width, height) {
+    // 'PNG' wouldn't work for some reason
+    doc.addImage(dataURL, type, x, y, width, height);
+    updateY(height+lineHeight);
+  } // end addImage
+
+  /**
+  * Create and store the legend indicator and description in legendObjs per line
+  *
+  * @param legendName: the name that will be stored as the keyword refer to the legend object
+  * @param color: legend indicator color in rgb()
+  * @param text: legend description
+  */
+  function addLegendLine(legendName, color, text) {
+    if (typeof legendObjs[legendName] === 'undefined') {
+      // Create Object
+      legendObjs[legendName] = {
+        indicator: [],
+        description: []
+      };
+    }
+    legendObjs[legendName].indicator.push(color);
+    legendObjs[legendName].description.push(text);
+  } // end addLegendLine
+
+  /**
+  * Place text on the pdf.
+  * If update y valuem it will be : size.
+  *
+  * @param needUpdateY: 0: don't update y, other: do update y
+  * @param String text, Number x, Number y, [Number size, String type, String family]
+  TODO center text
+  */
+  function addText(needUpdateY, text, x, y, size, type, family) {
+    if (arguments.length >= 5)
+      doc.setFontSize(size);
+
+    if (arguments.length >= 6)
+      doc.setFontType(type);
+
+    doc.text(x, y, text);
+    if (needUpdateY) {
+      // update y
+      // updateY(size + lineHeight);
+      updateY(size);
+    }
+    // reset font property
+    doc.setFontSize(font.font);
+    doc.setFontType("normal");
+  } // end addText
+
+  /**
+  * Sets the background of a canvas to white
+  *
+  * @param canvas who's background it to be set to white
+  */
+  function clearCanvasBackground(canvas) {
+    // reference below link on how to change background-color
+    // https://stackoverflow.com/questions/36522927/how-to-get-background-color-of-svg-converted-properly-into-canvas
+    var ctx = canvas.getContext('2d');
+    // all drawings will be made behind the already painted pixels
+    ctx.globalCompositeOperation = 'destination-over'
+    // set the color
+    ctx.fillStyle = 'white';
+    // draw the background
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  } // end clearCanvasBackground
+
+  /**
+  * Sets the background of a canvas to white
+  *
+  * @param canvas who's background it to be set to white
+  */
+  function clearCanvasBackground2(canvas) {
+    var imgData1 = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height);
+    var img_data = imgData1.data;
+    //
+    for (var i = 0; i < img_data.length; i += 4) {
+      if (img_data[i + 3] < 255) {
+        img_data[i] = 255 - img_data[i];
+        img_data[i + 1] = 255 - img_data[i + 1];
+        img_data[i + 2] = 255 - img_data[i + 2];
+        img_data[i + 3] = 255 - img_data[i + 3];
+      }
+    }
+    // update context
+    canvas.getContext("2d").putImageData(imgData1, 0, 0);
+  } // end clearCanvasBackground2
+
+  /**
+  * This function should be called before every time you want to put new component on PDF
+  * to check if there's needed to add page or not.
+  * It add page when the component to be put doesn't fit the page, and does nothing if no need to add page.
+  *
+  * @param HeightOfComponent the componemt that is going to put on the PDF
+  */
+  function checkPageHeight(HeightOfComponent) {
+    if (y + HeightOfComponent > pageHeight - pageLimit) {
+      doc.addPage();
+      y = pageMargin;
+    }
+  } // end checkPageHeight
+
+  /**
+  * Take legend object as a source to draw the according legend image
+  *
+  * @param Object legendObj: the property stored in legendObjs
+  * @param x, Number y: coordinates
+  */
+  function drawLegendBox(legendObj, x, y) {
+    var rectX, rectY, textX, textY, i;
+    rectX = x + padding;
+    rectY = y + padding;
+    textX = rectX + indicatorLength + padding;
+    textY = rectY + padding * 2;
+
+    // first draw the container
+    doc.setDrawColor(0);
+    doc.setFillColor(172, 172, 172); // light gray
+    doc.rect(x, y, legendObj.width, legendObj.height, 'F');
+
+    var matches_array; // size 3, stores values of RGB
+    var regexp = /\d+/g; // regexp to extract RGB values from String
+
+    // then draw the content line by line
+    for (i = 0; i < legendObj.indicator.length; i++) {
+      // trim to have values
+      matches_array = legendObj.indicator[i].match(regexp).map(Number);
+      doc.setFillColor(matches_array[0], matches_array[1], matches_array[2]);
+      doc.rect(rectX, rectY, indicatorLength, indicatorLength, 'F'); // filled square
+      // put on the text
+      addText(0, legendObj.description[i], textX, textY, 8);
+      // update parameters
+      rectY += indicatorLength + padding;
+      textY = rectY + padding * 2;
+    }
+  } // end drawLegendBox
+
+  /**
+  * Rendering pie charts on a canvas and convert to image
+  * then delete the canvas and returns the imageURL
+  *
+  * @returns imageURL of Land Use Type pie graph
+  */
+  function drawPieCharts() {
+    // Construct the <canvas> element
+    var canvas = document.createElement("canvas");
+    canvas.width = 200;
+    canvas.height = 200;
+
+    var canvas1 = document.createElement("canvas");
+    canvas1.width = 500;
+    canvas1.height = 400;
+
+    var xCord = 0,
+    yCord = 0;
+    var mode = true;
+    // Setting up a white background for the canvas
+    clearCanvasBackground2(canvas1);
+
+    // Adding the pie charts to the canvas
+    for (var j = 0; j < 2; j++) {
+      for (var i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
+
+        // draws only the years selected
+        if ((i == 1 && toPrint.year1 == true) || (i == 2 && toPrint.year2 == true) || (i == 3 && toPrint.year3 == true)) {
+          drawD3LandPieChart(i, mode); //draw the pie chart
+
+          // get the html content of svg
+          var svg = RESULTS_HTML.document.getElementById('pieSVG');
+          var svgStringData = $(svg).html(); // will convert data of SVGSVGElement Object to string
+          svgStringData = "<svg>" + svgStringData + "</svg>";
+
+          // put the svg on canvas
+          canvg(canvas, svgStringData);
+
+          clearCanvasBackground(canvas);
+
+          var ctx1 = canvas1.getContext('2d');
+          ctx1.drawImage(canvas, xCord, yCord, 150, 150); //draws the pie chart on main canvas
+          // writing the required text
+          ctx1.font = "15px Arial";
+          ctx1.fillText("Categories", xCord + 40, 75);
+          ctx1.fillText("Year " + i, xCord + 57, 96);
+          ctx1.fillText("Lists", xCord + 60, 255);
+          ctx1.fillText("Year " + i, xCord + 55, 274);
+
+          xCord += 160; //transitioning to the next line of pie charts
+        } // end if
+
+        //check if this legend has the maximum number of elements
+        if (tempLegendItems.length >= maxLegendSize) {
+          finalLegendColors = [];
+          finalLegendItems = [];
+          finalLegendItems = tempLegendItems;
+          finalLegendColors = tempLegendColors;
+          maxLegendSize = tempLegendItems.length;
+        } // end if
+      } // end inner for
+
+      if (mode) // to check which legend should be made
+      makeLegendBox('pie1');
+      else
+      makeLegendBox('pie2');
+
+      finalLegendColors = [];
+      finalLegendItems = [];
+      maxLegendSize = 1;
+      xCord = 0;
+      yCord += 180;
+      mode = false;
+    } // end outter for
+
+    var image = canvas1.toDataURL("image/jpeg");
+    // Cleanup the DOM
+    canvas.outerHTML = "";
+    delete canvas;
+    canvas1.outerHTML = "";
+    delete canvas1;
+
+    return image;
+  } // end drawPieCharts
+
+  /**
+  * Rendering Precipitation charts on a canvas and convert to image
+  * then delete the canvas and returns the imageURL
+  *
+  * @returns imageURL of Precipitation bar graph
+  */
+  function drawPrecipChart() {
+    // Construct the <canvas> element
+    var canvas = document.createElement("canvas");
+    canvas.width = 500;
+    canvas.height = 200;
+
+    // get the html content of svg
+    var precipSvg = RESULTS_HTML.document.getElementById('precipChart');
+    var precipSvgStringData = $(precipSvg).html();
+    precipSvgStringData = "<svg>" + precipSvgStringData + "</svg>";
+
+    // put the svg on canvas
+    canvg(canvas, precipSvgStringData);
+
+    clearCanvasBackground(canvas);
+
+    var image = canvas.toDataURL("image/jpeg");
+    // Cleanup the DOM
+    canvas.outerHTML = "";
+    delete canvas;
+
+    return image;
+  } // end drawPrecipChart
+
+  /**
+  * Rendering radar charts on a canvas and convert to image 
+  * then delete the canvas and returns the imageURL
+  *
+  * @returns imageURL of Ecosystem Services radar graph
+  */
+  function drawRadarChart() {
+    // Construct the <canvas> element
+    var canvas = document.createElement("canvas");
+    canvas.width = 500;
+    canvas.height = 500;
+
+    // get the html content of svg
+    var container = RESULTS_HTML.document.getElementById("radarChart");
+    var content = $(container).html().trim();
+    var svgEnd = content.indexOf('</g></svg>');
+    content = content.substring(0, svgEnd + 10);
+
+    // put the svg on canvas
+    canvg(canvas, content);
+
+    clearCanvasBackground(canvas);
+
+    var image = canvas.toDataURL("image/jpeg");
+    // Cleanup the DOM
+    canvas.outerHTML = "";
+    delete canvas;
+
+    return image;
+  } // END drawRadarChart
+
+  /**
+  * Loop through a string array and return the longest line's length
+  *
+  * @param String Array sArray
+  * @returns maxlength the longest line's length
+  */
+  function longestLine(sArray) {
+    var maxlength = 0,index;
+    for (var i = 0; i < sArray.length; i++) {
+      if (maxlength < sArray[i].length) {
+        maxlength = sArray[i].length;
+        index = i;
+      }
+    }
+    return maxlength;
+  } // end longestLine
+
+  /**
+   * Create LegendBox Object
+   * The way it works is getting the color and description line by line and call addLegendLine()
+   *　to push the line into that legend you created.
+   *
+   * @param String type
+   */
+  function makeLegendBox(type) {
+    var color, text, i;
+
+    switch (type.slice(0, 4)) {
+      case 'year':
+        // Create precipitation info as legend box for LandUse Map
+        // first get text and color
+        text = "Precipitation: " + boardData[currentBoard].precipitation[type.substr(-1)];
+        color = "rgb(29, 187, 245)";
+        addLegendLine(type, color, text); // add line to legend here
+
+        break;
+        // --result graph--
+      case 'pie1':
+      case 'pie2':
+      case 'rada':
+        var tempItemNames = [];
+        var tempColorNames = [];
+        var loopLength = 0;
+        if (type == 'rada') { //if the legend is being drawn for radar chart
+          tempItemNames = radarLegendItems;
+          tempColorNames = radarLegendColors;
+          loopLength = radarLegendItems.length;
+        } else {
+          // else if it's being drawn for the pie charts
+          tempItemNames = finalLegendItems;
+          tempColorNames = finalLegendColors;
+          loopLength = finalLegendItems.length;
+        }
+
+        // for creating legend for pie chart
+        for (i = 0; i < loopLength; i++) {
+          text = tempItemNames[i];
+          var hex = tempColorNames[i];
+          var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+          result = "rbg(" + parseInt(result[1], 16) + ", " + parseInt(result[2], 16) + ", " + parseInt(result[3], 16) + ")";
+          color = result;
+          //if it's adding radar legend line, it only lets it add the ones with selected number of years
+          if ((type == 'rada' && ((i == 0 && toPrint.year1 == true) || (i == 1 && toPrint.year2 == true) || (i == 2 && toPrint.year3 == true)) || type != 'rada'))
+            addLegendLine(type, color, text);
+
+        } // end for
+
+        break;
+
+      default:
+      // --those who have "xxxDetailsList" in index.html--
+
+        for (i = 0; i < document.getElementById(type + 'DetailsList').childElementCount; i++) {
+          color = void 0;
+          text = void 0;
+          // loop through the data from detail lists and store in color & text line by line
+          // color = document.getElementById(type + 'DetailsList').getElementsByClassName('levelColor'+(i+1) )[0].style.backgroundColor;
+          var colorDiv = document.getElementById(type + 'DetailsList').getElementsByClassName('legendColor')[i];
+          if (colorDiv instanceof HTMLElement) {
+            color = getComputedStyle(colorDiv, null).getPropertyValue("background-color");
+            text = colorDiv.getElementsByTagName('p')[0].innerText;
+          }
+          if (typeof color !== 'undefined' && typeof text !== 'undefined') {
+            addLegendLine(type, color, text); // add line to legend here
+          }
+        } // END for
+
+        break;
+    } // END switch
+
+    // store width & height according to its line numbers
+    legendObjs[type].height = padding + legendObjs[type].indicator.length * (indicatorLength + padding);
+    legendObjs[type].width = padding + indicatorLength + padding + (longestLine(legendObjs[type].description) * 4.5);
+    legendObjs[type].name = type;
+  } // end makeLegendBox
+
+  /**
+  * Loop through all available image src for each year and put them on pdf
+  *
+  * @param String type, Number uptoYear
+  */
+  function placeMapType(type) {
+    var legend;
+
+    // if type is year category
+    switch (type) {
+      case 'year1':
+      case 'year2':
+      case 'year3':
+        // check if it's needed to add page
+        checkPageHeight(padding + font.header2_font + (mapHeight+lineHeight) + (lineHeight*5+padding) );
+
+        // put the componemt
+        updateY(padding+lineHeight);
+        // place text and image
+        addText(1, "Year " + type.substr(type.length - 1) + " LandUse Map", x, y, font.header2_font);
+        previousY = y; // save previousY for legend
+        addImage(imageSrc[type], 'JPEG', x, y, mapWidth, mapHeight);
+        // place legend
+        if (legend = legendObjs[type]) {
+          drawLegendBox(legend, x + 5, previousY + mapHeight - (legend.height + 20));
+        }
+        // update y
+        updateY(lineHeight*4+padding);
+
+        break;
+
+      // if type is level category
+      case 'nitrate':
+      case 'erosion':
+      case 'phosphorus':
+        // paste Year 1 level map
+        if (toPrint.year1 === true) {
+          // check if it's needed to add page
+          checkPageHeight(padding + font.header2_font + (mapHeight+lineHeight) + (lineHeight*5+padding) );
+
+          // put the componemt
+          updateY(padding+lineHeight);
+          // place text and image
+          addText(1, "Year 1 " + titleText(type), x, y, font.header2_font);
+          previousY = y;
+          addImage(imageSrc[type + 1], 'JPEG', x, y, mapWidth, mapHeight);
+          // place legend
+          if (legend = legendObjs[type]) {
+            drawLegendBox(legend, x + 5, previousY + mapHeight - (legend.height+20) );
+          }
+          // update y
+          updateY(lineHeight*4+padding);
+        }
+
+        // paste Year 2 level map
+        if (toPrint.year2 === true) {
+          // check if it's needed to add page
+          checkPageHeight(padding + font.header2_font + (mapHeight+lineHeight) + (lineHeight*5+padding) );
+
+          // put the componemt
+          updateY(padding+lineHeight);
+          // place text and image
+          addText(1, "Year 2 " + titleText(type), x, y, font.header2_font);
+          previousY = y;
+          addImage(imageSrc[type + 2], 'JPEG', x, y, mapWidth, mapHeight);
+          // place legend
+          if (legend = legendObjs[type]) {
+            drawLegendBox(legend, x + 5, previousY + mapHeight - (legend.height+20) );
+          }
+          // update y
+          updateY(lineHeight*4+padding);
+        }
+
+        // paste Year 3 level map
+        if (toPrint.year3 === true) {
+          // check if it's needed to add page
+          checkPageHeight(padding + font.header2_font + (mapHeight+lineHeight) + (lineHeight*5+padding) );
+
+          // put the componemt
+          updateY(padding+lineHeight);
+          // place text and image
+          addText(1, "Year 3 " + titleText(type), x, y, font.header2_font);
+          previousY = y;
+          addImage(imageSrc[type + 3], 'JPEG', x, y, mapWidth, mapHeight);
+          // place legend
+          if (legend = legendObjs[type]) {
+            drawLegendBox(legend, x + 5, previousY + mapHeight - (legend.height+20) );
+          }
+          // update y
+          updateY(lineHeight*4+padding);
+        }
+        break;
+
+      // if type is other category
+      default:
+        // check if it's needed to add page
+        checkPageHeight(padding + font.header2_font + (mapHeight+lineHeight) + (lineHeight*5+padding) );
+
+        // put the componemt
+        updateY(padding+lineHeight);
+        // place text and image
+        addText(1, titleText(type), x, y, font.header2_font);
+        previousY = y;
+        addImage(imageSrc[type], 'JPEG', x, y, mapWidth, mapHeight);
+        // place legend
+        if (legend = legendObjs[type]) {
+          drawLegendBox(legend, x + 5, previousY + mapHeight - (legend.height + 20));
+        }
+        // update y
+        updateY(lineHeight*4+padding);
+        break;
+    } // END switch
+
+  } // end placeMapType
+
+  /**
+  * Loop through each year and get according image src
+  *
+  * @param String text, Number uptoYear
+  */
+  function saveScreenshotMapType(type) {
+
+    // if type is year category
+    switch (type) {
+      case 'year1':
+      case 'year2':
+      case 'year3':
+        transitionToYear(type.substr(type.length - 1));
+        // if (toPrint.yearUserViewpoint === true ) {
+        //   console.log("restore last state");
+        //
+        //   // TODO: camera set to last user session
+        //   controls.restoreLastState();
+        // //   renderer.render(scene, camera);
+        // //   imageSrc[type] = renderer.domElement.toDataURL('image/jpeg');
+        // //
+        // } else {
+        //   console.log("reset camera position");
+        //   // reset camera position
+        //   controls.value = 100; // reset 10 times
+        //   controls.reset();
+        //   setTimeout(function() {
+        //     controls.value = 1; // reset to 1
+        //   }, 100);
+        // }
+        // render the according webgl
+        renderer.render(scene, camera);
+        // get the screenshot image in data string form
+        imageSrc[type] = renderer.domElement.toDataURL('image/jpeg');
+        break;
+
+      // if type is level category
+      case 'nitrate':
+      case 'erosion':
+      case 'phosphorus':
+        if (toPrint.year1 === true) {
+          transitionToYear(1);
+          displayLevels(type);
+          // if (toPrint.levelUserViewpoint === true ) {
+          //   // TODO: camera set to last user session
+          // } else {
+          //   // reset camera position
+          //   controls.value = 10;
+          //   controls.reset();
+          //   setTimeout(function() {
+          //     controls.value = 1;
+          //   }, 100);
+          // }
+          renderer.render(scene, camera);
+          imageSrc[type + 1] = renderer.domElement.toDataURL('image/jpeg');
+        }
+        if (toPrint.year2 === true) {
+          transitionToYear(2);
+          displayLevels(type);
+          // if (toPrint.levelUserViewpoint === true ) {
+          //   // TODO: camera set to last user session
+          // } else {
+          //   // reset camera position
+          //   controls.value = 10;
+          //   controls.reset();
+          //   setTimeout(function() {
+          //     controls.value = 1;
+          //   }, 100);
+          // }
+          renderer.render(scene, camera);
+          imageSrc[type + 2] = renderer.domElement.toDataURL('image/jpeg');
+        }
+        if (toPrint.year3 === true) {
+          transitionToYear(3);
+          displayLevels(type);
+          // if (toPrint.levelUserViewpoint === true ) {
+          //   // TODO: camera set to last user session
+          // } else {
+          //   // reset camera position
+          //   controls.value = 10;
+          //   controls.reset();
+          //   setTimeout(function() {
+          //     controls.value = 1;
+          //   }, 100);
+          // }
+          renderer.render(scene, camera);
+          imageSrc[type + 3] = renderer.domElement.toDataURL('image/jpeg');
+        }
+        break;
+
+      // if type is other category
+      default:
+        displayLevels(type);
+        // // reset camera position
+        // controls.value = 10;
+        // controls.reset();
+        // setTimeout(function() {
+        //   controls.value = 1;
+        // }, 100);
+        renderer.render(scene, camera);
+        imageSrc[type] = renderer.domElement.toDataURL('image/jpeg');
+        break;
+    } // END switch
+
+  } // end saveScreenshotMapType
+
+  /**
+  * Just convert the type to the proper title
+  *
+  * @param String text the type pass into toPrint array
+  * @returns the proper title
+  */
+  function titleText(text) {
+    switch (text) {
+      // levels
+      case 'nitrate': return 'Nitrate';
+      case 'erosion': return 'Erosion';
+      case 'phosphorus': return 'Phosphorus';
+      // features
+      case 'flood': return 'Flood Frequency';
+      case 'wetlands': return 'Strategic Wetlands';
+      case 'boundary': return 'Subwatershed Boundaries';
+      case 'drainage': return 'Drainage Class';
+      case 'soil': return 'Soil Class';
+      // yields
+      case 'corn': return 'Corn Grain';
+      case 'soybean': return 'Soybean';
+      case 'fruit': return 'Mixed Fruits and Vegetables';
+      case 'cattle': return 'Cattle';
+      case 'alfalfa': return 'Alfalfa';
+      case 'grasshay': return 'GrassHay';
+      case 'switchgrass': return 'Switch Grass';
+      case 'wood': return 'Wood';
+      case 'short': return 'Woody Biomass';
+      default: return 'error type for title:'+text;
+    } // switch
+  } // end titleText
+
+  /**
+  * Update x coordinates by value, not used so far
+  *
+  * @param Number value
+  */
+  this.updateX = function(value) {
+    x += value;
+  };
+
+  /**
+  * Update y coordinates by value.
+  *
+  * @param Number value
+  */
+  function updateY(value) {
+    y += value;
+  } // end updateY
+
+} // end Printer()
 
 //######################################################################################
 //######################################################################################
