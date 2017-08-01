@@ -1,3 +1,10 @@
+/**
+ * @Date:   2017-05-23T15:09:56-05:00
+ * @Last modified time: 2017-05-31T16:52:59-05:00
+ */
+
+
+
   //global boolean for first pie chart, default to list
   var isLandPlotOnCategories = false;
 
@@ -71,6 +78,7 @@
       };
       isLandPlotOnCategories = true;
     } else {
+      //Default Setting
       document.getElementById('toggleYearPie').innerHTML = "To Categories";
       document.getElementById('toggleYearPie').onclick = function() {
         toggleCategoriesPie(1)
@@ -81,6 +89,31 @@
     changeLandPieBy(0);
   } //end toggleCategoriesPie()
 
+  function toggleCategoriesSpider(toggleNumber)
+  {
+    if(toggleNumber == 1)
+    {
+      document.getElementById('toggleSpider').innerHTML = "To Chart";
+      document.getElementById('toggleSpider').onclick = function()
+      {
+        toggleCategoriesSpider(0);
+      };
+    }
+    else
+    {
+      document.getElementById('toggleSpider').innerHTML = "To Spider";
+      document.getElementById('toggleSpider').onclick = function() {
+          toggleCategoriesSpider(1);
+      };
+    }
+  }
+
+  function refreshSpider(){
+    document.getElementById('toggleYearPie').innerHTML = "To Chart";
+    document.getElementById('toggleYearPie').onclick = function() {
+      toggleCategoriesSpider(1)
+    };
+  }
   //this changes the pie back to default listing of land usage
   //  making it not possible for users to become reliant on categories
   function refreshPie() {
