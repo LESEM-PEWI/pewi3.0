@@ -98,6 +98,7 @@
       {
         toggleCategoriesSpider(0);
       };
+      document.getElementById("radarChart").style.visibility="visible";
     }
     else
     {
@@ -105,6 +106,7 @@
       document.getElementById('toggleSpider').onclick = function() {
           toggleCategoriesSpider(1);
       };
+        document.getElementById("radarChart").style.visibility="hidden";
     }
   }
 

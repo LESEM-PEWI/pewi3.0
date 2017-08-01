@@ -1733,9 +1733,9 @@ var RadarChart = {
         return d;
       })
       .style("font-family", "sans-serif")
-      // .style("font-size", "16px")
+      .style("font-size", "8px")
       .attr("text-anchor", "middle")
-      .attr("dy", "1.6em")
+      .attr("dy", "2.0em")
       .attr("transform", function(d, i) {
         return "translate(0, -21)";
       })
