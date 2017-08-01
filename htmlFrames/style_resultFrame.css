@@ -178,6 +178,7 @@ tr:hover {
 
 #innerContainer {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 10px;
 }
 
 
@@ -361,6 +362,7 @@ tr:hover {
 
 text {
   cursor: default;
+  overflow: hidden;
 }
 
 .precipInfo {
@@ -445,7 +447,7 @@ text {
   text-align: center;
   position: relative;
   top: -50%;
-  left: 23%;
+  left: -7%;
   transition-duration: 0.4s;
   width: 15%;
   -webkit-transition-duration: 0.4s;
@@ -506,11 +508,12 @@ text {
 
 #yieldRadarContainer {}
 
-#radarChart, #yieldRadarChart {
+#radarChart{
   /*border: 3px solid #d64078;*/
   float: left;
-  height: 98%;
+  height: 99%;
   width: 60%;
+  margin-bottom: 25;
 }
 
 #radarLegend {
