@@ -133,6 +133,34 @@ function onResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 } //end onResize
 
+//For creating a manual scrolling event (Used in click tracking for PEWI map zooming [vertical position only])
+function customCameraView(position) {
+  var customScroll = new CustomEvent("MozMousePixelScroll1", {detail: -1*parseInt(position)});
+  window.dispatchEvent(customScroll);
+} //end customCameraView(position)
+
+//For creating a manual directional event (Used in click tracking for PEWI map navigation)
+function customDirectionalInput(input, keycode) {
+  var customInput = new KeyboardEvent("keydown", {code: input, keyCode: keycode});
+  window.dispatchEvent(customInput);
+} //end customDirectionalInput(input, keycode)
+
+//For creating a manual mouse click-and-drage events (Used in click tracking for PEWI map navigation)
+function customMouseInput(buttonInput,drag) {
+  var inputX = parseFloat(buttonInput[0]);
+  var inputY = parseFloat(buttonInput[1]);
+  var sX = parseFloat(buttonInput[2]);
+  var sY = parseFloat(buttonInput[3]);
+  var mX = parseFloat(buttonInput[4]);
+  var mY = parseFloat(buttonInput[5]);
+  if(!drag) {
+    var customMouse = new MouseEvent("mousedown", {button: 2, buttons: 2, clientX: inputX, clientY: inputY, layerX: 9, layerY: inputY, screenX: sX, screenY: sY, movementX: mX, movementY: mY});
+  } else {
+    var customMouse = new MouseEvent("mousemove", {button: 0, buttons: 2, clientX: inputX, clientY: inputY, layerX: inputX, layerY: inputY, screenX: sX, screenY: sY, movementX: mX, movementY: mY});
+  }
+  window.dispatchEvent(customMouse);
+} //end customMouseInput(buttonInput, drag)
+
 //displayBoard initializes a board with graphics using addTile()
 //only needs to be called when an entirely new board is loaded, since each
 //tile is created from scratch
@@ -706,92 +734,93 @@ function resetYearDisplay() {
 
 //onDocumentMouseMove follows the cursor and highlights corresponding tiles
 function onDocumentMouseMove(event) {
+  if(!isSimRunning() || isSimRunning && !event.isTrusted) {
+    event.preventDefault();
 
-  event.preventDefault();
+    mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
 
-  mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-
-  //set location of div that follows cursor for hover-info and displays with 1s delay
-  var x = event.clientX;
-  var y = event.clientY;
-  if (x != 'undefined' && y != 'undefined') {
-    // XXX 20 must be the footer id="bottomHUD" height. Might encounter problems sometimes
-    document.getElementById('hover-div').style.left = (x + 20) + "px";
-    document.getElementById('hover-div').style.top = (y + 20) + "px";
-  }
-
-  raycaster.setFromCamera(mouse, camera);
-
-  //FIXME intersects indicates when mouse is hover on tiles, however when the land's angle change, it appears not correct. I think this affects the correctness of coordinates
-  var intersects = raycaster.intersectObjects(scene.children);
-
-  //Remove highlighting if clicking and dragging (painter tool/brush 1)
-  if (clickAndDrag) {
-    highlightTile(-1);
-  }
-
-  //if there's no intersection, then turn off the gridHighlighting
-  if (intersects.length < 1) {
-
-    //if we're on grid paint, and we go off board, unhighlight everything
-    if (painterTool.status == 2) {
-      for (var i = 0; i < highlightedTiles.length; i++) {
-        meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
-      }
+    //set location of div that follows cursor for hover-info and displays with 1s delay
+    var x = event.clientX;
+    var y = event.clientY;
+    if (x != 'undefined' && y != 'undefined') {
+      // XXX 20 must be the footer id="bottomHUD" height. Might encounter problems sometimes
+      document.getElementById('hover-div').style.left = (x + 20) + "px";
+      document.getElementById('hover-div').style.top = (y + 20) + "px";
     }
 
-    //else, unhighlight previous
-    highlightTile(-1);
-  }
+    raycaster.setFromCamera(mouse, camera);
 
-  // mouse hovered on tiles and no iframe pops
-  if (intersects.length > 0 && !modalUp) {
+    //FIXME intersects indicates when mouse is hover on tiles, however when the land's angle change, it appears not correct. I think this affects the correctness of coordinates
+    var intersects = raycaster.intersectObjects(scene.children);
 
-    //if painter tool type is the rectangle painter
-    if (painterTool.status == 2 && !mapIsHighlighted) {
-      //highlight a grid
-      var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-      var tilesToHighlight = getGridOutline(painterTool.startTile, currentTile);
+    //Remove highlighting if clicking and dragging (painter tool/brush 1)
+    if (clickAndDrag) {
+      highlightTile(-1);
+    }
 
-      //clear Previous highlighting
-      for (var i = 0; i < highlightedTiles.length; i++) {
-        meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
-      }
+    //if there's no intersection, then turn off the gridHighlighting
+    if (intersects.length < 1) {
 
-      //if the tile we are on is an actual tile, then highlight accordingly
-      //  this is important as it appears to the users that they are off the board
-      //  so it should consistently not highlight
-      // in reality, there is a distinction between space outside the board and a
-      //  tile on the board with no land type
-
-      // if the tile the mouse hover on has landUseType, that means it is a paintable land
-      if (boardData[currentBoard].map[currentTile].landType[0] !== 0) {
-        // grid painter mode highlighting tiles here
-        for (var i = 0; i < tilesToHighlight.length; i++) {
-          highlightTile(tilesToHighlight[i] - 1);
-          //prevent highlighting from overwritting...
-          previousHover = null;
+      //if we're on grid paint, and we go off board, unhighlight everything
+      if (painterTool.status == 2) {
+        for (var i = 0; i < highlightedTiles.length; i++) {
+          meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
         }
-        highlightedTiles = tilesToHighlight;
-      } // end if highlighting tiles
-    } // end if grid painter brush
+      }
 
-    //if painter tool type is the clickAndDrag painter
-    else if (clickAndDrag) {
-      var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-      if (boardData[currentBoard].map[currentTile].landType[0] != 0) changeLandTypeTile(currentTile);
-    } else {
-      //just a normal highlighting
-      highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+      //else, unhighlight previous
+      highlightTile(-1);
     }
 
+    // mouse hovered on tiles and no iframe pops
+    if (intersects.length > 0 && !modalUp) {
+
+      //if painter tool type is the rectangle painter
+      if (painterTool.status == 2 && !mapIsHighlighted) {
+        //highlight a grid
+        var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
+        var tilesToHighlight = getGridOutline(painterTool.startTile, currentTile);
+
+        //clear Previous highlighting
+        for (var i = 0; i < highlightedTiles.length; i++) {
+          meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
+        }
+
+        //if the tile we are on is an actual tile, then highlight accordingly
+        //  this is important as it appears to the users that they are off the board
+        //  so it should consistently not highlight
+        // in reality, there is a distinction between space outside the board and a
+        //  tile on the board with no land type
+
+        // if the tile the mouse hover on has landUseType, that means it is a paintable land
+        if (boardData[currentBoard].map[currentTile].landType[0] !== 0) {
+          // grid painter mode highlighting tiles here
+          for (var i = 0; i < tilesToHighlight.length; i++) {
+            highlightTile(tilesToHighlight[i] - 1);
+            //prevent highlighting from overwritting...
+            previousHover = null;
+          }
+          highlightedTiles = tilesToHighlight;
+        } // end if highlighting tiles
+      } // end if grid painter brush
+
+      //if painter tool type is the clickAndDrag painter
+      else if (clickAndDrag) {
+        var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
+        if (boardData[currentBoard].map[currentTile].landType[0] != 0) changeLandTypeTile(currentTile);
+      } else {
+        //just a normal highlighting
+        highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+      }
+
+    }
   }
 } //end onDocumentMouseMove
 
 //onDocumentDoubleClick changes landType to the painted (selected) landType on double-click
 //and will change map to a monoculture if shift is held down
 function onDocumentMouseDown(event) {
-  if (!runningSim) {
+  if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     //if the user's mouse is over one of the frames
     // such as the left console or results button
     if (clearToChangeLandType) {
@@ -895,35 +924,37 @@ function onDocumentMouseDown(event) {
 
 //onDocumentMouseUp listens for the release of the click event
 function onDocumentMouseUp(event) {
+  if(!isSimRunning() || isSimRunning && !event.isTrusted) {
+    //Turn off click and drag functionality
+    clickAndDrag = false;
 
-  //Turn off click and drag functionality
-  clickAndDrag = false;
+    //check to see if one of the physical features maps is highlighted
+    //if so, we'll change the tiles over to their appropriate color levels
+    if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
 
-  //check to see if one of the physical features maps is highlighted
-  //if so, we'll change the tiles over to their appropriate color levels
-  if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
+      Totals = new Results(boardData[currentBoard]);
+      Totals.update();
 
-    Totals = new Results(boardData[currentBoard]);
-    Totals.update();
+      // update each tile on the board with its corresponding color
+      for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
-    // update each tile on the board with its corresponding color
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
-      if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-        meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
-      }
-    } //end for
+        if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+          meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
+        }
+      } //end for
+    }
   }
 } //end onDocumentMouseUp
 
 //onDocumentKeyDown, listener with keyboard bindings
 function onDocumentKeyDown(event) {
-  //switch structure on key code (http://keycode.info)
+  if(!isSimRunning() || isSimRunning && !event.isTrusted) {
+    //switch structure on key code (http://keycode.info)
 
-  // if (!event){
-  //   event = window.event;
-  // }
-  // var keycode = event.keyCode || event.charCode;
+    // if (!event){
+    //   event = window.event;
+    // }
+    // var keycode = event.keyCode || event.charCode;
 
   switch (event.keyCode) {
     //case shift - update isShiftDown
@@ -955,6 +986,9 @@ function onDocumentKeyDown(event) {
       break;
       //case e - reset camera position
     case hotkeyArr[0][0]: case hotkeyArr[0][1]:
+      if(curTracking) {
+        pushClick(0,getStamp(),90,0,null);
+      }
       //update scope across 10 turns,
       // it seeems that controls.js scope doesn't bring us all the way back
       // with just a controls value of 1
@@ -1086,6 +1120,7 @@ function onDocumentKeyDown(event) {
       startPrintOptions();
       break;
   } //end switch
+}
 } //end onDocumentKeyDown
 
 //onDocumentKeyUp, binding to keyboard keyUp event
@@ -3851,7 +3886,7 @@ function exportTracking() {
     clickTrackings[0].timeGap = clickTrackings[0].timeStamp;
     finishProperties();
     var A = [
-      ['ClickID', 'Time Stamp (Milliseconds)', 'Click Type', 'Time Gap (Milliseconds)', 'Description of click', 'TileID/Precip', startTime, endTime, startTime.getTime(), endTime.getTime()]
+      ['ClickID', 'Time Stamp (Milliseconds)', 'Click Type', 'Time Gap (Milliseconds)', 'Description of click', 'Extra Data', startTime, endTime, startTime.getTime(), endTime.getTime()]
     ];
     for (var j = 0; j < clickTrackings.length; j++) {
       A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
@@ -3929,9 +3964,9 @@ function runSimulation() {
     var tempStamp = tempArr[1];
     var tempType = tempArr[2];
     var tempGap = tempArr[3];
-    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82) {
+    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94) {
       var tempTile = tempArr[5];
-    } if (tempType == 56) {
+    } if (tempType == 56 || tempType == 99 || tempType == 100) {
       var tempTile = [];
       for(var j = 5; j < tempArr.length; j++) {
         tempTile.push(tempArr[j]);
@@ -4051,7 +4086,6 @@ function updateSim(newTime) {
   sliderTimer = setInterval(updateTime, 1);
   for (var j = 0; j < mainTimer.length; j++) {
     //Don't repeat previous steps if you didn't go back in time
-    console.log(backToTheFuture);
     if(backToTheFuture || !backToTheFuture && previousTime < parseInt(clickTrackings[j].timeStamp)) {
       mainTimer[j] = setTimeout(performAction, parseInt(clickTrackings[j].timeStamp) - elapsedTime, j);
     }
@@ -4099,6 +4133,10 @@ function resetPresets() {
   }
   //Resets the undoArr
   resetUndo();
+  //Resets camera type
+  if(document.getElementById('flyover').style.display == 'block') {
+    toggleCameraView();
+  }
 } //end resetPresets()
 
 //Sets the simUpload boolean value
