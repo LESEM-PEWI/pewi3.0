@@ -2461,10 +2461,10 @@ function writeFileToDownloadString(mapPlayerNumber) {
 
   var string = "";
   if (typeof boardData[currentBoard] !== 'undefined') {
-     //To save options in the file, changing the options string so that it doesn't have \n because csv file will read it differntly
-      var tempOptions=optionsString.replace(/\n/g,"~");//replaceing the \n in options string to be '~'
-      optionsString=tempOptions;
-      string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3,"+optionsString+",\n";//+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
+    //To save options in the file, changing the options string so that it doesn't have \n because csv file will read it differntly
+    var tempOptions = optionsString.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
+    optionsString = tempOptions;
+    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3," + optionsString + ",\n"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
 
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
@@ -2546,8 +2546,8 @@ function writeFileToDownloadString(mapPlayerNumber) {
       string += boardData[currentBoard].precipitation[0] + "," +
         boardData[currentBoard].precipitation[1] + "," +
         boardData[currentBoard].precipitation[2] + "," +
-        boardData[currentBoard].precipitation[3]+","+
-          optionsString;//optionsString added here
+        boardData[currentBoard].precipitation[3] + "," +
+        optionsString; //optionsString added here
 
       if (i < boardData[currentBoard].map.length - 1) {
         string = string + '\r\n';
@@ -2567,214 +2567,322 @@ function cleanCurrentBoardData() {
   boardData[currentBoard] = void 0;
 }
 
-//uploadClicked enables the user to upload a .csv of board data
-// this function is called from child frame uploadDownload
-function uploadClicked(e) {
+/**
+* get Precip Options Value
+*
+* @param precipValue
+* @returns Options value
+*/
+function getPrecipOptionsValue(precipValue) {
+  switch (precipValue) {
+    case 24.58: return 0;
+    case 28.18: return 1;
+    case 30.39: return 2;
+    case 32.16: return 3;
+    case 34.34: return 4;
+    case 36.47: return 5;
+    case 45.10: return 6;
+  } // end switch
+} // end getPrecipOptionsValue()
 
-  files = e.target.files;
+/**
+* get file Extension name and return it
+*
+* @param filename
+* @returns string of file extention
+*/
+function getExtension(filename) {
+    var parts = filename.split('.');
+    return parts[parts.length - 1];
+} // getExtension()
 
-  if (files[0].name && !files[0].name.match(/\.csv/)) //if there is a file name and it's not a csv
-  {
-    //. json is file format from pewi2.1
-    if (files[0].name.match(/\.json/)) {
-      //This piece of code converts files from pewi2.1 to fileformat of pewi 3.0
-      var reader = new FileReader();
-      reader.readAsText(files[0]);
+/**
+* check file type, returns true if is CSV or JSON file
+*
+* @param filename
+* @returns boolean value
+*/
+function checkFileType(filename) {
+  var ext = getExtension(filename);
+  switch (ext.toLowerCase()) {
+  case 'csv':
+  case 'json':
+      return true;
+  }
+  return false;
+} // checkFileType()
 
-      var string = "";
+/**
+* This function first check the file type, and put them to process according to their file type
+* this function is called by uploadFile() in child frame uploadDownload.html
+*
+* @param files: the files handler
+*/
+function uploadClicked(files) {
 
-      reader.onload = function(event) {
+  var reader;
 
-        string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
-        var obj = JSON.parse(event.target.result);
-        var year2Available = false;
-        var year3Available = false;
-
-        for (var i = 0; i < 828; i++) { //there are 828 tiles on the board (hidden+visible)
-          try {
-            //This variable 'string' stores the extracted data from the .json file. Won't comment this too much since it's self explainatory
-            string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + "," +
-              ((obj["1"].area.data[i] == null) ? 0 : obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," + ((obj["1"].carbonmax.data[i] == null) ? "NA" : obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i] == null) ? "NA" : obj["1"].carbonmin.data[i]) +
-              "," + ((obj["1"].cattle.data[i] == null) ? "NA" : obj["1"].cattle.data[i]) + "," + ((obj["1"].cornyield.data[i] == null) ? "NA" : obj["1"].cornyield.data[i]) + "," + ((obj["1"].drainageclass.data[i] == null) ? "NA" : obj["1"].drainageclass.data[i]) + "," + ((obj["1"].erosion.data[i] == null) ? "NA" : obj["1"].erosion.data[i]) + "," + ((obj["1"].floodfrequency.data[i] == null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
-              ((obj["1"].group.data[i] == null && obj["1"].floodfrequency.data[i] != 0) ? "NA" : " ") + "," + ((obj["1"].nitratespmm.data[i] == null) ? "NA" : obj["1"].nitratespmm.data[i]) + "," + ((obj["1"].pindex.data[i] == null) ? "NA" : obj["1"].pindex.data[i]) + "," + ((obj["1"].sediment.data[i] == null) ? "NA" : obj["1"].sediment.data[i]) + "," + ((obj["1"].soiltype.data[i] == null) ? 0 : obj["1"].soiltype.data[i]) + "," + ((obj["1"].soybeanyield.data[i] == null) ? "NA" : obj["1"].soybeanyield.data[i]) + "," +
-              ((obj["1"].streamnetwork.data[i] == null) ? "NA" : obj["1"].streamnetwork.data[i]) + "," + ((obj["1"].subwatershed.data[i] == null) ? 0 : obj["1"].subwatershed.data[i]) + "," + ((obj["1"].timber.data[i] == null) ? "NA" : obj["1"].timber.data[i]) + "," + ((obj["1"].topography.data[i] == null) ? 0 : obj["1"].topography.data[i]) + "," + ((obj["1"].watershednitrogencontribution.data[i] == null) ? "NA" : obj["1"].watershednitrogencontribution.data[i]) + "," +
-              ((obj["1"].wetland.data[i] == null) ? "NA" : obj["1"].wetland.data[i]) + "," + boardData[currentBoard].map[i].riverStreams + "," /** riverStreams is taken from the rever stream of currrent board*/ ;
-          } catch (except) {
-            //catches for a wrong json file type error
-            alert("This file format is not compatible");
-            return;
-          }
-          try {
-            string = string + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + ",";
-            string = string + ((obj["2"].area.data[i] == null) ? 0 : 1) + ",";
-            string = string + ((obj["3"].area.data[i] == null) ? 0 : 1) + "," /** landType + landType + landType*/ ;
-          } catch (except) {
-
-            if (except.message == "obj[2].area is undefined") {
-              string = string + "0,";
-              string = string + "0,";
-            } else if (except.message == "obj[3].area is undefined") {
-              string = string + "0,";
-            }
-
-            try {
-              string = string + ((obj["1"].area.data[i] == null) ? 1 : obj["1"].baseLandUseType.data[i]) + ",";
-              string = string + ((obj["2"].area.data[i] == null) ? 0 : obj["2"].baseLandUseType.data[i]) + ",";
-              string = string + ((obj["3"].area.data[i] == null) ? 0 : obj["3"].baseLandUseType.data[i]) + "," /** landType + landType + landType*/ ;
-              if ((obj["2"].area.data[i] != null)) {
-                //If data for year 2 is included in the file
-                addingYearFromFile = true;
-                year2Available = true;
-              }
-
-              if ((obj["3"].area.data[i] != null)) {
-                addingYearFromFile = true;
-                year3Available = true;
-              }
-            } catch (except) {
-
-              if (except.message == "obj[2].area is undefined") {
-                string = string + "0,";
-                string = string + "0,";
-              } else if (except.message == "obj[3].area is undefined") {
-                string = string + "0,";
-              }
-            }
-            string = string + obj.precipitation[0] + "," + obj.precipitation[1] + "," + obj.precipitation[2] + "," + obj.precipitation[3];
-            if (i < 827) {
-              string = string + '\n';
-            }
-
-          }
-          // console.log("got the json obj %s", string);
-          //initWorkspace("./data.csv"); //to fix the unusual loading of the river
-          setupBoardFromFile(string);
-          //setupBoardFromUpload(string);
-           //loadBoard(boardData[currentBoard], string);
-          //If data for years is included, add the year
-          if (year2Available) {
-            addYearAndTransition();
-            boardData[currentBoard].calculatedToYear = 2;
-          }
-          if (year3Available) {
-            addYearAndTransition();
-            boardData[currentBoard].calculatedToYear = 3;
-          }
-          //updating the precip levels from the values in the uploaded file
-          boardData[currentBoard].precipitation[0] = obj.precipitation[0];
-          boardData[currentBoard].precipitation[1] = obj.precipitation[1];
-          boardData[currentBoard].precipitation[2] = obj.precipitation[2];
-          boardData[currentBoard].precipitation[3] = obj.precipitation[3];
-          document.getElementById("year0Precip").value = (boardData[currentBoard].precipitation[0] == 24.58) ? 0 : ((boardData[currentBoard].precipitation[0] == 28.18) ? 1 : ((boardData[currentBoard].precipitation[0] == 30.39) ? 2 : ((boardData[currentBoard].precipitation[0] == 32.16) ? 3 : (boardData[currentBoard].precipitation[0] == 34.34) ? 4 : ((boardData[currentBoard].precipitation[0] == 36.47) ? 5 : 6))));
-          document.getElementById("year1Precip").value = (boardData[currentBoard].precipitation[1] == 24.58) ? 0 : ((boardData[currentBoard].precipitation[1] == 28.18) ? 1 : ((boardData[currentBoard].precipitation[1] == 30.39) ? 2 : ((boardData[currentBoard].precipitation[1] == 32.16) ? 3 : (boardData[currentBoard].precipitation[1] == 34.34) ? 4 : ((boardData[currentBoard].precipitation[1] == 36.47) ? 5 : 6))));
-          document.getElementById("year2Precip").value = (boardData[currentBoard].precipitation[2] == 24.58) ? 0 : ((boardData[currentBoard].precipitation[2] == 28.18) ? 1 : ((boardData[currentBoard].precipitation[2] == 30.39) ? 2 : ((boardData[currentBoard].precipitation[2] == 32.16) ? 3 : (boardData[currentBoard].precipitation[2] == 34.34) ? 4 : ((boardData[currentBoard].precipitation[2] == 36.47) ? 5 : 6))));
-          document.getElementById("year3Precip").value = (boardData[currentBoard].precipitation[3] == 24.58) ? 0 : ((boardData[currentBoard].precipitation[3] == 28.18) ? 1 : ((boardData[currentBoard].precipitation[3] == 30.39) ? 2 : ((boardData[currentBoard].precipitation[3] == 32.16) ? 3 : (boardData[currentBoard].precipitation[3] == 34.34) ? 4 : ((boardData[currentBoard].precipitation[3] == 36.47) ? 5 : 6))));
-          transitionToYear(1);
-          switchYearTab(1);
-          boardData[currentBoard].updateBoard();
-          refreshBoard();
-          //clear initData
-          initData = [];
-        }
-      };
-    } else {
-      //if the file isn't csv or json
-      alert("Incorrect File Type!");
-    }
-  } else { //it's csv
-    //console.log("Else entered");
-    //initData = [];
-    var reader = new FileReader();
+  // check file type here
+  if (!checkFileType(files[0].name))
+    alert("Incorrect File Type!");
+  else {
+    reader = new FileReader();
     reader.readAsText(files[0]);
-    reader.onload = function(e) {
-      resetYearDisplay();
-      setupBoardFromUpload(reader.result);
-      //Code to check if data multiple years are present in the file
-      var allText = reader.result;
-      //converting the csv into an array
-      var allTextLines = allText.split(/\r\n|\n/);
-      var headers = allTextLines[0].split(',');
-      var lines = [];
+  }
 
-      for (var i = 1; i < allTextLines.length; i++) {
-        var data = allTextLines[i].split(',');
-        if (data.length == headers.length) {
+  //. json is file format from pewi2.1
+  if (getExtension(files[0].name) == 'json')
+    uploadJSON(reader);
+  //it's csv
+  else if (getExtension(files[0].name) == 'csv')
+    uploadCSV(reader);
 
-          var tarr = [];
-          for (var j = 0; j < headers.length; j++) {
-            tarr.push(data[j]);
-          }
-          lines.push(tarr);
-        }
-      }
-//      window.top.document.getElementById('parameters').innerHTML;
-      var multipleYearFlag = 1;
-      //This for loop iterates through the uploaded csv data file and cheks if year 2 and 3 are present in the file
-      for (var i = 0; i < lines.length; i++) {
-        if ((lines[i][26] != lines[i][27])) {
-          if (lines[i][26] != 1 && lines[i][26] != 0)
-            multipleYearFlag = 2;
-          if (lines[i][27] != 1 && lines[i][27] != 0)
-            multipleYearFlag = 3;
-          break;
-        }
-      }
+  document.getElementById("year0Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[0]);
+  document.getElementById("year1Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[1]);
+  document.getElementById("year2Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[2]);
+  document.getElementById("year3Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[3]);
 
-      if (multipleYearFlag == 2) {
-        addingYearFromFile = true;
-        addYearAndTransition();
-        boardData[currentBoard].calculatedToYear = 2;
-        addingYearFromFile=false;
-      }
-
-      if (multipleYearFlag == 3) {
-        addingYearFromFile = true;
-        addYearAndTransition();
-        addYearAndTransition();
-        boardData[currentBoard].calculatedToYear = 3;
-        addingYearFromFile=false;
-      }
-
-    //Clears data so the river isnt redrawn when new files are uploaded
-        initData = [];
-      //load options from the csv
-      //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes
-      //the options page and shows the page is refreshed on the screen
-       if(headers.length == 32){
-           resetOptionsPage();
-           toggleVisibility();
-       }
-      //else if the file has options, then it takes the options and places it in the parameter div of the html and reloads it.
-      else{
-        var xys=headers[32].replace(/~/g,"\n");// since \n was replaced by '~' replace it back
-        window.top.document.getElementById('parameters').innerHTML=xys;// load the options string in the inner html of parameters
-        //make sure the locked land uses aren't seen on the side tool tab or on the map
-        toggleVisibility();
-      }
-
-      //updating the precip levels from the values in the uploaded file
-      boardData[currentBoard].precipitation[0] = lines[1][28];
-      boardData[currentBoard].precipitation[1] = lines[1][29];
-      boardData[currentBoard].precipitation[2] = lines[1][30];
-      boardData[currentBoard].precipitation[3] = lines[1][31];
-      document.getElementById("year0Precip").value = (boardData[currentBoard].precipitation[0] == 24.58) ? 0 : ((boardData[currentBoard].precipitation[0] == 28.18) ? 1 : ((boardData[currentBoard].precipitation[0] == 30.39) ? 2 : ((boardData[currentBoard].precipitation[0] == 32.16) ? 3 : (boardData[currentBoard].precipitation[0] == 34.34) ? 4 : ((boardData[currentBoard].precipitation[0] == 36.47) ? 5 : 6))));
-      document.getElementById("year1Precip").value = (boardData[currentBoard].precipitation[1] == 24.58) ? 0 : ((boardData[currentBoard].precipitation[1] == 28.18) ? 1 : ((boardData[currentBoard].precipitation[1] == 30.39) ? 2 : ((boardData[currentBoard].precipitation[1] == 32.16) ? 3 : (boardData[currentBoard].precipitation[1] == 34.34) ? 4 : ((boardData[currentBoard].precipitation[1] == 36.47) ? 5 : 6))));
-      document.getElementById("year2Precip").value = (boardData[currentBoard].precipitation[2] == 24.58) ? 0 : ((boardData[currentBoard].precipitation[2] == 28.18) ? 1 : ((boardData[currentBoard].precipitation[2] == 30.39) ? 2 : ((boardData[currentBoard].precipitation[2] == 32.16) ? 3 : (boardData[currentBoard].precipitation[2] == 34.34) ? 4 : ((boardData[currentBoard].precipitation[2] == 36.47) ? 5 : 6))));
-      document.getElementById("year3Precip").value = (boardData[currentBoard].precipitation[3] == 24.58) ? 0 : ((boardData[currentBoard].precipitation[3] == 28.18) ? 1 : ((boardData[currentBoard].precipitation[3] == 30.39) ? 2 : ((boardData[currentBoard].precipitation[3] == 32.16) ? 3 : (boardData[currentBoard].precipitation[3] == 34.34) ? 4 : ((boardData[currentBoard].precipitation[3] == 36.47) ? 5 : 6))));
-      transitionToYear(1); //transition to year one
-      switchYearTab(1);
-    //  boardData[currentBoard].updateBoard();
-      //calculateResults();
-      //generateResultsTable();
-      //clear initData
-      initData = [];
-    }; //end onload
-  } //end else
   closeUploadDownloadFrame();
   //reset keylistening frame (ie give up focus on iframe)
   //no more conch for us
   document.activeElement.blur();
-} //end downloadClicked()
+} //end uploadClicked()
+
+/**
+* Basically create convert to a string of what CSV file saves and let setupBoardFromFile() in mainFE.js to process it
+*
+* @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
+*/
+function uploadJSON(reader) {
+  //This piece of code converts files from pewi2.1 to fileformat of pewi 3.0
+
+  var string = "";
+
+  reader.onload = function(event) {
+
+    // append 31 column names first
+    string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3," + "\n";
+    var obj = JSON.parse(event.target.result);
+    var year2Available = false;
+    var year3Available = false;
+
+    //there are 828 tiles on the board (hidden+visible)
+    for (var i = 0; i < 828; i++) {
+      try {
+        //This variable 'string' stores the extracted data from the .json file. Won't comment this too much since it's self explainatory
+        string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + "," +
+          ((obj["1"].area.data[i] == null) ? 0 : obj["1"].area.data[i]) + "," +
+          ((obj["1"].baseLandUseType.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," +
+          ((obj["1"].carbonmax.data[i] == null) ? "NA" : obj["1"].carbonmax.data[i]) + "," +
+          ((obj["1"].carbonmin.data[i] == null) ? "NA" : obj["1"].carbonmin.data[i]) + "," +
+          ((obj["1"].cattle.data[i] == null) ? "NA" : obj["1"].cattle.data[i]) + "," +
+          ((obj["1"].cornyield.data[i] == null) ? "NA" : obj["1"].cornyield.data[i]) + "," +
+          ((obj["1"].drainageclass.data[i] == null) ? "NA" : obj["1"].drainageclass.data[i]) + "," +
+          ((obj["1"].erosion.data[i] == null) ? "NA" : obj["1"].erosion.data[i]) + "," +
+          ((obj["1"].floodfrequency.data[i] == null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
+          ((obj["1"].group.data[i] == null && obj["1"].group.data[i] != 0) ? "NA" : " ") + "," +
+          ((obj["1"].nitratespmm.data[i] == null) ? "NA" : obj["1"].nitratespmm.data[i]) + "," +
+          ((obj["1"].pindex.data[i] == null) ? "NA" : obj["1"].pindex.data[i]) + "," +
+          ((obj["1"].sediment.data[i] == null) ? "NA" : obj["1"].sediment.data[i]) + "," +
+          ((obj["1"].soiltype.data[i] == null) ? 0 : obj["1"].soiltype.data[i]) + "," +
+          ((obj["1"].soybeanyield.data[i] == null) ? "NA" : obj["1"].soybeanyield.data[i]) + "," +
+          ((obj["1"].streamnetwork.data[i] == null) ? "NA" : obj["1"].streamnetwork.data[i]) + "," +
+          ((obj["1"].subwatershed.data[i] == null) ? 0 : obj["1"].subwatershed.data[i]) + "," +
+          ((obj["1"].timber.data[i] == null) ? "NA" : obj["1"].timber.data[i]) + "," +
+          ((obj["1"].topography.data[i] == null) ? 0 : obj["1"].topography.data[i]) + "," +
+          ((obj["1"].watershednitrogencontribution.data[i] == null) ? "NA" : obj["1"].watershednitrogencontribution.data[i]) + "," +
+          ((obj["1"].wetland.data[i] == null) ? "NA" : obj["1"].wetland.data[i]) + "," +
+          ((boardData[currentBoard].map[i].riverStreams == null) ? 0 : boardData[currentBoard].map[i].riverStreams) + "," /*riverStreams is taken from the rever stream of currrent board*/ ;
+      } catch (except) {
+        //catches for a wrong json file type error
+        alert("This file format is not compatible...");
+        return;
+      } // end try/catch
+      // year 1 is default available, append landuse of second year
+      string = string + ((obj["1"].baseLandUseType.data[i] == null) ? 1 : obj["1"].baseLandUseType.data[i]) + ",";
+
+      // year 2 is available
+      if (obj[2].area) {
+        // append landuse of second year
+        string = string + ((obj["2"].baseLandUseType.data[i] == null) ? 0 : obj["2"].baseLandUseType.data[i]) + ",";
+        // If data for year 2 is included in the file
+        // if ((obj["2"].area.data[i] != null)) {
+        addingYearFromFile = true;
+        year2Available = true;
+        // }
+      } else {
+        string = string + "0,";
+      }
+
+      // year 3 is available
+      if (obj["3"].area) {
+        // append landuse of third year
+        string = string + ((obj["3"].baseLandUseType.data[i] == null) ? 0 : obj["3"].baseLandUseType.data[i]) + "," /** landType + landType + landType*/ ;
+        // if ((obj["3"].area.data[i] != null)) {
+        addingYearFromFile = true;
+        year3Available = true;
+        // }
+      } else {
+        string = string + "0,";
+      }
+
+      string = string + obj.precipitation[0] + "," + obj.precipitation[1] + "," + obj.precipitation[2] + "," + obj.precipitation[3] + ",";
+      if (i < 827)
+        string = string + '\n';
+
+    } // end for 828 tiles
+    // ===convert finished===
+
+    // set up board
+    //initWorkspace("./data.csv"); //to fix the unusual loading of the river
+    // setupBoardFromFile(string);
+    setupBoardFromUpload(string);
+    // loadBoard(boardData[currentBoard], string);
+
+    //If data for years is included, add the year
+    if (year2Available) {
+      addYearAndTransition();
+      boardData[currentBoard].calculatedToYear = 2;
+    }
+    if (year3Available) {
+      addYearAndTransition();
+      boardData[currentBoard].calculatedToYear = 3;
+    }
+
+    //Clears data so the river isnt redrawn when new files are uploaded
+    initData = [];
+
+    //XXX looks like here is dealing with options stuff. Copied from uploadCSV() not sure if this is needed
+    // //converting the csv into an array
+    // var allTextLines = reader.result.split(/\r\n|\n/);
+    // var headers = allTextLines[0].split(',');
+    //
+    // //load options from the csv
+    // //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes
+    // //the options page and shows the page is refreshed on the screen
+    // if (headers.length == 32) {
+    //   resetOptionsPage();
+    //   toggleVisibility();
+    // }
+    // //else if the file has options, then it takes the options and places it in the parameter div of the html and reloads it.
+    // else {
+    //   var xys = headers[32].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
+    //   window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
+    //   //make sure the locked land uses aren't seen on the side tool tab or on the map
+    //   toggleVisibility();
+    // }
+    // XXX until here
+
+    //updating the precip levels from the values in the uploaded file
+    boardData[currentBoard].precipitation[0] = obj.precipitation[0];
+    boardData[currentBoard].precipitation[1] = obj.precipitation[1];
+    boardData[currentBoard].precipitation[2] = obj.precipitation[2];
+    boardData[currentBoard].precipitation[3] = obj.precipitation[3];
+
+    transitionToYear(1); //transition to year one
+    switchYearTab(1);
+
+    // boardData[currentBoard].updateBoard();
+    // refreshBoard();
+    //clear initData
+    initData = [];
+  };
+} // uploadJSON()
+
+/**
+*
+*
+* @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
+*/
+function uploadCSV(reader) {
+  //initData = [];
+
+  reader.onload = function(e) {
+    resetYearDisplay();
+    setupBoardFromUpload(reader.result);
+    //Code to check if data multiple years are present in the file
+    var allText = reader.result;
+    //converting the csv into an array
+    var allTextLines = allText.split(/\r\n|\n/);
+    var headers = allTextLines[0].split(',');
+    var lines = [];
+    var data;
+
+    for (var i = 1; i < allTextLines.length; i++) {
+      data = allTextLines[i].split(',');
+      if (data.length == headers.length) {
+
+        var tarr = [];
+        for (var j = 0; j < headers.length; j++) {
+          tarr.push(data[j]);
+        }
+        lines.push(tarr);
+      } // end if
+    } // end for
+//XXX lines is empty
+
+    // window.top.document.getElementById('parameters').innerHTML;
+    var multipleYearFlag = 1;
+    // This for loop iterates through the uploaded csv data file
+    // and checks if year 2 and 3 are present in the file
+    for (var i = 0; i < lines.length; i++) {
+      if ((lines[i][26] != lines[i][27])) {
+        if (lines[i][26] != 1 && lines[i][26] != 0)
+          multipleYearFlag = 2;
+        if (lines[i][27] != 1 && lines[i][27] != 0)
+          multipleYearFlag = 3;
+        break;
+      }
+    }
+
+    if (multipleYearFlag == 2) {
+      addingYearFromFile = true;
+      addYearAndTransition();
+      boardData[currentBoard].calculatedToYear = 2;
+      addingYearFromFile = false;
+    }
+
+    if (multipleYearFlag == 3) {
+      addingYearFromFile = true;
+      addYearAndTransition();
+      addYearAndTransition();
+      boardData[currentBoard].calculatedToYear = 3;
+      addingYearFromFile = false;
+    }
+
+    //Clears data so the river isnt redrawn when new files are uploaded
+    initData = [];
+
+    //load options from the csv
+    //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes
+    //the options page and shows the page is refreshed on the screen
+    if (headers.length == 32) {
+      resetOptionsPage();
+      toggleVisibility();
+    }
+    //else if the file has options, then it takes the options and places it in the parameter div of the html and reloads it.
+    else {
+      var xys = headers[32].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
+      window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
+      //make sure the locked land uses aren't seen on the side tool tab or on the map
+      toggleVisibility();
+    }
+
+    //updating the precip levels from the values in the uploaded file
+    boardData[currentBoard].precipitation[0] = data[28];
+    boardData[currentBoard].precipitation[1] = data[29];
+    boardData[currentBoard].precipitation[2] = data[30];
+    boardData[currentBoard].precipitation[3] = data[31];
+
+    transitionToYear(1); //transition to year one
+    switchYearTab(1);
+    //  boardData[currentBoard].updateBoard();
+    //calculateResults();
+    //generateResultsTable();
+    //clear initData
+    initData = [];
+  }; //end onload
+} // uploadCSV()
 
 // animateResults() frame
 function animateResults() {
@@ -3001,7 +3109,7 @@ function togglePopupDisplay() {
 //Allows user to
 function toggleBackgroundInfoDisplay() {
   if (curTracking) {
-    pushClick(0,getStamp(),84,0,null);
+    pushClick(0, getStamp(), 84, 0, null);
   }
   if (!modalUp) {
     if (document.getElementById("backgroundInfoBox").className == "backgroundInfoBox") {
@@ -3046,18 +3154,18 @@ function randomizeBoard() {
           if (removedIndex == x) {
             randomPainterTile.splice(removedIndex, 1);
           }
-        }// end for
+        } // end for
 
       }
-    }// end for
+    } // end for
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
       if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
 
-         undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
-         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
+        undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
+        painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         //  console.log(painter);
         changeLandTypeTile(i);
       }
@@ -3121,7 +3229,7 @@ function saveAndRandomize() {
       }
 
     }
-    painter=newDefaultLandUse; //end for all tiles
+    painter = newDefaultLandUse; //end for all tiles
     //'unselect' the previously selected icon
     var painterElementId = "paint" + prevPainter;
     document.getElementById(painterElementId).className = "landSelectorIcon icon";
@@ -3168,7 +3276,7 @@ function toggleVisibility() {
 
   //alright, now let's see what the parameters look like
   // abscond them from the index.html page parameters div
-//    if(!multiplayerAssigningModeOn){
+  //    if(!multiplayerAssigningModeOn){
   var strRawContents = document.getElementById('parameters').innerHTML;
 
   //split based on escape chars
@@ -3182,12 +3290,20 @@ function toggleVisibility() {
     if (arrLines[i]) {
 
       switch (arrLines[i]) {
-        case "statsOn": document.getElementById('statFrame').style.display = "block"; break;
-        case "year0On": document.getElementById('year0Button').style.display = "block"; break;
-        case "precipOff": immutablePrecip = true; break;
-        case "multiAssign": document.getElementById('playerAddButton').style.display = "inline-block"; break;
+        case "statsOn":
+          document.getElementById('statFrame').style.display = "block";
+          break;
+        case "year0On":
+          document.getElementById('year0Button').style.display = "block";
+          break;
+        case "precipOff":
+          immutablePrecip = true;
+          break;
+        case "multiAssign":
+          document.getElementById('playerAddButton').style.display = "inline-block";
+          break;
         default:
-          if (arrLines[i].slice(0,5) == 'paint') {
+          if (arrLines[i].slice(0, 5) == 'paint') {
             document.getElementById(arrLines[i]).style.display = "none";
           }
           break;
@@ -3208,7 +3324,7 @@ function toggleVisibility() {
     //  then we know the precip was immutable before and we need to cut
     //  this text off
     if (!isNaN(currentInnerHtml[currentInnerHtml.length - 1])) {
-      while ( currentInnerHtml[currentInnerHtml.length - 1] != '>' ) {
+      while (currentInnerHtml[currentInnerHtml.length - 1] != '>') {
         //keep cutting off characters until we come back to the end tag of the
         // selector element
         currentInnerHtml = currentInnerHtml.slice(0, -1);
@@ -3393,7 +3509,7 @@ function closePrintOptions() {
   window.frames[6].document.removeEventListener('keyup', printOptionsEsc);
 } // end closePrintOptions
 
-//
+// store Current Camera Session, for print function. Was called when entering print function
 function storeCurrentCameraSession(actionCode, value) {
 
   // store the last map the user viewed
@@ -3419,10 +3535,9 @@ function storeCurrentCameraSession(actionCode, value) {
       controls.storeCurrentState();
       break;
   }
-  // console.log(session);
 } // end storeCurrentCameraSession
 
-// switch to the setting last stored in session object
+// switch to the setting last stored in session object. Was called when exiting print function
 function restoreCurrentCameraSession() {
   // restore the last camera degree, view
   controls.restoreLastState();
@@ -4187,24 +4302,31 @@ function setUpload(givenValue) {
 // }
 
 //This function resetoptionspage by untoggling all the elements in the page
- function resetOptionsPage(){
-     //This sets the parameter div string to an empty string
-     console.log("called");
-     document.getElementById('parameters').innerHTML = "";
-        optionsString="";
-     //Save ad randomize to make sure that the mao behind the options page is being refreshed when the options are reset
-        saveAndRandomize();
-     //Iterates through all the paints (Land uses) and untoggles them
-        for (var i = 1; i < 16; i++){
-            window.frames[4].document.getElementById("paint"+i).checked = false;
-        }
-        //iterates through the toggled hover elements and untoggles them
-        for (var i = 1; i <9; i ++){
-            window.frames[4].document.getElementById("hover"+i).checked = false;
-        }
-        //Untoggles all the other elements
-        window.frames[4].document.getElementById("year0").checked = false;
-        window.frames[4].document.getElementById("precip").checked = false;
-        window.frames[4].document.getElementById("statFrame").checked = false;
-
+function resetOptionsPage() {
+  //This sets the parameter div string to an empty string
+  document.getElementById('parameters').innerHTML = "";
+  optionsString = "";
+  //Save ad randomize to make sure that the mao behind the options page is being refreshed when the options are reset
+  saveAndRandomize();
+  //Iterates through all the paints (Land uses) and untoggles them
+  if (window.frames[4].document.getElementById("paint1")) {
+    for (var i = 1; i < 16; i++) {
+      window.frames[4].document.getElementById("paint" + i).checked = false;
     }
+  }
+  //iterates through the toggled hover elements and untoggles them
+  if (window.frames[4].document.getElementById("hover1")) {
+    for (var i = 1; i < 9; i++) {
+      window.frames[4].document.getElementById("hover" + i).checked = false;
+    }
+  }
+  //Untoggles all the other elements
+  if (window.frames[4].document.getElementById("year0") &&
+    window.frames[4].document.getElementById("precip") &&
+    window.frames[4].document.getElementById("statFrame")) {
+
+      window.frames[4].document.getElementById("year0").checked = false;
+      window.frames[4].document.getElementById("precip").checked = false;
+      window.frames[4].document.getElementById("statFrame").checked = false;
+  }
+}
