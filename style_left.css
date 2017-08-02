@@ -488,6 +488,11 @@ option {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
+.DetailsList-title {
+  color: #fff;
+  font-size: 0.9vw;
+  margin: 0.5vw;
+}
 
 /* detail lists */
 .DetailsList, .DetailsListRolled {
@@ -546,12 +551,14 @@ table, th, td {
     border: 0.1vw solid black;
     border-collapse: collapse;
     color: white;
-    font-size: 0.8vw;
+    font-size: 0.9vw;
 }
+
 th, td {
-    padding: 0.6vw;
-    text-align: left;
+    padding: 0.4vw;
+    text-align: center;
 }
+
 table {
     width: 100%;
     background-image: url('./imgs/consoleTexture.png');

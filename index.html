@@ -337,6 +337,7 @@
       <div id="levelsTab" class="consoleTab" style="display:none;">
 
         <div id="nitrateDetailsList" class="DetailsListRolled levelDetailsList">
+          <center><h1 class="DetailsList-title">Subwatershed Nitrate-N Percent Contribution</h1></center>
           <div class="legendColor" style="background-color: #87ceee">
             <p class="levelsTextDetails">0 - 5 %</p>
           </div>
@@ -355,6 +356,7 @@
         </div>
 
         <div id="erosionDetailsList" class="DetailsListRolled levelDetailsList">
+          <center><h1 class="DetailsList-title">Gross Erosion</h1></center>
           <div class="legendColor" style="background-color: #ffffc9">
             <p class="levelsTextDetails">< 0.5 t/ac/yr</p>
           </div>
@@ -373,6 +375,7 @@
         </div>
 
         <div id="phosphorusDetailsList" class="DetailsListRolled levelDetailsList">
+          <center><h1 class="DetailsList-title">Phosphorus Index Risk Assessment</h1></center>
           <div class="legendColor" style="background-color: #e6bb00;">
             <p class="levelsTextDetails">Very Low</p>
           </div>
@@ -405,6 +408,7 @@
       <!-- Watershed feature display -->
       <div id="featuresTab" class="consoleTab" style="display:none;">
         <div id="floodDetailsList" class="DetailsListRolled physicalDetailsList">
+          <center><h1 class="DetailsList-title">Flood Frequency</h1></center>
           <div class="legendColor" style="background-color: #ffffc9;">
             <p class="levelsTextDetails" style="margin-top:10px;">None</p>
           </div>
@@ -421,7 +425,13 @@
             <p class="levelsTextDetails">Ponded</p>
           </div>
         </div>
+
+        <div id="wetlandsDetailsList"></div>
+
+        <div id="boundaryDetailsList"></div>
+
         <div id="drainageDetailsList" class="DetailsListRolled physicalDetailsList">
+          <center><h1 class="DetailsList-title">Drainage Class</h1></center>
           <div class="legendColor" style="background-color: #0053b3;">
             <p class="levelsTextDetails">Very Poor</p>
           </div>
@@ -439,11 +449,8 @@
           </div>
         </div>
 
-        <div id="wetlandsDetailsList" class="DetailsListRolled physicalDetailsList">
-        </div>
-        <div id="boundaryDetailsList" class="DetailsListRolled physicalDetailsList">
-        </div>
         <div id="soilDetailsList" class="DetailsListRolled physicalDetailsList">
+          <center><h1 class="DetailsList-title">Soil Class</h1></center>
           <div class="legendColor" style="background-color: #097c2f">
             <p class="levelsTextDetails" style="margin-top:10px;">Clarion 138B</p>
           </div>
@@ -484,6 +491,7 @@
             <p class="levelsTextDetails">Nodaway 220</p>
           </div>
         </div>
+
         <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon icon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
         <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetlands');">
         <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('boundary');">
@@ -494,9 +502,7 @@
       <!--Yield Productivity Overlay Maps -->
       <div id="yieldTab" class="consoleTab" style="display: none;">
         <div id="cornDetailsList" class="DetailsListRolled yieldDetailsList">
-          <font size="1" color="white">
-            <center>Corn Grain Yield Key</center>
-          </font>
+          <center><h1 class="DetailsList-title">Corn Grain Yield Key</h1></center>
           <div class="legendColor" style="background-color: #ffffc9;">
             <p class="levelsTextDetails">0 Mg/ha/yr</p>
           </div>
@@ -509,12 +515,10 @@
           <div class="legendColor" style="background-color: #bc892f;">
             <p class="levelsTextDetails">13.9-15.1 Mg/ha/yr</p>
           </div>
-          <font size="1" color="white">
-            <center>Corn Grain Precipitation Factor</center>
-          </font>
-          <font size="1" color="white">
-            <center>At Different Precipitation Levels</center>
-          </font>
+
+          <center><h1 class="DetailsList-title">Corn Grain Precipitation Factor</h1></center>
+          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
           <table id="yieldTable">
             <tr>
               <th>Yield Type Precipitation Factor</th><th>Precipitation Level (in)/yr</th>
@@ -544,10 +548,7 @@
         </div>
 
         <div id="soybeanDetailsList" class="DetailsListRolled yieldDetailsList">
-          <br>
-          <font size="1" color="white">
-            <center>Soybean Yield Key</center>
-          </font>
+          <center><h1 class="DetailsList-title">Soybean Yield Key</h1></center>
           <div class="legendColor" style="background-color: #ffffff;">
             <p class="levelsTextDetails">0 Mg/ha/yr</p>
           </div>
@@ -560,13 +561,10 @@
           <div class="legendColor" style="background-color: #00cc00;">
             <p class="levelsTextDetails">4.30-4.70 Mg/ha/yr</p>
           </div>
-          <br>
-          <font size="1" color="white">
-            <center>Soybean Precipitation Factor</center>
-          </font>
-          <font size="1" color="white">
-            <center>At Different Precipitation Levels</center>
-          </font>
+
+          <center><h1 class="DetailsList-title">Soybean Precipitation Factor</h1></center>
+          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
           <table id="yieldTable">
             <tr>
               <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
@@ -596,10 +594,7 @@
         </div>
 
         <div id="fruitDetailsList" class="DetailsListRolled yieldDetailsList">
-          <br>
-          <font size="1" color="white">
-            <center>Mixed Fruit and Vegetable Yield Key</center>
-          </font>
+          <center><h1 class="DetailsList-title">Mixed Fruit and Vegetable Yield Key</h1></center>
           <div class="legendColor" style="background-color: #ff4000;">
             <p class="levelsTextDetails">6.58 Mg/ha/yr</p>
           </div>
@@ -612,13 +607,10 @@
           <div class="legendColor" style="background-color: #aa4497;">
             <p class="levelsTextDetails">16.45 Mg/ha/yr</p>
           </div>
-          <br>
-          <font size="1" color="white">
-            <center>Mixed Fruit and Vegetable Precipitation Factor</center>
-          </font>
-          <font size="1" color="white">
-            <center>At Different Precipitation Levels</center>
-          </font>
+
+          <center><h1 class="DetailsList-title">Mixed Fruit and Vegetable Precipitation Factor</h1></center>
+          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
           <table id="yieldTable">
             <tr>
               <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
@@ -648,10 +640,7 @@
         </div>
 
         <div id="cattleDetailsList" class="DetailsListRolled yieldDetailsList">
-          <br>
-          <font size="1" color="white">
-            <center>Cattle Yield Key</center>
-          </font>
+          <center><h1 class="DetailsList-title">Cattle Yield Key</h1></center>
           <div class="legendColor" style="background-color: #ffffff;">
             <p class="levelsTextDetails">3.4-4.0 animals/acre/yr</p>
           </div>
@@ -664,13 +653,10 @@
           <div class="legendColor" style="background-color: #000000;">
             <p class="levelsTextDetails">6.1-6.7 animals/acre/yr</p>
           </div>
-          <br>
-          <font size="1" color="white">
-            <center>Cattle Precipitation Factor</center>
-          </font>
-          <font size="1" color="white">
-            <center>At Different Precipitation Levels</center>
-          </font>
+
+          <center><h1 class="DetailsList-title">Cattle Precipitation Factor</h1></center>
+          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
           <table id="yieldTable">
             <tr>
               <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
@@ -700,10 +686,7 @@
         </div>
 
         <div id="alfalfaDetailsList" class="DetailsListRolled yieldDetailsList">
-          <br>
-          <font size="1" color="white">
-            <center>Alfalfa Yield Key</center>
-          </font>
+          <center><h1 class="DetailsList-title">Alfalfa Yield Key</h1></center>
           <div class="legendColor" style="background-color: #cc6578;">
             <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
           </div>
@@ -716,13 +699,10 @@
           <div class="legendColor" style="background-color: #862254;">
             <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
           </div>
-          <br>
-          <font size="1" color="white">
-            <center>Alfalfa Precipitation Factor</center>
-          </font>
-          <font size="1" color="white">
-            <center>At Different Precipitation Levels</center>
-          </font>
+
+          <center><h1 class="DetailsList-title">Alfalfa Precipitation Factor</h1></center>
+          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
           <table id="yieldTable">
             <tr>
               <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
@@ -752,10 +732,8 @@
         </div>
 
         <div id="grasshayDetailsList" class="DetailsListRolled yieldDetailsList">
-          <br>
-          <font size="1" color="white">
-            <center>Grass Hay Yield Key</center>
-          </font>
+          <center><h1 class="DetailsList-title">Grass Hay Yield Key</h1></center>
+
           <div class="legendColor" style="background-color: #d9ff66;">
             <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
           </div>
@@ -768,13 +746,10 @@
           <div class="legendColor" style="background-color: #187336;">
             <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
           </div>
-          <br>
-          <font size="1" color="white">
-            <center>Grass Hay Precipitation Factor</center>
-          </font>
-          <font size="1" color="white">
-            <center>At Different Precipitation Levels</center>
-          </font>
+
+          <center><h1 class="DetailsList-title">Grass Hay Precipitation Factor</h1></center>
+          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
           <table id="yieldTable">
             <tr>
               <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
@@ -804,10 +779,8 @@
         </div>
 
         <div id="switchgrassDetailsList" class="DetailsListRolled yieldDetailsList">
-          <br>
-          <font size="1" color="white">
-            <center>Switchgrass Yield Key</center>
-          </font>
+          <center><h1 class="DetailsList-title">Switchgrass Yield Key</h1></center>
+
           <div class="legendColor" style="background-color: #66ff66;">
             <p class="levelsTextDetails">4.39-5.29 Mg/ha/yr</p>
           </div>
@@ -820,13 +793,10 @@
           <div class="legendColor" style="background-color: #145214;">
             <p class="levelsTextDetails">6.25-6.61 Mg/ha/yr</p>
           </div>
-          <br>
-          <font size="1" color="white">
-            <center>Switchgrass Precipitation Factor</center>
-          </font>
-          <font size="1" color="white">
-            <center>At Different Precipitation Levels</center>
-          </font>
+
+          <center><h1 class="DetailsList-title">Switchgrass Precipitation Factor</h1></center>
+          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
           <table id="yieldTable">
             <tr>
               <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
@@ -856,10 +826,7 @@
         </div>
 
         <div id="woodDetailsList" class="DetailsListRolled yieldDetailsList">
-          <br>
-          <font size="1" color="white">
-            <center>Wood Yield Key</center>
-          </font>
+          <center><h1 class="DetailsList-title">Wood Yield Key</h1></center>
           <div class="legendColor" style="background-color: #f2e6d9;">
             <p class="levelsTextDetails">0.50-0.73 m3/ha/yr</p>
           </div>
@@ -872,13 +839,10 @@
           <div class="legendColor" style="background-color: #734d26;">
             <p class="levelsTextDetails">1.43-1.60 m3/ha/yr</p>
           </div>
-          <br>
-          <font size="1" color="white">
-            <center>Wood Precipitation Factor</center>
-          </font>
-          <font size="1" color="white">
-            <center>At Different Precipitation Levels</center>
-          </font>
+
+          <center><h1 class="DetailsList-title">Wood Precipitation Factor</h1></center>
+          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
           <table id="yieldTable">
             <tr>
               <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
@@ -908,20 +872,14 @@
         </div>
 
         <div id="shortDetailsList" class="DetailsListRolled yieldDetailsList">
-          <br>
-          <font size="1" color="white">
-            <center>Short-Rotation Woody Biomass Yield Key</center>
-          </font>
+          <center><h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Key</h1></center>
           <div class="legendColor" style="background-color: #734D26;">
             <p class="levelsTextDetails">608.6 tons/acre/yr</p>
           </div>
-          <br>
-          <font size="1" color="white">
-            <center>Short-Rotation Woody Biomass Yield Precipitation Factor</center>
-          </font>
-          <font size="1" color="white">
-            <center>At Different Precipitation Levels</center>
-          </font>
+
+          <center><h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Precipitation Factor</h1></center>
+          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
           <table id="yieldTable">
             <tr>
               <th>Yield Type Precipitation Factor </th><th>Precipitation Level (id)/yr</th>
