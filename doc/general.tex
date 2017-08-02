@@ -54,12 +54,12 @@
 \pagenumbering{roman}
 \section*{Summary}
 \addcontentsline{toc}{section}{\numberline{}Summary}
-This is the document of index. This document includes all general tab description.
+This is the document of index. This document includes all descriptions for the general tab.
 \cleardoublepage
 
 \section*{Acknowledgements}
 \addcontentsline{toc}{section}{\numberline{}Acknowledgements}
-Thanks to so many people.
+Special thanks to many people.
 \cleardoublepage
 
 
@@ -110,14 +110,25 @@ Permanent pasture in PEWI is alfalfa or grass hay grazed by cattle for the typic
 Rotational grazing is alfalfa or grass hay grazed by cattle for the typical 200 day grazing season from April 15 to November 1, strategically rotated across paddocks for even grazing.\cite{11}
 
 \subsection{Wetland}
+Wetlands historically covered 89 million hectares (221 million acres) of what is now the contiguous United States.\cite{12}  Between the years 1780 and 1980, the states of Iowa, Missouri, Illinois, and Indiana underwent an 85 percent decrease of wetland acreage.\cite{13}  The native wetland ecosystem is a rich habitat for a diversity of organisms and provides many benefits through water filtration and retention, soil and nutrient retention, and carbon sequestration. Wetlands also hold potential as a venue for tourism, recreation, and hunting.\cite{14} In PEWI, the benefits of restored wetlands are maximized by using Strategic Wetland areas.
 
 \subsection{Prairie}
-
+The Prairie land cover in PEWI consists of a diverse mix of tall grass prairie native to Iowa.\cite{15}  Less than 1 percent of the historical 97 million hectare (240 million acre) extent of tall grass prairie remains.\cite{16}  In Iowa, less than 0.1 percent of the original 12.1 million hectares (30 million acres) remain.\cite{17}
+The native prairie ecosystem is a rich habitat for a diversity of organisms and provides many benefits through water filtration and retention, soil and nutrient retention, and carbon sequestration. Prairies also hold potential as a venue for tourism, recreation, and hunting.\cite{18}  Restored prairie may also be a source for valuable prairie seeds and native grasses for biomass.
 \subsection{Conventional Forest}
+PEWI conventional and conservation forest land covers assume appropriate tree species selection for each soil type. Information on specific tree species is available through the Iowa Woodland Suitability Composite.\cite{19}
+
+In practice, conventional forests are managed on an ad hoc basis. The forest is periodically clearcut or high-graded, in which the most valuable trees are removed. Strategy is not customized based on the historical composition or structure of forests in the area.\cite{20}. 
+
 
 \subsection{Conservation Forest}
+	PEWI conventional and conservation forest land covers assume appropriate tree species selection for each soil type. Information on specific tree species is available through the Iowa Woodland Suitability Composite.\cite{21}
+
+Conservation forest in PEWI assumes management with regard to historically relevant compositional and structural diversity using a variety of strategic techniques. These may include uneven-aged management including gap or patch cuts, even-aged management including shelterwood or crop tree release, and other techniques such as timber stand improvement, prescribed burning and/or tactical grazing, and removal of invasives.\cite{22}  It also assumes "management of coarse woody debris, mast-bearing trees, and sensitive areas such as riparian zones, ephemeral ponds, and rock outcrops." .\cite{23}
+
 
 \subsection{Short-Rotation Woody Bioenergy}
+Short rotation woody crops are fast-growing trees, such as eucalyptus, poplar, and willow, grown for bioenergy and biofuel. In PEWI, aspen is used on a 10-year rotation.
 
 % Physical Features section
 \newpage
@@ -129,6 +140,14 @@ In the Physical Features tab, you'll find information on topography, soil proper
 This feature shows the elevation grade, or slope, of each cell of PEWI. Land use covers perform differently under different elevations, and the topographic map can help explain results and inform location-specific land use choices. The lightest color represents the shallowest slope, and the darkest color represents the steepest slope.
 
 \subsection{Flood Frequency}
+This feature shows the frequency of flooding for each PEWI grid cell, as found in the Iowa Soil Properties and Interpretations Database (ISPAID) Soil Survey.\cite{25}  Flooding categories are defined below, according to the ISPAID manual. In PEWI, flooding frequency is incorporated into yield calculations: yield is determined as per ISPAID calculations as a function of CSR2 results. The CSR2 formula is CSR2 = S-M-W-F-D+/- EJ, where F is the field condition including ponding and flooding properties, among other factors.  See the Yield tab for more information.
+\begin{itemize}
+\item NONE	=	0	=	Flooding is not probable.
+\item RARE	=	10	=	Flooding is unlikely but possible under unusual weather conditions.
+\item OCCAS	=	20	=	Flooding occurs on an average of 50 times or less in 100 years.
+\item FREQ	=	40	=	Flooding occurs on an average of more than 50 times in 100 years.
+\item PONDED	=	50	=	Standing water on soils in closed depressions.  Unless the soils are artificially drained, the water can be removed only by percolation or evapotranspiration.  (Ponded is for short duration unless otherwise specified).
+\end{itemize}
 
 \subsection{Subwatershed Boundaries}
 
@@ -203,7 +222,28 @@ The scientific modules in PEWI display ecosystem service scores, the benefits th
   
   \bibitem{15}Carrie Chennault, "People in Ecosystems / Watershed Integration: Visualizing Ecosystem Services Tradeoffs in Agricultural Landscapes" (Master’s thesis, Iowa State University, 2014), 78.
   
+  \bibitem{16}“PRAIRIEMAP: A GIS Database for Prairie Grassland Management in Western North America,” USGS, April 4, 2005, http://fresc.usgs.gov/products/fs/fs-057-03.pdf; Daryl D. Smith, “Tallgrass Prairie Settlement: Prelude to Demise of the Tallgrass Ecosystem,” in Proceedings of the Twelfth North American Prairie Conference 1990 (Twelfth North American Prairie Conference, Tallgrass Prairie Center, UNI, Cedar Falls, Iowa, 1990), 195, http://www.tallgrassprairiecenter.org/pdf/Recapturing_A_Vanishing_Heritage.pdf.
+  
+ \bibitem{17}Smith, “Tallgrass Prairie Settlement,” 195.
+   
+  \bibitem{18}Chennault, “People in Ecosystems / Watershed Integration,” 52.
+   
+  \bibitem{19}“2014 Iowa Woodland Suitability Recommendations,” Iowa State University Forestry Extension, February 6, 2014, https://www.extension.iastate.edu/forestry/publications/PDF_files/
+  
+  IowaWoodlandSuitability.pdf.
+  
+  \bibitem{20} Carrie Chennault, “People in Ecosystems / Watershed Integration: Visualizing Ecosystem Services Tradeoffs in Agricultural Landscapes” (Master’s thesis, Iowa State University, 2014), 117.
+  
+  \bibitem{21} “2014 Iowa Woodland Suitability Recommendations,” Iowa State University Forestry Extension, February 6, 2014, https://www.extension.iastate.edu/forestry/publications/PDF_files/
+  
+  IowaWoodlandSuitability.pdf.
+  
+  \bibitem{22}Carrie Chennault, “People in Ecosystems / Watershed Integration: Visualizing Ecosystem Services Tradeoffs in Agricultural Landscapes” (Master’s thesis, Iowa State University, 2014), 117.
+  
+  \bibitem{23}Chennault, “People in Ecosystems / Watershed Integration,” 117.
+  
    \bibitem{33} G. A. Miller et al., “ISPAID 7.3 Manual” (Iowa State University, Iowa Agriculture and Home Economics Experiment Station and University Extension, 2010), \url{www.extension.iastate.edu/Documents/soils/ISPAID_73man.doc}; Emily Heaton and Matt Liebman (Iowa State University, personal communication, 2014); Emily Heaton (Iowa State University, personal communication, 2014).
+   
 \end{thebibliography}
 
 \end{document}
