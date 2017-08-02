@@ -887,9 +887,9 @@ function showMainMenu() {
         camera2.position.x = 70;
         camera2.position.y = 25;
         camera2.position.z = 244;
-        camera2.rotation.y = 0; 
+        camera2.rotation.y = 0;
     }
-    
+
   //show loading animation and startup page
   document.getElementById('loading').style.display = "block";
   document.getElementById('startUpFrame').contentWindow.recallMain();
