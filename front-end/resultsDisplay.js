@@ -1413,7 +1413,7 @@ function drawEcosystemRadar(yearArray) {
     }, {
       label: "Total Sum Yields",
       axis: "Total Yields",
-      value: (Totals.nitrateConcentrationScore[y] + Totals.phosphorusLoadScore[y] + Totals.sedimentDeliveryScore[y] + Totals.carbonSequestrationScore[y] + Totals.grossErosionScore[y] + Totals.gameWildlifePointsScore[y] + Totals.biodiversityPointsScore[y]) / 700,
+      value: Math.min((Totals.nitrateConcentrationScore[y] + Totals.phosphorusLoadScore[y] + Totals.sedimentDeliveryScore[y] + Totals.carbonSequestrationScore[y] + Totals.grossErosionScore[y] + Totals.gameWildlifePointsScore[y] + Totals.biodiversityPointsScore[y]) / 700, 100),
     },{
       label: "Phosphorus Load",
       axis: "Phosphorus",
@@ -1735,9 +1735,9 @@ var RadarChart = {
       .style("font-family", "sans-serif")
       .style("font-size", "8px")
       .attr("text-anchor", "middle")
-      .attr("dy", "2.0em")
+      .attr("dy", "2.1170841em")
       .attr("transform", function(d, i) {
-        return "translate(0, -21)";
+        return "translate(0, -22)";
       })
       .attr("x", function(d, i) {
         return cfg.w / 2 * (1 - cfg.factorLegend * Math.sin(i * cfg.radians / total)) - 60 * Math.sin(i * cfg.radians / total);

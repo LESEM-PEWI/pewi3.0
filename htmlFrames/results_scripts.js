@@ -89,7 +89,7 @@
     changeLandPieBy(0);
   } //end toggleCategoriesPie()
 
-  function toggleCategoriesSpider(toggleNumber)
+/*  function toggleCategoriesSpider(toggleNumber)
   {
     if(toggleNumber == 1)
     {
@@ -115,7 +115,7 @@
     document.getElementById('toggleYearPie').onclick = function() {
       toggleCategoriesSpider(1)
     };
-  }
+  }*/
   //this changes the pie back to default listing of land usage
   //  making it not possible for users to become reliant on categories
   function refreshPie() {
