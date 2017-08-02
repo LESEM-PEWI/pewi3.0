@@ -1090,7 +1090,7 @@ function drawEcosystemIndicatorsDisplay(year) {
     color: "#e377c2",
     backColor: "tomato",
     raw: (Math.round(Totals.biodiversityPoints[year] * 10) / 10) + " pts"
-  }];
+  },];
 
   //chart parameters
   var width = 360;
@@ -1411,6 +1411,10 @@ function drawEcosystemRadar(yearArray) {
       value: Totals.nitrateConcentrationScore[y] / 100,
       raw: (Math.round(Totals.nitrateConcentration[y] * 10) / 10) + " ppm"
     }, {
+      label: "Total Sum Yields",
+      axis: "Total Yields",
+      value: Math.min((Totals.nitrateConcentrationScore[y] + Totals.phosphorusLoadScore[y] + Totals.sedimentDeliveryScore[y] + Totals.carbonSequestrationScore[y] + Totals.grossErosionScore[y] + Totals.gameWildlifePointsScore[y] + Totals.biodiversityPointsScore[y]) / 700, 100),
+    },{
       label: "Phosphorus Load",
       axis: "Phosphorus",
       value: Totals.phosphorusLoadScore[y] / 100,
@@ -1729,11 +1733,11 @@ var RadarChart = {
         return d;
       })
       .style("font-family", "sans-serif")
-      // .style("font-size", "16px")
+      .style("font-size", "8px")
       .attr("text-anchor", "middle")
-      .attr("dy", "1.5em")
+      .attr("dy", "2.1170841em")
       .attr("transform", function(d, i) {
-        return "translate(0, -17)";
+        return "translate(0, -22)";
       })
       .attr("x", function(d, i) {
         return cfg.w / 2 * (1 - cfg.factorLegend * Math.sin(i * cfg.radians / total)) - 60 * Math.sin(i * cfg.radians / total);
