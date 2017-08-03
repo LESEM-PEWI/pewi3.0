@@ -11,7 +11,7 @@ var variableNum = 0; //Number of variables in the custom equation
 var seedNum = 1; //The seed number used for creating map tiles
 var previousSeedNum; //The seed number used during the previous optimization (used when uploading optimizations only)
 var randomNumber; //Used for seeding
-var currentRandom = 1; //# of random numbers (x10^3) the usr has generated (used when uploading optimizations only) 
+var currentRandom = 1; //# of random numbers (x10^3) the usr has generated (used when uploading optimizations only)
 var usableLandTypes = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] // Array of usable land type for the optimization
 var fitCounter = 0; //Keeps track of the amount of maps that fit the criteria
 var usableChoices = ["Conventional Corn Area","Conservational Corn Area","Conventional Soybean Area","Conservational Soybean Area",
@@ -23,7 +23,7 @@ var usableLandChoices = ["Conventional Corn","Conservational Corn","Conventional
 "Prairie","Wetland","Alfalfa","Conventional Forest","Conservational Forest",
 "Short Rotation Woody Bioenergy"]; //List of possible land types (in string format)
 var usableYieldChoices = ["cornGrainYieldScore","soybeanYieldScore","mixedFruitsVegetablesYieldScore","cattleYieldScore",
-"alfalfaHayYieldScore","grassHayYieldScore","grassHayYieldScore","woodYieldScore","shortRotationWoodyBiomassYieldScore"]; //List of possible 
+"alfalfaHayYieldScore","grassHayYieldScore","grassHayYieldScore","woodYieldScore","shortRotationWoodyBiomassYieldScore"]; //List of possible
 // yield scores (in string format)
 var secondaryChoices = ["All strategic wetlands selected","Require stream buffers","No wetlands on slope",
 "No corn or soy in Buckney 1636 and Gara-Armstrong 993E2","Wetlands only in strategic wetland locations",
@@ -31,7 +31,7 @@ var secondaryChoices = ["All strategic wetlands selected","Require stream buffer
 var ecosystemChoices = ["Game Wildlife","Biodiversity","Carbon Sequestration","Erosion Control",
 "Nitrate Pollution Control","Phosphorus Pollution Control","Sediment Control"]; // Array of Ecosystem score types
 var weightNum = 0; //Number of weights added to the optimization
-var primaryCon = []; //Array of constraints (in order of their listing in optimizationDesigner.html). If user does not provide constraints for a 
+var primaryCon = []; //Array of constraints (in order of their listing in optimizationDesigner.html). If user does not provide constraints for a
 // yield, value will be set to null
 var resultsCon = []; //Array of results for constraints
 var resultsConArr = []; //Array of result figures
@@ -49,38 +49,91 @@ var buckGaraRestrict = false; //Boolean to determine if corn and soy are restric
 var wetlandStrat = false; //Boolean to determine if wetlands can only be placed in strategic wetland locations
 var cornNoPrairie = false; //Boolean to determine if prairie should be rescricted with soils over 14 Mg corn yield
 
-//Clears the form [Prompted by the "reset" button]
-function clearFields() {
-	var inputs = document.getElementsByTagName("input");
-    for(var i = 0; i < inputs.length; i++)
-    {
-    	if(inputs[i].type == "checkbox")
-    	{
-    		document.getElementById(inputs[i].id).checked = false;
-    	}
-    	if(inputs[i].type == "text" || inputs[i].type == "file")
-    	{
-    		document.getElementById(inputs[i].id).value = '';
-    	}
-    	if(inputs[i].type == "number")
-    	{
-        	document.getElementById(inputs[i].id).value = (inputs[i].id).value;
-        }
-    }
-    var inputs = [];
-    inputs = document.getElementsByTagName("select");
-    for(var i = 0; i < inputs.length; i++)
-    {
-    	document.getElementById(inputs[i].id).selectedIndex = 0;
-    }
-    document.getElementById('totalPos').innerHTML = '';
-    document.getElementById('middle').style.visibility = "hidden";
-    document.getElementById('totalExp').innerHTML = '';
-    document.getElementById('equation').style.visibility = "hidden";
-    document.getElementById('weight').style.visibility = "hidden";
-    document.getElementById('iterCalc').style.visibility = "hidden";
-    document.getElementById('seedNum').style.visibility = "hidden";
-} //end clearFields()
+//Adds the coefficient to the given variable
+function addCoefficient() {
+	return "<input id='c"+variableNum+"' class='coefficient' type='number' min='0'></input>"
+} //end addCoefficient()
+
+//Adds the parameter to the given variable
+function addParameter(givenCustom) {
+	var parString;
+	if(givenCustom=="w") {
+		parString = "<select id='ws"+weightNum+"' class='weights'>"
+	} else {
+		parString = "<select id='s"+variableNum+"' class='variable'>"
+	}
+	for(var i = 0; i < usableChoices.length; i++) {
+		parString += "<option value='"+usableChoices[i]+"''>"+usableChoices[i]+"</option>";
+	}
+	parString += "</select><br>";
+	return parString;
+} //end addParameter()
+
+//Adds a rank selector for the parameter
+function addRank() {
+	var parString = "<select id='w"+weightNum+"' class='ranks'>";
+	for(var i = 1; i < 16; i++) {
+		parString += "<option value='"+i+"'>"+i+"</option>";
+	}
+	return parString;
+} //end addRank()
+
+//Adds a variable to the custom equation
+function addVariable() {
+	variableNum++;
+	var tempDiv = document.createElement("div");
+	tempDiv.id = variableNum;
+	if(variableNum>1) {
+		tempDiv.innerHTML = " + "
+	}
+	tempDiv.innerHTML += addCoefficient() + addParameter();
+	document.getElementById("addVar").appendChild(tempDiv);
+} //end addVariable()
+
+//Adds a weighted constraint
+function addWeight() {
+	weightNum++;
+	var tempDiv = document.createElement("div")
+	tempDiv.id = weightNum;
+	tempDiv.innerHTML += addParameter("w") + addRank();
+	document.getElementById("addW").appendChild(tempDiv);
+} //end addWeight()
+
+//Assigns a GameBoard tile a random land use (that is allowed for that tile) based on a randomized seed
+function assignTile(givenTile) {
+	//Retrieves the total # of possible land types the tile can be
+	var max = tilePos[currentTile]*10;
+	//This obtains a random usable land type for that particular tile [Currently, the default seed is 1]
+	randomNumber = (prng.genrand_real1());
+	//Converts the randomNumber to an index
+	var chosenIndex = getRandomTile(randomNumber*100, max);
+	//Converts index to land type
+	var chosenLandType = (usableTiles[currentTile])[chosenIndex];
+	//Assigns that land type to the given tile (for year 1)
+	optGameBoard.map[givenTile.id-1].landType[1] = chosenLandType;
+} //end assignTile()
+
+//Calculates the total using the user-provided equation, and returns if the equation parameters are met
+function calculateEquation() {
+	//Temporary array for storing data pertinent to a given variable
+	var tempTotalArr = [];
+	//Running total of the custom equation
+	var runningTotal = 0;
+	//Cycle through each variable
+	for(var i = 1; i < variableNum+1; i++) {
+		tempTotalArr = retrieveScore(i);
+		runningTotal += tempTotalArr[0]*tempTotalArr[1];
+	}
+	//Retrieves the operator for the numerical comparison
+	var oper = document.getElementById("operator").value;
+	//Returns true if the equation is satisfied, false otherwise
+	if(runningTotal!=0) {
+		return eval(runningTotal + oper + document.getElementById("sum").value);
+	}
+	else {
+		return false;
+	}
+} //end calculateEquation()
 
 //Adds/Removes/Changes a particular yield condition due to secondary constraints
 function changeYield(givenYield) {
@@ -112,7 +165,7 @@ function changeYield(givenYield) {
 			}
 			break;
 		//For checkbox #2: Restricts wetlands from being on sloped land plots
-		case 2: 
+		case 2:
 			if(wetlandSlope.checked) {
 				noWetSlope = true;
 			}
@@ -162,117 +215,126 @@ function changeYield(givenYield) {
 	}
 } //end changeYield()
 
-//Helps organize the list of land types
-function sortNumber(a,b) {
-	return a-b;
-} //end sortNumber()
+//Checks the generated board to see if it meets the primary parameters
+function checkParameters() {
+	//Fetch primary parameters from user
+	populateParameters();
+	//Set the precip for the results
+	optGameBoard.precipitation[1] = parseFloat(document.getElementById("precipYear1").value);
+	//Update the results
+	results.update();
+	//Fetch the primary parameters from the results
+	populateResults(results);
+	//This will check each parameter and see if it works with the given board
+	var workingBoard = true;
+	for(var i = 0; i < primaryCon.length; i++) {
+		var tempCon = primaryCon[i];
+		var tempCon2 = resultsCon[i];
+		//Checks parameter. If the parameter is blank, then skip and move on to the next one
+		if(tempCon[1] != "" || tempCon[0] != "") {
+			//If a max wasn't set
+			if(tempCon[1] == "") {
+				//Set an arbirarily high max (since the user has no set maximum)
+				tempCon[1] = 1000000;
+			}
+			//Determines if the parameter is given as a percentage or in acres
+			//If it's in acres
+			if(tempCon[1] > 100) {
+				//If the minimum is greater or the maximum is less than the given value
+				if(tempCon[0] > tempCon2[1] || tempCon[1] < tempCon2[1]) {
+					workingBoard = false
+					break;
+				}
+				//If it's a percentage
+			} else {
+				//If the minimum is greater or the maximum is less than the given value
+				if(tempCon[0] > tempCon2[0] || tempCon[1] < tempCon2[0]) {
+					workingBoard = false;
+					break;
+				}
+			}
+		}
+	}
+	//Ends the primary constraint checks. The next if-statement handles a custom parameter
+	//
+	//If the user wanted to use a custom equation
+	if(document.getElementById("equation").style.visibility == "visible") {
+		workingBoard = calculateEquation();
+	}
+	return workingBoard;
+} //end checkParameters
 
-//Toggles the custom equation feature on/off
-function toggleEquation() {
-	if(document.getElementById("equation").style.visibility == "hidden") {
-		document.getElementById("equation").style.visibility = "visible";
-		addVariable();
-		addVariable();
+//This method decides if the given GameBoard (which meets all of the criteria set by the user) has a higher enough score to be in the top 3
+function checkScore(givenBoard, givenResults) {
+	//Obtains the yield score to compare GameBoards
+	yieldScore = retrieveYieldScore(document.getElementById("sorter").value, results);
+	//Add it to the boardArr if there aren't enough
+	if(boardArr.length<3) {
+		//Makes a unique copy (not a reference) of the current GameBoard
+		var copy = JSON.parse(JSON.stringify( optGameBoard ));
+		//Insert the objects into their respective arrays
+		boardArr.push([yieldScore, copy]);
+		resultsArr.push([yieldScore, results]);
+		console.log("GameBoard added to array [Initial add]");
+		//Otherwise...
 	} else {
-		document.getElementById("equation").style.visibility = "hidden";
-		document.getElementById("addVar").innerHTML = "";
-		variableNum = 0;
+		var lowBoard = boardArr[boardArr.length-1]
+		if(yieldScore > lowBoard[0]) {
+			//Get rid of the lowest scoring board
+			boardArr.splice(boardArr.length-1,1);
+			resultsArr.splice(resultsArr.length-1,1);
+			//Makes a unique copy (not a reference) of the current GameBoard
+			var copy = JSON.parse(JSON.stringify( optGameBoard ));
+			//Insert the objects into their respective arrays
+			boardArr.push([yieldScore, copy]);
+			resultsArr.push([yieldScore, results]);
+			console.log("GameBoard added to array [Score supersecedes lowest score]");
+		}
 	}
-} //end toggleEquation()
+	//Reorganizes the order of GamerBoards and Result objects in their arrays based on their score ranking
+	resultsArr.sort(function(a, b) { return a[0]-b[0]})
+	boardArr.sort(function(a, b) { return a[0]-b[0]})
+	boardArr.reverse();
+	resultsArr.reverse();
+} //end checkScore(givenBoard)
 
-//Toggles the custom weight feature on/off
-function toggleWeight() {
-	if(document.getElementById("weight").style.visibility == "hidden") {
-		document.getElementById("weight").style.visibility = "visible";
-		addWeight();
-	} else {
-		document.getElementById("weight").style.visibility = "hidden";
-		document.getElementById("addW").innerHTML = "";
-		weightNum = 0;
+//Clears the form [Prompted by the "reset" button]
+function clearFields() {
+	var inputs = document.getElementsByTagName("input");
+	for(var i = 0; i < inputs.length; i++)
+	{
+		if(inputs[i].type == "checkbox")
+		{
+			document.getElementById(inputs[i].id).checked = false;
+		}
+		if(inputs[i].type == "text" || inputs[i].type == "file")
+		{
+			document.getElementById(inputs[i].id).value = '';
+		}
+		if(inputs[i].type == "number")
+		{
+			document.getElementById(inputs[i].id).value = (inputs[i].id).value;
+		}
 	}
-} //end toggleWeight()
-
-//Toggles the custom seed feature on/off
-function toggleSeed() {
-	if(document.getElementById("seed").style.visibility == "hidden") {
-		document.getElementById("seed").style.visibility = "visible";
-		document.getElementById("seedNum").style.visibility = "visible";
-	} else {
-		document.getElementById("seed").style.visibility = "hidden";
-		document.getElementById("seedNum").style.visibility = "hidden";
+	var inputs = [];
+	inputs = document.getElementsByTagName("select");
+	for(var i = 0; i < inputs.length; i++)
+	{
+		document.getElementById(inputs[i].id).selectedIndex = 0;
 	}
-}
-
-//Removes a variable from the custom equation
-function removeVariable() {
-	if(variableNum>2) {
-		document.getElementById(variableNum).remove();
-		variableNum--;
-	}
-} //end removeVariable()
-
-//Adds a variable to the custom equation
-function addVariable() {
-	variableNum++;
-	var tempDiv = document.createElement("div");
-	tempDiv.id = variableNum;
-	if(variableNum>1) {
-		tempDiv.innerHTML = " + "
-	}
-	tempDiv.innerHTML += addCoefficient() + addParameter();
-	document.getElementById("addVar").appendChild(tempDiv);
-} //end addVariable()
-
-//Adds the coefficient to the given variable
-function addCoefficient() {
-	return "<input id='c"+variableNum+"' class='coefficient' type='number' min='0'></input>"
-} //end addCoefficient()
-
-//Adds the parameter to the given variable
-function addParameter(givenCustom) {
-	var parString;
-	if(givenCustom=="w") {
-		parString = "<select id='ws"+weightNum+"' class='weights'>"
-	} else {
-		parString = "<select id='s"+variableNum+"' class='variable'>"
-	}
-	for(var i = 0; i < usableChoices.length; i++) {
-		parString += "<option value='"+usableChoices[i]+"''>"+usableChoices[i]+"</option>";
-	}
-	parString += "</select><br>";
-	return parString;
-} //end addParameter()
-
-//Removes a weighted constraint
-function removeWeight() {
-	if(weightNum>1) {
-		document.getElementById(weightNum).remove();
-		weightNum--;
-	}
-} //end removeWeight()
-
-//Adds a weighted constraint
-function addWeight() {
-	weightNum++;
-	var tempDiv = document.createElement("div")
-	tempDiv.id = weightNum;
-	tempDiv.innerHTML += addParameter("w") + addRank();
-	document.getElementById("addW").appendChild(tempDiv);
-} //end addWeight()
-
-//Adds a rank selector for the parameter
-function addRank() {
-	var parString = "<select id='w"+weightNum+"' class='ranks'>";
-	for(var i = 1; i < 16; i++) {
-		parString += "<option value='"+i+"'>"+i+"</option>";
-	}
-	return parString;
-} //end addRank()
+	document.getElementById('totalPos').innerHTML = '';
+	document.getElementById('middle').style.visibility = "hidden";
+	document.getElementById('totalExp').innerHTML = '';
+	document.getElementById('equation').style.visibility = "hidden";
+	document.getElementById('weight').style.visibility = "hidden";
+	document.getElementById('iterCalc').style.visibility = "hidden";
+	document.getElementById('seedNum').style.visibility = "hidden";
+} //end clearFields()
 
 //Creates a CSV file for your selected constraints [Runs the optimization trials]
 //
 //
-// Note: This method is extremely memory intensive, as it runs thousands of possible map calculations at once. 
+// Note: This method is extremely memory intensive, as it runs thousands of possible map calculations at once.
 // [ Use caution when tampering with this method ]
 //
 function createOptimization() {
@@ -330,353 +392,6 @@ function createOptimization() {
 	exportOptimization();
 } //end createOptimization()
 
-//This method decides if the given GameBoard (which meets all of the criteria set by the user) has a higher enough score to be in the top 3
-function checkScore(givenBoard, givenResults) {
-	//Obtains the yield score to compare GameBoards
-	yieldScore = retrieveYieldScore(document.getElementById("sorter").value, results);
-	//Add it to the boardArr if there aren't enough
-	if(boardArr.length<3) {
-		//Makes a unique copy (not a reference) of the current GameBoard
-		var copy = JSON.parse(JSON.stringify( optGameBoard )); 
-		//Insert the objects into their respective arrays
-		boardArr.push([yieldScore, copy]);
-		resultsArr.push([yieldScore, results]);
-		console.log("GameBoard added to array [Initial add]");
-	//Otherwise...
-	} else {
-		var lowBoard = boardArr[boardArr.length-1]
-		if(yieldScore > lowBoard[0]) {
-			//Get rid of the lowest scoring board
-			boardArr.splice(boardArr.length-1,1);
-			resultsArr.splice(resultsArr.length-1,1);
-			//Makes a unique copy (not a reference) of the current GameBoard
-			var copy = JSON.parse(JSON.stringify( optGameBoard )); 
-			//Insert the objects into their respective arrays
-			boardArr.push([yieldScore, copy]);
-			resultsArr.push([yieldScore, results]);
-			console.log("GameBoard added to array [Score supersecedes lowest score]");
-		}
-	}
-	//Reorganizes the order of GamerBoards and Result objects in their arrays based on their score ranking
-	resultsArr.sort(function(a, b) { return a[0]-b[0]})
-	boardArr.sort(function(a, b) { return a[0]-b[0]})
-	boardArr.reverse();
-	resultsArr.reverse();
-} //end checkScore(givenBoard)
-
-//Generates a board based on a randomized seed of numbers
-function generateBoard() {
-	//Reset the currentTile value (no longer parsing through the tiles)
-	currentTile = 0; 
-	//Go through each GameBoard map tile
-	for(var i = 0; i<optGameBoard.map.length; i++) {
-		if(optGameBoard.map[i].baseLandUseType!=0) {
-			assignTile(optGameBoard.map[i]);
-			currentTile++;
-		}
-		optGameBoard.map[i].update(1);
-	}
-} //end generateBoard()
-
-//Assigns a GameBoard tile a random land use (that is allowed for that tile) based on a randomized seed
-function assignTile(givenTile) {
-	//Retrieves the total # of possible land types the tile can be
-	var max = tilePos[currentTile]*10;
-	//This obtains a random usable land type for that particular tile [Currently, the default seed is 1]
-	randomNumber = (prng.genrand_real1());
-	//Converts the randomNumber to an index
-	var chosenIndex = getRandomTile(randomNumber*100, max);
-	//Converts index to land type
-	var chosenLandType = (usableTiles[currentTile])[chosenIndex];
-	//Assigns that land type to the given tile (for year 1)
-	optGameBoard.map[givenTile.id-1].landType[1] = chosenLandType;
-} //end assignTile()
-
-//Retrieves the land use for the tile (using a random number)
-// This splits the range of possible land types for this tile into equal spacings. If the random number falls between a particular
-// range, that is the tile it is assigned
-function getRandomTile(givenNumber, givenMax) {
-	var numGap = 100/givenMax;
-	var currentMax = numGap;
-	var iter = 0;
-	while(givenNumber>currentMax) {
-		iter++;
-		currentMax += numGap;
-	}
-	return iter;
-} //end getRandomTile()
-
-//Checks the generated board to see if it meets the primary parameters
-function checkParameters() {
-	//Fetch primary parameters from user
-	populateParameters();
-	//Set the precip for the results
-	optGameBoard.precipitation[1] = parseFloat(document.getElementById("precipYear1").value);
-	//Update the results
-	results.update();
-	//Fetch the primary parameters from the results
-	populateResults(results);
-	//This will check each parameter and see if it works with the given board
-	var workingBoard = true;
-	for(var i = 0; i < primaryCon.length; i++) {
-		var tempCon = primaryCon[i];
-		var tempCon2 = resultsCon[i];
-		//Checks parameter. If the parameter is blank, then skip and move on to the next one
-		if(tempCon[1] != "" || tempCon[0] != "") {
-			//If a max wasn't set
-			if(tempCon[1] == "") {
-				//Set an arbirarily high max (since the user has no set maximum)
-				tempCon[1] = 1000000;
-			}
-			//Determines if the parameter is given as a percentage or in acres
-			//If it's in acres
-			if(tempCon[1] > 100) {
-				//If the minimum is greater or the maximum is less than the given value
-				if(tempCon[0] > tempCon2[1] || tempCon[1] < tempCon2[1]) {
-					workingBoard = false
-					break;
-				}
-			//If it's a percentage
-			} else {
-				//If the minimum is greater or the maximum is less than the given value
-				if(tempCon[0] > tempCon2[0] || tempCon[1] < tempCon2[0]) {
-					workingBoard = false;
-					break;
-				}
-			}
-		}
-	}
-	//Ends the primary constraint checks. The next if-statement handles a custom parameter
-	//
-	//If the user wanted to use a custom equation
-	if(document.getElementById("equation").style.visibility == "visible") {
-		workingBoard = calculateEquation();
-	}
-	return workingBoard;
-} //end checkParameters
-
-//Calculates the total using the user-provided equation, and returns if the equation parameters are met
-function calculateEquation() {
-	//Temporary array for storing data pertinent to a given variable
-	var tempTotalArr = [];
-	//Running total of the custom equation
-	var runningTotal = 0;
-	//Cycle through each variable
-	for(var i = 1; i < variableNum+1; i++) {
-		tempTotalArr = retrieveScore(i);
-		runningTotal += tempTotalArr[0]*tempTotalArr[1];
-	}
-	//Retrieves the operator for the numerical comparison
-	var oper = document.getElementById("operator").value;
-	//Returns true if the equation is satisfied, false otherwise
-	if(runningTotal!=0) {
-		return eval(runningTotal + oper + document.getElementById("sum").value);
-	}
-	else {
-		return false;
-	}
-} //end calculateEquation()
-
-//Retrieves the needed scores for the selector
-function retrieveScore(givenIndex) {
-	if(document.getElementById('c'+givenIndex).value==""){
-		alert("Please complete the custom equation before submitting!")
-		return [0,0];
-	}
-	else {
-		tempValue = document.getElementById('c'+givenIndex).value;
-		tempLandType = retrieveLandUse(document.getElementById('s'+givenIndex).value, results);
-		return [tempValue,tempLandType];
-	}
-} //end retrieveScore()
-
-//Retrieves the yield score (using a given string and results object)
-function retrieveYieldScore(givenType, givenResults) {
-	switch(givenType) {
-		case "cornGrainYieldScore":
-			return givenResults.cornGrainYieldScore[1];
-		case "soybeanYieldScore":
-			return givenResults.soybeanYieldScore[1];
-		case "mixedFruitsVegetablesYieldScore":
-			return givenResults.mixedFruitsAndVegetablesYieldScore[1];
-		case "cattleYieldScore":
-			return givenResults.cattleYieldScore[1];
-		case "alfalfaHayYieldScore":
-			return givenResults.alfalfaHayYieldScore[1];
-		case "grassHayYieldScore":
-			return givenResults.grassHayYieldScore[1];
-		case "switchgrassYieldScore":
-			return givenResults.switchgrassYieldScore[1];
-		case "woodYieldScore":
-			return givenResults.woodYieldScore[1];
-		case "shortRotationWoodyBiomassYieldScore":
-			return givenResults.shortRotationWoodyBiomassYieldScore[1];
-		case "total":
-			var runningYieldTot = 0;
-			for(var i = 0; i < usableYieldChoices.length; i++) {
-				runningYieldTot += retrieveYieldScore(usableYieldChoices[i], givenResults);
-			}
-			return runningYieldTot;
-	}
-} //end retrieveYieldScore()
-
-//Retrieves the needed land type for the selector (and its land usage)
-function retrieveLandUse(givenDiv, givenResults) {
-	resultsC = givenResults.landUseResults[1];
-	switch(givenDiv) {
-		case "Conventional Corn Area":
-			return resultsC.conventionalCornLandUse;
-		case "Conservational Corn Area":
-			return resultsC.conservationCornLandUse;
-		case "Conventional Soybean Area":
-			return resultsC.conventionalSoybeanLandUse;
-		case "Conservational Soybean Area":
-			return resultsC.conservationSoybeanLandUse;
-		case "Mixed Fruits and Vegetables Area":
-			return resultsC.mixedFruitsVegetablesLandUse;
-		case "Permanent Pasture Area":
-			return resultsC.permanentPastureLandUse;
-		case "Rotational Grazing Area":
-			return resultsC.rotationalGrazingLandUse;
-		case "Grass Hay Area":
-			return resultsC.grassHayLandUse;
-		case "Switchgrass Area":
-			return resultsC.switchgrassLandUse;
-		case "Prairie Area":
-			return resultsC.prairieLandUse;
-		case "Wetland Area":
-			return resultsC.wetlandLandUse;
-		case "Alfalfa Area":
-			return resultsC.alfalfaLandUse;
-		case "Conventional Forest Area":
-			return resultsC.conventionalForestLandUse;
-		case "Conservational Forest Area":
-			return resultsC.conservationForestLandUse;
-		case "Short Rotation Woody Bioenergy Area":
-			return resultsC.shortRotationWoodyBioenergyLandUse;
-	}
-} //end retrieveLandUse()
-
-//Retrieves the needed ecosystem scores
-function retrieveEcosystemScore(givenScore, givenResults) {
-	switch(givenScore) {
-		case "Game Wildlife":
-			return givenResults.gameWildlifePointsScore[1];
-		case "Biodiversity":
-			return givenResults.biodiversityPointsScore[1];
-		case "Carbon Sequestration":
-			return givenResults.carbonSequestrationScore[1];
-		case "Erosion Control":
-			return givenResults.grossErosionScore[1];
-		case "Nitrate Pollution Control":
-			return givenResults.nitrateConcentrationScore[1];
-		case "Phosphorus Pollution Control":
-			return givenResults.phosphorusLoadScore[1];
-		case "Sediment Control":
-			return givenResults.sedimentDeliveryScore[1];
-	}
-} //end retrieveEcosystemScore()
-
-//Sorts the boards based off the rankings given by the user (this is a secondary sorter)
-function sortBoards() {
-	//Get an array of land use types and their weight
-	var tempWeights = retrieveWeights();
-	//Iterate through the boards until the correct placement has been found (current selection)
-	for(var i = 0; i < boardArr.length; i++) {
-		//Curent yield score
-		var curScore = boardArr[i][0]
-		//Current rank score
-		var curRank = retrieveLandUse(tempWeights[0][1], resultsArr[i][1]);
-		//Selections moving to the right
-		for(var j = i+1; j < boardArr.length; j++) {
-			//If the board to the right has the same yield score and a higher initial ranking (this shouldn't happen to often)
-			if(curScore == boardArr[j][0] && curRank < retrieveLandUse(tempWeights[0][1], resultsArr[j][1])) {
-				//Switch the elements (for both the GameBoard array and result object array)
-				var tempGameBoard = boardArr[j];
-				boardArr[j] = boardArr[i];
-				boardArr[i] = tempGameBoard;
-
-				var tempResult = resultsArr[j];
-				resultsArr[j] = resultsArr[i];
-				resultsArr[i] = tempResult;
-			}
-			//If the yield AND intial rank score match (extremely unlikely)
-			if(curScore == boardArr[j][0] && curRank == retrieveLandUse(tempWeights[0][1], resultsArr[j][1])) {
-				for(var k = 1; k < tempWeights.length; k++) {
-					//Reset the rank score for the current result object
-					curRank = retrieveLandUse(tempWeights[k][1], resultsArr[i][1]);
-					//If another rank shows a difference
-					if(curRank < retrieveLandUse(tempWeights[k][1], resultsArr[j][1])) {
-						var tempGameBoard = boardArr[j];
-						boardArr[j] = boardArr[i];
-						boardArr[i] = tempGameBoard;
-
-						var tempResult = resultsArr[j];
-						resultsArr[j] = resultsArr[i];
-						resultsArr[i] = tempResult;
-					}
-				}
-			//If the stars align and I win the lottery, the two compared GameBoards will have the same yield score, as well as 
-			// the same rank parameters. This will probably never happen, thus no case is made for it (the two GameBoards can be
-			// left at their positions)
-			}
-			//If the yield score is lower, break and move on
-			if(curScore > boardArr[j][0]) {
-				break;
-			}
-		}
-	}
-} //end sortBoards()
-
-//Retrieves the weights (and their land use types) provided by the user
-function retrieveWeights() {
-	var tempW = [];
-	//For each weight
-	for(var i = 1; i < weightNum+1; i++) {
-		tempW[i-1] = [document.getElementById('w'+i).value, document.getElementById('ws'+i).value]
-	}
-	//Use sort() so that the highest rank is first in the array, and cascades from there
-	return tempW.sort();
-} //end retrieveWeights()
-
-//Populates an array with all of the primary parameters
-function populateParameters() {
-	primaryCon = [];
-	var inputs = document.getElementsByTagName("input");
-	var inputArr = Array.prototype.slice.call( inputs );
-	//Get rid of the first few inputs
-	inputArr.shift();
-	inputArr.shift();
-	//Keep the primary parameters within the first fields
-	for(var i = 0; i < usableChoices.length; i++) {
-		if(inputArr[i].type == "number"){
-			var tempArr = [inputArr[i*2].value,inputArr[i*2+1].value];
-			primaryCon.push(tempArr);
-		}
-	}
-}
-
-//Populates an array with the result parameters (For clarity purposes, these are pushed individually) [Percentage,Acre]
-// If more primary parameters are added, they will need to be added to this list
-function populateResults(givenResults) {
-	resultsCon = [];
-	var curRes = givenResults.landUseResults[1];
-	resultsCon.push([givenResults.conventionalCornLandUseScore[1], curRes.conventionalCornLandUse]);
-	resultsCon.push([givenResults.conservationCornLandUseScore[1], curRes.conservationCornLandUse]);
-	resultsCon.push([givenResults.conventionalSoybeanLandUseScore[1], curRes.conventionalSoybeanLandUse]);
-	resultsCon.push([givenResults.conservationSoybeanLandUseScore[1], curRes.conservationSoybeanLandUse]);
-	resultsCon.push([givenResults.mixedFruitsAndVegetablesLandUseScore[1], curRes.mixedFruitsVegetablesLandUse]);
-	resultsCon.push([givenResults.permanentPastureLandUseScore[1], curRes.permanentPastureLandUse]);
-	resultsCon.push([givenResults.rotationalGrazingLandUseScore[1], curRes.rotationalGrazingLandUse]);
-	resultsCon.push([givenResults.grassHayLandUseScore[1], curRes.grassHayLandUse]);
-	resultsCon.push([givenResults.switchgrassLandUseScore[1], curRes.switchgrassLandUse]);
-	resultsCon.push([givenResults.prairieLandUseScore[1], curRes.prairieLandUse]);
-	resultsCon.push([givenResults.wetlandLandUseScore[1], curRes.wetlandLandUse]);
-	resultsCon.push([(curRes.alfalfaLandUse/givenResults.totalArea)*100, curRes.alfalfaLandUse]);
-	resultsCon.push([givenResults.conventionalForestLandUseScore[1], curRes.conventionalForestLandUse]);
-	resultsCon.push([givenResults.conservationForestLandUseScore[1], curRes.conservationForestLandUse]);
-	resultsCon.push([givenResults.shortRotationWoodyBioenergyLandUseScore[1], curRes.shortRotationWoodyBioenergyLandUse]);
-}
 //Exports the data required to load and see your optimizations
 function exportOptimization() {
 	console.log("Now exporting...");
@@ -688,7 +403,7 @@ function exportOptimization() {
 	//
 	//2#) Scores and Data:
 	//		This includes the 15 Land Uses (their percentages and acreages), the 7 Ecosystem Scores, the 9 Yield Scores, and the optimized Score.
-	//	The map (tiles and their land uses) will also be appended at the end of each GameBoard. 
+	//	The map (tiles and their land uses) will also be appended at the end of each GameBoard.
 	//
 	var tempCSVArr = [];
 	//Start Part #1
@@ -772,44 +487,50 @@ function exportOptimization() {
 	//Finished with the array compilation, start CSV compilation
 	var csvRows = [];
 	for(var i=0; i<tempCSVArr.length; i++)
-    {
-        csvRows.push(tempCSVArr[i].join(','));
-    }
-    var csvString = csvRows.join("\n");
-    //Get ready to prompt for file
-    var a = document.createElement('a');
-    a.href     = 'data:text/csv;charset=utf-8;base64,' + window.btoa(csvString);
-    a.target   = '_blank';
-    if(document.getElementById("optimizationName").value=="") {
-    	a.download = document.getElementById("optimizationName").placeholder;
-    } else {
-    	a.download = document.getElementById("optimizationName").value;
-    }
-    document.body.appendChild(a);
-    a.click();
+	{
+		csvRows.push(tempCSVArr[i].join(','));
+	}
+	var csvString = csvRows.join("\n");
+	//Get ready to prompt for file
+	var a = document.createElement('a');
+	a.href     = 'data:text/csv;charset=utf-8;base64,' + window.btoa(csvString);
+	a.target   = '_blank';
+	if(document.getElementById("optimizationName").value=="") {
+		a.download = document.getElementById("optimizationName").placeholder;
+	} else {
+		a.download = document.getElementById("optimizationName").value;
+	}
+	document.body.appendChild(a);
+	a.click();
 } //end exportOptimization()
 
-//Handles the file upload
-function uploadOptimization(e) {
-	console.log("Optimization file uploaded; parsing through data...");
-	var files;
-    files = e.target.files;
-    optName = files[0].name;
+//Generates a board based on a randomized seed of numbers
+function generateBoard() {
+	//Reset the currentTile value (no longer parsing through the tiles)
+	currentTile = 0;
+	//Go through each GameBoard map tile
+	for(var i = 0; i<optGameBoard.map.length; i++) {
+		if(optGameBoard.map[i].baseLandUseType!=0) {
+			assignTile(optGameBoard.map[i]);
+			currentTile++;
+		}
+		optGameBoard.map[i].update(1);
+	}
+} //end generateBoard()
 
-    if (files[0].name && !files[0].name.match(/\.csv/)) {
-        alert("Incorrect File Type!");
-    }
-    else {
-        var reader = new FileReader();
-        reader.readAsText(files[0]);
-        //Perform the optimization fill
-        reader.onload = function(e) {
-            var opt = reader.result.split("\n");
-            optimizationData = opt;
-            importOptimization();
-        }
-    }
-} //end uploadOptimization()
+//Retrieves the land use for the tile (using a random number)
+// This splits the range of possible land types for this tile into equal spacings. If the random number falls between a particular
+// range, that is the tile it is assigned
+function getRandomTile(givenNumber, givenMax) {
+	var numGap = 100/givenMax;
+	var currentMax = numGap;
+	var iter = 0;
+	while(givenNumber>currentMax) {
+		iter++;
+		currentMax += numGap;
+	}
+	return iter;
+} //end getRandomTile()
 
 //Imports the data required to continue an optimization
 function importOptimization() {
@@ -959,17 +680,6 @@ function importOptimization() {
 	console.log("Optimization import finished");
 } //end importOptimization()
 
-//Returns the total number of possible variations your optimization can produce (given the restricted land options, this
-// doesn't take into account the min/max parameters)
-//
-// This uses the default PEWI map. This method can be changed later to allow for custom PEWI configured maps.
-function totalIterations() {
-	optGameBoard = new GameBoard();
-	file = "../data.csv";
-	loadBoard(optGameBoard, file);
-	parseTiles();
-} //end totalIterations()
-
 //Goes through the tiles in the board and counts how many possible combinations there can be
 function parseTiles() {
 	totalPoss = 0;
@@ -1073,3 +783,294 @@ function parseTiles() {
 	document.getElementById('middle').style.visibility = "visible";
 	document.getElementById('totalExp').innerHTML = totalExp;
 }
+
+//Populates an array with all of the primary parameters
+function populateParameters() {
+	primaryCon = [];
+	var inputs = document.getElementsByTagName("input");
+	var inputArr = Array.prototype.slice.call( inputs );
+	//Get rid of the first few inputs
+	inputArr.shift();
+	inputArr.shift();
+	//Keep the primary parameters within the first fields
+	for(var i = 0; i < usableChoices.length; i++) {
+		if(inputArr[i].type == "number"){
+			var tempArr = [inputArr[i*2].value,inputArr[i*2+1].value];
+			primaryCon.push(tempArr);
+		}
+	}
+}
+
+//Populates an array with the result parameters (For clarity purposes, these are pushed individually) [Percentage,Acre]
+// If more primary parameters are added, they will need to be added to this list
+function populateResults(givenResults) {
+	resultsCon = [];
+	var curRes = givenResults.landUseResults[1];
+	resultsCon.push([givenResults.conventionalCornLandUseScore[1], curRes.conventionalCornLandUse]);
+	resultsCon.push([givenResults.conservationCornLandUseScore[1], curRes.conservationCornLandUse]);
+	resultsCon.push([givenResults.conventionalSoybeanLandUseScore[1], curRes.conventionalSoybeanLandUse]);
+	resultsCon.push([givenResults.conservationSoybeanLandUseScore[1], curRes.conservationSoybeanLandUse]);
+	resultsCon.push([givenResults.mixedFruitsAndVegetablesLandUseScore[1], curRes.mixedFruitsVegetablesLandUse]);
+	resultsCon.push([givenResults.permanentPastureLandUseScore[1], curRes.permanentPastureLandUse]);
+	resultsCon.push([givenResults.rotationalGrazingLandUseScore[1], curRes.rotationalGrazingLandUse]);
+	resultsCon.push([givenResults.grassHayLandUseScore[1], curRes.grassHayLandUse]);
+	resultsCon.push([givenResults.switchgrassLandUseScore[1], curRes.switchgrassLandUse]);
+	resultsCon.push([givenResults.prairieLandUseScore[1], curRes.prairieLandUse]);
+	resultsCon.push([givenResults.wetlandLandUseScore[1], curRes.wetlandLandUse]);
+	resultsCon.push([(curRes.alfalfaLandUse/givenResults.totalArea)*100, curRes.alfalfaLandUse]);
+	resultsCon.push([givenResults.conventionalForestLandUseScore[1], curRes.conventionalForestLandUse]);
+	resultsCon.push([givenResults.conservationForestLandUseScore[1], curRes.conservationForestLandUse]);
+	resultsCon.push([givenResults.shortRotationWoodyBioenergyLandUseScore[1], curRes.shortRotationWoodyBioenergyLandUse]);
+}
+
+//Removes a variable from the custom equation
+function removeVariable() {
+	if(variableNum>2) {
+		document.getElementById(variableNum).remove();
+		variableNum--;
+	}
+} //end removeVariable()
+
+//Removes a weighted constraint
+function removeWeight() {
+	if(weightNum>1) {
+		document.getElementById(weightNum).remove();
+		weightNum--;
+	}
+} //end removeWeight()
+
+//Retrieves the needed ecosystem scores
+function retrieveEcosystemScore(givenScore, givenResults) {
+	switch(givenScore) {
+		case "Game Wildlife":
+		return givenResults.gameWildlifePointsScore[1];
+		case "Biodiversity":
+		return givenResults.biodiversityPointsScore[1];
+		case "Carbon Sequestration":
+		return givenResults.carbonSequestrationScore[1];
+		case "Erosion Control":
+		return givenResults.grossErosionScore[1];
+		case "Nitrate Pollution Control":
+		return givenResults.nitrateConcentrationScore[1];
+		case "Phosphorus Pollution Control":
+		return givenResults.phosphorusLoadScore[1];
+		case "Sediment Control":
+		return givenResults.sedimentDeliveryScore[1];
+	}
+} //end retrieveEcosystemScore()
+
+//Retrieves the needed land type for the selector (and its land usage)
+function retrieveLandUse(givenDiv, givenResults) {
+	resultsC = givenResults.landUseResults[1];
+	switch(givenDiv) {
+		case "Conventional Corn Area":
+		return resultsC.conventionalCornLandUse;
+		case "Conservational Corn Area":
+		return resultsC.conservationCornLandUse;
+		case "Conventional Soybean Area":
+		return resultsC.conventionalSoybeanLandUse;
+		case "Conservational Soybean Area":
+		return resultsC.conservationSoybeanLandUse;
+		case "Mixed Fruits and Vegetables Area":
+		return resultsC.mixedFruitsVegetablesLandUse;
+		case "Permanent Pasture Area":
+		return resultsC.permanentPastureLandUse;
+		case "Rotational Grazing Area":
+		return resultsC.rotationalGrazingLandUse;
+		case "Grass Hay Area":
+		return resultsC.grassHayLandUse;
+		case "Switchgrass Area":
+		return resultsC.switchgrassLandUse;
+		case "Prairie Area":
+		return resultsC.prairieLandUse;
+		case "Wetland Area":
+		return resultsC.wetlandLandUse;
+		case "Alfalfa Area":
+		return resultsC.alfalfaLandUse;
+		case "Conventional Forest Area":
+		return resultsC.conventionalForestLandUse;
+		case "Conservational Forest Area":
+		return resultsC.conservationForestLandUse;
+		case "Short Rotation Woody Bioenergy Area":
+		return resultsC.shortRotationWoodyBioenergyLandUse;
+	}
+} //end retrieveLandUse()
+
+//Retrieves the needed scores for the selector
+function retrieveScore(givenIndex) {
+	if(document.getElementById('c'+givenIndex).value==""){
+		alert("Please complete the custom equation before submitting!")
+		return [0,0];
+	}
+	else {
+		tempValue = document.getElementById('c'+givenIndex).value;
+		tempLandType = retrieveLandUse(document.getElementById('s'+givenIndex).value, results);
+		return [tempValue,tempLandType];
+	}
+} //end retrieveScore()
+
+//Retrieves the weights (and their land use types) provided by the user
+function retrieveWeights() {
+	var tempW = [];
+	//For each weight
+	for(var i = 1; i < weightNum+1; i++) {
+		tempW[i-1] = [document.getElementById('w'+i).value, document.getElementById('ws'+i).value]
+	}
+	//Use sort() so that the highest rank is first in the array, and cascades from there
+	return tempW.sort();
+} //end retrieveWeights()
+
+//Retrieves the yield score (using a given string and results object)
+function retrieveYieldScore(givenType, givenResults) {
+	switch(givenType) {
+		case "cornGrainYieldScore":
+		return givenResults.cornGrainYieldScore[1];
+		case "soybeanYieldScore":
+		return givenResults.soybeanYieldScore[1];
+		case "mixedFruitsVegetablesYieldScore":
+		return givenResults.mixedFruitsAndVegetablesYieldScore[1];
+		case "cattleYieldScore":
+		return givenResults.cattleYieldScore[1];
+		case "alfalfaHayYieldScore":
+		return givenResults.alfalfaHayYieldScore[1];
+		case "grassHayYieldScore":
+		return givenResults.grassHayYieldScore[1];
+		case "switchgrassYieldScore":
+		return givenResults.switchgrassYieldScore[1];
+		case "woodYieldScore":
+		return givenResults.woodYieldScore[1];
+		case "shortRotationWoodyBiomassYieldScore":
+		return givenResults.shortRotationWoodyBiomassYieldScore[1];
+		case "total":
+		var runningYieldTot = 0;
+		for(var i = 0; i < usableYieldChoices.length; i++) {
+			runningYieldTot += retrieveYieldScore(usableYieldChoices[i], givenResults);
+		}
+		return runningYieldTot;
+	}
+} //end retrieveYieldScore()
+
+//Sorts the boards based off the rankings given by the user (this is a secondary sorter)
+function sortBoards() {
+	//Get an array of land use types and their weight
+	var tempWeights = retrieveWeights();
+	//Iterate through the boards until the correct placement has been found (current selection)
+	for(var i = 0; i < boardArr.length; i++) {
+		//Curent yield score
+		var curScore = boardArr[i][0]
+		//Current rank score
+		var curRank = retrieveLandUse(tempWeights[0][1], resultsArr[i][1]);
+		//Selections moving to the right
+		for(var j = i+1; j < boardArr.length; j++) {
+			//If the board to the right has the same yield score and a higher initial ranking (this shouldn't happen to often)
+			if(curScore == boardArr[j][0] && curRank < retrieveLandUse(tempWeights[0][1], resultsArr[j][1])) {
+				//Switch the elements (for both the GameBoard array and result object array)
+				var tempGameBoard = boardArr[j];
+				boardArr[j] = boardArr[i];
+				boardArr[i] = tempGameBoard;
+
+				var tempResult = resultsArr[j];
+				resultsArr[j] = resultsArr[i];
+				resultsArr[i] = tempResult;
+			}
+			//If the yield AND intial rank score match (extremely unlikely)
+			if(curScore == boardArr[j][0] && curRank == retrieveLandUse(tempWeights[0][1], resultsArr[j][1])) {
+				for(var k = 1; k < tempWeights.length; k++) {
+					//Reset the rank score for the current result object
+					curRank = retrieveLandUse(tempWeights[k][1], resultsArr[i][1]);
+					//If another rank shows a difference
+					if(curRank < retrieveLandUse(tempWeights[k][1], resultsArr[j][1])) {
+						var tempGameBoard = boardArr[j];
+						boardArr[j] = boardArr[i];
+						boardArr[i] = tempGameBoard;
+
+						var tempResult = resultsArr[j];
+						resultsArr[j] = resultsArr[i];
+						resultsArr[i] = tempResult;
+					}
+				}
+				//If the stars align and I win the lottery, the two compared GameBoards will have the same yield score, as well as
+				// the same rank parameters. This will probably never happen, thus no case is made for it (the two GameBoards can be
+				// left at their positions)
+			}
+			//If the yield score is lower, break and move on
+			if(curScore > boardArr[j][0]) {
+				break;
+			}
+		}
+	}
+} //end sortBoards()
+
+//Helps organize the list of land types
+function sortNumber(a,b) {
+	return a-b;
+} //end sortNumber()
+
+//Toggles the custom equation feature on/off
+function toggleEquation() {
+	if(document.getElementById("equation").style.visibility == "hidden") {
+		document.getElementById("equation").style.visibility = "visible";
+		addVariable();
+		addVariable();
+	} else {
+		document.getElementById("equation").style.visibility = "hidden";
+		document.getElementById("addVar").innerHTML = "";
+		variableNum = 0;
+	}
+} //end toggleEquation()
+
+//Toggles the custom seed feature on/off
+function toggleSeed() {
+	if(document.getElementById("seed").style.visibility == "hidden") {
+		document.getElementById("seed").style.visibility = "visible";
+		document.getElementById("seedNum").style.visibility = "visible";
+	} else {
+		document.getElementById("seed").style.visibility = "hidden";
+		document.getElementById("seedNum").style.visibility = "hidden";
+	}
+}
+
+//Returns the total number of possible variations your optimization can produce (given the restricted land options, this
+// doesn't take into account the min/max parameters)
+//
+// This uses the default PEWI map. This method can be changed later to allow for custom PEWI configured maps.
+function totalIterations() {
+	optGameBoard = new GameBoard();
+	file = "../data.csv";
+	loadBoard(optGameBoard, file);
+	parseTiles();
+} //end totalIterations()
+
+//Toggles the custom weight feature on/off
+function toggleWeight() {
+	if(document.getElementById("weight").style.visibility == "hidden") {
+		document.getElementById("weight").style.visibility = "visible";
+		addWeight();
+	} else {
+		document.getElementById("weight").style.visibility = "hidden";
+		document.getElementById("addW").innerHTML = "";
+		weightNum = 0;
+	}
+} //end toggleWeight()
+
+//Handles the file upload
+function uploadOptimization(e) {
+	console.log("Optimization file uploaded; parsing through data...");
+	var files;
+    files = e.target.files;
+    optName = files[0].name;
+
+    if (files[0].name && !files[0].name.match(/\.csv/)) {
+        alert("Incorrect File Type!");
+    }
+    else {
+        var reader = new FileReader();
+        reader.readAsText(files[0]);
+        //Perform the optimization fill
+        reader.onload = function(e) {
+            var opt = reader.result.split("\n");
+            optimizationData = opt;
+            importOptimization();
+        }
+    }
+} //end uploadOptimization()
