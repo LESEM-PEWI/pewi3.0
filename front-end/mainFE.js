@@ -3,44 +3,44 @@
 //global vars
 
 //webGL stuff
+var bgScene = null;
 var camera, scene, raycaster, mouse, hoveredOver, bgCam, camera2, camera1, ToggleCam, cam2x, cam2y, cam2z;
 var cam2Roy, cam2Rox, cam2Roz;
-var player = { speed:3, turnSpeed:Math.PI*0.02 };
-var keyboard ={};
-var bgScene = null;
-var renderer = new THREE.WebGLRenderer();
 var controls, controls1;
+var keyboard ={};
+var player = { speed:3, turnSpeed:Math.PI*0.02 };
+var renderer = new THREE.WebGLRenderer();
 var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
 //application data
+var boardData = [];
+var clickTrackings = []; //array for storing all clicks in when click-tracking is enabled
 var river = null;
 var riverPoints = [];
-var boardData = [];
-var Totals; //global current calculated results, NOTE, should be reassigned every time currentBoard is changed
-var clickTrackings = []; //array for storing all clicks in when click-tracking is enabled
 var simUpload;
+var Totals; //global current calculated results, NOTE, should be reassigned every time currentBoard is changed
 
 //status trackers
-var onYear = "year1";
-var painter = 1;
+var allLoaded = false;
+var counter = 0;
 var currentBoard = -1;
 var currentYear = 1;
 var currentPlayer = 0;
-var modalUp = false;
 var isShiftDown = false;
-var counter = 0;
-var allLoaded = false;
-var tToggle = false; //topology off by default
 var mapIsHighlighted = false;
+var modalUp = false;
+var onYear = "year1";
+var painter = 1;
 var previousHover = null;
+var tToggle = false; //topology off by default
 var uploadedBoard = false;
 
 //Variables for Zoom Function
-var zoomedIn = false;
 var fov = null,
-  zoomFactor = 1.0,
-  zoomInInc = 0.1,
-  zoomOutInc = 0.2;
+zoomFactor = 1.0,
+zoomInInc = 0.1,
+zoomOutInc = 0.2;
+var zoomedIn = false;
 var zoomingInNow = false;
 var zoomingOutNow = false;
 
@@ -52,6 +52,321 @@ var printMode = false;
 var takeScreenshot = false; // used in animationFrames
 
 //===================
+
+//Camera movements Controls for Camera2 ie second view
+function animate() {
+  var hotkeys = giveHotkeys();
+  requestAnimationFrame(animate);
+
+  //Keyboard movement inputs
+  if (keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]) { // W key Forward Movements
+    if (curTracking) {
+      pushClick(0, getStamp(), 86, 0, null);
+    }
+    //Movements Restrictions and setting bounds
+    //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
+    //and if it does it resets it to that specific position set.
+    //If it doesnt the camera moves normally.
+    if (camera2.position.x - Math.sin(camera2.rotation.y) * player.speed >= 265)
+    camera2.position.x = 264;
+    if (camera2.position.x - Math.sin(camera2.rotation.y) * player.speed <= -265)
+    camera2.position.x = -264;
+    if (camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)
+    camera2.position.z = 299;
+    if (camera2.position.z - Math.cos(camera2.rotation.y) * player.speed <= -300)
+    camera2.position.z = -299;
+    else
+    camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
+    camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
+    console.log(camera2.position);
+  }
+
+  if (keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]) { // S key Back Words movements
+    if (curTracking) {
+      pushClick(0, getStamp(), 87, 0, null);
+    }
+    //Movements Restrictions and setting bounds
+    //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
+    //and if it does it resets it to that specific position set.
+    //If it doesnt the camera moves normally.
+    if (camera2.position.x + Math.sin(camera2.rotation.y) * player.speed >= 265)
+    camera2.position.x = 264;
+    if (camera2.position.x + Math.sin(camera2.rotation.y) * player.speed <= -265)
+    camera2.position.x = -264;
+    if (camera2.position.z + Math.cos(camera2.rotation.y) * player.speed >= 300)
+    camera2.position.z = 299;
+    if (camera2.position.z + Math.cos(camera2.rotation.y) * player.speed <= -300)
+    camera2.position.z = -299;
+    else
+    camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
+    camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
+    console.log(camera2.position);
+  }
+
+  if (keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // A key Left Side Movement
+    if (curTracking) {
+      pushClick(0, getStamp(), 89, 0, null);
+    }
+    //Movements Restrictions and setting bounds
+    //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
+    //and if it does it resets it to that specific position set.
+    //If it doesnt the camera moves normally.
+    if (camera2.position.x - Math.sin(camera2.rotation.y + Math.PI / 2) * player.speed >= 265)
+    camera2.position.x = 264;
+    if (camera2.position.x - Math.sin(camera2.rotation.y + Math.PI / 2) * player.speed <= -265)
+    camera2.position.x = -264;
+    if (camera2.position.z - Math.cos(camera2.rotation.y + Math.PI / 2) * player.speed >= 300)
+    camera2.position.z = 299;
+    if (camera2.position.z - Math.cos(camera2.rotation.y + Math.PI / 2) * player.speed <= -300)
+    camera2.position.z = -299;
+    else
+    camera2.position.z -= Math.cos(camera2.rotation.y + Math.PI / 2) * player.speed;
+    camera2.position.x -= Math.sin(camera2.rotation.y + Math.PI / 2) * player.speed;
+    console.log(camera2.position);
+  }
+
+  if (keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // D key Right side Movements
+    if (curTracking) {
+      pushClick(0, getStamp(), 88, 0, null);
+    }
+    //Movements Restrictions and setting bounds
+    //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
+    //and if it does it resets it to that specific position set.
+    //If it doesnt the camera moves normally.
+    if (camera2.position.x - Math.sin(camera2.rotation.y - Math.PI / 2) * player.speed >= 265)
+    camera2.position.x = 264;
+    if (camera2.position.x - Math.sin(camera2.rotation.y - Math.PI / 2) * player.speed <= -265)
+    camera2.position.x = -264;
+    if (camera2.position.z - Math.cos(camera2.rotation.y - Math.PI / 2) * player.speed >= 300)
+    camera2.position.z = 299;
+    if (camera2.position.z - Math.cos(camera2.rotation.y - Math.PI / 2) * player.speed <= -300)
+    camera2.position.z = -299;
+    else
+    camera2.position.z -= Math.cos(camera.rotation.y - Math.PI / 2) * player.speed;
+    camera2.position.x -= Math.sin(camera.rotation.y - Math.PI / 2) * player.speed;
+    console.log(camera2.position);
+  }
+
+  // Keyboard turn inputs
+  if (keyboard[39]) { // left arrow key Rotate right
+    if (curTracking) {
+      pushClick(0, getStamp(), 97, 0, null);
+    }
+    //This rotates the camera left
+    camera2.rotation.y -= player.turnSpeed;
+  }
+  if (keyboard[37]) { // right arrow key Rotate left
+    if (curTracking) {
+      pushClick(0, getStamp(), 98, 0, null);
+    }
+    //This rotates the camera right
+    camera2.rotation.y += player.turnSpeed;
+  }
+
+  //Specific Zooming
+  if (keyboard[38]) { // Up arrow key
+    if (curTracking) {
+      pushClick(0, getStamp(), 95, 0, null);
+    }
+    //Checking if toggle is on and checking if it passes a specific bounds and if it does
+    // It sets it to specific height and restrict it to that heights else if moves normally
+    if (tToggle) {
+      if (camera2.position.y <= 27)
+      camera2.position.y = 27;
+      else {
+        camera2.position.y -= 1;
+        camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
+        camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
+        console.log(camera2.position.y + " " + camera.position.z);
+      }
+    } else {
+      if (camera2.position.y <= 9)
+      camera2.position.y = 9;
+      else {
+        camera2.position.y -= 1;
+        camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
+        camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
+        console.log(camera2.position.y + " " + camera.position.z);
+      }
+    }
+  }
+
+  if (keyboard[40]) { // Down arrow key
+    if (curTracking) {
+      pushClick(0, getStamp(), 96, 0, null);
+    }
+    //setting bounds for zooming out and checking the camera y and z position.
+    //If it passes the position, it restricts the camera movement
+    if (camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)
+    camera2.position.z = 299;
+    if (camera2.position.y >= 60) {
+      camera2.position.y = 60;
+      console.log(camera2.position.y + " " + camera.position.z);
+    } else {
+      camera2.position.y += 1;
+      camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
+      camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
+      console.log(camera2.position.y + " " + camera.position.z);
+    }
+  }
+  renderer.render(scene, camera);
+}
+
+//animationFrames is the key function involved in webGl
+// here we set up a loop that calls itsef throughout the duration of the activity
+function animationFrames() {
+
+  //render animations
+  requestAnimationFrame(function animate() {
+
+    birdAnimation();
+    zoomAnimation();
+
+    //rain animations (change y position of each raindrop)
+    if (rain != null) {
+      for (var i = 0; i < rain.geometry.vertices.length; i++) {
+        //update position
+        rain.geometry.vertices[i].y = rain.geometry.vertices[i].y - (rain.geometry.vertices[i].speed);
+        //if the raindrop reaches the ground, regenerate above the board
+        if (rain.geometry.vertices[i].y <= 0) rain.geometry.vertices[i].y = Math.random() * 500;
+      }
+      //necessary to make the raindrops move
+      rain.geometry.verticesNeedUpdate = true;
+    }
+
+    renderer.autoClear = false;
+    if (bgScene != null) {
+      renderer.render(bgScene, bgCam);
+    }
+
+    //wait # update frames to check
+    if (counter > 20) {
+      gameDirector();
+      counter = 0;
+    }
+    counter += 1;
+
+    requestAnimationFrame(animate);
+    // render the according webgl
+    renderer.render(scene, camera);
+
+    // takeScreenshot is global variable. Is set to true when pressing print key 'p' ( helpersFE.js )
+    if (takeScreenshot) {
+      // reset takeScreenshot to false
+      takeScreenshot = false;
+      // preprocess needed src
+      jspdfprinter.preprocessing();
+
+    } // end if
+    stats.update();
+
+  }); //end request
+
+} //end animationFrames
+
+//birdAnimation updates bird and boid positions
+function birdAnimation() {
+
+  if (birds != null) {
+
+    for (var i = 0, il = birds.length; i < il; i++) {
+
+      boid = boids[i];
+      boid.run(boids);
+
+      bird = birds[i];
+      bird.position.copy(boids[i].position);
+
+      color = bird.material.color;
+      color.r = color.g = color.b = (500 - bird.position.z) / 1000;
+
+      bird.rotation.y = Math.atan2(-boid.velocity.z, boid.velocity.x);
+      bird.rotation.z = Math.asin(boid.velocity.y / boid.velocity.length());
+
+      bird.phase = (bird.phase + (Math.max(0, bird.rotation.z) + 0.1)) % 62.83;
+      bird.geometry.vertices[5].y = bird.geometry.vertices[4].y = Math.sin(bird.phase) * 5;
+
+    }
+
+  }
+
+} //end birdAnimation
+
+//Event function that is called when screen is changed
+function CamView(e) {
+  tempKeys = giveHotkeys();
+  var Uma = String.fromCharCode(tempKeys[11][0]);
+  document.getElementById("flyover").innerHTML = "FlyOver Mode, Hit " + Uma +  " to Exit";
+  if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
+    if(curTracking) {
+      pushClick(0,getStamp(),85,0,null);
+    }
+    toggleCameraView();
+  }
+}
+
+//Changes camera from birds-eye view to first person view
+function ChangeCam() {
+  //Switching to second camera view
+  camera = camera2;
+  //Changing flag variable
+  ToggleCam = 1;
+  //Reseting camera twos position
+  //    if(cam2x)
+  //    RestorePosition();
+} // end ChangeCam()
+
+//Changs camera from first person  view to birds-eye view
+function changeCam2() {
+  //saving camera2 old position
+  //    cam2x = camera2.position.x;
+  //    cam2y = camera2.position.y;
+  //    cam2z = camera2.position.z;
+  //    cam2Roy = camera2.rotation.y;
+  //    cam2Rox = camera2.rotation.x;
+  //    cam2Roz = camera2.rotation.z;
+  //Changes Camera to second camera view
+  camera = camera1;
+  //Flag variable for changing camera views
+  ToggleCam = 2;
+  //Reseting camera to original position after switching
+  controls1.value = 10;
+  controls1.reset();
+  setTimeout(function() {
+    controls1.value = 1;
+  }, 100);
+} // end changeCam2()
+
+//expand or collapse the div holding tools for confirming escape to main menu
+function confirmEscape() {
+  //if the div is not expanded, then expand
+  //else if expanded, then collapse it
+  if (document.getElementById('confirmEscape').style.height != "20vw") {
+    document.getElementById('exitToMenuButton').style.backgroundColor = "#003d4d";
+    document.getElementById('optionsButton').style.opacity = 0;
+    document.getElementById('directoryButton').style.opacity = 0;
+    document.getElementById('optionsButton').onclick = function() {};
+    document.getElementById('directoryButton').onclick = function() {};
+    document.getElementById('confirmEscape').style.height = "20vw";
+    // document.getElementById('confirmEscape').style.width = "13.2vw";
+  } else {
+    document.getElementById('exitToMenuButton').style.backgroundColor = "#40a4df";
+    document.getElementById('optionsButton').onclick = function() {
+      //if (!multiplayerAssigningModeOn) {
+      toggleEscapeFrame();
+      startOptions();
+      //}
+    };
+    document.getElementById('directoryButton').onclick = function() {
+      toggleEscapeFrame();
+      toggleIndex();
+    };
+    document.getElementById('optionsButton').style.opacity = 1;
+    document.getElementById('directoryButton').style.opacity = 1;
+    document.getElementById('confirmEscape').style.height = "0px";
+    // document.getElementById('confirmEscape').style.width = "0px";
+  }
+} //end toggleEscape
 
 /** createThreeFramework instantiates the renderer and scene to render 3D environment
  *   renderer = new THREE.WebGLRenderer(); above
@@ -150,269 +465,6 @@ function initializeCamera() {
 
 } //end initializeCamera
 
-
-//Event function that is called when screen is changed
-function CamView(e) {
-    tempKeys = giveHotkeys();
-    var Uma = String.fromCharCode(tempKeys[11][0]);
-   document.getElementById("flyover").innerHTML = "FlyOver Mode, Hit " + Uma +  " to Exit";
-  if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
-    if(curTracking) {
-      pushClick(0,getStamp(),85,0,null);
-    }
-    toggleCameraView();
-  }
-}
-
-//Event function that is called when a user is scrolling in the credits page
-function onWheelViewCredits(e) {
-  if(curTracking && scrollGap) {
-    pushClick(0,getStamp(),92,0,window.frames[0].pageYOffset);
-  }
-}
-
-//Event function that is called when a user is scrolling in results
-function onWheelViewResults(e) {
-  if(curTracking && scrollGap) {
-    pushClick(0,getStamp(),94,0,window.frames[3].pageYOffset);
-  }
-}
-
-//Event function that is called when a user is scrolling in the index [Unused for now...need to find a way to record scroll bar position in nested iframe within index]
-//function onWheelViewIndex(e) {
-  //if(curTracking && scrollGap) {
-    //pushClick(0,getStamp(),93,0,window.frames[2].frames[0].pageYOffset);
-  //}
-//}
-
-//Handles the time difference in scrolling events while click-tracking
-function scrollGap() {
-  //Change this value if needed
-  var goodGap = 500; //Half a second
-  var timeGap = (clickTrackings[clickTrackings.length-1].timeStamp) - (clickTrackings[clickTrackings.length-2].timeStamp);
-  if(goodGap>timeGap) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-// Function to restore camera2 last position after changing views.
-function RestorePosition(){
-    //Storing the camera2 values to global variables
-    camera2.position.x = cam2x;
-    camera2.position.y = cam2y;
-    camera2.position.z = cam2z;
-    camera2.rotation.x = cam2Rox;
-    camera2.rotation.y = cam2Roy;
-    camera2.rotation.z = cam2Roz;
-}
-
-//Function to change camera views.This function is called when the button Q is pressed.
-function toggleCameraView(){
-    //Checking the flag variable to know which camera is functional.
-    if (ToggleCam == 1){changeCam2();}
-    else{ChangeCam();}
-    if (ToggleCam == 1){document.getElementById('flyover').style.display = "block"}
-    else{document.getElementById('flyover').style.display = "none";}
-}
-
-//Changes camera from birds-eye view to first person view
-function ChangeCam (){
-   //Switching to second camera view
-   camera = camera2;
-   //Changing flag variable
-    ToggleCam = 1;
-    //Reseting camera twos position
-//    if(cam2x)
-//    RestorePosition();
-}
-
-//Changs camera from first person  view to birds-eye view
-function changeCam2(){
-    //saving camera2 old position
-//    cam2x = camera2.position.x;
-//    cam2y = camera2.position.y;
-//    cam2z = camera2.position.z;
-//    cam2Roy = camera2.rotation.y;
-//    cam2Rox = camera2.rotation.x;
-//    cam2Roz = camera2.rotation.z;
-    //Changes Camera to second camera view
-    camera = camera1;
-    //Flag variable for changing camera views
-    ToggleCam = 2;
-    //Reseting camera to original position after switching
-    controls1.value = 10;
-    controls1.reset();
-    setTimeout(function() {
-    controls1.value = 1;
-      }, 100);
-}
-
-//Camera movements Controls for Camera2 ie second view
-function animate(){
-  var hotkeys = giveHotkeys();
-	requestAnimationFrame(animate);
-
-	//Keyboard movement inputs
-    if(keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]){ // W key Forward Movements
-      if(curTracking) {
-        pushClick(0,getStamp(),86,0,null);
-      }
-        //Movements Restrictions and setting bounds
-        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
-        //and if it does it resets it to that specific position set.
-        //If it doesnt the camera moves normally.
-         if(camera2.position.x - Math.sin(camera2.rotation.y) * player.speed >= 265)
-            camera2.position.x = 264;
-        if(camera2.position.x - Math.sin(camera2.rotation.y) * player.speed  <= -265)
-            camera2.position.x =-264;
-        if(camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)
-            camera2.position.z = 299;
-        if(camera2.position.z-Math.cos(camera2.rotation.y) * player.speed  <= -300)
-            camera2.position.z =- 299;
-        else
-            camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
-		camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-        console.log(camera2.position);
-    }
-
-	if(keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]){ // S key Back Words movements
-    if(curTracking) {
-      pushClick(0,getStamp(),87,0,null);
-    }
-        //Movements Restrictions and setting bounds
-        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
-        //and if it does it resets it to that specific position set.
-        //If it doesnt the camera moves normally.
-        if(camera2.position.x+Math.sin(camera2.rotation.y) * player.speed >= 265)
-            camera2.position.x=264;
-        if(camera2.position.x+Math.sin(camera2.rotation.y) * player.speed  <= -265)
-            camera2.position.x=-264;
-        if(camera2.position.z+Math.cos(camera2.rotation.y) * player.speed >= 300)
-            camera2.position.z=299;
-        if(camera2.position.z+Math.cos(camera2.rotation.y) * player.speed  <= -300)
-            camera2.position.z=-299;
-        else
-            camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
-		camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
-        console.log(camera2.position);
-	}
-
-    if(keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // A key Left Side Movement
-      if(curTracking) {
-        pushClick(0,getStamp(),89,0,null);
-      }
-        //Movements Restrictions and setting bounds
-        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
-        //and if it does it resets it to that specific position set.
-        //If it doesnt the camera moves normally.
-         if(camera2.position.x-Math.sin(camera2.rotation.y + Math.PI/2) * player.speed >= 265)
-            camera2.position.x=264;
-        if(camera2.position.x-Math.sin(camera2.rotation.y + Math.PI/2) * player.speed  <= -265)
-            camera2.position.x=-264;
-        if(camera2.position.z - Math.cos(camera2.rotation.y + Math.PI/2) * player.speed >= 300)
-            camera2.position.z=299;
-        if(camera2.position.z - Math.cos(camera2.rotation.y + Math.PI/2) * player.speed  <= -300)
-            camera2.position.z=-299;
-        else
-            camera2.position.z -= Math.cos(camera2.rotation.y + Math.PI/2) * player.speed;
-		camera2.position.x -= Math.sin(camera2.rotation.y + Math.PI/2) * player.speed;
-        console.log(camera2.position);
-	}
-
-    if(keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // D key Right side Movements
-      if(curTracking) {
-        pushClick(0,getStamp(),88,0,null);
-      }
-        //Movements Restrictions and setting bounds
-        //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
-        //and if it does it resets it to that specific position set.
-        //If it doesnt the camera moves normally.
-        if(camera2.position.x-Math.sin(camera2.rotation.y - Math.PI/2) * player.speed >= 265)
-            camera2.position.x=264;
-        if(camera2.position.x-Math.sin(camera2.rotation.y - Math.PI/2) * player.speed  <= -265)
-            camera2.position.x=-264;
-        if(camera2.position.z - Math.cos(camera2.rotation.y - Math.PI/2) * player.speed >= 300)
-            camera2.position.z=299;
-        if(camera2.position.z - Math.cos(camera2.rotation.y - Math.PI/2) * player.speed  <= -300)
-            camera2.position.z=-299;
-        else
-		  camera2.position.z -= Math.cos(camera.rotation.y - Math.PI/2) * player.speed;
-		camera2.position.x -= Math.sin(camera.rotation.y - Math.PI/2) * player.speed;
-         console.log(camera2.position);
-	}
-
-    // Keyboard turn inputs
-	if(keyboard[39]){ // left arrow key Rotate right
-    if(curTracking) {
-      pushClick(0,getStamp(),97,0,null);
-    }
-        //This rotates the camera left
-		camera2.rotation.y -= player.turnSpeed;
-	}
-	if(keyboard[37]){ // right arrow key Rotate left
-    if(curTracking) {
-      pushClick(0,getStamp(),98,0,null);
-    }
-        //This rotates the camera right
-		camera2.rotation.y += player.turnSpeed;
-	}
-
-    //Specific Zooming
-    if(keyboard[38]){ // Up arrow key
-      if(curTracking) {
-        pushClick(0,getStamp(),95,0,null);
-      }
-        //Checking if toggle is on and checking if it passes a specific bounds and if it does
-        // It sets it to specific height and restrict it to that heights else if moves normally
-        if (tToggle){
-        if(camera2.position.y <= 27 )
-            camera2.position.y = 27;
-        else{
-         camera2.position.y -= 1;
-        camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
-		camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-        console.log(camera2.position.y +" "+ camera.position.z);}
-        }else{
-        if(camera2.position.y <= 9 )
-            camera2.position.y = 9;
-        else{
-         camera2.position.y -= 1;
-        camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
-		camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-        console.log(camera2.position.y +" "+ camera.position.z);}
-        }
-}
-
-    if(keyboard[40]){ // Down arrow key
-      if(curTracking) {
-        pushClick(0,getStamp(),96,0,null);
-      }
-       //setting bounds for zooming out and checking the camera y and z position.
-        //If it passes the position, it restricts the camera movement
-        if(camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)
-            camera2.position.z = 299;
-        if(camera2.position.y >= 60){
-            camera2.position.y = 60;
-            console.log(camera2.position.y +" "+ camera.position.z);
-        }
-        else {
-        camera2.position.y += 1;
-        camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
-		camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
-        console.log(camera2.position.y +" "+ camera.position.z);}
-    }
-	renderer.render(scene, camera);
-}
-function keyDown(event){
-	keyboard[event.keyCode] = true;
-}
-
-function keyUp(event){
-	keyboard[event.keyCode] = false;
-}
-
 //initializeLighting adds the lighting with specifications to the scene
 function initializeLighting() {
 
@@ -435,34 +487,6 @@ function initializeLighting() {
   spotLight.shadow.camera.near = 1;
   spotLight.shadow.camera.far = 500;
 } //end initializeCamera
-
-//renderBackground creates the static background always behind viewpoint
-//  this function used to select for the creation of a skybox
-//   but that functionality is deprecated as project requirements changed
-function renderBackground() {
-  setupStaticBackground();
-} //end renderBackground
-
-//loadingManager records when all textures and resources are loaded
-function loadingManager() {
-
-  //DefaultLoadingManager.onProgress is a THREE.js function that tracks when items are loaded
-  THREE.DefaultLoadingManager.onProgress = function(item, loaded, total) {
-    console.log(" loaded " + loaded + " of " + total);
-  };
-
-  //DefaultLoadingManager.onload updates boolean allLoaded when all resources are loaded
-  THREE.DefaultLoadingManager.onLoad = function() {
-
-    //update allLoaded status
-    console.log("Everything is loaded and good to go!");
-    allLoaded = true;
-
-    //show main PEWI page elements
-    // document.getElementById('page').style.visibility = "visible";
-    document.getElementById('firefoxWorkaround').focus();
-  };
-} //end loadingManager
 
 //initWorkspace initializes a sandbox game in the threeFramework
 function initWorkspace(file) {
@@ -497,167 +521,129 @@ function initWorkspace(file) {
   checkIfSceneLoaded();
 } //end initWorkspace
 
-//animationFrames is the key function involved in webGl
-// here we set up a loop that calls itsef throughout the duration of the activity
-function animationFrames() {
+function keyDown(event) {
+  keyboard[event.keyCode] = true;
+}
 
-  //render animations
-  requestAnimationFrame(function animate() {
+function keyUp(event) {
+  keyboard[event.keyCode] = false;
+}
 
-    birdAnimation();
-    zoomAnimation();
+//loadingManager records when all textures and resources are loaded
+function loadingManager() {
 
-    //rain animations (change y position of each raindrop)
-    if (rain != null) {
-      for (var i = 0; i < rain.geometry.vertices.length; i++) {
-        //update position
-        rain.geometry.vertices[i].y = rain.geometry.vertices[i].y - (rain.geometry.vertices[i].speed);
-        //if the raindrop reaches the ground, regenerate above the board
-        if (rain.geometry.vertices[i].y <= 0) rain.geometry.vertices[i].y = Math.random() * 500;
-      }
-      //necessary to make the raindrops move
-      rain.geometry.verticesNeedUpdate = true;
-    }
+  //DefaultLoadingManager.onProgress is a THREE.js function that tracks when items are loaded
+  THREE.DefaultLoadingManager.onProgress = function(item, loaded, total) {
+    console.log(" loaded " + loaded + " of " + total);
+  };
 
-    renderer.autoClear = false;
-    if (bgScene != null) {
-      renderer.render(bgScene, bgCam);
-    }
+  //DefaultLoadingManager.onload updates boolean allLoaded when all resources are loaded
+  THREE.DefaultLoadingManager.onLoad = function() {
 
-    //wait # update frames to check
-    if (counter > 20) {
-      gameDirector();
-      counter = 0;
-    }
-    counter += 1;
+    //update allLoaded status
+    console.log("Everything is loaded and good to go!");
+    allLoaded = true;
 
-    requestAnimationFrame(animate);
-    // render the according webgl
-    renderer.render(scene, camera);
+    //show main PEWI page elements
+    // document.getElementById('page').style.visibility = "visible";
+    document.getElementById('firefoxWorkaround').focus();
+  };
+} //end loadingManager
 
-    // takeScreenshot is global variable. Is set to true when pressing print key 'p' ( helpersFE.js )
-    if (takeScreenshot) {
-      // reset takeScreenshot to false
-      takeScreenshot = false;
-      // preprocess needed src
-      jspdfprinter.preprocessing();
+//makeItRain -- add some precipitation to PEWI
+function makeItRain(numberOfRaindrops) {
 
-    } // end if
-    stats.update();
+  //create geometry and material for raindrops
+  var rainGeometry = new THREE.Geometry();
+  var rainMaterial = new THREE.PointsMaterial({
+    blending: THREE.AdditiveBlending,
+    color: 0x40a4df,
+    map: rainTexture,
+    opacity: 0.5,
+    size: 2,
+    sizeAttenuation: true,
+    transparent: true
+  });
 
-  }); //end request
+  //for each raindrop to create randomly assign a position within the map boundaries
+  for (var i = 0; i < numberOfRaindrops; i++) {
 
-} //end animationFrames
+    //determine maximum dimensions of the current board
+    var maxWidth = boardData[currentBoard].width;
+    var maxHeight = boardData[currentBoard].height;
 
-//birdAnimation updates bird and boid positions
-function birdAnimation() {
+    //x range of board
+    var xRange = Math.abs(1 * tileWidth - (tileWidth * maxWidth) / 2) + Math.abs(maxWidth * tileWidth - (tileWidth * maxWidth) / 2);
+    //z range of board
+    var zRange = Math.abs(1 * tileHeight - (tileHeight * maxHeight) / 2) + Math.abs(maxHeight * tileHeight - (tileHeight * maxHeight) / 2);
 
-  if (birds != null) {
-
-    for (var i = 0, il = birds.length; i < il; i++) {
-
-      boid = boids[i];
-      boid.run(boids);
-
-      bird = birds[i];
-      bird.position.copy(boids[i].position);
-
-      color = bird.material.color;
-      color.r = color.g = color.b = (500 - bird.position.z) / 1000;
-
-      bird.rotation.y = Math.atan2(-boid.velocity.z, boid.velocity.x);
-      bird.rotation.z = Math.asin(boid.velocity.y / boid.velocity.length());
-
-      bird.phase = (bird.phase + (Math.max(0, bird.rotation.z) + 0.1)) % 62.83;
-      bird.geometry.vertices[5].y = bird.geometry.vertices[4].y = Math.sin(bird.phase) * 5;
-
-    }
-
+    //add a raindrop as a vertex in the rain object
+    var raindrop = new THREE.Vector3(
+      Math.random() * xRange - xRange / 2,
+      Math.random() * 500,
+      Math.random() * zRange - zRange / 2
+    );
+    raindrop.speed = Math.random() + 2;
+    rainGeometry.vertices.push(raindrop);
   }
 
-} //end birdAnimation
+  //create the rain object and add to the scene
+  rain = new THREE.Points(rainGeometry, rainMaterial);
+  rain.sortParticles = true;
+  scene.add(rain);
 
-//zoomAnimation updates field of view positions for zoom animation
-function zoomAnimation() {
+} //end makeItRain
 
-  if (zoomingInNow) {
-
-    camera.fov = fov * zoomFactor;
-    camera.updateProjectionMatrix();
-
-    zoomFactor = zoomFactor - zoomInInc;
-
-    if (zoomFactor < 0.35) zoomingInNow = false;
-
+//Event function that is called when a user is scrolling in the credits page
+function onWheelViewCredits(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),92,0,window.frames[0].pageYOffset);
   }
+}
 
-  if (zoomingOutNow) {
+//Event function that is called when a user is scrolling in the index [Unused for now...need to find a way to record scroll bar position in nested iframe within index]
+//function onWheelViewIndex(e) {
+//if(curTracking && scrollGap) {
+//pushClick(0,getStamp(),93,0,window.frames[2].frames[0].pageYOffset);
+//}
+//}
 
-    camera.fov = fov * zoomFactor;
-    camera.updateProjectionMatrix();
-
-    zoomFactor = zoomFactor + zoomOutInc;
-
-
-    console.log(zoomFactor);
-
-    if (zoomFactor > 0.8) {
-
-      if (zoomFactor >= 1.2) {
-        zoomingOutNow = false;
-      }
-
-      zoomFactor = 1.0;
-    }
+//Event function that is called when a user is scrolling in results
+function onWheelViewResults(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),94,0,window.frames[3].pageYOffset);
   }
+}
 
-} //end zoomAnimation
+//renderBackground creates the static background always behind viewpoint
+//  this function used to select for the creation of a skybox
+//   but that functionality is deprecated as project requirements changed
+function renderBackground() {
+  setupStaticBackground();
+} //end renderBackground
 
-//setupStaticBackground uses the old pewi graphics as a background image
-function setupStaticBackground() {
+// Function to restore camera2 last position after changing views.
+function RestorePosition(){
+  //Storing the camera2 values to global variables
+  camera2.position.x = cam2x;
+  camera2.position.y = cam2y;
+  camera2.position.z = cam2z;
+  camera2.rotation.x = cam2Rox;
+  camera2.rotation.y = cam2Roy;
+  camera2.rotation.z = cam2Roz;
+}
 
-  var r = Math.floor(Math.random() * oldPewiBackgrounds.length);
-
-  var bg = new THREE.Mesh(
-    new THREE.PlaneGeometry(2, 2, 0),
-    new THREE.MeshBasicMaterial({
-      map: oldPewiBackgrounds[r]
-    })
-  );
-
-  bg.material.depthTest = false;
-  bg.material.depthWrite = false;
-
-  bgScene = new THREE.Scene();
-  bgCam = new THREE.Camera();
-  bgScene.add(bgCam);
-  bgScene.add(bg);
-
-  var ambiLight = new THREE.AmbientLight(0x404040, 6.0);
-  bgScene.add(ambiLight);
-
-} //end setupStaticBackground
-
-//switchBoards removes and displays a new board in the THREE.js scene
-function switchBoards(newBoard) {
-
-  //remove points of previous board's river if present
-  if (riverPoints.length > 0) {
-    riverPoints = [];
+//Handles the time difference in scrolling events while click-tracking
+function scrollGap() {
+  //Change this value if needed
+  var goodGap = 500; //Half a second
+  var timeGap = (clickTrackings[clickTrackings.length-1].timeStamp) - (clickTrackings[clickTrackings.length-2].timeStamp);
+  if(goodGap>timeGap) {
+    return true;
+  } else {
+    return false;
   }
-  //push into current board
-  boardData.push(newBoard);
-  currentBoard++;
-  boardData[currentBoard].updateBoard();
-  refreshBoard();
-  setupRiver();
-  //in case new board is smaller than old board, make sure to reset hover
-  previousHover = 0;
-
-  //update Results to point to correct board since currentBoard is updated
-  Totals = new Results(boardData[currentBoard]);
-
-} //end switchBoards
+}
 
 //setupBoardFromFile creates a new gameboard from a stored file and creates a river for the board
 function setupBoardFromFile(file) {
@@ -698,65 +684,26 @@ function setupBoardFromUpload(data) {
   }
 } //end setupBoardFromUpload
 
-//switchToZoomView updates a zoom template map with information from the current full map
-function switchToZoomView(tile) {
+//setupHighlight adds listeners to the mouse in the THREE.js scene
+function setupHighlight() {
 
-  //record the board index before zooming in
-  fullBoardBeforeZoom = currentBoard;
-  zoomedIn = true;
+  //set up mouse functions and raycaster
+  raycaster = new THREE.Raycaster();
+  mouse = new THREE.Vector2(), hoveredOver;
 
-  //setup board from zoom template map
-  setupBoardFromFile("./levels/maps/zoomTemplate.csv");
+  //add mouse listener
+  document.addEventListener('mousemove', onDocumentMouseMove, false);
+  document.addEventListener('mousedown', onDocumentMouseDown, false);
+  document.addEventListener('mouseup', onDocumentMouseUp, false);
+  document.addEventListener('keydown', onDocumentKeyDown, false);
+  document.addEventListener('keyup', onDocumentKeyUp, false);
+  // addEvent(document, 'mousemove', onDocumentMouseMove);
+  // addEvent(document, 'mousedown', onDocumentMouseDown);
+  // addEvent(document, 'mouseup', onDocumentMouseUp);
+  // addEvent(document, 'keydown', onDocumentKeyDown);
+  // addEvent(document, 'keyup', onDocumentKeyUp);
 
-  //for each of the tiles in the zoomed in map, update their information from the main board
-  for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
-    //update the mesh textures
-    meshMaterials[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
-
-    //update the land use types for each year
-    boardData[currentBoard].map[i].landType[1] = boardData[fullBoardBeforeZoom].map[tile].landType[1];
-    boardData[currentBoard].map[i].landType[2] = boardData[fullBoardBeforeZoom].map[tile].landType[2];
-    boardData[currentBoard].map[i].landType[3] = boardData[fullBoardBeforeZoom].map[tile].landType[3];
-
-    //update the calculations for the current year
-    boardData[currentBoard].map[i].update(currentYear);
-
-  }
-
-  //reset the camera location
-  controls.value = 100;
-  controls.reset();
-  setTimeout(function() {
-    controls.value = 1;
-  }, 100);
-
-  //start animating the zoom in movement
-  zoomingInNow = true;
-
-}
-
-//switchToUnzoomedView returns to the full map from a zoomed in tile and updates the tile's results.
-function switchToUnzoomedView(tile, shouldResetBoard) {
-
-  zoomedIn = false;
-
-  //Record the results of this tile and save to the main map results for this tile.
-  //TODO
-
-  //Switch back to the full map
-  if (shouldResetBoard) switchBoards(boardData[fullBoardBeforeZoom]);
-
-  //reset the camera location
-  controls.value = 10;
-  controls.reset();
-  setTimeout(function() {
-    controls.value = 1;
-  }, 100);
-
-  //start animation the zoom out movement
-  zoomingOutNow = true;
-}
+} //end setupHighlight
 
 //Create a river object with tributaries
 function setupRiver() {
@@ -825,70 +772,43 @@ function setupRiver() {
   scene.add(river);
 } //end setupRiver
 
-//setupHighlight adds listeners to the mouse in the THREE.js scene
-function setupHighlight() {
+//setupStaticBackground uses the old pewi graphics as a background image
+function setupStaticBackground() {
 
-  //set up mouse functions and raycaster
-  raycaster = new THREE.Raycaster();
-  mouse = new THREE.Vector2(), hoveredOver;
+  var r = Math.floor(Math.random() * oldPewiBackgrounds.length);
 
-  //add mouse listener
-  document.addEventListener('mousemove', onDocumentMouseMove, false);
-  document.addEventListener('mousedown', onDocumentMouseDown, false);
-  document.addEventListener('mouseup', onDocumentMouseUp, false);
-  document.addEventListener('keydown', onDocumentKeyDown, false);
-  document.addEventListener('keyup', onDocumentKeyUp, false);
-  // addEvent(document, 'mousemove', onDocumentMouseMove);
-  // addEvent(document, 'mousedown', onDocumentMouseDown);
-  // addEvent(document, 'mouseup', onDocumentMouseUp);
-  // addEvent(document, 'keydown', onDocumentKeyDown);
-  // addEvent(document, 'keyup', onDocumentKeyUp);
+  var bg = new THREE.Mesh(
+    new THREE.PlaneGeometry(2, 2, 0),
+    new THREE.MeshBasicMaterial({
+      map: oldPewiBackgrounds[r]
+    })
+  );
 
-} //end setupHighlight
+  bg.material.depthTest = false;
+  bg.material.depthWrite = false;
 
-//expand or collapse the div holding tools for confirming escape to main menu
-function confirmEscape() {
-  //if the div is not expanded, then expand
-  //else if expanded, then collapse it
-  if (document.getElementById('confirmEscape').style.height != "20vw") {
-    document.getElementById('exitToMenuButton').style.backgroundColor = "#003d4d";
-    document.getElementById('optionsButton').style.opacity = 0;
-    document.getElementById('directoryButton').style.opacity = 0;
-    document.getElementById('optionsButton').onclick = function() {};
-    document.getElementById('directoryButton').onclick = function() {};
-    document.getElementById('confirmEscape').style.height = "20vw";
-    // document.getElementById('confirmEscape').style.width = "13.2vw";
-  } else {
-    document.getElementById('exitToMenuButton').style.backgroundColor = "#40a4df";
-    document.getElementById('optionsButton').onclick = function() {
-      //if (!multiplayerAssigningModeOn) {
-        toggleEscapeFrame();
-        startOptions();
-      //}
-    };
-    document.getElementById('directoryButton').onclick = function() {
-      toggleEscapeFrame();
-      toggleIndex();
-    };
-    document.getElementById('optionsButton').style.opacity = 1;
-    document.getElementById('directoryButton').style.opacity = 1;
-    document.getElementById('confirmEscape').style.height = "0px";
-    // document.getElementById('confirmEscape').style.width = "0px";
-  }
-} //end toggleEscape
+  bgScene = new THREE.Scene();
+  bgCam = new THREE.Camera();
+  bgScene.add(bgCam);
+  bgScene.add(bg);
+
+  var ambiLight = new THREE.AmbientLight(0x404040, 6.0);
+  bgScene.add(ambiLight);
+
+} //end setupStaticBackground
 
 //showMainMenu uses the esc key to return to the startup screen
 function showMainMenu() {
-    //Checking the flag variable to know which camera is functional.
-    if (ToggleCam == 1){
-        changeCam2();
-       document.getElementById("flyover").innerHTML = "";
-        //Reseting camera 2 position when sandbox is reloaded
-        camera2.position.x = 70;
-        camera2.position.y = 25;
-        camera2.position.z = 244;
-        camera2.rotation.y = 0;
-    }
+  //Checking the flag variable to know which camera is functional.
+  if (ToggleCam == 1){
+    changeCam2();
+    document.getElementById("flyover").innerHTML = "";
+    //Reseting camera 2 position when sandbox is reloaded
+    camera2.position.x = 70;
+    camera2.position.y = 25;
+    camera2.position.z = 244;
+    camera2.rotation.y = 0;
+  }
 
   //show loading animation and startup page
   document.getElementById('loading').style.display = "block";
@@ -935,46 +855,128 @@ function showMainMenu() {
 
 } //end showMainMenu
 
-//makeItRain -- add some precipitation to PEWI
-function makeItRain(numberOfRaindrops) {
+//switchBoards removes and displays a new board in the THREE.js scene
+function switchBoards(newBoard) {
 
-  //create geometry and material for raindrops
-  var rainGeometry = new THREE.Geometry();
-  var rainMaterial = new THREE.PointsMaterial({
-    blending: THREE.AdditiveBlending,
-    color: 0x40a4df,
-    map: rainTexture,
-    opacity: 0.5,
-    size: 2,
-    sizeAttenuation: true,
-    transparent: true
-  });
+  //remove points of previous board's river if present
+  if (riverPoints.length > 0) {
+    riverPoints = [];
+  }
+  //push into current board
+  boardData.push(newBoard);
+  currentBoard++;
+  boardData[currentBoard].updateBoard();
+  refreshBoard();
+  setupRiver();
+  //in case new board is smaller than old board, make sure to reset hover
+  previousHover = 0;
 
-  //for each raindrop to create randomly assign a position within the map boundaries
-  for (var i = 0; i < numberOfRaindrops; i++) {
+  //update Results to point to correct board since currentBoard is updated
+  Totals = new Results(boardData[currentBoard]);
 
-    //determine maximum dimensions of the current board
-    var maxWidth = boardData[currentBoard].width;
-    var maxHeight = boardData[currentBoard].height;
+} //end switchBoards
 
-    //x range of board
-    var xRange = Math.abs(1 * tileWidth - (tileWidth * maxWidth) / 2) + Math.abs(maxWidth * tileWidth - (tileWidth * maxWidth) / 2);
-    //z range of board
-    var zRange = Math.abs(1 * tileHeight - (tileHeight * maxHeight) / 2) + Math.abs(maxHeight * tileHeight - (tileHeight * maxHeight) / 2);
+//switchToZoomView updates a zoom template map with information from the current full map
+function switchToZoomView(tile) {
 
-    //add a raindrop as a vertex in the rain object
-    var raindrop = new THREE.Vector3(
-      Math.random() * xRange - xRange / 2,
-      Math.random() * 500,
-      Math.random() * zRange - zRange / 2
-    );
-    raindrop.speed = Math.random() + 2;
-    rainGeometry.vertices.push(raindrop);
+  //record the board index before zooming in
+  fullBoardBeforeZoom = currentBoard;
+  zoomedIn = true;
+
+  //setup board from zoom template map
+  setupBoardFromFile("./levels/maps/zoomTemplate.csv");
+
+  //for each of the tiles in the zoomed in map, update their information from the main board
+  for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+
+    //update the mesh textures
+    meshMaterials[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+
+    //update the land use types for each year
+    boardData[currentBoard].map[i].landType[1] = boardData[fullBoardBeforeZoom].map[tile].landType[1];
+    boardData[currentBoard].map[i].landType[2] = boardData[fullBoardBeforeZoom].map[tile].landType[2];
+    boardData[currentBoard].map[i].landType[3] = boardData[fullBoardBeforeZoom].map[tile].landType[3];
+
+    //update the calculations for the current year
+    boardData[currentBoard].map[i].update(currentYear);
+
   }
 
-  //create the rain object and add to the scene
-  rain = new THREE.Points(rainGeometry, rainMaterial);
-  rain.sortParticles = true;
-  scene.add(rain);
+  //reset the camera location
+  controls.value = 100;
+  controls.reset();
+  setTimeout(function() {
+    controls.value = 1;
+  }, 100);
 
-} //end makeItRain
+  //start animating the zoom in movement
+  zoomingInNow = true;
+
+}
+
+//switchToUnzoomedView returns to the full map from a zoomed in tile and updates the tile's results.
+function switchToUnzoomedView(tile, shouldResetBoard) {
+
+  zoomedIn = false;
+
+  //Record the results of this tile and save to the main map results for this tile.
+  //TODO
+
+  //Switch back to the full map
+  if (shouldResetBoard) switchBoards(boardData[fullBoardBeforeZoom]);
+
+  //reset the camera location
+  controls.value = 10;
+  controls.reset();
+  setTimeout(function() {
+    controls.value = 1;
+  }, 100);
+
+  //start animation the zoom out movement
+  zoomingOutNow = true;
+}
+
+//Function to change camera views.This function is called when the button Q is pressed.
+function toggleCameraView(){
+    //Checking the flag variable to know which camera is functional.
+    if (ToggleCam == 1){changeCam2();}
+    else{ChangeCam();}
+    if (ToggleCam == 1){document.getElementById('flyover').style.display = "block"}
+    else{document.getElementById('flyover').style.display = "none";}
+}
+
+//zoomAnimation updates field of view positions for zoom animation
+function zoomAnimation() {
+
+  if (zoomingInNow) {
+
+    camera.fov = fov * zoomFactor;
+    camera.updateProjectionMatrix();
+
+    zoomFactor = zoomFactor - zoomInInc;
+
+    if (zoomFactor < 0.35) zoomingInNow = false;
+
+  }
+
+  if (zoomingOutNow) {
+
+    camera.fov = fov * zoomFactor;
+    camera.updateProjectionMatrix();
+
+    zoomFactor = zoomFactor + zoomOutInc;
+
+
+    console.log(zoomFactor);
+
+    if (zoomFactor > 0.8) {
+
+      if (zoomFactor >= 1.2) {
+        zoomingOutNow = false;
+      }
+
+      zoomFactor = 1.0;
+    }
+  }
+
+} //end zoomAnimation
