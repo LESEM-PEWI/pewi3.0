@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.7.31)  3 AUG 2017 14:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.7.31)  7 AUG 2017 09:35
 entering extended mode
-**./general.tex
-(general.tex
+**./advanced.tex
+(advanced.tex
 LaTeX2e <2017-04-15>
 Babel <3.10> and hyphenation patterns for 75 language(s) loaded.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
@@ -536,8 +536,8 @@ s
 \f@nch@O@orf=\skip54
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 31.
- (general.aux)
-\openout1 = `general.aux'.
+ (advanced.aux)
+\openout1 = `advanced.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
 LaTeX Font Info:    ... okay on input line 35.
@@ -611,9 +611,9 @@ LaTeX Info: Redefining \ref on input line 35.
 LaTeX Info: Redefining \pageref on input line 35.
 LaTeX Info: Redefining \nameref on input line 35.
 
-(general.out) (general.out)
+(advanced.out) (advanced.out)
 \@outlinefile=\write3
-\openout3 = `general.out'.
+\openout3 = `advanced.out'.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
@@ -659,44 +659,170 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <../imgs/updatedPewiLogo.p
 ng>] [1] [2
 
-] (general.toc
+] (advanced.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 4.
  [3
 
 ])
 \tf@toc=\write4
-\openout4 = `general.toc'.
+\openout4 = `advanced.toc'.
 
  [4]pdfTeX warning (ext4): destination with the same identifier (name{page.1}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.102 
+l.116 
        [1
 
-] [2] [3]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 149.
+] [2] [3] [4] [5]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 254.
 
- ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 149.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 254.
+ [6] [7] [8] [9]
+[10]
+Overfull \hbox (64.03004pt too wide) in paragraph at lines 382--412
+ [] 
+ []
 
-[4] [5] [6] [7] [8] [9] [10] [11
+[11] [12] [13]
+Overfull \hbox (0.60829pt too wide) in paragraph at lines 464--464
+[]|\OT1/cmr/m/n/10.95 Fissore 
+ []
 
-] [12] [13] [14] [15] [16] [17] [18] [19]
-[20] [21]
-Overfull \hbox (32.63771pt too wide) in paragraph at lines 559--561
-\OT1/cmr/m/n/10.95 http://www.extension.iastate.edu/soils/sites/www.extension.i
-astate.edu/files/soils/ISU%20CSR2%20 
+
+Overfull \hbox (78.31133pt too wide) in paragraph at lines 457--502
+ [] 
+ []
+
+[14]
+
+LaTeX Warning: Citation `38' on page 15 undefined on input line 512.
+
+
+LaTeX Warning: Citation `39' on page 15 undefined on input line 512.
+
+
+LaTeX Warning: Citation `40' on page 15 undefined on input line 512.
+
+
+LaTeX Warning: Citation `41' on page 15 undefined on input line 515.
+
+
+LaTeX Warning: Citation `42' on page 15 undefined on input line 527.
+
+[15
+
+]
+
+LaTeX Warning: Citation `43' on page 16 undefined on input line 534.
+
+
+LaTeX Warning: Citation `43' on page 16 undefined on input line 548.
+
+[16]
+
+LaTeX Warning: Citation `44' on page 17 undefined on input line 569.
+
+
+LaTeX Warning: Citation `45' on page 17 undefined on input line 572.
+
+
+LaTeX Warning: Citation `46' on page 17 undefined on input line 575.
+
+[17] [18] [19] [20] [21]
+Underfull \hbox (badness 4543) in paragraph at lines 713--714
+[]\OT1/cmr/m/n/10.95 Iowa State Uni-ver-sity, \Iowa Soil Prop-er-ties and In-te
+r-pre-ta-tions Database," 2010,
  []
 
 [22]
+Underfull \hbox (badness 10000) in paragraph at lines 715--716
+\OT1/cmtt/m/n/10.95 extension . iastate . edu / files / soils / ISU % 20CSR2 % 
+20formula % 20with % 20values % 20V1 . 1 %
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 725--726
+\OT1/cmtt/m/n/10.95 extension . iastate . edu / files / soils / ISU % 20CSR2 % 
+20formula % 20with % 20values % 20V1 . 1 %
+ []
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.732 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.732 
+      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Display math should end with $$.
+<to be read again> 
+                   \@@par 
+l.732 
+      
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+! Extra }, or forgotten \endgroup.
+\par ...m \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.732 
+      
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.733   \end{equation}
+                        \bibitem{37}Cinzia Fissore et al., “Limited Potent...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! You can't use `\eqno' in math mode.
+\H@endequation ->\eqno 
+                       \hbox {\@eqnnum }$$\@ignoretrue 
+l.733   \end{equation}
+                        \bibitem{37}Cinzia Fissore et al., “Limited Potent...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.733   \end{equation}
+                        \bibitem{37}Cinzia Fissore et al., “Limited Potent...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
 ! Misplaced alignment tab character &.
-l.586 ...i River Basin,” Environmental Science &
-                                                   Technology 42, no. 3 (200...
+l.733 ... Iowa Soils,” Agriculture, Ecosystems &
+                                                   Environment 105, no. 4 (M...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
 simple: Just type `I\&' now. But if some right brace
@@ -704,42 +830,28 @@ up above has ended a previous alignment prematurely,
 you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
-! Misplaced alignment tab character &.
-l.596 ... Natural Resources] Bureau of Forestry, &
-                                                   USDA NRCS [United States ...
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 737.
 [23]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 605.
- [24]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 605.
- (general.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 605.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 605.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 737.
+ (advanced.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 737.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 737.
+Package rerunfilecheck Info: File `advanced.out' has not changed.
+(rerunfilecheck)             Checksum: F1096A8C259BB06F3AB93CA978B8CE80;4832.
 
 
-Package rerunfilecheck Warning: File `general.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
+LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Info: Checksums for `general.out':
-(rerunfilecheck)             Before: E635FCB8B0584816444506CD2FDE5340;4844
-(rerunfilecheck)             After:  FB5E1803DBEC0D40F2018DF5F529518E;4901.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 605.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 737.
  ) 
 Here is how much of TeX's memory you used:
- 6585 strings out of 493323
- 93671 string characters out of 3139066
- 289222 words of memory out of 3000000
- 9906 multiletter control sequences out of 15000+200000
+ 6524 strings out of 493323
+ 93344 string characters out of 3139066
+ 288383 words of memory out of 3000000
+ 9880 multiletter control sequences out of 15000+200000
  9624 words of font info for 34 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,12n,43p,1244b,433s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 28i,12n,43p,842b,430s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTe
@@ -748,9 +860,9 @@ ts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
 msfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmtt10.pfb>
-Output written on general.pdf (29 pages, 843812 bytes).
+Output written on advanced.pdf (28 pages, 828698 bytes).
 PDF statistics:
- 760 PDF objects out of 1000 (max. 8388607)
- 153 named destinations out of 1000 (max. 500000)
+ 657 PDF objects out of 1000 (max. 8388607)
+ 118 named destinations out of 1000 (max. 500000)
  582 words of extra memory for PDF output out of 10000 (max. 10000000)
 

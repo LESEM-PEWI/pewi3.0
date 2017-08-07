@@ -13,18 +13,65 @@
 \contentsline {subsection}{\numberline {1.10}Rotational Grazing}{2}{subsection.1.10}
 \contentsline {subsection}{\numberline {1.11}Wetland}{2}{subsection.1.11}
 \contentsline {subsection}{\numberline {1.12}Prairie}{2}{subsection.1.12}
-\contentsline {subsection}{\numberline {1.13}Conventional Forest}{2}{subsection.1.13}
+\contentsline {subsection}{\numberline {1.13}Conventional Forest}{3}{subsection.1.13}
 \contentsline {subsection}{\numberline {1.14}Conservation Forest}{3}{subsection.1.14}
 \contentsline {subsection}{\numberline {1.15}Short-Rotation Woody Bioenergy}{3}{subsection.1.15}
 \contentsline {section}{\numberline {2}Physical Features}{4}{section.2}
 \contentsline {subsection}{\numberline {2.1}Topographic Relief}{4}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Flood Frequency}{4}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Subwatershed Boundaries}{4}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Drainage Class}{4}{subsection.2.4}
-\contentsline {subsubsection}{\numberline {2.4.1}Hydrologic Group}{4}{subsubsection.2.4.1}
-\contentsline {subsection}{\numberline {2.5}Soil Class}{4}{subsection.2.5}
-\contentsline {subsection}{\numberline {2.6}Soil Texture}{4}{subsection.2.6}
-\contentsline {subsection}{\numberline {2.7}Corn Suitability Rating}{4}{subsection.2.7}
-\contentsline {section}{\numberline {3}Precipitation}{5}{section.3}
-\contentsline {section}{\numberline {4}Management Practices}{6}{section.4}
-\contentsline {section}{\numberline {5}Modules}{7}{section.5}
+\contentsline {subsection}{\numberline {2.3}Strategic Wetlands}{4}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Subwatershed Boundaries}{5}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Drainage Class}{5}{subsection.2.5}
+\contentsline {subsubsection}{\numberline {2.5.1}Hydrologic Group}{5}{subsubsection.2.5.1}
+\contentsline {subsection}{\numberline {2.6}Yield Overlay Maps}{6}{subsection.2.6}
+\contentsline {subsection}{\numberline {2.7}Soil Class}{6}{subsection.2.7}
+\contentsline {subsection}{\numberline {2.8}Soil Texture}{6}{subsection.2.8}
+\contentsline {subsection}{\numberline {2.9}Corn Suitability Rating}{7}{subsection.2.9}
+\contentsline {section}{\numberline {3}Precipitation}{8}{section.3}
+\contentsline {section}{\numberline {4}Management Practices}{9}{section.4}
+\contentsline {subsection}{\numberline {4.1}Crop Rotation}{9}{subsection.4.1}
+\contentsline {section}{\numberline {5}Modules}{10}{section.5}
+\contentsline {subsection}{\numberline {5.1}Habitat}{10}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}Biodiversity}{10}{subsubsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.2}Game Wildlife}{10}{subsubsection.5.1.2}
+\contentsline {subsection}{\numberline {5.2}Soil Quality}{10}{subsection.5.2}
+\contentsline {subsubsection}{\numberline {5.2.1}Carbon Sequestration}{10}{subsubsection.5.2.1}
+\contentsline {subsubsection}{\numberline {5.2.2}Erosion Control}{11}{subsubsection.5.2.2}
+\contentsline {subsection}{\numberline {5.3}Water Quality}{11}{subsection.5.3}
+\contentsline {subsubsection}{\numberline {5.3.1}Nitrate Retention}{11}{subsubsection.5.3.1}
+\contentsline {subsubsection}{\numberline {5.3.2}Phosphorus Retention}{11}{subsubsection.5.3.2}
+\contentsline {subsubsection}{\numberline {5.3.3}Sediment Control}{11}{subsubsection.5.3.3}
+\contentsline {subsection}{\numberline {5.4}Yield}{11}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}Corn Yield}{12}{subsubsection.5.4.1}
+\contentsline {subsubsection}{\numberline {5.4.2}Soybean Yield}{12}{subsubsection.5.4.2}
+\contentsline {subsubsection}{\numberline {5.4.3}Alfalfa Hay Yield}{12}{subsubsection.5.4.3}
+\contentsline {subsubsection}{\numberline {5.4.4}Grass Hay}{12}{subsubsection.5.4.4}
+\contentsline {subsubsection}{\numberline {5.4.5}Cattle Yield}{13}{subsubsection.5.4.5}
+\contentsline {subsubsection}{\numberline {5.4.6}Mixed Fruit and Vegetable Yield}{13}{subsubsection.5.4.6}
+\contentsline {subsubsection}{\numberline {5.4.7}Wood Yield}{13}{subsubsection.5.4.7}
+\contentsline {subsubsection}{\numberline {5.4.8}Switch Grass Yield}{13}{subsubsection.5.4.8}
+\contentsline {subsubsection}{\numberline {5.4.9}Woody Biomass}{13}{subsubsection.5.4.9}
+\contentsline {section}{\numberline {6}Functionality}{14}{section.6}
+\contentsline {subsection}{\numberline {6.1}Navigating the PEWI Workspace}{14}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Tool Panel}{14}{subsubsection.6.1.1}
+\contentsline {subsubsection}{\numberline {6.1.2}Results Panel}{14}{subsubsection.6.1.2}
+\contentsline {paragraph}{Land Use Graph}{14}{section*.4}
+\contentsline {paragraph}{Ecosystem Services Graph}{15}{section*.5}
+\contentsline {paragraph}{Precipitation Graph}{15}{section*.6}
+\contentsline {paragraph}{Data Sheet}{15}{section*.7}
+\contentsline {subsubsection}{\numberline {6.1.3}Comment Panel}{15}{subsubsection.6.1.3}
+\contentsline {subsubsection}{\numberline {6.1.4}Index Information Box}{15}{subsubsection.6.1.4}
+\contentsline {subsubsection}{\numberline {6.1.5}View Perspective}{15}{subsubsection.6.1.5}
+\contentsline {subsubsection}{\numberline {6.1.6}Save Watershed}{15}{subsubsection.6.1.6}
+\contentsline {subsection}{\numberline {6.2}Main Menu}{16}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Guided Play}{16}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Multiplayer Mode}{16}{subsection.6.4}
+\contentsline {subsection}{\numberline {6.5}Pause Menu}{16}{subsection.6.5}
+\contentsline {subsection}{\numberline {6.6}Hover Information}{16}{subsection.6.6}
+\contentsline {subsection}{\numberline {6.7}Hotkeys}{17}{subsection.6.7}
+\contentsline {subsection}{\numberline {6.8}Hotkey Customization}{17}{subsection.6.8}
+\contentsline {subsection}{\numberline {6.9}Randomization}{17}{subsection.6.9}
+\contentsline {subsection}{\numberline {6.10}Undo Function}{18}{subsection.6.10}
+\contentsline {subsection}{\numberline {6.11}Print Function}{18}{subsection.6.11}
+\contentsline {subsection}{\numberline {6.12}Record}{18}{subsection.6.12}
+\contentsline {subsection}{\numberline {6.13}About}{18}{subsection.6.13}
