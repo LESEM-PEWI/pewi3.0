@@ -871,10 +871,89 @@ Green bean, squash, and strawberry yield values are from Iowa State University E
 
 
 \subsubsection{Wood Yield}
-Wood production is based on estimates generated using the 2007 Iowa Woodland Suitability Composite.\cite{44} Yield estimates assume appropriate selection of tree species for a given location. A 30\% reduction in wood production estimates for conservation forest is applied to account for differences in management.
+The equation is:
+$$\sum_{i=1}^{n} \sum_{j=1}^{m_i} A_i_j *YB_i_j\bigg[Wood\bigg]*YP_i_j$$
+
+where YB_i_j\bigg[Wood\bigg] = CM * YB_i_j\bigg[ConvWood\bigg]
+
+and CM is a conservation multiplier that is equal to 0.7 in conservation forest and 1.0 in conventional forest. YP_i_j is equal to 1 in all precipitation scenarios. Yield on a per unit basis is maximized in Nodaway 220, Clarion 138B, Downs 162D2, Tama 120C2, and Tama 120B soils and minimized in Canisteo 507, Coland 135, and Okoboji 90 soils.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{2}{|l|}{County}                  & \multicolumn{2}{|l|}{ISPAID Soil Type} & \multicolumn{2}{|l|}{Yield Base Rate Mg/ha-1year} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{5}{*}{Boone County}} & \multicolumn{2}{|l|}{Clarion 138B} & \multicolumn{2}{|l|}{1.630} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Buckney 1636} & \multicolumn{2}{|l|}{0.741} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Canisteo 507} & \multicolumn{2}{|l|}{0.504} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Coland 135} & \multicolumn{2}{|l|}{0.504} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nicollet 55} & \multicolumn{2}{|l|}{1.040} \\ 
+\cline{3-6}
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Okoboji 90} & \multicolumn{2}{|l|}{0.504} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{3}{*}{Jasper County}} & \multicolumn{2}{|l|}{Downs 162D2} & \multicolumn{2}{|l|}{1.630} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Gara-Armstrong 993E2} & \multicolumn{2}{|l|}{1.560} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Ackmore-Colo 5B} & \multicolumn{2}{|l|}{0.771} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120C2} & \multicolumn{2}{|l|}{1.630} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120B} & \multicolumn{2}{|l|}{1.630} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Muscatine 119} & \multicolumn{2}{|l|}{1.040} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nodaway 220} & \multicolumn{2}{|l|}{1.631} \\ 
+\hline
+\end{tabular}
+\end{table}
 
 \subsubsection{Switch Grass Yield}
-Switchgrass biomass yields are based on a modification to Iowa Soil Properties and Interpretations Database (ISPAID) corn suitability ratings.\cite{45}
+The yield equation is given by:
+
+$$\sum_{i=1}^{n} \sum_{j=1}^{m_i} A_i_j *YB_i_j\bigg[Switchgrass\bigg]*YP_i_j$$
+
+where YB_i_j\bigg[Switchgrass\bigg] is given by the following table, with values ranging from 4.39 Mg/ha to 6.61 Mg/ha. Switchgrass yield on a per unit basis is optimized in Muscatine 119 soils, closely followed by Tama 120B and Nicollet 55 soil types. It is minimized in Buckney 1636, Gara-Armstrong 993E2, Okoboji 90, and Downs 162D2 soils. Total switchgrass production is optimized in a non-extreme precipitation year (1 vs. 0.95).
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{2}{|l|}{County}                  & \multicolumn{2}{|l|}{ISPAID Soil Type} & \multicolumn{2}{|l|}{Yield Base Rate Mg/ha-1year} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{5}{*}{Boone County}} & \multicolumn{2}{|l|}{Clarion 138B} & \multicolumn{2}{|l|}{5.77} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Buckney 1636} & \multicolumn{2}{|l|}{4.39} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Canisteo 507} & \multicolumn{2}{|l|}{5.65} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Coland 135} & \multicolumn{2}{|l|}{5.65} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nicollet 55} & \multicolumn{2}{|l|}{6.25} \\ 
+\cline{3-6}
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Okoboji 90} & \multicolumn{2}{|l|}{4.39} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{3}{*}{Jasper County}} & \multicolumn{2}{|l|}{Downs 162D2} & \multicolumn{2}{|l|}{4.39} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Gara-Armstrong 993E2} & \multicolumn{2}{|l|}{4.39} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Ackmore-Colo 5B} & \multicolumn{2}{|l|}{4.81} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120C2} & \multicolumn{2}{|l|}{5.29} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120B} & \multicolumn{2}{|l|}{6.31} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Muscatine 119} & \multicolumn{2}{|l|}{6.61} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nodaway 220} & \multicolumn{2}{|l|}{5.83} \\ 
+\hline
+\end{tabular}
+\end{table}
 
 \subsubsection{Woody Biomass}
 Woody biomass yield estimates are based on a 10-year aspen biomass of 224 Mg/ha.\cite{46}  Annual production assumes temporally spaced plantings such that a constant 22.4 Mg/ha is harvested each year.

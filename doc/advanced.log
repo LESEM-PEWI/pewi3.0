@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.7.31)  8 AUG 2017 10:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.7.31)  8 AUG 2017 11:25
 entering extended mode
 **./advanced.tex
 (advanced.tex
@@ -1197,27 +1197,220 @@ Overfull \hbox (21.24852pt too wide) in paragraph at lines 856--867
  [][] 
  []
 
+[21]
+! Double subscript.
+l.875 $$\sum_{i=1}^{n} \sum_{j=1}^{m_i} A_i_
+                                            j *YB_i_j\bigg[Wood\bigg]*YP_i_j$$
+I treat `x_1_2' essentially like `x_1{}_2'.
 
-LaTeX Warning: Citation `69' on page 21 undefined on input line 870.
+! Double subscript.
+l.875 ...m_{i=1}^{n} \sum_{j=1}^{m_i} A_i_j *YB_i_
+                                                  j\bigg[Wood\bigg]*YP_i_j$$
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.875 ...{m_i} A_i_j *YB_i_j\bigg[Wood\bigg]*YP_i_
+                                                  j$$
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.877 where YB_
+               i_j\bigg[Wood\bigg] = CM * YB_i_j\bigg[ConvWood\bigg]
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.877 where YB_i_
+                 j\bigg[Wood\bigg] = CM * YB_i_j\bigg[ConvWood\bigg]
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.877 where YB_i_j\bigg[Wood\bigg] = CM * YB_i_
+                                               j\bigg[ConvWood\bigg]
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.878 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.878 
+      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten \endgroup.
+\@par ... \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.878 
+      
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.879 ...orest and 1.0 in conventional forest. YP_
+                                                  i_j is equal to 1 in all p...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.879 ...est and 1.0 in conventional forest. YP_i_
+                                                  j is equal to 1 in all pre...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.880 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.880 
+      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
 
-LaTeX Warning: Citation `70' on page 21 undefined on input line 870.
+Overfull \hbox (618.22363pt too wide) in paragraph at lines 879--880
+\OT1/cmr/m/n/10.95 for-est. YP$[][]\OML/cmm/m/it/10.95 isequalto\OT1/cmr/m/n/10
+.95 1\OML/cmm/m/it/10.95 inallprecipitationscenarios:Yieldonaperunitbasisismaxi
+mizedinNodaway\OT1/cmr/m/n/10.95 220\OML/cmm/m/it/10.95 ; Clarion\OT1/cmr/m/n/1
+0.95 138\OML/cmm/m/it/10.95 B; Downs\OT1/cmr/m/n/10.95 162\OML/cmm/m/it/10.95 D
+\OT1/cmr/m/n/10.95 2\OML/cmm/m/it/10.95 ; Tama\OT1/cmr/m/n/10.95 120\OML/cmm/m/
+it/10.95 C\OT1/cmr/m/n/10.95 2\OML/cmm/m/it/10.95 ; andTama\OT1/cmr/m/n/10.95 1
+20\OML/cmm/m/it/10.95 BsoilsandminimizedinCanisteo\OT1/cmr/m/n/10.95 507\OML/cm
+m/m/it/10.95 ; Coland\OT1/cmr/m/n/10.95 135\OML/cmm/m/it/10.95 ; andOkoboji\OT1
+/cmr/m/n/10.95 90\OML/cmm/m/it/10.95 soils:[]$ 
+ []
 
-[21] [22] [23] [24] [25] [26] [27]
-Underfull \hbox (badness 10000) in paragraph at lines 1020--1021
+! Extra }, or forgotten \endgroup.
+\@par ... \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.880 
+      
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Double subscript.
+l.919 $$\sum_{i=1}^{n} \sum_{j=1}^{m_i} A_i_
+                                            j *YB_i_j\bigg[Switchgrass\bigg]...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.919 ...m_{i=1}^{n} \sum_{j=1}^{m_i} A_i_j *YB_i_
+                                                  j\bigg[Switchgrass\bigg]*Y...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.919 ..._i_j *YB_i_j\bigg[Switchgrass\bigg]*YP_i_
+                                                  j$$
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.921 where YB_
+               i_j\bigg[Switchgrass\bigg] is given by the following table, w...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Double subscript.
+l.921 where YB_i_
+                 j\bigg[Switchgrass\bigg] is given by the following table, w...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.922 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.922 
+      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (805.31366pt too wide) in paragraph at lines 921--922
+[]\OT1/cmr/m/n/10.95 where YB$[][][]\OML/cmm/m/it/10.95 Switchgrass[]isgivenbyt
+hefollowingtable; withvaluesrangingfrom\OT1/cmr/m/n/10.95 4\OML/cmm/m/it/10.95 
+:\OT1/cmr/m/n/10.95 39\OML/cmm/m/it/10.95 Mg=hato\OT1/cmr/m/n/10.95 6\OML/cmm/m
+/it/10.95 :\OT1/cmr/m/n/10.95 61\OML/cmm/m/it/10.95 Mg=ha:Switchgrassyieldonape
+runitbasisisoptimizedinMuscatine\OT1/cmr/m/n/10.95 119\OML/cmm/m/it/10.95 soils
+; closelyfollowedbyTama\OT1/cmr/m/n/10.95 120\OML/cmm/m/it/10.95 BandNicollet\O
+T1/cmr/m/n/10.95 55\OML/cmm/m/it/10.95 soiltypes:ItisminimizedinBuckney\OT1/cmr
+/m/n/10.95 1636\OML/cmm/m/it/10.95 ; Gara \OMS/cmsy/m/n/10.95  
+ []
+
+
+Overfull \hbox (23.17438pt too wide) in paragraph at lines 921--922
+\OML/cmm/m/it/10.95 Armstrong\OT1/cmr/m/n/10.95 993\OML/cmm/m/it/10.95 E\OT1/cm
+r/m/n/10.95 2\OML/cmm/m/it/10.95 ; Okoboji\OT1/cmr/m/n/10.95 90\OML/cmm/m/it/10
+.95 ; andDowns\OT1/cmr/m/n/10.95 162\OML/cmm/m/it/10.95 D\OT1/cmr/m/n/10.95 2\O
+ML/cmm/m/it/10.95 soils:Totalswitchgrassproductionisoptimizedinanon \OMS/cmsy/m
+/n/10.95  
+ []
+
+! Extra }, or forgotten \endgroup.
+\@par ... \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.922 
+      
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+[22] [23] [24] [25] [26] [27] [28]
+Underfull \hbox (badness 10000) in paragraph at lines 1099--1100
 \OT1/cmtt/m/n/10.95 sites / www . extension . iastate . edu / files / soils / I
 SU % 20CSR2 % 20formula % 20with %
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1030--1031
+Underfull \hbox (badness 10000) in paragraph at lines 1109--1110
 \OT1/cmtt/m/n/10.95 sites / www . extension . iastate . edu / files / soils / I
 SU % 20CSR2 % 20formula % 20with %
  []
 
-[28]
+[29]
 ! Misplaced alignment tab character &.
-l.1037 ...Iowa Soils,” Agriculture, Ecosystems &
+l.1116 ...Iowa Soils,” Agriculture, Ecosystems &
                                                    Environment 105, no. 4 (M...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -1227,7 +1420,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Misplaced alignment tab character &.
-l.1057 ... River Basin,” Environmental Science &
+l.1136 ... River Basin,” Environmental Science &
                                                    Technology 42, no. 3 (200...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -1236,20 +1429,20 @@ up above has ended a previous alignment prematurely,
 you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
-[29]
-Underfull \hbox (badness 5711) in paragraph at lines 1069--1070
+[30]
+Underfull \hbox (badness 5711) in paragraph at lines 1148--1149
 \OT1/cmr/m/n/10.95 ser-va-tion Ser-vice], \Iowa Tech-ni-cal Note No. 25: Iowa P
 hos-pho-rus In-dex"
  []
 
 
-Underfull \hbox (badness 1648) in paragraph at lines 1069--1070
+Underfull \hbox (badness 1648) in paragraph at lines 1148--1149
 \OT1/cmr/m/n/10.95 (Des Moines, Iowa, 2004a), http://[][]$\OT1/cmtt/m/n/10.95 w
 ww . nrcs . usda . gov / Internet / FSE _ DOCUMENTS /
  []
 
 ! Misplaced alignment tab character &.
-l.1077 ...b), ftp://ftp.wcc.nrcs.usda.gov/wntsc/H&
+l.1156 ...b), ftp://ftp.wcc.nrcs.usda.gov/wntsc/H&
                                                   H/NEHhydrology/ch9.pdf.
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -1258,14 +1451,14 @@ up above has ended a previous alignment prematurely,
 you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
-[30]
-Underfull \hbox (badness 2564) in paragraph at lines 1085--1086
+[31]
+Underfull \hbox (badness 2564) in paragraph at lines 1164--1165
 []\OT1/cmr/m/n/10.95 1. USDA NRCS [United States De-part-ment of Agri-cul-ture 
 Nat-u-ral Re-sources
  []
 
 
-Underfull \hbox (badness 2221) in paragraph at lines 1085--1086
+Underfull \hbox (badness 2221) in paragraph at lines 1164--1165
 \OT1/cmr/m/n/10.95 Con-ser-va-tion Ser-vice], \Iowa Tech-ni-cal Note No. 25: Io
 wa Phos-pho-rus In-dex"
  []
@@ -1277,38 +1470,31 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1097 \end{document}
+l.1176 \end{document}
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1097.
-[31]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1097.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1176.
+[32]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1176.
  (advanced.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1097.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1097.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1176.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1176.
 
 Package rerunfilecheck Info: File `advanced.out' has not changed.
 (rerunfilecheck)             Checksum: 37B8901C95F4B26F7E0C6ADAD20CB053;4838.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1097.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1176.
  )
 (\end occurred inside a group at level 1)
 
 ### semi simple group (level 1) entered at line 797 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 6581 strings out of 493323
- 93690 string characters out of 3139066
- 295033 words of memory out of 3000000
+ 6582 strings out of 493323
+ 93697 string characters out of 3139066
+ 296083 words of memory out of 3000000
  9902 multiletter control sequences out of 15000+200000
  9624 words of font info for 34 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1326,9 +1512,9 @@ mr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Progr
 am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files
 /MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on advanced.pdf (36 pages, 929040 bytes).
+Output written on advanced.pdf (37 pages, 934137 bytes).
 PDF statistics:
- 789 PDF objects out of 1000 (max. 8388607)
- 153 named destinations out of 1000 (max. 500000)
+ 796 PDF objects out of 1000 (max. 8388607)
+ 154 named destinations out of 1000 (max. 500000)
  582 words of extra memory for PDF output out of 10000 (max. 10000000)
 
