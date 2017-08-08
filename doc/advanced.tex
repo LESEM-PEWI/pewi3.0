@@ -6,6 +6,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage{multirow}
+\usepackage{float}
 
 %%%%%Graphics
 \usepackage{graphicx}
@@ -381,7 +382,7 @@ A complete chart for Cover Management Factor is found below:
 \begin{center}
 \begin{tabular}{ |c|c|c|c|c| } 
 \hline
-\multirow{5}{3em}{Cover Management Factor} & Cij & Conventional Corn preceding annual row crop: & 0.085 - 0.200 \\ 
+\multirow{5}{3em}{Cover Management Factor} & C_i_j & Conventional Corn preceding annual row crop: & 0.085 - 0.200 \\ 
 & & 0.085, \textit{Conservation Corn} & \\ 
 & & 0.116, \textit{Conservation Soybean} & \\ 
 & & 0.150, \textit{Conventional Corn} & \\
@@ -489,7 +490,7 @@ Source & Annual Row\\
  
 Al-Kaisi \\
 et al.\\
-(2005) & Switchgrass & soil depth \\ [-0.43 in]
+(2005) & Switchgrass & soil depth \\ [-0.42 in]
 & & SOC, 0-15 cm & Herbaceous\\
 & & & Perennial Bioenergy & 1.20 \\
 \hline
@@ -506,64 +507,368 @@ et al.\\
 \newpage
 
 \subsubsection{Erosion Control}
-The Erosion Control module is based on guidelines from the 2004 Iowa Phosphorus Index. Gross Erosion is the soil loss per year from ephemeral gully erosion, rill erosion, and interrill erosion; a high gross erosion corresponds to a low soil retention, and low gross erosion to a high soil retention. Excessive soil erosion has been shown to decrease soil and water quality, leading to diminished crop productivity and deterioration of aquatic stream habitat.\cite{36}
+Gross erosion is divided into two subcomponents: calculations for ephemeral gully erosion and calculations based on the Revised Universal Soil Loss Equation (RUSLE) for rill and interrill erosion.\cite{39}  Ephemeral gully erosion is modeled through a modification to USDA NRCS estimates of 6.7 Mg/ha for Iowa, increased by 50\% to 10.1 Mg/ha for conventional annual row-crops and decreased by 50\% to 3.4 Mg/ha for conservation annual row-crop practices. This is directionally consistent with current understanding of the relationship between conservation practices and ephemeral gully erosion.\cite{40} 
+
+The RUSLE rill and interrill calculation is expressed as A = R*K*LS*C*P, where
+
+\begin{itemize} 
+\item A is the estimated net soil loss, 
+\item R is the erosivity factor, 
+\item K is the soil erodibility factor, 
+\item L is the slope length factor, 
+\item S is the slope steepness factor, 
+\item C is the cover-management factor, and 
+\item P is the supporting practices factor (ars.gov). 
+\end{itemize}
+
+
+The R-factor estimates the influence of climate on erosion. In PEWI, the R-factor varies according to changes in precipitation.\cite{41}  The K-factor, representing the tendency of soil to become displaced through erosion, is dependent on soil type and is provided by ISPAID.\cite{42}  The relationship between L and S is estimated by an NRCS graph depicting slope length as a function of slope grade.\cite{43}  C-factor values are based on estimates for the Squaw Creek Watershed in central Iowa, which depends on current and prior land use (see Crop Rotation tab for full chart). \cite{44} P-factor is the product of a contour subfactor and a terrace subfactor, where contouring and terracing is assumed for conservation corn and soybean on slopes above 2\%. The P-factor is estimated according to the USLE Erosion Prediction guidelines, using median row grades, low ridge or oriented roughness height, 10 year EI (storm intensity) equal to 80, and maximum recommended terrace interval spacing.\cite{45}  The gross erosion in PEWI ranges from 1.36*102 Mg/year to 1.1*105 Mg/year.
 
 \subsection{Water Quality}
-Water quality is a salient issue for Corn Belt states and other agricultural regions. PEWI tracks three metrics of water quality: nitrate, sediment, and phosphorus. Nitrate-N concentrations in drinking water exceeding the Environmental Protection Agency’s National Regulation limit of 10 mg/L can lead to negative health effects, including blue baby syndrome.\cite{37}  Downstream, nitrate-N loading also creates hypoxic (low-oxygen) zones in gulf regions, leading to loss of marine life.\cite{38}  Sediment delivery impacts water quality both locally and downstream.\cite{39} Phosphorus loss impacts local producers who incur expenses of phosphorus fertilizer application, regional aquatic ecosystems and human economy through freshwater eutrophication, and distant scales through gulf hypoxia.\cite{40} 
+Water quality is a salient issue for Corn Belt states and other agricultural regions. PEWI tracks three metrics of water quality: nitrate, sediment, and phosphorus. Nitrate-N concentrations in drinking water exceeding the Environmental Protection Agency’s National Regulation limit of 10 mg/L can lead to negative health effects, including blue baby syndrome.\cite{46}  Downstream, nitrate-N loading also creates hypoxic (low-oxygen) zones in gulf regions, leading to loss of marine life.\cite{47}  Sediment delivery impacts water quality both locally and downstream.\cite{48} Phosphorus loss impacts local producers who incur expenses of phosphorus fertilizer application, regional aquatic ecosystems and human economy through freshwater eutrophication, and distant scales through gulf hypoxia.\cite{49} 
 
 \subsubsection{Nitrate Retention}
-Nitrate pollution is a well-known public health problem that negatively affects human health when exceeding a contamination level of 10 mg L-1 in drinking water, which is the limit established in the National Primary Drinking Water Regulations.  It also harms aquatic ecosystems by depleting oxygen in the Gulf of Mexico.\cite{41}
+In PEWI, Nitrate Retention is the indexed inverse of annual mean nitrate-N concentration in surface water at the watershed outlet. The nitrate-N contribution for the watershed is derived as follows:
+$$\sum_{n=1}^n\bigg[max⁡\bigg\{100*PW_i \sum_{j=1}^{m_i} R_i_j  C_i_j,2\bigg\}* \[\frac{A_(i.)}{A_(..)}\bigg]$$ 
+
+where i represents the watershed, j represents the pixel, P is a precipitation multiplier, W_i is a strategic wetland multiplier, R_i_j is a row crop multiplier, and C_i_j is a conservation row crop multiplier.
+
+The multipliers can take the following values:
+\begin{itemize}
+\item P = 0.86 in dry years; 1.69 in normal years following dry years; 2.11 in wet years after dry years; 1.00 in all other years. \cite{51}
+\item Wi = 0.48 for subwatersheds with at least one strategic wetland; 1.00 otherwise.\cite{52}
+\item Rij = 0.14*Aij/Ai. for conservation corn, conservation soy, conventional corn, conventional soy, and mixed fruit and vegetables, and 0.00 otherwise, where Aij is the area of the grid cell and Ai. is the area of the subwatershed (Schilling & Libra, 2000).\cite{53}
+\item Cij = 0.69*Aij/Ai. for conservation corn and conservation soy in the Des Moines Lobe, 0.62*Aij/Ai. for conservation corn and conservation soy in the Southern Iowa Drift Plain, and 1.00*Aij/Ai. otherwise.\cite{54}
+\end{itemize}
 
 \subsubsection{Phosphorus Retention}
-Phosphorus transport from fields to surface water can threaten aquatic species and human economy due to aquatic eutrophication. In PEWI, Phosphorus Retention is the indexed inverse of annual in-stream phosphorus loading, with high phosphorus runoff corresponding to low phosphorus retention, and vice versa.
+Phosphorus loading for each grid cell is found by 
+EC_i_j+ RC_i_j+ SDC_i_j
+
+where ECij represents erosion component, RCij is a runoff component, and SDCij is a subsurface drainage component. The erosion component, which measures delivery with sediment, is broken down as: 
+
+\[\frac{B_i_j*E_i_j* SDR_i_j* EF_i_j * STPE_i_j}{2,000}\]
+
+where Bij is buffer factor, Eij is gross erosion, SDRij is sediment delivery ratio, EFij is enrichment factor\cite{55}, and STPEij is soil test phosphorus erosion factor.  Information for gross erosion can be found under the erosion control tab. Information for buffer factor and SDR can be found under the sediment control tab. The enrichment factor accounts for the impact of management techniques on soil phosphorus levels.\cite{56}  The STP Erosion factor estimates the phosphorus release over time from STP in eroded sediment\cite{57} and is found by:
+ 0.7*(500+STP_ij )* \[\frac{2,000}{1,000,00}\]
+
+where STPij is averaged over the major landform region area (MLRA) at 30 ppm for the Des Moines Lobe and 27 ppm for the Southern Iowa Drift Plain.\cite{58}
+
+The runoff component, measuring delivery with runoff, is broken down as:
+
+
+RF_i_j*PF*(STPR_i_j+PA_i_j)
+
+where RFij is the runoff factor, PF is the precipitation factor, STPRij is the soil test phosphorus runoff factor, and PAij is the phosphorus application factor. RFij is a function of Runoff Curve Number (RCN) representing the fraction of precipitation that runs off the field.\cite{59}  PF is the annual precipitation in million Mg/ha. 
+STPRij is found by:
+  
+ 0.05+0.005*STPij 
+ 
+according to Technical Note 25.\cite{60}
+The subsurface drainage component, measuring delivery with subsurface drainage, is broken down as 
+FFij*PF*STPDij
+where FFij is the flow factor and STPDij is the soil test phosphorus drainage factor. Flow factor is either 0 or 0.1 according to P-Index Technical Note 25.\cite{61}  STPDij is 0.2 for STP values over 100 and 0.1 for all other values.\cite{62} STP values in PEWI are always under 100.
+
 
 \subsubsection{Sediment Control}
-Sediment transport can adversely affect water quality both at the local level and downstream. Sediment control is the indexed inverse of annual in-stream sediment delivery. 
+Calculations were based on modified P-index guidelines.\cite{63}  PEWI’s sediment delivery is determined as a product of three factors: gross erosion (Eij), sediment delivery ratio (SDRij), and buffer factor (Bij).
+
+$$\sum_{i=1}^n \sum_{j=1}^{m_i}A_ij (B_ij*E_ij*SDR_ij ) $$
+
+The buffer factor is equal to 0.5 for land uses considered vegetative buffers: conservation forest, conventional forest, grass hay, herbaceous perennial bioenergy, prairie, short-rotation woody bioenergy, and wetland. Buffer factor is 1.0 for all other land uses.\cite{64} 
+
+Information for Gross Erosion can be found in the Erosion Control tab.
+
+The Sediment Delivery Ratio is calculated as a function of drainage area. SDR for cells in the Des Moines Lobe is 0.044 and for cells in the Southern Iowa Drift Plain is 0.278.\cite{65}
+
 
 \subsection{Yield}
-Yields are based on modifications to Corn Suitability Rating, determined by the CSR2 from Iowa State University. The CSR2 assigns a corn suitability rating to each soil type in Iowa, and this data is incorporated into PEWI grid cells. Yields from other crops are estimated as a proportion of corn yield values. 
+The General equation is:
+$$\sum_{i=1}^n \sum_{j=1}^{m_i}A_i_j *YB_i_j\bigg[Yield Type\bigg]*YP_i_j $$
+where Aij  is the area of the grid cell, YBij[Yield Type] is the yield base rate for the type of product, and YPij is the yield precipitation factor. Yield precipitation factors for each precipitation level are shown below:
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+ Landuse Types & \multicolumn{7}{|l|}{Precipitation Factors}\\
+\hline
+ & 24.58 & 24.58 in & 30.39 in & 32.16 in & 34.34 in & 36.47 in & 45.1 in \\
+\hline
+ Alfalfa & 0.75 & 0.90 & 1.00 & 1.00 & 1.00 & 0.90 & 0.75 \\ 
+\hline
+ Grass Hay & 0.75 & 0.90 & 1.00 & 1.00 & 1.00 & 0.90 & 0.75 \\
+\hline
+ Herbaceous Perennial & 0.75 & 0.90 & 1.00 & 1.00 & 1.00 & 0.90 & 0.75 \\
+ \hline
+ Permanent Pasture & 0.75 & 0.90 & 1.00 & 1.00 & 1.00 & 0.90 & 0.75 \\
+ \hline
+ Rotational Grazing & 0.75 & 0.90 & 1.00 & 1.00 & 1.00 & 0.90 & 0.75 \\
+\hline
+ Conservation Corn & 0.95 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 0.95 \\ 
+\hline
+ Conservation Soybean & 0.95 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 0.95 \\ 
+\hline
+ Conventional Corn & 0.95 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 0.95 \\ 
+\hline
+ Conventional Soybean & 0.95 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 0.95 \\ 
+\hline
+ Mixed Fruit and Vegetables & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 0.90 & 0.75 \\ 
+ \hline
+ All Others & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\
+ \hline
+\end{tabular}
+\end{table}
 
 \subsubsection{Corn Yield}
-The Corn Grain yield in PEWI assumes high-level management, and no difference between yield in conventional and conservation systems. Corn grain yield is based on the Iowa Soil Properties and Interpretations Database (ISPAID) equation of Corn Yield = (1.6 * Corn Suitability Rating) + 80, and multiplied by a conversion factor of 0.0254 Mg/bu.\cite{42}  
- Total production is given by the product of the yield on a per-unit basis and the area of the grid cell, summed over the entire watershed. 
- 
+The yield equation for corn is given by
+$$\sum_{i=1}^{n} \sum_{j=1}^{m_i} A_i_j *YB_i_j\bigg[Corn\bigg]*YP_i_j$$
+Corn production in PEWI is maximized in a normal precipitation scenario, with all grid cells in either conventional or conservation corn land use types. Yield on a per-unit basis is maximized in Muscatine 119 soil, followed closely by Tama 120B, Nicollet 55, and Clarion 138B. Per-unit yield is minimized in Buckney 1636 soils and Gara-Armstrong 993E2 soils, and is decreased in dry and wet precipitation years. A complete yield base rate chart by soil type can be found below:
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{2}{|l|}{County}                  & \multicolumn{2}{|l|}{ISPAID Soil Type} & \multicolumn{2}{|l|}{Yield Base Rate Mg/ha-1year} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{5}{*}{Boone County}} & \multicolumn{2}{|l|}{Clarion 138B} & \multicolumn{2}{|l|}{14.0} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Buckney 1636} & \multicolumn{2}{|l|}{0} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Canisteo 507} & \multicolumn{2}{|l|}{13.4} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Coland 135} & \multicolumn{2}{|l|}{13.2} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nicollet 55} & \multicolumn{2}{|l|}{14.3} \\ 
+\cline{3-6}
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Okoboji 90} & \multicolumn{2}{|l|}{11.2} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{3}{*}{Jasper County}} & \multicolumn{2}{|l|}{Downs 162D2} & \multicolumn{2}{|l|}{12.9} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Gara-Armstrong 993E2} & \multicolumn{2}{|l|}{0} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Ackmore-Colo 5B} & \multicolumn{2}{|l|}{12.6} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120C2} & \multicolumn{2}{|l|}{13.9} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120B} & \multicolumn{2}{|l|}{14.7} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Muscatine 119} & \multicolumn{2}{|l|}{15.1} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nodaway 220} & \multicolumn{2}{|l|}{13.1} \\ 
+\hline
+\end{tabular}
+\end{table}
+
 \subsubsection{Soybean Yield}
-Soybean yield is based on the Iowa Soil Properties and Interpretations Database (ISPAID) equation of Soybean Yield = 0.29 * Corn Yield. Total production is given by the product of the yield on a per-unit basis and the area of the grid cell, summed over the entire watershed. 
+The yield equation for soybeans is given by:
+
+$$\sum_{i=1}^{n} \sum_{j=1}^{m_i} A_i_j *YB_i_j\bigg[Soybean\bigg]*YP_i_j$$
+
+Soybean production in PEWI is maximized in a normal precipitation scenario, with all grid cells in either conventional or conservation soybean land use types. Yield on a per-unit basis is maximized in Muscatine 119 soil, followed closely by Tama 120B, Nicollet 55, and Clarion 138B. Per-unit yield is minimized in Buckney 1636 soils and Gara-Armstrong 993E2 soils, and is decreased in dry and wet precipitation years. A complete yield base rate chart by soil type can be found below:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{2}{|l|}{County}                  & \multicolumn{2}{|l|}{ISPAID Soil Type} & \multicolumn{2}{|l|}{Yield Base Rate Mg/ha-1year} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{5}{*}{Boone County}} & \multicolumn{2}{|l|}{Clarion 138B} & \multicolumn{2}{|l|}{4.37} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Buckney 1636} & \multicolumn{2}{|l|}{0} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Canisteo 507} & \multicolumn{2}{|l|}{4.17} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Coland 135} & \multicolumn{2}{|l|}{4.10} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nicollet 55} & \multicolumn{2}{|l|}{4.44} \\ 
+\cline{3-6}
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Okoboji 90} & \multicolumn{2}{|l|}{3.49} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{3}{*}{Jasper County}} & \multicolumn{2}{|l|}{Downs 162D2} & \multicolumn{2}{|l|}{4.03} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Gara-Armstrong 993E2} & \multicolumn{2}{|l|}{0} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Ackmore-Colo 5B} & \multicolumn{2}{|l|}{3.90} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120C2} & \multicolumn{2}{|l|}{4.30} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120B} & \multicolumn{2}{|l|}{4.57} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Muscatine 119} & \multicolumn{2}{|l|}{4.70} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nodaway 220} & \multicolumn{2}{|l|}{4.10} \\ 
+\hline
+\end{tabular}
+\end{table}
+
 
 \subsubsection{Alfalfa Hay Yield}
-Alfalfa Hay yield is based on the Iowa Soil Properties and Interpretations Database  (ISPAID) equation of YBij[Alfalfa] = DFij * Corn Yield multiplied by a conversion factor from tons to megagrams and with a minimum of 8.07 Mg/ha yr.\cite{43} 
+The yield equation for alfalfa is given by:
 
-DFij is a drainage factor equal to:
-\begin{itemize}
+$$\sum_{i=1}^{n} \sum_{j=1}^{m_i} A_i_j *YB_i_j\bigg[Alfalfa\bigg]*YP_i_j$$
 
-\item 0.028 for soils with Drainage Class values of 10-35, as well as most soils with Drainage Class values of 40
-\item 0.026 for soils with Drainage Class values of 45-50, as well as two soils with Drainage Class values of 40
-\item 0.021 for soils with Drainage Class values of 55-70
+Alfalfa production in PEWI is maximized in a normal precipitation scenario, with all grid cells in alfalfa hay land use type. Yield on a per-unit basis is maximized in Tama 120B, followed closely by Muscatine 119, Tama 120C2, and Nicollet 55. Per-unit yield is minimized in Buckney 1636 soils, Gara-Armstrong 993E2 soils, and Okoboji 90 soils, and it is decreased in extreme precipitation years of 62.4 cm/yr (24.58 in/yr) and 114.6 cm/year (45.1 in/yr). A complete yield base rate chart by soil type can be found below:
 
-\end{itemize}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{2}{|l|}{County}                  & \multicolumn{2}{|l|}{ISPAID Soil Type} & \multicolumn{2}{|l|}{Yield Base Rate Mg/ha-1year} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{5}{*}{Boone County}} & \multicolumn{2}{|l|}{Clarion 138B} & \multicolumn{2}{|l|}{14.1} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Buckney 1636} & \multicolumn{2}{|l|}{8.07} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Canisteo 507} & \multicolumn{2}{|l|}{9.64} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Coland 135} & \multicolumn{2}{|l|}{9.42} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nicollet 55} & \multicolumn{2}{|l|}{14.4} \\ 
+\cline{3-6}
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Okoboji 90} & \multicolumn{2}{|l|}{8.07} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{3}{*}{Jasper County}} & \multicolumn{2}{|l|}{Downs 162D2} & \multicolumn{2}{|l|}{12.6} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Gara-Armstrong 993E2} & \multicolumn{2}{|l|}{8.07} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Ackmore-Colo 5B} & \multicolumn{2}{|l|}{9.19} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120C2} & \multicolumn{2}{|l|}{14.6} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120B} & \multicolumn{2}{|l|}{15.5} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Muscatine 119} & \multicolumn{2}{|l|}{15.0} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nodaway 220} & \multicolumn{2}{|l|}{14.1} \\ 
+\hline
+\end{tabular}
+\end{table}
 
-Total production is given by the product of the yield on a per-unit basis and the area of the grid cell, summed over the entire watershed. 
 
-\subsubsection{Grass Hay}
-Grass Hay yield is based on the Iowa Soil Properties and Interpretations Database (ISPAID) equation of YBij[GrassHay] = DFij * CornYield multiplied by a conversion factor from tons to megagrams and with a minimum of 8.07 Mg/ha yr.\cite{43} 
+\subsubsection{Grass Hay Yield}
+The yield equation for grass hay is given by:
+$$\sum_{i=1}^{n} \sum_{j=1}^{m_i} A_i_j *YB_i_j\bigg[Grass Hay\bigg]*YP_i_j$$
 
-DFij is a drainage factor equal to:
+Grass Hay production in PEWI is maximized in a normal precipitation scenario, with all grid cells in grass hay land use type. Yield on a per-unit basis is maximized in Tama 120B, followed closely by Muscatine 119, Tama 120C2, and Nicollet 55. Per-unit yield is minimized in Buckney 1636 soils, Gara-Armstrong 993E2 soils, and Okoboji 90 soils, and it is decreased in extreme precipitation years of 62.4 cm/yr (24.58 in/yr) and 114.6 cm/year (45.1 in/yr). A complete yield base rate chart by soil type can be found below:
 
-\begin{itemize}
-
-\item 0.028 for soils with Drainage Class values of 10-35, as well as most soils with Drainage Class values of 40
-\item 0.026 for soils with Drainage Class values of 45-50, as well as two soils with Drainage Class values of 40
-\item 0.021 for soils with Drainage Class values of 55-70
-
-\end{itemize}
-
-Total production is given by the product of the yield on a per-unit basis and the area of the grid cell, summed over the entire watershed. 
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{2}{|l|}{County}                  & \multicolumn{2}{|l|}{ISPAID Soil Type} & \multicolumn{2}{|l|}{Yield Base Rate Mg/ha-1year} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{5}{*}{Boone County}} & \multicolumn{2}{|l|}{Clarion 138B} & \multicolumn{2}{|l|}{14.1} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Buckney 1636} & \multicolumn{2}{|l|}{8.07} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Canisteo 507} & \multicolumn{2}{|l|}{9.64} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Coland 135} & \multicolumn{2}{|l|}{9.42} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nicollet 55} & \multicolumn{2}{|l|}{14.4} \\ 
+\cline{3-6}
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Okoboji 90} & \multicolumn{2}{|l|}{8.07} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{3}{*}{Jasper County}} & \multicolumn{2}{|l|}{Downs 162D2} & \multicolumn{2}{|l|}{12.6} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Gara-Armstrong 993E2} & \multicolumn{2}{|l|}{8.07} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Ackmore-Colo 5B} & \multicolumn{2}{|l|}{9.19} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120C2} & \multicolumn{2}{|l|}{14.6} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120B} & \multicolumn{2}{|l|}{15.5} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Muscatine 119} & \multicolumn{2}{|l|}{15.0} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nodaway 220} & \multicolumn{2}{|l|}{14.1} \\ 
+\hline
+\end{tabular}
+\end{table}
 
 \subsubsection{Cattle Yield}
-Cattle yield is based on the Iowa Soil Properties and Interpretations Database (ISPAID) equation of Alfalfa-Grass Hay Yield, with a conversion from Alfalfa-Grass yield to head of cattle.
+The yield equation for head of cattle is given by:
+
+$$\sum_{i=1}^{n} \sum_{j=1}^{m_i} A_i_j *YB_i_j\bigg[Cattle\bigg]*YP_i_j$$
+
+where YB_i_j\bigg[Cattle\bigg] = YB_i_j\bigg[Alfalfa\bigg] * \[\frac{SU}{DI * GS}\]
+
+\begin{itemize}
+\item SU is the seasonal utilization rate, which is equal to .35 in permanent pasture and .55 in rotational grazing
+\item DI is average daily intake, estimated at 3\% of live bodyweight of .544 Mg, equal to .0163 Mg/day/animal
+\item GS is the grazing season length, April 15 to November 1, which is 200 days
+
+Cattle production in PEWI is maximized in any of the middle five precipitation scenarios, with all grid cells in rotational grazing land use type. Yield on a per-unit basis is maximized in Tama 120B, followed closely by Muscatine 119, Tama 120C2, and Nicollet 55. Per-unit yield is minimized in Buckney 1636 soils, Gara-Armstrong 993E2 soils, and Okoboji 90 soils, and it is low in extreme precipitation years of 62.4 cm/year or 114.6 cm/year. A complete yield base rate chart by soil type can be found below:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{2}{|l|}{County}                  & \multicolumn{2}{|l|}{ISPAID Soil Type} & \multicolumn{2}{|l|}{Yield Base Rate Mg/ha-1year} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{5}{*}{Boone County}} & \multicolumn{2}{|l|}{Clarion 138B} & \multicolumn{2}{|l|}{14.1} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Buckney 1636} & \multicolumn{2}{|l|}{8.07} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Canisteo 507} & \multicolumn{2}{|l|}{9.64} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Coland 135} & \multicolumn{2}{|l|}{9.42} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nicollet 55} & \multicolumn{2}{|l|}{14.4} \\ 
+\cline{3-6}
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Okoboji 90} & \multicolumn{2}{|l|}{8.07} \\ 
+\hline
+\multicolumn{2}{|l|}{\multirow{3}{*}{Jasper County}} & \multicolumn{2}{|l|}{Downs 162D2} & \multicolumn{2}{|l|}{12.6} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Gara-Armstrong 993E2} & \multicolumn{2}{|l|}{8.07} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Ackmore-Colo 5B} & \multicolumn{2}{|l|}{9.19} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120C2} & \multicolumn{2}{|l|}{14.6} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Tama 120B} & \multicolumn{2}{|l|}{15.5} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Muscatine 119} & \multicolumn{2}{|l|}{15.0} \\ 
+\cline{3-6} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{2}{|l|}{Nodaway 220} & \multicolumn{2}{|l|}{14.1} \\ 
+\hline
+\end{tabular}
+\end{table}
 
 \subsubsection{Mixed Fruit and Vegetable Yield}
-Yield for mixed fruit and vegetables is determined from an estimate for grapes, strawberries, green beans, and squash, with each grid cell divided evenly among the four crops. 
+The yield equation for mixed fruit and vegetables is:
+
+$$\sum_{i=1}^{n} \sum_{j=1}^{m_i} A_i_j *YB_i_j\bigg[Cattle\bigg]*YP_i_j$$
+
+where YB_i_j\bigg[FruitVeg\bigg] = 0.25 * STM * (GRY + GBY + SQY + STY)
+and ranges from 6.58 to 16.5 Mg/ha/yr
+
+\begin{itemize}
+\item GRY = Grape Yield  = 17.6 Mg/ha/yr
+\item GBY = Green Bean Yield = 6.73 Mg/ha/yr
+\item SQY = Squash Yield = 33.6 Mg/ha/yr
+\item STY = Strawberry Yield = 7.85 Mg/ha/yr
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lllllll}
+\hline
+\multicolumn{2}{|l|}{\multirow{4}{*}{Soil Texture Multiplier}} & \multicolumn{3}{|l|}{Fine Sandy Loam (FSL)} & \multicolumn{2}{|l|}{1.00} \\ 
+\cline{3-7} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{3}{|l|}{Silt loam (SIL)}  & \multicolumn{2}{|l|}{0.90} \\
+ \cline{3-7} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{3}{|l|}{Loam (L)}  & \multicolumn{2}{|l|}{0.85} \\ 
+\cline{3-7} 
+\multicolumn{2}{|l|}{}                  & \multicolumn{3}{|l|}{Clay loam (CL), Mucky silt loam (MK-SIL), Silty clay loam (SICL)}  & \multicolumn{2}{|l|}{0.40} \\ 
+\hline
+\end{tabular}
+\end{table}
+
+A chart for Soil Texture Multiplier (STM) for each soil type can be found in the Texture tab.
+Green bean, squash, and strawberry yield values are from Iowa State University Extension, with adjustments for unfavorable soil texture.\cite{69}  Due to lack of published data for Iowa grapes, regionally similar data was used from New York State indicating 17.6 Mg/ha.\cite{70}  Mixed fruit and vegetable production is maximized in a dry or normal precipitation year. Yield on a per-unit basis is maximized in fine sandy loam (Buckney 1636 soils), followed by silt loam (Downs 162D2, Ackmore-Colo 5B, and Nodoway 220) soils. It is minimized in clay loam (Coland 135), mucky silt loam (Okoboji 90), and silty clay loam (Tama 120C2, Tama 120B, and Muscatine 119).
+
 
 \subsubsection{Wood Yield}
 Wood production is based on estimates generated using the 2007 Iowa Woodland Suitability Composite.\cite{44} Yield estimates assume appropriate selection of tree species for a given location. A 30\% reduction in wood production estimates for conservation forest is applied to account for differences in management.
@@ -727,10 +1032,65 @@ More information on PEWI, including information on tool development, learning ex
   \bibitem{33} G. A. Miller et al., “ISPAID 7.3 Manual” (Iowa State University, Iowa Agriculture and Home Economics Experiment Station and University Extension, 2010), \url{www.extension.iastate.edu/Documents/soils/ISPAID_73man.doc}; Emily Heaton and Matt Liebman (Iowa State University, personal communication, 2014); Emily Heaton (Iowa State University, personal communication, 2014).
   
   \bibitem{36}  J. Lyons and C.C. Courtney, “A Review of Fisheries Habitat Improvement Projects in Warmwater Streams with Recommendations for Wisconsin USA,” Wisconsin Department of Natural Resources Technical Bulletin, no. 169 (1990): 1–34; E.G. Smith et al., “Soil Quality Attribute Time Paths: Optimal Levels and Values,” Journal of Agricultural and Resource Economics 25, no. 1 (2000): 307–24.
-  
-\begin{equation}
  
-  \end{equation}  \bibitem{37}Cinzia Fissore et al., “Limited Potential for Terrestrial Carbon Sequestration to Offset Fossil-Fuel Emissions in the Upper Midwestern US,” Frontiers in Ecology and the Environment 8, no. 8 (October 2010): 409–13, doi:10.1890/090059; Mahdi M. Al-Kaisi, Xinhua Yin, and Mark A. Licht, “Soil Carbon and Nitrogen Changes as Influenced by Tillage and Cropping Systems in Some Iowa Soils,” Agriculture, Ecosystems & Environment 105, no. 4 (March 5, 2005): 635–47, doi:10.1016/j.agee.2004.08.002.
+  
+\bibitem{37}Cinzia Fissore et al., “Limited Potential for Terrestrial Carbon Sequestration to Offset Fossil-Fuel Emissions in the Upper Midwestern US,” Frontiers in Ecology and the Environment 8, no. 8 (October 2010): 409–13, doi:10.1890/090059; Mahdi M. Al-Kaisi, Xinhua Yin, and Mark A. Licht, “Soil Carbon and Nitrogen Changes as Influenced by Tillage and Cropping Systems in Some Iowa Soils,” Agriculture, Ecosystems & Environment 105, no. 4 (March 5, 2005): 635–47, doi:10.1016/j.agee.2004.08.002.
+
+  \bibitem{39}  Carrie Chennault, “People in Ecosystems / Watershed Integration: Visualizing Ecosystem Services Tradeoffs in Agricultural Landscapes” (Master’s thesis, Iowa State University, 2014), 44.
+  
+  \bibitem{40} Ibid.
+  
+  \bibitem{41}  Kenneth G. Renard and Jeremy R. Freimund, “Using Monthly Precipitation Data to Estimate the R-Factor in the Revised USLE,” Journal of Hydrology 157, no. 1 (May 1, 1994): 287–306, doi:10.1016/0022-1694(94)90110-4.
+  
+  \bibitem{42} G. A. Miller et al., “ISPAID 7.3 Manual” (Iowa State University, Iowa Agriculture and Home Economics Experiment Station and University Extension, 2010), \url{www.extension.iastate.edu/Documents/soils/ISPAID_73man.doc.}
+  
+  \bibitem{43} USDA NRCS [United States Department of Agriculture Natural Resources Conservation Service], “Iowa Technical Note No. 29: Choosing the Planning Area of a Field By ‘dominant Critical Area’.” (Des Moines, Iowa, 2008), \url{http://efotg.sc.egov.usda.gov/references/public/IA/AgronomyTECHnote29Nov08.pdf.}
+  
+  \bibitem{44} A.A. Wendt, “Watershed Planning in Central Iowa: An Integrated Assessment of the Squaw Creek Watershed for Prioritization of Conservation Practice Establishment” (Master’s thesis, 2007), ProQuest Dissertations and Theses Full Text database (UMI No. 1446134).
+  
+  \bibitem{45} Chennault, “People in Ecosystems / Watershed Integration,” 44-46.
+  
+  \bibitem{46} National Primary Drinking Water Regulations, 40 C.F.R. § 141 (2010).
+  
+  \bibitem{47} US EPA [United States Environmental Protection Agency], “Hypoxia in the Northern Gulf of Mexico: An Update by the EPA Science Advisory Board.” (Washington, D.C, December 2007), \url{http://water.epa.gov/type/watersheds/named/msbasin/upload/2008_1_31_msbasin_sab_report_2007.pdf.}
+  
+  \bibitem{48}   J. Lyons and C.C. Courtney, “A Review of Fisheries Habitat Improvement Projects in Warmwater Streams with Recommendations for Wisconsin USA,” Wisconsin Department of Natural Resources Technical Bulletin, no. 169 (1990): 1–34; E.G. Smith et al., “Soil Quality Attribute Time Paths: Optimal Levels and Values,” Journal of Agricultural and Resource Economics 25, no. 1 (2000): 307–24; K.B. Vache, J.M. Eilers, and M.V. Santelmann, “Water Quality Modeling of Alternative Agricultural Scenarios in the US Corn Belt,” Journal of the American Water Resources Association 38, no. 3 (2002): 773–87, doi:10.1111/j.1752-1688.2002.tb00996.x.; Iowa, “Iowa Nutrient Reduction Strategy. A Science and Technology-Based Framework to Assess and Reduce Nutrients to Iowa Waters and the Gulf of Mexico” (Iowa Department of Agriculture and Land Stewardship, Iowa Department of Natural Resources, and Iowa State University College of Agriculture and Life Sciences, 2013); R.B. Alexander et al., “Differences in Phosphorus and Nitrogen Delivery to the Gulf of Mexico from the Mississippi River Basin,” Environmental Science & Technology 42, no. 3 (2008): 822–30, doi: 10.1021/es0716103.
+  
+  \bibitem{49}  Alexander et al., “Phosphorus and Nitrogen Delivery to the Gulf of Mexico”; Iowa, “Iowa Nutrient Reduction Strategy”; US EPA, “Hypoxia in the Northern Gulf of Mexico”; Linda M. Jacobson, Mark B. David, and Laurie E. Drinkwater, “A Spatial Analysis of Phosphorus in the Mississippi River Basin,” Journal of Environment Quality 40, no. 3 (2011): 931, doi:10.2134/jeq2010.0386.
+  
+  \bibitem{51} G.W. Randall and D.J. Mulla, “Nitrate Nitrogen in Surface Waters as Influenced by Climatic Conditions and Agricultural Practices,” Journal of Environmental Quality 30, no. 2 (2001): 337–44.
+  
+  \bibitem{52} Thomas Isenhart (Iowa State University, personal communication, 2013).
+  
+  \bibitem{53} K.E. Schilling and R.D. Libra, “The Relationship of Nitrate Concentrations in Streams to Row Crop Land Use in Iowa. Journal of Environmental Quality,” Journal of Environmental Quality 29, no. 6 (2000): 1846–51.
+  
+  \bibitem{54}Iowa, “Iowa Nutrient Reduction Strategy. A Science and Technology-Based Framework to Assess and Reduce Nutrients to Iowa Waters and the Gulf of Mexico” (: Iowa Department of Agriculture and Land Stewardship, Iowa Department of Natural Resources, and Iowa State University College of Agriculture and Life Sciences, 2013).
+  
+  \bibitem{55}USDA NRCS [United States Department of Agriculture Natural Resources Conservation Service], “Iowa Technical Note No. 25: Iowa Phosphorus Index” (Des Moines, Iowa, 2004a), http://\url{www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/nrcs142p2_007643.pdf.}
+  
+  \bibitem{56}USDA NRCS, “Technical Note 25”;   Carrie Chennault, “People in Ecosystems / Watershed Integration: Visualizing Ecosystem Services Tradeoffs in Agricultural Landscapes,” Table 2-12 (Master’s thesis, Iowa State University, 2014).
+  
+  \bibitem{57}USDA NRCS, “Technical Note 25.”
+  
+  \bibitem{58}Iowa, “Iowa Nutrient Reduction Strategy. A Science and Technology-Based Framework to Assess and Reduce Nutrients to Iowa Waters and the Gulf of Mexico” (: Iowa Department of Agriculture and Land Stewardship, Iowa Department of Natural Resources, and Iowa State University College of Agriculture and Life Sciences, 2013).
+  
+  \bibitem{59}A.P. Mallarino et al., “Background and Basic Concepts of the Iowa Phosphorus Index: A Support Document to the USDA-NRCS Field Office Technical Note 25.” (Des Moines, Iowa, 2005), Iowa State University, USDA Natural Resource Conservation Service, and USDA Agricultural Research Service National Soil Tilth Laboratory, Retrieved from ftp://ftp-fc.sc.egov.usda.gov/IA/technical/BackgroundBasics.pdf; USDA NRCS [United States Department of Agriculture Natural Resources Conservation Service], “National Engineering Handbook. Part 630, Hydrology.” (Washington, D.C, 2004b), ftp://ftp.wcc.nrcs.usda.gov/wntsc/H&H/NEHhydrology/ch9.pdf.
+  
+  \bibitem{60} USDA NRCS, “Technical Note 25.”
+  
+  \bibitem{61} Ibid.
+  
+  \bibitem{62} Ibid.
+  
+  \bibitem{63} 1. USDA NRCS [United States Department of Agriculture Natural Resources Conservation Service], “Iowa Technical Note No. 25: Iowa Phosphorus Index” (Des Moines, Iowa, 2004a), \url{http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/nrcs142p2_007643.pdf}; A.P. Mallarino et al., “Background and Basic Concepts of the Iowa Phosphorus Index: A Support Document to the USDA-NRCS Field Office Technical Note 25.” (Des Moines, Iowa, 2005), Iowa State University, USDA Natural Resource Conservation Service, and USDA Agricultural Research Service National Soil Tilth Laboratory, Retrieved from ftp://ftp-fc.sc.egov.usda.gov/IA/technical/BackgroundBasics.pdf.
+  
+  \bibitem{64}USDA NRCS, “Technical Note 25.”
+  
+  \bibitem{65}USDA NRCS [United States Department of Agriculture Natural Resources Conservation Service], “Erosion and Sediment Delivery” (Des Moines, Iowa, 1998), \url{http://efotg.sc.egov.usda.gov/references/public/IA/Erosion_and_sediment_delivery.pdf}.
+  
+  \bibitem{69} H. G. Taber, “Commercial Vegetable Production – A Small Farm Opportunity?” (Iowa State University Extension and Outreach, 2009), \url{http://ia.foodmarketmaker.com/uploads/0a88216bd7a96e10152b7c7a6891a667.pdf.}
+  
+  \bibitem{70} R.M. Post and J.A. Robinson, “The SARE - Cornell Organic Grape Project” (The Third N.J. Shaulis Organic Grape and Wine Production Symposium, New York, 1995); K. Delate and H. Friedrich, “Organic Apple and Grape Performance in the Midwestern US,” Sustainability of Horticultural Systems in the 21st Century 638 (2004): 309–20.
   
 \end{thebibliography}
 

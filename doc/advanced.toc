@@ -37,40 +37,40 @@
 \contentsline {subsubsection}{\numberline {5.2.1}Carbon Sequestration}{14}{subsubsection.5.2.1}
 \contentsline {subsubsection}{\numberline {5.2.2}Erosion Control}{15}{subsubsection.5.2.2}
 \contentsline {subsection}{\numberline {5.3}Water Quality}{15}{subsection.5.3}
-\contentsline {subsubsection}{\numberline {5.3.1}Nitrate Retention}{15}{subsubsection.5.3.1}
-\contentsline {subsubsection}{\numberline {5.3.2}Phosphorus Retention}{15}{subsubsection.5.3.2}
-\contentsline {subsubsection}{\numberline {5.3.3}Sediment Control}{15}{subsubsection.5.3.3}
-\contentsline {subsection}{\numberline {5.4}Yield}{15}{subsection.5.4}
-\contentsline {subsubsection}{\numberline {5.4.1}Corn Yield}{16}{subsubsection.5.4.1}
-\contentsline {subsubsection}{\numberline {5.4.2}Soybean Yield}{16}{subsubsection.5.4.2}
-\contentsline {subsubsection}{\numberline {5.4.3}Alfalfa Hay Yield}{16}{subsubsection.5.4.3}
-\contentsline {subsubsection}{\numberline {5.4.4}Grass Hay}{16}{subsubsection.5.4.4}
-\contentsline {subsubsection}{\numberline {5.4.5}Cattle Yield}{17}{subsubsection.5.4.5}
-\contentsline {subsubsection}{\numberline {5.4.6}Mixed Fruit and Vegetable Yield}{17}{subsubsection.5.4.6}
-\contentsline {subsubsection}{\numberline {5.4.7}Wood Yield}{17}{subsubsection.5.4.7}
-\contentsline {subsubsection}{\numberline {5.4.8}Switch Grass Yield}{17}{subsubsection.5.4.8}
-\contentsline {subsubsection}{\numberline {5.4.9}Woody Biomass}{17}{subsubsection.5.4.9}
-\contentsline {section}{\numberline {6}Functionality}{18}{section.6}
-\contentsline {subsection}{\numberline {6.1}Navigating the PEWI Workspace}{18}{subsection.6.1}
-\contentsline {subsubsection}{\numberline {6.1.1}Tool Panel}{18}{subsubsection.6.1.1}
-\contentsline {subsubsection}{\numberline {6.1.2}Results Panel}{18}{subsubsection.6.1.2}
-\contentsline {paragraph}{Land Use Graph}{18}{section*.4}
-\contentsline {paragraph}{Ecosystem Services Graph}{19}{section*.5}
-\contentsline {paragraph}{Precipitation Graph}{19}{section*.6}
-\contentsline {paragraph}{Data Sheet}{19}{section*.7}
-\contentsline {subsubsection}{\numberline {6.1.3}Comment Panel}{19}{subsubsection.6.1.3}
-\contentsline {subsubsection}{\numberline {6.1.4}Index Information Box}{19}{subsubsection.6.1.4}
-\contentsline {subsubsection}{\numberline {6.1.5}View Perspective}{19}{subsubsection.6.1.5}
-\contentsline {subsubsection}{\numberline {6.1.6}Save Watershed}{19}{subsubsection.6.1.6}
-\contentsline {subsection}{\numberline {6.2}Main Menu}{19}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Guided Play}{20}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}Multiplayer Mode}{20}{subsection.6.4}
-\contentsline {subsection}{\numberline {6.5}Pause Menu}{20}{subsection.6.5}
-\contentsline {subsection}{\numberline {6.6}Hover Information}{20}{subsection.6.6}
-\contentsline {subsection}{\numberline {6.7}Hotkeys}{20}{subsection.6.7}
-\contentsline {subsection}{\numberline {6.8}Hotkey Customization}{21}{subsection.6.8}
-\contentsline {subsection}{\numberline {6.9}Randomization}{21}{subsection.6.9}
-\contentsline {subsection}{\numberline {6.10}Undo Function}{21}{subsection.6.10}
-\contentsline {subsection}{\numberline {6.11}Print Function}{22}{subsection.6.11}
-\contentsline {subsection}{\numberline {6.12}Record}{22}{subsection.6.12}
-\contentsline {subsection}{\numberline {6.13}About}{22}{subsection.6.13}
+\contentsline {subsubsection}{\numberline {5.3.1}Nitrate Retention}{16}{subsubsection.5.3.1}
+\contentsline {subsubsection}{\numberline {5.3.2}Phosphorus Retention}{16}{subsubsection.5.3.2}
+\contentsline {subsubsection}{\numberline {5.3.3}Sediment Control}{17}{subsubsection.5.3.3}
+\contentsline {subsection}{\numberline {5.4}Yield}{17}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}Corn Yield}{18}{subsubsection.5.4.1}
+\contentsline {subsubsection}{\numberline {5.4.2}Soybean Yield}{18}{subsubsection.5.4.2}
+\contentsline {subsubsection}{\numberline {5.4.3}Alfalfa Hay Yield}{19}{subsubsection.5.4.3}
+\contentsline {subsubsection}{\numberline {5.4.4}Grass Hay Yield}{20}{subsubsection.5.4.4}
+\contentsline {subsubsection}{\numberline {5.4.5}Cattle Yield}{20}{subsubsection.5.4.5}
+\contentsline {subsubsection}{\numberline {5.4.6}Mixed Fruit and Vegetable Yield}{21}{subsubsection.5.4.6}
+\contentsline {subsubsection}{\numberline {5.4.7}Wood Yield}{22}{subsubsection.5.4.7}
+\contentsline {subsubsection}{\numberline {5.4.8}Switch Grass Yield}{22}{subsubsection.5.4.8}
+\contentsline {subsubsection}{\numberline {5.4.9}Woody Biomass}{22}{subsubsection.5.4.9}
+\contentsline {section}{\numberline {6}Functionality}{23}{section.6}
+\contentsline {subsection}{\numberline {6.1}Navigating the PEWI Workspace}{23}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Tool Panel}{23}{subsubsection.6.1.1}
+\contentsline {subsubsection}{\numberline {6.1.2}Results Panel}{23}{subsubsection.6.1.2}
+\contentsline {paragraph}{Land Use Graph}{23}{section*.4}
+\contentsline {paragraph}{Ecosystem Services Graph}{24}{section*.5}
+\contentsline {paragraph}{Precipitation Graph}{24}{section*.6}
+\contentsline {paragraph}{Data Sheet}{24}{section*.7}
+\contentsline {subsubsection}{\numberline {6.1.3}Comment Panel}{24}{subsubsection.6.1.3}
+\contentsline {subsubsection}{\numberline {6.1.4}Index Information Box}{24}{subsubsection.6.1.4}
+\contentsline {subsubsection}{\numberline {6.1.5}View Perspective}{24}{subsubsection.6.1.5}
+\contentsline {subsubsection}{\numberline {6.1.6}Save Watershed}{25}{subsubsection.6.1.6}
+\contentsline {subsection}{\numberline {6.2}Main Menu}{25}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Guided Play}{25}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Multiplayer Mode}{25}{subsection.6.4}
+\contentsline {subsection}{\numberline {6.5}Pause Menu}{25}{subsection.6.5}
+\contentsline {subsection}{\numberline {6.6}Hover Information}{26}{subsection.6.6}
+\contentsline {subsection}{\numberline {6.7}Hotkeys}{26}{subsection.6.7}
+\contentsline {subsection}{\numberline {6.8}Hotkey Customization}{26}{subsection.6.8}
+\contentsline {subsection}{\numberline {6.9}Randomization}{27}{subsection.6.9}
+\contentsline {subsection}{\numberline {6.10}Undo Function}{27}{subsection.6.10}
+\contentsline {subsection}{\numberline {6.11}Print Function}{27}{subsection.6.11}
+\contentsline {subsection}{\numberline {6.12}Record}{27}{subsection.6.12}
+\contentsline {subsection}{\numberline {6.13}About}{27}{subsection.6.13}
