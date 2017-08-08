@@ -27,7 +27,7 @@ body {
   width: 100%;
 }
 
-.preview-btn, .print-btn, .exit-btn {
+.preview-btn, .print-btn, .exit-btn{
   position: absolute;
   top: 180%;
   width: 12vw;
@@ -46,6 +46,18 @@ body {
 .exit-btn {
   left: 86%;
   /*top: 19%;*/
+}
+.pdf-btn{
+  left: 50%;
+  position: absolute;
+  width: 12vw;
+  top: 195%;
+}
+.advpdf-btn{
+  left: 68%;
+  position: absolute;
+  width: 12vw;
+  top: 195%;
 }
 
 #optionsMainHolder {
