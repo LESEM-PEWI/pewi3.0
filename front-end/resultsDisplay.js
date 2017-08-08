@@ -309,7 +309,8 @@ function displayResults() {
   //create our top Radar plot, of the ecosystem indicators
   drawEcosystemRadar(tempObj);
   //create our bottom Radar plot, of the yield scores
-  drawYieldRadar(tempObj);
+  // drawYieldRadar(tempObj);
+
   // toggle the legend checkboxes for both of the radar plots on the page
   // document.getElementById('resultsFrame').contentWindow.toggleYearCheckboxes(); //XXX
 
@@ -737,7 +738,7 @@ function drawEcosystemIndicatorsDisplay(year) {
     color: "#e377c2",
     backColor: "tomato",
     raw: (Math.round(Totals.biodiversityPoints[year] * 10) / 10) + " pts"
-  },];
+  }, ];
 
   //chart parameters
   var width = 360;
@@ -751,28 +752,28 @@ function drawEcosystemIndicatorsDisplay(year) {
   var asterChart = document.getElementById('resultsFrame').contentWindow.document.getElementById('asterChart');
 
   var svg = d3.select(asterChart)
-  .append('svg')
-  .attr("class", "graph-svg-component")
-  .attr('width', width + 280)
-  .attr('height', height)
-  .append('g')
-  .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')');
+    .append('svg')
+    .attr("class", "graph-svg-component")
+    .attr('width', width + 280)
+    .attr('height', height)
+    .append('g')
+    .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')');
 
   var innerArc = d3.arc()
-  .innerRadius(innerRadius)
-  .padAngle(0)
-  //determine outter radius based on score out of 100
-  .outerRadius(function(d) {
-    return (radius - innerRadius) * (d.data.score / 100.0) + innerRadius;
-  });
+    .innerRadius(innerRadius)
+    .padAngle(0)
+    //determine outter radius based on score out of 100
+    .outerRadius(function(d) {
+      return (radius - innerRadius) * (d.data.score / 100.0) + innerRadius;
+    });
 
   var outlineArc = d3.arc()
-  .innerRadius(radius - 1)
-  .outerRadius(radius);
+    .innerRadius(radius - 1)
+    .outerRadius(radius);
 
   var coverArc = d3.arc()
-  .innerRadius(0)
-  .outerRadius(innerRadius);
+    .innerRadius(0)
+    .outerRadius(innerRadius);
 
   //a convoluted function for animating the aster plot
   // svg programming is obscure, but basically, we want to use this to graw our graphics
@@ -782,245 +783,245 @@ function drawEcosystemIndicatorsDisplay(year) {
     var sweepFlag = 1; // is arc to be drawn in +ve direction?
 
     return ['M', x, y, 'L', x + Math.sin(startAngle) * r, y - (Math.cos(startAngle) * r),
-    'A', r, r, 0, largeArc, sweepFlag, x + Math.sin(endAngle) * r, y - (Math.cos(endAngle) * r), 'Z'
-  ].join(' ');
-} //end nested function
+      'A', r, r, 0, largeArc, sweepFlag, x + Math.sin(endAngle) * r, y - (Math.cos(endAngle) * r), 'Z'
+    ].join(' ');
+  } //end nested function
 
-//function to create the tween animation moving the values from inner radius to their
-// correct positions
-function interpolateSVGArc(x, y, r, startAngle, endAngle) {
-  return function(t) {
-    return generateSVGArc(x, y, (r - innerRadius) * t + innerRadius, startAngle, endAngle);
-  };
-} //end nested function
+  //function to create the tween animation moving the values from inner radius to their
+  // correct positions
+  function interpolateSVGArc(x, y, r, startAngle, endAngle) {
+    return function(t) {
+      return generateSVGArc(x, y, (r - innerRadius) * t + innerRadius, startAngle, endAngle);
+    };
+  } //end nested function
 
-//d3 programming for creating the aster plot
-// this is a very sneaky plot, as it is essentially a pie chart with variable outter radii
-//  among the pie slice sections
+  //d3 programming for creating the aster plot
+  // this is a very sneaky plot, as it is essentially a pie chart with variable outter radii
+  //  among the pie slice sections
 
-var pie = d3.pie()
-.value(function(d) {
-  return 1; //everything has equal value, split up the pie chart accordingly
-})
-.sort(null);
+  var pie = d3.pie()
+    .value(function(d) {
+      return 1; //everything has equal value, split up the pie chart accordingly
+    })
+    .sort(null);
 
-//create mouseover information elements
+  //create mouseover information elements
 
-var mouseoverInfo = d3.select(asterChart)
-.append('g')
-.attr('class', 'mouseoverInfo');
+  var mouseoverInfo = d3.select(asterChart)
+    .append('g')
+    .attr('class', 'mouseoverInfo');
 
-mouseoverInfo.append('div')
-.attr('class', 'label');
+  mouseoverInfo.append('div')
+    .attr('class', 'label');
 
-mouseoverInfo.append('div')
-.attr('class', 'count');
+  mouseoverInfo.append('div')
+    .attr('class', 'count');
 
-mouseoverInfo.append('div')
-.attr('class', 'score');
+  mouseoverInfo.append('div')
+    .attr('class', 'score');
 
-//append data to plot
+  //append data to plot
 
-var path = svg.selectAll('path')
-.data(pie(dataset))
-.enter()
-.append('path')
-.attr('d', innerArc)
-.attr('fill', function(d) {
-  return d.data.color;
-})
-.attr('class', 'arc')
-.on('mouseover', function(d) {
-  //setup mouseover text and style
-  mouseoverInfo.select('.label').html(d.data.name);
-  mouseoverInfo.select('.count').html(d.data.raw);
-  mouseoverInfo.select('.score').html(d.data.score + "/100");
-  mouseoverInfo.style('border-color', d.data.color);
-  mouseoverInfo.style('display', 'block');
+  var path = svg.selectAll('path')
+    .data(pie(dataset))
+    .enter()
+    .append('path')
+    .attr('d', innerArc)
+    .attr('fill', function(d) {
+      return d.data.color;
+    })
+    .attr('class', 'arc')
+    .on('mouseover', function(d) {
+      //setup mouseover text and style
+      mouseoverInfo.select('.label').html(d.data.name);
+      mouseoverInfo.select('.count').html(d.data.raw);
+      mouseoverInfo.select('.score').html(d.data.score + "/100");
+      mouseoverInfo.style('border-color', d.data.color);
+      mouseoverInfo.style('display', 'block');
 
-  //highlight hovered arc
-  d3.select(this).classed("arc", false);
-  d3.select(this).classed("arcHighlight", true);
-})
-.on('mouseout', function() {
-  //hide mouseoverInfo
-  mouseoverInfo.style('display', 'none');
+      //highlight hovered arc
+      d3.select(this).classed("arc", false);
+      d3.select(this).classed("arcHighlight", true);
+    })
+    .on('mouseout', function() {
+      //hide mouseoverInfo
+      mouseoverInfo.style('display', 'none');
 
-  //unhighlight slice
-  d3.select(this).classed("arcHighlight", false);
-  d3.select(this).classed("arc", true);
-})
-.transition()
-.duration(700)
-.attrTween('d', function(d, i) {
-  //check to see if the score is very low, if so, still give it a visible slab
-  var endRadius = (d.data.score < 2) ? innerRadius + 6 : (radius - innerRadius) * (d.data.score / 100.0) + innerRadius;
-  return interpolateSVGArc(0, 0, endRadius, d.startAngle, d.endAngle);
-});
+      //unhighlight slice
+      d3.select(this).classed("arcHighlight", false);
+      d3.select(this).classed("arc", true);
+    })
+    .transition()
+    .duration(700)
+    .attrTween('d', function(d, i) {
+      //check to see if the score is very low, if so, still give it a visible slab
+      var endRadius = (d.data.score < 2) ? innerRadius + 6 : (radius - innerRadius) * (d.data.score / 100.0) + innerRadius;
+      return interpolateSVGArc(0, 0, endRadius, d.startAngle, d.endAngle);
+    });
 
-//setup the central cover
-var dummy = [{
-  count: 1
-}];
+  //setup the central cover
+  var dummy = [{
+    count: 1
+  }];
 
-//since the svg draws from the center, cover this with a white circle to disguise what's happening
-var cover = svg.selectAll(".cover")
-.data(pie(dummy))
-.enter().append("path")
-.attr("fill", "white")
-.attr("d", coverArc);
+  //since the svg draws from the center, cover this with a white circle to disguise what's happening
+  var cover = svg.selectAll(".cover")
+    .data(pie(dummy))
+    .enter().append("path")
+    .attr("fill", "white")
+    .attr("d", coverArc);
 
-//add the outline for each of the containers
-//  i'm still not sure how I feel about these, but consider removing the outline
-var outerPath = svg.selectAll(".outlineArc")
-.data(pie(dataset))
-.enter().append("path")
-.attr("fill", "none")
-.attr("stroke", function(d) {
-  return d.data.backColor;
-})
-.attr("class", "outlineArc")
-.attr("d", outlineArc);
+  //add the outline for each of the containers
+  //  i'm still not sure how I feel about these, but consider removing the outline
+  var outerPath = svg.selectAll(".outlineArc")
+    .data(pie(dataset))
+    .enter().append("path")
+    .attr("fill", "none")
+    .attr("stroke", function(d) {
+      return d.data.backColor;
+    })
+    .attr("class", "outlineArc")
+    .attr("d", outlineArc);
 
-//add title and year in the center of the plot
-svg.append("text")
-.attr("x", 0)
-.attr("y", 0)
-.attr("text-anchor", "middle")
-.style("font-size", "1.8vw")
-.style("font-weight", "bold")
-.text("Eco-Scores");
+  //add title and year in the center of the plot
+  svg.append("text")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text("Eco-Scores");
 
-svg.append("text")
-.attr("x", 0)
-.attr("y", 25)
-.attr("text-anchor", "middle")
-.style("font-size", "1.8vw")
-.style("font-weight", "bold")
-.text("Year " + year);
-
-
-//end of the aster plot creation, now do the indicator gradients
-
-//this function keeps track of the gradients based on the score
-function getColor(number) {
-  var tempColor;
-
-  if (number > 90) return "#0d46f2";
-  if (number > 70) return "#3359cc";
-  if (number > 50) return "#4d66b3";
-  if (number > 30) return "#60709f";
-  if (number > 0) return "#808080";
-  //else
-  return "#333333";
-} //end nested function
+  svg.append("text")
+    .attr("x", 0)
+    .attr("y", 25)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text("Year " + year);
 
 
-var nameArray = [];
-var colorLinker = {};
-var dataLinker = {};
+  //end of the aster plot creation, now do the indicator gradients
 
-//setup the initial data for these indicators
+  //this function keeps track of the gradients based on the score
+  function getColor(number) {
+    var tempColor;
 
-//water quality indicator
-
-nameArray.push("Water Quality");
-
-var sum = 0;
-//take into account the categories that affect water quality
-for (var i = 0; i <= 2; i++) {
-  sum += dataset[i].score;
-}
-
-dataLinker[nameArray[0]] = sum / 3; //average them
-colorLinker[nameArray[0]] = getColor(sum / 3);
-
-//soil quality indicator
-
-nameArray.push("Soil Quality");
-
-var sum = 0;
-for (var i = 3; i <= 4; i++) {
-  sum += dataset[i].score;
-}
-
-dataLinker[nameArray[1]] = sum / 2; //average them
-colorLinker[nameArray[1]] = getColor(sum / 2);
-
-//habitat quality indicator
-
-nameArray.push("Habitat Quality");
-
-var sum = 0;
-for (var i = 5; i <= 6; i++) {
-  sum += dataset[i].score;
-}
-
-dataLinker[nameArray[2]] = sum / 2; //average them
-colorLinker[nameArray[2]] = getColor(sum / 2);
-
-//now that all of this is set up, now create the graphic, d3
-
-var container = document.getElementById('resultsFrame').contentWindow.document.getElementById('asterContainer');
-
-var svg2 = d3.select(container)
-.append('svg')
-.attr('height', 200)
-.attr("class", "graph-svg-component")
-.append('g');
+    if (number > 90) return "#0d46f2";
+    if (number > 70) return "#3359cc";
+    if (number > 50) return "#4d66b3";
+    if (number > 30) return "#60709f";
+    if (number > 0) return "#808080";
+    //else
+    return "#333333";
+  } //end nested function
 
 
-var legendRectSize = 18;
-var legendSpacing = 4;
+  var nameArray = [];
+  var colorLinker = {};
+  var dataLinker = {};
 
-//set up the spacing of the elements
-var legend = svg2.selectAll('.legend')
-.data(nameArray)
-.enter()
-.append('g')
-.attr('class', 'ecoLegend')
-.attr('transform', function(d, i) {
-  var height = legendRectSize + legendSpacing;
-  var offset = 10;
-  var horz = 10;
-  var vert = i * height + offset;
-  return 'translate(' + horz + ',' + vert + ')';
-});
+  //setup the initial data for these indicators
 
-//add the text headings for the indicators
-legend.append('text')
-.attr('x', legendRectSize + legendSpacing)
-.attr('y', legendRectSize - legendSpacing)
-.text(function(d) {
-  return d + " : " + Math.round(dataLinker[d]) + "/100";
-})
-.attr('transform', function(d, i) {
-  var horz = 0;
-  var vert = (i) * (legendRectSize + 7 + legendSpacing);
-  return 'translate(' + horz + ',' + vert + ')';
-});
+  //water quality indicator
 
-//now add the bar of color
-legend.append('rect')
-.attr('width', legendRectSize * 15.2)
-.attr('height', legendRectSize)
-.attr('fill', function(d) {
-  return colorLinker[d];
-})
-.style('stroke', function(d) {
-  return colorLinker[d];
-})
-.attr('transform', function(d, i) {
-  var horz = 0;
-  var vert = (i + 1) * (legendRectSize + 5 + legendSpacing);
-  return 'translate(' + horz + ',' + vert + ')';
-})
-.transition()
-.duration(1000)
-.attrTween("fill", function() {
-  //animate the change of the color gradient from black to bright blue
-  return d3.interpolateRgb("#000000", this.getAttribute("fill"));
-});
+  nameArray.push("Water Quality");
+
+  var sum = 0;
+  //take into account the categories that affect water quality
+  for (var i = 0; i <= 2; i++) {
+    sum += dataset[i].score;
+  }
+
+  dataLinker[nameArray[0]] = sum / 3; //average them
+  colorLinker[nameArray[0]] = getColor(sum / 3);
+
+  //soil quality indicator
+
+  nameArray.push("Soil Quality");
+
+  var sum = 0;
+  for (var i = 3; i <= 4; i++) {
+    sum += dataset[i].score;
+  }
+
+  dataLinker[nameArray[1]] = sum / 2; //average them
+  colorLinker[nameArray[1]] = getColor(sum / 2);
+
+  //habitat quality indicator
+
+  nameArray.push("Habitat Quality");
+
+  var sum = 0;
+  for (var i = 5; i <= 6; i++) {
+    sum += dataset[i].score;
+  }
+
+  dataLinker[nameArray[2]] = sum / 2; //average them
+  colorLinker[nameArray[2]] = getColor(sum / 2);
+
+  //now that all of this is set up, now create the graphic, d3
+
+  var container = document.getElementById('resultsFrame').contentWindow.document.getElementById('asterContainer');
+
+  var svg2 = d3.select(container)
+    .append('svg')
+    .attr('height', 200)
+    .attr("class", "graph-svg-component")
+    .append('g');
+
+
+  var legendRectSize = 18;
+  var legendSpacing = 4;
+
+  //set up the spacing of the elements
+  var legend = svg2.selectAll('.legend')
+    .data(nameArray)
+    .enter()
+    .append('g')
+    .attr('class', 'ecoLegend')
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset = 10;
+      var horz = 10;
+      var vert = i * height + offset;
+      return 'translate(' + horz + ',' + vert + ')';
+    });
+
+  //add the text headings for the indicators
+  legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d) {
+      return d + " : " + Math.round(dataLinker[d]) + "/100";
+    })
+    .attr('transform', function(d, i) {
+      var horz = 0;
+      var vert = (i) * (legendRectSize + 7 + legendSpacing);
+      return 'translate(' + horz + ',' + vert + ')';
+    });
+
+  //now add the bar of color
+  legend.append('rect')
+    .attr('width', legendRectSize * 15.2)
+    .attr('height', legendRectSize)
+    .attr('fill', function(d) {
+      return colorLinker[d];
+    })
+    .style('stroke', function(d) {
+      return colorLinker[d];
+    })
+    .attr('transform', function(d, i) {
+      var horz = 0;
+      var vert = (i + 1) * (legendRectSize + 5 + legendSpacing);
+      return 'translate(' + horz + ',' + vert + ')';
+    })
+    .transition()
+    .duration(1000)
+    .attrTween("fill", function() {
+      //animate the change of the color gradient from black to bright blue
+      return d3.interpolateRgb("#000000", this.getAttribute("fill"));
+    });
 
 } //end drawEcosystemIndicatorsDisplay()
 
@@ -1468,238 +1469,238 @@ function drawPrecipitationInformationChart() {
 
 } //end drawPrecipitationInformationChart()
 
-//This function is in some ways similar to the ecosystem radar function
-//  here we updata the dataset and legend accordingly
-function drawYieldRadar(yearArray) {
-
-  //clear info already on page
-  document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart').innerHTML = " ";
-  document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend').innerHTML = " ";
-
-  var w = Math.round(window.innerWidth * 0.317);
-  var h = Math.round(window.innerHeight * 0.319);
-  var graphLength = Math.min(w, h);
-  // var graphWidth = 300,
-  //   graphHeight = 300;
-
-  var dataset = [];
-  var legendOptions = [];
-  var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
-  var radarClassElementsString = "yield-radar-chart-serie"; //ironically missing an s
-
-  //for each year given, setup the data in that series
-  for (var i = 0; i < yearArray.length; i++) {
-
-    var y = yearArray[i];
-    //Totals.yieldResults[y][tempString]
-    var obj = [{
-      label: "Corn Grain",
-      axis: "Corn Grain",
-      value: Totals.cornGrainYieldScore[y] / 100,
-      raw: (Math.round(Totals.yieldResults[y].cornGrainYield * 10) / 10) + " bu"
-    },
-    {
-      label: "Soybean",
-      axis: "Soybean",
-      value: Totals.soybeanYieldScore[y] / 100,
-      raw: (Math.round(Totals.yieldResults[y].soybeanYield * 10) / 10) + " bu"
-    },
-    {
-      label: "Mixed Fruits and Vegetables",
-      axis: "Fruit/Veg",
-      value: Totals.mixedFruitsAndVegetablesYieldScore[y] / 100,
-      raw: (Math.round(Totals.yieldResults[y].mixedFruitsAndVegetablesYield * 10) / 10) + " tons"
-    },
-    {
-      label: "Cattle",
-      axis: "Cattle",
-      value: Totals.cattleYieldScore[y] / 100,
-      raw: (Math.round(Totals.yieldResults[y].cattleYield * 10) / 10) + " animals"
-    },
-    {
-      label: "Alfalfa Hay",
-      axis: "Alfalfa",
-      value: Totals.alfalfaHayYieldScore[y] / 100,
-      raw: (Math.round(Totals.yieldResults[y].alfalfaHayYield * 10) / 10) + " tons"
-    },
-    {
-      label: "Grass Hay",
-      axis: "Grass Hay",
-      value: Totals.grassHayYieldScore[y] / 100,
-      raw: (Math.round(Totals.yieldResults[y].grassHayYield * 10) / 10) + " tons"
-    },
-    {
-      label: "Switchgrass Biomass",
-      axis: "Switchgrass",
-      value: Totals.switchgrassYieldScore[y] / 100,
-      raw: (Math.round(Totals.yieldResults[y].switchgrassYield * 10) / 10) + " tons"
-    },
-    {
-      label: "Wood",
-      axis: "Wood",
-      value: Totals.woodYieldScore[y] / 100,
-      raw: (Math.round(Totals.yieldResults[y].woodYield * 10) / 10) + " board-ft"
-    },
-    {
-      label: "Short Rotation Woody Biomass",
-      axis: "Woody Biomass",
-      value: Totals.shortRotationWoodyBiomassYieldScore[y] / 100,
-      raw: (Math.round(Totals.yieldResults[y].shortRotationWoodyBiomassYield * 10) / 10) + " tons"
-    }
-  ];
-
-  dataset.push(obj);
-  legendOptions.push("Year " + y);
-}
-
-//not used, but is useful for scaling the radar plot
-//  I decided against using the maximumOfData in config, as it is somewhat misleading
-//  when the graphic changes scales between uses
-var maximumOfData = 0;
-for (var i = 0; i < dataset.length; i++) {
-  for (var j = 0; j < dataset[i].length; j++) {
-    if (dataset[i][j].value > maximumOfData) maximumOfData = dataset[i][j].value;
-  }
-}
-
-//option overrides for chart
-var chartConfigOverride = {
-  // w: graphWidth,
-  // h: graphHeight,
-  w: graphLength,
-  h: graphLength,
-  maxValue: 1,
-  levels: 5,
-  ExtraWidthX: 300,
-  TranslateX: graphLength * 0.487, //95
-  TranslateY: graphLength * 0.154 //30
-};
-
-//get elements in the child frame
-var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart');
-var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend');
-// var checkboxes = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldChecks');
-
-//use Radar object to create a plot
-RadarChart.draw(radarId, dataset, chartConfigOverride, 'mouseoverInfoRadarLeft', radarClassElementsString);
-
-//now, time for the legend
-// var legendWidth = 355;
-// var legendHeight = 370;
-var legendWidth = Math.round(window.innerWidth * 0.376);
-var legendHeight = Math.round(window.innerHeight * 0.394);
-var legendLength = Math.round(Math.min(legendWidth, legendHeight));
-
-var svg = d3.select(radarLegendId)
-.append('svg')
-// .attr('width', legendWidth)
-// .attr('height', legendHeight)
-.attr('width', legendLength)
-.attr('height', legendLength)
-.append('g')
-.attr('transform', 'translate(' + (legendLength / 2) + ',' + (legendLength / 2) + ')');
-
-//add title for legend/chart
-svg.append("text")
-.attr("x", 0)
-// .attr("y", -120)
-.attr("y", Math.round(-0.324 * legendHeight))
-.attr("text-anchor", "middle")
-.style("font-size", "1.8vw")
-.style("font-weight", "bold")
-.text("Annual Yield Results");
-
-//sizing for the colored squares and spaces
-// var legendRectSize = 18;
-// var legendSpacing = 4;
-var legendRectSize = Math.round(graphLength * 0.06);
-var legendSpacing = Math.round(legendRectSize * 0.22);
-
-//add all the elements that have a nonzero count
-var legend = svg.selectAll('.legend')
-.data(legendOptions)
-.enter()
-.append('g')
-.on('mouseover', function(d) {
-
-  //change text to blue on mouse over
-  d3.select(this).style("fill", "steelblue");
-
-  //highlight area for the series in plot
-  var g = d3.select(radarId);
-  z = d3.select(this).attr("childElement");
-  z = "polygon." + z;
-
-  g.selectAll("polygon")
-  .transition(200)
-  .style("fill-opacity", 0.1);
-  g.selectAll(z)
-  .transition(200)
-  .style("fill-opacity", 0.7);
-})
-.on('mouseout', function(d) {
-
-  //set text back to black
-  d3.select(this).style("fill", "black");
-
-  //reset polygon area highlight
-  var g = d3.select(radarId);
-  g.selectAll("polygon")
-  .transition(200)
-  .style("fill-opacity", 0.2);
-})
-.attr("childElement", function(d, i) {
-  return radarClassElementsString + i;
-})
-.attr('transform', function(d, i) {
-  var height = legendRectSize + legendSpacing;
-  // var offset = 80;
-  // var horz = -124;
-  var offset = Math.round(legendRectSize * 4.44);
-  var horz = Math.round(legendRectSize * -1.55);
-  var vert = i * height - offset;
-  return 'translate(' + horz + ',' + vert + ')';
-});
-
-//add legend color squares
-legend.append('rect')
-.attr('width', legendRectSize)
-.attr('height', legendRectSize)
-.style('fill', function(d, i) {
-  return colorscale(i);
-})
-.style('stroke', function(d, i) {
-  return colorscale(i);
-});
-
-//add legend text info
-legend.append('text')
-.attr('x', legendRectSize + legendSpacing)
-.attr('y', legendRectSize - legendSpacing)
-.text(function(d) {
-  return d;
-});
-
-// add checkbox
-legend.append('foreignObject')
-.attr('width', 20)
-.attr('height', 20)
-.attr('x', 70)
-.attr('y', 0)
-
-.append('xhtml:input')
-.attr('id', function(d) {
-  return "yieldCheckboxYear" + d.slice(-1);
-})
-.attr('class', 'yearCheckbox')
-.attr('onclick', function(d) {
-  return "yieldRadarPlotYearToggle(" + d.slice(-1) + ");";
-})
-.attr('width', legendRectSize)
-.attr('height', legendRectSize)
-.attr('checked', "")
-.attr('type', 'checkbox');
-} //end drawYieldRadar()
+// // This function is in some ways similar to the ecosystem radar function
+// //  here we updata the dataset and legend accordingly
+// function drawYieldRadar(yearArray) {
+//
+//   //clear info already on page
+//   document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart').innerHTML = " ";
+//   document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend').innerHTML = " ";
+//
+//   var w = Math.round(window.innerWidth * 0.317);
+//   var h = Math.round(window.innerHeight * 0.319);
+//   var graphLength = Math.min(w, h);
+//   // var graphWidth = 300,
+//   //   graphHeight = 300;
+//
+//   var dataset = [];
+//   var legendOptions = [];
+//   var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
+//   var radarClassElementsString = "yield-radar-chart-serie"; //ironically missing an s
+//
+//   //for each year given, setup the data in that series
+//   for (var i = 0; i < yearArray.length; i++) {
+//
+//     var y = yearArray[i];
+//     //Totals.yieldResults[y][tempString]
+//     var obj = [{
+//         label: "Corn Grain",
+//         axis: "Corn Grain",
+//         value: Totals.cornGrainYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].cornGrainYield * 10) / 10) + " bu"
+//       },
+//       {
+//         label: "Soybean",
+//         axis: "Soybean",
+//         value: Totals.soybeanYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].soybeanYield * 10) / 10) + " bu"
+//       },
+//       {
+//         label: "Mixed Fruits and Vegetables",
+//         axis: "Fruit/Veg",
+//         value: Totals.mixedFruitsAndVegetablesYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].mixedFruitsAndVegetablesYield * 10) / 10) + " tons"
+//       },
+//       {
+//         label: "Cattle",
+//         axis: "Cattle",
+//         value: Totals.cattleYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].cattleYield * 10) / 10) + " animals"
+//       },
+//       {
+//         label: "Alfalfa Hay",
+//         axis: "Alfalfa",
+//         value: Totals.alfalfaHayYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].alfalfaHayYield * 10) / 10) + " tons"
+//       },
+//       {
+//         label: "Grass Hay",
+//         axis: "Grass Hay",
+//         value: Totals.grassHayYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].grassHayYield * 10) / 10) + " tons"
+//       },
+//       {
+//         label: "Switchgrass Biomass",
+//         axis: "Switchgrass",
+//         value: Totals.switchgrassYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].switchgrassYield * 10) / 10) + " tons"
+//       },
+//       {
+//         label: "Wood",
+//         axis: "Wood",
+//         value: Totals.woodYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].woodYield * 10) / 10) + " board-ft"
+//       },
+//       {
+//         label: "Short Rotation Woody Biomass",
+//         axis: "Woody Biomass",
+//         value: Totals.shortRotationWoodyBiomassYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].shortRotationWoodyBiomassYield * 10) / 10) + " tons"
+//       }
+//     ];
+//
+//     dataset.push(obj);
+//     legendOptions.push("Year " + y);
+//   }
+//
+//   //not used, but is useful for scaling the radar plot
+//   //  I decided against using the maximumOfData in config, as it is somewhat misleading
+//   //  when the graphic changes scales between uses
+//   var maximumOfData = 0;
+//   for (var i = 0; i < dataset.length; i++) {
+//     for (var j = 0; j < dataset[i].length; j++) {
+//       if (dataset[i][j].value > maximumOfData) maximumOfData = dataset[i][j].value;
+//     }
+//   }
+//
+//   //option overrides for chart
+//   var chartConfigOverride = {
+//     // w: graphWidth,
+//     // h: graphHeight,
+//     w: graphLength,
+//     h: graphLength,
+//     maxValue: 1,
+//     levels: 5,
+//     ExtraWidthX: 300,
+//     TranslateX: graphLength * 0.487, //95
+//     TranslateY: graphLength * 0.154 //30
+//   };
+//
+//   //get elements in the child frame
+//   var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart');
+//   var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend');
+//   // var checkboxes = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldChecks');
+//
+//   //use Radar object to create a plot
+//   RadarChart.draw(radarId, dataset, chartConfigOverride, 'mouseoverInfoRadarLeft', radarClassElementsString);
+//
+//   //now, time for the legend
+//   // var legendWidth = 355;
+//   // var legendHeight = 370;
+//   var legendWidth = Math.round(window.innerWidth * 0.376);
+//   var legendHeight = Math.round(window.innerHeight * 0.394);
+//   var legendLength = Math.round(Math.min(legendWidth, legendHeight));
+//
+//   var svg = d3.select(radarLegendId)
+//     .append('svg')
+//     // .attr('width', legendWidth)
+//     // .attr('height', legendHeight)
+//     .attr('width', legendLength)
+//     .attr('height', legendLength)
+//     .append('g')
+//     .attr('transform', 'translate(' + (legendLength / 2) + ',' + (legendLength / 2) + ')');
+//
+//   //add title for legend/chart
+//   svg.append("text")
+//     .attr("x", 0)
+//     // .attr("y", -120)
+//     .attr("y", Math.round(-0.324 * legendHeight))
+//     .attr("text-anchor", "middle")
+//     .style("font-size", "1.8vw")
+//     .style("font-weight", "bold")
+//     .text("Annual Yield Results");
+//
+//   //sizing for the colored squares and spaces
+//   // var legendRectSize = 18;
+//   // var legendSpacing = 4;
+//   var legendRectSize = Math.round(graphLength * 0.06);
+//   var legendSpacing = Math.round(legendRectSize * 0.22);
+//
+//   //add all the elements that have a nonzero count
+//   var legend = svg.selectAll('.legend')
+//     .data(legendOptions)
+//     .enter()
+//     .append('g')
+//     .on('mouseover', function(d) {
+//
+//       //change text to blue on mouse over
+//       d3.select(this).style("fill", "steelblue");
+//
+//       //highlight area for the series in plot
+//       var g = d3.select(radarId);
+//       z = d3.select(this).attr("childElement");
+//       z = "polygon." + z;
+//
+//       g.selectAll("polygon")
+//         .transition(200)
+//         .style("fill-opacity", 0.1);
+//       g.selectAll(z)
+//         .transition(200)
+//         .style("fill-opacity", 0.7);
+//     })
+//     .on('mouseout', function(d) {
+//
+//       //set text back to black
+//       d3.select(this).style("fill", "black");
+//
+//       //reset polygon area highlight
+//       var g = d3.select(radarId);
+//       g.selectAll("polygon")
+//         .transition(200)
+//         .style("fill-opacity", 0.2);
+//     })
+//     .attr("childElement", function(d, i) {
+//       return radarClassElementsString + i;
+//     })
+//     .attr('transform', function(d, i) {
+//       var height = legendRectSize + legendSpacing;
+//       // var offset = 80;
+//       // var horz = -124;
+//       var offset = Math.round(legendRectSize * 4.44);
+//       var horz = Math.round(legendRectSize * -1.55);
+//       var vert = i * height - offset;
+//       return 'translate(' + horz + ',' + vert + ')';
+//     });
+//
+//   //add legend color squares
+//   legend.append('rect')
+//     .attr('width', legendRectSize)
+//     .attr('height', legendRectSize)
+//     .style('fill', function(d, i) {
+//       return colorscale(i);
+//     })
+//     .style('stroke', function(d, i) {
+//       return colorscale(i);
+//     });
+//
+//   //add legend text info
+//   legend.append('text')
+//     .attr('x', legendRectSize + legendSpacing)
+//     .attr('y', legendRectSize - legendSpacing)
+//     .text(function(d) {
+//       return d;
+//     });
+//
+//   // add checkbox
+//   legend.append('foreignObject')
+//     .attr('width', 20)
+//     .attr('height', 20)
+//     .attr('x', 70)
+//     .attr('y', 0)
+//
+//     .append('xhtml:input')
+//     .attr('id', function(d) {
+//       return "yieldCheckboxYear" + d.slice(-1);
+//     })
+//     .attr('class', 'yearCheckbox')
+//     .attr('onclick', function(d) {
+//       return "yieldRadarPlotYearToggle(" + d.slice(-1) + ");";
+//     })
+//     .attr('width', legendRectSize)
+//     .attr('height', legendRectSize)
+//     .attr('checked', "")
+//     .attr('type', 'checkbox');
+// } //end drawYieldRadar()
 
 //generateResultsTable creates the string of html with all the numerical results
 // the code here is a little dense, but entirely straightforward
@@ -1918,8 +1919,8 @@ function generateResultsTable() {
 
       var tempString = backendDataIdentifiers[l];
       //Correction for Carbon Sequestrations
-      if(l==2) {
-        Totals[tempString][y] = Totals[tempString][y]*(1/conversionArray[l]);
+      if (l == 2) {
+        Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
       }
       htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
 
