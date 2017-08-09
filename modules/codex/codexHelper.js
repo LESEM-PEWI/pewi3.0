@@ -61,7 +61,7 @@ function establishHeader(i, line1, line2, line3, line4, padding) {
 
   //generic string to which we can add
   var tempString = "";
-  tempString += "<div id='" + i + "' class='groupHeader' onmouseover='this.focus()' onclick='arrangeContent(" + i + "); toggleChildElements(" + i + ");' style='padding-left:" + padding + "%;' >";
+  tempString += "<div id='" + i + "' class='groupHeader' onmouseover='this.focus()' onclick='arrangeContent(" + i + "); toggleChildElements(" + i + ");' style='padding-left:" + padding + "%;  overflow: auto;' >";
   //add the whole text, minus the indicator symbol and following space
   tempString += line1.slice(2);
   tempString += "</div>";
@@ -96,7 +96,7 @@ function establishElement(i, line1, line2, line3, line4, padding) {
 
   //html----
   var tempString = "";
-  tempString += "<div id='" + i + "' class='groupElement' onclick='arrangeContent(" + i + ");' style='padding-left:" + padding + "%;' >";
+  tempString += "<div id='" + i + "' class='groupElement' onclick='arrangeContent(" + i + ");' style='padding-left:" + padding + "%;  overflow: auto;' >";
   tempString += line1.slice(2);
   tempString += "</div>";
 
