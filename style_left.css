@@ -140,7 +140,6 @@
 }
 
 #printButton{
-  border-radius: 50%;
   cursor: pointer;
   height: 3vw;
   height: var(--left-console-button-length);

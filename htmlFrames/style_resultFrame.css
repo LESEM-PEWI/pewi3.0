@@ -427,6 +427,11 @@ text {
 #toggleYearPie:hover {
   background-color: rgba(40, 44, 42, 0.1);
 }
+#yearText {
+  right: 50%;
+  font-size: 20px;
+  font-weight: bold;
+}
 
 #asterChart {
   display: block;
