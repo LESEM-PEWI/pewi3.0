@@ -3617,9 +3617,11 @@ function toggleVisibility() {
   //currentPlayer=1;
 
   //reset default on items
-  for (var i = 1; i <= 15; i++) {
-    var string = "paint" + i;
-    document.getElementById(string).style.display = "inline-block";
+  if(!multiplayerAssigningModeOn) {
+      for (var i = 1; i <= 15; i++) {
+        var string = "paint" + i;
+        document.getElementById(string).style.display = "inline-block";
+      }   
   }
 
   document.getElementById('year1Button').style.display = "block";
