@@ -67,6 +67,7 @@ tr:hover {
 .tab, .tabSelected {
   background-color: rgba(40, 44, 42, 0.03);
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  cursor: pointer;
   display: inline-block;
   float: left;
   height: 2vw;
@@ -91,10 +92,6 @@ tr:hover {
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, */
-}
-
-.tab {
-  cursor: pointer;
 }
 
 .tabSelected {
@@ -178,7 +175,6 @@ tr:hover {
 
 #innerContainer {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 10px;
 }
 
 
@@ -362,7 +358,6 @@ tr:hover {
 
 text {
   cursor: default;
-  overflow: hidden;
 }
 
 .precipInfo {
@@ -384,7 +379,12 @@ text {
   margin: 0px;
   width: 5%;
 }
-
+#PrecipitationTitle{
+  left: 64%;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+}
 #precipTitle img {
   height: 100%;
   width: 100%;
@@ -429,35 +429,21 @@ text {
   -webkit-transition-duration: 0.4s;
 }
 
-
 #toggleYearPie:hover {
   background-color: rgba(40, 44, 42, 0.1);
 }
-
-#toggleSpider{
-  background-color: rgba(40, 44, 42, 0.03);
-  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
-  cursor: pointer;
-  font-size: 1.4vw;
-  font-size: var(--class-font-size);
+#yearText{
+  right: 50%;
+  font-size: 20px;
   font-weight: bold;
-  height: 15%;
-  line-height: 200%;
-  margin: 0 auto;
-  text-align: center;
+}
+
+#landUseTitle{
+  left: 64%;
+  font-size: 20px;
+  font-weight: bold;
   position: relative;
-  top: -50%;
-  left: -7%;
-  transition-duration: 0.4s;
-  width: 15%;
-  -webkit-transition-duration: 0.4s;
-  overflow-y: hidden;
 }
-#toggleSpider:hover {
-  background-color: rgba(40, 44, 42, 0.1);
-}
-
-
 #asterChart {
   display: block;
   float: left;
@@ -508,12 +494,11 @@ text {
 
 #yieldRadarContainer {}
 
-#radarChart{
+#radarChart, #yieldRadarChart {
   /*border: 3px solid #d64078;*/
   float: left;
-  height: 99%;
+  height: 98%;
   width: 60%;
-  margin-bottom: 25;
 }
 
 #radarLegend {

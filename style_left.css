@@ -152,6 +152,16 @@
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
+#printButton{
+  border-radius: 50%;
+  cursor: pointer;
+  height: 3vw;
+  height: var(--left-console-button-length);
+  width: 3vw;
+  width: var(--left-console-button-length);
+  left: 5vw;
+  top: 0vw;
+}
 /* toolsButton to slide the left console */
 #toolsButton {
   /*border-bottom-right-radius: 5px;*/

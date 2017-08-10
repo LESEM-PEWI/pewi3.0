@@ -318,3 +318,6 @@ $
 ./codexResources/text/biblio.html
 0
 $
+@ : General and Advanced PDF
+<img src="./codexResources/imgs/pdf-icon.png" />
+./codexResources/text/pdf.html

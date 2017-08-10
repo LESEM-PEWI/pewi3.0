@@ -1214,7 +1214,6 @@ function drawEcosystemRadar(yearArray) {
     radarLegendItems.push(d); // pushes the item names in the radar plot chart's legend to items array
     return d;
   });
-
   // add checkbox
   legend.append('foreignObject')
   .attr('style', 'visibility: visible;')
@@ -1987,7 +1986,6 @@ function generateResultsTable() {
 
       htmlTableString += "</td>";
     } //for each year
-
     //units cell
     htmlTableString += "<td>(out of 100)</td>";
 
