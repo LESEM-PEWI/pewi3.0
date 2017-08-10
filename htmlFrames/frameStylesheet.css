@@ -225,6 +225,7 @@
 }
 
 .uploadDownloadButton {
+  cursor: pointer;
   height: 40px;
   -webkit-transition-duration: 0.2s;
   transition-duration: 0.2s;

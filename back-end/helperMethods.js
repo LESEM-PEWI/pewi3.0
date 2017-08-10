@@ -1,4 +1,6 @@
 // global var for each page
+
+// ===These are the number of each frames===
 // CREDIT_HTML = window.frames[0],
 // UPDOWNLOAD_HTML = window.frames[1],
 // CODEX_HTML = window.frames[2],
@@ -43,6 +45,80 @@ function checkFileCorrectness(file, callback) {
 
 }
 
+//convertPrecipToIndex returns precipitationIndex array indicies from precip levels
+function convertPrecipToIndex(precip) {
+
+  switch (precip) {
+    case 24.58: return 0;
+    case 28.18: return 1;
+    case 30.39: return 2;
+    case 32.16: return 3;
+    case 34.34: return 4;
+    case 36.47: return 5;
+    case 45.10: return 6;
+  }
+} //end convertPrecipToIndex
+
+//this function returns a random int between min and max, inclusive!
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+} //end getRandomInt
+
+// Check if the array initData value and format is correct so that it's able to feed Tile object
+// returns true/false
+function initDataIsCorrupt() {
+  // check length
+  if (initData.length != 828) {
+    console.log("I thought this will never be triggered");
+    console.log("initData.length: " + initData.length);
+    console.log("initData ");
+    console.log(initData);
+    return 1;
+  }
+  // Each cell is an array, check the length of each cell
+  for (var i = 0; i < initData.length; i++) {
+    /**
+    if (initData[i].length !=32 && initData[i].length !=33 ) {
+    console.log("something wrong inside at row " + i + "in initData");
+    return 1;
+  } // end if*/
+
+  // check if there is value in each small cell
+  // for (var j = 0; j < initData[i].length; /*32*/ j++) {
+  //   if (initData[i][j].length == 0) {
+  //     console.log("empty value at [" + i + "][" + j + "]");
+  //     return 1;
+  //   }
+  //   //XXX can further check each value one by one
+  //
+  // } // end for
+} // end for
+// console.log("initData passed checking!");
+// not corrupt
+return 0;
+} // end initDataIsCorrupt()
+
+//load the data from given fileString into the given board object
+function loadBoard(board, fileString) {
+
+  $.ajax({
+    async: false,
+    type: "GET",
+    url: fileString,
+    dataType: "text",
+    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+    success: function(data) {
+      parseInitial(data);
+    }
+  });
+
+  propogateBoard(board);
+
+  //clear initData
+  initData = [];
+
+} //end loadBoard()
+
 //parseInitial takes the data from on server text file and fills global array
 // return true/false
 function parseInitial(data) {
@@ -73,95 +149,6 @@ function parseInitial(data) {
 
 } //end parseInitial()
 
-
-//setPrecipitation sets the precipitation for year 0 through year 3 in the watershed
-function setPrecipitation() {
-
-  //randomly select precipitation value
-  var r = Math.floor(Math.random() * precip.length);
-  return r;
-} //end setPrecipitation()
-
-//convertPrecipToIndex returns precipitationIndex array indicies from precip levels
-function convertPrecipToIndex(precip) {
-
-  switch (precip) {
-    case 24.58: return 0;
-    case 28.18: return 1;
-    case 30.39: return 2;
-    case 32.16: return 3;
-    case 34.34: return 4;
-    case 36.47: return 5;
-    case 45.10: return 6;
-  }
-} //end convertPrecipToIndex
-
-
-//helper method for calculations of log base 10
-Math.log10 = function(n) {
-  return (Math.log(n)) / (Math.log(10));
-}; //end log10
-
-//load the data from given fileString into the given board object
-function loadBoard(board, fileString) {
-
-  $.ajax({
-    async: false,
-    type: "GET",
-    url: fileString,
-    dataType: "text",
-    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-    success: function(data) {
-      parseInitial(data);
-    }
-  });
-
-  propogateBoard(board);
-
-  //clear initData
-  initData = [];
-
-} //end loadBoard()
-
-//this function returns a random int between min and max, inclusive!
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-} //end getRandomInt
-
-// Check if the array initData value and format is correct so that it's able to feed Tile object
-// returns true/false
-function initDataIsCorrupt() {
-  // check length
-  if (initData.length != 828) {
-    console.log("I thought this will never be triggered");
-    console.log("initData.length: " + initData.length);
-    console.log("initData ");
-    console.log(initData);
-    return 1;
-  }
-  // Each cell is an array, check the length of each cell
-  for (var i = 0; i < initData.length; i++) {
-  /**
-      if (initData[i].length !=32 && initData[i].length !=33 ) {
-      console.log("something wrong inside at row " + i + "in initData");
-      return 1;
-    } // end if*/
-
-    // check if there is value in each small cell
-    // for (var j = 0; j < initData[i].length; /*32*/ j++) {
-    //   if (initData[i][j].length == 0) {
-    //     console.log("empty value at [" + i + "][" + j + "]");
-    //     return 1;
-    //   }
-    //   //XXX can further check each value one by one
-    //
-    // } // end for
-  } // end for
-  // console.log("initData passed checking!");
-  // not corrupt
-  return 0;
-} // end initDataIsCorrupt()
-
 /**
 * Prompt a dialogue to ask for filename
 * If the user did not enter file name then it take date and time stamp as default file name.
@@ -186,3 +173,16 @@ function promptFileName() {
   return filename;
 
 } // END promptFileName
+
+//setPrecipitation sets the precipitation for year 0 through year 3 in the watershed
+function setPrecipitation() {
+
+  //randomly select precipitation value
+  var r = Math.floor(Math.random() * precip.length);
+  return r;
+} //end setPrecipitation()
+
+//helper method for calculations of log base 10
+Math.log10 = function(n) {
+  return (Math.log(n)) / (Math.log(10));
+}; //end log10

@@ -156,11 +156,11 @@ $
 <iframe width="500" height="300" src="https://www.youtube.com/embed/oknvFAeMFoU?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/waterQuality.html
 0
-@ : Nitrate Pollution Control
+@ : Nitrate Pollution
 <iframe width="500" height="300" src="https://www.youtube.com/embed/K_nmKowHYRY?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300"src=https://www.youtube.com/embed/dB3-d9UONJc?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/nitratePollutionControl.html
 1
-@ : Phosphorus Pollution Control
+@ : Phosphorus Pollution
 <iframe width="500" height="300" src="https://www.youtube.com/embed/2HZDHK8uy7Y?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>  + <iframe width="500" height="300" src="https://www.youtube.com/embed/ptQZ9LW-h_c?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/phosphorusPollutionControl.html
 1
@@ -297,9 +297,9 @@ $
 <iframe width="500" height="300" src="https://www.youtube.com/embed/qA2iBhKabm4?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/randomization.html
 0
-@ : Undo Function
+@ : Undo Key
 <iframe width="500" height="300" src="https://www.youtube.com/embed/7VDPh8DY2DM?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
-./codexResources/text/undofunction.html
+./codexResources/text/undokey.html
 0
 @ : Print Function
 <iframe width="500" height="300" src="https://www.youtube.com/embed/B55_v0vC2KE?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
