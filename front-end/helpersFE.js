@@ -2099,7 +2099,7 @@ function onDocumentMouseUp(event) {
 
 //onDocumentKeyDown, listener with keyboard bindings
 function onDocumentKeyDown(event) {
-  if (!isSimRunning() || isSimRunning && !event.isTrusted) {
+  if (!isSimRunning() || isSimRunning && !event.isTrusted || event.keyCode == 27) {
     //switch structure on key code (http://keycode.info)
 
     // if (!event){
@@ -2506,7 +2506,7 @@ function randomizeBoard() {
       }
     } //end for all tiles
   }
-  //randomizing = false;
+  randomizing = false;
   painter = prevPainter;
   //Inserts the block of land use types into the undoArr
   insertChange();
