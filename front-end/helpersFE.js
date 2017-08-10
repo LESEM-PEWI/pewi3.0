@@ -3014,6 +3014,7 @@ function saveAndRandomize() {
     document.getElementById(painterElementId).className = "landSelectorIcon icon";
     //change the selected painter to the new default land use
     changeSelectedPaintTo(newDefaultLandUse);
+    refreshBoard();
   }
 } //end saveandRandomize
 
