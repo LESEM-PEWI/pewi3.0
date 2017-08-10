@@ -1733,11 +1733,11 @@ var RadarChart = {
         return d;
       })
       .style("font-family", "sans-serif")
-      .style("font-size", "8px")
+      .style("font-size", "10px")
       .attr("text-anchor", "middle")
-      .attr("dy", "2.1170841em")
+      .attr("dy", "2.6203em")
       .attr("transform", function(d, i) {
-        return "translate(0, -22)";
+        return "translate(0, -31)";
       })
       .attr("x", function(d, i) {
         return cfg.w / 2 * (1 - cfg.factorLegend * Math.sin(i * cfg.radians / total)) - 60 * Math.sin(i * cfg.radians / total);
