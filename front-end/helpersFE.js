@@ -2995,22 +2995,16 @@ function saveAndRandomize() {
         break;
       }
     }
-
     for(var i = 1; i < boardData[currentBoard].calculatedToYear+1; i++) {
         for (var j = 0; j < boardData[currentBoard].map.length; j++) {
             //if tile exists
-            //Random tiles will keep getting added to the map as long as the tile exists
-            if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && (randomizing == false)) {
+            //Change the land use for a tile if it was restricted
+            if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
                 painter = newDefaultLandUse;
                 meshMaterials[j].map = textureArray[painter];
                 boardData[currentBoard].map[j].landType[i] = painter;
                 boardData[currentBoard].map[j].update(i);
-            } else if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none)) {
-                painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
-                meshMaterials[j].map = textureArray[painter];
-                boardData[currentBoard].map[j].landType[i] = painter;
-                boardData[currentBoard].map[j].update(i);
-            }
+            } 
 
         }
     }
