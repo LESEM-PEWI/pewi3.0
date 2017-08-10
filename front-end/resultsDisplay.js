@@ -1,3 +1,286 @@
+
+
+//RadarChart Object,
+// Code modified, animation tweens, mouseover interaction, and some logic
+//     interfacing are original to us
+
+//  Our Code based on Bremer's Code based on Graves's code
+//          Bremer:  see post at http://bl.ocks.org/nbremer/6506614
+//          Graves:  see alangrafu on gitHub
+
+//Radar prototype with construction function
+var RadarChart = {
+  draw: function(id, d, options, mouseoverClass, radarClassElementsString) {
+    var cfg = {
+      radius: 5,
+      w: 600,
+      h: 600,
+      factor: 1,
+      factorLegend: 0.85,
+      levels: 3,
+      maxValue: 0,
+      radians: 2 * Math.PI,
+      opacityArea: 0.2,
+      ToRight: 5,
+      TranslateX: 70, //95
+      TranslateY: 30, //25
+      ExtraWidthX: 100,
+      ExtraWidthY: 100,
+      color: d3.scaleOrdinal(d3.schemeCategory10)
+    };
+    if ('undefined' !== typeof options) {
+      for (var i in options) {
+        if ('undefined' !== typeof options[i]) {
+          cfg[i] = options[i];
+        }
+      }
+    }
+    cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i) {
+      return d3.max(i.map(function(o) {
+        return o.value;
+      }));
+    }));
+    var allAxis = (d[0].map(function(i, j) {
+      return i.axis;
+    }));
+    var total = allAxis.length;
+    var radius = cfg.factor * Math.min(cfg.w / 2, cfg.h / 2);
+    var Format = d3.format('%');
+    d3.select(id).select("svg").remove();
+
+    var g = d3.select(id)
+    .append("svg")
+    .attr("width", cfg.w * 1.97) //384
+    .attr("height", cfg.h * 1.23) //239
+    .append("g")
+    .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
+
+    var mouseoverInfo = d3.select(id)
+    .append('g')
+    .attr('class', mouseoverClass);
+
+    mouseoverInfo.append('div')
+    .attr('class', 'label');
+
+    mouseoverInfo.append('div')
+    .attr('class', 'count');
+
+    mouseoverInfo.append('div')
+    .attr('class', 'score');
+
+    //Circular segments
+    for (var j = 0; j < cfg.levels - 1; j++) {
+      var levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels);
+      g.selectAll(".levels")
+      .data(allAxis)
+      .enter()
+      .append("svg:line")
+      .attr("x1", function(d, i) {
+        return levelFactor * (1 - cfg.factor * Math.sin(i * cfg.radians / total));
+      })
+      .attr("y1", function(d, i) {
+        return levelFactor * (1 - cfg.factor * Math.cos(i * cfg.radians / total));
+      })
+      .attr("x2", function(d, i) {
+        return levelFactor * (1 - cfg.factor * Math.sin((i + 1) * cfg.radians / total));
+      })
+      .attr("y2", function(d, i) {
+        return levelFactor * (1 - cfg.factor * Math.cos((i + 1) * cfg.radians / total));
+      })
+      .attr("class", "line")
+      .style("stroke", "grey")
+      .style("stroke-opacity", "0.75")
+      .style("stroke-width", "0.3px")
+      .attr("transform", "translate(" + (cfg.w / 2 - levelFactor) + ", " + (cfg.h / 2 - levelFactor) + ")");
+    }
+
+    //Text indicating at what % each level is
+    for (var j = 0; j < cfg.levels; j++) {
+      var levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels);
+      g.selectAll(".levels")
+      .data([1]) //dummy data
+      .enter()
+      .append("svg:text")
+      .attr("x", function(d) {
+        return levelFactor * (1 - cfg.factor * Math.sin(0));
+      })
+      .attr("y", function(d) {
+        return levelFactor * (1 - cfg.factor * Math.cos(0));
+      })
+      .attr("class", "legend")
+      .style("font-family", "sans-serif")
+      .style("font-size", "10px")
+      .attr("transform", "translate(" + (cfg.w / 2 - levelFactor + cfg.ToRight) + ", " + (cfg.h / 2 - levelFactor) + ")")
+      .attr("fill", "#737373")
+      .text(((j + 1) * cfg.maxValue / cfg.levels).toFixed(2) * 100);
+    }
+
+    series = 0;
+
+    var axis = g.selectAll(".axis")
+    .data(allAxis)
+    .enter()
+    .append("g")
+    .attr("class", "axis");
+
+    axis.append("line")
+    .attr("x1", cfg.w / 2)
+    .attr("y1", cfg.h / 2)
+    .attr("x2", function(d, i) {
+      return cfg.w / 2 * (1 - cfg.factor * Math.sin(i * cfg.radians / total));
+    })
+    .attr("y2", function(d, i) {
+      return cfg.h / 2 * (1 - cfg.factor * Math.cos(i * cfg.radians / total));
+    })
+    .attr("class", "line")
+    .style("stroke", "grey")
+    .style("stroke-width", "1px");
+
+    axis.append("text")
+    .attr("class", "legend")
+    .text(function(d) {
+      return d;
+    })
+    .style("font-family", "sans-serif")
+    .style("font-size", "8px")
+    .attr("text-anchor", "middle")
+    .attr("dy", "2.1170841em")
+    .attr("transform", function(d, i) {
+      return "translate(0, -22)";
+    })
+    .attr("x", function(d, i) {
+      return cfg.w / 2 * (1 - cfg.factorLegend * Math.sin(i * cfg.radians / total)) - 60 * Math.sin(i * cfg.radians / total);
+    })
+    .attr("y", function(d, i) {
+      return cfg.h / 2 * (1 - Math.cos(i * cfg.radians / total)) - 20 * Math.cos(i * cfg.radians / total);
+    });
+
+
+    d.forEach(function(y, x) {
+      dataValues = [];
+      g.selectAll(".nodes")
+      .data(y, function(j, i) {
+        dataValues.push([
+          cfg.w / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
+          cfg.h / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
+        ]);
+      });
+      dataValues.push(dataValues[0]);
+      g.selectAll(".area")
+      .data([dataValues])
+      .enter()
+      .append("polygon")
+      .attr("id", function(d, i) {
+        return radarClassElementsString + "polygon-serie" + series + "num" + i;
+      })
+      .attr("class", radarClassElementsString + series)
+      .style("stroke-width", "2px")
+      .style("stroke", cfg.color(series))
+      .attr("points", function(d) {
+        var str = "";
+        for (var pti = 0; pti < d.length; pti++) {
+          str = str + d[pti][0] + "," + d[pti][1] + " ";
+        }
+        return str;
+      })
+      .style("fill", function(j, i) {
+        return cfg.color(series);
+      })
+      .style("fill-opacity", cfg.opacityArea)
+      .on('mouseover', function(d) {
+
+      })
+      .on('mouseout', function() {})
+      .transition()
+      .duration(900)
+      .styleTween("fill-opacity", function() {
+        //animate the change of the color gradient from black to bright blue
+        return d3.interpolate(0, cfg.opacityArea);
+      });
+      series++;
+    });
+    series = 0;
+
+
+    d.forEach(function(y, x) {
+      g.selectAll(".nodes")
+      .data(y).enter()
+      .append("svg:circle")
+      .attr("id", function(d, i) {
+        return radarClassElementsString + "circle-serie" + series + "num" + i;
+      })
+      .attr("class", radarClassElementsString + series)
+      .attr('r', cfg.radius)
+      .attr("alt", function(j) {
+        return Math.max(j.value, 0);
+      })
+      .attr("cx", function(j, i) {
+        dataValues.push([
+          cfg.w / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
+          cfg.h / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
+        ]);
+        return cfg.w / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total));
+      })
+      .attr("cy", function(j, i) {
+        return cfg.h / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total));
+      })
+      .attr("data-id", function(j) {
+        return j.axis;
+      })
+      .style("fill", function(d, i) {
+        return cfg.color(series);
+      })
+      .style("fill-opacity", 0.9)
+      .on('mouseover', function(d) {
+        newX = parseFloat(d3.select(this).attr('cx')) - 10;
+        newY = parseFloat(d3.select(this).attr('cy')) - 5;
+
+        z = "polygon." + d3.select(this).attr("class");
+        g.selectAll("polygon")
+        .transition(200)
+        .style("fill-opacity", 0.1);
+        g.selectAll(z)
+        .transition(200)
+        .style("fill-opacity", 0.7);
+
+        d3.select(this).attr("r", 15);
+
+        mouseoverInfo.select('.label').html(d.label);
+        mouseoverInfo.select('.count').html(d.raw);
+        mouseoverInfo.select('.score').html(Math.round(d.value * 1000) / 10 + "/100");
+        mouseoverInfo.style('border-color', d3.select(this).style("fill"));
+        mouseoverInfo.style('display', 'block');
+
+      })
+      .on('mouseout', function() {
+        d3.select(this).attr("r", cfg.radius);
+        mouseoverInfo.style('display', 'none');
+
+        g.selectAll("polygon")
+        .transition(200)
+        .style("fill-opacity", cfg.opacityArea);
+
+      })
+      .text(function(j) {
+        return Math.max(j.value, 0);
+      })
+      .transition()
+      .duration(900)
+      .attrTween("cy", function() {
+        //animate the change of the color gradient from black to bright blue
+        return d3.interpolate(150, this.getAttribute("cy"));
+      })
+      .attrTween("cx", function() {
+        //animate the change of the color gradient from black to bright blue
+        return d3.interpolate(150, this.getAttribute("cx"));
+      });
+
+      series++;
+    });
+
+  }
+}; //End Radar Object
+
 //displayResults writes the html for the results iframe with updates results from Totals
 function displayResults() {
 
@@ -26,7 +309,8 @@ function displayResults() {
   //create our top Radar plot, of the ecosystem indicators
   drawEcosystemRadar(tempObj);
   //create our bottom Radar plot, of the yield scores
-  drawYieldRadar(tempObj);
+  // drawYieldRadar(tempObj);
+
   // toggle the legend checkboxes for both of the radar plots on the page
   // document.getElementById('resultsFrame').contentWindow.toggleYearCheckboxes(); //XXX
 
@@ -38,411 +322,6 @@ function displayResults() {
   //=======END DEPRECATED
 
 } //end displayResults
-
-//generateResultsTable creates the string of html with all the numerical results
-// the code here is a little dense, but entirely straightforward
-// where possible, loops are created for years
-function generateResultsTable() {
-
-  var toMetricFactorArea = 2.471;
-  var upToYear = boardData[currentBoard].calculatedToYear;
-
-  var frontendNames = ["Conventional Corn Area", "Conservation Corn Area", "Conventional Soybean Area", "Conservation Soybean Area",
-    "Mixed Fruits and Vegetables Area", "Permanent Pasture Area", "Rotational Grazing Area", "Grass Hay Area",
-    "Switchgrass Area", "Prairie Area", "Wetland Area", "Alfalfa Area", "Conventional Forest Area",
-    "Conservation Forest Area", "Short Rotation Woody Bioenergy Area"
-  ];
-  var backendDataIdentifiers = ["conventionalCorn", "conservationCorn", "conventionalSoybean",
-    "conservationSoybean", "mixedFruitsVegetables", "permanentPasture", "rotationalGrazing", "grassHay",
-    "switchgrass", "prairie", "wetland", "alfalfa", "conventionalForest",
-    "conservationForest", "shortRotationWoodyBioenergy"
-  ];
-
-  var htmlTableString = "";
-
-  //FIRST TABLE, LAND USE
-
-  htmlTableString += "<table id='table1' class='resultsTable'>";
-
-  //add header row--------------
-
-  htmlTableString += "<tr class='tableHeading'> <th> Land Use Category </th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th>Percentage</th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th>Units (English) </th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th>Units (Metric) </th>";
-
-  htmlTableString += "</tr>";
-
-  //Add Data Rows
-
-  for (var l = 0; l < backendDataIdentifiers.length; l++) {
-
-    //check for the cases where a header needs to be added
-    switch (l) {
-      case 0:
-        htmlTableString += "<tr class='tableHeading'><td><b>Annual Grain</b></td></tr>";
-        break;
-      case 2:
-        htmlTableString += "<tr class='tableHeading'><td><b>Annual Legume</b></td></tr>";
-        break;
-      case 4:
-        htmlTableString += "<tr class='tableHeading'><td><b>Mixed Fruits and Vegetables</b></td></tr>";
-        break;
-      case 5:
-        htmlTableString += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>";
-        break;
-      case 7:
-        htmlTableString += "<tr class='tableHeading'><td><b>Perennial Herbaceous (non-pasture)</b></td></tr>";
-        break;
-      case 11:
-        htmlTableString += "<tr class='tableHeading'><td><b>Perennial Legume</b></td></tr>";
-        break;
-      case 12:
-        htmlTableString += "<tr class='tableHeading'><td><b>Perennial Wooded</b></td></tr>";
-        break;
-
-    } //end switch
-
-    htmlTableString += "<tr>";
-
-    htmlTableString += "<td>" + frontendNames[l] + "</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l] + "LandUse";
-      htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-    } //for each year
-
-    //units cell
-    htmlTableString += "<td>percent</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l] + "LandUse";
-      htmlTableString += (Math.round(Totals.landUseResults[y][tempString] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-    } //for each year
-
-    //units cell
-    htmlTableString += "<td>acres</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l] + "LandUse";
-      htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / toMetricFactorArea * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-
-    } //for each year
-
-    //units cell
-    htmlTableString += "<td>hectares</td></tr>";
-  }
-
-  htmlTableString += "</table><br>";
-
-
-  //===================================================
-  //SECOND TABLE, ECOSYSTEM INDICATORS
-
-
-  frontendNames = ["Game Wildlife", "Biodiversity", "Carbon Sequestration", "Erosion Control / Gross Erosion",
-    "Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading",
-    "Sediment Control <br> / In-Stream Delivery"
-  ];
-  backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "carbonSequestration", "grossErosion", "nitrateConcentration",
-    "phosphorusLoad", "sedimentDelivery"
-  ];
-
-  //variables for english to metric
-  // results are generally in english units as the original thesis
-  // had all calculations done this way
-  conversionArray = [1, 1, 0.90718474, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474];
-
-  htmlTableString += "<table id='table2' class='resultsTable'>";
-
-  //add header row
-
-  htmlTableString += "<tr class='tableHeading'> <th> Ecosystem Service Indicator <br> / Measurement </th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th>Score</th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th>Units (English) </th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th>Units (Metric) </th>";
-
-  htmlTableString += "</tr>";
-
-  //table data
-
-  for (var l = 0; l < backendDataIdentifiers.length; l++) {
-
-    //keep track if we need to add the appropriate subheading lines
-    switch (l) {
-      case 0:
-        htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
-        break;
-      case 2:
-        htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
-        break;
-      case 4:
-        htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
-        break;
-    } //end switch
-
-    htmlTableString += "<tr>";
-
-    htmlTableString += "<td>" + frontendNames[l] + "</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l] + "Score";
-      htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-    } //for each year
-
-    //units cell
-    htmlTableString += "<td>(out of 100)</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l];
-      //Correction for Carbon Sequestrations
-      if(l==2) {
-        Totals[tempString][y] = Totals[tempString][y]*(1/conversionArray[l]);
-      }
-      htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-    } //for each year
-
-    //units cell, keep track which type of units we'll need
-    if (l < 2) htmlTableString += "<td>pts</td>";
-    if (2 <= l && l < 4) htmlTableString += "<td>tons</td>";
-    if (4 <= l && l < 5) htmlTableString += "<td>ppm</td>";
-    if (5 <= l && l < 8) htmlTableString += "<td>tons</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l];
-      htmlTableString += (Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-
-    } //for each year
-
-    //units cell
-    if (l < 2) htmlTableString += "<td>pts</td>";
-    if (2 <= l && l < 4) htmlTableString += "<td>Mg</td>";
-    if (4 <= l && l < 5) htmlTableString += "<td>mg/L</td>";
-    if (5 <= l && l < 8) htmlTableString += "<td>Mg</td>";
-  }
-
-  //========================================
-  //THIRD TABLE, YIELD RESULTS
-
-  frontendNames = ["Corn Grain", "Soybeans", "Mixed Fruits and Vegetables", "Cattle", "Alfalfa Hay", "Grass Hay",
-    "Switchgrass Biomass", "Wood", "Short Rotation Woody Biomass"
-  ];
-
-  backendDataIdentifiers = ["cornGrainYield", "soybeanYield", "mixedFruitsAndVegetablesYield", "cattleYield",
-    "alfalfaHayYield", "grassHayYield", "switchgrassYield", "woodYield", "shortRotationWoodyBiomassYield"
-  ];
-
-  //conversion factors for the yeilds
-  conversionArray = [0.0254, 0.0272, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474, 0.002359737, 0.90718474];
-
-  //fill in table rows with data
-
-  for (var l = 0; l < backendDataIdentifiers.length; l++) {
-
-    //keep track of subheadings, just 1 this time
-    switch (l) {
-      case 0:
-        htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
-        break;
-    } //end switch
-
-    htmlTableString += "<tr>";
-
-    htmlTableString += "<td>" + frontendNames[l] + "</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l] + "Score";
-      htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-    } //for each year
-
-    //units cell
-    htmlTableString += "<td>(out of 100)</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l];
-      htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-    } //for each year
-
-    //units cell, lots of different ones to keep track of here
-    if (l < 2) htmlTableString += "<td>bu</td>";
-    if (l == 2) htmlTableString += "<td>tons</td>";
-    if (l == 3) htmlTableString += "<td>animals</td>"; //what an odd unit
-    if (4 <= l && l < 7) htmlTableString += "<td>tons</td>";
-    if (l == 7) htmlTableString += "<td>board-ft</td>";
-    if (l == 8) htmlTableString += "<td>tons</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l];
-      htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-
-    } //for each year
-
-    //units cell
-    if (l < 2) htmlTableString += "<td>Mg</td>";
-    if (l == 2) htmlTableString += "<td>Mg</td>";
-    if (l == 3) htmlTableString += "<td>animals</td>";
-    if (4 <= l && l < 7) htmlTableString += "<td>Mg</td>";
-    if (l == 7) htmlTableString += "<td>m^3</td>";
-    if (l == 8) htmlTableString += "<td>Mg</td>";
-  }
-
-  htmlTableString += "</table><br>";
-
-  //============================
-  //TABLE FOUR, SPECIAL INDICATORS
-
-  htmlTableString += "<table id='table4' class='resultsTable'>";
-
-  //add header row
-
-  htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Other Parameters </th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th> </th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th> </th>";
-
-  htmlTableString += "</tr>";
-
-  htmlTableString += "<tr><td>Precipitation</td>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<td>";
-    htmlTableString += boardData[currentBoard].precipitation[y];
-    htmlTableString += "</td>";
-  }
-
-  htmlTableString += "<td>inches</td>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<td>";
-    htmlTableString += Math.round(boardData[currentBoard].precipitation[y] * 2.54 * 10) / 10;
-    htmlTableString += "</td>";
-  }
-
-  htmlTableString += "<td>cm</td>";
-
-  htmlTableString += "</tr>";
-
-  htmlTableString += "<tr><td>Strategic Wetland Use</td>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<td>";
-    htmlTableString += Totals.strategicWetlandPercent[y];
-    htmlTableString += "</td>";
-  }
-
-  htmlTableString += "<td>percent</td>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<td>";
-    htmlTableString += Totals.strategicWetlandCells[y];
-    htmlTableString += "</td>";
-  }
-
-  htmlTableString += "<td>cells</td>";
-
-  htmlTableString += "</tr>";
-
-  htmlTableString += "</table><br>";
-
-
-  //===========================END TABLE
-
-  //well, we did all this work, we should probably do something with it.
-  //let's give pass it off to some other function...
-
-  return htmlTableString;
-} //end generateResultsTable()
 
 // this function creates the pie chart at the top of the graphics in the results page
 //it uses d3 and has the option to be displayed by categories or by a complete listing
@@ -592,7 +471,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
   // if the pie chart is being drawn to be printed on a pdf then set the fixed size
   if (printMode) {
-   w = h = 200;
+    w = h = 200;
   }
 
   var pieChart_length = Math.min(w, h);
@@ -612,26 +491,26 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
   //d3 stuff here, I won't comment this section too heavily as it is mostly typical graphics
   var svg = d3.select(chart)
-    .append('svg')
-    .attr("class", "graph-svg-component")
-    .attr("id", "pieSVG")
-    // .attr('width', width + legendW) //leave room for legend so add 280
-    // .attr('height', height)
-    .attr('width', pieChart_length + legendW) //leave room for legend so add 280
-    .attr('height', pieChart_length)
-    .append('g')
-    .attr('transform', 'translate(' + (pieChart_length / 2) + ',' + (pieChart_length / 2) + ')');
+  .append('svg')
+  .attr("class", "graph-svg-component")
+  .attr("id", "pieSVG")
+  // .attr('width', width + legendW) //leave room for legend so add 280
+  // .attr('height', height)
+  .attr('width', pieChart_length + legendW) //leave room for legend so add 280
+  .attr('height', pieChart_length)
+  .append('g')
+  .attr('transform', 'translate(' + (pieChart_length / 2) + ',' + (pieChart_length / 2) + ')');
 
   var arc = d3.arc()
-    .outerRadius(radius)
-    .innerRadius(radius * 0.55)
-    .padAngle(0.01);
+  .outerRadius(radius)
+  .innerRadius(radius * 0.55)
+  .padAngle(0.01);
 
   var pie = d3.pie()
-    .value(function(d) {
-      return d.count;
-    })
-    .sort(null);
+  .value(function(d) {
+    return d.count;
+  })
+  .sort(null);
 
   //animation for the pie graph
   function tweenPie(b) {
@@ -647,69 +526,69 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
   //create the elements for hover over information
   var mouseoverInfo = d3.select(chart)
-    .append('g')
-    .attr('class', 'mouseoverInfo');
+  .append('g')
+  .attr('class', 'mouseoverInfo');
 
   mouseoverInfo.append('div')
-    .attr('class', 'label');
+  .attr('class', 'label');
 
   mouseoverInfo.append('div')
-    .attr('class', 'count');
+  .attr('class', 'count');
 
   mouseoverInfo.append('div')
-    .attr('class', 'percent');
+  .attr('class', 'percent');
 
   //let's add the arcs to the pie graph now
   var path = svg.selectAll('path')
-    .data(pie(dataset))
-    .enter()
-    .append('path')
-    .attr('class', 'dataArc')
-    .attr('d', arc)
-    .attr('count', function(d) {
-      return d.data.number;
-    })
-    .attr('percent', function(d) {
-      return d.data.count;
-    })
-    .attr('fill', function(d, i) {
-      var hue = color(d.data.label);
-      //use these structures to keep track of what actually has a count
-      // for the legend
-      if (d.data.count != 0) {
-        nameArray.push(d.data.label);
-        colorLinker[d.data.label] = hue;
-      }
-      return hue;
-    })
-    .attr("id", function(d) {
-      return d.data.label;
-    })
-    .on('mouseover', function(d) {
-      //update the mouseover box
-      var percent = d.data.count;
-      mouseoverInfo.select('.label').html(d.data.label);
-      mouseoverInfo.select('.count').html(d.data.number + " acres");
-      mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100) + '%');
-      mouseoverInfo.style('border-color', color(d.data.label));
-      mouseoverInfo.style('opacity', 1);
-      mouseoverInfo.style('display', 'block');
+  .data(pie(dataset))
+  .enter()
+  .append('path')
+  .attr('class', 'dataArc')
+  .attr('d', arc)
+  .attr('count', function(d) {
+    return d.data.number;
+  })
+  .attr('percent', function(d) {
+    return d.data.count;
+  })
+  .attr('fill', function(d, i) {
+    var hue = color(d.data.label);
+    //use these structures to keep track of what actually has a count
+    // for the legend
+    if (d.data.count != 0) {
+      nameArray.push(d.data.label);
+      colorLinker[d.data.label] = hue;
+    }
+    return hue;
+  })
+  .attr("id", function(d) {
+    return d.data.label;
+  })
+  .on('mouseover', function(d) {
+    //update the mouseover box
+    var percent = d.data.count;
+    mouseoverInfo.select('.label').html(d.data.label);
+    mouseoverInfo.select('.count').html(d.data.number + " acres");
+    mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100) + '%');
+    mouseoverInfo.style('border-color', color(d.data.label));
+    mouseoverInfo.style('opacity', 1);
+    mouseoverInfo.style('display', 'block');
 
-      //highlight the pie slice
-      d3.select(this).classed("arc", false);
-      d3.select(this).classed("arcHighlight", true);
-    })
-    .on('mouseout', function() {
-      //hide mouseover box
-      mouseoverInfo.style('display', 'none');
+    //highlight the pie slice
+    d3.select(this).classed("arc", false);
+    d3.select(this).classed("arcHighlight", true);
+  })
+  .on('mouseout', function() {
+    //hide mouseover box
+    mouseoverInfo.style('display', 'none');
 
-      //unhighlight the pie slice
-      d3.select(this).classed("arcHighlight", false);
-      d3.select(this).classed("arc", true);
-    })
-    .transition()
-    .duration(900)
-    .attrTween("d", tweenPie);
+    //unhighlight the pie slice
+    d3.select(this).classed("arcHighlight", false);
+    d3.select(this).classed("arc", true);
+  })
+  .transition()
+  .duration(900)
+  .attrTween("d", tweenPie);
 
   //that's it for the pie chart, now we just need to add its legend information
 
@@ -721,320 +600,89 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
   //add all the elements that have a nonzero count
   var legend = svg.selectAll('.legend')
-    .data(nameArray)
-    .enter()
-    .append('g')
-    .attr('class', 'legend')
-    .on('mouseover', function(d) {
-      //highlight text
-      d3.select(this).style("fill", "steelblue");
+  .data(nameArray)
+  .enter()
+  .append('g')
+  .attr('class', 'legend')
+  .on('mouseover', function(d) {
+    //highlight text
+    d3.select(this).style("fill", "steelblue");
 
-      //highlight arc
-      var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
-      d3.select(slice).classed("arc", false)
-        .classed("arcHighlight", true);
+    //highlight arc
+    var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
+    d3.select(slice).classed("arc", false)
+    .classed("arcHighlight", true);
 
-      //show appropriate mouseover info
-      mouseoverInfo.select('.label').html(d);
-      mouseoverInfo.select('.count').html(d3.select(slice).attr("count") + " acres");
-      mouseoverInfo.select('.percent').html((Math.round(d3.select(slice).attr("percent") * 100) / 100) + '%');
-      mouseoverInfo.style('border-color', color(d));
-      mouseoverInfo.style('opacity', 1);
-      mouseoverInfo.style('display', 'block');
+    //show appropriate mouseover info
+    mouseoverInfo.select('.label').html(d);
+    mouseoverInfo.select('.count').html(d3.select(slice).attr("count") + " acres");
+    mouseoverInfo.select('.percent').html((Math.round(d3.select(slice).attr("percent") * 100) / 100) + '%');
+    mouseoverInfo.style('border-color', color(d));
+    mouseoverInfo.style('opacity', 1);
+    mouseoverInfo.style('display', 'block');
 
-    })
-    .on('mouseout', function(d) {
+  })
+  .on('mouseout', function(d) {
 
-      //set text back to black
-      d3.select(this).style("fill", "black");
+    //set text back to black
+    d3.select(this).style("fill", "black");
 
-      //unhighlight the arc
-      var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
-      d3.select(slice).classed("arcHighlight", false);
-      d3.select(slice).classed("arc", true);
+    //unhighlight the arc
+    var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
+    d3.select(slice).classed("arcHighlight", false);
+    d3.select(slice).classed("arc", true);
 
-      //undisplay the mouseover information box
-      mouseoverInfo.style('display', 'none');
-    })
-    .attr('transform', function(d, i) {
-      var height = legendRectSize + legendSpacing;
-      var offset = height * nameArray.length / 2;
-      var horz = pieChart_length / 2 + 20;
-      var vert = i * height - offset;
-      // var horz = width / 2 + 20;
-      return 'translate(' + horz + ',' + vert + ')';
-    });
+    //undisplay the mouseover information box
+    mouseoverInfo.style('display', 'none');
+  })
+  .attr('transform', function(d, i) {
+    var height = legendRectSize + legendSpacing;
+    var offset = height * nameArray.length / 2;
+    var horz = pieChart_length / 2 + 20;
+    var vert = i * height - offset;
+    // var horz = width / 2 + 20;
+    return 'translate(' + horz + ',' + vert + ')';
+  });
 
   //add legend color squares
   legend.append('rect')
-    .attr('width', legendRectSize)
-    .attr('height', legendRectSize)
-    .style('fill', function(d) {
-     tempLegendColors.push(colorLinker[d]); // adds the legend color to array (for print function)
-      return colorLinker[d];
-    })
-    .style('stroke', function(d) {
-      return colorLinker[d];
-    });
+  .attr('width', legendRectSize)
+  .attr('height', legendRectSize)
+  .style('fill', function(d) {
+    tempLegendColors.push(colorLinker[d]); // adds the legend color to array (for print function)
+    return colorLinker[d];
+  })
+  .style('stroke', function(d) {
+    return colorLinker[d];
+  });
 
   //add legend text info
   legend.append('text')
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
-    .text(function(d) {
-     tempLegendItems.push(d); // adds the legend element to the array (for print function)
-      return d;
-    });
+  .attr('x', legendRectSize + legendSpacing)
+  .attr('y', legendRectSize - legendSpacing)
+  .text(function(d) {
+    tempLegendItems.push(d); // adds the legend element to the array (for print function)
+    return d;
+  });
 
   //lastly, now add the chart title in the center
   // main chart title
   svg.append("text")
-    .attr("x", 0)
-    .attr("y", 0)
-    .attr("text-anchor", "middle")
-    .style("font-size", "1.8vw")
-    .style("font-weight", "bold")
-    .text("Land Use");
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("text-anchor", "middle")
+  .style("font-size", "1.8vw")
+  .style("font-weight", "bold")
+  .text("Land Use");
   //also add the year below that
   svg.append("text")
-    .attr("x", 0)
-    .attr("y", 25)
-    .attr("text-anchor", "middle")
-    .style("font-size", "2.5vw")
-    .style("font-weight", "bold")
-    .text("Year " + year);
+  .attr("x", 0)
+  .attr("y", 25)
+  .attr("text-anchor", "middle")
+  .style("font-size", "1.8vw")
+  .style("font-weight", "bold")
+  .text("Year " + year);
 } //end drawD3LandPieChart()
-
-//this function mainly is responsible for setting up the precipitation bar graph
-// as well as the left utility  which gives info on the year's precip and a nice image
-function drawPrecipitationInformationChart() {
-
-  //this nested function updates the text and images in the left container, mouseover info
-  function setupPrecipInfo(year) {
-    container.select('.yearLabel').html(parent.data[year].label);
-    container.select('.precipValue').html(parent.data[year].value + " inches");
-    container.select('.precipType').html(parent.data[year].adj);
-
-    var img = " ";
-    switch (parent.data[year].adj) {
-      case "Dry":
-        // "Clouds" by https://icons8.com with free commercial use / Inserted oval under cload
-        img = "./imgs/dry.png";
-        break;
-      case "Normal":
-        // "Partly Cloudy Rain" by https://icons8.com with free commercial use
-        img = "./imgs/normal.png";
-        break;
-      case "Wet":
-        // "Heavy Rain" by https://icons8.com with free commercial use
-        img = "./imgs/wet.png";
-        break;
-      case "Flood":
-        // "Torrential Rain" by https://icons8.com with free commercial use / Inserted curved black lines under rain/cloud
-        img = "imgs/flood.png";
-        break;
-    } //end switch
-
-    mouseoverInfo.select('.precipImg').attr('src', img);
-  } //end nested function
-
-
-  //reset precip chart on page
-  var element = document.getElementById('resultsFrame').contentWindow.document.getElementById('precipChart');
-  //pass information to the page by inserting it into a hidden div
-  document.getElementById('resultsFrame').contentWindow.document.getElementById('precipChart').innerHTML = " ";
-  document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo').innerHTML = " ";
-
-  //assign data
-  for(var i = 0; i < boardData[currentBoard].precipitation.length-2; i++) {
-    boardData[currentBoard].precipitation[i] = Number(boardData[currentBoard].precipitation[i]);
-  }
-
-  parent.data = [{
-    label: "Year 0",
-    value: boardData[currentBoard].precipitation[0],
-    percent: 0,
-    adj: "",
-    year: 0
-  }, {
-    label: "Year 1",
-    value: boardData[currentBoard].precipitation[1],
-    percent: 0,
-    adj: "",
-    year: 1
-  }, {
-    label: "Year 2",
-    value: boardData[currentBoard].precipitation[2],
-    percent: 0,
-    adj: "",
-    year: 2
-  }, {
-    label: "Year 3",
-    value: boardData[currentBoard].precipitation[3],
-    percent: 0,
-    adj: "",
-    year: 3
-  }];
-
-  //set up data percentage and adjectives
-  for (var y = 0; y < data.length; y++) {
-
-    var tempPercent;
-    var tempAdj;
-
-    switch (parent.data[y].value) {
-      case 24.58:
-        tempPercent = 25;
-        tempAdj = "Dry";
-        break;
-      case 28.18:
-        tempPercent = 36;
-        tempAdj = "Dry";
-        break;
-      case 30.39:
-        tempPercent = 42;
-        tempAdj = "Normal";
-        break;
-      case 32.16:
-        tempPercent = 49;
-        tempAdj = "Normal";
-        break;
-      case 34.34:
-        tempPercent = 57;
-        tempAdj = "Normal";
-        break;
-      case 36.47:
-        tempPercent = 64;
-        tempAdj = "Wet";
-
-        if (y > 0 && parent.data[y - 1].adj == "Dry") {
-          tempAdj = "Flood";
-        }
-
-        break;
-      case 45.1:
-        tempPercent = 89;
-        tempAdj = "Wet";
-
-        if (y > 0 && parent.data[y - 1].adj == "Dry") {
-          tempAdj = "Flood";
-        }
-
-        break;
-      default:
-        tempPercent = 0;
-        tempAdj = "";
-        break;
-    } //end switch
-
-    //assign data values
-    parent.data[y].percent = tempPercent;
-    parent.data[y].adj = tempAdj;
-  }
-
-  //d3 stuff, again, I won't comment too heavily since much of this is standard practice
-
-  //bar chart width and height
-  // note that these are closely interrelated to css styling on results page
-  // var width = 420;
-  // var barHeight = 30;
-  var width = Math.round(window.innerWidth * 0.3);
-  var barHeight = Math.round(window.innerHeight * 0.045);
-
-  //if the pie chart is being drawn to be prionted on a pdf then set a fixed size for graph
-  if (printMode) {
-   width = 500;
-   barHeight = 45;
-  }
-
-  //create bar scale for percentages
-  var x = d3.scaleLinear()
-    .domain([0, 100])
-    .range([0, width]);
-
-  var chart = d3.select(element)
-    .attr("width", width)
-    .attr("height", barHeight * data.length);
-
-  //set up hover over information in left container
-
-  var element = document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo');
-
-  var mouseoverInfo = d3.select(element)
-    .append('g');
-
-  mouseoverInfo.append('div')
-    .attr('class', 'leftPrecipContainer');
-  // .attr('style', 'display: inline-block; float: left; position: relative; top: 18%; width: 60%');
-
-  var container = mouseoverInfo.select('.leftPrecipContainer');
-
-  container.append('div')
-    .attr('class', 'yearLabel');
-
-  container.append('div')
-    .attr('class', 'precipValue');
-
-  container.append('div')
-    .attr('class', 'precipType');
-
-  mouseoverInfo.append('img')
-    .attr('class', 'precipImg');
-
-  //setup precipitation bar chart
-
-  var bar = chart.selectAll("g")
-    .data(data)
-    .enter().append("g")
-    .attr('class', 'barData')
-    .attr("transform", function(d, i) {
-      return "translate(0," + (i * barHeight + 2) + ")";
-    });
-
-  bar.append("rect")
-    .attr("width", function(d) {
-      return x(d.percent);
-    })
-    .attr("height", barHeight - 4)
-    .attr("class", "legendBars")
-    .attr('fill', '#1f77b4')
-    .on('mouseover', function(d) {
-
-      setupPrecipInfo(d.year);
-
-      mouseoverInfo.style('display', 'block');
-
-      d3.select(this).attr('fill', 'lightskyblue');
-    })
-    .on('mouseout', function() {
-      d3.select(this).attr('fill', '#1f77b4');
-
-      setupPrecipInfo(currentYear);
-
-    })
-    .transition()
-    .duration(1400)
-    //animation of bars
-    .attrTween("width", function() {
-      return d3.interpolate(0, this.getAttribute("width"));
-    });
-
-  bar.append("text")
-    .attr("x", function(d) {
-      return x(d.percent) + 7;
-    })
-    .attr("y", barHeight / 2 )
-    .attr("dy", ".35em")
-    .text(function(d) {
-      return d.label;
-    })
-    .attr('fill', 'black');
-
-  //lastly, after all of the chart setup, just setup the default information in the
-  //  precipitation graphic to the left
-  setupPrecipInfo(currentYear);
-
-} //end drawPrecipitationInformationChart()
 
 //this funtion creates and animates the Ecoscores aster plot
 // it also creates the quality indicator gradients to the plot's right
@@ -1090,7 +738,7 @@ function drawEcosystemIndicatorsDisplay(year) {
     color: "#e377c2",
     backColor: "tomato",
     raw: (Math.round(Totals.biodiversityPoints[year] * 10) / 10) + " pts"
-  },];
+  }, ];
 
   //chart parameters
   var width = 360;
@@ -1392,7 +1040,7 @@ function drawEcosystemRadar(yearArray) {
   var h = Math.round(window.innerHeight * 0.319);
   // set a fixed size for radar for print mode
   if (printMode) {
-   w = h = 244;
+    w = h = 244;
   }
   var graphLength = Math.min(w, h);
 
@@ -1476,23 +1124,23 @@ function drawEcosystemRadar(yearArray) {
   var legendLength = Math.round(Math.min(legendWidth, legendHeight));
 
   var svg = d3.select(radarLegendId)
-    .append('svg')
-    // .attr('width', legendWidth)
-    // .attr('height', legendHeight)
-    .attr('width', legendLength)
-    .attr('height', legendLength)
-    .append('g')
-    .attr('transform', 'translate(' + (legendLength / 2) + ',' + (legendLength / 2) + ')');
+  .append('svg')
+  // .attr('width', legendWidth)
+  // .attr('height', legendHeight)
+  .attr('width', legendLength)
+  .attr('height', legendLength)
+  .append('g')
+  .attr('transform', 'translate(' + (legendLength / 2) + ',' + (legendLength / 2) + ')');
 
   //add legend/chart title
   svg.append("text")
-    .attr("x", 0)
-    // .attr("y", -120)
-    .attr("y", Math.round(-0.324 * legendHeight))
-    .attr("text-anchor", "middle")
-    .style("font-size", "1.8vw")
-    .style("font-weight", "bold")
-    .text("Ecosystem Services");
+  .attr("x", 0)
+  // .attr("y", -120)
+  .attr("y", Math.round(-0.324 * legendHeight))
+  .attr("text-anchor", "middle")
+  .style("font-size", "1.8vw")
+  .style("font-weight", "bold")
+  .text("Ecosystem Services");
 
   //sizing for the colored squares and spaces
   // var legendRectSize = 18;
@@ -1502,375 +1150,962 @@ function drawEcosystemRadar(yearArray) {
 
   //add all of the year series to the legend
   var legend = svg.selectAll('.legend')
-    .data(legendOptions)
-    .enter()
-    .append('g')
-    .on('mouseover', function(d) {
+  .data(legendOptions)
+  .enter()
+  .append('g')
+  .on('mouseover', function(d) {
 
-      //change text color
-      d3.select(this).style("fill", "steelblue");
+    //change text color
+    d3.select(this).style("fill", "steelblue");
 
-      //select the polygon area and highlight it
-      var g = d3.select(radarId);
-      z = d3.select(this).attr("childElement");
-      z = "polygon." + z;
+    //select the polygon area and highlight it
+    var g = d3.select(radarId);
+    z = d3.select(this).attr("childElement");
+    z = "polygon." + z;
 
-      g.selectAll("polygon")
-        .transition(200)
-        .style("fill-opacity", 0.1);
-      g.selectAll(z)
-        .transition(200)
-        .style("fill-opacity", 0.7);
-    })
-    .on('mouseout', function(d) {
+    g.selectAll("polygon")
+    .transition(200)
+    .style("fill-opacity", 0.1);
+    g.selectAll(z)
+    .transition(200)
+    .style("fill-opacity", 0.7);
+  })
+  .on('mouseout', function(d) {
 
-      //set legend text back to black
-      d3.select(this).style("fill", "black");
+    //set legend text back to black
+    d3.select(this).style("fill", "black");
 
-      //reset all of the polygons in the chart
-      var g = d3.select(radarId);
-      g.selectAll("polygon")
-        .transition(200)
-        .style("fill-opacity", 0.2);
-    })
-    .attr("childElement", function(d, i) {
-      return radarClassElementsString + i;
-    })
-    .attr('transform', function(d, i) {
-      var height = legendRectSize + legendSpacing;
-      // var offset = 80;
-      // var horz = -117;
-      var offset = Math.round(legendRectSize * 4.44);
-      var horz = Math.round(legendRectSize * -6.5);
-      var vert = i * height - offset;
-      return 'translate(' + horz + ',' + vert + ')';
-    });
+    //reset all of the polygons in the chart
+    var g = d3.select(radarId);
+    g.selectAll("polygon")
+    .transition(200)
+    .style("fill-opacity", 0.2);
+  })
+  .attr("childElement", function(d, i) {
+    return radarClassElementsString + i;
+  })
+  .attr('transform', function(d, i) {
+    var height = legendRectSize + legendSpacing;
+    // var offset = 80;
+    // var horz = -117;
+    var offset = Math.round(legendRectSize * 4.44);
+    var horz = Math.round(legendRectSize * -6.5);
+    var vert = i * height - offset;
+    return 'translate(' + horz + ',' + vert + ')';
+  });
 
   //add legend color squares
   legend.append('rect')
-    .attr('width', legendRectSize)
-    .attr('height', legendRectSize)
-    .style('fill', function(d, i) {
-      return colorscale(i);
-    })
-    .style('stroke', function(d, i) {
-      radarLegendColors.push(colorscale(i)); // pushes the item names in the radar plot chart's legend to items array
-      return colorscale(i);
-    });
+  .attr('width', legendRectSize)
+  .attr('height', legendRectSize)
+  .style('fill', function(d, i) {
+    return colorscale(i);
+  })
+  .style('stroke', function(d, i) {
+    radarLegendColors.push(colorscale(i)); // pushes the item names in the radar plot chart's legend to items array
+    return colorscale(i);
+  });
 
   //add legend text info
   legend.append('text')
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
-    .text(function(d) {
-      radarLegendItems.push(d); // pushes the item names in the radar plot chart's legend to items array
-      return d;
-    });
-
+  .attr('x', legendRectSize + legendSpacing)
+  .attr('y', legendRectSize - legendSpacing)
+  .text(function(d) {
+    radarLegendItems.push(d); // pushes the item names in the radar plot chart's legend to items array
+    return d;
+  });
   // add checkbox
   legend.append('foreignObject')
-    .attr('style', 'visibility: visible;')
-    .attr('width', 20)
-    .attr('height', 20)
-    .attr('x', 70)
-    .attr('y', 0)
+  .attr('style', 'visibility: visible;')
+  .attr('width', 20)
+  .attr('height', 20)
+  .attr('x', 70)
+  .attr('y', 0)
 
-    .append('xhtml:input')
-    .attr('id', function(d) {
-      return "checkboxYear" + d.slice(-1);
-    })
-    .attr('class', 'yearCheckbox')
-    .attr('onclick', function(d) {
-      return "radarPlotYearToggle(" + d.slice(-1) + ");";
-    })
-    .attr('width', legendRectSize)
-    .attr('height', legendRectSize)
-    .attr('checked', "")
-    .attr('type', 'checkbox');
+  .append('xhtml:input')
+  .attr('id', function(d) {
+    return "checkboxYear" + d.slice(-1);
+  })
+  .attr('class', 'yearCheckbox')
+  .attr('onclick', function(d) {
+    return "radarPlotYearToggle(" + d.slice(-1) + ");";
+  })
+  .attr('width', legendRectSize)
+  .attr('height', legendRectSize)
+  .attr('checked', "")
+  .attr('type', 'checkbox');
 
 } //end  drawEcosystemRadar()
 
+//this function mainly is responsible for setting up the precipitation bar graph
+// as well as the left utility  which gives info on the year's precip and a nice image
+function drawPrecipitationInformationChart() {
 
-//RadarChart Object,
-// Code modified, animation tweens, mouseover interaction, and some logic
-//     interfacing are original to us
+  //this nested function updates the text and images in the left container, mouseover info
+  function setupPrecipInfo(year) {
+    container.select('.yearLabel').html(parent.data[year].label);
+    container.select('.precipValue').html(parent.data[year].value + " inches");
+    container.select('.precipType').html(parent.data[year].adj);
 
-//  Our Code based on Bremer's Code based on Graves's code
-//          Bremer:  see post at http://bl.ocks.org/nbremer/6506614
-//          Graves:  see alangrafu on gitHub
+    var img = " ";
+    switch (parent.data[year].adj) {
+      case "Dry":
+      // "Clouds" by https://icons8.com with free commercial use / Inserted oval under cload
+      img = "./imgs/dry.png";
+      break;
+      case "Normal":
+      // "Partly Cloudy Rain" by https://icons8.com with free commercial use
+      img = "./imgs/normal.png";
+      break;
+      case "Wet":
+      // "Heavy Rain" by https://icons8.com with free commercial use
+      img = "./imgs/wet.png";
+      break;
+      case "Flood":
+      // "Torrential Rain" by https://icons8.com with free commercial use / Inserted curved black lines under rain/cloud
+      img = "imgs/flood.png";
+      break;
+    } //end switch
 
-//Radar prototype with construction function
-var RadarChart = {
-  draw: function(id, d, options, mouseoverClass, radarClassElementsString) {
-    var cfg = {
-      radius: 5,
-      w: 600,
-      h: 600,
-      factor: 1,
-      factorLegend: 0.85,
-      levels: 3,
-      maxValue: 0,
-      radians: 2 * Math.PI,
-      opacityArea: 0.2,
-      ToRight: 5,
-      TranslateX: 70, //95
-      TranslateY: 30, //25
-      ExtraWidthX: 100,
-      ExtraWidthY: 100,
-      color: d3.scaleOrdinal(d3.schemeCategory10)
-    };
-    if ('undefined' !== typeof options) {
-      for (var i in options) {
-        if ('undefined' !== typeof options[i]) {
-          cfg[i] = options[i];
-        }
-      }
-    }
-    cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i) {
-      return d3.max(i.map(function(o) {
-        return o.value;
-      }));
-    }));
-    var allAxis = (d[0].map(function(i, j) {
-      return i.axis;
-    }));
-    var total = allAxis.length;
-    var radius = cfg.factor * Math.min(cfg.w / 2, cfg.h / 2);
-    var Format = d3.format('%');
-    d3.select(id).select("svg").remove();
-
-    var g = d3.select(id)
-      .append("svg")
-      .attr("width", cfg.w * 1.97) //384
-      .attr("height", cfg.h * 1.23) //239
-      .append("g")
-      .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
-
-    var mouseoverInfo = d3.select(id)
-      .append('g')
-      .attr('class', mouseoverClass);
-
-    mouseoverInfo.append('div')
-      .attr('class', 'label');
-
-    mouseoverInfo.append('div')
-      .attr('class', 'count');
-
-    mouseoverInfo.append('div')
-      .attr('class', 'score');
-
-    //Circular segments
-    for (var j = 0; j < cfg.levels - 1; j++) {
-      var levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels);
-      g.selectAll(".levels")
-        .data(allAxis)
-        .enter()
-        .append("svg:line")
-        .attr("x1", function(d, i) {
-          return levelFactor * (1 - cfg.factor * Math.sin(i * cfg.radians / total));
-        })
-        .attr("y1", function(d, i) {
-          return levelFactor * (1 - cfg.factor * Math.cos(i * cfg.radians / total));
-        })
-        .attr("x2", function(d, i) {
-          return levelFactor * (1 - cfg.factor * Math.sin((i + 1) * cfg.radians / total));
-        })
-        .attr("y2", function(d, i) {
-          return levelFactor * (1 - cfg.factor * Math.cos((i + 1) * cfg.radians / total));
-        })
-        .attr("class", "line")
-        .style("stroke", "grey")
-        .style("stroke-opacity", "0.75")
-        .style("stroke-width", "0.3px")
-        .attr("transform", "translate(" + (cfg.w / 2 - levelFactor) + ", " + (cfg.h / 2 - levelFactor) + ")");
-    }
-
-    //Text indicating at what % each level is
-    for (var j = 0; j < cfg.levels; j++) {
-      var levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels);
-      g.selectAll(".levels")
-        .data([1]) //dummy data
-        .enter()
-        .append("svg:text")
-        .attr("x", function(d) {
-          return levelFactor * (1 - cfg.factor * Math.sin(0));
-        })
-        .attr("y", function(d) {
-          return levelFactor * (1 - cfg.factor * Math.cos(0));
-        })
-        .attr("class", "legend")
-        .style("font-family", "sans-serif")
-        .style("font-size", "10px")
-        .attr("transform", "translate(" + (cfg.w / 2 - levelFactor + cfg.ToRight) + ", " + (cfg.h / 2 - levelFactor) + ")")
-        .attr("fill", "#737373")
-        .text(((j + 1) * cfg.maxValue / cfg.levels).toFixed(2) * 100);
-    }
-
-    series = 0;
-
-    var axis = g.selectAll(".axis")
-      .data(allAxis)
-      .enter()
-      .append("g")
-      .attr("class", "axis");
-
-    axis.append("line")
-      .attr("x1", cfg.w / 2)
-      .attr("y1", cfg.h / 2)
-      .attr("x2", function(d, i) {
-        return cfg.w / 2 * (1 - cfg.factor * Math.sin(i * cfg.radians / total));
-      })
-      .attr("y2", function(d, i) {
-        return cfg.h / 2 * (1 - cfg.factor * Math.cos(i * cfg.radians / total));
-      })
-      .attr("class", "line")
-      .style("stroke", "grey")
-      .style("stroke-width", "1px");
-
-    axis.append("text")
-      .attr("class", "legend")
-      .text(function(d) {
-        return d;
-      })
-      .style("font-family", "sans-serif")
-      .style("font-size", "10px")
-      .attr("text-anchor", "middle")
-      .attr("dy", "2.6203em")
-      .attr("transform", function(d, i) {
-        return "translate(0, -31)";
-      })
-      .attr("x", function(d, i) {
-        return cfg.w / 2 * (1 - cfg.factorLegend * Math.sin(i * cfg.radians / total)) - 60 * Math.sin(i * cfg.radians / total);
-      })
-      .attr("y", function(d, i) {
-        return cfg.h / 2 * (1 - Math.cos(i * cfg.radians / total)) - 20 * Math.cos(i * cfg.radians / total);
-      });
+    mouseoverInfo.select('.precipImg').attr('src', img);
+  } //end nested function
 
 
-    d.forEach(function(y, x) {
-      dataValues = [];
-      g.selectAll(".nodes")
-        .data(y, function(j, i) {
-          dataValues.push([
-            cfg.w / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
-            cfg.h / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
-          ]);
-        });
-      dataValues.push(dataValues[0]);
-      g.selectAll(".area")
-        .data([dataValues])
-        .enter()
-        .append("polygon")
-        .attr("id", function(d, i) {
-          return radarClassElementsString + "polygon-serie" + series + "num" + i;
-        })
-        .attr("class", radarClassElementsString + series)
-        .style("stroke-width", "2px")
-        .style("stroke", cfg.color(series))
-        .attr("points", function(d) {
-          var str = "";
-          for (var pti = 0; pti < d.length; pti++) {
-            str = str + d[pti][0] + "," + d[pti][1] + " ";
-          }
-          return str;
-        })
-        .style("fill", function(j, i) {
-          return cfg.color(series);
-        })
-        .style("fill-opacity", cfg.opacityArea)
-        .on('mouseover', function(d) {
+  //reset precip chart on page
+  var element = document.getElementById('resultsFrame').contentWindow.document.getElementById('precipChart');
+  //pass information to the page by inserting it into a hidden div
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('precipChart').innerHTML = " ";
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo').innerHTML = " ";
 
-        })
-        .on('mouseout', function() {})
-        .transition()
-        .duration(900)
-        .styleTween("fill-opacity", function() {
-          //animate the change of the color gradient from black to bright blue
-          return d3.interpolate(0, cfg.opacityArea);
-        });
-      series++;
-    });
-    series = 0;
-
-
-    d.forEach(function(y, x) {
-      g.selectAll(".nodes")
-        .data(y).enter()
-        .append("svg:circle")
-        .attr("id", function(d, i) {
-          return radarClassElementsString + "circle-serie" + series + "num" + i;
-        })
-        .attr("class", radarClassElementsString + series)
-        .attr('r', cfg.radius)
-        .attr("alt", function(j) {
-          return Math.max(j.value, 0);
-        })
-        .attr("cx", function(j, i) {
-          dataValues.push([
-            cfg.w / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
-            cfg.h / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
-          ]);
-          return cfg.w / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total));
-        })
-        .attr("cy", function(j, i) {
-          return cfg.h / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total));
-        })
-        .attr("data-id", function(j) {
-          return j.axis;
-        })
-        .style("fill", function(d, i) {
-          return cfg.color(series);
-        })
-        .style("fill-opacity", 0.9)
-        .on('mouseover', function(d) {
-          newX = parseFloat(d3.select(this).attr('cx')) - 10;
-          newY = parseFloat(d3.select(this).attr('cy')) - 5;
-
-          z = "polygon." + d3.select(this).attr("class");
-          g.selectAll("polygon")
-            .transition(200)
-            .style("fill-opacity", 0.1);
-          g.selectAll(z)
-            .transition(200)
-            .style("fill-opacity", 0.7);
-
-          d3.select(this).attr("r", 15);
-
-          mouseoverInfo.select('.label').html(d.label);
-          mouseoverInfo.select('.count').html(d.raw);
-          mouseoverInfo.select('.score').html(Math.round(d.value * 1000) / 10 + "/100");
-          mouseoverInfo.style('border-color', d3.select(this).style("fill"));
-          mouseoverInfo.style('display', 'block');
-
-        })
-        .on('mouseout', function() {
-          d3.select(this).attr("r", cfg.radius);
-          mouseoverInfo.style('display', 'none');
-
-          g.selectAll("polygon")
-            .transition(200)
-            .style("fill-opacity", cfg.opacityArea);
-
-        })
-        .text(function(j) {
-          return Math.max(j.value, 0);
-        })
-        .transition()
-        .duration(900)
-        .attrTween("cy", function() {
-          //animate the change of the color gradient from black to bright blue
-          return d3.interpolate(150, this.getAttribute("cy"));
-        })
-        .attrTween("cx", function() {
-          //animate the change of the color gradient from black to bright blue
-          return d3.interpolate(150, this.getAttribute("cx"));
-        });
-
-      series++;
-    });
-
+  //assign data
+  for(var i = 0; i < boardData[currentBoard].precipitation.length-2; i++) {
+    boardData[currentBoard].precipitation[i] = Number(boardData[currentBoard].precipitation[i]);
   }
-}; //End Radar Object
+
+  parent.data = [{
+    label: "Year 0",
+    value: boardData[currentBoard].precipitation[0],
+    percent: 0,
+    adj: "",
+    year: 0
+  }, {
+    label: "Year 1",
+    value: boardData[currentBoard].precipitation[1],
+    percent: 0,
+    adj: "",
+    year: 1
+  }, {
+    label: "Year 2",
+    value: boardData[currentBoard].precipitation[2],
+    percent: 0,
+    adj: "",
+    year: 2
+  }, {
+    label: "Year 3",
+    value: boardData[currentBoard].precipitation[3],
+    percent: 0,
+    adj: "",
+    year: 3
+  }];
+
+  //set up data percentage and adjectives
+  for (var y = 0; y < data.length; y++) {
+
+    var tempPercent;
+    var tempAdj;
+
+    switch (parent.data[y].value) {
+      case 24.58:
+      tempPercent = 25;
+      tempAdj = "Dry";
+      break;
+      case 28.18:
+      tempPercent = 36;
+      tempAdj = "Dry";
+      break;
+      case 30.39:
+      tempPercent = 42;
+      tempAdj = "Normal";
+      break;
+      case 32.16:
+      tempPercent = 49;
+      tempAdj = "Normal";
+      break;
+      case 34.34:
+      tempPercent = 57;
+      tempAdj = "Normal";
+      break;
+      case 36.47:
+      tempPercent = 64;
+      tempAdj = "Wet";
+
+      if (y > 0 && parent.data[y - 1].adj == "Dry") {
+        tempAdj = "Flood";
+      }
+
+      break;
+      case 45.1:
+      tempPercent = 89;
+      tempAdj = "Wet";
+
+      if (y > 0 && parent.data[y - 1].adj == "Dry") {
+        tempAdj = "Flood";
+      }
+
+      break;
+      default:
+      tempPercent = 0;
+      tempAdj = "";
+      break;
+    } //end switch
+
+    //assign data values
+    parent.data[y].percent = tempPercent;
+    parent.data[y].adj = tempAdj;
+  }
+
+  //d3 stuff, again, I won't comment too heavily since much of this is standard practice
+
+  //bar chart width and height
+  // note that these are closely interrelated to css styling on results page
+  // var width = 420;
+  // var barHeight = 30;
+  var width = Math.round(window.innerWidth * 0.3);
+  var barHeight = Math.round(window.innerHeight * 0.045);
+
+  //if the pie chart is being drawn to be prionted on a pdf then set a fixed size for graph
+  if (printMode) {
+    width = 500;
+    barHeight = 45;
+  }
+
+  //create bar scale for percentages
+  var x = d3.scaleLinear()
+  .domain([0, 100])
+  .range([0, width]);
+
+  var chart = d3.select(element)
+  .attr("width", width)
+  .attr("height", barHeight * data.length);
+
+  //set up hover over information in left container
+
+  var element = document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo');
+
+  var mouseoverInfo = d3.select(element)
+  .append('g');
+
+  mouseoverInfo.append('div')
+  .attr('class', 'leftPrecipContainer');
+  // .attr('style', 'display: inline-block; float: left; position: relative; top: 18%; width: 60%');
+
+  var container = mouseoverInfo.select('.leftPrecipContainer');
+
+  container.append('div')
+  .attr('class', 'yearLabel');
+
+  container.append('div')
+  .attr('class', 'precipValue');
+
+  container.append('div')
+  .attr('class', 'precipType');
+
+  mouseoverInfo.append('img')
+  .attr('class', 'precipImg');
+
+  //setup precipitation bar chart
+
+  var bar = chart.selectAll("g")
+  .data(data)
+  .enter().append("g")
+  .attr('class', 'barData')
+  .attr("transform", function(d, i) {
+    return "translate(0," + (i * barHeight + 2) + ")";
+  });
+
+  bar.append("rect")
+  .attr("width", function(d) {
+    return x(d.percent);
+  })
+  .attr("height", barHeight - 4)
+  .attr("class", "legendBars")
+  .attr('fill', '#1f77b4')
+  .on('mouseover', function(d) {
+
+    setupPrecipInfo(d.year);
+
+    mouseoverInfo.style('display', 'block');
+
+    d3.select(this).attr('fill', 'lightskyblue');
+  })
+  .on('mouseout', function() {
+    d3.select(this).attr('fill', '#1f77b4');
+
+    setupPrecipInfo(currentYear);
+
+  })
+  .transition()
+  .duration(1400)
+  //animation of bars
+  .attrTween("width", function() {
+    return d3.interpolate(0, this.getAttribute("width"));
+  });
+
+  bar.append("text")
+  .attr("x", function(d) {
+    return x(d.percent) + 7;
+  })
+  .attr("y", barHeight / 2 )
+  .attr("dy", ".35em")
+  .text(function(d) {
+    return d.label;
+  })
+  .attr('fill', 'black');
+
+  //lastly, after all of the chart setup, just setup the default information in the
+  //  precipitation graphic to the left
+  setupPrecipInfo(currentYear);
+
+} //end drawPrecipitationInformationChart()
+
+// // This function is in some ways similar to the ecosystem radar function
+// //  here we updata the dataset and legend accordingly
+// function drawYieldRadar(yearArray) {
+//
+//   //clear info already on page
+//   document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart').innerHTML = " ";
+//   document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend').innerHTML = " ";
+//
+//   var w = Math.round(window.innerWidth * 0.317);
+//   var h = Math.round(window.innerHeight * 0.319);
+//   var graphLength = Math.min(w, h);
+//   // var graphWidth = 300,
+//   //   graphHeight = 300;
+//
+//   var dataset = [];
+//   var legendOptions = [];
+//   var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
+//   var radarClassElementsString = "yield-radar-chart-serie"; //ironically missing an s
+//
+//   //for each year given, setup the data in that series
+//   for (var i = 0; i < yearArray.length; i++) {
+//
+//     var y = yearArray[i];
+//     //Totals.yieldResults[y][tempString]
+//     var obj = [{
+//         label: "Corn Grain",
+//         axis: "Corn Grain",
+//         value: Totals.cornGrainYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].cornGrainYield * 10) / 10) + " bu"
+//       },
+//       {
+//         label: "Soybean",
+//         axis: "Soybean",
+//         value: Totals.soybeanYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].soybeanYield * 10) / 10) + " bu"
+//       },
+//       {
+//         label: "Mixed Fruits and Vegetables",
+//         axis: "Fruit/Veg",
+//         value: Totals.mixedFruitsAndVegetablesYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].mixedFruitsAndVegetablesYield * 10) / 10) + " tons"
+//       },
+//       {
+//         label: "Cattle",
+//         axis: "Cattle",
+//         value: Totals.cattleYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].cattleYield * 10) / 10) + " animals"
+//       },
+//       {
+//         label: "Alfalfa Hay",
+//         axis: "Alfalfa",
+//         value: Totals.alfalfaHayYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].alfalfaHayYield * 10) / 10) + " tons"
+//       },
+//       {
+//         label: "Grass Hay",
+//         axis: "Grass Hay",
+//         value: Totals.grassHayYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].grassHayYield * 10) / 10) + " tons"
+//       },
+//       {
+//         label: "Switchgrass Biomass",
+//         axis: "Switchgrass",
+//         value: Totals.switchgrassYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].switchgrassYield * 10) / 10) + " tons"
+//       },
+//       {
+//         label: "Wood",
+//         axis: "Wood",
+//         value: Totals.woodYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].woodYield * 10) / 10) + " board-ft"
+//       },
+//       {
+//         label: "Short Rotation Woody Biomass",
+//         axis: "Woody Biomass",
+//         value: Totals.shortRotationWoodyBiomassYieldScore[y] / 100,
+//         raw: (Math.round(Totals.yieldResults[y].shortRotationWoodyBiomassYield * 10) / 10) + " tons"
+//       }
+//     ];
+//
+//     dataset.push(obj);
+//     legendOptions.push("Year " + y);
+//   }
+//
+//   //not used, but is useful for scaling the radar plot
+//   //  I decided against using the maximumOfData in config, as it is somewhat misleading
+//   //  when the graphic changes scales between uses
+//   var maximumOfData = 0;
+//   for (var i = 0; i < dataset.length; i++) {
+//     for (var j = 0; j < dataset[i].length; j++) {
+//       if (dataset[i][j].value > maximumOfData) maximumOfData = dataset[i][j].value;
+//     }
+//   }
+//
+//   //option overrides for chart
+//   var chartConfigOverride = {
+//     // w: graphWidth,
+//     // h: graphHeight,
+//     w: graphLength,
+//     h: graphLength,
+//     maxValue: 1,
+//     levels: 5,
+//     ExtraWidthX: 300,
+//     TranslateX: graphLength * 0.487, //95
+//     TranslateY: graphLength * 0.154 //30
+//   };
+//
+//   //get elements in the child frame
+//   var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart');
+//   var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend');
+//   // var checkboxes = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldChecks');
+//
+//   //use Radar object to create a plot
+//   RadarChart.draw(radarId, dataset, chartConfigOverride, 'mouseoverInfoRadarLeft', radarClassElementsString);
+//
+//   //now, time for the legend
+//   // var legendWidth = 355;
+//   // var legendHeight = 370;
+//   var legendWidth = Math.round(window.innerWidth * 0.376);
+//   var legendHeight = Math.round(window.innerHeight * 0.394);
+//   var legendLength = Math.round(Math.min(legendWidth, legendHeight));
+//
+//   var svg = d3.select(radarLegendId)
+//     .append('svg')
+//     // .attr('width', legendWidth)
+//     // .attr('height', legendHeight)
+//     .attr('width', legendLength)
+//     .attr('height', legendLength)
+//     .append('g')
+//     .attr('transform', 'translate(' + (legendLength / 2) + ',' + (legendLength / 2) + ')');
+//
+//   //add title for legend/chart
+//   svg.append("text")
+//     .attr("x", 0)
+//     // .attr("y", -120)
+//     .attr("y", Math.round(-0.324 * legendHeight))
+//     .attr("text-anchor", "middle")
+//     .style("font-size", "1.8vw")
+//     .style("font-weight", "bold")
+//     .text("Annual Yield Results");
+//
+//   //sizing for the colored squares and spaces
+//   // var legendRectSize = 18;
+//   // var legendSpacing = 4;
+//   var legendRectSize = Math.round(graphLength * 0.06);
+//   var legendSpacing = Math.round(legendRectSize * 0.22);
+//
+//   //add all the elements that have a nonzero count
+//   var legend = svg.selectAll('.legend')
+//     .data(legendOptions)
+//     .enter()
+//     .append('g')
+//     .on('mouseover', function(d) {
+//
+//       //change text to blue on mouse over
+//       d3.select(this).style("fill", "steelblue");
+//
+//       //highlight area for the series in plot
+//       var g = d3.select(radarId);
+//       z = d3.select(this).attr("childElement");
+//       z = "polygon." + z;
+//
+//       g.selectAll("polygon")
+//         .transition(200)
+//         .style("fill-opacity", 0.1);
+//       g.selectAll(z)
+//         .transition(200)
+//         .style("fill-opacity", 0.7);
+//     })
+//     .on('mouseout', function(d) {
+//
+//       //set text back to black
+//       d3.select(this).style("fill", "black");
+//
+//       //reset polygon area highlight
+//       var g = d3.select(radarId);
+//       g.selectAll("polygon")
+//         .transition(200)
+//         .style("fill-opacity", 0.2);
+//     })
+//     .attr("childElement", function(d, i) {
+//       return radarClassElementsString + i;
+//     })
+//     .attr('transform', function(d, i) {
+//       var height = legendRectSize + legendSpacing;
+//       // var offset = 80;
+//       // var horz = -124;
+//       var offset = Math.round(legendRectSize * 4.44);
+//       var horz = Math.round(legendRectSize * -1.55);
+//       var vert = i * height - offset;
+//       return 'translate(' + horz + ',' + vert + ')';
+//     });
+//
+//   //add legend color squares
+//   legend.append('rect')
+//     .attr('width', legendRectSize)
+//     .attr('height', legendRectSize)
+//     .style('fill', function(d, i) {
+//       return colorscale(i);
+//     })
+//     .style('stroke', function(d, i) {
+//       return colorscale(i);
+//     });
+//
+//   //add legend text info
+//   legend.append('text')
+//     .attr('x', legendRectSize + legendSpacing)
+//     .attr('y', legendRectSize - legendSpacing)
+//     .text(function(d) {
+//       return d;
+//     });
+//
+//   // add checkbox
+//   legend.append('foreignObject')
+//     .attr('width', 20)
+//     .attr('height', 20)
+//     .attr('x', 70)
+//     .attr('y', 0)
+//
+//     .append('xhtml:input')
+//     .attr('id', function(d) {
+//       return "yieldCheckboxYear" + d.slice(-1);
+//     })
+//     .attr('class', 'yearCheckbox')
+//     .attr('onclick', function(d) {
+//       return "yieldRadarPlotYearToggle(" + d.slice(-1) + ");";
+//     })
+//     .attr('width', legendRectSize)
+//     .attr('height', legendRectSize)
+//     .attr('checked', "")
+//     .attr('type', 'checkbox');
+// } //end drawYieldRadar()
+
+//generateResultsTable creates the string of html with all the numerical results
+// the code here is a little dense, but entirely straightforward
+// where possible, loops are created for years
+function generateResultsTable() {
+
+  var toMetricFactorArea = 2.471;
+  var upToYear = boardData[currentBoard].calculatedToYear;
+
+  var frontendNames = ["Conventional Corn Area", "Conservation Corn Area", "Conventional Soybean Area", "Conservation Soybean Area",
+    "Mixed Fruits and Vegetables Area", "Permanent Pasture Area", "Rotational Grazing Area", "Grass Hay Area",
+    "Switchgrass Area", "Prairie Area", "Wetland Area", "Alfalfa Area", "Conventional Forest Area",
+    "Conservation Forest Area", "Short Rotation Woody Bioenergy Area"
+  ];
+  var backendDataIdentifiers = ["conventionalCorn", "conservationCorn", "conventionalSoybean",
+    "conservationSoybean", "mixedFruitsVegetables", "permanentPasture", "rotationalGrazing", "grassHay",
+    "switchgrass", "prairie", "wetland", "alfalfa", "conventionalForest",
+    "conservationForest", "shortRotationWoodyBioenergy"
+  ];
+
+  var htmlTableString = "";
+
+  //FIRST TABLE, LAND USE
+
+  htmlTableString += "<table id='table1' class='resultsTable'>";
+
+  //add header row--------------
+
+  htmlTableString += "<tr class='tableHeading'> <th> Land Use Category </th>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<th>";
+    htmlTableString += "Y" + y;
+    htmlTableString += "</th>";
+  }
+
+  htmlTableString += "<th>Percentage</th>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<th>";
+    htmlTableString += "Y" + y;
+    htmlTableString += "</th>";
+  }
+
+  htmlTableString += "<th>Units (English) </th>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<th>";
+    htmlTableString += "Y" + y;
+    htmlTableString += "</th>";
+  }
+
+  htmlTableString += "<th>Units (Metric) </th>";
+
+  htmlTableString += "</tr>";
+
+  //Add Data Rows
+
+  for (var l = 0; l < backendDataIdentifiers.length; l++) {
+
+    //check for the cases where a header needs to be added
+    switch (l) {
+      case 0:
+        htmlTableString += "<tr class='tableHeading'><td><b>Annual Grain</b></td></tr>";
+        break;
+      case 2:
+        htmlTableString += "<tr class='tableHeading'><td><b>Annual Legume</b></td></tr>";
+        break;
+      case 4:
+        htmlTableString += "<tr class='tableHeading'><td><b>Mixed Fruits and Vegetables</b></td></tr>";
+        break;
+      case 5:
+        htmlTableString += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>";
+        break;
+      case 7:
+        htmlTableString += "<tr class='tableHeading'><td><b>Perennial Herbaceous (non-pasture)</b></td></tr>";
+        break;
+      case 11:
+        htmlTableString += "<tr class='tableHeading'><td><b>Perennial Legume</b></td></tr>";
+        break;
+      case 12:
+        htmlTableString += "<tr class='tableHeading'><td><b>Perennial Wooded</b></td></tr>";
+        break;
+
+    } //end switch
+
+    htmlTableString += "<tr>";
+
+    htmlTableString += "<td>" + frontendNames[l] + "</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+
+      var tempString = backendDataIdentifiers[l] + "LandUse";
+      htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10) / 10) + "<br>";
+
+      htmlTableString += "</td>";
+    } //for each year
+
+    //units cell
+    htmlTableString += "<td>percent</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+
+      var tempString = backendDataIdentifiers[l] + "LandUse";
+      htmlTableString += (Math.round(Totals.landUseResults[y][tempString] * 10) / 10) + "<br>";
+
+      htmlTableString += "</td>";
+    } //for each year
+
+    //units cell
+    htmlTableString += "<td>acres</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+
+      var tempString = backendDataIdentifiers[l] + "LandUse";
+      htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / toMetricFactorArea * 10) / 10) + "<br>";
+
+      htmlTableString += "</td>";
+
+    } //for each year
+
+    //units cell
+    htmlTableString += "<td>hectares</td></tr>";
+  }
+
+  htmlTableString += "</table><br>";
+
+
+  //===================================================
+  //SECOND TABLE, ECOSYSTEM INDICATORS
+
+
+  frontendNames = ["Game Wildlife", "Biodiversity", "Carbon Sequestration", "Erosion Control / Gross Erosion",
+    "Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading",
+    "Sediment Control <br> / In-Stream Delivery"
+  ];
+  backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "carbonSequestration", "grossErosion", "nitrateConcentration",
+    "phosphorusLoad", "sedimentDelivery"
+  ];
+
+  //variables for english to metric
+  // results are generally in english units as the original thesis
+  // had all calculations done this way
+  conversionArray = [1, 1, 0.90718474, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474];
+
+  htmlTableString += "<table id='table2' class='resultsTable'>";
+
+  //add header row
+
+  htmlTableString += "<tr class='tableHeading'> <th> Ecosystem Service Indicator <br> / Measurement </th>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<th>";
+    htmlTableString += "Y" + y;
+    htmlTableString += "</th>";
+  }
+
+  htmlTableString += "<th>Score</th>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<th>";
+    htmlTableString += "Y" + y;
+    htmlTableString += "</th>";
+  }
+
+  htmlTableString += "<th>Units (English) </th>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<th>";
+    htmlTableString += "Y" + y;
+    htmlTableString += "</th>";
+  }
+
+  htmlTableString += "<th>Units (Metric) </th>";
+
+  htmlTableString += "</tr>";
+
+  //table data
+
+  for (var l = 0; l < backendDataIdentifiers.length; l++) {
+
+    //keep track if we need to add the appropriate subheading lines
+    switch (l) {
+      case 0:
+        htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
+        break;
+      case 2:
+        htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
+        break;
+      case 4:
+        htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
+        break;
+    } //end switch
+
+    htmlTableString += "<tr>";
+
+    htmlTableString += "<td>" + frontendNames[l] + "</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+
+      var tempString = backendDataIdentifiers[l] + "Score";
+      htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
+
+      htmlTableString += "</td>";
+    } //for each year
+
+    //units cell
+    htmlTableString += "<td>(out of 100)</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+
+      var tempString = backendDataIdentifiers[l];
+      //Correction for Carbon Sequestrations
+      if (l == 2) {
+        Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
+      }
+      htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
+
+      htmlTableString += "</td>";
+    } //for each year
+
+    //units cell, keep track which type of units we'll need
+    if (l < 2) htmlTableString += "<td>pts</td>";
+    if (2 <= l && l < 4) htmlTableString += "<td>tons</td>";
+    if (4 <= l && l < 5) htmlTableString += "<td>ppm</td>";
+    if (5 <= l && l < 8) htmlTableString += "<td>tons</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+
+      var tempString = backendDataIdentifiers[l];
+      htmlTableString += (Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10) + "<br>";
+
+      htmlTableString += "</td>";
+
+    } //for each year
+
+    //units cell
+    if (l < 2) htmlTableString += "<td>pts</td>";
+    if (2 <= l && l < 4) htmlTableString += "<td>Mg</td>";
+    if (4 <= l && l < 5) htmlTableString += "<td>mg/L</td>";
+    if (5 <= l && l < 8) htmlTableString += "<td>Mg</td>";
+  }
+
+  //========================================
+  //THIRD TABLE, YIELD RESULTS
+
+  frontendNames = ["Corn Grain", "Soybeans", "Mixed Fruits and Vegetables", "Cattle", "Alfalfa Hay", "Grass Hay",
+    "Switchgrass Biomass", "Wood", "Short Rotation Woody Biomass"
+  ];
+
+  backendDataIdentifiers = ["cornGrainYield", "soybeanYield", "mixedFruitsAndVegetablesYield", "cattleYield",
+    "alfalfaHayYield", "grassHayYield", "switchgrassYield", "woodYield", "shortRotationWoodyBiomassYield"
+  ];
+
+  //conversion factors for the yeilds
+  conversionArray = [0.0254, 0.0272, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474, 0.002359737, 0.90718474];
+
+  //fill in table rows with data
+
+  for (var l = 0; l < backendDataIdentifiers.length; l++) {
+
+    //keep track of subheadings, just 1 this time
+    switch (l) {
+      case 0:
+        htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
+        break;
+    } //end switch
+
+    htmlTableString += "<tr>";
+
+    htmlTableString += "<td>" + frontendNames[l] + "</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+
+      var tempString = backendDataIdentifiers[l] + "Score";
+      htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
+
+      htmlTableString += "</td>";
+    } //for each year
+    //units cell
+    htmlTableString += "<td>(out of 100)</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+
+      var tempString = backendDataIdentifiers[l];
+      htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * 10) / 10) + "<br>";
+
+      htmlTableString += "</td>";
+    } //for each year
+
+    //units cell, lots of different ones to keep track of here
+    if (l < 2) htmlTableString += "<td>bu</td>";
+    if (l == 2) htmlTableString += "<td>tons</td>";
+    if (l == 3) htmlTableString += "<td>animals</td>"; //what an odd unit
+    if (4 <= l && l < 7) htmlTableString += "<td>tons</td>";
+    if (l == 7) htmlTableString += "<td>board-ft</td>";
+    if (l == 8) htmlTableString += "<td>tons</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+
+      var tempString = backendDataIdentifiers[l];
+      htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10) + "<br>";
+
+      htmlTableString += "</td>";
+
+    } //for each year
+
+    //units cell
+    if (l < 2) htmlTableString += "<td>Mg</td>";
+    if (l == 2) htmlTableString += "<td>Mg</td>";
+    if (l == 3) htmlTableString += "<td>animals</td>";
+    if (4 <= l && l < 7) htmlTableString += "<td>Mg</td>";
+    if (l == 7) htmlTableString += "<td>m^3</td>";
+    if (l == 8) htmlTableString += "<td>Mg</td>";
+  }
+
+  htmlTableString += "</table><br>";
+
+  //============================
+  //TABLE FOUR, SPECIAL INDICATORS
+
+  htmlTableString += "<table id='table4' class='resultsTable'>";
+
+  //add header row
+
+  htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Other Parameters </th>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<th>";
+    htmlTableString += "Y" + y;
+    htmlTableString += "</th>";
+  }
+
+  htmlTableString += "<th> </th>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<th>";
+    htmlTableString += "Y" + y;
+    htmlTableString += "</th>";
+  }
+
+  htmlTableString += "<th> </th>";
+
+  htmlTableString += "</tr>";
+
+  htmlTableString += "<tr><td>Precipitation</td>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<td>";
+    htmlTableString += boardData[currentBoard].precipitation[y];
+    htmlTableString += "</td>";
+  }
+
+  htmlTableString += "<td>inches</td>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<td>";
+    htmlTableString += Math.round(boardData[currentBoard].precipitation[y] * 2.54 * 10) / 10;
+    htmlTableString += "</td>";
+  }
+
+  htmlTableString += "<td>cm</td>";
+
+  htmlTableString += "</tr>";
+
+  htmlTableString += "<tr><td>Strategic Wetland Use</td>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<td>";
+    htmlTableString += Totals.strategicWetlandPercent[y];
+    htmlTableString += "</td>";
+  }
+
+  htmlTableString += "<td>percent</td>";
+
+  for (var y = 1; y <= upToYear; y++) {
+    htmlTableString += "<td>";
+    htmlTableString += Totals.strategicWetlandCells[y];
+    htmlTableString += "</td>";
+  }
+
+  htmlTableString += "<td>cells</td>";
+
+  htmlTableString += "</tr>";
+
+  htmlTableString += "</table><br>";
+
+
+  //===========================END TABLE
+
+  //well, we did all this work, we should probably do something with it.
+  //let's give pass it off to some other function...
+
+  return htmlTableString;
+} //end generateResultsTable()
+
+// ---
 
 //removeYearFromRadar hides all of the graph elements of that year on the ecosystem
 //  indicators plot
@@ -1893,239 +2128,7 @@ function addBackYearToRadar(yearToAdd) {
   }
 } //end addBackYearToRadar()
 
-//This function is in some ways similar to the ecosystem radar function
-//  here we updata the dataset and legend accordingly
-function drawYieldRadar(yearArray) {
-
-  //clear info already on page
-  document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart').innerHTML = " ";
-  document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend').innerHTML = " ";
-
-  var w = Math.round(window.innerWidth * 0.317);
-  var h = Math.round(window.innerHeight * 0.319);
-  var graphLength = Math.min(w, h);
-  // var graphWidth = 300,
-  //   graphHeight = 300;
-
-  var dataset = [];
-  var legendOptions = [];
-  var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
-  var radarClassElementsString = "yield-radar-chart-serie"; //ironically missing an s
-
-  //for each year given, setup the data in that series
-  for (var i = 0; i < yearArray.length; i++) {
-
-    var y = yearArray[i];
-    //Totals.yieldResults[y][tempString]
-    var obj = [{
-        label: "Corn Grain",
-        axis: "Corn Grain",
-        value: Totals.cornGrainYieldScore[y] / 100,
-        raw: (Math.round(Totals.yieldResults[y].cornGrainYield * 10) / 10) + " bu"
-      },
-      {
-        label: "Soybean",
-        axis: "Soybean",
-        value: Totals.soybeanYieldScore[y] / 100,
-        raw: (Math.round(Totals.yieldResults[y].soybeanYield * 10) / 10) + " bu"
-      },
-      {
-        label: "Mixed Fruits and Vegetables",
-        axis: "Fruit/Veg",
-        value: Totals.mixedFruitsAndVegetablesYieldScore[y] / 100,
-        raw: (Math.round(Totals.yieldResults[y].mixedFruitsAndVegetablesYield * 10) / 10) + " tons"
-      },
-      {
-        label: "Cattle",
-        axis: "Cattle",
-        value: Totals.cattleYieldScore[y] / 100,
-        raw: (Math.round(Totals.yieldResults[y].cattleYield * 10) / 10) + " animals"
-      },
-      {
-        label: "Alfalfa Hay",
-        axis: "Alfalfa",
-        value: Totals.alfalfaHayYieldScore[y] / 100,
-        raw: (Math.round(Totals.yieldResults[y].alfalfaHayYield * 10) / 10) + " tons"
-      },
-      {
-        label: "Grass Hay",
-        axis: "Grass Hay",
-        value: Totals.grassHayYieldScore[y] / 100,
-        raw: (Math.round(Totals.yieldResults[y].grassHayYield * 10) / 10) + " tons"
-      },
-      {
-        label: "Switchgrass Biomass",
-        axis: "Switchgrass",
-        value: Totals.switchgrassYieldScore[y] / 100,
-        raw: (Math.round(Totals.yieldResults[y].switchgrassYield * 10) / 10) + " tons"
-      },
-      {
-        label: "Wood",
-        axis: "Wood",
-        value: Totals.woodYieldScore[y] / 100,
-        raw: (Math.round(Totals.yieldResults[y].woodYield * 10) / 10) + " board-ft"
-      },
-      {
-        label: "Short Rotation Woody Biomass",
-        axis: "Woody Biomass",
-        value: Totals.shortRotationWoodyBiomassYieldScore[y] / 100,
-        raw: (Math.round(Totals.yieldResults[y].shortRotationWoodyBiomassYield * 10) / 10) + " tons"
-      }
-    ];
-
-    dataset.push(obj);
-    legendOptions.push("Year " + y);
-  }
-
-  //not used, but is useful for scaling the radar plot
-  //  I decided against using the maximumOfData in config, as it is somewhat misleading
-  //  when the graphic changes scales between uses
-  var maximumOfData = 0;
-  for (var i = 0; i < dataset.length; i++) {
-    for (var j = 0; j < dataset[i].length; j++) {
-      if (dataset[i][j].value > maximumOfData) maximumOfData = dataset[i][j].value;
-    }
-  }
-
-  //option overrides for chart
-  var chartConfigOverride = {
-    // w: graphWidth,
-    // h: graphHeight,
-    w: graphLength,
-    h: graphLength,
-    maxValue: 1,
-    levels: 5,
-    ExtraWidthX: 300,
-    TranslateX: graphLength * 0.487, //95
-    TranslateY: graphLength * 0.154 //30
-  };
-
-  //get elements in the child frame
-  var radarId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarChart');
-  var radarLegendId = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldRadarLegend');
-  // var checkboxes = document.getElementById('resultsFrame').contentWindow.document.getElementById('yieldChecks');
-
-  //use Radar object to create a plot
-  RadarChart.draw(radarId, dataset, chartConfigOverride, 'mouseoverInfoRadarLeft', radarClassElementsString);
-
-  //now, time for the legend
-  // var legendWidth = 355;
-  // var legendHeight = 370;
-  var legendWidth = Math.round(window.innerWidth * 0.376);
-  var legendHeight = Math.round(window.innerHeight * 0.394);
-  var legendLength = Math.round(Math.min(legendWidth, legendHeight));
-
-  var svg = d3.select(radarLegendId)
-    .append('svg')
-    // .attr('width', legendWidth)
-    // .attr('height', legendHeight)
-    .attr('width', legendLength)
-    .attr('height', legendLength)
-    .append('g')
-    .attr('transform', 'translate(' + (legendLength / 2) + ',' + (legendLength / 2) + ')');
-
-  //add title for legend/chart
-  svg.append("text")
-    .attr("x", 0)
-    // .attr("y", -120)
-    .attr("y", Math.round(-0.324 * legendHeight))
-    .attr("text-anchor", "middle")
-    .style("font-size", "1.8vw")
-    .style("font-weight", "bold")
-    .text("Annual Yield Results");
-
-  //sizing for the colored squares and spaces
-  // var legendRectSize = 18;
-  // var legendSpacing = 4;
-  var legendRectSize = Math.round(graphLength * 0.06);
-  var legendSpacing = Math.round(legendRectSize * 0.22);
-
-  //add all the elements that have a nonzero count
-  var legend = svg.selectAll('.legend')
-    .data(legendOptions)
-    .enter()
-    .append('g')
-    .on('mouseover', function(d) {
-
-      //change text to blue on mouse over
-      d3.select(this).style("fill", "steelblue");
-
-      //highlight area for the series in plot
-      var g = d3.select(radarId);
-      z = d3.select(this).attr("childElement");
-      z = "polygon." + z;
-
-      g.selectAll("polygon")
-        .transition(200)
-        .style("fill-opacity", 0.1);
-      g.selectAll(z)
-        .transition(200)
-        .style("fill-opacity", 0.7);
-    })
-    .on('mouseout', function(d) {
-
-      //set text back to black
-      d3.select(this).style("fill", "black");
-
-      //reset polygon area highlight
-      var g = d3.select(radarId);
-      g.selectAll("polygon")
-        .transition(200)
-        .style("fill-opacity", 0.2);
-    })
-    .attr("childElement", function(d, i) {
-      return radarClassElementsString + i;
-    })
-    .attr('transform', function(d, i) {
-      var height = legendRectSize + legendSpacing;
-      // var offset = 80;
-      // var horz = -124;
-      var offset = Math.round(legendRectSize * 4.44);
-      var horz = Math.round(legendRectSize * -1.55);
-      var vert = i * height - offset;
-      return 'translate(' + horz + ',' + vert + ')';
-    });
-
-  //add legend color squares
-  legend.append('rect')
-    .attr('width', legendRectSize)
-    .attr('height', legendRectSize)
-    .style('fill', function(d, i) {
-      return colorscale(i);
-    })
-    .style('stroke', function(d, i) {
-      return colorscale(i);
-    });
-
-  //add legend text info
-  legend.append('text')
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
-    .text(function(d) {
-      return d;
-    });
-
-  // add checkbox
-  legend.append('foreignObject')
-    .attr('width', 20)
-    .attr('height', 20)
-    .attr('x', 70)
-    .attr('y', 0)
-
-    .append('xhtml:input')
-    .attr('id', function(d) {
-      return "yieldCheckboxYear" + d.slice(-1);
-    })
-    .attr('class', 'yearCheckbox')
-    .attr('onclick', function(d) {
-      return "yieldRadarPlotYearToggle(" + d.slice(-1) + ");";
-    })
-    .attr('width', legendRectSize)
-    .attr('height', legendRectSize)
-    .attr('checked', "")
-    .attr('type', 'checkbox');
-} //end drawYieldRadar()
-
+// ---
 
 //here we remove all of the graph elements in the yield plot for the appropriate year
 function removeYearFromYieldRadar(yearToRemove) {

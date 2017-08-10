@@ -3,6 +3,141 @@ var dataHolder; //keeps track of individual properties for each element
 var elementNum;
 var elementHeight; //array with the current height of each section
 
+//this function adds the content to the right pane, namely
+//  the image/video in square1, the text frame in square2, and the title
+function arrangeContent(idOfElement) {
+  // record for click tracking system
+  if( parent.getTracking() ) {
+    console.log("tracking arrangeContent("+idOfElement+")");
+    parent.pushClick(0, parent.getStamp(), 80, 0, idOfElement);
+  }
+
+  document.getElementById('square1').innerHTML = dataHolder[idOfElement].square1;
+  document.getElementById('square2frame').src = dataHolder[idOfElement].square2;
+  document.getElementById('title').innerHTML = dataHolder[idOfElement].title.toUpperCase();
+
+
+  //if element hasMore attribute == 1, then we show the deaper button and assign it functionality
+  if (dataHolder[idOfElement].hasMore && dataHolder[idOfElement].hasMore == "1") {
+    document.getElementById('switchAdvanced').style.display = "block";
+    document.getElementById('switchAdvanced').className = "switchContentDepth";
+
+    document.getElementById('switchGeneral').style.display = "block";
+    document.getElementById('switchGeneral').className = "switchContentDepthSelected";
+
+    // make Advanced tab clickable
+    document.getElementById('switchAdvanced').onclick = function() {
+      showAdvancedDetail(idOfElement);
+      // if click tracking mode, then record the action
+      if( parent.getTracking() ) {
+        console.log("tracking Advanced clicked ");
+        // record for click tracking system
+        parent.pushClick(0, parent.getStamp(), 81, 0, idOfElement);
+      }
+    };
+  } else {
+    document.getElementById('switchAdvanced').style.display = "none";
+    document.getElementById('switchGeneral').style.display = "none";
+  }
+
+  //also change the class of the item clicked if it's a subElement
+  //note that headers have separate functionality, despite updating rightward squares
+  var currentSelectedGroupElements = document.getElementsByClassName('selectedGroupElement');
+  //unhighlight the current selected element
+  if (currentSelectedGroupElements.length > 0) {
+    currentSelectedGroupElements[0].className = 'groupElement';
+  }
+  //select the current element if not already
+  if (document.getElementById(idOfElement).className == 'groupElement') {
+    document.getElementById(idOfElement).className = 'selectedGroupElement';
+  }
+} //end function arrangeContent()
+
+//this function creates the html string needed for all header elements
+// it also stores the relevant data in dataHolder
+function establishHeader(i, line1, line2, line3, line4, padding) {
+
+  //html part----
+
+  //generic string to which we can add
+  var tempString = "";
+  tempString += "<div id='" + i + "' class='groupHeader' onmouseover='this.focus()' onclick='arrangeContent(" + i + "); toggleChildElements(" + i + ");' style='padding-left:" + padding + "%;  overflow: auto;' >";
+  //add the whole text, minus the indicator symbol and following space
+  tempString += line1.slice(2);
+  tempString += "</div>";
+
+  //data linkage part---
+
+  dataHolder[i] = {};
+  dataHolder[i].square1 = line2;
+  dataHolder[i].square2 = line3;
+  dataHolder[i].hasMore = line4;
+
+  if (dataHolder[i].hasMore) {
+    var temp = line2.split(" + ");
+    //really the creator of the .dat file should sanitize input,
+    //  but just in case, we'll be extra careful and build in a check
+    if (temp.length > 1) {
+      dataHolder[i].square1 = temp[0];
+      dataHolder[i].square1Advanced = temp[1];
+    } else {
+      dataHolder[i].hasMore = 0;
+    }
+  }
+
+  dataHolder[i].title = line1.slice(3);
+
+  return tempString;
+} //end establishHeader()
+
+//this function creates the html string needed for all child elements
+// it also stores the relevant data in dataHolder
+function establishElement(i, line1, line2, line3, line4, padding) {
+
+  //html----
+  var tempString = "";
+  tempString += "<div id='" + i + "' class='groupElement' onclick='arrangeContent(" + i + ");' style='padding-left:" + padding + "%;  overflow: auto;' >";
+  tempString += line1.slice(2);
+  tempString += "</div>";
+
+  //data linkage----
+  dataHolder[i] = {};
+  dataHolder[i].square1 = line2;
+  dataHolder[i].square2 = line3;
+  dataHolder[i].hasMore = line4;
+
+  if (dataHolder[i].hasMore) {
+    var temp = line2.split(" + ");
+    //really the creator of the .dat file should sanitize input,
+    //  but just in case, we'll be extra careful and build in a check
+    if (temp.length > 1) {
+      dataHolder[i].square1 = temp[0];
+      dataHolder[i].square1Advanced = temp[1];
+    } else {
+      dataHolder[i].hasMore = 0;
+    }
+  }
+
+  dataHolder[i].title = line1.slice(3);
+
+  return tempString;
+}
+
+//rather self-explanator, this function creates an array of heights for all of the headers
+// based on the number of child elements they have
+function estalishHeights() {
+
+  //35 px for each element
+  // heightConstant = 35 ;
+  heightConstant = 2.7;
+
+  for (var i = 0; i < elementNum.length; i++) {
+    if (elementNum[i]) {
+      elementHeight[i] = heightConstant * elementNum[i];
+    } //end if
+  } //end for
+} //end establishHeights()
+
 //initialize the codex by calling main setup file
 function init() {
 
@@ -18,6 +153,74 @@ function init() {
     }
   });
 }
+
+//listen for the 'i' key and trigger exit in parent (helpersFE.js)
+function onDocumentKeyDown(event) {
+  switch (event.keyCode) {
+    case 73:
+    parent.toggleIndex();
+    break;
+  } //end switch
+} //end onDocumentKeyDown
+
+//for use by helpersFE.js toggle index
+function resetHighlighting() {
+  var currentSelectedGroupElements = document.getElementsByClassName('selectedGroupElement');
+  //unhighlight the current selected element
+  if (currentSelectedGroupElements.length > 0) {
+    currentSelectedGroupElements[0].className = 'groupElement';
+  }
+}
+
+//this function adjusts the sizes of parent containers that have a child container opened or closed
+function resizeAffectedElements(idOfClickedElement, operationToPerform) {
+  //let's judge where elements are by their padding
+  var currentPadding = document.getElementById(idOfClickedElement).style.paddingLeft;
+  //slice off "%"
+  currentPadding = currentPadding.slice(0, -1);
+  // currentPadding = currentPadding.slice(0, -1);
+  currentPadding = Number(currentPadding);
+
+  var i = idOfClickedElement - 1;
+  var onwards = 1;
+  //find open group headers above us by going through all of the elements
+  //resize them accordingly
+  while (i >= 0 && onwards) {
+
+    //if the element is an open group header
+    if (document.getElementById(i) && document.getElementById(i).className == "selectedGroupHeader") {
+      //painstakingly get the element padding...
+      var elementPadding = document.getElementById(i).style.paddingLeft;
+      // slice off "%"
+      elementPadding = elementPadding.slice(0, -1);
+      elementPadding = Number(elementPadding);
+
+      //if the element is some parent container, it will have lower padding
+      if (elementPadding < currentPadding) {
+
+        //find the container referred to by the open header
+        var string = document.getElementById((i + "sub")).style.height;
+        // slice off "vw"
+        string = string.slice(0, -1);
+        string = string.slice(0, -1);
+
+        //here's where the magic happens, add or subtract the height of current element from parent holder
+        if (operationToPerform == 'expand') string = Number(string) + elementHeight[idOfClickedElement];
+        if (operationToPerform == 'shrink') string = Number(string) - elementHeight[idOfClickedElement];
+
+        //update new height
+        // document.getElementById((i + "sub")).style.height = string + "px" ;
+        document.getElementById((i + "sub")).style.height = string + "vw";
+        elementHeight[i] = string;
+      }
+      //let's stop looking if we're at the topmost padding
+      //  if(elementPadding == 20) onwards = 0 ;
+      if (elementPadding == 5) onwards = 0;
+    } //end if
+    //cycle through all elements above us
+    i -= 1;
+  } //end while
+} //end function resizeAffectedElements() ;
 
 //parse through the data lines and create the corresponding elements
 //  also keep track of element numbers so that height can be correctly established
@@ -122,244 +325,6 @@ function setUpCodexData(data) {
   estalishHeights();
 } //end function setUpCodexData()
 
-
-//this function creates the html string needed for all header elements
-// it also stores the relevant data in dataHolder
-function establishHeader(i, line1, line2, line3, line4, padding) {
-
-  //html part----
-
-  //generic string to which we can add
-  var tempString = "";
-  tempString += "<div id='" + i + "' class='groupHeader' onmouseover='this.focus()' onclick='arrangeContent(" + i + "); toggleChildElements(" + i + ");' style='padding-left:" + padding + "%;' >";
-  //add the whole text, minus the indicator symbol and following space
-  tempString += line1.slice(2);
-  tempString += "</div>";
-
-  //data linkage part---
-
-  dataHolder[i] = {};
-  dataHolder[i].square1 = line2;
-  dataHolder[i].square2 = line3;
-  dataHolder[i].hasMore = line4;
-
-  if (dataHolder[i].hasMore) {
-    var temp = line2.split(" + ");
-    //really the creator of the .dat file should sanitize input,
-    //  but just in case, we'll be extra careful and build in a check
-    if (temp.length > 1) {
-      dataHolder[i].square1 = temp[0];
-      dataHolder[i].square1Advanced = temp[1];
-    } else {
-      dataHolder[i].hasMore = 0;
-    }
-  }
-
-  dataHolder[i].title = line1.slice(3);
-
-  return tempString;
-} //end establishHeader()
-
-//this function creates the html string needed for all child elements
-// it also stores the relevant data in dataHolder
-function establishElement(i, line1, line2, line3, line4, padding) {
-
-  //html----
-  var tempString = "";
-  tempString += "<div id='" + i + "' class='groupElement' onclick='arrangeContent(" + i + ");' style='padding-left:" + padding + "%;' >";
-  tempString += line1.slice(2);
-  tempString += "</div>";
-
-  //data linkage----
-  dataHolder[i] = {};
-  dataHolder[i].square1 = line2;
-  dataHolder[i].square2 = line3;
-  dataHolder[i].hasMore = line4;
-
-  if (dataHolder[i].hasMore) {
-    var temp = line2.split(" + ");
-    //really the creator of the .dat file should sanitize input,
-    //  but just in case, we'll be extra careful and build in a check
-    if (temp.length > 1) {
-      dataHolder[i].square1 = temp[0];
-      dataHolder[i].square1Advanced = temp[1];
-    } else {
-      dataHolder[i].hasMore = 0;
-    }
-  }
-
-  dataHolder[i].title = line1.slice(3);
-
-  return tempString;
-}
-
-//rather self-explanator, this function creates an array of heights for all of the headers
-// based on the number of child elements they have
-function estalishHeights() {
-
-  //35 px for each element
-  // heightConstant = 35 ;
-  heightConstant = 2.7;
-
-  for (var i = 0; i < elementNum.length; i++) {
-    if (elementNum[i]) {
-      elementHeight[i] = heightConstant * elementNum[i];
-    } //end if
-  } //end for
-} //end establishHeights()
-
-
-//this function is in theory simple, all we need to do is display the child element associated with
-//  a header element.
-// Unfortunately, a second part is resizing all open divs appropriately, since opening a nested div
-//  requires its parent to expand as well
-function toggleChildElements(idOfHeader) {
-
-  //the sub div is named with the parent id and 'sub' appended
-  var childString = idOfHeader + "sub";
-
-  heightString = elementHeight[idOfHeader] + "vw";
-
-  //if it is an unopened group Header, open it
-  if (document.getElementById(idOfHeader).className == "groupHeader") {
-
-    //change styling accordingly
-    document.getElementById(childString).style.visibility = "visible";
-    document.getElementById(childString).style.height = heightString;
-    document.getElementById(idOfHeader).className = "selectedGroupHeader";
-    //change text + to - in button
-    var text = document.getElementById(idOfHeader).innerHTML;
-    text = text.slice(1);
-    text = "&ndash;" + text;
-    document.getElementById(idOfHeader).innerHTML = text;
-    //resize all other frames involved in this expansion
-    resizeAffectedElements(idOfHeader, 'expand');
-  }
-  //else if it is an opened group Header, close it
-  else if (document.getElementById(idOfHeader).className == "selectedGroupHeader") {
-    //change styling
-    document.getElementById(childString).style.height = "0px";
-    document.getElementById(childString).style.visibility = "hidden";
-    document.getElementById(idOfHeader).className = "groupHeader";
-    //change - text to +
-    var text = document.getElementById(idOfHeader).innerHTML;
-    text = text.slice(1);
-    text = "+" + text;
-    document.getElementById(idOfHeader).innerHTML = text;
-    //resize all other frames involved in the collapse
-    resizeAffectedElements(idOfHeader, 'shrink');
-  } //end if
-} //end toggleChildElements()
-
-//this function adds the content to the right pane, namely
-//  the image/video in square1, the text frame in square2, and the title
-function arrangeContent(idOfElement) {
-  // record for click tracking system
-  if( parent.getTracking() ) {
-    console.log("tracking arrangeContent("+idOfElement+")");
-    parent.pushClick(0, parent.getStamp(), 80, 0, idOfElement);
-  }
-
-  document.getElementById('square1').innerHTML = dataHolder[idOfElement].square1;
-  document.getElementById('square2frame').src = dataHolder[idOfElement].square2;
-  document.getElementById('title').innerHTML = dataHolder[idOfElement].title.toUpperCase();
-
-
-  //if element hasMore attribute == 1, then we show the deaper button and assign it functionality
-  if (dataHolder[idOfElement].hasMore && dataHolder[idOfElement].hasMore == "1") {
-    document.getElementById('switchAdvanced').style.display = "block";
-    document.getElementById('switchAdvanced').className = "switchContentDepth";
-
-    document.getElementById('switchGeneral').style.display = "block";
-    document.getElementById('switchGeneral').className = "switchContentDepthSelected";
-
-    // make Advanced tab clickable
-    document.getElementById('switchAdvanced').onclick = function() {
-      showAdvancedDetail(idOfElement);
-      // if click tracking mode, then record the action
-      if( parent.getTracking() ) {
-        console.log("tracking Advanced clicked ");
-        // record for click tracking system
-        parent.pushClick(0, parent.getStamp(), 81, 0, idOfElement);
-      }
-    };
-  } else {
-    document.getElementById('switchAdvanced').style.display = "none";
-    document.getElementById('switchGeneral').style.display = "none";
-  }
-
-  //also change the class of the item clicked if it's a subElement
-  //note that headers have separate functionality, despite updating rightward squares
-  var currentSelectedGroupElements = document.getElementsByClassName('selectedGroupElement');
-  //unhighlight the current selected element
-  if (currentSelectedGroupElements.length > 0) {
-    currentSelectedGroupElements[0].className = 'groupElement';
-  }
-  //select the current element if not already
-  if (document.getElementById(idOfElement).className == 'groupElement') {
-    document.getElementById(idOfElement).className = 'selectedGroupElement';
-  }
-} //end function arrangeContent()
-
-//this function adjusts the sizes of parent containers that have a child container opened or closed
-function resizeAffectedElements(idOfClickedElement, operationToPerform) {
-  //let's judge where elements are by their padding
-  var currentPadding = document.getElementById(idOfClickedElement).style.paddingLeft;
-  //slice off "%"
-  currentPadding = currentPadding.slice(0, -1);
-  // currentPadding = currentPadding.slice(0, -1);
-  currentPadding = Number(currentPadding);
-
-  var i = idOfClickedElement - 1;
-  var onwards = 1;
-  //find open group headers above us by going through all of the elements
-  //resize them accordingly
-  while (i >= 0 && onwards) {
-
-    //if the element is an open group header
-    if (document.getElementById(i) && document.getElementById(i).className == "selectedGroupHeader") {
-      //painstakingly get the element padding...
-      var elementPadding = document.getElementById(i).style.paddingLeft;
-      // slice off "%"
-      elementPadding = elementPadding.slice(0, -1);
-      elementPadding = Number(elementPadding);
-
-      //if the element is some parent container, it will have lower padding
-      if (elementPadding < currentPadding) {
-
-        //find the container referred to by the open header
-        var string = document.getElementById((i + "sub")).style.height;
-        // slice off "vw"
-        string = string.slice(0, -1);
-        string = string.slice(0, -1);
-
-        //here's where the magic happens, add or subtract the height of current element from parent holder
-        if (operationToPerform == 'expand') string = Number(string) + elementHeight[idOfClickedElement];
-        if (operationToPerform == 'shrink') string = Number(string) - elementHeight[idOfClickedElement];
-
-        //update new height
-        // document.getElementById((i + "sub")).style.height = string + "px" ;
-        document.getElementById((i + "sub")).style.height = string + "vw";
-        elementHeight[i] = string;
-      }
-      //let's stop looking if we're at the topmost padding
-      //  if(elementPadding == 20) onwards = 0 ;
-      if (elementPadding == 5) onwards = 0;
-    } //end if
-    //cycle through all elements above us
-    i -= 1;
-  } //end while
-} //end function resizeAffectedElements() ;
-
-//listen for the 'i' key and trigger exit in parent (helpersFE.js)
-function onDocumentKeyDown(event) {
-  switch (event.keyCode) {
-    case 73:
-      parent.toggleIndex();
-      break;
-  } //end switch
-} //end onDocumentKeyDown
-
 //gets the advanced detail page by appending "More" to the file name
 //sets up corresponding changes in the 'Advanced' Button
 function showAdvancedDetail(idOfCurrentElement) {
@@ -410,11 +375,44 @@ function showLessDetail(idOfCurrentElement) {
   };
 } //end showLessDetail
 
-//for use by helpersFE.js toggle index
-function resetHighlighting() {
-  var currentSelectedGroupElements = document.getElementsByClassName('selectedGroupElement');
-  //unhighlight the current selected element
-  if (currentSelectedGroupElements.length > 0) {
-    currentSelectedGroupElements[0].className = 'groupElement';
+//this function is in theory simple, all we need to do is display the child element associated with
+//  a header element.
+// Unfortunately, a second part is resizing all open divs appropriately, since opening a nested div
+//  requires its parent to expand as well
+function toggleChildElements(idOfHeader) {
+
+  //the sub div is named with the parent id and 'sub' appended
+  var childString = idOfHeader + "sub";
+
+  heightString = elementHeight[idOfHeader] + "vw";
+
+  //if it is an unopened group Header, open it
+  if (document.getElementById(idOfHeader).className == "groupHeader") {
+
+    //change styling accordingly
+    document.getElementById(childString).style.visibility = "visible";
+    document.getElementById(childString).style.height = heightString;
+    document.getElementById(idOfHeader).className = "selectedGroupHeader";
+    //change text + to - in button
+    var text = document.getElementById(idOfHeader).innerHTML;
+    text = text.slice(1);
+    text = "&ndash;" + text;
+    document.getElementById(idOfHeader).innerHTML = text;
+    //resize all other frames involved in this expansion
+    resizeAffectedElements(idOfHeader, 'expand');
   }
-}
+  //else if it is an opened group Header, close it
+  else if (document.getElementById(idOfHeader).className == "selectedGroupHeader") {
+    //change styling
+    document.getElementById(childString).style.height = "0px";
+    document.getElementById(childString).style.visibility = "hidden";
+    document.getElementById(idOfHeader).className = "groupHeader";
+    //change - text to +
+    var text = document.getElementById(idOfHeader).innerHTML;
+    text = text.slice(1);
+    text = "+" + text;
+    document.getElementById(idOfHeader).innerHTML = text;
+    //resize all other frames involved in the collapse
+    resizeAffectedElements(idOfHeader, 'shrink');
+  } //end if
+} //end toggleChildElements()

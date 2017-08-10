@@ -1,12 +1,34 @@
-/**
- * @Date:   2017-05-23T15:09:56-05:00
- * @Last modified time: 2017-05-31T16:52:59-05:00
- */
-
-
 
   //global boolean for first pie chart, default to list
   var isLandPlotOnCategories = false;
+
+  //changeLandPieBy toggles the year and then calls the pie graph function
+  function changeLandPieBy(numberOfYears) {
+    //parent is index.html
+    //resultsDisplay.js
+    parent.drawD3LandPieChart(toggleYearForLandPlotBy(numberOfYears), isLandPlotOnCategories);
+  } //end changeLandPieBy()
+
+  //change main pie chart from landList to Categories List
+  function toggleCategoriesPie(toggleSelectionValue) {
+    //toggle necessary main page items
+    if (toggleSelectionValue == 1) {
+      document.getElementById('toggleYearPie').innerHTML = "To List";
+      document.getElementById('toggleYearPie').onclick = function() {
+        toggleCategoriesPie(0)
+      };
+      isLandPlotOnCategories = true;
+    } else {
+      //Default Setting
+      document.getElementById('toggleYearPie').innerHTML = "To Categories";
+      document.getElementById('toggleYearPie').onclick = function() {
+        toggleCategoriesPie(1)
+      };
+      isLandPlotOnCategories = false;
+    }
+    //then regenerate pie chart
+    changeLandPieBy(0);
+  } //end toggleCategoriesPie()
 
   //toggleToTab changes via javascript the part of the the page which is displayed to
   // users, giving the appearance of two separate pages
@@ -21,9 +43,15 @@
     if (tabNumber == 1) {
       document.getElementById('graphics').style.display = "block";
       document.getElementById('tab1').className = "tabSelected";
+      if(parent.getTracking()) {
+        parent.pushClick(0,parent.getStamp(),58,0,null);
+      }
     } else if (tabNumber == 2) {
       document.getElementById('numbers').style.display = "block";
       document.getElementById('tab2').className = "tabSelected";
+      if(parent.getTracking()) {
+        parent.pushClick(0,parent.getStamp(),59,0,null);
+      }
     } //end else if block
   } //end toggleToTab
 
@@ -60,34 +88,6 @@
 
     return year;
   } //end toggleYearForLandPlotBy()
-
-  //changeLandPieBy toggles the year and then calls the pie graph function
-  function changeLandPieBy(numberOfYears) {
-    //parent is index.html
-    //resultsDisplay.js
-    parent.drawD3LandPieChart(toggleYearForLandPlotBy(numberOfYears), isLandPlotOnCategories);
-  } //end changeLandPieBy()
-
-  //change main pie chart from landList to Categories List
-  function toggleCategoriesPie(toggleSelectionValue) {
-    //toggle necessary main page items
-    if (toggleSelectionValue == 1) {
-      document.getElementById('toggleYearPie').innerHTML = "To List";
-      document.getElementById('toggleYearPie').onclick = function() {
-        toggleCategoriesPie(0)
-      };
-      isLandPlotOnCategories = true;
-    } else {
-      //Default Setting
-      document.getElementById('toggleYearPie').innerHTML = "To Categories";
-      document.getElementById('toggleYearPie').onclick = function() {
-        toggleCategoriesPie(1)
-      };
-      isLandPlotOnCategories = false;
-    }
-    //then regenerate pie chart
-    changeLandPieBy(0);
-  } //end toggleCategoriesPie()
 
 /*  function toggleCategoriesSpider(toggleNumber)
   {
@@ -131,6 +131,13 @@
   //  DEPRECATED
   //===============
 
+  //change ESIAsterBy toggles the values for the aster plot and then
+  //  requests that it be redrawn by parent
+  function changeESIAsterBy(numberOfYearsToChange) {
+    //index.html
+    parent.drawEcosystemIndicatorsDisplay(toggleYearForESIAsterBy(numberOfYearsToChange));
+  } //end changeESIAsterBy
+
   //hey ESI stands for ecosystem indicators
   //this function is the logical equivalent of the toggle Years for Land Plot
   // They were separated because these values should not be interdependent
@@ -164,13 +171,6 @@
     }
     return currentYearOfPlot;
   } //end toggleYearOfESIAsterBy
-
-  //change ESIAsterBy toggles the values for the aster plot and then
-  //  requests that it be redrawn by parent
-  function changeESIAsterBy(numberOfYearsToChange) {
-    //index.html
-    parent.drawEcosystemIndicatorsDisplay(toggleYearForESIAsterBy(numberOfYearsToChange));
-  } //end changeESIAsterBy
 
 
   //===============
