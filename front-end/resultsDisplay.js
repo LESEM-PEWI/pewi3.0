@@ -142,11 +142,11 @@ var RadarChart = {
       return d;
     })
     .style("font-family", "sans-serif")
-    .style("font-size", "8px")
+    .style("font-size", "11px")
     .attr("text-anchor", "middle")
-    .attr("dy", "2.1170841em")
+    .attr("dy", "3.3em")
     .attr("transform", function(d, i) {
-      return "translate(0, -22)";
+      return "translate(0, -40.7)";
     })
     .attr("x", function(d, i) {
       return cfg.w / 2 * (1 - cfg.factorLegend * Math.sin(i * cfg.radians / total)) - 60 * Math.sin(i * cfg.radians / total);
@@ -1040,7 +1040,7 @@ function drawEcosystemRadar(yearArray) {
   var h = Math.round(window.innerHeight * 0.319);
   // set a fixed size for radar for print mode
   if (printMode) {
-    w = h = 244;
+    w = h = 250;
   }
   var graphLength = Math.min(w, h);
 
