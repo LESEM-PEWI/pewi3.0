@@ -2230,12 +2230,16 @@ function onDocumentKeyDown(event) {
         }
         if (runningSim && !paused) {
           endSimPrompt();
+          document.getElementById('pausePlay').src = "imgs/playButton.png";
+          document.getElementById('pausePlay').style.width = '40px';
           break;
         }
         if (runningSim && paused) {
           document.getElementById("simContainer").style.visibility = "hidden";
           document.getElementById("genOverlay").style.visibility = "visible";
           resumeSim();
+          document.getElementById('pausePlay').src = "imgs/pauseButton.png";
+            document.getElementById('pausePlay').style.width = '20px';
           break;
         }
         break;
@@ -2676,6 +2680,9 @@ function resetPresets() {
   if(document.getElementById('flyover').style.display == 'block') {
     toggleCameraView();
   }
+  //Reset play/pause button toggle
+  document.getElementById('pausePlay').src = "imgs/pauseButton.png";
+  document.getElementById('pausePlay').style.width = "20px";
 } //end resetPresets()
 
 //Sets the slider for simulations
@@ -3901,6 +3908,22 @@ function updateTime() {
   updateSlider(elapsedTime);
 } //end updateTime()
 
+//Toggles the pause/play button during user simulations
+function togglePausePlay() {
+    if(runningSim) {
+        if(document.getElementById('pausePlay').getAttribute('src') == "imgs/pauseButton.png") {
+            endSimPrompt();
+            document.getElementById('pausePlay').src = "imgs/playButton.png";
+            document.getElementById('pausePlay').style.width = '40px';
+        } else {
+            document.getElementById("simContainer").style.visibility = "hidden";
+            document.getElementById("genOverlay").style.visibility = "visible";
+            resumeSim();
+            document.getElementById('pausePlay').src = "imgs/pauseButton.png";
+            document.getElementById('pausePlay').style.width = '20px';
+        }
+    }
+}
 /**
 * This function first check the file type, and put them to process according to their file type
 * this function is called by uploadFile() in child frame uploadDownload.html

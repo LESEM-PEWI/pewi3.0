@@ -978,6 +978,7 @@
       <div id="sliderCon" style="visibility: hidden">
         <label for="simSlider">Simulation Time</label>
         <input id="simSlider" type="range" min="0" max="100" value="0" onclick="updateSim(this.value)">
+          <img id="pausePlay" src="imgs/pauseButton.png" onclick="togglePausePlay();">
         <output for="simSlider" id="timer">00:00:00</output>
       </div>
       <p id="currentInfo">
