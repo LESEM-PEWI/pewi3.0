@@ -353,7 +353,7 @@ function calculateResults() {
 
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(tileId) {
-  if (document.getElementById("overlayContainer").style.visibility != "visible") {
+  if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //Add tile to the undoArr
     if (!undo) {
       addChange(tileId);
@@ -1798,11 +1798,13 @@ function multiplayerFileUpload(fileUploadEvent) {
 //multiplayerMode hides all unnecessary options from screen
 function multiplayerMode() {
   if (multiplayerAssigningModeOn) {
-
     document.getElementById("message").style.display = "block";
     //Don't add an aditional player if the level was only reset
     if (!resetting) {
-      addPlayer();
+      resetPlayers();
+      if(totalPlayers==0) {
+       addPlayer();   
+      }
     } else {
       resetting = false;
     }
@@ -2995,22 +2997,16 @@ function saveAndRandomize() {
         break;
       }
     }
-
     for(var i = 1; i < boardData[currentBoard].calculatedToYear+1; i++) {
         for (var j = 0; j < boardData[currentBoard].map.length; j++) {
             //if tile exists
-            //Random tiles will keep getting added to the map as long as the tile exists
-            if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && (randomizing == false)) {
+            //Change the land use for a tile if it was restricted
+            if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
                 painter = newDefaultLandUse;
                 meshMaterials[j].map = textureArray[painter];
                 boardData[currentBoard].map[j].landType[i] = painter;
                 boardData[currentBoard].map[j].update(i);
-            } else if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none)) {
-                painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
-                meshMaterials[j].map = textureArray[painter];
-                boardData[currentBoard].map[j].landType[i] = painter;
-                boardData[currentBoard].map[j].update(i);
-            }
+            } 
 
         }
     }
@@ -3020,6 +3016,7 @@ function saveAndRandomize() {
     document.getElementById(painterElementId).className = "landSelectorIcon icon";
     //change the selected painter to the new default land use
     changeSelectedPaintTo(newDefaultLandUse);
+    refreshBoard();
   }
 } //end saveandRandomize
 
@@ -4088,7 +4085,6 @@ function uploadJSON(reader) {
 */
 function uploadCSV(reader) {
   //initData = [];
-
   reader.onload = function(e) {
     resetYearDisplay();
     setupBoardFromUpload(reader.result);
@@ -4102,8 +4098,8 @@ function uploadCSV(reader) {
 
     for (var i = 1; i < allTextLines.length; i++) {
       data = allTextLines[i].split(',');
-      if (data.length == headers.length) {
-
+      var headlength = headers.length-1;
+      if (data.length == headlength) {
         var tarr = [];
         for (var j = 0; j < headers.length; j++) {
           tarr.push(data[j]);
