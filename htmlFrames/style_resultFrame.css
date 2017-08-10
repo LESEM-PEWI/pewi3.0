@@ -384,6 +384,7 @@ text {
   font-size: 20px;
   font-weight: bold;
   position: relative;
+  bottom: 10%;
 }
 #precipTitle img {
   height: 100%;
