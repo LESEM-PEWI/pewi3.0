@@ -4082,7 +4082,6 @@ function uploadJSON(reader) {
 */
 function uploadCSV(reader) {
   //initData = [];
-
   reader.onload = function(e) {
     resetYearDisplay();
     setupBoardFromUpload(reader.result);
@@ -4096,8 +4095,8 @@ function uploadCSV(reader) {
 
     for (var i = 1; i < allTextLines.length; i++) {
       data = allTextLines[i].split(',');
-      if (data.length == headers.length) {
-
+      var headlength = headers.length-1;
+      if (data.length == headlength) {
         var tarr = [];
         for (var j = 0; j < headers.length; j++) {
           tarr.push(data[j]);
