@@ -1798,11 +1798,13 @@ function multiplayerFileUpload(fileUploadEvent) {
 //multiplayerMode hides all unnecessary options from screen
 function multiplayerMode() {
   if (multiplayerAssigningModeOn) {
-
     document.getElementById("message").style.display = "block";
     //Don't add an aditional player if the level was only reset
     if (!resetting) {
-      addPlayer();
+      resetPlayers();
+      if(totalPlayers==0) {
+       addPlayer();   
+      }
     } else {
       resetting = false;
     }
