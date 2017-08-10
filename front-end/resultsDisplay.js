@@ -800,7 +800,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
     .attr("x", 0)
     .attr("y", 25)
     .attr("text-anchor", "middle")
-    .style("font-size", "1.8vw")
+    .style("font-size", "2.5vw")
     .style("font-weight", "bold")
     .text("Year " + year);
 } //end drawD3LandPieChart()
