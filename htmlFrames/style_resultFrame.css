@@ -379,7 +379,12 @@ text {
   margin: 0px;
   width: 5%;
 }
-
+#PrecipitationTitle{
+  left: 64%;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+}
 #precipTitle img {
   height: 100%;
   width: 100%;
