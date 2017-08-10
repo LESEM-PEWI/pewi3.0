@@ -501,6 +501,18 @@ label[for=file-upload], #sim-message-repeat {
     left: 25%;
 }
 
+#pausePlay {
+    position: absolute;
+    left: 17%;
+    bottom: 50%;
+    width: 20px;
+    z-index: 1003;
+}
+
+#pausePlay:hover {
+   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+}
+
 #file-upload {
     display: none;
 }
