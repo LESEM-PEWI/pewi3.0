@@ -2706,6 +2706,12 @@ function resetPresets() {
     camera2.rotation.y = 0;
   }
   controls.reset();
+  //Resets topography
+  if(tToggle) {
+      tToggle = false;
+      refreshBoard();
+      setupRiver();
+  }
   //Reset play/pause button toggle
   document.getElementById('pausePlay').src = "imgs/pauseButton.png";
   document.getElementById('pausePlay').style.width = "20px";
