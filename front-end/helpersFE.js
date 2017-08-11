@@ -151,7 +151,7 @@ function addPlayer(givenPlayer) {
     if(givenPlayer != undefined) {
         changeSelectedPaintTo(givenPlayer);
     } else {
-        changeSelectedPaintTo(totalPlayers);   
+        changeSelectedPaintTo(totalPlayers);
     }
   }
 }
@@ -1444,7 +1444,7 @@ function getHighlightedInfo(tileId) {
         if (boardData[currentBoard].map[tileId].strategicWetland == 1)
           highlightString = "Strategic Wetland" + "<br>";
         else
-          highlightString = "Non-Strategic Wetland" + "<br>";
+          highlightString = "Not A Strategic Wetland" + "<br>";
         break;
         //create string for subwatershed number
       case 7:
@@ -1808,7 +1808,7 @@ function multiplayerMode() {
     if (!resetting) {
       resetPlayers();
       if(totalPlayers==0) {
-       addPlayer();   
+       addPlayer();
       }
     } else {
       resetting = false;
@@ -3045,7 +3045,7 @@ function saveAndRandomize() {
                 meshMaterials[j].map = textureArray[painter];
                 boardData[currentBoard].map[j].landType[i] = painter;
                 boardData[currentBoard].map[j].update(i);
-            } 
+            }
 
         }
     }
@@ -3663,7 +3663,7 @@ function toggleVisibility() {
       for (var i = 1; i <= 15; i++) {
         var string = "paint" + i;
         document.getElementById(string).style.display = "inline-block";
-      }   
+      }
   }
 
   document.getElementById('year1Button').style.display = "block";

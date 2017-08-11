@@ -1482,7 +1482,7 @@ function Printer() {
 
             // put component
             updateY(padding + lineHeight);
-            addText(1, "Ecosystem radar chart", x, y, font.header2_font);
+            addText(1, "Ecosystem Service Charts", x, y, font.header2_font);
             //drawing the radar chart
             previousY = y;
             addImage(imageSrc[property], 'JPEG', x, y, radarChartWidth, radarChartHeight);
@@ -1499,7 +1499,7 @@ function Printer() {
 
             // put component
             updateY(padding + lineHeight);
-            addText(1, "Precipitation", x, y, font.header2_font);
+            addText(1, "Precipitation Charts", x, y, font.header2_font);
             previousY = y;
             addImage(imageSrc[property], 'JPEG', x + 155, y, barChartWidth, barChartHeight);
             //adding the text and description
@@ -2157,9 +2157,9 @@ function Printer() {
   function titleText(text) {
     switch (text) {
       // levels
-      case 'nitrate': return 'Nitrate';
-      case 'erosion': return 'Erosion';
-      case 'phosphorus': return 'Phosphorus';
+      case 'nitrate': return 'Subwatershed Nitrate-N Percent Contribution';
+      case 'erosion': return 'Gross Erosion';
+      case 'phosphorus': return 'Phosphorus Index Risk Assessment';
       // features
       case 'flood': return 'Flood Frequency';
       case 'wetlands': return 'Strategic Wetlands';
@@ -2167,15 +2167,15 @@ function Printer() {
       case 'drainage': return 'Drainage Class';
       case 'soil': return 'Soil Class';
       // yields
-      case 'corn': return 'Corn Grain';
-      case 'soybean': return 'Soybean';
-      case 'fruit': return 'Mixed Fruits and Vegetables';
-      case 'cattle': return 'Cattle';
-      case 'alfalfa': return 'Alfalfa';
-      case 'grasshay': return 'GrassHay';
-      case 'switchgrass': return 'Switch Grass';
-      case 'wood': return 'Wood';
-      case 'short': return 'Woody Biomass';
+      case 'corn': return 'Corn Grain Yield';
+      case 'soybean': return 'Soybean Yield';
+      case 'fruit': return 'Mixed Fruits and Vegetables Yield';
+      case 'cattle': return 'Cattle Yield';
+      case 'alfalfa': return 'Alfalfa Yield';
+      case 'grasshay': return 'Grass Hay Yield';
+      case 'switchgrass': return 'Switchgrass Yield';
+      case 'wood': return 'Wood Yield';
+      case 'short': return 'Short-Rotation Woody Biomass Yield';
       default: return 'error type for title:'+text;
     } // switch
   } // end titleText
