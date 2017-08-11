@@ -2275,11 +2275,7 @@ function onDocumentKeyDown(event) {
           clickTrackings = [];
           document.getElementById("recordIcon").style.visibility = "visible";
         } else {
-          curTracking = false;
-          //Ending date is recorded
-          endTime = new Date();
-          document.getElementById("recordIcon").style.visibility = "hidden";
-          exportTracking(clickTrackings);
+          continueTracking();
         }
         break;
         //no default handler
@@ -2291,6 +2287,19 @@ function onDocumentKeyDown(event) {
     } //end switch
   }
 } //end onDocumentKeyDown
+
+// Asks the user if they want to continue tracking...
+function continueTracking() {
+    if (confirm('Are you sure you want to stop your recording?')) {
+        curTracking = false;
+        //Ending date is recorded
+        endTime = new Date();
+        document.getElementById("recordIcon").style.visibility = "hidden";
+        exportTracking(clickTrackings);
+    } else {
+        // Do nothing! Continue with recording
+    }
+}
 
 //onDocumentKeyUp, binding to keyboard keyUp event
 //  but you already knew that...
