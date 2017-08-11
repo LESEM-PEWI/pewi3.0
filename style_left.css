@@ -21,16 +21,11 @@
 
 /**Styling for index Menu**/
 #indexmenu, #combineButton {
-  background-image: url('./imgs/consoleTexture.png');
-  background-repeat: repeat;
-  border-radius: 6px 6px 0 0;
-  -webkit-border-radius: 6px 6px 0 0;
-  -moz-border-radius: 6px 6px 0 0;
+
   color: #FFFFFF;
   cursor: pointer;
   font-family: 'Amatic SC', cursive;
   font-family: var(--button-font-family);
-  font-size: 2.5vw;
   font-size: var(--button-font-size);
   font-weight: bold;
   /*height: 3vw;*/
@@ -41,13 +36,31 @@
   /* Safari */
   transition-duration: var(--transition-duration);
   /*top: 7.7vw;*/
-  width: 12.5vw;
 }
 
 /**Styling for index Menu**/
 #indexmenu {
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  font-size: 2.5vw;
   height: 3vw;
-  top: 7.7vw;
+  left: 0.5vw;
+  top: 7.4vw;
+  width: 11vw;
+}
+
+#combineButton {
+  background-color: rgba(50,0,0,.5);
+  /*background-image: none;*/
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  font-size: 2vw;
+  top: 80%;
+  width: 9vw;
 }
 
 #playerAddButton {
@@ -139,6 +152,16 @@
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
+#printButton{
+  border-radius: 50%;
+  cursor: pointer;
+  height: 3vw;
+  height: var(--left-console-button-length);
+  width: 3vw;
+  width: var(--left-console-button-length);
+  left: 5vw;
+  top: 0vw;
+}
 /* toolsButton to slide the left console */
 #toolsButton {
   /*border-bottom-right-radius: 5px;*/
@@ -475,6 +498,11 @@ option {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
+.DetailsList-title {
+  color: #fff;
+  font-size: 0.9vw;
+  margin: 0.5vw;
+}
 
 /* detail lists */
 .DetailsList, .DetailsListRolled {
@@ -506,11 +534,11 @@ option {
 }
 
 .physicalDetailsList {
-  width: 15vw;
+  width: 14vw;
 }
 
 .yieldDetailsList {
-  width: 15vw;
+  width: 14vw;
 }
 /* end detail lists */
 
@@ -533,12 +561,14 @@ table, th, td {
     border: 0.1vw solid black;
     border-collapse: collapse;
     color: white;
-    font-size: 0.8vw;
+    font-size: 0.9vw;
 }
+
 th, td {
-    padding: 0.6vw;
-    text-align: left;
+    padding: 0.4vw;
+    text-align: center;
 }
+
 table {
     width: 100%;
     background-image: url('./imgs/consoleTexture.png');
@@ -546,219 +576,11 @@ table {
     /*font-size: 6pt;*/
 }
 
-/* indicator size and colors on detail lists */
-.levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5,
-.floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone,
-.drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8,
-.soilColor, .cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4,
-.soyBean1, .soyBean2, .soyBean3, .soyBean4,
-.fruit1, .fruit2, .fruit3, .fruit4,
-.cattle1, .cattle2, .cattle3, .cattle4,
-.alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4,
-.grassHay1, .grassHay2, .grassHay3, .grassHay4,
-.switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4,
-.wood1, .wood2, .wood3, .wood4, .short1 {
-  height: 1vw;
+.legendColor {
   height: var(--level-indicator-length);
   margin: 5%;
   width: 1vw;
   width: var(--level-indicator-length);
-}
-
-.levelColor1 {
-  background-color: #e6bb00;
-}
-
-.levelColor2 {
-  background-color: #c97b08;
-}
-
-.levelColor3 {
-  background-color: #ad490d;
-}
-
-.levelColor4 {
-  background-color: #9a3010;
-}
-
-.levelColor5 {
-  background-color: #871c12;
-}
-
-.floodColor1 {
-  background-color: #ffffc9;
-}
-
-.floodColor2 {
-  background-color: #c7eab4;
-}
-
-.floodColor3 {
-  background-color: #7fcebb;
-}
-
-.floodColor4 {
-  background-color: #41b7c5;
-}
-
-.floodColor5 {
-  background-color: #2f7eb7;
-}
-
-.floodColorNone {
-  border: 0px;
-}
-
-.drainageColor1 {
-  background-color: #0053b3;
-}
-
-.drainageColor2 {
-  background-color: #38638b;
-}
-
-.drainageColor3 {
-  background-color: #5e6e71;
-}
-
-.drainageColor4 {
-  background-color: #837856;
-}
-
-.drainageColor5 {
-  background-color: #bc892f;
-}
-
-.cornGrain1 {
-  background-color: #ffffc9;
-}
-
-.cornGrain2 {
-  background-color: #e3c972;
-}
-
-.cornGrain3 {
-  background-color: #e6bb00;
-}
-
-.cornGrain4 {
-  background-color: #bc892f;
-}
-
-.soyBean1 {
-  background-color: #ffffff;
-}
-
-.soyBean2 {
-  background-color: #ccffcc;
-}
-
-.soyBean3 {
-  background-color: #66ff66;
-}
-
-.soyBean4 {
-  background-color: #00cc00;
-}
-
-.fruit1 {
-  background-color: #ff4000;
-}
-
-.fruit2 {
-  background-color: #e6bb00;
-}
-
-.fruit3 {
-  background-color: #66ff66;
-}
-
-.fruit4 {
-  background-color: #aa4497;
-}
-
-.cattle1 {
-  background-color: #ffffff;
-}
-
-.cattle2 {
-  background-color: #CECACA;
-}
-
-.cattle3 {
-  background-color: #5e6e71;
-}
-
-.cattle4 {
-  background-color: #000000;
-}
-
-.alfalfa1 {
-  background-color: #cc6578;
-}
-
-.alfalfa2 {
-  background-color: #aa4497;
-}
-
-.alfalfa3 {
-  background-color: #8B008B;
-}
-
-.alfalfa4 {
-  background-color: #862254;
-}
-
-.grassHay1 {
-  background-color: #d9ff66;
-}
-
-.grassHay2 {
-  background-color: #66ff66;
-}
-
-.grassHay3 {
-  background-color: #00ff00;
-}
-
-.grassHay4 {
-  background-color: #187336;
-}
-
-.switchGrass1 {
-  background-color: #66ff66;
-}
-
-.switchGrass2 {
-  background-color: #33cc33;
-}
-
-.switchGrass3 {
-  background-color: #1f7a1f;
-}
-
-.switchGrass4 {
-  background-color: #145214;
-}
-
-.wood1 {
-  background-color: #f2e6d9;
-}
-
-.wood2 {
-  background-color: #d9b38c;
-}
-
-.wood3 {
-  background-color: #ac7339;
-}
-
-.wood4 {
-  background-color: #734d26;
-}
-
-.short1 {
-  background-color: #734D26;
 }
 /* end indicator size and colors on detail lists */
 
@@ -885,15 +707,7 @@ table {
     margin-left: 9px;
     font-size: 6px;
   }
-  .levelColor1, .levelColor2, .levelColor3, .levelColor4, .levelColor5,
-  .floodColor1, .floodColor2, .floodColor3, .floodColor4, .floodColor5, .floodColorNone,
-  .drainageColor1, .drainageColor2, .drainageColor3, .drainageColor4, .drainageColor5, .drainageColor6, .drainageColor7, .drainageColor8,
-  .soilColor, .cornGrain1, .cornGrain2, .cornGrain3, .cornGrain4,
-  .soyBean1, .soyBean2, .soyBean3, .soyBean4, .fruit1, .fruit2, .fruit3, .fruit4,
-  .cattle1, .cattle2, .cattle3, .cattle4, .alfalfa1, .alfalfa2, .alfalfa3, .alfalfa4,
-  .grassHay1, .grassHay2, .grassHay3, .grassHay4,
-  .switchGrass1, .switchGrass2, .switchGrass3, .switchGrass4,
-  .wood1, .wood2, .wood3, .wood4, .short1 {
+  .legendColor {
     height: 6px;
     width: 6px;
   }

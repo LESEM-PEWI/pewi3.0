@@ -9,11 +9,13 @@
   --font-size: 1.2vw;
   /*--transition-duration: 0.4s;*/
 }
-  body {
-    background-color: #000000;
-  }
 
-  /** Options Frame
+body {
+  background-color: #000000;
+}
+
+
+/** Options Frame
   -------------------------
   **/
 
@@ -32,6 +34,12 @@
    width: 12vw;
   }
 
+#resetOptionsPage{
+    margin-left: 30%;
+   margin-top: 5%;
+   width: 12vw;
+}
+
   #optionsMainHolder {
    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
    margin: 0px 15% 0px 15%;
@@ -45,6 +53,8 @@
    margin: 30px;
    margin-top: 0px;
   }
+
+
 
   .optionsHeader {
    color: #FFFFFF;

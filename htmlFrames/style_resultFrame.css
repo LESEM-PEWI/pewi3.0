@@ -67,6 +67,7 @@ tr:hover {
 .tab, .tabSelected {
   background-color: rgba(40, 44, 42, 0.03);
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
+  cursor: pointer;
   display: inline-block;
   float: left;
   height: 2vw;
@@ -91,10 +92,6 @@ tr:hover {
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, */
-}
-
-.tab {
-  cursor: pointer;
 }
 
 .tabSelected {
@@ -382,7 +379,13 @@ text {
   margin: 0px;
   width: 5%;
 }
-
+#PrecipitationTitle{
+  left: 64%;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  bottom: 10%;
+}
 #precipTitle img {
   height: 100%;
   width: 100%;
@@ -430,7 +433,18 @@ text {
 #toggleYearPie:hover {
   background-color: rgba(40, 44, 42, 0.1);
 }
+#yearText{
+  right: 50%;
+  font-size: 20px;
+  font-weight: bold;
+}
 
+#landUseTitle{
+  left: 64%;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+}
 #asterChart {
   display: block;
   float: left;

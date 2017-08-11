@@ -2,4 +2,8 @@
 .stylelintrc
 
 # testing files
+resultsPDF.js
 test_layout.html
+testPDF.css
+testPDF.html
+testPDF.js

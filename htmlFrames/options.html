@@ -23,7 +23,7 @@ Cleaned and Prepared - July 2016
 
 <head>
   <meta charset="utf-8">
-  <title>Workspace - Upload/Download</title>
+  <title>Workspace - Options</title>
   <!-- INCLUDES -->
 
   <!--css-->
@@ -37,6 +37,8 @@ Cleaned and Prepared - July 2016
   <!--page scripting-->
   <!-- <script type= "text/javascript" src="../front-end/helpersFE.js"></script> -->
   <script>
+    var tempString;
+    var multiString;
     var maxYear = 3; //for settings, defines the number of year buttons specified
     var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
     "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode"];
@@ -137,12 +139,12 @@ Cleaned and Prepared - July 2016
 
         //put all the elements in the parameters div of index.html
         window.top.document.getElementById('parameters').innerHTML = tempString;
+          parent.optionsString=tempString;
         if(tempString.includes('paint'))
         {
           parent.saveAndRandomize();
         }
       } //end if
-
       //hide the options frame from the top frame (index.html)
       parent.resetOptions();
       //scroll page to top, so that next time options is loaded it starts there
@@ -159,7 +161,7 @@ Cleaned and Prepared - July 2016
     function getCurrentOptionsState() {
       //raw text content in parameters div
       var strRawContents = window.top.document.getElementById('parameters').innerHTML;
-
+        console.log("in the get current options state method"+strRawContents);
       //split based on escape chars
       while (strRawContents.indexOf("\r") >= 0) {
         strRawContents = strRawContents.replace("\r", "");
@@ -182,7 +184,7 @@ Cleaned and Prepared - July 2016
             document.getElementById('skybox').checked = 1;
             break;
           case "precipOff":
-            document.getElementById('precip').checked = 1;
+            //document.getElementById('precip').checked = 1;
             break;
             //case nothing, do nothing (error protection)
           case "":
@@ -195,7 +197,7 @@ Cleaned and Prepared - July 2016
                 yearCounter += 1;
               }
             } else {
-              if (document.getElementById(string)) document.getElementById(string).checked = 1;
+              //if (document.getElementById(string)) document.getElementById(string).checked = 1;
             }
         } //end switch
       } //end for each line in the parameters div
@@ -314,8 +316,8 @@ Cleaned and Prepared - July 2016
 
     <div class="optionsSubContainer">
       <input id="paint1" class="toggle" type="checkbox">
+      <!-- <label style=" background-color: #4c6167; cursor:pointer ;">Conventional Corn</label> -->
       <label for="paint1">Conventional Corn</label>
-      <!--<label for="paint1">Conventional Corn</label>-->
 
       <input id="paint2" class="toggle" type="checkbox">
       <label for="paint2">Conservation Corn</label>
@@ -454,6 +456,7 @@ Cleaned and Prepared - July 2016
 
     <div style="width:100%;height:200px;position:relative;">
       <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState();">Save & Exit</div>
+    <div id="resetOptionsPage" class="mainButton" onclick="parent.resetOptionsPage()";>Reset Options</div>
     </div>
 
   </div>

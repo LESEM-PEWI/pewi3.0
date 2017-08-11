@@ -98,11 +98,10 @@
 }
 
 #pewiTitle {
-  position: fixed;
   width: 25vw;
   padding: 0px;
   top: 20%;
-  left: 35%;
+  margin: 0 auto;
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
 }
@@ -226,6 +225,7 @@
 }
 
 .uploadDownloadButton {
+  cursor: pointer;
   height: 40px;
   -webkit-transition-duration: 0.2s;
   transition-duration: 0.2s;

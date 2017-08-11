@@ -1,23 +1,16 @@
-/**
- * @Date:   2017-06-01T16:49:42-05:00
- * @Last modified time: 2017-06-08T11:05:52-05:00
- */
-
-
 
 //levelLoader keeps track of all the various parameters involved in a level
 // it is also called for sandbox, with no parameters assigned
 
-var hideOptions = "";
 var achievementScripts = [];
 var achievementValues = [];
 var achievementDisplayed = -1;
 var achievementAccomplished = [];
 var achievementAnimations = [];
-var yearToCheck = 0;
+var hideOptions = "";
 var multiplayerAssigningModeOn = false;
+var yearToCheck = 0;
 
-var objectives = [];
 var levelSpecs = {
   begin: "",
   end: "",
@@ -27,12 +20,46 @@ var levelSpecs = {
   precipitation: [0, 0, 0, 0],
   landTypeMonoculture: [0, 0, 0, 0]
 }
+var objectives = [];
 
 
-var levelGlobal = 0;
 var lastLevel = 0;
-var originalDiv;
 var levelContainer = [];
+var levelGlobal = 0;
+var originalDiv;
+
+//init parses the level.dat file which stores level data in the levelContainer array
+function init() {
+
+  $.ajax({
+    async: false,
+    type: "GET",
+    url: '../levels/levelResources/level.dat',
+    dataType: "text",
+    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+    success: function(data) {
+      parseLevelMenuData(data);
+    }
+  });
+
+} //end init
+
+//getFileForExercise can retrieve file name from exercise/level number for the level loader
+function getFileForExercise(exercise) {
+
+  for (var i = 0; i < levelContainer.length; i++) {
+
+    for (var k = 0; k < levelContainer[i].data.length; k++) {
+
+      if (exercise == levelContainer[i].data[k].exercise) {
+
+        return levelContainer[i].data[k].file;
+
+      }
+    }
+  }
+
+} //end getFileForExercise
 
 //loadLevel is triggered by clicking a level button on the html page
 function loadLevel(level) {
@@ -54,6 +81,13 @@ function loadLevel(level) {
       levelGlobal = 0;
       multiplayerExit();
       initWorkspace('./data.csv');
+      document.getElementById('parameters').innerHTML = "";
+      // console.log("window log:" + window.top.document.getElementById('parameters').innerHTML);
+      // console.log("document log:" + document.getElementById('parameters').innerHTML);
+      parent.saveAndRandomize();
+      parent.toggleVisibility();
+      // console.log("window log:" + window.top.document.getElementById('parameters').innerHTML);
+      // console.log("document log:" + document.getElementById('parameters').innerHTML);
       if (achievedAllLevels) {
         updatePopup("Congratulations! You made it through all the levels. Try out your newfound knowledge in Sandbox mode!");
         setTimeout(function() {
@@ -66,7 +100,7 @@ function loadLevel(level) {
         }, 5000);
       }
       break;
-    //multiplayer assigning mode
+      //multiplayer assigning mode
     case -1:
       multiplayerAssigningModeOn = true;
 
@@ -77,7 +111,6 @@ function loadLevel(level) {
       break;
       //generic loading for levels
     default:
-
       multiplayerExit();
       levelGlobal = level;
       loadLevelDetails("./levels/specs/" + getFileForExercise(level));
@@ -136,25 +169,21 @@ function loadLevel(level) {
 
 } //end loadLevel
 
-//resetLevel removes all objects, resets the levelSpecs and clears the popup dialogue
-function resetLevel() {
+//load the data from given fileString into the given board object
+function loadLevelDetails(fileString) {
 
-  objectives = [];
-  levelSpecs = {
-    begin: "",
-    end: "",
-    numRequired: 0,
-    started: 0,
-    finished: 0,
-    precipitation: [0, 0, 0, 0],
-    landTypeMonoculture: [0, 0, 0, 0]
-  }
+  $.ajax({
+    async: false,
+    type: "GET",
+    url: fileString,
+    dataType: "text",
+    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+    success: function(data) {
+      parseLevelDetails(data);
+    }
+  });
 
-  clearPopup();
-
-  document.getElementById("mainMenuButton").className = "moveButtonHidden";
-  document.getElementById("nextLevelButton").className = "moveButtonHidden";
-} //end resetLevel
+} //end loadLevelDetails
 
 //parseLevelDetails parses a level specifications file and stores the data in the level specs object and objectives array
 function parseLevelDetails(data) {
@@ -163,7 +192,7 @@ function parseLevelDetails(data) {
   var strRawContents = data;
   //split based on escape chars
   while (strRawContents.indexOf("\r") >= 0)
-    strRawContents = strRawContents.replace("\r", "");
+  strRawContents = strRawContents.replace("\r", "");
   var arrLines = strRawContents.split("\n");
 
   var curLine = arrLines[0];
@@ -214,50 +243,13 @@ function parseLevelDetails(data) {
   levelSpecs.end = arrLines[arrLines.length - 1];
 } //end parseLevelDetails
 
-//load the data from given fileString into the given board object
-function loadLevelDetails(fileString) {
-
-  $.ajax({
-    async: false,
-    type: "GET",
-    url: fileString,
-    dataType: "text",
-    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-    success: function(data) {
-      parseLevelDetails(data);
-    }
-  });
-
-} //end loadLevelDetails
-
-//returnCurrentLevel
-function returnCurrentLevel() {
-  return levelGlobal;
-} //end returnCurrentLevel
-
-//init parses the level.dat file which stores level data in the levelContainer array
-function init() {
-
-  $.ajax({
-    async: false,
-    type: "GET",
-    url: '../levels/levelResources/level.dat',
-    dataType: "text",
-    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-    success: function(data) {
-      parseLevelMenuData(data);
-    }
-  });
-
-} //end init
-
 //parseLevelMenuData reads the string from the level.dat file into a level hierarchy
 function parseLevelMenuData(data) {
 
   var strRawContents = data;
   //split based on escape chars
   while (strRawContents.indexOf("\r") >= 0)
-    strRawContents = strRawContents.replace("\r", "");
+  strRawContents = strRawContents.replace("\r", "");
   var arrLines = strRawContents.split("\n");
 
   var levelIndex = -1;
@@ -271,26 +263,26 @@ function parseLevelMenuData(data) {
     switch (lineType) {
       //if the line is a new stage
       case "#":
-        stageIndex = -1;
-        levelIndex++;
-        var levelData = {
-          data: [],
-          name: lineContent
-        };
-        levelContainer.push(levelData);
-        break;
-        //if the line is a new level
+      stageIndex = -1;
+      levelIndex++;
+      var levelData = {
+        data: [],
+        name: lineContent
+      };
+      levelContainer.push(levelData);
+      break;
+      //if the line is a new level
       case "@":
-        lastLevel++;
-        var levelNumber = lastLevel;
-        var lineArray = lineContent.split(",");
-        var exerciseData = {
-          exercise: levelNumber,
-          text: lineArray[0],
-          file: lineArray[1]
-        };
-        levelContainer[levelIndex].data.push(exerciseData);
-        break;
+      lastLevel++;
+      var levelNumber = lastLevel;
+      var lineArray = lineContent.split(",");
+      var exerciseData = {
+        exercise: levelNumber,
+        text: lineArray[0],
+        file: lineArray[1]
+      };
+      levelContainer[levelIndex].data.push(exerciseData);
+      break;
     }
   }
 
@@ -339,19 +331,27 @@ function populateLevels() {
 
 } //end populateLevels
 
-//getFileForExercise can retrieve file name from exercise/level number for the level loader
-function getFileForExercise(exercise) {
+//resetLevel removes all objects, resets the levelSpecs and clears the popup dialogue
+function resetLevel() {
 
-  for (var i = 0; i < levelContainer.length; i++) {
-
-    for (var k = 0; k < levelContainer[i].data.length; k++) {
-
-      if (exercise == levelContainer[i].data[k].exercise) {
-
-        return levelContainer[i].data[k].file;
-
-      }
-    }
+  objectives = [];
+  levelSpecs = {
+    begin: "",
+    end: "",
+    numRequired: 0,
+    started: 0,
+    finished: 0,
+    precipitation: [0, 0, 0, 0],
+    landTypeMonoculture: [0, 0, 0, 0]
   }
 
-} //end getFileForExercise
+  clearPopup();
+
+  document.getElementById("mainMenuButton").className = "moveButtonHidden";
+  document.getElementById("nextLevelButton").className = "moveButtonHidden";
+} //end resetLevel
+
+//returnCurrentLevel
+function returnCurrentLevel() {
+  return levelGlobal;
+} //end returnCurrentLevel
