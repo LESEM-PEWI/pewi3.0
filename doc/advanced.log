@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.7.31)  11 AUG 2017 17:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.7.31)  11 AUG 2017 17:43
 entering extended mode
 **./advanced.tex
 (advanced.tex
@@ -529,8 +529,7 @@ s
 \f@nch@O@orf=\skip52
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 30.
-
-No file advanced.aux.
+ (advanced.aux)
 \openout1 = `advanced.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
@@ -547,6 +546,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -603,6 +603,8 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 34.
 LaTeX Info: Redefining \pageref on input line 34.
 LaTeX Info: Redefining \nameref on input line 34.
+
+(advanced.out) (advanced.out)
 \@outlinefile=\write3
 \openout3 = `advanced.out'.
 
@@ -633,7 +635,7 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-<../imgs/updatedPewiLogo.png, id=3, 934.49126pt x 930.47626pt>
+<../imgs/updatedPewiLogo.png, id=123, 934.49126pt x 930.47626pt>
 File: ../imgs/updatedPewiLogo.png Graphic file (type png)
 
 <use ../imgs/updatedPewiLogo.png>
@@ -675,7 +677,10 @@ If that doesn't work, type  X <return>  to quit.
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <../imgs/updatedPewiLogo.p
 ng>] [1] [2
 
-]
+] (advanced.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 4.
+)
 \tf@toc=\write4
 \openout4 = `advanced.toc'.
 
@@ -688,58 +693,37 @@ ng>] [1] [2
 l.132 
        [1
 
-] [2] [3] [4]
-
-LaTeX Warning: Citation `24' on page 5 undefined on input line 238.
-
-[5]
+] [2] [3] [4] [5]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 262.
 
- ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 262.
-
-
-LaTeX Warning: Citation `33' on page 6 undefined on input line 267.
-
-[6] [7] [8]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 286.
+ [6] [7] [8]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 293.
  [9
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 293.
- (advanced.aux)
+
+(advanced.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 293.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 293.
-
-
-Package rerunfilecheck Warning: File `advanced.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `advanced.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  708F30F64E59C6B45565D6ED208A1352;1896.
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+Package rerunfilecheck Info: File `advanced.out' has not changed.
+(rerunfilecheck)             Checksum: 708F30F64E59C6B45565D6ED208A1352;1896.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 293.
  ) 
 Here is how much of TeX's memory you used:
- 6299 strings out of 493323
- 90181 string characters out of 3139066
- 282412 words of memory out of 3000000
- 9739 multiletter control sequences out of 15000+200000
+ 6338 strings out of 493323
+ 90737 string characters out of 3139066
+ 284624 words of memory out of 3000000
+ 9770 multiletter control sequences out of 15000+200000
  9278 words of font info for 33 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,12n,43p,563b,370s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 28i,12n,43p,754b,370s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTe
@@ -747,9 +731,9 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
 msfonts/cm/cmtt10.pfb>
-Output written on advanced.pdf (13 pages, 708534 bytes).
+Output written on advanced.pdf (13 pages, 733654 bytes).
 PDF statistics:
- 139 PDF objects out of 1000 (max. 8388607)
+ 292 PDF objects out of 1000 (max. 8388607)
  47 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 246 words of extra memory for PDF output out of 10000 (max. 10000000)
 

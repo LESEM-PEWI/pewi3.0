@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.7.31)  11 AUG 2017 17:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.7.31)  11 AUG 2017 17:42
 entering extended mode
 **./general.tex
 (general.tex
@@ -529,8 +529,7 @@ s
 \f@nch@O@orf=\skip52
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 30.
-
-No file general.aux.
+ (general.aux)
 \openout1 = `general.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
@@ -547,6 +546,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -603,6 +603,8 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 34.
 LaTeX Info: Redefining \pageref on input line 34.
 LaTeX Info: Redefining \nameref on input line 34.
+
+(general.out) (general.out)
 \@outlinefile=\write3
 \openout3 = `general.out'.
 
@@ -633,7 +635,7 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-<../imgs/updatedPewiLogo.png, id=3, 934.49126pt x 930.47626pt>
+<../imgs/updatedPewiLogo.png, id=123, 934.49126pt x 930.47626pt>
 File: ../imgs/updatedPewiLogo.png Graphic file (type png)
 
 <use ../imgs/updatedPewiLogo.png>
@@ -675,43 +677,23 @@ If that doesn't work, type  X <return>  to quit.
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <../imgs/updatedPewiLogo.p
 ng>] [1] [2
 
-]
+] (general.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 4.
+)
 \tf@toc=\write4
 \openout4 = `general.toc'.
 
  [3
 
-]
-
-LaTeX Warning: Citation `1' on page 1 undefined on input line 100.
-
-
-LaTeX Warning: Citation `2' on page 1 undefined on input line 103.
-
-
-LaTeX Warning: Citation `3' on page 1 undefined on input line 106.
-
-
-LaTeX Warning: Citation `4' on page 1 undefined on input line 109.
-
-
-LaTeX Warning: Citation `5' on page 1 undefined on input line 112.
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
-been already used, duplicate ignored
+]pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
+ been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.119 
        [1
 
-]
-
-LaTeX Warning: Citation `10' on page 2 undefined on input line 124.
-
-
-LaTeX Warning: Citation `11' on page 2 undefined on input line 127.
-
-[2] [3]
+] [2] [3]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 168.
 
  ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
@@ -720,13 +702,7 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 168.
 
-
-LaTeX Warning: Citation `33' on page 4 undefined on input line 173.
-
 [4] [5] [6]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 192.
-
 Underfull \hbox (badness 1389) in paragraph at lines 192--193
 []\OT1/cmr/m/n/10.95 Thomas Cape-hart \OT1/cmr/m/it/10.95 "Corn - Back-ground,"
  USDA Eco-nomic Re-search Ser-vice, \OT1/cmr/m/n/10.95 July 14,
@@ -813,31 +789,18 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 226.
  (general.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 226.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 226.
-
-
-Package rerunfilecheck Warning: File `general.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `general.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  708F30F64E59C6B45565D6ED208A1352;1896.
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+Package rerunfilecheck Info: File `general.out' has not changed.
+(rerunfilecheck)             Checksum: 708F30F64E59C6B45565D6ED208A1352;1896.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 226.
  ) 
 Here is how much of TeX's memory you used:
- 6328 strings out of 493323
- 90327 string characters out of 3139066
- 286412 words of memory out of 3000000
- 9754 multiletter control sequences out of 15000+200000
+ 6367 strings out of 493323
+ 90875 string characters out of 3139066
+ 286956 words of memory out of 3000000
+ 9785 multiletter control sequences out of 15000+200000
  9624 words of font info for 34 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,12n,43p,593b,430s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 28i,12n,43p,753b,430s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTe
@@ -846,9 +809,9 @@ ts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
 msfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmtt10.pfb>
-Output written on general.pdf (12 pages, 732344 bytes).
+Output written on general.pdf (12 pages, 757684 bytes).
 PDF statistics:
- 177 PDF objects out of 1000 (max. 8388607)
+ 336 PDF objects out of 1000 (max. 8388607)
  60 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 246 words of extra memory for PDF output out of 10000 (max. 10000000)
 
