@@ -148,7 +148,11 @@ function addPlayer(givenPlayer) {
     } else {
       document.getElementById("rightPlayerCon").appendChild(tempPlayer);
     }
-    changeSelectedPaintTo(totalPlayers);
+    if(givenPlayer != undefined) {
+        changeSelectedPaintTo(givenPlayer);
+    } else {
+        changeSelectedPaintTo(totalPlayers);   
+    }
   }
 }
 
@@ -604,11 +608,11 @@ function combinePlayers() {
       var painterElementId = "player" + playerCombo[i] + "Image";
       document.getElementById(painterElementId).className = "playerIcon icon";
     }
+    document.getElementById("combineButton").innerHTML = "Combine Players";
     if (playerCombo.length > 1) {
       combineMulti(playerCombo);
     }
     playerCombo = [];
-    document.getElementById("combineButton").innerHTML = "Combine Players";
     document.getElementById("genOverlay").style.visibility = "hidden";
     document.getElementById("painterTab-leftcol").style.zIndex = "auto";
     document.getElementById("painterTab-rightcol").style.zIndex = "auto";
@@ -634,6 +638,7 @@ function combineMulti(givenPlayers) {
     deletePlayer(givenPlayers[i]);
   }
   merging = false;
+  console.log(boardData[currentBoard]);
 } //end combineMulti(givenPlayers)
 
 function confirmExit() {
