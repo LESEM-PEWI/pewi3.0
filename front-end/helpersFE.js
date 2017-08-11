@@ -638,7 +638,6 @@ function combineMulti(givenPlayers) {
     deletePlayer(givenPlayers[i]);
   }
   merging = false;
-  console.log(boardData[currentBoard]);
 } //end combineMulti(givenPlayers)
 
 function confirmExit() {
@@ -2512,7 +2511,6 @@ function randomizeBoard() {
 
         undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
-        //  console.log(painter);
         changeLandTypeTile(i);
       }
     } //end for all tiles
@@ -2578,6 +2576,8 @@ function resetHotkeys() {
 function resetMultiPlayer() {
   //Eliminates all players except for player 1
   resetPlayers();
+  painter = 1;
+  changeSelectedPaintTo(painter);
   resetting = true;
   //Reloads the default multiplayer map
   parent.loadLevel(-1);
