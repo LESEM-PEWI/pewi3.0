@@ -171,11 +171,11 @@
           $("#simContainer").css("visibility", "hidden");
           $("#overlayContainer").css("visibility", "visible");
           //Reset defaults
+          setSimBoolean(false);
           resetSlider();
           clearTimers();
           setPause(false);
           setUpload(false);
-          setSimBoolean(false);
           promptUserSim();
         })
       });
