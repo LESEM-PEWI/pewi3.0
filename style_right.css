@@ -1,0 +1,434 @@
+/* IE doesn't support var() function; therefore we add actual value before using var(). Though var() is apparently a better programming way.  */
+
+/* upper right elements */
+.upperButton, #logoBase, #pewiLogo {
+  height: 3vw;
+  position: absolute;
+  top: 0.1vw;
+  -khtml-transition-duration: 0.1s;
+  -moz-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
+  -atsc-transition-duration: 0.1s;
+  -wap-transition-duration: 0.1s;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+}
+
+.upperButton {
+  cursor: pointer;
+  width: 3vw;
+}
+
+.upperButton:hover {
+  border-bottom: 2px groove white;
+}
+
+#creditsButton {
+  right: 0vw;
+}
+
+#uploadDownloadButton {
+  right: 3vw;
+}
+
+#logoBase {
+  right: 6vw;
+}
+
+#pewiLogo{
+  right: 16vw;
+}
+
+/**results right styling**/
+.resultsButton, .resultsButtonRolled {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  cursor: pointer;
+  height: 3vw;
+  position: absolute;
+  right: -3.18vw;
+  top: 7vw;
+  width: 9.4vw;
+  -webkit-transform: rotate(-90deg);
+  /* Safari */
+  transform: rotate(-90deg);
+}
+
+.resultsButton {
+  background-color: rgba(14, 71, 204, 0.8);
+}
+
+.resultsButtonRolled {
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+}
+
+.resultsButton:hover {
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
+}
+
+.resultsButton img, .resultsButtonRolled img {
+  width: 9vw;
+}
+
+.resultsFrame {
+  background-color: white;
+  height: 100%;
+  position: absolute;
+  right: 7%;
+  top: 0%;
+  width: 86%;
+  -webkit-transition-duration: 0.9s;
+  transition-duration: 0.9s;
+}
+
+
+/* message console */
+
+
+/*Message will stay on the screen by default */
+
+.popup, .popupHidden {
+  background-color: rgba(0, 0, 0, 0.7);
+  background-image: url('./imgs/consoleTexture.png');
+  border-bottom-left-radius: 12px;
+  color: #FFFFFF;
+  height: 20vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: absolute;
+  text-align: center;
+  top: 14vw;
+  width: 15vw;
+  /*-ms-animation-duration: 0.4s;
+  -webkit-animation-duration: var(--transition-duration);
+  animation-duration: var(--transition-duration);*/
+  transition-duration: 0.4s;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+.popup p, .popupHidden p {
+  padding: 1vw;
+}
+
+.popup {
+  right: 0px;
+  -webkit-animation-name: rollButtonSide;
+  animation-name: rollButtonSide;
+}
+
+/*Messages will disappear off the screen when clicked on */
+.popupHidden {
+  -webkit-animation-name: rollButtonOff;
+  animation-name: rollButtonOff;
+  right: -15vw;
+}
+
+.moveButtonHidden, .moveButtonShow {
+  background-color: #008fb3;
+  border: 2px solid white;
+  border-radius: 12px;
+  color: white;
+  font-family: 'Amatic SC', cursive;
+  font-size: 2vw;
+  font-weight: bold;
+  height:  3.4vw;
+  line-height: 120%;
+  margin: 20px 20px 30px 20px;
+  padding: 0.5vw;
+  position: relative;
+  text-align: center;
+  width: 10vw;
+}
+
+.moveButtonHidden {
+  display: none;
+}
+
+.moveButtonShow {
+  cursor: pointer;
+  display: inline-block;
+}
+
+/*By default, the dialogue button stays on the screen */
+.dialogueButton, .dialogueButtonRolled {
+  -webkit-animation-name: rollButtonSide;
+  animation-name: rollButtonSide;
+  background-color: rgba(0, 0, 0, 0.9);
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  cursor: pointer;
+  height: 3vw;
+  height: var(--left-console-button-length);
+  position: absolute;
+  right: 12vw;
+  top: 14vw;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+  width: 6vw;
+}
+
+/*Dialogue button will roll off the screen when clicked on*/
+.dialogueButtonRolled {
+  right: -3%;
+  -webkit-animation-name: rollButtonOff;
+  animation-name: rollButtonOff;
+}
+
+.dialogueButton img, .dialogueButtonRolled img, .backgroundInfoButton img, .backgroundInfoButtonRolled img {
+  width: 2.5vw;
+  margin: 0.25vw;
+}
+
+.backgroundInfoButton, .backgroundInfoButtonRolled {
+  background-image: url('./imgs/consoleTexture.png');
+  cursor: pointer;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background-repeat: repeat;
+  position: absolute;
+  top: 36vw;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+  width: 3vw;
+}
+
+.backgroundInfoButton {
+  -webkit-animation-name: rollUp;
+  animation-name: rollUp;
+  right: 15vw;
+}
+
+.backgroundInfoButtonRolled {
+  -webkit-animation-name: rollDown;
+  animation-name: rollDown;
+  right: 0%;
+}
+
+.backgroundInfoBox, .backgroundInfoBoxRolled {
+  border-bottom-left-radius: 12px;
+  background-repeat: repeat;
+  background-image: url('./imgs/consoleTexture.png');
+  height: 9vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: absolute;
+  top: 36vw;
+  width: 15vw;
+}
+
+.backgroundInfoBox {
+  /*-webkit-animation-duration: 5s;
+  animation-duration: 5s;*/
+  -webkit-animation-name: rollUp;
+  animation-name: rollUp;
+  right: 0%;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+.backgroundInfoBoxRolled {
+  /*-webkit-animation-duration: 5s;
+  animation-duration: 5s;*/
+  -webkit-animation-name: rollDown;
+  animation-name: rollDown;
+  right: -15vw;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: var(--transition-duration);
+  /* Safari */
+  transition-duration: var(--transition-duration);
+}
+
+.indexPopupText {
+  color: white;
+  padding: 1vw;
+  position: relative;
+  text-align: center;
+}
+
+/*XXX There are too many animations here, some of them are not necessary. Should clean them! */
+
+/* animation for popup */
+@keyframes rollUp {
+  0% {
+    right: -12vw;
+  }
+  100% {
+    right: 0%;
+  }
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes rollUp {
+  0% {
+    right: -12vw;
+  }
+  100% {
+    right: 0%;
+  }
+}
+
+@keyframes rollDown {
+  0% {
+    right: 0%;
+  }
+  100% {
+    right: -12vw;
+  }
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes rollDown {
+  0% {
+    right: 0%;
+  }
+  100% {
+    right: -12vw;
+  }
+}
+
+/*Animation for backgroundInfoButton*/
+@keyframes rollButtonSide{
+  0% {
+    right: 0%;
+  }
+  100% {
+    right: 0vw;
+  }
+}
+@-webkit-keyframes rollButtonSide{
+  0% {
+    right: 0%;
+  }
+  100% {
+    right: 0vw;
+  }
+}
+@keyframes rollButtonOff{
+  0% {
+    right: 2vw;
+  }
+  100% {
+    right: 0%;
+  }
+}
+@-webkit-keyframes rollButtonOff{
+  0% {
+    right: 2vw;
+  }
+  100% {
+    right: 0%;
+  }
+}
+
+/* animation for dialogueButton */
+@keyframes rollButtonUp {
+  0% {
+    right: 0%;
+  }
+  100% {
+    right: 12vw;
+  }
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes rollButtonUp {
+  0% {
+    right: 0%;
+  }
+  100% {
+    right: 12vw;
+  }
+}
+
+@keyframes rollButtonDown {
+  0% {
+    right: 12vw;
+  }
+  100% {
+    right: 0%;
+  }
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes rollButtonDown {
+  0% {
+    right: 12vw;
+  }
+  100% {
+    right: 0%;
+  }
+}
+
+/* responsive web design. When the window size gets smaller than 600x400, set the fixed size or position for it */
+@media screen and (max-width: 600px), screen and (max-height: 400px) {
+  /* buttons */
+  .resultsButton, .resultsButtonRolled {
+    font-size: 20px;
+    height: 18px;
+    top: 64px;
+    width: 54px;
+  }
+  .resultsButtonRolled {
+    right: -18px;
+  }
+  .resultsButton img, .resultsButtonRolled img {
+    height: 15.4px;
+    width: 54px;
+  }
+  .dialogueButton, .dialogueButtonRolled {
+    height: 18px;
+    width: 18px;
+    top: 108px;
+  }
+  .dialogueButtonRolled {
+    right: 0px;
+  }
+  .dialogueButton {
+    right: 100px;
+  }
+  .dialogueButton img, .dialogueButtonRolled img, .backgroundInfoButton img, .backgroundInfoButtonRolled img {
+    height: 10px;
+    margin: 4px;
+    width: 12px;
+  }
+  .backgroundInfoButton, .backgroundInfoButtonRolled {
+    height: 18px;
+    width: 18px;
+    top: 250px;
+  }
+  .backgroundInfoButton {
+    right: 100px;
+  }
+  /* contents */
+  .backgroundInfoBox, .backgroundInfoBoxRolled, .popup, .popupHidden {
+    font-size: 6px;
+    width: 100px;
+  }
+  .popup, .popupHidden {
+    height: 130px;
+    top: 108px;
+  }
+  .popup {
+    right: 0px;
+  }
+  .popupHidden {
+    right: -100px;
+  }
+  .backgroundInfoBox, .backgroundInfoBoxRolled {
+    height: 50px;
+    top: 250px;
+  }
+  .backgroundInfoBox {
+    right: 0px;
+  }
+  .backgroundInfoBoxRolled {
+    right: -100px;
+  }
+}

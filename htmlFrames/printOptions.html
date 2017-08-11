@@ -1,0 +1,613 @@
+<!doctype html>
+
+<!--
+The printOptions page is accessible from the parent document index.html
+  It interfaces with methods in helpersFE.js
+
+XXX haven't update the description XXX
+
+Options are propogated and stored in the index.html parameters div, an invisible div.
+Each parameter is designated by some text and then a newline.
+In order to avoid a comprehensive toggling of each element our system will work as such:
+  elements on by default can be toggled off with their id
+  elements off by default can be toggled on with keywords
+  other special features (off by default), such as precip unchangeable,
+      are added with keywords
+
+This page page contains most of the current options keywords as toggle buttons or
+numerical select. State is saved to the parameters div on close and pulled from that
+div on open.
+
+Cleaned and Prepared - July 2016 XXX
+-->
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Workspace - Print Options</title>
+
+  <!-- INCLUDES -->
+  <!--css-->
+  <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+  <link rel="stylesheet" type="text/css" href="./style_PrintOptions.css">
+
+  <!--external fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+  <!--page scripting-->
+  <script type= "text/javascript" src="./front-end/helpersFE.js"></script>
+  <!-- /INCLUDES -->
+
+  <script>
+    var yearAvailable;
+    // download from preview if there is preview src, or create new PDF according to print options
+    function downloadControl() {
+      var preview = document.getElementById('pdf_preview');
+
+      switch (preview.getAttribute('src')) {
+        case '':
+        // run creating PDF process if nothing is in preview
+          saveCurrentPrintOptions(1);
+          break;
+
+        default:
+        // directly download from the preview XXX doesn't work in safari
+          // Construct the <a> element
+          var link = document.createElement("a");
+
+          link.download = parent.promptFileName()+".pdf";
+          // Construct the uri
+          link.href = preview.getAttribute('src');
+          document.body.appendChild(link);
+          link.click();
+          // Cleanup the DOM
+          document.body.removeChild(link);
+          delete link;
+          break;
+      } // END switch
+
+    } // END downloadControl
+
+    // initialize settings such as reset map position and display years so far
+    function initPrintOptions(upToYear) {
+      yearAvailable = upToYear;
+
+      // make it easier to get the associated label
+      var labels = document.getElementsByTagName('LABEL');
+      for (var i = 0; i < labels.length; i++) {
+        if (labels[i].htmlFor != '') {
+          var elem = document.getElementById(labels[i].htmlFor);
+          if (elem)
+          elem.label = labels[i];
+        }
+      }
+
+      // display year icon accoding to current abled year
+      if (upToYear > 1) {
+        document.getElementById('year-toggle').style.display = 'inline-block';
+        document.getElementById('year-select-all-label').style.display = 'inline-block';
+        for (var i = 2; i <= upToYear; i++) {
+          document.getElementById('year'+i+'-checkbox').style.display = 'inline-block';
+          document.getElementById('year'+i+'-checkbox').label.style.display = 'inline-block';
+        }
+      } // END if
+
+      // reset camera position
+      parent.controls.value = 100; // reset 10 times
+      parent.controls.reset();
+      setTimeout(function() {
+        parent.controls.value = 1; // reset to 1
+      }, 100);
+
+      // reset css of toggle user view icon
+      document.getElementById("yearUserViewpoint").setAttribute('src', "../imgs/refresh_yellow.png");
+      document.getElementById("yearUserViewpoint").setAttribute('style', "");
+
+    } // end initPrintOptions
+
+    // saveCurrentPrintOptions() is called when the preview PDF/download button is pressed
+    // each of the options is evaluated and the text for the print-option-parameters div is generated
+    // as needed
+    function saveCurrentPrintOptions(isDownload) {
+      // clean the preview
+      document.getElementById('pdf_preview').setAttribute('src', '')
+      // find the elements that are able to be checked
+      var toggledElements = document.getElementsByClassName('print-options-checkbox');
+      var viewpointIcons = document.getElementsByClassName('viewpoint-icons');
+      var tempString = "";
+
+      //if there are toggled elements
+      if (toggledElements) {
+
+        if (viewpointIcons) {
+          for (var i = 0; i < viewpointIcons.length; i++) {
+            // record the ones set to user's viewpoint
+            if (viewpointIcons[i].getAttribute('src') == "../imgs/refresh_white.png") {
+              // append to tempString
+              tempString += viewpointIcons[i].id + "-\n";
+            }
+          } // END for
+        }  // END if
+
+        for (var i = 0; i < toggledElements.length; i++) {
+          if (toggledElements[i].checked) {
+            // append to tempString
+            tempString += toggledElements[i].id + "\n";
+          }
+        } //end for elements of class toggle
+
+        //put all the elements in the print-option-parameters div of index.html
+        window.top.document.getElementById('print-option-parameters').innerHTML = tempString;
+      } //end if
+
+      //hide the options frame from the top frame (index.html)
+      parent.executePrintOptions(isDownload);
+    } //end function saveCurrentOptionsState
+
+    // check/uncheck all checkboxes for the group
+    function toggleGroupCheckbox(group) {
+
+      var options = document.getElementById(group + "-group-checkbox").getElementsByTagName('input');
+      var groupCheckboxIcon = document.getElementById(group+"-checked-icon");
+
+      switch (group) {
+        case 'year':
+          for (var i = 0; i < yearAvailable; i++) {
+            if (options[i].id == "year1-checkbox")
+              continue;
+            options[i].checked = document.getElementById(group+'-toggle').checked;
+          }
+          break;
+
+        default:
+          for (var i = 0; i < options.length; i++) {
+            options[i].checked = document.getElementById(group+'-toggle').checked;
+          }
+          break;
+      }
+
+      // deal with element style
+      switch (groupCheckboxIcon.getAttribute('src')) {
+        case "../imgs/checked_yellow.png":
+          // set css for check all
+          groupCheckboxIcon.setAttribute('src',"../imgs/checked_white.png");
+          groupCheckboxIcon.setAttribute('style', "box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);");
+          break;
+
+        case "../imgs/checked_white.png":
+          // set css for uncheck all
+          groupCheckboxIcon.setAttribute('src', "../imgs/checked_yellow.png");
+          groupCheckboxIcon.setAttribute('style', "");
+          break;
+      } // END switch
+
+    } // end toggleGroupCheckbox
+
+    // toggle user last view point and change style of view icon
+    function toggleViewpoint(group) {
+
+      var groupUserViewpoint = document.getElementById(group+"UserViewpoint");
+
+      switch (groupUserViewpoint.getAttribute('src')) {
+        case "../imgs/refresh_yellow.png":
+          // user's last camera view point
+          // set css
+          groupUserViewpoint.setAttribute('src',"../imgs/refresh_white.png");
+          groupUserViewpoint.setAttribute('style', "box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);");
+          // reset to user view point
+          parent.controls.restoreLastState();
+          break;
+
+        case "../imgs/refresh_white.png":
+          // reset camera view point
+          // set css
+          document.getElementById(group+"UserViewpoint").setAttribute('src', "../imgs/refresh_yellow.png");
+          document.getElementById(group+"UserViewpoint").setAttribute('style', "");
+          // reset camera position
+          parent.controls.value = 100; // reset 10 times
+          parent.controls.reset();
+          setTimeout(function() {
+            parent.controls.value = 1; // reset to 1
+          }, 100);
+          break;
+      } // END switch
+
+    } // END toggleViewpoint
+
+    // reset all print options and clean the preview
+    function resetPrintOptions() {
+      var group = ['year', 'result', 'level', 'feature', 'yield'];
+      var toggledElements = document.getElementsByClassName('print-options-checkbox');
+      var viewpointIcons = document.getElementsByClassName('viewpoint-icons');
+
+      // clean the preview
+      document.getElementById('pdf_preview').setAttribute('src', '')
+
+      //reset groupCheckboxIcon
+      for (var i = 0; i < group.length; i++) {
+        var inputGroupCheckbox = document.getElementById(group[i]+"-toggle");
+        var groupCheckboxIcon = document.getElementById(group[i]+"-checked-icon");
+        // find checked groupCheckboxIcon
+        if (inputGroupCheckbox.checked) {
+          // uncheck it
+          inputGroupCheckbox.checked = false;
+          groupCheckboxIcon.setAttribute('src', '../imgs/checked_yellow.png')
+          groupCheckboxIcon.setAttribute('style', "");
+        } // END if
+      } // END outter if
+
+      //if there are viewpointIcons
+      if (viewpointIcons) {
+        for (var i = 0; i < viewpointIcons.length; i++) {
+          // record the ones set to user's viewpoint
+          if (viewpointIcons[i].getAttribute('src') == "../imgs/refresh_white.png") {
+            // reset viewpoint icons
+            viewpointIcons[i].setAttribute('src', '../imgs/refresh_yellow.png')
+            viewpointIcons[i].setAttribute('style', "");
+            // reset camera position
+            parent.controls.value = 100; // reset 10 times
+            parent.controls.reset();
+            setTimeout(function() {
+              parent.controls.value = 1; // reset to 1
+            }, 100);
+          }
+        } // END for
+      }  // END if
+
+      //if there are toggled elements
+      if (toggledElements) {
+        for (var i = 0; i < toggledElements.length; i++) {
+          if (toggledElements[i].checked && toggledElements[i].id !== "year1-checkbox" ) {
+            // uncheck toggledElements
+            toggledElements[i].checked = false;
+          }
+        } //end for
+      } //end if
+
+    } // END resetPrintOptions
+
+  </script>
+
+</head>
+
+<body>
+
+  <img id="optionsBackroundImage" alt="" src="./imgs/floodBack.png">
+
+  <!--Credit for functionality of hidden checkboxes
+  http://codersblock.com/blog/checkbox-trickery-with-css/
+  -->
+
+  <div class="print-options-content-holder">
+    <div id="closePDiv"><img id="closePrintOptions" onclick="parent.closePrintOptions();" src="../imgs/close_black.png"></div>
+    <div id="optionsMainHolder">
+      <div class="optionsHeader">
+        <h4>Land Use Type Map</h4>
+        <input id="year-toggle" onclick="toggleGroupCheckbox('year');" type="checkbox" style="display: none;">
+        <div class="print-options-tool">
+          <label id="year-select-all-label" for="year-toggle" class="print-options-tool-icon" style="display: none;">
+            <!-- "Checked" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+            <img id="year-checked-icon" src="../imgs/checked_yellow.png" >
+            <span class="tooltiptext">select all</span>
+          </label>
+
+          <div class="print-options-tool-icon" onclick="toggleViewpoint('year');">
+            <!-- "Refresh" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+            <img id="yearUserViewpoint" class="viewpoint-icons" src="../imgs/refresh_yellow.png" >
+            <span class="tooltiptext">toggle viewpoint</span>
+          </div>
+
+          <div class="print-options-tool-icon" onclick="resetPrintOptions()">
+            <!-- "Cancel" icon made by Gregor Cresnar http://www.flaticon.com/authors/gregor-cresnar from http://www.flaticon.com/packs/creative-outlines -->
+            <img class="viewpoint-icons" src="../imgs/cancel.png" >
+            <span class="tooltiptext">reset</span>
+          </div>
+        </div>
+        <hr>
+      </div>
+
+      <div id="year-group-checkbox" class="optionsSubContainer">
+        <input id="year1-checkbox" class="print-options-checkbox" style="inline-block" checked>
+        <!-- <label style="background-color: #4c6167; cursor: not-allowed;"> -->
+        <label style="color: #fff; cursor: not-allowed; display: inline-block;">
+          <div>
+            <img src="../imgs/one.png" style="box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);">
+            <span>Year 1</span>
+          </div>
+        </label>
+
+        <input id="year2-checkbox" class="print-options-checkbox" type="checkbox" style="display: none;">
+        <label for="year2-checkbox" style="display: none;">
+          <div>
+            <img src="../imgs/two.png">
+            <span>Year 2</span>
+          </div>
+        </label>
+
+        <input id="year3-checkbox" class="print-options-checkbox" type="checkbox" style="display: none;">
+        <label for="year3-checkbox" style="display: none;">
+          <div>
+            <img src="../imgs/three.png">
+            <span>Year 3</span>
+          </div>
+        </label>
+
+      </div>
+
+      <div class="optionsHeader">
+        <h4>Results</h4>
+        <!-- "Checked" & "Refresh" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+        <input id="result-toggle" onclick="toggleGroupCheckbox('result');" type="checkbox" >
+        <div class="print-options-tool">
+          <label for="result-toggle" class="print-options-tool-icon">
+              <img id="result-checked-icon" src="../imgs/checked_yellow.png" >
+              <span class="tooltiptext">select all<hr>Note: <br>It takes more time <br>to process table</span>
+          </label>
+        </div>
+        <hr>
+      </div>
+
+      <div id="result-group-checkbox" class="optionsSubContainer">
+        <input id="resultsTable1-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="resultsTable1-checkbox">
+          <div>
+            <!-- "Research" icon made by Freepik on https://www.flaticon.com/authors/freepik from https://www.flaticon.com/search?word=tables%20data -->
+            <img src="../imgs/spreadsheet-cell-row.png" style="border-radius: 0px;">
+            <p>Results Table 1</p>
+          </div>
+          <span class="tooltiptext">Note: <br>It takes more time <br>to process table</span>
+        </label>
+
+        <input id="resultsTable2-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="resultsTable2-checkbox">
+          <div>
+            <!-- "Research" icon made by Freepik on https://www.flaticon.com/authors/freepik from https://www.flaticon.com/search?word=tables%20data -->
+            <img src="../imgs/spreadsheet-cell-row.png" style="border-radius: 0px;">
+            <p>Results Table 2</p>
+          </div>
+          <span class="tooltiptext">Note: <br>It takes more time <br>to process table</span>
+        </label>
+
+        <input id="resultsTable4-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="resultsTable4-checkbox">
+          <div>
+            <!-- "Research" icon made by Freepik on https://www.flaticon.com/authors/freepik from https://www.flaticon.com/search?word=tables%20data -->
+            <img src="../imgs/spreadsheet-cell-row.png" style="border-radius: 0px;">
+            <p>Results Table 4</p>
+          </div>
+          <span class="tooltiptext">Note: <br>It takes more time <br>to process table</span>
+        </label>
+
+        <input id="resultsLanduse-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="resultsLanduse-checkbox">
+          <div>
+            <!-- "Pie Chart" icon made by Madebyoliver on https://www.flaticon.com/authors/madebyoliver from https://www.flaticon.com/search?word=pie%20chart -->
+            <img src="../imgs/pie-chart.png">
+            <p>Land Use Charts</p>
+          </div>
+        </label>
+
+        <input id="resultsEcosystem-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="resultsEcosystem-checkbox">
+          <div>
+            <!-- "Radar Chart" icon made by Freepik on https://www.flaticon.com/authors/freepik from https://www.flaticon.com/search?word=radar%20chart -->
+            <img src="../imgs/radar-chart-with-pentagon-shape.png">
+            <p>Ecosystem Services Charts</p>
+          </div>
+        </label>
+
+        <input id="resultsPrecip-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="resultsPrecip-checkbox">
+          <div>
+            <!-- "Bar Chart" icon made by Freepik on https://www.flaticon.com/authors/freepik from https://www.flaticon.com/search?word=radar%20chart -->
+            <img src="../imgs/bar-chart.png">
+            <p>Precipitation Charts</p>
+          </div>
+        </label>
+     </div>
+
+      <div class="optionsHeader">
+        <h4>Levels Map</h4>
+        <!-- "Checked" & "Refresh" & "Refresh" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+        <input id="level-toggle" onclick="toggleGroupCheckbox('level');" type="checkbox" >
+        <div class="print-options-tool">
+          <!-- <div class="print-options-tool-icon" onclick="toggleViewpoint('level');">
+            <img id="levelUserViewpoint" class="viewpoint-icons" src="../imgs/refresh_yellow.png" >
+          </div> -->
+          <label for="level-toggle" class="print-options-tool-icon">
+            <img id="level-checked-icon" src="../imgs/checked_yellow.png" >
+            <span class="tooltiptext">select all</span>
+          </label>
+        </div>
+        <hr>
+      </div>
+
+      <div id="level-group-checkbox" class="optionsSubContainer">
+        <input id="nitrate-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="nitrate-checkbox">
+          <div>
+            <img src="../imgs/N.png">
+            <p>Subwatershed Nitrate-N Percent Contribution</p>
+          </div>
+        </label>
+
+        <input id="erosion-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="erosion-checkbox">
+          <div>
+            <img src="../imgs/E.png">
+            <p>Gross Erosion</p>
+          </div>
+        </label>
+
+        <input id="phosphorus-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="phosphorus-checkbox">
+          <div>
+            <img src="../imgs/P.png">
+            <p>Phosphorus Index Risk Assessment</p>
+          </div>
+        </label>
+      </div>
+
+      <div class="optionsHeader">
+        <h4>Features Map</h4>
+        <!-- "Checked" & "Refresh" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+        <input id="feature-toggle" onclick="toggleGroupCheckbox('feature');" type="checkbox" >
+        <div class="print-options-tool">
+          <!-- <div class="print-options-tool-icon" onclick="toggleViewpoint('feature');">
+            <img id="featureUserViewpoint" class="viewpoint-icons" src="../imgs/refresh_yellow.png" >
+          </div> -->
+          <label for="feature-toggle" class="print-options-tool-icon">
+              <img id="feature-checked-icon" src="../imgs/checked_yellow.png" >
+              <span class="tooltiptext">select all</span>
+          </label>
+        </div>
+        <hr>
+      </div>
+
+      <div id="feature-group-checkbox" class="optionsSubContainer">
+        <input id="flood-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="flood-checkbox">
+          <div>
+            <img src="../imgs/Icon_Flood_Frequency.svg">
+            <p>Flood Frequency</p>
+          </div>
+        </label>
+
+        <input id="wetlands-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="wetlands-checkbox">
+          <div>
+            <img src="../imgs/Icon_Strategic_Wetlands.svg">
+            <p>Strategic Wetlands</p>
+          </div>
+        </label>
+
+        <input id="boundary-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="boundary-checkbox">
+          <div>
+            <img src="../imgs/Icon_Subwatershed_Boundaries.svg">
+            <p>Subwatershed Boundaries</p>
+          </div>
+        </label>
+
+        <input id="drainage-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="drainage-checkbox">
+          <div>
+            <img src="../imgs/Icon_Drainage_Class.svg">
+            <p>Drainage Class</p>
+          </div>
+        </label>
+
+        <input id="soil-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="soil-checkbox">
+          <div>
+            <img src="../imgs/Icon_Soil_Class.svg">
+            <p>Soil Class</p>
+          </div>
+        </label>
+      </div>
+
+      <div class="optionsHeader">
+        <h4>Yields Map</h4>
+        <!-- "Checked" & "Refresh" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+        <input id="yield-toggle" onclick="toggleGroupCheckbox('yield');" type="checkbox" >
+        <div class="print-options-tool">
+          <!-- <div class="print-options-tool-icon" onclick="toggleViewpoint('yield');">
+            <img id="yieldUserViewpoint" class="viewpoint-icons" src="../imgs/refresh_yellow.png" >
+          </div> -->
+          <label for="yield-toggle" class="print-options-tool-icon">
+              <img id="yield-checked-icon" src="../imgs/checked_yellow.png" >
+              <span class="tooltiptext">select all</span>
+          </label>
+        </div>
+        <hr>
+      </div>
+
+      <div id="yield-group-checkbox" class="optionsSubContainer">
+        <input id="corn-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="corn-checkbox">
+          <div>
+            <img src="../imgs/cornGrainIcon.png">
+            <p>Corn Grain</p>
+          </div>
+        </label>
+
+        <input id="soybean-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="soybean-checkbox">
+          <div>
+            <img src="../imgs/soybeanIcon.png">
+            <p>Soybean</p>
+          </div>
+        </label>
+
+        <input id="fruit-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="fruit-checkbox">
+          <div>
+            <img src="../imgs/fruitIcon.png">
+            <p>Mixed Fruit and Vegetables</p>
+          </div>
+        </label>
+
+        <input id="cattle-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="cattle-checkbox">
+          <div>
+            <img src="../imgs/cowIcon.png">
+            <p>Cattle</p>
+          </div>
+        </label>
+
+        <input id="alfalfa-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="alfalfa-checkbox">
+          <div>
+            <img src="../imgs/alfalfaIcon.png">
+            <p>Alfalfa</p>
+          </div>
+        </label>
+
+        <input id="grasshay-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="grasshay-checkbox">
+          <div>
+            <img src="../imgs/grassHayIcon.png">
+            <p>Grass Hay</p>
+          </div>
+        </label>
+
+        <input id="switchgrass-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="switchgrass-checkbox">
+          <div>
+            <img src="../imgs/switchGrassIcon.png">
+            <p>Switchgrass</p>
+          </div>
+        </label>
+
+        <input id="wood-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="wood-checkbox">
+          <div>
+            <img src="../imgs/woodIcon.png">
+            <p>Wood</p>
+          </div>
+        </label>
+
+        <input id="short-checkbox" class="print-options-checkbox" type="checkbox">
+        <label for="short-checkbox">
+          <div>
+            <img src="../imgs/woodyBiomassIcon.png">
+            <p>Short-Rotation Woody Biomass</p>
+          </div>
+        </label>
+      </div>
+
+    </div>
+
+    <iframe id="pdf_preview" class="pdf_preview" type="application/pdf" src=""></iframe>
+  </div>
+<a href="doc/general.pdf">General Index Document</a>
+  <div>
+    <div id="" class="mainButton preview-btn" onclick="saveCurrentPrintOptions(0);">Preview PDF</div>
+    <div id="" class="mainButton print-btn" onclick="downloadControl();">Download</div>
+    <div id="" class="mainButton exit-btn" onclick="parent.closePrintOptions();">Exit</div>
+    <div id="" class="mainButton pdf-btn" onclick="window.open('../doc/general.pdf');">General Glossary PDF</div>
+    <div id="" class="mainButton advpdf-btn" onclick="window.open('../doc/advanced.pdf');">Advanced Glossary PDF</div>
+  </div>
+
+</body>
+</html>

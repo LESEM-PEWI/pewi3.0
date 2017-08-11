@@ -4,10 +4,10 @@
 This page is designed to be used in a spanning iframe with index.html being its parent.
 
 The page consists of a four-cell table (2 rows, 2 cols) with the words 'Download' and
-'Upload' as well as the corresponding images. 
+'Upload' as well as the corresponding images.
 
 As seen in the included script, uploading is taken care of through the parent frame
-while downloading is mostly taken care of here. Ideally, both would be in parent frame, 
+while downloading is mostly taken care of here. Ideally, both would be in parent frame,
 but an issue with communicating back and forth makes it necessary for downloading to occur
 in the child frames.
 
@@ -17,79 +17,95 @@ Cleaned and Prepared - July 2016
 -->
 
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>Workspace - Upload/Download</title>
-    <!-- INCLUDES -->
-    
-    <!--javascript-->
-    <script src=".././lib/jquery-1.12.4.min.js"></script>
-    <script src=".././lib/filesaver.min.js"></script>
-    <!--css-->
-    <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
-    <!--external fonts (this only loads necessary characters)-->
-    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700&text=Upload%20Download' rel='stylesheet' type='text/css'>
-    
-    <!-- /INCLUDES -->
-    
-    <!--additional styling-->
-    <style>
-        body {
-            font-family: 'Amatic SC', cursive;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>Workspace - Upload/Download</title>
+  <!-- INCLUDES -->
 
-<script>
-//this function attaches the uploadClicked function from helpersFE.js to 
-// changes in the file-upload element. When a file is select from the native
-// file dialogue, propertchange is triggered
-function bindUploadFileListener() {
-    //add listener
-    $('#file-upload').bind('propertychange change', function(e) {
-        parent.uploadClicked(e);
-    });
-    //small issue: if file selected is same name as previous
-    //property change is not triggered, even if file has changed.
-};
+  <!--javascript-->
+  <script src=".././lib/jquery-3.2.1.min.js"></script>
+  <script src=".././lib/filesaver.min.js"></script>
+  <!--css-->
+  <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+  <!--external fonts (this only loads necessary characters)-->
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700&text=Upload%20Download' rel='stylesheet' type='text/css'>
 
-//this function triggers a download of the current data
-function triggerDownloadSequence() {
+  <!-- /INCLUDES -->
+
+  <script>
+    //this function attaches the uploadClicked function from helpersFE.js to
+    // changes in the file-upload element. When a file is select from the native
+    // file dialogue, propertychange is triggered
+    // function bindUploadFileListener() {
+    //   //add listener
+    //   $('#file-upload').bind('propertychange change', function(e) {
+    //     parent.uploadClicked(e);
+    //   });
+    //   //XXX small issue: if file selected is same name as previous
+    //   //property change is not triggered, even if file has changed.
+    // }
+
+  </script>
+
+</head>
+
+<body>
+  <div id="uploadDownloadHolder">
+    <table id="downloadTable">
+
+      <tr>
+        <td class="uploadDownloadText">Download</td>
+        <td> <img onclick="triggerDownloadSequence();" id="downloadButton" class="uploadDownloadButton" src="./imgs/download.png" alt="#"> </td>
+      </tr>
+
+      <tr>
+        <td class="uploadDownloadText">Upload</td>
+        <td>
+          <div class="uploadFile">
+            <label for="file-upload1">
+              <img id="uploadButton" class="uploadDownloadButton" src="./imgs/upload.png" alt="#" />
+            </label>
+            <input id="file-upload1" type="file" onchange="uploadFile();" />
+          </div>
+
+        </td>
+      </tr>
+
+    </table>
+  </div>
+
+  <script type="text/javascript">
+  // input tag that upload-file will attach to
+  var fp = document.getElementById("file-upload1");
+
+  /**
+  * pass the file handler to uploadClicked() in helpersFE.js
+  *
+  */
+  function uploadFile() {
+    // pass the file handler
+    parent.uploadClicked(fp.files);
+    // clean the file
+    fp.files = null;
+  } // end uploadFile()
+
+  //this function triggers a download of the current data
+  function triggerDownloadSequence() {
 
     //helpersFE.js, creates data using current board
     var data = parent.writeFileToDownloadString(0);
-    var downloadBlob = new Blob([data], {type: "text/csv;charset=utf-8"});
+    var downloadBlob = new Blob([data], {
+      type: "text/csv;charset=utf-8"
+    });
     //filesaver.min.js
-    saveAs(downloadBlob, "pewiMap.csv") ;
+    saveAs(downloadBlob, "pewiMap.csv");
 
     //close necessary frames
-    setTimeout(function() {parent.downloadClicked();},1 ); 
-}
-</script>
-
-</head>
-<body>
-    <div id="uploadDownloadHolder">
-        <table id="downloadTable">
-
-            <tr>
-                <td class="uploadDownloadText">Download</td>
-                <td> <img onclick="triggerDownloadSequence();" id="downloadButton" class="uploadDownloadButton" src="./imgs/download.png" alt="#"> </td>
-            </tr>
-
-            <tr>
-                <td class="uploadDownloadText">Upload</td>
-                <td >
-                    <div class="uploadFile">
-                        <label for="file-upload">
-                        <img onclick="bindUploadFileListener();" id="uploadButton" class="uploadDownloadButton" src="./imgs/upload.png" alt="#" />
-                        </label>
-                        <input id="file-upload" type="file" />
-                    </div>
-
-                </td>
-            </tr>
-
-        </table>
-    </div>
+    // setTimeout(function() {parent.downloadClicked();},1 );
+    // XXX SCRIPT438: Object doesn't support property or method 'downloadClicked'
+  } // end triggerDownloadSequence()
+  </script>
 </body>
+
 </html>
