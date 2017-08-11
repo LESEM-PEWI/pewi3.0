@@ -383,12 +383,10 @@ function createThreeFramework() {
 
   //create the main THREE.js scene
   scene = new THREE.Scene();
-
  //Creating mesh box around Map.
  var meshfloor = new THREE.Mesh(
  new THREE.BoxGeometry(500,100,500),
  new THREE.MeshBasicMaterial({color:0x0ffffff, wireframe:false}));
-
     meshfloor.rotation.y += Math.PI/2;
     //scene.add(meshfloor);
 } //end createThreeFramework()
@@ -408,7 +406,6 @@ function initializeCamera() {
     camera.position.y = 320;
     camera.position.z = 0;
     camera.rotation.x = -1.570795331865673;
-
     //Setting up First Camera
     SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
     ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 10000;
@@ -458,7 +455,6 @@ function initializeCamera() {
     document.addEventListener('keyup', CamView);
     // addEvent(document, 'keyup', CamView);
     animate();
-
     //Event listners for scrolling using the wheel or scroll bar ( Used exclusively by click tracking...for now)
     window.frames[0].onscroll = onWheelViewCredits;
     window.frames[3].onscroll = onWheelViewResults;
