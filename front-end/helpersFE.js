@@ -2685,6 +2685,17 @@ function resetPresets() {
   if(document.getElementById('flyover').style.display == 'block') {
     toggleCameraView();
   }
+  //Resets the camera angle
+  if (ToggleCam == 1){
+    changeCam2();
+    document.getElementById("flyover").innerHTML = "";
+    //Reseting camera 2 position when sandbox is reloaded
+    camera2.position.x = 70;
+    camera2.position.y = 25;
+    camera2.position.z = 244;
+    camera2.rotation.y = 0;
+  }
+  controls.reset();
   //Reset play/pause button toggle
   document.getElementById('pausePlay').src = "imgs/pauseButton.png";
   document.getElementById('pausePlay').style.width = "20px";
