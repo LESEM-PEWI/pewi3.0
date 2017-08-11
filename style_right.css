@@ -206,13 +206,11 @@
   animation-name: rollUp;
   right: 15vw;
 }
-
 .backgroundInfoButtonRolled {
   -webkit-animation-name: rollDown;
   animation-name: rollDown;
   right: 0%;
 }
-
 .backgroundInfoBox, .backgroundInfoBoxRolled {
   border-bottom-left-radius: 12px;
   background-repeat: repeat;

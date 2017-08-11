@@ -1531,7 +1531,6 @@ function getHighlightedInfo(tileId) {
       case 17:
         highlightString = "608.6 tons/acre/yr" + "<br>";
         break;
-    }
     return highlightString;
   } // END if/else
 
@@ -2108,7 +2107,38 @@ function onDocumentMouseUp(event) {
 function onDocumentKeyDown(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted || event.keyCode == 27) {
     //switch structure on key code (http://keycode.info)
+  files = e.target.files;
 
+  if (files[0].name && !files[0].name.match(/\.csv/)) //if there is a file name and it's not a csv
+  {
+    //. json is file format from pewi2.1
+    if (files[0].name.match(/\.json/)) {
+      //This piece of code converts files from pewi2.1 to fileformat of pewi 3.0
+      var reader = new FileReader();
+      reader.readAsText(files[0]);
+
+      var string = "";
+
+      reader.onload = function(event) {
+
+        string = string + "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3" + "\n";
+        var obj = JSON.parse(event.target.result);
+        var year2Available = false;
+        var year3Available = false;
+
+        for (var i = 0; i < 828; i++) { //there are 828 tiles on the board (hidden+visible)
+          try {
+            //This variable 'string' stores the extracted data from the .json file
+            string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + "," +
+              ((obj["1"].area.data[i] == null) ? 0 : obj["1"].area.data[i]) + "," + ((obj["1"].area.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," + ((obj["1"].carbonmax.data[i] == null) ? "NA" : obj["1"].carbonmax.data[i]) + "," + ((obj["1"].carbonmin.data[i] == null) ? "NA" : obj["1"].carbonmin.data[i]) +
+              "," + ((obj["1"].cattle.data[i] == null) ? "NA" : obj["1"].cattle.data[i]) + "," + ((obj["1"].cornyield.data[i] == null) ? "NA" : obj["1"].cornyield.data[i]) + "," + ((obj["1"].drainageclass.data[i] == null) ? "NA" : obj["1"].drainageclass.data[i]) + "," + ((obj["1"].erosion.data[i] == null) ? "NA" : obj["1"].erosion.data[i]) + "," + ((obj["1"].floodfrequency.data[i] == null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
+              ((obj["1"].group.data[i] == null && obj["1"].floodfrequency.data[i] != 0) ? "NA" : " ") + "," + ((obj["1"].nitratespmm.data[i] == null) ? "NA" : obj["1"].nitratespmm.data[i]) + "," + ((obj["1"].pindex.data[i] == null) ? "NA" : obj["1"].pindex.data[i]) + "," + ((obj["1"].sediment.data[i] == null) ? "NA" : obj["1"].sediment.data[i]) + "," + ((obj["1"].soiltype.data[i] == null) ? 0 : obj["1"].soiltype.data[i]) + "," + ((obj["1"].soybeanyield.data[i] == null) ? "NA" : obj["1"].soybeanyield.data[i]) + "," +
+              ((obj["1"].streamnetwork.data[i] == null) ? "NA" : obj["1"].streamnetwork.data[i]) + "," + ((obj["1"].subwatershed.data[i] == null) ? 0 : obj["1"].subwatershed.data[i]) + "," + ((obj["1"].timber.data[i] == null) ? "NA" : obj["1"].timber.data[i]) + "," + ((obj["1"].topography.data[i] == null) ? 0 : obj["1"].topography.data[i]) + "," + ((obj["1"].watershednitrogencontribution.data[i] == null) ? "NA" : obj["1"].watershednitrogencontribution.data[i]) + "," +
+              ((obj["1"].wetland.data[i] == null) ? "NA" : obj["1"].wetland.data[i]) + "," + boardData[currentBoard].map[i].riverStreams + "," /** riverStreams is taken from the rever stream of currrent board*/ ;
+          } catch (except) {
+            //catches for a wrong json file type error
+            alert("This file format is not compatible");
+            return;
     // if (!event){
     //   event = window.event;
     // }
