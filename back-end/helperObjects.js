@@ -2172,7 +2172,7 @@ function Printer() {
       case 'fruit': return 'Mixed Fruits and Vegetables Yield';
       case 'cattle': return 'Cattle Yield';
       case 'alfalfa': return 'Alfalfa Yield';
-      case 'grasshay': return 'GrassHay Yield';
+      case 'grasshay': return 'Grass Hay Yield';
       case 'switchgrass': return 'Switchgrass Yield';
       case 'wood': return 'Wood Yield';
       case 'short': return 'Short-Rotation Woody Biomass Yield';
