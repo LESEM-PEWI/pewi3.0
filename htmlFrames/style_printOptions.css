@@ -27,6 +27,17 @@ body {
   width: 100%;
 }
 
+#closePrintOptions {
+    position: absolute;
+    width: 3vw;
+    right: 5%;
+    top: 5%;
+}
+
+#closePDiv:hover {
+    cursor: pointer;
+}
+
 .preview-btn, .print-btn, .exit-btn{
   position: absolute;
   top: 180%;
