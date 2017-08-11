@@ -704,10 +704,11 @@ function customMouseInput(buttonInput,drag) {
   var mY = parseFloat(buttonInput[5]);
   if(!drag) {
     var customMouse = new MouseEvent("mousedown", {button: 2, buttons: 2, clientX: inputX, clientY: inputY, layerX: 9, layerY: inputY, screenX: sX, screenY: sY, movementX: mX, movementY: mY});
+    document.getElementById('genOverlay').dispatchEvent(customMouse);
   } else {
     var customMouse = new MouseEvent("mousemove", {button: 0, buttons: 2, clientX: inputX, clientY: inputY, layerX: inputX, layerY: inputY, screenX: sX, screenY: sY, movementX: mX, movementY: mY});
+    window.dispatchEvent(customMouse);
   }
-  window.dispatchEvent(customMouse);
 } //end customMouseInput(buttonInput, drag)
 
 //Handles the delete button feature
@@ -3834,7 +3835,6 @@ function updateKeys() {
 
 //updatePrecip updates the currentBoard with the precipitation values selected in the drop down boxes
 function updatePrecip(year) {
-
   if (year == 0) {
     if (curTracking) {
       pushClick(0, getStamp(), 34, 0, document.getElementById("year0Precip").value);
