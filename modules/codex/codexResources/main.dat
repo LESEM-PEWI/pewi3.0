@@ -261,6 +261,14 @@ $
 ./codexResources/text/saveWatershed.html
 0
 $
+@ : PEWI 3.0 Short Tutorial
+<iframe width="500" height="300" src=https://www.youtube.com/embed/jgq-ydqO1L4?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/videotutorial.html
+0
+@ : PEWI 3.0 Complete Tutorial
+<iframe width="500" height="300" src=https://www.youtube.com/embed/m3DQwosNRUc?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
+./codexResources/text/videotutorial.html
+0
 @ : Main Menu
 <iframe width="500" height="300" src="https://www.youtube.com/embed/XanFEFELSKo?autoplay=0&controls=1&rel=0" frameborder="0" allowfullscreen></iframe>
 ./codexResources/text/mainMenu.html
