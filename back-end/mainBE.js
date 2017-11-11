@@ -175,7 +175,8 @@ function propogateBoard(board) {
 
   //Loop through the years and assign precipitation levels
   for (var y = 0; y < 4; y++) {
-    var precipIndex = setPrecipitation();
+    //var precipIndex = setPrecipitation();
+	var precipIndex = convertPrecipToIndex(parseFloat(initData[1][28+y]));
     board.precipitation[y] = precip[precipIndex];
     board.precipitationIndex[y] = precipIndex; //store precip indices
   }
