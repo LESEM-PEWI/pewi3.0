@@ -344,9 +344,13 @@ function confirmEscape() {
   if (document.getElementById('confirmEscape').style.height != "20vw") {
     document.getElementById('exitToMenuButton').style.backgroundColor = "#003d4d";
     document.getElementById('optionsButton').style.opacity = 0;
+    /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.opacity = 0;
+    */
     document.getElementById('optionsButton').onclick = function() {};
+    /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').onclick = function() {};
+    */
     document.getElementById('confirmEscape').style.height = "20vw";
     // document.getElementById('confirmEscape').style.width = "13.2vw";
   } else {
@@ -357,12 +361,16 @@ function confirmEscape() {
       startOptions();
       //}
     };
+    /* Commented out Glossary button, which is the following lines below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').onclick = function() {
       toggleEscapeFrame();
       toggleIndex();
     };
+    */
     document.getElementById('optionsButton').style.opacity = 1;
+    /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.opacity = 1;
+    */
     document.getElementById('confirmEscape').style.height = "0px";
     // document.getElementById('confirmEscape').style.width = "0px";
   }
