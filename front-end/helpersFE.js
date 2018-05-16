@@ -1029,6 +1029,7 @@ function executePrintOptions(isDownload) {
     boundary: false,
     drainage: false,
     soil: false,
+    topography: false,
     // yields
     yieldUserViewpoint: false,
     corn: false,
