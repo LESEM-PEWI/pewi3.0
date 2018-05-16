@@ -59,7 +59,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   //Keyboard movement inputs
-  if (keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]) { // W key Forward Movements
+  if (keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]] || keyboard[38]) { // Handle W key or Up arrow - Forward Movements
     if (curTracking) {
       pushClick(0, getStamp(), 86, 0, null);
     }
@@ -78,10 +78,10 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
     camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-    console.log(camera2.position);
+    // console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]) { // S key Back Words movements
+  if (keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]] || keyboard[40]) { // Handle S key or Down arrow - Back Words movements
     if (curTracking) {
       pushClick(0, getStamp(), 87, 0, null);
     }
@@ -100,10 +100,10 @@ function animate() {
     else
     camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
     camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
-    console.log(camera2.position);
+    // console.log(camera2.position);
   }
-
-  if (keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // A key Left Side Movement
+  // What will happen When press key 'A'
+  if (keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]] || keyboard[37]) { // Handle A key or Left arrow - Left Side Movement
     if (curTracking) {
       pushClick(0, getStamp(), 89, 0, null);
     }
@@ -122,10 +122,10 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera2.rotation.y + Math.PI / 2) * player.speed;
     camera2.position.x -= Math.sin(camera2.rotation.y + Math.PI / 2) * player.speed;
-    console.log(camera2.position);
+    // console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // D key Right side Movements
+  if (keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]] || keyboard[39]) { // Handle D key or Right arrow - Right side Movements
     if (curTracking) {
       pushClick(0, getStamp(), 88, 0, null);
     }
@@ -144,71 +144,71 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera.rotation.y - Math.PI / 2) * player.speed;
     camera2.position.x -= Math.sin(camera.rotation.y - Math.PI / 2) * player.speed;
-    console.log(camera2.position);
+    // console.log(camera2.position);
   }
 
   // Keyboard turn inputs
-  if (keyboard[39]) { // left arrow key Rotate right
-    if (curTracking) {
-      pushClick(0, getStamp(), 97, 0, null);
-    }
-    //This rotates the camera left
-    camera2.rotation.y -= player.turnSpeed;
-  }
-  if (keyboard[37]) { // right arrow key Rotate left
-    if (curTracking) {
-      pushClick(0, getStamp(), 98, 0, null);
-    }
-    //This rotates the camera right
-    camera2.rotation.y += player.turnSpeed;
-  }
-
-  //Specific Zooming
-  if (keyboard[38]) { // Up arrow key
-    if (curTracking) {
-      pushClick(0, getStamp(), 95, 0, null);
-    }
-    //Checking if toggle is on and checking if it passes a specific bounds and if it does
-    // It sets it to specific height and restrict it to that heights else if moves normally
-    if (tToggle) {
-      if (camera2.position.y <= 27)
-      camera2.position.y = 27;
-      else {
-        camera2.position.y -= 1;
-        camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
-        camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-        console.log(camera2.position.y + " " + camera.position.z);
-      }
-    } else {
-      if (camera2.position.y <= 9)
-      camera2.position.y = 9;
-      else {
-        camera2.position.y -= 1;
-        camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
-        camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-        console.log(camera2.position.y + " " + camera.position.z);
-      }
-    }
-  }
-
-  if (keyboard[40]) { // Down arrow key
-    if (curTracking) {
-      pushClick(0, getStamp(), 96, 0, null);
-    }
-    //setting bounds for zooming out and checking the camera y and z position.
-    //If it passes the position, it restricts the camera movement
-    if (camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)
-    camera2.position.z = 299;
-    if (camera2.position.y >= 60) {
-      camera2.position.y = 60;
-      console.log(camera2.position.y + " " + camera.position.z);
-    } else {
-      camera2.position.y += 1;
-      camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
-      camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
-      console.log(camera2.position.y + " " + camera.position.z);
-    }
-  }
+  // if (keyboard[39]) { // left arrow key Rotate right
+  //   if (curTracking) {
+  //     pushClick(0, getStamp(), 97, 0, null);
+  //   }
+  //   //This rotates the camera left
+  //   camera2.rotation.y -= player.turnSpeed;
+  // }
+//   if (keyboard[37]) { // right arrow key Rotate left
+//     if (curTracking) {
+//       pushClick(0, getStamp(), 98, 0, null);
+//     }
+//     //This rotates the camera right
+//     camera2.rotation.y += player.turnSpeed;
+//   }
+//
+//   //Specific Zooming
+//   if (keyboard[38]) { // Up arrow key
+//     if (curTracking) {
+//       pushClick(0, getStamp(), 95, 0, null);
+//     }
+//     //Checking if toggle is on and checking if it passes a specific bounds and if it does
+//     // It sets it to specific height and restrict it to that heights else if moves normally
+//     if (tToggle) {
+//       if (camera2.position.y <= 27)
+//       camera2.position.y = 27;
+//       else {
+//         camera2.position.y -= 1;
+//         camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
+//         camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
+//         console.log(camera2.position.y + " " + camera.position.z);
+//       }
+//     } else {
+//       if (camera2.position.y <= 9)
+//       camera2.position.y = 9;
+//       else {
+//         camera2.position.y -= 1;
+//         camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
+//         camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
+//         console.log(camera2.position.y + " " + camera.position.z);
+//       }
+//     }
+//   }
+//
+//   if (keyboard[40]) { // Down arrow key
+//     if (curTracking) {
+//       pushClick(0, getStamp(), 96, 0, null);
+//     }
+//     //setting bounds for zooming out and checking the camera y and z position.
+//     //If it passes the position, it restricts the camera movement
+//     if (camera2.position.z - Math.cos(camera2.rotation.y) * player.speed >= 300)
+//     camera2.position.z = 299;
+//     if (camera2.position.y >= 60) {
+//       camera2.position.y = 60;
+//       console.log(camera2.position.y + " " + camera.position.z);
+//     } else {
+//       camera2.position.y += 1;
+//       camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
+//       camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
+//       console.log(camera2.position.y + " " + camera.position.z);
+//     }
+//   }
   renderer.render(scene, camera);
 }
 
