@@ -59,7 +59,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   //Keyboard movement inputs
-  if (keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]) { // W key Forward Movements
+  if (keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]) { // Handle W key - Forward Movements
     if (curTracking) {
       pushClick(0, getStamp(), 86, 0, null);
     }
@@ -78,10 +78,10 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
     camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-    console.log(camera2.position);
+    // console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]) { // S key Back Words movements
+  if (keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]) { // Handle S key - Back Words movements
     if (curTracking) {
       pushClick(0, getStamp(), 87, 0, null);
     }
@@ -100,10 +100,10 @@ function animate() {
     else
     camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
     camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
-    console.log(camera2.position);
+    // console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // A key Left Side Movement
+  if (keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // Handle A key - Left Side Movement
     if (curTracking) {
       pushClick(0, getStamp(), 89, 0, null);
     }
@@ -122,10 +122,10 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera2.rotation.y + Math.PI / 2) * player.speed;
     camera2.position.x -= Math.sin(camera2.rotation.y + Math.PI / 2) * player.speed;
-    console.log(camera2.position);
+    // console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // D key Right side Movements
+  if (keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // Handle D key - Right side Movements
     if (curTracking) {
       pushClick(0, getStamp(), 88, 0, null);
     }
@@ -144,7 +144,7 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera.rotation.y - Math.PI / 2) * player.speed;
     camera2.position.x -= Math.sin(camera.rotation.y - Math.PI / 2) * player.speed;
-    console.log(camera2.position);
+    // console.log(camera2.position);
   }
 
   // Keyboard turn inputs
@@ -177,7 +177,7 @@ function animate() {
         camera2.position.y -= 1;
         camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
         camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-        console.log(camera2.position.y + " " + camera.position.z);
+        // console.log(camera2.position.y + " " + camera.position.z);
       }
     } else {
       if (camera2.position.y <= 9)
@@ -186,7 +186,7 @@ function animate() {
         camera2.position.y -= 1;
         camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
         camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-        console.log(camera2.position.y + " " + camera.position.z);
+        // console.log(camera2.position.y + " " + camera.position.z);
       }
     }
   }
@@ -201,12 +201,12 @@ function animate() {
     camera2.position.z = 299;
     if (camera2.position.y >= 60) {
       camera2.position.y = 60;
-      console.log(camera2.position.y + " " + camera.position.z);
+      // console.log(camera2.position.y + " " + camera.position.z);
     } else {
       camera2.position.y += 1;
       camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
       camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
-      console.log(camera2.position.y + " " + camera.position.z);
+      // console.log(camera2.position.y + " " + camera.position.z);
     }
   }
   renderer.render(scene, camera);
@@ -344,9 +344,13 @@ function confirmEscape() {
   if (document.getElementById('confirmEscape').style.height != "20vw") {
     document.getElementById('exitToMenuButton').style.backgroundColor = "#003d4d";
     document.getElementById('optionsButton').style.opacity = 0;
+    /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.opacity = 0;
+    */
     document.getElementById('optionsButton').onclick = function() {};
+    /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').onclick = function() {};
+    */
     document.getElementById('confirmEscape').style.height = "20vw";
     // document.getElementById('confirmEscape').style.width = "13.2vw";
   } else {
@@ -357,12 +361,16 @@ function confirmEscape() {
       startOptions();
       //}
     };
+    /* Commented out Glossary button, which is the following lines below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').onclick = function() {
       toggleEscapeFrame();
       toggleIndex();
     };
+    */
     document.getElementById('optionsButton').style.opacity = 1;
+    /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.opacity = 1;
+    */
     document.getElementById('confirmEscape').style.height = "0px";
     // document.getElementById('confirmEscape').style.width = "0px";
   }

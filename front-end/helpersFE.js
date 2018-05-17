@@ -703,6 +703,7 @@ function customMouseInput(buttonInput,drag) {
   var mX = parseFloat(buttonInput[4]);
   var mY = parseFloat(buttonInput[5]);
   if(!drag) {
+    //if downloadClicked
     var customMouse = new MouseEvent("mousedown", {button: 2, buttons: 2, clientX: inputX, clientY: inputY, layerX: 9, layerY: inputY, screenX: sX, screenY: sY, movementX: mX, movementY: mY});
     document.getElementById('genOverlay').dispatchEvent(customMouse);
   } else {
@@ -919,7 +920,7 @@ function displayLevels(overlayHighlightType) {
 
     }
     //else if the highlighting is different, let's change to the new highlighting
-    else {
+  else {
       //close previous legend
       showLevelDetails(-1 * currentHighlightType);
       //highlight board
@@ -2135,22 +2136,23 @@ function onDocumentMouseUp(event) {
     clickAndDrag = false;
 
     //check to see if one of the physical features maps is highlighted
+    // levels maps need to be checked too
     //if so, we'll change the tiles over to their appropriate color levels
-    if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
-
-      Totals = new Results(boardData[currentBoard]);
-      Totals.update();
-
-      // update each tile on the board with its corresponding color
-      for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
-        if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-          meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
-        }
-      } //end for
-    }
+//     if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
+//
+//       Totals = new Results(boardData[currentBoard]);
+//       Totals.update();
+//
+//       // update each tile on the board with its corresponding color
+//       for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+//
+//         if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+//           meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
+//         }
+//       } //end for
+//     }
   }
-} //end onDocumentMouseUp
+ } //end onDocumentMouseUp
 
 //onDocumentKeyDown, listener with keyboard bindings
 function onDocumentKeyDown(event) {
@@ -3602,13 +3604,17 @@ function toggleEscapeFrame() {
     document.getElementById('modalEscapeFrame').style.display = "block";
     document.getElementById('exitToMenuButton').style.visibility = "visible";
     document.getElementById('optionsButton').style.visibility = "visible";
+    /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "visible";
+    */
     modalUp = true;
   } else if (document.getElementById('modalEscapeFrame').style.display == "block" && modalUp) {
     document.getElementById('modalEscapeFrame').style.display = "none";
     document.getElementById('exitToMenuButton').style.visibility = "hidden";
     document.getElementById('optionsButton').style.visibility = "hidden";
+    /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "hidden";
+    */
     modalUp = false;
   }
   //Here I have unlocked the options button on the multiplayer screen. Bear in mind that any changes made to the
