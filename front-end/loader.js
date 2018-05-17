@@ -128,7 +128,7 @@ function loadResources() {
     //Cattle Yield
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/000000.png')); // 57       Black
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/CECACA.png')); // 58       Light Grey
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/360b07.png')); // 58       Light Grey
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/360b07.png')); // 58       Dark Mahogany
 
 
 
