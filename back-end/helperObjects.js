@@ -3092,6 +3092,8 @@ function Tile(tileArray, board) {
   this.strategicWetland = tileArray[23];
   this.riverStreams = tileArray[24];
 
+
+
   //default settings for land use setup
   //years 4 and 5 are land use types used for calculations of minumum and maximum values
   this.landType = [this.baseLandUseType, Number(tileArray[25]), Number(tileArray[26]), Number(tileArray[27]), LandUseType.prairie, LandUseType.conventionalSoybean];
