@@ -834,57 +834,64 @@ function displayLevels(overlayHighlightType) {
       pushClick(0, getStamp(), 49, 0, null);
     }
     break;
+    case 'topo':
+    selectionHighlightNumber = 9;
+    updateIndexPopup('This map shows the <span style="color:orange;">topography</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 50, 0, null);
+    }
+    break;
     // yield
     case 'corn':
-    selectionHighlightNumber = 9;
+    selectionHighlightNumber = 10;
     if (curTracking) {
       pushClick(0, getStamp(), 69, 0, null);
     }
     break;
     case 'soybean':
-    selectionHighlightNumber = 10;
+    selectionHighlightNumber = 11;
     if (curTracking) {
       pushClick(0, getStamp(), 70, 0, null);
     }
     break;
     case 'fruit':
-    selectionHighlightNumber = 11;
+    selectionHighlightNumber = 12;
     if (curTracking) {
       pushClick(0, getStamp(), 71, 0, null);
     }
     break;
     case 'cattle':
-    selectionHighlightNumber = 12;
+    selectionHighlightNumber = 13;
     if (curTracking) {
       pushClick(0, getStamp(), 72, 0, null);
     }
     break;
     case 'alfalfa':
-    selectionHighlightNumber = 13;
+    selectionHighlightNumber = 14;
     if (curTracking) {
       pushClick(0, getStamp(), 73, 0, null);
     }
     break;
     case 'grasshay':
-    selectionHighlightNumber = 14;
+    selectionHighlightNumber = 15;
     if (curTracking) {
       pushClick(0, getStamp(), 74, 0, null);
     }
     break;
     case 'switchgrass':
-    selectionHighlightNumber = 15;
+    selectionHighlightNumber = 16;
     if (curTracking) {
       pushClick(0, getStamp(), 75, 0, null);
     }
     break;
     case 'wood':
-    selectionHighlightNumber = 16;
+    selectionHighlightNumber = 17;
     if (curTracking) {
       pushClick(0, getStamp(), 76, 0, null);
     }
     break;
     case 'short':
-    selectionHighlightNumber = 17;
+    selectionHighlightNumber = 18;
     if (curTracking) {
       pushClick(0, getStamp(), 77, 0, null);
     }
@@ -1023,6 +1030,7 @@ function executePrintOptions(isDownload) {
     boundary: false,
     drainage: false,
     soil: false,
+    topography: false,
     // yields
     yieldUserViewpoint: false,
     corn: false,
@@ -1222,6 +1230,22 @@ function getHighlightColor(highlightType, tileId) {
       case 50: return 9;
     } //end switch
   }
+
+  else if (highlightType == "topo") {
+
+    var topo = Number(boardData[currentBoard].map[tileId].topography);
+
+    switch (topo) {
+      case 0: return 0;
+      case 1: return 1;
+      case 2: return 2;
+      case 3: return 3;
+      case 4: return 4;
+      case 5: return 59;
+    } //end switch
+  }
+
+
   //wetland highlight color indicies
   else if (highlightType == "wetlands") {
 
@@ -1451,6 +1475,30 @@ function getHighlightedInfo(tileId) {
       case 7:
         highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>";
         break;
+
+      /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
+      case 9:
+          switch (Number(boardData[currentBoard].map[tileId].topography)) {
+            case 0:
+              highlightString = "0-1%" + "<br>";
+              break;
+            case 1:
+              highlightString = "1-2%" + "<br>";
+              break;
+            case 2:
+              highlightString = "2-5%" + "<br>";
+              break;
+            case 3:
+              highlightString = "5-9%" + "<br>";
+              break;
+            case 4:
+              highlightString = "9-14%" + "<br>";
+              break;
+            case 5:
+              highlightString = "14-18%" + "<br>";
+              break;
+          }
+          break;
         /*case 8:
       var soil = boardData[currentBoard].map[tileId].soilType;
       switch(soil)
@@ -1497,39 +1545,39 @@ function getHighlightedInfo(tileId) {
     }*/
         //Raw numbers are for conversion of the units (conversion doesn't exist in the back end)
         //create string for corn grain yield
-      case 9:
+      case 10:
         highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>";
         break;
         //create string for soybean yield
-      case 10:
+      case 11:
         highlightString = Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>";
         break;
         //create string for  mixed fruit and vegetable yield
-      case 11:
+      case 12:
         highlightString = Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>";
         break;
         //create string for cattle yield
-      case 12:
+      case 13:
         highlightString = Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(1) + " animals/acre/yr" + "<br>";
         break;
         //create string for alfalfa yield
-      case 13:
-        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
-        break;
-        //create string for grass hay yield (same as alfalfa)
       case 14:
         highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
         break;
-        //create string for switchgrass yield
+        //create string for grass hay yield (same as alfalfa)
       case 15:
+        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
+        break;
+        //create string for switchgrass yield
+      case 16:
         highlightString = Number(boardData[currentBoard].map[tileId].getSwitchgrassYield() / 0.445407279029).toFixed(2) + " Mg/ha/yr" + "<br>";
         break;
         //create string for wood yield
-      case 16:
+      case 17:
         highlightString = Number(boardData[currentBoard].map[tileId].getWoodYield() / 171.875).toFixed(2) + " m3/ha/yr" + "<br>";
         break;
         //create string for short-rotation woody biomass yield
-      case 17:
+      case 18:
         highlightString = "608.6 tons/acre/yr" + "<br>";
         break;
     }
@@ -3183,56 +3231,61 @@ function showLevelDetails(value) {
     document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
     document.getElementById('soilDetailsList').className = "DetailsList physicalDetailsList";
     break;
+    //Topo layout
     case 9:
+    document.getElementById('topoClass').className = "featureSelectorIcon iconSelected";
+    document.getElementById('topoDetailsList').className = "DetailsList physicalDetailsList";
+    break;
+    case 10:
     //show Corn class legend
     document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('cornDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('<span style="color:orange;">Conventional Corn and Conservation Corn</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
-    case 10:
+    case 11:
     //show soy class legend
     document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('soybeanDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('<span style="color:orange;">Conventional Soy and Conservation Soy</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
-    case 11:
+    case 12:
     //show fruit class legend
     document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('To learn more about <span style="color:orange;">Mixed Fruits and Vegetable Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
-    case 12:
+    case 13:
     //show cattle class legend
     document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('<span style="color:orange;">Permanent Pasture and Rotational Grazing</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
-    case 13:
+    case 14:
     //show alfalfa class legend
     document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('To learn more about Alfalfa Hay Yield, go to the Index, select "Modules", and then "Yield".');
     updateIndexPopup('To learn more about <span style="color:orange;">Alfalfa Hay Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
-    case 14:
+    case 15:
     //show grasshay class legend
     document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('grasshayDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('To learn more about <span style="color:orange;">Grass Hay Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
-    case 15:
+    case 16:
     //show switch grass class legend
     document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('switchgrassDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('To learn more about <span style="color:orange;">Switch Grass Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
-    case 16:
+    case 17:
     //show wood class legend
     document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
     updateIndexPopup('<span style="color:orange;">Conventional Forest and Conservation Forest</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
-    case 17:
+    case 18:
     //show short class legend
     document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
@@ -3252,7 +3305,7 @@ function showLevelDetails(value) {
   }
 
   //hide watershed feature legends
-  else if (value < -3 && value > -9) {
+  else if (value < -3 && value > -10) {
     var element = document.getElementsByClassName('DetailsList physicalDetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled physicalDetailsList';
@@ -3262,7 +3315,7 @@ function showLevelDetails(value) {
       element[0].className = 'featureSelectorIcon icon';
     }
   } //end else/if group
-  else if (value < -8) {
+  else if (value < -9) {
     var element = document.getElementsByClassName('DetailsList yieldDetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled yieldDetailsList';
