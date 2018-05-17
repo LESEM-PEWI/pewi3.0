@@ -28,16 +28,20 @@
   right: 0vw;
 }
 
-#uploadDownloadButton {
+#uploadButton {
   right: 3vw;
 }
 
+#uploadDownloadButton {
+  right: 5vw;
+}
+
 #logoBase {
-  right: 6vw;
+  right: 8vw;
 }
 
 #pewiLogo{
-  right: 16vw;
+  right: 18vw;
 }
 
 /**results right styling**/

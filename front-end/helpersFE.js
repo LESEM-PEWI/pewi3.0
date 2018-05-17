@@ -4424,6 +4424,30 @@ function indexEsc(e) {
   }
 }
 
+//this function triggers a download of the current data
+function triggerDownloadSequence() {
+
+  //helpersFE.js, creates data using current board
+  var data = parent.writeFileToDownloadString(0);
+  var downloadBlob = new Blob([data], {
+    type: "text/csv;charset=utf-8"
+  });
+  //filesaver.min.js
+  saveAs(downloadBlob, "pewiMap.csv");
+
+  //close necessary frames
+  // setTimeout(function() {parent.downloadClicked();},1 );
+  // XXX SCRIPT438: Object doesn't support property or method 'downloadClicked'
+} // end triggerDownloadSequence()
+
+var fp = document.getElementById("file-upload1");
+function uploadFile() {
+  // pass the file handler
+  parent.uploadClicked(fp.files);
+  // clean the file
+  fp.files = null;
+} // end uploadFile()
+
 // Execute when Esc key is pressed while on the options page
 function optionsEsc(e) {
   if (e.keyCode == 27) {
