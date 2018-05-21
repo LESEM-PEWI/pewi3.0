@@ -36,10 +36,13 @@ Cleaned and Prepared - July 2016
 
   <!--page scripting-->
   <!-- <script type= "text/javascript" src="../front-end/helpersFE.js"></script> -->
+  <script src="../lib/jquery-3.2.1.min.js"></script>
   <script>
     var tempString;
     var multiString;
     var maxYear = 3; //for settings, defines the number of year buttons specified
+    var selectedOptionsTrue = [];
+    var selectedOptionsFalse = [];
     var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
     "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode"];
     //the saveCurrentOptionsState function is called when the save/exit button is pressed
@@ -150,6 +153,10 @@ Cleaned and Prepared - July 2016
       //scroll page to top, so that next time options is loaded it starts there
       window.scrollTo(0, 0);
 
+
+      selectedOptionsTrue = [];
+      selectedOptionsFalse = [];
+      recordCurrentOptions();
     } //end function saveCurrentOptionsState
 
 
@@ -295,6 +302,39 @@ Cleaned and Prepared - July 2016
         document.getElementById("hotkeySets").innerHTML = '';
       }
     }
+
+    /*
+    * In recordCurrentOptions the current status of the checkbox is recorded.
+    * The purpose for this is that if someone had previous settings already saved then thought about changing those 
+    * settings, but changed their mind in the process then those changes would be undone.
+    * For more information refer to Issue 362. 
+    */
+    function recordCurrentOptions(){
+      var currentSelection = document.getElementsByClassName('toggle');
+      console.log(currentSelection);
+
+      for(var i = 0; i < currentSelection.length; ++i){
+        if(currentSelection[i].checked){
+          selectedOptionsTrue.push(i);
+        }
+        else if(!currentSelection[i].checked){
+          selectedOptionsFalse.push(i);
+        }
+      }
+      console.log(selectedOptionsTrue);
+      console.log(selectedOptionsFalse);
+    }
+    
+    /*
+    * In undoSelectedOptions it sets the entire checkbox, which is the Instructor Options menu,
+    * to what was recorded in recordCurrentOptions.
+    * The purpose for this is that if someone had previous settings already saved then thought about changing those 
+    * settings, but changed their mind in the process then those changes would be undone.
+    * For more information refer to Issue 362. 
+    */
+    function undoSelectedOptions(){
+
+    }
   </script>
 
 </head>
@@ -308,7 +348,7 @@ Cleaned and Prepared - July 2016
   -->
 
   <!--Line below was added to add exit button on top right of Instructor Options page. Reference Issue 362 for details.-->
-  <div id="closeDiv"><img id="closeOptions" onclick="parent.resetOptions();" src="../imgs/close_black.png"></div>
+  <div id="closeDiv"><img id="closeOptions" onclick="undoSelectedOptions(); parent.resetOptions();" src="../imgs/close_black.png"></div>
   <div id="optionsMainHolder">
     <div class="optionsHeader" style="margin-top:15px;">
       Disable Land Use Types
