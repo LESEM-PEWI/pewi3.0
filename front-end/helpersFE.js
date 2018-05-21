@@ -3202,10 +3202,11 @@ function triggerDownloadSequence() {
 
 
 function uploadFile() {
+  //console.log(parent.filename);
   var fp = document.getElementById("uploadButton1");
-  // pass the file handler
-  parent.uploadClicked(fp.files);
-  // clean the file
+  // // pass the file handler
+   parent.uploadClicked(fp.files);
+  // // clean the file
   fp.files = null;
 } // end uploadFile()
 
