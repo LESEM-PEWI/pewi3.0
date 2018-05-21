@@ -5,7 +5,7 @@
 //     interfacing are original to us
 
 //  Our Code based on Bremer's Code based on Graves's code
-//          Bremer:  see post at http://bl.ocks.org/nbremer/6506614
+//          Bremer:  see post at https://bl.ocks.org/nbremer/6506614
 //          Graves:  see alangrafu on gitHub
 
 //Radar prototype with construction function

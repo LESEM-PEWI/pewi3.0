@@ -1,4 +1,4 @@
-//from http://threejs.org/examples/#canvas_geometry_birds
+//from https://threejs.org/examples/#canvas_geometry_birds
 
 //Bird object used in the creation of a flock of birds in the three.js scene
 var Bird = function () {
@@ -36,7 +36,7 @@ var Bird = function () {
 Bird.prototype = Object.create( THREE.Geometry.prototype );
 Bird.prototype.constructor = Bird;
 
-// Based on http://www.openprocessing.org/visuals/?visualID=6910
+// Based on https://www.openprocessing.org/visuals/?visualID=6910
 
 var Boid = function() {
 
@@ -316,11 +316,11 @@ var Boid = function() {
 
 //add birds and boid properties to the flock of birds created for the three.js scene
 function addBirds() {
-    
+
     if(birds.length < 1 && boids.length < 1){
-	
+
 		for ( var i = 0; i < 25; i ++ ) {
-	
+
 			boid = boids[ i ] = new Boid();
 			boid.position.x = Math.random() * 400 - 200;
 			boid.position.y = Math.abs(Math.random() * 400 - 200);
@@ -330,7 +330,7 @@ function addBirds() {
 			boid.velocity.z = Math.random() * 2 - 1;
 			boid.setAvoidWalls( true );
 			boid.setWorldSize( 400, 250, 400 );
-	
+
 			bird = birds[ i ] = new THREE.Mesh( new Bird(), new THREE.MeshBasicMaterial( { color:Math.random() * 0xffffff, side: THREE.DoubleSide } ) );
 			bird.phase = Math.floor( Math.random() * 62.83 );
 			scene.add( bird );
