@@ -554,7 +554,7 @@ LaTeX Font Info:    ... okay on input line 34.
 * paper: <default>
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
-* modes: includefoot 
+* modes: includefoot
 * h-part:(L,W,R)=(72.26999pt, 469.75502pt, 72.26999pt)
 * v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
 * \paperwidth=614.295pt
@@ -653,8 +653,8 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
- ...                                              
-                                                  
+ ...
+
 l.66 \thispagestyle
                    {empty} % no page number on cover
 Try typing  <return>  to proceed.
@@ -665,8 +665,8 @@ If that doesn't work, type  X <return>  to quit.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
- ...                                              
-                                                  
+ ...
+
 l.66 \thispagestyle
                    {empty} % no page number on cover
 Try typing  <return>  to proceed.
@@ -688,9 +688,9 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 ]pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
  been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.119 
+<to be read again>
+                   \relax
+l.119
        [1
 
 ] [2] [3]
@@ -734,7 +734,7 @@ i-ver-sity Ex-ten-sion and
 
 
 Underfull \hbox (badness 5064) in paragraph at lines 202--203
-\OT1/cmr/m/n/10.95 Out-reach, May 13, 2010, [][]$\OT1/cmtt/m/n/10.95 http : / /
+\OT1/cmr/m/n/10.95 Out-reach, May 13, 2010, [][]$\OT1/cmtt/m/n/10.95 https : / /
  crops . extension . iastate . edu / cropnews / 2010 / 05 /
  []
 
@@ -746,7 +746,7 @@ a-son," Iowa
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 208--209
-\OT1/cmr/m/n/10.95 Farmer To-day, June 1, 2005, [][]$\OT1/cmtt/m/n/10.95 http :
+\OT1/cmr/m/n/10.95 Farmer To-day, June 1, 2005, [][]$\OT1/cmtt/m/n/10.95 https :
  / / www . iowafarmertoday . com / news /
  []
 
@@ -764,13 +764,13 @@ ands in the Con-
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 215--216
-\OT1/cmr/m/n/10.95 ter-mi-nous United States," in Na-tional Wa-ter Sum-mary on 
+\OT1/cmr/m/n/10.95 ter-mi-nous United States," in Na-tional Wa-ter Sum-mary on
 Wet-land Re-sources,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 215--216
-\OT1/cmr/m/n/10.95 U.S. Ge-o-log-i-cal Sur-vey Water-Supply, Pa-per 2425 (U.S. 
+\OT1/cmr/m/n/10.95 U.S. Ge-o-log-i-cal Sur-vey Water-Supply, Pa-per 2425 (U.S.
 Ge-o-log-i-cal Sur-vey),
  []
 
@@ -792,7 +792,7 @@ Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 226.
 Package rerunfilecheck Info: File `general.out' has not changed.
 (rerunfilecheck)             Checksum: 708F30F64E59C6B45565D6ED208A1352;1896.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 226.
- ) 
+ )
 Here is how much of TeX's memory you used:
  6367 strings out of 493323
  90875 string characters out of 3139066
@@ -814,4 +814,3 @@ PDF statistics:
  336 PDF objects out of 1000 (max. 8388607)
  60 named destinations out of 1000 (max. 500000)
  246 words of extra memory for PDF output out of 10000 (max. 10000000)
-

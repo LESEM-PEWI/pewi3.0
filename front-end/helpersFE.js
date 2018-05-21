@@ -287,26 +287,71 @@ function addTile(tile) {
 function addYearAndTransition() {
 
   var totalYearsAllowed = 3;
-  var nextYear = boardData[currentBoard].calculatedToYear + 1;
+  var nextYear = boardData[currentBoard].calculatedToYear+1;
   if (curTracking) {
     pushClick(0, getStamp(), 41, 0, null);
   }
+
   //make next button appear (has some prebuilt functionality for expanded number of years)
+
   if (nextYear < totalYearsAllowed) {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
+    document.getElementById("year" + nextYear + "Button").style.display = "block";
   }
 
-  //make last button appear and remove the "+" Button (has some prebuilt functionality for expanded number of years)
   if (nextYear == totalYearsAllowed) {
     document.getElementById("year3Button").className = "yearButton";
     document.getElementById("year3Image").className = "icon yearNotSelected";
-    document.getElementById("yearAddButton").style.display = "none";
+    document.getElementById("year3Button").style.display = "block";
   }
 
+  if(nextYear > totalYearsAllowed)
+  {
+    alert("Cannot add more than 3 years!");
+    nextYear-=1;
+  }
+  //switch to next year
   switchYearTab(nextYear);
   transitionToYear(nextYear);
 } //end addYearAndTransition
+
+//deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
+  function deleteYearAndTransition()
+  {
+    var leastYearAllowed = 1;
+    var currYear = boardData[currentBoard].calculatedToYear;
+    if(curTracking)
+    {
+      pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO:
+    }
+    //if the current year is = 1, don't have an option for deleting the year
+    //promt- "Are you sure you want to delete Year #?" -using a confirm box
+     if(currYear == 1)
+     {
+        alert("Cannot delete year 1!");
+        currYear = 1;
+     }
+
+    else
+    {
+      var response;
+      if(confirm("Are you sure you want to delete year " + currYear + "?" ))
+      {
+        response = "Deleted!";
+        //delete the year
+        document.getElementById("year" + currYear + "Button").style.display = "none";
+        currYear -=1;
+        //switch to the previous year
+        transitionToYear(currYear);
+        switchYearTab(currYear);
+      }
+      else
+      {
+          response = "Not Deleted!";
+      }
+    }
+  }// end deleteYearAndTransition
 
 // animateResults() frame
 function animateResults() {
@@ -912,7 +957,7 @@ function displayLevels(overlayHighlightType) {
 
     }
     //else if the highlighting is different, let's change to the new highlighting
-    else {
+  else {
       //close previous legend
       showLevelDetails(-1 * currentHighlightType);
       //highlight board
@@ -2087,27 +2132,28 @@ function onDocumentMouseUp(event) {
     clickAndDrag = false;
 
     //check to see if one of the physical features maps is highlighted
+    // levels maps need to be checked too
     //if so, we'll change the tiles over to their appropriate color levels
-    if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
-
-      Totals = new Results(boardData[currentBoard]);
-      Totals.update();
-
-      // update each tile on the board with its corresponding color
-      for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-
-        if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-          meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
-        }
-      } //end for
-    }
+//     if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
+//
+//       Totals = new Results(boardData[currentBoard]);
+//       Totals.update();
+//
+//       // update each tile on the board with its corresponding color
+//       for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+//
+//         if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+//           meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
+//         }
+//       } //end for
+//     }
   }
-} //end onDocumentMouseUp
+ } //end onDocumentMouseUp
 
 //onDocumentKeyDown, listener with keyboard bindings
 function onDocumentKeyDown(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted || event.keyCode == 27) {
-    //switch structure on key code (http://keycode.info)
+    //switch structure on key code (https://keycode.info)
 
     // if (!event){
     //   event = window.event;
@@ -2304,7 +2350,7 @@ function continueTracking() {
 //onDocumentKeyUp, binding to keyboard keyUp event
 //  but you already knew that...
 function onDocumentKeyUp(event) {
-  //switch structure for key code (http://keycode.info)
+  //switch structure for key code (https://keycode.info)
 
   // var keycode = event.keyCode || event.charCode;
 
@@ -3785,14 +3831,26 @@ function transitionToYear(year) {
   }
   if (year > boardData[currentBoard].calculatedToYear && addingYearFromFile == false) {
     boardData[currentBoard].calculatedToYear = year;
+
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
     } // end for
   } // end if
 
+  if(year < boardData[currentBoard].calculatedToYear && !addingYearFromFile)
+  {
+    boardData[currentBoard].calculatedToYear  = year;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++)
+    {
+      boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year+0];
+    }
+
+  }
+
   if(addingYearFromFile==true) {
     boardData[currentBoard].calculatedToYear = year;
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+    for (var i = 0; i < boardData[currentBoard].map.length; i++)
+    {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year];
     } // end for
   } // end if
