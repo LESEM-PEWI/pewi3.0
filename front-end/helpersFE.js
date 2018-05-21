@@ -531,7 +531,7 @@ function clearInfo() {
 function clearPopup() {
   document.getElementById("popupText").innerHTML = " ";
   document.getElementById("popup").className = "popupHidden";
-  document.getElementById("dialogueButton").className = "dialogueButtonRolled";
+  document.getElementById("bookMarkButton").className = "bookMarkButtonRolled";
 } //end clearPopup
 
 //Clears all relative timers
@@ -3688,13 +3688,13 @@ function togglePopupDisplay() {
         pushClick(0, getStamp(), 14, 0, null);
       }
       document.getElementById("popup").className = "popupHidden";
-      document.getElementById("dialogueButton").className = "dialogueButtonRolled";
+      document.getElementById("bookMarkButton").className = "bookMarkButtonRolled";
     } else {
       if (curTracking) {
         pushClick(0, getStamp(), 54, 0, null);
       }
       document.getElementById("popup").className = "popup";
-      document.getElementById("dialogueButton").className = "dialogueButton";
+      document.getElementById("bookMarkButton").className = "bookMarkButton";
     }
   } //end if
 } // togglePopupDisplay()
@@ -3888,7 +3888,7 @@ function uniqueTileChange(tileId) {
 
 function updateIndexPopup(string) {
   window.parent.document.getElementById("indexPopupText").innerHTML = string;
-  window.parent.document.getElementById("backgroundInfoButton").style.background = '#' + Math.random().toString(16).slice(-6);
+  // window.parent.document.getElementById("backgroundInfoButton").style.background = '#' + Math.random().toString(16).slice(-6); // Assign random background color.
 }
 
 //Updates the visuals for the user
@@ -3942,8 +3942,8 @@ function updatePrecip(year) {
 function updatePopup(string) {
   document.getElementById("popupText").innerHTML = string + "<br>___________________________<br>" + document.getElementById("popupText").innerHTML;
   document.getElementById("popup").className = "popup";
-  document.getElementById("dialogueButton").className = "dialogueButton";
-  document.getElementById("dialogueButton").style.background = '#' + Math.random().toString(16).slice(-6);
+  document.getElementById("bookMarkButton").className = "bookMarkButton";
+  // document.getElementById("bookMarkButton").style.background = '#' + Math.random().toString(16).slice(-6); // Assign random background color.
   //document.getElementById("popup").style.background= "green";
   //Will activate an animation on the lower right side of the screen to show that the message box has updated
 } //end updatePopup
