@@ -546,7 +546,7 @@ function clearTimers() {
 //closeCreditFrame closes the credits iframe
 function closeCreditFrame() {
   if (curTracking) {
-    pushClick(0, getStamp(), 33, 0, null); // The parameters may need to change, have no idea what this method does.
+    pushClick(0, getStamp(), 33, 0, null);
   }
   document.getElementById('creditsFrame').style.display = "none";
   document.getElementById('closeCredits').style.display = "none";
@@ -560,7 +560,7 @@ function closeCreditFrame() {
 //closeEmailFrame closes the contact us iframe
 function closeEmailFrame() {
   if (curTracking) {
-    pushClick(0, getStamp(), 33, 0, null);
+    pushClick(0, getStamp(), 33, 0, null); // The parameters may need to change, have no idea what this method does.
   }
   document.getElementById('emailFrame').style.display = "none";
   document.getElementById('closeEmail').style.display = "none";
