@@ -28,16 +28,19 @@
   right: 0vw;
 }
 
+#emailIcon {
+  right: 3.5vw
+}
 #uploadDownloadButton {
-  right: 3vw;
+  right: 6.5vw;
 }
 
 #logoBase {
-  right: 6vw;
+  right: 9.5vw;
 }
 
 #pewiLogo{
-  right: 16vw;
+  right: 19.5vw;
 }
 
 /**results right styling**/

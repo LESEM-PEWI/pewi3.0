@@ -1093,6 +1093,7 @@
     <img id="logoBase" src="./imgs/inGameLogo.png">
     <img id="uploadDownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="emailIcon" class="upperButton" src="./imgs/emailIcon.png" onclick="showEmail();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="recordIcon" class="upperButton" style="visibility:hidden;" width="40px" src="./imgs/recordingIcon.gif">
     <img id="homebutton" class="upperButton" src="imgs/Home_Icon.png" onclick="toggleEscapeFrame();">
     <img id="printButton" class="upperButton" src="imgs/Button_Print.svg" onclick="startPrintOptions();">
@@ -1119,11 +1120,13 @@
       <p id="hover-info"></p>
     </div>
 
-    <!-- Create iFrames for credits, upload/download, and codex -->
+    <!-- Create iFrames for credits, upload/download, contact us and codex -->
     <div id="modalCreditsFrame"><iframe id="creditsFrame" style="display:none;" src="./htmlFrames/credits.html"></iframe></div>
     <img id="closeCredits" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeCreditFrame() ;">
     <div id="modalUploadFrame"><iframe id="uploadDownloadFrame" style="display:none;" src="./htmlFrames/uploadDownload.html"></iframe></div>
     <img id="closeUploadDownload" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeUploadDownloadFrame();">
+    <div id="modalEmailFrame"><iframe id="emailFrame" style="display:none;" src="./htmlFrames/contact_us.html"></iframe></div>
+    <img id="closeEmail" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeEmailFrame() ;">
     <div id="modalCodexFrame"><iframe id="index" src="./modules/codex/codex.html" allowfullscreen="allowfullscreen"></iframe></div>
     <!-- index iframe has its own close button -->
 

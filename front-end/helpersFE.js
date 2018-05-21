@@ -546,7 +546,7 @@ function clearTimers() {
 //closeCreditFrame closes the credits iframe
 function closeCreditFrame() {
   if (curTracking) {
-    pushClick(0, getStamp(), 33, 0, null);
+    pushClick(0, getStamp(), 33, 0, null); // The parameters may need to change, have no idea what this method does.
   }
   document.getElementById('creditsFrame').style.display = "none";
   document.getElementById('closeCredits').style.display = "none";
@@ -554,6 +554,20 @@ function closeCreditFrame() {
   modalUp = false;
   //Event listner that closes escape key
   document.removeEventListener('keyup', aboutsEsc);
+  // removeEvent(document, 'keyup', aboutsEsc);
+} //end closeCreditFrame
+
+//closeEmailFrame closes the contact us iframe
+function closeEmailFrame() {
+  if (curTracking) {
+    pushClick(0, getStamp(), 33, 0, null);
+  }
+  document.getElementById('emailFrame').style.display = "none";
+  document.getElementById('closeEmail').style.display = "none";
+  document.getElementById('modalEmailFrame').style.display = "none";
+  modalUp = false;
+  //Event listner that closes escape key
+  document.removeEventListener('keyup', emailEsc);
   // removeEvent(document, 'keyup', aboutsEsc);
 } //end closeCreditFrame
 
@@ -2731,6 +2745,8 @@ function resetPresets() {
   closeCreditFrame();
   //Closes the upload/download tab (if it was open)
   closeUploadDownloadFrame();
+  //Closes the contact us tab (if it was open)
+  closeEmailFrame();
   //Rolls out the left console
   if (document.getElementById('tabButtons').className != "tabButtons") {
     roll(1);
@@ -3183,6 +3199,21 @@ function showCredits() {
   // addEvent(document, 'keyup', aboutsEsc);
 } //end showCredits
 
+function showEmail() {
+  if (!modalUp) {
+    if (curTracking) {
+      pushClick(0, getStamp(), 11, 0, null); // The parameters may need to change, have no idea what this method does.
+    }
+    document.getElementById('emailFrame').style.display = "block";
+    document.getElementById('closeEmail').style.display = "block";
+    document.getElementById('modalEmailFrame').style.display = "block";
+    modalUp = true;
+  }
+  //Event Listner to close the contact us page
+  document.addEventListener('keyup', aboutsEsc);
+  // addEvent(document, 'keyup', aboutsEsc);
+} //end showEmail
+
 //showInfo updates the bottom HUD
 function showInfo(stringToShow) {
   if (!multiplayerAssigningModeOn) document.getElementById("currentInfo").innerHTML = stringToShow;
@@ -3634,6 +3665,7 @@ function toggleIndex() {
 
   if (document.getElementById('index').style.display != "block" && !modalUp) {
     closeCreditFrame();
+    closeEmailFrame();
     closeUploadDownloadFrame();
     if (document.getElementById('modalResultsFrame').style.display == "block") resultsEnd();
 
@@ -4407,6 +4439,13 @@ function resultsEsc(e) {
 function aboutsEsc(e) {
   if (e.keyCode == 27) {
     closeCreditFrame();
+  }
+}
+
+//Function that closes the contact_us dialog when escape key is pressed
+function emailEsc(e) {
+  if (e.keyCode == 27) {
+    closeEmailFrame();
   }
 }
 
