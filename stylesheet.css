@@ -164,13 +164,18 @@ body {
 }
 
 #closeUploadDownload {
-  left: 55.5vw;
-  top: 20vh;
+  left: 58vw;
+  top: 21vh;
 }
 
 #closeCredits {
   right: 26%;
   top: 21%;
+}
+
+#closeEmail {
+  right: 26%;
+  top: 20%;
 }
 
 #uploadDownloadFrame {
@@ -188,7 +193,17 @@ body {
   position: absolute;
   right: 25%;
   top: 20%;
-  width: 50%;
+  width: 45%;
+}
+
+#emailFrame {
+  background-color: white;
+  border-radius: 10px;
+  height: 42%;
+  position: absolute;
+  right: 25%;
+  top: 20%;
+  width: 40%;
 }
 
 #bottomHUD {
@@ -417,7 +432,7 @@ body {
 
 /* style of all the iframe */
 
-#modalUploadFrame, #modalEscapeFrame, #modalCreditsFrame, #modalResultsFrame {
+#modalUploadFrame, #modalEscapeFrame, #modalCreditsFrame, #modalEmailFrame, #modalResultsFrame {
   animation-duration: 1.0s;
   animation-name: showEffect;
   background-color: rgba(0, 0, 0, 0.7);
