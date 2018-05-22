@@ -336,8 +336,19 @@ function addYearAndTransition() {
     else
     {
       var response;
+      var ele = document.getElementById("year3button");
       if(confirm("Are you sure you want to delete year " + currYear + "?" ))
       {
+        if(currYear == 2 && ele!= null)
+        {
+          response = "Deleted!";
+          //delete the year
+          document.getElementById("year3Button").style.display = "none";
+          currYear =2;
+          //switch to the previous year
+          transitionToYear(currYear);
+          switchYearTab(currYear);
+        }
         response = "Deleted!";
         //delete the year
         document.getElementById("year" + currYear + "Button").style.display = "none";
