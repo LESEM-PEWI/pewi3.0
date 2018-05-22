@@ -317,57 +317,57 @@ function addYearAndTransition() {
 } //end addYearAndTransition
 
 //deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
-  function deleteYearAndTransition()
+//deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
+function deleteYearAndTransition()
+{
+  var leastYearAllowed = 1;
+  var currYear = boardData[currentBoard].calculatedToYear;
+  if(curTracking)
   {
-    console.log("I am here");
-    var leastYearAllowed = 1;
-    var currYear = boardData[currentBoard].calculatedToYear;
-    if(curTracking)
-    {
-      pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO:
-    }
-    //if the current year is = 1, don't have an option for deleting the year
-    //promt- "Are you sure you want to delete Year #?" -using a confirm box
-     if(currYear == 1)
-     {
-        alert("Cannot delete year 1!");
-        currYear = 1;
-     }
+    pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO:
+  }
+  //if the current year is = 1, don't have an option for deleting the year
+  //promt- "Are you sure you want to delete Year #?" -using a confirm box
+   if(currYear == 1)
+   {
+      alert("Cannot delete year 1!");
+      currYear = 1;
+   }
 
-    else
+  else
+  {
+    var response;
+    if(confirm("Are you sure you want to delete year " + currYear + "?" ))
     {
-      var response;
-      if(confirm("Are you sure you want to delete year " + currYear + "?" ))
+      if(currYear == 2 && ($('#year3Button').is(':visible')))
       {
-        if(currYear == 2 && ($('#year3Button').is(':visible')))
-        {
-          console.log("entering the if statement");
-          response = "Deleted!";
-          //delete the year
-          document.getElementById("year3Button").style.display = "none";
-          document.getElementById("year2Button").style.display = "block";
-          currYear =2;
-          alert("Year 3 is now Year 2!");
-          //switch to the previous year
-        }
-        else
-        {
-          response = "Deleted!";
-          //delete the year
-          document.getElementById("year" + currYear + "Button").style.display = "none";
-          currYear -=1;
-          //switch to the previous year
-          transitionToYear(currYear);
-          switchYearTab(currYear);
-        }
+//        console.log("entering the if statement");
+        response = "Deleted!";
+        //delete the year
+        document.getElementById("year3Button").style.display = "year2Button";
+        document.getElementById("year3Button").style.display = "none";
+  //make it year 2
+        currYear =2;
+        switchYearTab(2);
+        alert("Year 3 is now Year 2!");
       }
       else
       {
-          response = "Not Deleted!";
+        response = "Deleted!";
+        //delete the year
+        document.getElementById("year" + currYear + "Button").style.display = "none";
+        currYear -=1;
+        //switch to the previous year
+        transitionToYear(currYear);
+        switchYearTab(currYear);
       }
     }
-  }// end deleteYearAndTransition
-
+    else
+    {
+        response = "Not Deleted!";
+    }
+  }
+}// end deleteYearAndTransition
 // animateResults() frame
 function animateResults() {
   //if it is ever the case that we want to do some fancy zooming or screen
