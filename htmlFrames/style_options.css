@@ -34,11 +34,22 @@ body {
    width: 12vw;
   }
 
-#resetOptionsPage{
-    margin-left: 30%;
+  #resetOptionsPage{
+   margin-left: 30%;
    margin-top: 5%;
    width: 12vw;
-}
+  }
+
+  #closeDiv:hover {
+    cursor: pointer;
+  }
+
+  #closeOptions {
+    position: absolute;
+    width: 3vw;
+    right: 5%;
+    top: 5%;
+  }
 
   #optionsMainHolder {
    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -99,9 +110,9 @@ body {
     display:inline-block;
   }
 
-#subtractYear {
-  margin-left: 1vw;
-}
+  #subtractYear {
+    margin-left: 1vw;
+  }
 
   #delimiter {
     font-weight: 100;
