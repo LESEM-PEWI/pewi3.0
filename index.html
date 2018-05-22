@@ -1100,20 +1100,49 @@
     <!-- Create buttons in upper right corner: upperHud-->
     <img id="pewiLogo" src="./imgs/updatedPewiLogo.png">
     <img id="logoBase" src="./imgs/inGameLogo.png">
+    <img id="DownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" onclick="triggerDownloadSequence();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
+    <div class="uploadFile1">
+      <label for="file-upload3">
+                <!--Technically not allowed, but seems to work across browsers-->
+                <!-- in future, div may need to be moved outside the label, cleverly-->
+                <div id="uploadFile" class="upperButton">
+                  <img id="UploadButton" src = "./imgs/UploadImage.png" style="height: 3vw" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+                </div>
+            </label>
+      <input id="file-upload3" type="file" onchange="uploadFile();"/>
+    </div>
 
+    <script type="text/javascript">
+    /**
+    * pass the file handler to uploadClicked() in helpersFE.js
+    *
+    */
+    function uploadFile() {
+      // input tag that upload-file will attach to
+      var fp = document.getElementById("file-upload3");
+      // pass the file handler
+      uploadClicked(fp.files);
+      // clean the file
+      fp.files = null;
+    } // end uploadFile()
 
+    //this function triggers a download of the current data
+    function triggerDownloadSequence() {
 
+      //helpersFE.js, creates data using current board
+      var data = writeFileToDownloadString(0);
+      var downloadBlob = new Blob([data], {
+        type: "text/csv;charset=utf-8"
+      });
+      //filesaver.min.js
+      saveAs(downloadBlob, "pewiMap.csv");
 
-
-    <img id="uploadDownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" onclick="triggerDownloadSequence();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-
-
-
-
-
-  <input type=image id="uploadButton1" class="upperButton" src="./imgs/UploadImage.png" onclick="uploadFile();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-  
+      //close necessary frames
+      // setTimeout(function() {parent.downloadClicked();},1 );
+      // XXX SCRIPT438: Object doesn't support property or method 'downloadClicked'
+    } // end triggerDownloadSequence()
+    </script>
 
 
 

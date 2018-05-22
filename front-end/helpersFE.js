@@ -3184,32 +3184,6 @@ function showCredits() {
   // addEvent(document, 'keyup', aboutsEsc);
 } //end showCredits
 
-//this function triggers a download of the current data
-function triggerDownloadSequence() {
-
-  //helpersFE.js, creates data using current board
-  var data = parent.writeFileToDownloadString(0);
-  var downloadBlob = new Blob([data], {
-    type: "text/csv;charset=utf-8"
-  });
-  //filesaver.min.js
-  saveAs(downloadBlob, "pewiMap.csv");
-
-  //close necessary frames
-  // setTimeout(function() {parent.downloadClicked();},1 );
-  // XXX SCRIPT438: Object doesn't support property or method 'downloadClicked'
-} // end triggerDownloadSequence()
-
-
-function uploadFile() {
-  //console.log(parent.filename);
-  var fp = document.getElementById("uploadButton1");
-  // // pass the file handler
-   parent.uploadClicked(fp.files);
-  // // clean the file
-  fp.files = null;
-} // end uploadFile()
-
 //showInfo updates the bottom HUD
 function showInfo(stringToShow) {
   if (!multiplayerAssigningModeOn) document.getElementById("currentInfo").innerHTML = stringToShow;

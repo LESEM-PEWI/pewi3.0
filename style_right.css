@@ -25,18 +25,17 @@
   border-bottom: 2px groove white;
 }
 
-
 #creditsButton {
   right: 0vw;
 }
 
-#uploadButton1 {
+/*This represents the div class not the image itself*/
+#uploadFile{
   right: 3vw;
 }
 
 
-
-#uploadDownloadButton {
+#DownloadButton {
   right: 5vw;
 }
 
@@ -46,6 +45,12 @@
 
 #pewiLogo{
   right: 18vw;
+}
+
+
+
+.uploadFile1>input {
+  display: none;
 }
 
 
