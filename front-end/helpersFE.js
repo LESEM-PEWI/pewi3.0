@@ -319,6 +319,7 @@ function addYearAndTransition() {
 //deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
   function deleteYearAndTransition()
   {
+    console.log("I am here");
     var leastYearAllowed = 1;
     var currYear = boardData[currentBoard].calculatedToYear;
     if(curTracking)
@@ -336,26 +337,29 @@ function addYearAndTransition() {
     else
     {
       var response;
-      var ele = document.getElementById("year3button");
       if(confirm("Are you sure you want to delete year " + currYear + "?" ))
       {
-        if(currYear == 2 && ele!= null)
+        if(currYear == 2 && ($('#year3Button').is(':visible')))
         {
+          console.log("entering the if statement");
           response = "Deleted!";
           //delete the year
           document.getElementById("year3Button").style.display = "none";
+          document.getElementById("year2Button").style.display = "block";
           currYear =2;
+          alert("Year 3 is now Year 2!");
+          //switch to the previous year
+        }
+        else
+        {
+          response = "Deleted!";
+          //delete the year
+          document.getElementById("year" + currYear + "Button").style.display = "none";
+          currYear -=1;
           //switch to the previous year
           transitionToYear(currYear);
           switchYearTab(currYear);
         }
-        response = "Deleted!";
-        //delete the year
-        document.getElementById("year" + currYear + "Button").style.display = "none";
-        currYear -=1;
-        //switch to the previous year
-        transitionToYear(currYear);
-        switchYearTab(currYear);
       }
       else
       {
