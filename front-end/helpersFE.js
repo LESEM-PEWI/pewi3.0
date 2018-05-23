@@ -348,7 +348,7 @@ function deleteYearAndTransition()
         document.getElementById("year3Button").style.display = "none";
   //make it year 2
         currYear =2;
-        switchYearTab(2);
+    //    switchYearTab(2);
         alert("Year 3 is now Year 2!");
       }
       else

@@ -107,3 +107,54 @@ function addYearAndTransition() {
 in index.html
 
   <div id="yearDeleteButton" class="yearButton" onclick="deleteYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearDeleteImage" class="icon yearNotSelected" src="./imgs/deleteYear.png"></div>
+
+  function deleteYearAndTransition()
+  {
+    var leastYearAllowed = 1;
+    var currYear = boardData[currentBoard].calculatedToYear;
+    if(curTracking)
+    {
+      pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO:
+    }
+    //if the current year is = 1, don't have an option for deleting the year
+    //promt- "Are you sure you want to delete Year #?" -using a confirm box
+     if(currYear == 1)
+     {
+        alert("Cannot delete year 1!");
+        currYear = 1;
+     }
+
+    else
+    {
+      var response;
+      if(confirm("Are you sure you want to delete year " + currYear + "?" ))
+      {
+        if(currYear == 2 && ($('#year3Button').is(':visible')))
+        {
+  //        console.log("entering the if statement");
+          response = "Deleted!";
+          //delete the year
+          document.getElementById("year3Button").style.display = "year2Button";
+          document.getElementById("year3Button").style.display = "none";
+	  //make it year 2
+          currYear =2;
+          switchYearTab(currYear);
+          alert("Year 3 is now Year 2!");
+        }
+        else
+        {
+          response = "Deleted!";
+          //delete the year
+          document.getElementById("year" + currYear + "Button").style.display = "none";
+          currYear -=1;
+          //switch to the previous year
+          transitionToYear(currYear);
+          switchYearTab(currYear);
+        }
+      }
+      else
+      {
+          response = "Not Deleted!";
+      }
+    }
+  }// end deleteYearAndTransition
