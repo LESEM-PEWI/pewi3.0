@@ -21,12 +21,16 @@
   width: 3vw;
 }
 
-.upperButton:hover {
+/* .upperButton:hover {
   border-bottom: 2px groove white;
-}
+} */
 
 #creditsButton {
   right: 0vw;
+}
+
+#creditsButton:hover{
+  border-bottom: 2px groove white;
 }
 
 /*This represents the div class not the image itself*/
@@ -39,6 +43,10 @@
   right: 5vw;
 }
 
+#DownloadButton:hover{
+  border-bottom: 2px groove white;
+}
+
 #logoBase {
   right: 8vw;
 }
@@ -47,12 +55,21 @@
   right: 18vw;
 }
 
-
-
+/*Hides the default file upload button*/
 .uploadFile1>input {
   display: none;
 }
 
+.uploadButtonClass{
+  cursor: pointer;
+ height: 3vw;
+ -webkit-transition-duration: 0.1s;
+ transition-duration: 0.1s;
+}
+
+#UploadButton:hover {
+  border-top: 2px solid white;
+}
 
 
 /**results right styling**/
