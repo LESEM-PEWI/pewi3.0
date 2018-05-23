@@ -29,18 +29,25 @@
   right: 0vw;
 }
 
+
 #creditsButton:hover{
+  border-bottom: 2px groove white;
+}
+
+ #emailIcon {
+  right: 3.5vw
+}
+
+#emailIcon:hover{
   border-bottom: 2px groove white;
 }
 
 /*This represents the div class not the image itself*/
 #uploadFile{
-  right: 3vw;
+  right: 7vw;
 }
-
-
 #DownloadButton {
-  right: 5vw;
+  right: 9vw;
 }
 
 #DownloadButton:hover{
@@ -48,11 +55,11 @@
 }
 
 #logoBase {
-  right: 8vw;
+  right: 11.5vw;
 }
 
 #pewiLogo{
-  right: 18vw;
+  right: 21.5vw;
 }
 
 /*Hides the default file upload button*/
@@ -67,8 +74,10 @@
  transition-duration: 0.1s;
 }
 
+
+
 #UploadButton:hover {
-  border-top: 2px solid white;
+  border-top: 2px groove white;
 }
 
 
