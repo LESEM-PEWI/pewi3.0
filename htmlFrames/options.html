@@ -36,6 +36,7 @@ Cleaned and Prepared - July 2016
 
   <!--page scripting-->
   <!-- <script type= "text/javascript" src="../front-end/helpersFE.js"></script> -->
+  <script src="../lib/jquery-3.2.1.min.js"></script>
   <script>
     var tempString;
     var multiString;
@@ -295,6 +296,36 @@ Cleaned and Prepared - July 2016
         document.getElementById("hotkeySets").innerHTML = '';
       }
     }
+
+    /*
+    * In resetOptionsSelected is used to set all the options to false (original state).
+    * The resetOptionSelected function was created for Issue 368. Reference Issue 368 for more information.
+    */
+    function resetOptionsSelected(){
+
+      /*
+      * Resets all options to false
+      * First 25 are paint and hover ids,
+      * The last two options are precipitation and application statistics option.
+      */
+      for(var i = 0; i < 29; ++i){
+        if(i < 26){
+          $(':checkbox')[i].checked = false;
+        }
+        if(i === 26){
+          $('#precip.toggle').prop('checked', false);
+        }
+        if(i === 27){
+          $('#statFrame.toggle').prop('checked', false);
+        }
+      }
+
+      //saves the current state of options
+      saveCurrentOptionsState();
+
+      //scroll page to top, so that next time options is loaded it starts there
+      window.scrollTo(0, 0);
+    }
   </script>
 
 </head>
@@ -456,7 +487,8 @@ Cleaned and Prepared - July 2016
 
     <div style="width:100%;height:200px;position:relative;">
       <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState();">Save & Exit</div>
-    <div id="resetOptionsPage" class="mainButton" onclick="parent.resetOptionsPage()";>Reset Options</div>
+    <!-- The line below was changed to for Issue 368. Reference Issue 368 for more information. -->
+    <div id="resetOptionsPage" class="mainButton" onclick="resetOptionsSelected(); parent.resetOptions();">Reset Options</div>
     </div>
 
   </div>
