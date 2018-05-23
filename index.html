@@ -193,24 +193,43 @@
 
     <!-- Create left-side console button tabs -->
     <!-- "Pickaxe" by Luke Anthony Firth on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-    <div id="toolsButton" class="consoleButton" onclick="roll(1);">
-      <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <div id="toolsButton" class="consoleButton" onclick="roll(1);" >
+      <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType(); toggleTabTitle('toolsTabTitle');" onmouseout="toggleChangeLandType(); toggleTabTitle('toolsTabTitle');">
+      <div id="toolsTabTitle" style="display:none;"></div>
     </div>
 
     <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
       <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-      <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);"><img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png"></div>
+      <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);">
+        <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle');" onmouseout="toggleTabTitle('terrainTabTitle');">
+        <div id="terrainTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Cloud, raindrops, sun icon" by Yannick Lung (http://yannicklung.com/) with free commercial use / Inverted and resized -->
-      <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png"></div>
+      <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);">
+        <img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png" onmouseover="toggleTabTitle('precipTabTitle');" onmouseout="toggleTabTitle('precipTabTitle');">
+        <div id="precipTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Calendar tool variant for time administration free icon" by FreePik (http://www.freepik.com), retrived from www.flaticon.com  with free commercial use / Inverted and resized -->
-      <div id="yearButton" class="consoleButton" onclick="switchConsoleTab(6);"><img id="calendarImg" class="imgNotSelected" src="./imgs/calendarIcon.png"></div>
+      <div id="yearButton" class="consoleButton" onclick="switchConsoleTab(6);">
+        <img id="calendarImg" class="imgNotSelected" src="./imgs/calendarIcon.png" onmouseover="toggleTabTitle('yearTabTitle');" onmouseout="toggleTabTitle('yearTabTitle');">
+        <div id="yearTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Filter, levels, settings icon" by Yash Ranpara (https://www.iconfinder.com/yash11) with free commerical use / Inverted and resized -->
-      <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);"><img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png"></div>
+      <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);">
+        <img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png" onmouseover="toggleTabTitle('levelsTabTitle');" onmouseout="toggleTabTitle('levelsTabTitle');">
+        <div id="levelsTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
-      <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
+      <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);">
+        <img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png" onmouseover="toggleTabTitle('featuresTabTitle');" onmouseout="toggleTabTitle('featuresTabTitle');">
+        <div id="featuresTabTitle" style="display:none;"></div>
+      </div>
 
-      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
+      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);">
+        <img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png" onmouseover="toggleTabTitle('yieldTabTitle');" onmouseout="toggleTabTitle('yieldTabTitle');">
+        <div id="yieldTabTitle" style="display:none;"></div>
+      </div>
 
     </div>
 
