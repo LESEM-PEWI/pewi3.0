@@ -363,11 +363,21 @@ body {
 }
 
 #escapeButton {
+  /*
   animation-duration: 0.8s;
   animation-name: showEffect;
   visibility: hidden;
   -webkit-transition-duration: 0.8s;
   /* Safari */
+
+  position: absolute;
+  width: 3vw;
+  right: 5%;
+  top: 5%;
+}
+
+#closeDiv:hover {
+    cursor: pointer;
 }
 
 #directoryButton {

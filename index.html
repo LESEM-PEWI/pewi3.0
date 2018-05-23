@@ -1153,6 +1153,8 @@
   <!-- the modal frame covers the page with semi-opaque layer, and escape options -->
 
   <div id="modalEscapeFrame">
+    <!--Line below was added to add exit button on top right of Home options page. Reference Issue 361 for details.-->
+    <div id="closeDiv"><img id="escapeButton" onclick="toggleEscapeFrame();" src="./imgs/close_black.png"></div>
     <div id="escapeMenu">
       <!--Commented out Glossary button, which is div below. Reference Issue 363 on explanation for removal.-->
       <!--<div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleIndex() ;">Glossary</div>-->
@@ -1160,8 +1162,6 @@
       <!--The hover options feature is currently in the Options menu, but can be changed -->
       <!--<div class="mainEscapeButton" id="userSettingsButton" onclick="toggleEscapeFrame(); startOptions();">User Settings</div>-->
       <div class="mainEscapeButton" id="exitToMenuButton" onclick="confirmEscape();">Main Menu</div>
-      <!--Line below was added to add exit button on top right of Home options page. Reference Issue 361 for details.-->
-      <div class="mainEscapeButton" id="escapeButton" onclick="toggleEscapeFrame();">Escape</div>
       <div id="confirmEscape">
         Are you sure you want to exit? All your progress will be lost.
         <div class="mainEscapeButton" id="yesConfirmEscape" onclick="showMainMenu(); toggleEscapeFrame();">Yes</div>
