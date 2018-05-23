@@ -28,16 +28,19 @@
   right: 0vw;
 }
 
+#emailIcon {
+  right: 3.5vw
+}
 #uploadDownloadButton {
-  right: 3vw;
+  right: 6.5vw;
 }
 
 #logoBase {
-  right: 6vw;
+  right: 9.5vw;
 }
 
 #pewiLogo{
-  right: 16vw;
+  right: 19.5vw;
 }
 
 /**results right styling**/
@@ -154,7 +157,7 @@
 }
 
 /*By default, the dialogue button stays on the screen */
-.dialogueButton, .dialogueButtonRolled {
+.bookMarkButton, .bookMarkButtonRolled {
   -webkit-animation-name: rollButtonSide;
   animation-name: rollButtonSide;
   background-color: rgba(0, 0, 0, 0.9);
@@ -176,13 +179,13 @@
 }
 
 /*Dialogue button will roll off the screen when clicked on*/
-.dialogueButtonRolled {
+.bookMarkButtonRolled {
   right: -3%;
   -webkit-animation-name: rollButtonOff;
   animation-name: rollButtonOff;
 }
 
-.dialogueButton img, .dialogueButtonRolled img, .backgroundInfoButton img, .backgroundInfoButtonRolled img {
+.bookMarkButton img, .bookMarkButtonRolled img, .backgroundInfoButton img, .backgroundInfoButtonRolled img {
   width: 2.5vw;
   margin: 0.25vw;
 }
@@ -329,7 +332,7 @@
   }
 }
 
-/* animation for dialogueButton */
+/* animation for bookMarkButton */
 @keyframes rollButtonUp {
   0% {
     right: 0%;
@@ -382,25 +385,25 @@
     height: 15.4px;
     width: 54px;
   }
-  .dialogueButton, .dialogueButtonRolled {
+  .bookMarkButton, .bookMarkButtonRolled {
     height: 18px;
     width: 18px;
     top: 108px;
   }
-  .dialogueButtonRolled {
+  .bookMarkButtonRolled {
     right: 0px;
   }
-  .dialogueButton {
+  .bookMarkButton {
     right: 100px;
   }
-  .dialogueButton img, .dialogueButtonRolled img, .backgroundInfoButton img, .backgroundInfoButtonRolled img {
+  .bookMarkButton img, .bookMarkButtonRolled img, .backgroundInfoButton img, .backgroundInfoButtonRolled img {
     height: 10px;
     margin: 4px;
     width: 12px;
   }
   .backgroundInfoButton, .backgroundInfoButtonRolled {
     height: 18px;
-    width: 18px;
+    width: 10px;
     top: 250px;
   }
   .backgroundInfoButton {

@@ -1,0 +1,67 @@
+<!doctype html>
+
+<!--
+This is a contact us page, we designed this page such that users could send a message for help.
+
+This page is designed as an iframe with parent frame index.html
+No scripted functionality is needed.
+
+-->
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Workspace - Contact us</title>
+
+  <!-- INCLUDES -->
+  <!--css-->
+  <link rel="stylesheet" type="text/css" href="./frameStylesheet.css">
+  <!-- /INCLUDES -->
+
+  <!--additional styling-->
+  <style>
+    body {
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 18px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="contact">
+    <h3 style=" text-align:left;">Contact Us</h3>
+    <form name="fedback" method="POST" action="https://formspree.io/rvalek@iastate.edu">
+      <table>
+        <tbody>
+
+          <tr>
+            <td>
+              <input type="text" name="Name" tabindex="1" class="text" placeholder="Your Name">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" name="Email" tabindex="2" class="text" placeholder="Your@email.com">
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <textarea name="Message" cols="50" rows="5" tabindex="3" class="mess" placeholder="Message"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="submit" value="Send" name="action" class="btn" tabindex="4">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+  </div>
+</body>
+
+</html>
