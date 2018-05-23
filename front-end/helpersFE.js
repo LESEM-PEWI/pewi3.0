@@ -3635,6 +3635,7 @@ function toggleEscapeFrame() {
     document.getElementById('modalEscapeFrame').style.display = "block";
     document.getElementById('exitToMenuButton').style.visibility = "visible";
     document.getElementById('optionsButton').style.visibility = "visible";
+    document.getElementById('escapeButton').style.visibility = "visible";
     /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "visible";
     */
@@ -3643,6 +3644,7 @@ function toggleEscapeFrame() {
     document.getElementById('modalEscapeFrame').style.display = "none";
     document.getElementById('exitToMenuButton').style.visibility = "hidden";
     document.getElementById('optionsButton').style.visibility = "hidden";
+    document.getElementById('escapeButton').style.visibility = "hidden";
     /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "hidden";
     */

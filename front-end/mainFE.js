@@ -344,6 +344,7 @@ function confirmEscape() {
   if (document.getElementById('confirmEscape').style.height != "20vw") {
     document.getElementById('exitToMenuButton').style.backgroundColor = "#003d4d";
     document.getElementById('optionsButton').style.opacity = 0;
+    document.getElementById('escapeButton').style.opacity = 0;
     /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.opacity = 0;
     */
@@ -367,7 +368,13 @@ function confirmEscape() {
       toggleIndex();
     };
     */
+    document.getElementById('escapeButton').onclick = function() {
+      //if (!multiplayerAssigningModeOn) {
+      toggleEscapeFrame();
+      //}
+    };
     document.getElementById('optionsButton').style.opacity = 1;
+    document.getElementById('escapeButton').style.opacity = 1;
     /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.opacity = 1;
     */
