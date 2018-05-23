@@ -40,7 +40,7 @@ var startTime;
 var tileHeight = 12;
 var tileWidth = 18;
 var undo = false;
-
+var isDeleted = 0; //false
 // arrays
 
 //var arrLines;
@@ -317,57 +317,63 @@ function addYearAndTransition() {
 } //end addYearAndTransition
 
 //deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
-//deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
 function deleteYearAndTransition()
 {
-  var leastYearAllowed = 1;
-  var currYear = boardData[currentBoard].calculatedToYear;
-  if(curTracking)
-  {
-    pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO:
-  }
-  //if the current year is = 1, don't have an option for deleting the year
-  //promt- "Are you sure you want to delete Year #?" -using a confirm box
-   if(currYear == 1)
-   {
-      alert("Cannot delete year 1!");
-      currYear = 1;
-   }
+var leastYearAllowed = 1;
+var currYear = boardData[currentBoard].calculatedToYear;
+if(curTracking)
+{
+  pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO:
+}
+//if the current year is = 1, don't have an option for deleting the year
+//promt- "Are you sure you want to delete Year #?" -using a confirm box
+ if(currYear == 1)
+ {
+    alert("Cannot delete year 1!");
+    currYear = 1;
+    isDeleted = 0;
+ }
 
-  else
+else
+{
+  var response;
+  if(confirm("Are you sure you want to delete year " + currYear + "?" ))
   {
-    var response;
-    if(confirm("Are you sure you want to delete year " + currYear + "?" ))
+    if(currYear == 2 && ($('#year3Button').is(':visible')))
     {
-      if(currYear == 2 && ($('#year3Button').is(':visible')))
-      {
 //        console.log("entering the if statement");
-        response = "Deleted!";
-        //delete the year
-        document.getElementById("year3Button").style.display = "year2Button";
-        document.getElementById("year3Button").style.display = "none";
-  //make it year 2
-        currYear =2;
-    //    switchYearTab(2);
-        alert("Year 3 is now Year 2!");
-      }
-      else
-      {
-        response = "Deleted!";
-        //delete the year
-        document.getElementById("year" + currYear + "Button").style.display = "none";
-        currYear -=1;
-        //switch to the previous year
-        transitionToYear(currYear);
-        switchYearTab(currYear);
-      }
+      response = "Deleted!";
+      //delete the year
+      document.getElementById("year3Button").style.display = "year2Button";
+      document.getElementById("year3Button").style.display = "none";
+//make it year 2
+      isDeleted = 1;
+      currYear =2;
+      transitionToYear(currYear);
+      switchYearTab(currYear);
+      alert("Year 3 is now Year 2!");
     }
     else
     {
-        response = "Not Deleted!";
+      response = "Deleted!";
+      //delete the year
+      document.getElementById("year" + currYear + "Button").style.display = "none";
+      currYear -=1;
+      isDeleted = 1;
+      //switch to the previous year
+      transitionToYear(currYear);
+      switchYearTab(currYear);
     }
   }
+  else
+  {
+      response = "Not Deleted!";
+      isDeleted = 0;
+  }
+}
 }// end deleteYearAndTransition
+
+
 // animateResults() frame
 function animateResults() {
   //if it is ever the case that we want to do some fancy zooming or screen
@@ -3852,7 +3858,7 @@ function transitionToYear(year) {
     } // end for
   } // end if
 
-  if(year < boardData[currentBoard].calculatedToYear && !addingYearFromFile)
+  if(year < boardData[currentBoard].calculatedToYear && !addingYearFromFile && isDeleted == 1)
   {
     boardData[currentBoard].calculatedToYear  = year;
     for (var i = 0; i < boardData[currentBoard].map.length; i++)
@@ -3870,8 +3876,8 @@ function transitionToYear(year) {
     } // end for
   } // end if
 
+  isDeleted = 0;
   boardData[currentBoard].updateBoard();
-
   refreshBoard();
 } //end transitionToYear
 
