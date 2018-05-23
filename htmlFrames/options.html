@@ -42,6 +42,10 @@ Cleaned and Prepared - July 2016
     var multiString;
     var maxYear = 3; //for settings, defines the number of year buttons specified
     /*
+    * savedOptions is a variable to indicate that whether or not changes in Instructor Options were saved.
+    */
+    var savedOptions = false;
+    /*
     * The variable selectedOptionsTrue is to store all elements selected when "Save and Exit" button is pressed.
     * This is used to know what elements to set to false, when exit without saving is done.
     */
@@ -162,6 +166,7 @@ Cleaned and Prepared - July 2016
       window.scrollTo(0, 0);
 
 
+      savedOptions = true; //Sets the savedOption to true, this indicates that the changes were saved
       selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
       selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
       recordCurrentOptions();
@@ -370,6 +375,34 @@ Cleaned and Prepared - July 2016
         }
       }
     }
+
+    function checkIfSaved(){
+      if(!savedOptions){
+
+        /*
+        * Resets all options to false
+        * First 25 are paint and hover ids,
+        * The last two options are precipitation and application statistics option.
+        */
+        for(var i = 0; i < 29; ++i){
+          if(i < 26){
+            $(':checkbox')[i].checked = false;
+          }
+          if(i === 26){
+            $('#precip.toggle').prop('checked', false);
+          }
+          if(i === 27){
+            $('#statFrame.toggle').prop('checked', false);
+          }
+        }
+
+        //saves the current state of options
+        saveCurrentOptionsState();
+
+        //scroll page to top, so that next time options is loaded it starts there
+        window.scrollTo(0, 0);
+      }
+    }
   </script>
 
 </head>
@@ -383,7 +416,7 @@ Cleaned and Prepared - July 2016
   -->
 
   <!--Line below was added to add exit button on top right of Instructor Options page. Reference Issue 362 for details.-->
-  <div id="closeDiv"><img id="closeOptions" onclick="undoSelectedOptions(); parent.resetOptions();" src="../imgs/close_black.png"></div>
+  <div id="closeDiv"><img id="closeOptions" onclick="undoSelectedOptions(); checkIfSaved(); parent.resetOptions();" src="../imgs/close_black.png"></div>
   <div id="optionsMainHolder">
     <div class="optionsHeader" style="margin-top:15px;">
       Disable Land Use Types
