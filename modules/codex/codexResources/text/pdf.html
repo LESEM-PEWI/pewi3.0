@@ -5,16 +5,18 @@
 <!-- INCLUDES -->
 <!--css-->
 <link rel="stylesheet" type="text/css" href=".././iframeStylesheet.css">
+<!-- link resourceHelper.js, we will need to call openFiles() method declared in it -->
+<script type="text/javascript", src=".././resourceHelper.js"> </script>
 <!-- /INCLUDES -->
 </head>
 <body>
 <p>The General and Advanced tab entries can be viewed on a PDF file and can be printed. </p>
 
 <p>General:</p>
-<p><a href="general.pdf">General Glossary Document</a></p>
+<p><a href='#' onclick="openFiles('general.pdf')">General Glossary Document</a></p>
 
 <p>Advanced:</p>
-<p><a href="advanced.pdf">Advanced Glossary Document</a></p>
+<p><a href="#" onclick="openFiles('advanced.pdf');">Advanced Glossary Document</a></p>
 
 
 </body>

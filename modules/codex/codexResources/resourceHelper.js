@@ -3,6 +3,8 @@
 
 
 */
+
+// Open a desired file in a separate window
 function openFiles(fileName){
   switch (fileName) {
     case 'general.pdf':
