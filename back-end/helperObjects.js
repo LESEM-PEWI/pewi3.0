@@ -224,14 +224,14 @@ function Click(c1, c2, c3, c4, c5) {
         }
         break;
         //When the user clicks the download/upload button
-      case 10:
-        if (action) {
-          return showUploadDownload();
-          break;
-        } else {
-          return "Download icon was clicked";
-          break;
-        }
+      // case 10:
+      //   if (action) {
+      //     return showUploadDownload();
+      //     break;
+      //   } else {
+      //     return "Download icon was clicked";
+      //     break;
+      //   }
         //When the user clicks the information icon
       case 11:
         if (action) {
