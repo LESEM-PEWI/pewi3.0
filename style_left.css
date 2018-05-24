@@ -20,6 +20,7 @@
 
 /* Styling for popup tab titles*/
 #toolsTabTitle, #terrainTabTitle, #precipTabTitle, #yearTabTitle, #levelsTabTitle, #featuresTabTitle, #yieldTabTitle {
+    top: 0vw;
     left: 3vw;
     width: 300%;
     height: inherit;
