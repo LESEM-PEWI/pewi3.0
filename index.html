@@ -15,6 +15,7 @@
 
 <html>
 
+
 <head>
 
   <meta charset="utf-8">
@@ -32,6 +33,12 @@
   <!--<link rel='shortcut icon' href='./imgs/pewi_favicon.ico' type='image/x-icon' />-->
   <link rel='shortcut icon' href='./imgs/logo_favicon.ico' type='image/x-icon' />
 
+
+
+
+
+
+
   <!-- three.js framework and javascript libraries -->
   <!-- <script src="./lib/d3.min.js"></script> -->
   <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -39,6 +46,7 @@
   <script src="./lib/controls.js"></script>
   <script src="./lib/jquery-3.2.1.min.js"></script>
   <script src="./lib/stats.min.js"></script>
+
   <!-- import jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
   <!-- import autotable plug-in for jsPDF -->
@@ -61,6 +69,7 @@
   <script src="./front-end/mainFE.js"></script>
   <script src="./front-end/helpersFE.js" info></script>
   <script src="./front-end/levelLoader.js"></script>
+
 
 
   <!--from http://www.schillmania.com/projects/fireworks/ -->
@@ -193,24 +202,44 @@
 
     <!-- Create left-side console button tabs -->
     <!-- "Pickaxe" by Luke Anthony Firth on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-    <div id="toolsButton" class="consoleButton" onclick="roll(1);">
-      <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <div id="toolsButton" class="consoleButton" onclick="roll(1);" >
+      <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType(); toggleTabTitle('toolsTabTitle');" onmouseout="toggleChangeLandType(); toggleTabTitle('toolsTabTitle');">
+      <!-- Tools tab title display -->
+      <div id="toolsTabTitle" style="display:none;"></div>
     </div>
 
     <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
       <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-      <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);"><img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png"></div>
+      <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);">
+        <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle');" onmouseout="toggleTabTitle('terrainTabTitle');">
+        <div id="terrainTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Cloud, raindrops, sun icon" by Yannick Lung (http://yannicklung.com/) with free commercial use / Inverted and resized -->
-      <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png"></div>
+      <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);">
+        <img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png" onmouseover="toggleTabTitle('precipTabTitle');" onmouseout="toggleTabTitle('precipTabTitle');">
+        <div id="precipTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Calendar tool variant for time administration free icon" by FreePik (http://www.freepik.com), retrived from www.flaticon.com  with free commercial use / Inverted and resized -->
-      <div id="yearButton" class="consoleButton" onclick="switchConsoleTab(6);"><img id="calendarImg" class="imgNotSelected" src="./imgs/calendarIcon.png"></div>
+      <div id="yearButton" class="consoleButton" onclick="switchConsoleTab(6);">
+        <img id="calendarImg" class="imgNotSelected" src="./imgs/calendarIcon.png" onmouseover="toggleTabTitle('yearTabTitle');" onmouseout="toggleTabTitle('yearTabTitle');">
+        <div id="yearTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Filter, levels, settings icon" by Yash Ranpara (https://www.iconfinder.com/yash11) with free commerical use / Inverted and resized -->
-      <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);"><img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png"></div>
+      <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);">
+        <img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png" onmouseover="toggleTabTitle('levelsTabTitle');" onmouseout="toggleTabTitle('levelsTabTitle');">
+        <div id="levelsTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
-      <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
+      <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);">
+        <img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png" onmouseover="toggleTabTitle('featuresTabTitle');" onmouseout="toggleTabTitle('featuresTabTitle');">
+        <div id="featuresTabTitle" style="display:none;"></div>
+      </div>
 
-      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
+      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);">
+        <img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png" onmouseover="toggleTabTitle('yieldTabTitle');" onmouseout="toggleTabTitle('yieldTabTitle');">
+        <div id="yieldTabTitle" style="display:none;"></div>
+      </div>
 
     </div>
 
@@ -331,6 +360,7 @@
         <div id="year2Button" class="yearButtonHidden" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="icon yearImageHidden" src="./imgs/two.png"></div>
         <div id="year3Button" class="yearButtonHidden" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="icon yearImageHidden" src="./imgs/three.png"></div>
         <div id="yearAddButton" class="yearButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
+        <div id="yearDeleteButton" class="yearButton" onclick="deleteYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearDeleteImage" class="icon yearNotSelected" src="./imgs/deleteYear.png"></div>
       </div>
 
       <!-- Ecosystem indicator highlighting display -->
@@ -1091,12 +1121,63 @@
     <!-- Create buttons in upper right corner: upperHud-->
     <img id="pewiLogo" src="./imgs/updatedPewiLogo.png">
     <img id="logoBase" src="./imgs/inGameLogo.png">
-    <img id="uploadDownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-    <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="DownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" onclick="triggerDownloadSequence();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+
+    <!--This class will hold the input element, so we'll hide this one-->
+    <div class="uploadFile1">
+      <!--Label is used so we can click the image and still use it as input-->
+      <label for="file-upload3">
+                <!--This element is used to align the button with everything else in the top right-->
+                <div id="uploadFile" class="upperButton">
+                  <!--Here's the button image itself, give it its own class so it's animation works properly-->
+                  <img id="UploadButton" class="uploadButtonClass" src = "./imgs/UploadImage.png" style="height: 3vw" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+                </div>
+            </label>
+      <!--And here's the input we'll be hiding-->
+      <input id="file-upload3" type="file" onchange="uploadFile();"/>
+    </div>
+
+    <!--Script for uploading and downloading-->
+    <script type="text/javascript">
+    /**
+    * pass the file handler to uploadClicked() in helpersFE.js
+    *
+    */
+    function uploadFile() {
+      // input tag that upload-file will attach to
+      var fp = document.getElementById("file-upload3");
+      // pass the file handler
+      uploadClicked(fp.files);
+      // clean the file
+      fp.files = null;
+    } // end uploadFile()
+
+    //this function triggers a download of the current data
+    function triggerDownloadSequence() {
+
+      //helpersFE.js, creates data using current board
+      var data = writeFileToDownloadString(0);
+      var downloadBlob = new Blob([data], {
+        type: "text/csv;charset=utf-8"
+      });
+      //filesaver.min.js
+      saveAs(downloadBlob, "pewiMap.csv");
+
+      //close necessary frames
+      // setTimeout(function() {parent.downloadClicked();},1 );
+      // XXX SCRIPT438: Object doesn't support property or method 'downloadClicked'
+    } // end triggerDownloadSequence()
+    </script>
+
+
+
     <img id="emailIcon" class="upperButton" src="./imgs/emailIcon.png" onclick="showEmail();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="recordIcon" class="upperButton" style="visibility:hidden;" width="40px" src="./imgs/recordingIcon.gif">
     <img id="homebutton" class="upperButton" src="imgs/Home_Icon.png" onclick="toggleEscapeFrame();">
     <img id="printButton" class="upperButton" src="imgs/Button_Print.svg" onclick="startPrintOptions();">
+
+
 
 
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
@@ -1153,6 +1234,8 @@
   <!-- the modal frame covers the page with semi-opaque layer, and escape options -->
 
   <div id="modalEscapeFrame">
+    <!--Line below was added to add exit button on top right of Home options page. Reference Issue 361 for details.-->
+    <div id="closeDiv"><img id="escapeButton" onclick="toggleEscapeFrame();" src="./imgs/close_black.png"></div>
     <div id="escapeMenu">
       <!--Commented out Glossary button, which is div below. Reference Issue 363 on explanation for removal.-->
       <!--<div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleIndex() ;">Glossary</div>-->
@@ -1182,7 +1265,7 @@
     $(window).bind("beforeunload", function(event) {
       if (page.style.visibility == 'visible') {
         // on the main page, ask the user to save changes
-        showUploadDownload();
+        //showUploadDownload();
         return "Are you sure to leave? Make sure if you saved changes.";
       } else {
         // not on the main page, exit the app directly

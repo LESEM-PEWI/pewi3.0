@@ -6,6 +6,7 @@
           painter, Totals, river,
           Results, initData, hoveredOver, currentPlayer*/
 
+
 var addingYearFromFile = false;//Boolean used to keep a track of whether or not you're adding a year from file
 var click;
 var clickAndDrag = false;
@@ -40,7 +41,7 @@ var startTime;
 var tileHeight = 12;
 var tileWidth = 18;
 var undo = false;
-
+var isDeleted = 0; //false
 // arrays
 
 //var arrLines;
@@ -105,6 +106,47 @@ var session = {
 
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
+
+// Toggled popup text when hover over the Tabs in the left console
+function toggleTabTitle(value) {
+  if(document.getElementById(value).style.display === 'none'){
+    // Set the corresponding titles when hover over one
+    switch (value){
+      case 'toolsTabTitle':
+        // The left console is hidden, it should popup 'Hide toolbar' when hover over the tool tab.
+        if(document.getElementById('leftConsole').className === 'leftConsole'){
+          document.getElementById(value).innerHTML = 'Hide&nbsp;toolbar';
+        } else {
+          document.getElementById(value).innerHTML = 'Show&nbsp;toolbar';
+        }
+        break;
+
+      case 'terrainTabTitle':
+        document.getElementById(value).innerHTML = 'Land&nbsp;use&nbsp;types';
+        break;
+      case 'precipTabTitle':
+        document.getElementById(value).innerHTML = 'precipitation';
+        break;
+      case 'yearTabTitle':
+        document.getElementById(value).innerHTML = 'years&nbsp;selection';
+        break;
+      case 'levelsTabTitle':
+        document.getElementById(value).innerHTML = 'results&nbsp;mapped';
+        break;
+      case 'featuresTabTitle':
+        document.getElementById(value).innerHTML = 'physical&nbsp;features';
+        break;
+      case 'yieldTabTitle':
+        document.getElementById(value).innerHTML = 'yield&nbsp;base&nbsp;rate';
+        break;
+  }
+
+    document.getElementById(value).style.display = 'inline-block';
+  }
+  else {
+    document.getElementById(value).style.display = 'none';
+  }
+}
 
 //Adds the given tileId and painter to the undoArr
 function addChange(tileId) {
@@ -287,26 +329,92 @@ function addTile(tile) {
 function addYearAndTransition() {
 
   var totalYearsAllowed = 3;
-  var nextYear = boardData[currentBoard].calculatedToYear + 1;
+  var nextYear = boardData[currentBoard].calculatedToYear+1;
   if (curTracking) {
     pushClick(0, getStamp(), 41, 0, null);
   }
+
   //make next button appear (has some prebuilt functionality for expanded number of years)
+
   if (nextYear < totalYearsAllowed) {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
+    document.getElementById("year" + nextYear + "Button").style.display = "block";
   }
 
-  //make last button appear and remove the "+" Button (has some prebuilt functionality for expanded number of years)
   if (nextYear == totalYearsAllowed) {
     document.getElementById("year3Button").className = "yearButton";
     document.getElementById("year3Image").className = "icon yearNotSelected";
-    document.getElementById("yearAddButton").style.display = "none";
+    document.getElementById("year3Button").style.display = "block";
   }
 
+  if(nextYear > totalYearsAllowed)
+  {
+    alert("Cannot add more than 3 years!");
+    nextYear-=1;
+  }
+  //switch to next year
   switchYearTab(nextYear);
   transitionToYear(nextYear);
 } //end addYearAndTransition
+
+//deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
+function deleteYearAndTransition()
+{
+var leastYearAllowed = 1;
+var currYear = boardData[currentBoard].calculatedToYear;
+if(curTracking)
+{
+  pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO:
+}
+//if the current year is = 1, don't have an option for deleting the year
+//promt- "Are you sure you want to delete Year #?" -using a confirm box
+ if(currYear == 1)
+ {
+    alert("Cannot delete year 1!");
+    currYear = 1;
+    isDeleted = 0;
+ }
+
+else
+{
+  var response;
+  if(confirm("Are you sure you want to delete year " + currYear + "?" ))
+  {
+    if(currYear == 2 && ($('#year3Button').is(':visible')))
+    {
+//        console.log("entering the if statement");
+      response = "Deleted!";
+      //delete the year
+      document.getElementById("year3Button").style.display = "year2Button";
+      document.getElementById("year3Button").style.display = "none";
+//make it year 2
+      isDeleted = 1;
+      currYear =2;
+      transitionToYear(currYear);
+      switchYearTab(currYear);
+      alert("Year 3 is now Year 2!");
+    }
+    else
+    {
+      response = "Deleted!";
+      //delete the year
+      document.getElementById("year" + currYear + "Button").style.display = "none";
+      currYear -=1;
+      isDeleted = 1;
+      //switch to the previous year
+      transitionToYear(currYear);
+      switchYearTab(currYear);
+    }
+  }
+  else
+  {
+      response = "Not Deleted!";
+      isDeleted = 0;
+  }
+}
+}// end deleteYearAndTransition
+
 
 // animateResults() frame
 function animateResults() {
@@ -717,7 +825,6 @@ function customMouseInput(buttonInput,drag) {
   var mX = parseFloat(buttonInput[4]);
   var mY = parseFloat(buttonInput[5]);
   if(!drag) {
-    //if downloadClicked
     var customMouse = new MouseEvent("mousedown", {button: 2, buttons: 2, clientX: inputX, clientY: inputY, layerX: 9, layerY: inputY, screenX: sX, screenY: sY, movementX: mX, movementY: mY});
     document.getElementById('genOverlay').dispatchEvent(customMouse);
   } else {
@@ -2171,7 +2278,7 @@ function onDocumentMouseUp(event) {
 //onDocumentKeyDown, listener with keyboard bindings
 function onDocumentKeyDown(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted || event.keyCode == 27) {
-    //switch structure on key code (http://keycode.info)
+    //switch structure on key code (https://keycode.info)
 
     // if (!event){
     //   event = window.event;
@@ -2368,7 +2475,7 @@ function continueTracking() {
 //onDocumentKeyUp, binding to keyboard keyUp event
 //  but you already knew that...
 function onDocumentKeyUp(event) {
-  //switch structure for key code (http://keycode.info)
+  //switch structure for key code (https://keycode.info)
 
   // var keycode = event.keyCode || event.charCode;
 
@@ -3635,6 +3742,7 @@ function toggleEscapeFrame() {
     document.getElementById('modalEscapeFrame').style.display = "block";
     document.getElementById('exitToMenuButton').style.visibility = "visible";
     document.getElementById('optionsButton').style.visibility = "visible";
+    document.getElementById('escapeButton').style.visibility = "visible";
     /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "visible";
     */
@@ -3643,6 +3751,7 @@ function toggleEscapeFrame() {
     document.getElementById('modalEscapeFrame').style.display = "none";
     document.getElementById('exitToMenuButton').style.visibility = "hidden";
     document.getElementById('optionsButton').style.visibility = "hidden";
+    document.getElementById('escapeButton').style.visibility = "hidden";
     /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "hidden";
     */
@@ -3876,20 +3985,32 @@ function transitionToYear(year) {
   }
   if (year > boardData[currentBoard].calculatedToYear && addingYearFromFile == false) {
     boardData[currentBoard].calculatedToYear = year;
+
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
     } // end for
   } // end if
 
+  if(year < boardData[currentBoard].calculatedToYear && !addingYearFromFile && isDeleted == 1)
+  {
+    boardData[currentBoard].calculatedToYear  = year;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++)
+    {
+      boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year+0];
+    }
+
+  }
+
   if(addingYearFromFile==true) {
     boardData[currentBoard].calculatedToYear = year;
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+    for (var i = 0; i < boardData[currentBoard].map.length; i++)
+    {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year];
     } // end for
   } // end if
 
+  isDeleted = 0;
   boardData[currentBoard].updateBoard();
-
   refreshBoard();
 } //end transitionToYear
 
@@ -4463,6 +4584,8 @@ function indexEsc(e) {
   }
 }
 
+
+
 // Execute when Esc key is pressed while on the options page
 function optionsEsc(e) {
   if (e.keyCode == 27) {
@@ -4478,6 +4601,147 @@ function printOptionsEsc(e) {
     closePrintOptions();
   }
 } // end printOptionsEsc
+
+/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
+//Added code directly in this js file as importing a js file to another js file isn't easily doable//
+var saveAs = saveAs || function(e) {
+  "use strict";
+  if (typeof e === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
+    return
+  }
+  var t = e.document,
+    n = function() {
+      return e.URL || e.webkitURL || e
+    },
+    r = t.createElementNS("http://www.w3.org/1999/xhtml", "a"),
+    o = "download" in r,
+    i = function(e) {
+      var t = new MouseEvent("click");
+      e.dispatchEvent(t)
+    },
+    a = /constructor/i.test(e.HTMLElement),
+    f = /CriOS\/[\d]+/.test(navigator.userAgent),
+    u = function(t) {
+      (e.setImmediate || e.setTimeout)(function() {
+        throw t
+      }, 0)
+    },
+    d = "application/octet-stream",
+    s = 1e3 * 40,
+    c = function(e) {
+      var t = function() {
+        if (typeof e === "string") {
+          n().revokeObjectURL(e)
+        } else {
+          e.remove()
+        }
+      };
+      setTimeout(t, s)
+    },
+    l = function(e, t, n) {
+      t = [].concat(t);
+      var r = t.length;
+      while (r--) {
+        var o = e["on" + t[r]];
+        if (typeof o === "function") {
+          try {
+            o.call(e, n || e)
+          } catch (i) {
+            u(i)
+          }
+        }
+      }
+    },
+    p = function(e) {
+      if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)) {
+        return new Blob([String.fromCharCode(65279), e], {
+          type: e.type
+        })
+      }
+      return e
+    },
+    v = function(t, u, s) {
+      if (!s) {
+        t = p(t)
+      }
+      var v = this,
+        w = t.type,
+        m = w === d,
+        y, h = function() {
+          l(v, "writestart progress write writeend".split(" "))
+        },
+        S = function() {
+          if ((f || m && a) && e.FileReader) {
+            var r = new FileReader;
+            r.onloadend = function() {
+              var t = f ? r.result : r.result.replace(/^data:[^;]*;/, "data:attachment/file;");
+              var n = e.open(t, "_blank");
+              if (!n) e.location.href = t;
+              t = undefined;
+              v.readyState = v.DONE;
+              h()
+            };
+            r.readAsDataURL(t);
+            v.readyState = v.INIT;
+            return
+          }
+          if (!y) {
+            y = n().createObjectURL(t)
+          }
+          if (m) {
+            e.location.href = y
+          } else {
+            var o = e.open(y, "_blank");
+            if (!o) {
+              e.location.href = y
+            }
+          }
+          v.readyState = v.DONE;
+          h();
+          c(y)
+        };
+      v.readyState = v.INIT;
+      if (o) {
+        y = n().createObjectURL(t);
+        setTimeout(function() {
+          r.href = y;
+          r.download = u;
+          i(r);
+          h();
+          c(y);
+          v.readyState = v.DONE
+        });
+        return
+      }
+      S()
+    },
+    w = v.prototype,
+    m = function(e, t, n) {
+      return new v(e, t || e.name || "download", n)
+    };
+  if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
+    return function(e, t, n) {
+      t = t || e.name || "download";
+      if (!n) {
+        e = p(e)
+      }
+      return navigator.msSaveOrOpenBlob(e, t)
+    }
+  }
+  w.abort = function() {};
+  w.readyState = w.INIT = 0;
+  w.WRITING = 1;
+  w.DONE = 2;
+  w.error = w.onwritestart = w.onprogress = w.onwrite = w.onabort = w.onerror = w.onwriteend = null;
+  return m
+}(typeof self !== "undefined" && self || typeof window !== "undefined" && window || this.content);
+if (typeof module !== "undefined" && module.exports) {
+  module.exports.saveAs = saveAs
+} else if (typeof define !== "undefined" && define !== null && define.amd !== null) {
+  define([], function() {
+    return saveAs
+  })
+}
 
 
 /**

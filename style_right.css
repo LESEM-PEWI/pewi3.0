@@ -15,33 +15,71 @@
   transition-duration: 0.1s;
 }
 
+
 .upperButton {
   cursor: pointer;
   width: 3vw;
 }
 
-.upperButton:hover {
+/* .upperButton:hover {
   border-bottom: 2px groove white;
-}
+} */
 
 #creditsButton {
   right: 0vw;
 }
 
-#emailIcon {
-  right: 3.5vw
+
+#creditsButton:hover{
+  border-bottom: 2px groove white;
 }
-#uploadDownloadButton {
+
+
+#emailIcon {
+  right: 3.5vw;
+}
+
+#emailIcon:hover{
+  border-bottom: 2px groove white;
+}
+
+/*This represents the div class not the image itself*/
+#uploadFile{
   right: 6.5vw;
+}
+#DownloadButton {
+  right: 8.5vw;
+}
+
+#DownloadButton:hover{
+  border-bottom: 2px groove white;
 }
 
 #logoBase {
-  right: 9.5vw;
+  right: 11vw;
 }
 
 #pewiLogo{
-  right: 19.5vw;
+  right: 21vw;
 }
+
+/*Hides the default file upload button*/
+.uploadFile1>input {
+  display: none;
+}
+.uploadButtonClass{
+  cursor: pointer;
+ height: 3vw;
+ -webkit-transition-duration: 0.1s;
+ transition-duration: 0.1s;
+}
+
+
+
+#UploadButton:hover {
+  border-top: 2px groove white;
+}
+
 
 /**results right styling**/
 .resultsButton, .resultsButtonRolled {

@@ -1,4 +1,4 @@
-//from http://threejs.org/examples/#canvas_geometry_birds
+//from https://threejs.org/examples/#canvas_geometry_birds
 
 //Bird object used in the creation of a flock of birds in the three.js scene
 var Bird = function () {
@@ -36,7 +36,7 @@ var Bird = function () {
 Bird.prototype = Object.create( THREE.Geometry.prototype );
 Bird.prototype.constructor = Bird;
 
-// Based on http://www.openprocessing.org/visuals/?visualID=6910
+// Based on https://www.openprocessing.org/visuals/?visualID=6910
 
 var Boid = function() {
 
