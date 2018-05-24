@@ -40,7 +40,7 @@ var startTime;
 var tileHeight = 12;
 var tileWidth = 18;
 var undo = false;
-
+var isDeleted = 0; //false
 // arrays
 
 //var arrLines;
@@ -287,26 +287,92 @@ function addTile(tile) {
 function addYearAndTransition() {
 
   var totalYearsAllowed = 3;
-  var nextYear = boardData[currentBoard].calculatedToYear + 1;
+  var nextYear = boardData[currentBoard].calculatedToYear+1;
   if (curTracking) {
     pushClick(0, getStamp(), 41, 0, null);
   }
+
   //make next button appear (has some prebuilt functionality for expanded number of years)
+
   if (nextYear < totalYearsAllowed) {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
+    document.getElementById("year" + nextYear + "Button").style.display = "block";
   }
 
-  //make last button appear and remove the "+" Button (has some prebuilt functionality for expanded number of years)
   if (nextYear == totalYearsAllowed) {
     document.getElementById("year3Button").className = "yearButton";
     document.getElementById("year3Image").className = "icon yearNotSelected";
-    document.getElementById("yearAddButton").style.display = "none";
+    document.getElementById("year3Button").style.display = "block";
   }
 
+  if(nextYear > totalYearsAllowed)
+  {
+    alert("Cannot add more than 3 years!");
+    nextYear-=1;
+  }
+  //switch to next year
   switchYearTab(nextYear);
   transitionToYear(nextYear);
 } //end addYearAndTransition
+
+//deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
+function deleteYearAndTransition()
+{
+var leastYearAllowed = 1;
+var currYear = boardData[currentBoard].calculatedToYear;
+if(curTracking)
+{
+  pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO:
+}
+//if the current year is = 1, don't have an option for deleting the year
+//promt- "Are you sure you want to delete Year #?" -using a confirm box
+ if(currYear == 1)
+ {
+    alert("Cannot delete year 1!");
+    currYear = 1;
+    isDeleted = 0;
+ }
+
+else
+{
+  var response;
+  if(confirm("Are you sure you want to delete year " + currYear + "?" ))
+  {
+    if(currYear == 2 && ($('#year3Button').is(':visible')))
+    {
+//        console.log("entering the if statement");
+      response = "Deleted!";
+      //delete the year
+      document.getElementById("year3Button").style.display = "year2Button";
+      document.getElementById("year3Button").style.display = "none";
+//make it year 2
+      isDeleted = 1;
+      currYear =2;
+      transitionToYear(currYear);
+      switchYearTab(currYear);
+      alert("Year 3 is now Year 2!");
+    }
+    else
+    {
+      response = "Deleted!";
+      //delete the year
+      document.getElementById("year" + currYear + "Button").style.display = "none";
+      currYear -=1;
+      isDeleted = 1;
+      //switch to the previous year
+      transitionToYear(currYear);
+      switchYearTab(currYear);
+    }
+  }
+  else
+  {
+      response = "Not Deleted!";
+      isDeleted = 0;
+  }
+}
+}// end deleteYearAndTransition
+
 
 // animateResults() frame
 function animateResults() {
@@ -717,7 +783,6 @@ function customMouseInput(buttonInput,drag) {
   var mX = parseFloat(buttonInput[4]);
   var mY = parseFloat(buttonInput[5]);
   if(!drag) {
-    //if downloadClicked
     var customMouse = new MouseEvent("mousedown", {button: 2, buttons: 2, clientX: inputX, clientY: inputY, layerX: 9, layerY: inputY, screenX: sX, screenY: sY, movementX: mX, movementY: mY});
     document.getElementById('genOverlay').dispatchEvent(customMouse);
   } else {
@@ -2171,7 +2236,7 @@ function onDocumentMouseUp(event) {
 //onDocumentKeyDown, listener with keyboard bindings
 function onDocumentKeyDown(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted || event.keyCode == 27) {
-    //switch structure on key code (http://keycode.info)
+    //switch structure on key code (https://keycode.info)
 
     // if (!event){
     //   event = window.event;
@@ -2368,7 +2433,7 @@ function continueTracking() {
 //onDocumentKeyUp, binding to keyboard keyUp event
 //  but you already knew that...
 function onDocumentKeyUp(event) {
-  //switch structure for key code (http://keycode.info)
+  //switch structure for key code (https://keycode.info)
 
   // var keycode = event.keyCode || event.charCode;
 
@@ -3876,20 +3941,32 @@ function transitionToYear(year) {
   }
   if (year > boardData[currentBoard].calculatedToYear && addingYearFromFile == false) {
     boardData[currentBoard].calculatedToYear = year;
+
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
     } // end for
   } // end if
 
+  if(year < boardData[currentBoard].calculatedToYear && !addingYearFromFile && isDeleted == 1)
+  {
+    boardData[currentBoard].calculatedToYear  = year;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++)
+    {
+      boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year+0];
+    }
+
+  }
+
   if(addingYearFromFile==true) {
     boardData[currentBoard].calculatedToYear = year;
-    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+    for (var i = 0; i < boardData[currentBoard].map.length; i++)
+    {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year];
     } // end for
   } // end if
 
+  isDeleted = 0;
   boardData[currentBoard].updateBoard();
-
   refreshBoard();
 } //end transitionToYear
 
