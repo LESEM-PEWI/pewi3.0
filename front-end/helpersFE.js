@@ -303,7 +303,7 @@ function addYearAndTransition() {
     switchYearTab(nextYear);
     transitionToYear(nextYear);
   }
-
+  //special case for adding year 3 when year 2 has been previously deleted in the presence of year 3
   if(nextYear< totalYearsAllowed && year2to3)
   {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
