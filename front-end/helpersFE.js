@@ -106,11 +106,13 @@ var session = {
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
 
-
+// Toggled popup text when hover over the Tabs in the left console
 function toggleTabTitle(value) {
   if(document.getElementById(value).style.display === 'none'){
+    // Set the corresponding titles when hover over one
     switch (value){
       case 'toolsTabTitle':
+        // The left console is hidden, it should popup 'Hide toolbar' when hover over the tool tab.
         if(document.getElementById('leftConsole').className === 'leftConsole'){
           document.getElementById(value).innerHTML = 'Hide&nbsp;toolbar';
         } else {
@@ -128,7 +130,7 @@ function toggleTabTitle(value) {
         document.getElementById(value).innerHTML = 'years&nbsp;selection';
         break;
       case 'levelsTabTitle':
-        document.getElementById(value).innerHTML = 'Levels';
+        document.getElementById(value).innerHTML = 'results&nbsp;mapped';
         break;
       case 'featuresTabTitle':
         document.getElementById(value).innerHTML = 'physical&nbsp;features';
