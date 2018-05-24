@@ -40,7 +40,9 @@ var startTime;
 var tileHeight = 12;
 var tileWidth = 18;
 var undo = false;
-var isDeleted = 0; //false
+var g_isDeleted = false; //false
+var yearSelected = 0;
+var year2to3 = false;
 // arrays
 
 //var arrLines;
@@ -298,22 +300,37 @@ function addYearAndTransition() {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
     document.getElementById("year" + nextYear + "Button").style.display = "block";
+    switchYearTab(nextYear);
+    transitionToYear(nextYear);
+  }
+
+  if(nextYear< totalYearsAllowed && year2to3)
+  {
+    document.getElementById("year" + nextYear + "Button").className = "yearButton";
+    document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
+    document.getElementById("year" + nextYear + "Button").style.display = "block";
+    switchYearTab(3);
+    transitionToYear(4);
+    year2to3 = false;
   }
 
   if (nextYear == totalYearsAllowed) {
     document.getElementById("year3Button").className = "yearButton";
     document.getElementById("year3Image").className = "icon yearNotSelected";
     document.getElementById("year3Button").style.display = "block";
+    switchYearTab(nextYear);
+    transitionToYear(nextYear);
   }
 
   if(nextYear > totalYearsAllowed)
   {
     alert("Cannot add more than 3 years!");
     nextYear-=1;
+    switchYearTab(nextYear);
+    transitionToYear(nextYear);
   }
   //switch to next year
-  switchYearTab(nextYear);
-  transitionToYear(nextYear);
+
 } //end addYearAndTransition
 
 //deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
@@ -327,48 +344,52 @@ if(curTracking)
 }
 //if the current year is = 1, don't have an option for deleting the year
 //promt- "Are you sure you want to delete Year #?" -using a confirm box
- if(currYear == 1)
+ if(yearSelected == 1)
  {
     alert("Cannot delete year 1!");
+    yearSelected = 1;
     currYear = 1;
-    isDeleted = 0;
+    g_isDeleted = false;
  }
 
 else
 {
   var response;
-  if(confirm("Are you sure you want to delete year " + currYear + "?" ))
+  if(confirm("Are you sure you want to delete year " + yearSelected + "?" ))
   {
-    if(currYear == 2 && ($('#year3Button').is(':visible')))
+    if(yearSelected == 2 && currYear == 3)
     {
-//        console.log("entering the if statement");
       response = "Deleted!";
       //delete the year
       document.getElementById("year3Button").style.display = "year2Button";
       document.getElementById("year3Button").style.display = "none";
-//make it year 2
-      isDeleted = 1;
-      currYear =2;
-      transitionToYear(currYear);
-      switchYearTab(currYear);
+      //make it year 2
+      g_isDeleted = true;
+      year2to3 = true;
+      transitionToYear(3);
+      switchYearTab(2);
+      boardData[currentBoard].calculatedToYear = 2;
+      yearSelected = 2;
+      currYear = 2;
       alert("Year 3 is now Year 2!");
     }
     else
     {
       response = "Deleted!";
       //delete the year
-      document.getElementById("year" + currYear + "Button").style.display = "none";
+      document.getElementById("year" + yearSelected + "Button").style.display = "none";
       currYear -=1;
-      isDeleted = 1;
+      yearSelected -= 1;
+      g_isDeleted = true;
       //switch to the previous year
-      transitionToYear(currYear);
-      switchYearTab(currYear);
+      transitionToYear(yearSelected);
+      switchYearTab(yearSelected);
     }
   }
   else
   {
       response = "Not Deleted!";
-      isDeleted = 0;
+      g_isDeleted = false;
   }
 }
 }// end deleteYearAndTransition
@@ -3846,19 +3867,30 @@ function toggleVisibility() {
 //transitionToYear updates the graphics for a board to "year" input
 function transitionToYear(year) {
   currentYear = year;
+  yearSelected = year;
   var tempNum = year + 37;
   if (curTracking) {
     pushClick(0, getStamp(), tempNum, 0, null);
   }
+  //only for addition
   if (year > boardData[currentBoard].calculatedToYear && addingYearFromFile == false) {
     boardData[currentBoard].calculatedToYear = year;
-
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year - 1];
     } // end for
   } // end if
 
-  if(year < boardData[currentBoard].calculatedToYear && !addingYearFromFile && isDeleted == 1)
+//  only after year 2 is deleted
+  if (year == boardData[currentBoard].calculatedToYear && !addingYearFromFile && year2to3) {
+    boardData[currentBoard].calculatedToYear = year;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      boardData[currentBoard].map[i].landType[year-1] = boardData[currentBoard].map[i].landType[year];
+    } // end for
+  } // end if
+  console.log("inside transitionToYear " + g_isDeleted);
+
+  //only for year subtraction
+  if(year < boardData[currentBoard].calculatedToYear && !addingYearFromFile && g_isDeleted)
   {
     boardData[currentBoard].calculatedToYear  = year;
     for (var i = 0; i < boardData[currentBoard].map.length; i++)
@@ -3875,8 +3907,8 @@ function transitionToYear(year) {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year];
     } // end for
   } // end if
-
-  isDeleted = 0;
+  year2to3 = false;
+  g_isDeleted = false;
   boardData[currentBoard].updateBoard();
   refreshBoard();
 } //end transitionToYear
