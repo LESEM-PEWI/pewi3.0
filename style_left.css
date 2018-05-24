@@ -18,7 +18,7 @@
   box-sizing: border-box;
 }
 
-
+/* Styling for popup tab titles*/
 #toolsTabTitle, #terrainTabTitle, #precipTabTitle, #yearTabTitle, #levelsTabTitle, #featuresTabTitle, #yieldTabTitle {
     left: 3vw;
     width: 300%;
@@ -43,15 +43,13 @@
     -webkit-transition-duration: var(--transition-duration);
 
   }
-
+/* Text slides out to right effect*/
   @keyframes slide-right {
     from {
-      /* margin-left: -100%; */
       width: 0%;
     }
 
     to {
-      /* margin-left: 0%; */
       width: 300%;
     }
   }
