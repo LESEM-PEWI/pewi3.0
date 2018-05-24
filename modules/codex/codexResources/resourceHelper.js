@@ -8,10 +8,10 @@
 function openFiles(fileName){
   switch (fileName) {
     case 'general.pdf':
-      window.open('../../../../doc/general.pdf');
+      window.open('./general.pdf');
       break;
     case 'advanced.pdf':
-      window.open('../../../../doc/advanced.pdf');
+      window.open('./advanced.pdf');
       break;
   }
 }
