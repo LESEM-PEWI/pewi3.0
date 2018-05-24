@@ -403,36 +403,6 @@ Cleaned and Prepared - July 2016
         window.scrollTo(0, 0);
       }
     }
-
-    /*
-    * In resetOptionsSelected is used to set all the options to false (original state).
-    * The resetOptionSelected function was created for Issue 368. Reference Issue 368 for more information.
-    */
-    function resetOptionsSelected(){
-      /*
-      * Resets all options to false
-      * First 25 are paint and hover ids,
-      * The last two options are precipitation and application statistics option.
-      */
-      for(var i = 0; i < 29; ++i){
-        if(i < 26){
-          $(':checkbox')[i].checked = false;
-        }
-        if(i === 26){
-          $('#precip.toggle').prop('checked', false);
-        }
-        if(i === 27){
-          $('#statFrame.toggle').prop('checked', false);
-        }
-      }
-      //saves the current state of options
-      saveCurrentOptionsState();
-      //scroll page to top, so that next time options is loaded it starts there
-      window.scrollTo(0, 0);
-
-      //resets saved options to false to start new cycle in exiting without saving
-      savedOptions = false; 
-    }
   </script>
 
 </head>
