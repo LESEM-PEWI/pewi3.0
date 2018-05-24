@@ -107,6 +107,47 @@ var session = {
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
 
+// Toggled popup text when hover over the Tabs in the left console
+function toggleTabTitle(value) {
+  if(document.getElementById(value).style.display === 'none'){
+    // Set the corresponding titles when hover over one
+    switch (value){
+      case 'toolsTabTitle':
+        // The left console is hidden, it should popup 'Hide toolbar' when hover over the tool tab.
+        if(document.getElementById('leftConsole').className === 'leftConsole'){
+          document.getElementById(value).innerHTML = 'Hide&nbsp;toolbar';
+        } else {
+          document.getElementById(value).innerHTML = 'Show&nbsp;toolbar';
+        }
+        break;
+
+      case 'terrainTabTitle':
+        document.getElementById(value).innerHTML = 'Land&nbsp;use&nbsp;types';
+        break;
+      case 'precipTabTitle':
+        document.getElementById(value).innerHTML = 'precipitation';
+        break;
+      case 'yearTabTitle':
+        document.getElementById(value).innerHTML = 'years&nbsp;selection';
+        break;
+      case 'levelsTabTitle':
+        document.getElementById(value).innerHTML = 'results&nbsp;mapped';
+        break;
+      case 'featuresTabTitle':
+        document.getElementById(value).innerHTML = 'physical&nbsp;features';
+        break;
+      case 'yieldTabTitle':
+        document.getElementById(value).innerHTML = 'yield&nbsp;base&nbsp;rate';
+        break;
+  }
+
+    document.getElementById(value).style.display = 'inline-block';
+  }
+  else {
+    document.getElementById(value).style.display = 'none';
+  }
+}
+
 //Adds the given tileId and painter to the undoArr
 function addChange(tileId) {
   if (uniqueTileChange(tileId)) {
