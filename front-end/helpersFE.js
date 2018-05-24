@@ -340,7 +340,7 @@ function deleteYearAndTransition()
   var currMaxYear = boardData[currentBoard].calculatedToYear;
   if(curTracking)
   {
-    pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO:
+    pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO
   }
 //if the current year is = 1, don't have an option for deleting the year
  if(yearSelected == 1)
@@ -361,7 +361,6 @@ function deleteYearAndTransition()
       {
         response = "Deleted!";
         //delete the year
-        document.getElementById("year3Button").style.display = "year2Button";
         document.getElementById("year3Button").style.display = "none";
         //make it year 2
         g_isDeleted = true;
