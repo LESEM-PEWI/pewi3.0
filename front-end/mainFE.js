@@ -78,7 +78,7 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
     camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-    // console.log(camera2.position);
+    console.log(camera2.position);
   }
 
   if (keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]) { // Handle S key - Back Words movements
@@ -100,7 +100,7 @@ function animate() {
     else
     camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
     camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
-    // console.log(camera2.position);
+    console.log(camera2.position);
   }
 
   if (keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // Handle A key - Left Side Movement
@@ -122,7 +122,7 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera2.rotation.y + Math.PI / 2) * player.speed;
     camera2.position.x -= Math.sin(camera2.rotation.y + Math.PI / 2) * player.speed;
-    // console.log(camera2.position);
+    console.log(camera2.position);
   }
 
   if (keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // Handle D key - Right side Movements
@@ -144,7 +144,7 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera.rotation.y - Math.PI / 2) * player.speed;
     camera2.position.x -= Math.sin(camera.rotation.y - Math.PI / 2) * player.speed;
-    // console.log(camera2.position);
+    console.log(camera2.position);
   }
 
   // Keyboard turn inputs
@@ -538,6 +538,10 @@ function initWorkspace(file) {
 
 function keyDown(event) {
   keyboard[event.keyCode] = true;
+  // if(event.keyCode === 80 && document.getElementById('printButton').style.display == 'none'){
+  //   // keyboard[event.keyCode] = false;
+  //   closePrintOptions();
+  // }
 }
 
 function keyUp(event) {
