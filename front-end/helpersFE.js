@@ -360,7 +360,7 @@ function deleteYearAndTransition()
       if(yearSelected == 2 && currMaxYear == 3)
       {
         response = "Deleted!";
-        //delete the year
+        //delete the button of the year - actual deletion is done in transitionToYear
         document.getElementById("year3Button").style.display = "none";
         //make it year 2
         g_isDeleted = true;
@@ -376,7 +376,7 @@ function deleteYearAndTransition()
       else
       {
         response = "Deleted!";
-        //delete the year
+        //delete the button of the year - actual deletion is done in transitionToYear
         document.getElementById("year" + yearSelected + "Button").style.display = "none";
         currMaxYear -=1;
         yearSelected -= 1;
@@ -392,6 +392,7 @@ function deleteYearAndTransition()
         g_isDeleted = false;
     }
   }
+
   }// end deleteYearAndTransition
 
 
@@ -3868,6 +3869,7 @@ function toggleVisibility() {
 function transitionToYear(year) {
   currentYear = year;
   yearSelected = year;
+  var specialCase = 0;
   var tempNum = year + 37;
   if (curTracking) {
     pushClick(0, getStamp(), tempNum, 0, null);
@@ -3880,16 +3882,32 @@ function transitionToYear(year) {
     } // end for
   } // end if
 
-//  only after year 2 is deleted
+//only after year 2 is deleted - special case; comes from deleteYearAndTransition
+//the board is not refreshed or updated here, instead, for this case it is done in deleteYearAndTransition
   if (year == boardData[currentBoard].calculatedToYear && !addingYearFromFile && year2to3) {
     boardData[currentBoard].calculatedToYear = year;
+    specialCase =1;
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year-1] = boardData[currentBoard].map[i].landType[year];
     } // end for
+    boardData[currentBoard].updateBoard();
+    refreshBoard();
+    //now make the landtype of the one deleted to 1 - in this case, landtype[3] = 1
+    for (var i = 0; i < boardData[currentBoard].map.length; i++)
+    {
+      if(boardData[currentBoard].map[i].landType[year] != 0)
+      {
+        boardData[currentBoard].map[i].landType[year] =1;
+      }
+      else
+      {
+        boardData[currentBoard].map[i].landType[year] =0;
+      }
+      boardData[currentBoard].calculatedYear =2;
+    } // end for
   } // end if
 
-
-  //only for year subtraction
+  //only for year subtraction - comes from deleteYearAndTransition
   if(year < boardData[currentBoard].calculatedToYear && !addingYearFromFile && g_isDeleted)
   {
     boardData[currentBoard].calculatedToYear  = year;
@@ -3897,6 +3915,18 @@ function transitionToYear(year) {
     {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year+0];
     } //end for
+    //now make the landtype of the one deleted to 1
+    for (var i = 0; i < boardData[currentBoard].map.length; i++)
+    {
+      if(boardData[currentBoard].map[i].landType[year+1] != 0)
+      {
+        boardData[currentBoard].map[i].landType[year+1] =1;
+      }
+      else
+      {
+        boardData[currentBoard].map[i].landType[year+1] =0;
+      }
+    } // end for
   } //end if
 
   if(addingYearFromFile==true) {
@@ -3908,8 +3938,13 @@ function transitionToYear(year) {
   } // end if
   year2to3 = false;
   g_isDeleted = false;
-  boardData[currentBoard].updateBoard();
-  refreshBoard();
+  //update here for regular cases;
+  if(!specialCase)
+  {
+    boardData[currentBoard].updateBoard();
+    refreshBoard();
+  }
+  specialCase =0;
 } //end transitionToYear
 
 //Clumps and undo's multiple tiles
