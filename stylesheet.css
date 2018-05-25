@@ -460,19 +460,26 @@ body {
   width: 100%;
 }
 
+
+
 #hover-div {
   background: none !important;
-  border-radius: 100%;
   color: white;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
+  font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
   font-size: 12px;
-  height: 100px;
   left: 48.85%;
   pointer-events: none;
   position: fixed;
-  top: 49%;
-  width: 250px;
+  text-align: center;
+}
+
+#hover-info{
+  display:inline-block;
+  position: relative;
+  width: 150%;
+  background-color:rgba(58, 58, 58, 0.8);
+  border-radius: 50px;
 }
 
 .simOverlay, #genOverlay, #overlay {
