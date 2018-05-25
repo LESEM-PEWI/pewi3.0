@@ -1,5 +1,3 @@
-
-
 //RadarChart Object,
 // Code modified, animation tweens, mouseover interaction, and some logic
 //     interfacing are original to us
@@ -49,154 +47,154 @@ var RadarChart = {
     d3.select(id).select("svg").remove();
 
     var g = d3.select(id)
-    .append("svg")
-    .attr("width", cfg.w * 1.97) //384
-    .attr("height", cfg.h * 1.23) //239
-    .append("g")
-    .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
+      .append("svg")
+      .attr("width", cfg.w * 1.97) //384
+      .attr("height", cfg.h * 1.23) //239
+      .append("g")
+      .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
 
     var mouseoverInfo = d3.select(id)
-    .append('g')
-    .attr('class', mouseoverClass);
+      .append('g')
+      .attr('class', mouseoverClass);
 
     mouseoverInfo.append('div')
-    .attr('class', 'label');
+      .attr('class', 'label');
 
     mouseoverInfo.append('div')
-    .attr('class', 'count');
+      .attr('class', 'count');
 
     mouseoverInfo.append('div')
-    .attr('class', 'score');
+      .attr('class', 'score');
 
     //Circular segments
     for (var j = 0; j < cfg.levels - 1; j++) {
       var levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels);
       g.selectAll(".levels")
-      .data(allAxis)
-      .enter()
-      .append("svg:line")
-      .attr("x1", function(d, i) {
-        return levelFactor * (1 - cfg.factor * Math.sin(i * cfg.radians / total));
-      })
-      .attr("y1", function(d, i) {
-        return levelFactor * (1 - cfg.factor * Math.cos(i * cfg.radians / total));
-      })
-      .attr("x2", function(d, i) {
-        return levelFactor * (1 - cfg.factor * Math.sin((i + 1) * cfg.radians / total));
-      })
-      .attr("y2", function(d, i) {
-        return levelFactor * (1 - cfg.factor * Math.cos((i + 1) * cfg.radians / total));
-      })
-      .attr("class", "line")
-      .style("stroke", "grey")
-      .style("stroke-opacity", "0.75")
-      .style("stroke-width", "0.3px")
-      .attr("transform", "translate(" + (cfg.w / 2 - levelFactor) + ", " + (cfg.h / 2 - levelFactor) + ")");
+        .data(allAxis)
+        .enter()
+        .append("svg:line")
+        .attr("x1", function(d, i) {
+          return levelFactor * (1 - cfg.factor * Math.sin(i * cfg.radians / total));
+        })
+        .attr("y1", function(d, i) {
+          return levelFactor * (1 - cfg.factor * Math.cos(i * cfg.radians / total));
+        })
+        .attr("x2", function(d, i) {
+          return levelFactor * (1 - cfg.factor * Math.sin((i + 1) * cfg.radians / total));
+        })
+        .attr("y2", function(d, i) {
+          return levelFactor * (1 - cfg.factor * Math.cos((i + 1) * cfg.radians / total));
+        })
+        .attr("class", "line")
+        .style("stroke", "grey")
+        .style("stroke-opacity", "0.75")
+        .style("stroke-width", "0.3px")
+        .attr("transform", "translate(" + (cfg.w / 2 - levelFactor) + ", " + (cfg.h / 2 - levelFactor) + ")");
     }
 
     //Text indicating at what % each level is
     for (var j = 0; j < cfg.levels; j++) {
       var levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels);
       g.selectAll(".levels")
-      .data([1]) //dummy data
-      .enter()
-      .append("svg:text")
-      .attr("x", function(d) {
-        return levelFactor * (1 - cfg.factor * Math.sin(0));
-      })
-      .attr("y", function(d) {
-        return levelFactor * (1 - cfg.factor * Math.cos(0));
-      })
-      .attr("class", "legend")
-      .style("font-family", "sans-serif")
-      .style("font-size", "10px")
-      .attr("transform", "translate(" + (cfg.w / 2 - levelFactor + cfg.ToRight) + ", " + (cfg.h / 2 - levelFactor) + ")")
-      .attr("fill", "#737373")
-      .text(((j + 1) * cfg.maxValue / cfg.levels).toFixed(2) * 100);
+        .data([1]) //dummy data
+        .enter()
+        .append("svg:text")
+        .attr("x", function(d) {
+          return levelFactor * (1 - cfg.factor * Math.sin(0));
+        })
+        .attr("y", function(d) {
+          return levelFactor * (1 - cfg.factor * Math.cos(0));
+        })
+        .attr("class", "legend")
+        .style("font-family", "sans-serif")
+        .style("font-size", "10px")
+        .attr("transform", "translate(" + (cfg.w / 2 - levelFactor + cfg.ToRight) + ", " + (cfg.h / 2 - levelFactor) + ")")
+        .attr("fill", "#737373")
+        .text(((j + 1) * cfg.maxValue / cfg.levels).toFixed(2) * 100);
     }
 
     series = 0;
 
     var axis = g.selectAll(".axis")
-    .data(allAxis)
-    .enter()
-    .append("g")
-    .attr("class", "axis");
+      .data(allAxis)
+      .enter()
+      .append("g")
+      .attr("class", "axis");
 
     axis.append("line")
-    .attr("x1", cfg.w / 2)
-    .attr("y1", cfg.h / 2)
-    .attr("x2", function(d, i) {
-      return cfg.w / 2 * (1 - cfg.factor * Math.sin(i * cfg.radians / total));
-    })
-    .attr("y2", function(d, i) {
-      return cfg.h / 2 * (1 - cfg.factor * Math.cos(i * cfg.radians / total));
-    })
-    .attr("class", "line")
-    .style("stroke", "grey")
-    .style("stroke-width", "1px");
+      .attr("x1", cfg.w / 2)
+      .attr("y1", cfg.h / 2)
+      .attr("x2", function(d, i) {
+        return cfg.w / 2 * (1 - cfg.factor * Math.sin(i * cfg.radians / total));
+      })
+      .attr("y2", function(d, i) {
+        return cfg.h / 2 * (1 - cfg.factor * Math.cos(i * cfg.radians / total));
+      })
+      .attr("class", "line")
+      .style("stroke", "grey")
+      .style("stroke-width", "1px");
 
     axis.append("text")
-    .attr("class", "legend")
-    .text(function(d) {
-      return d;
-    })
-    .style("font-family", "sans-serif")
-    .style("font-size", "11px")
-    .attr("text-anchor", "middle")
-    .attr("dy", "3.3em")
-    .attr("transform", function(d, i) {
-      return "translate(0, -40.7)";
-    })
-    .attr("x", function(d, i) {
-      return cfg.w / 2 * (1 - cfg.factorLegend * Math.sin(i * cfg.radians / total)) - 60 * Math.sin(i * cfg.radians / total);
-    })
-    .attr("y", function(d, i) {
-      return cfg.h / 2 * (1 - Math.cos(i * cfg.radians / total)) - 20 * Math.cos(i * cfg.radians / total);
-    });
+      .attr("class", "legend")
+      .text(function(d) {
+        return d;
+      })
+      .style("font-family", "sans-serif")
+      .style("font-size", "11px")
+      .attr("text-anchor", "middle")
+      .attr("dy", "3.3em")
+      .attr("transform", function(d, i) {
+        return "translate(0, -40.7)";
+      })
+      .attr("x", function(d, i) {
+        return cfg.w / 2 * (1 - cfg.factorLegend * Math.sin(i * cfg.radians / total)) - 60 * Math.sin(i * cfg.radians / total);
+      })
+      .attr("y", function(d, i) {
+        return cfg.h / 2 * (1 - Math.cos(i * cfg.radians / total)) - 20 * Math.cos(i * cfg.radians / total);
+      });
 
 
     d.forEach(function(y, x) {
       dataValues = [];
       g.selectAll(".nodes")
-      .data(y, function(j, i) {
-        dataValues.push([
-          cfg.w / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
-          cfg.h / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
-        ]);
-      });
+        .data(y, function(j, i) {
+          dataValues.push([
+            cfg.w / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
+            cfg.h / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
+          ]);
+        });
       dataValues.push(dataValues[0]);
       g.selectAll(".area")
-      .data([dataValues])
-      .enter()
-      .append("polygon")
-      .attr("id", function(d, i) {
-        return radarClassElementsString + "polygon-serie" + series + "num" + i;
-      })
-      .attr("class", radarClassElementsString + series)
-      .style("stroke-width", "2px")
-      .style("stroke", cfg.color(series))
-      .attr("points", function(d) {
-        var str = "";
-        for (var pti = 0; pti < d.length; pti++) {
-          str = str + d[pti][0] + "," + d[pti][1] + " ";
-        }
-        return str;
-      })
-      .style("fill", function(j, i) {
-        return cfg.color(series);
-      })
-      .style("fill-opacity", cfg.opacityArea)
-      .on('mouseover', function(d) {
+        .data([dataValues])
+        .enter()
+        .append("polygon")
+        .attr("id", function(d, i) {
+          return radarClassElementsString + "polygon-serie" + series + "num" + i;
+        })
+        .attr("class", radarClassElementsString + series)
+        .style("stroke-width", "2px")
+        .style("stroke", cfg.color(series))
+        .attr("points", function(d) {
+          var str = "";
+          for (var pti = 0; pti < d.length; pti++) {
+            str = str + d[pti][0] + "," + d[pti][1] + " ";
+          }
+          return str;
+        })
+        .style("fill", function(j, i) {
+          return cfg.color(series);
+        })
+        .style("fill-opacity", cfg.opacityArea)
+        .on('mouseover', function(d) {
 
-      })
-      .on('mouseout', function() {})
-      .transition()
-      .duration(900)
-      .styleTween("fill-opacity", function() {
-        //animate the change of the color gradient from black to bright blue
-        return d3.interpolate(0, cfg.opacityArea);
-      });
+        })
+        .on('mouseout', function() {})
+        .transition()
+        .duration(900)
+        .styleTween("fill-opacity", function() {
+          //animate the change of the color gradient from black to bright blue
+          return d3.interpolate(0, cfg.opacityArea);
+        });
       series++;
     });
     series = 0;
@@ -204,76 +202,76 @@ var RadarChart = {
 
     d.forEach(function(y, x) {
       g.selectAll(".nodes")
-      .data(y).enter()
-      .append("svg:circle")
-      .attr("id", function(d, i) {
-        return radarClassElementsString + "circle-serie" + series + "num" + i;
-      })
-      .attr("class", radarClassElementsString + series)
-      .attr('r', cfg.radius)
-      .attr("alt", function(j) {
-        return Math.max(j.value, 0);
-      })
-      .attr("cx", function(j, i) {
-        dataValues.push([
-          cfg.w / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
-          cfg.h / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
-        ]);
-        return cfg.w / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total));
-      })
-      .attr("cy", function(j, i) {
-        return cfg.h / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total));
-      })
-      .attr("data-id", function(j) {
-        return j.axis;
-      })
-      .style("fill", function(d, i) {
-        return cfg.color(series);
-      })
-      .style("fill-opacity", 0.9)
-      .on('mouseover', function(d) {
-        newX = parseFloat(d3.select(this).attr('cx')) - 10;
-        newY = parseFloat(d3.select(this).attr('cy')) - 5;
+        .data(y).enter()
+        .append("svg:circle")
+        .attr("id", function(d, i) {
+          return radarClassElementsString + "circle-serie" + series + "num" + i;
+        })
+        .attr("class", radarClassElementsString + series)
+        .attr('r', cfg.radius)
+        .attr("alt", function(j) {
+          return Math.max(j.value, 0);
+        })
+        .attr("cx", function(j, i) {
+          dataValues.push([
+            cfg.w / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
+            cfg.h / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
+          ]);
+          return cfg.w / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total));
+        })
+        .attr("cy", function(j, i) {
+          return cfg.h / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total));
+        })
+        .attr("data-id", function(j) {
+          return j.axis;
+        })
+        .style("fill", function(d, i) {
+          return cfg.color(series);
+        })
+        .style("fill-opacity", 0.9)
+        .on('mouseover', function(d) {
+          newX = parseFloat(d3.select(this).attr('cx')) - 10;
+          newY = parseFloat(d3.select(this).attr('cy')) - 5;
 
-        z = "polygon." + d3.select(this).attr("class");
-        g.selectAll("polygon")
-        .transition(200)
-        .style("fill-opacity", 0.1);
-        g.selectAll(z)
-        .transition(200)
-        .style("fill-opacity", 0.7);
+          z = "polygon." + d3.select(this).attr("class");
+          g.selectAll("polygon")
+            .transition(200)
+            .style("fill-opacity", 0.1);
+          g.selectAll(z)
+            .transition(200)
+            .style("fill-opacity", 0.7);
 
-        d3.select(this).attr("r", 15);
+          d3.select(this).attr("r", 15);
 
-        mouseoverInfo.select('.label').html(d.label);
-        mouseoverInfo.select('.count').html(d.raw);
-        mouseoverInfo.select('.score').html(Math.round(d.value * 1000) / 10 + "/100");
-        mouseoverInfo.style('border-color', d3.select(this).style("fill"));
-        mouseoverInfo.style('display', 'block');
+          mouseoverInfo.select('.label').html(d.label);
+          mouseoverInfo.select('.count').html(d.raw);
+          mouseoverInfo.select('.score').html(Math.round(d.value * 1000) / 10 + "/100");
+          mouseoverInfo.style('border-color', d3.select(this).style("fill"));
+          mouseoverInfo.style('display', 'block');
 
-      })
-      .on('mouseout', function() {
-        d3.select(this).attr("r", cfg.radius);
-        mouseoverInfo.style('display', 'none');
+        })
+        .on('mouseout', function() {
+          d3.select(this).attr("r", cfg.radius);
+          mouseoverInfo.style('display', 'none');
 
-        g.selectAll("polygon")
-        .transition(200)
-        .style("fill-opacity", cfg.opacityArea);
+          g.selectAll("polygon")
+            .transition(200)
+            .style("fill-opacity", cfg.opacityArea);
 
-      })
-      .text(function(j) {
-        return Math.max(j.value, 0);
-      })
-      .transition()
-      .duration(900)
-      .attrTween("cy", function() {
-        //animate the change of the color gradient from black to bright blue
-        return d3.interpolate(150, this.getAttribute("cy"));
-      })
-      .attrTween("cx", function() {
-        //animate the change of the color gradient from black to bright blue
-        return d3.interpolate(150, this.getAttribute("cx"));
-      });
+        })
+        .text(function(j) {
+          return Math.max(j.value, 0);
+        })
+        .transition()
+        .duration(900)
+        .attrTween("cy", function() {
+          //animate the change of the color gradient from black to bright blue
+          return d3.interpolate(150, this.getAttribute("cy"));
+        })
+        .attrTween("cx", function() {
+          //animate the change of the color gradient from black to bright blue
+          return d3.interpolate(150, this.getAttribute("cx"));
+        });
 
       series++;
     });
@@ -491,26 +489,26 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
   //d3 stuff here, I won't comment this section too heavily as it is mostly typical graphics
   var svg = d3.select(chart)
-  .append('svg')
-  .attr("class", "graph-svg-component")
-  .attr("id", "pieSVG")
-  // .attr('width', width + legendW) //leave room for legend so add 280
-  // .attr('height', height)
-  .attr('width', pieChart_length + legendW) //leave room for legend so add 280
-  .attr('height', pieChart_length)
-  .append('g')
-  .attr('transform', 'translate(' + (pieChart_length / 2) + ',' + (pieChart_length / 2) + ')');
+    .append('svg')
+    .attr("class", "graph-svg-component")
+    .attr("id", "pieSVG")
+    // .attr('width', width + legendW) //leave room for legend so add 280
+    // .attr('height', height)
+    .attr('width', pieChart_length + legendW) //leave room for legend so add 280
+    .attr('height', pieChart_length)
+    .append('g')
+    .attr('transform', 'translate(' + (pieChart_length / 2) + ',' + (pieChart_length / 2) + ')');
 
   var arc = d3.arc()
-  .outerRadius(radius)
-  .innerRadius(radius * 0.55)
-  .padAngle(0.01);
+    .outerRadius(radius)
+    .innerRadius(radius * 0.55)
+    .padAngle(0.01);
 
   var pie = d3.pie()
-  .value(function(d) {
-    return d.count;
-  })
-  .sort(null);
+    .value(function(d) {
+      return d.count;
+    })
+    .sort(null);
 
   //animation for the pie graph
   function tweenPie(b) {
@@ -526,69 +524,69 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
   //create the elements for hover over information
   var mouseoverInfo = d3.select(chart)
-  .append('g')
-  .attr('class', 'mouseoverInfo');
+    .append('g')
+    .attr('class', 'mouseoverInfo');
 
   mouseoverInfo.append('div')
-  .attr('class', 'label');
+    .attr('class', 'label');
 
   mouseoverInfo.append('div')
-  .attr('class', 'count');
+    .attr('class', 'count');
 
   mouseoverInfo.append('div')
-  .attr('class', 'percent');
+    .attr('class', 'percent');
 
   //let's add the arcs to the pie graph now
   var path = svg.selectAll('path')
-  .data(pie(dataset))
-  .enter()
-  .append('path')
-  .attr('class', 'dataArc')
-  .attr('d', arc)
-  .attr('count', function(d) {
-    return d.data.number;
-  })
-  .attr('percent', function(d) {
-    return d.data.count;
-  })
-  .attr('fill', function(d, i) {
-    var hue = color(d.data.label);
-    //use these structures to keep track of what actually has a count
-    // for the legend
-    if (d.data.count != 0) {
-      nameArray.push(d.data.label);
-      colorLinker[d.data.label] = hue;
-    }
-    return hue;
-  })
-  .attr("id", function(d) {
-    return d.data.label;
-  })
-  .on('mouseover', function(d) {
-    //update the mouseover box
-    var percent = d.data.count;
-    mouseoverInfo.select('.label').html(d.data.label);
-    mouseoverInfo.select('.count').html(d.data.number + " acres");
-    mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100) + '%');
-    mouseoverInfo.style('border-color', color(d.data.label));
-    mouseoverInfo.style('opacity', 1);
-    mouseoverInfo.style('display', 'block');
+    .data(pie(dataset))
+    .enter()
+    .append('path')
+    .attr('class', 'dataArc')
+    .attr('d', arc)
+    .attr('count', function(d) {
+      return d.data.number;
+    })
+    .attr('percent', function(d) {
+      return d.data.count;
+    })
+    .attr('fill', function(d, i) {
+      var hue = color(d.data.label);
+      //use these structures to keep track of what actually has a count
+      // for the legend
+      if (d.data.count != 0) {
+        nameArray.push(d.data.label);
+        colorLinker[d.data.label] = hue;
+      }
+      return hue;
+    })
+    .attr("id", function(d) {
+      return d.data.label;
+    })
+    .on('mouseover', function(d) {
+      //update the mouseover box
+      var percent = d.data.count;
+      mouseoverInfo.select('.label').html(d.data.label);
+      mouseoverInfo.select('.count').html(d.data.number + " acres");
+      mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100) + '%');
+      mouseoverInfo.style('border-color', color(d.data.label));
+      mouseoverInfo.style('opacity', 1);
+      mouseoverInfo.style('display', 'block');
 
-    //highlight the pie slice
-    d3.select(this).classed("arc", false);
-    d3.select(this).classed("arcHighlight", true);
-  })
-  .on('mouseout', function() {
-    //hide mouseover box
-    mouseoverInfo.style('display', 'none');
+      //highlight the pie slice
+      d3.select(this).classed("arc", false);
+      d3.select(this).classed("arcHighlight", true);
+    })
+    .on('mouseout', function() {
+      //hide mouseover box
+      mouseoverInfo.style('display', 'none');
 
-    //unhighlight the pie slice
-    d3.select(this).classed("arcHighlight", false);
-    d3.select(this).classed("arc", true);
-  })
-  .transition()
-  .duration(900)
-  .attrTween("d", tweenPie);
+      //unhighlight the pie slice
+      d3.select(this).classed("arcHighlight", false);
+      d3.select(this).classed("arc", true);
+    })
+    .transition()
+    .duration(900)
+    .attrTween("d", tweenPie);
 
   //that's it for the pie chart, now we just need to add its legend information
 
@@ -600,88 +598,88 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
   //add all the elements that have a nonzero count
   var legend = svg.selectAll('.legend')
-  .data(nameArray)
-  .enter()
-  .append('g')
-  .attr('class', 'legend')
-  .on('mouseover', function(d) {
-    //highlight text
-    d3.select(this).style("fill", "steelblue");
+    .data(nameArray)
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .on('mouseover', function(d) {
+      //highlight text
+      d3.select(this).style("fill", "steelblue");
 
-    //highlight arc
-    var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
-    d3.select(slice).classed("arc", false)
-    .classed("arcHighlight", true);
+      //highlight arc
+      var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
+      d3.select(slice).classed("arc", false)
+        .classed("arcHighlight", true);
 
-    //show appropriate mouseover info
-    mouseoverInfo.select('.label').html(d);
-    mouseoverInfo.select('.count').html(d3.select(slice).attr("count") + " acres");
-    mouseoverInfo.select('.percent').html((Math.round(d3.select(slice).attr("percent") * 100) / 100) + '%');
-    mouseoverInfo.style('border-color', color(d));
-    mouseoverInfo.style('opacity', 1);
-    mouseoverInfo.style('display', 'block');
+      //show appropriate mouseover info
+      mouseoverInfo.select('.label').html(d);
+      mouseoverInfo.select('.count').html(d3.select(slice).attr("count") + " acres");
+      mouseoverInfo.select('.percent').html((Math.round(d3.select(slice).attr("percent") * 100) / 100) + '%');
+      mouseoverInfo.style('border-color', color(d));
+      mouseoverInfo.style('opacity', 1);
+      mouseoverInfo.style('display', 'block');
 
-  })
-  .on('mouseout', function(d) {
+    })
+    .on('mouseout', function(d) {
 
-    //set text back to black
-    d3.select(this).style("fill", "black");
+      //set text back to black
+      d3.select(this).style("fill", "black");
 
-    //unhighlight the arc
-    var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
-    d3.select(slice).classed("arcHighlight", false);
-    d3.select(slice).classed("arc", true);
+      //unhighlight the arc
+      var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
+      d3.select(slice).classed("arcHighlight", false);
+      d3.select(slice).classed("arc", true);
 
-    //undisplay the mouseover information box
-    mouseoverInfo.style('display', 'none');
-  })
-  .attr('transform', function(d, i) {
-    var height = legendRectSize + legendSpacing;
-    var offset = height * nameArray.length / 2;
-    var horz = pieChart_length / 2 + 20;
-    var vert = i * height - offset;
-    // var horz = width / 2 + 20;
-    return 'translate(' + horz + ',' + vert + ')';
-  });
+      //undisplay the mouseover information box
+      mouseoverInfo.style('display', 'none');
+    })
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset = height * nameArray.length / 2;
+      var horz = pieChart_length / 2 + 20;
+      var vert = i * height - offset;
+      // var horz = width / 2 + 20;
+      return 'translate(' + horz + ',' + vert + ')';
+    });
 
   //add legend color squares
   legend.append('rect')
-  .attr('width', legendRectSize)
-  .attr('height', legendRectSize)
-  .style('fill', function(d) {
-    tempLegendColors.push(colorLinker[d]); // adds the legend color to array (for print function)
-    return colorLinker[d];
-  })
-  .style('stroke', function(d) {
-    return colorLinker[d];
-  });
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', function(d) {
+      tempLegendColors.push(colorLinker[d]); // adds the legend color to array (for print function)
+      return colorLinker[d];
+    })
+    .style('stroke', function(d) {
+      return colorLinker[d];
+    });
 
   //add legend text info
   legend.append('text')
-  .attr('x', legendRectSize + legendSpacing)
-  .attr('y', legendRectSize - legendSpacing)
-  .text(function(d) {
-    tempLegendItems.push(d); // adds the legend element to the array (for print function)
-    return d;
-  });
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d) {
+      tempLegendItems.push(d); // adds the legend element to the array (for print function)
+      return d;
+    });
 
   //lastly, now add the chart title in the center
   // main chart title
   svg.append("text")
-  .attr("x", 0)
-  .attr("y", 0)
-  .attr("text-anchor", "middle")
-  .style("font-size", "1.8vw")
-  .style("font-weight", "bold")
-  .text("Land Use");
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text("Land Use");
   //also add the year below that
   svg.append("text")
-  .attr("x", 0)
-  .attr("y", 25)
-  .attr("text-anchor", "middle")
-  .style("font-size", "1.8vw")
-  .style("font-weight", "bold")
-  .text("Year " + year);
+    .attr("x", 0)
+    .attr("y", 25)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text("Year " + year);
 } //end drawD3LandPieChart()
 
 //this funtion creates and animates the Ecoscores aster plot
@@ -1062,7 +1060,7 @@ function drawEcosystemRadar(yearArray) {
       label: "Total Sum Yields",
       axis: "Total Yields",
       value: Math.min((Totals.nitrateConcentrationScore[y] + Totals.phosphorusLoadScore[y] + Totals.sedimentDeliveryScore[y] + Totals.carbonSequestrationScore[y] + Totals.grossErosionScore[y] + Totals.gameWildlifePointsScore[y] + Totals.biodiversityPointsScore[y]) / 700, 100),
-    },{
+    }, {
       label: "Phosphorus Load",
       axis: "Phosphorus",
       value: Totals.phosphorusLoadScore[y] / 100,
@@ -1124,23 +1122,23 @@ function drawEcosystemRadar(yearArray) {
   var legendLength = Math.round(Math.min(legendWidth, legendHeight));
 
   var svg = d3.select(radarLegendId)
-  .append('svg')
-  // .attr('width', legendWidth)
-  // .attr('height', legendHeight)
-  .attr('width', legendLength)
-  .attr('height', legendLength)
-  .append('g')
-  .attr('transform', 'translate(' + (legendLength / 2) + ',' + (legendLength / 2) + ')');
+    .append('svg')
+    // .attr('width', legendWidth)
+    // .attr('height', legendHeight)
+    .attr('width', legendLength)
+    .attr('height', legendLength)
+    .append('g')
+    .attr('transform', 'translate(' + (legendLength / 2) + ',' + (legendLength / 2) + ')');
 
   //add legend/chart title
   svg.append("text")
-  .attr("x", 0)
-  // .attr("y", -120)
-  .attr("y", Math.round(-0.324 * legendHeight))
-  .attr("text-anchor", "middle")
-  .style("font-size", "1.8vw")
-  .style("font-weight", "bold")
-  .text("Ecosystem Services");
+    .attr("x", 0)
+    // .attr("y", -120)
+    .attr("y", Math.round(-0.324 * legendHeight))
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text("Ecosystem Services");
 
   //sizing for the colored squares and spaces
   // var legendRectSize = 18;
@@ -1150,90 +1148,90 @@ function drawEcosystemRadar(yearArray) {
 
   //add all of the year series to the legend
   var legend = svg.selectAll('.legend')
-  .data(legendOptions)
-  .enter()
-  .append('g')
-  .on('mouseover', function(d) {
+    .data(legendOptions)
+    .enter()
+    .append('g')
+    .on('mouseover', function(d) {
 
-    //change text color
-    d3.select(this).style("fill", "steelblue");
+      //change text color
+      d3.select(this).style("fill", "steelblue");
 
-    //select the polygon area and highlight it
-    var g = d3.select(radarId);
-    z = d3.select(this).attr("childElement");
-    z = "polygon." + z;
+      //select the polygon area and highlight it
+      var g = d3.select(radarId);
+      z = d3.select(this).attr("childElement");
+      z = "polygon." + z;
 
-    g.selectAll("polygon")
-    .transition(200)
-    .style("fill-opacity", 0.1);
-    g.selectAll(z)
-    .transition(200)
-    .style("fill-opacity", 0.7);
-  })
-  .on('mouseout', function(d) {
+      g.selectAll("polygon")
+        .transition(200)
+        .style("fill-opacity", 0.1);
+      g.selectAll(z)
+        .transition(200)
+        .style("fill-opacity", 0.7);
+    })
+    .on('mouseout', function(d) {
 
-    //set legend text back to black
-    d3.select(this).style("fill", "black");
+      //set legend text back to black
+      d3.select(this).style("fill", "black");
 
-    //reset all of the polygons in the chart
-    var g = d3.select(radarId);
-    g.selectAll("polygon")
-    .transition(200)
-    .style("fill-opacity", 0.2);
-  })
-  .attr("childElement", function(d, i) {
-    return radarClassElementsString + i;
-  })
-  .attr('transform', function(d, i) {
-    var height = legendRectSize + legendSpacing;
-    // var offset = 80;
-    // var horz = -117;
-    var offset = Math.round(legendRectSize * 4.44);
-    var horz = Math.round(legendRectSize * -6.5);
-    var vert = i * height - offset;
-    return 'translate(' + horz + ',' + vert + ')';
-  });
+      //reset all of the polygons in the chart
+      var g = d3.select(radarId);
+      g.selectAll("polygon")
+        .transition(200)
+        .style("fill-opacity", 0.2);
+    })
+    .attr("childElement", function(d, i) {
+      return radarClassElementsString + i;
+    })
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      // var offset = 80;
+      // var horz = -117;
+      var offset = Math.round(legendRectSize * 4.44);
+      var horz = Math.round(legendRectSize * -6.5);
+      var vert = i * height - offset;
+      return 'translate(' + horz + ',' + vert + ')';
+    });
 
   //add legend color squares
   legend.append('rect')
-  .attr('width', legendRectSize)
-  .attr('height', legendRectSize)
-  .style('fill', function(d, i) {
-    return colorscale(i);
-  })
-  .style('stroke', function(d, i) {
-    radarLegendColors.push(colorscale(i)); // pushes the item names in the radar plot chart's legend to items array
-    return colorscale(i);
-  });
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', function(d, i) {
+      return colorscale(i);
+    })
+    .style('stroke', function(d, i) {
+      radarLegendColors.push(colorscale(i)); // pushes the item names in the radar plot chart's legend to items array
+      return colorscale(i);
+    });
 
   //add legend text info
   legend.append('text')
-  .attr('x', legendRectSize + legendSpacing)
-  .attr('y', legendRectSize - legendSpacing)
-  .text(function(d) {
-    radarLegendItems.push(d); // pushes the item names in the radar plot chart's legend to items array
-    return d;
-  });
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d) {
+      radarLegendItems.push(d); // pushes the item names in the radar plot chart's legend to items array
+      return d;
+    });
   // add checkbox
   legend.append('foreignObject')
-  .attr('style', 'visibility: visible;')
-  .attr('width', 20)
-  .attr('height', 20)
-  .attr('x', 70)
-  .attr('y', 0)
+    .attr('style', 'visibility: visible;')
+    .attr('width', 20)
+    .attr('height', 20)
+    .attr('x', 70)
+    .attr('y', 0)
 
-  .append('xhtml:input')
-  .attr('id', function(d) {
-    return "checkboxYear" + d.slice(-1);
-  })
-  .attr('class', 'yearCheckbox')
-  .attr('onclick', function(d) {
-    return "radarPlotYearToggle(" + d.slice(-1) + ");";
-  })
-  .attr('width', legendRectSize)
-  .attr('height', legendRectSize)
-  .attr('checked', "")
-  .attr('type', 'checkbox');
+    .append('xhtml:input')
+    .attr('id', function(d) {
+      return "checkboxYear" + d.slice(-1);
+    })
+    .attr('class', 'yearCheckbox')
+    .attr('onclick', function(d) {
+      return "radarPlotYearToggle(" + d.slice(-1) + ");";
+    })
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .attr('checked', "")
+    .attr('type', 'checkbox');
 
 } //end  drawEcosystemRadar()
 
@@ -1250,21 +1248,21 @@ function drawPrecipitationInformationChart() {
     var img = " ";
     switch (parent.data[year].adj) {
       case "Dry":
-      // "Clouds" by https://icons8.com with free commercial use / Inserted oval under cload
-      img = "./imgs/dry.png";
-      break;
+        // "Clouds" by https://icons8.com with free commercial use / Inserted oval under cload
+        img = "./imgs/dry.png";
+        break;
       case "Normal":
-      // "Partly Cloudy Rain" by https://icons8.com with free commercial use
-      img = "./imgs/normal.png";
-      break;
+        // "Partly Cloudy Rain" by https://icons8.com with free commercial use
+        img = "./imgs/normal.png";
+        break;
       case "Wet":
-      // "Heavy Rain" by https://icons8.com with free commercial use
-      img = "./imgs/wet.png";
-      break;
+        // "Heavy Rain" by https://icons8.com with free commercial use
+        img = "./imgs/wet.png";
+        break;
       case "Flood":
-      // "Torrential Rain" by https://icons8.com with free commercial use / Inserted curved black lines under rain/cloud
-      img = "imgs/flood.png";
-      break;
+        // "Torrential Rain" by https://icons8.com with free commercial use / Inserted curved black lines under rain/cloud
+        img = "imgs/flood.png";
+        break;
     } //end switch
 
     mouseoverInfo.select('.precipImg').attr('src', img);
@@ -1278,7 +1276,7 @@ function drawPrecipitationInformationChart() {
   document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo').innerHTML = " ";
 
   //assign data
-  for(var i = 0; i < boardData[currentBoard].precipitation.length-2; i++) {
+  for (var i = 0; i < boardData[currentBoard].precipitation.length - 2; i++) {
     boardData[currentBoard].precipitation[i] = Number(boardData[currentBoard].precipitation[i]);
   }
 
@@ -1316,47 +1314,47 @@ function drawPrecipitationInformationChart() {
 
     switch (parent.data[y].value) {
       case 24.58:
-      tempPercent = 25;
-      tempAdj = "Dry";
-      break;
+        tempPercent = 25;
+        tempAdj = "Dry";
+        break;
       case 28.18:
-      tempPercent = 36;
-      tempAdj = "Dry";
-      break;
+        tempPercent = 36;
+        tempAdj = "Dry";
+        break;
       case 30.39:
-      tempPercent = 42;
-      tempAdj = "Normal";
-      break;
+        tempPercent = 42;
+        tempAdj = "Normal";
+        break;
       case 32.16:
-      tempPercent = 49;
-      tempAdj = "Normal";
-      break;
+        tempPercent = 49;
+        tempAdj = "Normal";
+        break;
       case 34.34:
-      tempPercent = 57;
-      tempAdj = "Normal";
-      break;
+        tempPercent = 57;
+        tempAdj = "Normal";
+        break;
       case 36.47:
-      tempPercent = 64;
-      tempAdj = "Wet";
+        tempPercent = 64;
+        tempAdj = "Wet";
 
-      if (y > 0 && parent.data[y - 1].adj == "Dry") {
-        tempAdj = "Flood";
-      }
+        if (y > 0 && parent.data[y - 1].adj == "Dry") {
+          tempAdj = "Flood";
+        }
 
-      break;
+        break;
       case 45.1:
-      tempPercent = 89;
-      tempAdj = "Wet";
+        tempPercent = 89;
+        tempAdj = "Wet";
 
-      if (y > 0 && parent.data[y - 1].adj == "Dry") {
-        tempAdj = "Flood";
-      }
+        if (y > 0 && parent.data[y - 1].adj == "Dry") {
+          tempAdj = "Flood";
+        }
 
-      break;
+        break;
       default:
-      tempPercent = 0;
-      tempAdj = "";
-      break;
+        tempPercent = 0;
+        tempAdj = "";
+        break;
     } //end switch
 
     //assign data values
@@ -1381,86 +1379,86 @@ function drawPrecipitationInformationChart() {
 
   //create bar scale for percentages
   var x = d3.scaleLinear()
-  .domain([0, 100])
-  .range([0, width]);
+    .domain([0, 100])
+    .range([0, width]);
 
   var chart = d3.select(element)
-  .attr("width", width)
-  .attr("height", barHeight * data.length);
+    .attr("width", width)
+    .attr("height", barHeight * data.length);
 
   //set up hover over information in left container
 
   var element = document.getElementById('resultsFrame').contentWindow.document.getElementById('precipInfo');
 
   var mouseoverInfo = d3.select(element)
-  .append('g');
+    .append('g');
 
   mouseoverInfo.append('div')
-  .attr('class', 'leftPrecipContainer');
+    .attr('class', 'leftPrecipContainer');
   // .attr('style', 'display: inline-block; float: left; position: relative; top: 18%; width: 60%');
 
   var container = mouseoverInfo.select('.leftPrecipContainer');
 
   container.append('div')
-  .attr('class', 'yearLabel');
+    .attr('class', 'yearLabel');
 
   container.append('div')
-  .attr('class', 'precipValue');
+    .attr('class', 'precipValue');
 
   container.append('div')
-  .attr('class', 'precipType');
+    .attr('class', 'precipType');
 
   mouseoverInfo.append('img')
-  .attr('class', 'precipImg');
+    .attr('class', 'precipImg');
 
   //setup precipitation bar chart
 
   var bar = chart.selectAll("g")
-  .data(data)
-  .enter().append("g")
-  .attr('class', 'barData')
-  .attr("transform", function(d, i) {
-    return "translate(0," + (i * barHeight + 2) + ")";
-  });
+    .data(data)
+    .enter().append("g")
+    .attr('class', 'barData')
+    .attr("transform", function(d, i) {
+      return "translate(0," + (i * barHeight + 2) + ")";
+    });
 
   bar.append("rect")
-  .attr("width", function(d) {
-    return x(d.percent);
-  })
-  .attr("height", barHeight - 4)
-  .attr("class", "legendBars")
-  .attr('fill', '#1f77b4')
-  .on('mouseover', function(d) {
+    .attr("width", function(d) {
+      return x(d.percent);
+    })
+    .attr("height", barHeight - 4)
+    .attr("class", "legendBars")
+    .attr('fill', '#1f77b4')
+    .on('mouseover', function(d) {
 
-    setupPrecipInfo(d.year);
+      setupPrecipInfo(d.year);
 
-    mouseoverInfo.style('display', 'block');
+      mouseoverInfo.style('display', 'block');
 
-    d3.select(this).attr('fill', 'lightskyblue');
-  })
-  .on('mouseout', function() {
-    d3.select(this).attr('fill', '#1f77b4');
+      d3.select(this).attr('fill', 'lightskyblue');
+    })
+    .on('mouseout', function() {
+      d3.select(this).attr('fill', '#1f77b4');
 
-    setupPrecipInfo(currentYear);
+      setupPrecipInfo(currentYear);
 
-  })
-  .transition()
-  .duration(1400)
-  //animation of bars
-  .attrTween("width", function() {
-    return d3.interpolate(0, this.getAttribute("width"));
-  });
+    })
+    .transition()
+    .duration(1400)
+    //animation of bars
+    .attrTween("width", function() {
+      return d3.interpolate(0, this.getAttribute("width"));
+    });
 
   bar.append("text")
-  .attr("x", function(d) {
-    return x(d.percent) + 7;
-  })
-  .attr("y", barHeight / 2 )
-  .attr("dy", ".35em")
-  .text(function(d) {
-    return d.label;
-  })
-  .attr('fill', 'black');
+    .attr("x", function(d) {
+      return x(d.percent) + 7;
+    })
+    .attr("y", barHeight / 2)
+    .attr("dy", ".35em")
+    .text(function(d) {
+      return d.label;
+    })
+    .attr('fill', 'black');
 
   //lastly, after all of the chart setup, just setup the default information in the
   //  precipitation graphic to the left

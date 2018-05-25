@@ -100,7 +100,7 @@ function loadResources() {
 
     //Added additional Yield Overlay Map Colors
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/8B008B.png')); // 42       Dark Magenta
-    
+
     //Soybean Yield
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/ffffff.png')); // 43       White
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/ccffcc.png')); // 44       White Green
@@ -128,8 +128,9 @@ function loadResources() {
     //Cattle Yield
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/000000.png')); // 57       Black
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/CECACA.png')); // 58       Light Grey
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/360b07.png')); // 59      Dark Mahogany
 
-    
+
 
 
     //raindrop texture
@@ -149,3 +150,4 @@ function loadResources() {
 
     return 1;
 }//end loadResources()
+

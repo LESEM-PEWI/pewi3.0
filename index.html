@@ -15,6 +15,7 @@
 
 <html>
 
+
 <head>
 
   <meta charset="utf-8">
@@ -32,6 +33,12 @@
   <!--<link rel='shortcut icon' href='./imgs/pewi_favicon.ico' type='image/x-icon' />-->
   <link rel='shortcut icon' href='./imgs/logo_favicon.ico' type='image/x-icon' />
 
+
+
+
+
+
+
   <!-- three.js framework and javascript libraries -->
   <!-- <script src="./lib/d3.min.js"></script> -->
   <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -39,6 +46,7 @@
   <script src="./lib/controls.js"></script>
   <script src="./lib/jquery-3.2.1.min.js"></script>
   <script src="./lib/stats.min.js"></script>
+
   <!-- import jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
   <!-- import autotable plug-in for jsPDF -->
@@ -59,8 +67,9 @@
   <script src="./front-end/resultsDisplay.js"></script>
   <script src="./front-end/gameLogic.js"></script>
   <script src="./front-end/mainFE.js"></script>
-  <script src="./front-end/helpersFE.js"info></script>
+  <script src="./front-end/helpersFE.js" info></script>
   <script src="./front-end/levelLoader.js"></script>
+
 
 
   <!--from http://www.schillmania.com/projects/fireworks/ -->
@@ -180,8 +189,8 @@
         })
       });
     </script>
-     <!-- style="display: inline; visibility: hidden;-->
-    <div id = "flyover" class = "fly" > </div>
+    <!-- style="display: inline; visibility: hidden;-->
+    <div id="flyover" class="fly"> </div>
     <!--Create Glossary button on screen-->
     <div id="indexmenu" onclick="toggleIndex();">Glossary</div>
 
@@ -193,24 +202,44 @@
 
     <!-- Create left-side console button tabs -->
     <!-- "Pickaxe" by Luke Anthony Firth on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-    <div id="toolsButton" class="consoleButton" onclick="roll(1);">
-      <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <div id="toolsButton" class="consoleButton" onclick="roll(1);" >
+      <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType(); toggleTabTitle('toolsTabTitle');" onmouseout="toggleChangeLandType(); toggleTabTitle('toolsTabTitle');">
+      <!-- Tools tab title display -->
+      <div id="toolsTabTitle" style="display:none;"></div>
     </div>
 
     <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
       <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-      <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);"><img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png"></div>
+      <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);">
+        <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle');" onmouseout="toggleTabTitle('terrainTabTitle');">
+        <div id="terrainTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Cloud, raindrops, sun icon" by Yannick Lung (http://yannicklung.com/) with free commercial use / Inverted and resized -->
-      <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);"><img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png"></div>
+      <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);">
+        <img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png" onmouseover="toggleTabTitle('precipTabTitle');" onmouseout="toggleTabTitle('precipTabTitle');">
+        <div id="precipTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Calendar tool variant for time administration free icon" by FreePik (http://www.freepik.com), retrived from www.flaticon.com  with free commercial use / Inverted and resized -->
-      <div id="yearButton" class="consoleButton" onclick="switchConsoleTab(6);"><img id="calendarImg" class="imgNotSelected" src="./imgs/calendarIcon.png"></div>
+      <div id="yearButton" class="consoleButton" onclick="switchConsoleTab(6);">
+        <img id="calendarImg" class="imgNotSelected" src="./imgs/calendarIcon.png" onmouseover="toggleTabTitle('yearTabTitle');" onmouseout="toggleTabTitle('yearTabTitle');">
+        <div id="yearTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Filter, levels, settings icon" by Yash Ranpara (https://www.iconfinder.com/yash11) with free commerical use / Inverted and resized -->
-      <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);"><img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png"></div>
+      <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);">
+        <img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png" onmouseover="toggleTabTitle('levelsTabTitle');" onmouseout="toggleTabTitle('levelsTabTitle');">
+        <div id="levelsTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
-      <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);"><img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png"></div>
+      <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);">
+        <img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png" onmouseover="toggleTabTitle('featuresTabTitle');" onmouseout="toggleTabTitle('featuresTabTitle');">
+        <div id="featuresTabTitle" style="display:none;"></div>
+      </div>
 
-      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);"><img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png"></div>
+      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);">
+        <img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png" onmouseover="toggleTabTitle('yieldTabTitle');" onmouseout="toggleTabTitle('yieldTabTitle');">
+        <div id="yieldTabTitle" style="display:none;"></div>
+      </div>
 
     </div>
 
@@ -338,7 +367,8 @@
       <div id="levelsTab" class="consoleTab" style="display:none;">
 
         <div id="nitrateDetailsList" class="DetailsListRolled levelDetailsList">
-          <center><h1 class="DetailsList-title">Subwatershed Nitrate-N Percent Contribution</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Subwatershed Nitrate-N Percent Contribution</h1></center>
           <div class="legendColor" style="background-color: #87ceee">
             <p class="levelsTextDetails">0 - 5 %</p>
           </div>
@@ -357,9 +387,11 @@
         </div>
 
         <div id="erosionDetailsList" class="DetailsListRolled levelDetailsList">
-          <center><h1 class="DetailsList-title">Gross Erosion</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Gross Erosion</h1></center>
           <div class="legendColor" style="background-color: #ffffc9">
-            <p class="levelsTextDetails">< 0.5 t/ac/yr</p>
+            <p class="levelsTextDetails">
+              < 0.5 t/ac/yr</p>
           </div>
           <div class="legendColor" style="background-color: #e3c972">
             <p class="levelsTextDetails">0.5-2 t/ac/yr</p>
@@ -376,7 +408,8 @@
         </div>
 
         <div id="phosphorusDetailsList" class="DetailsListRolled levelDetailsList">
-          <center><h1 class="DetailsList-title">Phosphorus Index Risk Assessment</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Phosphorus Index Risk Assessment</h1></center>
           <div class="legendColor" style="background-color: #e6bb00;">
             <p class="levelsTextDetails">Very Low</p>
           </div>
@@ -409,7 +442,8 @@
       <!-- Watershed feature display -->
       <div id="featuresTab" class="consoleTab" style="display:none;">
         <div id="floodDetailsList" class="DetailsListRolled physicalDetailsList">
-          <center><h1 class="DetailsList-title">Flood Frequency</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Flood Frequency</h1></center>
           <div class="legendColor" style="background-color: #ffffc9;">
             <p class="levelsTextDetails" style="margin-top:10px;">None</p>
           </div>
@@ -432,7 +466,8 @@
         <div id="boundaryDetailsList"></div>
 
         <div id="drainageDetailsList" class="DetailsListRolled physicalDetailsList">
-          <center><h1 class="DetailsList-title">Drainage Class</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Drainage Class</h1></center>
           <div class="legendColor" style="background-color: #0053b3;">
             <p class="levelsTextDetails">Very Poor</p>
           </div>
@@ -451,7 +486,8 @@
         </div>
 
         <div id="soilDetailsList" class="DetailsListRolled physicalDetailsList">
-          <center><h1 class="DetailsList-title">Soil Class</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Soil Class</h1></center>
           <div class="legendColor" style="background-color: #097c2f">
             <p class="levelsTextDetails" style="margin-top:10px;">Clarion 138B</p>
           </div>
@@ -493,17 +529,42 @@
           </div>
         </div>
 
+
+        <div id="topoDetailsList" class="DetailsListRolled physicalDetailsList">
+          <center><h1 class="DetailsList-title">Topography</h1></center>
+          <div class="legendColor" style="background-color: #e6bb00;">
+            <p class="levelsTextDetails" style="margin-top:10px;">0-1% slope</p>
+          </div>
+          <div class="legendColor" style="background-color: #c97b08;">
+            <p class="levelsTextDetails">1-2% slope</p>
+          </div>
+          <div class="legendColor" style="background-color: #ad490d;">
+            <p class="levelsTextDetails">2-5% slope</p>
+          </div>
+          <div class="legendColor" style="background-color: #9a3010;">
+            <p class="levelsTextDetails">5-9% slope</p>
+          </div>
+          <div class="legendColor" style="background-color: #871c12;">
+            <p class="levelsTextDetails">9-14% slope</p>
+          </div>
+          <div class="legendColor" style="background-color: #360b07;">
+            <p class="levelsTextDetails">14-18% slope</p>
+          </div>
+        </div>
+
         <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon icon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
         <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetlands');">
         <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('boundary');">
         <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon icon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
         <p class="featuresText">Soil Class</p><img id="soilClass" class="featureSelectorIcon icon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
+        <p class="featuresText">Topography Relief</p><img id="topoClass" class="featureSelectorIcon icon" src="./imgs/Icon_Topography.svg" onclick="displayLevels('topo');">
       </div>
 
       <!--Yield Productivity Overlay Maps -->
       <div id="yieldTab" class="consoleTab" style="display: none;">
         <div id="cornDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center><h1 class="DetailsList-title">Corn Grain Yield Key</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Corn Grain Yield Key</h1></center>
           <div class="legendColor" style="background-color: #ffffc9;">
             <p class="levelsTextDetails">0 Mg/ha/yr</p>
           </div>
@@ -517,39 +578,50 @@
             <p class="levelsTextDetails">13.9-15.1 Mg/ha/yr</p>
           </div>
 
-          <center><h1 class="DetailsList-title">Corn Grain Precipitation Factor</h1></center>
-          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Corn Grain Precipitation Factor</h1></center>
+          <center>
+            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
 
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor</th><th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor</th>
+              <th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.75</td><td>24.6</td>
+              <td>0.75</td>
+              <td>24.6</td>
             </tr>
             <tr>
-              <td>0.90</td><td>28.2</td>
+              <td>0.90</td>
+              <td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>30.4</td>
+              <td>1.00</td>
+              <td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td><td>32.2</td>
+              <td>1.00</td>
+              <td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>34.3</td>
+              <td>1.00</td>
+              <td>34.3</td>
             </tr>
             <tr>
-              <td>0.90</td><td>36.5</td>
+              <td>0.90</td>
+              <td>36.5</td>
             </tr>
             <tr>
-              <td>0.75</td><td>45.1</td>
+              <td>0.75</td>
+              <td>45.1</td>
             </tr>
           </table>
         </div>
 
         <div id="soybeanDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center><h1 class="DetailsList-title">Soybean Yield Key</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Soybean Yield Key</h1></center>
           <div class="legendColor" style="background-color: #ffffff;">
             <p class="levelsTextDetails">0 Mg/ha/yr</p>
           </div>
@@ -563,39 +635,50 @@
             <p class="levelsTextDetails">4.30-4.70 Mg/ha/yr</p>
           </div>
 
-          <center><h1 class="DetailsList-title">Soybean Precipitation Factor</h1></center>
-          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Soybean Precipitation Factor</h1></center>
+          <center>
+            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
 
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.75</td><td>24.6</td>
+              <td>0.75</td>
+              <td>24.6</td>
             </tr>
             <tr>
-              <td>0.90</td><td>28.2</td>
+              <td>0.90</td>
+              <td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>30.4</td>
+              <td>1.00</td>
+              <td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td><td>32.2</td>
+              <td>1.00</td>
+              <td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>34.3</td>
+              <td>1.00</td>
+              <td>34.3</td>
             </tr>
             <tr>
-              <td>0.90</td><td>36.5</td>
+              <td>0.90</td>
+              <td>36.5</td>
             </tr>
             <tr>
-              <td>0.75</td><td>45.1</td>
+              <td>0.75</td>
+              <td>45.1</td>
             </tr>
           </table>
         </div>
 
         <div id="fruitDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center><h1 class="DetailsList-title">Mixed Fruit and Vegetable Yield Key</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Mixed Fruit and Vegetable Yield Key</h1></center>
           <div class="legendColor" style="background-color: #ff4000;">
             <p class="levelsTextDetails">6.58 Mg/ha/yr</p>
           </div>
@@ -609,39 +692,50 @@
             <p class="levelsTextDetails">16.45 Mg/ha/yr</p>
           </div>
 
-          <center><h1 class="DetailsList-title">Mixed Fruit and Vegetable Precipitation Factor</h1></center>
-          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Mixed Fruit and Vegetable Precipitation Factor</h1></center>
+          <center>
+            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
 
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>1.00</td><td>24.6</td>
+              <td>1.00</td>
+              <td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td><td>28.2</td>
+              <td>1.00</td>
+              <td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>30.4</td>
+              <td>1.00</td>
+              <td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td><td>32.2</td>
+              <td>1.00</td>
+              <td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>34.3</td>
+              <td>1.00</td>
+              <td>34.3</td>
             </tr>
             <tr>
-              <td>0.90</td><td>36.5</td>
+              <td>0.90</td>
+              <td>36.5</td>
             </tr>
             <tr>
-              <td>0.75</td><td>45.1</td>
+              <td>0.75</td>
+              <td>45.1</td>
             </tr>
           </table>
         </div>
 
         <div id="cattleDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center><h1 class="DetailsList-title">Cattle Yield Key</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Cattle Yield Key</h1></center>
           <div class="legendColor" style="background-color: #ffffff;">
             <p class="levelsTextDetails">3.4-4.0 animals/acre/yr</p>
           </div>
@@ -655,39 +749,50 @@
             <p class="levelsTextDetails">6.1-6.7 animals/acre/yr</p>
           </div>
 
-          <center><h1 class="DetailsList-title">Cattle Precipitation Factor</h1></center>
-          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Cattle Precipitation Factor</h1></center>
+          <center>
+            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
 
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.95</td><td>24.6</td>
+              <td>0.95</td>
+              <td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td><td>28.2</td>
+              <td>1.00</td>
+              <td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>30.4</td>
+              <td>1.00</td>
+              <td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td><td>32.2</td>
+              <td>1.00</td>
+              <td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>34.3</td>
+              <td>1.00</td>
+              <td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td><td>36.5</td>
+              <td>1.00</td>
+              <td>36.5</td>
             </tr>
             <tr>
-              <td>0.95</td><td>45.1</td>
+              <td>0.95</td>
+              <td>45.1</td>
             </tr>
           </table>
         </div>
 
         <div id="alfalfaDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center><h1 class="DetailsList-title">Alfalfa Yield Key</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Alfalfa Yield Key</h1></center>
           <div class="legendColor" style="background-color: #cc6578;">
             <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
           </div>
@@ -701,39 +806,50 @@
             <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
           </div>
 
-          <center><h1 class="DetailsList-title">Alfalfa Precipitation Factor</h1></center>
-          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Alfalfa Precipitation Factor</h1></center>
+          <center>
+            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
 
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.95</td><td>24.6</td>
+              <td>0.95</td>
+              <td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td><td>28.2</td>
+              <td>1.00</td>
+              <td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>30.4</td>
+              <td>1.00</td>
+              <td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td><td>32.2</td>
+              <td>1.00</td>
+              <td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>34.3</td>
+              <td>1.00</td>
+              <td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td><td>36.5</td>
+              <td>1.00</td>
+              <td>36.5</td>
             </tr>
             <tr>
-              <td>0.95</td><td>45.1</td>
+              <td>0.95</td>
+              <td>45.1</td>
             </tr>
           </table>
         </div>
 
         <div id="grasshayDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center><h1 class="DetailsList-title">Grass Hay Yield Key</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Grass Hay Yield Key</h1></center>
 
           <div class="legendColor" style="background-color: #d9ff66;">
             <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
@@ -748,39 +864,50 @@
             <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
           </div>
 
-          <center><h1 class="DetailsList-title">Grass Hay Precipitation Factor</h1></center>
-          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Grass Hay Precipitation Factor</h1></center>
+          <center>
+            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
 
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.95</td><td>24.6</td>
+              <td>0.95</td>
+              <td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td><td>28.2</td>
+              <td>1.00</td>
+              <td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>30.4</td>
+              <td>1.00</td>
+              <td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td><td>32.2</td>
+              <td>1.00</td>
+              <td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>34.3</td>
+              <td>1.00</td>
+              <td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td><td>36.5</td>
+              <td>1.00</td>
+              <td>36.5</td>
             </tr>
             <tr>
-              <td>0.95</td><td>45.1</td>
+              <td>0.95</td>
+              <td>45.1</td>
             </tr>
           </table>
         </div>
 
         <div id="switchgrassDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center><h1 class="DetailsList-title">Switchgrass Yield Key</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Switchgrass Yield Key</h1></center>
 
           <div class="legendColor" style="background-color: #66ff66;">
             <p class="levelsTextDetails">4.39-5.29 Mg/ha/yr</p>
@@ -795,39 +922,50 @@
             <p class="levelsTextDetails">6.25-6.61 Mg/ha/yr</p>
           </div>
 
-          <center><h1 class="DetailsList-title">Switchgrass Precipitation Factor</h1></center>
-          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Switchgrass Precipitation Factor</h1></center>
+          <center>
+            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
 
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>0.95</td><td>24.6</td>
+              <td>0.95</td>
+              <td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td><td>28.2</td>
+              <td>1.00</td>
+              <td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>30.4</td>
+              <td>1.00</td>
+              <td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td><td>32.2</td>
+              <td>1.00</td>
+              <td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>34.3</td>
+              <td>1.00</td>
+              <td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td><td>36.5</td>
+              <td>1.00</td>
+              <td>36.5</td>
             </tr>
             <tr>
-              <td>0.95</td><td>45.1</td>
+              <td>0.95</td>
+              <td>45.1</td>
             </tr>
           </table>
         </div>
 
         <div id="woodDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center><h1 class="DetailsList-title">Wood Yield Key</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Wood Yield Key</h1></center>
           <div class="legendColor" style="background-color: #f2e6d9;">
             <p class="levelsTextDetails">0.50-0.73 m3/ha/yr</p>
           </div>
@@ -841,70 +979,91 @@
             <p class="levelsTextDetails">1.43-1.60 m3/ha/yr</p>
           </div>
 
-          <center><h1 class="DetailsList-title">Wood Precipitation Factor</h1></center>
-          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Wood Precipitation Factor</h1></center>
+          <center>
+            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
 
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (in)/yr</th>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (in)/yr</th>
             </tr>
             <tr>
-              <td>1.00</td><td>24.6</td>
+              <td>1.00</td>
+              <td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td><td>28.2</td>
+              <td>1.00</td>
+              <td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>30.4</td>
+              <td>1.00</td>
+              <td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td><td>32.2</td>
+              <td>1.00</td>
+              <td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>34.3</td>
+              <td>1.00</td>
+              <td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td><td>36.5</td>
+              <td>1.00</td>
+              <td>36.5</td>
             </tr>
             <tr>
-              <td>1.00</td><td>45.1</td>
+              <td>1.00</td>
+              <td>45.1</td>
             </tr>
           </table>
         </div>
 
         <div id="shortDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center><h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Key</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Key</h1></center>
           <div class="legendColor" style="background-color: #734D26;">
             <p class="levelsTextDetails">608.6 tons/acre/yr</p>
           </div>
 
-          <center><h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Precipitation Factor</h1></center>
-          <center><h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Precipitation Factor</h1></center>
+          <center>
+            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
 
           <table id="yieldTable">
             <tr>
-              <th>Yield Type Precipitation Factor </th><th>Precipitation Level (id)/yr</th>
+              <th>Yield Type Precipitation Factor </th>
+              <th>Precipitation Level (id)/yr</th>
             </tr>
             <tr>
-              <td>1.00</td><td>24.6</td>
+              <td>1.00</td>
+              <td>24.6</td>
             </tr>
             <tr>
-              <td>1.00</td><td>28.2</td>
+              <td>1.00</td>
+              <td>28.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>30.4</td>
+              <td>1.00</td>
+              <td>30.4</td>
             </tr>
             <tr>
-              <td>1.00</td><td>32.2</td>
+              <td>1.00</td>
+              <td>32.2</td>
             </tr>
             <tr>
-              <td>1.00</td><td>34.3</td>
+              <td>1.00</td>
+              <td>34.3</td>
             </tr>
             <tr>
-              <td>1.00</td><td>36.5</td>
+              <td>1.00</td>
+              <td>36.5</td>
             </tr>
             <tr>
-              <td>1.00</td><td>45.1</td>
+              <td>1.00</td>
+              <td>45.1</td>
             </tr>
           </table>
         </div>
@@ -944,7 +1103,7 @@
 
     <!-- Create dialogue popup box (message box) -->
     <!-- "Bubble, speech icon" by http://www.iconsolid.com/ with free commercial usage / Inverted from original and resized -->
-    <div id="dialogueButton" class="dialogueButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/dialogue.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
+    <div id="bookMarkButton" class="bookMarkButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/indexIcon.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
     <div id="popup" class="popupHidden" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
       <div id="nextLevelButton" class="moveButtonHidden" onclick="loadLevel(levelGlobal + 1);">Next Level</div>
       <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>
@@ -952,7 +1111,7 @@
     </div>
 
     <!--Chat box for Index information -->
-    <div id="backgroundInfoButton" class="backgroundInfoButton" onclick="toggleBackgroundInfoDisplay();"><img src="./imgs/indexIcon.png"></div>
+    <div id="backgroundInfoButton" class="backgroundInfoButton" onclick="toggleBackgroundInfoDisplay();"><img src="./imgs/questionIcon.png"></div>
     <div id="backgroundInfoBox" class="backgroundInfoBox">
       <p id="indexPopupText" class="indexPopupText"></p>
     </div>
@@ -962,11 +1121,63 @@
     <!-- Create buttons in upper right corner: upperHud-->
     <img id="pewiLogo" src="./imgs/updatedPewiLogo.png">
     <img id="logoBase" src="./imgs/inGameLogo.png">
-    <img id="uploadDownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" onclick="showUploadDownload();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="DownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" onclick="triggerDownloadSequence();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+
+    <!--This class will hold the input element, so we'll hide this one-->
+    <div class="uploadFile1">
+      <!--Label is used so we can click the image and still use it as input-->
+      <label for="file-upload3">
+                <!--This element is used to align the button with everything else in the top right-->
+                <div id="uploadFile" class="upperButton">
+                  <!--Here's the button image itself, give it its own class so it's animation works properly-->
+                  <img id="UploadButton" class="uploadButtonClass" src = "./imgs/UploadImage.png" style="height: 3vw" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+                </div>
+            </label>
+      <!--And here's the input we'll be hiding-->
+      <input id="file-upload3" type="file" onchange="uploadFile();"/>
+    </div>
+
+    <!--Script for uploading and downloading-->
+    <script type="text/javascript">
+    /**
+    * pass the file handler to uploadClicked() in helpersFE.js
+    *
+    */
+    function uploadFile() {
+      // input tag that upload-file will attach to
+      var fp = document.getElementById("file-upload3");
+      // pass the file handler
+      uploadClicked(fp.files);
+      // clean the file
+      fp.files = null;
+    } // end uploadFile()
+
+    //this function triggers a download of the current data
+    function triggerDownloadSequence() {
+
+      //helpersFE.js, creates data using current board
+      var data = writeFileToDownloadString(0);
+      var downloadBlob = new Blob([data], {
+        type: "text/csv;charset=utf-8"
+      });
+      //filesaver.min.js
+      saveAs(downloadBlob, "pewiMap.csv");
+
+      //close necessary frames
+      // setTimeout(function() {parent.downloadClicked();},1 );
+      // XXX SCRIPT438: Object doesn't support property or method 'downloadClicked'
+    } // end triggerDownloadSequence()
+    </script>
+
+
+
+    <img id="emailIcon" class="upperButton" src="./imgs/emailIcon.png" onclick="showEmail();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="recordIcon" class="upperButton" style="visibility:hidden;" width="40px" src="./imgs/recordingIcon.gif">
-    <img id="homebutton" class="upperButton" src="imgs/Home_Icon.png" onclick="toggleEscapeFrame();" >
-    <img id="printButton" class = "upperButton" src="imgs/Button_Print.svg" onclick="startPrintOptions();">
+    <img id="homebutton" class="upperButton" src="imgs/Home_Icon.png" onclick="toggleEscapeFrame();">
+    <img id="printButton" class="upperButton" src="imgs/Button_Print.svg" onclick="startPrintOptions();" style="display:block;">
+
+
 
 
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
@@ -979,22 +1190,26 @@
       <div id="sliderCon" style="visibility: hidden">
         <label for="simSlider">Simulation Time</label>
         <input id="simSlider" type="range" min="0" max="100" value="0" onclick="updateSim(this.value)">
-          <img id="pausePlay" src="imgs/pauseButton.png" onclick="togglePausePlay();">
+        <img id="pausePlay" src="imgs/pauseButton.png" onclick="togglePausePlay();">
         <output for="simSlider" id="timer">00:00:00</output>
       </div>
       <p id="currentInfo">
     </footer>
 
     <!-- div which follows cursor for delayed hover information -->
+
     <div id="hover-div">
       <p id="hover-info"></p>
     </div>
 
-    <!-- Create iFrames for credits, upload/download, and codex -->
+
+    <!-- Create iFrames for credits, upload/download, contact us and codex -->
     <div id="modalCreditsFrame"><iframe id="creditsFrame" style="display:none;" src="./htmlFrames/credits.html"></iframe></div>
     <img id="closeCredits" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeCreditFrame() ;">
     <div id="modalUploadFrame"><iframe id="uploadDownloadFrame" style="display:none;" src="./htmlFrames/uploadDownload.html"></iframe></div>
     <img id="closeUploadDownload" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeUploadDownloadFrame();">
+    <div id="modalEmailFrame"><iframe id="emailFrame" style="display:none;" src="./htmlFrames/contact_us.html"></iframe></div>
+    <img id="closeEmail" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeEmailFrame() ;">
     <div id="modalCodexFrame"><iframe id="index" src="./modules/codex/codex.html" allowfullscreen="allowfullscreen"></iframe></div>
     <!-- index iframe has its own close button -->
 
@@ -1021,8 +1236,11 @@
   <!-- the modal frame covers the page with semi-opaque layer, and escape options -->
 
   <div id="modalEscapeFrame">
+    <!--Line below was added to add exit button on top right of Home options page. Reference Issue 361 for details.-->
+    <div id="closeDiv"><img id="escapeButton" onclick="toggleEscapeFrame();" src="./imgs/close_black.png"></div>
     <div id="escapeMenu">
-      <div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleIndex() ;">Glossary</div>
+      <!--Commented out Glossary button, which is div below. Reference Issue 363 on explanation for removal.-->
+      <!--<div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleIndex() ;">Glossary</div>-->
       <div class="mainEscapeButton" id="optionsButton" onclick="toggleEscapeFrame(); startOptions();">Instructor Options</div>
       <!--The hover options feature is currently in the Options menu, but can be changed -->
       <!--<div class="mainEscapeButton" id="userSettingsButton" onclick="toggleEscapeFrame(); startOptions();">User Settings</div>-->
@@ -1049,7 +1267,7 @@
     $(window).bind("beforeunload", function(event) {
       if (page.style.visibility == 'visible') {
         // on the main page, ask the user to save changes
-        showUploadDownload();
+        //showUploadDownload();
         return "Are you sure to leave? Make sure if you saved changes.";
       } else {
         // not on the main page, exit the app directly

@@ -18,6 +18,53 @@
   box-sizing: border-box;
 }
 
+/* Styling for popup tab titles*/
+#toolsTabTitle, #terrainTabTitle, #precipTabTitle, #yearTabTitle, #levelsTabTitle, #featuresTabTitle, #yieldTabTitle {
+    top: 0vw;
+    left: 3vw;
+    width: 300%;
+    height: inherit;
+    color: #fff;
+    font-family: 'Amatic SC', cursive;
+    font-family: var(--button-font-family);
+    font-size: 1.6vw;
+    font-weight: bold;
+    text-align: center;
+    padding: 12% 0;
+    position: absolute;
+    overflow: hidden;
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat: repeat;
+    box-shadow: 0px 0px 5px 0px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+    border-radius: 0px 6px 6px 0px;
+    animation: 2s slide-right;
+    transition-duration:0.4s;
+    transition-duration: var(--transition-duration);
+    /* Safari */
+    -webkit-transition-duration: var(--transition-duration);
+
+  }
+/* Text slides out to right effect*/
+  @keyframes slide-right {
+    from {
+      width: 0%;
+    }
+
+    to {
+      width: 300%;
+    }
+  }
+
+/* Safari 4.0 - 8.0 */
+  @-webkit-keyframes slide-right {
+    from {
+      width: 0%;
+    }
+
+    to {
+      width: 300%;
+    }
+  }
 
 /**Styling for index Menu**/
 #indexmenu, #combineButton {
@@ -632,6 +679,13 @@ table {
   .tabButtons, #toolsButton, #undoButton {
     left: 57px;
   }
+
+ /* #toolsButton:hover #toolsTitle {
+    visibility: visible;
+    display: block;
+ } */
+
+
   #undoButton {
     height: 18px;
     top: 25px;

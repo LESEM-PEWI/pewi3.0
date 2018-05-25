@@ -226,6 +226,8 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,1)";
       //clear informational text
       document.getElementById('startupInformationText').innerHTML = "";
+      // // We need to show the print button in case of the button was hidden in multi-player mode.
+      // document.getElementById('printButton').style.display = 'block';
       //change random tolerance ("S" for sandbox)
       randomAllowed("S");
       //after all of this styling magic, let's actually do something and start the sandbox mode
@@ -234,10 +236,10 @@ Cleaned and Prepared - July 2016
         // A touch at the main page, for fixing key events for IE,
         // since at the start of the app, IE couldn't sense any keyevent before a click
         parent.document.getElementById("page").focus();
-        //Added this to reset the options page any time when sandbox is opened 
+        //Added this to reset the options page any time when sandbox is opened
         parent.resetOptionsPage();
       }, 400);
-          
+
       //Update the background information box
       updateIndexPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
     } //end startSandbox
@@ -264,6 +266,8 @@ Cleaned and Prepared - July 2016
       //clear informational text
       document.getElementById('startupInformationText').innerHTML = "";
       //change random tolerance ("U" for utilities)
+      // // We need to show the print button in case of the button was hidden in multi-player mode.
+      // parent.document.getElementById('printButton').style.display = 'block';
       randomAllowed("U");
       //Display utilities frame over the page, then with
       // the background elements hidden, rearrange them in preparation for the user
@@ -316,6 +320,8 @@ Cleaned and Prepared - July 2016
       document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)";
       //clear informational text
       document.getElementById('startupInformationText').innerHTML = "";
+      // We need to show the print button in case of the button was hidden in multi-player mode.
+      parent.document.getElementById('printButton').style.display = 'block';
       //change random tolerance ("P" for play)
       randomAllowed("P");
       //function multiplayerMode();

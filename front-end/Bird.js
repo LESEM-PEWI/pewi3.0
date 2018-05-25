@@ -43,7 +43,6 @@ var Boid = function() {
 	var vector = new THREE.Vector3(),
 	_acceleration, _width = 500, _height = 500, _depth = 200, _goal, _neighborhoodRadius = 100,
 	_maxSpeed = 4, _maxSteerForce = 0.1, _avoidWalls = false;
-
 	this.position = new THREE.Vector3();
 	this.velocity = new THREE.Vector3();
 	_acceleration = new THREE.Vector3();

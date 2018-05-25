@@ -6,7 +6,8 @@
           painter, Totals, river,
           Results, initData, hoveredOver, currentPlayer*/
 
-var addingYearFromFile = false;//Boolean used to keep a track of whether or not you're adding a year from file
+
+var addingYearFromFile = false; //Boolean used to keep a track of whether or not you're adding a year from file
 var click;
 var clickAndDrag = false;
 var currentHighlightType = 0;
@@ -22,7 +23,7 @@ var lastSelectedPainter = 1;
 var leftToolConsoleWasOpen;
 var mesh = null; // mesh store the whole view on the scene
 var meshGeometry = new THREE.Geometry();
-var optionsString = "";//string that stores toggeled off options
+var optionsString = ""; //string that stores toggeled off options
 var overlayedToggled = false;
 var paintSwitch = false;
 var paused = false;
@@ -46,13 +47,20 @@ var year2to3 = false; //true if year 2 is deleted when year 3 is present; false 
 // arrays
 
 //var arrLines;
-var birds = [], bird;
-var boids = [], boid;
+var birds = [],
+  bird;
+var boids = [],
+  boid;
 var columnCutOffs = [];
 var highlightedTiles = [];
 var meshMaterials = [];
 var rowCutOffs = []; //y coor of top left corner of each tile
-var undoArr = [[],[],[],[]];
+var undoArr = [
+  [],
+  [],
+  [],
+  []
+];
 var undoGridArr = [];
 var undoGridPainters = [];
 
@@ -90,13 +98,30 @@ var playerCombo = [];
 var resetting = false;
 var totalPlayers = 0;
 // customize hotkeys
-var hotkeyArr = [[69,null],[82,null],[84,null],[85,null],[66,null],[86,null],[68,null],[65,null],[87,null],[83,null],[79,null],[81,null]];
+var hotkeyArr = [
+  [69, null],
+  [82, null],
+  [84, null],
+  [85, null],
+  [66, null],
+  [86, null],
+  [68, null],
+  [65, null],
+  [87, null],
+  [83, null],
+  [79, null],
+  [81, null]
+];
 
 // for print function
 var data = []; // stores precip data for results page
-var radarLegendColors = [], radarLegendItems = [];
-var tempLegendItems = [], maxLegendSize = 1, finalLegendItems = []; // stores strings of the names in legend for print function
-var tempLegendColors = [], finalLegendColors = []; // stores colors of legent items for print function
+var radarLegendColors = [],
+  radarLegendItems = [];
+var tempLegendItems = [],
+  maxLegendSize = 1,
+  finalLegendItems = []; // stores strings of the names in legend for print function
+var tempLegendColors = [],
+  finalLegendColors = []; // stores colors of legent items for print function
 
 // object to store user actions ( print function )
 var session = {
@@ -108,11 +133,51 @@ var session = {
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
 
+// Toggled popup text when hover over the Tabs in the left console
+function toggleTabTitle(value) {
+  if (document.getElementById(value).style.display === 'none') {
+    // Set the corresponding titles when hover over one
+    switch (value) {
+      case 'toolsTabTitle':
+        // The left console is hidden, it should popup 'Hide toolbar' when hover over the tool tab.
+        if (document.getElementById('leftConsole').className === 'leftConsole') {
+          document.getElementById(value).innerHTML = 'Hide&nbsp;toolbar';
+        } else {
+          document.getElementById(value).innerHTML = 'Show&nbsp;toolbar';
+        }
+        break;
+
+      case 'terrainTabTitle':
+        document.getElementById(value).innerHTML = 'Land&nbsp;use&nbsp;types';
+        break;
+      case 'precipTabTitle':
+        document.getElementById(value).innerHTML = 'precipitation';
+        break;
+      case 'yearTabTitle':
+        document.getElementById(value).innerHTML = 'years&nbsp;selection';
+        break;
+      case 'levelsTabTitle':
+        document.getElementById(value).innerHTML = 'results&nbsp;mapped';
+        break;
+      case 'featuresTabTitle':
+        document.getElementById(value).innerHTML = 'physical&nbsp;features';
+        break;
+      case 'yieldTabTitle':
+        document.getElementById(value).innerHTML = 'yield&nbsp;base&nbsp;rate';
+        break;
+    }
+
+    document.getElementById(value).style.display = 'inline-block';
+  } else {
+    document.getElementById(value).style.display = 'none';
+  }
+}
+
 //Adds the given tileId and painter to the undoArr
 function addChange(tileId) {
   if (uniqueTileChange(tileId)) {
     //Paint selector is a grid
-    if(painterTool.status == 2 || randomizing || isShiftDown) {
+    if (painterTool.status == 2 || randomizing || isShiftDown) {
       undoGridArr.push(tileId);
       //Paint selector is regular
     } else {
@@ -129,17 +194,17 @@ function addPlayer(givenPlayer) {
       var tempPlayer = document.createElement("paintPlayer" + totalPlayers);
       tempPlayer.id = "paintPlayer" + totalPlayers;
       var playerString = "<div id='paintPlayer" + totalPlayers + "' class='players' onclick='changeSelectedPaintTo(" + totalPlayers + ");'" +
-      "onmouseover='toggleChangeLandType();'' onmouseout='toggleChangeLandType();'>";
+        "onmouseover='toggleChangeLandType();'' onmouseout='toggleChangeLandType();'>";
       playerString += "<img id='player" + totalPlayers + "Image' style='display:inline-block;' class='playerIcon iconSelected'" +
-      " src='./imgs/player" + totalPlayers + "a.png'></div>";
+        " src='./imgs/player" + totalPlayers + "a.png'></div>";
       //Toggled when you are sorting boards
     } else {
       var tempPlayer = document.createElement("paintPlayer" + givenPlayer);
       tempPlayer.id = "paintPlayer" + givenPlayer;
       var playerString = "<div id='paintPlayer" + givenPlayer + "' class='players' onclick='changeSelectedPaintTo(" + givenPlayer + ");'" +
-      "onmouseover='toggleChangeLandType();'' onmouseout='toggleChangeLandType();'>";
+        "onmouseover='toggleChangeLandType();'' onmouseout='toggleChangeLandType();'>";
       playerString += "<img id='player" + givenPlayer + "Image' style='display:inline-block;' class='playerIcon iconSelected'" +
-      " src='./imgs/player" + givenPlayer + "a.png'></div>";
+        " src='./imgs/player" + givenPlayer + "a.png'></div>";
     }
     tempPlayer.innerHTML = playerString;
     var whichSide = parseInt(tempPlayer.id.substr(11, 1));
@@ -150,10 +215,10 @@ function addPlayer(givenPlayer) {
     } else {
       document.getElementById("rightPlayerCon").appendChild(tempPlayer);
     }
-    if(givenPlayer != undefined) {
-        changeSelectedPaintTo(givenPlayer);
+    if (givenPlayer != undefined) {
+      changeSelectedPaintTo(givenPlayer);
     } else {
-        changeSelectedPaintTo(totalPlayers);
+      changeSelectedPaintTo(totalPlayers);
     }
   }
 }
@@ -289,7 +354,7 @@ function addTile(tile) {
 function addYearAndTransition() {
 
   var totalYearsAllowed = 3;
-  var nextYear = boardData[currentBoard].calculatedToYear+1;
+  var nextYear = boardData[currentBoard].calculatedToYear + 1;
   if (curTracking) {
     pushClick(0, getStamp(), 41, 0, null);
   }
@@ -322,7 +387,7 @@ function addYearAndTransition() {
     transitionToYear(nextYear);
   }
 
-  if(nextYear > totalYearsAllowed)
+ if(nextYear > totalYearsAllowed)
   {
     alert("Cannot add more than 3 years!");
     nextYear-=1;
@@ -334,6 +399,7 @@ function addYearAndTransition() {
 } //end addYearAndTransition
 
 //deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
+
 //Gets the year selected from transitionToYear, when the user selects which year to delete
 function deleteYearAndTransition()
 {
@@ -393,8 +459,7 @@ function deleteYearAndTransition()
     }
   }
 
-  }// end deleteYearAndTransition
-
+}// end deleteYearAndTransition
 
 // animateResults() frame
 function animateResults() {
@@ -493,53 +558,53 @@ function changeSelectedPaintTo(newPaintValue) {
     //Index chat box entries for each landuse type
     switch (painterElementId) {
       case 'paint1':
-      updateIndexPopup('To learn more about <span style="color:orange">Conventional Corn</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Conventional Corn</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint2':
-      updateIndexPopup('To learn more about <span style="color:orange">Conservation Corn</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Conservation Corn</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint3':
-      updateIndexPopup('To learn more about <span style="color:orange">Conventional Soybean</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Conventional Soybean</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint4':
-      updateIndexPopup('To learn more about <span style="color:orange">Conservation Soybean</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Conservation Soybean</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint5':
-      updateIndexPopup('To learn more about <span style="color:orange">Alfalfa Hay</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Alfalfa Hay</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint6':
-      updateIndexPopup('To learn more about <span style="color:orange">Permanent Pasture</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Permanent Pasture</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint7':
-      updateIndexPopup('To learm more about <span style="color:orange">Rotational Grazing</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learm more about <span style="color:orange">Rotational Grazing</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint8':
-      updateIndexPopup('To learn more about <span style="color:orange">Grass Hay</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Grass Hay</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint9':
-      updateIndexPopup('To learn more about <span style="color:orange">Prarie</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Prarie</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint10':
-      updateIndexPopup('To learn more about <span style="color:orange">Conservation Forest</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Conservation Forest</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint11':
-      updateIndexPopup('To learn more about <span style="color:orange">Conventional Forest</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Conventional Forest</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint12':
-      updateIndexPopup('To learn more about <span style="color:orange">Switch Grass</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Switch Grass</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint13':
-      updateIndexPopup('To learn more about <span style="color:orange">Short Rotation Woody Bioenergy</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Short Rotation Woody Bioenergy</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint14':
-      updateIndexPopup('To learn more about <span style="color:orange">Wetland</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Wetland</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       case 'paint15':
-      updateIndexPopup('To learn more about <span style="color:orange">Mixed Fruits and Vegetables</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
-      break;
+        updateIndexPopup('To learn more about <span style="color:orange">Mixed Fruits and Vegetables</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        break;
       default:
-      updateIndexPopup('');
-      break;
+        updateIndexPopup('');
+        break;
     } // END switch
 
     // if it's grid painting mode and the user click to switch painter, erase the first seleted tile
@@ -554,8 +619,7 @@ function changeSelectedPaintTo(newPaintValue) {
     if (!modalUp) {
       storeCurrentCameraSession(0, newPaintValue);
     } // END if
-  }
-  else {
+  } else {
 
     //If we are merging players together
     if (document.getElementById("combineButton").innerHTML == "Merge" && merging == false) {
@@ -589,17 +653,17 @@ function changeSelectedPaintTo(newPaintValue) {
 } //end paintChange
 
 /**
-* check file type, returns true if is CSV or JSON file
-*
-* @param filename
-* @returns boolean value
-*/
+ * check file type, returns true if is CSV or JSON file
+ *
+ * @param filename
+ * @returns boolean value
+ */
 function checkFileType(filename) {
   var ext = getExtension(filename);
   switch (ext.toLowerCase()) {
     case 'csv':
     case 'json':
-    return true;
+      return true;
   }
   return false;
 } // checkFileType()
@@ -619,7 +683,7 @@ function clearInfo() {
 function clearPopup() {
   document.getElementById("popupText").innerHTML = " ";
   document.getElementById("popup").className = "popupHidden";
-  document.getElementById("dialogueButton").className = "dialogueButtonRolled";
+  document.getElementById("bookMarkButton").className = "bookMarkButtonRolled";
 } //end clearPopup
 
 //Clears all relative timers
@@ -642,6 +706,20 @@ function closeCreditFrame() {
   modalUp = false;
   //Event listner that closes escape key
   document.removeEventListener('keyup', aboutsEsc);
+  // removeEvent(document, 'keyup', aboutsEsc);
+} //end closeCreditFrame
+
+//closeEmailFrame closes the contact us iframe
+function closeEmailFrame() {
+  if (curTracking) {
+    pushClick(0, getStamp(), 33, 0, null); // The parameters may need to change, have no idea what this method does.
+  }
+  document.getElementById('emailFrame').style.display = "none";
+  document.getElementById('closeEmail').style.display = "none";
+  document.getElementById('modalEmailFrame').style.display = "none";
+  modalUp = false;
+  //Event listner that closes escape key
+  document.removeEventListener('keyup', emailEsc);
   // removeEvent(document, 'keyup', aboutsEsc);
 } //end closeCreditFrame
 
@@ -677,7 +755,7 @@ function closeUploadDownloadFrame() {
 
 //Function that allows for multiple players to be combined into one player
 function combinePlayers() {
-  if (document.getElementById("combineButton").innerHTML == "Combine Players" && totalPlayers>1) {
+  if (document.getElementById("combineButton").innerHTML == "Combine Players" && totalPlayers > 1) {
     // console.log("Combining players...");
     document.getElementById("combineButton").innerHTML = "Merge";
     document.getElementById("genOverlay").style.visibility = "visible";
@@ -772,29 +850,56 @@ function createFlock() {
 
 //For creating a manual scrolling event (Used in click tracking for PEWI map zooming [vertical position only])
 function customCameraView(position) {
-  var customScroll = new CustomEvent("MozMousePixelScroll1", {detail: -1*parseInt(position)});
+  var customScroll = new CustomEvent("MozMousePixelScroll1", {
+    detail: -1 * parseInt(position)
+  });
   window.dispatchEvent(customScroll);
 } //end customCameraView(position)
 
 //For creating a manual directional event (Used in click tracking for PEWI map navigation)
 function customDirectionalInput(input, keycode) {
-  var customInput = new KeyboardEvent("keydown", {code: input, keyCode: keycode});
+  var customInput = new KeyboardEvent("keydown", {
+    code: input,
+    keyCode: keycode
+  });
   window.dispatchEvent(customInput);
 } //end customDirectionalInput(input, keycode)
 
 //For creating a manual mouse click-and-drage events (Used in click tracking for PEWI map navigation)
-function customMouseInput(buttonInput,drag) {
+function customMouseInput(buttonInput, drag) {
   var inputX = parseFloat(buttonInput[0]);
   var inputY = parseFloat(buttonInput[1]);
   var sX = parseFloat(buttonInput[2]);
   var sY = parseFloat(buttonInput[3]);
   var mX = parseFloat(buttonInput[4]);
   var mY = parseFloat(buttonInput[5]);
-  if(!drag) {
-    var customMouse = new MouseEvent("mousedown", {button: 2, buttons: 2, clientX: inputX, clientY: inputY, layerX: 9, layerY: inputY, screenX: sX, screenY: sY, movementX: mX, movementY: mY});
+  if (!drag) {
+    var customMouse = new MouseEvent("mousedown", {
+      button: 2,
+      buttons: 2,
+      clientX: inputX,
+      clientY: inputY,
+      layerX: 9,
+      layerY: inputY,
+      screenX: sX,
+      screenY: sY,
+      movementX: mX,
+      movementY: mY
+    });
     document.getElementById('genOverlay').dispatchEvent(customMouse);
   } else {
-    var customMouse = new MouseEvent("mousemove", {button: 0, buttons: 2, clientX: inputX, clientY: inputY, layerX: inputX, layerY: inputY, screenX: sX, screenY: sY, movementX: mX, movementY: mY});
+    var customMouse = new MouseEvent("mousemove", {
+      button: 0,
+      buttons: 2,
+      clientX: inputX,
+      clientY: inputY,
+      layerX: inputX,
+      layerY: inputY,
+      screenX: sX,
+      screenY: sY,
+      movementX: mX,
+      movementY: mY
+    });
     window.dispatchEvent(customMouse);
   }
 } //end customMouseInput(buttonInput, drag)
@@ -866,116 +971,123 @@ function displayLevels(overlayHighlightType) {
   //record new highlighting selection
   switch (overlayHighlightType) {
     case 'nitrate':
-    selectionHighlightNumber = 1;
-    updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Index</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
-    if (curTracking) {
-      pushClick(0, getStamp(), 42, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 1;
+      updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 42, 0, null);
+      }
+      break;
     case 'erosion':
-    selectionHighlightNumber = 2;
-    updateIndexPopup('To learn more about <span style="color:orange;">Erosion</span>, go to the <span style="color:yellow;">Index</span>, select "Modules" and then <span style="color:yellow;">"Soil Quality"</span>.');
-    if (curTracking) {
-      pushClick(0, getStamp(), 43, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 2;
+      updateIndexPopup('To learn more about <span style="color:orange;">Erosion</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Soil Quality"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 43, 0, null);
+      }
+      break;
     case 'phosphorus':
-    selectionHighlightNumber = 3;
-    updateIndexPopup('To learn more about <span style="color:orange;">Phosphorus</span>, go to the <span style="color:yellow;">Index</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
-    if (curTracking) {
-      pushClick(0, getStamp(), 44, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 3;
+      updateIndexPopup('To learn more about <span style="color:orange;">Phosphorus</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 44, 0, null);
+      }
+      break;
     case 'flood':
-    selectionHighlightNumber = 4;
-    updateIndexPopup('This map shows the <span style="color:orange;">frequency of flooding</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
-    if (curTracking) {
-      pushClick(0, getStamp(), 45, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 4;
+      updateIndexPopup('This map shows the <span style="color:orange;">frequency of flooding</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 45, 0, null);
+      }
+      break;
     case 'drainage':
-    selectionHighlightNumber = 5;
-    updateIndexPopup('This map shows the <span style="color:orange;">drainage</span> for each pixel. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
-    if (curTracking) {
-      pushClick(0, getStamp(), 48, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 5;
+      updateIndexPopup('This map shows the <span style="color:orange;">drainage</span> for each pixel. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 48, 0, null);
+      }
+      break;
     case 'wetlands':
-    selectionHighlightNumber = 6;
-    updateIndexPopup('This map shows the locations for each <span style="color:orange;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
-    if (curTracking) {
-      pushClick(0, getStamp(), 46, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 6;
+      updateIndexPopup('This map shows the locations for each <span style="color:orange;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 46, 0, null);
+      }
+      break;
     case 'boundary':
-    selectionHighlightNumber = 7;
-    updateIndexPopup('This map shows the <span style="color:orange;">boundaries of each subwatershed</span>. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
-    if (curTracking) {
-      pushClick(0, getStamp(), 47, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 7;
+      updateIndexPopup('This map shows the <span style="color:orange;">boundaries of each subwatershed</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 47, 0, null);
+      }
+      break;
     case 'soil':
-    selectionHighlightNumber = 8;
-    updateIndexPopup('There are <span style="color:orange;">thirteen</span> different soil classes that each have different properties. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
-    if (curTracking) {
-      pushClick(0, getStamp(), 49, 0, null);
-    }
-    break;
-    // yield
+      selectionHighlightNumber = 8;
+      updateIndexPopup('There are <span style="color:orange;">thirteen</span> different soil classes that each have different properties. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 49, 0, null);
+      }
+      break;
+    case 'topo':
+      selectionHighlightNumber = 9;
+      updateIndexPopup('This map shows the <span style="color:orange;">topography</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 50, 0, null);
+      }
+      break;
+      // yield
     case 'corn':
-    selectionHighlightNumber = 9;
-    if (curTracking) {
-      pushClick(0, getStamp(), 69, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 10;
+      if (curTracking) {
+        pushClick(0, getStamp(), 69, 0, null);
+      }
+      break;
     case 'soybean':
-    selectionHighlightNumber = 10;
-    if (curTracking) {
-      pushClick(0, getStamp(), 70, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 11;
+      if (curTracking) {
+        pushClick(0, getStamp(), 70, 0, null);
+      }
+      break;
     case 'fruit':
-    selectionHighlightNumber = 11;
-    if (curTracking) {
-      pushClick(0, getStamp(), 71, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 12;
+      if (curTracking) {
+        pushClick(0, getStamp(), 71, 0, null);
+      }
+      break;
     case 'cattle':
-    selectionHighlightNumber = 12;
-    if (curTracking) {
-      pushClick(0, getStamp(), 72, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 13;
+      if (curTracking) {
+        pushClick(0, getStamp(), 72, 0, null);
+      }
+      break;
     case 'alfalfa':
-    selectionHighlightNumber = 13;
-    if (curTracking) {
-      pushClick(0, getStamp(), 73, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 14;
+      if (curTracking) {
+        pushClick(0, getStamp(), 73, 0, null);
+      }
+      break;
     case 'grasshay':
-    selectionHighlightNumber = 14;
-    if (curTracking) {
-      pushClick(0, getStamp(), 74, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 15;
+      if (curTracking) {
+        pushClick(0, getStamp(), 74, 0, null);
+      }
+      break;
     case 'switchgrass':
-    selectionHighlightNumber = 15;
-    if (curTracking) {
-      pushClick(0, getStamp(), 75, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 16;
+      if (curTracking) {
+        pushClick(0, getStamp(), 75, 0, null);
+      }
+      break;
     case 'wood':
-    selectionHighlightNumber = 16;
-    if (curTracking) {
-      pushClick(0, getStamp(), 76, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 17;
+      if (curTracking) {
+        pushClick(0, getStamp(), 76, 0, null);
+      }
+      break;
     case 'short':
-    selectionHighlightNumber = 17;
-    if (curTracking) {
-      pushClick(0, getStamp(), 77, 0, null);
-    }
-    break;
+      selectionHighlightNumber = 18;
+      if (curTracking) {
+        pushClick(0, getStamp(), 77, 0, null);
+      }
+      break;
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -1000,7 +1112,7 @@ function displayLevels(overlayHighlightType) {
 
     }
     //else if the highlighting is different, let's change to the new highlighting
-  else {
+    else {
       //close previous legend
       showLevelDetails(-1 * currentHighlightType);
       //highlight board
@@ -1110,6 +1222,7 @@ function executePrintOptions(isDownload) {
     boundary: false,
     drainage: false,
     soil: false,
+    topography: false,
     // yields
     yieldUserViewpoint: false,
     corn: false,
@@ -1124,7 +1237,7 @@ function executePrintOptions(isDownload) {
   };
 
   // set chosen ones to true
-  for (var i = 0; i < arrLines.length-1; i++) {
+  for (var i = 0; i < arrLines.length - 1; i++) {
     toPrint[arrLines[i].substr(0, arrLines[i].indexOf("-"))] = true;
   }
 
@@ -1135,7 +1248,7 @@ function executePrintOptions(isDownload) {
     // wait for preprocessing
     jspdfprinter.processing(isDownload);
     jspdfprinter = {}; // clean object
-  },100);
+  }, 100);
 
 } //end executePrintOptions
 
@@ -1196,11 +1309,11 @@ function getCurrentPlayer() {
 } //end getCurrentPlayer()
 
 /**
-* get file Extension name and return it
-*
-* @param filename
-* @returns string of file extention
-*/
+ * get file Extension name and return it
+ *
+ * @param filename
+ * @returns string of file extention
+ */
 function getExtension(filename) {
   var parts = filename.split('.');
   return parts[parts.length - 1];
@@ -1302,13 +1415,39 @@ function getHighlightColor(highlightType, tileId) {
     var flood = Number(boardData[currentBoard].map[tileId].floodFrequency);
 
     switch (flood) {
-      case 0:  case 10: return 5;
-      case 20: return 6;
-      case 30: return 7;
-      case 40: return 8;
-      case 50: return 9;
+      case 0:
+      case 10:
+        return 5;
+      case 20:
+        return 6;
+      case 30:
+        return 7;
+      case 40:
+        return 8;
+      case 50:
+        return 9;
+    } //end switch
+  } else if (highlightType == "topo") {
+
+    var topo = Number(boardData[currentBoard].map[tileId].topography);
+
+    switch (topo) {
+      case 0:
+        return 0;
+      case 1:
+        return 1;
+      case 2:
+        return 2;
+      case 3:
+        return 3;
+      case 4:
+        return 4;
+      case 5:
+        return 59;
     } //end switch
   }
+
+
   //wetland highlight color indicies
   else if (highlightType == "wetlands") {
 
@@ -1331,11 +1470,19 @@ function getHighlightColor(highlightType, tileId) {
     var drainage = Number(boardData[currentBoard].map[tileId].drainageClass);
 
     switch (drainage) {
-      case 70: return 31;
-      case 60: return 32;
-      case 50: case 45: return 33;
-      case 40: case 30: return 34;
-      case 10: case 0: return 35;
+      case 70:
+        return 31;
+      case 60:
+        return 32;
+      case 50:
+      case 45:
+        return 33;
+      case 40:
+      case 30:
+        return 34;
+      case 10:
+      case 0:
+        return 35;
     } //end switch
   }
   //soil class highlight color indicies
@@ -1345,107 +1492,231 @@ function getHighlightColor(highlightType, tileId) {
 
     switch (soil) {
       //color 097c2f
-      case "A": return 19;
-      //color a84597
-      case "B": return 14;
-      //color 919246
-      case "C": return 30;
-      //color c97b08
-      case "D": return 1;
-      //color 9a3010
-      case "G": return 3;
-      //color c7eab4
-      case "K": return 6;
-      //color cc6578
-      case "L": return 13;
-      //color e6bb00
-      case "M": return 0;
-      //color 5e6e71
-      case "N": return 33;
-      //color 837856
-      case "O": return 34;
-      //color 41b7c5
-      case "Q": return 8;
-      //color 0053b3
-      case "T": return 31;
-      //color 87ceee
-      case "Y": return 18;
+      case "A":
+        return 19;
+        //color a84597
+      case "B":
+        return 14;
+        //color 919246
+      case "C":
+        return 30;
+        //color c97b08
+      case "D":
+        return 1;
+        //color 9a3010
+      case "G":
+        return 3;
+        //color c7eab4
+      case "K":
+        return 6;
+        //color cc6578
+      case "L":
+        return 13;
+        //color e6bb00
+      case "M":
+        return 0;
+        //color 5e6e71
+      case "N":
+        return 33;
+        //color 837856
+      case "O":
+        return 34;
+        //color 41b7c5
+      case "Q":
+        return 8;
+        //color 0053b3
+      case "T":
+        return 31;
+        //color 87ceee
+      case "Y":
+        return 18;
     }
   } else if (highlightType == "corn") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A": case "M": case "N": case "Q": case "T": return 35;
-      case "B": case "G": return 5;
-      case "C": case "L": return 0;
-      case "D": case "K": case "O": case "Y": return 22;
+      case "A":
+      case "M":
+      case "N":
+      case "Q":
+      case "T":
+        return 35;
+      case "B":
+      case "G":
+        return 5;
+      case "C":
+      case "L":
+        return 0;
+      case "D":
+      case "K":
+      case "O":
+      case "Y":
+        return 22;
     }
   } else if (highlightType == "soybean") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A": case "M": case "N": case "Q": case "T": return 46;
-      case "B": case "G": return 43;
-      case "C": case "D": case "K": case "L": case "Y": return 45;
-      case "O": return 44;
+      case "A":
+      case "M":
+      case "N":
+      case "Q":
+      case "T":
+        return 46;
+      case "B":
+      case "G":
+        return 43;
+      case "C":
+      case "D":
+      case "K":
+      case "L":
+      case "Y":
+        return 45;
+      case "O":
+        return 44;
     }
 
   } else if (highlightType == "alfalfa") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A": case "D": case "N": case "Y": return 42;
-      case "B": case "G": case "K": case "O": return 13;
-      case "C": case "L": return 25;
-      case "M": case "Q": case "T": return 17;
+      case "A":
+      case "D":
+      case "N":
+      case "Y":
+        return 42;
+      case "B":
+      case "G":
+      case "K":
+      case "O":
+        return 13;
+      case "C":
+      case "L":
+        return 25;
+      case "M":
+      case "Q":
+      case "T":
+        return 17;
     }
   } else if (highlightType == "grasshay") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A": case "D": case "N": case "Y": return 46;
-      case "B": case "G": case "K": case "O": return 47;
-      case "C": case "L": return 45;
-      case "M": case "Q": case "T": return 29;
+      case "A":
+      case "D":
+      case "N":
+      case "Y":
+        return 46;
+      case "B":
+      case "G":
+      case "K":
+      case "O":
+        return 47;
+      case "C":
+      case "L":
+        return 45;
+      case "M":
+      case "Q":
+      case "T":
+        return 29;
     }
   } else if (highlightType == "switchgrass") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A": case "C": case "L": case "M": return 49;
-      case "B": case "D": case "G": case "K": case "O": return 45;
-      case "N": case "Q": case "T": return 51;
-      case "Y": return 50;
+      case "A":
+      case "C":
+      case "L":
+      case "M":
+        return 49;
+      case "B":
+      case "D":
+      case "G":
+      case "K":
+      case "O":
+        return 45;
+      case "N":
+      case "Q":
+      case "T":
+        return 51;
+      case "Y":
+        return 50;
     }
   } else if (highlightType == "wood") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A": case "D": case "G": case "M": case "Q": case "Y": return 55;
-      case "B": case "K": return 53;
-      case "C": case "L": case "O": return 52;
-      case "N": case "T": return 54;
+      case "A":
+      case "D":
+      case "G":
+      case "M":
+      case "Q":
+      case "Y":
+        return 55;
+      case "B":
+      case "K":
+        return 53;
+      case "C":
+      case "L":
+      case "O":
+        return 52;
+      case "N":
+      case "T":
+        return 54;
     }
   } else if (highlightType == "fruit") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A": case "G": case "N": return 0;
-      case "B": return 25;
-      case "C": case "L": case "M": case "O": case "Q": case "T": return 56;
-      case "D": case "K": case "Y": return 45;
+      case "A":
+      case "G":
+      case "N":
+        return 0;
+      case "B":
+        return 25;
+      case "C":
+      case "L":
+      case "M":
+      case "O":
+      case "Q":
+      case "T":
+        return 56;
+      case "D":
+      case "K":
+      case "Y":
+        return 45;
     }
   } else if (highlightType == "cattle") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "D": return 33;
-      case "A":  case "M":  case "N":
-      case "Q":  case "T":  case "Y":
-      return 57;
-      case "B":  case "G":  case "O":
-      return 43;
-      case "C":  case "K":  case "L":
-      return 58;
+      case "D":
+        return 33;
+      case "A":
+      case "M":
+      case "N":
+      case "Q":
+      case "T":
+      case "Y":
+        return 57;
+      case "B":
+      case "G":
+      case "O":
+        return 43;
+      case "C":
+      case "K":
+      case "L":
+        return 58;
     }
   } else if (highlightType == "short") {
     var soil = boardData[currentBoard].map[tileId].soilType;
     switch (soil) {
-      case "A": case "B": case "C": case "D": case "G": case "K":
-      case "L": case "M": case "N": case "O": case "Q": case "T":
-      case "Y": return 55;
+      case "A":
+      case "B":
+      case "C":
+      case "D":
+      case "G":
+      case "K":
+      case "L":
+      case "M":
+      case "N":
+      case "O":
+      case "Q":
+      case "T":
+      case "Y":
+        return 55;
     }
   }
 
@@ -1538,6 +1809,30 @@ function getHighlightedInfo(tileId) {
       case 7:
         highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>";
         break;
+
+        /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
+      case 9:
+        switch (Number(boardData[currentBoard].map[tileId].topography)) {
+          case 0:
+            highlightString = "0-1%" + "<br>";
+            break;
+          case 1:
+            highlightString = "1-2%" + "<br>";
+            break;
+          case 2:
+            highlightString = "2-5%" + "<br>";
+            break;
+          case 3:
+            highlightString = "5-9%" + "<br>";
+            break;
+          case 4:
+            highlightString = "9-14%" + "<br>";
+            break;
+          case 5:
+            highlightString = "14-18%" + "<br>";
+            break;
+        }
+        break;
         /*case 8:
       var soil = boardData[currentBoard].map[tileId].soilType;
       switch(soil)
@@ -1584,39 +1879,39 @@ function getHighlightedInfo(tileId) {
     }*/
         //Raw numbers are for conversion of the units (conversion doesn't exist in the back end)
         //create string for corn grain yield
-      case 9:
+      case 10:
         highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>";
         break;
         //create string for soybean yield
-      case 10:
+      case 11:
         highlightString = Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>";
         break;
         //create string for  mixed fruit and vegetable yield
-      case 11:
+      case 12:
         highlightString = Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>";
         break;
         //create string for cattle yield
-      case 12:
+      case 13:
         highlightString = Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(1) + " animals/acre/yr" + "<br>";
         break;
         //create string for alfalfa yield
-      case 13:
-        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
-        break;
-        //create string for grass hay yield (same as alfalfa)
       case 14:
         highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
         break;
-        //create string for switchgrass yield
+        //create string for grass hay yield (same as alfalfa)
       case 15:
+        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
+        break;
+        //create string for switchgrass yield
+      case 16:
         highlightString = Number(boardData[currentBoard].map[tileId].getSwitchgrassYield() / 0.445407279029).toFixed(2) + " Mg/ha/yr" + "<br>";
         break;
         //create string for wood yield
-      case 16:
+      case 17:
         highlightString = Number(boardData[currentBoard].map[tileId].getWoodYield() / 171.875).toFixed(2) + " m3/ha/yr" + "<br>";
         break;
         //create string for short-rotation woody biomass yield
-      case 17:
+      case 18:
         highlightString = "608.6 tons/acre/yr" + "<br>";
         break;
     }
@@ -1630,20 +1925,27 @@ function getNumberOfPlayers() {
 }
 
 /**
-* get Precip Options Value
-*
-* @param precipValue
-* @returns Options value
-*/
+ * get Precip Options Value
+ *
+ * @param precipValue
+ * @returns Options value
+ */
 function getPrecipOptionsValue(precipValue) {
   switch (precipValue) {
-    case 24.58: return 0;
-    case 28.18: return 1;
-    case 30.39: return 2;
-    case 32.16: return 3;
-    case 34.34: return 4;
-    case 36.47: return 5;
-    case 45.10: return 6;
+    case 24.58:
+      return 0;
+    case 28.18:
+      return 1;
+    case 30.39:
+      return 2;
+    case 32.16:
+      return 3;
+    case 34.34:
+      return 4;
+    case 36.47:
+      return 5;
+    case 45.10:
+      return 6;
   } // end switch
 } // end getPrecipOptionsValue()
 
@@ -1735,52 +2037,52 @@ function highlightTile(tileId) {
     if (boardData[currentBoard].map[tileId].landType[currentYear] == 0 ||
       boardData[currentBoard].map[tileId].landType[0] == -1) {
 
-        showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
+      showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
 
-        document.getElementById('hover-info').innerHTML = "";
-
-      } else {
-
-        //Highlight a nonzero land type tile
-        meshMaterials[tileId].emissive.setHex(0x7f7f7f);
-        previousHover = tileId;
-
-        //update HUD with current information
-        //Bottom part of screen
-        showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
-
-        //update the information displayed in the delayed hover div by cursor
-        myTimer = setTimeout(function() {
-          document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
-          //May use strings and iterate through them for removing hover information
-          var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]);
-          var info2 = "Precipitation: " + printPrecipYearType();
-          var info3 = "Soil Type: " + printSoilType(tileId);
-          if (document.getElementById('parameters').innerHTML.includes('hover1')) {
-            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info1 + "<br>", '');
-            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
-          }
-          if (document.getElementById('parameters').innerHTML.includes('hover2')) {
-            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info2 + "<br>", '');
-            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
-          }
-          if (document.getElementById('parameters').innerHTML.includes('hover3')) {
-            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info3, '');
-            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
-          }
-        }, 500);
-      }
+      document.getElementById('hover-info').innerHTML = "";
 
     } else {
 
-      //If not over any land tile, update HUD accordingly
-      showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
+      //Highlight a nonzero land type tile
+      meshMaterials[tileId].emissive.setHex(0x7f7f7f);
+      previousHover = tileId;
 
-      document.getElementById("hover-info").innerHTML = "";
+      //update HUD with current information
+      //Bottom part of screen
+      showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
 
+      //update the information displayed in the delayed hover div by cursor
+      myTimer = setTimeout(function() {
+        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+        //May use strings and iterate through them for removing hover information
+        var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]);
+        var info2 = "Precipitation: " + printPrecipYearType();
+        var info3 = "Soil Type: " + printSoilType(tileId);
+        if (document.getElementById('parameters').innerHTML.includes('hover1')) {
+          document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info1 + "<br>", '');
+          //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+        }
+        if (document.getElementById('parameters').innerHTML.includes('hover2')) {
+          document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info2 + "<br>", '');
+          //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+        }
+        if (document.getElementById('parameters').innerHTML.includes('hover3')) {
+          document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info3, '');
+          //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+        }
+      }, 500);
     }
 
-  } //end highlightTile
+  } else {
+
+    //If not over any land tile, update HUD accordingly
+    showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;");
+
+    document.getElementById("hover-info").innerHTML = "";
+
+  }
+
+} //end highlightTile
 
 //Inserts the land type changes from a grid into the undoArr
 function insertChange() {
@@ -1895,8 +2197,8 @@ function multiplayerMode() {
     //Don't add an aditional player if the level was only reset
     if (!resetting) {
       resetPlayers();
-      if(totalPlayers==0) {
-       addPlayer();
+      if (totalPlayers == 0) {
+        addPlayer();
       }
     } else {
       resetting = false;
@@ -1907,6 +2209,9 @@ function multiplayerMode() {
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
     document.getElementById("yearButton").style.display = "none";
+    document.getElementById("yearButton").style.display = "none";
+    // Multi-player mode should not have a print function, hide it.
+    document.getElementById('printButton').style.display = 'none';
   }
 }
 
@@ -1980,7 +2285,7 @@ function objectiveCheck() {
 
 //onDocumentMouseMove follows the cursor and highlights corresponding tiles
 function onDocumentMouseMove(event) {
-  if(!isSimRunning() || isSimRunning && !event.isTrusted) {
+  if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     event.preventDefault();
 
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
@@ -2137,7 +2442,7 @@ function onDocumentMouseDown(event) {
               changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
               //Change variable for painting click and drag status
               clickAndDrag = true;
-            }// end if/else
+            } // end if/else
 
           } // end if/else
 
@@ -2170,28 +2475,28 @@ function onDocumentMouseDown(event) {
 
 //onDocumentMouseUp listens for the release of the click event
 function onDocumentMouseUp(event) {
-  if(!isSimRunning() || isSimRunning && !event.isTrusted) {
+  if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     //Turn off click and drag functionality
     clickAndDrag = false;
 
     //check to see if one of the physical features maps is highlighted
     // levels maps need to be checked too
     //if so, we'll change the tiles over to their appropriate color levels
-//     if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
-//
-//       Totals = new Results(boardData[currentBoard]);
-//       Totals.update();
-//
-//       // update each tile on the board with its corresponding color
-//       for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-//
-//         if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-//           meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
-//         }
-//       } //end for
-//     }
+    //     if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
+    //
+    //       Totals = new Results(boardData[currentBoard]);
+    //       Totals.update();
+    //
+    //       // update each tile on the board with its corresponding color
+    //       for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+    //
+    //         if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+    //           meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
+    //         }
+    //       } //end for
+    //     }
   }
- } //end onDocumentMouseUp
+} //end onDocumentMouseUp
 
 //onDocumentKeyDown, listener with keyboard bindings
 function onDocumentKeyDown(event) {
@@ -2333,7 +2638,7 @@ function onDocumentKeyDown(event) {
           document.getElementById("genOverlay").style.visibility = "visible";
           resumeSim();
           document.getElementById('pausePlay').src = "imgs/pauseButton.png";
-            document.getElementById('pausePlay').style.width = '20px';
+          document.getElementById('pausePlay').style.width = '20px';
           break;
         }
         break;
@@ -2371,7 +2676,11 @@ function onDocumentKeyDown(event) {
 
         // hit P to see pdf output
       case 80:
-        startPrintOptions();
+        // If not in the multi-player mode, we should not disable the 'P' key
+        if (document.getElementById('printButton').style.display !== 'none') {
+          startPrintOptions();
+        }
+
         break;
     } //end switch
   }
@@ -2379,15 +2688,15 @@ function onDocumentKeyDown(event) {
 
 // Asks the user if they want to continue tracking...
 function continueTracking() {
-    if (confirm('Are you sure you want to stop your recording?')) {
-        curTracking = false;
-        //Ending date is recorded
-        endTime = new Date();
-        document.getElementById("recordIcon").style.visibility = "hidden";
-        exportTracking(clickTrackings);
-    } else {
-        // Do nothing! Continue with recording
-    }
+  if (confirm('Are you sure you want to stop your recording?')) {
+    curTracking = false;
+    //Ending date is recorded
+    endTime = new Date();
+    document.getElementById("recordIcon").style.visibility = "hidden";
+    exportTracking(clickTrackings);
+  } else {
+    // Do nothing! Continue with recording
+  }
 }
 
 //onDocumentKeyUp, binding to keyboard keyUp event
@@ -2398,13 +2707,21 @@ function onDocumentKeyUp(event) {
   // var keycode = event.keyCode || event.charCode;
 
   switch (event.keyCode) {
-    case 0: isShiftDown = false; break;
-    //case release shift
-    case 16: isShiftDown = false; break;
-    //case release z -- for zoom functions
-    case 90: zIsDown = false; break;
-    //case release 1 -- press z,1 and click tile to zoom in
-    case 49: oneIsDown = false; break;
+    case 0:
+      isShiftDown = false;
+      break;
+      //case release shift
+    case 16:
+      isShiftDown = false;
+      break;
+      //case release z -- for zoom functions
+    case 90:
+      zIsDown = false;
+      break;
+      //case release 1 -- press z,1 and click tile to zoom in
+    case 49:
+      oneIsDown = false;
+      break;
   } //end switch
 } //end onDocumentKeyUp
 
@@ -2490,19 +2807,45 @@ function printPrecipYearType() {
 function printSoilType(tileId) {
   var soil = boardData[currentBoard].map[tileId].soilType;
   switch (soil) {
-    case "A": highlightString = "Clarion 138B" + "<br>"; break;
-    case "B": highlightString = "Buckney 1636" + "<br>"; break;
-    case "C": highlightString = "Canisteo 507" + "<br>"; break;
-    case "D": highlightString = "Downs 162D2" + "<br>"; break;
-    case "G": highlightString = "Gara-Armstrong 993E2" + "<br>"; break;
-    case "K": highlightString = "Ackmore-Colo 5B" + "<br>"; break;
-    case "L": highlightString = "Coland 135" + "<br>"; break;
-    case "M": highlightString = "Tama 120C2" + "<br>"; break;
-    case "N": highlightString = "Nicollet 55" + "<br>"; break;
-    case "O": highlightString = "Okoboji 90" + "<br>"; break;
-    case "Q": highlightString = "Tama 120B" + "<br>"; break;
-    case "T": highlightString = "Muscatine 119" + "<br>"; break;
-    case "Y": highlightString = "Noadaway 220" + "<br>"; break;
+    case "A":
+      highlightString = "Clarion 138B" + "<br>";
+      break;
+    case "B":
+      highlightString = "Buckney 1636" + "<br>";
+      break;
+    case "C":
+      highlightString = "Canisteo 507" + "<br>";
+      break;
+    case "D":
+      highlightString = "Downs 162D2" + "<br>";
+      break;
+    case "G":
+      highlightString = "Gara-Armstrong 993E2" + "<br>";
+      break;
+    case "K":
+      highlightString = "Ackmore-Colo 5B" + "<br>";
+      break;
+    case "L":
+      highlightString = "Coland 135" + "<br>";
+      break;
+    case "M":
+      highlightString = "Tama 120C2" + "<br>";
+      break;
+    case "N":
+      highlightString = "Nicollet 55" + "<br>";
+      break;
+    case "O":
+      highlightString = "Okoboji 90" + "<br>";
+      break;
+    case "Q":
+      highlightString = "Tama 120B" + "<br>";
+      break;
+    case "T":
+      highlightString = "Muscatine 119" + "<br>";
+      break;
+    case "Y":
+      highlightString = "Noadaway 220" + "<br>";
+      break;
   }
   if (document.getElementById('parameters').innerHTML.includes('hover4') && currentHighlightType != 0) {
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>", '');
@@ -2723,8 +3066,8 @@ function resetOptionsPage() {
   }
   //Untoggles all the other elements
   if (window.frames[4].document.getElementById("year0") &&
-  window.frames[4].document.getElementById("precip") &&
-  window.frames[4].document.getElementById("statFrame")) {
+    window.frames[4].document.getElementById("precip") &&
+    window.frames[4].document.getElementById("statFrame")) {
 
     window.frames[4].document.getElementById("year0").checked = false;
     window.frames[4].document.getElementById("precip").checked = false;
@@ -2770,22 +3113,24 @@ function resetPresets() {
   closeCreditFrame();
   //Closes the upload/download tab (if it was open)
   closeUploadDownloadFrame();
+  //Closes the contact us tab (if it was open)
+  closeEmailFrame();
   //Rolls out the left console
   if (document.getElementById('tabButtons').className != "tabButtons") {
     roll(1);
   }
   //Resets index function
-  if(document.getElementById('index').style.display == "block") {
+  if (document.getElementById('index').style.display == "block") {
     document.getElementById('index').style.display = "none";
   }
   //Resets the undoArr
   resetUndo();
   //Resets camera type
-  if(document.getElementById('flyover').style.display == 'block') {
+  if (document.getElementById('flyover').style.display == 'block') {
     toggleCameraView();
   }
   //Resets the camera angle
-  if (ToggleCam == 1){
+  if (ToggleCam == 1) {
     changeCam2();
     document.getElementById("flyover").innerHTML = "";
     //Reseting camera 2 position when sandbox is reloaded
@@ -2796,10 +3141,10 @@ function resetPresets() {
   }
   controls.reset();
   //Resets topography
-  if(tToggle) {
-      tToggle = false;
-      refreshBoard();
-      setupRiver();
+  if (tToggle) {
+    tToggle = false;
+    refreshBoard();
+    setupRiver();
   }
   //Reset play/pause button toggle
   document.getElementById('pausePlay').src = "imgs/pauseButton.png";
@@ -2844,16 +3189,16 @@ function restoreCurrentCameraSession() {
   controls.restoreLastState();
 
   // switch to the last year, tab or level
-  switchConsoleTab(6);// switch to year tab
+  switchConsoleTab(6); // switch to year tab
   switchYearTab(session.switchYearTab); // swithch to the exact year
   // swithch last consle tab
   switchConsoleTab(session.switchConsoleTab);
   // choose the LandUseType or player
-  if (typeof session.changeSelectedPaintTo !== 'undefined' )
-  changeSelectedPaintTo(session.changeSelectedPaintTo);
+  if (typeof session.changeSelectedPaintTo !== 'undefined')
+    changeSelectedPaintTo(session.changeSelectedPaintTo);
   // displays specific level, feature or yield
-  if (typeof session.displayLevels !== 'undefined' )
-  displayLevels(session.displayLevels);
+  if (typeof session.displayLevels !== 'undefined')
+    displayLevels(session.displayLevels);
 
 } // end restoreCurrentCameraSession
 
@@ -2971,7 +3316,7 @@ function resumeSim() {
   elapsedTime = timeResumed - startTime - pauseDuration;
   for (var j = 0; j < mainTimer.length; j++) {
     //Don't repeat previous steps if you didn't go back in time
-    if(parseInt(clickTrackings[j].timeStamp) - elapsedTime > 0) {
+    if (parseInt(clickTrackings[j].timeStamp) - elapsedTime > 0) {
       mainTimer[j] = setTimeout(performAction, parseInt(clickTrackings[j].timeStamp) - elapsedTime, j);
     }
   }
@@ -3067,9 +3412,10 @@ function runSimulation() {
     var tempGap = tempArr[3];
     if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94) {
       var tempTile = tempArr[5];
-    } if (tempType == 56 || tempType == 99 || tempType == 100) {
+    }
+    if (tempType == 56 || tempType == 99 || tempType == 100) {
       var tempTile = [];
-      for(var j = 5; j < tempArr.length; j++) {
+      for (var j = 5; j < tempArr.length; j++) {
         tempTile.push(tempArr[j]);
       }
     }
@@ -3125,18 +3471,18 @@ function saveAndRandomize() {
         break;
       }
     }
-    for(var i = 1; i < boardData[currentBoard].calculatedToYear+1; i++) {
-        for (var j = 0; j < boardData[currentBoard].map.length; j++) {
-            //if tile exists
-            //Change the land use for a tile if it was restricted
-            if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
-                painter = newDefaultLandUse;
-                meshMaterials[j].map = textureArray[painter];
-                boardData[currentBoard].map[j].landType[i] = painter;
-                boardData[currentBoard].map[j].update(i);
-            }
-
+    for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
+      for (var j = 0; j < boardData[currentBoard].map.length; j++) {
+        //if tile exists
+        //Change the land use for a tile if it was restricted
+        if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
+          painter = newDefaultLandUse;
+          meshMaterials[j].map = textureArray[painter];
+          boardData[currentBoard].map[j].landType[i] = painter;
+          boardData[currentBoard].map[j].update(i);
         }
+
+      }
     }
     painter = newDefaultLandUse; //end for all tiles
     //'unselect' the previously selected icon
@@ -3152,13 +3498,27 @@ function saveAndRandomize() {
 function selectAnimation(animation) {
 
   switch (animation) {
-    case "bird": flyLark(); break;
-    case "fireworks": launchFireworks(); break;
-    case "flock": createFlock(); break;
-    case "brownRiver": contaminatedRiver("brown"); break;
-    case "blueRiver": contaminatedRiver("blue"); break;
-    case "greenRiver": contaminatedRiver("green"); break;
-    case "rain": rainOnPewi(); break;
+    case "bird":
+      flyLark();
+      break;
+    case "fireworks":
+      launchFireworks();
+      break;
+    case "flock":
+      createFlock();
+      break;
+    case "brownRiver":
+      contaminatedRiver("brown");
+      break;
+    case "blueRiver":
+      contaminatedRiver("blue");
+      break;
+    case "greenRiver":
+      contaminatedRiver("green");
+      break;
+    case "rain":
+      rainOnPewi();
+      break;
   } //end switch
 } //end selectAnimation
 
@@ -3222,6 +3582,21 @@ function showCredits() {
   // addEvent(document, 'keyup', aboutsEsc);
 } //end showCredits
 
+function showEmail() {
+  if (!modalUp) {
+    if (curTracking) {
+      pushClick(0, getStamp(), 11, 0, null); // The parameters may need to change, have no idea what this method does.
+    }
+    document.getElementById('emailFrame').style.display = "block";
+    document.getElementById('closeEmail').style.display = "block";
+    document.getElementById('modalEmailFrame').style.display = "block";
+    modalUp = true;
+  }
+  //Event Listner to close the contact us page
+  document.addEventListener('keyup', aboutsEsc);
+  // addEvent(document, 'keyup', aboutsEsc);
+} //end showEmail
+
 //showInfo updates the bottom HUD
 function showInfo(stringToShow) {
   if (!multiplayerAssigningModeOn) document.getElementById("currentInfo").innerHTML = stringToShow;
@@ -3232,99 +3607,104 @@ function showLevelDetails(value) {
 
   switch (value) {
     case 1:
-    //show nitrate legend
-    document.getElementById('nitrateIcon').className = "levelsSelectorIcon iconSelected";
-    document.getElementById("nitrateDetailsList").className = "DetailsList levelDetailsList";
-    break;
+      //show nitrate legend
+      document.getElementById('nitrateIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("nitrateDetailsList").className = "DetailsList levelDetailsList";
+      break;
     case 2:
-    //show erosion legend
-    document.getElementById('erosionIcon').className = "levelsSelectorIcon iconSelected";
-    document.getElementById("erosionDetailsList").className = "DetailsList levelDetailsList";
-    break;
+      //show erosion legend
+      document.getElementById('erosionIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("erosionDetailsList").className = "DetailsList levelDetailsList";
+      break;
     case 3:
-    //show phosphorus legend
-    document.getElementById('phoshorusIcon').className = "levelsSelectorIcon iconSelected";
-    document.getElementById("phosphorusDetailsList").className = "DetailsList levelDetailsList";
-    break;
+      //show phosphorus legend
+      document.getElementById('phoshorusIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("phosphorusDetailsList").className = "DetailsList levelDetailsList";
+      break;
     case 4:
-    //show flood frequency legend
-    document.getElementById('floodFrequency').className = "featureSelectorIcon iconSelected";
-    document.getElementById("floodDetailsList").className = "DetailsList physicalDetailsList";
-    break;
+      //show flood frequency legend
+      document.getElementById('floodFrequency').className = "featureSelectorIcon iconSelected";
+      document.getElementById("floodDetailsList").className = "DetailsList physicalDetailsList";
+      break;
     case 5:
-    //show drainage class legend
-    document.getElementById('drainageClass').className = "featureSelectorIcon iconSelected";
-    document.getElementById("drainageDetailsList").className = "DetailsList physicalDetailsList";
-    break;
+      //show drainage class legend
+      document.getElementById('drainageClass').className = "featureSelectorIcon iconSelected";
+      document.getElementById("drainageDetailsList").className = "DetailsList physicalDetailsList";
+      break;
     case 6:
-    //show strategic wetlands legend
-    document.getElementById('strategicWetlands').className = "featureSelectorIcon iconSelected";
-    document.getElementById("wetlandsDetailsList").className = "DetailsList physicalDetailsList";
-    break;
+      //show strategic wetlands legend
+      document.getElementById('strategicWetlands').className = "featureSelectorIcon iconSelected";
+      document.getElementById("wetlandsDetailsList").className = "DetailsList physicalDetailsList";
+      break;
     case 7:
-    //show subwatershed legend
-    document.getElementById('subwatershedBoundaries').className = "featureSelectorIcon iconSelected";
-    document.getElementById("boundaryDetailsList").className = "DetailsList physicalDetailsList";
-    break;
+      //show subwatershed legend
+      document.getElementById('subwatershedBoundaries').className = "featureSelectorIcon iconSelected";
+      document.getElementById("boundaryDetailsList").className = "DetailsList physicalDetailsList";
+      break;
     case 8:
-    document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
-    document.getElementById('soilDetailsList').className = "DetailsList physicalDetailsList";
-    break;
+      document.getElementById('soilClass').className = "featureSelectorIcon iconSelected";
+      document.getElementById('soilDetailsList').className = "DetailsList physicalDetailsList";
+      break;
+      //Topo layout
     case 9:
-    //show Corn class legend
-    document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('cornDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('<span style="color:orange;">Conventional Corn and Conservation Corn</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
-    break;
+      document.getElementById('topoClass').className = "featureSelectorIcon iconSelected";
+      document.getElementById('topoDetailsList').className = "DetailsList physicalDetailsList";
+      break;
     case 10:
-    //show soy class legend
-    document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('soybeanDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('<span style="color:orange;">Conventional Soy and Conservation Soy</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
-    break;
+      //show Corn class legend
+      document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
+      document.getElementById('cornDetailsList').className = "DetailsList yieldDetailsList";
+      updateIndexPopup('<span style="color:orange;">Conventional Corn and Conservation Corn</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      break;
     case 11:
-    //show fruit class legend
-    document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about <span style="color:orange;">Mixed Fruits and Vegetable Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
-    break;
+      //show soy class legend
+      document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
+      document.getElementById('soybeanDetailsList').className = "DetailsList yieldDetailsList";
+      updateIndexPopup('<span style="color:orange;">Conventional Soy and Conservation Soy</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      break;
     case 12:
-    //show cattle class legend
-    document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('<span style="color:orange;">Permanent Pasture and Rotational Grazing</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
-    break;
+      //show fruit class legend
+      document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
+      document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
+      updateIndexPopup('To learn more about <span style="color:orange;">Mixed Fruits and Vegetable Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      break;
     case 13:
-    //show alfalfa class legend
-    document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about Alfalfa Hay Yield, go to the Index, select "Modules", and then "Yield".');
-    updateIndexPopup('To learn more about <span style="color:orange;">Alfalfa Hay Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
-    break;
+      //show cattle class legend
+      document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
+      document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
+      updateIndexPopup('<span style="color:orange;">Permanent Pasture and Rotational Grazing</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      break;
     case 14:
-    //show grasshay class legend
-    document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('grasshayDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about <span style="color:orange;">Grass Hay Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
-    break;
+      //show alfalfa class legend
+      document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
+      document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
+      updateIndexPopup('To learn more about Alfalfa Hay Yield, go to the Glossary, select "Modules", and then "Yield".');
+      updateIndexPopup('To learn more about <span style="color:orange;">Alfalfa Hay Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      break;
     case 15:
-    //show switch grass class legend
-    document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('switchgrassDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about <span style="color:orange;">Switch Grass Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
-    break;
+      //show grasshay class legend
+      document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
+      document.getElementById('grasshayDetailsList').className = "DetailsList yieldDetailsList";
+      updateIndexPopup('To learn more about <span style="color:orange;">Grass Hay Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      break;
     case 16:
-    //show wood class legend
-    document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('<span style="color:orange;">Conventional Forest and Conservation Forest</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
-    break;
+      //show switch grass class legend
+      document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
+      document.getElementById('switchgrassDetailsList').className = "DetailsList yieldDetailsList";
+      updateIndexPopup('To learn more about <span style="color:orange;">Switch Grass Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      break;
     case 17:
-    //show short class legend
-    document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
-    document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('<span style="color:orange;">Short-Rotation Woody Biomass</span> produces the same output, no matter the soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
-    break;
+      //show wood class legend
+      document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
+      document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
+      updateIndexPopup('<span style="color:orange;">Conventional Forest and Conservation Forest</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      break;
+    case 18:
+      //show short class legend
+      document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
+      document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
+      updateIndexPopup('<span style="color:orange;">Short-Rotation Woody Biomass</span> produces the same output, no matter the soil type. To learn more, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      break;
   } // END switch
   //hide ecosystem indicator legends
   if (value > -4 && value < 0) {
@@ -3339,7 +3719,7 @@ function showLevelDetails(value) {
   }
 
   //hide watershed feature legends
-  else if (value < -3 && value > -9) {
+  else if (value < -3 && value > -10) {
     var element = document.getElementsByClassName('DetailsList physicalDetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled physicalDetailsList';
@@ -3349,7 +3729,7 @@ function showLevelDetails(value) {
       element[0].className = 'featureSelectorIcon icon';
     }
   } //end else/if group
-  else if (value < -8) {
+  else if (value < -9) {
     var element = document.getElementsByClassName('DetailsList yieldDetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled yieldDetailsList';
@@ -3457,25 +3837,25 @@ function storeCurrentCameraSession(actionCode, value) {
   // store the last map the user viewed
   switch (actionCode) {
     case 0:
-    // save the LandUseType or player
-    session.changeSelectedPaintTo = value;
-    break;
+      // save the LandUseType or player
+      session.changeSelectedPaintTo = value;
+      break;
     case 1:
-    // save the specific level, feature or yield
-    session.displayLevels = value;
-    break;
+      // save the specific level, feature or yield
+      session.displayLevels = value;
+      break;
     case 2:
-    // save last consle tab
-    session.switchConsoleTab = value;
-    break;
+      // save last consle tab
+      session.switchConsoleTab = value;
+      break;
     case 3:
-    // save the exact year
-    session.switchYearTab = value;
-    break;
+      // save the exact year
+      session.switchYearTab = value;
+      break;
     default:
-    // store the last camera degree, view, zoom
-    controls.storeCurrentState();
-    break;
+      // store the last camera degree, view, zoom
+      controls.storeCurrentState();
+      break;
   }
 } // end storeCurrentCameraSession
 
@@ -3504,67 +3884,67 @@ function switchConsoleTab(value) {
   //update the left console tab according to the value selected
   switch (value) {
     case 1:
-    inDispLevels = false;
-    if (curTracking) {
-      pushClick(0, getStamp(), 4, 0, null);
-    }
-    document.getElementById('terrainImg').className = "imgSelected";
-    document.getElementById('painterTab').style.display = "block";
-    updateIndexPopup('These are the <span style="color:orange;">15</span> different <span style="color:orange;">land use types</span>. To learn more about them, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Land Use"</span>.');
-    break;
+      inDispLevels = false;
+      if (curTracking) {
+        pushClick(0, getStamp(), 4, 0, null);
+      }
+      document.getElementById('terrainImg').className = "imgSelected";
+      document.getElementById('painterTab').style.display = "block";
+      updateIndexPopup('These are the <span style="color:orange;">15</span> different <span style="color:orange;">land use types</span>. To learn more about them, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Land Use"</span>.');
+      break;
     case 2:
-    inDispLevels = false;
-    if (curTracking) {
-      pushClick(0, getStamp(), 5, 0, null);
-    }
-    document.getElementById('precipImg').className = "imgSelected";
-    document.getElementById('precipTab').style.display = "block";
-    updateIndexPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Index</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
-    break;
+      inDispLevels = false;
+      if (curTracking) {
+        pushClick(0, getStamp(), 5, 0, null);
+      }
+      document.getElementById('precipImg').className = "imgSelected";
+      document.getElementById('precipTab').style.display = "block";
+      updateIndexPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Glossary</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
+      break;
     case 3:
-    inDispLevels = true;
-    if (curTracking) {
-      pushClick(0, getStamp(), 7, 0, null);
-    }
-    document.getElementById('levelsImg').className = "imgSelected";
-    document.getElementById('levelsTab').style.display = "block";
-    updateIndexPopup('This is the <span style="color:orange;">Levels Tab,</span> where you can learn about <span style="color:yellow;">Soil Quality and Water Quality</span>.');
-    break;
+      inDispLevels = true;
+      if (curTracking) {
+        pushClick(0, getStamp(), 7, 0, null);
+      }
+      document.getElementById('levelsImg').className = "imgSelected";
+      document.getElementById('levelsTab').style.display = "block";
+      updateIndexPopup('This is the <span style="color:orange;">Levels Tab,</span> where you can learn about <span style="color:yellow;">Soil Quality and Water Quality</span>.');
+      break;
     case 4:
-    inDispLevels = true;
-    if (curTracking) {
-      pushClick(0, getStamp(), 8, 0, null);
-    }
-    document.getElementById('featuresImg').className = "imgSelected";
-    document.getElementById('featuresTab').style.display = "block";
-    updateIndexPopup('This is the <span style="color:orange;">Physical Features Tab</span>, where you will find information on topography, soil properties, subwatershed boundaries, and strategic wetland areas.');
-    break;
+      inDispLevels = true;
+      if (curTracking) {
+        pushClick(0, getStamp(), 8, 0, null);
+      }
+      document.getElementById('featuresImg').className = "imgSelected";
+      document.getElementById('featuresTab').style.display = "block";
+      updateIndexPopup('This is the <span style="color:orange;">Physical Features Tab</span>, where you will find information on topography, soil properties, subwatershed boundaries, and strategic wetland areas.');
+      break;
     case 5:
-    inDispLevels = false;
-    if (curTracking) {
-      pushClick(0, getStamp(), 9, 0, null);
-    }
-    document.getElementById('settingsImg').className = "imgSelected";
-    document.getElementById('settingsTab').style.display = "block";
-    break;
+      inDispLevels = false;
+      if (curTracking) {
+        pushClick(0, getStamp(), 9, 0, null);
+      }
+      document.getElementById('settingsImg').className = "imgSelected";
+      document.getElementById('settingsTab').style.display = "block";
+      break;
     case 6:
-    inDispLevels = false;
-    if (curTracking) {
-      pushClick(0, getStamp(), 6, 0, null);
-    }
-    document.getElementById('calendarImg').className = "imgSelected";
-    document.getElementById('yearsTab').style.display = "block";
-    updateIndexPopup('The <span style="color:orange;">Years Tab</span> allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
-    break;
+      inDispLevels = false;
+      if (curTracking) {
+        pushClick(0, getStamp(), 6, 0, null);
+      }
+      document.getElementById('calendarImg').className = "imgSelected";
+      document.getElementById('yearsTab').style.display = "block";
+      updateIndexPopup('The <span style="color:orange;">Years Tab</span> allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
+      break;
     case 7:
-    inDispLevels = true;
-    if (curTracking) {
-      pushClick(0, getStamp(), 68, 0, null);
-    }
-    document.getElementById('yieldImg').className = "imgSelected";
-    document.getElementById('yieldTab').style.display = "block";
-    updateIndexPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
-    break;
+      inDispLevels = true;
+      if (curTracking) {
+        pushClick(0, getStamp(), 68, 0, null);
+      }
+      document.getElementById('yieldImg').className = "imgSelected";
+      document.getElementById('yieldTab').style.display = "block";
+      updateIndexPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
+      break;
   } // END switch
 
   //check if the map needs the levels legend displayed
@@ -3624,7 +4004,7 @@ function toggleBackgroundInfoDisplay() {
 function toggleChangeLandType() {
   //ternary toggle on clearToChangeLandType being true
   clearToChangeLandType =
-  (clearToChangeLandType) ? false : true;
+    (clearToChangeLandType) ? false : true;
 } //end toggleChangeLandType
 
 //toggleEscapeFrame displays and hides the div that allows the user to go to the main menu, options, or directory
@@ -3638,13 +4018,19 @@ function toggleEscapeFrame() {
     document.getElementById('modalEscapeFrame').style.display = "block";
     document.getElementById('exitToMenuButton').style.visibility = "visible";
     document.getElementById('optionsButton').style.visibility = "visible";
+    document.getElementById('escapeButton').style.visibility = "visible";
+    /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "visible";
+    */
     modalUp = true;
   } else if (document.getElementById('modalEscapeFrame').style.display == "block" && modalUp) {
     document.getElementById('modalEscapeFrame').style.display = "none";
     document.getElementById('exitToMenuButton').style.visibility = "hidden";
     document.getElementById('optionsButton').style.visibility = "hidden";
+    document.getElementById('escapeButton').style.visibility = "hidden";
+    /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "hidden";
+    */
     modalUp = false;
   }
   //Here I have unlocked the options button on the multiplayer screen. Bear in mind that any changes made to the
@@ -3664,6 +4050,7 @@ function toggleIndex() {
 
   if (document.getElementById('index').style.display != "block" && !modalUp) {
     closeCreditFrame();
+    closeEmailFrame();
     closeUploadDownloadFrame();
     if (document.getElementById('modalResultsFrame').style.display == "block") resultsEnd();
 
@@ -3718,13 +4105,13 @@ function togglePopupDisplay() {
         pushClick(0, getStamp(), 14, 0, null);
       }
       document.getElementById("popup").className = "popupHidden";
-      document.getElementById("dialogueButton").className = "dialogueButtonRolled";
+      document.getElementById("bookMarkButton").className = "bookMarkButtonRolled";
     } else {
       if (curTracking) {
         pushClick(0, getStamp(), 54, 0, null);
       }
       document.getElementById("popup").className = "popup";
-      document.getElementById("dialogueButton").className = "dialogueButton";
+      document.getElementById("bookMarkButton").className = "bookMarkButton";
     }
   } //end if
 } // togglePopupDisplay()
@@ -3748,11 +4135,11 @@ function toggleVisibility() {
   //currentPlayer=1;
 
   //reset default on items
-  if(!multiplayerAssigningModeOn) {
-      for (var i = 1; i <= 15; i++) {
-        var string = "paint" + i;
-        document.getElementById(string).style.display = "inline-block";
-      }
+  if (!multiplayerAssigningModeOn) {
+    for (var i = 1; i <= 15; i++) {
+      var string = "paint" + i;
+      document.getElementById(string).style.display = "inline-block";
+    }
   }
 
   document.getElementById('year1Button').style.display = "block";
@@ -3784,22 +4171,22 @@ function toggleVisibility() {
 
       switch (arrLines[i]) {
         case "statsOn":
-        document.getElementById('statFrame').style.display = "block";
-        break;
+          document.getElementById('statFrame').style.display = "block";
+          break;
         case "year0On":
-        document.getElementById('year0Button').style.display = "block";
-        break;
+          document.getElementById('year0Button').style.display = "block";
+          break;
         case "precipOff":
-        immutablePrecip = true;
-        break;
+          immutablePrecip = true;
+          break;
         case "multiAssign":
-        document.getElementById('playerAddButton').style.display = "inline-block";
-        break;
+          document.getElementById('playerAddButton').style.display = "inline-block";
+          break;
         default:
-        if (arrLines[i].slice(0, 5) == 'paint') {
-          document.getElementById(arrLines[i]).style.display = "none";
-        }
-        break;
+          if (arrLines[i].slice(0, 5) == 'paint') {
+            document.getElementById(arrLines[i]).style.display = "none";
+          }
+          break;
       } // end switch
     } // end if
   } //end for
@@ -3829,7 +4216,7 @@ function toggleVisibility() {
     //check if the precip shouldn't be changeable
     // if this is the case, then show the precip values, but not in a drop-down selector
     if (multiplayerAssigningModeOn)
-    immutablePrecip = false; //***************************************************trial
+      immutablePrecip = false; //***************************************************trial
     if (immutablePrecip) {
       document.getElementById(elementIdString).style.display = "none";
 
@@ -3974,7 +4361,7 @@ function uniqueTileChange(tileId) {
 
 function updateIndexPopup(string) {
   window.parent.document.getElementById("indexPopupText").innerHTML = string;
-  window.parent.document.getElementById("backgroundInfoButton").style.background = '#' + Math.random().toString(16).slice(-6);
+  // window.parent.document.getElementById("backgroundInfoButton").style.background = '#' + Math.random().toString(16).slice(-6); // Assign random background color.
 }
 
 //Updates the visuals for the user
@@ -4028,8 +4415,8 @@ function updatePrecip(year) {
 function updatePopup(string) {
   document.getElementById("popupText").innerHTML = string + "<br>___________________________<br>" + document.getElementById("popupText").innerHTML;
   document.getElementById("popup").className = "popup";
-  document.getElementById("dialogueButton").className = "dialogueButton";
-  document.getElementById("dialogueButton").style.background = '#' + Math.random().toString(16).slice(-6);
+  document.getElementById("bookMarkButton").className = "bookMarkButton";
+  // document.getElementById("bookMarkButton").style.background = '#' + Math.random().toString(16).slice(-6); // Assign random background color.
   //document.getElementById("popup").style.background= "green";
   //Will activate an animation on the lower right side of the screen to show that the message box has updated
 } //end updatePopup
@@ -4037,9 +4424,9 @@ function updatePopup(string) {
 //Updates the slider's input value (duration is in milliseconds) [Note: Format is 00:00:00.0]
 function updateSlider(duration) {
   var milliseconds = parseInt((duration % 1000) / 100),
-  seconds = parseInt((duration / 1000) % 60),
-  minutes = parseInt((duration / (1000 * 60)) % 60),
-  hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+    seconds = parseInt((duration / 1000) % 60),
+    minutes = parseInt((duration / (1000 * 60)) % 60),
+    hours = parseInt((duration / (1000 * 60 * 60)) % 24);
   hours = (hours < 10) ? "0" + hours : hours;
   minutes = (minutes < 10) ? "0" + minutes : minutes;
   seconds = (seconds < 10) ? "0" + seconds : seconds;
@@ -4070,7 +4457,7 @@ function updateSim(newTime) {
   sliderTimer = setInterval(updateTime, 1);
   for (var j = 0; j < mainTimer.length; j++) {
     //Don't repeat previous steps if you didn't go back in time
-    if(backToTheFuture || !backToTheFuture && previousTime < parseInt(clickTrackings[j].timeStamp)) {
+    if (backToTheFuture || !backToTheFuture && previousTime < parseInt(clickTrackings[j].timeStamp)) {
       mainTimer[j] = setTimeout(performAction, parseInt(clickTrackings[j].timeStamp) - elapsedTime, j);
     }
   }
@@ -4086,33 +4473,33 @@ function updateTime() {
 
 //Toggles the pause/play button during user simulations
 function togglePausePlay() {
-    if(runningSim) {
-        if(document.getElementById('pausePlay').getAttribute('src') == "imgs/pauseButton.png") {
-            endSimPrompt();
-            document.getElementById('pausePlay').src = "imgs/playButton.png";
-            document.getElementById('pausePlay').style.width = '40px';
-        } else {
-            document.getElementById("simContainer").style.visibility = "hidden";
-            document.getElementById("genOverlay").style.visibility = "visible";
-            resumeSim();
-            document.getElementById('pausePlay').src = "imgs/pauseButton.png";
-            document.getElementById('pausePlay').style.width = '20px';
-        }
+  if (runningSim) {
+    if (document.getElementById('pausePlay').getAttribute('src') == "imgs/pauseButton.png") {
+      endSimPrompt();
+      document.getElementById('pausePlay').src = "imgs/playButton.png";
+      document.getElementById('pausePlay').style.width = '40px';
+    } else {
+      document.getElementById("simContainer").style.visibility = "hidden";
+      document.getElementById("genOverlay").style.visibility = "visible";
+      resumeSim();
+      document.getElementById('pausePlay').src = "imgs/pauseButton.png";
+      document.getElementById('pausePlay').style.width = '20px';
     }
+  }
 }
 /**
-* This function first check the file type, and put them to process according to their file type
-* this function is called by uploadFile() in child frame uploadDownload.html
-*
-* @param files: the files handler
-*/
+ * This function first check the file type, and put them to process according to their file type
+ * this function is called by uploadFile() in child frame uploadDownload.html
+ *
+ * @param files: the files handler
+ */
 function uploadClicked(files) {
 
   var reader;
 
   // check file type here
   if (!checkFileType(files[0].name))
-  alert("Incorrect File Type!");
+    alert("Incorrect File Type!");
   else {
     reader = new FileReader();
     reader.readAsText(files[0]);
@@ -4120,10 +4507,10 @@ function uploadClicked(files) {
 
   //. json is file format from pewi2.1
   if (getExtension(files[0].name) == 'json')
-  uploadJSON(reader);
+    uploadJSON(reader);
   //it's csv
   else if (getExtension(files[0].name) == 'csv')
-  uploadCSV(reader);
+    uploadCSV(reader);
 
   document.getElementById("year0Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[0]);
   document.getElementById("year1Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[1]);
@@ -4137,10 +4524,10 @@ function uploadClicked(files) {
 } //end uploadClicked()
 
 /**
-* Basically create convert to a string of what CSV file saves and let setupBoardFromFile() in mainFE.js to process it
-*
-* @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
-*/
+ * Basically create convert to a string of what CSV file saves and let setupBoardFromFile() in mainFE.js to process it
+ *
+ * @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
+ */
 function uploadJSON(reader) {
   //This piece of code converts files from pewi2.1 to fileformat of pewi 3.0
 
@@ -4159,28 +4546,28 @@ function uploadJSON(reader) {
       try {
         //This variable 'string' stores the extracted data from the .json file. Won't comment this too much since it's self explainatory
         string = string + obj["1"].id.data[i] + "," + obj["1"].row.data[i] + "," + obj["1"].column.data[i] + "," +
-        ((obj["1"].area.data[i] == null) ? 0 : obj["1"].area.data[i]) + "," +
-        ((obj["1"].baseLandUseType.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," +
-        ((obj["1"].carbonmax.data[i] == null) ? "NA" : obj["1"].carbonmax.data[i]) + "," +
-        ((obj["1"].carbonmin.data[i] == null) ? "NA" : obj["1"].carbonmin.data[i]) + "," +
-        ((obj["1"].cattle.data[i] == null) ? "NA" : obj["1"].cattle.data[i]) + "," +
-        ((obj["1"].cornyield.data[i] == null) ? "NA" : obj["1"].cornyield.data[i]) + "," +
-        ((obj["1"].drainageclass.data[i] == null) ? "NA" : obj["1"].drainageclass.data[i]) + "," +
-        ((obj["1"].erosion.data[i] == null) ? "NA" : obj["1"].erosion.data[i]) + "," +
-        ((obj["1"].floodfrequency.data[i] == null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
-        ((obj["1"].group.data[i] == null && obj["1"].group.data[i] != 0) ? "NA" : " ") + "," +
-        ((obj["1"].nitratespmm.data[i] == null) ? "NA" : obj["1"].nitratespmm.data[i]) + "," +
-        ((obj["1"].pindex.data[i] == null) ? "NA" : obj["1"].pindex.data[i]) + "," +
-        ((obj["1"].sediment.data[i] == null) ? "NA" : obj["1"].sediment.data[i]) + "," +
-        ((obj["1"].soiltype.data[i] == null) ? 0 : obj["1"].soiltype.data[i]) + "," +
-        ((obj["1"].soybeanyield.data[i] == null) ? "NA" : obj["1"].soybeanyield.data[i]) + "," +
-        ((obj["1"].streamnetwork.data[i] == null) ? "NA" : obj["1"].streamnetwork.data[i]) + "," +
-        ((obj["1"].subwatershed.data[i] == null) ? 0 : obj["1"].subwatershed.data[i]) + "," +
-        ((obj["1"].timber.data[i] == null) ? "NA" : obj["1"].timber.data[i]) + "," +
-        ((obj["1"].topography.data[i] == null) ? 0 : obj["1"].topography.data[i]) + "," +
-        ((obj["1"].watershednitrogencontribution.data[i] == null) ? "NA" : obj["1"].watershednitrogencontribution.data[i]) + "," +
-        ((obj["1"].wetland.data[i] == null) ? "NA" : obj["1"].wetland.data[i]) + "," +
-        ((boardData[currentBoard].map[i].riverStreams == null) ? 0 : boardData[currentBoard].map[i].riverStreams) + "," /*riverStreams is taken from the rever stream of currrent board*/ ;
+          ((obj["1"].area.data[i] == null) ? 0 : obj["1"].area.data[i]) + "," +
+          ((obj["1"].baseLandUseType.data[i] == null) ? 0 : obj["1"].baseLandUseType.data[i]) + "," +
+          ((obj["1"].carbonmax.data[i] == null) ? "NA" : obj["1"].carbonmax.data[i]) + "," +
+          ((obj["1"].carbonmin.data[i] == null) ? "NA" : obj["1"].carbonmin.data[i]) + "," +
+          ((obj["1"].cattle.data[i] == null) ? "NA" : obj["1"].cattle.data[i]) + "," +
+          ((obj["1"].cornyield.data[i] == null) ? "NA" : obj["1"].cornyield.data[i]) + "," +
+          ((obj["1"].drainageclass.data[i] == null) ? "NA" : obj["1"].drainageclass.data[i]) + "," +
+          ((obj["1"].erosion.data[i] == null) ? "NA" : obj["1"].erosion.data[i]) + "," +
+          ((obj["1"].floodfrequency.data[i] == null) ? "NA" : obj["1"].floodfrequency.data[i]) + "," +
+          ((obj["1"].group.data[i] == null && obj["1"].group.data[i] != 0) ? "NA" : " ") + "," +
+          ((obj["1"].nitratespmm.data[i] == null) ? "NA" : obj["1"].nitratespmm.data[i]) + "," +
+          ((obj["1"].pindex.data[i] == null) ? "NA" : obj["1"].pindex.data[i]) + "," +
+          ((obj["1"].sediment.data[i] == null) ? "NA" : obj["1"].sediment.data[i]) + "," +
+          ((obj["1"].soiltype.data[i] == null) ? 0 : obj["1"].soiltype.data[i]) + "," +
+          ((obj["1"].soybeanyield.data[i] == null) ? "NA" : obj["1"].soybeanyield.data[i]) + "," +
+          ((obj["1"].streamnetwork.data[i] == null) ? "NA" : obj["1"].streamnetwork.data[i]) + "," +
+          ((obj["1"].subwatershed.data[i] == null) ? 0 : obj["1"].subwatershed.data[i]) + "," +
+          ((obj["1"].timber.data[i] == null) ? "NA" : obj["1"].timber.data[i]) + "," +
+          ((obj["1"].topography.data[i] == null) ? 0 : obj["1"].topography.data[i]) + "," +
+          ((obj["1"].watershednitrogencontribution.data[i] == null) ? "NA" : obj["1"].watershednitrogencontribution.data[i]) + "," +
+          ((obj["1"].wetland.data[i] == null) ? "NA" : obj["1"].wetland.data[i]) + "," +
+          ((boardData[currentBoard].map[i].riverStreams == null) ? 0 : boardData[currentBoard].map[i].riverStreams) + "," /*riverStreams is taken from the rever stream of currrent board*/ ;
       } catch (except) {
         //catches for a wrong json file type error
         alert("This file format is not compatible...");
@@ -4216,7 +4603,7 @@ function uploadJSON(reader) {
 
       string = string + obj.precipitation[0] + "," + obj.precipitation[1] + "," + obj.precipitation[2] + "," + obj.precipitation[3] + ",";
       if (i < 827)
-      string = string + '\n';
+        string = string + '\n';
 
     } // end for 828 tiles
     // ===convert finished===
@@ -4278,10 +4665,10 @@ function uploadJSON(reader) {
 } // uploadJSON()
 
 /**
-*
-*
-* @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
-*/
+ *
+ *
+ * @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
+ */
 function uploadCSV(reader) {
   //initData = [];
   reader.onload = function(e) {
@@ -4297,7 +4684,7 @@ function uploadCSV(reader) {
 
     for (var i = 1; i < allTextLines.length; i++) {
       data = allTextLines[i].split(',');
-      var headlength = headers.length-1;
+      var headlength = headers.length - 1;
       if (data.length == headlength) {
         var tarr = [];
         for (var j = 0; j < headers.length; j++) {
@@ -4315,9 +4702,9 @@ function uploadCSV(reader) {
     for (var i = 0; i < lines.length; i++) {
       if ((lines[i][26] != lines[i][27])) {
         if (lines[i][26] != 1 && lines[i][26] != 0)
-        multipleYearFlag = 2;
+          multipleYearFlag = 2;
         if (lines[i][27] != 1 && lines[i][27] != 0)
-        multipleYearFlag = 3;
+          multipleYearFlag = 3;
         break;
       }
     }
@@ -4389,14 +4776,14 @@ function writeFileToDownloadString(mapPlayerNumber) {
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       if (boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
         string = string + boardData[currentBoard].map[i].id + "," +
-        boardData[currentBoard].map[i].row + "," +
-        boardData[currentBoard].map[i].column + "," +
-        "0" + ",";
+          boardData[currentBoard].map[i].row + "," +
+          boardData[currentBoard].map[i].column + "," +
+          "0" + ",";
       } else {
         string = string + boardData[currentBoard].map[i].id + "," +
-        boardData[currentBoard].map[i].row + "," +
-        boardData[currentBoard].map[i].column + "," +
-        boardData[currentBoard].map[i].area + ",";
+          boardData[currentBoard].map[i].row + "," +
+          boardData[currentBoard].map[i].column + "," +
+          boardData[currentBoard].map[i].area + ",";
       }
 
       if (mapPlayerNumber > 0) {
@@ -4410,63 +4797,63 @@ function writeFileToDownloadString(mapPlayerNumber) {
       // If the user made a multipler map, and a tile still has values when it's not that player's tile
       if (boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
         string += "NA" + "," +
-        "NA" + "," +
-        "NA" + "," +
-        "NA" + "," +
-        "NA" + "," +
-        "NA" + "," +
-        "NA" + "," +
-        "NA" + "," +
-        "NA" + "," +
-        "NA" + "," +
-        "NA" + "," +
-        "0" + "," +
-        "NA" + "," +
-        "NA" + "," +
-        "0" + "," +
-        "NA" + "," +
-        boardData[currentBoard].map[i].topography + "," +
-        "NA" + "," +
-        "NA" + "," +
-        boardData[currentBoard].map[i].riverStreams + ",";
+          "NA" + "," +
+          "NA" + "," +
+          "NA" + "," +
+          "NA" + "," +
+          "NA" + "," +
+          "NA" + "," +
+          "NA" + "," +
+          "NA" + "," +
+          "NA" + "," +
+          "NA" + "," +
+          "0" + "," +
+          "NA" + "," +
+          "NA" + "," +
+          "0" + "," +
+          "NA" + "," +
+          boardData[currentBoard].map[i].topography + "," +
+          "NA" + "," +
+          "NA" + "," +
+          boardData[currentBoard].map[i].riverStreams + ",";
       } else {
         string += boardData[currentBoard].map[i].carbonMax + "," +
-        boardData[currentBoard].map[i].carbonMin + "," +
-        boardData[currentBoard].map[i].cattle + "," +
-        boardData[currentBoard].map[i].cornYield + "," +
-        boardData[currentBoard].map[i].drainageClass + "," +
-        boardData[currentBoard].map[i].erosion + "," +
-        boardData[currentBoard].map[i].floodFrequency + "," +
-        boardData[currentBoard].map[i].group + "," +
-        boardData[currentBoard].map[i].nitratesPPM + "," +
-        boardData[currentBoard].map[i].pIndex + "," +
-        boardData[currentBoard].map[i].sediment + "," +
-        boardData[currentBoard].map[i].soilType + "," +
-        boardData[currentBoard].map[i].soybeanYield + "," +
-        boardData[currentBoard].map[i].streamNetwork + "," +
-        boardData[currentBoard].map[i].subwatershed + "," +
-        boardData[currentBoard].map[i].timber + "," +
-        boardData[currentBoard].map[i].topography + "," +
-        boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
-        boardData[currentBoard].map[i].strategicWetland + "," +
-        boardData[currentBoard].map[i].riverStreams + ",";
+          boardData[currentBoard].map[i].carbonMin + "," +
+          boardData[currentBoard].map[i].cattle + "," +
+          boardData[currentBoard].map[i].cornYield + "," +
+          boardData[currentBoard].map[i].drainageClass + "," +
+          boardData[currentBoard].map[i].erosion + "," +
+          boardData[currentBoard].map[i].floodFrequency + "," +
+          boardData[currentBoard].map[i].group + "," +
+          boardData[currentBoard].map[i].nitratesPPM + "," +
+          boardData[currentBoard].map[i].pIndex + "," +
+          boardData[currentBoard].map[i].sediment + "," +
+          boardData[currentBoard].map[i].soilType + "," +
+          boardData[currentBoard].map[i].soybeanYield + "," +
+          boardData[currentBoard].map[i].streamNetwork + "," +
+          boardData[currentBoard].map[i].subwatershed + "," +
+          boardData[currentBoard].map[i].timber + "," +
+          boardData[currentBoard].map[i].topography + "," +
+          boardData[currentBoard].map[i].watershedNitrogenContribution + "," +
+          boardData[currentBoard].map[i].strategicWetland + "," +
+          boardData[currentBoard].map[i].riverStreams + ",";
       }
 
       if (mapPlayerNumber > 0) {
         string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year1
-        ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year2
-        ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,"); //year3
+          ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year2
+          ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,"); //year3
       } else {
         string += boardData[currentBoard].map[i].landType[1] + "," +
-        boardData[currentBoard].map[i].landType[2] + "," +
-        boardData[currentBoard].map[i].landType[3] + ",";
+          boardData[currentBoard].map[i].landType[2] + "," +
+          boardData[currentBoard].map[i].landType[3] + ",";
       }
 
       string += boardData[currentBoard].precipitation[0] + "," +
-      boardData[currentBoard].precipitation[1] + "," +
-      boardData[currentBoard].precipitation[2] + "," +
-      boardData[currentBoard].precipitation[3] + "," +
-      optionsString; //optionsString added here
+        boardData[currentBoard].precipitation[1] + "," +
+        boardData[currentBoard].precipitation[2] + "," +
+        boardData[currentBoard].precipitation[3] + "," +
+        optionsString; //optionsString added here
 
       if (i < boardData[currentBoard].map.length - 1) {
         string = string + '\r\n';
@@ -4496,6 +4883,13 @@ function aboutsEsc(e) {
   }
 }
 
+//Function that closes the contact_us dialog when escape key is pressed
+function emailEsc(e) {
+  if (e.keyCode == 27) {
+    closeEmailFrame();
+  }
+}
+
 //Function that closes the Download dialog when the escape key is pressed
 function downuploadEsc(e) {
   if (e.keyCode == 27) {
@@ -4509,6 +4903,8 @@ function indexEsc(e) {
     toggleIndex();
   }
 }
+
+
 
 // Execute when Esc key is pressed while on the options page
 function optionsEsc(e) {
@@ -4526,14 +4922,155 @@ function printOptionsEsc(e) {
   }
 } // end printOptionsEsc
 
+/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
+//Added code directly in this js file as importing a js file to another js file isn't easily doable//
+var saveAs = saveAs || function(e) {
+  "use strict";
+  if (typeof e === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
+    return
+  }
+  var t = e.document,
+    n = function() {
+      return e.URL || e.webkitURL || e
+    },
+    r = t.createElementNS("http://www.w3.org/1999/xhtml", "a"),
+    o = "download" in r,
+    i = function(e) {
+      var t = new MouseEvent("click");
+      e.dispatchEvent(t)
+    },
+    a = /constructor/i.test(e.HTMLElement),
+    f = /CriOS\/[\d]+/.test(navigator.userAgent),
+    u = function(t) {
+      (e.setImmediate || e.setTimeout)(function() {
+        throw t
+      }, 0)
+    },
+    d = "application/octet-stream",
+    s = 1e3 * 40,
+    c = function(e) {
+      var t = function() {
+        if (typeof e === "string") {
+          n().revokeObjectURL(e)
+        } else {
+          e.remove()
+        }
+      };
+      setTimeout(t, s)
+    },
+    l = function(e, t, n) {
+      t = [].concat(t);
+      var r = t.length;
+      while (r--) {
+        var o = e["on" + t[r]];
+        if (typeof o === "function") {
+          try {
+            o.call(e, n || e)
+          } catch (i) {
+            u(i)
+          }
+        }
+      }
+    },
+    p = function(e) {
+      if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)) {
+        return new Blob([String.fromCharCode(65279), e], {
+          type: e.type
+        })
+      }
+      return e
+    },
+    v = function(t, u, s) {
+      if (!s) {
+        t = p(t)
+      }
+      var v = this,
+        w = t.type,
+        m = w === d,
+        y, h = function() {
+          l(v, "writestart progress write writeend".split(" "))
+        },
+        S = function() {
+          if ((f || m && a) && e.FileReader) {
+            var r = new FileReader;
+            r.onloadend = function() {
+              var t = f ? r.result : r.result.replace(/^data:[^;]*;/, "data:attachment/file;");
+              var n = e.open(t, "_blank");
+              if (!n) e.location.href = t;
+              t = undefined;
+              v.readyState = v.DONE;
+              h()
+            };
+            r.readAsDataURL(t);
+            v.readyState = v.INIT;
+            return
+          }
+          if (!y) {
+            y = n().createObjectURL(t)
+          }
+          if (m) {
+            e.location.href = y
+          } else {
+            var o = e.open(y, "_blank");
+            if (!o) {
+              e.location.href = y
+            }
+          }
+          v.readyState = v.DONE;
+          h();
+          c(y)
+        };
+      v.readyState = v.INIT;
+      if (o) {
+        y = n().createObjectURL(t);
+        setTimeout(function() {
+          r.href = y;
+          r.download = u;
+          i(r);
+          h();
+          c(y);
+          v.readyState = v.DONE
+        });
+        return
+      }
+      S()
+    },
+    w = v.prototype,
+    m = function(e, t, n) {
+      return new v(e, t || e.name || "download", n)
+    };
+  if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
+    return function(e, t, n) {
+      t = t || e.name || "download";
+      if (!n) {
+        e = p(e)
+      }
+      return navigator.msSaveOrOpenBlob(e, t)
+    }
+  }
+  w.abort = function() {};
+  w.readyState = w.INIT = 0;
+  w.WRITING = 1;
+  w.DONE = 2;
+  w.error = w.onwritestart = w.onprogress = w.onwrite = w.onabort = w.onerror = w.onwriteend = null;
+  return m
+}(typeof self !== "undefined" && self || typeof window !== "undefined" && window || this.content);
+if (typeof module !== "undefined" && module.exports) {
+  module.exports.saveAs = saveAs
+} else if (typeof define !== "undefined" && define !== null && define.amd !== null) {
+  define([], function() {
+    return saveAs
+  })
+}
+
 
 /**
-* Use two methods to add event listener, help with browser compatibility
-*
-* @param element html DOM which listens to the event
-* @param evName built-in event name, the event that is listening to
-* @param fn callback function, will be triggered if the event is fired
-*/
+ * Use two methods to add event listener, help with browser compatibility
+ *
+ * @param element html DOM which listens to the event
+ * @param evName built-in event name, the event that is listening to
+ * @param fn callback function, will be triggered if the event is fired
+ */
 // function addEvent(element, evName, fn) {
 //   if (evName == 'resize') {
 //     console.log(element+" has added "+ evName+ " listener");
@@ -4550,12 +5087,12 @@ function printOptionsEsc(e) {
 // }
 
 /**
-* Use two methods to remove event listener, help with browser compatibility
-*
-* @param element html DOM which listens to the event
-* @param evName built-in event name, the event that is listening to
-* @param fn callback function, will be triggered if the event is fired
-*/
+ * Use two methods to remove event listener, help with browser compatibility
+ *
+ * @param element html DOM which listens to the event
+ * @param evName built-in event name, the event that is listening to
+ * @param fn callback function, will be triggered if the event is fired
+ */
 // function removeEvent(element, evName, fn) {
 //   // console.log(element+" has removed "+ evName+ " listener");
 //   if (element.removeEventListener) {

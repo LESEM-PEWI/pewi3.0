@@ -164,13 +164,18 @@ body {
 }
 
 #closeUploadDownload {
-  left: 55.5vw;
-  top: 20vh;
+  left: 58vw;
+  top: 21vh;
 }
 
 #closeCredits {
   right: 26%;
   top: 21%;
+}
+
+#closeEmail {
+  right: 26%;
+  top: 20%;
 }
 
 #uploadDownloadFrame {
@@ -188,7 +193,17 @@ body {
   position: absolute;
   right: 25%;
   top: 20%;
-  width: 50%;
+  width: 45%;
+}
+
+#emailFrame {
+  background-color: white;
+  border-radius: 10px;
+  height: 42%;
+  position: absolute;
+  right: 25%;
+  top: 20%;
+  width: 40%;
 }
 
 #bottomHUD {
@@ -347,6 +362,24 @@ body {
   /* Safari */
 }
 
+#escapeButton {
+  /*
+  animation-duration: 0.8s;
+  animation-name: showEffect;
+  visibility: hidden;
+  -webkit-transition-duration: 0.8s;
+  /* Safari */
+
+  position: absolute;
+  width: 3vw;
+  right: 5%;
+  top: 5%;
+}
+
+#closeDiv:hover {
+    cursor: pointer;
+}
+
 #directoryButton {
   animation-duration: 0.4s;
   animation-name: showEffect;
@@ -417,7 +450,7 @@ body {
 
 /* style of all the iframe */
 
-#modalUploadFrame, #modalEscapeFrame, #modalCreditsFrame, #modalResultsFrame {
+#modalUploadFrame, #modalEscapeFrame, #modalCreditsFrame, #modalEmailFrame, #modalResultsFrame {
   animation-duration: 1.0s;
   animation-name: showEffect;
   background-color: rgba(0, 0, 0, 0.7);
@@ -427,19 +460,26 @@ body {
   width: 100%;
 }
 
+
+
 #hover-div {
   background: none !important;
-  border-radius: 100%;
   color: white;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
+  font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
   font-size: 12px;
-  height: 100px;
   left: 48.85%;
   pointer-events: none;
   position: fixed;
-  top: 49%;
-  width: 250px;
+  text-align: center;
+}
+
+#hover-info{
+  display:inline-block;
+  position: relative;
+  width: 150%;
+  background-color:rgba(58, 58, 58, 0.8);
+  border-radius: 50px;
 }
 
 .simOverlay, #genOverlay, #overlay {
