@@ -175,3 +175,18 @@ body {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
   }
+
+  /* The following two CSS tags, #closeOptions and #closeDiv, are added for exit button on Intructor Options page.
+   * For more information refer to Issue 362.
+  */
+  #closeOptions {
+    position: absolute;
+    width: 3vw;
+    right: 5%;
+    top: 5%;
+  }
+
+  #closeDiv:hover {
+    cursor: pointer;
+  }
+  

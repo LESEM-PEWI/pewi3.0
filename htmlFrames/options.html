@@ -41,6 +41,20 @@ Cleaned and Prepared - July 2016
     var tempString;
     var multiString;
     var maxYear = 3; //for settings, defines the number of year buttons specified
+    /*
+    * savedOptions is a variable to indicate that whether or not changes in Instructor Options were saved.
+    */
+    var savedOptions = false;
+    /*
+    * The variable selectedOptionsTrue is to store all elements selected when "Save and Exit" button is pressed.
+    * This is used to know what elements to set to false, when exit without saving is done.
+    */
+    var selectedOptionsTrue = [];
+    /*
+    * The variable selectedOptionsFalse is to store all elements that are not selected when "Save and Exit" button is pressed.
+    * This is used to know what elements to set to false, when exit without saving is done.
+    */
+    var selectedOptionsFalse = [];
     var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
     "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode"];
     //the saveCurrentOptionsState function is called when the save/exit button is pressed
@@ -151,6 +165,11 @@ Cleaned and Prepared - July 2016
       //scroll page to top, so that next time options is loaded it starts there
       window.scrollTo(0, 0);
 
+
+      savedOptions = true; //Sets the savedOption to true, this indicates that the changes were saved
+      selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
+      selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
+      recordCurrentOptions();
     } //end function saveCurrentOptionsState
 
 
@@ -325,6 +344,97 @@ Cleaned and Prepared - July 2016
 
       //scroll page to top, so that next time options is loaded it starts there
       window.scrollTo(0, 0);
+
+      savedOptions = true; //Sets the savedOption to false, this is to restart the new state, as clicking on instructor options for first time.
+    }
+
+
+    /*
+    * In recordCurrentOptions the current status of the checkbox is recorded.
+    * The purpose for this is that if someone had previous settings already saved then thought about changing those 
+    * settings, but changed their mind in the process then those changes would be undone.
+    * For more information refer to Issue 362. 
+    */
+    function recordCurrentOptions(){
+      var currentSelection = document.getElementsByClassName('toggle');
+
+      for(var i = 0; i < currentSelection.length; ++i){
+        if(currentSelection[i].checked){
+          selectedOptionsTrue.push(i);
+        }
+        else if(!currentSelection[i].checked){
+          selectedOptionsFalse.push(i);
+        }
+      }
+    }
+    
+    /*
+    * In undoSelectedOptions it sets the entire checkbox, which is the Instructor Options menu,
+    * to what was recorded in recordCurrentOptions.
+    * The purpose for this is that if someone had previous settings already saved then thought about changing those 
+    * settings, but changed their mind in the process then those changes would be undone.
+    * For more information refer to Issue 362. 
+    */
+    function undoSelectedOptions(){
+      /*
+      * Iterate through all elements in selectedOptionsTrue and manually sets them to true, for being checked.
+      */
+      for(var i = 0; i < selectedOptionsTrue.length; ++i){
+        var index = selectedOptionsTrue[i];
+        if(index < 26){
+          $(':checkbox')[index].checked = true;
+        }
+        if(index === 26){
+          $('#precip.toggle').prop('checked', true);
+        }
+        if(index === 27){
+          $('#statFrame.toggle').prop('checked', true);
+        }
+      }
+
+      /*
+      * Iterate through all elements in selectedOptionsFalse and manually sets them to false, for being checked.
+      */
+      for(var i = 0; i < selectedOptionsFalse.length; ++i){
+        var index = selectedOptionsFalse[i];
+        if(index < 26){
+          $(':checkbox')[index].checked = false;
+        }
+        if(index === 26){
+          $('#precip.toggle').prop('checked', false);
+        }
+        if(index === 27){
+          $('#statFrame.toggle').prop('checked', false);
+        }
+      }
+    }
+
+    function checkIfSaved(){
+      if(!savedOptions){
+
+        /*
+        * Resets all options to false
+        * First 25 are paint and hover ids,
+        * The last two options are precipitation and application statistics option.
+        */
+        for(var i = 0; i < 29; ++i){
+          if(i < 26){
+            $(':checkbox')[i].checked = false;
+          }
+          if(i === 26){
+            $('#precip.toggle').prop('checked', false);
+          }
+          if(i === 27){
+            $('#statFrame.toggle').prop('checked', false);
+          }
+        }
+
+        //saves the current state of options
+        saveCurrentOptionsState();
+
+        //scroll page to top, so that next time options is loaded it starts there
+        window.scrollTo(0, 0);
+      }
     }
   </script>
 
@@ -338,6 +448,8 @@ Cleaned and Prepared - July 2016
   https://codersblock.com/blog/checkbox-trickery-with-css/
   -->
 
+  <!--Line below was added to add exit button on top right of Instructor Options page. Reference Issue 362 for details.-->
+  <div id="closeDiv"><img id="closeOptions" onclick="undoSelectedOptions(); checkIfSaved(); parent.resetOptions();" src="../imgs/close_black.png"></div>
   <div id="optionsMainHolder">
     <div class="optionsHeader" style="margin-top:15px;">
       Disable Land Use Types
