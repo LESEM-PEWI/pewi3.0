@@ -133,6 +133,9 @@ window.onbeforeunload = confirmExit;
 
 // Toggled popup text when hover over the Tabs in the left console
 function toggleTabTitle(value) {
+  // document.getElementById(value).style.zIndex = '1';
+
+  // console.log(document.getElementsByClassName('DetailsList'));
   if (document.getElementById(value).style.display === 'none') {
     // Set the corresponding titles when hover over one
     switch (value) {
