@@ -404,6 +404,7 @@
 }
 
 
+
 /*terrain selector*/
 .landSelectorIcon {
   margin: 0.5vw;
@@ -508,6 +509,56 @@ select {
   font-size: 1vw;
   font-size: var(--font-size);
   margin: 5%;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    bottom: 0px;
+    left: 70px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.tooltip .tooltiptext::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltiptext:hover {
+    display: none;
 }
 
 .year-precip-select {
