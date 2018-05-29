@@ -4192,6 +4192,7 @@ function toggleVisibility() {
       document.getElementById(elementIdString).innerHTML = string;
     } else {
       document.getElementById(elementIdString).options[boardData[currentBoard].precipitationIndex[y]].selected = true;
+      // console.log(document.getElementById(elementIdString));
     }
   }
 
