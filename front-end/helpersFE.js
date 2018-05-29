@@ -172,6 +172,21 @@ function toggleTabTitle(value) {
   } else {
     document.getElementById(value).style.display = 'none';
   }
+
+  // When hover over the tab, hide the map key
+  var detailListStyle = null;
+  if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
+    detailListStyle = document.getElementsByClassName('DetailsList')[0].style;
+  }
+  // console.log(document.getElementsByClassName('DetailsList')[0]);
+  if(detailListStyle != null){
+    if(detailListStyle.display === 'none'){
+      detailListStyle.display = 'block';
+    }
+    else {
+      detailListStyle.display = 'none';
+    }
+  }
 }
 
 //Adds the given tileId and painter to the undoArr
