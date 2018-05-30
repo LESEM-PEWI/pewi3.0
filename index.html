@@ -486,15 +486,24 @@
           </div>
         </div>
 
+
+
+
         <!-- "Letter N Ig Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p>
-        <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/N.png" onclick="displayLevels('nitrate');">
+        <div class="tooltipResultsNitrate">
+          <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/N.png" onclick="displayLevels('nitrate');">
+          <span class="tooltiptextResults">Subwatershed Nitrate-N Percent Contribution</span>
+        </div>
         <!-- "Letter E gold Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Gross Erosion</p>
-        <img id="erosionIcon" class="levelsSelectorIcon icon" src="./imgs/E.png" onclick="displayLevels('erosion');">
+        <div class="tooltipResultsErosion">
+          <img id="erosionIcon" class="levelsSelectorIcon icon" src="./imgs/E.png" onclick="displayLevels('erosion');">
+          <span class="tooltiptextResults">Gross Erosion</span>
+        </div>
         <!-- "Letter P blue Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Phosphorus Index Risk Assessment</p>
-        <img id="phoshorusIcon" class="levelsSelectorIcon icon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
+        <div class="tooltipResultsPhosphorus">
+          <img id="phoshorusIcon" class="levelsSelectorIcon icon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
+          <span class="tooltiptextResults">Phosphorus Index Risk Assessment</span>
+        </div>
 
       </div>
 
@@ -616,15 +625,37 @@
 
 
 
-        <div class="tooltip">
+        <div class="tooltipPhysicalFeaturesFlood">
           <img id="floodFrequency" class="featureSelectorIcon icon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
-          <span class="tooltiptext">Flood Frequency</span>
+          <span class="tooltiptextPhysicalFeatures">Flood Frequency</span>
         </div>
-        <img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetlands');">
-        <img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('boundary');">
-        <img id="drainageClass" class="featureSelectorIcon icon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
-        <img id="soilClass" class="featureSelectorIcon icon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
-        <img id="topoClass" class="featureSelectorIcon icon" src="./imgs/Icon_Topography.svg" onclick="displayLevels('topo');">
+
+
+        <div class="tooltipPhysicalFeaturesWetlands">
+          <img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetlands');">
+          <span class="tooltiptextPhysicalFeatures">Strategic Wetlands</span>
+        </div>
+
+        <div class="tooltipPhysicalFeaturesSubwatershed">
+          <img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('boundary');">
+          <span class="tooltiptextPhysicalFeatures">Subwatershed Boundaries</span>
+        </div>
+
+        <div class="tooltipPhysicalFeaturesDrainage">
+          <img id="drainageClass" class="featureSelectorIcon icon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
+          <span class="tooltiptextPhysicalFeatures">Drainage Class</span>
+        </div>
+
+        <div class="tooltipPhysicalFeaturesSoil">
+          <img id="soilClass" class="featureSelectorIcon icon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
+          <span class="tooltiptextPhysicalFeatures">Soil Class</span>
+        </div>
+
+        <div class="tooltipPhysicalFeaturesTopography">
+          <img id="topoClass" class="featureSelectorIcon icon" src="./imgs/Icon_Topography.svg" onclick="displayLevels('topo');">
+          <span class="tooltiptextPhysicalFeatures">Topography</span>
+        </div>
+
         </div>
 
       <!--Yield Productivity Overlay Maps -->
