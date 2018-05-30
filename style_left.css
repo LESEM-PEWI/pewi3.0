@@ -24,6 +24,7 @@
     left: 3vw;
     width: 300%;
     height: inherit;
+    /* float: right; */
     color: #fff;
     font-family: 'Amatic SC', cursive;
     font-family: var(--button-font-family);
@@ -42,6 +43,8 @@
     transition-duration: var(--transition-duration);
     /* Safari */
     -webkit-transition-duration: var(--transition-duration);
+    /* z-index specififes the stack order, in other words, it makes itself appears on top of others*/
+    z-index: 1;
 
   }
 /* Text slides out to right effect*/
@@ -566,6 +569,7 @@ option {
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
+
 }
 
 .DetailsList {
