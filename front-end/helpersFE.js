@@ -46,6 +46,7 @@ var g_year1delete = false; //true if year 1 is deleted when there are other year
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board
+var yearCopyPaste = 0; //used for copying and pasting the selected year
 // arrays
 
 //var arrLines;
@@ -897,6 +898,15 @@ function contaminatedRiver(riverColor) {
   }
 
 } //end contaminatedRiver
+
+//depends on the variable yearSelected from transitionToYear
+function copyYear(yearToCopy)
+{
+  yearToCopy = yearSelected;
+  console.log("year to copy " +yearSelected);
+  yearCopyPaste = yearToCopy;
+  console.log(yearCopyPaste);
+} //end copyYear
 
 //createFlock displays an animated flock of birds for 10 seconds
 function createFlock() {
@@ -2825,6 +2835,23 @@ function painterSelect(brushNumberValue) {
     document.getElementById('gridPaint').className = "painterIcon iconSelected";
   } //end else/if group
 } //end painterSelect()
+
+//pastes the landuse of a certain year - related to the copyYear function
+
+function pasteYear(yearToPaste)
+{
+  //which year we want to paste in, i.e whichever year is highlighted now
+  var yearToPasteIn = yearSelected;
+  console.log("year to paste in " + yearToPasteIn);
+  yearToPaste = yearCopyPaste;
+  console.log("year to paste should be equal to year to copy " +yearToPaste);
+  //for loop to copy the landUseType
+  for (var i = 0; i < boardData[currentBoard].map.length; i++)
+  {
+    boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearToPaste];
+  } //end for loop
+
+} //end pasteYear
 
 //Pauses the sim (and related times)
 function pauseSim() {
