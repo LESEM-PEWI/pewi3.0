@@ -491,6 +491,7 @@
 
 /*precip selector*/
 .styled-select {
+  transition: background-color 0.2s ease;
   background: #3b3b3b;
   border-radius: 6px;
   -webkit-border-radius: 6px;
@@ -500,6 +501,12 @@
   margin: 0.5vw;
   padding: 0.2vw;
   text-align: center;
+}
+
+.styled-select:hover
+{
+    background-image:none !important;
+    background-color:#656224 !important;
 }
 
 #year0PrecipContainer {
@@ -560,6 +567,65 @@ select {
 .tooltiptext:hover {
     display: none;
 }
+
+
+.tooltipPrecip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltipPrecip .tooltiptextPrecip {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    bottom: 2px;
+    left: 130px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.tooltipPrecip .tooltiptextPrecip::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+.tooltipPrecip:hover .tooltiptextPrecip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.styled-select:hover .tooltiptextPrecip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+.tooltiptextPrecip:hover {
+    display: none;
+}
+
 
 
 

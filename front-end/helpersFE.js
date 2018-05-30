@@ -4840,6 +4840,33 @@ function printOptionsEsc(e) {
   }
 } // end printOptionsEsc
 
+function getPrecipType(a){
+  var str = "yearPrecip";
+  var sel = [str.slice(0, 4), a, str.slice(4)].join('');
+  console.log(sel);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
 //Added code directly in this js file as importing a js file to another js file isn't easily doable//
 var saveAs = saveAs || function(e) {
