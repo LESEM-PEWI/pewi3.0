@@ -1,5 +1,5 @@
 ﻿paint15*paint1*paint2*paint3*paint4*paint5*paint12*paint6*paint7*paint8*paint11*paint10*paint13*paint9*paint14*multiAssign*precipOff*year2Button*year3Button*resultsButton
-24.58*30.39*34.34*24.18
+24.58*30.39*34.34*28.18
 1*1*1
 <p style='font-weight:900;'>Multiplayer Assignment Mode</p><br><p> Using the choice options to the left, divide up the watershed into a maximum of 6 'landowner' players properties. <br /> <br />  When you’ve completed your landownership assignments, press the ‘v’ key to create the multiplayer maps.</p>
 1
