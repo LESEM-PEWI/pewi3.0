@@ -446,9 +446,9 @@ function deleteYearAndTransition()
         if(currMaxYear == 1)
          {
            alert("Cannot delete year 1!");
-           yearSelected = 1; //TODO
-           currMaxYear = 1; //TODO
-           g_isDeleted = false; //TODO
+           yearSelected = 1;
+           currMaxYear = 1;
+           g_isDeleted = false;
            g_year1delete = false;
          }
          else
