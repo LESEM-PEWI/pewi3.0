@@ -387,24 +387,25 @@ function addYearAndTransition() {
   //make next button appear (has some prebuilt functionality for expanded number of years)
 
   if (nextYear < totalYearsAllowed)
-  {console.log("one");
+  {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
     document.getElementById("year" + nextYear + "Button").style.display = "block";
+//    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
     //special case for adding year 3 when year 2 has been previously deleted in the presence of year 3
     if(year2to3)
     {
-      console.log("two");
       switchYearTab(3);
       transitionToYear(4);
+//      document.getElementById("year3precipContainer").style.display = "block";
       year2to3 = false;
     }
 
     else
     {
-    console.log("three");
     switchYearTab(nextYear);
     transitionToYear(nextYear);
+//    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
     }
   }
 
@@ -414,14 +415,16 @@ function addYearAndTransition() {
       document.getElementById("year2Button").className = "yearButton";
       document.getElementById("year2Image").className = "icon yearNotSelected";
       document.getElementById("year2Button").style.display = "block";
+//      document.getElementById("year2precipContainer").style.display = "block";
       nextYear = 2;
       g_year1delete = false;
     }
     else
-    {console.log("five");
+    {
       document.getElementById("year3Button").className = "yearButton";
       document.getElementById("year3Image").className = "icon yearNotSelected";
       document.getElementById("year3Button").style.display = "block";
+//      document.getElementById("year3precipContainer").style.display = "block";
     }
     switchYearTab(nextYear);
     transitionToYear(nextYear);
@@ -3961,6 +3964,15 @@ function switchConsoleTab(value) {
       }
       document.getElementById('precipImg').className = "imgSelected";
       document.getElementById('precipTab').style.display = "block";
+      //making sure that only year 0 and 1 are always shown and year 2 and 3 are not unless the user enables them
+      //TODO: Move them somewhere else;
+//      var precipYearCount = boardData[currentBoard].calculatedToYear;
+      document.getElementById('year2PrecipContainer').style.display = "none";
+      document.getElementById('year3PrecipContainer').style.display = "none";
+      for(var i =2; i<=boardData[currentBoard].calculatedToYear; i++)
+      {
+        document.getElementById('year' + i + 'PrecipContainer').style.display = "block";
+      }
       updateIndexPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Glossary</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
       break;
     case 3:
