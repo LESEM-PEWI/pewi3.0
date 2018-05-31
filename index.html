@@ -362,7 +362,7 @@
 
 
 
-              <div id="year0PrecipContainer" class="styled-select">
+              <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);">
                 <div class="tooltipPrecip">
                 <h4>Year 0:</h4>
                 <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
@@ -374,7 +374,7 @@
                   <option value=5>36.47</option>
                   <option value=6>45.10</option>
                 </select>
-                <span class="tooltiptextPrecip">Testing</span>
+                <span class="tooltiptextPrecip" id="precipspan0"></span>
               </div>
               </div>
 
@@ -382,10 +382,10 @@
 
 
 
-          <div id="year1PrecipContainer" class="styled-select">
+          <div id="year1PrecipContainer" class="styled-select" onmouseover="getPrecipType(1);">
             <div class="tooltipPrecip">
             <h4>Year 1:</h4>
-            <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();" onmouseover="getPrecipType(1);">
+            <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -394,13 +394,13 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
-            <span class="tooltiptextPrecip">Testing</span>
+            <span class="tooltiptextPrecip" id="precipspan1"></span>
           </div>
           </div>
+<!-- <script type="text/javascript"> document.write(getPrecipType(1))</script>  -->
 
 
-
-          <div id="year2PrecipContainer" class="styled-select">
+          <div id="year2PrecipContainer" class="styled-select" onmouseover="getPrecipType(2);">
             <div class="tooltipPrecip">
             <h4>Year 2:</h4>
             <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi();">
@@ -412,13 +412,13 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
-            <span class="tooltiptextPrecip">Testing</span>
+            <span class="tooltiptextPrecip" id="precipspan2"></span>
           </div>
           </div>
 
 
 
-          <div id="year3PrecipContainer" class="styled-select">
+          <div id="year3PrecipContainer" class="styled-select" onmouseover="getPrecipType(3);">
             <div class="tooltipPrecip">
             <h4>Year 3:</h4>
             <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi();">
@@ -430,7 +430,7 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
-            <span class="tooltiptextPrecip">Testing</span>
+            <span class="tooltiptextPrecip" id="precipspan3"></span>
           </div>
           </div>
         </form>

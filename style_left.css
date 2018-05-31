@@ -592,7 +592,7 @@ select {
     bottom: 2px;
     left: 130px;
     opacity: 0;
-    transition: opacity 0.5s;
+    
 }
 
 .tooltipPrecip .tooltiptextPrecip::after {
