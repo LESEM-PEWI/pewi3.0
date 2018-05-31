@@ -442,9 +442,9 @@ function addYearAndTransition() {
 } //end addYearAndTransition
 
 
-//deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
+//deleteYearAndTransition deletes the selected year
 //Gets the year selected from transitionToYear, when the user selects which year to delete
-//uses the helper year2and3Delete()
+//uses the helper year2and3Delete() in the special cases
 function deleteYearAndTransition()
 {
   var currMaxYear = boardData[currentBoard].calculatedToYear;
@@ -464,6 +464,7 @@ function deleteYearAndTransition()
     {
       if(yearSelected == 1)
       {
+        //if selected year is 1 and there are no other years
         if(currMaxYear == 1)
          {
            alert("Cannot delete year 1!");
@@ -479,7 +480,8 @@ function deleteYearAndTransition()
            response = "Deleted!";
            document.getElementById("year" + currMaxYear + "Button").style.display = "none";
            alert("Year 2 is now Year 1!");
-           //copy year 2 to year 1
+           //copy year 2 to year 1 - including the precipitation
+           boardData[currentBoard].precipitation[yearSelected] = boardData[currentBoard].precipitation[2];
            transitionToYear(2);
            switchYearTab(1);
            boardData[currentBoard].calculatedToYear = 1;
@@ -489,7 +491,8 @@ function deleteYearAndTransition()
            if(maxYear == 3)
            {
              boardData[currentBoard].calculatedToYear = 3;
-             //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2.
+             //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2; then year 3 is default
+            //this includes the precipitation too
              year2and3Delete();
           }
          }
@@ -3966,10 +3969,9 @@ function switchConsoleTab(value) {
       document.getElementById('precipTab').style.display = "block";
       //making sure that only year 0 and 1 are always shown and year 2 and 3 are not unless the user enables them
       //TODO: Move them somewhere else;
-//      var precipYearCount = boardData[currentBoard].calculatedToYear;
       document.getElementById('year2PrecipContainer').style.display = "none";
       document.getElementById('year3PrecipContainer').style.display = "none";
-      for(var i =2; i<=boardData[currentBoard].calculatedToYear; i++)
+      for(var i=2; i<=boardData[currentBoard].calculatedToYear; i++)
       {
         document.getElementById('year' + i + 'PrecipContainer').style.display = "block";
       }
@@ -4977,6 +4979,7 @@ function year2and3Delete()
   g_isDeleted = true;
   year2to3 = true;
   //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2.
+  boardData[currentBoard].precipitation[2] = boardData[currentBoard].precipitation[3];
   transitionToYear(3);
   switchYearTab(2);
   boardData[currentBoard].calculatedToYear = 2;
