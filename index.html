@@ -213,7 +213,7 @@
       <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
       <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);">
         <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle');" onmouseout="toggleTabTitle('terrainTabTitle');">
-        <div id="terrainTabTitle" style="display:none;"></div> 
+        <div id="terrainTabTitle" style="display:none;"></div>
       </div>
       <!-- "Cloud, raindrops, sun icon" by Yannick Lung (http://yannicklung.com/) with free commercial use / Inverted and resized -->
       <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);">
@@ -1148,6 +1148,7 @@
       var fp = document.getElementById("file-upload3");
       // pass the file handler
       uploadClicked(fp.files);
+      console.log('files',fp.files);
       // clean the file
       fp.files = null;
     } // end uploadFile()

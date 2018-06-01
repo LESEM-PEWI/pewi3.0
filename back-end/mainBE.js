@@ -186,7 +186,7 @@ function propogateBoard(board) {
   //board.precipitationIndex = [0,2,4,1] ;
 
   //loop through initData array and assign values to Tiles
-  console.log("initData.length " + initData.length);
+  // console.log("initData.length " + initData.length);
   for (var i = 0; i < initData.length; i++) {
     var tile = new Tile(initData[i], board);
     board.map.push(tile);

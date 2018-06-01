@@ -387,14 +387,15 @@ function addYearAndTransition() {
   //make next button appear (has some prebuilt functionality for expanded number of years)
 
   if (nextYear < totalYearsAllowed)
-  {console.log("one");
+  {
+    // console.log("one");
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
     document.getElementById("year" + nextYear + "Button").style.display = "block";
     //special case for adding year 3 when year 2 has been previously deleted in the presence of year 3
     if(year2to3)
     {
-      console.log("two");
+      // console.log("two");
       switchYearTab(3);
       transitionToYear(4);
       year2to3 = false;
@@ -402,7 +403,7 @@ function addYearAndTransition() {
 
     else
     {
-    console.log("three");
+    // console.log("three");
     switchYearTab(nextYear);
     transitionToYear(nextYear);
     }
@@ -417,8 +418,8 @@ function addYearAndTransition() {
       nextYear = 2;
       g_year1delete = false;
     }
-    else
-    {console.log("five");
+    else{
+    // {console.log("five");
       document.getElementById("year3Button").className = "yearButton";
       document.getElementById("year3Image").className = "icon yearNotSelected";
       document.getElementById("year3Button").style.display = "block";
@@ -4773,7 +4774,7 @@ function uploadCSV(reader) {
     var headers = allTextLines[0].split(',');
     var lines = [];
     var data;
-
+    console.log('reader.result = ', reader.result);
     for (var i = 1; i < allTextLines.length; i++) {
       data = allTextLines[i].split(',');
       var headlength = headers.length - 1;
@@ -4786,19 +4787,32 @@ function uploadCSV(reader) {
       } // end if
     } // end for
     //XXX lines is empty
-
+console.log("lines = ", lines);
     // window.top.document.getElementById('parameters').innerHTML;
     var multipleYearFlag = 1;
     // This for loop iterates through the uploaded csv data file
     // and checks if year 2 and 3 are present in the file
+    // for (var i = 0; i < lines.length; i++) {
+    //   if ((lines[i][26] != lines[i][27])) {
+    //     if (lines[i][26] != 1 && lines[i][26] != 0)
+    //       multipleYearFlag = 2;
+    //     if (lines[i][27] != 1 && lines[i][27] != 0)
+    //       multipleYearFlag = 3;
+    //     break;
+    //   }
+    // }
+
     for (var i = 0; i < lines.length; i++) {
-      if ((lines[i][26] != lines[i][27])) {
+
+      // if ((lines[i][26] != lines[i][27])) {
         if (lines[i][26] != 1 && lines[i][26] != 0)
           multipleYearFlag = 2;
-        if (lines[i][27] != 1 && lines[i][27] != 0)
+        if (lines[i][27] != 1 && lines[i][27] != 0){
           multipleYearFlag = 3;
-        break;
-      }
+          console.log('Now I know that Year is 3');
+          break;
+        }
+
     }
 
     if (multipleYearFlag == 2) {
@@ -4862,7 +4876,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
     //To save options in the file, changing the options string so that it doesn't have \n because csv file will read it differntly
     var tempOptions = optionsString.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
     optionsString = tempOptions;
-    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3," + optionsString + ",\n"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
+    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3," + optionsString + ",\n"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
 
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
@@ -4940,7 +4954,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
           boardData[currentBoard].map[i].landType[2] + "," +
           boardData[currentBoard].map[i].landType[3] + ",";
       }
-
+      string += boardData[currentBoard].calculatedToYear + ",";
       string += boardData[currentBoard].precipitation[0] + "," +
         boardData[currentBoard].precipitation[1] + "," +
         boardData[currentBoard].precipitation[2] + "," +
