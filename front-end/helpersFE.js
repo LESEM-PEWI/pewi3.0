@@ -46,6 +46,8 @@ var g_year1delete = false; //true if year 1 is deleted when there are other year
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board
+var precipSwitch = 0;
+
 // arrays
 
 //var arrLines;
@@ -482,6 +484,9 @@ function deleteYearAndTransition()
            alert("Year 2 is now Year 1!");
            //copy year 2 to year 1 - including the precipitation
            boardData[currentBoard].precipitation[yearSelected] = boardData[currentBoard].precipitation[2];
+           console.log("before" +(document.getElementById("year" + yearSelected+ "Precip").value));
+           precip[Number(document.getElementById("year" + yearSelected+ "Precip").value)] = boardData[currentBoard].precipitation[2];
+           console.log("after " +(document.getElementById("year" + yearSelected+ "Precip").value));
            transitionToYear(2);
            switchYearTab(1);
            boardData[currentBoard].calculatedToYear = 1;
@@ -3392,6 +3397,35 @@ function resumeSim() {
   document.getElementById("simSlider").style.zIndex = "1002";
 } //end resumeSim()
 
+//this function contains switch statements which take in the real value (Number) of precipitation and gives out their values;
+
+function reversePrecipValue(val)
+{
+  switch (val) {
+    case : 24.58
+      precipSwitch = 0;
+      break;
+    case : 28.18
+      precipSwitch = 1;
+      break;
+    case : 30.39
+      precipSwitch = 2;
+      break;
+    case : 32.16
+      precipSwitch = 3;
+      break;
+    case : 34.34
+      precipSwitch = 4;
+      break;
+    case : 36.47
+      precipSwitch = 5;
+      break;
+    case : 45.10
+      precipSwitch = 6;
+      break;
+  }// end switch
+} //end reversePrecipValue
+
 //revertChanges undos the users previous tile changes, and goes back to the previous board instance
 function revertChanges() {
   //For storing clicks
@@ -4980,6 +5014,9 @@ function year2and3Delete()
   year2to3 = true;
   //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2.
   boardData[currentBoard].precipitation[2] = boardData[currentBoard].precipitation[3];
+  console.log("before " +precip[Number(document.getElementById("year2Precip").value)]);
+  precip[Number(document.getElementById("year2Precip").value)] = boardData[currentBoard].precipitation[3];
+  console.log("after " +precip[Number(document.getElementById("year2Precip").value)]);
   transitionToYear(3);
   switchYearTab(2);
   boardData[currentBoard].calculatedToYear = 2;
