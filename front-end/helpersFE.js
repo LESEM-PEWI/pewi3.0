@@ -4003,14 +4003,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('precipImg').className = "imgSelected";
       document.getElementById('precipTab').style.display = "block";
-      //making sure that only year 0 and 1 are always shown and year 2 and 3 are not unless the user enables them
-      //TODO: Move them somewhere else;
-      document.getElementById('year2PrecipContainer').style.display = "none";
-      document.getElementById('year3PrecipContainer').style.display = "none";
-      for(var i=2; i<=boardData[currentBoard].calculatedToYear; i++)
-      {
-        document.getElementById('year' + i + 'PrecipContainer').style.display = "block";
-      }
+      yearPrecipManager();
       updateIndexPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Glossary</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
       break;
     case 3:
@@ -5023,6 +5016,18 @@ function year2and3Delete()
   yearSelected = 2;
   currMaxYear = 2;
   alert("Year 3 is now Year 2!");
+}
+
+//update sthe precipitation boxes in the precip tab - called from switchConsoleTab
+function yearPrecipManager()
+{
+  //making sure that only year 0 and 1 are always shown and year 2 and 3 are not unless the user enables them
+  document.getElementById('year2PrecipContainer').style.display = "none";
+  document.getElementById('year3PrecipContainer').style.display = "none";
+  for(var i=2; i<=boardData[currentBoard].calculatedToYear; i++)
+  {
+    document.getElementById('year' + i + 'PrecipContainer').style.display = "block";
+  }
 }
 
 
