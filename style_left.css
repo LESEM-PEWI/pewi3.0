@@ -130,22 +130,6 @@
   top:55%;
 }
 
-/** styling for year add and delete button in the year tab of sandbox mode **/
-
-#yearAddButton
-{
-  position: absolute;
-  top:40%;
-  right:58%;
-}
-
-#yearDeleteButton
-{
-  position: absolute;
-  top:40%;
-  left:50%;
-}
-
 #indexmenu:hover, #combineButton:hover {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
@@ -553,6 +537,21 @@ option {
 
 .yearButtonHidden, .yearImageHidden {
   display: none;
+}
+
+/** styling for year add and delete button in the year tab of sandbox mode **/
+#yearAddButton
+{
+  position: absolute;
+  top:60%;
+  right:58%;
+}
+
+#yearDeleteButton
+{
+  position: absolute;
+  top:60%;
+  left:50%;
 }
 
 /** year buttons**/
