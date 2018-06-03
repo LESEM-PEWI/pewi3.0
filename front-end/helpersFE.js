@@ -2011,6 +2011,24 @@ function getPrecipOptionsValue(precipValue) {
   } // end switch
 } // end getPrecipOptionsValue()
 
+function getPrecipType(a){
+  var spanID = "precipspan";
+  spanID+=a;
+  var str = "yearPrecip";
+  var sel = [str.slice(0, 4), a, str.slice(4)].join('');
+  var e = document.getElementById(sel);
+  var val = e.options[e.selectedIndex].value;
+  if(val==="0" || val==="1"){
+    document.getElementById(spanID).textContent="Dry";
+  }
+  if(val==="2" || val==="3" || val==="4"){
+    document.getElementById(spanID).textContent="Normal";
+  }
+  if(val==="5" || val==="6"){
+    document.getElementById(spanID).textContent="Wet";
+  }
+}
+
 //Gets the current timestamp for the click (event)
 function getStamp() {
   curTime = new Date();
@@ -5026,6 +5044,29 @@ function printOptionsEsc(e) {
     closePrintOptions();
   }
 } // end printOptionsEsc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
 //Added code directly in this js file as importing a js file to another js file isn't easily doable//

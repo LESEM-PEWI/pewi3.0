@@ -249,28 +249,87 @@
       <!-- Land type painter display -->
       <div id="painterTab" class="consoleTab">
         <div id="painterTab-leftcol" class="leftcol">
-          <img id="paint1" class="landSelectorIcon iconSelected" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);">
-          <img id="paint3" class="landSelectorIcon icon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);">
-          <img id="paint15" class="landSelectorIcon icon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);">
-          <img id="paint8" class="landSelectorIcon icon" src="./imgs/grassHay.png" onclick="changeSelectedPaintTo(8);">
-          <img id="paint6" class="landSelectorIcon icon" src="./imgs/permanentPasture.png" onclick="changeSelectedPaintTo(6);">
-          <img id="paint14" class="landSelectorIcon icon" src="./imgs/wetland.png" onclick="changeSelectedPaintTo(14);">
-          <img id="paint11" class="landSelectorIcon icon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);">
-          <img id="paint13" class="landSelectorIcon icon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);">
 
+          <div class="tooltip">
+            <img id="paint1" class="landSelectorIcon iconSelected" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);">
+            <span class="tooltiptext">Conventional Corn</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="paint3" class="landSelectorIcon icon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);">
+            <span class="tooltiptext">Conventional Soybean</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="paint15" class="landSelectorIcon icon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);">
+            <span class="tooltiptext">Mixed Fruits and Vegetables</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="paint8" class="landSelectorIcon icon" src="./imgs/grassHay.png" onclick="changeSelectedPaintTo(8);">
+            <span class="tooltiptext">Grass Hay</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="paint6" class="landSelectorIcon icon" src="./imgs/permanentPasture.png" onclick="changeSelectedPaintTo(6);">
+            <span class="tooltiptext">Permanent Pasture</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="paint14" class="landSelectorIcon icon" src="./imgs/wetland.png" onclick="changeSelectedPaintTo(14);">
+            <span class="tooltiptext">Wetland</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="paint11" class="landSelectorIcon icon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);">
+            <span class="tooltiptext">Conventional Forest</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="paint13" class="landSelectorIcon icon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);">
+            <span class="tooltiptext">Short Rotation Woody Bioenergy</span>
+          </div>
           <!-- multiplayer mode  -->
           <div id="leftPlayerCon"></div>
 
         </div>
 
         <div id="painterTab-rightcol" class="rightcol">
+
+          <div class="tooltip">
           <img id="paint2" class="landSelectorIcon icon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
+          <span class="tooltiptext">Conservation Corn</span>
+        </div>
+
+          <div class="tooltip">
           <img id="paint4" class="landSelectorIcon icon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
+          <span class="tooltiptext">Conservation Soybean</span>
+        </div>
+
+          <div class="tooltip">
           <img id="paint5" class="landSelectorIcon icon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
+          <span class="tooltiptext">Alfafa Hay</span>
+        </div>
+
+          <div class="tooltip">
           <img id="paint12" class="landSelectorIcon icon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);">
+          <span class="tooltiptext">Switch Grass</span>
+        </div>
+
+          <div class="tooltip">
           <img id="paint7" class="landSelectorIcon icon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);">
+          <span class="tooltiptext">Rotational Grazing</span>
+        </div>
+
+          <div class="tooltip">
           <img id="paint9" class="landSelectorIcon icon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);">
+          <span class="tooltiptext">Prarie</span>
+        </div>
+
+          <div class="tooltip">
           <img id="paint10" class="landSelectorIcon icon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);">
+          <span class="tooltiptext">Conservation Forest</span>
+        </div>
 
           <!-- multiplayer mode  -->
           <div id="rightPlayerCon"></div>
@@ -298,19 +357,33 @@
           <div id="precipTitle">
             <h3>Precipitation</h3></div>
 
-          <div id="year0PrecipContainer" class="styled-select">
-            <h4>Year 0:</h4>
-            <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
-                <option value=0>24.58</option>
-                <option value=1>28.18</option>
-                <option value=2>30.39</option>
-                <option value=3>32.16</option>
-                <option value=4>34.34</option>
-                <option value=5>36.47</option>
-                <option value=6>45.10</option>
-            </select>
-          </div>
-          <div id="year1PrecipContainer" class="styled-select">
+
+
+
+
+
+              <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);">
+                <div class="tooltipPrecip">
+                <h4>Year 0:</h4>
+                <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
+                  <option value=0>24.58</option>
+                  <option value=1>28.18</option>
+                  <option value=2>30.39</option>
+                  <option value=3>32.16</option>
+                  <option value=4>34.34</option>
+                  <option value=5>36.47</option>
+                  <option value=6>45.10</option>
+                </select>
+                <span class="tooltiptextPrecip" id="precipspan0"></span>
+              </div>
+              </div>
+
+
+
+
+
+          <div id="year1PrecipContainer" class="styled-select" onmouseover="getPrecipType(1);">
+            <div class="tooltipPrecip">
             <h4>Year 1:</h4>
             <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();">
                 <option value=0>24.58</option>
@@ -321,8 +394,14 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
+            <span class="tooltiptextPrecip" id="precipspan1"></span>
           </div>
-          <div id="year2PrecipContainer" class="styled-select">
+          </div>
+<!-- <script type="text/javascript"> document.write(getPrecipType(1))</script>  -->
+
+
+          <div id="year2PrecipContainer" class="styled-select" onmouseover="getPrecipType(2);">
+            <div class="tooltipPrecip">
             <h4>Year 2:</h4>
             <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi();">
                 <option value=0>24.58</option>
@@ -333,8 +412,14 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
+            <span class="tooltiptextPrecip" id="precipspan2"></span>
           </div>
-          <div id="year3PrecipContainer" class="styled-select">
+          </div>
+
+
+
+          <div id="year3PrecipContainer" class="styled-select" onmouseover="getPrecipType(3);">
+            <div class="tooltipPrecip">
             <h4>Year 3:</h4>
             <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi();">
                 <option value=0>24.58</option>
@@ -345,6 +430,8 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
+            <span class="tooltiptextPrecip" id="precipspan3"></span>
+          </div>
           </div>
         </form>
 
@@ -427,15 +514,24 @@
           </div>
         </div>
 
+
+
+
         <!-- "Letter N Ig Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Subwatershed Nitrate-N Percent Contribution</p>
-        <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/N.png" onclick="displayLevels('nitrate');">
+        <div class="tooltipResultsNitrate">
+          <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/N.png" onclick="displayLevels('nitrate');">
+          <span class="tooltiptextResults">Subwatershed Nitrate-N Percent Contribution</span>
+        </div>
         <!-- "Letter E gold Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Gross Erosion</p>
-        <img id="erosionIcon" class="levelsSelectorIcon icon" src="./imgs/E.png" onclick="displayLevels('erosion');">
+        <div class="tooltipResultsErosion">
+          <img id="erosionIcon" class="levelsSelectorIcon icon" src="./imgs/E.png" onclick="displayLevels('erosion');">
+          <span class="tooltiptextResults">Gross Erosion</span>
+        </div>
         <!-- "Letter P blue Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <p class="levelsText">Phosphorus Index Risk Assessment</p>
-        <img id="phoshorusIcon" class="levelsSelectorIcon icon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
+        <div class="tooltipResultsPhosphorus">
+          <img id="phoshorusIcon" class="levelsSelectorIcon icon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
+          <span class="tooltiptextResults">Phosphorus Index Risk Assessment</span>
+        </div>
 
       </div>
 
@@ -552,13 +648,43 @@
           </div>
         </div>
 
-        <p class="featuresText">Flood Frequency</p><img id="floodFrequency" class="featureSelectorIcon icon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
-        <p class="featuresText">Strategic Wetlands</p><img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetlands');">
-        <p class="featuresText">Subwatershed Boundaries</p><img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('boundary');">
-        <p class="featuresText">Drainage Class</p><img id="drainageClass" class="featureSelectorIcon icon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
-        <p class="featuresText">Soil Class</p><img id="soilClass" class="featureSelectorIcon icon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
-        <p class="featuresText">Topography Relief</p><img id="topoClass" class="featureSelectorIcon icon" src="./imgs/Icon_Topography.svg" onclick="displayLevels('topo');">
-      </div>
+
+
+
+
+
+        <div class="tooltipPhysicalFeaturesFlood">
+          <img id="floodFrequency" class="featureSelectorIcon icon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
+          <span class="tooltiptextPhysicalFeatures">Flood Frequency</span>
+        </div>
+
+
+        <div class="tooltipPhysicalFeaturesWetlands">
+          <img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetlands');">
+          <span class="tooltiptextPhysicalFeatures">Strategic Wetlands</span>
+        </div>
+
+        <div class="tooltipPhysicalFeaturesSubwatershed">
+          <img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('boundary');">
+          <span class="tooltiptextPhysicalFeatures">Subwatershed Boundaries</span>
+        </div>
+
+        <div class="tooltipPhysicalFeaturesDrainage">
+          <img id="drainageClass" class="featureSelectorIcon icon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
+          <span class="tooltiptextPhysicalFeatures">Drainage Class</span>
+        </div>
+
+        <div class="tooltipPhysicalFeaturesSoil">
+          <img id="soilClass" class="featureSelectorIcon icon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
+          <span class="tooltiptextPhysicalFeatures">Soil Class</span>
+        </div>
+
+        <div class="tooltipPhysicalFeaturesTopography">
+          <img id="topoClass" class="featureSelectorIcon icon" src="./imgs/Icon_Topography.svg" onclick="displayLevels('topo');">
+          <span class="tooltiptextPhysicalFeatures">Topography</span>
+        </div>
+
+        </div>
 
       <!--Yield Productivity Overlay Maps -->
       <div id="yieldTab" class="consoleTab" style="display: none;">
@@ -1069,17 +1195,54 @@
         </div>
 
         <div class="leftcol">
-          <img id="cornClass" class="yieldSelectorIcon icon" src="./imgs/cornGrainIcon.png" title="Corn Grain" onclick="displayLevels('corn');">
-          <img id="fruitClass" class="yieldSelectorIcon icon" src="./imgs/fruitIcon.png" title="Mixed Fruits and Vegetables" onclick="displayLevels('fruit');">
-          <img id="alfalfaClass" class="yieldSelectorIcon icon" src="./imgs/alfalfaIcon.png" title="Alfalfa" onclick="displayLevels('alfalfa');">
-          <img id="switchGrassClass" class="yieldSelectorIcon icon" src="./imgs/switchGrassIcon.png" title="Switch Grass" onclick="displayLevels('switchgrass');">
-          <img id="shortClass" class="yieldSelectorIcon icon" src="./imgs/woodyBiomassIcon.png" title="Woody Biomass" onclick="displayLevels('short');">
+
+          <div class="tooltip">
+            <img id="cornClass" class="yieldSelectorIcon icon" src="./imgs/cornGrainIcon.png" onclick="displayLevels('corn');">
+            <span class="tooltiptext">Corn Grain</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="fruitClass" class="yieldSelectorIcon icon" src="./imgs/fruitIcon.png" onclick="displayLevels('fruit');">
+            <span class="tooltiptext">Mixed Fruits and Vegetables</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="alfalfaClass" class="yieldSelectorIcon icon" src="./imgs/alfalfaIcon.png" onclick="displayLevels('alfalfa');">
+            <span class="tooltiptext">Alafafa Hay</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="switchGrassClass" class="yieldSelectorIcon icon" src="./imgs/switchGrassIcon.png" onclick="displayLevels('switchgrass');">
+            <span class="tooltiptext">Switch Grass</span>
+          </div>
+
+          <div class="tooltip">
+            <img id="shortClass" class="yieldSelectorIcon icon" src="./imgs/woodyBiomassIcon.png" onclick="displayLevels('short');">
+            <span class="tooltiptext">Woody Biomass</span>
+          </div>
         </div>
+
         <div class="rightcol">
-          <img id="soyClass" class="yieldSelectorIcon icon" src="./imgs/soybeanIcon.png" title="Soybean" onclick="displayLevels('soybean');">
-          <img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" title="Cattle" onclick="displayLevels('cattle');">
-          <img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" title="GrassHay" onclick="displayLevels('grasshay');">
-          <img id="woodClass" class="yieldSelectorIcon icon" src="./imgs/woodIcon.png" title="Wood" onclick="displayLevels('wood');">
+
+          <div class="tooltip">
+            <img id="soyClass" class="yieldSelectorIcon icon" src="./imgs/soybeanIcon.png" onclick="displayLevels('soybean');">
+            <span class="tooltiptext">Soybean</span>
+          </div>
+
+          <div class="tooltip">
+          <img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" onclick="displayLevels('cattle');">
+          <span class="tooltiptext">Cattle</span>
+        </div>
+
+          <div class="tooltip">
+          <img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" onclick="displayLevels('grasshay');">
+          <span class="tooltiptext">Grass Hay</span>
+        </div>
+
+          <div class="tooltip">
+          <img id="woodClass" class="yieldSelectorIcon icon" src="./imgs/woodIcon.png" onclick="displayLevels('wood');">
+          <span class="tooltiptext">Wood</span>
+        </div>
         </div>
 
       </div>
