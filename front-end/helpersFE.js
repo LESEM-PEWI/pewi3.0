@@ -1928,7 +1928,7 @@ function getPrecipType(a){
     document.getElementById(spanID).textContent="Normal";
   }
   if(val==="5" || val==="6"){
-    document.getElementById(spanID).textContent="Flood";
+    document.getElementById(spanID).textContent="Wet";
   }
 }
 
