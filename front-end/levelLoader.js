@@ -82,8 +82,7 @@ function loadLevel(level) {
       multiplayerExit();
       initWorkspace('./data.csv');
       document.getElementById('parameters').innerHTML = "";
-      // We need to show the print button in case of the button was hidden in multi-player mode.
-      document.getElementById('printButton').style.display = 'block';
+
       // console.log("window log:" + window.top.document.getElementById('parameters').innerHTML);
       // console.log("document log:" + document.getElementById('parameters').innerHTML);
       parent.saveAndRandomize();

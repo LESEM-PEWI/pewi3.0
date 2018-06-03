@@ -2253,6 +2253,15 @@ function multiplayerExit() {
   document.getElementById("levelsButton").style.display = "block";
   document.getElementById("yearButton").style.display = "block";
   document.getElementById("playerResetButton").style.display = "none";
+  // Change the Download method to the normal one
+  document.getElementById("DownloadButton").onclick = triggerDownloadSequence;
+  // We need to show the buttons in case of the buttons was hidden in multi-player mode.
+  document.getElementById('printButton').style.display = 'block';
+  document.getElementById('uploadFile').style.display = 'block';
+  // move all the left icons to the right, so that there's no empty space between Download icon and Contact Us icon.
+  document.getElementById('DownloadButton').style.right = '8.5vw';
+  document.getElementById('logoBase').style.right = '11vw';
+  document.getElementById('pewiLogo').style.right = '21vw';
   // document.getElementById("playerResetImage").style.display = "none";
   resetPlayers();
   //Elimnate player 1 (since we are actually leaving multiplayer) and reduce totalPlayers count to 0
@@ -2298,8 +2307,16 @@ function multiplayerMode() {
     document.getElementById("levelsButton").style.display = "none";
     document.getElementById("yearButton").style.display = "none";
     document.getElementById("yearButton").style.display = "none";
+    // When hit download button, it should download the multi-map.
+    document.getElementById("DownloadButton").onclick = endMultiplayerAssignMode;
     // Multi-player mode should not have a print function, hide it.
     document.getElementById('printButton').style.display = 'none';
+    // Multi-player mode should not have a upload functionality, hide it.
+    document.getElementById('uploadFile').style.display = 'none';
+    // move all the left icons to the right, so that there's no empty space between Download icon and Contact Us icon.
+    document.getElementById('DownloadButton').style.right = '6.5vw';
+    document.getElementById('logoBase').style.right = '9vw';
+    document.getElementById('pewiLogo').style.right = '18.5vw';
   }
 }
 
@@ -2765,7 +2782,7 @@ function onDocumentKeyDown(event) {
         // hit P to see pdf output
       case 80:
         // If not in the multi-player mode, we should not disable the 'P' key
-        if (document.getElementById('printButton').style.display !== 'none') {
+        if (!multiplayerAssigningModeOn) {
           startPrintOptions();
         }
 
