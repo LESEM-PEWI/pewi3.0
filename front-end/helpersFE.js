@@ -400,6 +400,7 @@ function addYearAndTransition() {
     {
       switchYearTab(nextYear);
       transitionToYear(nextYear);
+//    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
     }
   }
 
@@ -455,15 +456,15 @@ function deleteYearAndTransition()
     if (yearSelected == 1)
     {
       if(currMaxYear == 1)
-      {
+       {
         alert("Cannot delete year 1!");
         yearSelected = 1;
         currMaxYear = 1;
         g_isDeleted = false;
         g_year1delete = false;
-      }
-      else
-      {
+       }
+       else
+       {
         g_year1delete = true;
         // g_isDeleted = true;
         response = "Deleted!";
@@ -481,10 +482,10 @@ function deleteYearAndTransition()
         if(maxYear == 3)
         {
           boardData[currentBoard].calculatedToYear = 3;
-          //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2; then year 3 is default
-          //this includes the precipitation too
+           //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2; then year 3 is default
+           //this includes the precipitation too
           year2and3Delete();
-        }
+       }
       }
     }
 
@@ -2271,8 +2272,9 @@ function multiplayerMode() {
     document.getElementById("playerAddButton").style.display = "inline-block";
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
+    document.getElementById("yearButton").style.display = "none";
+    document.getElementById("yearButton").style.display = "none";
     document.getElementById("yearButton").style.display = "block";
-    // document.getElementById("yearButton").style.display = "none";
     // When hit download button, it should download the multi-map.
     document.getElementById("DownloadButton").onclick = endMultiplayerAssignMode;
     // Multi-player mode should not have a print function, hide it.
@@ -2281,7 +2283,7 @@ function multiplayerMode() {
     // move all the left icons to the right, so that there's no empty space between Download icon and Contact Us icon.
     document.getElementById('DownloadButton').style.right = '6.5vw';
     document.getElementById('logoBase').style.right = '9vw';
-    document.getElementById('pewiLogo').style.right = '18.5vw'
+    document.getElementById('pewiLogo').style.right = '18.5vw';
   }
 }
 
