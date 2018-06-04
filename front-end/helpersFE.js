@@ -179,15 +179,14 @@ function toggleTabTitle(value) {
 
   // When hover over the tab, hide the map key
   var detailListStyle = null;
-  if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
+  if (typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined') {
     detailListStyle = document.getElementsByClassName('DetailsList')[0].style;
   }
   // console.log(document.getElementsByClassName('DetailsList')[0]);
-  if(detailListStyle != null){
-    if(detailListStyle.display === 'none'){
+  if (detailListStyle != null) {
+    if (detailListStyle.display === 'none') {
       detailListStyle.display = 'block';
-    }
-    else {
+    } else {
       detailListStyle.display = 'none';
     }
   }
@@ -375,9 +374,8 @@ function addTile(tile) {
 function addYearAndTransition() {
 
   var totalYearsAllowed = 3;
-  var nextYear = boardData[currentBoard].calculatedToYear+1;
-  if(g_year1delete)
-  {
+  var nextYear = boardData[currentBoard].calculatedToYear + 1;
+  if (g_year1delete) {
     nextYear = 2;
   }
   if (curTracking) {
@@ -386,40 +384,33 @@ function addYearAndTransition() {
 
   //make next button appear (has some prebuilt functionality for expanded number of years)
 
-  if (nextYear < totalYearsAllowed)
-  {
+  if (nextYear < totalYearsAllowed) {
     // console.log("one");
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
     document.getElementById("year" + nextYear + "Button").style.display = "block";
     //special case for adding year 3 when year 2 has been previously deleted in the presence of year 3
-    if(year2to3)
-    {
+    if (year2to3) {
       // console.log("two");
       switchYearTab(3);
       transitionToYear(4);
       year2to3 = false;
-    }
-
-    else
-    {
-    // console.log("three");
-    switchYearTab(nextYear);
-    transitionToYear(nextYear);
+    } else {
+      // console.log("three");
+      switchYearTab(nextYear);
+      transitionToYear(nextYear);
     }
   }
 
   if (nextYear == totalYearsAllowed) {
-    if (g_year1delete)
-    {
+    if (g_year1delete) {
       document.getElementById("year2Button").className = "yearButton";
       document.getElementById("year2Image").className = "icon yearNotSelected";
       document.getElementById("year2Button").style.display = "block";
       nextYear = 2;
       g_year1delete = false;
-    }
-    else{
-    // {console.log("five");
+    } else {
+      // {console.log("five");
       document.getElementById("year3Button").className = "yearButton";
       document.getElementById("year3Image").className = "icon yearNotSelected";
       document.getElementById("year3Button").style.display = "block";
@@ -428,10 +419,9 @@ function addYearAndTransition() {
     transitionToYear(nextYear);
   }
 
-  if(nextYear > totalYearsAllowed)
-  {
+  if (nextYear > totalYearsAllowed) {
     alert("Cannot add more than 3 years!");
-    nextYear-=1;
+    nextYear -= 1;
     switchYearTab(nextYear);
     transitionToYear(nextYear);
   }
@@ -443,84 +433,70 @@ function addYearAndTransition() {
 //deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
 //Gets the year selected from transitionToYear, when the user selects which year to delete
 //uses the helper year2and3Delete()
-function deleteYearAndTransition()
-{
+function deleteYearAndTransition() {
   var currMaxYear = boardData[currentBoard].calculatedToYear;
   maxYear = currMaxYear;
-  if(curTracking)
-  {
-    pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO
+  if (curTracking) {
+    pushClick(0, getStamp(), 40, 0, null); //double check this - // TODO
   }
-//if somehow the selected year is year 0, don't have an option for deleting the year
-  if(!yearSelected)
-  {
+  //if somehow the selected year is year 0, don't have an option for deleting the year
+  if (!yearSelected) {
     yearSelected = 1;
   }
-//promt- "Are you sure you want to delete Year #?" -using a confirm box
-    var response;
-    if(confirm("Are you sure you want to delete year " + yearSelected + "?" ))
-    {
-      if(yearSelected == 1)
-      {
-        if(currMaxYear == 1)
-         {
-           alert("Cannot delete year 1!");
-           yearSelected = 1;
-           currMaxYear = 1;
-           g_isDeleted = false;
-           g_year1delete = false;
-         }
-         else
-         {
-           g_year1delete = true;
-          // g_isDeleted = true;
-           response = "Deleted!";
-           document.getElementById("year" + currMaxYear + "Button").style.display = "none";
-           alert("Year 2 is now Year 1!");
-           //copy year 2 to year 1
-           transitionToYear(2);
-           switchYearTab(1);
-           boardData[currentBoard].calculatedToYear = 1;
-           currMaxYear -=1;
-           yearSelected = 1;
-           //and if there is a year 3- copy it to year 2 and set year 3 as default.
-           if(maxYear == 3)
-           {
-             boardData[currentBoard].calculatedToYear = 3;
-             //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2.
-             year2and3Delete();
-          }
-         }
-      }
-
-      //special case - deletes year 2 when year 3 is present and then makes year 2 = year 3 and the next year, i.e year 3 as default
-      else if(yearSelected == 2 && currMaxYear == 3)
-      {
-        response = "Deleted!";
-        //delete the button of the year - actual deletion is done in transitionToYear
-        document.getElementById("year3Button").style.display = "none";
-        //make it year 2
-        year2and3Delete();
-      }
-      else
-      {
-        response = "Deleted!";
-        //delete the button of the year - actual deletion is done in transitionToYear
-        document.getElementById("year" + yearSelected + "Button").style.display = "none";
-        currMaxYear -=1;
-        yearSelected -= 1;
-        g_isDeleted = true;
-        //switch to the previous year
-        transitionToYear(yearSelected);
-        switchYearTab(yearSelected);
-      }
-    }
-    else
-    {
-        response = "Not Deleted!";
+  //promt- "Are you sure you want to delete Year #?" -using a confirm box
+  var response;
+  if (confirm("Are you sure you want to delete year " + yearSelected + "?")) {
+    if (yearSelected == 1) {
+      if (currMaxYear == 1) {
+        alert("Cannot delete year 1!");
+        yearSelected = 1;
+        currMaxYear = 1;
         g_isDeleted = false;
+        g_year1delete = false;
+      } else {
+        g_year1delete = true;
+        // g_isDeleted = true;
+        response = "Deleted!";
+        document.getElementById("year" + currMaxYear + "Button").style.display = "none";
+        alert("Year 2 is now Year 1!");
+        //copy year 2 to year 1
+        transitionToYear(2);
+        switchYearTab(1);
+        boardData[currentBoard].calculatedToYear = 1;
+        currMaxYear -= 1;
+        yearSelected = 1;
+        //and if there is a year 3- copy it to year 2 and set year 3 as default.
+        if (maxYear == 3) {
+          boardData[currentBoard].calculatedToYear = 3;
+          //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2.
+          year2and3Delete();
+        }
+      }
     }
-}// end deleteYearAndTransition
+
+    //special case - deletes year 2 when year 3 is present and then makes year 2 = year 3 and the next year, i.e year 3 as default
+    else if (yearSelected == 2 && currMaxYear == 3) {
+      response = "Deleted!";
+      //delete the button of the year - actual deletion is done in transitionToYear
+      document.getElementById("year3Button").style.display = "none";
+      //make it year 2
+      year2and3Delete();
+    } else {
+      response = "Deleted!";
+      //delete the button of the year - actual deletion is done in transitionToYear
+      document.getElementById("year" + yearSelected + "Button").style.display = "none";
+      currMaxYear -= 1;
+      yearSelected -= 1;
+      g_isDeleted = true;
+      //switch to the previous year
+      transitionToYear(yearSelected);
+      switchYearTab(yearSelected);
+    }
+  } else {
+    response = "Not Deleted!";
+    g_isDeleted = false;
+  }
+} // end deleteYearAndTransition
 
 
 
@@ -1994,22 +1970,23 @@ function getNumberOfPlayers() {
  * @returns Options value
  */
 function getPrecipOptionsValue(precipValue) {
-  if(precipValue == 24.58)
+
+  // We don't use switch statement because switch cases use STRICT comparison(===)
+  if (precipValue == 24.58)
     return 0;
-  else if(precipValue == 28.18)
+  else if (precipValue == 28.18)
     return 1;
-  else if(precipValue == 30.39)
+  else if (precipValue == 30.39)
     return 2;
-  else if(precipValue == 32.16)
+  else if (precipValue == 32.16)
     return 3;
-  else if(precipValue == 34.34)
+  else if (precipValue == 34.34)
     return 4;
-  else if(precipValue == 36.47)
+  else if (precipValue == 36.47)
     return 5;
-  else if(precipValue == 45.10){
+  else if (precipValue == 45.10) {
     return 6;
-  }
-  else{
+  } else {
     alert('Corrupted data! Unable to process the file.');
     return -1;
   }
@@ -4336,85 +4313,67 @@ function transitionToYear(year) {
     } // end for
   } // end if
 
-//only after year 2 is deleted - special case; comes from deleteYearAndTransition
-//the board is not refreshed or updated here, instead, for this case it is done in deleteYearAndTransition
+  //only after year 2 is deleted - special case; comes from deleteYearAndTransition
+  //the board is not refreshed or updated here, instead, for this case it is done in deleteYearAndTransition
   if (year == boardData[currentBoard].calculatedToYear && !addingYearFromFile && year2to3) {
     boardData[currentBoard].calculatedToYear = year;
-    specialCase =1;
+    specialCase = 1;
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-      boardData[currentBoard].map[i].landType[year-1] = boardData[currentBoard].map[i].landType[year];
+      boardData[currentBoard].map[i].landType[year - 1] = boardData[currentBoard].map[i].landType[year];
     } // end for
     boardData[currentBoard].updateBoard();
     refreshBoard();
     //now make the landtype of the one deleted to 1 - in this case, landtype[3] = 1
-    for (var i = 0; i < boardData[currentBoard].map.length; i++)
-    {
-      if(boardData[currentBoard].map[i].landType[year] != 0)
-      {
-        boardData[currentBoard].map[i].landType[year] =1;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      if (boardData[currentBoard].map[i].landType[year] != 0) {
+        boardData[currentBoard].map[i].landType[year] = 1;
+      } else {
+        boardData[currentBoard].map[i].landType[year] = 0;
       }
-      else
-      {
-        boardData[currentBoard].map[i].landType[year] =0;
-      }
-      boardData[currentBoard].calculatedYear =2;
+      boardData[currentBoard].calculatedYear = 2;
     } // end for
   } // end if
 
   //only for year subtraction - comes from deleteYearAndTransition
-  if(year < boardData[currentBoard].calculatedToYear && !addingYearFromFile && g_isDeleted)
-  {
-    boardData[currentBoard].calculatedToYear  = year;
-    for (var i = 0; i < boardData[currentBoard].map.length; i++)
-    {
-      boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year+0];
+  if (year < boardData[currentBoard].calculatedToYear && !addingYearFromFile && g_isDeleted) {
+    boardData[currentBoard].calculatedToYear = year;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year + 0];
     } //end for
     //now make the landtype of the one deleted to 1
-    for (var i = 0; i < boardData[currentBoard].map.length; i++)
-    {
-      if(boardData[currentBoard].map[i].landType[year+1] != 0)
-      {
-        boardData[currentBoard].map[i].landType[year+1] =1;
-      }
-      else
-      {
-        boardData[currentBoard].map[i].landType[year+1] =0;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      if (boardData[currentBoard].map[i].landType[year + 1] != 0) {
+        boardData[currentBoard].map[i].landType[year + 1] = 1;
+      } else {
+        boardData[currentBoard].map[i].landType[year + 1] = 0;
       }
     } // end for
   } //end if
   //this is another special case, where year 1 can be deleted if at least any other year is present.
-  if(year <= boardData[currentBoard].calculatedToYear && !addingYearFromFile && g_year1delete)
-   {
-     boardData[currentBoard].calculatedToYear  = year;
-     specialCase = 1;
-     for (var i = 0; i < boardData[currentBoard].map.length; i++)
-     {
-       boardData[currentBoard].map[i].landType[year-1] = boardData[currentBoard].map[i].landType[year];
-     } //end for
-     boardData[currentBoard].updateBoard();
-     refreshBoard();
-     //if year 2 was the only other year, then make year 2 as default
-     //otherwise, run the other special case from here on
-     if(maxYear == 2)
-     {
-       for (var i = 0; i < boardData[currentBoard].map.length; i++)
-       {
-         if(boardData[currentBoard].map[i].landType[year] != 0)
-         {
-           boardData[currentBoard].map[i].landType[year] =1;
-         }
-         else
-         {
-           boardData[currentBoard].map[i].landType[year] =0;
-         }
-       } // end for
-     } // end if
-   } //end if
-
-  if(addingYearFromFile==true) {
+  if (year <= boardData[currentBoard].calculatedToYear && !addingYearFromFile && g_year1delete) {
     boardData[currentBoard].calculatedToYear = year;
-    for (var i = 0; i < boardData[currentBoard].map.length; i++)
-    {
+    specialCase = 1;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      boardData[currentBoard].map[i].landType[year - 1] = boardData[currentBoard].map[i].landType[year];
+    } //end for
+    boardData[currentBoard].updateBoard();
+    refreshBoard();
+    //if year 2 was the only other year, then make year 2 as default
+    //otherwise, run the other special case from here on
+    if (maxYear == 2) {
+      for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+        if (boardData[currentBoard].map[i].landType[year] != 0) {
+          boardData[currentBoard].map[i].landType[year] = 1;
+        } else {
+          boardData[currentBoard].map[i].landType[year] = 0;
+        }
+      } // end for
+    } // end if
+  } //end if
+
+  if (addingYearFromFile == true) {
+    boardData[currentBoard].calculatedToYear = year;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year];
     } // end for
   } // end if
@@ -4422,12 +4381,11 @@ function transitionToYear(year) {
   year2to3 = false;
   g_isDeleted = false;
   //update here for regular cases;
-  if(!specialCase)
-  {
+  if (!specialCase) {
     boardData[currentBoard].updateBoard();
     refreshBoard();
   }
-  specialCase =0;
+  specialCase = 0;
 } //end transitionToYear
 
 //Clumps and undo's multiple tiles
@@ -4786,7 +4744,7 @@ function uploadCSV(reader) {
         var tarr = [];
         for (var j = 0; j < headers.length; j++) {
           tarr.push(data[j]);
-          if(j == 28){
+          if (j == 28) {
             yearsOwned = data[j];
           }
         }
@@ -4805,7 +4763,7 @@ function uploadCSV(reader) {
     //       yearsOwned = 3;
     //       break;
     //     }
-    //
+
     // }
 
     if (yearsOwned == 2) {
@@ -4875,7 +4833,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
     var tempOptions = optionsString.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
     optionsString = tempOptions;
     string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
-    if(optionsString !== ""){
+    if (optionsString !== "") {
       string += ",OptionsSelected";
     }
     string += "\n";
@@ -4960,8 +4918,8 @@ function writeFileToDownloadString(mapPlayerNumber) {
         boardData[currentBoard].precipitation[1] + "," +
         boardData[currentBoard].precipitation[2] + "," +
         boardData[currentBoard].precipitation[3];
-      if(optionsString !== ""){
-        string = string + "," + optionsString;  //optionsString added here if not empty
+      if (optionsString !== "") {
+        string = string + "," + optionsString; //optionsString added here if not empty
       }
       if (i < boardData[currentBoard].map.length - 1) {
         string = string + '\r\n';
@@ -4977,8 +4935,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
 
 //helper for deleteYearAndTransition.
 //This method deletes year 2 and makes year 3 as year 2 and then sets year 3 as default.
-function year2and3Delete()
-{
+function year2and3Delete() {
   g_isDeleted = true;
   year2to3 = true;
   //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2.
