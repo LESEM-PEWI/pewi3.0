@@ -1994,22 +1994,26 @@ function getNumberOfPlayers() {
  * @returns Options value
  */
 function getPrecipOptionsValue(precipValue) {
-  switch (precipValue) {
-    case 24.58:
-      return 0;
-    case 28.18:
-      return 1;
-    case 30.39:
-      return 2;
-    case 32.16:
-      return 3;
-    case 34.34:
-      return 4;
-    case 36.47:
-      return 5;
-    case 45.10:
-      return 6;
-  } // end switch
+  if(precipValue == 24.58)
+    return 0;
+  else if(precipValue == 28.18)
+    return 1;
+  else if(precipValue == 30.39)
+    return 2;
+  else if(precipValue == 32.16)
+    return 3;
+  else if(precipValue == 34.34)
+    return 4;
+  else if(precipValue == 36.47)
+    return 5;
+  else if(precipValue == 45.10){
+    return 6;
+  }
+  else{
+    alert('Corrupted data! Unable to process the file.');
+    return -1;
+  }
+
 } // end getPrecipOptionsValue()
 
 //Gets the current timestamp for the click (event)
@@ -2271,8 +2275,7 @@ function multiplayerMode() {
     document.getElementById("playerAddButton").style.display = "inline-block";
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
-    document.getElementById("yearButton").style.display = "none";
-    document.getElementById("yearButton").style.display = "none";
+    document.getElementById("yearButton").style.display = "block";
     // Multi-player mode should not have a print function, hide it.
     document.getElementById('printButton').style.display = 'none';
   }
@@ -4290,7 +4293,7 @@ function toggleVisibility() {
       document.getElementById(elementIdString).innerHTML = string;
     } else {
       document.getElementById(elementIdString).options[boardData[currentBoard].precipitationIndex[y]].selected = true;
-      // console.log(document.getElementById(elementIdString));
+
     }
   }
 
@@ -4605,10 +4608,10 @@ function uploadClicked(files) {
   else if (getExtension(files[0].name) == 'csv')
     uploadCSV(reader);
 
-  document.getElementById("year0Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[0]);
-  document.getElementById("year1Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[1]);
-  document.getElementById("year2Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[2]);
-  document.getElementById("year3Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[3]);
+  // document.getElementById("year0Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[0]);
+  // document.getElementById("year1Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[1]);
+  // document.getElementById("year2Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[2]);
+  // document.getElementById("year3Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[3]);
 
   closeUploadDownloadFrame();
   //reset keylistening frame (ie give up focus on iframe)
@@ -4774,55 +4777,45 @@ function uploadCSV(reader) {
     var headers = allTextLines[0].split(',');
     var lines = [];
     var data;
-    console.log('reader.result = ', reader.result);
+    var yearsOwned = 1;
+    // console.log('reader.result = ', reader.result);
     for (var i = 1; i < allTextLines.length; i++) {
       data = allTextLines[i].split(',');
-      var headlength = headers.length - 1;
+      var headlength = headers.length;
       if (data.length == headlength) {
         var tarr = [];
         for (var j = 0; j < headers.length; j++) {
           tarr.push(data[j]);
+          if(j == 28){
+            yearsOwned = data[j];
+          }
         }
         lines.push(tarr);
       } // end if
     } // end for
     //XXX lines is empty
-console.log("lines = ", lines);
     // window.top.document.getElementById('parameters').innerHTML;
-    var multipleYearFlag = 1;
+    // var yearsOwned = 1;
     // This for loop iterates through the uploaded csv data file
-    // and checks if year 2 and 3 are present in the file
     // for (var i = 0; i < lines.length; i++) {
-    //   if ((lines[i][26] != lines[i][27])) {
+    //
     //     if (lines[i][26] != 1 && lines[i][26] != 0)
-    //       multipleYearFlag = 2;
-    //     if (lines[i][27] != 1 && lines[i][27] != 0)
-    //       multipleYearFlag = 3;
-    //     break;
-    //   }
+    //       yearsOwned = 2;
+    //     if (lines[i][27] != 1 && lines[i][27] != 0){
+    //       yearsOwned = 3;
+    //       break;
+    //     }
+    //
     // }
 
-    for (var i = 0; i < lines.length; i++) {
-
-      // if ((lines[i][26] != lines[i][27])) {
-        if (lines[i][26] != 1 && lines[i][26] != 0)
-          multipleYearFlag = 2;
-        if (lines[i][27] != 1 && lines[i][27] != 0){
-          multipleYearFlag = 3;
-          console.log('Now I know that Year is 3');
-          break;
-        }
-
-    }
-
-    if (multipleYearFlag == 2) {
+    if (yearsOwned == 2) {
       addingYearFromFile = true;
       addYearAndTransition();
       boardData[currentBoard].calculatedToYear = 2;
       addingYearFromFile = false;
     }
 
-    if (multipleYearFlag == 3) {
+    if (yearsOwned == 3) {
       addingYearFromFile = true;
       addYearAndTransition();
       addYearAndTransition();
@@ -4833,26 +4826,31 @@ console.log("lines = ", lines);
     //Clears data so the river isnt redrawn when new files are uploaded
     initData = [];
 
+    //updating the precip levels from the values in the uploaded file
+    boardData[currentBoard].precipitation[0] = data[29];
+    boardData[currentBoard].precipitation[1] = data[30];
+    boardData[currentBoard].precipitation[2] = data[31];
+    boardData[currentBoard].precipitation[3] = data[32];
+
+    boardData[currentBoard].precipitationIndex[0] = getPrecipOptionsValue(data[29]);
+    boardData[currentBoard].precipitationIndex[1] = getPrecipOptionsValue(data[30]);
+    boardData[currentBoard].precipitationIndex[2] = getPrecipOptionsValue(data[31]);
+    boardData[currentBoard].precipitationIndex[3] = getPrecipOptionsValue(data[32]);
+
     //load options from the csv
     //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes
     //the options page and shows the page is refreshed on the screen
-    if (headers.length == 32) {
+    if (headers.length == 33) {
       resetOptionsPage();
       toggleVisibility();
     }
     //else if the file has options, then it takes the options and places it in the parameter div of the html and reloads it.
     else {
-      var xys = headers[32].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
+      var xys = headers[33].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
       window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
       //make sure the locked land uses aren't seen on the side tool tab or on the map
       toggleVisibility();
     }
-
-    //updating the precip levels from the values in the uploaded file
-    boardData[currentBoard].precipitation[0] = data[28];
-    boardData[currentBoard].precipitation[1] = data[29];
-    boardData[currentBoard].precipitation[2] = data[30];
-    boardData[currentBoard].precipitation[3] = data[31];
 
     transitionToYear(1); //transition to year one
     switchYearTab(1);
@@ -4876,8 +4874,11 @@ function writeFileToDownloadString(mapPlayerNumber) {
     //To save options in the file, changing the options string so that it doesn't have \n because csv file will read it differntly
     var tempOptions = optionsString.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
     optionsString = tempOptions;
-    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3," + optionsString + ",\n"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
-
+    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
+    if(optionsString !== ""){
+      string += ",OptionsSelected";
+    }
+    string += "\n";
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       if (boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
@@ -4958,9 +4959,10 @@ function writeFileToDownloadString(mapPlayerNumber) {
       string += boardData[currentBoard].precipitation[0] + "," +
         boardData[currentBoard].precipitation[1] + "," +
         boardData[currentBoard].precipitation[2] + "," +
-        boardData[currentBoard].precipitation[3] + "," +
-        optionsString; //optionsString added here
-
+        boardData[currentBoard].precipitation[3];
+      if(optionsString !== ""){
+        string = string + "," + optionsString;  //optionsString added here if not empty
+      }
       if (i < boardData[currentBoard].map.length - 1) {
         string = string + '\r\n';
       }
