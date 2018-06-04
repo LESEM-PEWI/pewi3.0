@@ -441,82 +441,84 @@ function deleteYearAndTransition()
 {
   var currMaxYear = boardData[currentBoard].calculatedToYear;
   maxYear = currMaxYear;
-  if (curTracking) {
-    pushClick(0, getStamp(), 40, 0, null); //double check this - // TODO
+  if(curTracking)
+  {
+    pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO
   }
-  //if somehow the selected year is year 0, don't have an option for deleting the year
-  if (!yearSelected) {
+//if somehow the selected year is year 0, don't have an option for deleting the year
+  if(!yearSelected)
+  {
     yearSelected = 1;
   }
 //promt- "Are you sure you want to delete Year #?" -using a confirm box
-  var response;
-  if (confirm("Are you sure you want to delete year " + yearSelected + "?"))
-  {
-    //if selected year is 1 and there are no other years
-    if (yearSelected == 1)
+    var response;
+    if(confirm("Are you sure you want to delete year " + yearSelected + "?" ))
     {
-      if(currMaxYear == 1)
-       {
-        alert("Cannot delete year 1!");
-        yearSelected = 1;
-        currMaxYear = 1;
-        g_isDeleted = false;
-        g_year1delete = false;
-       }
-       else
-       {
-        g_year1delete = true;
-        // g_isDeleted = true;
-        response = "Deleted!";
-        document.getElementById("year" + currMaxYear + "Button").style.display = "none";
-        alert("Year 2 is now Year 1!");
-        //copy year 2 to year 1 - including the precipitation
-        boardData[currentBoard].precipitation[yearSelected] = boardData[currentBoard].precipitation[2];
-        document.getElementById("year" + yearSelected+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearSelected]);
-        transitionToYear(2);
-        switchYearTab(1);
-        boardData[currentBoard].calculatedToYear = 1;
-        currMaxYear -= 1;
-        yearSelected = 1;
-        //and if there is a year 3- copy it to year 2 and set year 3 as default.
-        if(maxYear == 3)
-        {
-          boardData[currentBoard].calculatedToYear = 3;
-           //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2; then year 3 is default
-           //this includes the precipitation too
-          year2and3Delete();
-       }
+      if(yearSelected == 1)
+      {
+        //if selected year is 1 and there are no other years
+        if(currMaxYear == 1)
+         {
+           alert("Cannot delete year 1!");
+           yearSelected = 1;
+           currMaxYear = 1;
+           g_isDeleted = false;
+           g_year1delete = false;
+         }
+         else
+         {
+           g_year1delete = true;
+          // g_isDeleted = true;
+           response = "Deleted!";
+           document.getElementById("year" + currMaxYear + "Button").style.display = "none";
+           alert("Year 2 is now Year 1!");
+           //copy year 2 to year 1 - including the precipitation
+           boardData[currentBoard].precipitation[yearSelected] = boardData[currentBoard].precipitation[2];
+           document.getElementById("year" + yearSelected+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearSelected]);
+           transitionToYear(2);
+           switchYearTab(1);
+           boardData[currentBoard].calculatedToYear = 1;
+           currMaxYear -=1;
+           yearSelected = 1;
+           //and if there is a year 3- copy it to year 2 and set year 3 as default.
+           if(maxYear == 3)
+           {
+             boardData[currentBoard].calculatedToYear = 3;
+             //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2; then year 3 is default
+            //this includes the precipitation too
+             year2and3Delete();
+          }
+         }
       }
-    }
 
-    //special case - deletes year 2 when year 3 is present and then makes year 2 = year 3 and the next year, i.e year 3 as default
-    else if(yearSelected == 2 && currMaxYear == 3)
-    {
-      response = "Deleted!";
-      //delete the button of the year - actual deletion is done in transitionToYear
-      document.getElementById("year3Button").style.display = "none";
-      //make it year 2
-      year2and3Delete();
+      //special case - deletes year 2 when year 3 is present and then makes year 2 = year 3 and the next year, i.e year 3 as default
+      else if(yearSelected == 2 && currMaxYear == 3)
+      {
+        response = "Deleted!";
+        //delete the button of the year - actual deletion is done in transitionToYear
+        document.getElementById("year3Button").style.display = "none";
+        //make it year 2
+        year2and3Delete();
+      }
+      else
+      {
+        response = "Deleted!";
+        //delete the button of the year - actual deletion is done in transitionToYear
+        document.getElementById("year" + yearSelected + "Button").style.display = "none";
+        currMaxYear -=1;
+        yearSelected -= 1;
+        g_isDeleted = true;
+        //switch to the previous year
+        transitionToYear(yearSelected);
+        switchYearTab(yearSelected);
+      }
     }
     else
     {
-      response = "Deleted!";
-      //delete the button of the year - actual deletion is done in transitionToYear
-      document.getElementById("year" + yearSelected + "Button").style.display = "none";
-      currMaxYear -= 1;
-      yearSelected -= 1;
-      g_isDeleted = true;
-      //switch to the previous year
-      transitionToYear(yearSelected);
-      switchYearTab(yearSelected);
+        response = "Not Deleted!";
+        g_isDeleted = false;
     }
-  }
-  else
-  {
-    response = "Not Deleted!";
-    g_isDeleted = false;
-  }
-} // end deleteYearAndTransition
+}// end deleteYearAndTransition
 
 
 
@@ -2273,11 +2275,9 @@ function multiplayerMode() {
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
     document.getElementById("yearButton").style.display = "none";
-    document.getElementById("yearButton").style.display = "none";
     document.getElementById("yearButton").style.display = "block";
     // When hit download button, it should download the multi-map.
     document.getElementById("DownloadButton").onclick = endMultiplayerAssignMode;
-    // Multi-player mode should not have a print function, hide it.
     document.getElementById('printButton').style.display = 'none';
     document.getElementById('uploadFile').style.display = 'none';
     // move all the left icons to the right, so that there's no empty space between Download icon and Contact Us icon.
