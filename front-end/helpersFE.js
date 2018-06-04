@@ -419,6 +419,7 @@ function addYearAndTransition() {
     }
     switchYearTab(nextYear);
     transitionToYear(nextYear);
+//    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
   }
 
   if (nextYear > totalYearsAllowed) {
@@ -446,12 +447,13 @@ function deleteYearAndTransition()
   if (!yearSelected) {
     yearSelected = 1;
   }
-  //promt- "Are you sure you want to delete Year #?" -using a confirm box
+//promt- "Are you sure you want to delete Year #?" -using a confirm box
   var response;
   if (confirm("Are you sure you want to delete year " + yearSelected + "?"))
   {
     //if selected year is 1 and there are no other years
-    if (yearSelected == 1) {
+    if (yearSelected == 1)
+    {
       if (currMaxYear == 1)
       {
         alert("Cannot delete year 1!");
