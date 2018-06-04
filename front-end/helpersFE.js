@@ -417,8 +417,8 @@ function addYearAndTransition() {
       document.getElementById("year3Image").className = "icon yearNotSelected";
       document.getElementById("year3Button").style.display = "block";
     }
-    switchYearTab(nextYear);
-    transitionToYear(nextYear);
+  switchYearTab(nextYear);
+  transitionToYear(nextYear);
 //    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
   }
 
@@ -454,7 +454,7 @@ function deleteYearAndTransition()
     //if selected year is 1 and there are no other years
     if (yearSelected == 1)
     {
-      if (currMaxYear == 1)
+      if(currMaxYear == 1)
       {
         alert("Cannot delete year 1!");
         yearSelected = 1;
@@ -469,31 +469,36 @@ function deleteYearAndTransition()
         response = "Deleted!";
         document.getElementById("year" + currMaxYear + "Button").style.display = "none";
         alert("Year 2 is now Year 1!");
-        //copy year 2 to year 1
+        //copy year 2 to year 1 - including the precipitation
+        boardData[currentBoard].precipitation[yearSelected] = boardData[currentBoard].precipitation[2];
+        document.getElementById("year" + yearSelected+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearSelected]);
         transitionToYear(2);
         switchYearTab(1);
         boardData[currentBoard].calculatedToYear = 1;
         currMaxYear -= 1;
         yearSelected = 1;
         //and if there is a year 3- copy it to year 2 and set year 3 as default.
-        if (maxYear == 3)
+        if(maxYear == 3)
         {
           boardData[currentBoard].calculatedToYear = 3;
-          //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2.
+          //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2; then year 3 is default
+          //this includes the precipitation too
           year2and3Delete();
         }
       }
     }
 
     //special case - deletes year 2 when year 3 is present and then makes year 2 = year 3 and the next year, i.e year 3 as default
-    else if (yearSelected == 2 && currMaxYear == 3)
+    else if(yearSelected == 2 && currMaxYear == 3)
     {
       response = "Deleted!";
       //delete the button of the year - actual deletion is done in transitionToYear
       document.getElementById("year3Button").style.display = "none";
       //make it year 2
       year2and3Delete();
-    } else {
+    }
+    else
+    {
       response = "Deleted!";
       //delete the button of the year - actual deletion is done in transitionToYear
       document.getElementById("year" + yearSelected + "Button").style.display = "none";
@@ -2267,11 +2272,16 @@ function multiplayerMode() {
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
     document.getElementById("yearButton").style.display = "block";
-    // document.getElementById("yearButton").style.display = "block";
-    // Multi-player mode should not have a print function, hide it.
-    document.getElementById('printButton').style.display = 'none';
+    // document.getElementById("yearButton").style.display = "none";
     // When hit download button, it should download the multi-map.
     document.getElementById("DownloadButton").onclick = endMultiplayerAssignMode;
+    // Multi-player mode should not have a print function, hide it.
+    document.getElementById('printButton').style.display = 'none';
+    document.getElementById('uploadFile').style.display = 'none';
+    // move all the left icons to the right, so that there's no empty space between Download icon and Contact Us icon.
+    document.getElementById('DownloadButton').style.right = '6.5vw';
+    document.getElementById('logoBase').style.right = '9vw';
+    document.getElementById('pewiLogo').style.right = '18.5vw'
   }
 }
 
