@@ -2275,7 +2275,8 @@ function multiplayerMode() {
     document.getElementById("playerAddButton").style.display = "inline-block";
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
-    // document.getElementById("yearButton").style.display = "none";
+    document.getElementById("yearButton").style.display = "none";
+    document.getElementById("yearButton").style.display = "none";
     document.getElementById("yearButton").style.display = "block";
     // When hit download button, it should download the multi-map.
     document.getElementById("DownloadButton").onclick = endMultiplayerAssignMode;
@@ -2286,7 +2287,7 @@ function multiplayerMode() {
     // move all the left icons to the right, so that there's no empty space between Download icon and Contact Us icon.
     document.getElementById('DownloadButton').style.right = '6.5vw';
     document.getElementById('logoBase').style.right = '9vw';
-    document.getElementById('pewiLogo').style.right = '18.5vw'
+    document.getElementById('pewiLogo').style.right = '18.5vw';
   }
 }
 
