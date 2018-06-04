@@ -384,19 +384,18 @@ function addYearAndTransition() {
 
   //make next button appear (has some prebuilt functionality for expanded number of years)
 
-  if (nextYear < totalYearsAllowed) {
-    // console.log("one");
+  if (nextYear < totalYearsAllowed)
+  {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
     document.getElementById("year" + nextYear + "Button").style.display = "block";
     //special case for adding year 3 when year 2 has been previously deleted in the presence of year 3
-    if (year2to3) {
-      // console.log("two");
+    if (year2to3)
+    {
       switchYearTab(3);
       transitionToYear(4);
       year2to3 = false;
     } else {
-      // console.log("three");
       switchYearTab(nextYear);
       transitionToYear(nextYear);
     }
@@ -409,8 +408,8 @@ function addYearAndTransition() {
       document.getElementById("year2Button").style.display = "block";
       nextYear = 2;
       g_year1delete = false;
-    } else {
-      // {console.log("five");
+    } else
+    {
       document.getElementById("year3Button").className = "yearButton";
       document.getElementById("year3Image").className = "icon yearNotSelected";
       document.getElementById("year3Button").style.display = "block";
@@ -433,7 +432,8 @@ function addYearAndTransition() {
 //deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
 //Gets the year selected from transitionToYear, when the user selects which year to delete
 //uses the helper year2and3Delete()
-function deleteYearAndTransition() {
+function deleteYearAndTransition()
+{
   var currMaxYear = boardData[currentBoard].calculatedToYear;
   maxYear = currMaxYear;
   if (curTracking) {
