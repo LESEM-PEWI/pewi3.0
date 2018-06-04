@@ -2275,7 +2275,7 @@ function multiplayerMode() {
     document.getElementById("playerAddButton").style.display = "inline-block";
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
-    document.getElementById("yearButton").style.display = "none";
+    // document.getElementById("yearButton").style.display = "none";
     document.getElementById("yearButton").style.display = "block";
     // When hit download button, it should download the multi-map.
     document.getElementById("DownloadButton").onclick = endMultiplayerAssignMode;
