@@ -26,6 +26,8 @@
   * The function inMultiplayer() is used to switch the value of inMultiplayerMode.
   * For more information refer to Issue 386.
   */
+  function inMultiplayer(result) {
+    console.log("BEFORE CHANGES, in multiplayer mode: "+localStorage.getItem('LSinMultiplayer'));
     inMultiplayerMode = result;
     localStorage.setItem('LSinMultiplayer', inMultiplayerMode);
     console.log("Currently in multiplayer mode: "+localStorage.getItem('LSinMultiplayer'));
