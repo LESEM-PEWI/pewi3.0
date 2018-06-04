@@ -388,14 +388,13 @@ function addYearAndTransition() {
   //make next button appear (has some prebuilt functionality for expanded number of years)
 
   if (nextYear < totalYearsAllowed)
-  {console.log("one");
+  {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
     document.getElementById("year" + nextYear + "Button").style.display = "block";
     //special case for adding year 3 when year 2 has been previously deleted in the presence of year 3
     if(year2to3)
     {
-      console.log("two");
       switchYearTab(3);
       transitionToYear(4);
       year2to3 = false;
@@ -403,7 +402,6 @@ function addYearAndTransition() {
 
     else
     {
-    console.log("three");
     switchYearTab(nextYear);
     transitionToYear(nextYear);
     }
@@ -419,7 +417,7 @@ function addYearAndTransition() {
       g_year1delete = false;
     }
     else
-    {console.log("five");
+    {
       document.getElementById("year3Button").className = "yearButton";
       document.getElementById("year3Image").className = "icon yearNotSelected";
       document.getElementById("year3Button").style.display = "block";
@@ -900,12 +898,10 @@ function contaminatedRiver(riverColor) {
 } //end contaminatedRiver
 
 //depends on the variable yearSelected from transitionToYear
-function copyYear(yearToCopy)
+function copyYear()
 {
-  yearToCopy = yearSelected;
-  console.log("year to copy " +yearSelected);
-  yearCopyPaste = yearToCopy;
-  console.log(yearCopyPaste);
+  document.getElementById("yearCopyButton").classList.toggle("show");
+  yearCopyPaste = document.getElementById("yearToCopy").value;
 } //end copyYear
 
 //createFlock displays an animated flock of birds for 10 seconds
@@ -2838,19 +2834,23 @@ function painterSelect(brushNumberValue) {
 
 //pastes the landuse of a certain year - related to the copyYear function
 
-function pasteYear(yearToPaste)
+function pasteYear()
 {
-  //which year we want to paste in, i.e whichever year is highlighted now
-  var yearToPasteIn = yearSelected;
-  console.log("year to paste in " + yearToPasteIn);
-  yearToPaste = yearCopyPaste;
-  console.log("year to paste should be equal to year to copy " +yearToPaste);
-  //for loop to copy the landUseType
+  document.getElementById("yearPasteButton").classList.toggle("show");
+  var yearToPasteIn = document.getElementById("yearToPaste").value;
   for (var i = 0; i < boardData[currentBoard].map.length; i++)
   {
-    boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearToPaste];
+    boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearCopyPaste];
   } //end for loop
+  //copy the precipitation
+  boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
 
+  boardData[currentBoard].updateBoard();
+  refreshBoard();
+  alert("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn);
+  document.getElementById("yearToCopy").value = 0;
+  document.getElementById("yearToPaste").value = 0;
+  document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
 } //end pasteYear
 
 //Pauses the sim (and related times)
@@ -3412,6 +3412,40 @@ function resumeSim() {
   exitTimer = setTimeout(endSimPrompt, endTime - elapsedTime);
   document.getElementById("simSlider").style.zIndex = "1002";
 } //end resumeSim()
+
+//this function contains switch statements which take in the real value (Number) of precipitation and gives out their values;
+
+function reversePrecipValue(val)
+{
+  if(val == 24.58)
+  {
+    return 0;
+  }
+  if(val == 28.18)
+  {
+    return 1;
+  }
+  if(val == 30.39)
+  {
+    return 2;
+  }
+  if(val == 32.16)
+  {
+    return 3;
+  }
+  if(val == 34.34)
+  {
+    return 4;
+  }
+  if(val == 36.47)
+  {
+    return 5;
+  }
+  if(val == 45.10)
+  {
+    return 6;
+  }
+} //end reversePrecipValue
 
 //revertChanges undos the users previous tile changes, and goes back to the previous board instance
 function revertChanges() {
@@ -4023,6 +4057,8 @@ function switchConsoleTab(value) {
       }
       document.getElementById('calendarImg').className = "imgSelected";
       document.getElementById('yearsTab').style.display = "block";
+      document.getElementById("yearToCopy").value = 0;
+      document.getElementById("yearToPaste").value = 0;
       updateIndexPopup('The <span style="color:orange;">Years Tab</span> allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
       break;
     case 7:

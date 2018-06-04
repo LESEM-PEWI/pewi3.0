@@ -361,6 +361,24 @@
         <div id="year3Button" class="yearButtonHidden" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="icon yearImageHidden" src="./imgs/three.png"></div>
         <div id="yearAddButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
         <div id="yearDeleteButton" onclick="deleteYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearDeleteImage" class="icon yearNotSelected" src="./imgs/deleteYear.png"></div>
+        <div id="yearCopyButton" class="year-styled-select">
+          <h4>Copy From:</h4>
+          <select id="yearToCopy" class="yearCopyPasteSelect" onChange="copyYear();">
+              <option value=0>      </option>
+              <option value=1>Year 1</option>
+              <option value=2>Year 2</option>
+              <option value=3>Year 3</option>
+          </select>
+        </div>
+        <div id="yearPasteButton" class="year-styled-select">
+          <h4>Paste To:</h4>
+          <select id="yearToPaste" class="yearCopyPasteSelect" onChange="pasteYear();">
+              <option value=0>      </option>
+              <option value=1>Year 1</option>
+              <option value=2>Year 2</option>
+              <option value=3>Year 3</option>
+          </select>
+        </div>
       </div>
 
       <!-- Ecosystem indicator highlighting display -->
