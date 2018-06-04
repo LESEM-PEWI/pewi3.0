@@ -396,10 +396,11 @@ function addYearAndTransition() {
       transitionToYear(4);
       year2to3 = false;
     }
+
     else
     {
-      switchYearTab(nextYear);
-      transitionToYear(nextYear);
+    switchYearTab(nextYear);
+    transitionToYear(nextYear);
 //    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
     }
   }
@@ -2274,16 +2275,18 @@ function multiplayerMode() {
     document.getElementById("playerAddButton").style.display = "inline-block";
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
-    document.getElementById("yearButton").style.display = "none";
+    // document.getElementById("yearButton").style.display = "none";
     document.getElementById("yearButton").style.display = "block";
     // When hit download button, it should download the multi-map.
     document.getElementById("DownloadButton").onclick = endMultiplayerAssignMode;
+    // Multi-player mode should not have a print function, hide it.
     document.getElementById('printButton').style.display = 'none';
+    // Multi-player mode should not have a upload functionality, hide it.
     document.getElementById('uploadFile').style.display = 'none';
     // move all the left icons to the right, so that there's no empty space between Download icon and Contact Us icon.
     document.getElementById('DownloadButton').style.right = '6.5vw';
     document.getElementById('logoBase').style.right = '9vw';
-    document.getElementById('pewiLogo').style.right = '18.5vw';
+    document.getElementById('pewiLogo').style.right = '18.5vw'
   }
 }
 
