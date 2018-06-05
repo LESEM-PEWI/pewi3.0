@@ -924,6 +924,8 @@ function copyYear()
 {
   document.getElementById("yearCopyButton").classList.toggle("show");
   yearCopyPaste = document.getElementById("yearToCopy").value;
+  //Hide the option of pasting the same year to itself
+  document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'none';
 } //end copyYear
 
 //createFlock displays an animated flock of birds for 10 seconds
@@ -2866,13 +2868,13 @@ function pasteYear()
   } //end for loop
   //copy the precipitation
   boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
-
   boardData[currentBoard].updateBoard();
   refreshBoard();
   alert("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn);
   document.getElementById("yearToCopy").value = 0;
   document.getElementById("yearToPaste").value = 0;
   document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
+  document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'block';
 } //end pasteYear
 
 //Pauses the sim (and related times)
