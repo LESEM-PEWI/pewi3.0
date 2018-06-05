@@ -333,10 +333,41 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   document.getElementById('resultsFrame').contentWindow.document.getElementById('landYear').innerHTML = year;
   document.getElementById('resultsFrame').contentWindow.document.getElementById('upTo').innerHTML = boardData[currentBoard].calculatedToYear;
 
+  var inMultiplayer = localStorage.getItem('LSinMultiplayer');
   var dataset;
+  console.log("Before, inMultiplayer is: "+inMultiplayer);
+  //if in multiplayer mode, looking at different players and size of land each owns
+  if(inMultiplayer === "true"){
+    console.log("inMultiplayer is: "+inMultiplayer);
+    var dataset = [{
+      label: 'Player 1',
+      count: (Math.round(Totals.landUseResults[year].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conventionalCornLandUse * 10) / 10)
+    }, {
+      label: 'Player 2',
+      count: (Math.round(Totals.landUseResults[year].conservationCornLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conservationCornLandUse * 10) / 10)
+    }, {
+      label: 'Player 3',
+      count: (Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 10) / 10)
+    }, {
+      label: 'Player 4',
+      count: (Math.round(Totals.landUseResults[year].conservationSoybeanLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 10) / 10)
+    }, {
+      label: 'Player 5',
+      count: (Math.round(Totals.landUseResults[year].alfalfaLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].alfalfaLandUse * 10) / 10)
+    }, {
+      label: 'Player 6',
+      count: (Math.round(Totals.landUseResults[year].permanentPastureLandUse / Totals.totalArea * 100 * 10) / 10),
+      number: (Math.round(Totals.landUseResults[year].permanentPastureLandUse * 10) / 10)
+    }];
+  }
   //assign dataset based on whether or not categories are toggeled on, if so, then combine the dataset into one large heap
-  if (isTheChartInCategoryMode) {
-
+  else if (isTheChartInCategoryMode) {
+    console.log("inMultiplayer is: "+inMultiplayer);
     //data groupings, dummy labels are there to increase color contrast
     dataset = [{
       label: "Annual Grain",
