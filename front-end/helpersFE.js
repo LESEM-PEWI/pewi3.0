@@ -377,6 +377,8 @@ function addYearAndTransition() {
 
   var totalYearsAllowed = 3;
   var nextYear = boardData[currentBoard].calculatedToYear+1;
+  document.getElementById("yearToCopy").options[1].style.display = 'block';
+  document.getElementById("yearToPaste").options[1].style.display = 'block';
   if(g_year1delete)
   {
     nextYear = 2;
@@ -397,6 +399,8 @@ function addYearAndTransition() {
     {
       switchYearTab(3);
       transitionToYear(4);
+      document.getElementById("yearToCopy").options[3].style.display = 'block';
+      document.getElementById("yearToPaste").options[3].style.display = 'block';
       year2to3 = false;
     }
 
@@ -404,6 +408,8 @@ function addYearAndTransition() {
     {
     switchYearTab(nextYear);
     transitionToYear(nextYear);
+    document.getElementById("yearToCopy").options[nextYear].style.display = 'block';
+    document.getElementById("yearToPaste").options[nextYear].style.display = 'block';
     }
   }
 
@@ -424,6 +430,8 @@ function addYearAndTransition() {
     }
     switchYearTab(nextYear);
     transitionToYear(nextYear);
+    document.getElementById("yearToCopy").options[nextYear].style.display = 'block';
+    document.getElementById("yearToPaste").options[nextYear].style.display = 'block';
   }
 
   if(nextYear > totalYearsAllowed)
@@ -432,6 +440,8 @@ function addYearAndTransition() {
     nextYear-=1;
     switchYearTab(nextYear);
     transitionToYear(nextYear);
+    document.getElementById("yearToCopy").options[nextYear].style.display = 'block';
+    document.getElementById("yearToPaste").options[nextYear].style.display = 'block';
   }
   //switch to next year
 
@@ -474,6 +484,8 @@ function deleteYearAndTransition()
           // g_isDeleted = true;
            response = "Deleted!";
            document.getElementById("year" + currMaxYear + "Button").style.display = "none";
+           document.getElementById("yearToCopy").options[currMaxYear].style.display = 'none';
+           document.getElementById("yearToPaste").options[currMaxYear].style.display = 'none';
            alert("Year 2 is now Year 1!");
            //copy year 2 to year 1
            transitionToYear(2);
@@ -497,6 +509,8 @@ function deleteYearAndTransition()
         response = "Deleted!";
         //delete the button of the year - actual deletion is done in transitionToYear
         document.getElementById("year3Button").style.display = "none";
+        document.getElementById("yearToCopy").options[3].style.display = 'none';
+        document.getElementById("yearToPaste").options[3].style.display = 'none';
         //make it year 2
         year2and3Delete();
       }
@@ -505,6 +519,8 @@ function deleteYearAndTransition()
         response = "Deleted!";
         //delete the button of the year - actual deletion is done in transitionToYear
         document.getElementById("year" + yearSelected + "Button").style.display = "none";
+        document.getElementById("yearToCopy").options[yearSelected].style.display = 'none';
+        document.getElementById("yearToPaste").options[yearSelected].style.display = 'none';
         currMaxYear -=1;
         yearSelected -= 1;
         g_isDeleted = true;
@@ -517,6 +533,12 @@ function deleteYearAndTransition()
     {
         response = "Not Deleted!";
         g_isDeleted = false;
+    }
+    //if the maximum year is 1 now, don't show the option in  the copy and paste boxes
+    if(boardData[currentBoard].calculatedToYear == 1)
+    {
+      document.getElementById("yearToCopy").options[1].style.display = 'none';
+      document.getElementById("yearToPaste").options[1].style.display = 'none';
     }
 }// end deleteYearAndTransition
 
@@ -4057,8 +4079,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('calendarImg').className = "imgSelected";
       document.getElementById('yearsTab').style.display = "block";
-      document.getElementById("yearToCopy").value = 0;
-      document.getElementById("yearToPaste").value = 0;
+      yearCopyPasteInit();
       updateIndexPopup('The <span style="color:orange;">Years Tab</span> allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
       break;
     case 7:
@@ -5036,6 +5057,30 @@ function year2and3Delete()
   alert("Year 3 is now Year 2!");
 }
 
+function yearCopyPasteInit()
+{
+  document.getElementById("yearToCopy").value = 0;
+  document.getElementById("yearToPaste").value = 0;
+
+  for(var i=1; i <=3; i++)
+  {
+    document.getElementById("yearToCopy").options[i].style.display = 'none';
+    document.getElementById("yearToPaste").options[i].style.display = 'none';
+  }
+  for(var i=1; i <=boardData[currentBoard].calculatedToYear; i++)
+  {
+    if(boardData[currentBoard].calculatedToYear == 1)
+    {
+      break;
+    }
+    else
+    {
+    document.getElementById("yearToCopy").options[i].style.display = 'block';
+    document.getElementById("yearToPaste").options[i].style.display = 'block';
+  }
+  }
+
+}//end yearCopyPasteInit
 
 // execute when Esc is pressed while on the result page
 function resultsEsc(e) {
