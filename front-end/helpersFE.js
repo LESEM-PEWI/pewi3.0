@@ -47,6 +47,7 @@ var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board
 var yearCopyPaste = 0; //used for copying and pasting the selected year
+var copyFlag = false;
 // arrays
 
 //var arrLines;
@@ -924,6 +925,7 @@ function copyYear()
 {
   document.getElementById("yearCopyButton").classList.toggle("show");
   yearCopyPaste = document.getElementById("yearToCopy").value;
+  document.getElementById("yearPasteButton").style.display = "block";
   //Hide the option of pasting the same year to itself
   document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'none';
 } //end copyYear
@@ -2856,25 +2858,26 @@ function painterSelect(brushNumberValue) {
   } //end else/if group
 } //end painterSelect()
 
-//pastes the landuse of a certain year - related to the copyYear function
+//pastes the landuse and precipitation of a certain year to another - related to the copyYear function
 
 function pasteYear()
 {
   document.getElementById("yearPasteButton").classList.toggle("show");
   var yearToPasteIn = document.getElementById("yearToPaste").value;
-  for (var i = 0; i < boardData[currentBoard].map.length; i++)
-  {
-    boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearCopyPaste];
-  } //end for loop
-  //copy the precipitation
-  boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
-  boardData[currentBoard].updateBoard();
-  refreshBoard();
-  alert("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn);
-  document.getElementById("yearToCopy").value = 0;
-  document.getElementById("yearToPaste").value = 0;
-  document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
-  document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'block';
+    for (var i = 0; i < boardData[currentBoard].map.length; i++)
+    {
+      boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearCopyPaste];
+    } //end for loop
+    //copy the precipitation
+    boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
+    boardData[currentBoard].updateBoard();
+    refreshBoard();
+    alert("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn);
+    document.getElementById("yearToCopy").value = 0;
+    document.getElementById("yearToPaste").value = 0;
+    document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
+    document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'block';
+    document.getElementById("yearPasteButton").style.display = "none";
 } //end pasteYear
 
 //Pauses the sim (and related times)
@@ -5067,6 +5070,7 @@ function yearCopyPasteInit()
   for(var i=1; i <=3; i++)
   {
     document.getElementById("yearToCopy").options[i].style.display = 'none';
+    document.getElementById("yearPasteButton").style.display = 'none';
     document.getElementById("yearToPaste").options[i].style.display = 'none';
   }
   for(var i=1; i <=boardData[currentBoard].calculatedToYear; i++)
@@ -5079,8 +5083,8 @@ function yearCopyPasteInit()
     {
     document.getElementById("yearToCopy").options[i].style.display = 'block';
     document.getElementById("yearToPaste").options[i].style.display = 'block';
-  }
-  }
+    }
+  }//end for
 
 }//end yearCopyPasteInit
 
