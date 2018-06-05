@@ -711,6 +711,8 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
     .style("font-size", "1.8vw")
     .style("font-weight", "bold")
     .text("Year " + year);
+
+  multiplayerResults();
 } //end drawD3LandPieChart()
 
 //this funtion creates and animates the Ecoscores aster plot
@@ -2135,6 +2137,23 @@ function generateResultsTable() {
 } //end generateResultsTable()
 
 // ---
+
+function multiplayerResults() {
+  var inMultiplayer = localStorage.getItem('LSinMultiplayer');
+  console.log("In function of results.html");
+  if(localStorage.getItem('LSinMultiplayer') === "true"){
+    console.log("changing visibility of div tags");
+    console.log("multiplayer results is: " +inMultiplayer+", should be true");
+    document.getElementById('resultsFrame').contentWindow.document.getElementById("yearHolder").style.display = "none";
+    document.getElementById('resultsFrame').contentWindow.document.getElementById("radarContainer").style.display = "none";
+  }
+  else{
+    console.log("multiplayer results is: " +inMultiplayer+", should be false");
+    console.log("making visibility of div tags to true");
+    document.getElementById('resultsFrame').contentWindow.document.getElementById("yearHolder").style.display = "block";
+    document.getElementById('resultsFrame').contentWindow.document.getElementById("radarContainer").style.display = "block";
+  }
+}
 
 //removeYearFromRadar hides all of the graph elements of that year on the ecosystem
 //  indicators plot
