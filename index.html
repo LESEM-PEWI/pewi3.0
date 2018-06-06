@@ -46,6 +46,8 @@
   <script src="./lib/controls.js"></script>
   <script src="./lib/jquery-3.2.1.min.js"></script>
   <script src="./lib/stats.min.js"></script>
+  <script type="text/javascript" src="./lib/bootstrap-progressbar.js"></script>
+  <link rel="stylesheet" type="text/css" href="./lib/bootstrap-progressbar-3.3.4.css" />
 
   <!-- import jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
@@ -202,7 +204,7 @@
 
     <!-- Create left-side console button tabs -->
     <!-- "Pickaxe" by Luke Anthony Firth on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-    <div id="toolsButton" class="consoleButton" onclick="roll(1);" >
+    <div id="toolsButton" class="consoleButton" onclick="roll(1);">
       <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType(); toggleTabTitle('toolsTabTitle');" onmouseout="toggleChangeLandType(); toggleTabTitle('toolsTabTitle');">
       <!-- Tools tab title display -->
       <div id="toolsTabTitle" style="display:none;"></div>
@@ -213,7 +215,7 @@
       <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
       <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);">
         <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle');" onmouseout="toggleTabTitle('terrainTabTitle');">
-        <div id="terrainTabTitle" style="display:none;"></div> 
+        <div id="terrainTabTitle" style="display:none;"></div>
       </div>
       <!-- "Cloud, raindrops, sun icon" by Yannick Lung (http://yannicklung.com/) with free commercial use / Inverted and resized -->
       <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);">
@@ -297,39 +299,39 @@
         <div id="painterTab-rightcol" class="rightcol">
 
           <div class="tooltip">
-          <img id="paint2" class="landSelectorIcon icon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
-          <span class="tooltiptext">Conservation Corn</span>
-        </div>
+            <img id="paint2" class="landSelectorIcon icon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
+            <span class="tooltiptext">Conservation Corn</span>
+          </div>
 
           <div class="tooltip">
-          <img id="paint4" class="landSelectorIcon icon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
-          <span class="tooltiptext">Conservation Soybean</span>
-        </div>
+            <img id="paint4" class="landSelectorIcon icon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
+            <span class="tooltiptext">Conservation Soybean</span>
+          </div>
 
           <div class="tooltip">
-          <img id="paint5" class="landSelectorIcon icon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
-          <span class="tooltiptext">Alfafa Hay</span>
-        </div>
+            <img id="paint5" class="landSelectorIcon icon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
+            <span class="tooltiptext">Alfafa Hay</span>
+          </div>
 
           <div class="tooltip">
-          <img id="paint12" class="landSelectorIcon icon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);">
-          <span class="tooltiptext">Switch Grass</span>
-        </div>
+            <img id="paint12" class="landSelectorIcon icon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);">
+            <span class="tooltiptext">Switch Grass</span>
+          </div>
 
           <div class="tooltip">
-          <img id="paint7" class="landSelectorIcon icon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);">
-          <span class="tooltiptext">Rotational Grazing</span>
-        </div>
+            <img id="paint7" class="landSelectorIcon icon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);">
+            <span class="tooltiptext">Rotational Grazing</span>
+          </div>
 
           <div class="tooltip">
-          <img id="paint9" class="landSelectorIcon icon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);">
-          <span class="tooltiptext">Prarie</span>
-        </div>
+            <img id="paint9" class="landSelectorIcon icon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);">
+            <span class="tooltiptext">Prarie</span>
+          </div>
 
           <div class="tooltip">
-          <img id="paint10" class="landSelectorIcon icon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);">
-          <span class="tooltiptext">Conservation Forest</span>
-        </div>
+            <img id="paint10" class="landSelectorIcon icon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);">
+            <span class="tooltiptext">Conservation Forest</span>
+          </div>
 
           <!-- multiplayer mode  -->
           <div id="rightPlayerCon"></div>
@@ -362,10 +364,10 @@
 
 
 
-              <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);">
-                <div class="tooltipPrecip">
-                <h4>Year 0:</h4>
-                <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
+          <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);">
+            <div class="tooltipPrecip">
+              <h4>Year 0:</h4>
+              <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
                   <option value=0>24.58</option>
                   <option value=1>28.18</option>
                   <option value=2>30.39</option>
@@ -374,9 +376,9 @@
                   <option value=5>36.47</option>
                   <option value=6>45.10</option>
                 </select>
-                <span class="tooltiptextPrecip" id="precipspan0"></span>
-              </div>
-              </div>
+              <span class="tooltiptextPrecip" id="precipspan0"></span>
+            </div>
+          </div>
 
 
 
@@ -384,8 +386,8 @@
 
           <div id="year1PrecipContainer" class="styled-select" onmouseover="getPrecipType(1);">
             <div class="tooltipPrecip">
-            <h4>Year 1:</h4>
-            <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();">
+              <h4>Year 1:</h4>
+              <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -394,16 +396,16 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
-            <span class="tooltiptextPrecip" id="precipspan1"></span>
+              <span class="tooltiptextPrecip" id="precipspan1"></span>
+            </div>
           </div>
-          </div>
-<!-- <script type="text/javascript"> document.write(getPrecipType(1))</script>  -->
+          <!-- <script type="text/javascript"> document.write(getPrecipType(1))</script>  -->
 
 
           <div id="year2PrecipContainer" class="styled-select" onmouseover="getPrecipType(2);">
             <div class="tooltipPrecip">
-            <h4>Year 2:</h4>
-            <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi();">
+              <h4>Year 2:</h4>
+              <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -412,16 +414,16 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
-            <span class="tooltiptextPrecip" id="precipspan2"></span>
-          </div>
+              <span class="tooltiptextPrecip" id="precipspan2"></span>
+            </div>
           </div>
 
 
 
           <div id="year3PrecipContainer" class="styled-select" onmouseover="getPrecipType(3);">
             <div class="tooltipPrecip">
-            <h4>Year 3:</h4>
-            <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi();">
+              <h4>Year 3:</h4>
+              <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -430,8 +432,8 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
-            <span class="tooltiptextPrecip" id="precipspan3"></span>
-          </div>
+              <span class="tooltiptextPrecip" id="precipspan3"></span>
+            </div>
           </div>
         </form>
 
@@ -627,7 +629,8 @@
 
 
         <div id="topoDetailsList" class="DetailsListRolled physicalDetailsList">
-          <center><h1 class="DetailsList-title">Topography</h1></center>
+          <center>
+            <h1 class="DetailsList-title">Topography</h1></center>
           <div class="legendColor" style="background-color: #e6bb00;">
             <p class="levelsTextDetails" style="margin-top:10px;">0-1% slope</p>
           </div>
@@ -684,7 +687,7 @@
           <span class="tooltiptextPhysicalFeatures">Topography</span>
         </div>
 
-        </div>
+      </div>
 
       <!--Yield Productivity Overlay Maps -->
       <div id="yieldTab" class="consoleTab" style="display: none;">
@@ -1230,19 +1233,19 @@
           </div>
 
           <div class="tooltip">
-          <img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" onclick="displayLevels('cattle');">
-          <span class="tooltiptext">Cattle</span>
-        </div>
+            <img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" onclick="displayLevels('cattle');">
+            <span class="tooltiptext">Cattle</span>
+          </div>
 
           <div class="tooltip">
-          <img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" onclick="displayLevels('grasshay');">
-          <span class="tooltiptext">Grass Hay</span>
-        </div>
+            <img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" onclick="displayLevels('grasshay');">
+            <span class="tooltiptext">Grass Hay</span>
+          </div>
 
           <div class="tooltip">
-          <img id="woodClass" class="yieldSelectorIcon icon" src="./imgs/woodIcon.png" onclick="displayLevels('wood');">
-          <span class="tooltiptext">Wood</span>
-        </div>
+            <img id="woodClass" class="yieldSelectorIcon icon" src="./imgs/woodIcon.png" onclick="displayLevels('wood');">
+            <span class="tooltiptext">Wood</span>
+          </div>
         </div>
 
       </div>
@@ -1297,39 +1300,39 @@
                 </div>
             </label>
       <!--And here's the input we'll be hiding-->
-      <input id="file-upload3" type="file" onchange="uploadFile();"/>
+      <input id="file-upload3" type="file" onchange="uploadFile();" />
     </div>
 
     <!--Script for uploading and downloading-->
     <script type="text/javascript">
-    /**
-    * pass the file handler to uploadClicked() in helpersFE.js
-    *
-    */
-    function uploadFile() {
-      // input tag that upload-file will attach to
-      var fp = document.getElementById("file-upload3");
-      // pass the file handler
-      uploadClicked(fp.files);
-      // clean the file
-      fp.files = null;
-    } // end uploadFile()
+      /**
+       * pass the file handler to uploadClicked() in helpersFE.js
+       *
+       */
+      function uploadFile() {
+        // input tag that upload-file will attach to
+        var fp = document.getElementById("file-upload3");
+        // pass the file handler
+        uploadClicked(fp.files);
+        // clean the file
+        fp.files = null;
+      } // end uploadFile()
 
-    //this function triggers a download of the current data
-    function triggerDownloadSequence() {
+      //this function triggers a download of the current data
+      function triggerDownloadSequence() {
 
-      //helpersFE.js, creates data using current board
-      var data = writeFileToDownloadString(0);
-      var downloadBlob = new Blob([data], {
-        type: "text/csv;charset=utf-8"
-      });
-      //filesaver.min.js
-      saveAs(downloadBlob, "pewiMap.csv");
+        //helpersFE.js, creates data using current board
+        var data = writeFileToDownloadString(0);
+        var downloadBlob = new Blob([data], {
+          type: "text/csv;charset=utf-8"
+        });
+        //filesaver.min.js
+        saveAs(downloadBlob, "pewiMap.csv");
 
-      //close necessary frames
-      // setTimeout(function() {parent.downloadClicked();},1 );
-      // XXX SCRIPT438: Object doesn't support property or method 'downloadClicked'
-    } // end triggerDownloadSequence()
+        //close necessary frames
+        // setTimeout(function() {parent.downloadClicked();},1 );
+        // XXX SCRIPT438: Object doesn't support property or method 'downloadClicked'
+      } // end triggerDownloadSequence()
     </script>
 
 
@@ -1365,6 +1368,30 @@
       <p id="hover-info"></p>
     </div>
 
+    <!-- div which responsible for the progress bar -->
+    <div class="progressBarContainer">
+      <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" data-transitiongoal="40"></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal="60"></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-warning" role="progressbar" data-transitiongoal="80"></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-danger" role="progressbar" data-transitiongoal="90"></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-danger" role="progressbar" data-transitiongoal="100"></div>
+      </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+  $('.progress .progress-bar').progressbar({display_text: 'fill', use_percentage: false});
+});
+    </script>
 
     <!-- Create iFrames for credits, upload/download, contact us and codex -->
     <div id="modalCreditsFrame"><iframe id="creditsFrame" style="display:none;" src="./htmlFrames/credits.html"></iframe></div>
@@ -1384,14 +1411,14 @@
     <div id="fireContainer"></div>
 
     <!-- Place meadowlark gif off page -->
-    <img id="meadowlark" class="meadowlarkhidden" src="./imgs/meadowlarkanimation.gif"></div>
+    <img id="meadowlark" class="meadowlarkhidden" src="./imgs/meadowlarkanimation.gif">
 
-  <!-- Create iframes for the results, options and multiplayer screens -->
-  <div id="modalResultsFrame"><iframe id="resultsFrame" class="resultsFrame" src="./htmlFrames/results.html"></iframe></div>
-  <img id="closeResults" class="closeButton" style="opacity:0; visibility:hidden; right:9%;" src="./imgs/close_black.png" onclick="resultsEnd() ;">
-  <iframe id="multiplayer" class="fullPageIframe" src="./htmlFrames/multiDownload.html"></iframe>
-  <iframe id="options" class="fullPageIframe" src="./htmlFrames/options.html"></iframe>
-  <iframe id="printOptions" class="fullPageIframe" src="./htmlFrames/printOptions.html"></iframe>
+    <!-- Create iframes for the results, options and multiplayer screens -->
+    <div id="modalResultsFrame"><iframe id="resultsFrame" class="resultsFrame" src="./htmlFrames/results.html"></iframe></div>
+    <img id="closeResults" class="closeButton" style="opacity:0; visibility:hidden; right:9%;" src="./imgs/close_black.png" onclick="resultsEnd() ;">
+    <iframe id="multiplayer" class="fullPageIframe" src="./htmlFrames/multiDownload.html"></iframe>
+    <iframe id="options" class="fullPageIframe" src="./htmlFrames/options.html"></iframe>
+    <iframe id="printOptions" class="fullPageIframe" src="./htmlFrames/printOptions.html"></iframe>
 
   </div>
   <!-- End of page div, this is all of the meaningful content for in-game -->
