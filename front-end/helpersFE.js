@@ -46,7 +46,7 @@ var g_year1delete = false; //true if year 1 is deleted when there are other year
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board
-
+var tempArrTest = [];
 
 // arrays
 
@@ -1174,6 +1174,14 @@ function displayLevels(overlayHighlightType) {
       pushClick(0, getStamp(), 79, 0, null);
     }
     break;
+
+    case 'gamewildlife':
+    selectionHighlightNumber = 21;
+    updateIndexPopup('To learn more about <span style="color:orange;">Game Wildlife</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 80, 0, null);
+    }
+    break;
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -1231,7 +1239,20 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
       meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
     } //end if
   } //end for
-
+//   var sum = 0;
+//   var min = 500;
+//   var max = 0;
+//   for(var k = 0; k<tempArrTest.length; k++){
+//     sum+=tempArrTest[k];
+//     if(tempArrTest[k]>max){
+//       max = tempArrTest[k];
+//     }
+//     if(tempArrTest[k]<min){
+//       min = tempArrTest[k];
+//     }
+//   }
+// console.log("sum: " + sum + " max: " + max + " min: " + min);
+// tempArrTest = [];
 
   showLevelDetails(selectionHighlightNumber);
   currentHighlightType = selectionHighlightNumber;
@@ -1508,8 +1529,17 @@ function getHighlightColor(highlightType, tileId) {
   }
 
   else if (highlightType == "carbon") {
-    //(Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration)/1000);
-  return 6;
+    var carbonseq = ((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231));
+    if(carbonseq>=0 && carbonseq<=4.04) return 44;
+    else if(carbonseq>4.04 && carbonseq<8.09) return 45;
+    else if(carbonseq>8.09 && carbonseq<=12.13) return 19;
+    else if(carbonseq>12.13 && carbonseq<=16.17) return 32;
+    else if(carbonseq>16.17) return 26;
+  }
+
+  else if (highlightType == "gamewildlife") {
+    console.log(boardData[currentBoard].map[tileId].landType[yearSelected]);
+    return 5;
   }
 
 
@@ -2025,7 +2055,7 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for carbon sequestration
       case 20:
-        highlightString = Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration)/1000 + " tons" + "<br>";
+        highlightString = (Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1) + " tons" + "<br>";
         break;
     }
     return highlightString;
@@ -5171,6 +5201,8 @@ function printOptionsEsc(e) {
     closePrintOptions();
   }
 } // end printOptionsEsc
+
+
 
 
 
