@@ -376,7 +376,7 @@ function addYearAndTransition() {
 
   var totalYearsAllowed = 3;
   var nextYear = boardData[currentBoard].calculatedToYear+1;
-  if (g_year1delete)
+  if(g_year1delete)
   {
     nextYear = 2;
   }
