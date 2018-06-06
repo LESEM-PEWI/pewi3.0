@@ -425,9 +425,8 @@ function addYearAndTransition() {
       document.getElementById("year3Button").style.display = "block";
 //      document.getElementById("year3precipContainer").style.display = "block";
     }
-  switchYearTab(nextYear);
-  transitionToYear(nextYear);
-//    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
+    switchYearTab(nextYear);
+    transitionToYear(nextYear);
   }
 
   if (nextYear > totalYearsAllowed) {
