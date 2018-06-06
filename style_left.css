@@ -598,13 +598,6 @@ option {
   text-align: center;
 }
 
-select {
-  font-size: 1vw;
-  font-size: var(--font-size);
-  margin: 5%;
-}
-
-
 #yearCopyButton
 {
   position: absolute;
@@ -625,19 +618,10 @@ select {
   width: 5vw;
 }
 
-option {
-  font-size: 1px;
- font-size: var(--font-size);
-}
-
-
-
-
-
 .DetailsList-title {
   color: #fff;
-  font-size: 0.9vw;
-  margin: 0.5vw;
+  font-size: 1.8vw;
+  margin: 5vw;
 }
 
 /* detail lists */
