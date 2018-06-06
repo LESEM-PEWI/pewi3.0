@@ -46,6 +46,7 @@ var g_year1delete = false; //true if year 1 is deleted when there are other year
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board
+
 // arrays
 
 //var arrLines;
@@ -389,11 +390,13 @@ function addYearAndTransition() {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
     document.getElementById("year" + nextYear + "Button").style.display = "block";
+//    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
     //special case for adding year 3 when year 2 has been previously deleted in the presence of year 3
     if (year2to3)
     {
       switchYearTab(3);
       transitionToYear(4);
+//      document.getElementById("year3precipContainer").style.display = "block";
       year2to3 = false;
     }
 
@@ -410,6 +413,7 @@ function addYearAndTransition() {
       document.getElementById("year2Button").className = "yearButton";
       document.getElementById("year2Image").className = "icon yearNotSelected";
       document.getElementById("year2Button").style.display = "block";
+//      document.getElementById("year2precipContainer").style.display = "block";
       nextYear = 2;
       g_year1delete = false;
     }
@@ -418,6 +422,7 @@ function addYearAndTransition() {
       document.getElementById("year3Button").className = "yearButton";
       document.getElementById("year3Image").className = "icon yearNotSelected";
       document.getElementById("year3Button").style.display = "block";
+//      document.getElementById("year3precipContainer").style.display = "block";
     }
   switchYearTab(nextYear);
   transitionToYear(nextYear);
@@ -435,9 +440,9 @@ function addYearAndTransition() {
 } //end addYearAndTransition
 
 
-//deleteYearAndTransition updates the years to switch between in the left console and transitions to the new year
+//deleteYearAndTransition deletes the selected year
 //Gets the year selected from transitionToYear, when the user selects which year to delete
-//uses the helper year2and3Delete()
+//uses the helper year2and3Delete() in the special cases
 function deleteYearAndTransition()
 {
   var currMaxYear = boardData[currentBoard].calculatedToYear;
@@ -2016,6 +2021,24 @@ function getPrecipOptionsValue(precipValue) {
 
 } // end getPrecipOptionsValue()
 
+function getPrecipType(a){
+  var spanID = "precipspan";
+  spanID+=a;
+  var str = "yearPrecip";
+  var sel = [str.slice(0, 4), a, str.slice(4)].join('');
+  var e = document.getElementById(sel);
+  var val = e.options[e.selectedIndex].value;
+  if(val==="0" || val==="1"){
+    document.getElementById(spanID).textContent="Dry";
+  }
+  if(val==="2" || val==="3" || val==="4"){
+    document.getElementById(spanID).textContent="Normal";
+  }
+  if(val==="5" || val==="6"){
+    document.getElementById(spanID).textContent="Wet";
+  }
+}
+
 //Gets the current timestamp for the click (event)
 function getStamp() {
   curTime = new Date();
@@ -2232,6 +2255,15 @@ function multiplayerExit() {
   document.getElementById("levelsButton").style.display = "block";
   document.getElementById("yearButton").style.display = "block";
   document.getElementById("playerResetButton").style.display = "none";
+  // Change the Download method to the normal one
+  document.getElementById("DownloadButton").onclick = triggerDownloadSequence;
+  // We need to show the buttons in case of the buttons was hidden in multi-player mode.
+  document.getElementById('printButton').style.display = 'block';
+  document.getElementById('uploadFile').style.display = 'block';
+  // move all the left icons to the right, so that there's no empty space between Download icon and Contact Us icon.
+  document.getElementById('DownloadButton').style.right = '8.5vw';
+  document.getElementById('logoBase').style.right = '11vw';
+  document.getElementById('pewiLogo').style.right = '21vw';
   // document.getElementById("playerResetImage").style.display = "none";
   resetPlayers();
   //Elimnate player 1 (since we are actually leaving multiplayer) and reduce totalPlayers count to 0
@@ -2275,8 +2307,10 @@ function multiplayerMode() {
     document.getElementById("playerAddButton").style.display = "inline-block";
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
+
     // document.getElementById("yearButton").style.display = "none";
     document.getElementById("yearButton").style.display = "block";
+
     // When hit download button, it should download the multi-map.
     document.getElementById("DownloadButton").onclick = endMultiplayerAssignMode;
     // Multi-player mode should not have a print function, hide it.
@@ -2752,7 +2786,7 @@ function onDocumentKeyDown(event) {
         // hit P to see pdf output
       case 80:
         // If not in the multi-player mode, we should not disable the 'P' key
-        if (document.getElementById('printButton').style.display !== 'none') {
+        if (!multiplayerAssigningModeOn) {
           startPrintOptions();
         }
 
@@ -3399,6 +3433,40 @@ function resumeSim() {
   document.getElementById("simSlider").style.zIndex = "1002";
 } //end resumeSim()
 
+//this function contains switch statements which take in the real value (Number) of precipitation and gives out their values;
+
+function reversePrecipValue(val)
+{
+  if(val == 24.58)
+  {
+    return 0;
+  }
+  if(val == 28.18)
+  {
+    return 1;
+  }
+  if(val == 30.39)
+  {
+    return 2;
+  }
+  if(val == 32.16)
+  {
+    return 3;
+  }
+  if(val == 34.34)
+  {
+    return 4;
+  }
+  if(val == 36.47)
+  {
+    return 5;
+  }
+  if(val == 45.10)
+  {
+    return 6;
+  }
+} //end reversePrecipValue
+
 //revertChanges undos the users previous tile changes, and goes back to the previous board instance
 function revertChanges() {
   //For storing clicks
@@ -3974,6 +4042,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('precipImg').className = "imgSelected";
       document.getElementById('precipTab').style.display = "block";
+      yearPrecipManager();
       updateIndexPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Glossary</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
       break;
     case 3:
@@ -4971,12 +5040,26 @@ function year2and3Delete() {
   g_isDeleted = true;
   year2to3 = true;
   //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2.
+  boardData[currentBoard].precipitation[2] = boardData[currentBoard].precipitation[3];
+  document.getElementById("year2Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[3]);
   transitionToYear(3);
   switchYearTab(2);
   boardData[currentBoard].calculatedToYear = 2;
   yearSelected = 2;
   currMaxYear = 2;
   alert("Year 3 is now Year 2!");
+}
+
+//update sthe precipitation boxes in the precip tab - called from switchConsoleTab
+function yearPrecipManager()
+{
+  //making sure that only year 0 and 1 are always shown and year 2 and 3 are not unless the user enables them
+  document.getElementById('year2PrecipContainer').style.display = "none";
+  document.getElementById('year3PrecipContainer').style.display = "none";
+  for(var i=2; i<=boardData[currentBoard].calculatedToYear; i++)
+  {
+    document.getElementById('year' + i + 'PrecipContainer').style.display = "block";
+  }
 }
 
 
@@ -5032,6 +5115,29 @@ function printOptionsEsc(e) {
     closePrintOptions();
   }
 } // end printOptionsEsc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
 //Added code directly in this js file as importing a js file to another js file isn't easily doable//
