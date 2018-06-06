@@ -1387,7 +1387,7 @@
     </div>
 
     <!-- div which responsible for the progress bar -->
-    <div class="progressBarContainer">
+    <div class="progressBarContainer" id="progressBarContainer">
       <div class="progress">
         <div class="progress-bar progress-bar-success" role="progressbar" data-transitiongoal="40"></div>
       </div>
@@ -1405,11 +1405,6 @@
       </div>
     </div>
 
-    <script>
-    $(document).ready(function() {
-  $('.progress .progress-bar').progressbar({display_text: 'fill', use_percentage: false});
-});
-    </script>
 
     <!-- Create iFrames for credits, upload/download, contact us and codex -->
     <div id="modalCreditsFrame"><iframe id="creditsFrame" style="display:none;" src="./htmlFrames/credits.html"></iframe></div>

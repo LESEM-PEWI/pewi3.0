@@ -100,6 +100,11 @@ function loadLevel(level) {
           togglePopupDisplay();
         }, 5000);
       }
+      // Show the progress bars
+      document.getElementById('progressBarContainer').style.display = 'block';
+      $(document).ready(function() {
+        $('.progress .progress-bar').progressbar({display_text: 'fill', use_percentage: false});
+      });
       break;
       //multiplayer assigning mode
     case -1:

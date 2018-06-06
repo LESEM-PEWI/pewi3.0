@@ -2358,6 +2358,8 @@ function multiplayerMode() {
     document.getElementById('DownloadButton').style.right = '6.5vw';
     document.getElementById('logoBase').style.right = '9vw';
     document.getElementById('pewiLogo').style.right = '18.5vw';
+    // Hide the progress bar
+    document.getElementById('progressBarContainer').style.display = 'none';
   }
 }
 
