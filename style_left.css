@@ -526,7 +526,7 @@ option {
 
 
 /** year buttons div**/
-.yearButton {
+ .yearButton {
   height: 2.5vw;
   height: var(--selector-icon-length);
   margin-left: 3vw;
@@ -539,19 +539,40 @@ option {
   display: none;
 }
 
+#year1Button
+{
+  position: absolute;
+  top: 15%;
+  right: 58%;
+}
+
+#year2Button
+{
+  position: absolute;
+  top: 11.25%;
+  right: 20%;
+}
+
+#year3Button
+{
+  position: absolute;
+  top: 25%;
+  right: 58%;
+}
+
 /** styling for year add and delete button in the year tab of sandbox mode **/
 #yearAddButton
 {
   position: absolute;
-  top:60%;
+  top:50%;
   right:58%;
 }
 
 #yearDeleteButton
 {
   position: absolute;
-  top:60%;
-  left:50%;
+  top:50%;
+  right:20%;
 }
 
 /** year buttons**/
@@ -584,18 +605,17 @@ select {
 }
 
 
-
 #yearCopyButton
 {
   position: absolute;
-  top: 69%;
+  top: 65%;
   left: 11%;
 }
 
 #yearPasteButton
 {
   position: absolute;
-  top: 84%;
+  top: 80%;
   left: 11%;
 }
 
@@ -606,8 +626,8 @@ select {
 }
 
 option {
-  font-size: 1vw;
-  font-size: var(--font-size);
+  font-size: 1px;
+ font-size: var(--font-size);
 }
 
 

@@ -47,7 +47,6 @@ var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board
 var yearCopyPaste = 0; //used for copying and pasting the selected year
-var copyFlag = false;
 // arrays
 
 //var arrLines;
@@ -2872,7 +2871,7 @@ function pasteYear()
     boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
     boardData[currentBoard].updateBoard();
     refreshBoard();
-    alert("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn);
+    alert("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
     document.getElementById("yearToCopy").value = 0;
     document.getElementById("yearToPaste").value = 0;
     document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
