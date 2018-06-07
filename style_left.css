@@ -595,7 +595,7 @@ select {
     bottom: 2px;
     left: 130px;
     opacity: 0;
-    
+
 }
 
 .tooltipPrecip .tooltiptextPrecip::after {
@@ -1208,8 +1208,8 @@ option {
 
 .DetailsList-title {
   color: #fff;
-  font-size: 1.8vw;
-  margin: 5vw;
+  font-size: 0.9vw;
+  margin: 0.5vw;
 }
 
 /* detail lists */
