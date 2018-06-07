@@ -35,6 +35,7 @@ var previousTileId = [];
 var previousPainter = [];
 var randomzing = false;
 var rightPopupWasOpen;
+var backgroundInfoBoxWasOpen;
 var runningSim = false;
 var simulationData;
 var startTime;
@@ -3393,7 +3394,7 @@ function resultsEnd() {
   //reopen elements that were previously open
   if (leftToolConsoleWasOpen) roll(1);
   if (rightPopupWasOpen) togglePopupDisplay();
-
+  if (backgroundInfoBoxWasOpen) toggleBackgroundInfoDisplay();
   //if highlighted map legend was previously open, redisplay
   if (currentHighlightType > 0) {
     showLevelDetails(currentHighlightType);
@@ -3460,6 +3461,11 @@ function resultsStart() {
     if (document.getElementById("popup").className == "popup") {
       togglePopupDisplay();
       rightPopupWasOpen = true;
+    }
+    backgroundInfoBoxWasOpen = false;
+    if(document.getElementById("backgroundInfoBox").className == "backgroundInfoBox"){
+      toggleBackgroundInfoDisplay();
+      backgroundInfoBoxWasOpen = true;
     }
 
     //prevent background land changes and so forth
