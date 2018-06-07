@@ -1182,6 +1182,14 @@ function displayLevels(overlayHighlightType) {
       pushClick(0, getStamp(), 80, 0, null);
     }
     break;
+
+    case 'biodiversity':
+    selectionHighlightNumber = 22;
+    updateIndexPopup('To learn more about <span style="color:orange;">Biodiversity</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 81, 0, null);
+    }
+    break;
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -1537,9 +1545,23 @@ function getHighlightColor(highlightType, tileId) {
     else if(carbonseq>16.17) return 26;
   }
 
+
   else if (highlightType == "gamewildlife") {
-    console.log(boardData[currentBoard].map[tileId].landType[yearSelected]);
-    return 5;
+  var gamewildlifescore = getTileGameWildlifeScore(tileId);
+  if(gamewildlifescore >= 0 && sgamewildlifescorecore < 0.1) return 0;
+  else if (gamewildlifescore>=0.1 && gamewildlifescore<=2) return 1;
+  else if (gamewildlifescore>=2.1 && gamewildlifescore<=4) return 2;
+  else if (gamewildlifescore>=4.1 && gamewildlifescore<=6) return 3;
+  else if (gamewildlifescore>6) return 4;
+  }
+
+  else if (highlightType == "biodiversity") {
+  var biodiversityscore = getTileBiodiversityScore(tileId);
+  if(biodiversityscore >= 0 && biodiversityscore < 0.1) return 5;
+  else if (biodiversityscore>=0.1 && biodiversityscore<=2) return 6;
+  else if (biodiversityscore>=2.1 && biodiversityscore<=4) return 7;
+  else if (biodiversityscore>=4.1 && biodiversityscore<=6) return 8;
+  else if (biodiversityscore>6) return 9;
   }
 
 
@@ -2056,6 +2078,14 @@ function getHighlightedInfo(tileId) {
         //create string for carbon sequestration
       case 20:
         highlightString = (Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1) + " tons" + "<br>";
+        break;
+        //create string for Game Wildlife score
+      case 21:
+        highlightString = "Score: " + getTileGameWildlifeScore(tileId) + "<br>";
+        break;
+        //create string for Biodiversity score
+      case 22:
+        highlightString = "ScoreBiv: " + getTileBiodiversityScore(tileId) + "<br>" + "ScoreGW: " + getTileGameWildlifeScore(tileId) + "<br>";
         break;
     }
     return highlightString;
@@ -3927,9 +3957,21 @@ function showLevelDetails(value) {
       document.getElementById('carbonIcon').className = "levelsSelectorIcon iconSelected";
       document.getElementById("carbonDetailsList").className = "DetailsList levelDetailsList";
       break;
+
+    case 21:
+      //show game wildlife legend
+      document.getElementById('gamewildlifeIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("gamewildlifeDetailsList").className = "DetailsList levelDetailsList";
+      break;
+
+    case 22:
+      //show biodiversity legend
+      document.getElementById('biodiveristyIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("biodiversityDetailsList").className = "DetailsList levelDetailsList";
+      break;
   } // END switch
   //hide ecosystem indicator legends
-  if (value > -4 && value < 0 || value==-19 || value==-20) {
+  if ((value > -4 && value < 0) || (value<=-19 && value>=-22)) {
     var element = document.getElementsByClassName('DetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled';
@@ -5202,7 +5244,93 @@ function printOptionsEsc(e) {
   }
 } // end printOptionsEsc
 
+//Calculate Game Wildlife score for each individual tile
+function getTileGameWildlifeScore(tileId){
+  var score = 0;
+  var currLandType = boardData[currentBoard].map[tileId].landType[yearSelected];
+  var stratWet = boardData[currentBoard].map[tileId].strategicWetland;
+  var streamBuff = boardData[currentBoard].map[tileId].streamNetwork;
+  var multiplier = boardData[currentBoard].map[tileId].area / 10;
 
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing or Wetland, add 4 points
+  if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14){
+    score+=4;
+  }
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
+  if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
+    score+=1.5;
+  }
+  //If land use is Conservational Forest add 1 point
+  if(currLandType == 10){
+    score+=1;
+  }
+  //If land use is Prarie, Rotational Grazing, or Switchgrass, add 1 point
+  if(currLandType == 9 || currLandType == 7 || currLandType == 12){
+    score+=1;
+  }
+  //If land use is Wetlands add 1 point
+  if(currLandType == 14){
+    score+=1;
+  }
+  //If land is stream buffer and land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
+  if(streamBuff==1){
+    if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
+      score+=1.5;
+    }
+  }
+
+  //Multiply score by area divided by 10
+  score*=multiplier;
+
+  return score;
+}
+
+
+
+
+//Calculate Biodiversity score for each individual tile
+function getTileBiodiversityScore(tileId){
+  var score = 0;
+  var currLandType = boardData[currentBoard].map[tileId].landType[yearSelected];
+  var stratWet = boardData[currentBoard].map[tileId].strategicWetland;
+  var streamBuff = boardData[currentBoard].map[tileId].streamNetwork;
+  var multiplier = boardData[currentBoard].map[tileId].area / 10;
+
+  //If land use is Conservational Forest, Prarie, or Wetland, add 4 points
+  if(currLandType == 10  || currLandType == 9 || currLandType == 14){
+    score+=4;
+  }
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, or Wetland
+  if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14){
+    score+=1.5;
+  }
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
+  if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
+    score+=1.5;
+  }
+  //If land use is Wetland add 1.5 points
+  if(currLandType == 14){
+    score+=0.5;
+    if(stratWet == 1){
+      score+=1;
+    }
+  }
+  //If land is stream buffer and land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
+  if(streamBuff==1){
+    if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
+      score+=1.5;
+    }
+  }
+
+  //Multiply score by area divided by 10
+  score*=multiplier;
+
+  return score;
+}
 
 
 

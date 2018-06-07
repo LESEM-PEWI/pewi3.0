@@ -424,7 +424,7 @@
 
 /* levels map selector */
 .levelsSelectorIcon {
-  margin: 1vw 3vw 1.2vw;
+  margin: 0.4vw 3vw 1.2vw;
 }
 
 
@@ -972,6 +972,17 @@ select {
     display: inline-block;
 }
 
+/**Container for Game Wildlife**/
+.tooltipResultsGameWildlife{
+    position: relative;
+    display: inline-block;
+}
+
+/**Container for Game Wildlife**/
+.tooltipResultsBiodiversity{
+    position: relative;
+    display: inline-block;
+}
 
 /**Nitrate specs**/
 .tooltipResultsNitrate .tooltiptextResults {
@@ -1083,6 +1094,50 @@ select {
     transition: opacity 0.5s;
 }
 
+/**Game Wildlife specs**/
+.tooltipResultsGameWildlife .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 110px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Biodiversity specs**/
+.tooltipResultsBiodiversity .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 110px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
 /**More Nitrate specs for tooltip**/
 .tooltipResultsNitrate .tooltiptextResults::after {
   right: 100%;
@@ -1163,6 +1218,37 @@ select {
 	margin-top: -10px;
 }
 
+/**More Game Wildlife specs for tooltip**/
+.tooltipResultsGameWildlife .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More Biodiversity specs for tooltip**/
+.tooltipResultsBiodiversity .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
 
 /**Hover for Nitrate**/
 .tooltipResultsNitrate:hover .tooltiptextResults{
@@ -1190,6 +1276,18 @@ select {
 
 /**Hover for Carbon**/
 .tooltipResultsCarbon:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for Game Wildlife**/
+.tooltipResultsGameWildlife:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for Biodiversity**/
+.tooltipResultsBiodiversity:hover .tooltiptextResults{
     visibility: visible;
     opacity: 1;
 }
@@ -1270,7 +1368,7 @@ option {
 }
 
 .levelDetailsList {
-  width: 8.5vw;
+  width: 12vw;
 }
 
 .physicalDetailsList {
@@ -1442,7 +1540,7 @@ table {
     left: 78px;
   }
   .levelDetailsList {
-    width: 51px;
+    width: 100px;
   }
   .physicalDetailsList {
     width: 89px;
