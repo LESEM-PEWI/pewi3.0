@@ -47,7 +47,7 @@ var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board
 var yearCopyPaste = 0; //used for copying and pasting the selected year
-var wetLandsSelect = false; //used to keep track if wetlands have been selected
+var selectedLandType = 0; //keeps track of which land is selected
 
 // arrays
 
@@ -619,10 +619,11 @@ function changeLandTypeTile(tileId) {
       if (!multiplayerAssigningModeOn) {
         // textureArray is a global array that links to each landType image, it was load in loader.js
         // by changing the reference on meshMaterials array, three.js will draw it on canvas automatically
-        //wetlands are restricted only for flat lands
-        if((wetLandsSelect) && (Number(boardData[currentBoard].map[tileId].topography) != 0))
+
+        //wetlands are restricted within flat lands only
+        if(selectedLandType == 14 && (Number(boardData[currentBoard].map[tileId].topography) != 0))
         {
-          //dont highlight && do nothing
+          //dont highlight
         }
         else
         {
@@ -660,7 +661,7 @@ function changeSelectedPaintTo(newPaintValue) {
     painterElementId = "paint" + newPaintValue;
     document.getElementById(painterElementId).className = "landSelectorIcon iconSelected";
     painter = newPaintValue;
-
+    selectedLandType = painter;
     //Index chat box entries for each landuse type
     switch (painterElementId) {
       case 'paint1':
@@ -703,7 +704,6 @@ function changeSelectedPaintTo(newPaintValue) {
         updateIndexPopup('To learn more about <span style="color:orange">Short Rotation Woody Bioenergy</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
         break;
       case 'paint14':
-        wetLandsSelect = true;
         updateIndexPopup('To learn more about <span style="color:orange">Wetland</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
         break;
       case 'paint15':
@@ -2520,7 +2520,6 @@ function onDocumentMouseMove(event) {
         //just a normal highlighting
         highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
       }
-
     }
   }
 } //end onDocumentMouseMove
