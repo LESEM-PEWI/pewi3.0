@@ -1740,6 +1740,37 @@ function generateResultsTable() {
   var toMetricFactorArea = 2.471;
   var upToYear = boardData[currentBoard].calculatedToYear;
 
+  /*
+  * The variable 'dataset' is a variable that holds all the information of map land distribution for multiplayer mode.
+  * The variable is used in this function as a reference to get size of parcel of each player.
+  * For more information refer to Issue 386.
+  */
+  var dataset = [{
+    label: 'Player 1',
+    count: (Math.round(Totals.landUseResults[1].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10),
+    number: (Math.round(Totals.landUseResults[1].conventionalCornLandUse * 10) / 10)
+  }, {
+    label: 'Player 2',
+    count: (Math.round(Totals.landUseResults[1].conservationCornLandUse / Totals.totalArea * 100 * 10) / 10),
+    number: (Math.round(Totals.landUseResults[1].conservationCornLandUse * 10) / 10)
+  }, {
+    label: 'Player 3',
+    count: (Math.round(Totals.landUseResults[1].conventionalSoybeanLandUse / Totals.totalArea * 100 * 10) / 10),
+    number: (Math.round(Totals.landUseResults[1].conventionalSoybeanLandUse * 10) / 10)
+  }, {
+    label: 'Player 4',
+    count: (Math.round(Totals.landUseResults[1].conservationSoybeanLandUse / Totals.totalArea * 100 * 10) / 10),
+    number: (Math.round(Totals.landUseResults[1].conservationSoybeanLandUse * 10) / 10)
+  }, {
+    label: 'Player 5',
+    count: (Math.round(Totals.landUseResults[1].alfalfaLandUse / Totals.totalArea * 100 * 10) / 10),
+    number: (Math.round(Totals.landUseResults[1].alfalfaLandUse * 10) / 10)
+  }, {
+    label: 'Player 6',
+    count: (Math.round(Totals.landUseResults[1].permanentPastureLandUse / Totals.totalArea * 100 * 10) / 10),
+    number: (Math.round(Totals.landUseResults[1].permanentPastureLandUse * 10) / 10)
+  }];
+
   var frontendNames = ["Conventional Corn Area", "Conservation Corn Area", "Conventional Soybean Area", "Conservation Soybean Area",
     "Mixed Fruits and Vegetables Area", "Permanent Pasture Area", "Rotational Grazing Area", "Grass Hay Area",
     "Switchgrass Area", "Prairie Area", "Wetland Area", "Alfalfa Area", "Conventional Forest Area",
@@ -1753,382 +1784,532 @@ function generateResultsTable() {
 
   var htmlTableString = "";
 
-  //FIRST TABLE, LAND USE
-
+  //The code below is creating the first table
   htmlTableString += "<table id='table1' class='resultsTable'>";
 
-  //add header row--------------
+  //The following coditional statement is to modify the results table depending on the mode.
+  //If the condition is true then it means that the results will be modified to the multiplayer mode, else it will be the same results table per every other mode.
+  if(localStorage.getItem('LSinMultiplayer')==="true"){
+    console.log(boardData[currentBoard]);
 
-  htmlTableString += "<tr class='tableHeading'> <th> Land Use Category </th>";
+    //add header
+    //Players section of table START
+    //The code below is to add the column titles for Players section of results table
+    htmlTableString += "<tr class='tableHeading'> <th> Players </th>";
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
 
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
+    htmlTableString += "<th>Percentage</th>";
 
-  htmlTableString += "<th>Percentage</th>";
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
 
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
+    htmlTableString += "<th>Units (English) </th>";
 
-  htmlTableString += "<th>Units (English) </th>";
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
 
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
+    htmlTableString += "<th>Units (Metric) </th>";
 
-  htmlTableString += "<th>Units (Metric) </th>";
+    htmlTableString += "</tr>";
+    //The code above is to add the column titles for Players section of results table
 
-  htmlTableString += "</tr>";
+    //The code below is to add players data
+    for(var i = 1; i < 7; ++i){
+      htmlTableString += "<tr><td> Player "+i+" </td>";
+      htmlTableString += "<td> " + dataset[i-1].count +" </td><td> percent </td>"
+      htmlTableString += "<td> " + dataset[i-1].number +" </td><td> acres </td>";
+      //the switch case is to toggle between different "players" since players is assigned by different land types
+      switch (i) {
+        case 1:
+          htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["conventionalCornLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
+          break;
+        case 2:
+          htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["conservationCornLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
+          break;
+        case 3:
+          htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["conventionalSoybeanLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
+          break;
+        case 4:
+          htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["conservationSoybeanLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
+          break;
+        case 5:
+          htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["alfalfaLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
+          break;
+        case 6:
+          htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["permanentPastureLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
+          break;
+      }
+      htmlTableString += "</tr>";
+    }
 
-  //Add Data Rows
+    htmlTableString += "</table><br>";
+    //END of Table 1 (Players)==================================================
 
-  for (var l = 0; l < backendDataIdentifiers.length; l++) {
+    //Start of Precipitation table
+    htmlTableString += "<table id='table4' class='resultsTable'>";
 
-    //check for the cases where a header needs to be added
-    switch (l) {
-      case 0:
-        htmlTableString += "<tr class='tableHeading'><td><b>Annual Grain</b></td></tr>";
-        break;
-      case 2:
-        htmlTableString += "<tr class='tableHeading'><td><b>Annual Legume</b></td></tr>";
-        break;
-      case 4:
-        htmlTableString += "<tr class='tableHeading'><td><b>Mixed Fruits and Vegetables</b></td></tr>";
-        break;
-      case 5:
-        htmlTableString += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>";
-        break;
-      case 7:
-        htmlTableString += "<tr class='tableHeading'><td><b>Perennial Herbaceous (non-pasture)</b></td></tr>";
-        break;
-      case 11:
-        htmlTableString += "<tr class='tableHeading'><td><b>Perennial Legume</b></td></tr>";
-        break;
-      case 12:
-        htmlTableString += "<tr class='tableHeading'><td><b>Perennial Wooded</b></td></tr>";
-        break;
+    //add header
+    htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Precipitation </th>";
+    //filling the column titles (code below)
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
 
-    } //end switch
+    htmlTableString += "<th> Units (English) </th>";
 
-    htmlTableString += "<tr>";
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
 
-    htmlTableString += "<td>" + frontendNames[l] + "</td>";
+    htmlTableString += "<th> Units(Metric) </th>";
+
+    htmlTableString += "</tr>";
+
+    //adding the data for precipitation table
+    htmlTableString += "<tr><td>Precipitation</td>";
 
     for (var y = 1; y <= upToYear; y++) {
       htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l] + "LandUse";
-      htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10) / 10) + "<br>";
-
+      htmlTableString += boardData[currentBoard].precipitation[y];
       htmlTableString += "</td>";
-    } //for each year
+    }
 
-    //units cell
+    htmlTableString += "<td>inches</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+      htmlTableString += Math.round(boardData[currentBoard].precipitation[y] * 2.54 * 10) / 10;
+      htmlTableString += "</td>";
+    }
+
+    htmlTableString += "<td>cm</td></tr>";
+
+    htmlTableString += "</table><br>";
+    //END of Table 2 (Precipitation)==================================================
+
+    //Start of Strategic Wetland Use table
+    htmlTableString += "<table id='table4' class='resultsTable'>";
+
+    //The code below is to add the column titles for Players section of results table
+    //add header
+    htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Strategic Wetland Use </th>";
+    //filling the column titles (code below)
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
+
+    htmlTableString += "<th> </th>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
+
+    htmlTableString += "<th> </th>";
+
+    htmlTableString += "</tr>";
+    //The code above is to add the column titles for Players section of results table
+
+    for(var i = 1; i < 7; ++i){
+      //The code below is to fill player data into the html page
+      htmlTableString += "<tr><td> Player "+i+" </td>";
+      htmlTableString += "<td> "+((strategicWetlandFinder(i)/20)*100)+" </td><td> Percent </td><td> "+strategicWetlandFinder(i)+" </td><td> Cells </td>"
+    }
+
+    htmlTableString += "</table><br>";
+    //END of Table 3 (Strategic Wetlands)==================================================
+
+
+    //===========================END OF RESTULTS TABLE (if version)
+  }//end of if
+  else {
+    htmlTableString += "<tr class='tableHeading'> <th> Land Use Category </th>";
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
+
+    htmlTableString += "<th>Percentage</th>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
+
+    htmlTableString += "<th>Units (English) </th>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
+
+    htmlTableString += "<th>Units (Metric) </th>";
+
+    htmlTableString += "</tr>";
+
+    //Add Data Rows
+
+    for (var l = 0; l < backendDataIdentifiers.length; l++) {
+
+      //check for the cases where a header needs to be added
+      switch (l) {
+        case 0:
+          htmlTableString += "<tr class='tableHeading'><td><b>Annual Grain</b></td></tr>";
+          break;
+        case 2:
+          htmlTableString += "<tr class='tableHeading'><td><b>Annual Legume</b></td></tr>";
+          break;
+        case 4:
+          htmlTableString += "<tr class='tableHeading'><td><b>Mixed Fruits and Vegetables</b></td></tr>";
+          break;
+        case 5:
+          htmlTableString += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>";
+          break;
+        case 7:
+          htmlTableString += "<tr class='tableHeading'><td><b>Perennial Herbaceous (non-pasture)</b></td></tr>";
+          break;
+        case 11:
+          htmlTableString += "<tr class='tableHeading'><td><b>Perennial Legume</b></td></tr>";
+          break;
+        case 12:
+          htmlTableString += "<tr class='tableHeading'><td><b>Perennial Wooded</b></td></tr>";
+          break;
+
+      } //end switch
+
+      htmlTableString += "<tr>";
+
+      htmlTableString += "<td>" + frontendNames[l] + "</td>";
+
+      for (var y = 1; y <= upToYear; y++) {
+        htmlTableString += "<td>";
+
+        var tempString = backendDataIdentifiers[l] + "LandUse";
+        htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10) / 10) + "<br>";
+
+        htmlTableString += "</td>";
+      } //for each year
+
+      //units cell
+      htmlTableString += "<td>percent</td>";
+
+      for (var y = 1; y <= upToYear; y++) {
+        htmlTableString += "<td>";
+
+        var tempString = backendDataIdentifiers[l] + "LandUse";
+        htmlTableString += (Math.round(Totals.landUseResults[y][tempString] * 10) / 10) + "<br>";
+
+        htmlTableString += "</td>";
+      } //for each year
+
+      //units cell
+      htmlTableString += "<td>acres</td>";
+
+      for (var y = 1; y <= upToYear; y++) {
+        htmlTableString += "<td>";
+
+        var tempString = backendDataIdentifiers[l] + "LandUse";
+        htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / toMetricFactorArea * 10) / 10) + "<br>";
+
+        htmlTableString += "</td>";
+
+      } //for each year
+
+      //units cell
+      htmlTableString += "<td>hectares</td></tr>";
+    }
+
+    htmlTableString += "</table><br>";
+
+
+    //===================================================
+    //SECOND TABLE, ECOSYSTEM INDICATORS
+
+
+    frontendNames = ["Game Wildlife", "Biodiversity", "Carbon Sequestration", "Erosion Control / Gross Erosion",
+      "Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading",
+      "Sediment Control <br> / In-Stream Delivery"
+    ];
+    backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "carbonSequestration", "grossErosion", "nitrateConcentration",
+      "phosphorusLoad", "sedimentDelivery"
+    ];
+
+    //variables for english to metric
+    // results are generally in english units as the original thesis
+    // had all calculations done this way
+    conversionArray = [1, 1, 0.90718474, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474];
+
+    htmlTableString += "<table id='table2' class='resultsTable'>";
+
+    //add header row
+
+    htmlTableString += "<tr class='tableHeading'> <th> Ecosystem Service Indicator <br> / Measurement </th>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
+
+    htmlTableString += "<th>Score</th>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
+
+    htmlTableString += "<th>Units (English) </th>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
+
+    htmlTableString += "<th>Units (Metric) </th>";
+
+    htmlTableString += "</tr>";
+
+    //table data
+
+    for (var l = 0; l < backendDataIdentifiers.length; l++) {
+
+      //keep track if we need to add the appropriate subheading lines
+      switch (l) {
+        case 0:
+          htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
+          break;
+        case 2:
+          htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
+          break;
+        case 4:
+          htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
+          break;
+      } //end switch
+
+      htmlTableString += "<tr>";
+
+      htmlTableString += "<td>" + frontendNames[l] + "</td>";
+
+      for (var y = 1; y <= upToYear; y++) {
+        htmlTableString += "<td>";
+
+        var tempString = backendDataIdentifiers[l] + "Score";
+        htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
+
+        htmlTableString += "</td>";
+      } //for each year
+
+      //units cell
+      htmlTableString += "<td>(out of 100)</td>";
+
+      for (var y = 1; y <= upToYear; y++) {
+        htmlTableString += "<td>";
+
+        var tempString = backendDataIdentifiers[l];
+        //Correction for Carbon Sequestrations
+        if (l == 2) {
+          Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
+        }
+        htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
+
+        htmlTableString += "</td>";
+      } //for each year
+
+      //units cell, keep track which type of units we'll need
+      if (l < 2) htmlTableString += "<td>pts</td>";
+      if (2 <= l && l < 4) htmlTableString += "<td>tons</td>";
+      if (4 <= l && l < 5) htmlTableString += "<td>ppm</td>";
+      if (5 <= l && l < 8) htmlTableString += "<td>tons</td>";
+
+      for (var y = 1; y <= upToYear; y++) {
+        htmlTableString += "<td>";
+
+        var tempString = backendDataIdentifiers[l];
+        htmlTableString += (Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10) + "<br>";
+
+        htmlTableString += "</td>";
+
+      } //for each year
+
+      //units cell
+      if (l < 2) htmlTableString += "<td>pts</td>";
+      if (2 <= l && l < 4) htmlTableString += "<td>Mg</td>";
+      if (4 <= l && l < 5) htmlTableString += "<td>mg/L</td>";
+      if (5 <= l && l < 8) htmlTableString += "<td>Mg</td>";
+    }
+
+    //========================================
+    //THIRD TABLE, YIELD RESULTS
+
+    frontendNames = ["Corn Grain", "Soybeans", "Mixed Fruits and Vegetables", "Cattle", "Alfalfa Hay", "Grass Hay",
+      "Switchgrass Biomass", "Wood", "Short Rotation Woody Biomass"
+    ];
+
+    backendDataIdentifiers = ["cornGrainYield", "soybeanYield", "mixedFruitsAndVegetablesYield", "cattleYield",
+      "alfalfaHayYield", "grassHayYield", "switchgrassYield", "woodYield", "shortRotationWoodyBiomassYield"
+    ];
+
+    //conversion factors for the yeilds
+    conversionArray = [0.0254, 0.0272, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474, 0.002359737, 0.90718474];
+
+    //fill in table rows with data
+
+    for (var l = 0; l < backendDataIdentifiers.length; l++) {
+
+      //keep track of subheadings, just 1 this time
+      switch (l) {
+        case 0:
+          htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
+          break;
+      } //end switch
+
+      htmlTableString += "<tr>";
+
+      htmlTableString += "<td>" + frontendNames[l] + "</td>";
+
+      for (var y = 1; y <= upToYear; y++) {
+        htmlTableString += "<td>";
+
+        var tempString = backendDataIdentifiers[l] + "Score";
+        htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
+
+        htmlTableString += "</td>";
+      } //for each year
+      //units cell
+      htmlTableString += "<td>(out of 100)</td>";
+
+      for (var y = 1; y <= upToYear; y++) {
+        htmlTableString += "<td>";
+
+        var tempString = backendDataIdentifiers[l];
+        htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * 10) / 10) + "<br>";
+
+        htmlTableString += "</td>";
+      } //for each year
+
+      //units cell, lots of different ones to keep track of here
+      if (l < 2) htmlTableString += "<td>bu</td>";
+      if (l == 2) htmlTableString += "<td>tons</td>";
+      if (l == 3) htmlTableString += "<td>animals</td>"; //what an odd unit
+      if (4 <= l && l < 7) htmlTableString += "<td>tons</td>";
+      if (l == 7) htmlTableString += "<td>board-ft</td>";
+      if (l == 8) htmlTableString += "<td>tons</td>";
+
+      for (var y = 1; y <= upToYear; y++) {
+        htmlTableString += "<td>";
+
+        var tempString = backendDataIdentifiers[l];
+        htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10) + "<br>";
+
+        htmlTableString += "</td>";
+
+      } //for each year
+
+      //units cell
+      if (l < 2) htmlTableString += "<td>Mg</td>";
+      if (l == 2) htmlTableString += "<td>Mg</td>";
+      if (l == 3) htmlTableString += "<td>animals</td>";
+      if (4 <= l && l < 7) htmlTableString += "<td>Mg</td>";
+      if (l == 7) htmlTableString += "<td>m^3</td>";
+      if (l == 8) htmlTableString += "<td>Mg</td>";
+    }
+
+    htmlTableString += "</table><br>";
+
+    //============================
+    //TABLE FOUR, SPECIAL INDICATORS
+
+    htmlTableString += "<table id='table4' class='resultsTable'>";
+
+    //add header row
+
+    htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Other Parameters </th>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
+
+    htmlTableString += "<th> </th>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<th>";
+      htmlTableString += "Y" + y;
+      htmlTableString += "</th>";
+    }
+
+    htmlTableString += "<th> </th>";
+
+    htmlTableString += "</tr>";
+
+    htmlTableString += "<tr><td>Precipitation</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+      htmlTableString += boardData[currentBoard].precipitation[y];
+      htmlTableString += "</td>";
+    }
+
+    htmlTableString += "<td>inches</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+      htmlTableString += Math.round(boardData[currentBoard].precipitation[y] * 2.54 * 10) / 10;
+      htmlTableString += "</td>";
+    }
+
+    htmlTableString += "<td>cm</td>";
+
+    htmlTableString += "</tr>";
+
+    htmlTableString += "<tr><td>Strategic Wetland Use</td>";
+
+    for (var y = 1; y <= upToYear; y++) {
+      htmlTableString += "<td>";
+      htmlTableString += Totals.strategicWetlandPercent[y];
+      htmlTableString += "</td>";
+    }
+
     htmlTableString += "<td>percent</td>";
 
     for (var y = 1; y <= upToYear; y++) {
       htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l] + "LandUse";
-      htmlTableString += (Math.round(Totals.landUseResults[y][tempString] * 10) / 10) + "<br>";
-
+      htmlTableString += Totals.strategicWetlandCells[y];
       htmlTableString += "</td>";
-    } //for each year
+    }
 
-    //units cell
-    htmlTableString += "<td>acres</td>";
+    htmlTableString += "<td>cells</td>";
 
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
+    htmlTableString += "</tr>";
 
-      var tempString = backendDataIdentifiers[l] + "LandUse";
-      htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / toMetricFactorArea * 10) / 10) + "<br>";
+    htmlTableString += "</table><br>";
 
-      htmlTableString += "</td>";
 
-    } //for each year
-
-    //units cell
-    htmlTableString += "<td>hectares</td></tr>";
-  }
-
-  htmlTableString += "</table><br>";
-
-
-  //===================================================
-  //SECOND TABLE, ECOSYSTEM INDICATORS
-
-
-  frontendNames = ["Game Wildlife", "Biodiversity", "Carbon Sequestration", "Erosion Control / Gross Erosion",
-    "Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading",
-    "Sediment Control <br> / In-Stream Delivery"
-  ];
-  backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "carbonSequestration", "grossErosion", "nitrateConcentration",
-    "phosphorusLoad", "sedimentDelivery"
-  ];
-
-  //variables for english to metric
-  // results are generally in english units as the original thesis
-  // had all calculations done this way
-  conversionArray = [1, 1, 0.90718474, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474];
-
-  htmlTableString += "<table id='table2' class='resultsTable'>";
-
-  //add header row
-
-  htmlTableString += "<tr class='tableHeading'> <th> Ecosystem Service Indicator <br> / Measurement </th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th>Score</th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th>Units (English) </th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th>Units (Metric) </th>";
-
-  htmlTableString += "</tr>";
-
-  //table data
-
-  for (var l = 0; l < backendDataIdentifiers.length; l++) {
-
-    //keep track if we need to add the appropriate subheading lines
-    switch (l) {
-      case 0:
-        htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
-        break;
-      case 2:
-        htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
-        break;
-      case 4:
-        htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
-        break;
-    } //end switch
-
-    htmlTableString += "<tr>";
-
-    htmlTableString += "<td>" + frontendNames[l] + "</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l] + "Score";
-      htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-    } //for each year
-
-    //units cell
-    htmlTableString += "<td>(out of 100)</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l];
-      //Correction for Carbon Sequestrations
-      if (l == 2) {
-        Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
-      }
-      htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-    } //for each year
-
-    //units cell, keep track which type of units we'll need
-    if (l < 2) htmlTableString += "<td>pts</td>";
-    if (2 <= l && l < 4) htmlTableString += "<td>tons</td>";
-    if (4 <= l && l < 5) htmlTableString += "<td>ppm</td>";
-    if (5 <= l && l < 8) htmlTableString += "<td>tons</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l];
-      htmlTableString += (Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-
-    } //for each year
-
-    //units cell
-    if (l < 2) htmlTableString += "<td>pts</td>";
-    if (2 <= l && l < 4) htmlTableString += "<td>Mg</td>";
-    if (4 <= l && l < 5) htmlTableString += "<td>mg/L</td>";
-    if (5 <= l && l < 8) htmlTableString += "<td>Mg</td>";
-  }
-
-  //========================================
-  //THIRD TABLE, YIELD RESULTS
-
-  frontendNames = ["Corn Grain", "Soybeans", "Mixed Fruits and Vegetables", "Cattle", "Alfalfa Hay", "Grass Hay",
-    "Switchgrass Biomass", "Wood", "Short Rotation Woody Biomass"
-  ];
-
-  backendDataIdentifiers = ["cornGrainYield", "soybeanYield", "mixedFruitsAndVegetablesYield", "cattleYield",
-    "alfalfaHayYield", "grassHayYield", "switchgrassYield", "woodYield", "shortRotationWoodyBiomassYield"
-  ];
-
-  //conversion factors for the yeilds
-  conversionArray = [0.0254, 0.0272, 0.90718474, 1, 0.90718474, 0.90718474, 0.90718474, 0.002359737, 0.90718474];
-
-  //fill in table rows with data
-
-  for (var l = 0; l < backendDataIdentifiers.length; l++) {
-
-    //keep track of subheadings, just 1 this time
-    switch (l) {
-      case 0:
-        htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
-        break;
-    } //end switch
-
-    htmlTableString += "<tr>";
-
-    htmlTableString += "<td>" + frontendNames[l] + "</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l] + "Score";
-      htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-    } //for each year
-    //units cell
-    htmlTableString += "<td>(out of 100)</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l];
-      htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-    } //for each year
-
-    //units cell, lots of different ones to keep track of here
-    if (l < 2) htmlTableString += "<td>bu</td>";
-    if (l == 2) htmlTableString += "<td>tons</td>";
-    if (l == 3) htmlTableString += "<td>animals</td>"; //what an odd unit
-    if (4 <= l && l < 7) htmlTableString += "<td>tons</td>";
-    if (l == 7) htmlTableString += "<td>board-ft</td>";
-    if (l == 8) htmlTableString += "<td>tons</td>";
-
-    for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<td>";
-
-      var tempString = backendDataIdentifiers[l];
-      htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10) + "<br>";
-
-      htmlTableString += "</td>";
-
-    } //for each year
-
-    //units cell
-    if (l < 2) htmlTableString += "<td>Mg</td>";
-    if (l == 2) htmlTableString += "<td>Mg</td>";
-    if (l == 3) htmlTableString += "<td>animals</td>";
-    if (4 <= l && l < 7) htmlTableString += "<td>Mg</td>";
-    if (l == 7) htmlTableString += "<td>m^3</td>";
-    if (l == 8) htmlTableString += "<td>Mg</td>";
-  }
-
-  htmlTableString += "</table><br>";
-
-  //============================
-  //TABLE FOUR, SPECIAL INDICATORS
-
-  htmlTableString += "<table id='table4' class='resultsTable'>";
-
-  //add header row
-
-  htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Other Parameters </th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th> </th>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<th>";
-    htmlTableString += "Y" + y;
-    htmlTableString += "</th>";
-  }
-
-  htmlTableString += "<th> </th>";
-
-  htmlTableString += "</tr>";
-
-  htmlTableString += "<tr><td>Precipitation</td>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<td>";
-    htmlTableString += boardData[currentBoard].precipitation[y];
-    htmlTableString += "</td>";
-  }
-
-  htmlTableString += "<td>inches</td>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<td>";
-    htmlTableString += Math.round(boardData[currentBoard].precipitation[y] * 2.54 * 10) / 10;
-    htmlTableString += "</td>";
-  }
-
-  htmlTableString += "<td>cm</td>";
-
-  htmlTableString += "</tr>";
-
-  htmlTableString += "<tr><td>Strategic Wetland Use</td>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<td>";
-    htmlTableString += Totals.strategicWetlandPercent[y];
-    htmlTableString += "</td>";
-  }
-
-  htmlTableString += "<td>percent</td>";
-
-  for (var y = 1; y <= upToYear; y++) {
-    htmlTableString += "<td>";
-    htmlTableString += Totals.strategicWetlandCells[y];
-    htmlTableString += "</td>";
-  }
-
-  htmlTableString += "<td>cells</td>";
-
-  htmlTableString += "</tr>";
-
-  htmlTableString += "</table><br>";
-
-
-  //===========================END TABLE
+    //===========================END TABLE
+  }//end of else
 
   //well, we did all this work, we should probably do something with it.
   //let's give pass it off to some other function...
@@ -2198,3 +2379,19 @@ function addBackYearToYieldRadar(yearToAdd) {
     document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToRevive[e].id).style.visibility = "visible";
   }
 } //end addBackYearToYieldRadar
+
+/*
+* The function strategicWetlandFinder finds how many strategic wetland locations a player has for their share of land.
+* The way this task is done is by using boardData's map and comparing each cell's land type (the 2nd index of this value indicates which player it belongs to),
+* and checking if the wetland of that cell is a strategic wetland.
+* For more information refer Issue 386.
+*/
+function strategicWetlandFinder(playerNumber) {
+  var strategicWetlandCount = 0;
+  for(var i = 0; i < boardData[currentBoard].map.length; ++i){
+    if(boardData[currentBoard].map[i].landType[1] === playerNumber && boardData[currentBoard].map[i].strategicWetland === "1"){
+      strategicWetlandCount++;
+    }
+  }
+  return strategicWetlandCount;
+}
