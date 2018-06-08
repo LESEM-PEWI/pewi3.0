@@ -630,6 +630,9 @@ function changeLandTypeTile(tileId) {
       pushClick(0, getStamp(), 55, 0, tileId);
     }
   } // end outter if
+
+  // Whenever tile of land type is changed, we'd better recalculate the results
+  calculateResults();
 } //end changeLandTypeTile
 
 //paintChange changes the highlighted color of the selected painter and updates painter
@@ -3472,7 +3475,11 @@ function resultsStart() {
     modalUp = true;
 
     //functions that update results and display them appropriately
+    /*
+    Since we recalculate the results whenever tile of land use type is changed,
+    and we could always get the up-to-date result, so it's unnecessary to calculate result again here.
     calculateResults();
+    */
     displayResults();
     animateResults();
     //Event Listener for closing reslts tab

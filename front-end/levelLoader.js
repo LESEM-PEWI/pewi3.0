@@ -100,12 +100,15 @@ function loadLevel(level) {
           togglePopupDisplay();
         }, 5000);
       }
-
+      calculateResults();
       // Show the progress bars
       document.getElementById('progressBarContainer').style.display = 'block';
       $(document).ready(function() {
-        // Use the following line to change the value of data-transitiongoal
-        $('.progress .progress-bar-success').attr('data-transitiongoal', 15);
+        // get responding scores and assign it to the data-transitiongoal
+        $('.progress .progress-bar-nitrite').attr('data-transitiongoal', Totals.nitrateConcentrationScore[1]);
+        $('.progress .progress-bar-phoshorus').attr('data-transitiongoal', Totals.phosphorusLoadScore[1]);
+        // $('.progress .progress-bar-erosion').attr('data-transitiongoal', Totals.nitrateConcentrationScore[1]);
+        $('.progress .progress-bar-sediment').attr('data-transitiongoal', Totals.sedimentDeliveryScore[1]);
 
         $('.progress .progress-bar').progressbar(
           {display_text: 'center', percent_format: function(p) {return p;}}
