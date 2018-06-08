@@ -1926,30 +1926,6 @@ function getHighlightedInfo(tileId) {
       case 7:
         highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>";
         break;
-
-        /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
-      // case 9:
-      //   switch (Number(boardData[currentBoard].map[tileId].topography)) {
-      //     case 0:
-      //       highlightString = "0-1% slope" + "<br>";
-      //       break;
-      //     case 1:
-      //       highlightString = "1-2% slope" + "<br>";
-      //       break;
-      //     case 2:
-      //       highlightString = "2-5% slope" + "<br>";
-      //       break;
-      //     case 3:
-      //       highlightString = "5-9% slope" + "<br>";
-      //       break;
-      //     case 4:
-      //       highlightString = "9-14% slope" + "<br>";
-      //       break;
-      //     case 5:
-      //       highlightString = "14-18% slope" + "<br>";
-      //       break;
-      //   }
-        break;
         /*case 8:
       var soil = boardData[currentBoard].map[tileId].soilType;
       switch(soil)
