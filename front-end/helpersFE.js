@@ -620,8 +620,8 @@ function changeLandTypeTile(tileId) {
         // textureArray is a global array that links to each landType image, it was load in loader.js
         // by changing the reference on meshMaterials array, three.js will draw it on canvas automatically
 
-        //wetlands are restricted within flat lands only
-        if(selectedLandType == 14 && (Number(boardData[currentBoard].map[tileId].topography) != 0))
+        //wetlands are restricted within flat lands, i.e 0-2% only
+        if(selectedLandType == 14 && (Number(boardData[currentBoard].map[tileId].topography) >= 2))
         {
           //dont highlight
         }
@@ -2090,22 +2090,22 @@ function getSlope(tileId)
 {
   switch (Number(boardData[currentBoard].map[tileId].topography)) {
     case 0:
-      return "0-1% slope" + "<br>";
+      return "0-1% Slope" + "<br>";
       break;
     case 1:
-      return "1-2% slope" + "<br>";
+      return "1-2% Slope" + "<br>";
       break;
     case 2:
-      return "2-5% slope" + "<br>";
+      return "2-5% Slope" + "<br>";
       break;
     case 3:
-      return "5-9% slope" + "<br>";
+      return "5-9% Slope" + "<br>";
       break;
     case 4:
-      return "9-14% slope" + "<br>";
+      return "9-14% Slope" + "<br>";
       break;
     case 5:
-      return "14-18% slope" + "<br>";
+      return "14-18% Slope" + "<br>";
       break;
   }// end switch
 }// end getSlope
