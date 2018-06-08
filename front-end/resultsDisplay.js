@@ -1771,6 +1771,8 @@ function generateResultsTable() {
     number: (Math.round(Totals.landUseResults[1].permanentPastureLandUse * 10) / 10)
   }];
 
+  var listOfPlayerAv = [];
+
   var frontendNames = ["Conventional Corn Area", "Conservation Corn Area", "Conventional Soybean Area", "Conservation Soybean Area",
     "Mixed Fruits and Vegetables Area", "Permanent Pasture Area", "Rotational Grazing Area", "Grass Hay Area",
     "Switchgrass Area", "Prairie Area", "Wetland Area", "Alfalfa Area", "Conventional Forest Area",
@@ -1782,6 +1784,9 @@ function generateResultsTable() {
     "conservationForest", "shortRotationWoodyBioenergy"
   ];
 
+  /*
+  * The htmlTableString variable is used to keep track of which players have a parcel size greater than 0.
+  */
   var htmlTableString = "";
 
   //The code below is creating the first table
@@ -1823,29 +1828,55 @@ function generateResultsTable() {
     htmlTableString += "</tr>";
     //The code above is to add the column titles for Players section of results table
 
-    //The code below is to add players data
+    //The code below is to add players data to results table
     for(var i = 1; i < 7; ++i){
-      htmlTableString += "<tr><td> Player "+i+" </td>";
-      htmlTableString += "<td> " + dataset[i-1].count +" </td><td> percent </td>"
-      htmlTableString += "<td> " + dataset[i-1].number +" </td><td> acres </td>";
+      var j = i;
+      //the condition below is to make sure the parcel size is greater than 0, if not that player will not be included in the results table
+      if(dataset[i-1].number <=  0){
+        j = 0;
+      }
+      else{
+        listOfPlayerAv.push(i);
+      }
       //the switch case is to toggle between different "players" since players is assigned by different land types
-      switch (i) {
+      switch (j) {
+        case 0:
+          //default case does nothing, this is to only display players who own land
+          break;
         case 1:
+          htmlTableString += "<tr><td> Player "+i+" </td>";
+          htmlTableString += "<td> " + dataset[i-1].count +" </td><td> percent </td>"
+          htmlTableString += "<td> " + dataset[i-1].number +" </td><td> acres </td>";
           htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["conventionalCornLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
           break;
         case 2:
+          htmlTableString += "<tr><td> Player "+i+" </td>";
+          htmlTableString += "<td> " + dataset[i-1].count +" </td><td> percent </td>"
+          htmlTableString += "<td> " + dataset[i-1].number +" </td><td> acres </td>";
           htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["conservationCornLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
           break;
         case 3:
+          htmlTableString += "<tr><td> Player "+i+" </td>";
+          htmlTableString += "<td> " + dataset[i-1].count +" </td><td> percent </td>"
+          htmlTableString += "<td> " + dataset[i-1].number +" </td><td> acres </td>";
           htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["conventionalSoybeanLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
           break;
         case 4:
+          htmlTableString += "<tr><td> Player "+i+" </td>";
+          htmlTableString += "<td> " + dataset[i-1].count +" </td><td> percent </td>"
+          htmlTableString += "<td> " + dataset[i-1].number +" </td><td> acres </td>";
           htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["conservationSoybeanLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
           break;
         case 5:
+          htmlTableString += "<tr><td> Player "+i+" </td>";
+          htmlTableString += "<td> " + dataset[i-1].count +" </td><td> percent </td>"
+          htmlTableString += "<td> " + dataset[i-1].number +" </td><td> acres </td>";
           htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["alfalfaLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
           break;
         case 6:
+          htmlTableString += "<tr><td> Player "+i+" </td>";
+          htmlTableString += "<td> " + dataset[i-1].count +" </td><td> percent </td>"
+          htmlTableString += "<td> " + dataset[i-1].number +" </td><td> acres </td>";
           htmlTableString += "<td> " + (Math.round(Totals.landUseResults[1]["permanentPastureLandUse"] / toMetricFactorArea * 10) / 10) +" </td><td> hectares </td>";
           break;
       }
@@ -1927,8 +1958,9 @@ function generateResultsTable() {
     htmlTableString += "</tr>";
     //The code above is to add the column titles for Players section of results table
 
-    for(var i = 1; i < 7; ++i){
+    for(var j = 0; j < listOfPlayerAv.length; ++j){
       //The code below is to fill player data into the html page
+      var i = listOfPlayerAv[j];
       htmlTableString += "<tr><td> Player "+i+" </td>";
       htmlTableString += "<td> "+((strategicWetlandFinder(i)/20)*100)+" </td><td> Percent </td><td> "+strategicWetlandFinder(i)+" </td><td> Cells </td>"
     }
