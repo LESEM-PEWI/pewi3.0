@@ -46,7 +46,7 @@ var g_year1delete = false; //true if year 1 is deleted when there are other year
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board
-var tempArrTest = [];
+// var tempArrTest = [];
 
 // arrays
 
@@ -185,14 +185,14 @@ function toggleTabTitle(value) {
     detailListStyle = document.getElementsByClassName('DetailsList')[0].style;
   }
   // console.log(document.getElementsByClassName('DetailsList')[0]);
-  if(detailListStyle != null){
-    if(detailListStyle.display === 'none'){
-      detailListStyle.display = 'block';
-    }
-    else {
-      detailListStyle.display = 'none';
-    }
-  }
+  // if(detailListStyle != null){
+  //   if(detailListStyle.display === 'none'){
+  //     detailListStyle.display = 'block';
+  //   }
+  //   else {
+  //     detailListStyle.display = 'none';
+  //   }
+  // }
 }
 
 //Adds the given tileId and painter to the undoArr
@@ -1261,7 +1261,7 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
 //   }
 // console.log("sum: " + sum + " max: " + max + " min: " + min);
 // tempArrTest = [];
-
+  console.log("Got here");
   showLevelDetails(selectionHighlightNumber);
   currentHighlightType = selectionHighlightNumber;
   currentHighlightTypeString = highlightType;
@@ -2687,22 +2687,22 @@ function onDocumentMouseUp(event) {
     //Turn off click and drag functionality
     clickAndDrag = false;
 
-    //check to see if one of the physical features maps is highlighted
+    // check to see if one of the physical features maps is highlighted
     // levels maps need to be checked too
-    //if so, we'll change the tiles over to their appropriate color levels
-    //     if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
-    //
-    //       Totals = new Results(boardData[currentBoard]);
-    //       Totals.update();
-    //
-    //       // update each tile on the board with its corresponding color
-    //       for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-    //
-    //         if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-    //           meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
-    //         }
-    //       } //end for
-    //     }
+    // if so, we'll change the tiles over to their appropriate color levels
+        // if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
+        //
+        //   Totals = new Results(boardData[currentBoard]);
+        //   Totals.update();
+        //
+        //   // update each tile on the board with its corresponding color
+        //   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+        //
+        //     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+        //       meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
+        //     }
+        //   } //end for
+        // }
   }
 } //end onDocumentMouseUp
 
@@ -3055,10 +3055,15 @@ function printSoilType(tileId) {
       highlightString = "Noadaway 220" + "<br>";
       break;
   }
+//"Game Wildlife: " + getTileGameWildlifeInfoText(getTileGameWildlifeScore(tileId)) + "<br>"
   if (document.getElementById('parameters').innerHTML.includes('hover4') && currentHighlightType != 0) {
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile) * Number(boardData[currentBoard].map[tileId].area)).toFixed(2) + " tons" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1) + " tons" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Game Wildlife: " + getTileGameWildlifeInfoText(getTileGameWildlifeScore(tileId)) + "<br>");
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Game Wildlife: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>");
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>", '');
