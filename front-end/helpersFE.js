@@ -1928,27 +1928,27 @@ function getHighlightedInfo(tileId) {
         break;
 
         /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
-      case 9:
-        switch (Number(boardData[currentBoard].map[tileId].topography)) {
-          case 0:
-            highlightString = "0-1%" + "<br>";
-            break;
-          case 1:
-            highlightString = "1-2%" + "<br>";
-            break;
-          case 2:
-            highlightString = "2-5%" + "<br>";
-            break;
-          case 3:
-            highlightString = "5-9%" + "<br>";
-            break;
-          case 4:
-            highlightString = "9-14%" + "<br>";
-            break;
-          case 5:
-            highlightString = "14-18%" + "<br>";
-            break;
-        }
+      // case 9:
+      //   switch (Number(boardData[currentBoard].map[tileId].topography)) {
+      //     case 0:
+      //       highlightString = "0-1% slope" + "<br>";
+      //       break;
+      //     case 1:
+      //       highlightString = "1-2% slope" + "<br>";
+      //       break;
+      //     case 2:
+      //       highlightString = "2-5% slope" + "<br>";
+      //       break;
+      //     case 3:
+      //       highlightString = "5-9% slope" + "<br>";
+      //       break;
+      //     case 4:
+      //       highlightString = "9-14% slope" + "<br>";
+      //       break;
+      //     case 5:
+      //       highlightString = "14-18% slope" + "<br>";
+      //       break;
+      //   }
         break;
         /*case 8:
       var soil = boardData[currentBoard].map[tileId].soilType;
@@ -2084,6 +2084,32 @@ function getPrecipType(a){
   }
 }
 
+//gets the topography (percentage of slope) of a tile
+  /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
+function getSlope(tileId)
+{
+  switch (Number(boardData[currentBoard].map[tileId].topography)) {
+    case 0:
+      return "0-1% slope" + "<br>";
+      break;
+    case 1:
+      return "1-2% slope" + "<br>";
+      break;
+    case 2:
+      return "2-5% slope" + "<br>";
+      break;
+    case 3:
+      return "5-9% slope" + "<br>";
+      break;
+    case 4:
+      return "9-14% slope" + "<br>";
+      break;
+    case 5:
+      return "14-18% slope" + "<br>";
+      break;
+  }// end switch
+}// end getSlope
+
 //Gets the current timestamp for the click (event)
 function getStamp() {
   curTime = new Date();
@@ -2188,7 +2214,7 @@ function highlightTile(tileId) {
 
       //update the information displayed in the delayed hover div by cursor
       myTimer = setTimeout(function() {
-        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" +  getSlope(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
         //May use strings and iterate through them for removing hover information
         var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]);
         var info2 = "Precipitation: " + printPrecipYearType();
