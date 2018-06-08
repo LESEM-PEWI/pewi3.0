@@ -47,6 +47,7 @@ var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board
 var yearCopyPaste = 0; //used for copying and pasting the selected year
+var selectedLandType = 0; //keeps track of which land is selected
 
 // arrays
 
@@ -615,11 +616,20 @@ function changeLandTypeTile(tileId) {
       if (!multiplayerAssigningModeOn) {
         // textureArray is a global array that links to each landType image, it was load in loader.js
         // by changing the reference on meshMaterials array, three.js will draw it on canvas automatically
-        meshMaterials[tileId].map = textureArray[painter];
-        // record the data changes in boardData
-        boardData[currentBoard].map[tileId].landType[currentYear] = painter;
-        // update boardData figures
-        boardData[currentBoard].map[tileId].update(currentYear);
+
+        //wetlands are restricted within flat lands, i.e 0-2% only
+        if(selectedLandType == 14 && (Number(boardData[currentBoard].map[tileId].topography) >= 2))
+        {
+          //dont highlight
+        }
+        else
+        {
+          meshMaterials[tileId].map = textureArray[painter];
+          // record the data changes in boardData
+          boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+          // update boardData figures
+          boardData[currentBoard].map[tileId].update(currentYear);
+        }
       } else if (multiplayerAssigningModeOn) {
         meshMaterials[tileId].map = multiplayerTextureArray[painter];
         boardData[currentBoard].map[tileId].landType[currentYear] = painter;
@@ -648,7 +658,7 @@ function changeSelectedPaintTo(newPaintValue) {
     painterElementId = "paint" + newPaintValue;
     document.getElementById(painterElementId).className = "landSelectorIcon iconSelected";
     painter = newPaintValue;
-
+    selectedLandType = painter;
     //Index chat box entries for each landuse type
     switch (painterElementId) {
       case 'paint1':
@@ -1913,30 +1923,6 @@ function getHighlightedInfo(tileId) {
       case 7:
         highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>";
         break;
-
-        /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
-      case 9:
-        switch (Number(boardData[currentBoard].map[tileId].topography)) {
-          case 0:
-            highlightString = "0-1%" + "<br>";
-            break;
-          case 1:
-            highlightString = "1-2%" + "<br>";
-            break;
-          case 2:
-            highlightString = "2-5%" + "<br>";
-            break;
-          case 3:
-            highlightString = "5-9%" + "<br>";
-            break;
-          case 4:
-            highlightString = "9-14%" + "<br>";
-            break;
-          case 5:
-            highlightString = "14-18%" + "<br>";
-            break;
-        }
-        break;
         /*case 8:
       var soil = boardData[currentBoard].map[tileId].soilType;
       switch(soil)
@@ -2076,6 +2062,32 @@ function getPrecipType(a){
   }
 }
 
+//gets the topography (percentage of slope) of a tile
+  /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
+function getSlope(tileId)
+{
+  switch (Number(boardData[currentBoard].map[tileId].topography)) {
+    case 0:
+      return "0-1% Slope" + "<br>";
+      break;
+    case 1:
+      return "1-2% Slope" + "<br>";
+      break;
+    case 2:
+      return "2-5% Slope" + "<br>";
+      break;
+    case 3:
+      return "5-9% Slope" + "<br>";
+      break;
+    case 4:
+      return "9-14% Slope" + "<br>";
+      break;
+    case 5:
+      return "14-18% Slope" + "<br>";
+      break;
+  }// end switch
+}// end getSlope
+
 //Gets the current timestamp for the click (event)
 function getStamp() {
   curTime = new Date();
@@ -2180,7 +2192,7 @@ function highlightTile(tileId) {
 
       //update the information displayed in the delayed hover div by cursor
       myTimer = setTimeout(function() {
-        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" +  getSlope(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
         //May use strings and iterate through them for removing hover information
         var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]);
         var info2 = "Precipitation: " + printPrecipYearType();
@@ -2197,6 +2209,7 @@ function highlightTile(tileId) {
           document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info3, '');
           //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
         }
+        //this is where you should include the code about the topography for the hover over button
       }, 500);
     }
 
@@ -2433,7 +2446,6 @@ function objectiveCheck() {
 function onDocumentMouseMove(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     event.preventDefault();
-
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
 
     //set location of div that follows cursor for hover-info and displays with 1s delay
@@ -2490,8 +2502,10 @@ function onDocumentMouseMove(event) {
         //  tile on the board with no land type
 
         // if the tile the mouse hover on has landUseType, that means it is a paintable land
+
         if (boardData[currentBoard].map[currentTile].landType[0] !== 0) {
           // grid painter mode highlighting tiles here
+
           for (var i = 0; i < tilesToHighlight.length; i++) {
             highlightTile(tilesToHighlight[i] - 1);
             //prevent highlighting from overwritting...
@@ -2504,12 +2518,14 @@ function onDocumentMouseMove(event) {
       //if painter tool type is the clickAndDrag painter
       else if (clickAndDrag) {
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-        if (boardData[currentBoard].map[currentTile].landType[0] != 0) changeLandTypeTile(currentTile);
+        if (boardData[currentBoard].map[currentTile].landType[0] != 0)
+        {
+          changeLandTypeTile(currentTile);
+        }
       } else {
         //just a normal highlighting
         highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
       }
-
     }
   }
 } //end onDocumentMouseMove
@@ -2537,7 +2553,6 @@ function onDocumentMouseDown(event) {
         if (!modalUp && (!painterTool.hover || mapIsHighlighted)) {
 
           if (painterTool.status > 0 && !mapIsHighlighted) {
-
             //take care of grid painting
             //if the painter is not active, set to active
             if (painterTool.status == 1) {
@@ -2549,6 +2564,7 @@ function onDocumentMouseDown(event) {
             }
             //else if the painter is active, then complete grid paint
             else if (painterTool.status == 2) {
+
               //end painterTool.status function if
               var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
 
@@ -2624,7 +2640,6 @@ function onDocumentMouseUp(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     //Turn off click and drag functionality
     clickAndDrag = false;
-
     //check to see if one of the physical features maps is highlighted
     // levels maps need to be checked too
     //if so, we'll change the tiles over to their appropriate color levels
