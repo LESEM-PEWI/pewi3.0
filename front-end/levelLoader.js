@@ -105,7 +105,7 @@ function loadLevel(level) {
       document.getElementById('progressBarContainer').style.display = 'block';
       $(document).ready(function() {
         // Use the following line to change the value of data-transitiongoal
-        $('.progress .progress-bar-success').attr('data-transitiongoal', 3.55);
+        $('.progress .progress-bar-success').attr('data-transitiongoal', 15);
 
         $('.progress .progress-bar').progressbar(
           {display_text: 'center', percent_format: function(p) {return p;}}
