@@ -893,6 +893,8 @@ function switchBoards(newBoard) {
 
   //update Results to point to correct board since currentBoard is updated
   Totals = new Results(boardData[currentBoard]);
+  Totals.update();
+  console.log('Totals = ', Totals);
 
 } //end switchBoards
 

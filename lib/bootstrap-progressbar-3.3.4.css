@@ -32,9 +32,6 @@
   float: left;
   width: 0%;
   height: 100%;
-  font-size: 1.5vw;
-  color: white;
-  line-height: 2vw;
   text-align: center;
   background-color: #337ab7;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
@@ -50,8 +47,19 @@
   display: inline-block;
 }
 
+.progress .progressbar-back-text {
+  font-size: 1.5vw;
+  color: white;
+  line-height: 2vw;
+}
 
-#NitrateProgressBar span {
+.progress .progressbar-front-text {
+  font-size: 1.5vw;
+  color: white;
+  line-height: 2vw;
+}
+
+#NitrateProgressBar .progressBarTitle {
   display: inline-block;
   font-family: 'Amatic SC';
   font-size: 2.3vw;
@@ -125,14 +133,14 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  font-size: 12px;
+  /* font-size: 12px; */
   line-height: 20px;
   text-align: center;
 }
 .progress .progressbar-front-text {
   display: block;
   width: 100%;
-  font-size: 12px;
+  /* font-size: 12px; */
   line-height: 20px;
   text-align: center;
 }

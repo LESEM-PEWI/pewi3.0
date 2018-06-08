@@ -105,15 +105,15 @@ function loadLevel(level) {
       document.getElementById('progressBarContainer').style.display = 'block';
       $(document).ready(function() {
         // Use the following line to change the value of data-transitiongoal
-        $('.progress .progress-bar').attr('data-transitiongoal', 40);
-        
+        $('.progress .progress-bar-success').attr('data-transitiongoal', 3.55);
+
         $('.progress .progress-bar').progressbar(
-          {display_text: 'fill', percent_format: function(p) {return p;}}
+          {display_text: 'center', percent_format: function(p) {return p;}}
         );
 
       });
       break;
-      //multiplayer assigning mode
+    //multiplayer assigning mode
     case -1:
       multiplayerAssigningModeOn = true;
 
