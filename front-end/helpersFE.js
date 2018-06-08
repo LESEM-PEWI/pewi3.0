@@ -1548,20 +1548,20 @@ function getHighlightColor(highlightType, tileId) {
 
   else if (highlightType == "gamewildlife") {
   var gamewildlifescore = getTileGameWildlifeScore(tileId);
-  if(gamewildlifescore >= 0 && sgamewildlifescorecore < 0.1) return 0;
-  else if (gamewildlifescore>=0.1 && gamewildlifescore<=2) return 1;
-  else if (gamewildlifescore>=2.1 && gamewildlifescore<=4) return 2;
-  else if (gamewildlifescore>=4.1 && gamewildlifescore<=6) return 3;
-  else if (gamewildlifescore>6) return 4;
+  if(gamewildlifescore == 0) return 0;
+  if(gamewildlifescore > 0 && gamewildlifescore <= 2.1) return 1;
+  else if (gamewildlifescore>2.1 && gamewildlifescore<=4.1) return 2;
+  else if (gamewildlifescore>4 && gamewildlifescore<=6.1) return 3;
+  else if (gamewildlifescore>6.1) return 4;
   }
 
   else if (highlightType == "biodiversity") {
   var biodiversityscore = getTileBiodiversityScore(tileId);
-  if(biodiversityscore >= 0 && biodiversityscore < 0.1) return 5;
-  else if (biodiversityscore>=0.1 && biodiversityscore<=2) return 6;
-  else if (biodiversityscore>=2.1 && biodiversityscore<=4) return 7;
-  else if (biodiversityscore>=4.1 && biodiversityscore<=6) return 8;
-  else if (biodiversityscore>6) return 9;
+  if(biodiversityscore == 0) return 5;
+  else if (biodiversityscore> 0 && biodiversityscore<=2.5) return 6;
+  else if (biodiversityscore>2.5 && biodiversityscore<=5) return 7;
+  else if (biodiversityscore> 5 && biodiversityscore<=7.5) return 8;
+  else if (biodiversityscore>7.5) return 9;
   }
 
 
@@ -2081,11 +2081,11 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for Game Wildlife score
       case 21:
-        highlightString = "Score: " + getTileGameWildlifeScore(tileId) + "<br>";
+        highlightString = "Game Wildlife: " + getTileGameWildlifeInfoText(getTileGameWildlifeScore(tileId)) + "<br>";
         break;
         //create string for Biodiversity score
       case 22:
-        highlightString = "ScoreBiv: " + getTileBiodiversityScore(tileId) + "<br>" + "ScoreGW: " + getTileGameWildlifeScore(tileId) + "<br>";
+        highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
         break;
     }
     return highlightString;
@@ -5244,7 +5244,7 @@ function printOptionsEsc(e) {
   }
 } // end printOptionsEsc
 
-//Calculate Game Wildlife score for each individual tile
+//Calculate Game Wildlife score for an individual tile
 function getTileGameWildlifeScore(tileId){
   var score = 0;
   var currLandType = boardData[currentBoard].map[tileId].landType[yearSelected];
@@ -5290,7 +5290,7 @@ function getTileGameWildlifeScore(tileId){
 
 
 
-//Calculate Biodiversity score for each individual tile
+//Calculate Biodiversity score for an individual tile
 function getTileBiodiversityScore(tileId){
   var score = 0;
   var currLandType = boardData[currentBoard].map[tileId].landType[yearSelected];
@@ -5330,6 +5330,24 @@ function getTileBiodiversityScore(tileId){
   score*=multiplier;
 
   return score;
+}
+
+//This function is used to display hover information for the Game Wildlife overlay
+function getTileGameWildlifeInfoText(score){
+  if(score == 0) return "No Impact";
+  if(score > 0 && score <= 2.1) return "Low Impact";
+  else if (score>2.1 && score<=4.1) return "Moderate Impact";
+  else if (score>4 && score<=6.1) return "High Impact";
+  else if (score>6.1) return "Very High Impact";
+}
+
+//This function is used to display hover information for the Biodiversity overlay
+function getTileBiodiversityInfoText(score){
+  if(score == 0) return "No Impact";
+  else if (score> 0 && score<=2.5) return "Low Impact";
+  else if (score>2.5 && score<=5) return "Moderate Impact";
+  else if (score> 5 && score<=7.5) return "High Impact";
+  else if (score>7.5) return "Very High Impact"
 }
 
 
