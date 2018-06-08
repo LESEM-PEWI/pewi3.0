@@ -1206,12 +1206,6 @@ option {
   width: 5vw;
 }
 
-.DetailsList-title {
-  color: #fff;
-  font-size: 0.9vw;
-  margin: 0.5vw;
-}
-
 /* detail lists */
 .DetailsList, .DetailsListRolled {
   background-color: black;
@@ -1233,6 +1227,14 @@ option {
 .DetailsList {
   left: 14vw;
 }
+
+
+.DetailsList-title {
+  color: #fff;
+  font-size: 0.9vw;
+  margin: 0.5vw;
+}
+
 
 .DetailsListRolled {
   left: -1000px;

@@ -669,6 +669,7 @@ function setupBoardFromFile(file) {
 
   //addBoard
   var boardFromFile = new GameBoard();
+  // console.log('boardFromFile.map', boardFromFile.map);
   loadBoard(boardFromFile, file);
 
   switchBoards(boardFromFile);
