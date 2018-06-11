@@ -1388,32 +1388,61 @@
 
     <!-- div which responsible for the progress bar -->
     <div class="progressBarContainer" id="progressBarContainer">
-
-      <div id="NitrateProgressBar">
-        <div class="progressBarTitle">N:</div>
+      <div id="gameWildlifeProgressBar">
+        <div class="progressBarTitle">G:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-nitrare" role="progressbar" data-transitiongoal="40"></div>
+          <div class="progress-bar progress-bar-gameWildlife" role="progressbar" onmouseover="toogleScoreDetails('gameWildlife')"></div>
+        </div>
+        <div class="gameWildlifeScoreDetails">
+          <div class="title">Game Wildlife</div>
+          <div class="min-max">
+            <div class="min"> Total min: 0</div>
+            <div class="min"> Total max: 100</div>
+          </div>
+          <div class="ecoScore"></div>
+          <div class="rawValue"></div>
         </div>
       </div>
-
-      <div id="NitrateProgressBar">
-        <div class="progressBarTitle">P:</div>
+      <div id="biodiversityProgressBar">
+        <div class="progressBarTitle">B:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-phoshorus" role="progressbar" data-transitiongoal="60"></div>
+          <div class="progress-bar progress-bar-biodiversity" role="progressbar"></div>
         </div>
       </div>
-
-      <div id="NitrateProgressBar">
+      <div id="carbonProgressBar">
+        <div class="progressBarTitle">C:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-carbon" role="progressbar"></div>
+        </div>
+      </div>
+      <div id="erosionProgressBar">
         <div class="progressBarTitle">E:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-erosion" role="progressbar" data-transitiongoal="80"></div>
+          <div class="progress-bar progress-bar-erosion" role="progressbar"></div>
         </div>
       </div>
-
-      <div id="NitrateProgressBar">
+      <div id="nitrateProgressBar">
+        <div class="progressBarTitle">N:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-nitrate" role="progressbar"></div>
+        </div>
+      </div>
+      <div id="phoshorusProgressBar">
+        <div class="progressBarTitle">P:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-phoshorus" role="progressbar"></div>
+        </div>
+      </div>
+      <div id="sedimentProgressBar">
         <div class="progressBarTitle">S:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-sediment" role="progressbar" data-transitiongoal="90"></div>
+          <div class="progress-bar progress-bar-sediment" role="progressbar"></div>
+        </div>
+      </div>
+      <div id="totalYieldsProgressBar">
+        <div class="progressBarTitle">T:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-totalYields" role="progressbar"></div>
         </div>
       </div>
     </div>

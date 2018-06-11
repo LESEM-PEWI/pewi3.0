@@ -17,8 +17,8 @@
 }
 .progress {
   overflow: hidden;
-  height: 1.8vw;
-  width: 17vw;
+  height: 1.3vw;
+  width: 13vw;
   /* margin-bottom: 10px; */
   background-image: url('.././imgs/consoleTexture.png');
   border-radius: 12px;
@@ -33,7 +33,7 @@
   width: 0%;
   height: 100%;
   text-align: center;
-  background-color: #337ab7;
+  background-color: #008080;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
 
@@ -48,32 +48,34 @@
 }
 
 .progress .progressbar-back-text {
-  font-size: 1.2vw;
+  font-size: 1vw;
   color: white;
-  line-height: 2vw;
+  line-height: 1.4vw;
 }
 
 .progress .progressbar-front-text {
-  font-size: 1.2vw;
+  font-size: 1vw;
   color: white;
-  line-height: 2vw;
+  line-height: 1.4vw;
 }
 
-#NitrateProgressBar .progressBarTitle {
+.progressBarTitle {
   display: inline-block;
   font-family: 'Amatic SC';
-  font-size: 2.3vw;
+  font-size: 1.8vw;
   color: white;
 }
 
-#NitrateProgressBar {
-  margin-bottom: -5px;
+#gameWildlifeProgressBar, #biodiversityProgressBar, #carbonProgressBar,
+#erosionProgressBar, #phoshorusProgressBar, #sedimentProgressBar, #nitrateProgressBar,
+#totalYieldsProgressBar {
+  margin-bottom: -4px;
 }
 
 .progressBarContainer {
   position: absolute;
-  top: 20vw;
-  right: 68vw;
+  top: 12vw;
+  left: 14vw;
 }
 
 .progress-striped .progress-bar,
@@ -89,37 +91,49 @@
   -o-animation: progress-bar-stripes 2s linear infinite;
   animation: progress-bar-stripes 2s linear infinite;
 }
-.progress-bar-success {
+.progress-bar-gameWildlife {
   background-color: #5cb85c;
 }
-.progress-striped .progress-bar-success {
+.progress-striped .progress-bar-gameWildlife {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 }
-.progress-bar-info {
+.progress-bar-biodiversity {
   background-color: #5bc0de;
 }
-.progress-striped .progress-bar-info {
+.progress-striped .progress-bar-biodiversity {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 }
-.progress-bar-warning {
+.progress-bar-carbon {
   background-color: #f0ad4e;
 }
-.progress-striped .progress-bar-warning {
+.progress-striped .progress-bar-carbon {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 }
-.progress-bar-danger {
+.progress-bar-erosion {
   background-color: #d9534f;
 }
-.progress-striped .progress-bar-danger {
+.progress-striped .progress-bar-erosion {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+}
+.progress-bar-nitrate {
+  background-color: #C39900;
+}
+.progress-bar-phoshorus {
+  background-color: #0099DC;
+}
+.progress-bar-sediment {
+  background-color: #A53300;
+}
+.progress-bar-totalYields {
+  background-color: #009633;
 }
 .progress {
   position: relative;
@@ -134,14 +148,14 @@
   width: 100%;
   height: 100%;
   /* font-size: 12px; */
-  line-height: 20px;
+  /* line-height: 20px; */
   text-align: center;
 }
 .progress .progressbar-front-text {
   display: block;
   width: 100%;
   /* font-size: 12px; */
-  line-height: 20px;
+  /* line-height: 20px; */
   text-align: center;
 }
 .progress.right .progress-bar {
@@ -174,4 +188,12 @@
 .progress.vertical.bottom .progress-bar {
   position: absolute;
   bottom: 0;
+}
+
+.gameWildlifeScoreDetails {
+  position: inherit;
+  width: 10vw;
+  height: auto;
+  font-size: 3vw;
+  display: none;
 }

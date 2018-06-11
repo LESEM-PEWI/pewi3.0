@@ -195,6 +195,21 @@ function toggleTabTitle(value) {
   }
 }
 
+// Show score details when hover over progress bar
+function toogleScoreDetails(factor) {
+  switch (factor){
+    case 'gameWildlife':
+      console.log(document.getElementsByClassName('gameWildlifeScoreDetails'));
+      if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
+      else{
+        document.getElementsByClassName('gameWildlifeScoreDetails').childNodes[0].innerHTML = Totals.gameWildlifePointsScore[currentYear];
+        // document.getElementsByClassName('gameWildlifeScoreDetails')[0].innerHTML = Totals.gameWildlifePointsScore[currentYear];
+      }
+    break;
+  }
+}
+
 //Adds the given tileId and painter to the undoArr
 function addChange(tileId) {
   if (uniqueTileChange(tileId)) {
@@ -452,7 +467,9 @@ function addYearAndTransition() {
     document.getElementById("yearToPaste").options[nextYear].style.display = 'block';
   }
   //switch to next year
-
+  // refresh the progress bar
+  calculateResults();
+  refreshProgressBar(currentYear);
 } //end addYearAndTransition
 
 
@@ -552,6 +569,9 @@ function deleteYearAndTransition()
       document.getElementById("yearToCopy").options[1].style.display = 'none';
       document.getElementById("yearToPaste").options[1].style.display = 'none';
     }
+    // refresh the progress bar
+    // calculateResults();
+    refreshProgressBar(currentYear);
 }// end deleteYearAndTransition
 
 
@@ -633,6 +653,7 @@ function changeLandTypeTile(tileId) {
 
   // Whenever tile of land type is changed, we'd better recalculate the results
   calculateResults();
+  refreshProgressBar(currentYear);
 } //end changeLandTypeTile
 
 //paintChange changes the highlighted color of the selected painter and updates painter
@@ -4196,7 +4217,7 @@ function switchYearTab(yearNumberToChangeTo) {
   //then toggle on the selected year
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
   document.getElementById(yearIdString).className = "icon yearSelected";
-
+  refreshProgressBar(currentYear);
   // store last users action ( print function )
   if (!modalUp) {
     storeCurrentCameraSession(3, yearNumberToChangeTo);

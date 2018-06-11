@@ -44,6 +44,24 @@ function init() {
 
 } //end init
 
+// get ecosystem scores and load them to the corresponding progress bars based on which year user want to load.
+function refreshProgressBar(yearToLoad) {
+  $('.progress .progress-bar-gameWildlife').attr('data-transitiongoal', Totals.gameWildlifePointsScore[yearToLoad]);
+  $('.progress .progress-bar-biodiversity').attr('data-transitiongoal', Totals.biodiversityPointsScore[yearToLoad]);
+  $('.progress .progress-bar-carbon').attr('data-transitiongoal', Totals.carbonSequestrationScore[yearToLoad]);
+  $('.progress .progress-bar-erosion').attr('data-transitiongoal', Totals.grossErosionScore[yearToLoad]);
+  $('.progress .progress-bar-nitrate').attr('data-transitiongoal', Totals.nitrateConcentrationScore[yearToLoad]);
+  $('.progress .progress-bar-phoshorus').attr('data-transitiongoal', Totals.phosphorusLoadScore[yearToLoad]);
+  $('.progress .progress-bar-sediment').attr('data-transitiongoal', Totals.sedimentDeliveryScore[yearToLoad]);
+  $('.progress .progress-bar-totalYields').attr('data-transitiongoal', Math.min((Totals.nitrateConcentrationScore[yearToLoad] +
+    Totals.phosphorusLoadScore[yearToLoad] + Totals.sedimentDeliveryScore[yearToLoad] + Totals.carbonSequestrationScore[yearToLoad] +
+    Totals.grossErosionScore[yearToLoad] + Totals.gameWildlifePointsScore[yearToLoad] + Totals.biodiversityPointsScore[yearToLoad]) / 7, 100));
+
+  $('.progress .progress-bar').progressbar(
+    // {display_text: 'center', percent_format: function(p) {return p;}}
+  );
+}
+
 //getFileForExercise can retrieve file name from exercise/level number for the level loader
 function getFileForExercise(exercise) {
 
@@ -104,16 +122,7 @@ function loadLevel(level) {
       // Show the progress bars
       document.getElementById('progressBarContainer').style.display = 'block';
       $(document).ready(function() {
-        // get responding scores and assign it to the data-transitiongoal
-        $('.progress .progress-bar-nitrite').attr('data-transitiongoal', Totals.nitrateConcentrationScore[1]);
-        $('.progress .progress-bar-phoshorus').attr('data-transitiongoal', Totals.phosphorusLoadScore[1]);
-        // $('.progress .progress-bar-erosion').attr('data-transitiongoal', Totals.nitrateConcentrationScore[1]);
-        $('.progress .progress-bar-sediment').attr('data-transitiongoal', Totals.sedimentDeliveryScore[1]);
-
-        $('.progress .progress-bar').progressbar(
-          {display_text: 'center', percent_format: function(p) {return p;}}
-        );
-
+        refreshProgressBar(1);
       });
       break;
     //multiplayer assigning mode
