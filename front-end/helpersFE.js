@@ -6,7 +6,7 @@
           painter, Totals, river,
           Results, initData, hoveredOver, currentPlayer*/
 
-
+var globalLegend = false;
 var addingYearFromFile = false; //Boolean used to keep a track of whether or not you're adding a year from file
 var click;
 var clickAndDrag = false;
@@ -179,21 +179,66 @@ function toggleTabTitle(value) {
     document.getElementById(value).style.display = 'none';
   }
 
+
+  //
+  // var elementList = document.getElementsByClassName('DetailsList');
+  // if (elementList.length > 0) {
+  //   elementList[0].className = 'DetailsListRolled';
+  // }
+  //
+  // var elementRolled = document.getElementsByClassName('DetailsListRolled');
+  // if (elementRolled.length > 0) {
+  //   elementRolled[0].className = 'DetailsList';
+  // }
+
+
+
   // When hover over the tab, hide the map key
-  var detailListStyle = null;
-  if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
-    detailListStyle = document.getElementsByClassName('DetailsList')[0].style;
-  }
-  // console.log(document.getElementsByClassName('DetailsList')[0]);
+  // var detailListStyle = null;
+  // if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
+  //   detailListStyle = document.getElementsByClassName('DetailsList')[0].style;
+  // }
+  // // console.log(document.getElementsByClassName('DetailsList')[0]);
   // if(detailListStyle != null){
   //   if(detailListStyle.display === 'none'){
-  //     detailListStyle.display = 'block';
+  //     detailListStyle.display = 'inline-block';
   //   }
   //   else {
   //     detailListStyle.display = 'none';
   //   }
   // }
+
+
 }
+
+function toggleLegendVisibilityIn(){
+  if(globalLegend != null){
+  var element = document.getElementById(globalLegend).style;
+
+  if(element.visibility === 'visible'){
+    element.visibility = 'hidden';
+  }
+}
+}
+
+function toggleLegendVisibilityOut(){
+  if(globalLegend != null){
+  var element = document.getElementById(globalLegend).style;
+
+  if(element.visibility === 'hidden'){
+    element.visibility = 'visible';
+  }
+}
+}
+
+
+
+
+
+
+
+
+
 
 //Adds the given tileId and painter to the undoArr
 function addChange(tileId) {
@@ -1261,7 +1306,7 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
 //   }
 // console.log("sum: " + sum + " max: " + max + " min: " + min);
 // tempArrTest = [];
-  console.log("Got here");
+
   showLevelDetails(selectionHighlightNumber);
   currentHighlightType = selectionHighlightNumber;
   currentHighlightTypeString = highlightType;
@@ -3851,7 +3896,7 @@ function showInfo(stringToShow) {
 
 //showLevelDetails shows the legend for each of the highlight map functions
 function showLevelDetails(value) {
-
+  globalLegend = true;
   switch (value) {
     case 1:
       //show nitrate legend
@@ -3977,6 +4022,7 @@ function showLevelDetails(value) {
   } // END switch
   //hide ecosystem indicator legends
   if ((value > -4 && value < 0) || (value<=-19 && value>=-22)) {
+    globalLegend = false;
     var element = document.getElementsByClassName('DetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled';
@@ -3989,6 +4035,7 @@ function showLevelDetails(value) {
 
   //hide watershed feature legends
   else if (value < -3 && value > -10) {
+    globalLegend = false;
     var element = document.getElementsByClassName('DetailsList physicalDetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled physicalDetailsList';
@@ -3999,6 +4046,7 @@ function showLevelDetails(value) {
     }
   } //end else/if group
   else if (value < -9) {
+    globalLegend = false;
     var element = document.getElementsByClassName('DetailsList yieldDetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled yieldDetailsList';
