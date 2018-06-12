@@ -1235,6 +1235,14 @@ function displayLevels(overlayHighlightType) {
       pushClick(0, getStamp(), 81, 0, null);
     }
     break;
+
+    case 'nitratetile':
+    selectionHighlightNumber = 23;
+    updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 82, 0, null);
+    }
+    break;
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -1556,9 +1564,10 @@ function getHighlightColor(highlightType, tileId) {
   //nitrite highlight color indicies
   else if (highlightType == "nitrate") {
 
+
     var nitrateConcentration = Totals.nitrateContribution[currentYear][tileId];
 
-    if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return 18;
+    if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return getBoldedCells(tileId, 18);
     else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return 8;
     else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return 9;
     else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return 31;
@@ -1607,6 +1616,10 @@ function getHighlightColor(highlightType, tileId) {
   else if (biodiversityscore>2.5 && biodiversityscore<=5) return 7;
   else if (biodiversityscore> 5 && biodiversityscore<=7.5) return 8;
   else if (biodiversityscore>7.5) return 9;
+  }
+
+  else if (highlightType == "nitratetile") {
+    return 7;
   }
 
 
@@ -2131,6 +2144,9 @@ function getHighlightedInfo(tileId) {
         //create string for Biodiversity score
       case 22:
         highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
+        break;
+      case 23:
+        highlightString = "Nitrate ELevs: " + Number(boardData[currentBoard].map[tileId].nitrateConcentration[yearSelected]) + "<br>";
         break;
     }
     return highlightString;
@@ -5404,6 +5420,35 @@ function getTileBiodiversityInfoText(score){
 }
 
 
+function getTileNitrateScore(tileId){
+  var nitrateLevel = board.map[i].results[yearSelected].cropMultiplier;
+  var currLandType = boardData[currentBoard].map[tileId].landType[yearSelected];
+  var stratWet = boardData[currentBoard].map[tileId].strategicWetland;
+  var wetlandMultiplier = 0;
+  if(currLandType==14 && stratWet==1){
+    wetlandMultiplier = 0.48;
+  }
+
+}
+
+
+function getBoldedCells(tileId, color){
+  var row = boardData[currentBoard].map[tileId].row;
+  var col = boardData[currentBoard].map[tileId].column;
+  if(((row>=3 && row<=4) || (row>=7 && row<=12)) && (col==9)){
+    return getColorForBoldedCells('right', color);
+  }
+  else return 7;
+}
+
+function getColorForBoldedCells(direction, color){
+  switch(color){
+    case 18:
+      if(direction=='right') return 61;
+      break;
+    }
+
+  }
 
 
 

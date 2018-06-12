@@ -130,6 +130,15 @@ function loadResources() {
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/CECACA.png')); // 58       Light Grey
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/360b07.png')); // 59      Dark Mahogany
 
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTop.png')); // 60
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldLRight.png')); // 61
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottom.png')); // 62
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldLeft.png')); // 63
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopLeft.png')); // 64
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopRight.png')); // 65
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottomLeft.png')); // 66
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottomRight.png')); // 67
+
 
 
 
@@ -150,4 +159,3 @@ function loadResources() {
 
     return 1;
 }//end loadResources()
-

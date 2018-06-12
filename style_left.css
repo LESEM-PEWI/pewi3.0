@@ -424,7 +424,7 @@
 
 /* levels map selector */
 .levelsSelectorIcon {
-  margin: 0.4vw 3vw 1.2vw;
+  margin: 1vw 1vw 1.2vw;
 }
 
 
@@ -984,6 +984,12 @@ select {
     display: inline-block;
 }
 
+/**Container for Nitrate Tile**/
+.tooltipResultsNitrateTile{
+    position: relative;
+    display: inline-block;
+}
+
 /**Nitrate specs**/
 .tooltipResultsNitrate .tooltiptextResults {
     visibility: hidden;
@@ -1000,7 +1006,7 @@ select {
     /* padding: 6px 0; */
     position: absolute;
     z-index: 1;
-    left: 110px;
+    left: 68px;
     bottom: 8px;
     opacity: 0;
     transition: opacity 0.5s;
@@ -1022,7 +1028,7 @@ select {
     /* padding: 6px 0; */
     position: absolute;
     z-index: 1;
-    left: 110px;
+    left: 68px;
     bottom: 8px;
     opacity: 0;
     transition: opacity 0.5s;
@@ -1044,7 +1050,7 @@ select {
     /* padding: 6px 0; */
     position: absolute;
     z-index: 1;
-    left: 110px;
+    left: 68px;
     bottom: 8px;
     opacity: 0;
     transition: opacity 0.5s;
@@ -1066,7 +1072,7 @@ select {
     /* padding: 6px 0; */
     position: absolute;
     z-index: 1;
-    left: 110px;
+    left: 68px;
     bottom: 8px;
     opacity: 0;
     transition: opacity 0.5s;
@@ -1088,7 +1094,7 @@ select {
     /* padding: 6px 0; */
     position: absolute;
     z-index: 1;
-    left: 110px;
+    left: 68px;
     bottom: 8px;
     opacity: 0;
     transition: opacity 0.5s;
@@ -1110,7 +1116,7 @@ select {
     /* padding: 6px 0; */
     position: absolute;
     z-index: 1;
-    left: 110px;
+    left: 68px;
     bottom: 8px;
     opacity: 0;
     transition: opacity 0.5s;
@@ -1132,7 +1138,29 @@ select {
     /* padding: 6px 0; */
     position: absolute;
     z-index: 1;
-    left: 110px;
+    left: 68px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Nitrate Tile specs**/
+.tooltipResultsNitrateTile .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 68px;
     bottom: 8px;
     opacity: 0;
     transition: opacity 0.5s;
@@ -1250,6 +1278,22 @@ select {
 	margin-top: -10px;
 }
 
+/**More Nitrate Tile specs for tooltip**/
+.tooltipResultsNitrateTile .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
 /**Hover for Nitrate**/
 .tooltipResultsNitrate:hover .tooltiptextResults{
     visibility: visible;
@@ -1288,6 +1332,12 @@ select {
 
 /**Hover for Biodiversity**/
 .tooltipResultsBiodiversity:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for Nitrate Tile**/
+.tooltipResultsNitrateTile:hover .tooltiptextResults{
     visibility: visible;
     opacity: 1;
 }
