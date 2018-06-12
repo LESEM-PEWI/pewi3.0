@@ -216,11 +216,10 @@ function toogleScoreDetails(factor) {
     else{
       var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
       // 0 - 100 value
-      childNodes[5].innerHTML = 'Current: ' + Totals.carbonSequestrationScore[currentYear].toFixed(1);
-      // convert English unit to Metric unit
-      console.log(Totals.carbonSequestration[currentYear].toFixed(1) + ' Tons');
-      childNodes[7].innerHTML = Totals.carbonSequestration[currentYear].toFixed(1) + ' tons' + '<br>' +
-       (Totals.carbonSequestration[currentYear] * 0.90718474).toFixed(1) + ' Mg';
+      childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10);
+      childNodes[7].innerHTML = (Math.round(Totals.carbonSequestration[currentYear] * 10) / 10) + ' tons' + '<br>' +
+          // convert English unit to Metric unit
+          (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg';
       document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
     }
     break;
@@ -637,6 +636,12 @@ function calculateCutoffs() {
 function calculateResults() {
   //Totals = new Results(boardData[currentBoard]);
   Totals.update();
+
+  //Correction for Carbon Sequestrations
+  for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
+    Totals.carbonSequestration[y] = Totals.carbonSequestration[y] * (1 / 0.90718474);
+  }
+
   //contaminatedRiver(Totals);
 } //end calculateResults
 
@@ -3513,7 +3518,11 @@ function resultsStart() {
     modalUp = true;
 
     //functions that update results and display them appropriately
+    /*
+    Since we recalculate the results whenever tile of land use type is changed,
+    and we could always get the up-to-date result, so it's unnecessary to calculate result again here.
     calculateResults();
+    */
     displayResults();
     animateResults();
     //Event Listener for closing reslts tab
@@ -4673,6 +4682,9 @@ function updatePrecip(year) {
 
   boardData[currentBoard].updateBoard();
 
+  // update the result whenever precipitation is changed.
+  calculateResults();
+  refreshProgressBar();
 } //updatePrecip
 
 //updatePopup appends text to the popup dialogue
