@@ -334,6 +334,11 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   document.getElementById('resultsFrame').contentWindow.document.getElementById('upTo').innerHTML = boardData[currentBoard].calculatedToYear;
 
   var inMultiplayer = localStorage.getItem('LSinMultiplayer');
+  /*
+  * The variable multiplayerColorPack is used to hold the colors that represent each player in the the multiplayer set up mode.
+  * For more information refer to Issue 386.
+  */
+  var multiplayerColorPack = ["#87ceee","#e6bb00","#cc6578","#127731","#c97b08","#302485"];
   var dataset;
   console.log("Before, inMultiplayer is: "+inMultiplayer);
   //if in multiplayer mode, looking at different players and size of land each owns
@@ -509,7 +514,13 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   var radius = pieChart_length / 2;
 
   //colors are assigned from one of the default scaling options
-  var color = d3.scaleOrdinal(d3.schemeCategory20);
+  //if in multiplayer mode the color options will change else it will use default d3 schemeCategory20 colors
+  if(localStorage.getItem('LSinMultiplayer')==="true"){
+    var color = d3.scaleOrdinal(multiplayerColorPack);
+  }
+  else{
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+  }
 
   //set up an object and array for referring back and forth to elements
   var nameArray = [];
