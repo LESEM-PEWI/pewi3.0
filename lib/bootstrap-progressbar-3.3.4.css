@@ -190,7 +190,9 @@
   bottom: 0;
 }
 
-.gameWildlifeScoreDetails, .carbonScoreDetails {
+.gameWildlifeScoreDetails, .carbonScoreDetails, .erosionScoreDetails,
+.nitrateScoreDetails, .phoshorusScoreDetails, .sedimentScoreDetails,
+.totalScoreDetails, .biodiversityScoreDetails {
   background-image: url('.././imgs/consoleTexture.png');
   position: absolute;
   left: 1vw;

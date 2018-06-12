@@ -204,24 +204,49 @@ function toogleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Totals.gameWildlifePointsScore[currentYear];
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10;
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Totals.gameWildlifePointsScore[currentYear];
+        childNodes[7].innerHTML = Totals.gameWildlifePoints[currentYear] + 'pts';
         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
       }
     break;
     case 'carbon':
-    if(document.getElementsByClassName('carbonScoreDetails')[0].style.display == 'block')
-      document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'none';
-    else{
-      var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
-      // 0 - 100 value
-      childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10);
-      childNodes[7].innerHTML = (Math.round(Totals.carbonSequestration[currentYear] * 10) / 10) + ' tons' + '<br>' +
-          // convert English unit to Metric unit
-          (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg';
-      document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
-    }
+      if(document.getElementsByClassName('carbonScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 + ' tons' + '<br>' +
+        (Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 * 0.90718474) + ' Mg';
+        document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'biodiversity':
+      if(document.getElementsByClassName('biodiversityScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10 + ' pts';
+        document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'erosion':
+      if(document.getElementsByClassName('erosionScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grossErosionScore[currentYear] * 10) / 10;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.grossErosion[currentYear] * 10) / 10 + ' tons' + '<br>' +
+          (Math.round(Totals.grossErosion[currentYear] * 10) / 10 * 0.90718474) + ' Mg';
+        document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
+      }
     break;
   }
 }
