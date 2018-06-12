@@ -199,13 +199,30 @@ function toggleTabTitle(value) {
 function toogleScoreDetails(factor) {
   switch (factor){
     case 'gameWildlife':
-      console.log(document.getElementsByClassName('gameWildlifeScoreDetails'));
       if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block')
         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
       else{
-        document.getElementsByClassName('gameWildlifeScoreDetails').childNodes[0].innerHTML = Totals.gameWildlifePointsScore[currentYear];
-        // document.getElementsByClassName('gameWildlifeScoreDetails')[0].innerHTML = Totals.gameWildlifePointsScore[currentYear];
+        var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Totals.gameWildlifePointsScore[currentYear];
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Totals.gameWildlifePointsScore[currentYear];
+        document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
       }
+    break;
+    case 'carbon':
+    if(document.getElementsByClassName('carbonScoreDetails')[0].style.display == 'block')
+      document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'none';
+    else{
+      var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
+      // 0 - 100 value
+      childNodes[5].innerHTML = 'Current: ' + Totals.carbonSequestrationScore[currentYear].toFixed(1);
+      // convert English unit to Metric unit
+      console.log(Totals.carbonSequestration[currentYear].toFixed(1) + ' Tons');
+      childNodes[7].innerHTML = Totals.carbonSequestration[currentYear].toFixed(1) + ' tons' + '<br>' +
+       (Totals.carbonSequestration[currentYear] * 0.90718474).toFixed(1) + ' Mg';
+      document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
+    }
     break;
   }
 }
@@ -3496,11 +3513,7 @@ function resultsStart() {
     modalUp = true;
 
     //functions that update results and display them appropriately
-    /*
-    Since we recalculate the results whenever tile of land use type is changed,
-    and we could always get the up-to-date result, so it's unnecessary to calculate result again here.
     calculateResults();
-    */
     displayResults();
     animateResults();
     //Event Listener for closing reslts tab

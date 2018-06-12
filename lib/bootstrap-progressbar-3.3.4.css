@@ -190,10 +190,23 @@
   bottom: 0;
 }
 
-.gameWildlifeScoreDetails {
-  position: inherit;
-  width: 10vw;
+.gameWildlifeScoreDetails, .carbonScoreDetails {
+  background-image: url('.././imgs/consoleTexture.png');
+  position: absolute;
+  left: 1vw;
+  width: auto;
   height: auto;
-  font-size: 3vw;
+  font-size: 1.5vw;
+  color: white;
   display: none;
+  z-index: 1;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+  padding: 0.5vw 1vw 0.5vw 1vw;
+}
+
+.min-max {
+  display: inline-block;
+  font-size: 1vw;
 }

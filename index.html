@@ -1391,13 +1391,13 @@
       <div id="gameWildlifeProgressBar">
         <div class="progressBarTitle">G:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-gameWildlife" role="progressbar" onmouseover="toogleScoreDetails('gameWildlife')"></div>
+          <div class="progress-bar progress-bar-gameWildlife" role="progressbar" onmouseover="toogleScoreDetails('gameWildlife');" onmouseout="toogleScoreDetails('gameWildlife');"></div>
         </div>
         <div class="gameWildlifeScoreDetails">
           <div class="title">Game Wildlife</div>
           <div class="min-max">
             <div class="min"> Total min: 0</div>
-            <div class="min"> Total max: 100</div>
+            <div class="max"> Total max: 100</div>
           </div>
           <div class="ecoScore"></div>
           <div class="rawValue"></div>
@@ -1412,7 +1412,17 @@
       <div id="carbonProgressBar">
         <div class="progressBarTitle">C:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-carbon" role="progressbar"></div>
+          <div class="progress-bar progress-bar-carbon" role="progressbar" onmouseover="toogleScoreDetails('carbon');" onmouseout="toogleScoreDetails('carbon');"></div>
+        </div>
+
+        <div class="carbonScoreDetails">
+          <div class="title">Carbon</div>
+          <div class="min-max">
+            <div class="min"> Total min: 0</div>
+            <div class="max"> Total max: 100</div>
+          </div>
+          <div class="ecoScore"></div>
+          <div class="rawValue"></div>
         </div>
       </div>
       <div id="erosionProgressBar">
