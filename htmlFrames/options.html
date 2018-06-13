@@ -130,10 +130,14 @@ Cleaned and Prepared - July 2016
                   tempString += "hover8" + "\n";
                 }
               break;
+              // case "progressbars":
+              //   if (toggledElements[i].checked){
+              //     tempString += "progressbars" + "\n";
+              //   }
               //default case, just add a new line with parameter
             default:
               if (toggledElements[i].checked) {
-                tempString += toggledElements[i].id + "\n"
+                tempString += toggledElements[i].id + "\n";
               }
           } //end switch
         } //end for elements of class toggle
@@ -351,9 +355,9 @@ Cleaned and Prepared - July 2016
 
     /*
     * In recordCurrentOptions the current status of the checkbox is recorded.
-    * The purpose for this is that if someone had previous settings already saved then thought about changing those 
+    * The purpose for this is that if someone had previous settings already saved then thought about changing those
     * settings, but changed their mind in the process then those changes would be undone.
-    * For more information refer to Issue 362. 
+    * For more information refer to Issue 362.
     */
     function recordCurrentOptions(){
       var currentSelection = document.getElementsByClassName('toggle');
@@ -367,13 +371,13 @@ Cleaned and Prepared - July 2016
         }
       }
     }
-    
+
     /*
     * In undoSelectedOptions it sets the entire checkbox, which is the Instructor Options menu,
     * to what was recorded in recordCurrentOptions.
-    * The purpose for this is that if someone had previous settings already saved then thought about changing those 
+    * The purpose for this is that if someone had previous settings already saved then thought about changing those
     * settings, but changed their mind in the process then those changes would be undone.
-    * For more information refer to Issue 362. 
+    * For more information refer to Issue 362.
     */
     function undoSelectedOptions(){
       /*
@@ -435,6 +439,13 @@ Cleaned and Prepared - July 2016
         //scroll page to top, so that next time options is loaded it starts there
         window.scrollTo(0, 0);
       }
+    }
+
+    function toogleProgressBar() {
+      if(parent.document.getElementById('progressBarContainer').style.display == 'none')
+        parent.document.getElementById('progressBarContainer').style.display = 'block';
+      else
+        parent.document.getElementById('progressBarContainer').style.display = 'none';
     }
   </script>
 
@@ -537,6 +548,19 @@ Cleaned and Prepared - July 2016
 
       <input id="hover8" class="toggle" type="checkbox">
       <label for="hover8">Strategic Wetlands</label>
+    </div>
+
+    <div class="optionsHeader">
+      Progress Bar Options
+      <br>
+      <hr>
+    </div>
+
+    <div class = "optionsSubContainer">
+      <input id="progressbars" class="toggle" type="checkbox" onclick="toogleProgressBar();">
+      <label for="progressbars">Progress Bar</label>
+      <input id="minMax" class="toggle" type="button" onclick="retrieveMinMaxValues();">
+      <label for="minMax">Set min-max values</label>
     </div>
 
     <div class="optionsHeader">

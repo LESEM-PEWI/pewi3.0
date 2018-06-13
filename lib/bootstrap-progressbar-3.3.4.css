@@ -47,6 +47,13 @@
   display: inline-block;
 }
 
+.progress img {
+  /* display: none; */
+  width: 0.2vw;
+  height: 2vw;
+  position: absolute;
+}
+
 .progress .progressbar-back-text {
   font-size: 1vw;
   color: white;
@@ -74,7 +81,7 @@
 
 .progressBarContainer {
   position: absolute;
-  top: 18vw;
+  top: 15vw;
   right: 5vw;
 }
 
