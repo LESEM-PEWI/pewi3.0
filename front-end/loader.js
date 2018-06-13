@@ -130,14 +130,35 @@ function loadResources() {
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/CECACA.png')); // 58       Light Grey
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/360b07.png')); // 59      Dark Mahogany
 
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTop.png')); // 60
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldLRight.png')); // 61
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottom.png')); // 62
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldLeft.png')); // 63
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopLeft.png')); // 64
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopRight.png')); // 65
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottomLeft.png')); // 66
-    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottomRight.png')); // 67
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTop.png')); // 60 top
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldRight.png')); // 61 left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottom.png')); // 62 bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldLeft.png')); // 63 right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopLeft.png')); // 64 top right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopRight.png')); // 65 top left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottomLeft.png')); // 66 bottom right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottomRight.png')); // 67 bottom left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottomLeftRight.png')); // 68 bottom left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopLeftRight.png')); // 69 top left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopLeftBottom.png')); // 70 top right bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopRightBottom.png')); // 71 top left bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldLeftRight.png')); // 72 left right
+
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTop.png')); // 73 top
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldRight.png')); // 74 left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldBottom.png')); // 75 bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldLeft.png')); // 76 right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTopLeft.png')); // 77 top right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTopRight.png')); // 78 top left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldBottomLeft.png')); // 79 bottom right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldBottomRight.png')); // 80 bottom left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldBottomLeftRight.png')); // 81 bottom left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTopLeftRight.png')); // 82 top left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTopLeftBottom.png')); // 83 top right bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTopRightBottom.png')); // 84 top left bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldLeftRight.png')); // 85 left right
+
+
 
 
 

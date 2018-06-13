@@ -1568,10 +1568,10 @@ function getHighlightColor(highlightType, tileId) {
     var nitrateConcentration = Totals.nitrateContribution[currentYear][tileId];
 
     if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return getBoldedCells(tileId, 18);
-    else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return 8;
-    else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return 9;
-    else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return 31;
-    else if (nitrateConcentration > 0.25) return 26;
+    else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return getBoldedCells(tileId, 8);//return 8;
+    else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return getBoldedCells(tileId, 18);//return 9;
+    else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return getBoldedCells(tileId, 18);//return 31;
+    else if (nitrateConcentration > 0.25) return getBoldedCells(tileId, 18);//return 26;
 
   }
   //phosphorus highlight color indicies
@@ -1950,7 +1950,7 @@ function getHighlightedInfo(tileId) {
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>";
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>" + "TileId: " + tileId + "<br>";
         break;
         //create string for gross erosion levels
       case 2:
@@ -5432,19 +5432,152 @@ function getTileNitrateScore(tileId){
 }
 
 
+//This function is called in the getHighlightColor function for the subwatershed Nitrate layout
+//The function takes in the tileId and color necessary for the current cell
+//and determines which side of the cell should be bolded to show distinctions between
+//the subwatershed boundaries
 function getBoldedCells(tileId, color){
   var row = boardData[currentBoard].map[tileId].row;
   var col = boardData[currentBoard].map[tileId].column;
-  if(((row>=3 && row<=4) || (row>=7 && row<=12)) && (col==9)){
-    return getColorForBoldedCells('right', color);
+
+  var subwatershedcurr = boardData[currentBoard].map[tileId].subwatershed;  //The current subwatershed reference number
+  var subwatershedleft;
+  var subwatershedright;
+  var subwatershedtop;
+  var subwatershedbottom;
+  var didtop = false;
+  var didbottom = false;
+  var didleft = false;
+  var didright = false;
+
+//The next 4 if statements check if the cell is on an edge of the map,
+//if so, set its empty neighbor subwatershed type to 0
+  if(row==1){
+    subwatershedtop = 0;
+    didtop = true;
   }
-  else return 7;
+  if(row==36){
+    subwatershedbottom = 0;
+    didbottom = true;
+  }
+  if(col==1){
+    subwatershedleft = 0;
+    didleft = true;
+  }
+  if(col==23){
+    subwatershedright = 0;
+    didright = true;
+  }
+
+
+  //The next 4 if statements are used if a tile in on the edge of the map
+  if(!didtop){
+    subwatershedtop = boardData[currentBoard].map[tileId-23].subwatershed;
+  }
+  if(!didbottom){
+    subwatershedbottom = boardData[currentBoard].map[tileId+23].subwatershed;
+  }
+  if(!didleft){
+    subwatershedleft = boardData[currentBoard].map[tileId-1].subwatershed;
+  }
+  if(!didright){
+  subwatershedright = boardData[currentBoard].map[tileId+1].subwatershed;
+  }
+
+
+
+  //The following if statements contain the bulk of the functionality. They check if another subwatershed is found in any
+  //direction from the current tile and determine where to bold the current tile
+  //The function returns a call to the getColorForBoldedCells function, which determines which image file to be used
+
+  //Needs bolded on right
+  if(subwatershedcurr!=subwatershedright && subwatershedcurr==subwatershedleft && subwatershedcurr==subwatershedtop && subwatershedcurr==subwatershedbottom){
+      return getColorForBoldedCells('right', color);
+  }
+  //Needs bolded on left
+  else if(subwatershedcurr!=subwatershedleft && subwatershedcurr==subwatershedright && subwatershedcurr==subwatershedtop && subwatershedcurr==subwatershedbottom){
+      return getColorForBoldedCells('left', color);
+  }
+  //Needs bolded on bottom
+  else if(subwatershedcurr!=subwatershedbottom && subwatershedcurr==subwatershedright && subwatershedcurr==subwatershedtop && subwatershedcurr==subwatershedleft){
+      return getColorForBoldedCells('bottom', color);
+  }
+  //Needs bolded on top
+  else if(subwatershedcurr!=subwatershedtop && subwatershedcurr==subwatershedright && subwatershedcurr==subwatershedbottom && subwatershedcurr==subwatershedleft){
+      return getColorForBoldedCells('top', color);
+  }
+  //Needs bolded on top and right
+  else if(subwatershedcurr==subwatershedleft && subwatershedcurr==subwatershedbottom && subwatershedcurr!=subwatershedtop && subwatershedcurr!=subwatershedright){
+    return getColorForBoldedCells('topright', color);
+  }
+  //Needs bolded on top and left
+  else if(subwatershedcurr==subwatershedright && subwatershedcurr==subwatershedbottom && subwatershedcurr!=subwatershedtop && subwatershedcurr!=subwatershedleft){
+    return getColorForBoldedCells('topleft', color);
+  }
+  //Needs bolded on bottom and right
+  else if(subwatershedcurr==subwatershedleft && subwatershedcurr==subwatershedtop && subwatershedcurr !=subwatershedbottom && subwatershedcurr!=subwatershedright){
+    return getColorForBoldedCells('bottomright', color);
+  }
+  //Needs bolded on bottom and left
+  else if(subwatershedcurr==subwatershedright && subwatershedcurr==subwatershedtop && subwatershedcurr!=subwatershedbottom && subwatershedcurr!=subwatershedleft){
+    return getColorForBoldedCells('bottomleft', color);
+  }
+  //Needs bolded on top and left and right
+  else if(subwatershedcurr==subwatershedbottom && subwatershedcurr!=subwatershedleft && subwatershedcurr!=subwatershedright && subwatershedcurr!=subwatershedtop){
+    return getColorForBoldedCells('topleftright', color);
+  }
+  //Needs bolded on bottom and left and right
+  else if(subwatershedcurr==subwatershedtop && subwatershedcurr!=subwatershedleft && subwatershedcurr!=subwatershedright && subwatershedcurr!=subwatershedbottom){
+    return getColorForBoldedCells('bottomleftright', color);
+  }
+  //Needs bolded on top and right and bottom
+  else if(subwatershedcurr==subwatershedleft && subwatershedcurr!=subwatershedright && subwatershedcurr!=subwatershedtop && subwatershedcurr!=subwatershedbottom){
+    return getColorForBoldedCells('toprightbottom', color);
+  }
+  //Needs bolded on top and left and bottom
+  else if(subwatershedcurr==subwatershedright && subwatershedcurr!=subwatershedleft && subwatershedcurr!=subwatershedtop && subwatershedcurr!=subwatershedbottom){
+    return getColorForBoldedCells('topleftbottom', color);
+  }
+  //Needs bolded on left and right
+  else if(subwatershedcurr==subwatershedtop && subwatershedcurr==subwatershedbottom && subwatershedcurr!=subwatershedright && subwatershedcurr!=subwatershedleft){
+    return getColorForBoldedCells('leftright', color);
+  }
+  //Does not need to be bolded
+  else return color;
 }
 
 function getColorForBoldedCells(direction, color){
   switch(color){
     case 18:
-      if(direction=='right') return 61;
+      if(direction=='right') return 63;
+      else if(direction=='top') return 60;
+      else if(direction=='left') return 61;
+      else if(direction=='bottom') return 62;
+      else if(direction=='topright') return 64;
+      else if(direction=='topleft') return 65;
+      else if(direction=='bottomleft') return 67;
+      else if(direction=='bottomright') return 66;
+      else if(direction=='bottomleftright') return 68;
+      else if(direction=='topleftright') return 69;
+      else if(direction=='topleftbottom') return 71;
+      else if(direction=='toprightbottom') return 70;
+      else if(direction=='leftright') return 72;
+      break;
+
+    case 8:
+      if(direction=='right') return 76;
+      else if(direction=='top') return 73;
+      else if(direction=='left') return 74;
+      else if(direction=='bottom') return 75;
+      else if(direction=='topright') return 77;
+      else if(direction=='topleft') return 78;
+      else if(direction=='bottomleft') return 80;
+      else if(direction=='bottomright') return 79;
+      else if(direction=='bottomleftright') return 81;
+      else if(direction=='topleftright') return 82;
+      else if(direction=='topleftbottom') return 84;
+      else if(direction=='toprightbottom') return 83;
+      else if(direction=='leftright') return 85;
       break;
     }
 
