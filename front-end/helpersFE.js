@@ -219,7 +219,7 @@ function toogleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10;
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 + ' tons' + '<br>' +
-        (Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 * 0.90718474) + ' Mg';
+        (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg';
         document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
       }
     break;
@@ -239,13 +239,66 @@ function toogleScoreDetails(factor) {
       if(document.getElementsByClassName('erosionScoreDetails')[0].style.display == 'block')
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'none';
       else{
-        var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
+        var childNodes = document.getElementsByClassName('erosionScoreDetails')[0].childNodes;
         // 0 - 100 value
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grossErosionScore[currentYear] * 10) / 10;
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.grossErosion[currentYear] * 10) / 10 + ' tons' + '<br>' +
-          (Math.round(Totals.grossErosion[currentYear] * 10) / 10 * 0.90718474) + ' Mg';
+          (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10) + ' Mg';
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'nitrate':
+      if(document.getElementsByClassName('nitrateScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('nitrateScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' ppm' + '<br>' +
+          Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' mg/L';
+        document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'phoshorus':
+      if(document.getElementsByClassName('phoshorusScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('phoshorusScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+        document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'sediment':
+      if(document.getElementsByClassName('sedimentScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('sedimentScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.sedimentDelivery[currentYear] * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.sedimentDelivery[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+        document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'total':
+      if(document.getElementsByClassName('totalScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('totalScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('totalScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        var totalScore = Math.min((Totals.nitrateConcentrationScore[currentYear] +
+          Totals.phosphorusLoadScore[currentYear] + Totals.sedimentDeliveryScore[currentYear] + Totals.carbonSequestrationScore[currentYear] +
+          Totals.grossErosionScore[currentYear] + Totals.gameWildlifePointsScore[currentYear] + Totals.biodiversityPointsScore[currentYear]) / 7, 100);
+        childNodes[5].innerHTML = 'Current: ' + Math.round(totalScore * 10) / 10;
+
+        document.getElementsByClassName('totalScoreDetails')[0].style.display = 'block';
       }
     break;
   }

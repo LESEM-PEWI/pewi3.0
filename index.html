@@ -1279,6 +1279,130 @@
 
     <!-- END left console, there is a lot happening there -->
 
+    <!-- div which responsible for the progress bar -->
+    <div class="progressBarContainer" id="progressBarContainer">
+      <div id="gameWildlifeProgressBar">
+        <div class="progressBarTitle">G:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-gameWildlife" role="progressbar" onmouseover="toogleScoreDetails('gameWildlife');" onmouseout="toogleScoreDetails('gameWildlife');"></div>
+        </div>
+        <div class="gameWildlifeScoreDetails">
+          <div class="title">Game Wildlife</div>
+          <div class="min-max">
+            <div class="min"> Total min: 0</div>
+            <div class="max"> Total max: 100</div>
+          </div>
+          <div class="ecoScore"></div>
+          <div class="rawValue"></div>
+        </div>
+      </div>
+      <div id="biodiversityProgressBar">
+        <div class="progressBarTitle">B:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-biodiversity" role="progressbar" onmouseover="toogleScoreDetails('biodiversity');" onmouseout="toogleScoreDetails('biodiversity');"></div>
+        </div>
+        <div class="biodiversityScoreDetails">
+          <div class="title">Biodiversity</div>
+          <div class="min-max">
+            <div class="min"> Total min: 0</div>
+            <div class="max"> Total max: 100</div>
+          </div>
+          <div class="ecoScore"></div>
+          <div class="rawValue"></div>
+        </div>
+      </div>
+      <div id="carbonProgressBar">
+        <div class="progressBarTitle">C:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-carbon" role="progressbar" onmouseover="toogleScoreDetails('carbon');" onmouseout="toogleScoreDetails('carbon');"></div>
+        </div>
+        <div class="carbonScoreDetails">
+          <div class="title">Carbon Sequestration</div>
+          <div class="min-max">
+            <div class="min"> Total min: 0</div>
+            <div class="max"> Total max: 100</div>
+          </div>
+          <div class="ecoScore"></div>
+          <div class="rawValue"></div>
+        </div>
+      </div>
+      <div id="erosionProgressBar">
+        <div class="progressBarTitle">E:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-erosion" role="progressbar" onmouseover="toogleScoreDetails('erosion');" onmouseout="toogleScoreDetails('erosion');"></div>
+        </div>
+        <div class="erosionScoreDetails">
+          <div class="title">Gross Erosion</div>
+          <div class="min-max">
+            <div class="min"> Total min: 0</div>
+            <div class="max"> Total max: 100</div>
+          </div>
+          <div class="ecoScore"></div>
+          <div class="rawValue"></div>
+        </div>
+      </div>
+      <div id="nitrateProgressBar">
+        <div class="progressBarTitle">N:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-nitrate" role="progressbar" onmouseover="toogleScoreDetails('nitrate');" onmouseout="toogleScoreDetails('nitrate');"></div>
+        </div>
+        <div class="nitrateScoreDetails">
+          <div class="title">Nitrate Concentration</div>
+          <div class="min-max">
+            <div class="min"> Total min: 0</div>
+            <div class="max"> Total max: 100</div>
+          </div>
+          <div class="ecoScore"></div>
+          <div class="rawValue"></div>
+        </div>
+      </div>
+      <div id="phoshorusProgressBar">
+        <div class="progressBarTitle">P:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-phoshorus" role="progressbar" onmouseover="toogleScoreDetails('phoshorus');" onmouseout="toogleScoreDetails('phoshorus');"></div>
+        </div>
+        <div class="phoshorusScoreDetails">
+          <div class="title">Phoshorus Load</div>
+          <div class="min-max">
+            <div class="min"> Total min: 0</div>
+            <div class="max"> Total max: 100</div>
+          </div>
+          <div class="ecoScore"></div>
+          <div class="rawValue"></div>
+        </div>
+      </div>
+      <div id="sedimentProgressBar">
+        <div class="progressBarTitle">S:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-sediment" role="progressbar" onmouseover="toogleScoreDetails('sediment');" onmouseout="toogleScoreDetails('sediment');"></div>
+        </div>
+        <div class="sedimentScoreDetails">
+          <div class="title">Sediment Delivery</div>
+          <div class="min-max">
+            <div class="min"> Total min: 0</div>
+            <div class="max"> Total max: 100</div>
+          </div>
+          <div class="ecoScore"></div>
+          <div class="rawValue"></div>
+        </div>
+      </div>
+      <div id="totalYieldsProgressBar">
+        <div class="progressBarTitle">T:</div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-totalYields" role="progressbar" onmouseover="toogleScoreDetails('total');" onmouseout="toogleScoreDetails('total');"></div>
+        </div>
+        <div class="totalScoreDetails">
+          <div class="title">Total Sum Yields</div>
+          <div class="min-max">
+            <div class="min"> Total min: 0</div>
+            <div class="max"> Total max: 100</div>
+          </div>
+          <div class="ecoScore"></div>
+        </div>
+      </div>
+    </div>
+
+
     <!-- **BEGIN Right Side Component** -->
 
     <!-- Create results button -->
@@ -1386,128 +1510,6 @@
       <p id="hover-info"></p>
     </div>
 
-    <!-- div which responsible for the progress bar -->
-    <div class="progressBarContainer" id="progressBarContainer">
-      <div id="gameWildlifeProgressBar">
-        <div class="progressBarTitle">G:</div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-gameWildlife" role="progressbar" onmouseover="toogleScoreDetails('gameWildlife');" onmouseout="toogleScoreDetails('gameWildlife');"></div>
-        </div>
-        <div class="gameWildlifeScoreDetails">
-          <div class="title">Game Wildlife</div>
-          <div class="min-max">
-            <div class="min"> Total min: 0</div>
-            <div class="max"> Total max: 100</div>
-          </div>
-          <div class="ecoScore"></div>
-          <div class="rawValue"></div>
-        </div>
-      </div>
-      <div id="biodiversityProgressBar">
-        <div class="progressBarTitle">B:</div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-biodiversity" role="progressbar" onmouseover="toogleScoreDetails('biodiversity');" onmouseout="toogleScoreDetails('biodiversity');"></div>
-        </div>
-        <div class="biodiversityScoreDetails">
-          <div class="title">Biodiversity</div>
-          <div class="min-max">
-            <div class="min"> Total min: 0</div>
-            <div class="max"> Total max: 100</div>
-          </div>
-          <div class="ecoScore"></div>
-          <div class="rawValue"></div>
-        </div>
-      </div>
-      <div id="carbonProgressBar">
-        <div class="progressBarTitle">C:</div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-carbon" role="progressbar" onmouseover="toogleScoreDetails('carbon');" onmouseout="toogleScoreDetails('carbon');"></div>
-        </div>
-        <div class="carbonScoreDetails">
-          <div class="title">Carbon Sequestration</div>
-          <div class="min-max">
-            <div class="min"> Total min: 0</div>
-            <div class="max"> Total max: 100</div>
-          </div>
-          <div class="ecoScore"></div>
-          <div class="rawValue"></div>
-        </div>
-      </div>
-      <div id="erosionProgressBar">
-        <div class="progressBarTitle">E:</div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-erosion" role="progressbar" onmouseover="toogleScoreDetails('erosion');" onmouseout="toogleScoreDetails('erosion');"></div>
-        </div>
-        <div class="erosionScoreDetails">
-          <div class="title">Gross Erosion</div>
-          <div class="min-max">
-            <div class="min"> Total min: 0</div>
-            <div class="max"> Total max: 100</div>
-          </div>
-          <div class="ecoScore"></div>
-          <div class="rawValue"></div>
-        </div>
-      </div>
-      <div id="nitrateProgressBar">
-        <div class="progressBarTitle">N:</div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-nitrate" role="progressbar"></div>
-        </div>
-        <div class="nitrateScoreDetails">
-          <div class="title">Nitrate Concentration</div>
-          <div class="min-max">
-            <div class="min"> Total min: 0</div>
-            <div class="max"> Total max: 100</div>
-          </div>
-          <div class="ecoScore"></div>
-          <div class="rawValue"></div>
-        </div>
-      </div>
-      <div id="phoshorusProgressBar">
-        <div class="progressBarTitle">P:</div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-phoshorus" role="progressbar"></div>
-        </div>
-        <div class="phoshorusScoreDetails">
-          <div class="title">Phoshorus Load</div>
-          <div class="min-max">
-            <div class="min"> Total min: 0</div>
-            <div class="max"> Total max: 100</div>
-          </div>
-          <div class="ecoScore"></div>
-          <div class="rawValue"></div>
-        </div>
-      </div>
-      <div id="sedimentProgressBar">
-        <div class="progressBarTitle">S:</div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-sediment" role="progressbar"></div>
-        </div>
-        <div class="sedimentScoreDetails">
-          <div class="title">Sediment Delivery</div>
-          <div class="min-max">
-            <div class="min"> Total min: 0</div>
-            <div class="max"> Total max: 100</div>
-          </div>
-          <div class="ecoScore"></div>
-          <div class="rawValue"></div>
-        </div>
-      </div>
-      <div id="totalYieldsProgressBar">
-        <div class="progressBarTitle">T:</div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-totalYields" role="progressbar"></div>
-        </div>
-        <div class="totalScoreDetails">
-          <div class="title">Total Sum Yields</div>
-          <div class="min-max">
-            <div class="min"> Total min: 0</div>
-            <div class="max"> Total max: 100</div>
-          </div>
-          <div class="ecoScore"></div>
-        </div>
-      </div>
-    </div>
 
 
     <!-- Create iFrames for credits, upload/download, contact us and codex -->

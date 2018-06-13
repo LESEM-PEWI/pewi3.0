@@ -149,7 +149,7 @@
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .popup p, .popupHidden p {
@@ -215,7 +215,7 @@
   /* Safari */
   transition-duration: var(--transition-duration);
   width: 6vw;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 /*Dialogue button will roll off the screen when clicked on*/
@@ -242,7 +242,7 @@
   /* Safari */
   transition-duration: var(--transition-duration);
   width: 3vw;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .backgroundInfoButton {
@@ -267,7 +267,7 @@
   position: absolute;
   top: 36vw;
   width: 15vw;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .backgroundInfoBox {
