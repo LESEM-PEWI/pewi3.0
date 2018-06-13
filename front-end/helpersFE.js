@@ -2447,7 +2447,6 @@ function onDocumentMouseMove(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     event.preventDefault();
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-    console.log("Mouse Move");
     //set location of div that follows cursor for hover-info and displays with 1s delay
     var x = event.clientX;
     var y = event.clientY;
@@ -2534,7 +2533,6 @@ function onDocumentMouseMove(event) {
 function onDocumentMouseDown(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     //if the user's mouse is over one of the frames
-    console.log("I am in mouse down");
     // such as the left console or results button
     if (clearToChangeLandType) {
       event.preventDefault();
@@ -2547,24 +2545,19 @@ function onDocumentMouseDown(event) {
     if (event.which == 1 && intersects.length > 0 && clearToChangeLandType) {
 
       if (!isShiftDown) {
-        console.log("1st");
         if (!modalUp && (!painterTool.hover || mapIsHighlighted)) {
-            console.log("2nd");
           if (painterTool.status > 0) { //CHANGE
              //take care of grid painting
             //if the painter is not active, set to active
-            console.log("3rd");
             if (painterTool.status == 1) {
               //start grid painting option
               //set active
-              console.log("4th");
               painterTool.status = 2;
               //set start tile
               painterTool.startTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
             }
             //else if the painter is active, then complete grid paint
             else if (painterTool.status == 2) {
-              console.log("5th");
               //end painterTool.status function if
               var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
 
@@ -2572,7 +2565,7 @@ function onDocumentMouseDown(event) {
                 //then paint since it's an actual tile
                 painterTool.endTile = currentTile;
                 var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
-                console.log("6st");
+
                 var tempGridArr = [];
                 for (var i = 0; i < changedTiles.length; i++) {
                   if (curTracking) {
@@ -2594,17 +2587,18 @@ function onDocumentMouseDown(event) {
                 }
                 else
                 {
-                //  console.log("I am here");
-                    setHex(0x000000);
-                }
-
+                  //if map is highlighted, make sure that the highlighted tiles (when grid select is selected)
+                  //turn back to their intended color
+                  for(var i=0; i<changedTiles.length; i++)
+                  {
+                    meshMaterials[changedTiles[i]-1].emissive.setHex(0x000000);
+                  } //end for
+                } //end if-else
                 //reset painterTooling status as not active
                 painterTool.status = 1;
               } //end if
             } //end if active painter status
           } else {
-            //WRITE your code here
-
             //Zoom in when z and 1 keys are pressed and a tile is clicked -- also not multiAssign mode
             if (zIsDown && oneIsDown && !zoomedIn && !multiplayerAssigningModeOn) {
               switchToZoomView(getTileID(intersects[0].point.x, -intersects[0].point.z));
@@ -2649,7 +2643,6 @@ function onDocumentMouseUp(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     //Turn off click and drag functionality
     clickAndDrag = false;
-    console.log("I am in mouse up");
     //check to see if one of the physical features maps is highlighted
     // levels maps need to be checked too
     //if so, we'll change the tiles over to their appropriate color levels
@@ -2910,8 +2903,6 @@ function painterSelect(brushNumberValue) {
   var selectedElement = document.getElementsByClassName('painterIcon iconSelected');
   selectedElement[0].className = "painterIcon icon";
   painterTool.hover = false;
-  console.log("I am in painter Select");
-  console.log("bursh number value is " +brushNumberValue);
   //if the brush is a normal cell paint
   if (brushNumberValue == 1) {
     if (curTracking) {
