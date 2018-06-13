@@ -2587,7 +2587,7 @@ function onDocumentMouseDown(event) {
                 }
                 else
                 {
-                  //if map is highlighted, make sure that the highlighted tiles (especially the four corners) are
+                  //if map is highlighted, make sure that the highlighted tiles (especially the four corners)
                   //turn back to their intended color
                   for(var i=0; i<changedTiles.length; i++)
                   {
