@@ -45,7 +45,7 @@ var g_isDeleted = false; //true if year delete button is used; false otherwise
 var g_year1delete = false; //true if year 1 is deleted when there are other years present; false otherwise
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
-var maxYear = 0; //maximum number of years present currently on the board
+var maxYear = 0; //maximum number of years present currently on the board - only used for deletetion of years
 var yearCopyPaste = 0; //used for copying and pasting the selected year
 var selectedLandType = 0; //keeps track of which land is selected
 
@@ -2587,7 +2587,7 @@ function onDocumentMouseDown(event) {
                 }
                 else
                 {
-                  //if map is highlighted, make sure that the highlighted tiles (when grid select is selected)
+                  //if map is highlighted, make sure that the highlighted tiles (especially the four corners) are
                   //turn back to their intended color
                   for(var i=0; i<changedTiles.length; i++)
                   {
