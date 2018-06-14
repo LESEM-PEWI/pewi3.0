@@ -4725,12 +4725,14 @@ function updateKeys() {
   for (var i = 0; i < hotkeyArr.length; i++) {
     for (var j = 0; j < 2; j++) {
       var temp = j + 1;
-      if (hotkeyArr[i][j] == null) {
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).value = "";
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).placeholder = "N/A";
-      } else {
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).value = "";
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).placeholder = String.fromCharCode(hotkeyArr[i][j]);
+      if(window.frames[6].document.getElementById('hotkeyAggregateTool').style.display == 'block'){
+        if (hotkeyArr[i][j] == null) {
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).value = "";
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).placeholder = "N/A";
+        } else {
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).value = "";
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).placeholder = String.fromCharCode(hotkeyArr[i][j]);
+        }
       }
     }
   }

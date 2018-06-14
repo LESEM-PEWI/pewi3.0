@@ -270,6 +270,7 @@ Cleaned and Prepared - July 2016
       if(document.getElementById("hotkeyAggregateTool").style.display == "none") {
         document.getElementById("hotkeyAggregateTool").style.display = "block";
         var curHotkeys = parent.giveHotkeys();
+        console.log(curHotkeys);
         for(var i = 1; i < curHotkeys.length+1; i++) {
           var tempIndex = i-1;
           var tempHotkey = document.createElement("div");
