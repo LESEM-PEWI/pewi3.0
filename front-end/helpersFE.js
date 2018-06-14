@@ -3335,7 +3335,7 @@ function resetOptions() {
   toggleVisibility();
   // remove Esc key event listener
   document.removeEventListener('keyup', optionsEsc);
-  window.frames[4].document.removeEventListener('keyup', optionsEsc);
+  window.frames[6].document.removeEventListener('keyup', optionsEsc);
   // removeEvent(document, 'keyup', optionsEsc);
   // removeEvent(window.frames[4].document, 'keyup', optionsEsc);
 } //end resetOptions
@@ -3348,27 +3348,27 @@ function resetOptionsPage() {
   //Save ad randomize to make sure that the mao behind the options page is being refreshed when the options are reset
   saveAndRandomize();
   //Iterates through all the paints (Land uses) and untoggles them
-  if (window.frames[4].document.getElementById("paint1")) {
+  if (window.frames[6].document.getElementById("paint1")) {
     for (var i = 1; i < 16; i++) {
-      window.frames[4].document.getElementById("paint" + i).checked = false;
+      window.frames[6].document.getElementById("paint" + i).checked = false;
     }
   }
   //iterates through the toggled hover elements and untoggles them
-  if (window.frames[4].document.getElementById("hover1")) {
+  if (window.frames[6].document.getElementById("hover1")) {
     for (var i = 1; i < 9; i++) {
-      window.frames[4].document.getElementById("hover" + i).checked = false;
+      window.frames[6].document.getElementById("hover" + i).checked = false;
     }
   }
   //Untoggles all the other elements
-  if (window.frames[4].document.getElementById("year0") &&
-    window.frames[4].document.getElementById("progressbars") &&
-    window.frames[4].document.getElementById("precip") &&
-    window.frames[4].document.getElementById("statFrame")) {
+  if (window.frames[6].document.getElementById("year0") &&
+    window.frames[6].document.getElementById("progressbars") &&
+    window.frames[6].document.getElementById("precip") &&
+    window.frames[6].document.getElementById("statFrame")) {
 
-    window.frames[4].document.getElementById("year0").checked = false;
-    window.frames[4].document.getElementById("precip").checked = false;
-    window.frames[4].document.getElementById("statFrame").checked = false;
-    window.frames[4].document.getElementById("progressbars").checked = false;
+    window.frames[6].document.getElementById("year0").checked = false;
+    window.frames[6].document.getElementById("precip").checked = false;
+    window.frames[6].document.getElementById("statFrame").checked = false;
+    window.frames[6].document.getElementById("progressbars").checked = false;
   }
 }
 
@@ -4147,9 +4147,15 @@ function startOptions() {
     document.getElementById('options').contentWindow.getCurrentOptionsState();
     // add Esc key event listener
     document.addEventListener('keyup', optionsEsc);
-    window.frames[4].document.addEventListener('keyup', optionsEsc);
+    window.frames[6].document.addEventListener('keyup', optionsEsc);
     // addEvent(document, 'keyup', optionsEsc);
     // addEvent(window.frames[4].document, 'keyup', optionsEsc);
+
+    // hide the hotkey table when we click on 'Options' button
+    var hotkeyTable = window.frames[6].contentWindow.document.getElementById('#progressBarAggregateTool');
+    console.log(hotkeyTable);
+    if(hotkeyTable != null && hotkeyTable.style.display == 'block')
+      hotkeyTable.style.display = 'none';
   }
 } // end startOptions
 

@@ -162,7 +162,7 @@ body {
     border-radius: 25px;
   }
 
-  #hotkeyAggregateTool {
+  #hotkeyAggregateTool, #progressBarAggregateTool {
     width: 50%;
   }
 
@@ -189,4 +189,3 @@ body {
   #closeDiv:hover {
     cursor: pointer;
   }
-  
