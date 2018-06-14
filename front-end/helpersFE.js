@@ -3361,12 +3361,14 @@ function resetOptionsPage() {
   }
   //Untoggles all the other elements
   if (window.frames[4].document.getElementById("year0") &&
+    window.frames[4].document.getElementById("progressbars") &&
     window.frames[4].document.getElementById("precip") &&
     window.frames[4].document.getElementById("statFrame")) {
 
     window.frames[4].document.getElementById("year0").checked = false;
     window.frames[4].document.getElementById("precip").checked = false;
     window.frames[4].document.getElementById("statFrame").checked = false;
+    window.frames[4].document.getElementById("progressbars").checked = false;
   }
 }
 
@@ -4489,7 +4491,7 @@ function toggleVisibility() {
   document.getElementById('year2PrecipContainer').style.display = 'block';
   document.getElementById('year3PrecipContainer').style.display = 'block';
   document.getElementById('resultsButton').style.display = 'block';
-
+  document.getElementById('progressBarContainer').style.display = "block";
 
   //reset precip
   immutablePrecip = false;
@@ -4521,6 +4523,9 @@ function toggleVisibility() {
           break;
         case "multiAssign":
           document.getElementById('playerAddButton').style.display = "inline-block";
+          break;
+        case "progressbars":
+          document.getElementById('progressBarContainer').style.display = "none";
           break;
         default:
           if (arrLines[i].slice(0, 5) == 'paint') {

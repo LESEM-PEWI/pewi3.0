@@ -90,50 +90,52 @@ Cleaned and Prepared - July 2016
                 tempString += "precipOff" + "\n";
               }
               break;
-              case "hover1":
-                if (toggledElements[i].checked) {
-                  tempString += "hover1" + "\n";
+              // duplicate code, we can delete them
+              // case "hover1":
+              //   if (toggledElements[i].checked) {
+              //     tempString += "hover1" + "\n";
+              //   }
+              //   break;
+              // case "hover2":
+              //     if (toggledElements[i].checked) {
+              //       tempString += "hover2" + "\n";
+              //     }
+              //  break;
+              // case "hover3":
+              //    if (toggledElements[i].checked) {
+              //      tempString += "hover3" + "\n";
+              //    }
+              // break;
+              // case "hover4":
+              //   if (toggledElements[i].checked) {
+              //     tempString += "hover4" + "\n";
+              //   }
+              // break;
+              // case "hover5":
+              //   if (toggledElements[i].checked) {
+              //     tempString += "hover5" + "\n";
+              //   }
+              // break;
+              // case "hover6":
+              //   if (toggledElements[i].checked) {
+              //     tempString += "hover6" + "\n";
+              //   }
+              // break;
+              // case "hover7":
+              //   if (toggledElements[i].checked) {
+              //     tempString += "hover7" + "\n";
+              //   }
+              // break;
+              // case "hover8":
+              //   if (toggledElements[i].checked) {
+              //     tempString += "hover8" + "\n";
+              //   }
+              // break;
+              case "progressbars":
+                if (toggledElements[i].checked){
+                  tempString += "progressbars" + "\n";
                 }
                 break;
-              case "hover2":
-                  if (toggledElements[i].checked) {
-                    tempString += "hover2" + "\n";
-                  }
-               break;
-              case "hover3":
-                 if (toggledElements[i].checked) {
-                   tempString += "hover3" + "\n";
-                 }
-              break;
-              case "hover4":
-                if (toggledElements[i].checked) {
-                  tempString += "hover4" + "\n";
-                }
-              break;
-              case "hover5":
-                if (toggledElements[i].checked) {
-                  tempString += "hover5" + "\n";
-                }
-              break;
-              case "hover6":
-                if (toggledElements[i].checked) {
-                  tempString += "hover6" + "\n";
-                }
-              break;
-              case "hover7":
-                if (toggledElements[i].checked) {
-                  tempString += "hover7" + "\n";
-                }
-              break;
-              case "hover8":
-                if (toggledElements[i].checked) {
-                  tempString += "hover8" + "\n";
-                }
-              break;
-              // case "progressbars":
-              //   if (toggledElements[i].checked){
-              //     tempString += "progressbars" + "\n";
-              //   }
               //default case, just add a new line with parameter
             default:
               if (toggledElements[i].checked) {
@@ -185,7 +187,7 @@ Cleaned and Prepared - July 2016
     function getCurrentOptionsState() {
       //raw text content in parameters div
       var strRawContents = window.top.document.getElementById('parameters').innerHTML;
-        console.log("in the get current options state method"+strRawContents);
+        // console.log("in the get current options state method"+strRawContents);
       //split based on escape chars
       while (strRawContents.indexOf("\r") >= 0) {
         strRawContents = strRawContents.replace("\r", "");
@@ -206,6 +208,9 @@ Cleaned and Prepared - July 2016
             break;
           case "skyboxOn":
             document.getElementById('skybox').checked = 1;
+            break;
+          case "progressbars":
+            document.getElementById('progressbars').checked = 1;
             break;
           case "precipOff":
             //document.getElementById('precip').checked = 1;
@@ -328,19 +333,23 @@ Cleaned and Prepared - July 2016
 
       /*
       * Resets all options to false
-      * First 25 are paint and hover ids,
+      * First 23 are paint and hover ids,
       * The last two options are precipitation and application statistics option.
+      * Revised on June 14, there are 26 checkboxes in total, we only need to set the 'checked' property to false
       */
-      for(var i = 0; i < 29; ++i){
-        if(i < 26){
-          $(':checkbox')[i].checked = false;
-        }
-        if(i === 26){
-          $('#precip.toggle').prop('checked', false);
-        }
-        if(i === 27){
-          $('#statFrame.toggle').prop('checked', false);
-        }
+      for(var i = 0; i < 27; ++i){
+        $(':checkbox')[i].checked = false;
+        // if(i < 26){
+        //   $(':checkbox')[i].checked = false;
+        // }
+        // if(i === 26){
+        //   $('#precip.toggle').prop('checked', false);
+        //   console.log($('#precip.toggle'));
+        // }
+        // if(i === 27){
+        //   $('#statFrame.toggle').prop('checked', false);
+        //   console.log($('#statFrame.toggle'));
+        // }
       }
 
       //saves the current state of options
@@ -360,8 +369,9 @@ Cleaned and Prepared - July 2016
     * For more information refer to Issue 362.
     */
     function recordCurrentOptions(){
-      var currentSelection = document.getElementsByClassName('toggle');
-
+      // var currentSelection = document.getElementsByClassName('toggle');
+      // We should get all the 'checkbox' elements instead of 'toogle' elements.
+      var currentSelection = $(':checkbox');
       for(var i = 0; i < currentSelection.length; ++i){
         if(currentSelection[i].checked){
           selectedOptionsTrue.push(i);
@@ -385,15 +395,17 @@ Cleaned and Prepared - July 2016
       */
       for(var i = 0; i < selectedOptionsTrue.length; ++i){
         var index = selectedOptionsTrue[i];
-        if(index < 26){
-          $(':checkbox')[index].checked = true;
-        }
-        if(index === 26){
-          $('#precip.toggle').prop('checked', true);
-        }
-        if(index === 27){
-          $('#statFrame.toggle').prop('checked', true);
-        }
+        $(':checkbox')[index].checked = true;
+
+        // if(index < 27){
+        //   $(':checkbox')[index].checked = true;
+        // }
+        // if(index === 26){
+        //   $('#precip.toggle').prop('checked', true);
+        // }
+        // if(index === 27){
+        //   $('#statFrame.toggle').prop('checked', true);
+        // }
       }
 
       /*
@@ -401,15 +413,16 @@ Cleaned and Prepared - July 2016
       */
       for(var i = 0; i < selectedOptionsFalse.length; ++i){
         var index = selectedOptionsFalse[i];
-        if(index < 26){
-          $(':checkbox')[index].checked = false;
-        }
-        if(index === 26){
-          $('#precip.toggle').prop('checked', false);
-        }
-        if(index === 27){
-          $('#statFrame.toggle').prop('checked', false);
-        }
+        $(':checkbox')[index].checked = false;
+        // if(index < 26){
+        //   $(':checkbox')[index].checked = false;
+        // }
+        // if(index === 26){
+        //   $('#precip.toggle').prop('checked', false);
+        // }
+        // if(index === 27){
+        //   $('#statFrame.toggle').prop('checked', false);
+        // }
       }
     }
 
@@ -421,16 +434,17 @@ Cleaned and Prepared - July 2016
         * First 25 are paint and hover ids,
         * The last two options are precipitation and application statistics option.
         */
-        for(var i = 0; i < 29; ++i){
-          if(i < 26){
-            $(':checkbox')[i].checked = false;
-          }
-          if(i === 26){
-            $('#precip.toggle').prop('checked', false);
-          }
-          if(i === 27){
-            $('#statFrame.toggle').prop('checked', false);
-          }
+        for(var i = 0; i < 27; ++i){
+          $(':checkbox')[i].checked = false;
+          // if(i < 26){
+          //   $(':checkbox')[i].checked = false;
+          // }
+          // if(i === 26){
+          //   $('#precip.toggle').prop('checked', false);
+          // }
+          // if(i === 27){
+          //   $('#statFrame.toggle').prop('checked', false);
+          // }
         }
 
         //saves the current state of options
@@ -441,12 +455,6 @@ Cleaned and Prepared - July 2016
       }
     }
 
-    function toogleProgressBar() {
-      if(parent.document.getElementById('progressBarContainer').style.display == 'none')
-        parent.document.getElementById('progressBarContainer').style.display = 'block';
-      else
-        parent.document.getElementById('progressBarContainer').style.display = 'none';
-    }
   </script>
 
 </head>
@@ -557,8 +565,8 @@ Cleaned and Prepared - July 2016
     </div>
 
     <div class = "optionsSubContainer">
-      <input id="progressbars" class="toggle" type="checkbox" onclick="toogleProgressBar();">
-      <label for="progressbars">Progress Bar</label>
+      <input id="progressbars" class="toggle" type="checkbox">
+      <label for="progressbars">Progress Bar Off</label>
       <input id="minMax" class="toggle" type="button" onclick="retrieveMinMaxValues();">
       <label for="minMax">Set min-max values</label>
     </div>
