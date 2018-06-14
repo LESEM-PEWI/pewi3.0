@@ -618,7 +618,7 @@ function changeLandTypeTile(tileId) {
         // by changing the reference on meshMaterials array, three.js will draw it on canvas automatically
 
         //wetlands are restricted within flat lands, i.e 0-2% only
-        if(selectedLandType == 14 && (Number(boardData[currentBoard].map[tileId].topography) >= 2))
+        if(selectedLandType == 14 && (Number(boardData[currentBoard].map[tileId].topography) >= 2) && !randomizing)
         {
           //dont highlight
         }
@@ -3133,7 +3133,15 @@ function randomizeBoard() {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
       if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
-
+        //wetlands are restricted within flat lands, i.e 0-2% only
+        if((Number(boardData[currentBoard].map[i].topography) >= 2))
+        {
+          randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15];
+        }
+        else
+        {
+          randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+        }
         undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         changeLandTypeTile(i);
