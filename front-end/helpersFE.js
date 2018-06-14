@@ -1567,11 +1567,11 @@ function getHighlightColor(highlightType, tileId) {
 
     var nitrateConcentration = Totals.nitrateContribution[currentYear][tileId];
 
-    if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return getBoldedCells(tileId, 18);
-    else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return getBoldedCells(tileId, 8);//return 8;
-    else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return getBoldedCells(tileId, 18);//return 9;
-    else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return getBoldedCells(tileId, 18);//return 31;
-    else if (nitrateConcentration > 0.25) return getBoldedCells(tileId, 18);//return 26;
+    if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return getBoldedCells(tileId, 125);
+    else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return getBoldedCells(tileId, 126);//return 8;
+    else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return getBoldedCells(tileId, 127);//return 9;
+    else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return getBoldedCells(tileId, 128);//return 31;
+    else if (nitrateConcentration > 0.25) return getBoldedCells(tileId, 129);//return 26;
 
   }
   //phosphorus highlight color indicies
@@ -1619,7 +1619,7 @@ function getHighlightColor(highlightType, tileId) {
   }
 
   else if (highlightType == "nitratetile") {
-    return 7;
+    getTileNitrateScore(tileId);
   }
 
 
@@ -1950,7 +1950,7 @@ function getHighlightedInfo(tileId) {
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>" + "TileId: " + tileId + "<br>";
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>";
         break;
         //create string for gross erosion levels
       case 2:
@@ -5421,15 +5421,54 @@ function getTileBiodiversityInfoText(score){
 
 
 function getTileNitrateScore(tileId){
-  var nitrateLevel = board.map[i].results[yearSelected].cropMultiplier;
-  var currLandType = boardData[currentBoard].map[tileId].landType[yearSelected];
-  var stratWet = boardData[currentBoard].map[tileId].strategicWetland;
-  var wetlandMultiplier = 0;
-  if(currLandType==14 && stratWet==1){
-    wetlandMultiplier = 0.48;
-  }
+  var score = boardData[currentBoard].map[tileId].results[yearSelected].cropMultiplier;
+  score*=getTilePrecipitationMultiplier(yearSelected);
+
+  var check=0;
+  for (var s = 1; s < boardData[currentBoard].map[tileId].subwatershedArea.length; s++) {
+    console.log(check);
+    check++;
 
 }
+}
+
+function getTilePrecipitationMultiplier(year){
+
+  if (boardData[currentBoard].precipitation[year] == 24.58 || boardData[currentBoard].precipitation[year] == 28.18) // If it's a dry year
+  {
+    return 0.86;
+  } else if (boardData[currentBoard].precipitation[year] == 30.39 || boardData[currentBoard].precipitation[year] == 32.16 || boardData[currentBoard].precipitation[year] == 34.34) { // If it's a normal year
+    if (boardData[currentBoard].precipitation[year - 1] == 24.58 || boardData[currentBoard].precipitation[year - 1] == 28.18) {
+      return 1.69;
+    } else {
+      return 1;
+    }
+  } else { // If it's a flood year
+    if (boardData[currentBoard].precipitation[year - 1] == 24.58 || boardData[currentBoard].precipitation[year - 1] == 28.18) {
+      return 2.11;
+    } else {
+      return 1;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //This function is called in the getHighlightColor function for the subwatershed Nitrate layout
@@ -5546,9 +5585,13 @@ function getBoldedCells(tileId, color){
   else return color;
 }
 
+//This function is used in the getBoldedCells function to return the correct color and correct bolded cell
+//for displaying on the map
 function getColorForBoldedCells(direction, color){
+
+  //Any cell can be bolded in 1 of 13 ways depending on its location relative to the other subwatersheds
   switch(color){
-    case 18:
+    case 125:
       if(direction=='right') return 63;
       else if(direction=='top') return 60;
       else if(direction=='left') return 61;
@@ -5564,7 +5607,7 @@ function getColorForBoldedCells(direction, color){
       else if(direction=='leftright') return 72;
       break;
 
-    case 8:
+    case 126:
       if(direction=='right') return 76;
       else if(direction=='top') return 73;
       else if(direction=='left') return 74;
@@ -5579,6 +5622,56 @@ function getColorForBoldedCells(direction, color){
       else if(direction=='toprightbottom') return 83;
       else if(direction=='leftright') return 85;
       break;
+
+
+    case 127:
+      if(direction=='right') return 89;
+      else if(direction=='top') return 86;
+      else if(direction=='left') return 87;
+      else if(direction=='bottom') return 88;
+      else if(direction=='topright') return 90;
+      else if(direction=='topleft') return 91;
+      else if(direction=='bottomleft') return 93;
+      else if(direction=='bottomright') return 92;
+      else if(direction=='bottomleftright') return 94;
+      else if(direction=='topleftright') return 95;
+      else if(direction=='topleftbottom') return 97;
+      else if(direction=='toprightbottom') return 96;
+      else if(direction=='leftright') return 98;
+      break;
+
+    case 128:
+      if(direction=='right') return 102;
+      else if(direction=='top') return 99;
+      else if(direction=='left') return 100;
+      else if(direction=='bottom') return 101;
+      else if(direction=='topright') return 103;
+      else if(direction=='topleft') return 104;
+      else if(direction=='bottomleft') return 106;
+      else if(direction=='bottomright') return 105;
+      else if(direction=='bottomleftright') return 107;
+      else if(direction=='topleftright') return 108;
+      else if(direction=='topleftbottom') return 110;
+      else if(direction=='toprightbottom') return 109;
+      else if(direction=='leftright') return 111;
+      break;
+
+    case 129:
+      if(direction=='right') return 115;
+      else if(direction=='top') return 112;
+      else if(direction=='left') return 113;
+      else if(direction=='bottom') return 114;
+      else if(direction=='topright') return 116;
+      else if(direction=='topleft') return 117;
+      else if(direction=='bottomleft') return 119;
+      else if(direction=='bottomright') return 118;
+      else if(direction=='bottomleftright') return 120;
+      else if(direction=='topleftright') return 121;
+      else if(direction=='topleftbottom') return 123;
+      else if(direction=='toprightbottom') return 122;
+      else if(direction=='leftright') return 124;
+      break;
+
     }
 
   }
