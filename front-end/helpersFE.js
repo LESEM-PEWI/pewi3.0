@@ -1300,20 +1300,7 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
       meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
     } //end if
   } //end for
-//   var sum = 0;
-//   var min = 500;
-//   var max = 0;
-//   for(var k = 0; k<tempArrTest.length; k++){
-//     sum+=tempArrTest[k];
-//     if(tempArrTest[k]>max){
-//       max = tempArrTest[k];
-//     }
-//     if(tempArrTest[k]<min){
-//       min = tempArrTest[k];
-//     }
-//   }
-// console.log("sum: " + sum + " max: " + max + " min: " + min);
-// tempArrTest = [];
+
 
   showLevelDetails(selectionHighlightNumber);
   currentHighlightType = selectionHighlightNumber;
@@ -1619,7 +1606,8 @@ function getHighlightColor(highlightType, tileId) {
   }
 
   else if (highlightType == "nitratetile") {
-    getTileNitrateScore(tileId);
+    return 7;
+    // var nitratescore = Totals.tileNitrateScore[tileId][yearSelected];
   }
 
 
@@ -2146,7 +2134,7 @@ function getHighlightedInfo(tileId) {
         highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
         break;
       case 23:
-        highlightString = "Nitrate ELevs: " + Number(boardData[currentBoard].map[tileId].nitrateConcentration[yearSelected]) + "<br>";
+        highlightString = "Nitrate ELevs: " + Totals.tileNitrateScore[yearSelected][tileId] + "<br>";
         break;
     }
     return highlightString;

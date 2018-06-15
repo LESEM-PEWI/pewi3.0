@@ -2235,6 +2235,7 @@ function Results(board) {
   this.strategicWetlandCells = Array(4);
   this.grossErosionSeverity = Array(4);
   this.phosphorusRiskAssessment = Array(4);
+  this.tileNitrateScore = Array(4);
 
   //Achievement Score Variables:
   this.conventionalCornLandUseScore = [0, 0, 0, 0];
@@ -2406,6 +2407,18 @@ function Results(board) {
     }
   }; //end this.precipitationMultiplier
   //---end helper methods for assisting in calculateNitrateConcentration
+
+
+
+
+
+
+
+
+
+
+
+
 
   //preliminary function that sums area and stream network cells (allows flexibility with map layout)
   this.sumArea = function() {
@@ -2934,6 +2947,14 @@ function Results(board) {
       []
     ];
 
+    var tileNitrate = Array(4);
+    tileNitrate = [
+      [],
+      [],
+      [],
+      []
+    ];
+
     for (var y = 1; y <= board.calculatedToYear; y++) {
 
       //For each watershed store nitrate percent contribution
@@ -2949,6 +2970,7 @@ function Results(board) {
         grossErosionSeverity[y].push(this.getGrossErosionSeverity(board.map[i].results[y].calculatedGrossErosionRate));
         phosphorusRisk[y].push(this.getPhosphorusRiskAssessment(board.map[i].results[y].phosphorusDelivered / board.map[i].area));
         nitrateContribution[y].push(watershedPercent[y][board.map[i].subwatershed]);
+        tileNitrate[y].push(board.map[i].results[y].calculatedTileNitrate);
 
       }
     }
@@ -2957,6 +2979,7 @@ function Results(board) {
     this.nitrateContribution = nitrateContribution;
     this.grossErosionSeverity = grossErosionSeverity;
     this.phosphorusRiskAssessment = phosphorusRisk;
+    this.tileNitrateScore = tileNitrate;
 
   }; //end this.mapIt
 
@@ -3225,6 +3248,23 @@ function Tile(tileArray, board) {
 
   }; //end this.flagValues
 
+
+this.tileNitrate = function(year){
+  var score = 100 * Results.precipitationMultiplier(year) * this.cropMultiplierHelper(year) * this.area;
+  console.log("Made it");
+  var subwatershed = this.subwatershed;
+  var wetlandMultiplier = 1;
+  for(var t = 0; t < board.map.length; t++){
+    if ((subwatershed == board.map[t].subwatershed) && (board.map[t].landType[year] == LandUseType.wetland) && board.map[t].strategicWetland == 1) {
+      wetlandMultiplier = 0.48;
+      break;
+    }
+  }
+
+  score *= wetlandMultiplier;
+  this.results[year].calculatedTileNitrate = score;
+
+}
 
   /*----------------------------
        CARBON SEQUESTRATION
@@ -3999,6 +4039,27 @@ function Tile(tileArray, board) {
       }
     } else {
       this.results[year].cropMultiplier = 0;
+    }
+
+  }; //end this.nitrateSubcalculation
+
+
+  //Helper method, does same calculations as nitrateSubcalculation but returns values
+  //for use in Tile Nitrate calculation
+  this.cropMultiplierHelper = function(year) {
+
+    if ((this.landType[year] > LandUseType.none && this.landType[year] < LandUseType.alfalfa) || this.landType[year] == LandUseType.mixedFruitsVegetables) {
+      if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean) {
+        if (this.soilType == "A" || this.soilType == "B" || this.soilType == "C" || this.soilType == "L" || this.soilType == "N" || this.soilType == "O") {
+          return 0.14 * this.area * 0.69;
+        } else {
+          return 0.14 * this.area * 0.62;
+        }
+      } else {
+        return 0.14 * this.area;
+      }
+    } else {
+      return 0;
     }
 
   }; //end this.nitrateSubcalculation
