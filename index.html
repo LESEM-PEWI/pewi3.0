@@ -1284,9 +1284,10 @@
       <div id="gameWildlifeProgressBar">
         <div class="progressBarTitle">G:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-gameWildlife" role="progressbar" onmouseover="toogleScoreDetails('gameWildlife');" onmouseout="toogleScoreDetails('gameWildlife');"></div>
-          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;">
-          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;">
+          <div class="progress-bar progress-bar-gameWildlife" role="progressbar" onmouseover="toggleScoreDetails('gameWildlife');" onmouseout="toggleScoreDetails('gameWildlife');"></div>
+          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('min',0);" onmouseout="toggleMinMax('min',0);">
+          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('max',0);" onmouseout="toggleMinMax('max',0);">
+          <div class="min-max-details"></div>
         </div>
         <div class="gameWildlifeScoreDetails">
           <div class="title">Game Wildlife</div>
@@ -1301,9 +1302,10 @@
       <div id="biodiversityProgressBar">
         <div class="progressBarTitle">B:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-biodiversity" role="progressbar" onmouseover="toogleScoreDetails('biodiversity');" onmouseout="toogleScoreDetails('biodiversity');"></div>
-          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;">
-          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;">
+          <div class="progress-bar progress-bar-biodiversity" role="progressbar" onmouseover="toggleScoreDetails('biodiversity');" onmouseout="toggleScoreDetails('biodiversity');"></div>
+          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('min',1);" onmouseout="toggleMinMax('min',1);">
+          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('max',1);" onmouseout="toggleMinMax('max',1);">
+          <div class="min-max-details"></div>
         </div>
         <div class="biodiversityScoreDetails">
           <div class="title">Biodiversity</div>
@@ -1318,9 +1320,10 @@
       <div id="carbonProgressBar">
         <div class="progressBarTitle">C:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-carbon" role="progressbar" onmouseover="toogleScoreDetails('carbon');" onmouseout="toogleScoreDetails('carbon');"></div>
-          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;">
-          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;">
+          <div class="progress-bar progress-bar-carbon" role="progressbar" onmouseover="toggleScoreDetails('carbon');" onmouseout="toggleScoreDetails('carbon');"></div>
+          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('min',2);" onmouseout="toggleMinMax('min',2);">
+          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('max',2);" onmouseout="toggleMinMax('max',2);">
+          <div class="min-max-details"></div>
         </div>
         <div class="carbonScoreDetails">
           <div class="title">Carbon Sequestration</div>
@@ -1335,9 +1338,10 @@
       <div id="erosionProgressBar">
         <div class="progressBarTitle">E:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-erosion" role="progressbar" onmouseover="toogleScoreDetails('erosion');" onmouseout="toogleScoreDetails('erosion');"></div>
-          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;">
-          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;">
+          <div class="progress-bar progress-bar-erosion" role="progressbar" onmouseover="toggleScoreDetails('erosion');" onmouseout="toggleScoreDetails('erosion');"></div>
+          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('min',3);" onmouseout="toggleMinMax('min',3);">
+          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('max',3);" onmouseout="toggleMinMax('max',3);">
+          <div class="min-max-details"></div>
         </div>
         <div class="erosionScoreDetails">
           <div class="title">Gross Erosion</div>
@@ -1352,9 +1356,10 @@
       <div id="nitrateProgressBar">
         <div class="progressBarTitle">N:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-nitrate" role="progressbar" onmouseover="toogleScoreDetails('nitrate');" onmouseout="toogleScoreDetails('nitrate');"></div>
-          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;">
-          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;">
+          <div class="progress-bar progress-bar-nitrate" role="progressbar" onmouseover="toggleScoreDetails('nitrate');" onmouseout="toggleScoreDetails('nitrate');"></div>
+          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('min',4);" onmouseout="toggleMinMax('min',4);">
+          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('max',4);" onmouseout="toggleMinMax('max',4);">
+          <div class="min-max-details"></div>
         </div>
         <div class="nitrateScoreDetails">
           <div class="title">Nitrate Concentration</div>
@@ -1369,9 +1374,10 @@
       <div id="phoshorusProgressBar">
         <div class="progressBarTitle">P:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-phoshorus" role="progressbar" onmouseover="toogleScoreDetails('phoshorus');" onmouseout="toogleScoreDetails('phoshorus');"></div>
-          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;">
-          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;">
+          <div class="progress-bar progress-bar-phoshorus" role="progressbar" onmouseover="toggleScoreDetails('phoshorus');" onmouseout="toggleScoreDetails('phoshorus');"></div>
+          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('min',5);" onmouseout="toggleMinMax('min',5);">
+          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('max',5);" onmouseout="toggleMinMax('max',5);">
+          <div class="min-max-details"></div>
         </div>
         <div class="phoshorusScoreDetails">
           <div class="title">Phoshorus Load</div>
@@ -1386,9 +1392,10 @@
       <div id="sedimentProgressBar">
         <div class="progressBarTitle">S:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-sediment" role="progressbar" onmouseover="toogleScoreDetails('sediment');" onmouseout="toogleScoreDetails('sediment');"></div>
-          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;">
-          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;">
+          <div class="progress-bar progress-bar-sediment" role="progressbar" onmouseover="toggleScoreDetails('sediment');" onmouseout="toggleScoreDetails('sediment');"></div>
+          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('min',6);" onmouseout="toggleMinMax('min',6);">
+          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('max',6);" onmouseout="toggleMinMax('max',6);">
+          <div class="min-max-details"></div>
         </div>
         <div class="sedimentScoreDetails">
           <div class="title">Sediment Delivery</div>
@@ -1403,9 +1410,10 @@
       <div id="totalYieldsProgressBar">
         <div class="progressBarTitle">T:</div>
         <div class="progress">
-          <div class="progress-bar progress-bar-totalYields" role="progressbar" onmouseover="toogleScoreDetails('total');" onmouseout="toogleScoreDetails('total');"></div>
-          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;">
-          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;">
+          <div class="progress-bar progress-bar-totalYields" role="progressbar" onmouseover="toggleScoreDetails('total');" onmouseout="toggleScoreDetails('total');"></div>
+          <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('min',7);" onmouseout="toggleMinMax('min',7);">
+          <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('max',7);" onmouseout="toggleMinMax('max',7);">
+          <div id="min-max-details"></div>
         </div>
         <div class="totalScoreDetails">
           <div class="title">Total Sum Yields</div>

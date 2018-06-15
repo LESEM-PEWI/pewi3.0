@@ -196,7 +196,7 @@ function toggleTabTitle(value) {
 }
 
 // Show score details when hover over progress bar
-function toogleScoreDetails(factor) {
+function toggleScoreDetails(factor) {
   switch (factor){
     case 'gameWildlife':
       if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block')
@@ -302,6 +302,23 @@ function toogleScoreDetails(factor) {
       }
     break;
   }
+}
+
+function toggleMinMax(minOrMax, idNum){
+  if(document.getElementById('min-max-details').style.display == 'none'){
+    var progressbarIDs = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar",
+                        "nitrateProgressBar","phoshorusProgressBar","sedimentProgressBar","totalYieldsProgressBar"];
+    var minOrMaxValue;
+    if(minOrMax == 'min')
+      minOrMaxValue = document.getElementById(progressbarIDs[idNum]).childNodes[3].childNodes[3].style.left;
+      else
+      minOrMaxValue = document.getElementById(progressbarIDs[idNum]).childNodes[3].childNodes[5].style.left;
+      document.getElementById('min-max-details').innerHTML = minOrMax + ": " + minOrMaxValue;
+      document.getElementById('min-max-details').style.display = 'block';
+  }
+  else
+    document.getElementById('min-max-details').style.display = 'none';
+
 }
 
 //Adds the given tileId and painter to the undoArr
@@ -4152,20 +4169,48 @@ function startOptions() {
     // addEvent(window.frames[4].document, 'keyup', optionsEsc);
 
     // hide the hotkey table when we click on 'Options' button
-    var hotkeyTable = window.frames[6].document.getElementById('hotkeyAggregateTool');
-    if(hotkeyTable != null && hotkeyTable.style.display != 'none')
-      hotkeyTable.style.display = 'none';
+    var tableInOption = window.frames[6].document.getElementById('hotkeyAggregateTool');
+    if(tableInOption != null && tableInOption.style.display != 'none'){
+      tableInOption.style.display = 'none';
+      window.frames[6].document.getElementById('hotkeySets').innerHTML = '';
+    }
+
+    // hide the progressbar min/max setup table when we click on 'Options' button
+    tableInOption = window.frames[6].document.getElementById('progressBarAggregateTool');
+    if(tableInOption != null && tableInOption.style.display != 'none'){
+      tableInOption.style.display = 'none';
+      window.frames[6].document.getElementById('progressBarSets').innerHTML = '';
+    }
   }
 } // end startOptions
 
 // Set min or max value indicators in progress bar according to its id.
 function setProgressbarMinMaxValues(id, minOrMax, value) {
-  // var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar",
-  //                       "nitrateProgressBar","phoshorusProgressBar","sedimentProgressBar","totalYieldsProgressBar"];
+  //if value is not numerical, disgard this change.
   if(isNaN(value))
     return;
-  var children = document.getElementById(id).childNodes;
-  console.log(children);
+  // if value < 0, we set it to be 0, if value > 100, then set it to be 100. Error protection.
+  if(value <= 0) value = -10;
+  if(value >= 100) value = 110;
+
+  var children = document.getElementById(id).childNodes[3].childNodes;
+  // console.log(children);
+  if(minOrMax == 'min'){
+    if(value < parseFloat(children[5].style.left))
+      children[3].style.left = value + "%";
+    // else{ //If min > max, then we remove max value
+    //   children[5].style.left = "110%";
+    // }
+
+  }
+  else if(minOrMax == 'max'){
+    if(value > parseFloat(children[3].style.left))
+      children[5].style.left = value + "%";
+    // else{ //If min > max, then we remove min value
+    //   children[3].style.left = "-10%";
+    // }
+
+  }
 }
 
 // startPrintOptions displays the printOptions page

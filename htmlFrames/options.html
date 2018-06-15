@@ -458,10 +458,40 @@ Cleaned and Prepared - July 2016
       }
     }
 
+    /*
+      Dynamically generate a table for customizing min and max values in progress bar
+
+    */
     function retrieveMinMaxValues() {
       if(document.getElementById("progressBarAggregateTool").style.display == "none") {
         document.getElementById("progressBarAggregateTool").style.display = "block";
-        // var curHotkeys = parent.giveHotkeys();
+        var titleEle = document.createElement("div");
+        titleEle.style.overflow = "auto";
+        titleEle.id = "itemTitles";
+        titleEle.className = "progressbarItems";
+        titleEle.innerHTML = " Category:";
+        var titleSpan = document.createElement("span");
+        titleEle.appendChild(titleSpan);
+        var minTitle = document.createElement("span");
+        minTitle.className = "minInput";
+        minTitle.id = "minTitle";
+        minTitle.innerHTML = "Min";
+        minTitle.setAttribute("size","5");
+        minTitle.setAttribute("height","5");
+        titleSpan.appendChild(minTitle);
+        var maxTitle = document.createElement("span");
+        maxTitle.className = "maxInput";
+        maxTitle.id = "maxTitle";
+        maxTitle.innerHTML = "Max";
+        maxTitle.setAttribute("size","5");
+        maxTitle.setAttribute("height","5");
+        titleEle.style.background = "#2d5986";
+        minTitle.style.background = "#2d5986";
+        maxTitle.style.background = "#2d5986";
+        titleSpan.appendChild(maxTitle);
+        document.getElementById('progressBarSets').appendChild(titleEle);
+
+
         for(var i = 0; i < progressbarDescrip.length; i++) {
           var progressbarElement = document.createElement("div");
             progressbarElement.style.overflow = "auto";
@@ -473,13 +503,15 @@ Cleaned and Prepared - July 2016
           var minInput = document.createElement("input");
             minInput.id = "min" + i;
             minInput.className = "minInput";
-            if(Number(parent.document.getElementById('minIndicator').style.left) < 0%){
-              var currentValue = "N/A";
-            } else {
-              var currentValue = Number(parent.document.getElementById('minIndicator').style.left) * 100;
-            }
-            minInput.placeholder = currentValue;
-            minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues(pb" + i +", min,this.value)");
+            // console.log(parent.document.getElementById(progressbarIds[i]));
+            var minValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[3].style.left);
+            var maxValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[5].style.left);
+            if(minValue < 0) minValue = "NaN";
+
+            if(maxValue > 100) maxValue = "NaN";
+            minInput.placeholder = minValue;
+            // console.log(progressbarIds[i]);
+            minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', this.value)");
             minInput.setAttribute("onkeydown","this.value = this.value");
             minInput.setAttribute("size","5");
             minInput.setAttribute("height","5");
@@ -487,19 +519,14 @@ Cleaned and Prepared - July 2016
           var maxInput = document.createElement("input");
             maxInput.id = "max" + i;
             maxInput.className = "maxInput";
-            if(Number(parent.document.getElementById('maxIndicator').style.left) > 100%){
-              var currentValue = "N/A";
-            } else {
-              var currentValue = Number(parent.document.getElementById('minIndicator').style.right) * 100;
-            }
-            maxInput.placeholder = currentValue;
+            maxInput.placeholder = maxValue;
             maxInput.setAttribute("type","text");
-            maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues(pb" + i +", max,this.value)");
+            maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', this.value)");
             maxInput.setAttribute("onkeydown","this.value = this.value");
             maxInput.setAttribute("size","5");
             maxInput.setAttribute("height","5");
             tempSpan.appendChild(maxInput);
-          if(i % 2==0) {
+          if(i % 2 != 0) {
             progressbarElement.style.background = "#2d5986";
             minInput.style.background = "#2d5986";
             maxInput.style.background = "#2d5986";
