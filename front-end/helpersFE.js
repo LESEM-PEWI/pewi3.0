@@ -4152,12 +4152,21 @@ function startOptions() {
     // addEvent(window.frames[4].document, 'keyup', optionsEsc);
 
     // hide the hotkey table when we click on 'Options' button
-    var hotkeyTable = window.frames[6].contentWindow.document.getElementById('#progressBarAggregateTool');
-    console.log(hotkeyTable);
-    if(hotkeyTable != null && hotkeyTable.style.display == 'block')
+    var hotkeyTable = window.frames[6].document.getElementById('hotkeyAggregateTool');
+    if(hotkeyTable != null && hotkeyTable.style.display != 'none')
       hotkeyTable.style.display = 'none';
   }
 } // end startOptions
+
+// Set min or max value indicators in progress bar according to its id.
+function setProgressbarMinMaxValues(id, minOrMax, value) {
+  // var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar",
+  //                       "nitrateProgressBar","phoshorusProgressBar","sedimentProgressBar","totalYieldsProgressBar"];
+  if(isNaN(value))
+    return;
+  var children = document.getElementById(id).childNodes;
+  console.log(children);
+}
 
 // startPrintOptions displays the printOptions page
 function startPrintOptions() {

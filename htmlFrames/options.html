@@ -41,6 +41,9 @@ Cleaned and Prepared - July 2016
     var tempString;
     var multiString;
     var maxYear = 3; //for settings, defines the number of year buttons specified
+    var progressbarDescrip = ["Game Wildlife","Biodiversity","Carbon Sequestration","Gross Erosion","Nitrate Concentration","Phoshorus Load","Sediment Delivery","Total Sum Yields"];
+    var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar",
+                          "nitrateProgressBar","phoshorusProgressBar","sedimentProgressBar","totalYieldsProgressBar"];
     /*
     * savedOptions is a variable to indicate that whether or not changes in Instructor Options were saved.
     */
@@ -270,7 +273,6 @@ Cleaned and Prepared - July 2016
       if(document.getElementById("hotkeyAggregateTool").style.display == "none") {
         document.getElementById("hotkeyAggregateTool").style.display = "block";
         var curHotkeys = parent.giveHotkeys();
-        console.log(curHotkeys);
         for(var i = 1; i < curHotkeys.length+1; i++) {
           var tempIndex = i-1;
           var tempHotkey = document.createElement("div");
@@ -453,6 +455,64 @@ Cleaned and Prepared - July 2016
 
         //scroll page to top, so that next time options is loaded it starts there
         window.scrollTo(0, 0);
+      }
+    }
+
+    function retrieveMinMaxValues() {
+      if(document.getElementById("progressBarAggregateTool").style.display == "none") {
+        document.getElementById("progressBarAggregateTool").style.display = "block";
+        // var curHotkeys = parent.giveHotkeys();
+        for(var i = 0; i < progressbarDescrip.length; i++) {
+          var progressbarElement = document.createElement("div");
+            progressbarElement.style.overflow = "auto";
+            progressbarElement.id = "pb"+i;
+            progressbarElement.className = "progressbarItems";
+            progressbarElement.innerHTML = progressbarDescrip[i];
+          var tempSpan = document.createElement("span");
+            progressbarElement.appendChild(tempSpan);
+          var minInput = document.createElement("input");
+            minInput.id = "min" + i;
+            minInput.className = "minInput";
+            if(Number(parent.document.getElementById('minIndicator').style.left) < 0%){
+              var currentValue = "N/A";
+            } else {
+              var currentValue = Number(parent.document.getElementById('minIndicator').style.left) * 100;
+            }
+            minInput.placeholder = currentValue;
+            minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues(pb" + i +", min,this.value)");
+            minInput.setAttribute("onkeydown","this.value = this.value");
+            minInput.setAttribute("size","5");
+            minInput.setAttribute("height","5");
+            tempSpan.appendChild(minInput);
+          var maxInput = document.createElement("input");
+            maxInput.id = "max" + i;
+            maxInput.className = "maxInput";
+            if(Number(parent.document.getElementById('maxIndicator').style.left) > 100%){
+              var currentValue = "N/A";
+            } else {
+              var currentValue = Number(parent.document.getElementById('minIndicator').style.right) * 100;
+            }
+            maxInput.placeholder = currentValue;
+            maxInput.setAttribute("type","text");
+            maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues(pb" + i +", max,this.value)");
+            maxInput.setAttribute("onkeydown","this.value = this.value");
+            maxInput.setAttribute("size","5");
+            maxInput.setAttribute("height","5");
+            tempSpan.appendChild(maxInput);
+          if(i % 2==0) {
+            progressbarElement.style.background = "#2d5986";
+            minInput.style.background = "#2d5986";
+            maxInput.style.background = "#2d5986";
+          } else {
+            progressbarElement.style.background = "#0f4d70";
+            minInput.style.background = "#0f4d70";
+            maxInput.style.background = "#0f4d70";
+          }
+          document.getElementById('progressBarSets').appendChild(progressbarElement);
+        }
+      } else {
+        document.getElementById("progressBarAggregateTool").style.display = "none";
+        document.getElementById("progressBarSets").innerHTML = '';
       }
     }
 
