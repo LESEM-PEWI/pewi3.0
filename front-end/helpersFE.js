@@ -1567,8 +1567,17 @@ function getHighlightColor(highlightType, tileId) {
 
     if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
       return 26;
-    } else {
+    }
+    else
+    {
+      if((Number(boardData[currentBoard].map[tileId].topography) <= 1))
+      {
+          return 32;
+      }
+      else
+      {
       return 41;
+    }
     }
   }
   // loader
@@ -1917,7 +1926,14 @@ function getHighlightedInfo(tileId) {
         if (boardData[currentBoard].map[tileId].strategicWetland == 1)
           highlightString = "Strategic Wetland" + "<br>";
         else
-          highlightString = "Not A Strategic Wetland" + "<br>";
+          if((Number(boardData[currentBoard].map[tileId].topography) <= 1))
+          {
+            highlightString = "Suitable" + "<br>";
+          }
+          else
+          {
+            highlightString = "Not Suitable" + "<br>";
+          }
         break;
         //create string for subwatershed number
       case 7:
