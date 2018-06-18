@@ -305,19 +305,23 @@ function toggleScoreDetails(factor) {
 }
 
 function toggleMinMax(minOrMax, idNum){
-  if(document.getElementById('min-max-details').style.display == 'none'){
-    var progressbarIDs = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar",
-                        "nitrateProgressBar","phoshorusProgressBar","sedimentProgressBar","totalYieldsProgressBar"];
+  var progressbarIDs = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar",
+                      "nitrateProgressBar","phoshorusProgressBar","sedimentProgressBar","totalYieldsProgressBar"];
+  var tempElement = document.getElementById(progressbarIDs[idNum]);
+  // console.log(tempElement.childNodes[7].style.display);
+  if(tempElement.childNodes[7].style.display == 'none' || tempElement.childNodes[7].style.display == '' ){
     var minOrMaxValue;
-    if(minOrMax == 'min')
-      minOrMaxValue = document.getElementById(progressbarIDs[idNum]).childNodes[3].childNodes[3].style.left;
-      else
-      minOrMaxValue = document.getElementById(progressbarIDs[idNum]).childNodes[3].childNodes[5].style.left;
-      document.getElementById('min-max-details').innerHTML = minOrMax + ": " + minOrMaxValue;
-      document.getElementById('min-max-details').style.display = 'block';
+    if(minOrMax == 'Min')
+      minOrMaxValue = tempElement.childNodes[3].childNodes[3].style.left;
+    else
+      minOrMaxValue = tempElement.childNodes[3].childNodes[5].style.left;
+    tempElement.childNodes[7].innerHTML = minOrMax + ": " + minOrMaxValue.replace("%", "") ;
+    tempElement.childNodes[7].style.display = 'block';
   }
-  else
-    document.getElementById('min-max-details').style.display = 'none';
+  else{
+    tempElement.childNodes[7].style.display = 'none';
+    tempElement.childNodes[7].innerHTML = '';
+  }
 
 }
 

@@ -203,7 +203,7 @@
   background-image: url('.././imgs/consoleTexture.png');
   position: absolute;
   left: 1vw;
-  width: 17vw;
+  width: 18vw;
   height: auto;
   font-size: 1.5vw;
   color: white;
@@ -211,6 +211,7 @@
   z-index: 1;
   text-align: center;
   border-radius: 10px;
+  border: solid 3px white;
   box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
   padding: 0.5vw 1vw 1vw 1vw;
 }
@@ -220,19 +221,19 @@
   font-size: 1vw;
 }
 
-#min-max-details {
-  display: none;
+.min-max-details {
   background-image: url('.././imgs/consoleTexture.png');
   position: absolute;
-  left: 1vw;
-  width: 4vw;
+  left: 4.5vw;
+  width: auto;
   height: auto;
-  font-size: 1.5vw;
+  font-size: 1.6vw;
   color: white;
   display: none;
   z-index: 1;
+  border: solid 3px white;
   text-align: center;
   border-radius: 10px;
   box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
-  padding: 0.5vw 1vw 1vw 1vw;
+  padding: 1vw 1vw 1vw 1vw;
 }
