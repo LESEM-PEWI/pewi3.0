@@ -45,7 +45,7 @@ var g_isDeleted = false; //true if year delete button is used; false otherwise
 var g_year1delete = false; //true if year 1 is deleted when there are other years present; false otherwise
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
-var maxYear = 0; //maximum number of years present currently on the board
+var maxYear = 0; //maximum number of years present currently on the board - only used for deletetion of years
 var yearCopyPaste = 0; //used for copying and pasting the selected year
 var selectedLandType = 0; //keeps track of which land is selected
 
@@ -2463,7 +2463,6 @@ function onDocumentMouseMove(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     event.preventDefault();
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-
     //set location of div that follows cursor for hover-info and displays with 1s delay
     var x = event.clientX;
     var y = event.clientY;
@@ -2474,18 +2473,17 @@ function onDocumentMouseMove(event) {
     }
 
     raycaster.setFromCamera(mouse, camera);
-
     //FIXME intersects indicates when mouse is hover on tiles, however when the land's angle change, it appears not correct. I think this affects the correctness of coordinates
     var intersects = raycaster.intersectObjects(scene.children);
 
     //Remove highlighting if clicking and dragging (painter tool/brush 1)
     if (clickAndDrag) {
+
       highlightTile(-1);
     }
 
     //if there's no intersection, then turn off the gridHighlighting
     if (intersects.length < 1) {
-
       //if we're on grid paint, and we go off board, unhighlight everything
       if (painterTool.status == 2) {
         for (var i = 0; i < highlightedTiles.length; i++) {
@@ -2501,14 +2499,14 @@ function onDocumentMouseMove(event) {
     if (intersects.length > 0 && !modalUp) {
 
       //if painter tool type is the rectangle painter
-      if (painterTool.status == 2 && !mapIsHighlighted) {
+      if (painterTool.status == 2) { //CHANGE
         //highlight a grid
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
         var tilesToHighlight = getGridOutline(painterTool.startTile, currentTile);
 
         //clear Previous highlighting
         for (var i = 0; i < highlightedTiles.length; i++) {
-          meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
+         meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
         }
 
         //if the tile we are on is an actual tile, then highlight accordingly
@@ -2529,7 +2527,7 @@ function onDocumentMouseMove(event) {
           }
           highlightedTiles = tilesToHighlight;
         } // end if highlighting tiles
-      } // end if grid painter brush
+       } // end if grid painter brush
 
       //if painter tool type is the clickAndDrag painter
       else if (clickAndDrag) {
@@ -2555,21 +2553,17 @@ function onDocumentMouseDown(event) {
     if (clearToChangeLandType) {
       event.preventDefault();
     }
-
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
 
     raycaster.setFromCamera(mouse, camera);
 
     var intersects = raycaster.intersectObjects(scene.children);
-
     if (event.which == 1 && intersects.length > 0 && clearToChangeLandType) {
 
       if (!isShiftDown) {
-
         if (!modalUp && (!painterTool.hover || mapIsHighlighted)) {
-
-          if (painterTool.status > 0 && !mapIsHighlighted) {
-            //take care of grid painting
+          if (painterTool.status > 0) { //CHANGE
+             //take care of grid painting
             //if the painter is not active, set to active
             if (painterTool.status == 1) {
               //start grid painting option
@@ -2580,7 +2574,6 @@ function onDocumentMouseDown(event) {
             }
             //else if the painter is active, then complete grid paint
             else if (painterTool.status == 2) {
-
               //end painterTool.status function if
               var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
 
@@ -2604,14 +2597,24 @@ function onDocumentMouseDown(event) {
                 insertChange();
                 //reset highlighting, computationally intensive
                 //  but a working solution
-                refreshBoard();
-
+                if(!mapIsHighlighted)
+                {
+                  refreshBoard();
+                }
+                else
+                {
+                  //if map is highlighted, make sure that the highlighted tiles (especially the four corners)
+                  //turn back to their intended color
+                  for(var i=0; i<changedTiles.length; i++)
+                  {
+                    meshMaterials[changedTiles[i]-1].emissive.setHex(0x000000);
+                  } //end for
+                } //end if-else
                 //reset painterTooling status as not active
                 painterTool.status = 1;
               } //end if
             } //end if active painter status
           } else {
-
             //Zoom in when z and 1 keys are pressed and a tile is clicked -- also not multiAssign mode
             if (zIsDown && oneIsDown && !zoomedIn && !multiplayerAssigningModeOn) {
               switchToZoomView(getTileID(intersects[0].point.x, -intersects[0].point.z));
@@ -2659,19 +2662,18 @@ function onDocumentMouseUp(event) {
     //check to see if one of the physical features maps is highlighted
     // levels maps need to be checked too
     //if so, we'll change the tiles over to their appropriate color levels
-    //     if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
-    //
-    //       Totals = new Results(boardData[currentBoard]);
-    //       Totals.update();
-    //
-    //       // update each tile on the board with its corresponding color
-    //       for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-    //
-    //         if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-    //           meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
-    //         }
-    //       } //end for
-    //     }
+        // if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
+        //   Totals = new Results(boardData[currentBoard]);
+        //   Totals.update();
+        //
+        //   // update each tile on the board with its corresponding color
+        //   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+        //
+        //     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+        //       meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
+        //     }
+        //   } //end for
+        // }
   }
 } //end onDocumentMouseUp
 
@@ -2917,7 +2919,6 @@ function painterSelect(brushNumberValue) {
   var selectedElement = document.getElementsByClassName('painterIcon iconSelected');
   selectedElement[0].className = "painterIcon icon";
   painterTool.hover = false;
-
   //if the brush is a normal cell paint
   if (brushNumberValue == 1) {
     if (curTracking) {
