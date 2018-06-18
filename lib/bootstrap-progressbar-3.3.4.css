@@ -20,7 +20,6 @@
   height: 1.3vw;
   width: 13vw;
   /* margin-bottom: 10px; */
-  background-image: url('.././imgs/consoleTexture.png');
   border-radius: 12px;
   border: 1px solid white;
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -45,6 +44,8 @@
   /* position: relative; */
   background-image: url('.././imgs/consoleTexture.png');
   display: inline-block;
+  float: right;
+  margin-top: 7px;
 }
 
 .progress img {
@@ -71,6 +72,7 @@
   font-family: 'Amatic SC';
   font-size: 1.8vw;
   color: white;
+  align-self: right;
 }
 
 #gameWildlifeProgressBar, #biodiversityProgressBar, #carbonProgressBar,
@@ -216,10 +218,10 @@
   padding: 0.5vw 1vw 1vw 1vw;
 }
 
-.min-max {
+/* .min-max {
   display: inline-block;
   font-size: 1vw;
-}
+} */
 
 .min-max-details {
   background-image: url('.././imgs/consoleTexture.png');

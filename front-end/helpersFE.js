@@ -204,9 +204,9 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10;
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10 + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Totals.gameWildlifePoints[currentYear] + 'pts';
+        childNodes[7].innerHTML = Totals.gameWildlifePoints[currentYear] + ' pts';
         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
       }
     break;
@@ -216,7 +216,7 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10;
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 + ' tons' + '<br>' +
         (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg';
@@ -229,7 +229,7 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10;
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10  + '/100';;
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10 + ' pts';
         document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'block';
@@ -241,7 +241,7 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('erosionScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grossErosionScore[currentYear] * 10) / 10;
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grossErosionScore[currentYear] * 10) / 10  + '/100';;
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.grossErosion[currentYear] * 10) / 10 + ' tons' + '<br>' +
           (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10) + ' Mg';
@@ -254,7 +254,7 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('nitrateScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10;
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' ppm' + '<br>' +
           Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' mg/L';
@@ -267,7 +267,7 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('phoshorusScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10;
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10 + ' tons' + '<br>' +
           Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
@@ -280,7 +280,7 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('sedimentScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10;
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10  + '/100';;
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.sedimentDelivery[currentYear] * 10) / 10 + ' tons' + '<br>' +
           Math.round(Totals.sedimentDelivery[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
@@ -296,7 +296,7 @@ function toggleScoreDetails(factor) {
         var totalScore = Math.min((Totals.nitrateConcentrationScore[currentYear] +
           Totals.phosphorusLoadScore[currentYear] + Totals.sedimentDeliveryScore[currentYear] + Totals.carbonSequestrationScore[currentYear] +
           Totals.grossErosionScore[currentYear] + Totals.gameWildlifePointsScore[currentYear] + Totals.biodiversityPointsScore[currentYear]) / 7, 100);
-        childNodes[5].innerHTML = 'Current: ' + Math.round(totalScore * 10) / 10;
+        childNodes[5].innerHTML = 'Current: ' + Math.round(totalScore * 10) / 10  + '/100';;
 
         document.getElementsByClassName('totalScoreDetails')[0].style.display = 'block';
       }
@@ -315,7 +315,7 @@ function toggleMinMax(minOrMax, idNum){
       minOrMaxValue = tempElement.childNodes[3].childNodes[3].style.left;
     else
       minOrMaxValue = tempElement.childNodes[3].childNodes[5].style.left;
-    tempElement.childNodes[7].innerHTML = minOrMax + ": " + minOrMaxValue.replace("%", "") ;
+    tempElement.childNodes[7].innerHTML = minOrMax + ": " + minOrMaxValue.replace("%", "") + "/100";
     tempElement.childNodes[7].style.display = 'block';
   }
   else{
