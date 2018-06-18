@@ -1550,10 +1550,7 @@ function getHighlightColor(highlightType, tileId) {
   }
   //nitrite highlight color indicies
   else if (highlightType == "nitrate") {
-
-
     var nitrateConcentration = Totals.nitrateContribution[currentYear][tileId];
-
     if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return getBoldedCells(tileId, 125);
     else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return getBoldedCells(tileId, 126);//return 8;
     else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return getBoldedCells(tileId, 127);//return 9;
@@ -2134,7 +2131,7 @@ function getHighlightedInfo(tileId) {
         highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
         break;
       case 23:
-        highlightString = "Nitrate ELevs: " + Totals.tileNitrateScore[yearSelected][tileId] + "<br>";
+        highlightString = "Nitrate Tile: " + (Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2) + "<br>";
         break;
     }
     return highlightString;

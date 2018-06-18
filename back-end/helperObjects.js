@@ -2235,7 +2235,7 @@ function Results(board) {
   this.strategicWetlandCells = Array(4);
   this.grossErosionSeverity = Array(4);
   this.phosphorusRiskAssessment = Array(4);
-  this.tileNitrateScore = Array(4);
+  this.tileNitrate = Array(4);
 
   //Achievement Score Variables:
   this.conventionalCornLandUseScore = [0, 0, 0, 0];
@@ -2366,7 +2366,9 @@ function Results(board) {
           subWatershedNitrate[s] = 0;
         } else {
           subWatershedNitrate[s] = subWatershedNitrate[s] / this.subwatershedArea[s];
+
           subWatershedNitrate[s] = 100 * this.precipitationMultiplier(y) * wetlandMultiplier[s] * subWatershedNitrate[s];
+
 
           //Take the maximum between the calculated value and 2
           //see thesis for this imposition of a floor value at 2
@@ -2979,7 +2981,7 @@ function Results(board) {
     this.nitrateContribution = nitrateContribution;
     this.grossErosionSeverity = grossErosionSeverity;
     this.phosphorusRiskAssessment = phosphorusRisk;
-    this.tileNitrateScore = tileNitrate;
+    this.tileNitrate = tileNitrate;
 
   }; //end this.mapIt
 
@@ -3130,6 +3132,9 @@ function Tile(tileArray, board) {
   this.PApplicationRate = Array(6);
   this.rusleValues = Array(6);
   this.ephemeralGullyErosionValue = Array(6);
+  this.finalArea = 0;
+  this.subWatershedNitrateNoMin = Array(4);
+
 
   //create a blank results holder sized to hold 3 years of results (year 0 = results[0])
   this.results = Array(4);
@@ -3162,6 +3167,7 @@ function Tile(tileArray, board) {
       this.sedimentDeliveryToStreamTile(y); //also requires prefactors calculated by rusle and ephemeral and sedimentDeliveryRatio and bufferFactor
       this.nitrateSubcalculation(y);
       this.yieldTile(y);
+      this.tileNitrate(y);
     } //end for each year
   }; //end this.update()
 
@@ -3250,8 +3256,9 @@ function Tile(tileArray, board) {
 
 
 this.tileNitrate = function(year){
-  var score = 100 * Results.precipitationMultiplier(year) * this.cropMultiplierHelper(year) * this.area;
-  console.log("Made it");
+  this.calculateNitrateConcentrationHelper();
+  var res = this.subWatershedNitrateNoMin;
+  var score = 100 * this.precipitationMultiplierHelper(year) * this.cropMultiplierHelper(year) * this.area;
   var subwatershed = this.subwatershed;
   var wetlandMultiplier = 1;
   for(var t = 0; t < board.map.length; t++){
@@ -3262,9 +3269,137 @@ this.tileNitrate = function(year){
   }
 
   score *= wetlandMultiplier;
+  if(res[year][subWatershed]<2){
+    var diff = 2-res[year][subWatershed];
+  }
+
+
+
+
   this.results[year].calculatedTileNitrate = score;
 
+};
+
+//Helper method, does same calculations as nitrateSubcalculation but returns values
+//for use in Tile Nitrate calculation
+this.cropMultiplierHelper = function(year) {
+
+  if ((this.landType[year] > LandUseType.none && this.landType[year] < LandUseType.alfalfa) || this.landType[year] == LandUseType.mixedFruitsVegetables) {
+    if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean) {
+      if (this.soilType == "A" || this.soilType == "B" || this.soilType == "C" || this.soilType == "L" || this.soilType == "N" || this.soilType == "O") {
+        return 0.14 * this.area * 0.69;
+      } else {
+        return 0.14 * this.area * 0.62;
+      }
+    } else {
+      return 0.14 * this.area;
+    }
+  } else {
+    return 0;
+  }
+
+}; //end this.cropMultiplierHelper
+
+this.precipitationMultiplierHelper = function(year){
+  if (board.precipitation[year] == 24.58 || board.precipitation[year] == 28.18) // If it's a dry year
+  {
+    return 0.86;
+  } else if (board.precipitation[year] == 30.39 || board.precipitation[year] == 32.16 || board.precipitation[year] == 34.34) { // If it's a normal year
+    if (board.precipitation[year - 1] == 24.58 || board.precipitation[year - 1] == 28.18) {
+      return 1.69;
+    } else {
+      return 1;
+    }
+  } else { // If it's a flood year
+    if (board.precipitation[year - 1] == 24.58 || board.precipitation[year - 1] == 28.18) {
+      return 2.11;
+    } else {
+      return 1;
+    }
+  }
+};
+
+this.calculateNitrateConcentrationHelper = function() {
+
+  //note, the calculations are done incrementally with the subWatershedNitrate array for clarity
+
+  var areaArr = this.sumAreaHelper();
+  var tempNitrateConcentration = [0, 0, 0, 0];
+
+  for (var y = 1; y <= board.calculatedToYear; y++) {
+    var wetlandMultiplier = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    var subWatershedNitrateNoMin = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    for (var i = 0; i < board.map.length; i++) {
+
+      subWatershedNitrateNoMin[board.map[i].subwatershed] += board.map[i].cropMultiplierHelper(y);
+
+      if ((board.map[i].landType[y] == LandUseType.wetland) && board.map[i].strategicWetland == 1) {
+
+        wetlandMultiplier[board.map[i].subwatershed] = 0.48;
+      } //end if
+
+    } //end for all cells, adding Crop Multipliers
+
+    for (var s = 1; s < areaArr.length; s++) {
+      //divide to accomodate for row crop multiplier
+      if (subWatershedNitrateNoMin[s] == 0 && areaArr[s] == 0) {
+        subWatershedNitrateNoMin[s] = 0;
+        subWatershedNitrateNoMin[s] = 0;
+      } else {
+        subWatershedNitrateNoMin[s] = subWatershedNitrateNoMin[s] / areaArr[s];
+
+        subWatershedNitrateNoMin[s] = 100 * this.precipitationMultiplierHelper(y) * wetlandMultiplier[s] * subWatershedNitrateNoMin[s];
+
+        subWatershedNitrateNoMin[s] = (subWatershedNitrateNoMin[s] * areaArr[s]) / this.finalArea;
+      }
+
+      //keep a running total of the amount each year by adding together subWatershed values
+      tempNitrateConcentration[y] += subWatershedNitrateNoMin[s];
+    } //end for all watersheds
+
+    this.subWatershedNitrateNoMin[y] = subWatershedNitrateNoMin;
+
+    for(var r = 0; r<this.subWatershedNitrateNoMin.length; r++){
+      if(subWatershedNitrateNoMin[])
+    }
+  } //end for all years
+
+}; //end this.calculateNitrateConcentration()
+
+
+this.sumAreasUnderTwo = function(year){
+  
 }
+
+
+//preliminary function that sums area and stream network cells (allows flexibility with map layout)
+this.sumAreaHelper = function() {
+  var tempArea = 0;
+  var tempStreamCells = 0; //stream buffer is on a Cell Basis, not area (see table S5)
+  var tempStrategicWetlandCells = 0;
+  var tempSubwatershedArea = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+  for (var i = 0; i < board.map.length; i++) {
+
+    tempArea += board.map[i].area;
+    //if tile is in stream network
+    if (board.map[i].streamNetwork == 1) {
+      tempStreamCells += 1;
+    }
+
+    //if tile is a strategic wetland
+    if (board.map[i].strategicWetland == 1) {
+      tempStrategicWetlandCells += 1;
+    }
+
+    tempSubwatershedArea[board.map[i].subwatershed] += board.map[i].area;
+  } //end for all Cells
+
+  this.finalArea = tempArea;
+  return tempSubwatershedArea;
+}; //end this.sumArea()
+
 
   /*----------------------------
        CARBON SEQUESTRATION
@@ -4044,25 +4179,6 @@ this.tileNitrate = function(year){
   }; //end this.nitrateSubcalculation
 
 
-  //Helper method, does same calculations as nitrateSubcalculation but returns values
-  //for use in Tile Nitrate calculation
-  this.cropMultiplierHelper = function(year) {
-
-    if ((this.landType[year] > LandUseType.none && this.landType[year] < LandUseType.alfalfa) || this.landType[year] == LandUseType.mixedFruitsVegetables) {
-      if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean) {
-        if (this.soilType == "A" || this.soilType == "B" || this.soilType == "C" || this.soilType == "L" || this.soilType == "N" || this.soilType == "O") {
-          return 0.14 * this.area * 0.69;
-        } else {
-          return 0.14 * this.area * 0.62;
-        }
-      } else {
-        return 0.14 * this.area;
-      }
-    } else {
-      return 0;
-    }
-
-  }; //end this.nitrateSubcalculation
 
 
   /*----------------------------
