@@ -46,6 +46,7 @@
   <script src="./lib/controls.js"></script>
   <script src="./lib/jquery-3.2.1.min.js"></script>
   <script src="./lib/stats.min.js"></script>
+  <script src="./htmlFrames/results_scripts.js"></script>
 
   <!-- import jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
@@ -1279,7 +1280,7 @@
     <!-- **BEGIN Right Side Component** -->
 
     <!-- Create results button -->
-    <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
+    <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart(); multiplayerResults();"><img src="./imgs/resultsIcon.png"></div>
     <!--img src="./imgs/backgroundinfo.png"></div>-->
 
     <!-- Create dialogue popup box (message box) -->
@@ -1428,7 +1429,7 @@
       <div class="mainEscapeButton" id="exitToMenuButton" onclick="confirmEscape();">Main Menu</div>
       <div id="confirmEscape">
         Are you sure you want to exit? All your progress will be lost.
-        <div class="mainEscapeButton" id="yesConfirmEscape" onclick="showMainMenu(); toggleEscapeFrame();">Yes</div>
+        <div class="mainEscapeButton" id="yesConfirmEscape" onclick="showMainMenu(); toggleEscapeFrame(); inMultiplayer(false);">Yes</div>
         <div class="mainEscapeButton" id="noConfirmEscape" onclick="toggleEscapeFrame();">No</div>
       </div>
     </div>
