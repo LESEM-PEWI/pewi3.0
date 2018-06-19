@@ -311,7 +311,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].cornGrainYield * 10) / 10 + ' bu' + '<br>' +
-          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+          Math.round(Totals.yieldResults[currentYear].cornGrainYield * 0.0254 * 10) / 10 + ' Mg';
 
         document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'block';
       }
@@ -325,7 +325,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].soybeanYield * 10) / 10 + ' bu' + '<br>' +
-          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+          Math.round(Totals.yieldResults[currentYear].soybeanYield * 0.0272 * 10) / 10 + ' Mg';
 
         document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'block';
       }
@@ -339,7 +339,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.mixedFruitsAndVegetablesYieldScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 10) / 10 + ' tons' + '<br>' +
-          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+          Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 0.90718474 * 10) / 10 + ' Mg';
 
         document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display = 'block';
       }
@@ -366,7 +366,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.alfalfaHayYieldScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 10) / 10 + ' tons' + '<br>' +
-          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+          Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 0.90718474 * 10) / 10 + ' Mg';
 
         document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display = 'block';
       }
@@ -380,7 +380,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grassHayYieldScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].grassHayYield * 10) / 10 + ' tons' + '<br>' +
-          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+          Math.round(Totals.yieldResults[currentYear].grassHayYield * 0.90718474 * 10) / 10 + ' Mg';
 
         document.getElementsByClassName('grassHayScoreDetails')[0].style.display = 'block';
       }
@@ -394,7 +394,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.switchgrassYieldScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].switchgrassYield * 10) / 10 + ' tons' + '<br>' +
-          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+          Math.round(Totals.yieldResults[currentYear].switchgrassYield * 0.90718474 * 10) / 10 + ' Mg';
 
         document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display = 'block';
       }
@@ -408,7 +408,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.woodYieldScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].woodYield * 10) / 10 + ' board-ft' + '<br>' +
-          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' M^3';
+          Math.round(Totals.yieldResults[currentYear].woodYield * 0.002359737 * 10) / 10 + ' M^3';
 
         document.getElementsByClassName('woodScoreDetails')[0].style.display = 'block';
       }
@@ -422,7 +422,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.shortRotationWoodyBiomassYieldScore[currentYear] * 10) / 10  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 10) / 10 + ' tons' + '<br>' +
-          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+          Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 0.90718474 * 10) / 10 + ' Mg';
 
         document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display = 'block';
       }
@@ -4683,6 +4683,11 @@ function toggleVisibility() {
   document.getElementById('resultsButton').style.display = 'block';
   document.getElementById('progressBarContainer').style.display = "block";
 
+  // for(var i = 1; i <= 17; i++){
+  //   var idName = "progressbar" + i;
+  //   console.log(idName);
+  //   document.getElementById(idName).style.display = "block";
+  // }
   //reset precip
   immutablePrecip = false;
 
@@ -4696,6 +4701,9 @@ function toggleVisibility() {
     strRawContents = strRawContents.replace("\r", "")
   }
   var arrLines = strRawContents.split("\n");
+  var progressbarIds = ["gameWildlifeProgressbar","biodiversityProgressbar","carbonProgressbar","erosionProgressbar","nitrateProgressbar",
+                        "phoshorusProgressbar","sedimentProgressbar","cornGrainProgressbar","soybeansProgressbar","fruitsAndVegetablesProgressbar",
+                        "cattleProgressbar","alfalfaHayProgressbar","grassHayProgressbar","switchgrassProgressbar","woodProgressbar","woodyProgressbar","sumProgressbar"];
 
   //for each line of the parameters div, as each keyword has its own line
   for (var i = 0; i < arrLines.length; i++) {
@@ -4714,16 +4722,21 @@ function toggleVisibility() {
         case "multiAssign":
           document.getElementById('playerAddButton').style.display = "inline-block";
           break;
-        case "progressbars":
+        case "allProgressbars":
           document.getElementById('progressBarContainer').style.display = "none";
           break;
+
         default:
           if (arrLines[i].slice(0, 5) == 'paint') {
             document.getElementById(arrLines[i]).style.display = "none";
           }
           break;
       } // end switch
-    } // end if
+    if(progressbarIds.indexOf(arrLines[i]) != -1){
+      console.log(arrLines[i]);
+      document.getElementById(arrLines[i]).style.display = "none";
+    }
+   } // end if
   } //end for
 
 

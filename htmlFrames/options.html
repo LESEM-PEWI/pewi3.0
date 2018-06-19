@@ -134,9 +134,9 @@ Cleaned and Prepared - July 2016
               //     tempString += "hover8" + "\n";
               //   }
               // break;
-              case "progressbars":
+              case "allProgressbars":
                 if (toggledElements[i].checked){
-                  tempString += "progressbars" + "\n";
+                  tempString += "allProgressbars" + "\n";
                 }
                 break;
               //default case, just add a new line with parameter
@@ -212,8 +212,8 @@ Cleaned and Prepared - July 2016
           case "skyboxOn":
             document.getElementById('skybox').checked = 1;
             break;
-          case "progressbars":
-            document.getElementById('progressbars').checked = 1;
+          case "allProgressbars":
+            document.getElementById('allProgressbars').checked = 1;
             break;
           case "precipOff":
             //document.getElementById('precip').checked = 1;
@@ -340,7 +340,8 @@ Cleaned and Prepared - July 2016
       * The last two options are precipitation and application statistics option.
       * Revised on June 14, there are 26 checkboxes in total, we only need to set the 'checked' property to false
       */
-      for(var i = 0; i < 27; ++i){
+      var allCheckboxes = $(':checkbox');
+      for(var i = 0; i < allCheckboxes.length; ++i){
         $(':checkbox')[i].checked = false;
         // if(i < 26){
         //   $(':checkbox')[i].checked = false;
@@ -437,7 +438,8 @@ Cleaned and Prepared - July 2016
         * First 25 are paint and hover ids,
         * The last two options are precipitation and application statistics option.
         */
-        for(var i = 0; i < 27; ++i){
+        var allCheckboxes = $(':checkbox');
+        for(var i = 0; i < allCheckboxes.length; ++i){
           $(':checkbox')[i].checked = false;
           // if(i < 26){
           //   $(':checkbox')[i].checked = false;
@@ -653,8 +655,8 @@ Cleaned and Prepared - July 2016
     </div>
 
     <div class = "optionsSubContainer">
-      <input id="progressbars" class="toggle" type="checkbox">
-      <label for="progressbars">Progress Bar Off</label>
+      <input id="allProgressbars" class="toggle" type="checkbox">
+      <label for="allProgressbars">All Progress Bars Off</label>
       <input id="minMax" class="toggle" type="button" onclick="retrieveMinMaxValues();">
       <label for="minMax">Set Min-Max Values</label>
 
@@ -662,6 +664,49 @@ Cleaned and Prepared - July 2016
         <div id="progressBarSets">
         </div>
       </div>
+    </div>
+
+    <div class="optionsHeader">
+      Disable Progress Bars
+      <br>
+      <hr>
+    </div>
+
+    <div class = "optionsSubContainer">
+      <input id="gameWildlifeProgressbar" class="toggle" type="checkbox">
+      <label for="gameWildlifeProgressbar">Game Wildlife</label>
+      <input id="biodiversityProgressbar" class="toggle" type="checkbox">
+      <label for="biodiversityProgressbar">Biodiversity</label>
+      <input id="carbonProgressbar" class="toggle" type="checkbox">
+      <label for="carbonProgressbar">Carbon Sequestration</label>
+      <input id="erosionProgressbar" class="toggle" type="checkbox">
+      <label for="erosionProgressbar">Gross Erosion</label>
+      <input id="nitrateProgressbar" class="toggle" type="checkbox">
+      <label for="nitrateProgressbar">Nitrate Concentration</label>
+      <input id="phoshorusProgressbar" class="toggle" type="checkbox">
+      <label for="phoshorusProgressbar">Phoshorus Load</label>
+      <input id="sedimentProgressbar" class="toggle" type="checkbox">
+      <label for="sedimentProgressbar">Sediment Delivery</label>
+      <input id="cornGrainProgressbar" class="toggle" type="checkbox">
+      <label for="cornGrainProgressbar">Corn Grain</label>
+      <input id="soybeansProgressbar" class="toggle" type="checkbox">
+      <label for="soybeansProgressbar">Soybeans</label>
+      <input id="fruitsAndVegetablesProgressbar" class="toggle" type="checkbox">
+      <label for="fruitsAndVegetablesProgressbar" style="font:1vw;">Mixed Fruits/Vegetables</label>
+      <input id="cattleProgressbar" class="toggle" type="checkbox">
+      <label for="cattleProgressbar">Cattle</label>
+      <input id="alfalfaHayProgressbar" class="toggle" type="checkbox">
+      <label for="alfalfaHayProgressbar">Alfalfa Hay</label>
+      <input id="grassHayProgressbar" class="toggle" type="checkbox">
+      <label for="grassHayProgressbar">Grass Hay</label>
+      <input id="switchgrassProgressbar" class="toggle" type="checkbox">
+      <label for="switchgrassProgressbar">Switchgrass Biomass</label>
+      <input id="woodProgressbar" class="toggle" type="checkbox">
+      <label for="woodProgressbar">Wood</label>
+      <input id="woodyProgressbar" class="toggle" type="checkbox">
+      <label for="woodyProgressbar">Woody Biomass</label>
+      <input id="sumProgressbar" class="toggle" type="checkbox">
+      <label for="sumProgressbar">Total Sum Yields</label>
     </div>
 
     <div class="optionsHeader">

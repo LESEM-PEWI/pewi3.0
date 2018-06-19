@@ -75,9 +75,11 @@
   align-self: right;
 }
 
-#gameWildlifeProgressBar, #biodiversityProgressBar, #carbonProgressBar,
-#erosionProgressBar, #phoshorusProgressBar, #sedimentProgressBar, #nitrateProgressBar,
-#totalYieldsProgressBar {
+#gameWildlifeProgressBar, #biodiversityProgressBar, #carbonProgressBar,#erosionProgressBar,
+#phoshorusProgressBar, #sedimentProgressBar, #nitrateProgressBar,#totalYieldsProgressBar,
+#cornGrainProgressBar, #soybeansProgressBar, #fruitsAndVegetablesProgressBar, #cattleProgressBar,
+#alfalfaHayProgressBar, #grassHayProgressBar, #switchgrassBiomassProgressBar,
+#woodProgressBar, #woodyBiomassProgressBar {
   margin-bottom: -4px;
 }
 
