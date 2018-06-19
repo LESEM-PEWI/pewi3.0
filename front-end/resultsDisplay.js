@@ -291,6 +291,10 @@ function displayResults() {
 
   //create land Pie Chart
   drawD3LandPieChart(currentYear, false);
+  //clearing scoreChart div tag, or else it will duplicate the scoreChart graph every time results is clicked on
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('scoreChart').innerHTML = ' ';
+  //creating the scoreChart graph by calling the number of years that are currently
+  render(boardData[currentBoard].calculatedToYear);
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
 
@@ -2148,3 +2152,278 @@ function addBackYearToYieldRadar(yearToAdd) {
     document.getElementById('resultsFrame').contentWindow.document.getElementById(elementsToRevive[e].id).style.visibility = "visible";
   }
 } //end addBackYearToYieldRadar
+
+
+/*
+* In the function render it is creating svg paths and rectangles
+* For more information refer to Issue 386.
+*/
+function render(years){
+
+    var dataset = [{
+      label: "Conventional Corn",
+      count: (Math.round(Totals.landUseResults[1].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Conservational Corn",
+      count: (Math.round(Totals.landUseResults[1].conservationCornLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Conventional Soybean",
+      count: (Math.round(Totals.landUseResults[1].conventionalSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Conservational Soybean",
+      count: (Math.round(Totals.landUseResults[1].conservationSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Alfalfa",
+      count: (Math.round(Totals.landUseResults[1].alfalfaLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Permanent Pasture",
+      count: (Math.round(Totals.landUseResults[1].permanentPastureLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Rotational Grazing",
+      count: (Math.round(Totals.landUseResults[1].rotationalGrazingLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Grass Hay",
+      count: (Math.round(Totals.landUseResults[1].grassHayLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Prairie",
+      count: (Math.round(Totals.landUseResults[1].prairieLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Conservation Forest",
+      count: (Math.round(Totals.landUseResults[1].conservationForestLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Conventional Forest",
+      count: (Math.round(Totals.landUseResults[1].conventionalForestLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Herbaceous Perennial Bioenergy",
+      count: (Math.round(Totals.landUseResults[1].switchgrassLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Short-rotation Woody Bioenergy",
+      count: (Math.round(Totals.landUseResults[1].shortRotationWoodyBioenergyLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Wetland",
+      count: (Math.round(Totals.landUseResults[1].wetlandLandUse / Totals.totalArea * 100 * 10) / 10)
+    }, {
+      label: "Mixed Fruits & Vegetables",
+      count: (Math.round(Totals.landUseResults[1].mixedFruitsVegetablesLandUse / Totals.totalArea * 100 * 10) / 10)
+    }];
+    var dataset2 = [];
+    var dataset3 = [];
+    if(years > 1){
+      dataset2 = [{
+        label: "Conventional Corn",
+        count: (Math.round(Totals.landUseResults[2].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Conservational Corn",
+        count: (Math.round(Totals.landUseResults[2].conservationCornLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Conventional Soybean",
+        count: (Math.round(Totals.landUseResults[2].conventionalSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Conservational Soybean",
+        count: (Math.round(Totals.landUseResults[2].conservationSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Alfalfa",
+        count: (Math.round(Totals.landUseResults[2].alfalfaLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Permanent Pasture",
+        count: (Math.round(Totals.landUseResults[2].permanentPastureLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Rotational Grazing",
+        count: (Math.round(Totals.landUseResults[2].rotationalGrazingLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Grass Hay",
+        count: (Math.round(Totals.landUseResults[2].grassHayLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Prairie",
+        count: (Math.round(Totals.landUseResults[2].prairieLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Conservation Forest",
+        count: (Math.round(Totals.landUseResults[2].conservationForestLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Conventional Forest",
+        count: (Math.round(Totals.landUseResults[2].conventionalForestLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Herbaceous Perennial Bioenergy",
+        count: (Math.round(Totals.landUseResults[2].switchgrassLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Short-rotation Woody Bioenergy",
+        count: (Math.round(Totals.landUseResults[2].shortRotationWoodyBioenergyLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Wetland",
+        count: (Math.round(Totals.landUseResults[2].wetlandLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Mixed Fruits & Vegetables",
+        count: (Math.round(Totals.landUseResults[2].mixedFruitsVegetablesLandUse / Totals.totalArea * 100 * 10) / 10)
+      }];
+    }
+
+    if(years > 2){
+      dataset3 = [{
+        label: "Conventional Corn",
+        count: (Math.round(Totals.landUseResults[3].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Conservational Corn",
+        count: (Math.round(Totals.landUseResults[3].conservationCornLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Conventional Soybean",
+        count: (Math.round(Totals.landUseResults[3].conventionalSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Conservational Soybean",
+        count: (Math.round(Totals.landUseResults[3].conservationSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Alfalfa",
+        count: (Math.round(Totals.landUseResults[3].alfalfaLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Permanent Pasture",
+        count: (Math.round(Totals.landUseResults[3].permanentPastureLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Rotational Grazing",
+        count: (Math.round(Totals.landUseResults[3].rotationalGrazingLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Grass Hay",
+        count: (Math.round(Totals.landUseResults[3].grassHayLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Prairie",
+        count: (Math.round(Totals.landUseResults[3].prairieLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Conservation Forest",
+        count: (Math.round(Totals.landUseResults[3].conservationForestLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Conventional Forest",
+        count: (Math.round(Totals.landUseResults[3].conventionalForestLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Herbaceous Perennial Bioenergy",
+        count: (Math.round(Totals.landUseResults[3].switchgrassLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Short-rotation Woody Bioenergy",
+        count: (Math.round(Totals.landUseResults[3].shortRotationWoodyBioenergyLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Wetland",
+        count: (Math.round(Totals.landUseResults[3].wetlandLandUse / Totals.totalArea * 100 * 10) / 10)
+      }, {
+        label: "Mixed Fruits & Vegetables",
+        count: (Math.round(Totals.landUseResults[3].mixedFruitsVegetablesLandUse / Totals.totalArea * 100 * 10) / 10)
+      }];
+    }
+
+    //the variable width is used to assign the width of the svg container
+    var width = 1000;
+    //the variable width is used to assign the height of the svg container
+    var height = 550;
+    //the variable width is used to assign the starting location value "x" of the svg container
+    var svgx = 200;
+    //the variable width is used to assign the starting location value "y" of the svg container
+    var svgy = 100;
+
+    var chart = document.getElementById('resultsFrame').contentWindow.document.getElementById('scoreChart');
+
+    //the variable svg is creating the svg container and connecting it with the div tag scoreChart
+    var svg = d3.select(chart).append("svg")
+      .attr("x",svgx)
+      .attr("y", svgy)
+      .attr("width",  width)
+      .attr("height", height);
+    //the code below is making it that the scoreChart div tag is centered
+    d3.select(chart).attr("align","center");
+
+  //This is to add the colors
+  //the appropriate color is selected by choosing a domain using the function "color(i)"
+  var color = d3.scaleOrdinal() // D3 Version 4
+    .domain([0, 1, 2])
+    .range(["#adccff", "#b7ffad" , "#ffd0ad"]);
+
+  //the variable gradient is used to created the gradient settings for gradient colors of arrowpath, id is "arrow-indicator-grad"
+  var gradient = svg.append("defs").append("linearGradient")
+      .attr("id", "arrow-indicator-grad")
+      .attr("x1", "0%")
+      .attr("y1", "0%")
+      .attr("x2", "0%")
+      .attr("y2", "100%");
+
+  //adding the first gradient color, blue
+  gradient.append("stop")
+      .attr("offset", "0%")
+      .style("stop-color", "#2171b5")
+      .style("stop-opacity", "90");
+  //adding the second gradient color, red
+  gradient.append("stop")
+      .attr("offset", "100%")
+      .style("stop-color", "#cc4c02")
+      .style("stop-opacity", "90");
+
+  //the variable lineData is the points that are used to create the svg-path arrow
+  var lineData = [{'x':25, 'y':50}, {'x':40, 'y': 75},
+                 {'x':30, 'y':75}, {'x':30, 'y': 500},
+                 {'x':20, 'y':500}, {'x':20, 'y': 75},
+                 {'x':10, 'y':75}, {'x':25, 'y': 50}];
+
+  //The lineFunction is a variable that uses functions to return x and y of each lineData, this is used to create the arrow path
+  var lineFunction = d3.line()
+                    .x(function(d){return d.x;})
+                    .y(function(d){return d.y;})
+                    .curve(d3.curveLinear);
+
+  //The lineGraph variable adds the arrow path to the svg element.
+  var lineGraph = svg.append('path')
+                 .attr('d', lineFunction(lineData))
+                 .attr('stroke', 'none')
+                 .attr('fill', 'url(#arrow-indicator-grad)');
+
+
+  //In this for loop the rectangles are being drawn
+  //There will be x number of rectangles for x number of years
+  for(var i = 0; i < years; ++i){
+    //Draw the Rectangle, rect is the term used for rectangles
+    var rectangle = svg.append("rect")
+                        .attr("x", (i*100)+50)
+                        .attr("y", 50)
+                        .attr("width", 100)
+                        .attr("height", 450)
+                        .style("fill", "none")
+                        .style("stroke", "grey")
+                        .style("stroke-width", "3px")
+                        .style("fill", color(i));
+  }
+
+  //The variable textXPosChange is used to change the x position of the texts that are on the side depending how many yers will be displayed
+  var textXPosChange = (3-years)*100;
+
+  //This is going to add all the names of categories that are in the dataset.
+  //This may need to change in some way, maybe ID?, to have this binded with the data, maybe binding data?
+  svg.append("text")
+      .attr("x", (800-textXPosChange))
+      .attr("y", 35)
+      .text("Average Score")
+      .style("fill", "#888")
+      .attr("text-anchor", "middle")
+      .style("font-size", "1.0em");
+
+  //The progressBar variable is to calculate the progress bar, these progress bars will be swapped out for Wei's version on progress bars
+  var progressBar = 750 - textXPosChange;
+  for(var i = 0; i < dataset.length; ++i){
+    svg.append("text")
+        .attr("x", (575 - textXPosChange))
+        .attr("y", (65+i*30))
+        .text(dataset[i].label)
+        .style("fill", "black")
+        .attr("text-anchor", "middle")
+        .style("font-size", "1.0em");
+    //progress bar
+    svg.append("rect")
+        .attr("fill", "black")
+        .attr("x", (progressBar+dataset[i].count))
+        .attr("y", (55+i*30))
+        .attr("width", (100-dataset[i].count))
+        .attr("height", 10);
+
+    //progress bar
+    svg.append("rect")
+        .attr("fill", "gray")
+        .attr("x", (750 - textXPosChange))
+        .attr("y", 55+i*30)
+        .attr("width", dataset[i].count)
+        .attr("height", 10);
+  }
+
+//--------------------End of Render function
+}
