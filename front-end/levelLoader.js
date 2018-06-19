@@ -57,6 +57,16 @@ function refreshProgressBar(yearToLoad) {
     Totals.phosphorusLoadScore[yearToLoad] + Totals.sedimentDeliveryScore[yearToLoad] + Totals.carbonSequestrationScore[yearToLoad] +
     Totals.grossErosionScore[yearToLoad] + Totals.gameWildlifePointsScore[yearToLoad] + Totals.biodiversityPointsScore[yearToLoad]) / 7, 100));
 
+  $('.progress .progress-bar-cornGrain').attr('data-transitiongoal', Totals.cornGrainYieldScore[yearToLoad]);
+  $('.progress .progress-bar-soybeans').attr('data-transitiongoal', Totals.soybeanYieldScore[yearToLoad]);
+  $('.progress .progress-bar-fruitsAndVegetables').attr('data-transitiongoal', Totals.mixedFruitsAndVegetablesYieldScore[yearToLoad]);
+  $('.progress .progress-bar-cattle').attr('data-transitiongoal', Totals.cattleYieldScore[yearToLoad]);
+  $('.progress .progress-bar-alfalfaHay').attr('data-transitiongoal', Totals.alfalfaHayYieldScore[yearToLoad]);
+  $('.progress .progress-bar-grassHay').attr('data-transitiongoal', Totals.grassHayYieldScore[yearToLoad]);
+  $('.progress .progress-bar-switchgrassBiomass').attr('data-transitiongoal', Totals.switchgrassYieldScore[yearToLoad]);
+  $('.progress .progress-bar-wood').attr('data-transitiongoal', Totals.woodYieldScore[yearToLoad]);
+  $('.progress .progress-bar-woodyBiomass').attr('data-transitiongoal', Totals.shortRotationWoodyBiomassYieldScore[yearToLoad]);
+
   $('.progress .progress-bar').progressbar(
     // {display_text: 'center', percent_format: function(p) {return p;}}
   );

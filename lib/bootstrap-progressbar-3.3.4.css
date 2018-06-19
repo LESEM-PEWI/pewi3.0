@@ -144,6 +144,33 @@
 .progress-bar-totalYields {
   background-color: #009633;
 }
+.progress-bar-cornGrain {
+  background-color: #A0522D;
+}
+.progress-bar-soybeans {
+  background-color: #4169E1;
+}
+.progress-bar-fruitsAndVegetables {
+  background-color: #16a085;
+}
+.progress-bar-cattle {
+  background-color: #beef00;
+}
+.progress-bar-alfalfaHay {
+  background-color: #1aafb8;
+}
+.progress-bar-grassHay {
+  background-color: #D2691E;
+}
+.progress-bar-switchgrassBiomass {
+  background-color: #ffde2a;
+}
+.progress-bar-wood {
+  background-color: #228B22;
+}
+.progress-bar-woodyBiomass {
+  background-color: #FF8C00;
+}
 .progress {
   position: relative;
 }
@@ -199,9 +226,11 @@
   bottom: 0;
 }
 
-.gameWildlifeScoreDetails, .carbonScoreDetails, .erosionScoreDetails,
-.nitrateScoreDetails, .phoshorusScoreDetails, .sedimentScoreDetails,
-.totalScoreDetails, .biodiversityScoreDetails {
+.gameWildlifeScoreDetails, .carbonScoreDetails, .erosionScoreDetails,.nitrateScoreDetails,
+.phoshorusScoreDetails, .sedimentScoreDetails,.totalScoreDetails, .biodiversityScoreDetails,
+.cornGrainScoreDetails,.soybeansScoreDetails, .fruitsAndVegetablesScoreDetails, .cattleScoreDetails,
+.alfalfaHayScoreDetails, .grassHayScoreDetails, .switchgrassBiomassScoreDetails, .woodScoreDetails,
+.woodyBiomassScoreDetails {
   background-image: url('.././imgs/consoleTexture.png');
   position: absolute;
   left: 1vw;
