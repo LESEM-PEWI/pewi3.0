@@ -4365,10 +4365,10 @@ function startPrintOptions() {
     document.getElementById('printOptions').style.visibility = "visible";
     // add Esc key event listener
     document.addEventListener('keyup', printOptionsEsc);
-    window.frames[7].document.addEventListener('keyup', printOptionsEsc);
+    window.frames[6].document.addEventListener('keyup', printOptionsEsc);
     // pass the current uplimit year
     var uptoYear = boardData[currentBoard].calculatedToYear;
-    window.frames[7].initPrintOptions(uptoYear);
+    window.frames[6].initPrintOptions(uptoYear);
   }
 } // end startPrintOptions
 
