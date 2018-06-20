@@ -203,7 +203,7 @@ function toggleScoreDetails(factor) {
         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
       else{
         var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
-        console.log(childNodes);
+        // console.log(childNodes);
         // 0 - 100 value
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10 + '/100';
         // convert English unit to Metric unit
@@ -431,9 +431,10 @@ function toggleScoreDetails(factor) {
 }
 
 function toggleMinMax(minOrMax, idNum){
-  var progressbarIDs = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar",
-                      "nitrateProgressBar","phoshorusProgressBar","sedimentProgressBar","totalYieldsProgressBar"];
-  var tempElement = document.getElementById(progressbarIDs[idNum]);
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+  var tempElement = document.getElementById(progressbarIds[idNum]);
   // console.log(tempElement.childNodes[7].style.display);
   if(tempElement.childNodes[7].style.display == 'none' || tempElement.childNodes[7].style.display == '' ){
     var minOrMaxValue;
@@ -3506,6 +3507,15 @@ function resetOptionsPage() {
       window.frames[6].document.getElementById("hover" + i).checked = false;
     }
   }
+
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+  if (window.frames[6].document.getElementById("gameWildlifeProgressBar")) {
+    for (var i = 0; i < progressbarIds.length; i++) {
+      window.frames[6].document.getElementById(progressbarIds[i]).checked = false;
+    }
+  }
   //Untoggles all the other elements
   if (window.frames[6].document.getElementById("year0") &&
     window.frames[6].document.getElementById("progressbars") &&
@@ -4683,11 +4693,12 @@ function toggleVisibility() {
   document.getElementById('resultsButton').style.display = 'block';
   document.getElementById('progressBarContainer').style.display = "block";
 
-  // for(var i = 1; i <= 17; i++){
-  //   var idName = "progressbar" + i;
-  //   console.log(idName);
-  //   document.getElementById(idName).style.display = "block";
-  // }
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+  for(var i = 0; i < progressbarIds.length; i++){
+    document.getElementById(progressbarIds[i]).style.display = "block";
+  }
   //reset precip
   immutablePrecip = false;
 
@@ -4701,9 +4712,7 @@ function toggleVisibility() {
     strRawContents = strRawContents.replace("\r", "")
   }
   var arrLines = strRawContents.split("\n");
-  var progressbarIds = ["gameWildlifeProgressbar","biodiversityProgressbar","carbonProgressbar","erosionProgressbar","nitrateProgressbar",
-                        "phoshorusProgressbar","sedimentProgressbar","cornGrainProgressbar","soybeansProgressbar","fruitsAndVegetablesProgressbar",
-                        "cattleProgressbar","alfalfaHayProgressbar","grassHayProgressbar","switchgrassProgressbar","woodProgressbar","woodyProgressbar","sumProgressbar"];
+
 
   //for each line of the parameters div, as each keyword has its own line
   for (var i = 0; i < arrLines.length; i++) {
@@ -4733,7 +4742,6 @@ function toggleVisibility() {
           break;
       } // end switch
     if(progressbarIds.indexOf(arrLines[i]) != -1){
-      console.log(arrLines[i]);
       document.getElementById(arrLines[i]).style.display = "none";
     }
    } // end if

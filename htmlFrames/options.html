@@ -41,9 +41,13 @@ Cleaned and Prepared - July 2016
     var tempString;
     var multiString;
     var maxYear = 3; //for settings, defines the number of year buttons specified
-    var progressbarDescrip = ["Game Wildlife","Biodiversity","Carbon Sequestration","Gross Erosion","Nitrate Concentration","Phoshorus Load","Sediment Delivery","Total Sum Yields"];
-    var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar",
-                          "nitrateProgressBar","phoshorusProgressBar","sedimentProgressBar","totalYieldsProgressBar"];
+    var progressbarDescrip = ["Game Wildlife","Biodiversity","Carbon Sequestration","Gross Erosion","Nitrate Concentration","Phoshorus Load","Sediment Delivery",
+                              "Corn Grain","Soybeans","Mixed Fruits and Vegetables","Cattle","Alfalfa Hay","Grass Hay","Switchgrass Biomass","Wood",
+                              "Short Rotation Woody Biomass","Total Sum Yields"];
+    var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                          "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                          "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+  
     /*
     * savedOptions is a variable to indicate that whether or not changes in Instructor Options were saved.
     */
@@ -673,40 +677,40 @@ Cleaned and Prepared - July 2016
     </div>
 
     <div class = "optionsSubContainer">
-      <input id="gameWildlifeProgressbar" class="toggle" type="checkbox">
-      <label for="gameWildlifeProgressbar">Game Wildlife</label>
-      <input id="biodiversityProgressbar" class="toggle" type="checkbox">
-      <label for="biodiversityProgressbar">Biodiversity</label>
-      <input id="carbonProgressbar" class="toggle" type="checkbox">
-      <label for="carbonProgressbar">Carbon Sequestration</label>
-      <input id="erosionProgressbar" class="toggle" type="checkbox">
-      <label for="erosionProgressbar">Gross Erosion</label>
-      <input id="nitrateProgressbar" class="toggle" type="checkbox">
-      <label for="nitrateProgressbar">Nitrate Concentration</label>
-      <input id="phoshorusProgressbar" class="toggle" type="checkbox">
-      <label for="phoshorusProgressbar">Phoshorus Load</label>
-      <input id="sedimentProgressbar" class="toggle" type="checkbox">
-      <label for="sedimentProgressbar">Sediment Delivery</label>
-      <input id="cornGrainProgressbar" class="toggle" type="checkbox">
-      <label for="cornGrainProgressbar">Corn Grain</label>
-      <input id="soybeansProgressbar" class="toggle" type="checkbox">
-      <label for="soybeansProgressbar">Soybeans</label>
-      <input id="fruitsAndVegetablesProgressbar" class="toggle" type="checkbox">
-      <label for="fruitsAndVegetablesProgressbar" style="font:1vw;">Mixed Fruits/Vegetables</label>
-      <input id="cattleProgressbar" class="toggle" type="checkbox">
-      <label for="cattleProgressbar">Cattle</label>
-      <input id="alfalfaHayProgressbar" class="toggle" type="checkbox">
-      <label for="alfalfaHayProgressbar">Alfalfa Hay</label>
-      <input id="grassHayProgressbar" class="toggle" type="checkbox">
-      <label for="grassHayProgressbar">Grass Hay</label>
-      <input id="switchgrassProgressbar" class="toggle" type="checkbox">
-      <label for="switchgrassProgressbar">Switchgrass Biomass</label>
-      <input id="woodProgressbar" class="toggle" type="checkbox">
-      <label for="woodProgressbar">Wood</label>
-      <input id="woodyProgressbar" class="toggle" type="checkbox">
-      <label for="woodyProgressbar">Woody Biomass</label>
-      <input id="sumProgressbar" class="toggle" type="checkbox">
-      <label for="sumProgressbar">Total Sum Yields</label>
+      <input id="gameWildlifeProgressBar" class="toggle" type="checkbox">
+      <label for="gameWildlifeProgressBar">Game Wildlife</label>
+      <input id="biodiversityProgressBar" class="toggle" type="checkbox">
+      <label for="biodiversityProgressBar">Biodiversity</label>
+      <input id="carbonProgressBar" class="toggle" type="checkbox">
+      <label for="carbonProgressBar">Carbon Sequestration</label>
+      <input id="erosionProgressBar" class="toggle" type="checkbox">
+      <label for="erosionProgressBar">Gross Erosion</label>
+      <input id="nitrateProgressBar" class="toggle" type="checkbox">
+      <label for="nitrateProgressBar">Nitrate Concentration</label>
+      <input id="phoshorusProgressBar" class="toggle" type="checkbox">
+      <label for="phoshorusProgressBar">Phoshorus Load</label>
+      <input id="sedimentProgressBar" class="toggle" type="checkbox">
+      <label for="sedimentProgressBar">Sediment Delivery</label>
+      <input id="cornGrainProgressBar" class="toggle" type="checkbox">
+      <label for="cornGrainProgressBar">Corn Grain</label>
+      <input id="soybeansProgressBar" class="toggle" type="checkbox">
+      <label for="soybeansProgressBar">Soybeans</label>
+      <input id="fruitsAndVegetablesProgressBar" class="toggle" type="checkbox">
+      <label for="fruitsAndVegetablesProgressBar" style="font:1vw;">Mixed Fruits/Vegetables</label>
+      <input id="cattleProgressBar" class="toggle" type="checkbox">
+      <label for="cattleProgressBar">Cattle</label>
+      <input id="alfalfaHayProgressBar" class="toggle" type="checkbox">
+      <label for="alfalfaHayProgressBar">Alfalfa Hay</label>
+      <input id="grassHayProgressBar" class="toggle" type="checkbox">
+      <label for="grassHayProgressBar">Grass Hay</label>
+      <input id="switchgrassBiomassProgressBar" class="toggle" type="checkbox">
+      <label for="switchgrassBiomassProgressBar">Switchgrass Biomass</label>
+      <input id="woodProgressBar" class="toggle" type="checkbox">
+      <label for="woodProgressBar">Wood</label>
+      <input id="woodyBiomassProgressBar" class="toggle" type="checkbox">
+      <label for="woodyBiomassProgressBar">Woody Biomass</label>
+      <input id="totalYieldsProgressBar" class="toggle" type="checkbox">
+      <label for="totalYieldsProgressBar">Total Sum Yields</label>
     </div>
 
     <div class="optionsHeader">
