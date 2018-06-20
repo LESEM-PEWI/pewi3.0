@@ -2512,7 +2512,7 @@ function Results(board) {
     this.sumFlagPercentages();
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
-      var tempScore = 0
+      var tempScore = 0;
 
       //native vegetation and other high diversity land uses points
       if (this.nativeVegetationHDPercent[y] == 100) {
@@ -2984,7 +2984,6 @@ function Results(board) {
   this.updateScores = function() {
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
-
       this.gameWildlifePointsScore[y] = this.gameWildlifePoints[y] * 10;
       this.biodiversityPointsScore[y] = this.biodiversityPoints[y] * 10;
       this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));

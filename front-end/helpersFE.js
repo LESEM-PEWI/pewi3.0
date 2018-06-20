@@ -439,10 +439,25 @@ function toggleMinMax(minOrMax, idNum){
   if(tempElement.childNodes[7].style.display == 'none' || tempElement.childNodes[7].style.display == '' ){
     var minOrMaxValue;
     if(minOrMax == 'Min')
-      minOrMaxValue = tempElement.childNodes[3].childNodes[3].style.left;
+      minOrMaxValue = parseFloat(tempElement.childNodes[3].childNodes[3].style.left);
     else
-      minOrMaxValue = tempElement.childNodes[3].childNodes[5].style.left;
-    tempElement.childNodes[7].innerHTML = minOrMax + ": " + minOrMaxValue.replace("%", "") + "/100";
+      minOrMaxValue = parseFloat(tempElement.childNodes[3].childNodes[5].style.left);
+    tempElement.childNodes[7].innerHTML ="Goal " + minOrMax + ": <br>" + minOrMaxValue + "/100";
+    if(idNum == 0 || idNum == 1) tempElement.childNodes[7].innerHTML += "<br>" + minOrMaxValue / 10 + " pts";
+
+    // calculate carbon raw value given carbonSequestrationScore(equals to minOrMaxValue) by the following equation
+    // this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
+    if(idNum == 2){
+      var rawValue = Math.round((minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin) + boardData[currentBoard].minimums.carbonMin) * 10) / 10;
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
+    }
+    // calculate grass erosion raw values
+    // this.grossErosionScore[y] = 100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
+    if(idNum == 3){
+      var rawValue = Math.round((boardData[currentBoard].maximums.erosionMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) * 10) / 10;
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
+    }
+
     tempElement.childNodes[7].style.display = 'block';
   }
   else{
@@ -3507,7 +3522,7 @@ function resetOptionsPage() {
       window.frames[6].document.getElementById("hover" + i).checked = false;
     }
   }
-
+  // untoggle progress bars
   var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
                         "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
                         "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];

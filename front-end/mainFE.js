@@ -884,6 +884,7 @@ function switchBoards(newBoard) {
   }
   //push into current board
   boardData.push(newBoard);
+  // console.log('here');
   currentBoard++;
   boardData[currentBoard].updateBoard();
   refreshBoard();
