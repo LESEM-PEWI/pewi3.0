@@ -47,7 +47,7 @@ Cleaned and Prepared - July 2016
     var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
                           "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
                           "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
-  
+
     /*
     * savedOptions is a variable to indicate that whether or not changes in Instructor Options were saved.
     */
@@ -465,12 +465,14 @@ Cleaned and Prepared - July 2016
     }
 
     /*
-      Dynamically generate a table for customizing min and max values in progress bar
-
+      Dynamically generate a table for customizing min and max values for all progress bars
+      If additional progress bars are added, don't need to do anything with this function, just add
+      the additional progress bar id into progressbarDescrip array.
     */
     function retrieveMinMaxValues() {
       if(document.getElementById("progressBarAggregateTool").style.display == "none") {
         document.getElementById("progressBarAggregateTool").style.display = "block";
+        // add table header
         var titleEle = document.createElement("div");
         titleEle.style.overflow = "auto";
         titleEle.id = "itemTitles";
@@ -496,8 +498,9 @@ Cleaned and Prepared - July 2016
         maxTitle.style.background = "#2d5986";
         titleSpan.appendChild(maxTitle);
         document.getElementById('progressBarSets').appendChild(titleEle);
+        // finished table header
 
-
+        // iterate all the progress bar elements, generate one row which contains the title, text inputs for each progress bar
         for(var i = 0; i < progressbarDescrip.length; i++) {
           var progressbarElement = document.createElement("div");
             progressbarElement.style.overflow = "auto";
@@ -506,6 +509,7 @@ Cleaned and Prepared - July 2016
             progressbarElement.innerHTML = progressbarDescrip[i];
           var tempSpan = document.createElement("span");
             progressbarElement.appendChild(tempSpan);
+          // add min value text input element
           var minInput = document.createElement("input");
             minInput.id = "min" + i;
             minInput.className = "minInput";
@@ -522,6 +526,7 @@ Cleaned and Prepared - July 2016
             minInput.setAttribute("size","5");
             minInput.setAttribute("height","5");
             tempSpan.appendChild(minInput);
+          // add max value text input element
           var maxInput = document.createElement("input");
             maxInput.id = "max" + i;
             maxInput.className = "maxInput";

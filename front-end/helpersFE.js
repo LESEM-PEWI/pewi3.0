@@ -4325,11 +4325,12 @@ function startOptions() {
 } // end startOptions
 
 // Set min or max value indicators in progress bar according to its id.
+// i.e. make a white vertical bar appears in the progress bar which indicates the customized min/max value.
 function setProgressbarMinMaxValues(id, minOrMax, value) {
   //if value is not numerical, disgard this change.
   if(isNaN(value))
     return;
-  // if value < 0, we set it to be 0, if value > 100, then set it to be 100. Error protection.
+  // if value <= 0, we set it to be -10, if value >= 100, then set it to be 110. Error protection.
   if(value <= 0) value = -10;
   if(value >= 100) value = 110;
 
@@ -4364,10 +4365,10 @@ function startPrintOptions() {
     document.getElementById('printOptions').style.visibility = "visible";
     // add Esc key event listener
     document.addEventListener('keyup', printOptionsEsc);
-    window.frames[6].document.addEventListener('keyup', printOptionsEsc);
+    window.frames[7].document.addEventListener('keyup', printOptionsEsc);
     // pass the current uplimit year
     var uptoYear = boardData[currentBoard].calculatedToYear;
-    window.frames[6].initPrintOptions(uptoYear);
+    window.frames[7].initPrintOptions(uptoYear);
   }
 } // end startPrintOptions
 
