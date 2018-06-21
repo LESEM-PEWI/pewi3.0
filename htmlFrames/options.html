@@ -480,23 +480,22 @@ Cleaned and Prepared - July 2016
         titleEle.innerHTML = " Category:";
         var titleSpan = document.createElement("span");
         titleEle.appendChild(titleSpan);
-        var minTitle = document.createElement("span");
-        minTitle.className = "minInput";
-        minTitle.id = "minTitle";
-        minTitle.innerHTML = "Min";
-        minTitle.setAttribute("size","5");
-        minTitle.setAttribute("height","5");
-        titleSpan.appendChild(minTitle);
-        var maxTitle = document.createElement("span");
-        maxTitle.className = "maxInput";
-        maxTitle.id = "maxTitle";
-        maxTitle.innerHTML = "Max";
-        maxTitle.setAttribute("size","5");
-        maxTitle.setAttribute("height","5");
+        var classNames = ["minInput", "maxInput","actualMinInput","actualMaxInput"];
+        var ids = ["minTitle", "maxTitle","actualMinTitle","actualMaxTitle"];
+        var titles = ["Min", "Max","Actual&nbsp;Min","Actual&nbsp;Max"];
+        for(var i = 0; i < titles.length; i++){
+          var inputEle = document.createElement("span");
+          inputEle.className = classNames[i];
+          inputEle.id = ids[i];
+          inputEle.innerHTML = titles[i];
+          inputEle.setAttribute("size","5");
+          inputEle.setAttribute("height","5");
+          inputEle.style.background = "#2d5986";
+          titleSpan.appendChild(inputEle);
+
+        }
+
         titleEle.style.background = "#2d5986";
-        minTitle.style.background = "#2d5986";
-        maxTitle.style.background = "#2d5986";
-        titleSpan.appendChild(maxTitle);
         document.getElementById('progressBarSets').appendChild(titleEle);
         // finished table header
 
@@ -509,16 +508,17 @@ Cleaned and Prepared - July 2016
             progressbarElement.innerHTML = progressbarDescrip[i];
           var tempSpan = document.createElement("span");
             progressbarElement.appendChild(tempSpan);
+
+          var minValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[3].style.left);
+          var maxValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[5].style.left);
+          if(minValue < 0) minValue = "NaN";
+
+          if(maxValue > 100) maxValue = "NaN";
           // add min value text input element
           var minInput = document.createElement("input");
             minInput.id = "min" + i;
             minInput.className = "minInput";
             // console.log(parent.document.getElementById(progressbarIds[i]));
-            var minValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[3].style.left);
-            var maxValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[5].style.left);
-            if(minValue < 0) minValue = "NaN";
-
-            if(maxValue > 100) maxValue = "NaN";
             minInput.placeholder = minValue;
             // console.log(progressbarIds[i]);
             minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', this.value)");
@@ -537,6 +537,26 @@ Cleaned and Prepared - July 2016
             maxInput.setAttribute("size","5");
             maxInput.setAttribute("height","5");
             tempSpan.appendChild(maxInput);
+
+
+            // add actualMin value text input element
+            var actualMinInput = document.createElement("input");
+              actualMinInput.id = "actualMin" + i;
+              actualMinInput.className = "actualMinInput";
+              // console.log(parent.document.getElementById(progressbarIds[i]));
+              var actualMinValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[3].style.left);
+              var actualMaxValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[5].style.left);
+              if(minValue < 0) minValue = "NaN";
+
+              if(maxValue > 100) maxValue = "NaN";
+              minInput.placeholder = minValue;
+              // console.log(progressbarIds[i]);
+              minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', this.value)");
+              minInput.setAttribute("onkeydown","this.value = this.value");
+              minInput.setAttribute("size","5");
+              minInput.setAttribute("height","5");
+              tempSpan.appendChild(minInput);
+
           if(i % 2 != 0) {
             progressbarElement.style.background = "#2d5986";
             minInput.style.background = "#2d5986";

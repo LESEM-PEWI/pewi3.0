@@ -73,18 +73,34 @@ body {
     color: white;
   }
 
-  .hkInputs1, .minInput {
+  .hkInputs1, .hkInputs2, .minInput, .maxInput, .actualMinInput, .actualMaxInput {
     position: absolute;
-    left: 72%;
     border: 0;
     color: white;
   }
 
-  .hkInputs2, .maxInput {
-    position: absolute;
+  .hkInputs1 {
+    left: 72%;
+  }
+
+  .hkInputs2 {
     left: 85%;
-    border: 0;
-    color: white;
+  }
+
+  .minInput {
+    left: 48%;
+  }
+
+  .maxInput {
+    left: 58%;
+  }
+
+  .actualMinInput {
+    left: 67%;
+  }
+
+  .actualMaxInput {
+    left: 83%;
   }
 
   .hkDivs, .progressbarItems {
@@ -162,8 +178,12 @@ body {
     border-radius: 25px;
   }
 
-  #hotkeyAggregateTool, #progressBarAggregateTool {
+  #hotkeyAggregateTool {
     width: 50%;
+  }
+
+#progressBarAggregateTool {
+    width: 75%;
   }
 
   #hk1, #itemTitles {
@@ -192,7 +212,7 @@ body {
 
   #progressBarAggregateTool {
     position: relative;
-    left:22%;
+    left:12%;
   }
 
   #itemTitles {
@@ -200,6 +220,6 @@ body {
     background: #2d5986;
   }
 
-  #maxTitle, #minTitle {
+  #maxTitle, #minTitle, #actualMinTitle, #actualMaxTitle {
     text-indent: 0;
   }
