@@ -3256,6 +3256,7 @@ function Tile(tileArray, board) {
   -Updates calculatedTileNitrate value and then we're done, now on to the next Tile
   **/
   this.tileNitrateCalculation = function(year){
+
     this.calculateNitrateConcentrationHelper(); //Called to update subWatershedNitrateNoMin value
     var res = this.subWatershedNitrateNoMin;
     var score = 100 * this.precipitationMultiplierHelper(year) * this.cropMultiplierHelper(year) * this.area;
@@ -3269,6 +3270,9 @@ function Tile(tileArray, board) {
     }
     score *= wetlandMultiplier;
 
+    if(this.id == 1){
+      var debug = true;
+    }
     //If Tile is in subwatershed with score below 2, do more stuff
     if(res[year][subwatershed]<2){
       var diff = 2-res[year][subwatershed];
