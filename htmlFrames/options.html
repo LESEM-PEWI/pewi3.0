@@ -511,9 +511,17 @@ Cleaned and Prepared - July 2016
 
           var minValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[3].style.left);
           var maxValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[5].style.left);
-          if(minValue < 0) minValue = "NaN";
+          var actualMinValue;
+          var actualMaxValue;
+          if(minValue < 0){
+            minValue = "NaN";
+            actualMinValue = "NaN";
+          }
 
-          if(maxValue > 100) maxValue = "NaN";
+          if(maxValue > 100) {
+            maxValue = "NaN";
+            actualMaxValue = "NaN";
+          }
           // add min value text input element
           var minInput = document.createElement("input");
             minInput.id = "min" + i;
@@ -538,33 +546,39 @@ Cleaned and Prepared - July 2016
             maxInput.setAttribute("height","5");
             tempSpan.appendChild(maxInput);
 
-
-            // add actualMin value text input element
-            var actualMinInput = document.createElement("input");
-              actualMinInput.id = "actualMin" + i;
-              actualMinInput.className = "actualMinInput";
-              // console.log(parent.document.getElementById(progressbarIds[i]));
-              var actualMinValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[3].style.left);
-              var actualMaxValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[5].style.left);
-              if(minValue < 0) minValue = "NaN";
-
-              if(maxValue > 100) maxValue = "NaN";
-              minInput.placeholder = minValue;
-              // console.log(progressbarIds[i]);
-              minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', this.value)");
-              minInput.setAttribute("onkeydown","this.value = this.value");
-              minInput.setAttribute("size","5");
-              minInput.setAttribute("height","5");
-              tempSpan.appendChild(minInput);
+          // add actualMin value text input element
+          var actualMinInput = document.createElement("input");
+            actualMinInput.id = "actualMin" + i;
+            actualMinInput.className = "actualMinInput";
+            actualMinInput.placeholder = actualMinValue;
+            actualMinInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', this.value)");
+            actualMinInput.setAttribute("onkeydown","this.value = this.value");
+            actualMinInput.setAttribute("size","5");
+            actualMinInput.setAttribute("height","5");
+            tempSpan.appendChild(actualMinInput);
+          // add actualMin value text input element
+          var actualMaxInput = document.createElement("input");
+            actualMaxInput.id = "actualMin" + i;
+            actualMaxInput.className = "actualMaxInput";
+            actualMaxInput.placeholder = actualMaxValue;
+            actualMaxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', this.value)");
+            actualMaxInput.setAttribute("onkeydown","this.value = this.value");
+            actualMaxInput.setAttribute("size","5");
+            actualMaxInput.setAttribute("height","5");
+            tempSpan.appendChild(actualMaxInput);
 
           if(i % 2 != 0) {
             progressbarElement.style.background = "#2d5986";
             minInput.style.background = "#2d5986";
             maxInput.style.background = "#2d5986";
+            actualMinInput.style.background = "#2d5986";
+            actualMaxInput.style.background = "#2d5986";
           } else {
             progressbarElement.style.background = "#0f4d70";
             minInput.style.background = "#0f4d70";
             maxInput.style.background = "#0f4d70";
+            actualMinInput.style.background = "#0f4d70";
+            actualMaxInput.style.background = "#0f4d70";
           }
           document.getElementById('progressBarSets').appendChild(progressbarElement);
         }
@@ -573,6 +587,14 @@ Cleaned and Prepared - July 2016
         document.getElementById("progressBarSets").innerHTML = '';
       }
     }
+
+    // Convert 0 - 100 value into raw value Or convert raw value into 0 - 100 value
+    // When user enter Min/Max values in progress bar, Actual Min/Actual Max values can be real-time updated, vice versa.
+    // var minValue;
+    // var maxValue;
+    // function convertAndUpdate(id, option, value) {
+    //   if(option == )
+    // }
 
   </script>
 

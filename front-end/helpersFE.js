@@ -430,113 +430,113 @@ function toggleScoreDetails(factor) {
   }
 }
 
-function toggleMinMax(minOrMax, idNum){
+function toggleMinMax(option, idNum){
   var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
                         "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
                         "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
   var tempElement = document.getElementById(progressbarIds[idNum]);
   // console.log(tempElement.childNodes[7].style.display);
   if(tempElement.childNodes[7].style.display == 'none' || tempElement.childNodes[7].style.display == '' ){
-    var minOrMaxValue;
-    if(minOrMax == 'Min')
-      minOrMaxValue = parseFloat(tempElement.childNodes[3].childNodes[3].style.left);
+    var optionValue;
+    if(option == 'Min')
+      optionValue = parseFloat(tempElement.childNodes[3].childNodes[3].style.left);
     else
-      minOrMaxValue = parseFloat(tempElement.childNodes[3].childNodes[5].style.left);
-    tempElement.childNodes[7].innerHTML ="Goal " + minOrMax + ": <br>" + minOrMaxValue + "/100";
-    if(idNum == 0 || idNum == 1) tempElement.childNodes[7].innerHTML += "<br>" + minOrMaxValue / 10 + " pts";
+      optionValue = parseFloat(tempElement.childNodes[3].childNodes[5].style.left);
+    tempElement.childNodes[7].innerHTML ="Goal " + option + ": <br>" + optionValue + "/100";
+    if(idNum == 0 || idNum == 1) tempElement.childNodes[7].innerHTML += "<br>" + optionValue / 10 + " pts";
 
-    // calculate Carbon raw value given carbonSequestrationScore(equals to minOrMaxValue) by the following equation
+    // calculate Carbon raw value given carbonSequestrationScore(equals to optionValue) by the following equation
     // this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
     if(idNum == 2){
-      var rawValue = Math.round((minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin) + boardData[currentBoard].minimums.carbonMin) * 10) / 10;
+      var rawValue = Math.round((optionValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin) + boardData[currentBoard].minimums.carbonMin) * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + Math.round(rawValue / 0.90718474 * 10) / 10 + " tons" + "<br>" + rawValue + " Mg";
       // console.log("boardData[currentBoard].minimums.carbonMin = ", boardData[currentBoard].minimums.carbonMin);
       // console.log("boardData[currentBoard].maximums.carbonMax = ", boardData[currentBoard].maximums.carbonMax);
       // console.log("boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin = ", boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin);
-      // console.log("minOrMaxValue / 100 = ", minOrMaxValue / 100);
-      // console.log("minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)", minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin));
-      // console.log("rawValue = ", minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin) + boardData[currentBoard].minimums.carbonMin);
+      // console.log("optionValue / 100 = ", optionValue / 100);
+      // console.log("optionValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)", optionValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin));
+      // console.log("rawValue = ", optionValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin) + boardData[currentBoard].minimums.carbonMin);
     }
     // calculate Gross Erosion raw value
     // this.grossErosionScore[y] = 100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
     if(idNum == 3){
-      var rawValue = Math.round((boardData[currentBoard].maximums.erosionMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) * 10) / 10;
+      var rawValue = Math.round((boardData[currentBoard].maximums.erosionMax - optionValue / 100 * (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
     }
     // calculate Nitrate concentration raw value
     // this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin));
     if(idNum == 4){
-      var rawValue = Math.round((boardData[currentBoard].maximums.nitrateMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) * 10) / 10;
+      var rawValue = Math.round((boardData[currentBoard].maximums.nitrateMax - optionValue / 100 * (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " ppm" + "<br>" + rawValue + " mg/L";
     }
 
     // calculate Phoshorus raw value
     // this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin));
     if(idNum == 5){
-      var rawValue = Math.round((boardData[currentBoard].maximums.phosphorusMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) * 10) / 10;
+      var rawValue = Math.round((boardData[currentBoard].maximums.phosphorusMax - optionValue / 100 * (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
     }
 
     // calculate Sediment raw value
     // this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin));
     if(idNum == 6){
-      var rawValue = Math.round((boardData[currentBoard].maximums.sedimentMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) * 10) / 10;
+      var rawValue = Math.round((boardData[currentBoard].maximums.sedimentMax - optionValue / 100 * (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
     }
 
     // calculate Corn Grain raw value
     // this.cornGrainYieldScore[y] = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax;
     if(idNum == 7){
-      var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.cornMax * 10) / 10;
+      var rawValue = Math.round(optionValue / 100 * boardData[currentBoard].maximums.cornMax * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " bu" + "<br>" + Math.round(rawValue * 0.0272 * 10) / 10 + " Mg";
     }
     // calculate Soybeans raw value
     // this.soybeanYieldScore[y] = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax;
     if(idNum == 8){
-      var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.soybeanMax * 10) / 10;
+      var rawValue = Math.round(optionValue / 100 * boardData[currentBoard].maximums.soybeanMax * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " bu" + "<br>" + Math.round(rawValue * 0.0272 * 10) / 10 + " Mg";
     }
     // calculate Mixed Fruits and Vegetables raw value
     // this.mixedFruitsAndVegetablesYieldScore[y] = 100 * this.yieldResults[y].mixedFruitsAndVegetablesYield / board.maximums.mixedFruitsAndVegetablesMax;
     if(idNum == 9){
-      var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.mixedFruitsAndVegetablesMax * 10) / 10;
+      var rawValue = Math.round(optionValue / 100 * boardData[currentBoard].maximums.mixedFruitsAndVegetablesMax * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
     }
     // calculate Cattle raw value
     // this.cattleYieldScore[y] = 100 * this.yieldResults[y].cattleYield / board.maximums.cattleMax;
     if(idNum == 10){
-      var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.cattleMax * 10) / 10;
+      var rawValue = Math.round(optionValue / 100 * boardData[currentBoard].maximums.cattleMax * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " animals";
     }
 
     // calculate Alfalfa Hay raw value
     // this.alfalfaHayYieldScore[y] = 100 * this.yieldResults[y].alfalfaHayYield / board.maximums.alfalfaMax;
     if(idNum == 11){
-      var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.alfalfaMax * 10) / 10;
+      var rawValue = Math.round(optionValue / 100 * boardData[currentBoard].maximums.alfalfaMax * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
     }
     // calculate Grass Hay raw value
     // this.grassHayYieldScore[y] = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax;
     if(idNum == 12){
-      var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.grassHayMax * 10) / 10;
+      var rawValue = Math.round(optionValue / 100 * boardData[currentBoard].maximums.grassHayMax * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
     }
     // calculate Switchgrass Biomass raw value
     // this.switchgrassYieldScore[y] = 100 * this.yieldResults[y].switchgrassYield / board.maximums.switchgrassMax;
     if(idNum == 13){
-      var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.switchgrassMax * 10) / 10;
+      var rawValue = Math.round(optionValue / 100 * boardData[currentBoard].maximums.switchgrassMax * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
     }
     // calculate Wood raw value
     // this.woodYieldScore[y] = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax;
     if(idNum == 14){
-      var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.woodMax * 10) / 10;
+      var rawValue = Math.round(optionValue / 100 * boardData[currentBoard].maximums.woodMax * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " board-ft" + "<br>" + Math.round(rawValue * 0.002359737 * 10) / 10 + " M^3";
     }
     // calculate Short Rotation Woody Biomass raw value
     // this.shortRotationWoodyBiomassYieldScore[y] = 100 * this.yieldResults[y].shortRotationWoodyBiomassYield / board.maximums.shortRotationWoodyBiomassMax;
     if(idNum == 15){
-      var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.shortRotationWoodyBiomassMax * 10) / 10;
+      var rawValue = Math.round(optionValue / 100 * boardData[currentBoard].maximums.shortRotationWoodyBiomassMax * 10) / 10;
       tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
     }
 
@@ -545,6 +545,39 @@ function toggleMinMax(minOrMax, idNum){
   else{
     tempElement.childNodes[7].style.display = 'none';
     tempElement.childNodes[7].innerHTML = '';
+  }
+
+}
+
+// Set min or max value indicators in progress bar according to its id.
+// i.e. make a white vertical bar appears in the progress bar which indicates the customized min/max value.
+function setProgressbarMinMaxValues(id, option, value) {
+  //if value is not numerical, disgard this change.
+  if(isNaN(value))
+    return;
+  // if value < 0, we set it to be -10, if value > 100, then set it to be 110. Error protection.
+  if(value < 0) value = -10;
+  if(value > 100) value = 110;
+
+  var children = document.getElementById(id).childNodes[3].childNodes;
+  // console.log(children);
+  if(option == 'min'){
+    if(value < parseFloat(children[5].style.left)){
+      children[3].style.left = value + "%";
+    }
+    // else{ //If min > max, then we remove max value
+    //   children[5].style.left = "110%";
+    // }
+
+  }
+  else if(option == 'max'){
+    if(value > parseFloat(children[3].style.left)){
+      children[5].style.left = value + "%";
+    }
+    // else{ //If min > max, then we remove min value
+    //   children[3].style.left = "-10%";
+    // }
+
   }
 
 }
@@ -4421,35 +4454,6 @@ function startOptions() {
   }
 } // end startOptions
 
-// Set min or max value indicators in progress bar according to its id.
-// i.e. make a white vertical bar appears in the progress bar which indicates the customized min/max value.
-function setProgressbarMinMaxValues(id, minOrMax, value) {
-  //if value is not numerical, disgard this change.
-  if(isNaN(value))
-    return;
-  // if value <= 0, we set it to be -10, if value >= 100, then set it to be 110. Error protection.
-  if(value <= 0) value = -10;
-  if(value >= 100) value = 110;
-
-  var children = document.getElementById(id).childNodes[3].childNodes;
-  // console.log(children);
-  if(minOrMax == 'min'){
-    if(value < parseFloat(children[5].style.left))
-      children[3].style.left = value + "%";
-    // else{ //If min > max, then we remove max value
-    //   children[5].style.left = "110%";
-    // }
-
-  }
-  else if(minOrMax == 'max'){
-    if(value > parseFloat(children[3].style.left))
-      children[5].style.left = value + "%";
-    // else{ //If min > max, then we remove min value
-    //   children[3].style.left = "-10%";
-    // }
-
-  }
-}
 
 // startPrintOptions displays the printOptions page
 function startPrintOptions() {
