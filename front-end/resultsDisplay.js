@@ -2172,9 +2172,11 @@ function generateResultsTable() {
 
         var tempString = backendDataIdentifiers[l];
         //Correction for Carbon Sequestrations
-        if (l == 2) {
-          Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
-        }
+
+        // if (l == 2) {
+        //   Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
+        // }
+
         htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
 
         htmlTableString += "</td>";
@@ -2268,6 +2270,7 @@ function generateResultsTable() {
 
         htmlTableString += "</td>";
 
+
       } //for each year
 
       //units cell
@@ -2287,6 +2290,7 @@ function generateResultsTable() {
     htmlTableString += "<table id='table4' class='resultsTable'>";
 
     //add header row
+
 
     htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Other Parameters </th>";
 

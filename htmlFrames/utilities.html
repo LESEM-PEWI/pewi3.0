@@ -28,6 +28,7 @@ Cleaned and Prepared - August 2016
   <!--javascript-->
   <script src=".././lib/jquery-3.2.1.min.js"></script>
   <script src=".././lib/filesaver.min.js"></script>
+  <script src="./results_scripts.js"></script>
   <!-- <script src=".././back-end/helperMethods.js"></script> -->
   <!--external fonts-->
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
@@ -44,7 +45,7 @@ Cleaned and Prepared - August 2016
 
     <!---buttons for utilities, add new buttons here -->
     <div id="levelDesignerButton" class="mainButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
-    <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup();">Set-Up Multiplayer</div>
+    <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup(); inMultiplayer(true);">Set-Up Multiplayer</div>
     <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
     <div class="uploadFile">
 

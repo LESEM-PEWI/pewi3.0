@@ -46,8 +46,9 @@ var g_isDeleted = false; //true if year delete button is used; false otherwise
 var g_year1delete = false; //true if year 1 is deleted when there are other years present; false otherwise
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
-var maxYear = 0; //maximum number of years present currently on the board
+var maxYear = 0; //maximum number of years present currently on the board - only used for deletetion of years
 var yearCopyPaste = 0; //used for copying and pasting the selected year
+var selectedLandType = 0; //keeps track of which land is selected
 
 // arrays
 
@@ -1053,11 +1054,20 @@ function changeLandTypeTile(tileId) {
       if (!multiplayerAssigningModeOn) {
         // textureArray is a global array that links to each landType image, it was load in loader.js
         // by changing the reference on meshMaterials array, three.js will draw it on canvas automatically
-        meshMaterials[tileId].map = textureArray[painter];
-        // record the data changes in boardData
-        boardData[currentBoard].map[tileId].landType[currentYear] = painter;
-        // update boardData figures
-        boardData[currentBoard].map[tileId].update(currentYear);
+
+        //wetlands are restricted within flat lands, i.e 0-2% only
+        if(selectedLandType == 14 && (Number(boardData[currentBoard].map[tileId].topography) >= 2) && !randomizing)
+        {
+          //dont highlight
+        }
+        else
+        {
+          meshMaterials[tileId].map = textureArray[painter];
+          // record the data changes in boardData
+          boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+          // update boardData figures
+          boardData[currentBoard].map[tileId].update(currentYear);
+        }
       } else if (multiplayerAssigningModeOn) {
         meshMaterials[tileId].map = multiplayerTextureArray[painter];
         boardData[currentBoard].map[tileId].landType[currentYear] = painter;
@@ -1090,7 +1100,7 @@ function changeSelectedPaintTo(newPaintValue) {
     painterElementId = "paint" + newPaintValue;
     document.getElementById(painterElementId).className = "landSelectorIcon iconSelected";
     painter = newPaintValue;
-
+    selectedLandType = painter;
     //Index chat box entries for each landuse type
     switch (painterElementId) {
       case 'paint1':
@@ -1999,8 +2009,17 @@ function getHighlightColor(highlightType, tileId) {
 
     if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
       return 26;
-    } else {
+    }
+    else
+    {
+      if((Number(boardData[currentBoard].map[tileId].topography) <= 1))
+      {
+          return 32;
+      }
+      else
+      {
       return 41;
+    }
     }
   }
   // loader
@@ -2349,35 +2368,18 @@ function getHighlightedInfo(tileId) {
         if (boardData[currentBoard].map[tileId].strategicWetland == 1)
           highlightString = "Strategic Wetland" + "<br>";
         else
-          highlightString = "Not A Strategic Wetland" + "<br>";
+          if((Number(boardData[currentBoard].map[tileId].topography) <= 1))
+          {
+            highlightString = "Suitable" + "<br>";
+          }
+          else
+          {
+            highlightString = "Not Suitable" + "<br>";
+          }
         break;
         //create string for subwatershed number
       case 7:
         highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>";
-        break;
-
-        /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
-      case 9:
-        switch (Number(boardData[currentBoard].map[tileId].topography)) {
-          case 0:
-            highlightString = "0-1%" + "<br>";
-            break;
-          case 1:
-            highlightString = "1-2%" + "<br>";
-            break;
-          case 2:
-            highlightString = "2-5%" + "<br>";
-            break;
-          case 3:
-            highlightString = "5-9%" + "<br>";
-            break;
-          case 4:
-            highlightString = "9-14%" + "<br>";
-            break;
-          case 5:
-            highlightString = "14-18%" + "<br>";
-            break;
-        }
         break;
         /*case 8:
       var soil = boardData[currentBoard].map[tileId].soilType;
@@ -2518,6 +2520,32 @@ function getPrecipType(a){
   }
 }
 
+//gets the topography (percentage of slope) of a tile
+  /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
+function getSlope(tileId)
+{
+  switch (Number(boardData[currentBoard].map[tileId].topography)) {
+    case 0:
+      return "0-1% Slope" + "<br>";
+      break;
+    case 1:
+      return "1-2% Slope" + "<br>";
+      break;
+    case 2:
+      return "2-5% Slope" + "<br>";
+      break;
+    case 3:
+      return "5-9% Slope" + "<br>";
+      break;
+    case 4:
+      return "9-14% Slope" + "<br>";
+      break;
+    case 5:
+      return "14-18% Slope" + "<br>";
+      break;
+  }// end switch
+}// end getSlope
+
 //Gets the current timestamp for the click (event)
 function getStamp() {
   curTime = new Date();
@@ -2622,7 +2650,7 @@ function highlightTile(tileId) {
 
       //update the information displayed in the delayed hover div by cursor
       myTimer = setTimeout(function() {
-        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" +  getSlope(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
         //May use strings and iterate through them for removing hover information
         var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]);
         var info2 = "Precipitation: " + printPrecipYearType();
@@ -2639,6 +2667,7 @@ function highlightTile(tileId) {
           document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info3, '');
           //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
         }
+        //this is where you should include the code about the topography for the hover over button
       }, 500);
     }
 
@@ -2877,9 +2906,7 @@ function objectiveCheck() {
 function onDocumentMouseMove(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     event.preventDefault();
-
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-
     //set location of div that follows cursor for hover-info and displays with 1s delay
     var x = event.clientX;
     var y = event.clientY;
@@ -2890,18 +2917,17 @@ function onDocumentMouseMove(event) {
     }
 
     raycaster.setFromCamera(mouse, camera);
-
     //FIXME intersects indicates when mouse is hover on tiles, however when the land's angle change, it appears not correct. I think this affects the correctness of coordinates
     var intersects = raycaster.intersectObjects(scene.children);
 
     //Remove highlighting if clicking and dragging (painter tool/brush 1)
     if (clickAndDrag) {
+
       highlightTile(-1);
     }
 
     //if there's no intersection, then turn off the gridHighlighting
     if (intersects.length < 1) {
-
       //if we're on grid paint, and we go off board, unhighlight everything
       if (painterTool.status == 2) {
         for (var i = 0; i < highlightedTiles.length; i++) {
@@ -2917,14 +2943,14 @@ function onDocumentMouseMove(event) {
     if (intersects.length > 0 && !modalUp) {
 
       //if painter tool type is the rectangle painter
-      if (painterTool.status == 2 && !mapIsHighlighted) {
+      if (painterTool.status == 2) { //CHANGE
         //highlight a grid
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
         var tilesToHighlight = getGridOutline(painterTool.startTile, currentTile);
 
         //clear Previous highlighting
         for (var i = 0; i < highlightedTiles.length; i++) {
-          meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
+         meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
         }
 
         //if the tile we are on is an actual tile, then highlight accordingly
@@ -2934,8 +2960,10 @@ function onDocumentMouseMove(event) {
         //  tile on the board with no land type
 
         // if the tile the mouse hover on has landUseType, that means it is a paintable land
+
         if (boardData[currentBoard].map[currentTile].landType[0] !== 0) {
           // grid painter mode highlighting tiles here
+
           for (var i = 0; i < tilesToHighlight.length; i++) {
             highlightTile(tilesToHighlight[i] - 1);
             //prevent highlighting from overwritting...
@@ -2943,17 +2971,19 @@ function onDocumentMouseMove(event) {
           }
           highlightedTiles = tilesToHighlight;
         } // end if highlighting tiles
-      } // end if grid painter brush
+       } // end if grid painter brush
 
       //if painter tool type is the clickAndDrag painter
       else if (clickAndDrag) {
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-        if (boardData[currentBoard].map[currentTile].landType[0] != 0) changeLandTypeTile(currentTile);
+        if (boardData[currentBoard].map[currentTile].landType[0] != 0)
+        {
+          changeLandTypeTile(currentTile);
+        }
       } else {
         //just a normal highlighting
         highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
       }
-
     }
   }
 } //end onDocumentMouseMove
@@ -2967,22 +2997,17 @@ function onDocumentMouseDown(event) {
     if (clearToChangeLandType) {
       event.preventDefault();
     }
-
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
 
     raycaster.setFromCamera(mouse, camera);
 
     var intersects = raycaster.intersectObjects(scene.children);
-
     if (event.which == 1 && intersects.length > 0 && clearToChangeLandType) {
 
       if (!isShiftDown) {
-
         if (!modalUp && (!painterTool.hover || mapIsHighlighted)) {
-
-          if (painterTool.status > 0 && !mapIsHighlighted) {
-
-            //take care of grid painting
+          if (painterTool.status > 0) { //CHANGE
+             //take care of grid painting
             //if the painter is not active, set to active
             if (painterTool.status == 1) {
               //start grid painting option
@@ -3016,14 +3041,24 @@ function onDocumentMouseDown(event) {
                 insertChange();
                 //reset highlighting, computationally intensive
                 //  but a working solution
-                refreshBoard();
-
+                if(!mapIsHighlighted)
+                {
+                  refreshBoard();
+                }
+                else
+                {
+                  //if map is highlighted, make sure that the highlighted tiles (especially the four corners)
+                  //turn back to their intended color
+                  for(var i=0; i<changedTiles.length; i++)
+                  {
+                    meshMaterials[changedTiles[i]-1].emissive.setHex(0x000000);
+                  } //end for
+                } //end if-else
                 //reset painterTooling status as not active
                 painterTool.status = 1;
               } //end if
             } //end if active painter status
           } else {
-
             //Zoom in when z and 1 keys are pressed and a tile is clicked -- also not multiAssign mode
             if (zIsDown && oneIsDown && !zoomedIn && !multiplayerAssigningModeOn) {
               switchToZoomView(getTileID(intersects[0].point.x, -intersects[0].point.z));
@@ -3068,23 +3103,21 @@ function onDocumentMouseUp(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     //Turn off click and drag functionality
     clickAndDrag = false;
-
     //check to see if one of the physical features maps is highlighted
     // levels maps need to be checked too
     //if so, we'll change the tiles over to their appropriate color levels
-    //     if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
-    //
-    //       Totals = new Results(boardData[currentBoard]);
-    //       Totals.update();
-    //
-    //       // update each tile on the board with its corresponding color
-    //       for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-    //
-    //         if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-    //           meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
-    //         }
-    //       } //end for
-    //     }
+        // if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
+        //   Totals = new Results(boardData[currentBoard]);
+        //   Totals.update();
+        //
+        //   // update each tile on the board with its corresponding color
+        //   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+        //
+        //     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+        //       meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
+        //     }
+        //   } //end for
+        // }
   }
 } //end onDocumentMouseUp
 
@@ -3330,7 +3363,6 @@ function painterSelect(brushNumberValue) {
   var selectedElement = document.getElementsByClassName('painterIcon iconSelected');
   selectedElement[0].className = "painterIcon icon";
   painterTool.hover = false;
-
   //if the brush is a normal cell paint
   if (brushNumberValue == 1) {
     if (curTracking) {
@@ -3562,7 +3594,15 @@ function randomizeBoard() {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
       if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
-
+        //wetlands are restricted within flat lands, i.e 0-2% only
+        if((Number(boardData[currentBoard].map[i].topography) >= 2))
+        {
+          randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15];
+        }
+        else
+        {
+          randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+        }
         undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         changeLandTypeTile(i);
