@@ -556,7 +556,7 @@ Cleaned and Prepared - July 2016
             actualMinInput.id = "actualMin" + i;
             actualMinInput.className = "actualMinInput";
             actualMinInput.placeholder = actualMinValue;
-            actualMinInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'actualMin', this.value)");
+            actualMinInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','actualMin', this.value))");
             actualMinInput.setAttribute("onkeydown","this.value = this.value");
             actualMinInput.setAttribute("size","5");
             actualMinInput.setAttribute("height","5");
@@ -566,7 +566,7 @@ Cleaned and Prepared - July 2016
             actualMaxInput.id = "actualMax" + i;
             actualMaxInput.className = "actualMaxInput";
             actualMaxInput.placeholder = actualMaxValue;
-            actualMaxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'actualMax', this.value)");
+            actualMaxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','actualMax', this.value))");
             actualMaxInput.setAttribute("onkeydown","this.value = this.value");
             actualMaxInput.setAttribute("size","5");
             actualMaxInput.setAttribute("height","5");
@@ -605,16 +605,93 @@ Cleaned and Prepared - July 2016
           rawValue = Math.round(rawValue / 0.90718474 * 10) / 10;
         }
         if(option == "min"){
+          // Set actualMin raw value
           document.getElementById("actualMin" + idNum).placeholder = rawValue;
         }
         else {
+          // Set actualMax raw value
           document.getElementById("actualMax" + idNum).placeholder = rawValue;
         }
+        // return the min/max value since we will need it as a parameter in setProgressbarMinMaxValues function.
         return value;
       }
       else if(option == "actualMin" || option == "actualMax"){
-
+        var minOrMaxValue = Math.round(getScores(idNum, value) * 100) / 100;
+        if(option == "actualMin"){
+          // Set 0 - 100 Min value based on the raw value
+          document.getElementById("min" + idNum).placeholder = minOrMaxValue;
+        }
+        else {
+          // Set 0 - 100 Max value based on the raw value
+          document.getElementById("max" + idNum).placeholder = minOrMaxValue;
+        }
+        // return the min/max value since we will need it as a parameter in setProgressbarMinMaxValues function.
+        return minOrMaxValue;
       }
+
+    }
+
+    function getScores(idNum, rawValue) {
+      if(idNum == 0 || idNum == 1) return rawValue * 10;
+      // calculate Carbon score
+      else if(idNum == 2) {
+        return 100 * ((rawValue - parent.boardData[parent.currentBoard].minimums.carbonMin) / (parent.boardData[parent.currentBoard].maximums.carbonMax - parent.boardData[parent.currentBoard].minimums.carbonMin));
+      }
+      // calculate Gross Erosion score
+      else if(idNum == 3) {
+        return 100 * ((parent.boardData[parent.currentBoard].maximums.erosionMax - rawValue) / (parent.boardData[parent.currentBoard].maximums.erosionMax - parent.boardData[parent.currentBoard].minimums.erosionMin));
+      }
+      // calculate Nitrate score
+      else if(idNum == 4) {
+        return 100 * ((parent.boardData[parent.currentBoard].maximums.nitrateMax - rawValue) / (parent.boardData[parent.currentBoard].maximums.nitrateMax - parent.boardData[parent.currentBoard].minimums.nitrateMin));
+      }
+      // calculate Phosphorus score
+      else if(idNum == 5) {
+        return 100 * ((parent.boardData[parent.currentBoard].maximums.phosphorusMax - rawValue) / (parent.boardData[parent.currentBoard].maximums.phosphorusMax - parent.boardData[parent.currentBoard].minimums.phosphorusMin));
+      }
+      // calculate Sediment score
+      else if(idNum == 6) {
+        return 100 * ((parent.boardData[parent.currentBoard].maximums.sedimentMax - rawValue) / (parent.boardData[parent.currentBoard].maximums.sedimentMax - parent.boardData[parent.currentBoard].minimums.sedimentMin));
+      }
+      // calculate Corn Grain score
+      else if(idNum == 7) {
+        return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.cornMax;
+      }
+      // calculate Soybeans score
+      else if(idNum == 8) {
+        return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.soybeanMax;
+      }
+      // calculate Mixed Fruits and Vegetables score
+      else if(idNum == 9) {
+        return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.mixedFruitsAndVegetablesMax;
+      }
+      // calculate Cattle score
+      else if(idNum == 10) {
+        return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.cattleMax;
+      }
+
+      // calculate Alfalfa Hay score
+      else if(idNum == 11) {
+        return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.alfalfaMax;
+      }
+      // calculate Grass Hay score
+      else if(idNum == 12) {
+        return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.grassHayMax;
+      }
+      // calculate Switchgrass Biomass score
+      else if(idNum == 13) {
+        return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.switchgrassMax;
+      }
+      // calculate Wood score
+      else if(idNum == 14) {
+        return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.woodMax;
+      }
+      
+      // calculate Short Rotation Woody Biomass score
+      else if(idNum == 15) {
+        return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.shortRotationWoodyBiomassMax;
+      }
+
 
     }
 
