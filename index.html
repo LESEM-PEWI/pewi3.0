@@ -578,7 +578,19 @@
           </div>
         </div>
 
-        <div id="wetlandsDetailsList"></div>
+        <div id="wetlandsDetailsList" class="DetailsListRolled physicalDetailsList">
+          <center>
+            <h1 class="DetailsList-title">Strategic Wetlands</h1></center>
+          <div class="legendColor" style="background-color: #302486;">
+            <p class="levelsTextDetails">Strategic Wetland</p>
+          </div>
+          <div class="legendColor" style="background-color: #38638b;">
+            <p class="levelsTextDetails">Suitable</p>
+          </div>
+          <div class="legendColor" style="background-color: #FFB347;">
+            <p class="levelsTextDetails">Not Suitable</p>
+          </div>
+        </div>
 
         <div id="boundaryDetailsList"></div>
 
@@ -1599,7 +1611,7 @@
     <!-- **BEGIN Right Side Component** -->
 
     <!-- Create results button -->
-    <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart() ;"><img src="./imgs/resultsIcon.png"></div>
+    <div id="resultsButton" class="resultsButtonRolled" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();" onclick="resultsStart(); multiplayerResults();"><img src="./imgs/resultsIcon.png"></div>
     <!--img src="./imgs/backgroundinfo.png"></div>-->
 
     <!-- Create dialogue popup box (message box) -->
@@ -1749,7 +1761,7 @@
       <div class="mainEscapeButton" id="exitToMenuButton" onclick="confirmEscape();">Main Menu</div>
       <div id="confirmEscape">
         Are you sure you want to exit? All your progress will be lost.
-        <div class="mainEscapeButton" id="yesConfirmEscape" onclick="showMainMenu(); toggleEscapeFrame();">Yes</div>
+        <div class="mainEscapeButton" id="yesConfirmEscape" onclick="showMainMenu(); toggleEscapeFrame(); inMultiplayer(false);">Yes</div>
         <div class="mainEscapeButton" id="noConfirmEscape" onclick="toggleEscapeFrame();">No</div>
       </div>
     </div>
