@@ -513,6 +513,11 @@ Cleaned and Prepared - July 2016
           var maxValue = parseFloat(parent.document.getElementById(progressbarIds[i]).childNodes[3].childNodes[5].style.left);
           var actualMinValue = parent.getRawValue(minValue, i);
           var actualMaxValue = parent.getRawValue(maxValue, i);
+          // Carbon correction
+          if(i == 2) {
+            actualMinValue = Math.round(actualMinValue / 0.90718474 * 100) / 100;
+            actualMaxValue = Math.round(actualMaxValue / 0.90718474 * 100) / 100;
+          }
           if(minValue < 0){
             minValue = "NaN";
             actualMinValue = "NaN";
@@ -540,7 +545,7 @@ Cleaned and Prepared - July 2016
             maxInput.className = "maxInput";
             maxInput.placeholder = maxValue;
             maxInput.setAttribute("type","text");
-            maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', this.value)");
+            maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','max', this.value))");
             maxInput.setAttribute("onkeydown","this.value = this.value");
             maxInput.setAttribute("size","5");
             maxInput.setAttribute("height","5");
@@ -590,21 +595,21 @@ Cleaned and Prepared - July 2016
 
     // Convert 0 - 100 value into raw value Or convert raw value into 0 - 100 value
     // When user enter Min/Max values in progress bar, Actual Min/Actual Max values can be real-time updated, vice versa.
-    // var minValue;
-    // var maxValue;
+
     function convertAndUpdate(id, option, value) {
-      console.log("id = ",id);
       var idNum = progressbarIds.indexOf(id);
       if(option == "min" || option == "max"){
         var rawValue = parent.getRawValue(value, idNum);
+        // Carbon correction
+        if(idNum == 2) {
+          rawValue = Math.round(rawValue / 0.90718474 * 10) / 10;
+        }
         if(option == "min"){
-          console.log("actualMin" + idNum);
           document.getElementById("actualMin" + idNum).placeholder = rawValue;
         }
         else {
           document.getElementById("actualMax" + idNum).placeholder = rawValue;
         }
-        console.log("here at convert function");
         return value;
       }
       else if(option == "actualMin" || option == "actualMax"){

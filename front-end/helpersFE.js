@@ -591,7 +591,6 @@ function getRawValue(minOrMaxValue,idNum) {
 // Set min or max value indicators in progress bar according to its id.
 // i.e. make a white vertical bar appears in the progress bar which indicates the customized min/max value.
 function setProgressbarMinMaxValues(id, option, value) {
-  console.log("id2 = ",id);
   //if value is not numerical, disgard this change.
   if(isNaN(value))
     return;
