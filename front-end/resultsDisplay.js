@@ -2171,10 +2171,7 @@ function generateResultsTable() {
         htmlTableString += "<td>";
 
         var tempString = backendDataIdentifiers[l];
-        //Correction for Carbon Sequestrations
-        // if (l == 2) {
-        //   Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
-        // }
+
         htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
 
         htmlTableString += "</td>";
