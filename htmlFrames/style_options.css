@@ -97,10 +97,12 @@ body {
 
   .actualMinInput {
     left: 67%;
+    width: 7vw;
   }
 
   .actualMaxInput {
     left: 83%;
+    width: 7vw;
   }
 
   .hkDivs, .progressbarItems {
