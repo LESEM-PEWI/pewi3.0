@@ -138,7 +138,8 @@ var session = {
 
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
-
+document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
+                                                  "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
 // Toggled popup text when hover over the Tabs in the left console
 function toggleTabTitle(value) {
   // document.getElementById(value).style.zIndex = '1';
@@ -3700,7 +3701,8 @@ function resetOptions() {
 //This function resetoptionspage by untoggling all the elements in the page
 function resetOptionsPage() {
   //This sets the parameter div string to an empty string
-  document.getElementById('parameters').innerHTML = "";
+  document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
+                                                    "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
   optionsString = "";
   //Save ad randomize to make sure that the mao behind the options page is being refreshed when the options are reset
   saveAndRandomize();
@@ -3722,7 +3724,11 @@ function resetOptionsPage() {
                         "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
   if (window.frames[6].document.getElementById("gameWildlifeProgressBar")) {
     for (var i = 0; i < progressbarIds.length; i++) {
-      window.frames[6].document.getElementById(progressbarIds[i]).checked = false;
+      if(i < 7 || i == 16)
+        window.frames[6].document.getElementById(progressbarIds[i]).checked = false;
+      else{
+        window.frames[6].document.getElementById(progressbarIds[i]).checked = true;
+      }
     }
   }
   //Untoggles all the other elements
@@ -3734,7 +3740,7 @@ function resetOptionsPage() {
     window.frames[6].document.getElementById("year0").checked = false;
     window.frames[6].document.getElementById("precip").checked = false;
     window.frames[6].document.getElementById("statFrame").checked = false;
-    window.frames[6].document.getElementById("progressbars").checked = false;
+    window.frames[6].document.getElementById("allProgressbars").checked = false;
   }
 }
 
@@ -4871,7 +4877,12 @@ function toggleVisibility() {
     document.getElementById('progressBarContainer').style.display = "block";
 
     for(var i = 0; i < progressbarIds.length; i++){
-      document.getElementById(progressbarIds[i]).style.display = "block";
+      // if(i < 7 || i == 16)
+        document.getElementById(progressbarIds[i]).style.display = "block";
+      // else{
+      //   window.frames[6].document.getElementById(progressbarIds[i]).checked = true;
+      // }
+
     }
 
   }
@@ -4891,7 +4902,7 @@ function toggleVisibility() {
   // abscond them from the index.html page parameters div
   //    if(!multiplayerAssigningModeOn){
   var strRawContents = document.getElementById('parameters').innerHTML;
-
+  console.log(strRawContents);
   //split based on escape chars
   while (strRawContents.indexOf("\r") >= 0) {
     strRawContents = strRawContents.replace("\r", "")
