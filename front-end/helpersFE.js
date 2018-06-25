@@ -4857,12 +4857,23 @@ function toggleVisibility() {
   //document.getElementById('playerAddButton').style.display = "none";
   //currentPlayer=1;
 
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+
   //reset default on items
   if (!multiplayerAssigningModeOn) {
     for (var i = 1; i <= 15; i++) {
       var string = "paint" + i;
       document.getElementById(string).style.display = "inline-block";
     }
+
+    document.getElementById('progressBarContainer').style.display = "block";
+
+    for(var i = 0; i < progressbarIds.length; i++){
+      document.getElementById(progressbarIds[i]).style.display = "block";
+    }
+
   }
 
   document.getElementById('year1Button').style.display = "block";
@@ -4872,14 +4883,7 @@ function toggleVisibility() {
   document.getElementById('year2PrecipContainer').style.display = 'block';
   document.getElementById('year3PrecipContainer').style.display = 'block';
   document.getElementById('resultsButton').style.display = 'block';
-  document.getElementById('progressBarContainer').style.display = "block";
 
-  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
-                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
-                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
-  for(var i = 0; i < progressbarIds.length; i++){
-    document.getElementById(progressbarIds[i]).style.display = "block";
-  }
   //reset precip
   immutablePrecip = false;
 
