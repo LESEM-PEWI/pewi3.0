@@ -536,6 +536,7 @@ Cleaned and Prepared - July 2016
             // console.log(progressbarIds[i]);
             minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','min', this.value))");
             minInput.setAttribute("onkeydown","this.value = this.value");
+            minInput.setAttribute("onfocusout","setPlaceholderValue('min" + i + "',this.value)");
             minInput.setAttribute("size","5");
             minInput.setAttribute("height","5");
             tempSpan.appendChild(minInput);
@@ -547,6 +548,7 @@ Cleaned and Prepared - July 2016
             maxInput.setAttribute("type","text");
             maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','max', this.value))");
             maxInput.setAttribute("onkeydown","this.value = this.value");
+            maxInput.setAttribute("onfocusout","setPlaceholderValue('max" + i + "',this.value)");
             maxInput.setAttribute("size","5");
             maxInput.setAttribute("height","5");
             tempSpan.appendChild(maxInput);
@@ -558,6 +560,7 @@ Cleaned and Prepared - July 2016
             actualMinInput.placeholder = actualMinValue;
             actualMinInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','actualMin', this.value))");
             actualMinInput.setAttribute("onkeydown","this.value = this.value");
+            actualMinInput.setAttribute("onfocusout","setPlaceholderValue('actualMin" + i + "',this.value)");
             actualMinInput.setAttribute("size","5");
             actualMinInput.setAttribute("height","5");
             tempSpan.appendChild(actualMinInput);
@@ -568,6 +571,7 @@ Cleaned and Prepared - July 2016
             actualMaxInput.placeholder = actualMaxValue;
             actualMaxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','actualMax', this.value))");
             actualMaxInput.setAttribute("onkeydown","this.value = this.value");
+            actualMaxInput.setAttribute("onfocusout","setPlaceholderValue('actualMax" + i + "',this.value)");
             actualMaxInput.setAttribute("size","5");
             actualMaxInput.setAttribute("height","5");
             tempSpan.appendChild(actualMaxInput);
@@ -590,6 +594,18 @@ Cleaned and Prepared - July 2016
       } else {
         document.getElementById("progressBarAggregateTool").style.display = "none";
         document.getElementById("progressBarSets").innerHTML = '';
+      }
+    }
+
+    // Set placeholder value, when user enter a numerical value in the input box, we set placehoder to be the input value and then set the input value to be "".
+    // So that in the min-max value setting table, we're able to see real-time update effect.
+    function setPlaceholderValue(id,value) {
+      if(!isNaN(value) && value != ""){
+        document.getElementById(id).placeholder = value;
+        document.getElementById(id).value = "";
+      }
+      else {
+        document.getElementById(id).value = "";
       }
     }
 
@@ -686,7 +702,7 @@ Cleaned and Prepared - July 2016
       else if(idNum == 14) {
         return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.woodMax;
       }
-      
+
       // calculate Short Rotation Woody Biomass score
       else if(idNum == 15) {
         return 100 * rawValue / parent.boardData[parent.currentBoard].maximums.shortRotationWoodyBiomassMax;
