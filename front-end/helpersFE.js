@@ -138,8 +138,7 @@ var session = {
 
 //Used for preventing users from exiting (click-tracking mode)
 window.onbeforeunload = confirmExit;
-document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
-                                                  "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
+
 // Toggled popup text when hover over the Tabs in the left console
 function toggleTabTitle(value) {
   // document.getElementById(value).style.zIndex = '1';
@@ -4902,7 +4901,6 @@ function toggleVisibility() {
   // abscond them from the index.html page parameters div
   //    if(!multiplayerAssigningModeOn){
   var strRawContents = document.getElementById('parameters').innerHTML;
-  console.log(strRawContents);
   //split based on escape chars
   while (strRawContents.indexOf("\r") >= 0) {
     strRawContents = strRawContents.replace("\r", "")

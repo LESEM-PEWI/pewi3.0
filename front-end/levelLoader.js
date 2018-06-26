@@ -109,8 +109,9 @@ function loadLevel(level) {
       levelGlobal = 0;
       multiplayerExit();
       initWorkspace('./data.csv');
-      document.getElementById('parameters').innerHTML = "";
-
+      // document.getElementById('parameters').innerHTML = "";
+      document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
+                                                        "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
       // console.log("window log:" + window.top.document.getElementById('parameters').innerHTML);
       // console.log("document log:" + document.getElementById('parameters').innerHTML);
       parent.saveAndRandomize();
@@ -150,6 +151,15 @@ function loadLevel(level) {
       levelGlobal = level;
       loadLevelDetails("./levels/specs/" + getFileForExercise(level));
       initWorkspace('./data.csv');
+      document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
+                                                        "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
+
+      var yieldProgressbarIds = ["cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                            "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar"];
+
+      for (var i = 0; i < yieldProgressbarIds.length; i++) {
+        window.frames[6].document.getElementById(yieldProgressbarIds[i]).checked = true;
+      }
       document.getElementById('popup').className = 'popup';
       break;
   }
