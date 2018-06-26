@@ -88,15 +88,15 @@ body {
   }
 
   .minInput {
-    left: 48%;
+    left: 45%;
   }
 
   .maxInput {
-    left: 58%;
+    left: 56%;
   }
 
   .actualMinInput {
-    left: 67%;
+    left: 68%;
     width: 7vw;
   }
 
@@ -185,7 +185,7 @@ body {
   }
 
 #progressBarAggregateTool {
-    width: 75%;
+    width: 82%;
   }
 
   #hk1, #itemTitles {
@@ -233,8 +233,8 @@ body {
     background-color: #0f4d70;
     border: 5px solid white;
     border-radius: 12px;
-    padding-top: 8px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 8px;
     color: white;
     text-align: center;
     width: 15vw;

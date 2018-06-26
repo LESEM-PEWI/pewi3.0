@@ -501,7 +501,7 @@ Cleaned and Prepared - July 2016
         element.style.display = "block";
       }
       else {
-        // element.innerHTML = "";
+        element.innerHTML = "";
         element.style.display = "none";
       }
     }
@@ -524,7 +524,7 @@ Cleaned and Prepared - July 2016
         titleEle.appendChild(titleSpan);
         var classNames = ["minInput", "maxInput","actualMinInput","actualMaxInput"];
         var ids = ["minTitle", "maxTitle","actualMinTitle","actualMaxTitle"];
-        var titles = ["Min", "Max","Actual&nbsp;Min","Actual&nbsp;Max"];
+        var titles = ["Min(%)", "Max(%)","Actual&nbsp;Min","Actual&nbsp;Max"];
         for(var i = 0; i < titles.length; i++){
           var inputEle = document.createElement("span");
           inputEle.className = classNames[i];
@@ -659,7 +659,38 @@ Cleaned and Prepared - July 2016
     // Set placeholder value, when user enter a numerical value in the input box, we set placehoder to be the input value and then set the input value to be "".
     // So that in the min-max value setting table, we're able to see real-time update effect.
     function setPlaceholderValue(id,value) {
-      if(!isNaN(value) && value != ""){
+      var siblingId;
+      var siblingValue;
+      var isValid = false;
+      if(id.indexOf("min") != -1){
+        siblingId = "max" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("max") != -1){
+        siblingId = "min" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("actualMin") != -1){
+        siblingId = "actualMax" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("actualMax") != -1){
+        siblingId = "actualMin" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(isNaN(value) || value == "" ){
+        isValid = false;
+      }
+
+      if(isValid){
         document.getElementById(id).placeholder = value;
         document.getElementById(id).value = "";
       }
