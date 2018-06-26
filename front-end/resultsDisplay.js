@@ -2174,6 +2174,9 @@ function render(years){
   //the variable width is used to assign the starting location value "y" of the svg container
   var svgy = 100;
 
+  //The variable textXPosChange is used to change the x position of the texts that are on the side depending how many yers will be displayed
+  var textXPosChange = (3-years)*100;
+
   //the variable chart selects the resultsFrame to add all components to
   var chart = document.getElementById('resultsFrame').contentWindow.document.getElementById('scoreChart');
 
@@ -2183,9 +2186,6 @@ function render(years){
     .attr("y", svgy)
     .attr("width",  width)
     .attr("height", height);
-
-  //the code below is making it that the scoreChart div tag is centered
-  d3.select(chart).attr("align","center");
 
   //This is to add the colors
   //the appropriate color is selected by choosing a domain using the function "color(i)"
@@ -2246,9 +2246,6 @@ function render(years){
                         .style("fill", color(i));
   }
 
-  //The variable textXPosChange is used to change the x position of the texts that are on the side depending how many yers will be displayed
-  var textXPosChange = (3-years)*100;
-
   //This is going to add all the names of categories that are in the dataset.
   svg.append("text")
       .attr("x", (800-textXPosChange))
@@ -2262,10 +2259,8 @@ function render(years){
   var listOfNames = ["Conventional Corn", "Conservation Corn", "Conventional Soybean", "Conservation Soybean", "Alfalfa",
                      "Permanent Pasture", "Rotational Grazing", "Grass Hay", "Prairie", "Conservation Forest", "Conventional Forest",
                      "Switch Grass", "Short-rotation Woody Bioenergy", "Wetland", "Mixed Fruits & Vegetables"
-                   ];
+                    ];
 
-  //The progressBar variable is to calculate the progress bar, these progress bars will be swapped out for Wei's version on progress bars TODO
-  var progressBar = 750 - textXPosChange;
   for(var i = 0; i < listOfNames.length; ++i){
     svg.append("text")
         .attr("x", (575 - textXPosChange))
@@ -2282,18 +2277,11 @@ function render(years){
 
     //progress bar
     svg.append("rect")
-        .attr("fill", "black")
-        .attr("x", (750- textXPosChange))
-        .attr("y", (55+i*30))
-        .attr("width", 50)
-        .attr("height", 10);
-
-    //progress bar
-    svg.append("rect")
         .attr("fill", "gray")
-        .attr("x", (800- textXPosChange))
+        .attr("x", (750- textXPosChange))
         .attr("y", 55+i*30)
-        .attr("width", 50)
+        .attr("rx", 5)
+        .attr("width", 100)
         .attr("height", 10);
   }
 
@@ -2302,6 +2290,8 @@ function render(years){
   * This function was created for Issue 357. For more information refer to Issue 357.
   */
   function renderData(data, year){
+
+    var scoreData = calculateAvgScores(data, years);
 
     //the variable circles binds data and connects it with circle HTML elements.
     var circles = svg.selectAll("circle").data(data);
@@ -2327,6 +2317,44 @@ function render(years){
       })
       .attr("id",  function (d){ var id = d.id; i++; return id; })
       .attr("class", "info");
+
+    //The progressBar variable is to calculate the progress bar, these progress bars will be swapped out for Wei's version on progress bars
+    var progressBarX = 750 - textXPosChange;
+
+    for(var l = 0; l < scoreData.length; ++l){
+      function calculateWidth() {
+        if(scoreData[l] == 100){
+          return 0;
+        }
+        else if(scoreData[l] <= 10){
+          return (scoreData[l]*.35);
+        }
+        else{
+          return (scoreData[l]*.25);
+        }
+      }
+
+      //the variable tempX is so that the second rectangle (end) is at the appropriate X location.
+      var tempX = progressBarX + scoreData[l] - calculateWidth();
+      //progress bar
+      svg.append("rect")
+          .attr("fill", "black")
+          .attr("x", (progressBarX))
+          .attr("y", (55+l*30))
+          .attr("rx", 5)
+          .attr("width", scoreData[l])
+          .attr("height", 10)
+          .attr("id", ("bigrect"+(l+1)));
+
+      //progress bar
+      svg.append("rect")
+          .attr("fill", "black")
+          .attr("x", tempX)
+          .attr("y", (55+l*30))
+          .attr("width", calculateWidth())
+          .attr("height", 10)
+          .attr("id", ("smallrect"+(l+1)));
+    }
 
     //the variable clickables is used to select all the datapoints and the legend on the right hand side
     var clickables = svg.selectAll(".info");
@@ -2395,16 +2423,23 @@ function render(years){
       })
       .on('click', function (d) {
         var id = this.id;
-        //if you clicked on a circle all circles & text that are tied within must change color and size
+        //if you clicked on a circle all circles & text that are tied within must change color
         if(id.charAt(0) === "c"){
-          var newR = onClickHandler(this);
+          //the variable newR is used to have the new value Radius for circles to be changed;
+          var newR = onClickHandler(this)
+
           //if it was already clicked, reset everything back to previous version
           if(newR === 10){
-            //change the color of circle back to gray
-            // d3.select(this).style("opacity", 0.3).style("fill", "gray");
+            //the Rep variables are to hold the IDs of the texts in legend and bar graphs that represent that data point
             textRep = "#"+getTextRep(this.id);
-            //set the color of the text representing circle back to color gray
+            var bigBarRep = "#bigrect"+getBarRep(this.id);
+            var smallBarRep = "#smallrect"+getBarRep(this.id);
+
+            //set the color of the text and bar graphs representing circle back to original colors
             svg.select(textRep).style("fill", "gray");
+            svg.select(bigBarRep).attr("fill", "black");
+            svg.select(smallBarRep).attr("fill", "black");
+
             var index = isClicked.indexOf(textRep);
             isClicked.splice(index, 1);
             circlesToChange = listOfData(this.id, years);
@@ -2416,8 +2451,12 @@ function render(years){
           else{
             var tempColor = color(d.id);
             textRep = "#"+getTextRep(this.id);
+            var bigBarRep = "#bigrect"+getBarRep(this.id);
+            var smallBarRep = "#smallrect"+getBarRep(this.id);
             isClicked.push(textRep);
             svg.select(textRep).style("fill", tempColor);
+            svg.select(bigBarRep).attr("fill", tempColor);
+            svg.select(smallBarRep).attr("fill", tempColor);
             circlesToChange = listOfData(this.id, years);
             for(var i = 0; i < circlesToChange.length; ++i){
               svg.select("#"+circlesToChange[i]).style("opacity", 0.8).style("fill", tempColor).attr('r', newR);
@@ -2430,15 +2469,21 @@ function render(years){
         }
         else{//if you select a text
           circlesToChange = listOfData(this.id, years);
+          var bigBarRep = "#bigrect"+getBarRep(this.id);
+          var smallBarRep = "#smallrect"+getBarRep(this.id);
           var temp = svg.select("#"+circlesToChange[0]);
           var tempColor = color(this.id);
           if(temp._groups[0][0].attributes.r.nodeValue === "10"){
             newR = 15;
             svg.select("#"+this.id).style("fill", tempColor);
+            svg.select(bigBarRep).style("fill", tempColor);
+            svg.select(smallBarRep).style("fill", tempColor);
             isClicked.push("#"+this.id);
           }else{
             newR = 10;
             svg.select("#"+this.id).style("fill", "gray");
+            svg.select(bigBarRep).style("fill", "black");
+            svg.select(smallBarRep).style("fill", "black");
           }
           //the for loop below is used to change all the circles in circlesToChange
           for(var i = 0; i < circlesToChange.length; ++i){
@@ -2453,6 +2498,37 @@ function render(years){
 
     // On circles exit it removes all the circles that are placed in, this is for good D3.js practice and so that circles from previous data do not appear.
     circles.exit().remove();
+  }
+
+  /*
+  * The function fillData fills an array of objects with the average of each data type.
+  * This is used for the bar graph in average score graph.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function calculateAvgScores(dataPoints, numYears){
+    var tempdata = [];
+    if(numYears === 3){
+      var tempSum = 0;
+      for(var i = 0; i < 15; ++i){
+        tempSum += dataPoints[i].count+dataPoints[i+15].count+dataPoints[i+30].count;
+        tempSum = tempSum / numYears;
+        tempdata.push(tempSum);
+      }
+    }
+    else if(numYears === 2){
+      var tempSum = 0;
+      for(var i = 0; i < 15; ++i){
+        tempSum += dataPoints[i].count+dataPoints[i+15].count;
+        tempSum = tempSum / numYears;
+        tempdata.push(tempSum);
+      }
+    }
+    else{
+      for(var i = 0; i < 15; ++i){
+        tempdata.push(dataPoints[i].count);
+      }
+    }
+    return tempdata;
   }
 
   /*
@@ -2619,6 +2695,64 @@ function render(years){
         break;
       case "c15": case "c30": case "c45":
         textId = "t15";
+        break;
+      default:
+        textId = givenID;
+    }
+    return textId;
+  }
+
+  /*
+  * The function getTextRep takes in an ID from a circle and returns the ID of the bar graph that represents it.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getBarRep(givenID) {
+    var textId = "";
+    switch (givenID) {
+      case "c1": case "c16": case "c31": case "t1":
+        textId = "1";
+        break;
+      case "c2": case "c17": case "c32": case "t2":
+        textId = "2";
+        break;
+      case "c3": case "c18": case "c33": case "t3":
+        textId = "3";
+        break;
+      case "c4": case "c19": case "c34": case "t4":
+        textId = "4";
+        break;
+      case "c5": case "c20": case "c35": case "t5":
+        textId = "5";
+        break;
+      case "c6": case "c21": case "c36": case "t6":
+        textId = "6";
+        break;
+      case "c7": case "c22": case "c37": case "t7":
+        textId = "7";
+        break;
+      case "c8": case "c23": case "c38": case "t8":
+        textId = "8";
+        break;
+      case "c9": case "c24": case "39": case "t9":
+        textId = "9";
+        break;
+      case "c10": case "c25": case "c40": case "t10":
+        textId = "10";
+        break;
+      case "c11": case "c26": case "c41": case "t11":
+        textId = "11";
+        break;
+      case "c12": case "c27": case "c42": case "t12":
+        textId = "12";
+        break;
+      case "c13": case "c28": case "c43": case "t13":
+        textId = "13";
+        break;
+      case "c14": case "c29": case "c44": case "t14":
+        textId = "14";
+        break;
+      case "c15": case "c30": case "c45": case "t15":
+        textId = "15";
         break;
       default:
         textId = givenID;
