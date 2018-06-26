@@ -2155,176 +2155,37 @@ function addBackYearToYieldRadar(yearToAdd) {
 
 
 /*
-* In the function render it is creating svg paths and rectangles
-* For more information refer to Issue 386.
+* In the function render is to create the graph displaying years and data points score out of 100.
+* For more information refer to Issue 357.
 */
 function render(years){
+  //the variabale dataser is used to hold all the data that is to be plotted
+  var dataset = fillData(years);
 
-    var dataset = [{
-      label: "Conventional Corn",
-      count: (Math.round(Totals.landUseResults[1].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Conservational Corn",
-      count: (Math.round(Totals.landUseResults[1].conservationCornLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Conventional Soybean",
-      count: (Math.round(Totals.landUseResults[1].conventionalSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Conservational Soybean",
-      count: (Math.round(Totals.landUseResults[1].conservationSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Alfalfa",
-      count: (Math.round(Totals.landUseResults[1].alfalfaLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Permanent Pasture",
-      count: (Math.round(Totals.landUseResults[1].permanentPastureLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Rotational Grazing",
-      count: (Math.round(Totals.landUseResults[1].rotationalGrazingLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Grass Hay",
-      count: (Math.round(Totals.landUseResults[1].grassHayLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Prairie",
-      count: (Math.round(Totals.landUseResults[1].prairieLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Conservation Forest",
-      count: (Math.round(Totals.landUseResults[1].conservationForestLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Conventional Forest",
-      count: (Math.round(Totals.landUseResults[1].conventionalForestLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Herbaceous Perennial Bioenergy",
-      count: (Math.round(Totals.landUseResults[1].switchgrassLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Short-rotation Woody Bioenergy",
-      count: (Math.round(Totals.landUseResults[1].shortRotationWoodyBioenergyLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Wetland",
-      count: (Math.round(Totals.landUseResults[1].wetlandLandUse / Totals.totalArea * 100 * 10) / 10)
-    }, {
-      label: "Mixed Fruits & Vegetables",
-      count: (Math.round(Totals.landUseResults[1].mixedFruitsVegetablesLandUse / Totals.totalArea * 100 * 10) / 10)
-    }];
-    var dataset2 = [];
-    var dataset3 = [];
-    if(years > 1){
-      dataset2 = [{
-        label: "Conventional Corn",
-        count: (Math.round(Totals.landUseResults[2].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Conservational Corn",
-        count: (Math.round(Totals.landUseResults[2].conservationCornLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Conventional Soybean",
-        count: (Math.round(Totals.landUseResults[2].conventionalSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Conservational Soybean",
-        count: (Math.round(Totals.landUseResults[2].conservationSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Alfalfa",
-        count: (Math.round(Totals.landUseResults[2].alfalfaLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Permanent Pasture",
-        count: (Math.round(Totals.landUseResults[2].permanentPastureLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Rotational Grazing",
-        count: (Math.round(Totals.landUseResults[2].rotationalGrazingLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Grass Hay",
-        count: (Math.round(Totals.landUseResults[2].grassHayLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Prairie",
-        count: (Math.round(Totals.landUseResults[2].prairieLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Conservation Forest",
-        count: (Math.round(Totals.landUseResults[2].conservationForestLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Conventional Forest",
-        count: (Math.round(Totals.landUseResults[2].conventionalForestLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Herbaceous Perennial Bioenergy",
-        count: (Math.round(Totals.landUseResults[2].switchgrassLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Short-rotation Woody Bioenergy",
-        count: (Math.round(Totals.landUseResults[2].shortRotationWoodyBioenergyLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Wetland",
-        count: (Math.round(Totals.landUseResults[2].wetlandLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Mixed Fruits & Vegetables",
-        count: (Math.round(Totals.landUseResults[2].mixedFruitsVegetablesLandUse / Totals.totalArea * 100 * 10) / 10)
-      }];
-    }
+  //the variable width is used to assign the width of the svg container
+  var width = 1000;
 
-    if(years > 2){
-      dataset3 = [{
-        label: "Conventional Corn",
-        count: (Math.round(Totals.landUseResults[3].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Conservational Corn",
-        count: (Math.round(Totals.landUseResults[3].conservationCornLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Conventional Soybean",
-        count: (Math.round(Totals.landUseResults[3].conventionalSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Conservational Soybean",
-        count: (Math.round(Totals.landUseResults[3].conservationSoybeanLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Alfalfa",
-        count: (Math.round(Totals.landUseResults[3].alfalfaLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Permanent Pasture",
-        count: (Math.round(Totals.landUseResults[3].permanentPastureLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Rotational Grazing",
-        count: (Math.round(Totals.landUseResults[3].rotationalGrazingLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Grass Hay",
-        count: (Math.round(Totals.landUseResults[3].grassHayLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Prairie",
-        count: (Math.round(Totals.landUseResults[3].prairieLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Conservation Forest",
-        count: (Math.round(Totals.landUseResults[3].conservationForestLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Conventional Forest",
-        count: (Math.round(Totals.landUseResults[3].conventionalForestLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Herbaceous Perennial Bioenergy",
-        count: (Math.round(Totals.landUseResults[3].switchgrassLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Short-rotation Woody Bioenergy",
-        count: (Math.round(Totals.landUseResults[3].shortRotationWoodyBioenergyLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Wetland",
-        count: (Math.round(Totals.landUseResults[3].wetlandLandUse / Totals.totalArea * 100 * 10) / 10)
-      }, {
-        label: "Mixed Fruits & Vegetables",
-        count: (Math.round(Totals.landUseResults[3].mixedFruitsVegetablesLandUse / Totals.totalArea * 100 * 10) / 10)
-      }];
-    }
+  //the variable width is used to assign the height of the svg container
+  var height = 550;
 
-    //the variable width is used to assign the width of the svg container
-    var width = 1000;
-    //the variable width is used to assign the height of the svg container
-    var height = 550;
-    //the variable width is used to assign the starting location value "x" of the svg container
-    var svgx = 200;
-    //the variable width is used to assign the starting location value "y" of the svg container
-    var svgy = 100;
+  //the variable width is used to assign the starting location value "x" of the svg container
+  var svgx = 200;
 
-    var chart = document.getElementById('resultsFrame').contentWindow.document.getElementById('scoreChart');
+  //the variable width is used to assign the starting location value "y" of the svg container
+  var svgy = 100;
 
-    //the variable svg is creating the svg container and connecting it with the div tag scoreChart
-    var svg = d3.select(chart).append("svg")
-      .attr("x",svgx)
-      .attr("y", svgy)
-      .attr("width",  width)
-      .attr("height", height);
-    //the code below is making it that the scoreChart div tag is centered
-    d3.select(chart).attr("align","center");
+  //the variable chart selects the resultsFrame to add all components to
+  var chart = document.getElementById('resultsFrame').contentWindow.document.getElementById('scoreChart');
+
+  //the variable svg is creating the svg container and connecting it with the div tag scoreChart
+  var svg = d3.select(chart).append("svg")
+    .attr("x",svgx)
+    .attr("y", svgy)
+    .attr("width",  width)
+    .attr("height", height);
+
+  //the code below is making it that the scoreChart div tag is centered
+  d3.select(chart).attr("align","center");
 
   //This is to add the colors
   //the appropriate color is selected by choosing a domain using the function "color(i)"
@@ -2389,7 +2250,6 @@ function render(years){
   var textXPosChange = (3-years)*100;
 
   //This is going to add all the names of categories that are in the dataset.
-  //This may need to change in some way, maybe ID?, to have this binded with the data, maybe binding data?
   svg.append("text")
       .attr("x", (800-textXPosChange))
       .attr("y", 35)
@@ -2398,32 +2258,542 @@ function render(years){
       .attr("text-anchor", "middle")
       .style("font-size", "1.0em");
 
-  //The progressBar variable is to calculate the progress bar, these progress bars will be swapped out for Wei's version on progress bars
+  //the variable listOfNames holds all the data names that will be displayed on the right hand legend.
+  var listOfNames = ["Conventional Corn", "Conservation Corn", "Conventional Soybean", "Conservation Soybean", "Alfalfa",
+                     "Permanent Pasture", "Rotational Grazing", "Grass Hay", "Prairie", "Conservation Forest", "Conventional Forest",
+                     "Switch Grass", "Short-rotation Woody Bioenergy", "Wetland", "Mixed Fruits & Vegetables"
+                   ];
+
+  //The progressBar variable is to calculate the progress bar, these progress bars will be swapped out for Wei's version on progress bars TODO
   var progressBar = 750 - textXPosChange;
-  for(var i = 0; i < dataset.length; ++i){
+  for(var i = 0; i < listOfNames.length; ++i){
     svg.append("text")
         .attr("x", (575 - textXPosChange))
         .attr("y", (65+i*30))
-        .text(dataset[i].label)
-        .style("fill", "black")
+        .attr("id", ("t"+(i+1)))
+        .attr("class", "info")
+        .text(listOfNames[i])
+        .style("fill", "gray")
         .attr("text-anchor", "middle")
-        .style("font-size", "1.0em");
+        .style("font-size", "1.0em")
+        .on("click", function(d){
+          console.log(this);
+        });
+
     //progress bar
     svg.append("rect")
         .attr("fill", "black")
-        .attr("x", (progressBar+dataset[i].count))
+        .attr("x", (750- textXPosChange))
         .attr("y", (55+i*30))
-        .attr("width", (100-dataset[i].count))
+        .attr("width", 50)
         .attr("height", 10);
 
     //progress bar
     svg.append("rect")
         .attr("fill", "gray")
-        .attr("x", (750 - textXPosChange))
+        .attr("x", (800- textXPosChange))
         .attr("y", 55+i*30)
-        .attr("width", dataset[i].count)
+        .attr("width", 50)
         .attr("height", 10);
   }
+
+  /*
+  * The function renderData takes in an array of objects as data and number of years.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function renderData(data, year){
+
+    //the variable circles binds data and connects it with circle HTML elements.
+    var circles = svg.selectAll("circle").data(data);
+
+    //the variable color holds the d3 color scheme.
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+    //the variable i is used to put the circles in the appropriate location.
+    var i = 1;
+    // the circles enter puts the datapoints on the graph
+    circles.enter().append("circle")
+      .attr("r", 10)
+      .style("fill", "gray")
+      .style("opacity", 0.3)
+      .attr("cx", function (){
+        var tempCX = Math.ceil(i/15);
+        i++;
+        return tempCX*100;
+      })
+      .attr("cy", function (d){
+        var tempCY = 450 * (d.count/100);
+        return (500-tempCY);
+      })
+      .attr("id",  function (d){ var id = d.id; i++; return id; })
+      .attr("class", "info");
+
+    //the variable clickables is used to select all the datapoints and the legend on the right hand side
+    var clickables = svg.selectAll(".info");
+
+    //the variable textRep is used to assign the ID of the legend of the land type.
+    var textRep = "";
+
+    //the variable isClicked is used to hold all the IDs of the legends that were already selected
+    var isClicked = [];
+
+    //the variable circlesToChange is used to hold all the circles that need to be changed. This for example would be all 3 circles for conventionalCorn selected.
+    var circlesToChange = [];
+
+    //the following code is used to do all the event listeners for the clickables elements.
+    clickables
+      .on('mouseover', function (d) {
+         d3.select(this).style("cursor", "pointer");
+         var id = this.id;
+         textRep = "#"+getTextRep(id);
+         var cantChangeTxtColor = isClicked.includes(textRep);
+         //this is to do hover effect on hovering a CIRCLE
+         if(id.charAt(0) === "c"){
+           var text = getText(this);
+           if(!cantChangeTxtColor){
+             svg.select(textRep).style("fill", "black");
+           }
+           svg.append("rect")
+               .attr("x", (getCX(this)-5))
+               .attr("y", (getCY(this)-20))
+               .attr("rx", 5)
+               .attr("ry", 5)
+               .attr("width", (text.length*15))
+               .attr("height", 30)
+               .attr("id", "textbox")
+               .attr("class", "info")
+               .style("fill", "#9cc1fc")
+               .style("opacity", 0.8)
+           svg.append("text")
+                 .attr("x", getCX(this))
+                 .attr("y", getCY(this))
+                 .attr("id", "tempText")
+                 .text(getLandName(this.id)+": "+getScoreOfLandType(this.id));
+         }
+         else{//this is to do hover effect on hovering a TEXT
+           if(!cantChangeTxtColor){
+             d3.select(this).style("fill", "black");
+           }
+         }
+      })
+      .on('mouseout', function (d) {
+        d3.select(this).style("cursor", "default");
+        var id = this.id;
+        //this is to do hover effect on hovering a CIRCLE
+        if(id.charAt(0) === "c"){
+          svg.select("#textbox").remove();
+          svg.select("#tempText").remove();
+          if(!isClicked.includes(textRep)){
+            svg.select(textRep).style("fill", "gray");
+          }
+        }
+        else{//this is to do hover effect on hovering a TEXT
+          if(!isClicked.includes(textRep)){
+            d3.select(this).style("fill", "gray");
+          }
+        }
+      })
+      .on('click', function (d) {
+        var id = this.id;
+        //if you clicked on a circle all circles & text that are tied within must change color and size
+        if(id.charAt(0) === "c"){
+          var newR = onClickHandler(this);
+          //if it was already clicked, reset everything back to previous version
+          if(newR === 10){
+            //change the color of circle back to gray
+            // d3.select(this).style("opacity", 0.3).style("fill", "gray");
+            textRep = "#"+getTextRep(this.id);
+            //set the color of the text representing circle back to color gray
+            svg.select(textRep).style("fill", "gray");
+            var index = isClicked.indexOf(textRep);
+            isClicked.splice(index, 1);
+            circlesToChange = listOfData(this.id, years);
+            //in this for loop we iterate through all the circles that need to be change and "reset" them to standard setting
+            for(var i = 0; i < circlesToChange.length; ++i){
+              svg.select("#"+circlesToChange[i]).style("opacity", 0.3).style("fill", "gray").attr('r', newR);
+            }
+          }//else if data point was not clicked
+          else{
+            var tempColor = color(d.id);
+            textRep = "#"+getTextRep(this.id);
+            isClicked.push(textRep);
+            svg.select(textRep).style("fill", tempColor);
+            circlesToChange = listOfData(this.id, years);
+            for(var i = 0; i < circlesToChange.length; ++i){
+              svg.select("#"+circlesToChange[i]).style("opacity", 0.8).style("fill", tempColor).attr('r', newR);
+            }
+          }
+          circlesToChange = listOfData(this.id, years);
+          for(var i = 0; i < circlesToChange.length; ++i){
+            svg.select("#"+circlesToChange[i]).attr('r', newR);
+          }
+        }
+        else{//if you select a text
+          circlesToChange = listOfData(this.id, years);
+          var temp = svg.select("#"+circlesToChange[0]);
+          var tempColor = color(this.id);
+          if(temp._groups[0][0].attributes.r.nodeValue === "10"){
+            newR = 15;
+            svg.select("#"+this.id).style("fill", tempColor);
+            isClicked.push("#"+this.id);
+          }else{
+            newR = 10;
+            svg.select("#"+this.id).style("fill", "gray");
+          }
+          //the for loop below is used to change all the circles in circlesToChange
+          for(var i = 0; i < circlesToChange.length; ++i){
+            if(newR === 10){//changing the radius to 10, color is gray
+              svg.select("#"+circlesToChange[i]).style("opacity", 0.3).style("fill", "gray").attr('r', newR);
+            }else{//changing the radius to 15, new color
+              svg.select("#"+circlesToChange[i]).style("opacity", 0.8).style("fill", tempColor).attr('r', newR);
+            }
+          }
+        }
+      });
+
+    // On circles exit it removes all the circles that are placed in, this is for good D3.js practice and so that circles from previous data do not appear.
+    circles.exit().remove();
+  }
+
+  /*
+  * The function fillData fills an array of objects with data that will be plotted with data points.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function fillData(yearsToFill) {
+    var tempData = [];
+    var tempID = 0;
+    for(var i = 1; i <= yearsToFill; ++i){
+      var tempObj = Totals.landUseResults[i];
+      for(var properties in tempObj){
+        tempID++;
+        var tempObjData = {'count': Math.round(tempObj[properties]/Totals.totalArea*100*10)/10, 'id': "c"+tempID};
+        tempData.push(tempObjData);
+      }
+    }
+    return tempData;
+  }
+
+  /*
+  * The function getLandName will take in a circle id and return the land type name that connects with that data point.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getLandName(givenID) {
+    var landType = "";
+    switch (givenID) {
+      case "c1": case "c16": case "c31":
+        landType = "Conventional Corn";
+        break;
+      case "c2": case "c17": case "c32":
+        landType = "Conservation Corn";
+        break;
+      case "c3": case "c18": case "c33":
+        landType = "Conventional Soybean";
+        break;
+      case "c4": case "c19": case "c34":
+        landType = "Conservation Soybean";
+        break;
+      case "c5": case "c20": case "c35":
+        landType = "Alfalfa";
+        break;
+      case "c6": case "c21": case "c36":
+        landType = "Permanent Pasture";
+        break;
+      case "c7": case "c22": case "c37":
+        landType = "Rotational Grazing";
+        break;
+      case "c8": case "c23": case "c38":
+        landType = "Grass Hay";
+        break;
+      case "c9": case "c24": case "39":
+        landType = "Prairie";
+        break;
+      case "c10": case "c25": case "c40":
+        landType = "Conservation Forest";
+        break;
+      case "c11": case "c26": case "c41":
+        landType = "Conventional Forest";
+        break;
+      case "c12": case "c27": case "c42":
+        landType = "Switch Grass";
+        break;
+      case "c13": case "c28": case "c43":
+        landType = "Short-Rotation Woody Bioenergy";
+        break;
+      case "c14": case "c29": case "c44":
+        landType = "Wetland";
+        break;
+      case "c15": case "c30": case "c45":
+        landType = "Mixed Fruits & Vegetables";
+        break;
+    }
+    return landType;
+  }
+
+  /*
+  * The function getScoreOfLandType returns the score of the type of land put in as a parameter.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getScoreOfLandType(id) {
+    for(var properties in dataset){
+      if(dataset[properties].id === id){
+        return dataset[properties].count;
+      }
+    }
+    return 123456789;
+  }
+
+  /*
+  * The function getCX returns the CX of data point that is passed in as a parameter.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function  getCX(thisElement) {
+    return parseInt(thisElement.attributes.cx.nodeValue)+12;
+  }
+
+  /*
+  * The function getCY returns the CY of data point that is passed in as a parameter.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function  getCY(thisElement) {
+    return parseInt(thisElement.attributes.cy.nodeValue)-8;
+  }
+
+  /*
+  * The function getText returns a string that will be used over hover options.
+  * The string will be as follows: "landName: landScore".
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getText(thisElement){
+    var tempText = getLandName(thisElement.id)+": "+getScoreOfLandType(thisElement.id);
+    return tempText;
+  }
+
+  /*
+  * The function getTextRep takes in an ID from a circle and returns the ID of the string legend that represents it.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getTextRep(givenID) {
+    var textId = "";
+    switch (givenID) {
+      case "c1": case "c16": case "c31":
+        textId = "t1";
+        break;
+      case "c2": case "c17": case "c32":
+        textId = "t2";
+        break;
+      case "c3": case "c18": case "c33":
+        textId = "t3";
+        break;
+      case "c4": case "c19": case "c34":
+        textId = "t4";
+        break;
+      case "c5": case "c20": case "c35":
+        textId = "t5";
+        break;
+      case "c6": case "c21": case "c36":
+        textId = "t6";
+        break;
+      case "c7": case "c22": case "c37":
+        textId = "t7";
+        break;
+      case "c8": case "c23": case "c38":
+        textId = "t8";
+        break;
+      case "c9": case "c24": case "39":
+        textId = "t9";
+        break;
+      case "c10": case "c25": case "c40":
+        textId = "t10";
+        break;
+      case "c11": case "c26": case "c41":
+        textId = "t11";
+        break;
+      case "c12": case "c27": case "c42":
+        textId = "t12";
+        break;
+      case "c13": case "c28": case "c43":
+        textId = "t13";
+        break;
+      case "c14": case "c29": case "c44":
+        textId = "t14";
+        break;
+      case "c15": case "c30": case "c45":
+        textId = "t15";
+        break;
+      default:
+        textId = givenID;
+    }
+    return textId;
+  }
+
+  /*
+  * The function listOfData takes in an ID and an int that represents an integer and returns all the data points that are tied with it.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function listOfData(givenID, y) {
+    var selectID = [];
+    switch (givenID) {
+    case "c1": case "c16": case "c31": case "t1":
+      if(y > 2){
+        selectID = ["c1", "c16", "c31"];
+      }else if(y > 1){
+        selectID = ["c1", "c16"];
+      }else{
+        selectID = ["c1"];
+      }
+      break;
+    case "c2": case "c17": case "c32": case "t2":
+      if(y > 2){
+        selectID = ["c2", "c17", "c32"];
+      }else if(y > 1){
+        selectID = ["c2", "c17"];
+      }else{
+        selectID = ["c2"];
+      }
+      break;
+    case "c3": case "c18": case "c33": case "t3":
+      if(y > 2){
+        selectID = ["c3", "c18", "c33"];
+      }else if(y > 1){
+        selectID = ["c3", "c18"];
+      }else{
+        selectID = ["c3"];
+      }
+      break;
+    case "c4": case "c19": case "c34": case "t4":
+      if(y > 2){
+        selectID = ["c4", "c19", "c34"];
+      }else if(y > 1){
+        selectID = ["c4", "c19"];
+      }else{
+        selectID = ["c4"];
+      }
+      break;
+    case "c5": case "c20": case "c35": case "t5":
+      if(y > 2){
+        selectID = ["c5", "c20", "c35"];
+      }else if(y > 1){
+        selectID = ["c5", "c20"];
+      }else{
+        selectID = ["c5"];
+      }
+      break;
+    case "c6": case "c21": case "c36": case "t6":
+      if(y > 2){
+        selectID = ["c6", "c21", "c36"];
+      }else if(y > 1){
+        selectID = ["c6", "c21"];
+      }else{
+        selectID = ["c6"];
+      }
+      break;
+    case "c7": case "c22": case "c37": case "t7":
+      if(y > 2){
+        selectID = ["c7", "c22", "c37"];
+      }else if(y > 1){
+        selectID = ["c7", "c22"];
+      }else{
+        selectID = ["c7"];
+      }
+      break;
+    case "c8": case "c23": case "c38": case "t8":
+      if(y > 2){
+        selectID = ["c8", "c23", "c38"];
+      }else if(y > 1){
+        selectID = ["c8", "c23"];
+      }else{
+        selectID = ["c8"];
+      }
+      break;
+    case "c9": case "c24": case "c39": case "t9":
+      if(y > 2){
+        selectID = ["c9", "c24", "c39"];
+      }else if(y > 1){
+        selectID = ["c9", "c24"];
+      }else{
+        selectID = ["c9"];
+      }
+      break;
+    case "c10": case "c25": case "c40": case "t10":
+      if(y > 2){
+        selectID = ["c7", "c22", "c37"];
+      }else if(y > 1){
+        selectID = ["c7", "c22"];
+      }else{
+        selectID = ["c7"];
+      }
+        selectID = ["c10", "c25", "c40"];
+      break;
+    case "c11": case "c26": case "c41": case "t11":
+      if(y > 2){
+        selectID = ["c7", "c22", "c37"];
+      }else if(y > 1){
+        selectID = ["c7", "c22"];
+      }else{
+        selectID = ["c7"];
+      }
+      selectID = ["c11", "c26", "c41"];
+      break;
+    case "c12": case "c27": case "c42": case "t12":
+      if(y > 2){
+        selectID = ["c7", "c22", "c37"];
+      }else if(y > 1){
+        selectID = ["c7", "c22"];
+      }else{
+        selectID = ["c7"];
+      }
+      selectID = ["c12", "c27", "c42"];
+      break;
+    case "c13": case "c28": case "c43": case "t13":
+      if(y > 2){
+        selectID = ["c7", "c22", "c37"];
+      }else if(y > 1){
+        selectID = ["c7", "c22"];
+      }else{
+        selectID = ["c7"];
+      }
+      selectID = ["c13", "c28", "c43"];
+      break;
+    case "c14": case "c29": case "c44": case "t14":
+      if(y > 2){
+        selectID = ["c7", "c22", "c37"];
+      }else if(y > 1){
+        selectID = ["c7", "c22"];
+      }else{
+        selectID = ["c7"];
+      }
+      selectID = ["c14", "c29", "c44"];
+      break;
+    case "c15": case "c30": case "c45": case "t15":
+      if(y > 2){
+        selectID = ["c7", "c22", "c37"];
+      }else if(y > 1){
+        selectID = ["c7", "c22"];
+      }else{
+        selectID = ["c7"];
+      }
+      selectID = ["c15", "c30", "c45"];
+      break;
+    }
+    return selectID;
+  }
+
+  /*
+  * The function onClickHandler takes in an HTML element and checks the R of that element and based on that returns the new R.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function onClickHandler(thisElement) {
+    //element that is being clicked has not been clicked
+    var thisElementR = parseInt(thisElement.attributes.r.nodeValue);
+    if(thisElementR === 10){
+      return 15;
+    }
+    else if(thisElementR !== 10){
+      return 10;
+    }
+  }
+
+  renderData(dataset,years);
 
 //--------------------End of Render function
 }
