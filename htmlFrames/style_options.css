@@ -214,7 +214,7 @@ body {
 
   #progressBarAggregateTool {
     position: relative;
-    left:10%;
+    left:4%;
   }
 
   #itemTitles {
@@ -240,3 +240,10 @@ body {
     width: 15vw;
     height: auto;
   }
+
+#tableDescrip {
+  color: white;
+  text-align: center;
+  margin: 10px 15px 10px 15px;
+  font-size: 1.4vw;
+}
