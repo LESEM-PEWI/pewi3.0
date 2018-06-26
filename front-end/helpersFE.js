@@ -489,6 +489,30 @@ function toggleMinMax(option, idNum){
 
 }
 
+function englishToMetric(idNum, englishUnit){
+  if(idNum == 2){
+    return Math.round(englishUnit / 0.90718474 * 10) / 10;
+  }
+  if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
+    return Math.round(englishUnit * 0.90718474 * 10) / 10;
+  }
+  if(idNum == 4){
+    return englishUnit;
+  }
+
+  if(idNum == 7 || idNum == 8){
+    return Math.round(englishUnit * 0.0272 * 10) / 10;
+  }
+
+  if(idNum == 10){
+    return englishUnit;
+  }
+
+  if(idNum == 14){
+    return Math.round(englishUnit * 0.002359737 * 10) / 10;
+  }
+}
+
 function getRawValue(minOrMaxValue,idNum) {
   // calculate Game Wildlife and Biodiversity raw value
   if(idNum == 0 || idNum == 1) return minOrMaxValue / 10;

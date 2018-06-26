@@ -228,8 +228,15 @@ body {
 
   .hoverInfo {
     position: absolute;
-    right: -11vw;
-    background-image: url(.././imgs/consoleTexture.png);
-    width: 10vw;
-    height: 1.5vw;
+    right: -16vw;
+    /* background-image: url(.././imgs/consoleTexture.png); */
+    background-color: #0f4d70;
+    border: 5px solid white;
+    border-radius: 12px;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    color: white;
+    text-align: center;
+    width: 15vw;
+    height: auto;
   }

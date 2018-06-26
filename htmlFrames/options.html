@@ -470,11 +470,38 @@ Cleaned and Prepared - July 2016
       if(element.style.display == "none"){
         var actualMinValue = parent.getRawValue(0, idNum);
         var actualMaxValue = parent.getRawValue(100, idNum);
-        element.innerHTML = "Min - Max: 0 - 100%<br>Actual Min - Actual Max: " + actualMinValue + " - " + actualMaxValue;
+        element.innerHTML = progressbarDescrip[idNum] + "<br>Min - Max: <strong>0 - 100%</strong>";
+        if(idNum != 16){
+          element.innerHTML += "<br>Actual Min - Actual Max: <br><strong>" + actualMinValue + " - " + actualMaxValue +"</strong>";
+        }
+        if(idNum == 0 || idNum == 1){
+          element.innerHTML += "<strong> pts</strong>";
+        }
+        else if(idNum == 2){
+          element.innerHTML += "<strong> Mg</strong><br><strong>" + parent.englishToMetric(idNum,actualMinValue) + " - " + parent.englishToMetric(idNum,actualMaxValue) + " tons</strong>";
+        }
+        else if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
+          element.innerHTML += "<strong> tons</strong><br><strong>" + parent.englishToMetric(idNum,actualMinValue) + " - " + parent.englishToMetric(idNum,actualMaxValue) + " Mg</strong>" ;
+        }
+        else if(idNum == 4){
+          element.innerHTML += "<strong> PPM</strong><br><strong>" + parent.englishToMetric(idNum,actualMinValue) + " - " + parent.englishToMetric(idNum,actualMaxValue) + " Mg/L</strong>";
+        }
+        else if(idNum == 7 || idNum == 8){
+          element.innerHTML += "<strong> bu</strong><br><strong>" + parent.englishToMetric(idNum,actualMinValue) + " - " + parent.englishToMetric(idNum,actualMaxValue) + " Mg</strong>";
+        }
+
+        else if(idNum == 10){
+          element.innerHTML += "<strong> animals</strong>";
+        }
+
+        else if(idNum == 14){
+          element.innerHTML += "<strong> board-ft</strong><br><strong>" + parent.englishToMetric(idNum,actualMinValue) + " - " + parent.englishToMetric(idNum,actualMaxValue) + " M^3</strong>";
+        }
+
         element.style.display = "block";
       }
       else {
-        element.innerHTML = "";
+        // element.innerHTML = "";
         element.style.display = "none";
       }
     }
@@ -551,7 +578,10 @@ Cleaned and Prepared - July 2016
             // console.log(parent.document.getElementById(progressbarIds[i]));
             minInput.placeholder = minValue;
             // console.log(progressbarIds[i]);
-            minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','min', this.value))");
+            if(i != 16)
+              minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','min', this.value))");
+            else
+              minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', this.value)");
             minInput.setAttribute("onkeydown","this.value = this.value");
             minInput.setAttribute("onfocusout","setPlaceholderValue('min" + i + "',this.value)");
             minInput.setAttribute("size","5");
@@ -563,7 +593,10 @@ Cleaned and Prepared - July 2016
             maxInput.className = "maxInput";
             maxInput.placeholder = maxValue;
             maxInput.setAttribute("type","text");
-            maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','max', this.value))");
+            if(i != 16)
+              maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','max', this.value))");
+            else
+              maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', this.value)");
             maxInput.setAttribute("onkeydown","this.value = this.value");
             maxInput.setAttribute("onfocusout","setPlaceholderValue('max" + i + "',this.value)");
             maxInput.setAttribute("size","5");
@@ -571,6 +604,7 @@ Cleaned and Prepared - July 2016
             tempSpan.appendChild(maxInput);
 
           // add actualMin value text input element
+
           var actualMinInput = document.createElement("input");
             actualMinInput.id = "actualMin" + i;
             actualMinInput.className = "actualMinInput";
@@ -580,7 +614,8 @@ Cleaned and Prepared - July 2016
             actualMinInput.setAttribute("onfocusout","setPlaceholderValue('actualMin" + i + "',this.value)");
             actualMinInput.setAttribute("size","5");
             actualMinInput.setAttribute("height","5");
-            tempSpan.appendChild(actualMinInput);
+            if(i != 16)
+              tempSpan.appendChild(actualMinInput);
           // add actualMin value text input element
           var actualMaxInput = document.createElement("input");
             actualMaxInput.id = "actualMax" + i;
@@ -591,7 +626,8 @@ Cleaned and Prepared - July 2016
             actualMaxInput.setAttribute("onfocusout","setPlaceholderValue('actualMax" + i + "',this.value)");
             actualMaxInput.setAttribute("size","5");
             actualMaxInput.setAttribute("height","5");
-            tempSpan.appendChild(actualMaxInput);
+            if(i != 16)
+              tempSpan.appendChild(actualMaxInput);
 
           if(i % 2 != 0) {
             progressbarElement.style.background = "#2d5986";
@@ -606,12 +642,13 @@ Cleaned and Prepared - July 2016
             actualMinInput.style.background = "#0f4d70";
             actualMaxInput.style.background = "#0f4d70";
           }
-          document.getElementById('progressBarSets').appendChild(progressbarElement);
+
           var hoverElements = document.createElement("div");
           hoverElements.className = "hoverInfo";
           hoverElements.id = progressbarIds[i] + "HoverInfo";
           hoverElements.style.display = "none";
           document.getElementById('progressBarSets').appendChild(hoverElements);
+          document.getElementById('progressBarSets').appendChild(progressbarElement);
         }
       } else {
         document.getElementById("progressBarAggregateTool").style.display = "none";
@@ -636,6 +673,7 @@ Cleaned and Prepared - July 2016
 
     function convertAndUpdate(id, option, value) {
       var idNum = progressbarIds.indexOf(id);
+      if(idNum == 16) return;
       if(option == "min" || option == "max"){
         var rawValue = parent.getRawValue(value, idNum);
         // Carbon correction
