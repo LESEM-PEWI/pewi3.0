@@ -464,6 +464,21 @@ Cleaned and Prepared - July 2016
       }
     }
 
+    function toggleHoverInfo(idNum) {
+
+      var element = document.getElementById(progressbarIds[idNum] + "HoverInfo");
+      if(element.style.display == "none"){
+        var actualMinValue = parent.getRawValue(0, idNum);
+        var actualMaxValue = parent.getRawValue(100, idNum);
+        element.innerHTML = "Min - Max: 0 - 100%<br>Actual Min - Actual Max: " + actualMinValue + " - " + actualMaxValue;
+        element.style.display = "block";
+      }
+      else {
+        element.innerHTML = "";
+        element.style.display = "none";
+      }
+    }
+
     /*
       Dynamically generate a table for customizing min and max values for all progress bars
       If additional progress bars are added, don't need to do anything with this function, just add
@@ -506,6 +521,8 @@ Cleaned and Prepared - July 2016
             progressbarElement.id = "pb"+i;
             progressbarElement.className = "progressbarItems";
             progressbarElement.innerHTML = progressbarDescrip[i];
+            progressbarElement.setAttribute("onmouseover", "toggleHoverInfo(" + i + ")");
+            progressbarElement.setAttribute("onmouseout", "toggleHoverInfo(" + i + ")");
           var tempSpan = document.createElement("span");
             progressbarElement.appendChild(tempSpan);
 
@@ -590,6 +607,11 @@ Cleaned and Prepared - July 2016
             actualMaxInput.style.background = "#0f4d70";
           }
           document.getElementById('progressBarSets').appendChild(progressbarElement);
+          var hoverElements = document.createElement("div");
+          hoverElements.className = "hoverInfo";
+          hoverElements.id = progressbarIds[i] + "HoverInfo";
+          hoverElements.style.display = "none";
+          document.getElementById('progressBarSets').appendChild(hoverElements);
         }
       } else {
         document.getElementById("progressBarAggregateTool").style.display = "none";
