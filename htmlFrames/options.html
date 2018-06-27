@@ -524,7 +524,7 @@ Cleaned and Prepared - July 2016
         titleEle.appendChild(titleSpan);
         var classNames = ["minInput", "maxInput","actualMinInput","actualMaxInput"];
         var ids = ["minTitle", "maxTitle","actualMinTitle","actualMaxTitle"];
-        var titles = ["Min(%)", "Max(%)","Actual&nbsp;Min","Actual&nbsp;Max"];
+        var titles = ["Min", "Max","Actual&nbsp;Min","Actual&nbsp;Max"];
         for(var i = 0; i < titles.length; i++){
           var inputEle = document.createElement("span");
           inputEle.className = classNames[i];
@@ -586,7 +586,13 @@ Cleaned and Prepared - July 2016
             minInput.setAttribute("onfocusout","setPlaceholderValue('min" + i + "',this.value)");
             minInput.setAttribute("size","5");
             minInput.setAttribute("height","5");
-            tempSpan.appendChild(minInput);
+
+          var unitElement = document.createElement("span");
+            unitElement.className = "minUnit";
+            unitElement.innerHTML = "%";
+
+          tempSpan.appendChild(minInput);
+          tempSpan.appendChild(unitElement);
           // add max value text input element
           var maxInput = document.createElement("input");
             maxInput.id = "max" + i;
@@ -601,8 +607,13 @@ Cleaned and Prepared - July 2016
             maxInput.setAttribute("onfocusout","setPlaceholderValue('max" + i + "',this.value)");
             maxInput.setAttribute("size","5");
             maxInput.setAttribute("height","5");
-            tempSpan.appendChild(maxInput);
 
+          unitElement = document.createElement("span");
+            unitElement.className = "maxUnit";
+            unitElement.innerHTML = "%";
+
+          tempSpan.appendChild(maxInput);
+          tempSpan.appendChild(unitElement);
           // add actualMin value text input element
 
           var actualMinInput = document.createElement("input");
@@ -614,8 +625,17 @@ Cleaned and Prepared - July 2016
             actualMinInput.setAttribute("onfocusout","setPlaceholderValue('actualMin" + i + "',this.value)");
             actualMinInput.setAttribute("size","5");
             actualMinInput.setAttribute("height","5");
-            if(i != 16)
+
+          unitElement = document.createElement("span");
+            unitElement.id = "actualMin" + i + "Unit";
+            unitElement.className = "actualMinUnit";
+
+            // don't need an Actual Min text input box for Total Sum Yields.
+            if(i != 16){
               tempSpan.appendChild(actualMinInput);
+              tempSpan.appendChild(unitElement);
+            }
+
           // add actualMin value text input element
           var actualMaxInput = document.createElement("input");
             actualMaxInput.id = "actualMax" + i;
@@ -626,8 +646,41 @@ Cleaned and Prepared - July 2016
             actualMaxInput.setAttribute("onfocusout","setPlaceholderValue('actualMax" + i + "',this.value)");
             actualMaxInput.setAttribute("size","5");
             actualMaxInput.setAttribute("height","5");
-            if(i != 16)
-              tempSpan.appendChild(actualMaxInput);
+            actualMaxInput.innerHTML = "tons";
+          var unitElement1 = document.createElement("span");
+            unitElement1.id = "actualMax" + i + "Unit";
+            unitElement1.className = "actualMaxUnit";
+            // unitElement1.innerHTML = "tons";
+          // don't need an Actual Max text input box for Total Sum Yields.
+          if(i != 16){
+            tempSpan.appendChild(actualMaxInput);
+            tempSpan.appendChild(unitElement1);
+          }
+
+          if(i == 0 || i == 1){
+            unitElement.innerHTML = "pts";
+            unitElement1.innerHTML = "pts";
+          }
+          else if(i == 2 || i == 3 || i == 5 || i == 6 || i == 9 || i == 11 || i == 12 || i == 13 || i == 15){
+            unitElement.innerHTML = "tons";
+            unitElement1.innerHTML = "tons";
+          }
+          else if(i == 4){
+            unitElement.innerHTML = "PPM";
+            unitElement1.innerHTML = "PPM";
+          }
+          else if(i == 7 || i == 8){
+            unitElement.innerHTML = "bu";
+            unitElement1.innerHTML = "bu";
+          }
+          else if(i == 10){
+            unitElement.innerHTML = "animals";
+            unitElement1.innerHTML = "animals";
+          }
+          else if (i == 14){
+            unitElement.innerHTML = "board-ft";
+            unitElement1.innerHTML = "board-ft";
+          }
 
           if(i % 2 != 0) {
             progressbarElement.style.background = "#2d5986";

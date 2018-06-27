@@ -88,21 +88,47 @@ body {
   }
 
   .minInput {
-    left: 45%;
+    left: 40%;
+    width: 33px;
   }
 
   .maxInput {
-    left: 56%;
+    left: 52%;
+    width: 33px;
   }
 
   .actualMinInput {
-    left: 68%;
-    width: 7vw;
+    left: 64%;
+    width: 60px;
   }
 
   .actualMaxInput {
     left: 83%;
-    width: 7vw;
+    width: 60px;
+  }
+
+  .actualMaxUnit, .minUnit, .maxUnit, .actualMinUnit {
+    position: absolute;
+    font-size: 12px;
+    color: #a9a9a9;
+    line-height: 1.9;
+    text-indent: 0;
+  }
+
+  .actualMaxUnit {
+    left: 92%;
+  }
+
+  .minUnit {
+    left: 45.1%;
+  }
+
+  .maxUnit {
+    left: 57.2%;
+  }
+
+  .actualMinUnit {
+    left: 73%;
   }
 
   .hkDivs, .progressbarItems {
@@ -185,7 +211,7 @@ body {
   }
 
 #progressBarAggregateTool {
-    width: 82%;
+    width: 88%;
   }
 
   #hk1, #itemTitles {
@@ -214,7 +240,7 @@ body {
 
   #progressBarAggregateTool {
     position: relative;
-    left:4%;
+    left: 3%;
   }
 
   #itemTitles {
