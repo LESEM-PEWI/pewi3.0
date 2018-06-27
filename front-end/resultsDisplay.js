@@ -2256,9 +2256,9 @@ function render(years){
       .style("font-size", "1.0em");
 
   //the variable listOfNames holds all the data names that will be displayed on the right hand legend.
-  var listOfNames = ["Conventional Corn", "Conservation Corn", "Conventional Soybean", "Conservation Soybean", "Alfalfa",
-                     "Permanent Pasture", "Rotational Grazing", "Grass Hay", "Prairie", "Conservation Forest", "Conventional Forest",
-                     "Switch Grass", "Short-rotation Woody Bioenergy", "Wetland", "Mixed Fruits & Vegetables"
+  var listOfNames = ["Conventional Corn", "Conservation Corn", "Conventional Soybean", "Conservation Soybean", "Mixed Fruits & Vegetables",
+                     "Permanent Pasture", "Rotational Grazing", "Grass Hay", "Switchgrass", "Prairie", "Wetland", "Alfalfa",
+                     "Conservational Forest", "Conventional Forest", "Short-Rotation Woody Bioenergy"
                     ];
 
   for(var i = 0; i < listOfNames.length; ++i){
@@ -2335,7 +2335,7 @@ function render(years){
       }
 
       //the variable tempX is so that the second rectangle (end) is at the appropriate X location.
-      var tempX = progressBarX + scoreData[l] - calculateWidth();
+      var tempX = progressBarX + scoreData[l] - calculateWidth() - 0.15;
       //progress bar
       svg.append("rect")
           .attr("fill", "black")
@@ -2386,16 +2386,17 @@ function render(years){
                .attr("y", (getCY(this)-20))
                .attr("rx", 5)
                .attr("ry", 5)
-               .attr("width", (text.length*15))
+               .attr("width", 230)
                .attr("height", 30)
                .attr("id", "textbox")
                .attr("class", "info")
                .style("fill", "#9cc1fc")
                .style("opacity", 0.8)
            svg.append("text")
-                 .attr("x", getCX(this))
+                 .attr("x", (getCX(this)+115))
                  .attr("y", getCY(this))
                  .attr("id", "tempText")
+                 .style("text-anchor","middle")
                  .text(getLandName(this.id)+": "+getScoreOfLandType(this.id));
          }
          else{//this is to do hover effect on hovering a TEXT
@@ -2569,7 +2570,7 @@ function render(years){
         landType = "Conservation Soybean";
         break;
       case "c5": case "c20": case "c35":
-        landType = "Alfalfa";
+        landType = "Mixed Fruits & Vegetables";
         break;
       case "c6": case "c21": case "c36":
         landType = "Permanent Pasture";
@@ -2581,25 +2582,25 @@ function render(years){
         landType = "Grass Hay";
         break;
       case "c9": case "c24": case "39":
-        landType = "Prairie";
+        landType = "Switchgrass";
         break;
       case "c10": case "c25": case "c40":
-        landType = "Conservation Forest";
+        landType = "Prairie";
         break;
       case "c11": case "c26": case "c41":
-        landType = "Conventional Forest";
-        break;
-      case "c12": case "c27": case "c42":
-        landType = "Switch Grass";
-        break;
-      case "c13": case "c28": case "c43":
-        landType = "Short-Rotation Woody Bioenergy";
-        break;
-      case "c14": case "c29": case "c44":
         landType = "Wetland";
         break;
+      case "c12": case "c27": case "c42":
+        landType = "Alfalfa";
+        break;
+      case "c13": case "c28": case "c43":
+        landType = "Conservation Forest";
+        break;
+      case "c14": case "c29": case "c44":
+        landType = "Conventional Forest";
+        break;
       case "c15": case "c30": case "c45":
-        landType = "Mixed Fruits & Vegetables";
+        landType = "Short-rotation Woody Bioenergy";
         break;
     }
     return landType;
