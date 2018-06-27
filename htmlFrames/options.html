@@ -855,6 +855,94 @@ Cleaned and Prepared - July 2016
 
     }
 
+    function switchUnits(type) {
+      var englishButton = document.getElementById("englishButton");
+      var metricButton = document.getElementById("metricButton");
+      if(type == 'English'){
+        if(englishButton.className != "buttonSelected"){
+          englishButton.className = "buttonSelected";
+          metricButton.className = "buttonUnselected";
+          var tempArr = ["actualMin", "actualMax"];
+          for(var i = 2; i < progressbarIds.length; i++){
+            for(var j = 0; j < tempArr.length; j++){
+              var elementMinUnit = document.getElementById(tempArr[j] + i + "Unit");
+              switch (i){
+                case 2: case 3: case 5: case 6: case 9:
+                case 11: case 12: case 13: case 15:
+                  elementMinUnit.innerHTML = "tons";
+                  break;
+                case 4:
+                  elementMinUnit.innerHTML = "PPM";
+                  break;
+                case 7: case 8:
+                  elementMinUnit.innerHTML = "bu";
+                  break;
+                case 14:
+                  elementMinUnit.innerHTML = "board-ft";
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+        }
+      }
+      else {
+        if(metricButton.className != "buttonSelected"){
+          metricButton.className = "buttonSelected";
+          englishButton.className = "buttonUnselected";
+          var tempArr = ["actualMin", "actualMax"];
+          for(var i = 2; i < progressbarIds.length; i++){
+            for(var j = 0; j < tempArr.length; j++){
+              var elementMinUnit = document.getElementById(tempArr[j] + i + "Unit");
+              switch (i){
+                case 2: case 3: case 5: case 6: case 9:
+                case 11: case 12: case 13: case 15:
+                  elementMinUnit.innerHTML = "Mg";
+                  break;
+                case 4:
+                  elementMinUnit.innerHTML = "Mg/L";
+                  break;
+                case 7: case 8:
+                  elementMinUnit.innerHTML = "Mg";
+                  break;
+                case 14:
+                  elementMinUnit.innerHTML = "M^3";
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // if(i == 0 || i == 1){
+    //   unitElement.innerHTML = "pts";
+    //   unitElement1.innerHTML = "pts";
+    // }
+    // else if(i == 2 || i == 3 || i == 5 || i == 6 || i == 9 || i == 11 || i == 12 || i == 13 || i == 15){
+    //   unitElement.innerHTML = "tons";
+    //   unitElement1.innerHTML = "tons";
+    // }
+    // else if(i == 4){
+    //   unitElement.innerHTML = "PPM";
+    //   unitElement1.innerHTML = "PPM";
+    // }
+    // else if(i == 7 || i == 8){
+    //   unitElement.innerHTML = "bu";
+    //   unitElement1.innerHTML = "bu";
+    // }
+    // else if(i == 10){
+    //   unitElement.innerHTML = "animals";
+    //   unitElement1.innerHTML = "animals";
+    // }
+    // else if (i == 14){
+    //   unitElement.innerHTML = "board-ft";
+    //   unitElement1.innerHTML = "board-ft";
+    // }
+
   </script>
 
 </head>
@@ -972,6 +1060,8 @@ Cleaned and Prepared - July 2016
 
       <div id="progressBarAggregateTool" style="display: none">
         <div id="tableDescrip">Use this table to input minimum/maximum desired values for specific progress bars. Values can be typed in via percent, English or Metric units.</div>
+        <button class="buttonSelected" id="englishButton" type="button" onclick="switchUnits('English');">English</button>
+        <button class="buttonUnselected" id="metricButton" type="button" onclick="switchUnits('Metric');">Metric</button>
         <div id="progressBarSets">
         </div>
       </div>

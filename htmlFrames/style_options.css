@@ -178,6 +178,53 @@ body {
     /*margin: 20px;*/
   }
 
+  button {
+    box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    padding: 15px 30px 15px 23px;
+    line-height: 1px;
+    position: relative;
+    text-align: center;
+    transition: background-color .2s, box-shadow .2s;
+    user-select: none;
+    white-space: nowrap;
+    width: 100px;
+    display: inline-block;
+
+  }
+
+  button:hover {
+    box-shadow: 0 0 30px rgba(255, 255, 255, .7);
+  }
+
+  button:active {
+    border-style: outset;
+  }
+
+  .buttonSelected {
+    background-color: #40A4DF;
+  }
+
+  .buttonUnselected {
+    background-color: #003d4d;
+  }
+
+  #metricButton {
+    position: absolute;
+    right: 60px;
+    border-radius: 0 12px 0 0;
+    border: 5px 5px 0 0 solid white;
+  }
+
+  #englishButton {
+    left: 492px;
+    border-radius: 12px 0 0 0;
+    border: 5px 0 0 5px solid white;
+  }
+
   label:hover,
   input:focus+label {
     box-shadow: 0 0 30px rgba(255, 255, 255, .7);
@@ -211,7 +258,7 @@ body {
   }
 
 #progressBarAggregateTool {
-    width: 88%;
+    width: 750px;
   }
 
   #hk1, #itemTitles {
@@ -271,5 +318,13 @@ body {
   color: white;
   text-align: center;
   margin: 10px 15px 10px 15px;
-  font-size: 1.4vw;
+  font-size: 20px;
+}
+
+#metricUnit {
+  right: 0vw;
+}
+
+#englishUnit {
+  right: 2vw;
 }
