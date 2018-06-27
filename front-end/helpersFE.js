@@ -653,6 +653,26 @@ function changeLandTypeTile(tileId) {
   } // end outter if
 } //end changeLandTypeTile
 
+//Individual updating function for Nitrate Tile values because every individual Tile's score is based off of values from the entire map
+//Meaning, all the landtypes need to be updated before the Nitrate score can be calculated
+function changeLandTypeTileNitrate(){
+  if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
+    for(var n = 0; n<boardData[currentBoard].map.length; n++){
+      //if land type of tile is nonzero
+      if (boardData[currentBoard].map[n].landType[currentYear] != 0) {
+        //change the materials of the faces in the meshMaterials array and update the boardData
+        if (!multiplayerAssigningModeOn) {
+          boardData[currentBoard].map[n].updateNitrate(currentYear);
+        }
+      }
+    }
+  } // end outter if
+} //end changeLandTypeTile
+
+
+
+
+
 //paintChange changes the highlighted color of the selected painter and updates painter
 function changeSelectedPaintTo(newPaintValue) {
   //check to see if multiplayer Assignment Mode is On
@@ -908,12 +928,16 @@ function combineMulti(givenPlayers) {
   merging = true;
   givenPlayers.sort();
   changeSelectedPaintTo(givenPlayers[0]);
+
   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
     var curValue = boardData[currentBoard].map[i].landType[currentYear];
     if (givenPlayers.indexOf(curValue) != -1) {
       changeLandTypeTile(i);
     }
   }
+
+changeLandTypeTileNitrate();
+
   //Delete the other (now unused) players
   givenPlayers.shift();
   for (var i = 0; i < givenPlayers.length; i++) {
@@ -1603,8 +1627,12 @@ function getHighlightColor(highlightType, tileId) {
   }
 
   else if (highlightType == "nitratetile") {
-    return 7;
-    // var nitratescore = Totals.tileNitrateScore[tileId][yearSelected];
+    var nitratescore = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate);
+    if(nitratescore>=0 && nitratescore<510) return 5;
+    else if(nitratescore>=510 && nitratescore<1020) return 18;
+    else if(nitratescore>=1020 && nitratescore<1530) return 32;
+    else if(nitratescore>=1530 && nitratescore<2040) return 31;
+    else if(nitratescore>2040) return 16;
   }
 
 
@@ -2131,7 +2159,7 @@ function getHighlightedInfo(tileId) {
         highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
         break;
       case 23:
-        highlightString = "Nitrate Tile: " + (Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2) + "<br>" + "ID: " + tileId + "<br>";
+        highlightString = "Nitrate Tile: " + (Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2) + "<br>";
         break;
     }
     return highlightString;
@@ -2612,7 +2640,10 @@ function onDocumentMouseMove(event) {
       //if painter tool type is the clickAndDrag painter
       else if (clickAndDrag) {
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-        if (boardData[currentBoard].map[currentTile].landType[0] != 0) changeLandTypeTile(currentTile);
+        if (boardData[currentBoard].map[currentTile].landType[0] != 0){
+           changeLandTypeTile(currentTile);
+           changeLandTypeTileNitrate();
+         }
       } else {
         //just a normal highlighting
         highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
@@ -2666,6 +2697,7 @@ function onDocumentMouseDown(event) {
                 var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
 
                 var tempGridArr = [];
+
                 for (var i = 0; i < changedTiles.length; i++) {
                   if (curTracking) {
                     tempGridArr.push(changedTiles[i]);
@@ -2673,6 +2705,7 @@ function onDocumentMouseDown(event) {
                   undoGridPainters.push(boardData[currentBoard].map[changedTiles[i] - 1].landType[currentYear]);
                   changeLandTypeTile(changedTiles[i] - 1);
                 }
+                changeLandTypeTileNitrate();
                 if (curTracking) {
                   pushClick(0, getStamp(), 56, 0, tempGridArr);
                 }
@@ -2694,6 +2727,7 @@ function onDocumentMouseDown(event) {
             } else {
               //just a normal tile change
               changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+              changeLandTypeTileNitrate();
               //Change variable for painting click and drag status
               clickAndDrag = true;
             } // end if/else
@@ -2711,6 +2745,7 @@ function onDocumentMouseDown(event) {
           if (curTracking) {
             pushClick(0, getStamp(), 83, 0, null);
           }
+
           for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
             if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
@@ -2719,6 +2754,9 @@ function onDocumentMouseDown(event) {
 
             }
           }
+
+          changeLandTypeTileNitrate();
+
         }
         //Inserts the block of land use types into the undoArr
         insertChange();
@@ -3205,6 +3243,7 @@ function randomizeBoard() {
       }
     } // end for
 
+
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
@@ -3215,6 +3254,8 @@ function randomizeBoard() {
         changeLandTypeTile(i);
       }
     } //end for all tiles
+
+    changeLandTypeTileNitrate();
   }
   randomizing = false;
   painter = prevPainter;
@@ -3635,6 +3676,7 @@ function revertChanges() {
     } else {
       painter = tempTileAndPainter[1];
       changeLandTypeTile(tempTileAndPainter[0]);
+      changeLandTypeTileNitrate();
     }
     undo = false;
     painter = tempPainter;
@@ -3764,6 +3806,12 @@ function saveAndRandomize() {
         break;
       }
     }
+    var forNitrateCalc = Array(4);
+    forNitrateCalc[0] = Array(828);
+    forNitrateCalc[1] = Array(828);
+    forNitrateCalc[2] = Array(828);
+    forNitrateCalc[3] = Array(828);
+
     for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
         //if tile exists
@@ -3773,10 +3821,23 @@ function saveAndRandomize() {
           meshMaterials[j].map = textureArray[painter];
           boardData[currentBoard].map[j].landType[i] = painter;
           boardData[currentBoard].map[j].update(i);
+          forNitrateCalc[i][j] = 1;
         }
 
       }
+
     }
+    for (var n = 1; n < forNitrateCalc.length; n++) {
+      for (var t = 0; t < forNitrateCalc[n].length; t++) {
+        if(forNitrateCalc[n][t] == 1){
+          boardData[currentBoard].map[t].updateNitrate(n);
+        }
+      }
+    }
+
+
+
+
     painter = newDefaultLandUse; //end for all tiles
     //'unselect' the previously selected icon
     var painterElementId = "paint" + prevPainter;
@@ -4020,9 +4081,15 @@ function showLevelDetails(value) {
       document.getElementById('biodiveristyIcon').className = "levelsSelectorIcon iconSelected";
       document.getElementById("biodiversityDetailsList").className = "DetailsList levelDetailsList";
       break;
+
+    case 23:
+      //show biodiversity legend
+      document.getElementById('nitratetileIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("nitratetileDetailsList").className = "DetailsList levelDetailsList";
+      break;
   } // END switch
   //hide ecosystem indicator legends
-  if ((value > -4 && value < 0) || (value<=-19 && value>=-22)) {
+  if ((value > -4 && value < 0) || (value<=-19 && value>=-23)) {
     globalLegend = false;
     var element = document.getElementsByClassName('DetailsList');
     if (element.length > 0) {
@@ -4685,10 +4752,14 @@ function transitionToYear(year) {
 //Clumps and undo's multiple tiles
 function undoGrid(givenTilesAndPainter) {
   //Go through each tile and replace the paint with the paint previously there
+
   while (givenTilesAndPainter[1].length > 0) {
     painter = givenTilesAndPainter[1].pop();
-    changeLandTypeTile(givenTilesAndPainter[0].pop());
+    var tile = givenTilesAndPainter[0].pop();
+    changeLandTypeTile(tile);
   }
+
+  changeLandTypeTileNitrate();
 } //end givenTilesAndPainter
 
 //Determines if the tile to be added is unique (non-repeated in paint and tileId)
