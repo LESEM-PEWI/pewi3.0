@@ -35,6 +35,7 @@ var previousTileId = [];
 var previousPainter = [];
 var randomzing = false;
 var rightPopupWasOpen;
+var backgroundInfoBoxWasOpen;
 var runningSim = false;
 var simulationData;
 var startTime;
@@ -193,6 +194,488 @@ function toggleTabTitle(value) {
       detailListStyle.display = 'none';
     }
   }
+}
+
+// Show score details when hover over progress bar
+function toggleScoreDetails(factor) {
+  switch (factor){
+    case 'gameWildlife':
+      if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
+        // console.log(childNodes);
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10 + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Totals.gameWildlifePoints[currentYear] + ' pts';
+        document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'carbon':
+      if(document.getElementsByClassName('carbonScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 + ' tons' + '<br>' +
+        (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg';
+        document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'biodiversity':
+      if(document.getElementsByClassName('biodiversityScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10  + '/100';;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10 + ' pts';
+        document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'erosion':
+      if(document.getElementsByClassName('erosionScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('erosionScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grossErosionScore[currentYear] * 10) / 10  + '/100';;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.grossErosion[currentYear] * 10) / 10 + ' tons' + '<br>' +
+          (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10) + ' Mg';
+        document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'nitrate':
+      if(document.getElementsByClassName('nitrateScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('nitrateScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' ppm' + '<br>' +
+          Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' mg/L';
+        document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'phoshorus':
+      if(document.getElementsByClassName('phoshorusScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('phoshorusScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+        document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'sediment':
+      if(document.getElementsByClassName('sedimentScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('sedimentScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10  + '/100';;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.sedimentDelivery[currentYear] * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.sedimentDelivery[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+        document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'total':
+      if(document.getElementsByClassName('totalScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('totalScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('totalScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        var totalScore = Math.min((Totals.nitrateConcentrationScore[currentYear] +
+          Totals.phosphorusLoadScore[currentYear] + Totals.sedimentDeliveryScore[currentYear] + Totals.carbonSequestrationScore[currentYear] +
+          Totals.grossErosionScore[currentYear] + Totals.gameWildlifePointsScore[currentYear] + Totals.biodiversityPointsScore[currentYear]) / 7, 100);
+        childNodes[5].innerHTML = 'Current: ' + Math.round(totalScore * 10) / 10  + '/100';
+
+        document.getElementsByClassName('totalScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'cornGrain':
+      if(document.getElementsByClassName('cornGrainScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('cornGrainScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].cornGrainYield * 10) / 10 + ' bu' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].cornGrainYield * 0.0254 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'soybeans':
+      if(document.getElementsByClassName('soybeansScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('soybeansScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].soybeanYield * 10) / 10 + ' bu' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].soybeanYield * 0.0272 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'fruitsAndVegetables':
+      if(document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.mixedFruitsAndVegetablesYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 0.90718474 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'cattle':
+      if(document.getElementsByClassName('cattleScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('cattleScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('cattleScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.cattleYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].cattleYield * 10) / 10 + ' animals';
+
+        document.getElementsByClassName('cattleScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'alfalfaHay':
+      if(document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('alfalfaHayScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.alfalfaHayYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 0.90718474 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'grassHay':
+      if(document.getElementsByClassName('grassHayScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('grassHayScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('grassHayScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grassHayYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].grassHayYield * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].grassHayYield * 0.90718474 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('grassHayScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'switchgrassBiomass':
+      if(document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.switchgrassYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].switchgrassYield * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].switchgrassYield * 0.90718474 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'wood':
+      if(document.getElementsByClassName('woodScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('woodScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('woodScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.woodYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].woodYield * 10) / 10 + ' board-ft' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].woodYield * 0.002359737 * 10) / 10 + ' M^3';
+
+        document.getElementsByClassName('woodScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'woodyBiomass':
+      if(document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('woodyBiomassScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.shortRotationWoodyBiomassYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 0.90718474 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display = 'block';
+      }
+    break;
+  }
+}
+
+function toggleMinMax(option, idNum){
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+  var tempElement = document.getElementById(progressbarIds[idNum]);
+  // console.log(tempElement.childNodes[7].style.display);
+  if(tempElement.childNodes[7].style.display == 'none' || tempElement.childNodes[7].style.display == '' ){
+    var minOrMaxValue;
+    if(option == 'Min')
+      minOrMaxValue = parseFloat(tempElement.childNodes[3].childNodes[3].style.left);
+    else
+      minOrMaxValue = parseFloat(tempElement.childNodes[3].childNodes[5].style.left);
+    tempElement.childNodes[7].innerHTML ="Goal " + option + ": <br>" + minOrMaxValue + "/100";
+    if(idNum == 0 || idNum == 1) tempElement.childNodes[7].innerHTML += "<br>" + minOrMaxValue / 10 + " pts";
+
+    // Set Carbon raw value
+    if(idNum == 2){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + Math.round(rawValue / 0.90718474 * 10) / 10 + " tons" + "<br>" + rawValue + " Mg";
+    }
+    // Set Gross Erosion, Phoshorus, Sediment, FruitsAndVegetables, Alfalfa Hay, Grass Hay, Switchgrass Biomass and Short Rotation Woody Biomass raw value
+    if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
+    }
+    // Set Nitrate concentration raw value
+    if(idNum == 4){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " ppm" + "<br>" + rawValue + " mg/L";
+    }
+
+    // calculate Corn Grain and Soybeans raw value
+    if(idNum == 7 || idNum == 8){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " bu" + "<br>" + Math.round(rawValue * 0.0272 * 10) / 10 + " Mg";
+    }
+
+    // Set Cattle raw value
+    if(idNum == 10){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " animals";
+    }
+
+    // Set Wood raw value
+    if(idNum == 14){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " board-ft" + "<br>" + Math.round(rawValue * 0.002359737 * 10) / 10 + " M^3";
+    }
+
+    tempElement.childNodes[7].style.display = 'block';
+  }
+  else {
+    tempElement.childNodes[7].style.display = 'none';
+    tempElement.childNodes[7].innerHTML = '';
+  }
+
+}
+
+// convert english unit to metric unit
+function englishToMetric(idNum, englishUnit){
+  if(idNum == 0 || idNum == 1)
+    return englishUnit;
+  else if(idNum == 2){
+    return Math.round(englishUnit / 0.90718474 * 10) / 10;
+  }
+  else if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
+    return Math.round(englishUnit * 0.90718474 * 10) / 10;
+  }
+  else if(idNum == 4){
+    return englishUnit;
+  }
+
+  else if(idNum == 7 || idNum == 8){
+    return Math.round(englishUnit * 0.0272 * 10) / 10;
+  }
+
+  else if(idNum == 10){
+    return englishUnit;
+  }
+
+  else if(idNum == 14){
+    return Math.round(englishUnit * 0.002359737 * 10) / 10;
+  }
+}
+
+// convert metric unit to english unit
+function metricToEnglish(idNum, metricUnit){
+  if(idNum == 0 || idNum == 1)
+    return metricUnit;
+  else if(idNum == 2){
+    return Math.round(metricUnit * 0.90718474 * 10) / 10;
+  }
+  else if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
+    return Math.round(metricUnit / 0.90718474 * 10) / 10;
+  }
+  else if(idNum == 4){
+    return metricUnit;
+  }
+
+  else if(idNum == 7 || idNum == 8){
+    return Math.round(metricUnit / 0.0272 * 10) / 10;
+  }
+
+  else if(idNum == 10){
+    return metricUnit;
+  }
+
+  else if(idNum == 14){
+    return Math.round(metricUnit / 0.002359737 * 10) / 10;
+  }
+}
+
+// calculate English raw scores given eco scores
+function getRawValue(minOrMaxValue,idNum) {
+  // calculate Game Wildlife and Biodiversity raw value
+  if(idNum == 0 || idNum == 1) return minOrMaxValue / 10;
+
+  // calculate Carbon raw value given carbonSequestrationScore(equals to minOrMaxValue) by the following equation
+  // this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
+  if(idNum == 2){
+    // Calculate in Metric unit by default.
+    var rawValue = Math.round((minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin) + boardData[currentBoard].minimums.carbonMin) * 10) / 10;
+    return rawValue;
+    // console.log("boardData[currentBoard].minimums.carbonMin = ", boardData[currentBoard].minimums.carbonMin);
+    // console.log("boardData[currentBoard].maximums.carbonMax = ", boardData[currentBoard].maximums.carbonMax);
+    // console.log("boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin = ", boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin);
+    // console.log("minOrMaxValue / 100 = ", minOrMaxValue / 100);
+    // console.log("minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)", minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin));
+    // console.log("rawValue = ", minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin) + boardData[currentBoard].minimums.carbonMin);
+  }
+  // calculate Gross Erosion raw value
+  // this.grossErosionScore[y] = 100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
+  if(idNum == 3){
+    var rawValue = Math.round((boardData[currentBoard].maximums.erosionMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) * 10) / 10;
+    return rawValue;
+  }
+  // calculate Nitrate concentration raw value
+  // this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin));
+  if(idNum == 4){
+    var rawValue = Math.round((boardData[currentBoard].maximums.nitrateMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) * 10) / 10;
+    return rawValue;
+  }
+
+  // calculate Phoshorus raw value
+  // this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin));
+  if(idNum == 5){
+    var rawValue = Math.round((boardData[currentBoard].maximums.phosphorusMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) * 10) / 10;
+    return rawValue;
+  }
+
+  // calculate Sediment raw value
+  // this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin));
+  if(idNum == 6){
+    var rawValue = Math.round((boardData[currentBoard].maximums.sedimentMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) * 10) / 10;
+    return rawValue;
+  }
+
+  // calculate Corn Grain raw value
+  // this.cornGrainYieldScore[y] = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax;
+  if(idNum == 7){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.cornMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Soybeans raw value
+  // this.soybeanYieldScore[y] = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax;
+  if(idNum == 8){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.soybeanMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Mixed Fruits and Vegetables raw value
+  // this.mixedFruitsAndVegetablesYieldScore[y] = 100 * this.yieldResults[y].mixedFruitsAndVegetablesYield / board.maximums.mixedFruitsAndVegetablesMax;
+  if(idNum == 9){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.mixedFruitsAndVegetablesMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Cattle raw value
+  // this.cattleYieldScore[y] = 100 * this.yieldResults[y].cattleYield / board.maximums.cattleMax;
+  if(idNum == 10){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.cattleMax * 10) / 10;
+    return rawValue;
+  }
+
+  // calculate Alfalfa Hay raw value
+  // this.alfalfaHayYieldScore[y] = 100 * this.yieldResults[y].alfalfaHayYield / board.maximums.alfalfaMax;
+  if(idNum == 11){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.alfalfaMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Grass Hay raw value
+  // this.grassHayYieldScore[y] = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax;
+  if(idNum == 12){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.grassHayMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Switchgrass Biomass raw value
+  // this.switchgrassYieldScore[y] = 100 * this.yieldResults[y].switchgrassYield / board.maximums.switchgrassMax;
+  if(idNum == 13){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.switchgrassMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Wood raw value
+  // this.woodYieldScore[y] = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax;
+  if(idNum == 14){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.woodMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Short Rotation Woody Biomass raw value
+  // this.shortRotationWoodyBiomassYieldScore[y] = 100 * this.yieldResults[y].shortRotationWoodyBiomassYield / board.maximums.shortRotationWoodyBiomassMax;
+  if(idNum == 15){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.shortRotationWoodyBiomassMax * 10) / 10;
+    return rawValue;
+  }
+}
+
+// Set min or max position indicators in progress bar according to its id.
+// i.e. make a white vertical bar appears in the progress bar which indicates the customized min/max value.
+function setProgressbarMinMaxValues(id, option, value) {
+  //if value is not numerical, disgard this change.
+  if(isNaN(value) || value < 0 || value > 100)
+    return;
+  // if value < 0, we set it to be -10, if value > 100, then set it to be 110. Error protection.
+  // if(value < 0) value = -10;
+  // if(value > 100) value = 110;
+
+  var children = document.getElementById(id).childNodes[3].childNodes;
+  // console.log(children);
+  if(option == 'min'){
+    if(value < parseFloat(children[5].style.left)){
+      children[3].style.left = value + "%";
+    }
+    // else{ //If min > max, then we remove max value
+    //   children[5].style.left = "110%";
+    // }
+
+  }
+  else if(option == 'max'){
+    if(value > parseFloat(children[3].style.left)){
+      children[5].style.left = value + "%";
+    }
+    // else{ //If min > max, then we remove min value
+    //   children[3].style.left = "-10%";
+    // }
+
+  }
+
 }
 
 //Adds the given tileId and painter to the undoArr
@@ -452,7 +935,9 @@ function addYearAndTransition() {
     document.getElementById("yearToPaste").options[nextYear].style.display = 'block';
   }
   //switch to next year
-
+  // refresh the progress bar
+  calculateResults();
+  refreshProgressBar(currentYear);
 } //end addYearAndTransition
 
 
@@ -552,6 +1037,9 @@ function deleteYearAndTransition()
       document.getElementById("yearToCopy").options[1].style.display = 'none';
       document.getElementById("yearToPaste").options[1].style.display = 'none';
     }
+    // refresh the progress bar
+    // calculateResults();
+    refreshProgressBar(currentYear);
 }// end deleteYearAndTransition
 
 
@@ -600,6 +1088,12 @@ function calculateCutoffs() {
 function calculateResults() {
   //Totals = new Results(boardData[currentBoard]);
   Totals.update();
+
+  //Correction for Carbon Sequestrations
+  for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
+    Totals.carbonSequestration[y] = Totals.carbonSequestration[y] * (1 / 0.90718474);
+  }
+
   //contaminatedRiver(Totals);
 } //end calculateResults
 
@@ -639,6 +1133,10 @@ function changeLandTypeTile(tileId) {
       pushClick(0, getStamp(), 55, 0, tileId);
     }
   } // end outter if
+
+  // Whenever tile of land type is changed, we'd better recalculate the results
+  calculateResults();
+  refreshProgressBar(currentYear);
 } //end changeLandTypeTile
 
 //paintChange changes the highlighted color of the selected painter and updates painter
@@ -2387,6 +2885,8 @@ function multiplayerMode() {
     document.getElementById('DownloadButton').style.right = '6.5vw';
     document.getElementById('logoBase').style.right = '9vw';
     document.getElementById('pewiLogo').style.right = '18.5vw';
+    // Hide the progress bar
+    document.getElementById('progressBarContainer').style.display = 'none';
   }
 }
 
@@ -3248,7 +3748,7 @@ function resetOptions() {
   toggleVisibility();
   // remove Esc key event listener
   document.removeEventListener('keyup', optionsEsc);
-  window.frames[4].document.removeEventListener('keyup', optionsEsc);
+  window.frames[6].document.removeEventListener('keyup', optionsEsc);
   // removeEvent(document, 'keyup', optionsEsc);
   // removeEvent(window.frames[4].document, 'keyup', optionsEsc);
 } //end resetOptions
@@ -3256,30 +3756,46 @@ function resetOptions() {
 //This function resetoptionspage by untoggling all the elements in the page
 function resetOptionsPage() {
   //This sets the parameter div string to an empty string
-  document.getElementById('parameters').innerHTML = "";
+  document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
+                                                    "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
   optionsString = "";
   //Save ad randomize to make sure that the mao behind the options page is being refreshed when the options are reset
   saveAndRandomize();
   //Iterates through all the paints (Land uses) and untoggles them
-  if (window.frames[4].document.getElementById("paint1")) {
+  if (window.frames[6].document.getElementById("paint1")) {
     for (var i = 1; i < 16; i++) {
-      window.frames[4].document.getElementById("paint" + i).checked = false;
+      window.frames[6].document.getElementById("paint" + i).checked = false;
     }
   }
   //iterates through the toggled hover elements and untoggles them
-  if (window.frames[4].document.getElementById("hover1")) {
+  if (window.frames[6].document.getElementById("hover1")) {
     for (var i = 1; i < 9; i++) {
-      window.frames[4].document.getElementById("hover" + i).checked = false;
+      window.frames[6].document.getElementById("hover" + i).checked = false;
+    }
+  }
+  // untoggle progress bars
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+  if (window.frames[6].document.getElementById("gameWildlifeProgressBar")) {
+    for (var i = 0; i < progressbarIds.length; i++) {
+      if(i < 7 || i == 16)
+        window.frames[6].document.getElementById(progressbarIds[i]).checked = false;
+      else{
+        window.frames[6].document.getElementById(progressbarIds[i]).checked = true;
+      }
     }
   }
   //Untoggles all the other elements
-  if (window.frames[4].document.getElementById("year0") &&
-    window.frames[4].document.getElementById("precip") &&
-    window.frames[4].document.getElementById("statFrame")) {
+  if (window.frames[6].document.getElementById("year0") &&
+    window.frames[6].document.getElementById("progressbars") &&
+    window.frames[6].document.getElementById("precip") &&
+    window.frames[6].document.getElementById("statFrame")) {
 
-    window.frames[4].document.getElementById("year0").checked = false;
-    window.frames[4].document.getElementById("precip").checked = false;
-    window.frames[4].document.getElementById("statFrame").checked = false;
+    window.frames[6].document.getElementById("year0").checked = false;
+    window.frames[6].document.getElementById("precip").checked = false;
+    window.frames[6].document.getElementById("statFrame").checked = false;
+    window.frames[6].document.getElementById("allProgressbars").checked = false;
   }
 }
 
@@ -3431,7 +3947,7 @@ function resultsEnd() {
   //reopen elements that were previously open
   if (leftToolConsoleWasOpen) roll(1);
   if (rightPopupWasOpen) togglePopupDisplay();
-
+  if (backgroundInfoBoxWasOpen) toggleBackgroundInfoDisplay();
   //if highlighted map legend was previously open, redisplay
   if (currentHighlightType > 0) {
     showLevelDetails(currentHighlightType);
@@ -3499,12 +4015,21 @@ function resultsStart() {
       togglePopupDisplay();
       rightPopupWasOpen = true;
     }
+    backgroundInfoBoxWasOpen = false;
+    if(document.getElementById("backgroundInfoBox").className == "backgroundInfoBox"){
+      toggleBackgroundInfoDisplay();
+      backgroundInfoBoxWasOpen = true;
+    }
 
     //prevent background land changes and so forth
     modalUp = true;
 
     //functions that update results and display them appropriately
+    /*
+    Since we recalculate the results whenever tile of land use type is changed,
+    and we could always get the up-to-date result, so it's unnecessary to calculate result again here.
     calculateResults();
+    */
     displayResults();
     animateResults();
     //Event Listener for closing reslts tab
@@ -4049,11 +4574,26 @@ function startOptions() {
     document.getElementById('options').contentWindow.getCurrentOptionsState();
     // add Esc key event listener
     document.addEventListener('keyup', optionsEsc);
-    window.frames[4].document.addEventListener('keyup', optionsEsc);
+    window.frames[6].document.addEventListener('keyup', optionsEsc);
     // addEvent(document, 'keyup', optionsEsc);
     // addEvent(window.frames[4].document, 'keyup', optionsEsc);
+
+    // hide the hotkey table when we click on 'Options' button
+    var tableInOption = window.frames[6].document.getElementById('hotkeyAggregateTool');
+    if(tableInOption != null && tableInOption.style.display != 'none'){
+      tableInOption.style.display = 'none';
+      window.frames[6].document.getElementById('hotkeySets').innerHTML = '';
+    }
+
+    // hide the progressbar min/max setup table when we click on 'Options' button
+    tableInOption = window.frames[6].document.getElementById('progressBarAggregateTool');
+    if(tableInOption != null && tableInOption.style.display != 'none'){
+      tableInOption.style.display = 'none';
+      window.frames[6].document.getElementById('progressBarSets').innerHTML = '';
+    }
   }
 } // end startOptions
+
 
 // startPrintOptions displays the printOptions page
 function startPrintOptions() {
@@ -4221,7 +4761,7 @@ function switchYearTab(yearNumberToChangeTo) {
   //then toggle on the selected year
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
   document.getElementById(yearIdString).className = "icon yearSelected";
-
+  refreshProgressBar(currentYear);
   // store last users action ( print function )
   if (!modalUp) {
     storeCurrentCameraSession(3, yearNumberToChangeTo);
@@ -4378,12 +4918,28 @@ function toggleVisibility() {
   //document.getElementById('playerAddButton').style.display = "none";
   //currentPlayer=1;
 
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+
   //reset default on items
   if (!multiplayerAssigningModeOn) {
     for (var i = 1; i <= 15; i++) {
       var string = "paint" + i;
       document.getElementById(string).style.display = "inline-block";
     }
+
+    document.getElementById('progressBarContainer').style.display = "block";
+
+    for(var i = 0; i < progressbarIds.length; i++){
+      // if(i < 7 || i == 16)
+        document.getElementById(progressbarIds[i]).style.display = "block";
+      // else{
+      //   window.frames[6].document.getElementById(progressbarIds[i]).checked = true;
+      // }
+
+    }
+
   }
 
   document.getElementById('year1Button').style.display = "block";
@@ -4394,7 +4950,6 @@ function toggleVisibility() {
   document.getElementById('year3PrecipContainer').style.display = 'block';
   document.getElementById('resultsButton').style.display = 'block';
 
-
   //reset precip
   immutablePrecip = false;
 
@@ -4402,12 +4957,12 @@ function toggleVisibility() {
   // abscond them from the index.html page parameters div
   //    if(!multiplayerAssigningModeOn){
   var strRawContents = document.getElementById('parameters').innerHTML;
-
   //split based on escape chars
   while (strRawContents.indexOf("\r") >= 0) {
     strRawContents = strRawContents.replace("\r", "")
   }
   var arrLines = strRawContents.split("\n");
+
 
   //for each line of the parameters div, as each keyword has its own line
   for (var i = 0; i < arrLines.length; i++) {
@@ -4426,13 +4981,20 @@ function toggleVisibility() {
         case "multiAssign":
           document.getElementById('playerAddButton').style.display = "inline-block";
           break;
+        case "allProgressbars":
+          document.getElementById('progressBarContainer').style.display = "none";
+          break;
+
         default:
           if (arrLines[i].slice(0, 5) == 'paint') {
             document.getElementById(arrLines[i]).style.display = "none";
           }
           break;
       } // end switch
-    } // end if
+    if(progressbarIds.indexOf(arrLines[i]) != -1){
+      document.getElementById(arrLines[i]).style.display = "none";
+    }
+   } // end if
   } //end for
 
 
@@ -4624,12 +5186,14 @@ function updateKeys() {
   for (var i = 0; i < hotkeyArr.length; i++) {
     for (var j = 0; j < 2; j++) {
       var temp = j + 1;
-      if (hotkeyArr[i][j] == null) {
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).value = "";
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).placeholder = "N/A";
-      } else {
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).value = "";
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).placeholder = String.fromCharCode(hotkeyArr[i][j]);
+      if(window.frames[6].document.getElementById('hotkeyAggregateTool').style.display == 'block'){
+        if (hotkeyArr[i][j] == null) {
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).value = "";
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).placeholder = "N/A";
+        } else {
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).value = "";
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).placeholder = String.fromCharCode(hotkeyArr[i][j]);
+        }
       }
     }
   }
@@ -4664,6 +5228,9 @@ function updatePrecip(year) {
 
   boardData[currentBoard].updateBoard();
 
+  // update the result whenever precipitation is changed.
+  calculateResults();
+  refreshProgressBar(currentYear);
 } //updatePrecip
 
 //updatePopup appends text to the popup dialogue
