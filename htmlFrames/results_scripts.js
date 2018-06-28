@@ -2,12 +2,36 @@
   //global boolean for first pie chart, default to list
   var isLandPlotOnCategories = false;
 
+  /*
+  * The variable inMultiplayerMode is to indicate if the application is in multiplayer mode.
+  * This is helpful for Issue 386, as the results page in multiplayer are different than the rest of the modes.
+  * For more information refer to Issue 386.
+  */
+  var inMultiplayerMode = false;
+
+  /*
+  * Using localStorage to hold value of inMultiplayerMode.
+  * This action is done because of transitions between pages alters the value of inMultiplayerMode unexpectedly.
+  */
+  localStorage.setItem('LSinMultiplayer', inMultiplayerMode);
+
   //changeLandPieBy toggles the year and then calls the pie graph function
   function changeLandPieBy(numberOfYears) {
     //parent is index.html
     //resultsDisplay.js
     parent.drawD3LandPieChart(toggleYearForLandPlotBy(numberOfYears), isLandPlotOnCategories);
   } //end changeLandPieBy()
+
+  /*
+  * The function inMultiplayer() is used to switch the value of inMultiplayerMode.
+  * For more information refer to Issue 386.
+  */
+  function inMultiplayer(result) {
+    console.log("BEFORE CHANGES, in multiplayer mode: "+localStorage.getItem('LSinMultiplayer'));
+    inMultiplayerMode = result;
+    localStorage.setItem('LSinMultiplayer', inMultiplayerMode);
+    console.log("Currently in multiplayer mode: "+localStorage.getItem('LSinMultiplayer'));
+  }//end of inMultiplayer()
 
   //change main pie chart from landList to Categories List
   function toggleCategoriesPie(toggleSelectionValue) {

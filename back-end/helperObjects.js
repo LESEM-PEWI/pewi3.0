@@ -1087,6 +1087,7 @@ function GameBoard() {
   this.width = 0;
   this.height = 0;
 
+  // this.yearsOwned = 1;
   //This function updates all of the tiles in the board to the calculatedYear
   //Use this only when you need to update all of the tiles, such as initially or when precip is changed
   //  otherwise, avoid using this function and update tiles individually since this is computationally intensive
@@ -1097,7 +1098,7 @@ function GameBoard() {
         this.map[i].updateNitrate(y);
       }
     }
-  } //end updateBoard
+  }; //end updateBoard
 
   //this function establishes the board area for calculations that depend on it
   //and determines the dimensions of the board
