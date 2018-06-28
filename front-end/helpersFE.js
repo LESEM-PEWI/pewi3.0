@@ -138,7 +138,7 @@ var session = {
 window.onbeforeunload = confirmExit;
 
 // Toggled popup text when hover over the Tabs in the left console
-function toggleTabTitle(value) {
+function toggleTabTitle(value, dir) {
   // document.getElementById(value).style.zIndex = '1';
 
   // console.log(document.getElementsByClassName('DetailsList'));
@@ -179,56 +179,20 @@ function toggleTabTitle(value) {
     document.getElementById(value).style.display = 'none';
   }
 
-
-  //
-  // var elementList = document.getElementsByClassName('DetailsList');
-  // if (elementList.length > 0) {
-  //   elementList[0].className = 'DetailsListRolled';
-  // }
-  //
-  // var elementRolled = document.getElementsByClassName('DetailsListRolled');
-  // if (elementRolled.length > 0) {
-  //   elementRolled[0].className = 'DetailsList';
-  // }
-
-
-
-  // When hover over the tab, hide the map key
-  // var detailListStyle = null;
-  // if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
-  //   detailListStyle = document.getElementsByClassName('DetailsList')[0].style;
-  // }
-  // // console.log(document.getElementsByClassName('DetailsList')[0]);
-  // if(detailListStyle != null){
-  //   if(detailListStyle.display === 'none'){
-  //     detailListStyle.display = 'inline-block';
-  //   }
-  //   else {
-  //     detailListStyle.display = 'none';
-  //   }
-  // }
-
-
-}
-
-function toggleLegendVisibilityIn(){
-  if(globalLegend != null){
-  var element = document.getElementById(globalLegend).style;
-
-  if(element.visibility === 'visible'){
-    element.visibility = 'hidden';
+//If hovering over, hide legend
+if(dir == 0){
+  if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
+    document.getElementsByClassName('DetailsList')[0].style.visibility = 'hidden';
   }
 }
-}
 
-function toggleLegendVisibilityOut(){
-  if(globalLegend != null){
-  var element = document.getElementById(globalLegend).style;
-
-  if(element.visibility === 'hidden'){
-    element.visibility = 'visible';
+//If leaving hover, show legend
+if(dir == 1){
+  if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
+    document.getElementsByClassName('DetailsList')[0].style.visibility = 'visible';
   }
 }
+
 }
 
 
@@ -653,10 +617,12 @@ function changeLandTypeTile(tileId) {
   } // end outter if
 } //end changeLandTypeTile
 
-//Individual updating function for Nitrate Tile values because every individual Tile's score is based off of values from the entire map
-//Meaning, all the landtypes need to be updated before the Nitrate score can be calculated
+//Updates Nitrate score for entire map since each individual Tile's score hinges on landtypes across the entire map
+//This function is called after each instance of a changeLandTypeTile() call
 function changeLandTypeTileNitrate(){
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
+    //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
+    //Hence the for loop
     for(var n = 0; n<boardData[currentBoard].map.length; n++){
       //if land type of tile is nonzero
       if (boardData[currentBoard].map[n].landType[currentYear] != 0) {
@@ -3959,6 +3925,12 @@ function showInfo(stringToShow) {
 //showLevelDetails shows the legend for each of the highlight map functions
 function showLevelDetails(value) {
   globalLegend = true;
+
+  //If there is a legend to show, make sure it's visible as the hover tab may have hidden it
+  if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
+  document.getElementsByClassName('DetailsList')[0].style.visibility = 'visible';
+  }
+
   switch (value) {
     case 1:
       //show nitrate legend
