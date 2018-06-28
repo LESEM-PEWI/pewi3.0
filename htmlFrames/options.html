@@ -50,7 +50,7 @@ Cleaned and Prepared - July 2016
 
     // unitType is used to identify what kind of unit should be shown in the Min/Max table
     // var unitType = document.getElementById("englishButton").className == "buttonSelected" ? "English" : "Metric";
-
+    var unitType;
     /*
     * savedOptions is a variable to indicate that whether or not changes in Instructor Options were saved.
     */
@@ -68,7 +68,6 @@ Cleaned and Prepared - July 2016
     var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
     "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode"];
 
-    recordCurrentOptions();
 
     //the saveCurrentOptionsState function is called when the save/exit button is pressed
     //each of the options is evaluated and the text for the parameters div is generated
@@ -352,7 +351,13 @@ Cleaned and Prepared - July 2016
       */
       var allCheckboxes = $(':checkbox');
       for(var i = 0; i < allCheckboxes.length; ++i){
-        $(':checkbox')[i].checked = false;
+        // All the YIELD progress bars should be checked.
+        if(i >= 31 && i <= 39){
+          $(':checkbox')[i].checked = true;
+        }
+        else {
+          $(':checkbox')[i].checked = false;
+        }
         // if(i < 26){
         //   $(':checkbox')[i].checked = false;
         // }
@@ -450,7 +455,14 @@ Cleaned and Prepared - July 2016
         */
         var allCheckboxes = $(':checkbox');
         for(var i = 0; i < allCheckboxes.length; ++i){
-          $(':checkbox')[i].checked = false;
+          // All the YIELD progress bars should be checked.
+          if(i >= 31 && i <= 39){
+            $(':checkbox')[i].checked = true;
+          }
+          else {
+            $(':checkbox')[i].checked = false;
+          }
+          // console.log('i =' + i +' : ' + $(':checkbox')[i].id);
           // if(i < 26){
           //   $(':checkbox')[i].checked = false;
           // }
@@ -518,7 +530,8 @@ Cleaned and Prepared - July 2016
       the additional progress bar id into progressbarDescrip array.
     */
     function retrieveMinMaxValues() {
-      console.log(unitType);
+      unitType = document.getElementById("englishButton").className == "buttonSelected" ? "English" : "Metric";
+
       if(document.getElementById("progressBarAggregateTool").style.display == "none") {
         document.getElementById("progressBarAggregateTool").style.display = "block";
         // add table header
@@ -712,6 +725,9 @@ Cleaned and Prepared - July 2016
         }
 
         if(unitType == "Metric"){
+          // This is a trick, we set the english button to be seleted while the metric button to be not, so that we can use switchUnits function.
+          document.getElementById("englishButton").className = "buttonSelected";
+          document.getElementById("metricButton").className = "buttonUnselected";
           switchUnits("Metric");
         }
       } else {
@@ -879,10 +895,14 @@ Cleaned and Prepared - July 2016
 
     }
 
+    // In switchUnits function, the 'type' parameter has two potential values which are "English" and "Metric"
+    // The purpose of this function is showing desired units (English or Metric) in the Min/Max table.
+    // We also convert the values from one unit to the other if there are any in the table.
     function switchUnits(type) {
       var englishButton = document.getElementById("englishButton");
       var metricButton = document.getElementById("metricButton");
       if(type == 'English'){
+        // Only switch units when english isn't currently selected.
         if(englishButton.className != "buttonSelected"){
           englishButton.className = "buttonSelected";
           metricButton.className = "buttonUnselected";
@@ -917,6 +937,7 @@ Cleaned and Prepared - July 2016
         }
       }
       else {
+        // Only switch units when metric unit isn't currently selected
         if(metricButton.className != "buttonSelected"){
           metricButton.className = "buttonSelected";
           englishButton.className = "buttonUnselected";
