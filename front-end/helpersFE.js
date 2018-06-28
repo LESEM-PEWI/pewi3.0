@@ -4050,7 +4050,7 @@ function showLevelDetails(value) {
 
     case 22:
       //show biodiversity legend
-      document.getElementById('biodiveristyIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById('biodiversityIcon').className = "levelsSelectorIcon iconSelected";
       document.getElementById("biodiversityDetailsList").className = "DetailsList levelDetailsList";
       break;
 
