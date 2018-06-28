@@ -489,30 +489,61 @@ function toggleMinMax(option, idNum){
 
 }
 
+// convert english unit to metric unit
 function englishToMetric(idNum, englishUnit){
-  if(idNum == 2){
+  if(idNum == 0 || idNum == 1)
+    return englishUnit;
+  else if(idNum == 2){
     return Math.round(englishUnit / 0.90718474 * 10) / 10;
   }
-  if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
+  else if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
     return Math.round(englishUnit * 0.90718474 * 10) / 10;
   }
-  if(idNum == 4){
+  else if(idNum == 4){
     return englishUnit;
   }
 
-  if(idNum == 7 || idNum == 8){
+  else if(idNum == 7 || idNum == 8){
     return Math.round(englishUnit * 0.0272 * 10) / 10;
   }
 
-  if(idNum == 10){
+  else if(idNum == 10){
     return englishUnit;
   }
 
-  if(idNum == 14){
+  else if(idNum == 14){
     return Math.round(englishUnit * 0.002359737 * 10) / 10;
   }
 }
 
+// convert metric unit to english unit
+function metricToEnglish(idNum, metricUnit){
+  if(idNum == 0 || idNum == 1)
+    return metricUnit;
+  else if(idNum == 2){
+    return Math.round(metricUnit * 0.90718474 * 10) / 10;
+  }
+  else if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
+    return Math.round(metricUnit / 0.90718474 * 10) / 10;
+  }
+  else if(idNum == 4){
+    return metricUnit;
+  }
+
+  else if(idNum == 7 || idNum == 8){
+    return Math.round(metricUnit / 0.0272 * 10) / 10;
+  }
+
+  else if(idNum == 10){
+    return metricUnit;
+  }
+
+  else if(idNum == 14){
+    return Math.round(metricUnit / 0.002359737 * 10) / 10;
+  }
+}
+
+// calculate English raw scores given eco scores
 function getRawValue(minOrMaxValue,idNum) {
   // calculate Game Wildlife and Biodiversity raw value
   if(idNum == 0 || idNum == 1) return minOrMaxValue / 10;
@@ -520,6 +551,7 @@ function getRawValue(minOrMaxValue,idNum) {
   // calculate Carbon raw value given carbonSequestrationScore(equals to minOrMaxValue) by the following equation
   // this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
   if(idNum == 2){
+    // Calculate in Metric unit by default.
     var rawValue = Math.round((minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin) + boardData[currentBoard].minimums.carbonMin) * 10) / 10;
     return rawValue;
     // console.log("boardData[currentBoard].minimums.carbonMin = ", boardData[currentBoard].minimums.carbonMin);
@@ -613,15 +645,15 @@ function getRawValue(minOrMaxValue,idNum) {
   }
 }
 
-// Set min or max value indicators in progress bar according to its id.
+// Set min or max position indicators in progress bar according to its id.
 // i.e. make a white vertical bar appears in the progress bar which indicates the customized min/max value.
 function setProgressbarMinMaxValues(id, option, value) {
   //if value is not numerical, disgard this change.
-  if(isNaN(value))
+  if(isNaN(value) || value < 0 || value > 100)
     return;
   // if value < 0, we set it to be -10, if value > 100, then set it to be 110. Error protection.
-  if(value < 0) value = -10;
-  if(value > 100) value = 110;
+  // if(value < 0) value = -10;
+  // if(value > 100) value = 110;
 
   var children = document.getElementById(id).childNodes[3].childNodes;
   // console.log(children);

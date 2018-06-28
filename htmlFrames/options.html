@@ -48,6 +48,9 @@ Cleaned and Prepared - July 2016
                           "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
                           "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
 
+    // unitType is used to identify what kind of unit should be shown in the Min/Max table
+    // var unitType = document.getElementById("englishButton").className == "buttonSelected" ? "English" : "Metric";
+
     /*
     * savedOptions is a variable to indicate that whether or not changes in Instructor Options were saved.
     */
@@ -64,6 +67,9 @@ Cleaned and Prepared - July 2016
     var selectedOptionsFalse = [];
     var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
     "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode"];
+
+    recordCurrentOptions();
+
     //the saveCurrentOptionsState function is called when the save/exit button is pressed
     //each of the options is evaluated and the text for the parameters div is generated
     //as needed
@@ -512,6 +518,7 @@ Cleaned and Prepared - July 2016
       the additional progress bar id into progressbarDescrip array.
     */
     function retrieveMinMaxValues() {
+      console.log(unitType);
       if(document.getElementById("progressBarAggregateTool").style.display == "none") {
         document.getElementById("progressBarAggregateTool").style.display = "block";
         // add table header
@@ -703,6 +710,10 @@ Cleaned and Prepared - July 2016
           document.getElementById('progressBarSets').appendChild(hoverElements);
           document.getElementById('progressBarSets').appendChild(progressbarElement);
         }
+
+        if(unitType == "Metric"){
+          switchUnits("Metric");
+        }
       } else {
         document.getElementById("progressBarAggregateTool").style.display = "none";
         document.getElementById("progressBarSets").innerHTML = '';
@@ -752,18 +763,24 @@ Cleaned and Prepared - July 2016
       }
     }
 
-    // Convert 0 - 100 value into raw value Or convert raw value into 0 - 100 value
+    // Convert 0 - 100 eco score into raw value Or convert raw value into 0 - 100 value
     // When user enter Min/Max values in progress bar, Actual Min/Actual Max values can be real-time updated, vice versa.
 
     function convertAndUpdate(id, option, value) {
       var idNum = progressbarIds.indexOf(id);
+
       if(idNum == 16) return;
       if(option == "min" || option == "max"){
+        // get english raw value
         var rawValue = parent.getRawValue(value, idNum);
         // Carbon correction
         if(idNum == 2) {
           rawValue = Math.round(rawValue / 0.90718474 * 10) / 10;
         }
+        if(unitType == "Metric"){
+          rawValue = parent.englishToMetric(idNum, rawValue);
+        }
+
         if(option == "min"){
           // Set actualMin raw value
           document.getElementById("actualMin" + idNum).placeholder = rawValue;
@@ -776,6 +793,9 @@ Cleaned and Prepared - July 2016
         return value;
       }
       else if(option == "actualMin" || option == "actualMax"){
+        if(unitType == "Metric"){
+          value = parent.metricToEnglish(idNum, value);
+        }
         var minOrMaxValue = Math.round(getScores(idNum, value) * 100) / 100;
         if(option == "actualMin"){
           // Set 0 - 100 Min value based on the raw value
@@ -791,6 +811,10 @@ Cleaned and Prepared - July 2016
 
     }
 
+    /*
+      Calculate ecosystem scores given raw values.
+
+    */
     function getScores(idNum, rawValue) {
       if(idNum == 0 || idNum == 1) return rawValue * 10;
       // calculate Carbon score
@@ -862,27 +886,32 @@ Cleaned and Prepared - July 2016
         if(englishButton.className != "buttonSelected"){
           englishButton.className = "buttonSelected";
           metricButton.className = "buttonUnselected";
+          unitType = "English";
           var tempArr = ["actualMin", "actualMax"];
-          for(var i = 2; i < progressbarIds.length; i++){
+          for(var i = 2; i < progressbarIds.length - 1; i++){
             for(var j = 0; j < tempArr.length; j++){
-              var elementMinUnit = document.getElementById(tempArr[j] + i + "Unit");
+              var unitElement = document.getElementById(tempArr[j] + i + "Unit");
+              var actualElement = document.getElementById(tempArr[j] + i);
+              var metricUnit = parseFloat(actualElement.placeholder);
+              actualElement.placeholder = parent.metricToEnglish(i, metricUnit);
               switch (i){
                 case 2: case 3: case 5: case 6: case 9:
                 case 11: case 12: case 13: case 15:
-                  elementMinUnit.innerHTML = "tons";
+                  unitElement.innerHTML = "tons";
                   break;
                 case 4:
-                  elementMinUnit.innerHTML = "PPM";
+                  unitElement.innerHTML = "PPM";
                   break;
                 case 7: case 8:
-                  elementMinUnit.innerHTML = "bu";
+                  unitElement.innerHTML = "bu";
                   break;
                 case 14:
-                  elementMinUnit.innerHTML = "board-ft";
+                  unitElement.innerHTML = "board-ft";
                   break;
                 default:
                   break;
               }
+
             }
           }
         }
@@ -891,57 +920,38 @@ Cleaned and Prepared - July 2016
         if(metricButton.className != "buttonSelected"){
           metricButton.className = "buttonSelected";
           englishButton.className = "buttonUnselected";
+          unitType = "Metric";
           var tempArr = ["actualMin", "actualMax"];
-          for(var i = 2; i < progressbarIds.length; i++){
+          for(var i = 2; i < progressbarIds.length - 1; i++){
             for(var j = 0; j < tempArr.length; j++){
-              var elementMinUnit = document.getElementById(tempArr[j] + i + "Unit");
+              var unitElement = document.getElementById(tempArr[j] + i + "Unit");
+              var actualElement = document.getElementById(tempArr[j] + i);
+              var englishUnit = parseFloat(actualElement.placeholder);
+              actualElement.placeholder = parent.englishToMetric(i, englishUnit);
               switch (i){
                 case 2: case 3: case 5: case 6: case 9:
                 case 11: case 12: case 13: case 15:
-                  elementMinUnit.innerHTML = "Mg";
+                  unitElement.innerHTML = "Mg";
                   break;
                 case 4:
-                  elementMinUnit.innerHTML = "Mg/L";
+                  unitElement.innerHTML = "Mg/L";
                   break;
                 case 7: case 8:
-                  elementMinUnit.innerHTML = "Mg";
+                  unitElement.innerHTML = "Mg";
                   break;
                 case 14:
-                  elementMinUnit.innerHTML = "M^3";
+                  unitElement.innerHTML = "M^3";
                   break;
                 default:
                   break;
               }
+
             }
           }
         }
       }
     }
 
-    // if(i == 0 || i == 1){
-    //   unitElement.innerHTML = "pts";
-    //   unitElement1.innerHTML = "pts";
-    // }
-    // else if(i == 2 || i == 3 || i == 5 || i == 6 || i == 9 || i == 11 || i == 12 || i == 13 || i == 15){
-    //   unitElement.innerHTML = "tons";
-    //   unitElement1.innerHTML = "tons";
-    // }
-    // else if(i == 4){
-    //   unitElement.innerHTML = "PPM";
-    //   unitElement1.innerHTML = "PPM";
-    // }
-    // else if(i == 7 || i == 8){
-    //   unitElement.innerHTML = "bu";
-    //   unitElement1.innerHTML = "bu";
-    // }
-    // else if(i == 10){
-    //   unitElement.innerHTML = "animals";
-    //   unitElement1.innerHTML = "animals";
-    // }
-    // else if (i == 14){
-    //   unitElement.innerHTML = "board-ft";
-    //   unitElement1.innerHTML = "board-ft";
-    // }
 
   </script>
 
