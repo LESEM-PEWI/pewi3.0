@@ -5448,18 +5448,6 @@ function getTileBiodiversityInfoText(score){
 }
 
 
-function getTileNitrateScore(tileId){
-  var score = boardData[currentBoard].map[tileId].results[yearSelected].cropMultiplier;
-  score*=getTilePrecipitationMultiplier(yearSelected);
-
-  var check=0;
-  for (var s = 1; s < boardData[currentBoard].map[tileId].subwatershedArea.length; s++) {
-    console.log(check);
-    check++;
-
-}
-}
-
 function getTilePrecipitationMultiplier(year){
 
   if (boardData[currentBoard].precipitation[year] == 24.58 || boardData[currentBoard].precipitation[year] == 28.18) // If it's a dry year
@@ -5537,7 +5525,7 @@ function getBoldedCells(tileId, color){
   }
 
 
-  //The next 4 if statements are used if a tile in on the edge of the map
+  //The next 4 if statements are used if a tile is not on the edge of the map
   if(!didtop){
     subwatershedtop = boardData[currentBoard].map[tileId-23].subwatershed;
   }
