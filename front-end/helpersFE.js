@@ -5509,7 +5509,7 @@ function uploadCSV(reader) {
       // If download the file by openWith option, and then upload the file into PEWI, you can noticed that there is one additional line, and errors occur
       // because of this addition line. Since we know that there should be 829 lines in total, thus we deal with only the first 829 lines.
       if(i > 828) continue;
-      
+
       data = allTextLines[i].split(',');
       var headlength = headers.length;
       if (data.length == headlength) {
@@ -5608,7 +5608,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
     if (optionsString !== "") {
       string += ",OptionsSelected";
     }
-    string += "\n";
+    string += "\r\n";
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       if (boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
