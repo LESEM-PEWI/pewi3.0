@@ -2513,7 +2513,7 @@ function Results(board) {
     this.sumFlagPercentages();
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
-      var tempScore = 0
+      var tempScore = 0;
 
       //native vegetation and other high diversity land uses points
       if (this.nativeVegetationHDPercent[y] == 100) {
@@ -2994,10 +2994,16 @@ function Results(board) {
   this.updateScores = function() {
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
-
       this.gameWildlifePointsScore[y] = this.gameWildlifePoints[y] * 10;
       this.biodiversityPointsScore[y] = this.biodiversityPoints[y] * 10;
       this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
+      // console.log("this.carbonSequestration[y]", this.carbonSequestration[y]);
+      // console.log("board.minimums.carbonMin = ",board.minimums.carbonMin);
+      // console.log("board.maximums.carbonMax = ",board.maximums.carbonMax);
+      // console.log("board.maximums.carbonMax - board.minimums.carbonMin = ", board.maximums.carbonMax - board.minimums.carbonMin);
+      // console.log("this.carbonSequestrationScore[y] / 100 = ", this.carbonSequestrationScore[y] / 100);
+      // console.log("this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin) = ", this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin));
+      // console.log("rawValue = ", this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin) + board.minimums.carbonMin);
       this.grossErosionScore[y] = 100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
 
       this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin));

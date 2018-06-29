@@ -163,6 +163,13 @@ body {
   transition-duration: 0.1s;
 }
 
+/* .progressbar {
+  right: 10vw;
+  top: 24vw;
+  position: absolute;
+  z-index: 0;
+} */
+
 #closeUploadDownload {
   left: 58vw;
   top: 21vh;
