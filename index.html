@@ -208,39 +208,39 @@
     <div id="toolsButton" class="consoleButton" onclick="roll(1);">
       <img id="pick" src="./imgs/pickOut.png" onmouseover="toggleChangeLandType(); toggleTabTitle('toolsTabTitle');" onmouseout="toggleChangeLandType(); toggleTabTitle('toolsTabTitle');">
       <!-- Tools tab title display -->
-      <div id="toolsTabTitle" style="display:none;"></div>
+      <div id="toolsTabTitle" style="display: none;"></div>
     </div>
 
     <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
       <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
       <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);">
-        <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle');" onmouseout="toggleTabTitle('terrainTabTitle');">
+        <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle', 0);" onmouseout="toggleTabTitle('terrainTabTitle', 1);">
         <div id="terrainTabTitle" style="display:none;"></div>
       </div>
       <!-- "Cloud, raindrops, sun icon" by Yannick Lung (http://yannicklung.com/) with free commercial use / Inverted and resized -->
       <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);">
-        <img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png" onmouseover="toggleTabTitle('precipTabTitle');" onmouseout="toggleTabTitle('precipTabTitle');">
+        <img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png" onmouseover="toggleTabTitle('precipTabTitle', 0);" onmouseout="toggleTabTitle('precipTabTitle', 1);">
         <div id="precipTabTitle" style="display:none;"></div>
       </div>
       <!-- "Calendar tool variant for time administration free icon" by FreePik (http://www.freepik.com), retrived from www.flaticon.com  with free commercial use / Inverted and resized -->
       <div id="yearButton" class="consoleButton" onclick="switchConsoleTab(6);">
-        <img id="calendarImg" class="imgNotSelected" src="./imgs/calendarIcon.png" onmouseover="toggleTabTitle('yearTabTitle');" onmouseout="toggleTabTitle('yearTabTitle');">
+        <img id="calendarImg" class="imgNotSelected" src="./imgs/calendarIcon.png" onmouseover="toggleTabTitle('yearTabTitle', 0);" onmouseout="toggleTabTitle('yearTabTitle', 1);">
         <div id="yearTabTitle" style="display:none;"></div>
       </div>
       <!-- "Filter, levels, settings icon" by Yash Ranpara (https://www.iconfinder.com/yash11) with free commerical use / Inverted and resized -->
       <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);">
-        <img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png" onmouseover="toggleTabTitle('levelsTabTitle');" onmouseout="toggleTabTitle('levelsTabTitle');">
+        <img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png" onmouseover="toggleTabTitle('levelsTabTitle', 0);" onmouseout="toggleTabTitle('levelsTabTitle', 1);">
         <div id="levelsTabTitle" style="display:none;"></div>
       </div>
       <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
       <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);">
-        <img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png" onmouseover="toggleTabTitle('featuresTabTitle');" onmouseout="toggleTabTitle('featuresTabTitle');">
+        <img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png" onmouseover="toggleTabTitle('featuresTabTitle', 0);" onmouseout="toggleTabTitle('featuresTabTitle', 1);">
         <div id="featuresTabTitle" style="display:none;"></div>
       </div>
 
       <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);">
-        <img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png" onmouseover="toggleTabTitle('yieldTabTitle');" onmouseout="toggleTabTitle('yieldTabTitle');">
+        <img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png" onmouseover="toggleTabTitle('yieldTabTitle', 0);" onmouseout="toggleTabTitle('yieldTabTitle', 1);">
         <div id="yieldTabTitle" style="display:none;"></div>
       </div>
 
@@ -536,11 +536,110 @@
         </div>
 
 
+        <div id="sedimentDetailsList" class="DetailsListRolled levelDetailsList">
+          <center>
+            <h1 class="DetailsList-title">Sediment Control</h1></center>
+          <div class="legendColor" style="background-color: #ffffc9;">
+            <p class="levelsTextDetails">0-9.94</p>
+          </div>
+          <div class="legendColor" style="background-color: #ac7339;">
+            <p class="levelsTextDetails">9.94-19.88</p>
+          </div>
+          <div class="legendColor" style="background-color: #cb657a;">
+            <p class="levelsTextDetails">19.88-29.82</p>
+          </div>
+          <div class="legendColor" style="background-color: #882252;">
+            <p class="levelsTextDetails">29.82-39.76</p>
+          </div>
+          <div class="legendColor" style="background-color: #9a3010;">
+            <p class="levelsTextDetails">>39.76</p>
+          </div>
+        </div>
 
+        <div id="carbonDetailsList" class="DetailsListRolled levelDetailsList">
+          <center>
+            <h1 class="DetailsList-title">Carbon Sequestration</h1></center>
+          <div class="legendColor" style="background-color: #ccffcc;">
+            <p class="levelsTextDetails">0-4.04</p>
+          </div>
+          <div class="legendColor" style="background-color: #66ff66;">
+            <p class="levelsTextDetails">4.04-8.09</p>
+          </div>
+          <div class="legendColor" style="background-color: #097c2f;">
+            <p class="levelsTextDetails">8.09-12.13</p>
+          </div>
+          <div class="legendColor" style="background-color: #38638b;">
+            <p class="levelsTextDetails">12.13-16.17</p>
+          </div>
+          <div class="legendColor" style="background-color: #302486;">
+            <p class="levelsTextDetails">>16.17</p>
+          </div>
+        </div>
 
+        <div id="gamewildlifeDetailsList" class="DetailsListRolled levelDetailsList">
+          <center>
+            <h1 class="DetailsList-title">Game Wildlife</h1></center>
+          <div class="legendColor" style="background-color: #e6bb00;">
+            <p class="levelsTextDetails">No impact</p>
+          </div>
+          <div class="legendColor" style="background-color: #c97b08;">
+            <p class="levelsTextDetails">Low Impact</p>
+          </div>
+          <div class="legendColor" style="background-color: #ad490d;">
+            <p class="levelsTextDetails">Moderate Impact</p>
+          </div>
+          <div class="legendColor" style="background-color: #9a3010;">
+            <p class="levelsTextDetails">High Impact</p>
+          </div>
+          <div class="legendColor" style="background-color: #871c12;">
+            <p class="levelsTextDetails">Very High Impact</p>
+          </div>
+        </div>
+
+        <div id="biodiversityDetailsList" class="DetailsListRolled levelDetailsList">
+          <center>
+            <h1 class="DetailsList-title">Biodiversity</h1></center>
+          <div class="legendColor" style="background-color: #ffffc9;">
+            <p class="levelsTextDetails">No impact</p>
+          </div>
+          <div class="legendColor" style="background-color: #c7eab4;">
+            <p class="levelsTextDetails">Low Impact</p>
+          </div>
+          <div class="legendColor" style="background-color: #7fcebb;">
+            <p class="levelsTextDetails">Moderate Impact</p>
+          </div>
+          <div class="legendColor" style="background-color: #41b7c5;">
+            <p class="levelsTextDetails">High Impact</p>
+          </div>
+          <div class="legendColor" style="background-color: #2f7eb7;">
+            <p class="levelsTextDetails">Very High Impact</p>
+          </div>
+        </div>
+
+        <div id="nitratetileDetailsList" class="DetailsListRolled levelDetailsList">
+          <center>
+            <h1 class="DetailsList-title">Nitrate Tile Score</h1></center>
+          <div class="legendColor" style="background-color: #ffffc9;">
+            <p class="levelsTextDetails">0-510</p>
+          </div>
+          <div class="legendColor" style="background-color: #87ceee;">
+            <p class="levelsTextDetails">510-1020</p>
+          </div>
+          <div class="legendColor" style="background-color: #38638b;">
+            <p class="levelsTextDetails">1020-1530</p>
+          </div>
+          <div class="legendColor" style="background-color: #0053b3;">
+            <p class="levelsTextDetails">1530-2040</p>
+          </div>
+          <div class="legendColor" style="background-color: #342286;">
+            <p class="levelsTextDetails">2040+</p>
+          </div>
+        </div>
+
+        <div class="leftcol">
         <!-- "Letter N Ig Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
         <div class="tooltipResultsNitrate">
-          <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/N.png" onclick="displayLevels('nitrate');">
+          <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/Ns.png" onclick="displayLevels('nitrate');">
           <span class="tooltiptextResults">Subwatershed Nitrate-N Percent Contribution</span>
         </div>
         <!-- "Letter E gold Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
@@ -553,6 +652,39 @@
           <img id="phoshorusIcon" class="levelsSelectorIcon icon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
           <span class="tooltiptextResults">Phosphorus Index Risk Assessment</span>
         </div>
+        <!--"S.png icon created by Sam Kerr"-->
+        <div class="tooltipResultsSediment">
+          <img id="sedimentIcon" class="levelsSelectorIcon icon" src="./imgs/S.png" onclick="displayLevels('sediment');">
+          <span class="tooltiptextResults">Sediment Runoff</span>
+        </div>
+
+      </div>
+
+
+      <div class="rightcol">
+        <!--"C.png icon created by Sam Kerr"-->
+        <div class="tooltipResultsCarbon">
+          <img id="carbonIcon" class="levelsSelectorIcon icon" src="./imgs/C.png" onclick="displayLevels('carbon');">
+          <span class="tooltiptextResults">Carbon Sequestration</span>
+        </div>
+        <!--"G.png icon created by Sam Kerr"-->
+        <div class="tooltipResultsGameWildlife">
+          <img id="gamewildlifeIcon" class="levelsSelectorIcon icon" src="./imgs/G.png" onclick="displayLevels('gamewildlife');">
+          <span class="tooltiptextResults">Game Wildlife</span>
+        </div>
+        <!--"B.png icon created by Sam Kerr"-->
+        <div class="tooltipResultsBiodiversity">
+          <img id="biodiversityIcon" class="levelsSelectorIcon icon" src="./imgs/B.png" onclick="displayLevels('biodiversity');">
+          <span class="tooltiptextResults">Biodiversity</span>
+        </div>
+        <!--"B.png icon created by Sam Kerr"-->
+        <div class="tooltipResultsNitrateTile">
+          <img id="nitratetileIcon" class="levelsSelectorIcon icon" src="./imgs/Nt.png" onclick="displayLevels('nitratetile');">
+          <span class="tooltiptextResults">Nitrate Levels by Tile</span>
+        </div>
+
+      </div>
+
 
       </div>
 

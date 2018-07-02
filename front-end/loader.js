@@ -130,6 +130,95 @@ function loadResources() {
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/CECACA.png')); // 58       Light Grey
     highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/360b07.png')); // 59      Dark Mahogany
 
+    //The Nitrate subwatershed percent contribution overlay is made so that the borders between subwatershed Boundaries
+    //are bolded. This requires a specific bolded cell image for any possible instance of bolding direction for the 5
+    //different key colors.
+
+    //Bold cells for 87cee
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTop.png')); // 60 top
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldRight.png')); // 61 left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottom.png')); // 62 bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldLeft.png')); // 63 right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopLeft.png')); // 64 top right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopRight.png')); // 65 top left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottomLeft.png')); // 66 bottom right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottomRight.png')); // 67 bottom left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldBottomLeftRight.png')); // 68 bottom left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopLeftRight.png')); // 69 top left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopLeftBottom.png')); // 70 top right bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldTopRightBottom.png')); // 71 top left bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeBoldLeftRight.png')); // 72 left right
+
+    //Bold cells for 41b7c5
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTop.png')); // 73 top
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldRight.png')); // 74 left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldBottom.png')); // 75 bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldLeft.png')); // 76 right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTopLeft.png')); // 77 top right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTopRight.png')); // 78 top left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldBottomLeft.png')); // 79 bottom right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldBottomRight.png')); // 80 bottom left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldBottomLeftRight.png')); // 81 bottom left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTopLeftRight.png')); // 82 top left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTopLeftBottom.png')); // 83 top right bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldTopRightBottom.png')); // 84 top left bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5BoldLeftRight.png')); // 85 left right
+
+    //Bold cells for 2f7eb7
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldTop.png')); // 86 top
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldRight.png')); // 87 left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldBottom.png')); // 88 bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldLeft.png')); // 89 right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldTopLeft.png')); // 90 top right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldTopRight.png')); // 91 top left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldBottomLeft.png')); // 92 bottom right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldBottomRight.png')); // 93 bottom left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldBottomLeftRight.png')); // 94 bottom left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldTopLeftRight.png')); // 95 top left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldTopLeftBottom.png')); // 96 top right bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldTopRightBottom.png')); // 97 top left bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7BoldLeftRight.png')); // 98 left right
+
+    //Bold cells for 0053b3
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldTop.png')); // 99 top
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldRight.png')); // 100 left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldBottom.png')); // 101 bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldLeft.png')); // 102 right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldTopLeft.png')); // 103 top right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldTopRight.png')); // 104 top left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldBottomLeft.png')); // 105 bottom right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldBottomRight.png')); // 106 bottom left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldBottomLeftRight.png')); // 107 bottom left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldTopLeftRight.png')); // 108 top left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldTopLeftBottom.png')); // 109 top right bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldTopRightBottom.png')); // 110 top left bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3BoldLeftRight.png')); // 111 left right
+
+    //Bold cells for 302486
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldTop.png')); // 112 top
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldRight.png')); // 113 left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldBottom.png')); // 114 bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldLeft.png')); // 115 right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldTopLeft.png')); // 116 top right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldTopRight.png')); // 117 top left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldBottomLeft.png')); // 118 bottom right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldBottomRight.png')); // 119 bottom left
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldBottomLeftRight.png')); // 120 bottom left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldTopLeftRight.png')); // 121 top left right
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldTopLeftBottom.png')); // 122 top right bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldTopRightBottom.png')); // 123 top left bottom
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486BoldLeftRight.png')); // 124 left right
+
+    //Photo editing software used to add thicker borders slightly changed the color of the tiles
+    //Created new tiles to adjust
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/87ceeeTest.png')); // 125
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/41b7c5Test.png')); // 126
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/2f7eb7Test.png')); // 127
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/0053b3Test.png')); // 128
+    highlightArray.push(textureLoader.load('./imgs/cell_images_bitmaps/302486Test.png')); // 129
+
+
+
 
 
 
@@ -150,4 +239,3 @@ function loadResources() {
 
     return 1;
 }//end loadResources()
-
