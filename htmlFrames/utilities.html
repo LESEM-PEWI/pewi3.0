@@ -47,16 +47,7 @@ Cleaned and Prepared - August 2016
     <div id="levelDesignerButton" class="mainButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
     <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup(); inMultiplayer(true);">Set-Up Multiplayer</div>
     <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
-    <div class="uploadFile">
 
-      <label for="file-upload2">
-                <!--Technically not allowed, but seems to work across browsers-->
-                <!-- in future, div may need to be moved outside the label, cleverly-->
-                <div id="simulationButton" class="mainButton">Run User Simulation</div>
-            </label>
-      <input id="file-upload2" type="file" />
-    </div>
-    <!--<div id="goalOptimizationButton" class="mainButton" onClick="window.open('./optimizationDesigner.html')">Optimize PEWI Goals</div>-->
     <!--container for Aggregate Tool, slides up and down by height changes-->
     <div id="utilitiesAggregateTools">
       <div class="uploadFile">
@@ -74,6 +65,18 @@ Cleaned and Prepared - August 2016
       </div>
 
     </div>
+
+    <div class="uploadFile">
+
+      <label for="file-upload2">
+                <!--Technically not allowed, but seems to work across browsers-->
+                <!-- in future, div may need to be moved outside the label, cleverly-->
+                <div id="simulationButton" class="mainButton">Run User Simulation</div>
+            </label>
+      <input id="file-upload2" type="file" />
+    </div>
+    <!--<div id="goalOptimizationButton" class="mainButton" onClick="window.open('./optimizationDesigner.html')">Optimize PEWI Goals</div>-->
+
     <div id="div-fileList">
       <ul id="fileList"></ul>
     </div>
@@ -150,10 +153,19 @@ Cleaned and Prepared - August 2016
     function toggleAggregateOptions() {
       //if the div is not expanded, then expand
       //else if expanded, then collapse it (preferable using %, it relates to its layout)
+      // document.getElementById('utilitiesAggregateTools').style.display =
+      //   (document.getElementById('utilitiesAggregateTools').style.display == "none") ? "inline-block" : "none";
       document.getElementById('utilitiesAggregateTools').style.height =
-        (document.getElementById('utilitiesAggregateTools').style.height != "18vw") ?
-        document.getElementById('utilitiesAggregateTools').style.height = "18vw" :
-        document.getElementById('utilitiesAggregateTools').style.height = "0px";
+        (document.getElementById('utilitiesAggregateTools').style.height == "0px" || document.getElementById('utilitiesAggregateTools').style.height == "" ) ? "18vw" : "0px";
+      document.getElementById('simulationButton').style.marginTop =
+        (document.getElementById('simulationButton').style.marginTop == "2.5%" || document.getElementById('simulationButton').style.marginTop == "") ? "15px" : "2.5%";
+
+      if(document.getElementById('utilitiesAggregateTools').style.height == "18vw" && document.getElementById('fileList').innerHTML != ""){
+        document.getElementById('div-fileList').style.display = "block";
+      }
+      else {
+        document.getElementById('div-fileList').style.display = "none";
+      }
       // document.getElementById('utilitiesAggregateTools').style.height =
       //     (document.getElementById('utilitiesAggregateTools').style.height != "300px") ?
       //     document.getElementById('utilitiesAggregateTools').style.height = "300px" :
@@ -167,7 +179,7 @@ Cleaned and Prepared - August 2016
         document.getElementById('aggregateInfo').innerHTML = content;
       } else {
         // number of files
-        document.getElementById('aggregateInfo').innerHTML = "Added " + content + " files";
+        document.getElementById('aggregateInfo').innerHTML = content + " files uploaded successfully";
       }
     } //end updateInfo
 
@@ -182,7 +194,7 @@ Cleaned and Prepared - August 2016
         input.files = null;
         // clean the data to prevent from downloading something
         window.top.cleanCurrentBoardData();
-        alert("Can Upload At Most 6 Files!");
+        alert("ERROR: Cannot Upload More Than 6 Files!");
         updateInfo("Ready. Upload csv map files.");
         return;
       }
@@ -194,7 +206,7 @@ Cleaned and Prepared - August 2016
           input.files = null;
           // clean the data to prevent from downloading something
           window.top.cleanCurrentBoardData();
-          alert("At Least One Incorrect File Type!");
+          alert("ERROR: Incorrect File(s) Detected! Please Upload .csv Files");
           updateInfo("Ready. Upload csv map files.");
           return;
         }
@@ -219,7 +231,7 @@ Cleaned and Prepared - August 2016
             input.files = null;
             // clean the data to prevent from downloading something
             window.top.cleanCurrentBoardData();
-            alert("At Least One Corrupt File!");
+            alert("ERROR: Corrupted File(s) Detected!");
           }
           // testing for execution time
           // d = new Date();
@@ -239,7 +251,7 @@ Cleaned and Prepared - August 2016
           //change what is displayed in the info bar
           updateInfo(input.files.length);
         } else {
-          updateInfo("Please try again with valid csv map file.");
+          updateInfo("Please try again with valid .csv map file(s).");
         }
       }, 2500);
 

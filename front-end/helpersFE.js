@@ -5510,6 +5510,7 @@ function uploadCSV(reader) {
       // because of this addition line. Since we know that there should be 829 lines in total, thus we deal with only the first 829 lines.
       if(i > 828) continue;
 
+      console.log("allTextLines.length = ",allTextLines.length);
       data = allTextLines[i].split(',');
       var headlength = headers.length;
       if (data.length == headlength) {

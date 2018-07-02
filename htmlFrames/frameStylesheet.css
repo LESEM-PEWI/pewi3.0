@@ -282,11 +282,15 @@
   /*width: 400px;*/
 }
 
+#simulationButton {
+  margin-top: 2.5%;
+}
+
 #addFile, #downloadFile {
   /*height: 40px;*/
   line-height: 90%;
   margin-left: 17px;
-  margin-left: 4.1%;
+  margin-left: 6%;
   width: 84.1%;
 }
 
@@ -314,7 +318,8 @@
   display: inline-block;
   height: 0px;
   margin-left: 2.4%;
-  margin-top: 20px;
+  margin-top: 5px;
+  /* display: none; */
   overflow: hidden;
   position: relative;
   width: 96.2%;
@@ -333,11 +338,11 @@
   border: aqua;
   border-radius: 30px;
   display: none;
-  left: 65vw;
+  left: 63vw;
   margin: 1vw;
   padding: 1.5vw;
   position: absolute;
-  top: 30vw;
+  top: 23vw;
 }
 
 
