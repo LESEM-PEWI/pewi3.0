@@ -345,6 +345,11 @@
   top: 23vw;
 }
 
+#fileList {
+  position: relative;
+  left: -0.8vw;
+}
+
 
 /** MultiDownload (multiplayer setup) Frame
  -------------------------

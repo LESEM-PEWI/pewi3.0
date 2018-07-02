@@ -179,7 +179,7 @@ Cleaned and Prepared - August 2016
         document.getElementById('aggregateInfo').innerHTML = content;
       } else {
         // number of files
-        document.getElementById('aggregateInfo').innerHTML = content + " files uploaded successfully";
+        document.getElementById('aggregateInfo').innerHTML = content + " file(s) uploaded successfully!";
       }
     } //end updateInfo
 
@@ -194,7 +194,7 @@ Cleaned and Prepared - August 2016
         input.files = null;
         // clean the data to prevent from downloading something
         window.top.cleanCurrentBoardData();
-        alert("ERROR: Cannot Upload More Than 6 Files!");
+        alert("ERROR: Cannot upload more than 6 files!");
         updateInfo("Ready. Upload csv map files.");
         return;
       }
@@ -206,7 +206,7 @@ Cleaned and Prepared - August 2016
           input.files = null;
           // clean the data to prevent from downloading something
           window.top.cleanCurrentBoardData();
-          alert("ERROR: Incorrect File(s) Detected! Please Upload .csv Files");
+          alert("ERROR: Incorrect file(s) detected! Please upload .csv files");
           updateInfo("Ready. Upload csv map files.");
           return;
         }
@@ -231,7 +231,7 @@ Cleaned and Prepared - August 2016
             input.files = null;
             // clean the data to prevent from downloading something
             window.top.cleanCurrentBoardData();
-            alert("ERROR: Corrupted File(s) Detected!");
+            alert("ERROR: Corrupted file(s) detected!");
           }
           // testing for execution time
           // d = new Date();
