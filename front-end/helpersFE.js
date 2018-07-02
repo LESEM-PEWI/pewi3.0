@@ -1328,7 +1328,7 @@ function closeEmailFrame() {
 // close printOptions frame
 function closePrintOptions() {
   //scroll page to top, so that next time options is loaded it starts there
-  window.frames[6].scrollTo(0, 0);
+  window.frames[7].scrollTo(0, 0);
 
   //close frame
   document.getElementById('printOptions').style.visibility = "hidden";
@@ -1339,7 +1339,7 @@ function closePrintOptions() {
   document.activeElement.blur();
   // remove Esc key event listener
   document.removeEventListener('keyup', printOptionsEsc);
-  window.frames[6].document.removeEventListener('keyup', printOptionsEsc);
+  window.frames[7].document.removeEventListener('keyup', printOptionsEsc);
 } // end closePrintOptions
 
 //closeUploadDownloadFrame closes the credits iframe
@@ -4606,10 +4606,10 @@ function startPrintOptions() {
     document.getElementById('printOptions').style.visibility = "visible";
     // add Esc key event listener
     document.addEventListener('keyup', printOptionsEsc);
-    window.frames[6].document.addEventListener('keyup', printOptionsEsc);
+    window.frames[7].document.addEventListener('keyup', printOptionsEsc);
     // pass the current uplimit year
     var uptoYear = boardData[currentBoard].calculatedToYear;
-    window.frames[6].initPrintOptions(uptoYear);
+    window.frames[7].initPrintOptions(uptoYear);
   }
 } // end startPrintOptions
 

@@ -10,11 +10,13 @@ N. Hagen
 
 //######################################################################################
 //######################################################################################
-
+// For the windows.frames[] variables, they are in fact iframe elements in index.html page, to learn what index is responsible for what iframe,
+// we can type window.frames in the browser console window to find out.
 
 //Creation of LandUseType Object
 //This object serves to translate the values stored as land types into readable code
 //Use this for comparisons and assignments
+
 var LandUseType = {
 
   none: 0,
@@ -1244,7 +1246,8 @@ function Printer() {
     creator: 'PEWI app & jsPDF'
   });
 
-  var RESULTS_HTML = window.frames[3];
+  // var RESULTS_HTML = window.frames[4];
+  var RESULTS_HTML = document.getElementById("resultsFrame").contentWindow;
 
   // some parameters // in pt
   var
@@ -1526,7 +1529,9 @@ function Printer() {
       doc.save(promptFileName() + ".pdf");
     } else {
       // --user clicked preview--
-      window.frames[6].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
+      // window.frames[7].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
+      document.getElementById("printOptions").contentWindow.document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
+
       // new window
       // doc.output('dataurlnewwindow');
       // Output as Data URI on the current page
