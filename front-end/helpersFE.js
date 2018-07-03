@@ -5228,7 +5228,7 @@ function updatePrecip(year) {
 
   boardData[currentBoard].updateBoard();
 
-  // update the result whenever precipitation is changed.
+  // update the results and progress bars whenever precipitation is changed.
   calculateResults();
   refreshProgressBar(currentYear);
 } //updatePrecip

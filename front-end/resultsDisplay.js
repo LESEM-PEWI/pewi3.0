@@ -340,10 +340,10 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   */
   var multiplayerColorPack = ["#87ceee","#e6bb00","#cc6578","#127731","#c97b08","#302485"];
   var dataset;
-  console.log("Before, inMultiplayer is: "+inMultiplayer);
+  // console.log("Before, inMultiplayer is: "+inMultiplayer);
   //if in multiplayer mode, looking at different players and size of land each owns
   if(inMultiplayer === "true"){
-    console.log("inMultiplayer is: "+inMultiplayer);
+    // console.log("inMultiplayer is: "+inMultiplayer);
     var dataset = [{
       label: 'Player 1',
       count: (Math.round(Totals.landUseResults[year].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10),
@@ -372,7 +372,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   }
   //assign dataset based on whether or not categories are toggeled on, if so, then combine the dataset into one large heap
   else if (isTheChartInCategoryMode) {
-    console.log("inMultiplayer is: "+inMultiplayer);
+    // console.log("inMultiplayer is: "+inMultiplayer);
     //data groupings, dummy labels are there to increase color contrast
     dataset = [{
       label: "Annual Grain",
@@ -1351,8 +1351,8 @@ function drawPrecipitationInformationChart() {
   }];
 
   //set up data percentage and adjectives
-  for (var y = 0; y < data.length; y++) {
-
+  // for (var y = 0; y < data.length; y++) {
+  for (var y = 0; y < boardData[currentBoard].calculatedToYear; y++) {
     var tempPercent;
     var tempAdj;
 
