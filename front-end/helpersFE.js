@@ -195,15 +195,6 @@ if(dir == 1){
 
 }
 
-
-
-
-
-
-
-
-
-
 //Adds the given tileId and painter to the undoArr
 function addChange(tileId) {
   if (uniqueTileChange(tileId)) {
@@ -1557,20 +1548,20 @@ function getHighlightColor(highlightType, tileId) {
   else if (highlightType == "sediment") {
     var sedimentDelivery = boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile * boardData[currentBoard].map[tileId].area;
 
-    if(sedimentDelivery>=0.0043 && sedimentDelivery<=9.9447) return 5;
-    else if(sedimentDelivery>9.9447 && sedimentDelivery<=19.8851) return 54;
-    else if(sedimentDelivery>19.8851 && sedimentDelivery<=29.8255) return 23;
-    else if(sedimentDelivery>29.8255 && sedimentDelivery<=39.7659) return 24;
-    else if(sedimentDelivery>39.7659) return 3;
+    if(sedimentDelivery>=0.0043 && sedimentDelivery<=9.9447) return 140;
+    else if(sedimentDelivery>9.9447 && sedimentDelivery<=19.8851) return 141;
+    else if(sedimentDelivery>19.8851 && sedimentDelivery<=29.8255) return 142;
+    else if(sedimentDelivery>29.8255 && sedimentDelivery<=39.7659) return 143;
+    else if(sedimentDelivery>39.7659) return 144;
   }
 
   else if (highlightType == "carbon") {
     var carbonseq = ((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231));
-    if(carbonseq>=0 && carbonseq<=4.04) return 44;
-    else if(carbonseq>4.04 && carbonseq<8.09) return 45;
-    else if(carbonseq>8.09 && carbonseq<=12.13) return 19;
-    else if(carbonseq>12.13 && carbonseq<=16.17) return 32;
-    else if(carbonseq>16.17) return 26;
+    if(carbonseq>=0 && carbonseq<=4.04) return 130;
+    else if(carbonseq>4.04 && carbonseq<8.09) return 131;
+    else if(carbonseq>8.09 && carbonseq<=12.13) return 132;
+    else if(carbonseq>12.13 && carbonseq<=16.17) return 133;
+    else if(carbonseq>16.17) return 134;
   }
 
 
@@ -1594,11 +1585,11 @@ function getHighlightColor(highlightType, tileId) {
 
   else if (highlightType == "nitratetile") {
     var nitratescore = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate);
-    if(nitratescore>=0 && nitratescore<510) return 5;
-    else if(nitratescore>=510 && nitratescore<1020) return 18;
-    else if(nitratescore>=1020 && nitratescore<1530) return 32;
-    else if(nitratescore>=1530 && nitratescore<2040) return 31;
-    else if(nitratescore>2040) return 16;
+    if(nitratescore>=0 && nitratescore<510) return getBoldedCells(tileId, 210);
+    else if(nitratescore>=510 && nitratescore<1020) return getBoldedCells(tileId, 211);
+    else if(nitratescore>=1020 && nitratescore<1530) return getBoldedCells(tileId, 212);
+    else if(nitratescore>=1530 && nitratescore<2040) return getBoldedCells(tileId, 213);
+    else if(nitratescore>2040) return getBoldedCells(tileId, 214);
   }
 
 
@@ -1929,7 +1920,7 @@ function getHighlightedInfo(tileId) {
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>";
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>";
         break;
         //create string for gross erosion levels
       case 2:
@@ -3113,7 +3104,7 @@ function printSoilType(tileId) {
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile) * Number(boardData[currentBoard].map[tileId].area)).toFixed(2) + " tons" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1) + " tons" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Game Wildlife: " + getTileGameWildlifeInfoText(getTileGameWildlifeScore(tileId)) + "<br>");
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Game Wildlife: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>");
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>");
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>", '');
@@ -5688,7 +5679,99 @@ function getColorForBoldedCells(direction, color){
       else if(direction=='leftright') return 124;
       break;
 
+
+
+    case 210:
+      if(direction=='right') return 148;
+      else if(direction=='top') return 145;
+      else if(direction=='left') return 146;
+      else if(direction=='bottom') return 147;
+      else if(direction=='topright') return 149;
+      else if(direction=='topleft') return 150;
+      else if(direction=='bottomleft') return 152;
+      else if(direction=='bottomright') return 151;
+      else if(direction=='bottomleftright') return 153;
+      else if(direction=='topleftright') return 154;
+      else if(direction=='topleftbottom') return 156;
+      else if(direction=='toprightbottom') return 155;
+      else if(direction=='leftright') return 157;
+      break;
+
+
+
+    case 211:
+      if(direction=='right') return 161;
+      else if(direction=='top') return 158;
+      else if(direction=='left') return 159;
+      else if(direction=='bottom') return 160;
+      else if(direction=='topright') return 162;
+      else if(direction=='topleft') return 163;
+      else if(direction=='bottomleft') return 165;
+      else if(direction=='bottomright') return 164;
+      else if(direction=='bottomleftright') return 166;
+      else if(direction=='topleftright') return 167;
+      else if(direction=='topleftbottom') return 169;
+      else if(direction=='toprightbottom') return 168;
+      else if(direction=='leftright') return 170;
+      break;
+
+
+
+    case 212:
+      if(direction=='right') return 174;
+      else if(direction=='top') return 171;
+      else if(direction=='left') return 172;
+      else if(direction=='bottom') return 173;
+      else if(direction=='topright') return 175;
+      else if(direction=='topleft') return 176;
+      else if(direction=='bottomleft') return 178;
+      else if(direction=='bottomright') return 177;
+      else if(direction=='bottomleftright') return 179;
+      else if(direction=='topleftright') return 180;
+      else if(direction=='topleftbottom') return 182;
+      else if(direction=='toprightbottom') return 181;
+      else if(direction=='leftright') return 183;
+      break;
+
+
+
+    case 213:
+      if(direction=='right') return 187;
+      else if(direction=='top') return 184;
+      else if(direction=='left') return 185;
+      else if(direction=='bottom') return 186;
+      else if(direction=='topright') return 188;
+      else if(direction=='topleft') return 189;
+      else if(direction=='bottomleft') return 191;
+      else if(direction=='bottomright') return 190;
+      else if(direction=='bottomleftright') return 192;
+      else if(direction=='topleftright') return 193;
+      else if(direction=='topleftbottom') return 195;
+      else if(direction=='toprightbottom') return 194;
+      else if(direction=='leftright') return 196;
+      break;
+
+
+
+    case 214:
+      if(direction=='right') return 200;
+      else if(direction=='top') return 197;
+      else if(direction=='left') return 198;
+      else if(direction=='bottom') return 199;
+      else if(direction=='topright') return 201;
+      else if(direction=='topleft') return 202;
+      else if(direction=='bottomleft') return 204;
+      else if(direction=='bottomright') return 203;
+      else if(direction=='bottomleftright') return 205;
+      else if(direction=='topleftright') return 206;
+      else if(direction=='topleftbottom') return 208;
+      else if(direction=='toprightbottom') return 207;
+      else if(direction=='leftright') return 209;
+      break;
+
     }
+
+
 
   }
 

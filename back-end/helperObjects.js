@@ -3261,7 +3261,7 @@ function Tile(tileArray, board) {
 
 
   //This function calculates the Nitrate score for an individual Tile
-  //The scoring works as follows
+  //The scoring works as follows:
   /**
   -All the helper functions are called before the main function is, in order to update object-scope variables
   -Checks if subwatershed contains in-use strategic wetland, updates score value accordingly
@@ -3293,7 +3293,7 @@ function Tile(tileArray, board) {
     //If Tile is in subwatershed with score below 2, do more stuff
     if(res[subwatershed]<2){
       var diff = 2-res[subwatershed];
-      var paa = diff/sut;  //per acre adjustment
+      var paa = diff/sut;  //per-acr-adjustment
       score+=paa*this.area;
     }
 
@@ -3350,7 +3350,7 @@ function Tile(tileArray, board) {
   }; //end this.sumAreaHelper()
 
 
-  //Helper method, does same calculations as Results.nitrateSubcalculation but returns values
+  //Helper method, does same calculations as Results.nitrateSubcalculation but updates values
   //for use in Tile Nitrate calculation
   this.cropMultiplierHelper = function(year) {
     for(var i=0, il=board.map.length; i<il; i++){
