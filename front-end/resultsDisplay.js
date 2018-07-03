@@ -1352,7 +1352,7 @@ function drawPrecipitationInformationChart() {
 
   //set up data percentage and adjectives
   // for (var y = 0; y < data.length; y++) {
-  for (var y = 0; y < boardData[currentBoard].calculatedToYear; y++) {
+  for (var y = 0; y <= boardData[currentBoard].calculatedToYear; y++) {
     var tempPercent;
     var tempAdj;
 
@@ -1464,12 +1464,12 @@ function drawPrecipitationInformationChart() {
     .attr("transform", function(d, i) {
       return "translate(0," + (i * barHeight + 2) + ")";
     });
-
+console.log(bar);
   bar.append("rect")
     .attr("width", function(d) {
       return x(d.percent);
     })
-    .attr("height", barHeight - 4)
+    .attr("height", barHeight - boardData[currentBoard].calculatedToYear)
     .attr("class", "legendBars")
     .attr('fill', '#1f77b4')
     .on('mouseover', function(d) {
@@ -1500,6 +1500,7 @@ function drawPrecipitationInformationChart() {
     .attr("y", barHeight / 2)
     .attr("dy", ".35em")
     .text(function(d) {
+      console.log(d);
       return d.label;
     })
     .attr('fill', 'black');
