@@ -53,10 +53,10 @@ Cleaned and Prepared - August 2016
       <div class="uploadFile">
 
         <label for="file-upload">
-                    <!--Technically not allowed, but seems to work across browsers-->
-                    <!-- in future, div may need to be moved outside the label, cleverly-->
-                    <div id="addFile" class="mainButton">Add Player Files</div>
-                </label>
+          <!--Technically not allowed, but seems to work across browsers-->
+          <!-- in future, div may need to be moved outside the label, cleverly-->
+          <div id="addFile" class="mainButton">Add Player Files</div>
+        </label>
         <input id="file-upload" type="file" multiple="" onchange="uploadAggregateMultiMap();" />
       </div>
       <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
@@ -69,11 +69,17 @@ Cleaned and Prepared - August 2016
     <div class="uploadFile">
 
       <label for="file-upload2">
-                <!--Technically not allowed, but seems to work across browsers-->
-                <!-- in future, div may need to be moved outside the label, cleverly-->
-                <div id="simulationButton" class="mainButton">Run User Simulation</div>
-            </label>
+        <!--Technically not allowed, but seems to work across browsers-->
+        <!-- in future, div may need to be moved outside the label, cleverly-->
+        <div id="simulationButton" class="mainButton">Run User Simulation</div>
+      </label>
       <input id="file-upload2" type="file" />
+    </div>
+
+    <div id="conflictPopupBox">
+      <div id="showUpText" class="conflictButton">There's a conflict between uploaded maps</div>
+      <div id="setPriority" class="conflictButton">Set priority map</div>
+      <div id="cancelButton" class="conflictButton">Cancel</div>
     </div>
     <!--<div id="goalOptimizationButton" class="mainButton" onClick="window.open('./optimizationDesigner.html')">Optimize PEWI Goals</div>-->
 
@@ -201,7 +207,9 @@ Cleaned and Prepared - August 2016
 
       // check file type here
       for (var i = 0; i < input.files.length; i++) {
-        if (!input.files[i].name.match(/\.csv/)) {
+        // check if the file is .csv file
+        if(input.files[i].name.substr(-4).toLowerCase() !== ".csv"){
+        // if (!input.files[i].name.match(/\.csv/)) {
           // remove the file handler
           input.files = null;
           // clean the data to prevent from downloading something

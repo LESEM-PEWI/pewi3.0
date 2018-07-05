@@ -156,11 +156,18 @@ function display() {
 function overlayBoard(board) {
   // for each data entry
   console.log("initData.length " + initData.length);
+  console.log(initData);
+  console.log(board);
   for (var i = 0; i < initData.length; i++) {
     //get the tile set up
     var tile = new Tile(initData[i], board);
 
-    //if tile has meaningful data...
+    if(tile.baseLandUseType == 1 && board.map[tile.id - 1].baseLandUseType == 1){
+      alert("Conflict!!!");
+      return;
+    }
+
+    //if tile has meaningful data...   && board.map[tile.id - 1].baseLandUseType != -1
     if (tile.baseLandUseType == 1) {
       //then overwrite the tile in old board with new board stuffaroo
       board.map[tile.id - 1] = tile;
