@@ -6,7 +6,7 @@
           painter, Totals, river,
           Results, initData, hoveredOver, currentPlayer*/
 
-
+var globalLegend = false;
 var addingYearFromFile = false; //Boolean used to keep a track of whether or not you're adding a year from file
 var click;
 var clickAndDrag = false;
@@ -140,7 +140,7 @@ var session = {
 window.onbeforeunload = confirmExit;
 
 // Toggled popup text when hover over the Tabs in the left console
-function toggleTabTitle(value) {
+function toggleTabTitle(value, dir) {
   // document.getElementById(value).style.zIndex = '1';
 
   // console.log(document.getElementsByClassName('DetailsList'));
@@ -181,19 +181,20 @@ function toggleTabTitle(value) {
     document.getElementById(value).style.display = 'none';
   }
 
-  // When hover over the tab, hide the map key
-  var detailListStyle = null;
-  if (typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined') {
-    detailListStyle = document.getElementsByClassName('DetailsList')[0].style;
+
+//If hovering over, hide legend
+if(dir == 0){
+  if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
+    document.getElementsByClassName('DetailsList')[0].style.visibility = 'hidden';
   }
-  // console.log(document.getElementsByClassName('DetailsList')[0]);
-  if (detailListStyle != null) {
-    if (detailListStyle.display === 'none') {
-      detailListStyle.display = 'block';
-    } else {
-      detailListStyle.display = 'none';
-    }
+}
+
+//If leaving hover, show legend
+if(dir == 1){
+  if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
+    document.getElementsByClassName('DetailsList')[0].style.visibility = 'visible';
   }
+}
 }
 
 // Show score details when hover over progress bar
@@ -676,6 +677,8 @@ function setProgressbarMinMaxValues(id, option, value) {
 
   }
 
+
+  
 }
 
 //Adds the given tileId and painter to the undoArr
@@ -1139,6 +1142,28 @@ function changeLandTypeTile(tileId) {
   refreshProgressBar(currentYear);
 } //end changeLandTypeTile
 
+//Updates Nitrate score for entire map since each individual Tile's score hinges on landtypes across the entire map
+//This function is called after each instance of a changeLandTypeTile() call
+function changeLandTypeTileNitrate(){
+  if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
+    //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
+    //Hence the for loop
+    for(var n = 0, nl=boardData[currentBoard].map.length; n<nl; n++){
+      //if land type of tile is nonzero
+      if (boardData[currentBoard].map[n].landType[currentYear] != 0) {
+        //change the materials of the faces in the meshMaterials array and update the boardData
+        if (!multiplayerAssigningModeOn) {
+          boardData[currentBoard].map[n].updateNitrate(currentYear);
+        }
+      }
+    }
+  } // end outter if
+} //end changeLandTypeTile
+
+
+
+
+
 //paintChange changes the highlighted color of the selected painter and updates painter
 function changeSelectedPaintTo(newPaintValue) {
   //check to see if multiplayer Assignment Mode is On
@@ -1394,12 +1419,16 @@ function combineMulti(givenPlayers) {
   merging = true;
   givenPlayers.sort();
   changeSelectedPaintTo(givenPlayers[0]);
+
   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
     var curValue = boardData[currentBoard].map[i].landType[currentYear];
     if (givenPlayers.indexOf(curValue) != -1) {
       changeLandTypeTile(i);
     }
   }
+
+changeLandTypeTileNitrate();
+
   //Delete the other (now unused) players
   givenPlayers.shift();
   for (var i = 0; i < givenPlayers.length; i++) {
@@ -1700,6 +1729,45 @@ function displayLevels(overlayHighlightType) {
         pushClick(0, getStamp(), 77, 0, null);
       }
       break;
+    case 'sediment':
+     selectionHighlightNumber = 19;
+     updateIndexPopup('To learn more about <span style="color:orange;">Sediment Control</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+     if (curTracking) {
+       pushClick(0, getStamp(), 78, 0, null);
+     }
+     break;
+
+    case 'carbon':
+    selectionHighlightNumber = 20;
+    updateIndexPopup('To learn more about <span style="color:orange;">Carbon Sequestration</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 79, 0, null);
+    }
+    break;
+
+    case 'gamewildlife':
+    selectionHighlightNumber = 21;
+    updateIndexPopup('To learn more about <span style="color:orange;">Game Wildlife</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 80, 0, null);
+    }
+    break;
+
+    case 'biodiversity':
+    selectionHighlightNumber = 22;
+    updateIndexPopup('To learn more about <span style="color:orange;">Biodiversity</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 81, 0, null);
+    }
+    break;
+
+    case 'nitratetile':
+    selectionHighlightNumber = 23;
+    updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 82, 0, null);
+    }
+    break;
   } //end switch
 
   //save selectionHighlightNumber for quick access via hotkey
@@ -1757,6 +1825,7 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
       meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
     } //end if
   } //end for
+
 
   showLevelDetails(selectionHighlightNumber);
   currentHighlightType = selectionHighlightNumber;
@@ -2006,14 +2075,12 @@ function getHighlightColor(highlightType, tileId) {
   }
   //nitrite highlight color indicies
   else if (highlightType == "nitrate") {
-
     var nitrateConcentration = Totals.nitrateContribution[currentYear][tileId];
-
-    if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return 18;
-    else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return 8;
-    else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return 9;
-    else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return 31;
-    else if (nitrateConcentration > 0.25) return 26;
+    if (nitrateConcentration >= 0 && nitrateConcentration <= 0.05) return getBoldedCells(tileId, 125);
+    else if (nitrateConcentration > 0.05 && nitrateConcentration <= 0.1) return getBoldedCells(tileId, 126);//return 8;
+    else if (nitrateConcentration > 0.1 && nitrateConcentration <= 0.2) return getBoldedCells(tileId, 127);//return 9;
+    else if (nitrateConcentration > 0.2 && nitrateConcentration <= 0.25) return getBoldedCells(tileId, 128);//return 31;
+    else if (nitrateConcentration > 0.25) return getBoldedCells(tileId, 129);//return 26;
 
   }
   //phosphorus highlight color indicies
@@ -2021,6 +2088,56 @@ function getHighlightColor(highlightType, tileId) {
     //-1 for 0 indexing of arrays, sigh
     return (Totals.phosphorusRiskAssessment[currentYear][tileId] - 1);
   }
+
+  else if (highlightType == "sediment") {
+    var sedimentDelivery = boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile * boardData[currentBoard].map[tileId].area;
+
+    if(sedimentDelivery>=0.0043 && sedimentDelivery<=9.9447) return 140;
+    else if(sedimentDelivery>9.9447 && sedimentDelivery<=19.8851) return 141;
+    else if(sedimentDelivery>19.8851 && sedimentDelivery<=29.8255) return 142;
+    else if(sedimentDelivery>29.8255 && sedimentDelivery<=39.7659) return 143;
+    else if(sedimentDelivery>39.7659) return 144;
+  }
+
+  else if (highlightType == "carbon") {
+    var carbonseq = ((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231));
+    if(carbonseq>=0 && carbonseq<=4.04) return 130;
+    else if(carbonseq>4.04 && carbonseq<8.09) return 131;
+    else if(carbonseq>8.09 && carbonseq<=12.13) return 132;
+    else if(carbonseq>12.13 && carbonseq<=16.17) return 133;
+    else if(carbonseq>16.17) return 134;
+  }
+
+
+  else if (highlightType == "gamewildlife") {
+  var gamewildlifescore = getTileGameWildlifeScore(tileId);
+  if(gamewildlifescore == 0) return 0;
+  if(gamewildlifescore > 0 && gamewildlifescore <= 2.1) return 1;
+  else if (gamewildlifescore>2.1 && gamewildlifescore<=4.1) return 2;
+  else if (gamewildlifescore>4 && gamewildlifescore<=6.1) return 3;
+  else if (gamewildlifescore>6.1) return 4;
+  }
+
+  else if (highlightType == "biodiversity") {
+  var biodiversityscore = getTileBiodiversityScore(tileId);
+  if(biodiversityscore == 0) return 5;
+  else if (biodiversityscore> 0 && biodiversityscore<=2.5) return 6;
+  else if (biodiversityscore>2.5 && biodiversityscore<=5) return 7;
+  else if (biodiversityscore> 5 && biodiversityscore<=7.5) return 8;
+  else if (biodiversityscore>7.5) return 9;
+  }
+
+  else if (highlightType == "nitratetile") {
+    var nitratescore = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate);
+    if(nitratescore>=0 && nitratescore<510) return getBoldedCells(tileId, 210);
+    else if(nitratescore>=510 && nitratescore<1020) return getBoldedCells(tileId, 211);
+    else if(nitratescore>=1020 && nitratescore<1530) return getBoldedCells(tileId, 212);
+    else if(nitratescore>=1530 && nitratescore<2040) return getBoldedCells(tileId, 213);
+    else if(nitratescore>2040) return getBoldedCells(tileId, 214);
+  }
+
+
+
   //flood frequency highlight color indicies
   else if (highlightType == "flood") {
 
@@ -2356,7 +2473,7 @@ function getHighlightedInfo(tileId) {
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>";
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>";
         break;
         //create string for gross erosion levels
       case 2:
@@ -2517,6 +2634,25 @@ function getHighlightedInfo(tileId) {
         //create string for short-rotation woody biomass yield
       case 18:
         highlightString = "608.6 tons/acre/yr" + "<br>";
+        break;
+        //create string for sediment control
+      case 19:
+        highlightString = (Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile) * Number(boardData[currentBoard].map[tileId].area)).toFixed(2) + " tons" + "<br>";
+        break;
+        //create string for carbon sequestration
+      case 20:
+        highlightString = (Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1) + " tons" + "<br>";
+        break;
+        //create string for Game Wildlife score
+      case 21:
+        highlightString = "Game Wildlife: " + getTileGameWildlifeInfoText(getTileGameWildlifeScore(tileId)) + "<br>";
+        break;
+        //create string for Biodiversity score
+      case 22:
+        highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
+        break;
+      case 23:
+        highlightString = "Nitrate Tile: " + (Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2) + "<br>";
         break;
     }
     return highlightString;
@@ -3032,10 +3168,10 @@ function onDocumentMouseMove(event) {
       //if painter tool type is the clickAndDrag painter
       else if (clickAndDrag) {
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
-        if (boardData[currentBoard].map[currentTile].landType[0] != 0)
-        {
-          changeLandTypeTile(currentTile);
-        }
+        if (boardData[currentBoard].map[currentTile].landType[0] != 0){
+           changeLandTypeTile(currentTile);
+           changeLandTypeTileNitrate();
+         }
       } else {
         //just a normal highlighting
         highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
@@ -3083,6 +3219,7 @@ function onDocumentMouseDown(event) {
                 var changedTiles = getGrid(painterTool.startTile, painterTool.endTile);
 
                 var tempGridArr = [];
+
                 for (var i = 0; i < changedTiles.length; i++) {
                   if (curTracking) {
                     tempGridArr.push(changedTiles[i]);
@@ -3090,6 +3227,7 @@ function onDocumentMouseDown(event) {
                   undoGridPainters.push(boardData[currentBoard].map[changedTiles[i] - 1].landType[currentYear]);
                   changeLandTypeTile(changedTiles[i] - 1);
                 }
+                changeLandTypeTileNitrate();
                 if (curTracking) {
                   pushClick(0, getStamp(), 56, 0, tempGridArr);
                 }
@@ -3121,6 +3259,7 @@ function onDocumentMouseDown(event) {
             } else {
               //just a normal tile change
               changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+              changeLandTypeTileNitrate();
               //Change variable for painting click and drag status
               clickAndDrag = true;
             } // end if/else
@@ -3138,6 +3277,7 @@ function onDocumentMouseDown(event) {
           if (curTracking) {
             pushClick(0, getStamp(), 83, 0, null);
           }
+
           for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
             if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
@@ -3146,6 +3286,9 @@ function onDocumentMouseDown(event) {
 
             }
           }
+
+          changeLandTypeTileNitrate();
+
         }
         //Inserts the block of land use types into the undoArr
         insertChange();
@@ -3159,21 +3302,6 @@ function onDocumentMouseUp(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     //Turn off click and drag functionality
     clickAndDrag = false;
-    //check to see if one of the physical features maps is highlighted
-    // levels maps need to be checked too
-    //if so, we'll change the tiles over to their appropriate color levels
-        // if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
-        //   Totals = new Results(boardData[currentBoard]);
-        //   Totals.update();
-        //
-        //   // update each tile on the board with its corresponding color
-        //   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-        //
-        //     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-        //       meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
-        //     }
-        //   } //end for
-        // }
   }
 } //end onDocumentMouseUp
 
@@ -3547,10 +3675,15 @@ function printSoilType(tileId) {
       highlightString = "Noadaway 220" + "<br>";
       break;
   }
+//"Game Wildlife: " + getTileGameWildlifeInfoText(getTileGameWildlifeScore(tileId)) + "<br>"
   if (document.getElementById('parameters').innerHTML.includes('hover4') && currentHighlightType != 0) {
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile) * Number(boardData[currentBoard].map[tileId].area)).toFixed(2) + " tons" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1) + " tons" + "<br>", '');
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Game Wildlife: " + getTileGameWildlifeInfoText(getTileGameWildlifeScore(tileId)) + "<br>");
+    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>");
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>", '');
     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>", '');
@@ -3646,6 +3779,7 @@ function randomizeBoard() {
       }
     } // end for
 
+
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
@@ -3664,6 +3798,8 @@ function randomizeBoard() {
         changeLandTypeTile(i);
       }
     } //end for all tiles
+
+    changeLandTypeTileNitrate();
   }
   randomizing = false;
   painter = prevPainter;
@@ -4109,6 +4245,7 @@ function revertChanges() {
     } else {
       painter = tempTileAndPainter[1];
       changeLandTypeTile(tempTileAndPainter[0]);
+      changeLandTypeTileNitrate();
     }
     undo = false;
     painter = tempPainter;
@@ -4238,6 +4375,12 @@ function saveAndRandomize() {
         break;
       }
     }
+    var forNitrateCalc = Array(4);
+    forNitrateCalc[0] = Array(828);
+    forNitrateCalc[1] = Array(828);
+    forNitrateCalc[2] = Array(828);
+    forNitrateCalc[3] = Array(828);
+
     for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
         //if tile exists
@@ -4247,10 +4390,23 @@ function saveAndRandomize() {
           meshMaterials[j].map = textureArray[painter];
           boardData[currentBoard].map[j].landType[i] = painter;
           boardData[currentBoard].map[j].update(i);
+          forNitrateCalc[i][j] = 1;
         }
 
       }
+
     }
+    for (var n = 1; n < forNitrateCalc.length; n++) {
+      for (var t = 0; t < forNitrateCalc[n].length; t++) {
+        if(forNitrateCalc[n][t] == 1){
+          boardData[currentBoard].map[t].updateNitrate(n);
+        }
+      }
+    }
+
+
+
+
     painter = newDefaultLandUse; //end for all tiles
     //'unselect' the previously selected icon
     var painterElementId = "paint" + prevPainter;
@@ -4371,6 +4527,12 @@ function showInfo(stringToShow) {
 
 //showLevelDetails shows the legend for each of the highlight map functions
 function showLevelDetails(value) {
+  globalLegend = true;
+
+  //If there is a legend to show, make sure it's visible as the hover tab may have hidden it
+  if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
+  document.getElementsByClassName('DetailsList')[0].style.visibility = 'visible';
+  }
 
   switch (value) {
     case 1:
@@ -4472,9 +4634,38 @@ function showLevelDetails(value) {
       document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
       updateIndexPopup('<span style="color:orange;">Short-Rotation Woody Biomass</span> produces the same output, no matter the soil type. To learn more, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
+    case 19:
+      //show sediment legend
+      document.getElementById('sedimentIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("sedimentDetailsList").className = "DetailsList levelDetailsList";
+      break;
+    case 20:
+      //show carbon legend
+      document.getElementById('carbonIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("carbonDetailsList").className = "DetailsList levelDetailsList";
+      break;
+
+    case 21:
+      //show game wildlife legend
+      document.getElementById('gamewildlifeIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("gamewildlifeDetailsList").className = "DetailsList levelDetailsList";
+      break;
+
+    case 22:
+      //show biodiversity legend
+      document.getElementById('biodiversityIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("biodiversityDetailsList").className = "DetailsList levelDetailsList";
+      break;
+
+    case 23:
+      //show biodiversity legend
+      document.getElementById('nitratetileIcon').className = "levelsSelectorIcon iconSelected";
+      document.getElementById("nitratetileDetailsList").className = "DetailsList levelDetailsList";
+      break;
   } // END switch
   //hide ecosystem indicator legends
-  if (value > -4 && value < 0) {
+  if ((value > -4 && value < 0) || (value<=-19 && value>=-23)) {
+    globalLegend = false;
     var element = document.getElementsByClassName('DetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled';
@@ -4487,6 +4678,7 @@ function showLevelDetails(value) {
 
   //hide watershed feature legends
   else if (value < -3 && value > -10) {
+    globalLegend = false;
     var element = document.getElementsByClassName('DetailsList physicalDetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled physicalDetailsList';
@@ -4497,6 +4689,7 @@ function showLevelDetails(value) {
     }
   } //end else/if group
   else if (value < -9) {
+    globalLegend = false;
     var element = document.getElementsByClassName('DetailsList yieldDetailsList');
     if (element.length > 0) {
       element[0].className = 'DetailsListRolled yieldDetailsList';
@@ -5154,10 +5347,14 @@ function transitionToYear(year) {
 //Clumps and undo's multiple tiles
 function undoGrid(givenTilesAndPainter) {
   //Go through each tile and replace the paint with the paint previously there
+
   while (givenTilesAndPainter[1].length > 0) {
     painter = givenTilesAndPainter[1].pop();
-    changeLandTypeTile(givenTilesAndPainter[0].pop());
+    var tile = givenTilesAndPainter[0].pop();
+    changeLandTypeTile(tile);
   }
+
+  changeLandTypeTileNitrate();
 } //end givenTilesAndPainter
 
 //Determines if the tile to be added is unique (non-repeated in paint and tileId)
@@ -5815,7 +6012,448 @@ function printOptionsEsc(e) {
   }
 } // end printOptionsEsc
 
+//Calculate Game Wildlife score for an individual tile
+function getTileGameWildlifeScore(tileId){
+  var score = 0;
+  var currLandType = boardData[currentBoard].map[tileId].landType[yearSelected];
+  var stratWet = boardData[currentBoard].map[tileId].strategicWetland;
+  var streamBuff = boardData[currentBoard].map[tileId].streamNetwork;
+  var multiplier = boardData[currentBoard].map[tileId].area / 10;
 
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing or Wetland, add 4 points
+  if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14){
+    score+=4;
+  }
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
+  if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
+    score+=1.5;
+  }
+  //If land use is Conservational Forest add 1 point
+  if(currLandType == 10){
+    score+=1;
+  }
+  //If land use is Prarie, Rotational Grazing, or Switchgrass, add 1 point
+  if(currLandType == 9 || currLandType == 7 || currLandType == 12){
+    score+=1;
+  }
+  //If land use is Wetlands add 1 point
+  if(currLandType == 14){
+    score+=1;
+  }
+  //If land is stream buffer and land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
+  if(streamBuff==1){
+    if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
+      score+=1.5;
+    }
+  }
+
+  //Multiply score by area divided by 10
+  score*=multiplier;
+
+  return score;
+}
+
+
+
+
+//Calculate Biodiversity score for an individual tile
+function getTileBiodiversityScore(tileId){
+  var score = 0;
+  var currLandType = boardData[currentBoard].map[tileId].landType[yearSelected];
+  var stratWet = boardData[currentBoard].map[tileId].strategicWetland;
+  var streamBuff = boardData[currentBoard].map[tileId].streamNetwork;
+  var multiplier = boardData[currentBoard].map[tileId].area / 10;
+
+  //If land use is Conservational Forest, Prarie, or Wetland, add 4 points
+  if(currLandType == 10  || currLandType == 9 || currLandType == 14){
+    score+=4;
+  }
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, or Wetland
+  if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14){
+    score+=1.5;
+  }
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
+  if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
+    score+=1.5;
+  }
+  //If land use is Wetland add 1.5 points
+  if(currLandType == 14){
+    score+=0.5;
+    if(stratWet == 1){
+      score+=1;
+    }
+  }
+  //If land is stream buffer and land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
+  if(streamBuff==1){
+    if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
+      score+=1.5;
+    }
+  }
+
+  //Multiply score by area divided by 10
+  score*=multiplier;
+
+  return score;
+}
+
+//This function is used to display hover information for the Game Wildlife overlay
+function getTileGameWildlifeInfoText(score){
+  if(score == 0) return "No Impact";
+  if(score > 0 && score <= 2.1) return "Low Impact";
+  else if (score>2.1 && score<=4.1) return "Moderate Impact";
+  else if (score>4 && score<=6.1) return "High Impact";
+  else if (score>6.1) return "Very High Impact";
+}
+
+//This function is used to display hover information for the Biodiversity overlay
+function getTileBiodiversityInfoText(score){
+  if(score == 0) return "No Impact";
+  else if (score> 0 && score<=2.5) return "Low Impact";
+  else if (score>2.5 && score<=5) return "Moderate Impact";
+  else if (score> 5 && score<=7.5) return "High Impact";
+  else if (score>7.5) return "Very High Impact"
+}
+
+
+function getTilePrecipitationMultiplier(year){
+
+  if (boardData[currentBoard].precipitation[year] == 24.58 || boardData[currentBoard].precipitation[year] == 28.18) // If it's a dry year
+  {
+    return 0.86;
+  } else if (boardData[currentBoard].precipitation[year] == 30.39 || boardData[currentBoard].precipitation[year] == 32.16 || boardData[currentBoard].precipitation[year] == 34.34) { // If it's a normal year
+    if (boardData[currentBoard].precipitation[year - 1] == 24.58 || boardData[currentBoard].precipitation[year - 1] == 28.18) {
+      return 1.69;
+    } else {
+      return 1;
+    }
+  } else { // If it's a flood year
+    if (boardData[currentBoard].precipitation[year - 1] == 24.58 || boardData[currentBoard].precipitation[year - 1] == 28.18) {
+      return 2.11;
+    } else {
+      return 1;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//This function is called in the getHighlightColor function for the subwatershed Nitrate layout
+//The function takes in the tileId and color necessary for the current cell
+//and determines which side of the cell should be bolded to show distinctions between
+//the subwatershed boundaries
+function getBoldedCells(tileId, color){
+  var row = boardData[currentBoard].map[tileId].row;
+  var col = boardData[currentBoard].map[tileId].column;
+
+  var subwatershedcurr = boardData[currentBoard].map[tileId].subwatershed;  //The current subwatershed reference number
+  var subwatershedleft;
+  var subwatershedright;
+  var subwatershedtop;
+  var subwatershedbottom;
+  var didtop = false;
+  var didbottom = false;
+  var didleft = false;
+  var didright = false;
+
+//The next 4 if statements check if the cell is on an edge of the map,
+//if so, set its empty neighbor subwatershed type to 0
+  if(row==1){
+    subwatershedtop = 0;
+    didtop = true;
+  }
+  if(row==36){
+    subwatershedbottom = 0;
+    didbottom = true;
+  }
+  if(col==1){
+    subwatershedleft = 0;
+    didleft = true;
+  }
+  if(col==23){
+    subwatershedright = 0;
+    didright = true;
+  }
+
+
+  //The next 4 if statements are used if a tile is not on the edge of the map
+  if(!didtop){
+    subwatershedtop = boardData[currentBoard].map[tileId-23].subwatershed;
+  }
+  if(!didbottom){
+    subwatershedbottom = boardData[currentBoard].map[tileId+23].subwatershed;
+  }
+  if(!didleft){
+    subwatershedleft = boardData[currentBoard].map[tileId-1].subwatershed;
+  }
+  if(!didright){
+  subwatershedright = boardData[currentBoard].map[tileId+1].subwatershed;
+  }
+
+
+
+  //The following if statements contain the bulk of the functionality. They check if another subwatershed is found in any
+  //direction from the current tile and determine where to bold the current tile
+  //The function returns a call to the getColorForBoldedCells function, which determines which image file to be used
+
+  //Needs bolded on right
+  if(subwatershedcurr!=subwatershedright && subwatershedcurr==subwatershedleft && subwatershedcurr==subwatershedtop && subwatershedcurr==subwatershedbottom){
+      return getColorForBoldedCells('right', color);
+  }
+  //Needs bolded on left
+  else if(subwatershedcurr!=subwatershedleft && subwatershedcurr==subwatershedright && subwatershedcurr==subwatershedtop && subwatershedcurr==subwatershedbottom){
+      return getColorForBoldedCells('left', color);
+  }
+  //Needs bolded on bottom
+  else if(subwatershedcurr!=subwatershedbottom && subwatershedcurr==subwatershedright && subwatershedcurr==subwatershedtop && subwatershedcurr==subwatershedleft){
+      return getColorForBoldedCells('bottom', color);
+  }
+  //Needs bolded on top
+  else if(subwatershedcurr!=subwatershedtop && subwatershedcurr==subwatershedright && subwatershedcurr==subwatershedbottom && subwatershedcurr==subwatershedleft){
+      return getColorForBoldedCells('top', color);
+  }
+  //Needs bolded on top and right
+  else if(subwatershedcurr==subwatershedleft && subwatershedcurr==subwatershedbottom && subwatershedcurr!=subwatershedtop && subwatershedcurr!=subwatershedright){
+    return getColorForBoldedCells('topright', color);
+  }
+  //Needs bolded on top and left
+  else if(subwatershedcurr==subwatershedright && subwatershedcurr==subwatershedbottom && subwatershedcurr!=subwatershedtop && subwatershedcurr!=subwatershedleft){
+    return getColorForBoldedCells('topleft', color);
+  }
+  //Needs bolded on bottom and right
+  else if(subwatershedcurr==subwatershedleft && subwatershedcurr==subwatershedtop && subwatershedcurr !=subwatershedbottom && subwatershedcurr!=subwatershedright){
+    return getColorForBoldedCells('bottomright', color);
+  }
+  //Needs bolded on bottom and left
+  else if(subwatershedcurr==subwatershedright && subwatershedcurr==subwatershedtop && subwatershedcurr!=subwatershedbottom && subwatershedcurr!=subwatershedleft){
+    return getColorForBoldedCells('bottomleft', color);
+  }
+  //Needs bolded on top and left and right
+  else if(subwatershedcurr==subwatershedbottom && subwatershedcurr!=subwatershedleft && subwatershedcurr!=subwatershedright && subwatershedcurr!=subwatershedtop){
+    return getColorForBoldedCells('topleftright', color);
+  }
+  //Needs bolded on bottom and left and right
+  else if(subwatershedcurr==subwatershedtop && subwatershedcurr!=subwatershedleft && subwatershedcurr!=subwatershedright && subwatershedcurr!=subwatershedbottom){
+    return getColorForBoldedCells('bottomleftright', color);
+  }
+  //Needs bolded on top and right and bottom
+  else if(subwatershedcurr==subwatershedleft && subwatershedcurr!=subwatershedright && subwatershedcurr!=subwatershedtop && subwatershedcurr!=subwatershedbottom){
+    return getColorForBoldedCells('toprightbottom', color);
+  }
+  //Needs bolded on top and left and bottom
+  else if(subwatershedcurr==subwatershedright && subwatershedcurr!=subwatershedleft && subwatershedcurr!=subwatershedtop && subwatershedcurr!=subwatershedbottom){
+    return getColorForBoldedCells('topleftbottom', color);
+  }
+  //Needs bolded on left and right
+  else if(subwatershedcurr==subwatershedtop && subwatershedcurr==subwatershedbottom && subwatershedcurr!=subwatershedright && subwatershedcurr!=subwatershedleft){
+    return getColorForBoldedCells('leftright', color);
+  }
+  //Does not need to be bolded
+  else return color;
+}
+
+//This function is used in the getBoldedCells function to return the correct color and correct bolded cell
+//for displaying on the map
+function getColorForBoldedCells(direction, color){
+
+  //Any cell can be bolded in 1 of 13 ways depending on its location relative to the other subwatersheds
+  switch(color){
+    case 125:
+      if(direction=='right') return 63;
+      else if(direction=='top') return 60;
+      else if(direction=='left') return 61;
+      else if(direction=='bottom') return 62;
+      else if(direction=='topright') return 64;
+      else if(direction=='topleft') return 65;
+      else if(direction=='bottomleft') return 67;
+      else if(direction=='bottomright') return 66;
+      else if(direction=='bottomleftright') return 68;
+      else if(direction=='topleftright') return 69;
+      else if(direction=='topleftbottom') return 71;
+      else if(direction=='toprightbottom') return 70;
+      else if(direction=='leftright') return 72;
+      break;
+
+    case 126:
+      if(direction=='right') return 76;
+      else if(direction=='top') return 73;
+      else if(direction=='left') return 74;
+      else if(direction=='bottom') return 75;
+      else if(direction=='topright') return 77;
+      else if(direction=='topleft') return 78;
+      else if(direction=='bottomleft') return 80;
+      else if(direction=='bottomright') return 79;
+      else if(direction=='bottomleftright') return 81;
+      else if(direction=='topleftright') return 82;
+      else if(direction=='topleftbottom') return 84;
+      else if(direction=='toprightbottom') return 83;
+      else if(direction=='leftright') return 85;
+      break;
+
+
+    case 127:
+      if(direction=='right') return 89;
+      else if(direction=='top') return 86;
+      else if(direction=='left') return 87;
+      else if(direction=='bottom') return 88;
+      else if(direction=='topright') return 90;
+      else if(direction=='topleft') return 91;
+      else if(direction=='bottomleft') return 93;
+      else if(direction=='bottomright') return 92;
+      else if(direction=='bottomleftright') return 94;
+      else if(direction=='topleftright') return 95;
+      else if(direction=='topleftbottom') return 97;
+      else if(direction=='toprightbottom') return 96;
+      else if(direction=='leftright') return 98;
+      break;
+
+    case 128:
+      if(direction=='right') return 102;
+      else if(direction=='top') return 99;
+      else if(direction=='left') return 100;
+      else if(direction=='bottom') return 101;
+      else if(direction=='topright') return 103;
+      else if(direction=='topleft') return 104;
+      else if(direction=='bottomleft') return 106;
+      else if(direction=='bottomright') return 105;
+      else if(direction=='bottomleftright') return 107;
+      else if(direction=='topleftright') return 108;
+      else if(direction=='topleftbottom') return 110;
+      else if(direction=='toprightbottom') return 109;
+      else if(direction=='leftright') return 111;
+      break;
+
+    case 129:
+      if(direction=='right') return 115;
+      else if(direction=='top') return 112;
+      else if(direction=='left') return 113;
+      else if(direction=='bottom') return 114;
+      else if(direction=='topright') return 116;
+      else if(direction=='topleft') return 117;
+      else if(direction=='bottomleft') return 119;
+      else if(direction=='bottomright') return 118;
+      else if(direction=='bottomleftright') return 120;
+      else if(direction=='topleftright') return 121;
+      else if(direction=='topleftbottom') return 123;
+      else if(direction=='toprightbottom') return 122;
+      else if(direction=='leftright') return 124;
+      break;
+
+
+
+    case 210:
+      if(direction=='right') return 148;
+      else if(direction=='top') return 145;
+      else if(direction=='left') return 146;
+      else if(direction=='bottom') return 147;
+      else if(direction=='topright') return 149;
+      else if(direction=='topleft') return 150;
+      else if(direction=='bottomleft') return 152;
+      else if(direction=='bottomright') return 151;
+      else if(direction=='bottomleftright') return 153;
+      else if(direction=='topleftright') return 154;
+      else if(direction=='topleftbottom') return 156;
+      else if(direction=='toprightbottom') return 155;
+      else if(direction=='leftright') return 157;
+      break;
+
+
+
+    case 211:
+      if(direction=='right') return 161;
+      else if(direction=='top') return 158;
+      else if(direction=='left') return 159;
+      else if(direction=='bottom') return 160;
+      else if(direction=='topright') return 162;
+      else if(direction=='topleft') return 163;
+      else if(direction=='bottomleft') return 165;
+      else if(direction=='bottomright') return 164;
+      else if(direction=='bottomleftright') return 166;
+      else if(direction=='topleftright') return 167;
+      else if(direction=='topleftbottom') return 169;
+      else if(direction=='toprightbottom') return 168;
+      else if(direction=='leftright') return 170;
+      break;
+
+
+
+    case 212:
+      if(direction=='right') return 174;
+      else if(direction=='top') return 171;
+      else if(direction=='left') return 172;
+      else if(direction=='bottom') return 173;
+      else if(direction=='topright') return 175;
+      else if(direction=='topleft') return 176;
+      else if(direction=='bottomleft') return 178;
+      else if(direction=='bottomright') return 177;
+      else if(direction=='bottomleftright') return 179;
+      else if(direction=='topleftright') return 180;
+      else if(direction=='topleftbottom') return 182;
+      else if(direction=='toprightbottom') return 181;
+      else if(direction=='leftright') return 183;
+      break;
+
+
+
+    case 213:
+      if(direction=='right') return 187;
+      else if(direction=='top') return 184;
+      else if(direction=='left') return 185;
+      else if(direction=='bottom') return 186;
+      else if(direction=='topright') return 188;
+      else if(direction=='topleft') return 189;
+      else if(direction=='bottomleft') return 191;
+      else if(direction=='bottomright') return 190;
+      else if(direction=='bottomleftright') return 192;
+      else if(direction=='topleftright') return 193;
+      else if(direction=='topleftbottom') return 195;
+      else if(direction=='toprightbottom') return 194;
+      else if(direction=='leftright') return 196;
+      break;
+
+
+
+    case 214:
+      if(direction=='right') return 200;
+      else if(direction=='top') return 197;
+      else if(direction=='left') return 198;
+      else if(direction=='bottom') return 199;
+      else if(direction=='topright') return 201;
+      else if(direction=='topleft') return 202;
+      else if(direction=='bottomleft') return 204;
+      else if(direction=='bottomright') return 203;
+      else if(direction=='bottomleftright') return 205;
+      else if(direction=='topleftright') return 206;
+      else if(direction=='topleftbottom') return 208;
+      else if(direction=='toprightbottom') return 207;
+      else if(direction=='leftright') return 209;
+      break;
+
+    }
+
+
+
+  }
 
 
 
