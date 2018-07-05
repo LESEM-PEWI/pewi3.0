@@ -35,6 +35,7 @@ var previousTileId = [];
 var previousPainter = [];
 var randomzing = false;
 var rightPopupWasOpen;
+var backgroundInfoBoxWasOpen;
 var runningSim = false;
 var simulationData;
 var startTime;
@@ -45,8 +46,9 @@ var g_isDeleted = false; //true if year delete button is used; false otherwise
 var g_year1delete = false; //true if year 1 is deleted when there are other years present; false otherwise
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
-var maxYear = 0; //maximum number of years present currently on the board
-// var tempArrTest = [];
+var maxYear = 0; //maximum number of years present currently on the board - only used for deletetion of years
+var yearCopyPaste = 0; //used for copying and pasting the selected year
+var selectedLandType = 0; //keeps track of which land is selected
 
 // arrays
 
@@ -179,6 +181,7 @@ function toggleTabTitle(value, dir) {
     document.getElementById(value).style.display = 'none';
   }
 
+
 //If hovering over, hide legend
 if(dir == 0){
   if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
@@ -192,7 +195,490 @@ if(dir == 1){
     document.getElementsByClassName('DetailsList')[0].style.visibility = 'visible';
   }
 }
+}
 
+// Show score details when hover over progress bar
+function toggleScoreDetails(factor) {
+  switch (factor){
+    case 'gameWildlife':
+      if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
+        // console.log(childNodes);
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10 + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Totals.gameWildlifePoints[currentYear] + ' pts';
+        document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'carbon':
+      if(document.getElementsByClassName('carbonScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 + ' tons' + '<br>' +
+        (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg';
+        document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'biodiversity':
+      if(document.getElementsByClassName('biodiversityScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10  + '/100';;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10 + ' pts';
+        document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'erosion':
+      if(document.getElementsByClassName('erosionScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('erosionScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grossErosionScore[currentYear] * 10) / 10  + '/100';;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.grossErosion[currentYear] * 10) / 10 + ' tons' + '<br>' +
+          (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10) + ' Mg';
+        document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'nitrate':
+      if(document.getElementsByClassName('nitrateScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('nitrateScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' ppm' + '<br>' +
+          Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' mg/L';
+        document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'phoshorus':
+      if(document.getElementsByClassName('phoshorusScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('phoshorusScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+        document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'sediment':
+      if(document.getElementsByClassName('sedimentScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('sedimentScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10  + '/100';;
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.sedimentDelivery[currentYear] * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.sedimentDelivery[currentYear] * 0.90718474 * 10) / 10 + ' Mg';
+        document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'total':
+      if(document.getElementsByClassName('totalScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('totalScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('totalScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        var totalScore = Math.min((Totals.nitrateConcentrationScore[currentYear] +
+          Totals.phosphorusLoadScore[currentYear] + Totals.sedimentDeliveryScore[currentYear] + Totals.carbonSequestrationScore[currentYear] +
+          Totals.grossErosionScore[currentYear] + Totals.gameWildlifePointsScore[currentYear] + Totals.biodiversityPointsScore[currentYear]) / 7, 100);
+        childNodes[5].innerHTML = 'Current: ' + Math.round(totalScore * 10) / 10  + '/100';
+
+        document.getElementsByClassName('totalScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'cornGrain':
+      if(document.getElementsByClassName('cornGrainScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('cornGrainScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].cornGrainYield * 10) / 10 + ' bu' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].cornGrainYield * 0.0254 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'soybeans':
+      if(document.getElementsByClassName('soybeansScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('soybeansScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].soybeanYield * 10) / 10 + ' bu' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].soybeanYield * 0.0272 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'fruitsAndVegetables':
+      if(document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.mixedFruitsAndVegetablesYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 0.90718474 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'cattle':
+      if(document.getElementsByClassName('cattleScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('cattleScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('cattleScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.cattleYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].cattleYield * 10) / 10 + ' animals';
+
+        document.getElementsByClassName('cattleScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'alfalfaHay':
+      if(document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('alfalfaHayScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.alfalfaHayYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 0.90718474 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'grassHay':
+      if(document.getElementsByClassName('grassHayScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('grassHayScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('grassHayScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grassHayYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].grassHayYield * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].grassHayYield * 0.90718474 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('grassHayScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'switchgrassBiomass':
+      if(document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.switchgrassYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].switchgrassYield * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].switchgrassYield * 0.90718474 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'wood':
+      if(document.getElementsByClassName('woodScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('woodScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('woodScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.woodYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].woodYield * 10) / 10 + ' board-ft' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].woodYield * 0.002359737 * 10) / 10 + ' M^3';
+
+        document.getElementsByClassName('woodScoreDetails')[0].style.display = 'block';
+      }
+    break;
+    case 'woodyBiomass':
+      if(document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display == 'block')
+        document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display = 'none';
+      else{
+        var childNodes = document.getElementsByClassName('woodyBiomassScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.shortRotationWoodyBiomassYieldScore[currentYear] * 10) / 10  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 10) / 10 + ' tons' + '<br>' +
+          Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 0.90718474 * 10) / 10 + ' Mg';
+
+        document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display = 'block';
+      }
+    break;
+  }
+}
+
+function toggleMinMax(option, idNum){
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+  var tempElement = document.getElementById(progressbarIds[idNum]);
+  // console.log(tempElement.childNodes[7].style.display);
+  if(tempElement.childNodes[7].style.display == 'none' || tempElement.childNodes[7].style.display == '' ){
+    var minOrMaxValue;
+    if(option == 'Min')
+      minOrMaxValue = parseFloat(tempElement.childNodes[3].childNodes[3].style.left);
+    else
+      minOrMaxValue = parseFloat(tempElement.childNodes[3].childNodes[5].style.left);
+    tempElement.childNodes[7].innerHTML ="Goal " + option + ": <br>" + minOrMaxValue + "/100";
+    if(idNum == 0 || idNum == 1) tempElement.childNodes[7].innerHTML += "<br>" + minOrMaxValue / 10 + " pts";
+
+    // Set Carbon raw value
+    if(idNum == 2){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + Math.round(rawValue / 0.90718474 * 10) / 10 + " tons" + "<br>" + rawValue + " Mg";
+    }
+    // Set Gross Erosion, Phoshorus, Sediment, FruitsAndVegetables, Alfalfa Hay, Grass Hay, Switchgrass Biomass and Short Rotation Woody Biomass raw value
+    if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " tons" + "<br>" + Math.round(rawValue * 0.90718474 * 10) / 10 + " Mg";
+    }
+    // Set Nitrate concentration raw value
+    if(idNum == 4){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " ppm" + "<br>" + rawValue + " mg/L";
+    }
+
+    // calculate Corn Grain and Soybeans raw value
+    if(idNum == 7 || idNum == 8){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " bu" + "<br>" + Math.round(rawValue * 0.0272 * 10) / 10 + " Mg";
+    }
+
+    // Set Cattle raw value
+    if(idNum == 10){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " animals";
+    }
+
+    // Set Wood raw value
+    if(idNum == 14){
+      var rawValue = getRawValue(minOrMaxValue, idNum);
+      tempElement.childNodes[7].innerHTML += "<br>" + rawValue + " board-ft" + "<br>" + Math.round(rawValue * 0.002359737 * 10) / 10 + " M^3";
+    }
+
+    tempElement.childNodes[7].style.display = 'block';
+  }
+  else {
+    tempElement.childNodes[7].style.display = 'none';
+    tempElement.childNodes[7].innerHTML = '';
+  }
+
+}
+
+// convert english unit to metric unit
+function englishToMetric(idNum, englishUnit){
+  if(idNum == 0 || idNum == 1)
+    return englishUnit;
+  else if(idNum == 2){
+    return Math.round(englishUnit / 0.90718474 * 10) / 10;
+  }
+  else if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
+    return Math.round(englishUnit * 0.90718474 * 10) / 10;
+  }
+  else if(idNum == 4){
+    return englishUnit;
+  }
+
+  else if(idNum == 7 || idNum == 8){
+    return Math.round(englishUnit * 0.0272 * 10) / 10;
+  }
+
+  else if(idNum == 10){
+    return englishUnit;
+  }
+
+  else if(idNum == 14){
+    return Math.round(englishUnit * 0.002359737 * 10) / 10;
+  }
+}
+
+// convert metric unit to english unit
+function metricToEnglish(idNum, metricUnit){
+  if(idNum == 0 || idNum == 1)
+    return metricUnit;
+  else if(idNum == 2){
+    return Math.round(metricUnit * 0.90718474 * 10) / 10;
+  }
+  else if(idNum == 3 || idNum == 5 || idNum == 6 || idNum == 9 || idNum == 11 || idNum == 12 || idNum == 13 || idNum == 15){
+    return Math.round(metricUnit / 0.90718474 * 10) / 10;
+  }
+  else if(idNum == 4){
+    return metricUnit;
+  }
+
+  else if(idNum == 7 || idNum == 8){
+    return Math.round(metricUnit / 0.0272 * 10) / 10;
+  }
+
+  else if(idNum == 10){
+    return metricUnit;
+  }
+
+  else if(idNum == 14){
+    return Math.round(metricUnit / 0.002359737 * 10) / 10;
+  }
+}
+
+// calculate English raw scores given eco scores
+function getRawValue(minOrMaxValue,idNum) {
+  // calculate Game Wildlife and Biodiversity raw value
+  if(idNum == 0 || idNum == 1) return minOrMaxValue / 10;
+
+  // calculate Carbon raw value given carbonSequestrationScore(equals to minOrMaxValue) by the following equation
+  // this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
+  if(idNum == 2){
+    // Calculate in Metric unit by default.
+    var rawValue = Math.round((minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin) + boardData[currentBoard].minimums.carbonMin) * 10) / 10;
+    return rawValue;
+    // console.log("boardData[currentBoard].minimums.carbonMin = ", boardData[currentBoard].minimums.carbonMin);
+    // console.log("boardData[currentBoard].maximums.carbonMax = ", boardData[currentBoard].maximums.carbonMax);
+    // console.log("boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin = ", boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin);
+    // console.log("minOrMaxValue / 100 = ", minOrMaxValue / 100);
+    // console.log("minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin)", minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin));
+    // console.log("rawValue = ", minOrMaxValue / 100 * (boardData[currentBoard].maximums.carbonMax - boardData[currentBoard].minimums.carbonMin) + boardData[currentBoard].minimums.carbonMin);
+  }
+  // calculate Gross Erosion raw value
+  // this.grossErosionScore[y] = 100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
+  if(idNum == 3){
+    var rawValue = Math.round((boardData[currentBoard].maximums.erosionMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.erosionMax - boardData[currentBoard].minimums.erosionMin)) * 10) / 10;
+    return rawValue;
+  }
+  // calculate Nitrate concentration raw value
+  // this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin));
+  if(idNum == 4){
+    var rawValue = Math.round((boardData[currentBoard].maximums.nitrateMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.nitrateMax - boardData[currentBoard].minimums.nitrateMin)) * 10) / 10;
+    return rawValue;
+  }
+
+  // calculate Phoshorus raw value
+  // this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin));
+  if(idNum == 5){
+    var rawValue = Math.round((boardData[currentBoard].maximums.phosphorusMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.phosphorusMax - boardData[currentBoard].minimums.phosphorusMin)) * 10) / 10;
+    return rawValue;
+  }
+
+  // calculate Sediment raw value
+  // this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin));
+  if(idNum == 6){
+    var rawValue = Math.round((boardData[currentBoard].maximums.sedimentMax - minOrMaxValue / 100 * (boardData[currentBoard].maximums.sedimentMax - boardData[currentBoard].minimums.sedimentMin)) * 10) / 10;
+    return rawValue;
+  }
+
+  // calculate Corn Grain raw value
+  // this.cornGrainYieldScore[y] = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax;
+  if(idNum == 7){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.cornMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Soybeans raw value
+  // this.soybeanYieldScore[y] = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax;
+  if(idNum == 8){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.soybeanMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Mixed Fruits and Vegetables raw value
+  // this.mixedFruitsAndVegetablesYieldScore[y] = 100 * this.yieldResults[y].mixedFruitsAndVegetablesYield / board.maximums.mixedFruitsAndVegetablesMax;
+  if(idNum == 9){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.mixedFruitsAndVegetablesMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Cattle raw value
+  // this.cattleYieldScore[y] = 100 * this.yieldResults[y].cattleYield / board.maximums.cattleMax;
+  if(idNum == 10){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.cattleMax * 10) / 10;
+    return rawValue;
+  }
+
+  // calculate Alfalfa Hay raw value
+  // this.alfalfaHayYieldScore[y] = 100 * this.yieldResults[y].alfalfaHayYield / board.maximums.alfalfaMax;
+  if(idNum == 11){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.alfalfaMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Grass Hay raw value
+  // this.grassHayYieldScore[y] = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax;
+  if(idNum == 12){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.grassHayMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Switchgrass Biomass raw value
+  // this.switchgrassYieldScore[y] = 100 * this.yieldResults[y].switchgrassYield / board.maximums.switchgrassMax;
+  if(idNum == 13){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.switchgrassMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Wood raw value
+  // this.woodYieldScore[y] = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax;
+  if(idNum == 14){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.woodMax * 10) / 10;
+    return rawValue;
+  }
+  // calculate Short Rotation Woody Biomass raw value
+  // this.shortRotationWoodyBiomassYieldScore[y] = 100 * this.yieldResults[y].shortRotationWoodyBiomassYield / board.maximums.shortRotationWoodyBiomassMax;
+  if(idNum == 15){
+    var rawValue = Math.round(minOrMaxValue / 100 * boardData[currentBoard].maximums.shortRotationWoodyBiomassMax * 10) / 10;
+    return rawValue;
+  }
+}
+
+// Set min or max position indicators in progress bar according to its id.
+// i.e. make a white vertical bar appears in the progress bar which indicates the customized min/max value.
+function setProgressbarMinMaxValues(id, option, value) {
+  //if value is not numerical, disgard this change.
+  if(isNaN(value) || value < 0 || value > 100)
+    return;
+  // if value < 0, we set it to be -10, if value > 100, then set it to be 110. Error protection.
+  // if(value < 0) value = -10;
+  // if(value > 100) value = 110;
+
+  var children = document.getElementById(id).childNodes[3].childNodes;
+  // console.log(children);
+  if(option == 'min'){
+    if(value < parseFloat(children[5].style.left)){
+      children[3].style.left = value + "%";
+    }
+    // else{ //If min > max, then we remove max value
+    //   children[5].style.left = "110%";
+    // }
+
+  }
+  else if(option == 'max'){
+    if(value > parseFloat(children[3].style.left)){
+      children[5].style.left = value + "%";
+    }
+    // else{ //If min > max, then we remove min value
+    //   children[3].style.left = "-10%";
+    // }
+
+  }
+
+
+  
 }
 
 //Adds the given tileId and painter to the undoArr
@@ -378,6 +864,8 @@ function addYearAndTransition() {
 
   var totalYearsAllowed = 3;
   var nextYear = boardData[currentBoard].calculatedToYear+1;
+  document.getElementById("yearToCopy").options[1].style.display = 'block';
+  document.getElementById("yearToPaste").options[1].style.display = 'block';
   if(g_year1delete)
   {
     nextYear = 2;
@@ -395,10 +883,13 @@ function addYearAndTransition() {
     document.getElementById("year" + nextYear + "Button").style.display = "block";
 //    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
     //special case for adding year 3 when year 2 has been previously deleted in the presence of year 3
-    if(year2to3)
+    if (year2to3)
     {
       switchYearTab(3);
       transitionToYear(4);
+
+      document.getElementById("yearToCopy").options[3].style.display = 'block';
+      document.getElementById("yearToPaste").options[3].style.display = 'block';
 //      document.getElementById("year3precipContainer").style.display = "block";
       year2to3 = false;
     }
@@ -407,13 +898,17 @@ function addYearAndTransition() {
     {
     switchYearTab(nextYear);
     transitionToYear(nextYear);
+
+    document.getElementById("yearToCopy").options[nextYear].style.display = 'block';
+    document.getElementById("yearToPaste").options[nextYear].style.display = 'block';
+
 //    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
+
     }
   }
 
   if (nextYear == totalYearsAllowed) {
-    if (g_year1delete)
-    {
+    if (g_year1delete) {
       document.getElementById("year2Button").className = "yearButton";
       document.getElementById("year2Image").className = "icon yearNotSelected";
       document.getElementById("year2Button").style.display = "block";
@@ -430,17 +925,22 @@ function addYearAndTransition() {
     }
     switchYearTab(nextYear);
     transitionToYear(nextYear);
+    document.getElementById("yearToCopy").options[nextYear].style.display = 'block';
+    document.getElementById("yearToPaste").options[nextYear].style.display = 'block';
   }
 
-  if(nextYear > totalYearsAllowed)
-  {
+  if (nextYear > totalYearsAllowed) {
     alert("Cannot add more than 3 years!");
-    nextYear-=1;
+    nextYear -= 1;
     switchYearTab(nextYear);
     transitionToYear(nextYear);
+    document.getElementById("yearToCopy").options[nextYear].style.display = 'block';
+    document.getElementById("yearToPaste").options[nextYear].style.display = 'block';
   }
   //switch to next year
-
+  // refresh the progress bar
+  calculateResults();
+  refreshProgressBar(currentYear);
 } //end addYearAndTransition
 
 
@@ -481,6 +981,8 @@ function deleteYearAndTransition()
           // g_isDeleted = true;
            response = "Deleted!";
            document.getElementById("year" + currMaxYear + "Button").style.display = "none";
+           document.getElementById("yearToCopy").options[currMaxYear].style.display = 'none';
+           document.getElementById("yearToPaste").options[currMaxYear].style.display = 'none';
            alert("Year 2 is now Year 1!");
            //copy year 2 to year 1 - including the precipitation
            boardData[currentBoard].precipitation[yearSelected] = boardData[currentBoard].precipitation[2];
@@ -507,6 +1009,8 @@ function deleteYearAndTransition()
         response = "Deleted!";
         //delete the button of the year - actual deletion is done in transitionToYear
         document.getElementById("year3Button").style.display = "none";
+        document.getElementById("yearToCopy").options[3].style.display = 'none';
+        document.getElementById("yearToPaste").options[3].style.display = 'none';
         //make it year 2
         year2and3Delete();
       }
@@ -515,6 +1019,8 @@ function deleteYearAndTransition()
         response = "Deleted!";
         //delete the button of the year - actual deletion is done in transitionToYear
         document.getElementById("year" + yearSelected + "Button").style.display = "none";
+        document.getElementById("yearToCopy").options[yearSelected].style.display = 'none';
+        document.getElementById("yearToPaste").options[yearSelected].style.display = 'none';
         currMaxYear -=1;
         yearSelected -= 1;
         g_isDeleted = true;
@@ -528,6 +1034,15 @@ function deleteYearAndTransition()
         response = "Not Deleted!";
         g_isDeleted = false;
     }
+    //if the maximum year is 1 now, don't show the option in  the copy and paste boxes
+    if(boardData[currentBoard].calculatedToYear == 1)
+    {
+      document.getElementById("yearToCopy").options[1].style.display = 'none';
+      document.getElementById("yearToPaste").options[1].style.display = 'none';
+    }
+    // refresh the progress bar
+    // calculateResults();
+    refreshProgressBar(currentYear);
 }// end deleteYearAndTransition
 
 
@@ -576,6 +1091,12 @@ function calculateCutoffs() {
 function calculateResults() {
   //Totals = new Results(boardData[currentBoard]);
   Totals.update();
+
+  //Correction for Carbon Sequestrations
+  for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
+    Totals.carbonSequestration[y] = Totals.carbonSequestration[y] * (1 / 0.90718474);
+  }
+
   //contaminatedRiver(Totals);
 } //end calculateResults
 
@@ -592,11 +1113,20 @@ function changeLandTypeTile(tileId) {
       if (!multiplayerAssigningModeOn) {
         // textureArray is a global array that links to each landType image, it was load in loader.js
         // by changing the reference on meshMaterials array, three.js will draw it on canvas automatically
-        meshMaterials[tileId].map = textureArray[painter];
-        // record the data changes in boardData
-        boardData[currentBoard].map[tileId].landType[currentYear] = painter;
-        // update boardData figures
-        boardData[currentBoard].map[tileId].update(currentYear);
+
+        //wetlands are restricted within flat lands, i.e 0-2% only
+        if(selectedLandType == 14 && (Number(boardData[currentBoard].map[tileId].topography) >= 2) && !randomizing)
+        {
+          //dont highlight
+        }
+        else
+        {
+          meshMaterials[tileId].map = textureArray[painter];
+          // record the data changes in boardData
+          boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+          // update boardData figures
+          boardData[currentBoard].map[tileId].update(currentYear);
+        }
       } else if (multiplayerAssigningModeOn) {
         meshMaterials[tileId].map = multiplayerTextureArray[painter];
         boardData[currentBoard].map[tileId].landType[currentYear] = painter;
@@ -606,6 +1136,10 @@ function changeLandTypeTile(tileId) {
       pushClick(0, getStamp(), 55, 0, tileId);
     }
   } // end outter if
+
+  // Whenever tile of land type is changed, we'd better recalculate the results
+  calculateResults();
+  refreshProgressBar(currentYear);
 } //end changeLandTypeTile
 
 //Updates Nitrate score for entire map since each individual Tile's score hinges on landtypes across the entire map
@@ -647,7 +1181,7 @@ function changeSelectedPaintTo(newPaintValue) {
     painterElementId = "paint" + newPaintValue;
     document.getElementById(painterElementId).className = "landSelectorIcon iconSelected";
     painter = newPaintValue;
-
+    selectedLandType = painter;
     //Index chat box entries for each landuse type
     switch (painterElementId) {
       case 'paint1':
@@ -932,6 +1466,16 @@ function contaminatedRiver(riverColor) {
   }
 
 } //end contaminatedRiver
+
+//depends on the variable yearSelected from transitionToYear
+function copyYear()
+{
+  document.getElementById("yearCopyButton").classList.toggle("show");
+  yearCopyPaste = document.getElementById("yearToCopy").value;
+  document.getElementById("yearPasteButton").style.display = "block";
+  //Hide the option of pasting the same year to itself
+  document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'none';
+} //end copyYear
 
 //createFlock displays an animated flock of birds for 10 seconds
 function createFlock() {
@@ -1638,8 +2182,17 @@ function getHighlightColor(highlightType, tileId) {
 
     if (boardData[currentBoard].map[tileId].strategicWetland == 1) {
       return 26;
-    } else {
+    }
+    else
+    {
+      if((Number(boardData[currentBoard].map[tileId].topography) <= 1))
+      {
+          return 32;
+      }
+      else
+      {
       return 41;
+    }
     }
   }
   // loader
@@ -1988,35 +2541,18 @@ function getHighlightedInfo(tileId) {
         if (boardData[currentBoard].map[tileId].strategicWetland == 1)
           highlightString = "Strategic Wetland" + "<br>";
         else
-          highlightString = "Not A Strategic Wetland" + "<br>";
+          if((Number(boardData[currentBoard].map[tileId].topography) <= 1))
+          {
+            highlightString = "Suitable" + "<br>";
+          }
+          else
+          {
+            highlightString = "Not Suitable" + "<br>";
+          }
         break;
         //create string for subwatershed number
       case 7:
         highlightString = "Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>";
-        break;
-
-        /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
-      case 9:
-        switch (Number(boardData[currentBoard].map[tileId].topography)) {
-          case 0:
-            highlightString = "0-1%" + "<br>";
-            break;
-          case 1:
-            highlightString = "1-2%" + "<br>";
-            break;
-          case 2:
-            highlightString = "2-5%" + "<br>";
-            break;
-          case 3:
-            highlightString = "5-9%" + "<br>";
-            break;
-          case 4:
-            highlightString = "9-14%" + "<br>";
-            break;
-          case 5:
-            highlightString = "14-18%" + "<br>";
-            break;
-        }
         break;
         /*case 8:
       var soil = boardData[currentBoard].map[tileId].soilType;
@@ -2135,22 +2671,27 @@ function getNumberOfPlayers() {
  * @returns Options value
  */
 function getPrecipOptionsValue(precipValue) {
-  switch (precipValue) {
-    case 24.58:
-      return 0;
-    case 28.18:
-      return 1;
-    case 30.39:
-      return 2;
-    case 32.16:
-      return 3;
-    case 34.34:
-      return 4;
-    case 36.47:
-      return 5;
-    case 45.10:
-      return 6;
-  } // end switch
+
+  // We don't use switch statement because switch cases use STRICT comparison(===)
+  if (precipValue == 24.58)
+    return 0;
+  else if (precipValue == 28.18)
+    return 1;
+  else if (precipValue == 30.39)
+    return 2;
+  else if (precipValue == 32.16)
+    return 3;
+  else if (precipValue == 34.34)
+    return 4;
+  else if (precipValue == 36.47)
+    return 5;
+  else if (precipValue == 45.10) {
+    return 6;
+  } else {
+    alert('Corrupted data! Unable to process the file.');
+    return -1;
+  }
+
 } // end getPrecipOptionsValue()
 
 function getPrecipType(a){
@@ -2170,6 +2711,32 @@ function getPrecipType(a){
     document.getElementById(spanID).textContent="Wet";
   }
 }
+
+//gets the topography (percentage of slope) of a tile
+  /*Topography numbers in data sheet are not indicative of exact percent slope. Rather, 0 -> 0-1%, 1 -> 1-2%, 2-> 2-5%  ...and so on*/
+function getSlope(tileId)
+{
+  switch (Number(boardData[currentBoard].map[tileId].topography)) {
+    case 0:
+      return "0-1% Slope" + "<br>";
+      break;
+    case 1:
+      return "1-2% Slope" + "<br>";
+      break;
+    case 2:
+      return "2-5% Slope" + "<br>";
+      break;
+    case 3:
+      return "5-9% Slope" + "<br>";
+      break;
+    case 4:
+      return "9-14% Slope" + "<br>";
+      break;
+    case 5:
+      return "14-18% Slope" + "<br>";
+      break;
+  }// end switch
+}// end getSlope
 
 //Gets the current timestamp for the click (event)
 function getStamp() {
@@ -2275,7 +2842,7 @@ function highlightTile(tileId) {
 
       //update the information displayed in the delayed hover div by cursor
       myTimer = setTimeout(function() {
-        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" +  getSlope(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
         //May use strings and iterate through them for removing hover information
         var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]);
         var info2 = "Precipitation: " + printPrecipYearType();
@@ -2292,6 +2859,7 @@ function highlightTile(tileId) {
           document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info3, '');
           //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
         }
+        //this is where you should include the code about the topography for the hover over button
       }, 500);
     }
 
@@ -2439,8 +3007,10 @@ function multiplayerMode() {
     document.getElementById("playerAddButton").style.display = "inline-block";
     document.getElementById("playerResetButton").style.display = "block";
     document.getElementById("levelsButton").style.display = "none";
-    document.getElementById("yearButton").style.display = "none";
-    document.getElementById("yearButton").style.display = "none";
+
+    // document.getElementById("yearButton").style.display = "none";
+    document.getElementById("yearButton").style.display = "block";
+
     // When hit download button, it should download the multi-map.
     document.getElementById("DownloadButton").onclick = endMultiplayerAssignMode;
     // Multi-player mode should not have a print function, hide it.
@@ -2451,6 +3021,8 @@ function multiplayerMode() {
     document.getElementById('DownloadButton').style.right = '6.5vw';
     document.getElementById('logoBase').style.right = '9vw';
     document.getElementById('pewiLogo').style.right = '18.5vw';
+    // Hide the progress bar
+    document.getElementById('progressBarContainer').style.display = 'none';
   }
 }
 
@@ -2526,9 +3098,7 @@ function objectiveCheck() {
 function onDocumentMouseMove(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     event.preventDefault();
-
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-
     //set location of div that follows cursor for hover-info and displays with 1s delay
     var x = event.clientX;
     var y = event.clientY;
@@ -2539,18 +3109,17 @@ function onDocumentMouseMove(event) {
     }
 
     raycaster.setFromCamera(mouse, camera);
-
     //FIXME intersects indicates when mouse is hover on tiles, however when the land's angle change, it appears not correct. I think this affects the correctness of coordinates
     var intersects = raycaster.intersectObjects(scene.children);
 
     //Remove highlighting if clicking and dragging (painter tool/brush 1)
     if (clickAndDrag) {
+
       highlightTile(-1);
     }
 
     //if there's no intersection, then turn off the gridHighlighting
     if (intersects.length < 1) {
-
       //if we're on grid paint, and we go off board, unhighlight everything
       if (painterTool.status == 2) {
         for (var i = 0; i < highlightedTiles.length; i++) {
@@ -2566,14 +3135,14 @@ function onDocumentMouseMove(event) {
     if (intersects.length > 0 && !modalUp) {
 
       //if painter tool type is the rectangle painter
-      if (painterTool.status == 2 && !mapIsHighlighted) {
+      if (painterTool.status == 2) { //CHANGE
         //highlight a grid
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
         var tilesToHighlight = getGridOutline(painterTool.startTile, currentTile);
 
         //clear Previous highlighting
         for (var i = 0; i < highlightedTiles.length; i++) {
-          meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
+         meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
         }
 
         //if the tile we are on is an actual tile, then highlight accordingly
@@ -2583,8 +3152,10 @@ function onDocumentMouseMove(event) {
         //  tile on the board with no land type
 
         // if the tile the mouse hover on has landUseType, that means it is a paintable land
+
         if (boardData[currentBoard].map[currentTile].landType[0] !== 0) {
           // grid painter mode highlighting tiles here
+
           for (var i = 0; i < tilesToHighlight.length; i++) {
             highlightTile(tilesToHighlight[i] - 1);
             //prevent highlighting from overwritting...
@@ -2592,7 +3163,7 @@ function onDocumentMouseMove(event) {
           }
           highlightedTiles = tilesToHighlight;
         } // end if highlighting tiles
-      } // end if grid painter brush
+       } // end if grid painter brush
 
       //if painter tool type is the clickAndDrag painter
       else if (clickAndDrag) {
@@ -2605,7 +3176,6 @@ function onDocumentMouseMove(event) {
         //just a normal highlighting
         highlightTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
       }
-
     }
   }
 } //end onDocumentMouseMove
@@ -2619,22 +3189,17 @@ function onDocumentMouseDown(event) {
     if (clearToChangeLandType) {
       event.preventDefault();
     }
-
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
 
     raycaster.setFromCamera(mouse, camera);
 
     var intersects = raycaster.intersectObjects(scene.children);
-
     if (event.which == 1 && intersects.length > 0 && clearToChangeLandType) {
 
       if (!isShiftDown) {
-
         if (!modalUp && (!painterTool.hover || mapIsHighlighted)) {
-
-          if (painterTool.status > 0 && !mapIsHighlighted) {
-
-            //take care of grid painting
+          if (painterTool.status > 0) { //CHANGE
+             //take care of grid painting
             //if the painter is not active, set to active
             if (painterTool.status == 1) {
               //start grid painting option
@@ -2670,14 +3235,24 @@ function onDocumentMouseDown(event) {
                 insertChange();
                 //reset highlighting, computationally intensive
                 //  but a working solution
-                refreshBoard();
-
+                if(!mapIsHighlighted)
+                {
+                  refreshBoard();
+                }
+                else
+                {
+                  //if map is highlighted, make sure that the highlighted tiles (especially the four corners)
+                  //turn back to their intended color
+                  for(var i=0; i<changedTiles.length; i++)
+                  {
+                    meshMaterials[changedTiles[i]-1].emissive.setHex(0x000000);
+                  } //end for
+                } //end if-else
                 //reset painterTooling status as not active
                 painterTool.status = 1;
               } //end if
             } //end if active painter status
           } else {
-
             //Zoom in when z and 1 keys are pressed and a tile is clicked -- also not multiAssign mode
             if (zIsDown && oneIsDown && !zoomedIn && !multiplayerAssigningModeOn) {
               switchToZoomView(getTileID(intersects[0].point.x, -intersects[0].point.z));
@@ -2727,23 +3302,6 @@ function onDocumentMouseUp(event) {
   if (!isSimRunning() || isSimRunning && !event.isTrusted) {
     //Turn off click and drag functionality
     clickAndDrag = false;
-
-    // check to see if one of the physical features maps is highlighted
-    // levels maps need to be checked too
-    // if so, we'll change the tiles over to their appropriate color levels
-        // if (mapIsHighlighted && currentHighlightType > 0 && currentHighlightType < 4) {
-        //
-        //   Totals = new Results(boardData[currentBoard]);
-        //   Totals.update();
-        //
-        //   // update each tile on the board with its corresponding color
-        //   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-        //
-        //     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
-        //       meshMaterials[i].map = highlightArray[getHighlightColor(currentHighlightTypeString, i)];
-        //     }
-        //   } //end for
-        // }
   }
 } //end onDocumentMouseUp
 
@@ -2989,7 +3547,6 @@ function painterSelect(brushNumberValue) {
   var selectedElement = document.getElementsByClassName('painterIcon iconSelected');
   selectedElement[0].className = "painterIcon icon";
   painterTool.hover = false;
-
   //if the brush is a normal cell paint
   if (brushNumberValue == 1) {
     if (curTracking) {
@@ -3012,6 +3569,28 @@ function painterSelect(brushNumberValue) {
     document.getElementById('gridPaint').className = "painterIcon iconSelected";
   } //end else/if group
 } //end painterSelect()
+
+//pastes the landuse and precipitation of a certain year to another - related to the copyYear function
+
+function pasteYear()
+{
+  document.getElementById("yearPasteButton").classList.toggle("show");
+  var yearToPasteIn = document.getElementById("yearToPaste").value;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++)
+    {
+      boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearCopyPaste];
+    } //end for loop
+    //copy the precipitation
+    boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
+    boardData[currentBoard].updateBoard();
+    refreshBoard();
+    alert("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
+    document.getElementById("yearToCopy").value = 0;
+    document.getElementById("yearToPaste").value = 0;
+    document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
+    document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'block';
+    document.getElementById("yearPasteButton").style.display = "none";
+} //end pasteYear
 
 //Pauses the sim (and related times)
 function pauseSim() {
@@ -3205,7 +3784,15 @@ function randomizeBoard() {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
       if (boardData[currentBoard].map[i].landType[currentYear] != LandUseType.none) {
-
+        //wetlands are restricted within flat lands, i.e 0-2% only
+        if((Number(boardData[currentBoard].map[i].topography) >= 2))
+        {
+          randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15];
+        }
+        else
+        {
+          randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+        }
         undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         changeLandTypeTile(i);
@@ -3297,7 +3884,7 @@ function resetOptions() {
   toggleVisibility();
   // remove Esc key event listener
   document.removeEventListener('keyup', optionsEsc);
-  window.frames[4].document.removeEventListener('keyup', optionsEsc);
+  window.frames[6].document.removeEventListener('keyup', optionsEsc);
   // removeEvent(document, 'keyup', optionsEsc);
   // removeEvent(window.frames[4].document, 'keyup', optionsEsc);
 } //end resetOptions
@@ -3305,30 +3892,46 @@ function resetOptions() {
 //This function resetoptionspage by untoggling all the elements in the page
 function resetOptionsPage() {
   //This sets the parameter div string to an empty string
-  document.getElementById('parameters').innerHTML = "";
+  document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
+                                                    "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
   optionsString = "";
   //Save ad randomize to make sure that the mao behind the options page is being refreshed when the options are reset
   saveAndRandomize();
   //Iterates through all the paints (Land uses) and untoggles them
-  if (window.frames[4].document.getElementById("paint1")) {
+  if (window.frames[6].document.getElementById("paint1")) {
     for (var i = 1; i < 16; i++) {
-      window.frames[4].document.getElementById("paint" + i).checked = false;
+      window.frames[6].document.getElementById("paint" + i).checked = false;
     }
   }
   //iterates through the toggled hover elements and untoggles them
-  if (window.frames[4].document.getElementById("hover1")) {
+  if (window.frames[6].document.getElementById("hover1")) {
     for (var i = 1; i < 9; i++) {
-      window.frames[4].document.getElementById("hover" + i).checked = false;
+      window.frames[6].document.getElementById("hover" + i).checked = false;
+    }
+  }
+  // untoggle progress bars
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+  if (window.frames[6].document.getElementById("gameWildlifeProgressBar")) {
+    for (var i = 0; i < progressbarIds.length; i++) {
+      if(i < 7 || i == 16)
+        window.frames[6].document.getElementById(progressbarIds[i]).checked = false;
+      else{
+        window.frames[6].document.getElementById(progressbarIds[i]).checked = true;
+      }
     }
   }
   //Untoggles all the other elements
-  if (window.frames[4].document.getElementById("year0") &&
-    window.frames[4].document.getElementById("precip") &&
-    window.frames[4].document.getElementById("statFrame")) {
+  if (window.frames[6].document.getElementById("year0") &&
+    window.frames[6].document.getElementById("progressbars") &&
+    window.frames[6].document.getElementById("precip") &&
+    window.frames[6].document.getElementById("statFrame")) {
 
-    window.frames[4].document.getElementById("year0").checked = false;
-    window.frames[4].document.getElementById("precip").checked = false;
-    window.frames[4].document.getElementById("statFrame").checked = false;
+    window.frames[6].document.getElementById("year0").checked = false;
+    window.frames[6].document.getElementById("precip").checked = false;
+    window.frames[6].document.getElementById("statFrame").checked = false;
+    window.frames[6].document.getElementById("allProgressbars").checked = false;
   }
 }
 
@@ -3480,7 +4083,7 @@ function resultsEnd() {
   //reopen elements that were previously open
   if (leftToolConsoleWasOpen) roll(1);
   if (rightPopupWasOpen) togglePopupDisplay();
-
+  if (backgroundInfoBoxWasOpen) toggleBackgroundInfoDisplay();
   //if highlighted map legend was previously open, redisplay
   if (currentHighlightType > 0) {
     showLevelDetails(currentHighlightType);
@@ -3548,12 +4151,21 @@ function resultsStart() {
       togglePopupDisplay();
       rightPopupWasOpen = true;
     }
+    backgroundInfoBoxWasOpen = false;
+    if(document.getElementById("backgroundInfoBox").className == "backgroundInfoBox"){
+      toggleBackgroundInfoDisplay();
+      backgroundInfoBoxWasOpen = true;
+    }
 
     //prevent background land changes and so forth
     modalUp = true;
 
     //functions that update results and display them appropriately
+    /*
+    Since we recalculate the results whenever tile of land use type is changed,
+    and we could always get the up-to-date result, so it's unnecessary to calculate result again here.
     calculateResults();
+    */
     displayResults();
     animateResults();
     //Event Listener for closing reslts tab
@@ -4155,11 +4767,26 @@ function startOptions() {
     document.getElementById('options').contentWindow.getCurrentOptionsState();
     // add Esc key event listener
     document.addEventListener('keyup', optionsEsc);
-    window.frames[4].document.addEventListener('keyup', optionsEsc);
+    window.frames[6].document.addEventListener('keyup', optionsEsc);
     // addEvent(document, 'keyup', optionsEsc);
     // addEvent(window.frames[4].document, 'keyup', optionsEsc);
+
+    // hide the hotkey table when we click on 'Options' button
+    var tableInOption = window.frames[6].document.getElementById('hotkeyAggregateTool');
+    if(tableInOption != null && tableInOption.style.display != 'none'){
+      tableInOption.style.display = 'none';
+      window.frames[6].document.getElementById('hotkeySets').innerHTML = '';
+    }
+
+    // hide the progressbar min/max setup table when we click on 'Options' button
+    tableInOption = window.frames[6].document.getElementById('progressBarAggregateTool');
+    if(tableInOption != null && tableInOption.style.display != 'none'){
+      tableInOption.style.display = 'none';
+      window.frames[6].document.getElementById('progressBarSets').innerHTML = '';
+    }
   }
 } // end startOptions
+
 
 // startPrintOptions displays the printOptions page
 function startPrintOptions() {
@@ -4283,6 +4910,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('calendarImg').className = "imgSelected";
       document.getElementById('yearsTab').style.display = "block";
+      yearCopyPasteInit();
       updateIndexPopup('The <span style="color:orange;">Years Tab</span> allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
       break;
     case 7:
@@ -4326,7 +4954,7 @@ function switchYearTab(yearNumberToChangeTo) {
   //then toggle on the selected year
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
   document.getElementById(yearIdString).className = "icon yearSelected";
-
+  refreshProgressBar(currentYear);
   // store last users action ( print function )
   if (!modalUp) {
     storeCurrentCameraSession(3, yearNumberToChangeTo);
@@ -4483,12 +5111,28 @@ function toggleVisibility() {
   //document.getElementById('playerAddButton').style.display = "none";
   //currentPlayer=1;
 
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                        "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
+
   //reset default on items
   if (!multiplayerAssigningModeOn) {
     for (var i = 1; i <= 15; i++) {
       var string = "paint" + i;
       document.getElementById(string).style.display = "inline-block";
     }
+
+    document.getElementById('progressBarContainer').style.display = "block";
+
+    for(var i = 0; i < progressbarIds.length; i++){
+      // if(i < 7 || i == 16)
+        document.getElementById(progressbarIds[i]).style.display = "block";
+      // else{
+      //   window.frames[6].document.getElementById(progressbarIds[i]).checked = true;
+      // }
+
+    }
+
   }
 
   document.getElementById('year1Button').style.display = "block";
@@ -4499,7 +5143,6 @@ function toggleVisibility() {
   document.getElementById('year3PrecipContainer').style.display = 'block';
   document.getElementById('resultsButton').style.display = 'block';
 
-
   //reset precip
   immutablePrecip = false;
 
@@ -4507,12 +5150,12 @@ function toggleVisibility() {
   // abscond them from the index.html page parameters div
   //    if(!multiplayerAssigningModeOn){
   var strRawContents = document.getElementById('parameters').innerHTML;
-
   //split based on escape chars
   while (strRawContents.indexOf("\r") >= 0) {
     strRawContents = strRawContents.replace("\r", "")
   }
   var arrLines = strRawContents.split("\n");
+
 
   //for each line of the parameters div, as each keyword has its own line
   for (var i = 0; i < arrLines.length; i++) {
@@ -4531,13 +5174,20 @@ function toggleVisibility() {
         case "multiAssign":
           document.getElementById('playerAddButton').style.display = "inline-block";
           break;
+        case "allProgressbars":
+          document.getElementById('progressBarContainer').style.display = "none";
+          break;
+
         default:
           if (arrLines[i].slice(0, 5) == 'paint') {
             document.getElementById(arrLines[i]).style.display = "none";
           }
           break;
       } // end switch
-    } // end if
+    if(progressbarIds.indexOf(arrLines[i]) != -1){
+      document.getElementById(arrLines[i]).style.display = "none";
+    }
+   } // end if
   } //end for
 
 
@@ -4576,6 +5226,7 @@ function toggleVisibility() {
       document.getElementById(elementIdString).innerHTML = string;
     } else {
       document.getElementById(elementIdString).options[boardData[currentBoard].precipitationIndex[y]].selected = true;
+
     }
   }
 
@@ -4618,85 +5269,67 @@ function transitionToYear(year) {
     } // end for
   } // end if
 
-//only after year 2 is deleted - special case; comes from deleteYearAndTransition
-//the board is not refreshed or updated here, instead, for this case it is done in deleteYearAndTransition
+  //only after year 2 is deleted - special case; comes from deleteYearAndTransition
+  //the board is not refreshed or updated here, instead, for this case it is done in deleteYearAndTransition
   if (year == boardData[currentBoard].calculatedToYear && !addingYearFromFile && year2to3) {
     boardData[currentBoard].calculatedToYear = year;
-    specialCase =1;
+    specialCase = 1;
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
-      boardData[currentBoard].map[i].landType[year-1] = boardData[currentBoard].map[i].landType[year];
+      boardData[currentBoard].map[i].landType[year - 1] = boardData[currentBoard].map[i].landType[year];
     } // end for
     boardData[currentBoard].updateBoard();
     refreshBoard();
     //now make the landtype of the one deleted to 1 - in this case, landtype[3] = 1
-    for (var i = 0; i < boardData[currentBoard].map.length; i++)
-    {
-      if(boardData[currentBoard].map[i].landType[year] != 0)
-      {
-        boardData[currentBoard].map[i].landType[year] =1;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      if (boardData[currentBoard].map[i].landType[year] != 0) {
+        boardData[currentBoard].map[i].landType[year] = 1;
+      } else {
+        boardData[currentBoard].map[i].landType[year] = 0;
       }
-      else
-      {
-        boardData[currentBoard].map[i].landType[year] =0;
-      }
-      boardData[currentBoard].calculatedYear =2;
+      boardData[currentBoard].calculatedYear = 2;
     } // end for
   } // end if
 
   //only for year subtraction - comes from deleteYearAndTransition
-  if(year < boardData[currentBoard].calculatedToYear && !addingYearFromFile && g_isDeleted)
-  {
-    boardData[currentBoard].calculatedToYear  = year;
-    for (var i = 0; i < boardData[currentBoard].map.length; i++)
-    {
-      boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year+0];
+  if (year < boardData[currentBoard].calculatedToYear && !addingYearFromFile && g_isDeleted) {
+    boardData[currentBoard].calculatedToYear = year;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year + 0];
     } //end for
     //now make the landtype of the one deleted to 1
-    for (var i = 0; i < boardData[currentBoard].map.length; i++)
-    {
-      if(boardData[currentBoard].map[i].landType[year+1] != 0)
-      {
-        boardData[currentBoard].map[i].landType[year+1] =1;
-      }
-      else
-      {
-        boardData[currentBoard].map[i].landType[year+1] =0;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      if (boardData[currentBoard].map[i].landType[year + 1] != 0) {
+        boardData[currentBoard].map[i].landType[year + 1] = 1;
+      } else {
+        boardData[currentBoard].map[i].landType[year + 1] = 0;
       }
     } // end for
   } //end if
   //this is another special case, where year 1 can be deleted if at least any other year is present.
-  if(year <= boardData[currentBoard].calculatedToYear && !addingYearFromFile && g_year1delete)
-   {
-     boardData[currentBoard].calculatedToYear  = year;
-     specialCase = 1;
-     for (var i = 0; i < boardData[currentBoard].map.length; i++)
-     {
-       boardData[currentBoard].map[i].landType[year-1] = boardData[currentBoard].map[i].landType[year];
-     } //end for
-     boardData[currentBoard].updateBoard();
-     refreshBoard();
-     //if year 2 was the only other year, then make year 2 as default
-     //otherwise, run the other special case from here on
-     if(maxYear == 2)
-     {
-       for (var i = 0; i < boardData[currentBoard].map.length; i++)
-       {
-         if(boardData[currentBoard].map[i].landType[year] != 0)
-         {
-           boardData[currentBoard].map[i].landType[year] =1;
-         }
-         else
-         {
-           boardData[currentBoard].map[i].landType[year] =0;
-         }
-       } // end for
-     } // end if
-   } //end if
-
-  if(addingYearFromFile==true) {
+  if (year <= boardData[currentBoard].calculatedToYear && !addingYearFromFile && g_year1delete) {
     boardData[currentBoard].calculatedToYear = year;
-    for (var i = 0; i < boardData[currentBoard].map.length; i++)
-    {
+    specialCase = 1;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+      boardData[currentBoard].map[i].landType[year - 1] = boardData[currentBoard].map[i].landType[year];
+    } //end for
+    boardData[currentBoard].updateBoard();
+    refreshBoard();
+    //if year 2 was the only other year, then make year 2 as default
+    //otherwise, run the other special case from here on
+    if (maxYear == 2) {
+      for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+        if (boardData[currentBoard].map[i].landType[year] != 0) {
+          boardData[currentBoard].map[i].landType[year] = 1;
+        } else {
+          boardData[currentBoard].map[i].landType[year] = 0;
+        }
+      } // end for
+    } // end if
+  } //end if
+
+  if (addingYearFromFile == true) {
+    boardData[currentBoard].calculatedToYear = year;
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year];
     } // end for
   } // end if
@@ -4704,12 +5337,11 @@ function transitionToYear(year) {
   year2to3 = false;
   g_isDeleted = false;
   //update here for regular cases;
-  if(!specialCase)
-  {
+  if (!specialCase) {
     boardData[currentBoard].updateBoard();
     refreshBoard();
   }
-  specialCase =0;
+  specialCase = 0;
 } //end transitionToYear
 
 //Clumps and undo's multiple tiles
@@ -4751,12 +5383,14 @@ function updateKeys() {
   for (var i = 0; i < hotkeyArr.length; i++) {
     for (var j = 0; j < 2; j++) {
       var temp = j + 1;
-      if (hotkeyArr[i][j] == null) {
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).value = "";
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).placeholder = "N/A";
-      } else {
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).value = "";
-        window.frames[4].document.getElementById("hki" + i + "e" + temp).placeholder = String.fromCharCode(hotkeyArr[i][j]);
+      if(window.frames[6].document.getElementById('hotkeyAggregateTool').style.display == 'block'){
+        if (hotkeyArr[i][j] == null) {
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).value = "";
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).placeholder = "N/A";
+        } else {
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).value = "";
+          window.frames[6].document.getElementById("hki" + i + "e" + temp).placeholder = String.fromCharCode(hotkeyArr[i][j]);
+        }
       }
     }
   }
@@ -4791,6 +5425,9 @@ function updatePrecip(year) {
 
   boardData[currentBoard].updateBoard();
 
+  // update the result whenever precipitation is changed.
+  calculateResults();
+  refreshProgressBar(currentYear);
 } //updatePrecip
 
 //updatePopup appends text to the popup dialogue
@@ -4894,10 +5531,10 @@ function uploadClicked(files) {
   else if (getExtension(files[0].name) == 'csv')
     uploadCSV(reader);
 
-  document.getElementById("year0Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[0]);
-  document.getElementById("year1Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[1]);
-  document.getElementById("year2Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[2]);
-  document.getElementById("year3Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[3]);
+  // document.getElementById("year0Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[0]);
+  // document.getElementById("year1Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[1]);
+  // document.getElementById("year2Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[2]);
+  // document.getElementById("year3Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[3]);
 
   closeUploadDownloadFrame();
   //reset keylistening frame (ie give up focus on iframe)
@@ -5063,42 +5700,49 @@ function uploadCSV(reader) {
     var headers = allTextLines[0].split(',');
     var lines = [];
     var data;
-
+    var yearsOwned = 1;
+    // console.log('reader.result = ', reader.result);
     for (var i = 1; i < allTextLines.length; i++) {
+      // If download the file by openWith option, and then upload the file into PEWI, you can noticed that there is one additional line, and errors occur
+      // because of this addition line. Since we know that there should be 829 lines in total, thus we deal with only the first 829 lines.
+      if(i > 828) continue;
+
       data = allTextLines[i].split(',');
-      var headlength = headers.length - 1;
+      var headlength = headers.length;
       if (data.length == headlength) {
         var tarr = [];
         for (var j = 0; j < headers.length; j++) {
           tarr.push(data[j]);
+          if (j == 28) {
+            yearsOwned = data[j];
+          }
         }
         lines.push(tarr);
       } // end if
     } // end for
     //XXX lines is empty
-
     // window.top.document.getElementById('parameters').innerHTML;
-    var multipleYearFlag = 1;
+    // var yearsOwned = 1;
     // This for loop iterates through the uploaded csv data file
-    // and checks if year 2 and 3 are present in the file
-    for (var i = 0; i < lines.length; i++) {
-      if ((lines[i][26] != lines[i][27])) {
-        if (lines[i][26] != 1 && lines[i][26] != 0)
-          multipleYearFlag = 2;
-        if (lines[i][27] != 1 && lines[i][27] != 0)
-          multipleYearFlag = 3;
-        break;
-      }
-    }
+    // for (var i = 0; i < lines.length; i++) {
+    //
+    //     if (lines[i][26] != 1 && lines[i][26] != 0)
+    //       yearsOwned = 2;
+    //     if (lines[i][27] != 1 && lines[i][27] != 0){
+    //       yearsOwned = 3;
+    //       break;
+    //     }
 
-    if (multipleYearFlag == 2) {
+    // }
+
+    if (yearsOwned == 2) {
       addingYearFromFile = true;
       addYearAndTransition();
       boardData[currentBoard].calculatedToYear = 2;
       addingYearFromFile = false;
     }
 
-    if (multipleYearFlag == 3) {
+    if (yearsOwned == 3) {
       addingYearFromFile = true;
       addYearAndTransition();
       addYearAndTransition();
@@ -5109,26 +5753,31 @@ function uploadCSV(reader) {
     //Clears data so the river isnt redrawn when new files are uploaded
     initData = [];
 
+    //updating the precip levels from the values in the uploaded file
+    boardData[currentBoard].precipitation[0] = data[29];
+    boardData[currentBoard].precipitation[1] = data[30];
+    boardData[currentBoard].precipitation[2] = data[31];
+    boardData[currentBoard].precipitation[3] = data[32];
+
+    boardData[currentBoard].precipitationIndex[0] = getPrecipOptionsValue(data[29]);
+    boardData[currentBoard].precipitationIndex[1] = getPrecipOptionsValue(data[30]);
+    boardData[currentBoard].precipitationIndex[2] = getPrecipOptionsValue(data[31]);
+    boardData[currentBoard].precipitationIndex[3] = getPrecipOptionsValue(data[32]);
+
     //load options from the csv
     //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes
     //the options page and shows the page is refreshed on the screen
-    if (headers.length == 32) {
+    if (headers.length == 33) {
       resetOptionsPage();
       toggleVisibility();
     }
     //else if the file has options, then it takes the options and places it in the parameter div of the html and reloads it.
     else {
-      var xys = headers[32].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
+      var xys = headers[33].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
       window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
       //make sure the locked land uses aren't seen on the side tool tab or on the map
       toggleVisibility();
     }
-
-    //updating the precip levels from the values in the uploaded file
-    boardData[currentBoard].precipitation[0] = data[28];
-    boardData[currentBoard].precipitation[1] = data[29];
-    boardData[currentBoard].precipitation[2] = data[30];
-    boardData[currentBoard].precipitation[3] = data[31];
 
     transitionToYear(1); //transition to year one
     switchYearTab(1);
@@ -5152,8 +5801,11 @@ function writeFileToDownloadString(mapPlayerNumber) {
     //To save options in the file, changing the options string so that it doesn't have \n because csv file will read it differntly
     var tempOptions = optionsString.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
     optionsString = tempOptions;
-    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3," + optionsString + ",\n"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
-
+    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
+    if (optionsString !== "") {
+      string += ",OptionsSelected";
+    }
+    string += "\r\n";
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       if (boardData[currentBoard].map[i].landType[1] != mapPlayerNumber && multiplayerAssigningModeOn) {
@@ -5230,13 +5882,14 @@ function writeFileToDownloadString(mapPlayerNumber) {
           boardData[currentBoard].map[i].landType[2] + "," +
           boardData[currentBoard].map[i].landType[3] + ",";
       }
-
+      string += boardData[currentBoard].calculatedToYear + ",";
       string += boardData[currentBoard].precipitation[0] + "," +
         boardData[currentBoard].precipitation[1] + "," +
         boardData[currentBoard].precipitation[2] + "," +
-        boardData[currentBoard].precipitation[3] + "," +
-        optionsString; //optionsString added here
-
+        boardData[currentBoard].precipitation[3];
+      if (optionsString !== "") {
+        string = string + "," + optionsString; //optionsString added here if not empty
+      }
       if (i < boardData[currentBoard].map.length - 1) {
         string = string + '\r\n';
       }
@@ -5251,8 +5904,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
 
 //helper for deleteYearAndTransition.
 //This method deletes year 2 and makes year 3 as year 2 and then sets year 3 as default.
-function year2and3Delete()
-{
+function year2and3Delete() {
   g_isDeleted = true;
   year2to3 = true;
   //when year 2 is deleted, we transition to 3 so that year 3 = year 2 and highlight the year 2.
@@ -5266,6 +5918,33 @@ function year2and3Delete()
   alert("Year 3 is now Year 2!");
 }
 
+
+function yearCopyPasteInit()
+{
+  document.getElementById("yearToCopy").value = 0;
+  document.getElementById("yearToPaste").value = 0;
+
+  for(var i=1; i <=3; i++)
+  {
+    document.getElementById("yearToCopy").options[i].style.display = 'none';
+    document.getElementById("yearPasteButton").style.display = 'none';
+    document.getElementById("yearToPaste").options[i].style.display = 'none';
+  }
+  for(var i=1; i <=boardData[currentBoard].calculatedToYear; i++)
+  {
+    if(boardData[currentBoard].calculatedToYear == 1)
+    {
+      break;
+    }
+    else
+    {
+    document.getElementById("yearToCopy").options[i].style.display = 'block';
+    document.getElementById("yearToPaste").options[i].style.display = 'block';
+    }
+  }//end for
+
+}//end yearCopyPasteInit
+
 //update sthe precipitation boxes in the precip tab - called from switchConsoleTab
 function yearPrecipManager()
 {
@@ -5277,6 +5956,7 @@ function yearPrecipManager()
     document.getElementById('year' + i + 'PrecipContainer').style.display = "block";
   }
 }
+
 
 
 // execute when Esc is pressed while on the result page
