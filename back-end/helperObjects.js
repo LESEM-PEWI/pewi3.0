@@ -1509,7 +1509,7 @@ function Printer() {
             previousY = y;
             addImage(imageSrc[property], 'JPEG', x + 155, y, barChartWidth, barChartHeight);
             //adding the text and description
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i <= parent.boardData[parent.currentBoard].calculatedToYear; i++)
               addText(1, parent.boardData[parent.currentBoard].precipitation[i] + " inches " + parent.data[i].adj, x + 20, previousY + 20*(i+1), font.font);
             // update y
             updateY(lineHeight*2+padding);

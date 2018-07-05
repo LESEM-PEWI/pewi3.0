@@ -3680,7 +3680,7 @@ function randomizeBoard() {
 //The argument bypassFromKeyEvent helps the t key and r key switch up the board when pressed
 //  to change topography and random tiles, but keep the board highlighted
 function refreshBoard(bypassFromKeyEvent) {
-
+  
   if (mesh != null) {
     scene.remove(mesh);
   }
