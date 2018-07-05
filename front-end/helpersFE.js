@@ -614,7 +614,7 @@ function changeLandTypeTileNitrate(){
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
     //Hence the for loop
-    for(var n = 0; n<boardData[currentBoard].map.length; n++){
+    for(var n = 0, nl=boardData[currentBoard].map.length; n<nl; n++){
       //if land type of tile is nonzero
       if (boardData[currentBoard].map[n].landType[currentYear] != 0) {
         //change the materials of the faces in the meshMaterials array and update the boardData
