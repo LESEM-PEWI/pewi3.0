@@ -2807,6 +2807,10 @@ function multiplayerAggregateOverlayMapping(file) {
       overlayBoard(boardData[currentBoard]);
       //now switch to the current board so that all data is up to date
       switchBoards(boardData[currentBoard]);
+      
+      if(!isAggregateConflictDetected){
+        mergedFiles.push(file.name);
+      }
     }
     //clear initData
     initData = [];
@@ -2838,6 +2842,7 @@ function multiplayerExit() {
   multiplayerAssigningModeOn = false;
 }
 
+/*
 //multiUpload directs functions for multiplayer file upload
 function multiplayerFileUpload(fileUploadEvent) {
   //if this is the first time, call base prep, otherwise, add map on top
@@ -2845,13 +2850,47 @@ function multiplayerFileUpload(fileUploadEvent) {
   // return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
   //   multiplayerAggregateOverlayMapping(fileUploadEvent) :
   //   multiplayerAggregateBaseMapping(fileUploadEvent);
-
+  console.log("Processing ", fileUploadEvent.files[0].name);
   multiplayerAggregateBaseMapping(fileUploadEvent.files[0]);
+
+  // If files conflict detected, we abort the aggretgation process, since we need to get the user action,
+  // once we get the user action, we can continue the aggregation action
   for (var i = 1; i < fileUploadEvent.files.length; i++) {
+    console.log("Processing ", fileUploadEvent.files[i].name);
+
     multiplayerAggregateOverlayMapping(fileUploadEvent.files[i]);
+
   }
 
 } //end multiUpload
+*/
+
+//multiUpload directs functions for multiplayer file upload
+function multiplayerFileUpload(fileUploadEvent, fileIndex) {
+  //if this is the first time, call base prep, otherwise, add map on top
+
+  // return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
+  //   multiplayerAggregateOverlayMapping(fileUploadEvent) :
+  //   multiplayerAggregateBaseMapping(fileUploadEvent);
+  console.log("Processing ", fileUploadEvent.files[0].name);
+  if(fileIndex == 0){
+    multiplayerAggregateBaseMapping(fileUploadEvent.files[0]);
+    mergedFiles.push(fileUploadEvent.files[0].name);
+  }
+
+  // If file aggreagate conflict detected, we abort the aggretgation process, since we need to get the user action,
+  // once we get the user action, we can continue the aggregation action
+  fileIndex = fileIndex == 0 ? 1 : fileIndex;
+  for (;fileIndex < fileUploadEvent.files.length; fileIndex++) {
+    console.log("Processing ", fileUploadEvent.files[fileIndex].name);
+
+    if(!isAggregateConflictDetected) {
+      multiplayerAggregateOverlayMapping(fileUploadEvent.files[fileIndex]);
+    }
+  }
+
+} //end multiUpload
+
 
 //multiplayerMode hides all unnecessary options from screen
 function multiplayerMode() {

@@ -93,8 +93,8 @@ Cleaned and Prepared - August 2016
 
     </div>
     <div id="optionsBox">
-      <div id="mergedMapButton"></div>
-      <div id="currentMapButton"></div>
+      <div id="mergedMapButton" class="conflictButton">Merged map</div>
+      <div id="currentMapButton" class="conflictButton">Current map</div>
     </div>
   </div>
 
@@ -265,7 +265,7 @@ Cleaned and Prepared - August 2016
           // list all the files selected
           makeFileList();
           // do uploading and process the files
-          window.top.multiplayerFileUpload(input);
+          window.top.multiplayerFileUpload(input, 0);
           //change what is displayed in the info bar
           updateInfo(input.files.length);
         } else {

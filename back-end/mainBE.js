@@ -1,5 +1,9 @@
 /*global initData*/
 /*global precip*/
+var aggregateChoice;
+var isAggregateChoiceMade = false;
+var isAggregateConflictDetected = false;
+var mergedFiles = [];
 
 //calculate() function brings the results up to date
 //  this is currently set to calculate up to year 3 for testing purposes
@@ -158,17 +162,20 @@ function overlayBoard(board) {
   console.log("initData.length " + initData.length);
   console.log(initData);
   console.log(board);
+
+  var utilityWindow = document.getElementById("startUpFrame").contentWindow.document.getElementById("startupDialogueOverlay").contentWindow;
   for (var i = 0; i < initData.length; i++) {
     //get the tile set up
     var tile = new Tile(initData[i], board);
 
     if(tile.baseLandUseType == 1 && board.map[tile.id - 1].baseLandUseType == 1){
-      alert("Conflict!!!");
-      return;
+      utilityWindow.document.getElementById("modalConflictFrame").style.display = "block";
+      isAggregateConflictDetected = true;
+      break;
     }
 
     //if tile has meaningful data...   && board.map[tile.id - 1].baseLandUseType != -1
-    if (tile.baseLandUseType == 1) {
+    else if (tile.baseLandUseType == 1 && board.map[tile.id - 1].baseLandUseType == -1) {
       //then overwrite the tile in old board with new board stuffaroo
       board.map[tile.id - 1] = tile;
     }
