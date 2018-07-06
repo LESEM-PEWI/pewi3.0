@@ -3182,7 +3182,7 @@ function Tile(tileArray, board) {
       this.results[year].nativeVegetationHDFlag = 0;
     } //end elseif for native vegatation and other high diversity land uses
 
-    //flag native vegatation and comparatively high diversity or low input land uses
+    //flag native vegatation and comparatively high diversity or low input land uses //// QUESTION:
     if(!noTill && !coverCrop && !gWaterway && !contouringOrTerracing)
     {
       //if all the four of the best practices are on, corn and soybean aren't going to be counted
@@ -3232,7 +3232,7 @@ function Tile(tileArray, board) {
       this.results[year].grasslandFlag = 0;
     } //end elseif for grassland category
 
-    //stream buffer flag
+    //stream buffer flag //// QUESTION:
     if (this.streamNetwork == 1) {
       //if tile is a part of the stream network
       if(streamBuffer)
@@ -3246,7 +3246,7 @@ function Tile(tileArray, board) {
           {
             this.results[year].streamBufferFlag = 1;
           }
-          else
+        else
           {
             this.results[year].streamBufferFlag = 0;
           }
@@ -3282,8 +3282,16 @@ function Tile(tileArray, board) {
   //the tile-level method for carbon sequestration calculations
   this.carbonSequestration = function(year) {
     //Array of possible values of carbon sequestration per unit area sorted by landUseType
-    var carbonMultiplier = [0, 0, 161.87, 0, 161.87, 202.34, 117.36, 117.36, 117.36, 433.01, 1485.20, 1485.20, 485.62, 1897.98, 1234.29, 0];
 
+    //for Best Management Practices, if cover crop is turned on
+    if(coverCrop)
+    {
+      var carbonMultiplier = [0, 0, 161.87, 0, 161.87, 202.34, 117.36, 117.36, 117.36, 433.01, 1485.20, 1485.20, 485.62, 1897.98, 1234.29, 0];
+    }
+    else
+    {
+      var carbonMultiplier = [0, 0, 0, 0, 0, 202.34, 117.36, 117.36, 117.36, 433.01, 1485.20, 1485.20, 485.62, 1897.98, 1234.29, 0];
+    }
     //Retrieve value of carbon sequestion and multiply by tile area
     this.results[year].calculatedCarbonSequestration = carbonMultiplier[this.landType[year]] * this.area;
   }; //end this.carbonSequestration
