@@ -196,6 +196,7 @@ function toggleTabTitle(value) {
   }
 }
 
+
 // Show score details when hover over progress bar
 function toggleScoreDetails(factor) {
   switch (factor){

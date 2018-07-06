@@ -3183,18 +3183,38 @@ function Tile(tileArray, board) {
     } //end elseif for native vegatation and other high diversity land uses
 
     //flag native vegatation and comparatively high diversity or low input land uses
-    if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.conventionalForest ||
-      this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
-      this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.wetland ||
-      this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean ||
-      this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass ||
-      this.landType[year] == LandUseType.shortRotationWoodyBioenergy) {
-
-      this.results[year].nativeVegatationHDorLIFlag = 1;
-    } else {
-      this.results[year].nativeVegatationHDorLIFlag = 0;
-    } //end elseif for native and comparitively high diversity or low input
-
+    if(!noTill && !coverCrop && !gWaterway && !contouringOrTerracing)
+    {
+      //if all the four of the best practices are on, corn and soybean aren't going to be counted
+      if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.conventionalForest ||
+        this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
+        this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.wetland ||
+        this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass ||
+        this.landType[year] == LandUseType.shortRotationWoodyBioenergy)
+        {
+          this.results[year].nativeVegatationHDorLIFlag = 1;
+        }
+       else
+       {
+        this.results[year].nativeVegatationHDorLIFlag = 0;
+      } //end elseif for native and comparitively high diversity or low input
+    }
+    else
+    {
+      if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.conventionalForest ||
+        this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
+        this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.wetland ||
+        this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean ||
+        this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass ||
+        this.landType[year] == LandUseType.shortRotationWoodyBioenergy)
+        {
+          this.results[year].nativeVegatationHDorLIFlag = 1;
+        }
+        else
+        {
+          this.results[year].nativeVegatationHDorLIFlag = 0;
+        }
+    }
     //flag conservation forest (not entirely necessary, but we'll work with it for consistency at higher up level)
     if (this.landType[year] == LandUseType.conservationForest) {
 
@@ -3215,18 +3235,40 @@ function Tile(tileArray, board) {
     //stream buffer flag
     if (this.streamNetwork == 1) {
       //if tile is a part of the stream network
-      if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationForest ||
-        this.landType[year] == LandUseType.conservationSoybean || this.landType[year] == LandUseType.conventionalForest ||
-        this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass ||
-        this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
-        this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.shortRotationWoodyBioenergy ||
-        this.landType[year] == LandUseType.wetland) {
-
-        this.results[year].streamBufferFlag = 1;
-      } else {
-        this.results[year].streamBufferFlag = 0;
+      if(streamBuffer)
+      {
+        if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationForest ||
+          this.landType[year] == LandUseType.conservationSoybean || this.landType[year] == LandUseType.conventionalForest ||
+          this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass ||
+          this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
+          this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.shortRotationWoodyBioenergy ||
+          this.landType[year] == LandUseType.wetland)
+          {
+            this.results[year].streamBufferFlag = 1;
+          }
+          else
+          {
+            this.results[year].streamBufferFlag = 0;
+          }
       }
-    } else {
+      else
+      {
+        if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.conventionalForest ||
+            this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass ||
+            this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
+            this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.shortRotationWoodyBioenergy ||
+            this.landType[year] == LandUseType.wetland)
+            {
+            this.results[year].streamBufferFlag = 1;
+            }
+        else
+          {
+            this.results[year].streamBufferFlag = 0;
+          }
+      }
+    }
+    else
+    {
       this.results[year].streamBufferFlag = 0;
     } //end elseif for stream buffer flag
 

@@ -29,6 +29,12 @@
   var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
   "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode"];
 
+  //Variables for Best Management Practices
+  var noTill = true;
+  var coverCrop = true;
+  var gWaterway = true;
+  var streamBuffer = false;
+  var contouringOrTerracing = false;
 
   //the saveCurrentOptionsState function is called when the save/exit button is pressed
   //each of the options is evaluated and the text for the parameters div is generated
@@ -931,5 +937,75 @@
           }
         }
       }
+    }
+  }
+
+  function getTill()
+  {
+    var isChecked = document.getElementById("noTillSwitch").checked;
+
+    if(isChecked)
+    {
+      noTill = true;
+    }
+    else
+    {
+      noTill = false;
+    }
+  }
+
+  function getCoverCrop()
+  {
+    var isChecked = document.getElementById("coverCroppingSwitch").checked;
+
+    if(isChecked)
+    {
+      coverCrop = true;
+    }
+    else
+    {
+      coverCrop = false;
+    }
+  }
+
+  function getGrassedWaterWay()
+  {
+    var isChecked = document.getElementById("gWaterwaySwitch").checked;
+
+    if(isChecked)
+    {
+      gWaterway = true;
+    }
+    else
+    {
+      gWaterway = false;
+    }
+  }
+
+  function getStreamBuffer()
+  {
+    var isChecked = document.getElementById("streamBufferSwitch").checked;
+
+    if(isChecked)
+    {
+      streamBuffer = true;
+    }
+    else
+    {
+      streamBuffer = false;
+    }
+  }
+
+  function getContouringOrTerracing()
+  {
+    var isChecked = document.getElementById("contouringOrTerracingSwitch").checked;
+
+    if(isChecked)
+    {
+      contouringOrTerracing = true;
+    }
+    else
+    {
+      contouringOrTerracing = false;
     }
   }
