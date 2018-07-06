@@ -27,10 +27,10 @@
   * For more information refer to Issue 386.
   */
   function inMultiplayer(result) {
-    console.log("BEFORE CHANGES, in multiplayer mode: "+localStorage.getItem('LSinMultiplayer'));
+    // console.log("BEFORE CHANGES, in multiplayer mode: "+localStorage.getItem('LSinMultiplayer'));
     inMultiplayerMode = result;
     localStorage.setItem('LSinMultiplayer', inMultiplayerMode);
-    console.log("Currently in multiplayer mode: "+localStorage.getItem('LSinMultiplayer'));
+    // console.log("Currently in multiplayer mode: "+localStorage.getItem('LSinMultiplayer'));
   }//end of inMultiplayer()
 
   //change main pie chart from landList to Categories List

@@ -10,11 +10,13 @@ N. Hagen
 
 //######################################################################################
 //######################################################################################
-
+// For the windows.frames[] variables, they are in fact iframe elements in index.html page, to learn what index is responsible for what iframe,
+// we can type window.frames in the browser console window to find out.
 
 //Creation of LandUseType Object
 //This object serves to translate the values stored as land types into readable code
 //Use this for comparisons and assignments
+
 var LandUseType = {
 
   none: 0,
@@ -144,6 +146,7 @@ function Click(c1, c2, c3, c4, c5) {
   this.tileID = c5;
 
   var CODEX_HTML = window.frames[2];
+  // var CODEX_HTML = document.getElementById("modalCodexFrame").contentWindow;
 
   //Retrieves the function performed in accordance to the click type [As a string]
   this.getAction = function() {
@@ -685,7 +688,8 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 58:
         if (action) {
-          return window.frames[3].toggleToTab(1);
+          // window.frames[4] is the same as document.getElementById("modalResultsFrame").contentWindow,
+          return window.frames[4].toggleToTab(1);
           break;
         } else {
           return "First results tab clicked";
@@ -693,7 +697,7 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 59:
         if (action) {
-          return window.frames[3].toggleToTab(2);
+          return window.frames[4].toggleToTab(2);
           break;
         } else {
           return "Second results tab clicked";
@@ -701,8 +705,8 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 60:
         if (action) {
-          window.frames[3].scrollTo(0, 0);
-          return window.frames[3].changeLandPieBy(1);
+          window.frames[4].scrollTo(0, 0);
+          return window.frames[4].changeLandPieBy(1);
           break;
         } else {
           return "Up arrow on results pie toggled";
@@ -710,8 +714,8 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 61:
         if (action) {
-          window.frames[3].scrollTo(0, 0);
-          return window.frames[3].changeLandPieBy(-1);
+          window.frames[4].scrollTo(0, 0);
+          return window.frames[4].changeLandPieBy(-1);
           break;
         } else {
           return "Down arrow on results pie toggled";
@@ -719,13 +723,13 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 62:
         if (action) {
-          window.frames[3].scrollTo(0, 500);
-          if (window.frames[3].document.getElementById("checkboxYear1").checked) {
-            window.frames[3].document.getElementById("checkboxYear1").checked = false;
+          window.frames[4].scrollTo(0, 500);
+          if (window.frames[4].document.getElementById("checkboxYear1").checked) {
+            window.frames[4].document.getElementById("checkboxYear1").checked = false;
           } else {
-            window.frames[3].document.getElementById("checkboxYear1").checked = true;
+            window.frames[4].document.getElementById("checkboxYear1").checked = true;
           }
-          return window.frames[3].radarPlotYearToggle(1);
+          return window.frames[4].radarPlotYearToggle(1);
           break;
         } else {
           return "Radar plot year 1 toggled";
@@ -733,13 +737,13 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 63:
         if (action) {
-          if (window.frames[3].document.getElementById("checkboxYear2").checked) {
-            window.frames[3].document.getElementById("checkboxYear2").checked = false;
+          if (window.frames[4].document.getElementById("checkboxYear2").checked) {
+            window.frames[4].document.getElementById("checkboxYear2").checked = false;
           } else {
-            window.frames[3].document.getElementById("checkboxYear2").checked = true;
+            window.frames[4].document.getElementById("checkboxYear2").checked = true;
           }
-          window.frames[3].scrollTo(0, 500);
-          return window.frames[3].radarPlotYearToggle(2);
+          window.frames[4].scrollTo(0, 500);
+          return window.frames[4].radarPlotYearToggle(2);
           break;
         } else {
           return "Radar plot year 2 toggled";
@@ -747,13 +751,13 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 64:
         if (action) {
-          if (window.frames[3].document.getElementById("checkboxYear3").checked) {
-            window.frames[3].document.getElementById("checkboxYear3").checked = false;
+          if (window.frames[4].document.getElementById("checkboxYear3").checked) {
+            window.frames[4].document.getElementById("checkboxYear3").checked = false;
           } else {
-            window.frames[3].document.getElementById("checkboxYear3").checked = true;
+            window.frames[4].document.getElementById("checkboxYear3").checked = true;
           }
-          window.frames[3].scrollTo(0, 500);
-          return window.frames[3].radarPlotYearToggle(3);
+          window.frames[4].scrollTo(0, 500);
+          return window.frames[4].radarPlotYearToggle(3);
           break;
         } else {
           return "Radar plot year 3 toggled";
@@ -761,13 +765,13 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 65:
         if (action) {
-          if (window.frames[3].document.getElementById("yieldCheckboxYear1").checked) {
-            window.frames[3].document.getElementById("yieldCheckboxYear1").checked = false;
+          if (window.frames[4].document.getElementById("yieldCheckboxYear1").checked) {
+            window.frames[4].document.getElementById("yieldCheckboxYear1").checked = false;
           } else {
-            window.frames[3].document.getElementById("yieldCheckboxYear1").checked = true;
+            window.frames[4].document.getElementById("yieldCheckboxYear1").checked = true;
           }
-          window.frames[3].scrollTo(0, 1000);
-          return window.frames[3].yieldRadarPlotYearToggle(1);
+          window.frames[4].scrollTo(0, 1000);
+          return window.frames[4].yieldRadarPlotYearToggle(1);
           break;
         } else {
           return "Annual yield results year 1 toggled";
@@ -775,13 +779,13 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 66:
         if (action) {
-          if (window.frames[3].document.getElementById("yieldCheckboxYear2").checked) {
-            window.frames[3].document.getElementById("yieldCheckboxYear2").checked = false;
+          if (window.frames[4].document.getElementById("yieldCheckboxYear2").checked) {
+            window.frames[4].document.getElementById("yieldCheckboxYear2").checked = false;
           } else {
-            window.frames[3].document.getElementById("yieldCheckboxYear2").checked = true;
+            window.frames[4].document.getElementById("yieldCheckboxYear2").checked = true;
           }
-          window.frames[3].scrollTo(0, 1000);
-          return window.frames[3].yieldRadarPlotYearToggle(2);
+          window.frames[4].scrollTo(0, 1000);
+          return window.frames[4].yieldRadarPlotYearToggle(2);
           break;
         } else {
           return "Annual yield results year 2 toggled";
@@ -789,13 +793,13 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 67:
         if (action) {
-          if (window.frames[3].document.getElementById("yieldCheckboxYear3").checked) {
-            window.frames[3].document.getElementById("yieldCheckboxYear3").checked = false;
+          if (window.frames[4].document.getElementById("yieldCheckboxYear3").checked) {
+            window.frames[4].document.getElementById("yieldCheckboxYear3").checked = false;
           } else {
-            window.frames[3].document.getElementById("yieldCheckboxYear3").checked = true;
+            window.frames[4].document.getElementById("yieldCheckboxYear3").checked = true;
           }
-          window.frames[3].scrollTo(0, 1000);
-          return window.frames[3].yieldRadarPlotYearToggle(3);
+          window.frames[4].scrollTo(0, 1000);
+          return window.frames[4].yieldRadarPlotYearToggle(3);
           break;
         } else {
           return "Annual yield results year 3 toggled";
@@ -1010,22 +1014,22 @@ function Click(c1, c2, c3, c4, c5) {
           else
             return "User zoomed in/out of PEWI map";
           break;
-        //When the user scrolls in the about page
+        //When the user scrolls in the about page, which is the credits.html
         case 92:
           if(action)
             return window.frames[0].scrollTo(0,parseInt(this.tileID));
           else
             return "User scrolled in the about page";
-        //When the user scrolls in the index page
+        //When the user scrolls in the index page, which is the codex.html
         case 93:
           if(action)
-            return window.frames[2].frames[0].scrollTo(0,parseInt(this.tileID));
+            return window.frames[3].frames[0].scrollTo(0,parseInt(this.tileID));
           else
             return "User scrolled in the index page";
         //When the user scrolls in the results page
         case 94:
           if(action)
-            return window.frames[3].scrollTo(0,parseInt(this.tileID));
+            return window.frames[4].scrollTo(0,parseInt(this.tileID));
           else
             return "User scrolled in the results page";
         //When the user uses the up arrow
@@ -1244,7 +1248,8 @@ function Printer() {
     creator: 'PEWI app & jsPDF'
   });
 
-  var RESULTS_HTML = window.frames[3];
+  // var RESULTS_HTML = window.frames[4];
+  var RESULTS_HTML = document.getElementById("resultsFrame").contentWindow;
 
   // some parameters // in pt
   var
@@ -1392,7 +1397,7 @@ function Printer() {
   /**
   * This function generates and formats all the contents on the PDF and create it in the end
   *
-  * @param isDownload: 0 not downloadingm, 1: is downloading
+  * @param isDownload: 0 not downloading, 1: is downloading
   */
   this.processing = function(isDownload) {
     // var uptoYear = boardData[currentBoard].calculatedToYear;
@@ -1504,7 +1509,7 @@ function Printer() {
             previousY = y;
             addImage(imageSrc[property], 'JPEG', x + 155, y, barChartWidth, barChartHeight);
             //adding the text and description
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i <= parent.boardData[parent.currentBoard].calculatedToYear; i++)
               addText(1, parent.boardData[parent.currentBoard].precipitation[i] + " inches " + parent.data[i].adj, x + 20, previousY + 20*(i+1), font.font);
             // update y
             updateY(lineHeight*2+padding);
@@ -1526,7 +1531,9 @@ function Printer() {
       doc.save(promptFileName() + ".pdf");
     } else {
       // --user clicked preview--
-      window.frames[6].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
+      // window.frames[7].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
+      document.getElementById("printOptions").contentWindow.document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
+
       // new window
       // doc.output('dataurlnewwindow');
       // Output as Data URI on the current page

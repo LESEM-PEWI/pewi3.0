@@ -340,10 +340,10 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   */
   var multiplayerColorPack = ["#87ceee","#e6bb00","#cc6578","#127731","#c97b08","#302485"];
   var dataset;
-  console.log("Before, inMultiplayer is: "+inMultiplayer);
+  // console.log("Before, inMultiplayer is: "+inMultiplayer);
   //if in multiplayer mode, looking at different players and size of land each owns
   if(inMultiplayer === "true"){
-    console.log("inMultiplayer is: "+inMultiplayer);
+    // console.log("inMultiplayer is: "+inMultiplayer);
     var dataset = [{
       label: 'Player 1',
       count: (Math.round(Totals.landUseResults[year].conventionalCornLandUse / Totals.totalArea * 100 * 10) / 10),
@@ -372,7 +372,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   }
   //assign dataset based on whether or not categories are toggeled on, if so, then combine the dataset into one large heap
   else if (isTheChartInCategoryMode) {
-    console.log("inMultiplayer is: "+inMultiplayer);
+    // console.log("inMultiplayer is: "+inMultiplayer);
     //data groupings, dummy labels are there to increase color contrast
     dataset = [{
       label: "Annual Grain",
@@ -1324,35 +1324,54 @@ function drawPrecipitationInformationChart() {
     boardData[currentBoard].precipitation[i] = Number(boardData[currentBoard].precipitation[i]);
   }
 
-  parent.data = [{
-    label: "Year 0",
-    value: boardData[currentBoard].precipitation[0],
-    percent: 0,
-    adj: "",
-    year: 0
-  }, {
-    label: "Year 1",
-    value: boardData[currentBoard].precipitation[1],
-    percent: 0,
-    adj: "",
-    year: 1
-  }, {
-    label: "Year 2",
-    value: boardData[currentBoard].precipitation[2],
-    percent: 0,
-    adj: "",
-    year: 2
-  }, {
-    label: "Year 3",
-    value: boardData[currentBoard].precipitation[3],
-    percent: 0,
-    adj: "",
-    year: 3
-  }];
+  // parent.data = [{
+  //   label: "Year 0",
+  //   value: boardData[currentBoard].precipitation[0],
+  //   percent: 0,
+  //   adj: "",
+  //   year: 0
+  // }, {
+  //   label: "Year 1",
+  //   value: boardData[currentBoard].precipitation[1],
+  //   percent: 0,
+  //   adj: "",
+  //   year: 1
+  // }, {
+  //   label: "Year 2",
+  //   value: boardData[currentBoard].precipitation[2],
+  //   percent: 0,
+  //   adj: "",
+  //   year: 2
+  // }, {
+  //   label: "Year 3",
+  //   value: boardData[currentBoard].precipitation[3],
+  //   percent: 0,
+  //   adj: "",
+  //   year: 3
+  // }];
+  // console.log(parent.data);
+
+  /*
+     Assign precipitation value to "data" variable.
+     Previous version: assigned 4-year precipitation data anyways no matter how many years there are.
+     Current version: assigned precipitation data according to how many years we have
+     In this way, in the "Result" page, we're able to show precipitation bars according to the number of years
+  */
+  parent.data = [];
+  for(var j = 0; j <= boardData[currentBoard].calculatedToYear; j++) {
+    var precipData = {
+      label: "Year " + j,
+      value: boardData[currentBoard].precipitation[j],
+      adj: "",
+      year: j
+    };
+    parent.data.push(precipData);
+  }
+  // console.log(parent.data);
 
   //set up data percentage and adjectives
   for (var y = 0; y < data.length; y++) {
-
+  // for (var y = 0; y <= boardData[currentBoard].calculatedToYear; y++) {
     var tempPercent;
     var tempAdj;
 
@@ -1456,6 +1475,12 @@ function drawPrecipitationInformationChart() {
     .attr('class', 'precipImg');
 
   //setup precipitation bar chart
+// console.log(chart.selectAll("g").data());
+// console.log(chart.selectAll("g").data(data));
+// console.log(chart.selectAll("g").data(data).enter());
+// console.log(data);
+// console.log(parent.data);
+// console.log(data == parent.data);
 
   var bar = chart.selectAll("g")
     .data(data)
@@ -1469,7 +1494,7 @@ function drawPrecipitationInformationChart() {
     .attr("width", function(d) {
       return x(d.percent);
     })
-    .attr("height", barHeight - 4)
+    .attr("height", barHeight - boardData[currentBoard].calculatedToYear)
     .attr("class", "legendBars")
     .attr('fill', '#1f77b4')
     .on('mouseover', function(d) {
@@ -1500,6 +1525,7 @@ function drawPrecipitationInformationChart() {
     .attr("y", barHeight / 2)
     .attr("dy", ".35em")
     .text(function(d) {
+      // console.log(d);
       return d.label;
     })
     .attr('fill', 'black');
@@ -2368,16 +2394,16 @@ function generateResultsTable() {
 
 function multiplayerResults() {
   var inMultiplayer = localStorage.getItem('LSinMultiplayer');
-  console.log("In function of results.html");
+  // console.log("In function of results.html");
   if(localStorage.getItem('LSinMultiplayer') === "true"){
-    console.log("changing visibility of div tags");
-    console.log("multiplayer results is: " +inMultiplayer+", should be true");
+    // console.log("changing visibility of div tags");
+    // console.log("multiplayer results is: " +inMultiplayer+", should be true");
     document.getElementById('resultsFrame').contentWindow.document.getElementById("yearHolder").style.display = "none";
     document.getElementById('resultsFrame').contentWindow.document.getElementById("radarContainer").style.display = "none";
   }
   else{
-    console.log("multiplayer results is: " +inMultiplayer+", should be false");
-    console.log("making visibility of div tags to true");
+    // console.log("multiplayer results is: " +inMultiplayer+", should be false");
+    // console.log("making visibility of div tags to true");
     document.getElementById('resultsFrame').contentWindow.document.getElementById("yearHolder").style.display = "block";
     document.getElementById('resultsFrame').contentWindow.document.getElementById("radarContainer").style.display = "block";
   }
