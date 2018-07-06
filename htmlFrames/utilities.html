@@ -76,11 +76,7 @@ Cleaned and Prepared - August 2016
       <input id="file-upload2" type="file" />
     </div>
 
-    <div id="conflictPopupBox">
-      <div id="showUpText" class="conflictButton">There's a conflict between uploaded maps</div>
-      <div id="setPriority" class="conflictButton">Set priority map</div>
-      <div id="cancelButton" class="conflictButton">Cancel</div>
-    </div>
+
     <!--<div id="goalOptimizationButton" class="mainButton" onClick="window.open('./optimizationDesigner.html')">Optimize PEWI Goals</div>-->
 
     <div id="div-fileList">
@@ -88,6 +84,20 @@ Cleaned and Prepared - August 2016
     </div>
 
   </div>
+
+  <div id="modalConflictFrame">
+    <div id="conflictPopupBox">
+      <div id="showUpText">There's a conflict between uploaded maps</div>
+      <div id="cancelButton" class="conflictButton">Cancel</div>
+      <div id="setPriorityButton" class="conflictButton">Set priority map</div>
+
+    </div>
+    <div id="optionsBox">
+      <div id="mergedMapButton"></div>
+      <div id="currentMapButton"></div>
+    </div>
+  </div>
+
   <script>
     var input = document.getElementById("file-upload");
     var ul = document.getElementById("fileList");
