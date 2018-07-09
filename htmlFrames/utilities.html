@@ -101,6 +101,7 @@ Cleaned and Prepared - August 2016
   <script>
     var input = document.getElementById("file-upload");
     var ul = document.getElementById("fileList");
+    window.top.filesUploaded = input.files;
 
     bindSimulationFileListener();
 
@@ -132,6 +133,7 @@ Cleaned and Prepared - August 2016
       window.top.isAggregateConflictDetected = false;
       window.top.isAggregateChoiceMade = false;
       window.top.nextFileIndex = 0;
+      window.top.filesUploaded = void 0;
 
       updateInfo("Ready. Upload csv map files.");
     }
@@ -297,7 +299,7 @@ Cleaned and Prepared - August 2016
           // list all the files selected
           makeFileList();
           // do uploading and process the files
-          window.top.multiplayerFileUpload(input);
+          window.top.multiplayerFileUpload();
           //change what is displayed in the info bar
           updateInfo(input.files.length);
         } else {

@@ -5,6 +5,7 @@ var isAggregateChoiceMade = false;
 var isAggregateConflictDetected = false;
 var nextFileIndex = 0;
 var mergedFiles = [];
+var filesUploaded;
 
 //calculate() function brings the results up to date
 //  this is currently set to calculate up to year 3 for testing purposes
@@ -158,7 +159,7 @@ function display() {
 
 //overlayBoard takes two GameBoard objects, and merges tiles that exist in overlay
 // into board. The first argument is passed by reference, so nothing need be returned
-function overlayBoard(fileName, board) {
+function overlayBoard(board) {
   // for each data entry
   console.log("initData.length " + initData.length);
   console.log(initData);
@@ -176,7 +177,7 @@ function overlayBoard(fileName, board) {
         if(i != mergedFiles.length - 1)
           utilityWindow.document.getElementById("showUpText").innerHTML += ", ";
       }
-      utilityWindow.document.getElementById("showUpText").innerHTML += " are merged. Currently merging " + fileName;
+      utilityWindow.document.getElementById("showUpText").innerHTML += " are merged. Currently merging " + filesUploaded[nextFileIndex].name;
       isAggregateConflictDetected = true;
       break;
     }

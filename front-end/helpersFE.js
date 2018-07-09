@@ -2795,7 +2795,7 @@ function multiplayerAggregateBaseMapping(file) {
 
 //here we facilitate the aggregation of multiplayer boards
 function multiplayerAggregateOverlayMapping(file) {
-  
+
   var reader = new FileReader();
   reader.readAsText(file);
   reader.onload = function(e) {
@@ -2804,7 +2804,7 @@ function multiplayerAggregateOverlayMapping(file) {
     if (parseInitial(reader.result)) {
       //call *backend* function for overlaying boards, will put boardFromUpload onto
       //  the current board
-      overlayBoard(file.name, boardData[currentBoard]);
+      overlayBoard(boardData[currentBoard]);
       //now switch to the current board so that all data is up to date
       switchBoards(boardData[currentBoard]);
 
@@ -2843,56 +2843,48 @@ function multiplayerExit() {
   multiplayerAssigningModeOn = false;
 }
 
-/*
+
 //multiUpload directs functions for multiplayer file upload
-function multiplayerFileUpload(fileUploadEvent) {
+function multiplayerFileUpload() {
   //if this is the first time, call base prep, otherwise, add map on top
 
   // return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
   //   multiplayerAggregateOverlayMapping(fileUploadEvent) :
   //   multiplayerAggregateBaseMapping(fileUploadEvent);
-  console.log("Processing ", fileUploadEvent.files[0].name);
-  multiplayerAggregateBaseMapping(fileUploadEvent.files[0]);
+  console.log("Processing ", filesUploaded[0].name);
+  multiplayerAggregateBaseMapping(filesUploaded[0]);
 
   // If files conflict detected, we abort the aggretgation process, since we need to get the user action,
   // once we get the user action, we can continue the aggregation action
-  for (var i = 1; i < fileUploadEvent.files.length; i++) {
-    console.log("Processing ", fileUploadEvent.files[i].name);
+  for (var i = 1; i < filesUploaded.length; i++) {
+    console.log("Processing ", filesUploaded[i].name);
 
-    multiplayerAggregateOverlayMapping(fileUploadEvent.files[i]);
+    multiplayerAggregateOverlayMapping(filesUploaded[i]);
 
   }
 
 } //end multiUpload
-*/
+
 
 //multiUpload directs functions for multiplayer file upload
-function multiplayerFileUpload(fileUploadEvent) {
-  //if this is the first time, call base prep, otherwise, add map on top
-
-  // return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
-  //   multiplayerAggregateOverlayMapping(fileUploadEvent) :
-  //   multiplayerAggregateBaseMapping(fileUploadEvent);
-  if(nextFileIndex == 0){
-    multiplayerAggregateBaseMapping(fileUploadEvent.files[0]);
-    mergedFiles.push(fileUploadEvent.files[0].name);
-    nextFileIndex++;
-  }
-
-  // If file aggreagate conflict detected, we abort the aggretgation process, since we need to get the user action,
-  // once we get the user action, we can continue the aggregation action
-
-  for (;nextFileIndex < fileUploadEvent.files.length; nextFileIndex++) {
-
-    if(!isAggregateConflictDetected) {
-      multiplayerAggregateOverlayMapping(fileUploadEvent.files[nextFileIndex]);
-    }
-    else{
-      break;
-    }
-  }
-
-} //end multiUpload
+// async function multiplayerFileUpload() {
+//   if(nextFileIndex == 0){
+//     await multiplayerAggregateBaseMapping(filesUploaded[0]);
+//     mergedFiles.push(filesUploaded[0].name);
+//
+//     nextFileIndex++;
+//   }
+//   for (; nextFileIndex < filesUploaded.length;) {
+//
+//     if(!isAggregateConflictDetected) {
+//       await multiplayerAggregateOverlayMapping(filesUploaded[nextFileIndex]);
+//     }
+//     else{
+//       break;
+//     }
+//   }
+//
+// } //end multiUpload
 
 
 //multiplayerMode hides all unnecessary options from screen
