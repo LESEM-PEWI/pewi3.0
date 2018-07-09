@@ -2186,6 +2186,7 @@ function render(years){
   //the variable listOfProgressBars is used to hold all the IDs of the progress bars who have been selected through data point or text
   var listOfProgressBars = [];
 
+  //the variable listOfHiddenRects is used to hold all of the IDs of the rectangles that have been selected
   var listOfHiddenRects = [];
 
   //The variable textXPosChange is used to change the x position of the texts that are on the side depending how many yers will be displayed
@@ -2204,8 +2205,7 @@ function render(years){
     .attr("width",  width)
     .attr("height", height);
 
-  //This is to add the colors
-  //the appropriate color is selected by choosing a domain using the function "color(i)"
+  //The variable color is used to assign colors for year rectangles
   var color = d3.scaleOrdinal()
     .domain([0, 1, 2])
     .range(["#ffe099", "#f9ccc2" , "#fcff7f"]);
@@ -2339,11 +2339,13 @@ function render(years){
   * This function was created for Issue 357. For more information refer to Issue 357.
   */
   function placeText(dataSet, years) {
+    //the variable scoreData is used to hold all the average scores
     var scoreData = calculateAvgScores(dataSet, years);
 
     //Pattern injection
     var defs = svg.append("defs");
 
+    //the variable patter is used to create the patter to be used to fill in smallrect elements
     var pattern = defs.append("pattern")
     		.attr("id","hash4_4")
         .attr("width","8")
@@ -2357,6 +2359,7 @@ function render(years){
           .attr("fill","#0087ff" );
 
 
+    //this for loop adds the texts of data types
     for(var i = 0; i < 16; ++i){
       svg.append("text")
           .attr("x", (525 - textXPosChange))
@@ -2368,7 +2371,7 @@ function render(years){
           .attr("text-anchor", "middle")
           .style("font-size", "1.0em")
 
-      //progress bar
+      //adding small rect progress bars
       if(listOfHiddenRects.includes("#smallrect"+(i+1))){
         svg.append("rect")
             .attr("fill", "url(#hash4_4)")
@@ -2485,7 +2488,6 @@ function render(years){
       })
       .attr("id",  function (d){ var id = d.id; i++; return id; })
       .attr("class", "info")
-      .attr("z-index", 1)
       .attr("stroke", "black")
       .attr("stroke-width", 1);
 
@@ -2498,9 +2500,8 @@ function render(years){
   * This function was created for Issue 357. For more information refer to Issue 357.
   */
   function renderData(data){
+    //the variable dataSet holds the data that is passed in as parameter
     var dataSet = data;
-
-    var scoreData = calculateAvgScores(data, years);
 
     //the variable color holds the d3 color scheme.
     var color = d3.scaleOrdinal(d3.schemeCategory20);
@@ -2766,7 +2767,6 @@ function render(years){
             }
 
             //the for loop below changes all the progress bars that have been selected to color black
-            console.log(listOfProgressBars);
             for(var i = 0; i < listOfProgressBars.length; ++i){
               svg.select("#"+listOfProgressBars[i]).style("fill", "black");
             }
@@ -2834,6 +2834,10 @@ function render(years){
       });
   }
 
+  /*
+  * The function getProgressBarsNumber returns array of IDs of progress bars that are connected to givenID.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
   function getProgressBarsNumber(givenID){
     var progressBarsToChange = [];
     switch (givenID) {
@@ -2889,6 +2893,10 @@ function render(years){
     return progressBarsToChange;
   }
 
+  /*
+  * The function getBoxID returns ID of background box that are placed behind the data type texts and progress bars that are connected to givenID.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
   function getBoxID(givenID) {
     switch (givenID) {
     case "c1": case "c17": case "c33": case "t1":
@@ -2942,6 +2950,10 @@ function render(years){
     }
   }
 
+  /*
+  * The function getBoxY takes a givenID and through that ID it returns the Y cordinate that is going to be used for the background boxes.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
   function getBoxY(givenID) {
     switch (givenID) {
     case "c1": case "c17": case "c33": case "t1":
