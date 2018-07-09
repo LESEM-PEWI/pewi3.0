@@ -2795,7 +2795,7 @@ function multiplayerAggregateBaseMapping(file) {
 
 //here we facilitate the aggregation of multiplayer boards
 function multiplayerAggregateOverlayMapping(file) {
-
+  
   var reader = new FileReader();
   reader.readAsText(file);
   reader.onload = function(e) {
@@ -2804,11 +2804,12 @@ function multiplayerAggregateOverlayMapping(file) {
     if (parseInitial(reader.result)) {
       //call *backend* function for overlaying boards, will put boardFromUpload onto
       //  the current board
-      overlayBoard(boardData[currentBoard]);
+      overlayBoard(file.name, boardData[currentBoard]);
       //now switch to the current board so that all data is up to date
       switchBoards(boardData[currentBoard]);
-      
+
       if(!isAggregateConflictDetected){
+        nextFileIndex++;
         mergedFiles.push(file.name);
       }
     }
@@ -2866,26 +2867,28 @@ function multiplayerFileUpload(fileUploadEvent) {
 */
 
 //multiUpload directs functions for multiplayer file upload
-function multiplayerFileUpload(fileUploadEvent, fileIndex) {
+function multiplayerFileUpload(fileUploadEvent) {
   //if this is the first time, call base prep, otherwise, add map on top
 
   // return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
   //   multiplayerAggregateOverlayMapping(fileUploadEvent) :
   //   multiplayerAggregateBaseMapping(fileUploadEvent);
-  console.log("Processing ", fileUploadEvent.files[0].name);
-  if(fileIndex == 0){
+  if(nextFileIndex == 0){
     multiplayerAggregateBaseMapping(fileUploadEvent.files[0]);
     mergedFiles.push(fileUploadEvent.files[0].name);
+    nextFileIndex++;
   }
 
   // If file aggreagate conflict detected, we abort the aggretgation process, since we need to get the user action,
   // once we get the user action, we can continue the aggregation action
-  fileIndex = fileIndex == 0 ? 1 : fileIndex;
-  for (;fileIndex < fileUploadEvent.files.length; fileIndex++) {
-    console.log("Processing ", fileUploadEvent.files[fileIndex].name);
+
+  for (;nextFileIndex < fileUploadEvent.files.length; nextFileIndex++) {
 
     if(!isAggregateConflictDetected) {
-      multiplayerAggregateOverlayMapping(fileUploadEvent.files[fileIndex]);
+      multiplayerAggregateOverlayMapping(fileUploadEvent.files[nextFileIndex]);
+    }
+    else{
+      break;
     }
   }
 

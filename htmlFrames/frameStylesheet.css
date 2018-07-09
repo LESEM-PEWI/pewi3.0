@@ -519,10 +519,11 @@
  }
 
  #optionsBox {
-   display: none;
+   /* display: none; */
    width: 50vw;
    top: 15vw;
    left: 25%;
+   height: 0vw;
  }
 
 .conflictButton {

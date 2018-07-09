@@ -87,9 +87,9 @@ Cleaned and Prepared - August 2016
 
   <div id="modalConflictFrame">
     <div id="conflictPopupBox">
-      <div id="showUpText">There's a conflict between uploaded maps</div>
-      <div id="cancelButton" class="conflictButton">Cancel</div>
-      <div id="setPriorityButton" class="conflictButton">Set priority map</div>
+      <div id="showUpText">There's a conflict between uploaded maps.</div>
+      <div id="cancelButton" class="conflictButton" onclick="cancelUploadFiles();">Cancel</div>
+      <div id="setPriorityButton" class="conflictButton" onclick="toggleOptionsBox();">Set priority map</div>
 
     </div>
     <div id="optionsBox">
@@ -103,6 +103,38 @@ Cleaned and Prepared - August 2016
     var ul = document.getElementById("fileList");
 
     bindSimulationFileListener();
+
+
+    function toggleOptionsBox() {
+      if(document.getElementById("optionsBox").style.height != "18vw"){
+        document.getElementById("optionsBox").style.height = "18vw";
+        document.getElementById("cancelButton").style.opacity = "0";
+        document.getElementById("cancelButton").style.cursor = "default";
+        document.getElementById("cancelButton").onclick = function() {};
+        document.getElementById('setPriorityButton').style.backgroundColor = "#003d4d";
+      }
+      else {
+        document.getElementById("optionsBox").style.height = "0vw";
+        document.getElementById("cancelButton").style.opacity = "1";
+        document.getElementById("cancelButton").style.cursor = "pointer";
+        document.getElementById("cancelButton").onclick = function() {cancelUploadFiles();};
+        document.getElementById('setPriorityButton').style.backgroundColor = "#40a4df";
+      }
+    }
+
+    function cancelUploadFiles() {
+      document.getElementById("modalConflictFrame").style.display = "none";
+
+      emptyFileList();
+      // remove the file handler
+      input.files = null;
+      window.top.cleanCurrentBoardData();
+      window.top.isAggregateConflictDetected = false;
+      window.top.isAggregateChoiceMade = false;
+      window.top.nextFileIndex = 0;
+
+      updateInfo("Ready. Upload csv map files.");
+    }
 
     //attach the file upload event to our functions for simulating
     function bindSimulationFileListener() {
@@ -265,7 +297,7 @@ Cleaned and Prepared - August 2016
           // list all the files selected
           makeFileList();
           // do uploading and process the files
-          window.top.multiplayerFileUpload(input, 0);
+          window.top.multiplayerFileUpload(input);
           //change what is displayed in the info bar
           updateInfo(input.files.length);
         } else {
