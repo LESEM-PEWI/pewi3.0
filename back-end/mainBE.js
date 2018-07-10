@@ -171,6 +171,7 @@ function overlayBoard(board) {
     var tile = new Tile(initData[i], board);
 
     if(tile.baseLandUseType == 1 && board.map[tile.id - 1].baseLandUseType == 1){
+      console.log("Conflict!");
       utilityWindow.document.getElementById("modalConflictFrame").style.display = "block";
       for(var i = 0; i < mergedFiles.length; i++){
         utilityWindow.document.getElementById("showUpText").innerHTML += "\r\n" + mergedFiles[i];
@@ -179,6 +180,7 @@ function overlayBoard(board) {
       }
       utilityWindow.document.getElementById("showUpText").innerHTML += " are merged. Currently merging " + filesUploaded[nextFileIndex].name;
       isAggregateConflictDetected = true;
+
       break;
     }
 
@@ -186,8 +188,10 @@ function overlayBoard(board) {
     else if (tile.baseLandUseType == 1 && board.map[tile.id - 1].baseLandUseType == -1) {
       //then overwrite the tile in old board with new board stuffaroo
       board.map[tile.id - 1] = tile;
+      console.log("Tile merged");
     }
   } //end for : each entry in initData
+  return !isAggregateConflictDetected;
 } //end overlayBoard()
 
 

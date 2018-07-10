@@ -2783,39 +2783,42 @@ function loadSimulation(e) {
 //  basically, it setups up the first board as is
 function multiplayerAggregateBaseMapping(file) {
   //set up first file completely normally
-
   var reader = new FileReader();
   reader.readAsText(file);
-  reader.onload = function(e) {
-    setupBoardFromUpload(reader.result);
+  reader.onload = async function(e) {
+    await setupBoardFromUpload(reader.result);
     //clear initData
     initData = [];
+    console.log("BASE MAPPING");
+
   };
+  return true;
 } //end multiplayerAggregateBaseMapping
 
 //here we facilitate the aggregation of multiplayer boards
-function multiplayerAggregateOverlayMapping(file) {
-
+async function multiplayerAggregateOverlayMapping(file) {
   var reader = new FileReader();
   reader.readAsText(file);
-  reader.onload = function(e) {
-
+  let success;
+  reader.onload = async function(e) {
     //setup data from reader (file) into intiData global
     if (parseInitial(reader.result)) {
       //call *backend* function for overlaying boards, will put boardFromUpload onto
       //  the current board
-      overlayBoard(boardData[currentBoard]);
-      //now switch to the current board so that all data is up to date
-      switchBoards(boardData[currentBoard]);
-
-      if(!isAggregateConflictDetected){
-        nextFileIndex++;
+      success = await overlayBoard(boardData[currentBoard]);
+      if(success) {
+        //now switch to the current board so that all data is up to date
+        switchBoards(boardData[currentBoard]);
         mergedFiles.push(file.name);
       }
     }
+    console.log(success);
+
     //clear initData
     initData = [];
+    return success;
   };
+
 } //end multiplayerAggregateOverlayMapping
 
 function multiplayerExit() {
@@ -2843,7 +2846,7 @@ function multiplayerExit() {
   multiplayerAssigningModeOn = false;
 }
 
-
+/*
 //multiUpload directs functions for multiplayer file upload
 function multiplayerFileUpload() {
   //if this is the first time, call base prep, otherwise, add map on top
@@ -2851,8 +2854,10 @@ function multiplayerFileUpload() {
   // return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
   //   multiplayerAggregateOverlayMapping(fileUploadEvent) :
   //   multiplayerAggregateBaseMapping(fileUploadEvent);
+
   console.log("Processing ", filesUploaded[0].name);
   multiplayerAggregateBaseMapping(filesUploaded[0]);
+
 
   // If files conflict detected, we abort the aggretgation process, since we need to get the user action,
   // once we get the user action, we can continue the aggregation action
@@ -2864,27 +2869,36 @@ function multiplayerFileUpload() {
   }
 
 } //end multiUpload
+*/
 
 
 //multiUpload directs functions for multiplayer file upload
-// async function multiplayerFileUpload() {
-//   if(nextFileIndex == 0){
-//     await multiplayerAggregateBaseMapping(filesUploaded[0]);
-//     mergedFiles.push(filesUploaded[0].name);
-//
-//     nextFileIndex++;
-//   }
-//   for (; nextFileIndex < filesUploaded.length;) {
-//
-//     if(!isAggregateConflictDetected) {
-//       await multiplayerAggregateOverlayMapping(filesUploaded[nextFileIndex]);
-//     }
-//     else{
-//       break;
-//     }
-//   }
-//
-// } //end multiUpload
+async function multiplayerFileUpload() {
+
+  for(var file of filesUploaded){
+    if(file == filesUploaded[0]) {
+      console.log("Processing ", file.name);
+      let success = await multiplayerAggregateBaseMapping(file);
+      if(!success) {
+        console.log(file.name, " cannot be merged!");
+        break;
+      }
+      console.log(file.name, " merged!");
+    }
+    else {
+      console.log("Processing ", file.name);
+      let success = await multiplayerAggregateOverlayMapping(file);
+      console.log(success);
+      // if(!success) {
+      //   console.log(file.name, " cannot be merged!");
+      //   break;
+      // }
+      console.log(file.name, " merged!");
+
+    }
+  }
+
+} //end multiUpload
 
 
 //multiplayerMode hides all unnecessary options from screen
