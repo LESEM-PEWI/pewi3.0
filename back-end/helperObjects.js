@@ -15,6 +15,20 @@ N. Hagen
 //Creation of LandUseType Object
 //This object serves to translate the values stored as land types into readable code
 //Use this for comparisons and assignments
+//Variables for Best Management Practices
+  var bmp = {
+  noTill: 'true',
+  coverCrop: 'true',
+  gWaterway: 'true',
+  streamBuffer : 'false',
+  contouringOrTerracing: 'false'
+};
+sessionStorage.setItem('nT', 'true');
+sessionStorage.setItem('cC', 'true');
+sessionStorage.setItem('gW', 'true');
+sessionStorage.setItem('sB', 'false');
+sessionStorage.setItem('cT', 'false');
+
 var LandUseType = {
 
   none: 0,
@@ -2284,7 +2298,6 @@ function Results(board) {
       for (var i = 0; i < board.map.length; i++) {
         tempCarbonSum[y] += board.map[i].results[y].calculatedCarbonSequestration;
       }
-
       //PEWI calculations are reported in megagrams, the previous calculation in kilograms therefore divide by 1000
       this.carbonSequestration[y] = tempCarbonSum[y] / 1000;
     } //end for
@@ -3162,7 +3175,18 @@ function Tile(tileArray, board) {
 
   //the basic tile-level methods for biodiversity and game wildlife calculations
   this.flagValues = function(year) {
-
+    getTill();
+    bmp.noTill = sessionStorage.getItem('nT');
+    //console.log("nT in function "+bmp.noTill);
+    getGrassedWaterWay();
+    bmp.gWaterway = sessionStorage.getItem('gW');
+  //  console.log("gW in the function "+bmp.gWaterway);
+    getStreamBuffer();
+    bmp.streamBuffer = sessionStorage.getItem('sB');
+    //console.log("sB in the function "+bmp.streamBuffer);
+    getContouringOrTerracing();
+    bmp.contouringOrTerracing = sessionStorage.getItem('cT');
+    //console.log("cT in the function "+bmp.contouringOrTerracing );
     //flag native vegetation (for biodiversity calculations only)
     if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.prairie ||
       this.landType[year] == LandUseType.wetland) {
@@ -3183,9 +3207,9 @@ function Tile(tileArray, board) {
     } //end elseif for native vegatation and other high diversity land uses
 
     //flag native vegatation and comparatively high diversity or low input land uses //// QUESTION:
-    if(!noTill && !coverCrop && !gWaterway && !contouringOrTerracing)
+    if(bmp.noTill === 'false' && bmp.coverCrop === 'false' && bmp.gWaterway === 'false' && bmp.contouringOrTerracing === 'false')
     {
-      //if all the four of the best practices are on, corn and soybean aren't going to be counted
+      //if all the four of the best practices are off, conservation (corn and soybean) aren't going to be counted
       if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.conventionalForest ||
         this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
         this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.wetland ||
@@ -3197,7 +3221,7 @@ function Tile(tileArray, board) {
        else
        {
         this.results[year].nativeVegatationHDorLIFlag = 0;
-      } //end elseif for native and comparitively high diversity or low input
+       } //end elseif for native and comparitively high diversity or low input
     }
     else
     {
@@ -3235,7 +3259,7 @@ function Tile(tileArray, board) {
     //stream buffer flag //// QUESTION:
     if (this.streamNetwork == 1) {
       //if tile is a part of the stream network
-      if(streamBuffer)
+      if(bmp.streamBuffer === 'true')
       {
         if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationForest ||
           this.landType[year] == LandUseType.conservationSoybean || this.landType[year] == LandUseType.conventionalForest ||
@@ -3284,7 +3308,10 @@ function Tile(tileArray, board) {
     //Array of possible values of carbon sequestration per unit area sorted by landUseType
 
     //for Best Management Practices, if cover crop is turned on
-    if(coverCrop)
+
+    bmp.coverCrop = sessionStorage.getItem('cC');
+    //console.log("cC in the function " +bmp.coverCrop);
+    if(bmp.coverCrop === 'true')
     {
       var carbonMultiplier = [0, 0, 161.87, 0, 161.87, 202.34, 117.36, 117.36, 117.36, 433.01, 1485.20, 1485.20, 485.62, 1897.98, 1234.29, 0];
     }
@@ -4254,9 +4281,124 @@ function Tile(tileArray, board) {
 
   //End Methods that assist yieldTile
   //--------------------------------------------------------------
-
 };
 //end construction of Tile
+//The following are the functions used for Best Management Practices
 
+function getTill()
+{
+  //default
+  var nT = sessionStorage.getItem('nT');
+  if(document.getElementById("noTillSwitch") === null)
+  {
+    return nT;
+  }
+
+  var isChecked = document.getElementById("noTillSwitch").checked;
+  if(isChecked)
+  {
+    nT = 'true';
+    sessionStorage.setItem('nT', 'true');
+  }
+  else
+  {
+    nT = 'false';
+    sessionStorage.setItem('nT', 'false');
+  }
+  console.log("nT is " +nT);
+  return nT;
+}
+
+function getCoverCrop()
+{
+  //default
+  var cC = sessionStorage.getItem('cC');
+  if(document.getElementById("coverCroppingSwitch") === null)
+  {
+    return cC;
+  }
+  var isChecked = document.getElementById("coverCroppingSwitch").checked;
+  if(isChecked)
+  {
+    cC = 'true';
+    sessionStorage.setItem('cC', 'true');
+  }
+  else
+  {
+    cC = 'false';
+    sessionStorage.setItem('cC', 'false');
+  }
+  console.log("cC is " +cC);
+  return cC;
+}
+
+function getGrassedWaterWay()
+{
+  //default
+  var gW = sessionStorage.getItem('gW');
+  if(document.getElementById("gWaterwaySwitch") === null)
+  {
+    return gW;
+  }
+  var isChecked = document.getElementById("gWaterwaySwitch").checked;
+  if(isChecked)
+  {
+    gW = 'true';
+    sessionStorage.setItem('gW', 'true');
+  }
+  else
+  {
+    gW = 'false';
+    sessionStorage.setItem('gW', 'false');
+  }
+  console.log("gW is " +gW);
+  return gW;
+}
+
+function getStreamBuffer()
+{
+  //default
+  var sB = sessionStorage.getItem('sB');
+  if(document.getElementById("streamBufferSwitch") === null)
+  {
+    return sB;
+  }
+  var isChecked = document.getElementById("streamBufferSwitch").checked;
+  if(isChecked)
+  {
+    sB ='true';
+    sessionStorage.setItem('sB', 'true');
+  }
+  else
+  {
+    sB = 'false';
+    sessionStorage.setItem('sB', 'false');
+  }
+  console.log("sB is " +sB);
+  return sB;
+}
+
+function getContouringOrTerracing()
+{
+  var cT = sessionStorage.getItem('cT');
+  //default
+  if(document.getElementById("contouringOrTerracingSwitch") === null)
+  {
+    return cT;
+  }
+  var isChecked = document.getElementById("contouringOrTerracingSwitch").checked;
+  if(isChecked)
+  {
+    cT = 'true';
+    sessionStorage.setItem('cT', 'true');
+  }
+  else
+  {
+    cT = 'false';
+    sessionStorage.setItem('cT', 'false');
+  }
+  console.log("cT is " +cT);
+  return cT;
+}
 //######################################################################################
 //######################################################################################

@@ -38,7 +38,7 @@ Cleaned and Prepared - July 2016
   <!-- <script type= "text/javascript" src="../front-end/helpersFE.js"></script> -->
   <script src="../lib/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="./options_script.js"></script>
-
+  <script type="text/javascript" src="../back-end/helperObjects.js"></script>
 </head>
 
 <body>
@@ -273,7 +273,7 @@ Cleaned and Prepared - July 2016
       No-Till </div>
       <label class="switch1">
         <input type="checkbox" id="noTillSwitch" onclick="getTill()" checked>
-        <span class="slider round"></span>
+        <span id="noTillSwitchS" class="slider round"></span>
       </label>
     </div>
     <br>
@@ -283,7 +283,7 @@ Cleaned and Prepared - July 2016
         Cover Cropping </div>
         <label class="switch2">
           <input type="checkbox" id="coverCroppingSwitch" onclick="getCoverCrop()" checked>
-          <span class="slider round"></span>
+          <span id="coverCroppingSwitchS" class="slider round"></span>
         </label>
     </div>
     <br>
@@ -293,7 +293,7 @@ Cleaned and Prepared - July 2016
         Grassed Waterway </div>
         <label class="switch3">
           <input type="checkbox" id="gWaterwaySwitch" onclick="getGrassedWaterWay()" checked>
-          <span class="slider round"></span>
+          <span id="gWaterwaySwitchS" class="slider round"></span>
         </label>
     </div>
     <br>
@@ -303,7 +303,7 @@ Cleaned and Prepared - July 2016
         Stream Buffer </div>
         <label class="switch4">
           <input type="checkbox" id="streamBufferSwitch" onclick="getStreamBuffer()">
-          <span class="slider round"></span>
+          <span id="streamBufferSwitchS" class="slider round"></span>
         </label>
     </div>
     <br>
@@ -313,7 +313,7 @@ Cleaned and Prepared - July 2016
         Contouring/Terracing </div>
         <label class="switch5">
           <input type="checkbox" id="contouringOrTerracingSwitch" onclick="getContouringOrTerracing()">
-          <span class="slider round"></span>
+          <span id="contouringOrTerracingSwitchS" class="slider round"></span>
         </label>
     </div>
     <br>
