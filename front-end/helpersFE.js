@@ -2785,8 +2785,8 @@ function multiplayerAggregateBaseMapping(file) {
   //set up first file completely normally
   var reader = new FileReader();
   reader.readAsText(file);
-  reader.onload = async function(e) {
-    await setupBoardFromUpload(reader.result);
+  reader.onload = function(e) {
+   setupBoardFromUpload(reader.result);
     //clear initData
     initData = [];
     console.log("BASE MAPPING");
@@ -2796,16 +2796,17 @@ function multiplayerAggregateBaseMapping(file) {
 } //end multiplayerAggregateBaseMapping
 
 //here we facilitate the aggregation of multiplayer boards
-async function multiplayerAggregateOverlayMapping(file) {
+function multiplayerAggregateOverlayMapping(file) {
   var reader = new FileReader();
   reader.readAsText(file);
   let success;
-  reader.onload = async function(e) {
+  reader.onload = function(e) {
     //setup data from reader (file) into intiData global
+    // console.log("in onload function");
     if (parseInitial(reader.result)) {
       //call *backend* function for overlaying boards, will put boardFromUpload onto
       //  the current board
-      success = await overlayBoard(boardData[currentBoard]);
+      success = overlayBoard(boardData[currentBoard]);
       if(success) {
         //now switch to the current board so that all data is up to date
         switchBoards(boardData[currentBoard]);
@@ -2873,12 +2874,13 @@ function multiplayerFileUpload() {
 
 
 //multiUpload directs functions for multiplayer file upload
-async function multiplayerFileUpload() {
-
+ function multiplayerFileUpload() {
+  var success;
   for(var file of filesUploaded){
     if(file == filesUploaded[0]) {
       console.log("Processing ", file.name);
-      let success = await multiplayerAggregateBaseMapping(file);
+      console.log("nextFileIndex", nextFileIndex);
+       success =  multiplayerAggregateBaseMapping(file);
       if(!success) {
         console.log(file.name, " cannot be merged!");
         break;
@@ -2887,7 +2889,8 @@ async function multiplayerFileUpload() {
     }
     else {
       console.log("Processing ", file.name);
-      let success = await multiplayerAggregateOverlayMapping(file);
+      console.log("nextFileIndex", nextFileIndex);
+       success =  multiplayerAggregateOverlayMapping(file);
       console.log(success);
       // if(!success) {
       //   console.log(file.name, " cannot be merged!");

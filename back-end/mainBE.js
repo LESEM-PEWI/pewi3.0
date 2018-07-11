@@ -172,7 +172,7 @@ function overlayBoard(board) {
 
     if(tile.baseLandUseType == 1 && board.map[tile.id - 1].baseLandUseType == 1){
       console.log("Conflict!");
-      utilityWindow.document.getElementById("modalConflictFrame").style.display = "block";
+      // utilityWindow.document.getElementById("modalConflictFrame").style.display = "block";
       for(var i = 0; i < mergedFiles.length; i++){
         utilityWindow.document.getElementById("showUpText").innerHTML += "\r\n" + mergedFiles[i];
         if(i != mergedFiles.length - 1)
