@@ -21,13 +21,15 @@ N. Hagen
   coverCrop: 'true',
   gWaterway: 'true',
   streamBuffer : 'false',
-  contouringOrTerracing: 'false'
+  contouringOrTerracing: 'false',
+  numSwitchesOn : 3
 };
 sessionStorage.setItem('nT', 'true');
 sessionStorage.setItem('cC', 'true');
 sessionStorage.setItem('gW', 'true');
 sessionStorage.setItem('sB', 'false');
 sessionStorage.setItem('cT', 'false');
+sessionStorage.setItem('nSOn', '3');
 
 var LandUseType = {
 
@@ -3181,9 +3183,6 @@ function Tile(tileArray, board) {
     getGrassedWaterWay();
     bmp.gWaterway = sessionStorage.getItem('gW');
   //  console.log("gW in the function "+bmp.gWaterway);
-    getStreamBuffer();
-    bmp.streamBuffer = sessionStorage.getItem('sB');
-    //console.log("sB in the function "+bmp.streamBuffer);
     getContouringOrTerracing();
     bmp.contouringOrTerracing = sessionStorage.getItem('cT');
     //console.log("cT in the function "+bmp.contouringOrTerracing );
@@ -3209,6 +3208,7 @@ function Tile(tileArray, board) {
     //flag native vegatation and comparatively high diversity or low input land uses //// QUESTION:
     if(bmp.noTill === 'false' && bmp.coverCrop === 'false' && bmp.gWaterway === 'false' && bmp.contouringOrTerracing === 'false')
     {
+    //  console.log("all four are deactivated");
       //if all the four of the best practices are off, conservation (corn and soybean) aren't going to be counted
       if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.conventionalForest ||
         this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
@@ -3225,6 +3225,7 @@ function Tile(tileArray, board) {
     }
     else
     {
+    //  console.log("at least one is active");
       if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.conventionalForest ||
         this.landType[year] == LandUseType.mixedFruitsVegetables || this.landType[year] == LandUseType.prairie ||
         this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.wetland ||
@@ -3232,6 +3233,7 @@ function Tile(tileArray, board) {
         this.landType[year] == LandUseType.grassHay || this.landType[year] == LandUseType.switchgrass ||
         this.landType[year] == LandUseType.shortRotationWoodyBioenergy)
         {
+      //    console.log("conservation detected");
           this.results[year].nativeVegatationHDorLIFlag = 1;
         }
         else
@@ -3259,6 +3261,9 @@ function Tile(tileArray, board) {
     //stream buffer flag //// QUESTION:
     if (this.streamNetwork == 1) {
       //if tile is a part of the stream network
+      getStreamBuffer();
+      bmp.streamBuffer = sessionStorage.getItem('sB');
+      //console.log("sB in the function "+bmp.streamBuffer);
       if(bmp.streamBuffer === 'true')
       {
         if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationForest ||
@@ -3268,10 +3273,12 @@ function Tile(tileArray, board) {
           this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.shortRotationWoodyBioenergy ||
           this.landType[year] == LandUseType.wetland)
           {
+          //  console.log("Stream buffer is selected and conservation");
             this.results[year].streamBufferFlag = 1;
           }
         else
           {
+            //console.log("streambuffer and no conservation");
             this.results[year].streamBufferFlag = 0;
           }
       }
@@ -3283,19 +3290,22 @@ function Tile(tileArray, board) {
             this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.shortRotationWoodyBioenergy ||
             this.landType[year] == LandUseType.wetland)
             {
+              //console.log("stream buffer is not selected and conservatioon not selected");
             this.results[year].streamBufferFlag = 1;
             }
         else
           {
+        //    console.log("sB not selected and conservation selected");
             this.results[year].streamBufferFlag = 0;
           }
       }
     }
     else
     {
+      //console.log("I am coming here instead");
       this.results[year].streamBufferFlag = 0;
     } //end elseif for stream buffer flag
-
+    //console.log(this.results[year].streamBufferFlag);
   }; //end this.flagValues
 
 
@@ -3308,7 +3318,8 @@ function Tile(tileArray, board) {
     //Array of possible values of carbon sequestration per unit area sorted by landUseType
 
     //for Best Management Practices, if cover crop is turned on
-
+    bmp.numSwitchesOn = Number(sessionStorage.getItem('nSOn'));
+    console.log("number of switches "+bmp.numSwitchesOn);
     bmp.coverCrop = sessionStorage.getItem('cC');
     //console.log("cC in the function " +bmp.coverCrop);
     if(bmp.coverCrop === 'true')
@@ -3343,14 +3354,14 @@ function Tile(tileArray, board) {
     this.rusleValues[year] = this.rainfallRunoffErosivityFactor(year) * this.soilErodibilityFactor() * this.slopeLengthSteepnessFactor(year) * this.coverManagementFactor(year) * this.supportPracticeFactor(year);
   }; //end this.rusle
 
-  //Calculate rainfallRunoffErosivityFactor for rusle
+  //Calculate rainfallRunoffErosivityFactor for rusle -R
   this.rainfallRunoffErosivityFactor = function(year) {
     if (board.precipitation[year] <= 33.46) {
       return (0.0483 * (Math.pow((board.precipitation[year] * 25.4), 1.61))) / 17.02;
     } else return (587.8 - (1.219 * board.precipitation[year] * 25.4) + (0.004105 * (Math.pow((board.precipitation[year] * 25.4), 2)))) / 17.02;
   }; //end this.rainfallRunoffErosivityFactor
 
-  //Calculate soilErodibilityFactor for rusle
+  //Calculate soilErodibilityFactor for rusle - K
   //based on soil type, which is assigned permanently to each cell
   this.soilErodibilityFactor = function() {
     switch (this.soilType) {
@@ -3385,7 +3396,7 @@ function Tile(tileArray, board) {
     } //end switch
   }; //end this.soilErodibilityFactor
 
-  //Calculate slopeLengthSteepnessFactor for rusle
+  //Calculate slopeLengthSteepnessFactor for rusle- LS
   //compare values with LandUseType
   this.slopeLengthSteepnessFactor = function(year) {
     if (this.landType[year] > LandUseType.none) {
@@ -3411,15 +3422,15 @@ function Tile(tileArray, board) {
     }
   }; //end this.slopeLengthSteepnessFactor
 
-  //Calculate coverManagementFactor for rusle
+  //Calculate coverManagementFactor for rusle - C
   this.coverManagementFactor = function(year) {
-
+    //bmpCount();
     //If year == 5, then we are calculating the maximum for Conventional Soybean
     //value 0.3 must be returned because previous year land type is not relevant for maximum
     if (year == 5 && this.landType[year] == LandUseType.conventionalSoybean) {
       return 0.3;
     }
-
+    // QUESTION: do I change corn in every if statement?
     //Depends on landType uses for current and previous year
     if (this.landType[year] == LandUseType.none) {
       return 0;
@@ -3463,6 +3474,7 @@ function Tile(tileArray, board) {
     } //end else
     else if (this.landType[year - 1] == LandUseType.conservationCorn) {
       switch (LandUseType.getType(this.landType[year])) {
+        //HERE??
         case "conservationCorn":
           return 0.020;
         case "conservationSoybean":
@@ -3491,6 +3503,7 @@ function Tile(tileArray, board) {
     } //end else
     else if (this.landType[year - 1] == LandUseType.conservationSoybean) {
       switch (LandUseType.getType(this.landType[year])) {
+        //HERE???
         case "conservationCorn":
           return 0.052;
         case "conservationSoybean":
@@ -3519,17 +3532,28 @@ function Tile(tileArray, board) {
     } //end elseif
   }; //end this.coverManagementFactor
 
-  //Calculate supportPracticeFactor for rusle
+  //Calculate supportPracticeFactor for rusle- P
   this.supportPracticeFactor = function(year) {
-    if (this.landType[year] == LandUseType.none) {
+    if (this.landType[year] == LandUseType.none)
+    {
       return 0;
-    } else {
-      if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean) {
-        if (this.topography > 1) {
-          return this.contourSubfactor(year) * this.terraceSubfactor();
+    }
+    else
+    {
+      if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean)
+      {
+        //// QUESTION: is it that the slope>2% then if the cT is true, or the other way around?
+        if (this.topography > 1)
+        {
+          getContouringOrTerracing();
+          bmp.contouringOrTerracing = sessionStorage.getItem('cT');
+          if(bmp.contouringOrTerracing === 'true')
+          {
+            return this.contourSubfactor(year) * this.terraceSubfactor();
+          }
         }
-      }
-      return 1;
+     }
+     return 1;
     } //end elseif
   }; //end this.supportPracticeFactor
 
@@ -4287,7 +4311,9 @@ function Tile(tileArray, board) {
 
 function getTill()
 {
+
   //default
+  var count = Number(sessionStorage.getItem('nSOn'));
   var nT = sessionStorage.getItem('nT');
   if(document.getElementById("noTillSwitch") === null)
   {
@@ -4299,18 +4325,24 @@ function getTill()
   {
     nT = 'true';
     sessionStorage.setItem('nT', 'true');
+    count++;
+    sessionStorage.setItem('nSOn', count);
   }
   else
   {
     nT = 'false';
     sessionStorage.setItem('nT', 'false');
+    count--;
+    sessionStorage.setItem('nSOn', count);
   }
-  console.log("nT is " +nT);
+//  console.log("nT is " +nT);
+bmp.numSwitchesOn = count;
   return nT;
 }
 
 function getCoverCrop()
 {
+  var count = Number(sessionStorage.getItem('nSOn'));
   //default
   var cC = sessionStorage.getItem('cC');
   if(document.getElementById("coverCroppingSwitch") === null)
@@ -4322,18 +4354,24 @@ function getCoverCrop()
   {
     cC = 'true';
     sessionStorage.setItem('cC', 'true');
+    count++;
+    sessionStorage.setItem('nSOn', count);
   }
   else
   {
     cC = 'false';
     sessionStorage.setItem('cC', 'false');
+    count--;
+    sessionStorage.setItem('nSOn', count);
   }
-  console.log("cC is " +cC);
+//  console.log("cC is " +cC);
+bmp.numSwitchesOn = count;
   return cC;
 }
 
 function getGrassedWaterWay()
 {
+  var count = Number(sessionStorage.getItem('nSOn'));
   //default
   var gW = sessionStorage.getItem('gW');
   if(document.getElementById("gWaterwaySwitch") === null)
@@ -4345,19 +4383,25 @@ function getGrassedWaterWay()
   {
     gW = 'true';
     sessionStorage.setItem('gW', 'true');
+    count++;
+    sessionStorage.setItem('nSOn', count);
   }
   else
   {
     gW = 'false';
     sessionStorage.setItem('gW', 'false');
+    count--;
+    sessionStorage.setItem('nSOn', count);
   }
-  console.log("gW is " +gW);
+  //console.log("gW is " +gW);
+  bmp.numSwitchesOn = count;
   return gW;
 }
 
 function getStreamBuffer()
 {
   //default
+  var count = Number(sessionStorage.getItem('nSOn'));
   var sB = sessionStorage.getItem('sB');
   if(document.getElementById("streamBufferSwitch") === null)
   {
@@ -4368,18 +4412,24 @@ function getStreamBuffer()
   {
     sB ='true';
     sessionStorage.setItem('sB', 'true');
+    count++;
+    sessionStorage.setItem('nSOn', count);
   }
   else
   {
     sB = 'false';
     sessionStorage.setItem('sB', 'false');
+    count--;
+    sessionStorage.setItem('nSOn', count);
   }
-  console.log("sB is " +sB);
+  //console.log("sB is " +sB);
+  bmp.numSwitchesOn = count;
   return sB;
 }
 
 function getContouringOrTerracing()
 {
+  var count = Number(sessionStorage.getItem('nSOn'));
   var cT = sessionStorage.getItem('cT');
   //default
   if(document.getElementById("contouringOrTerracingSwitch") === null)
@@ -4391,14 +4441,20 @@ function getContouringOrTerracing()
   {
     cT = 'true';
     sessionStorage.setItem('cT', 'true');
+    count++;
+    sessionStorage.setItem('nSOn', count);
   }
   else
   {
     cT = 'false';
     sessionStorage.setItem('cT', 'false');
+    count--;
+    sessionStorage.setItem('nSOn', count);
   }
-  console.log("cT is " +cT);
+//  console.log("cT is " +cT);
+  bmp.numSwitchesOn = count;
   return cT;
 }
+
 //######################################################################################
 //######################################################################################
