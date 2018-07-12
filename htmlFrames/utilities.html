@@ -58,6 +58,7 @@ Cleaned and Prepared - August 2016
           <div id="addFile" class="mainButton">Add Player Files</div>
         </label>
         <input id="file-upload" type="file" multiple="" onchange="uploadAggregateMultiMap();" />
+
       </div>
       <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
       <div id="aggregateInfo" class="infoBar">
@@ -87,21 +88,20 @@ Cleaned and Prepared - August 2016
 
   <div id="modalConflictFrame">
     <div id="conflictPopupBox">
-      <div id="showUpText">There's a conflict between uploaded maps.</div>
+      <div id="conflictText">There's a conflict between uploaded maps.<br><br></div>
       <div id="cancelButton" class="conflictButton" onclick="cancelUploadFiles();">Cancel</div>
       <div id="setPriorityButton" class="conflictButton" onclick="toggleOptionsBox();">Set priority map</div>
 
     </div>
     <div id="optionsBox">
-      <div id="mergedMapButton" class="conflictButton">Merged map</div>
-      <div id="currentMapButton" class="conflictButton">Current map</div>
+      <div id="mergedMapButton" class="conflictButton" onclick="setPriority('merged');">Merged map</div>
+      <div id="currentMapButton" class="conflictButton" onclick="setPriority('current');">Current map</div>
     </div>
   </div>
 
   <script>
-    var input = document.getElementById("file-upload");
+    // var input = document.getElementById("file-upload");
     var ul = document.getElementById("fileList");
-    window.top.filesUploaded = input.files;
 
     bindSimulationFileListener();
 
@@ -125,17 +125,28 @@ Cleaned and Prepared - August 2016
 
     function cancelUploadFiles() {
       document.getElementById("modalConflictFrame").style.display = "none";
-
+      document.getElementById("conflictText").innerHTML = "There's a conflict between uploaded maps.<br>";
       emptyFileList();
       // remove the file handler
-      input.files = null;
       window.top.cleanCurrentBoardData();
       window.top.isAggregateConflictDetected = false;
       window.top.isAggregateChoiceMade = false;
       window.top.nextFileIndex = 0;
-      window.top.filesUploaded = void 0;
+      window.top.filesUploaded = null;
 
       updateInfo("Ready. Upload csv map files.");
+    }
+
+    // setPriority sets map priority when merging conflict is detected,
+    // the parameter 'option' has two possible values, which are 'merged' and 'current',
+    function setPriority(option) {
+      window.top.aggregateChoice = option;
+      window.top.isAggregateConflictDetected = false;
+      document.getElementById("conflictText").innerHTML = "There's a conflict between uploaded maps.<br><br>";
+      document.getElementById("modalConflictFrame").style.display = "none";
+      toggleOptionsBox();
+      window.top.multiplayerAggregateOverlayMapping(window.top.filesUploaded[window.top.nextFileIndex]);
+
     }
 
     //attach the file upload event to our functions for simulating
@@ -154,7 +165,7 @@ Cleaned and Prepared - August 2016
     function downloadAggregateMap() {
       emptyFileList();
       // remove the file handler
-      input.files = null;
+      window.top.filesUploaded = null;
 
       //data from function in helpersFE.js
       var data = window.top.writeFileToDownloadString();
@@ -189,10 +200,10 @@ Cleaned and Prepared - August 2016
     // list all the files selected
     function makeFileList() {
       // append filename entries
-      if (input.files.length > 0) {
-        for (var i = 0; i < input.files.length; i++) {
+      if (window.top.filesUploaded.length > 0) {
+        for (var i = 0; i < window.top.filesUploaded.length; i++) {
           var li = document.createElement("li");
-          li.innerHTML = input.files[i].name;
+          li.innerHTML = window.top.filesUploaded[i].name;
           ul.appendChild(li);
         }
         document.getElementById("div-fileList").style.display = 'block';
@@ -237,11 +248,13 @@ Cleaned and Prepared - August 2016
     function uploadAggregateMultiMap() {
       // clean the files list
       emptyFileList();
-
+      // clear the boardData
+      boardData = [];
+      window.top.filesUploaded = document.getElementById("file-upload").files;
       // check files number
-      if (input.files.length > 6) {
+      if (window.top.filesUploaded.length > 6) {
         // remove the file handler
-        input.files = null;
+        window.top.filesUploaded = null;
         // clean the data to prevent from downloading something
         window.top.cleanCurrentBoardData();
         alert("ERROR: Cannot upload more than 6 files!");
@@ -250,12 +263,12 @@ Cleaned and Prepared - August 2016
       }
 
       // check file type here
-      for (var i = 0; i < input.files.length; i++) {
+      for (var i = 0; i < window.top.filesUploaded.length; i++) {
         // check if the file is .csv file
-        if(input.files[i].name.substr(-4).toLowerCase() !== ".csv"){
-        // if (!input.files[i].name.match(/\.csv/)) {
+        if(window.top.filesUploaded[i].name.substr(-4).toLowerCase() !== ".csv"){
+        // if (!window.top.filesUploaded[i].name.match(/\.csv/)) {
           // remove the file handler
-          input.files = null;
+          window.top.filesUploaded = null;
           // clean the data to prevent from downloading something
           window.top.cleanCurrentBoardData();
           alert("ERROR: Incorrect file(s) detected! Please upload .csv files");
@@ -273,14 +286,14 @@ Cleaned and Prepared - August 2016
       updateInfo("Verifying...");
 
       // check the correctness of the files
-      for (var i = 0; i < input.files.length; i++) {
+      for (var i = 0; i < window.top.filesUploaded.length; i++) {
 
         // asynchronous callback function to get parse data result
-        window.top.checkFileCorrectness(input.files[i], function(result) {
+        window.top.checkFileCorrectness(window.top.filesUploaded[i], function(result) {
           if (result == false) {
             hasCorrupt = true;
             // remove the file handler
-            input.files = null;
+            window.top.filesUploaded = null;
             // clean the data to prevent from downloading something
             window.top.cleanCurrentBoardData();
             alert("ERROR: Corrupted file(s) detected!");
@@ -292,6 +305,11 @@ Cleaned and Prepared - August 2016
         });
       }
 
+      if (hasCorrupt == false) {
+        // do uploading and process the files
+        window.top.multiplayerFileUpload();
+      }
+
       // set delay time 2.5 seconds to wait for files uploading
       setTimeout(function() {
 
@@ -299,13 +317,13 @@ Cleaned and Prepared - August 2016
           // list all the files selected
           makeFileList();
           // do uploading and process the files
-          window.top.multiplayerFileUpload();
+          // window.top.multiplayerFileUpload();
           //change what is displayed in the info bar
-          updateInfo(input.files.length);
+          updateInfo(window.top.filesUploaded.length);
         } else {
           updateInfo("Please try again with valid .csv map file(s).");
         }
-      }, 2500);
+      }, 3000);
 
     } // end bindAggregateFunctionToFileUpload()
   </script>
