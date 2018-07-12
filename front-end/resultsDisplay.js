@@ -2530,6 +2530,813 @@ function render(years){
     .range(["#ffe099", "#f9ccc2" , "#fcff7f"]);
 
   /*
+  * The function calculateAvgScores takes in dataPoints as a parameter and an int that represents the number of years.
+  * This function calculates the average of each data type and returns an array with those averages
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function calculateAvgScores(dataPoints, numYears){
+    var tempdata = [];
+    if(numYears === 3){
+      var tempSum = 0;
+      for(var i = 0; i < 16; ++i){
+        tempSum = dataPoints[i].count+dataPoints[i+16].count+dataPoints[i+32].count;
+        tempSum = tempSum / numYears;
+        tempdata.push(tempSum);
+      }
+    }
+    else if(numYears === 2){
+      var tempSum = 0;
+      for(var i = 0; i < 16; ++i){
+        tempSum = dataPoints[i].count+dataPoints[i+16].count;
+        tempSum = tempSum / numYears;
+        tempdata.push(tempSum);
+      }
+    }
+    else{
+      for(var i = 0; i < 16; ++i){
+        tempdata.push(dataPoints[i].count);
+      }
+    }
+    return tempdata;
+  }
+
+  /*
+  * The function deteleText is used to delete the text legend on the right hand side and the gray layer of the progress bar.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function deteleText() {
+    for(var i = 0; i < 16; ++i){
+      var tempID = "#t"+(i+1);
+      var tempSmallID = "#smallrect"+(i+1);
+      var tempBigID = "#bigrect"+(i+1);
+      svg.select(tempID).remove();
+      svg.select(tempSmallID).remove();
+      svg.select(tempBigID).remove();
+    }
+  }
+
+  /*
+  * The function fillData fills an array of objects with data that will be plotted with data points.
+  * Each object consists of count (the score out of 100), label (the title of the category it belongs to), and id (the id that will be used for that specifc data point).
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function fillData(yearsToFill) {
+    var tempData = [];
+    var totalNumberDataPoints = yearsToFill*16; //16 because there are 16 different data points we fill per year
+    var tempID = 0;
+    for(var i = 1; i <= totalNumberDataPoints; ++i){
+      tempID++;
+      var tempDataCount = getScore(i);
+      var tempDataLabel = getLabel(i);
+      var tempObjData = {'count': (Math.round(tempDataCount*100)/100), 'label': tempDataLabel, 'id': "c"+tempID};
+      tempData.push(tempObjData);
+    }
+    return tempData;
+  }
+
+  /*
+  * The function getCX returns the CX of data point that is passed in as a parameter.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function  getCX(thisElement) {
+    return parseInt(thisElement.attributes.cx.nodeValue)+12;
+  }
+
+  /*
+  * The function getCY returns the CY of data point that is passed in as a parameter.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function  getCY(thisElement) {
+    return parseInt(thisElement.attributes.cy.nodeValue)-8;
+  }
+
+  /*
+  * parameters: givenID (string), y (int), and type (string)
+  * return: int, string, or array of strings depending of type (parameter)
+  * The function getInfo takes in the three parameters, the "y" parameter only matters when type is data.
+  * The purpose of this function is to give all the IDs and and desired information depending on type. This fucntion was a combination of getter functions from previous commit.
+  * The reason for combining all functions was to make more simple to understand and make code less cluttered with fucntions.
+  * For more information refer to Issue 357.
+  */
+  function getInfo(givenID, y, type) {
+    var selectID = [];
+    switch (givenID) {
+    case "c1": case "c17": case "c33": case "t1": case "bigrect1": case "checkbox1":
+      if(type === "color"){
+        return "#1f77b4";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c1", "c17", "c33"];
+        }else if(y > 1){
+          selectID = ["c1", "c17"];
+        }else{
+          selectID = ["c1"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "1";
+      }
+      else if(type === "textRep"){
+        return "t1";
+      }
+      else if(type === "landName"){
+        return "Carbon Sequestration";
+      }
+      else if(type === "boxY"){
+        return 45;
+      }
+      else if(type === "boxID"){
+        return "b1";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect1", "#bigrect1"];
+        return selectID;
+      }
+      break;
+    case "c2": case "c18": case "c34": case "t2": case "bigrect2": case "checkbox2":
+      if(type === "color"){
+        return "#aec7e8";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c2", "c18", "c34"];
+        }else if(y > 1){
+          selectID = ["c2", "c18"];
+        }else{
+          selectID = ["c2"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "2";
+      }
+      else if(type === "textRep"){
+        return "t2";
+      }
+      else if(type === "landName"){
+        return "Biodiversity";
+      }
+      else if(type === "boxY"){
+        return 75;
+      }
+      else if(type === "boxID"){
+        return "b2";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect2", "#bigrect2"];
+        return selectID;
+      }
+      break;
+    case "c3": case "c19": case "c35": case "t3": case "bigrect3": case "checkbox3":
+      if(type === "color"){
+        return "#ff7f0e";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c3", "c19", "c35"];
+        }else if(y > 1){
+          selectID = ["c3", "c19"];
+        }else{
+          selectID = ["c3"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "3";
+      }
+      else if(type === "textRep"){
+        return "t3";
+      }
+      else if(type === "landName"){
+        return "Game Wildlife";
+      }
+      else if(type === "boxY"){
+        return 105;
+      }
+      else if(type === "boxID"){
+        return "b3";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect3", "#bigrect3"];
+        return selectID;
+      }
+      break;
+    case "c4": case "c20": case "c36": case "t4": case "bigrect4": case "checkbox4":
+      if(type === "color"){
+        return "#ffbb78";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c4", "c20", "c36"];
+        }else if(y > 1){
+          selectID = ["c4", "c20"];
+        }else{
+          selectID = ["c4"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "4";
+      }
+      else if(type === "textRep"){
+        return "t4";
+      }
+      else if(type === "landName"){
+        return "Erosion Control";
+      }
+      else if(type === "boxY"){
+        return 135;
+      }
+      else if(type === "boxID"){
+        return "b4";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect4", "#bigrect4"];
+        return selectID;
+      }
+      break;
+    case "c5": case "c21": case "c37": case "t5": case "bigrect5": case "checkbox5":
+      if(type === "color"){
+        return "#2ca02c";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c5", "c21", "c37"];
+        }else if(y > 1){
+          selectID = ["c5", "c21"];
+        }else{
+          selectID = ["c5"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "5";
+      }
+      else if(type === "textRep"){
+        return "t5";
+      }
+      else if(type === "landName"){
+        return "Nitrate Pollution Control";
+      }
+      else if(type === "boxY"){
+        return 165;
+      }
+      else if(type === "boxID"){
+        return "b5";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect5", "#bigrect5"];
+        return selectID;
+      }
+      break;
+    case "c6": case "c22": case "c38": case "t6": case "bigrect6": case "checkbox6":
+      if(type === "color"){
+        return "#98df8a";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c6", "c22", "c38"];
+        }else if(y > 1){
+          selectID = ["c6", "c22"];
+        }else{
+          selectID = ["c6"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "6";
+      }
+      else if(type === "textRep"){
+        return "t6";
+      }
+      else if(type === "landName"){
+        return "Phosphorus Pollution Control";
+      }
+      else if(type === "boxY"){
+        return 195;
+      }
+      else if(type === "boxID"){
+        return "b6";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect6", "#bigrect6"];
+        return selectID;
+      }
+      break;
+    case "c7": case "c23": case "c39": case "t7": case "bigrect7": case "checkbox7":
+      if(type === "color"){
+        return "#9467bd";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c7", "c23", "c39"];
+        }else if(y > 1){
+          selectID = ["c7", "c23"];
+        }else{
+          selectID = ["c7"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "7";
+      }
+      else if(type === "textRep"){
+        return "t7";
+      }
+      else if(type === "landName"){
+        return "Sediment Control";
+      }
+      else if(type === "boxY"){
+        return 225;
+      }
+      else if(type === "boxID"){
+        return "b7";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect7", "#bigrect7"];
+        return selectID;
+      }
+      break;
+    case "c8": case "c24": case "c40": case "t8": case "bigrect8": case "checkbox8":
+      if(type === "color"){
+        return "#c5b0d5";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c8", "c24", "c40"];
+        }else if(y > 1){
+          selectID = ["c8", "c24"];
+        }else{
+          selectID = ["c8"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "8";
+      }
+      else if(type === "textRep"){
+        return "t8";
+      }
+      else if(type === "landName"){
+        return "Alfalfa Hay";
+      }
+      else if(type === "boxY"){
+        return 255;
+      }
+      else if(type === "boxID"){
+        return "b8";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect8", "#bigrect8"];
+        return selectID;
+      }
+      break;
+    case "c9": case "c25": case "c41": case "t9": case "bigrect9": case "checkbox9":
+      if(type === "color"){
+        return "#8c564b";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c9", "c25", "c41"];
+        }else if(y > 1){
+          selectID = ["c9", "c25"];
+        }else{
+          selectID = ["c9"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "9";
+      }
+      else if(type === "textRep"){
+        return "t9";
+      }
+      else if(type === "landName"){
+        return "Cattle";
+      }
+      else if(type === "boxY"){
+        return 285;
+      }
+      else if(type === "boxID"){
+        return "b9";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect9", "#bigrect9"];
+        return selectID;
+      }
+      break;
+    case "c10": case "c26": case "c42": case "t10": case "bigrect10": case "checkbox10":
+      if(type === "color"){
+        return "#c49c94";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c10", "c26", "c42"];
+        }else if(y > 1){
+          selectID = ["c10", "c26"];
+        }else{
+          selectID = ["c10"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "10";
+      }
+      else if(type === "textRep"){
+        return "t10";
+      }
+      else if(type === "landName"){
+        return "Corn Grain";
+      }
+      else if(type === "boxY"){
+        return 315;
+      }
+      else if(type === "boxID"){
+        return "b10";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect10", "#bigrect10"];
+        return selectID;
+      }
+      break;
+    case "c11": case "c27": case "c43": case "t11": case "bigrect11": case "checkbox11":
+      if(type === "color"){
+        return "#e377c2";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c11", "c27", "c43"];
+        }else if(y > 1){
+          selectID = ["c11", "c27"];
+        }else{
+          selectID = ["c11"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "11";
+      }
+      else if(type === "textRep"){
+        return "t11";
+      }
+      else if(type === "landName"){
+        return "Grass Hay";
+      }
+      else if(type === "boxY"){
+        return 345;
+      }
+      else if(type === "boxID"){
+        return "b11";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect11", "#bigrect11"];
+        return selectID;
+      }
+      break;
+    case "c12": case "c28": case "c44": case "t12": case "bigrect12": case "checkbox12":
+      if(type === "color"){
+        return "#9e4a6a";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c12", "c28", "c44"];
+        }else if(y > 1){
+          selectID = ["c12", "c28"];
+        }else{
+          selectID = ["c12"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "12";
+      }
+      else if(type === "textRep"){
+        return "t12";
+      }
+      else if(type === "landName"){
+        return "Switchgrass Biomass";
+      }
+      else if(type === "boxY"){
+        return 375;
+      }
+      else if(type === "boxID"){
+        return "b12";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect12", "#bigrect12"];
+        return selectID;
+      }
+      break;
+    case "c13": case "c29": case "c45": case "t13": case "bigrect13": case "checkbox13":
+      if(type === "color"){
+        return "#ba6f14";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c13", "c29", "c45"];
+        }else if(y > 1){
+          selectID = ["c13", "c29"];
+        }else{
+          selectID = ["c13"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "13";
+      }
+      else if(type === "textRep"){
+        return "t13";
+      }
+      else if(type === "landName"){
+        return "Mixed Fruits and Vegetables";
+      }
+      else if(type === "boxY"){
+        return 405;
+      }
+      else if(type === "boxID"){
+        return "b13";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect13", "#bigrect13"];
+        return selectID;
+      }
+      break;
+    case "c14": case "c30": case "c46": case "t14": case "bigrect14": case "checkbox14":
+      if(type === "color"){
+        return "#24e2cf";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c14", "c30", "c46"];
+        }else if(y > 1){
+          selectID = ["c14", "c30"];
+        }else{
+          selectID = ["c14"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "14";
+      }
+      else if(type === "textRep"){
+        return "t14";
+      }
+      else if(type === "landName"){
+        return "Short-Rotation Woody Biomass";
+      }
+      else if(type === "boxY"){
+        return 435;
+      }
+      else if(type === "boxID"){
+        return "b14";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect14", "#bigrect14"];
+        return selectID;
+      }
+      break;
+    case "c15": case "c31": case "c47": case "t15": case "bigrect15": case "checkbox15":
+      if(type === "color"){
+        return "#02d6fc";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c15", "c31", "c47"];
+        }else if(y > 1){
+          selectID = ["c15", "c31"];
+        }else{
+          selectID = ["c15"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "15";
+      }
+      else if(type === "textRep"){
+        return "t15";
+      }
+      else if(type === "landName"){
+        return "Soybeans";
+      }
+      else if(type === "boxY"){
+        return 465;
+      }
+      else if(type === "boxID"){
+        return "b15";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect15", "#bigrect15"];
+        return selectID;
+      }
+      break;
+    case "c16": case "c32": case "c48": case "t16": case "bigrect16": case "checkbox16":
+      if(type === "color"){
+        return "#bcf5ff";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c16", "c32", "c48"];
+        }else if(y > 1){
+          selectID = ["c16", "c32"];
+        }else{
+          selectID = ["c16"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "16";
+      }
+      else if(type === "textRep"){
+        return "t16";
+      }
+      else if(type === "landName"){
+        return "Wood";
+      }
+      else if(type === "boxY"){
+        return 495;
+      }
+      else if(type === "boxID"){
+        return "b16";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect16", "#bigrect16"];
+        return selectID;
+      }
+      break;
+    }
+  }
+
+  /*
+  * The function getLabel will take in id (an int) as a parameter that will return the appropriate label for each valid int passed.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getLabel(id) {
+    switch (id) {
+      case 1: case 17: case 33:
+        return "Carbon Sequestration";
+      break;
+      case 2: case 18: case 34:
+        return "Biodiversity";
+      break;
+      case 3: case 19: case 35:
+        return "Game Wildlife";
+      break;
+      case 4: case 20: case 36:
+        return "Erosion Control";
+      break;
+      case 5: case 21: case 37:
+        return "Nitrate Pollution Control";
+      break;
+      case 6: case 22: case 38:
+        return "Phosphorus Pollution Control";
+      break;
+      case 7: case 23: case 39:
+        return "Sediment Control";
+      break;
+      case 8: case 24: case 40:
+        return "Alfalfa Hay";
+      break;
+      case 9: case 25: case 41:
+        return "Cattle";
+      break;
+      case 10: case 26: case 42:
+        return "Corn Grain";
+      break;
+      case 11: case 27: case 43:
+        return "Grass Hay";
+      break;
+      case 12: case 28: case 44:
+        return "Switchgrass Biomass";
+      break;
+      case 13: case 29: case 45:
+        return "Mixed Fruits and Vegetables";
+      break;
+      case 14: case 30: case 46:
+        return "Short-rotation Woody Biomass";
+      break;
+      case 15: case 31: case 47:
+        return "Soybeans";
+      break;
+      case 16: case 32: case 48:
+        return "Wood";
+      break;
+    }
+  }
+
+  /*
+  * The function getScore will take in id (an int) as a parameter that will determine what type of score the program needs i.e Corn Grain score.
+  * This fucntion also call the getYearForScore to get what year of that specific category you are looking for.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getScore(id) {
+    switch (id) {
+      case 1: case 17: case 33:
+        return Totals.carbonSequestrationScore[getYearForScore(id)];
+      break;
+      case 2: case 18: case 34:
+        return Totals.biodiversityPointsScore[getYearForScore(id)];
+      break;
+      case 3: case 19: case 35:
+        return Totals.gameWildlifePointsScore[getYearForScore(id)];
+      break;
+      case 4: case 20: case 36:
+        return Totals.grossErosionScore[getYearForScore(id)];
+      break;
+      case 5: case 21: case 37:
+        return Totals.nitrateConcentrationScore[getYearForScore(id)];
+      break;
+      case 6: case 22: case 38:
+        return Totals.phosphorusLoadScore[getYearForScore(id)];
+      break;
+      case 7: case 23: case 39:
+        return Totals.sedimentDeliveryScore[getYearForScore(id)];
+      break;
+      case 8: case 24: case 40:
+        return Totals.alfalfaHayYieldScore[getYearForScore(id)];
+      break;
+      case 9: case 25: case 41:
+        return Totals.cattleYieldScore[getYearForScore(id)];
+      break;
+      case 10: case 26: case 42:
+        return Totals.cornGrainYieldScore[getYearForScore(id)];
+      break;
+      case 11: case 27: case 43:
+        return Totals.grassHayYieldScore[getYearForScore(id)];
+      break;
+      case 12: case 28: case 44:
+        return Totals.switchgrassYieldScore[getYearForScore(id)];
+      break;
+      case 13: case 29: case 45:
+        return Totals.mixedFruitsAndVegetablesYieldScore[getYearForScore(id)];
+      break;
+      case 14: case 30: case 46:
+        return Totals.shortRotationWoodyBiomassYieldScore[getYearForScore(id)];
+      break;
+      case 15: case 31: case 47:
+        return Totals.soybeanYieldScore[getYearForScore(id)];
+      break;
+      case 16: case 32: case 48:
+        return Totals.woodYieldScore[getYearForScore(id)];
+      break;
+    }
+  }
+
+  /*
+  * The function getScoreOfLandType returns the score of the type of land put in as a parameter.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getScoreOfLandType(id) {
+    for(var properties in dataset){
+      if(dataset[properties].id === id){
+        return dataset[properties].count;
+      }
+    }
+    return 123456789;
+  }
+
+  /*
+  * The function getText returns a string that will be used over hover options.
+  * The string will be as follows: "landName: landScore".
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getText(thisElement){
+    var tempText = getInfo(thisElement.id, 0, "landName")+": "+getScoreOfLandType(thisElement.id);
+    return tempText;
+  }
+
+  /*
+  * The function getYearForScore will take in id (an int) as a parameter that will determine what year that falls under.
+  * This fucntion is used in getScore to get the right year of each land type, i.e 1-16 is the first cycle of each of the land types, 17-32 is the second cycle and so on.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getYearForScore(tempID){
+    if (tempID > 0 && tempID < 17){
+      return 1;
+    }else if(tempID > 16 && tempID < 33){
+      return 2;
+    }else{
+      return 3;
+    }
+  }
+
+  /*
+  * The function newRCalculator takes in an HTML element and checks the R of that element and based on that returns the new R.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function newRCalculator(thisElement) {
+    //element that is being clicked has not been clicked
+    var thisElementR = parseInt(thisElement.attributes.r.nodeValue);
+    if(thisElementR === 10){
+      return 15;
+    }
+    else if(thisElementR !== 10){
+      return 10;
+    }
+  }
+
+  /*
   * The function placeStandards is used to place elements into the div that will NOT be modified, this includes but is not limeted to each year rectangle, and arrow diagram.
   * This function was created for Issue 357. For more information refer to Issue 357.
   */
@@ -2743,7 +3550,7 @@ function render(years){
             .attr("width", scoreData[l])
             .attr("height", 10)
             .attr("id", ("bigrect"+(l+1)))
-            .attr("fill", getColor("bigrect"+(l+1)))
+            .attr("fill", getInfo("bigrect"+(l+1), 0, "color"))
             .attr("visibility", "hidden")
             .style("stroke", "black")
             .style("stroke-width", 1.5);
@@ -2756,7 +3563,7 @@ function render(years){
             .attr("width", scoreData[l])
             .attr("height", 10)
             .attr("id", ("bigrect"+(l+1)))
-            .attr("fill", getColor("bigrect"+(l+1)))
+            .attr("fill", getInfo("bigrect"+(l+1), 0, "color"))
             .attr("visibility", "visible")
             .style("stroke", "black")
             .style("stroke-width", 1.5);
@@ -2765,20 +3572,6 @@ function render(years){
     renderData(dataSet);
   }
 
-  /*
-  * The function placeText is used to place the text legend on the right hand side and the gray layer of the progress bar.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function deteleText() {
-    for(var i = 0; i < 16; ++i){
-      var tempID = "#t"+(i+1);
-      var tempSmallID = "#smallrect"+(i+1);
-      var tempBigID = "#bigrect"+(i+1);
-      svg.select(tempID).remove();
-      svg.select(tempSmallID).remove();
-      svg.select(tempBigID).remove();
-    }
-  }
 
   /*
   * The function plotDataPoints is used to place the data points inside the appropriate year container.
@@ -2842,7 +3635,7 @@ function render(years){
       .on('mouseover', function (d) {
          d3.select(this).style("cursor", "pointer");
          var id = this.id;
-         textRep = "#"+getTextRep(id);
+         textRep = "#"+getInfo(id, 0, "textRep");
          var cantChangeTxtColor = listOfClickedText.includes(textRep);
          //this is to do hover effect on hovering a CIRCLE
          if(id.charAt(0) === "c"){
@@ -2851,8 +3644,8 @@ function render(years){
              svg.select(textRep).style("fill", "black");
            }
            svg.append("rect")
-               .attr("x", (getCX(this)-30))
-               .attr("y", (getCY(this)-20))
+               .attr("x", (getCX(this)-15))
+               .attr("y", (getCY(this)-25))
                .attr("rx", 5)
                .attr("ry", 5)
                .attr("width", 300)
@@ -2863,7 +3656,7 @@ function render(years){
                .style("opacity", 0.8)
            svg.append("text")
                  .attr("x", (getCX(this)+115))
-                 .attr("y", getCY(this))
+                 .attr("y", (getCY(this)-5))
                  .attr("id", "tempText")
                  .style("text-anchor","middle")
                  .text(text);
@@ -2878,7 +3671,7 @@ function render(years){
         d3.select(this).style("cursor", "default");
         var id = this.id;
         //assigning the Rep variable to use to make changes to those elements
-        textRep = getTextRep(id);
+        textRep = getInfo(id, 0, "textRep");
         //this is to do hover effect on hovering a CIRCLE
         //removes the text box and the text on top of the text box
         if(id.charAt(0) === "c"){
@@ -2904,7 +3697,7 @@ function render(years){
         };
 
         //the variable circlesToChange is used to hold list of all circles that need to change
-        var circlesToChange = listOfData(id, years);
+        var circlesToChange = getInfo(id, years, "data");
 
         //if you clicked on a circle all circles & text that are tied within must change color
         if(id.charAt(0) === "c"){
@@ -2912,8 +3705,8 @@ function render(years){
           var newR = newRCalculator(this);
 
           //assigning the Rep variables to use to make changes to those elements
-          textRep = getTextRep(id);
-          bigBarRep = "bigrect"+getBarRep(id);
+          textRep = getInfo(id, 0, "textRep");
+          bigBarRep = "bigrect"+getInfo(id, 0, "barRep");
 
           //if it was already clicked, RESET everything back to previous version
           if(newR === 10){
@@ -2925,12 +3718,12 @@ function render(years){
 
             //the variable tempBBoxID is used to temporarily store the ID of the background box that is related to the circle who's attributes are being changed
             //variable is used to remove the background box of circle
-            var tempBBoxID = "#"+getBoxID(id);
+            var tempBBoxID = "#"+getInfo(id, 0, "boxID");
             svg.select(tempBBoxID).remove();
 
             //changing the text of legend that belongs to data point to gray and resetting color of progress bar to assined color of data point
             svg.select("#"+textRep).style("fill", "gray");
-            svg.select("#"+bigBarRep).style("fill", getColor(id));
+            svg.select("#"+bigBarRep).style("fill", getInfo(id, 0, "color"));
 
             //removes the text associated with data point from clicked text array
             var index = listOfClickedText.indexOf(textRep);
@@ -2945,7 +3738,7 @@ function render(years){
             }
 
             //removes the background box associated with data point from background box array
-            var index3 = listOfBackGroundBoxes.indexOf(getBoxID(id));
+            var index3 = listOfBackGroundBoxes.indexOf(getInfo(id, 0, "boxID"));
             if (index3 > -1) {
               listOfBackGroundBoxes.splice(index3, 1);
             }
@@ -2958,7 +3751,7 @@ function render(years){
             //adds the new progress bar that is connected to clicked data point to array of selected progress bars
             listOfProgressBars.push(bigBarRep);
 
-            listOfBackGroundBoxes.push(getBoxID(id));
+            listOfBackGroundBoxes.push(getInfo(id, 0, "boxID"));
 
             //remove texts so background box could be at the bottom
             deteleText();
@@ -2966,22 +3759,24 @@ function render(years){
             //add background box
             svg.append("rect")
                 .attr("x", (100+(100*years)))
-                .attr("y", getBoxY(id))
+                .attr("y", getInfo(id, 0, "boxY"))
                 .attr("rx", 5)
                 .attr("ry", 5)
                 .attr("width", 375)
                 .attr("height", 30)
-                .attr("id", getBoxID(id))
-                .style("fill", getColor(id))
+                .attr("id", getInfo(id, 0, "boxID"))
+                .style("fill", getInfo(id, 0, "color"))
                 .style("opacity", 0.3)
                 .attr("visibility", "none");
 
             //places text back on top layer above background boxes
             placeText(dataset, years);
 
+            circlesToChange = getInfo(id, years, "data");
+
             //the for loop below resets the color of each circle to changed state: color--varies, opacity--0.8 and ADDS each circle to the clicked data point array
             for(var i = 0; i < circlesToChange.length; ++i){
-              svg.select("#"+circlesToChange[i]).style("opacity", 5.0).style("fill", getColor(id));
+              svg.select("#"+circlesToChange[i]).style("opacity", 5.0).style("fill", getInfo(id, 0, "color"));
               svg.select("#"+circlesToChange[i]).moveToFront();
               svg.select("#textbox").remove();
               svg.select("#tempText").remove();
@@ -3002,8 +3797,8 @@ function render(years){
         else{//if you select a text
 
           //assigning the Rep variables to use to make changes to those elements
-          textRep = getTextRep(id);
-          bigBarRep = "bigrect"+getBarRep(id);
+          textRep = getInfo(id, 0, "textRep");
+          bigBarRep = "bigrect"+getInfo(id, 0, "barRep");
 
           //undo changes
           if(listOfClickedText.includes(textRep)) {
@@ -3016,12 +3811,12 @@ function render(years){
 
             //the variable tempBBoxID is used to temporarily store the ID of the background box that is related to the circle who's attributes are being changed
             //variable is used to remove the background box of circle
-            var tempBBoxID = "#"+getBoxID(id);
+            var tempBBoxID = "#"+getInfo(id, 0, "boxID");
             svg.select(tempBBoxID).remove();
 
             //changing the text of legend that belongs to data point to gray and resetting color of progress bar to assined color of data point
             svg.select("#"+textRep).style("fill", "gray");
-            svg.select("#"+bigBarRep).style("fill", getColor(id));
+            svg.select("#"+bigBarRep).style("fill", getInfo(id, 0, "color"));
 
             //removes the text associated with data point from clicked text array
             var index = listOfClickedText.indexOf(textRep);
@@ -3036,7 +3831,7 @@ function render(years){
             }
 
             //removes the background box associated with data point from background box array
-            var index3 = listOfBackGroundBoxes.indexOf(getBoxID(id));
+            var index3 = listOfBackGroundBoxes.indexOf(getInfo(id, 0, "boxID"));
             if (index3 > -1) {
               listOfBackGroundBoxes.splice(index3, 1);
             }
@@ -3050,7 +3845,7 @@ function render(years){
             //adds the new progress bar that is connected to clicked data point to array of selected progress bars
             listOfProgressBars.push(bigBarRep);
 
-            listOfBackGroundBoxes.push(getBoxID(id));
+            listOfBackGroundBoxes.push(getInfo(id, 0, "boxID"));
 
             //remove texts so background box could be at the bottom
             deteleText();
@@ -3058,13 +3853,13 @@ function render(years){
             //add background box
             svg.append("rect")
                 .attr("x", (100+(100*years)))
-                .attr("y", getBoxY(id))
+                .attr("y", getInfo(id, 0, "boxY"))
                 .attr("rx", 5)
                 .attr("ry", 5)
                 .attr("width", 375)
                 .attr("height", 30)
-                .attr("id", getBoxID(id))
-                .style("fill", getColor(id))
+                .attr("id", getInfo(id, 0, "boxID"))
+                .style("fill", getInfo(id, 0, "color"))
                 .style("opacity", 0.3)
                 .attr("visibility", "none");
 
@@ -3073,7 +3868,7 @@ function render(years){
 
             //the for loop below resets the color of each circle to changed state: color--varies, opacity--0.8 and ADDS each circle to the clicked data point array
             for(var i = 0; i < circlesToChange.length; ++i){
-              svg.select("#"+circlesToChange[i]).style("opacity", 5.0).style("fill", getColor(id));
+              svg.select("#"+circlesToChange[i]).style("opacity", 5.0).style("fill", getInfo(id, 0, "color"));
               svg.select("#"+circlesToChange[i]).moveToFront();
               svg.select("#textbox").remove();
               svg.select("#tempText").remove();
@@ -3114,8 +3909,8 @@ function render(years){
           d3.select(this).style("fill", "gray");
 
           //the below two variables is used to hold all the elements that will change (progress bars and data points)
-          var progressBars= getProgressBarsNumber(this.id);
-          var selectedDataPoints = listOfData(this.id ,years);
+          var progressBars= getInfo(this.id, 0, "progressBars");
+          var selectedDataPoints = getInfo(this.id ,years, "data");
 
           //the for loop below sets necessary progress bars to hidden
           for(var i = 0; i < progressBars.length; ++i){
@@ -3133,8 +3928,8 @@ function render(years){
           d3.select(this).style("fill", "white");
 
           //the below two variables is used to hold all the elements that will change (progress bars and data points)
-          var progressBars= getProgressBarsNumber(this.id);
-          var selectedDataPoints = listOfData(this.id ,years);
+          var progressBars= getInfo(this.id, 0, "progressBars");
+          var selectedDataPoints = getInfo(this.id ,years, "data");
 
           //the for loop below sets necessary progress bars to visible
           for(var i = 0; i < progressBars.length; ++i){
@@ -3153,805 +3948,6 @@ function render(years){
       });
   }
 
-  /*
-  * The function getProgressBarsNumber returns array of IDs of progress bars that are connected to givenID.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getProgressBarsNumber(givenID){
-    var progressBarsToChange = [];
-    switch (givenID) {
-      case "checkbox1":
-        progressBarsToChange = ["#smallrect1", "#bigrect1"];
-      break;
-      case "checkbox2":
-        progressBarsToChange = ["#smallrect2", "#bigrect2"];
-      break;
-      case "checkbox3":
-        progressBarsToChange = ["#smallrect3", "#bigrect3"];
-      break;
-      case "checkbox4":
-        progressBarsToChange = ["#smallrect4", "#bigrect4"];
-      break;
-      case "checkbox5":
-        progressBarsToChange = ["#smallrect5", "#bigrect5"];
-      break;
-      case "checkbox6":
-        progressBarsToChange = ["#smallrect6", "#bigrect6"];
-      break;
-      case "checkbox7":
-        progressBarsToChange = ["#smallrect7", "#bigrect7"];
-      break;
-      case "checkbox8":
-        progressBarsToChange = ["#smallrect8", "#bigrect8"];
-      break;
-      case "checkbox9":
-        progressBarsToChange = ["#smallrect9", "#bigrect9"];
-      break;
-      case "checkbox10":
-        progressBarsToChange = ["#smallrect10", "#bigrect10"];
-      break;
-      case "checkbox11":
-        progressBarsToChange = ["#smallrect11", "#bigrect11"];
-      break;
-      case "checkbox12":
-        progressBarsToChange = ["#smallrect12", "#bigrect12"];
-      break;
-      case "checkbox13":
-        progressBarsToChange = ["#smallrect13", "#bigrect13"];
-      break;
-      case "checkbox14":
-        progressBarsToChange = ["#smallrect14", "#bigrect14"];
-      break;
-      case "checkbox15":
-        progressBarsToChange = ["#smallrect15", "#bigrect15"];
-      break;
-      case "checkbox16":
-        progressBarsToChange = ["#smallrect16", "#bigrect16"];
-      break;
-    }
-    return progressBarsToChange;
-  }
-
-  /*
-  * The function getBoxID returns ID of background box that are placed behind the data type texts and progress bars that are connected to givenID.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getBoxID(givenID) {
-    switch (givenID) {
-    case "c1": case "c17": case "c33": case "t1":
-      return "b1";
-      break;
-    case "c2": case "c18": case "c34": case "t2":
-      return "b2";
-      break;
-    case "c3": case "c19": case "c35": case "t3":
-      return "b3";
-      break;
-    case "c4": case "c20": case "c36": case "t4":
-      return "b4";
-      break;
-    case "c5": case "c21": case "c37": case "t5":
-      return "b5";
-      break;
-    case "c6": case "c22": case "c38": case "t6":
-      return "b6";
-      break;
-    case "c7": case "c23": case "c39": case "t7":
-      return "b7";
-      break;
-    case "c8": case "c24": case "c40": case "t8":
-      return "b8";
-      break;
-    case "c9": case "c25": case "c41": case "t9":
-      return "b9";
-      break;
-    case "c10": case "c26": case "c42": case "t10":
-      return "b10";
-      break;
-    case "c11": case "c27": case "c43": case "t11":
-      return "b11";
-      break;
-    case "c12": case "c28": case "c44": case "t12":
-      return "b12";
-      break;
-    case "c13": case "c28": case "c45": case "t13":
-      return "b13";
-      break;
-    case "c14": case "c30": case "c46": case "t14":
-      return "b14";
-      break;
-    case "c15": case "c31": case "c47": case "t15":
-      return "b15";
-      break;
-    case "c16": case "c32": case "c48": case "t16":
-      return "b16";
-      break;
-    }
-  }
-
-  /*
-  * The function getBoxY takes a givenID and through that ID it returns the Y cordinate that is going to be used for the background boxes.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getBoxY(givenID) {
-    switch (givenID) {
-    case "c1": case "c17": case "c33": case "t1":
-      return 45;
-      break;
-    case "c2": case "c18": case "c34": case "t2":
-      return 75;
-      break;
-    case "c3": case "c19": case "c35": case "t3":
-      return 105;
-      break;
-    case "c4": case "c20": case "c36": case "t4":
-      return 135;
-      break;
-    case "c5": case "c21": case "c37": case "t5":
-      return 165;
-      break;
-    case "c6": case "c22": case "c38": case "t6":
-      return 195;
-      break;
-    case "c7": case "c23": case "c39": case "t7":
-      return 225;
-      break;
-    case "c8": case "c24": case "c40": case "t8":
-      return 255;
-      break;
-    case "c9": case "c25": case "c41": case "t9":
-      return 285;
-      break;
-    case "c10": case "c26": case "c42": case "t10":
-      return 315;
-      break;
-    case "c11": case "c27": case "c43": case "t11":
-      return 345;
-      break;
-    case "c12": case "c28": case "c44": case "t12":
-      return 375;
-      break;
-    case "c13": case "c28": case "c45": case "t13":
-      return 405;
-      break;
-    case "c14": case "c30": case "c46": case "t14":
-      return 435;
-      break;
-    case "c15": case "c31": case "c47": case "t15":
-      return 465;
-      break;
-    case "c16": case "c32": case "c48": case "t16":
-      return 495;
-      break;
-    }
-  }
-
-  /*
-  * The function calculateAvgScores takes in dataPoints as a parameter and an int that represents the number of years.
-  * This function calculates the average of each data type and returns an array with those averages
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function calculateAvgScores(dataPoints, numYears){
-    var tempdata = [];
-    if(numYears === 3){
-      var tempSum = 0;
-      for(var i = 0; i < 16; ++i){
-        tempSum = dataPoints[i].count+dataPoints[i+16].count+dataPoints[i+32].count;
-        tempSum = tempSum / numYears;
-        tempdata.push(tempSum);
-      }
-    }
-    else if(numYears === 2){
-      var tempSum = 0;
-      for(var i = 0; i < 16; ++i){
-        tempSum = dataPoints[i].count+dataPoints[i+16].count;
-        tempSum = tempSum / numYears;
-        tempdata.push(tempSum);
-      }
-    }
-    else{
-      for(var i = 0; i < 16; ++i){
-        tempdata.push(dataPoints[i].count);
-      }
-    }
-    return tempdata;
-  }
-
-  /*
-  * The function fillData fills an array of objects with data that will be plotted with data points.
-  * Each object consists of count (the score out of 100), label (the title of the category it belongs to), and id (the id that will be used for that specifc data point).
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function fillData(yearsToFill) {
-    var tempData = [];
-    var totalNumberDataPoints = yearsToFill*16; //16 because there are 16 different data points we fill per year
-    var tempID = 0;
-    for(var i = 1; i <= totalNumberDataPoints; ++i){
-      tempID++;
-      var tempDataCount = getScore(i);
-      var tempDataLabel = getLabel(i);
-      var tempObjData = {'count': (Math.round(tempDataCount*100)/100), 'label': tempDataLabel, 'id': "c"+tempID};
-      tempData.push(tempObjData);
-    }
-    return tempData;
-  }
-
-  /*
-  * The function getScore will take in id (an int) as a parameter that will determine what type of score the program needs i.e Corn Grain score.
-  * This fucntion also call the getYearForScore to get what year of that specific category you are looking for.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getScore(id) {
-    switch (id) {
-      case 1: case 17: case 33:
-        return Totals.carbonSequestrationScore[getYearForScore(id)];
-      break;
-      case 2: case 18: case 34:
-        return Totals.biodiversityPointsScore[getYearForScore(id)];
-      break;
-      case 3: case 19: case 35:
-        return Totals.gameWildlifePointsScore[getYearForScore(id)];
-      break;
-      case 4: case 20: case 36:
-        return Totals.grossErosionScore[getYearForScore(id)];
-      break;
-      case 5: case 21: case 37:
-        return Totals.nitrateConcentrationScore[getYearForScore(id)];
-      break;
-      case 6: case 22: case 38:
-        return Totals.phosphorusLoadScore[getYearForScore(id)];
-      break;
-      case 7: case 23: case 39:
-        return Totals.sedimentDeliveryScore[getYearForScore(id)];
-      break;
-      case 8: case 24: case 40:
-        return Totals.alfalfaHayYieldScore[getYearForScore(id)];
-      break;
-      case 9: case 25: case 41:
-        return Totals.cattleYieldScore[getYearForScore(id)];
-      break;
-      case 10: case 26: case 42:
-        return Totals.cornGrainYieldScore[getYearForScore(id)];
-      break;
-      case 11: case 27: case 43:
-        return Totals.grassHayYieldScore[getYearForScore(id)];
-      break;
-      case 12: case 28: case 44:
-        return Totals.switchgrassYieldScore[getYearForScore(id)];
-      break;
-      case 13: case 29: case 45:
-        return Totals.mixedFruitsAndVegetablesYieldScore[getYearForScore(id)];
-      break;
-      case 14: case 30: case 46:
-        return Totals.shortRotationWoodyBiomassYieldScore[getYearForScore(id)];
-      break;
-      case 15: case 31: case 47:
-        return Totals.soybeanYieldScore[getYearForScore(id)];
-      break;
-      case 16: case 32: case 48:
-        return Totals.woodYieldScore[getYearForScore(id)];
-      break;
-    }
-  }
-
-  /*
-  * The function getYearForScore will take in id (an int) as a parameter that will determine what year that falls under.
-  * This fucntion is used in getScore to get the right year of each land type, i.e 1-16 is the first cycle of each of the land types, 17-32 is the second cycle and so on.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getYearForScore(tempID){
-    if (tempID > 0 && tempID < 17){
-      return 1;
-    }else if(tempID > 16 && tempID < 33){
-      return 2;
-    }else{
-      return 3;
-    }
-  }
-
-  /*
-  * The function getLabel will take in id (an int) as a parameter that will return the appropriate label for each valid int passed.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getLabel(id) {
-    switch (id) {
-      case 1: case 17: case 33:
-        return "Carbon Sequestration";
-      break;
-      case 2: case 18: case 34:
-        return "Biodiversity";
-      break;
-      case 3: case 19: case 35:
-        return "Game Wildlife";
-      break;
-      case 4: case 20: case 36:
-        return "Erosion Control";
-      break;
-      case 5: case 21: case 37:
-        return "Nitrate Pollution Control";
-      break;
-      case 6: case 22: case 38:
-        return "Phosphorus Pollution Control";
-      break;
-      case 7: case 23: case 39:
-        return "Sediment Control";
-      break;
-      case 8: case 24: case 40:
-        return "Alfalfa Hay";
-      break;
-      case 9: case 25: case 41:
-        return "Cattle";
-      break;
-      case 10: case 26: case 42:
-        return "Corn Grain";
-      break;
-      case 11: case 27: case 43:
-        return "Grass Hay";
-      break;
-      case 12: case 28: case 44:
-        return "Switchgrass Biomass";
-      break;
-      case 13: case 29: case 45:
-        return "Mixed Fruits and Vegetables";
-      break;
-      case 14: case 30: case 46:
-        return "Short-rotation Woody Biomass";
-      break;
-      case 15: case 31: case 47:
-        return "Soybeans";
-      break;
-      case 16: case 32: case 48:
-        return "Wood";
-      break;
-    }
-  }
-
-  /*
-  * The function getLandName will take in a circle id and return the land type name that connects with that data point.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getLandName(givenID) {
-    var landType = "";
-    switch (givenID) {
-      case "c1": case "c17": case "c33":
-        landType = "Carbon Sequestration";
-        break;
-      case "c2": case "c18": case "c34":
-        landType = "Biodiversity";
-        break;
-      case "c3": case "c19": case "c35":
-        landType = "Game Wildlife";
-        break;
-      case "c4": case "c20": case "c36":
-        landType = "Erosion Control";
-        break;
-      case "c5": case "c21": case "c37":
-        landType = "Nitrate Pollution Control";
-        break;
-      case "c6": case "c22": case "c38":
-        landType = "Phosphorus Pollution Control";
-        break;
-      case "c7": case "c23": case "c39":
-        landType = "Sediment Control";
-        break;
-      case "c8": case "c24": case "c40":
-        landType = "Alfalfa Hay";
-        break;
-      case "c9": case "c25": case "c41":
-        landType = "Cattle";
-        break;
-      case "c10": case "c26": case "c42":
-        landType = "Corn Grain";
-        break;
-      case "c11": case "c27": case "c43":
-        landType = "Grass Hay";
-        break;
-      case "c12": case "c28": case "c44":
-        landType = "Switchgrass Biomass";
-        break;
-      case "c13": case "c29": case "c45":
-        landType = "Mixed Fruits and Vegetables";
-        break;
-      case "c14": case "c30": case "c46":
-        landType = "Short-Rotation Woody Biomass";
-        break;
-      case "c15": case "c31": case "c47":
-        landType = "Soybeans";
-        break;
-      case "c16": case "c32": case "c48":
-        landType = "Wood";
-        break;
-    }
-    return landType;
-  }
-
-  /*
-  * The function getScoreOfLandType returns the score of the type of land put in as a parameter.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getScoreOfLandType(id) {
-    for(var properties in dataset){
-      if(dataset[properties].id === id){
-        return dataset[properties].count;
-      }
-    }
-    return 123456789;
-  }
-
-  /*
-  * The function getCX returns the CX of data point that is passed in as a parameter.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function  getCX(thisElement) {
-    return parseInt(thisElement.attributes.cx.nodeValue)+12;
-  }
-
-  /*
-  * The function getCY returns the CY of data point that is passed in as a parameter.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function  getCY(thisElement) {
-    return parseInt(thisElement.attributes.cy.nodeValue)-8;
-  }
-
-  /*
-  * The function getText returns a string that will be used over hover options.
-  * The string will be as follows: "landName: landScore".
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getText(thisElement){
-    var tempText = getLandName(thisElement.id)+": "+getScoreOfLandType(thisElement.id);
-    return tempText;
-  }
-
-  /*
-  * The function getTextRep takes in an ID from a circle and returns the ID of the string legend that represents it.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getTextRep(givenID) {
-    var textId = "";
-    switch (givenID) {
-      case "c1": case "c17": case "c33": case "t1":
-        textId = "t1";
-        break;
-      case "c2": case "c18": case "c34": case "t1":
-        textId = "t2";
-        break;
-      case "c3": case "c19": case "c35": case "t1":
-        textId = "t3";
-        break;
-      case "c4": case "c20": case "c36": case "t1":
-        textId = "t4";
-        break;
-      case "c5": case "c21": case "c37": case "t1":
-        textId = "t5";
-        break;
-      case "c6": case "c22": case "c38": case "t1":
-        textId = "t6";
-        break;
-      case "c7": case "c23": case "c39": case "t1":
-        textId = "t7";
-        break;
-      case "c8": case "c24": case "c40": case "t1":
-        textId = "t8";
-        break;
-      case "c9": case "c25": case "c41": case "t1":
-        textId = "t9";
-        break;
-      case "c10": case "c26": case "c42": case "t1":
-        textId = "t10";
-        break;
-      case "c11": case "c27": case "c43":
-        textId = "t11";
-        break;
-      case "c12": case "c28": case "c44":
-        textId = "t12";
-        break;
-      case "c13": case "c29": case "c45":
-        textId = "t13";
-        break;
-      case "c14": case "c30": case "c46":
-        textId = "t14";
-        break;
-      case "c15": case "c31": case "c47":
-        textId = "t15";
-        break;
-      case "c16": case "c32": case "c48":
-        textId = "t16";
-        break;
-      default:
-        textId = givenID;
-    }
-    return textId;
-  }
-
-  /*
-  * The function getBarRep takes in an ID from a circle and returns the ID of the bar graph that represents it.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getBarRep(givenID) {
-    var textId = "";
-    switch (givenID) {
-      case "c1": case "c17": case "c33": case "t1":
-        textId = "1";
-        break;
-      case "c2": case "c18": case "c34": case "t2":
-        textId = "2";
-        break;
-      case "c3": case "c19": case "c35": case "t3":
-        textId = "3";
-        break;
-      case "c4": case "c20": case "c36": case "t4":
-        textId = "4";
-        break;
-      case "c5": case "c21": case "c37": case "t5":
-        textId = "5";
-        break;
-      case "c6": case "c22": case "c38": case "t6":
-        textId = "6";
-        break;
-      case "c7": case "c23": case "c39": case "t7":
-        textId = "7";
-        break;
-      case "c8": case "c24": case "c40": case "t8":
-        textId = "8";
-        break;
-      case "c9": case "c25": case "c41": case "t9":
-        textId = "9";
-        break;
-      case "c10": case "c26": case "c42": case "t10":
-        textId = "10";
-        break;
-      case "c11": case "c27": case "c43": case "t11":
-        textId = "11";
-        break;
-      case "c12": case "c28": case "c44": case "t12":
-        textId = "12";
-        break;
-      case "c13": case "c29": case "c45": case "t13":
-        textId = "13";
-        break;
-      case "c14": case "c30": case "c46": case "t14":
-        textId = "14";
-        break;
-      case "c15": case "c31": case "c47": case "t15":
-        textId = "15";
-        break;
-      case "c16": case "c32": case "c48": case "t16":
-        textId = "16";
-        break;
-      default:
-        textId = givenID;
-    }
-    return textId;
-  }
-
-  /*
-  * The function listOfData takes in an ID and an int that represents an integer and returns all the data points that are tied with it.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function listOfData(givenID, y) {
-    var selectID = [];
-    switch (givenID) {
-    case "c1": case "c17": case "c33": case "t1": case "checkbox1":
-      if(y > 2){
-        selectID = ["c1", "c17", "c33"];
-      }else if(y > 1){
-        selectID = ["c1", "c17"];
-      }else{
-        selectID = ["c1"];
-      }
-      break;
-    case "c2": case "c18": case "c34": case "t2":  case "checkbox2":
-      if(y > 2){
-        selectID = ["c2", "c18", "c34"];
-      }else if(y > 1){
-        selectID = ["c2", "c18"];
-      }else{
-        selectID = ["c2"];
-      }
-      break;
-    case "c3": case "c19": case "c35": case "t3":  case "checkbox3":
-      if(y > 2){
-        selectID = ["c3", "c19", "c35"];
-      }else if(y > 1){
-        selectID = ["c3", "c19"];
-      }else{
-        selectID = ["c3"];
-      }
-      break;
-    case "c4": case "c20": case "c36": case "t4":  case "checkbox4":
-      if(y > 2){
-        selectID = ["c4", "c20", "c36"];
-      }else if(y > 1){
-        selectID = ["c4", "c20"];
-      }else{
-        selectID = ["c4"];
-      }
-      break;
-    case "c5": case "c21": case "c37": case "t5":  case "checkbox5":
-      if(y > 2){
-        selectID = ["c5", "c21", "c37"];
-      }else if(y > 1){
-        selectID = ["c5", "c21"];
-      }else{
-        selectID = ["c5"];
-      }
-      break;
-    case "c6": case "c22": case "c38": case "t6":  case "checkbox6":
-      if(y > 2){
-        selectID = ["c6", "c22", "c38"];
-      }else if(y > 1){
-        selectID = ["c6", "c22"];
-      }else{
-        selectID = ["c6"];
-      }
-      break;
-    case "c7": case "c23": case "c39": case "t7":  case "checkbox7":
-      if(y > 2){
-        selectID = ["c7", "c23", "c39"];
-      }else if(y > 1){
-        selectID = ["c7", "c23"];
-      }else{
-        selectID = ["c7"];
-      }
-      break;
-    case "c8": case "c24": case "c40": case "t8":  case "checkbox8":
-      if(y > 2){
-        selectID = ["c8", "c24", "c40"];
-      }else if(y > 1){
-        selectID = ["c8", "c24"];
-      }else{
-        selectID = ["c8"];
-      }
-      break;
-    case "c9": case "c25": case "c41": case "t9":  case "checkbox9":
-      if(y > 2){
-        selectID = ["c9", "c25", "c41"];
-      }else if(y > 1){
-        selectID = ["c9", "c25"];
-      }else{
-        selectID = ["c9"];
-      }
-      break;
-    case "c10": case "c26": case "c42": case "t10":  case "checkbox10":
-      if(y > 2){
-        selectID = ["c10", "c26", "c42"];
-      }else if(y > 1){
-        selectID = ["c10", "c26"];
-      }else{
-        selectID = ["c10"];
-      }
-      break;
-    case "c11": case "c27": case "c43": case "t11":  case "checkbox11":
-      if(y > 2){
-        selectID = ["c11", "c27", "c43"];
-      }else if(y > 1){
-        selectID = ["c11", "c27"];
-      }else{
-        selectID = ["c11"];
-      }
-      break;
-    case "c12": case "c28": case "c44": case "t12":  case "checkbox12":
-      if(y > 2){
-        selectID = ["c12", "c28", "c44"];
-      }else if(y > 1){
-        selectID = ["c12", "c28"];
-      }else{
-        selectID = ["c12"];
-      }
-      break;
-    case "c13": case "c29": case "c45": case "t13":  case "checkbox13":
-      if(y > 2){
-        selectID = ["c13", "c29", "c45"];
-      }else if(y > 1){
-        selectID = ["c13", "c29"];
-      }else{
-        selectID = ["c13"];
-      }
-      break;
-    case "c14": case "c30": case "c46": case "t14":  case "checkbox14":
-      if(y > 2){
-        selectID = ["c14", "c30", "c46"];
-      }else if(y > 1){
-        selectID = ["c14", "c30"];
-      }else{
-        selectID = ["c14"];
-      }
-      break;
-    case "c15": case "c31": case "c47": case "t15":  case "checkbox15":
-      if(y > 2){
-        selectID = ["c15", "c31", "c47"];
-      }else if(y > 1){
-        selectID = ["c15", "c31"];
-      }else{
-        selectID = ["c15"];
-      }
-      break;
-    case "c16": case "c32": case "c48": case "t16":  case "checkbox16":
-      if(y > 2){
-        selectID = ["c16", "c32", "c48"];
-      }else if(y > 1){
-        selectID = ["c16", "c32"];
-      }else{
-        selectID = ["c16"];
-      }
-      break;
-    }
-    return selectID;
-  }
-
-  /*
-  * The function getColor takes in an ID returns the color that is specific for that date type.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function getColor(givenID) {
-    switch (givenID) {
-    case "c1": case "c17": case "c33": case "t1": case "bigrect1":
-      return "#1f77b4";
-      break;
-    case "c2": case "c18": case "c34": case "t2": case "bigrect2":
-      return "#aec7e8";
-      break;
-    case "c3": case "c19": case "c35": case "t3": case "bigrect3":
-      return "#ff7f0e";
-      break;
-    case "c4": case "c20": case "c36": case "t4": case "bigrect4":
-      return "#ffbb78";
-      break;
-    case "c5": case "c21": case "c37": case "t5": case "bigrect5":
-      return "#2ca02c";
-      break;
-    case "c6": case "c22": case "c38": case "t6": case "bigrect6":
-      return "#98df8a";
-      break;
-    case "c7": case "c23": case "c39": case "t7": case "bigrect7":
-      return "#9467bd";
-      break;
-    case "c8": case "c24": case "c40": case "t8": case "bigrect8":
-      return "#c5b0d5";
-      break;
-    case "c9": case "c25": case "c41": case "t9": case "bigrect9":
-      return "#8c564b";
-      break;
-    case "c10": case "c26": case "c42": case "t10": case "bigrect10":
-      return "#c49c94";
-      break;
-    case "c11": case "c27": case "c43": case "t11": case "bigrect11":
-      return "#e377c2";
-      break;
-    case "c12": case "c28": case "c44": case "t12": case "bigrect12":
-      return "#9e4a6a";
-      break;
-    case "c13": case "c28": case "c45": case "t13": case "bigrect13":
-      return "#ba6f14";
-      break;
-    case "c14": case "c30": case "c46": case "t14": case "bigrect14":
-      return "#24e2cf";
-      break;
-    case "c15": case "c31": case "c47": case "t15": case "bigrect15":
-      return "#02d6fc";
-      break;
-    case "c16": case "c32": case "c48": case "t16": case "bigrect16":
-      return "#bcf5ff";
-      break;
-    }
-  }
-
-  /*
-  * The function onClickHandler takes in an HTML element and checks the R of that element and based on that returns the new R.
-  * This function was created for Issue 357. For more information refer to Issue 357.
-  */
-  function newRCalculator(thisElement) {
-    //element that is being clicked has not been clicked
-    var thisElementR = parseInt(thisElement.attributes.r.nodeValue);
-    if(thisElementR === 10){
-      return 15;
-    }
-    else if(thisElementR !== 10){
-      return 10;
-    }
-  }
 
   placeText(dataset, years);
   placeStandards(years);
