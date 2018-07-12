@@ -3318,8 +3318,6 @@ function Tile(tileArray, board) {
     //Array of possible values of carbon sequestration per unit area sorted by landUseType
 
     //for Best Management Practices, if cover crop is turned on
-    bmp.numSwitchesOn = Number(sessionStorage.getItem('nSOn'));
-    console.log("number of switches "+bmp.numSwitchesOn);
     bmp.coverCrop = sessionStorage.getItem('cC');
     //console.log("cC in the function " +bmp.coverCrop);
     if(bmp.coverCrop === 'true')
@@ -3424,7 +3422,7 @@ function Tile(tileArray, board) {
 
   //Calculate coverManagementFactor for rusle - C
   this.coverManagementFactor = function(year) {
-    //bmpCount();
+    bmp.numSwitchesOn = sessionStorage.getItem('nSon');
     //If year == 5, then we are calculating the maximum for Conventional Soybean
     //value 0.3 must be returned because previous year land type is not relevant for maximum
     if (year == 5 && this.landType[year] == LandUseType.conventionalSoybean) {
@@ -3477,6 +3475,23 @@ function Tile(tileArray, board) {
         //HERE??
         case "conservationCorn":
           return 0.020;
+          //if cell is stream adjacent- regular + ((#BMPs off)/5)* (regular conventional corn - regular conservation corn) - // COMBAK: after formula is fixed
+          // if(this.streamNetwork == 1)
+          // {
+          //   return (0.020+(((5 - bmp.numSwitchesOn)/5)*(0.085-0.020)));
+          // }
+          // else
+          // {
+          //   getStreamBuffer();
+          //   bmp.streamBuffer = sessionStorage.getItem('sB');
+          //   var otherSwitches = bmp.numSwitchesOn;
+          //   if(bmp.streamBuffer === 'true')
+          //   {
+          //     otherSwitches-=1;
+          //     return (0.020+(((4 - otherSwitches)/4)*(0.085-0.020)));
+          //   }
+          //   return (0.020+(((4 - bmp.numSwitchesOn)/4)*(0.085-0.020)));
+          // }
         case "conservationSoybean":
           return 0.031;
         case "conventionalCorn":
@@ -4047,10 +4062,10 @@ function Tile(tileArray, board) {
   };
 
   this.getPApplicationFactor = function(year) {
-
+    // COMBAK:
     if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean || this.landType[year] == LandUseType.permanentPasture ||
       this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.grassHay) {
-      return (this.PApplicationRate[year] / 4.58) * 0.5 * 1 * 0.005;
+      return (this.PApplicationRate[year] / 4.58) * 0.5 * 1 * 0.005; //instead of 0.5,
     } else if (this.landType[year] == LandUseType.alfalfa) {
       return (this.PApplicationRate[year] / 4.58) * 0.5 * 0.9 * 0.005;
     } else if (this.landType[year] == LandUseType.conventionalCorn || this.landType[year] == LandUseType.conventionalSoybean ||
@@ -4066,12 +4081,29 @@ function Tile(tileArray, board) {
     return (0.7 * (500 + 3 * this.soilTestP)) * (2000 / 1000000);
   };
 
+  // COMBAK: if- else question
   this.enrichmentFactor = function(year) {
     if (this.landType[year] == LandUseType.conventionalCorn || this.landType[year] == LandUseType.conventionalSoybean ||
-      this.landType[year] == LandUseType.mixedFruitsVegetables) {
-      return 1.1;
+      this.landType[year] == LandUseType.mixedFruitsVegetables){
+        return 1.1;
     } else {
-      return 1.3;
+      //return 1.3;
+      if(this.streamNetwork == 1)
+      {
+        return (1.3-((0.2)*((5-bmp.numSwitchesOn)/5)));
+      }
+      else
+      {
+        getStreamBuffer();
+        bmp.streamBuffer = sessionStorage.getItem('sB');
+        var otherSwitches = bmp.numSwitchesOn;
+        if(bmp.streamBuffer === 'true')
+        {
+          otherSwitches-=1;
+          return (1.3-((0.2)*((4-otherSwitches)/4)));
+        }
+        return (1.3-((0.2)*((5-bmp.numSwitchesOn)/5)));
+      }
     }
   };
 
