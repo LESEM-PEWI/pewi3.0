@@ -1,5 +1,10 @@
 /*global initData*/
 /*global precip*/
+var aggregateChoice; // When aggregate conflict is detected, map priority will be stored in this variable.
+var isAggregateConflictDetected = false; // Indicates whether there's a aggregate conflict
+var nextFileIndex = 0; // next uploaded file should be process
+var mergedFiles = []; // stores all merged files
+var filesUploaded; // stores uploaded files
 
 //calculate() function brings the results up to date
 //  this is currently set to calculate up to year 3 for testing purposes
@@ -155,17 +160,55 @@ function display() {
 // into board. The first argument is passed by reference, so nothing need be returned
 function overlayBoard(board) {
   // for each data entry
-  console.log("initData.length " + initData.length);
+  // console.log("initData.length " + initData.length);
+  // console.log(initData);
+  // console.log(board);
+
+  var utilityWindow = document.getElementById("startUpFrame").contentWindow.document.getElementById("startupDialogueOverlay").contentWindow;
   for (var i = 0; i < initData.length; i++) {
     //get the tile set up
     var tile = new Tile(initData[i], board);
 
+    if(tile.baseLandUseType == 1 && board.map[tile.id - 1].baseLandUseType == 1){
+      // An new aggregate conflict is detected
+      if(typeof aggregateChoice === 'undefined'){
+
+        utilityWindow.document.getElementById("modalConflictFrame").style.display = "block";
+        utilityWindow.document.getElementById("conflictText").innerHTML += "Merged Map - Currently includes the following files: ";
+        for(var i = 0; i < mergedFiles.length; i++){
+          utilityWindow.document.getElementById("conflictText").innerHTML += "<" + mergedFiles[i] + ">";
+          if(i != mergedFiles.length - 1)
+            utilityWindow.document.getElementById("conflictText").innerHTML += ", ";
+        }
+        utilityWindow.document.getElementById("conflictText").innerHTML += ". These files were successfully merged.<br><br>";
+        utilityWindow.document.getElementById("conflictText").innerHTML += "Current Map to Merge - <" + filesUploaded[nextFileIndex].name + "> has a conflict with the above merged maps.";
+
+        isAggregateConflictDetected = true;
+
+        break;
+      }
+      // aggregate conflict is detected, and map priority is made to be merged map.
+      else if(aggregateChoice === 'merged') {
+        // do nothing
+      }
+      // aggregate conflict is detected, and map priority is made to be current map.
+      else if(aggregateChoice === 'current') {
+        board.map[tile.id - 1] = tile;
+      }
+    }
+
     //if tile has meaningful data...
-    if (tile.baseLandUseType == 1) {
+    else if (tile.baseLandUseType == 1 && board.map[tile.id - 1].baseLandUseType == -1) {
       //then overwrite the tile in old board with new board stuffaroo
       board.map[tile.id - 1] = tile;
+
     }
   } //end for : each entry in initData
+  if(typeof aggregateChoice !== 'undefined') {
+    aggregateChoice = void 0;
+
+  }
+
 } //end overlayBoard()
 
 

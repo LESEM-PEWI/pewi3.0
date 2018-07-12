@@ -2919,19 +2919,26 @@ function loadSimulation(e) {
 //  basically, it setups up the first board as is
 function multiplayerAggregateBaseMapping(file) {
   //set up first file completely normally
-
   var reader = new FileReader();
   reader.readAsText(file);
   reader.onload = function(e) {
     setupBoardFromUpload(reader.result);
     //clear initData
     initData = [];
+    nextFileIndex++;
+    mergedFiles.push(file.name);
+    console.log(file.name, "is merged!");
+    if(nextFileIndex < filesUploaded.length){
+      console.log("Processing ", filesUploaded[nextFileIndex].name);
+      // So far we are done with the first file, we continue to deal with the second one.
+      multiplayerAggregateOverlayMapping(filesUploaded[nextFileIndex]);
+    }
   };
+
 } //end multiplayerAggregateBaseMapping
 
 //here we facilitate the aggregation of multiplayer boards
 function multiplayerAggregateOverlayMapping(file) {
-
   var reader = new FileReader();
   reader.readAsText(file);
   reader.onload = function(e) {
@@ -2943,9 +2950,22 @@ function multiplayerAggregateOverlayMapping(file) {
       overlayBoard(boardData[currentBoard]);
       //now switch to the current board so that all data is up to date
       switchBoards(boardData[currentBoard]);
+      //clear initData
+      initData = [];
+
+      if(!isAggregateConflictDetected){
+        nextFileIndex++;
+        mergedFiles.push(file.name);
+        console.log(file.name, "is merged!");
+        if(nextFileIndex < filesUploaded.length){
+          console.log("Processing ", filesUploaded[nextFileIndex].name);
+          // So far we are done with the previous file, we continue to deal with the next one.
+          // Call multiplayerAggregateOverlayMapping recursively to realize load files asynchrnously. Clever, right?
+          multiplayerAggregateOverlayMapping(filesUploaded[nextFileIndex]);
+        }
+      }
     }
-    //clear initData
-    initData = [];
+
   };
 } //end multiplayerAggregateOverlayMapping
 
@@ -2975,19 +2995,32 @@ function multiplayerExit() {
 }
 
 //multiUpload directs functions for multiplayer file upload
-function multiplayerFileUpload(fileUploadEvent) {
-  //if this is the first time, call base prep, otherwise, add map on top
-
-  // return (numberOfTimesThisFunctionHasBeenCalledInProcess >= 1) ?
-  //   multiplayerAggregateOverlayMapping(fileUploadEvent) :
-  //   multiplayerAggregateBaseMapping(fileUploadEvent);
-
-  multiplayerAggregateBaseMapping(fileUploadEvent.files[0]);
-  for (var i = 1; i < fileUploadEvent.files.length; i++) {
-    multiplayerAggregateOverlayMapping(fileUploadEvent.files[i]);
-  }
+// In this function, we only process the first file, load the data into board.
+// Due to the nature of javascript asynchronousity, we should NOT use for loop to deal with all the files
+// Instead, I used recursive function to deal with all other files
+function multiplayerFileUpload() {
+  console.log("Processing ", filesUploaded[0].name);
+  multiplayerAggregateBaseMapping(filesUploaded[0]);
+  // for(var file of filesUploaded){
+  //   if(file == filesUploaded[0]) {
+  //     console.log("Processing ", file.name);
+  //     multiplayerAggregateBaseMapping(file);
+  //     console.log(file.name, " merged!");
+  //   }
+  //   else {
+  //     if(!isAggregateConflictDetected) {
+  //       console.log("Processing ", file.name);
+  //       setTimeout(function(file){multiplayerAggregateOverlayMapping(file)},50);
+  //       console.log(file.name, " merged!");
+  //     }
+  //     else{
+  //       break;
+  //     }
+  //   }
+  // }
 
 } //end multiUpload
+
 
 //multiplayerMode hides all unnecessary options from screen
 function multiplayerMode() {
@@ -5707,6 +5740,7 @@ function uploadCSV(reader) {
       // because of this addition line. Since we know that there should be 829 lines in total, thus we deal with only the first 829 lines.
       if(i > 828) continue;
 
+      console.log("allTextLines.length = ",allTextLines.length);
       data = allTextLines[i].split(',');
       var headlength = headers.length;
       if (data.length == headlength) {
