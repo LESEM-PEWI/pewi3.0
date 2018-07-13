@@ -4076,7 +4076,7 @@ function Tile(tileArray, board) {
             var timeMethodFactor = 1-((0.2)*((5-bmp.numSwitchesOn)/5));
             return (this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005;
           }
-          else
+          else //if it is not stream adjacent
           {
             getStreamBuffer();
             bmp.streamBuffer = sessionStorage.getItem('sB');
@@ -4084,9 +4084,11 @@ function Tile(tileArray, board) {
             if(bmp.streamBuffer === 'true')
             {
               otherSwitches-=1;
-              var timeMethodFactor = 1-((0.2)*((4-bmp.numSwitchesOn)/4));
+              var timeMethodFactor = 1-((0.2)*((4-otherSwitches)/4));
               return (this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005;
             }
+            var timeMethodFactor = 1-((0.2)*((4-bmp.numSwitchesOn)/4));
+            return (this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005;
           }
         }
         return (this.PApplicationRate[year] / 4.58) * 0.5 * 1 * 0.005; //instead of 0.5,
@@ -4132,7 +4134,7 @@ function Tile(tileArray, board) {
           otherSwitches-=1;
           return (1.3-((0.2)*((4-otherSwitches)/4)));
         }
-        return (1.3-((0.2)*((5-bmp.numSwitchesOn)/5)));
+        return (1.3-((0.2)*((4-bmp.numSwitchesOn)/4)));
       }
     }
   };
@@ -4155,19 +4157,75 @@ function Tile(tileArray, board) {
   //the tile-level method for nitrate delivery
   //since nitrate levels are calculated at subWatershed level, tile level calculations output
   // row crop multiplier times conservation row crop multiplier
+  // COMBAK:
   this.nitrateSubcalculation = function(year) {
 
-    if ((this.landType[year] > LandUseType.none && this.landType[year] < LandUseType.alfalfa) || this.landType[year] == LandUseType.mixedFruitsVegetables) {
-      if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean) {
-        if (this.soilType == "A" || this.soilType == "B" || this.soilType == "C" || this.soilType == "L" || this.soilType == "N" || this.soilType == "O") {
-          this.results[year].cropMultiplier = 0.14 * this.area * 0.69;
-        } else {
-          this.results[year].cropMultiplier = 0.14 * this.area * 0.62;
+    if ((this.landType[year] > LandUseType.none && this.landType[year] < LandUseType.alfalfa) || this.landType[year] == LandUseType.mixedFruitsVegetables)
+    {
+      if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean)
+      {
+        var conservationRowCropMultiplier = 0;
+        //Des Moines lobe. See function printSoilType(tileId) method in helpersFE.js to get the list of soil types
+        if (this.soilType == "A" || this.soilType == "B" || this.soilType == "C" || this.soilType == "L" || this.soilType == "N" || this.soilType == "O")
+        {
+          //if tile is stream adjacent
+          if(this.streamNetwork == 1)
+          {
+            conservationRowCropMultiplier = 0.69 + (0.31*((5-bmp.numSwitchesOn)/5));
+          }
+          else  //not stream adjacent
+          {
+            getStreamBuffer();
+            bmp.streamBuffer = sessionStorage.getItem('sB');
+            var otherSwitches = bmp.numSwitchesOn;
+            if(bmp.streamBuffer === 'true')
+            {
+              otherSwitches-=1;
+              conservationRowCropMultiplier = 0.69 + (0.31*((4-otherSwitches)/4));
+            }
+            else
+            {
+              conservationRowCropMultiplier = 0.69 + (0.31*((4-bmp.numSwitchesOn)/4));
+            }
+          }
+          this.results[year].cropMultiplier = 0.14 * this.area * conservationRowCropMultiplier;
         }
-      } else {
+        else //not in Des Moines lobe.
+        {
+          //this.results[year].cropMultiplier = 0.14 * this.area * 0.62;
+          if (this.soilType == "A" || this.soilType == "B" || this.soilType == "C" || this.soilType == "L" || this.soilType == "N" || this.soilType == "O")
+          {
+            //if tile is stream adjacent
+            if(this.streamNetwork == 1)
+            {
+              conservationRowCropMultiplier = 0.62 + (0.38*((5-bmp.numSwitchesOn)/5));
+            }
+            else  //not stream adjacent
+            {
+              getStreamBuffer();
+              bmp.streamBuffer = sessionStorage.getItem('sB');
+              var otherSwitches = bmp.numSwitchesOn;
+              if(bmp.streamBuffer === 'true')
+              {
+                otherSwitches-=1;
+                conservationRowCropMultiplier = 0.62 + (0.38*((4-otherSwitches)/4));
+              }
+              else
+              {
+                conservationRowCropMultiplier = 0.62 + (0.38*((4-bmp.numSwitchesOn)/4));
+              }
+            }
+            this.results[year].cropMultiplier = 0.14 * this.area * conservationRowCropMultiplier;
+          }
+        }
+      } //end for conservation
+      else
+      {
         this.results[year].cropMultiplier = 0.14 * this.area;
       }
-    } else {
+    }
+    else
+    {
       this.results[year].cropMultiplier = 0;
     }
 
