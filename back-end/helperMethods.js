@@ -144,7 +144,7 @@ function parseInitial(data) {
   //   console.log("Inner content is not correct.");
   //   return 0;
   // }
-console.log(initData);
+// console.log(initData);
   // // success
   return 1;
 
