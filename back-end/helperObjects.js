@@ -3558,11 +3558,11 @@ function Tile(tileArray, board) {
       if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean)
       {
         //// QUESTION: is it that the slope>2% then if the cT is true, or the other way around?
-        if (this.topography > 1)
+        getContouringOrTerracing();
+        bmp.contouringOrTerracing = sessionStorage.getItem('cT');
+        if (bmp.contouringOrTerracing === 'true')
         {
-          getContouringOrTerracing();
-          bmp.contouringOrTerracing = sessionStorage.getItem('cT');
-          if(bmp.contouringOrTerracing === 'true')
+          if(this.topography > 1)
           {
             return this.contourSubfactor(year) * this.terraceSubfactor();
           }
