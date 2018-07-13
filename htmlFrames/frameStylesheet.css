@@ -484,7 +484,7 @@
   }
 }
 
-#modalConflictFrame {
+#modalConflictFrame, #modalPrecipConflictFrame {
   display: none;
   animation-duration: 1.0s;
   animation-name: showEffect;
@@ -518,7 +518,7 @@
   text-align: justify;
 }
 
-#cancelButton, #setPriorityButton, #optionsBox {
+#cancelButton, #setPriorityButton, #optionsBox, #selectButton, #customButton {
   font-family: 'Amatic SC', cursive;
 }
 

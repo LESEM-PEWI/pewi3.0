@@ -678,7 +678,7 @@ function setProgressbarMinMaxValues(id, option, value) {
   }
 
 
-  
+
 }
 
 //Adds the given tileId and painter to the undoArr
@@ -2963,6 +2963,11 @@ function multiplayerAggregateOverlayMapping(file) {
           // Call multiplayerAggregateOverlayMapping recursively to realize load files asynchrnously. Clever, right?
           multiplayerAggregateOverlayMapping(filesUploaded[nextFileIndex]);
         }
+
+        else if(nextFileIndex == filesUploaded.length && hasPrecipConclict) {
+          var utilityWindow = document.getElementById("startUpFrame").contentWindow.document.getElementById("startupDialogueOverlay").contentWindow;
+          utilityWindow.document.getElementById("modalPrecipConflictFrame").style.display = "block";
+        }
       }
     }
 
@@ -3849,7 +3854,7 @@ function randomizeBoard() {
 //The argument bypassFromKeyEvent helps the t key and r key switch up the board when pressed
 //  to change topography and random tiles, but keep the board highlighted
 function refreshBoard(bypassFromKeyEvent) {
-  
+
   if (mesh != null) {
     scene.remove(mesh);
   }
@@ -5807,7 +5812,7 @@ function uploadCSV(reader) {
     }
     //else if the file has options, then it takes the options and places it in the parameter div of the html and reloads it.
     else {
-      var xys = headers[33].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
+      var xys = data[33].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
       window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
       //make sure the locked land uses aren't seen on the side tool tab or on the map
       toggleVisibility();
@@ -5818,6 +5823,9 @@ function uploadCSV(reader) {
     //  boardData[currentBoard].updateBoard();
     //calculateResults();
     //generateResultsTable();
+    // fresh progress bars
+    calculateResults();
+    refreshProgressBar(currentYear);
     //clear initData
     initData = [];
   }; //end onload
