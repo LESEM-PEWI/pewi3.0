@@ -4063,15 +4063,43 @@ function Tile(tileArray, board) {
 
   this.getPApplicationFactor = function(year) {
     // COMBAK:
+    //The P application factor depends on the time and method factor; which changes based on the land use and
+      //with the use of BMPs. When the tile is adjacent to the stream - TM = 1-((0.2)*((5-bmp.numSwitchesOn)/5))
+      //if it isn't - TM = 1-((0.2)*((4-bmp.numSwitchesOn)/4))
     if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean || this.landType[year] == LandUseType.permanentPasture ||
-      this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.grassHay) {
-      return (this.PApplicationRate[year] / 4.58) * 0.5 * 1 * 0.005; //instead of 0.5,
-    } else if (this.landType[year] == LandUseType.alfalfa) {
-      return (this.PApplicationRate[year] / 4.58) * 0.5 * 0.9 * 0.005;
-    } else if (this.landType[year] == LandUseType.conventionalCorn || this.landType[year] == LandUseType.conventionalSoybean ||
-      this.landType[year] == LandUseType.mixedFruitsVegetables) {
-      return (this.PApplicationRate[year] / 4.58) * 0.5 * ((0.6 + 1.0) / 2) * 0.005;
-    }
+      this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.grassHay)
+      {
+        if(this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean)
+        {
+          if(this.streamNetwork == 1)
+          {
+            var timeMethodFactor = 1-((0.2)*((5-bmp.numSwitchesOn)/5));
+            return (this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005;
+          }
+          else
+          {
+            getStreamBuffer();
+            bmp.streamBuffer = sessionStorage.getItem('sB');
+            var otherSwitches = bmp.numSwitchesOn;
+            if(bmp.streamBuffer === 'true')
+            {
+              otherSwitches-=1;
+              var timeMethodFactor = 1-((0.2)*((4-bmp.numSwitchesOn)/4));
+              return (this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005;
+            }
+          }
+        }
+        return (this.PApplicationRate[year] / 4.58) * 0.5 * 1 * 0.005; //instead of 0.5,
+      }
+      else if (this.landType[year] == LandUseType.alfalfa)
+      {
+        return (this.PApplicationRate[year] / 4.58) * 0.5 * 0.9 * 0.005;
+      }
+      else if (this.landType[year] == LandUseType.conventionalCorn || this.landType[year] == LandUseType.conventionalSoybean ||
+      this.landType[year] == LandUseType.mixedFruitsVegetables)
+      {
+        return (this.PApplicationRate[year] / 4.58) * 0.5 * ((0.6 + 1.0) / 2) * 0.005;
+      }
     return 0;
   };
   //-------end runoffComponent subCalcs
@@ -4087,12 +4115,14 @@ function Tile(tileArray, board) {
       this.landType[year] == LandUseType.mixedFruitsVegetables){
         return 1.1;
     } else {
-      //return 1.3;
+      //for all the others including conservation corn and soybean, the formula is as follows -
+      //if the tile is stream adjacent
+      //1.3 - 0.2*(#bmp off)/5
       if(this.streamNetwork == 1)
       {
         return (1.3-((0.2)*((5-bmp.numSwitchesOn)/5)));
       }
-      else
+      else //if not stream adjacent and stream buffer is off 1.3 - 0.2*(#bmp off)/4
       {
         getStreamBuffer();
         bmp.streamBuffer = sessionStorage.getItem('sB');
