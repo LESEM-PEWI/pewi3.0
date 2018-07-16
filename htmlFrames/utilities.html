@@ -101,7 +101,7 @@ Cleaned and Prepared - August 2016
 
   <div id="modalPrecipConflictFrame">
     <div id="conflictPopupBox">
-      <div id="conflictText">There's a precipitation level conflict between uploaded maps.<br><br></div>
+      <div id="conflictPrecipText">There's a precipitation level conflict between uploaded maps.<br><br></div>
       <div id="selectButton" class="conflictButton" onclick="generateMapList();" style="display:block;">Select one map to use precip from</div>
       <div id="mapList"></div>
       <div id="customButton" class="conflictButton" onclick="generatePrecipList();" style="display:block;">Customize precip levels</div>
@@ -138,7 +138,7 @@ Cleaned and Prepared - August 2016
     // cancelUploadFiles will clear all the data that loaded from the upload files
     function cancelUploadFiles() {
       document.getElementById("modalConflictFrame").style.display = "none";
-      document.getElementById("conflictText").innerHTML = "There's a conflict between uploaded maps.<br>";
+      document.getElementById("conflictText").innerHTML = "There's a conflict between uploaded maps.<br><br>";
       emptyFileList();
       // remove the file handler
       window.top.cleanCurrentBoardData();

@@ -5176,9 +5176,9 @@ function toggleVisibility() {
   document.getElementById('year1Button').style.display = "block";
   document.getElementById('year2Button').style.display = "block";
   document.getElementById('year3Button').style.display = "block";
-  document.getElementById('year1PrecipContainer').style.display = "block";
-  document.getElementById('year2PrecipContainer').style.display = 'block';
-  document.getElementById('year3PrecipContainer').style.display = 'block';
+  document.getElementById('year1PrecipContainer').style.display = "none";
+  document.getElementById('year2PrecipContainer').style.display = 'none';
+  document.getElementById('year3PrecipContainer').style.display = 'none';
   document.getElementById('resultsButton').style.display = 'block';
 
   //reset precip
@@ -5230,7 +5230,8 @@ function toggleVisibility() {
 
 
   //toggle Precip visibility
-  for (var y = 0; y <= 3; y++) {
+  for (var y = 0; y <= boardData[currentBoard].calculatedToYear; y++) {
+    document.getElementById("year" + y + "PrecipContainer").style.display = "block";
 
     var elementIdString = "year" + y + "Precip";
 
