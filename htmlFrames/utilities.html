@@ -290,9 +290,9 @@ Cleaned and Prepared - August 2016
     //assist in downloading the currently aggregated map
     //uses filesaver.js for compatibility purposes
     function downloadAggregateMap() {
-      emptyFileList();
-      // remove the file handler
-      window.top.filesUploaded = null;
+      // emptyFileList();
+      // // remove the file handler
+      // window.top.filesUploaded = null;
 
       //data from function in helpersFE.js
       var data = window.top.writeFileToDownloadString();
@@ -377,11 +377,13 @@ Cleaned and Prepared - August 2016
       emptyFileList();
       // clear the boardData
       boardData = [];
+      // initialize all related variables
       window.top.isAggregateConflictDetected = false;
-      window.top.isAggregateChoiceMade = false;
+      window.top.isAggregateChoice = void 0;
       window.top.nextFileIndex = 0;
       window.top.filesUploaded = null;
       window.top.hasPrecipConclict = false;
+      window.top.mergedFiles = [];
       document.getElementById("selectButton").style.display = "block";
       document.getElementById("customButton").style.display = "block";
       document.getElementById("mapList").innerHTML = "";
