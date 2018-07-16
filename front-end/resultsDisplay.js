@@ -291,6 +291,10 @@ function displayResults() {
 
   //create land Pie Chart
   drawD3LandPieChart(currentYear, false);
+  //clearing scoreChart div tag, or else it will duplicate the scoreChart graph every time results is clicked on
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('scoreChart').innerHTML = ' ';
+  //creating the scoreChart graph by calling the number of years that are currently
+  render(boardData[currentBoard].calculatedToYear);
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
 
@@ -2467,4 +2471,1488 @@ function strategicWetlandFinder(playerNumber) {
     }
   }
   return strategicWetlandCount;
+}
+
+/*
+* In the function render is to create the graph displaying years and data points score out of 100.
+* For more information refer to Issue 357.
+*/
+function render(years){
+  //the variabale dataser is used to hold all the data that is to be plotted
+  var dataset = fillData(years);
+
+  //the variable width is used to assign the width of the svg container
+  var width = 850;
+
+  //the variable width is used to assign the height of the svg container
+  var height = 550;
+
+  //the variable width is used to assign the starting location value "x" of the svg container
+  var svgx = 200;
+
+  //the variable width is used to assign the starting location value "y" of the svg container
+  var svgy = 100;
+
+  //the variable listOfBackGroundBoxes is used to hold all the IDs of the background boxes
+  var listOfBackGroundBoxes = [];
+
+  //the variable listOfClickedPoints is used to hold all the IDs of the data points that were already selected
+  var listOfClickedPoints = [];
+
+  //the variable listOfClickedText is used to hold all the IDs of the legend texts that were already selected
+  var listOfClickedText = [];
+
+  //the variable listOfProgressBars is used to hold all the IDs of the progress bars who have been selected through data point or text
+  var listOfProgressBars = [];
+
+  //the variable listOfHiddenRects is used to hold all of the IDs of the rectangles that have been selected
+  var listOfHiddenRects = [];
+
+  //The variable textXPosChange is used to change the x position of the texts that are on the side depending how many yers will be displayed
+  var textXPosChange = (3-years)*100;
+
+  //The progressBar variable is to calculate the progress bar, these progress bars will be swapped out for Wei's version on progress bars
+  var progressBarX = 650 - textXPosChange;
+
+  //the variable chart selects the resultsFrame to add all components to
+  var chart = document.getElementById('resultsFrame').contentWindow.document.getElementById('scoreChart');
+
+  //the variable svg is creating the svg container and connecting it with the div tag scoreChart
+  var svg = d3.select(chart).append("svg")
+    .attr("x",svgx)
+    .attr("y", svgy)
+    .attr("width",  width)
+    .attr("height", height);
+
+  //The variable color is used to assign colors for year rectangles
+  var color = d3.scaleOrdinal()
+    .domain([0, 1, 2])
+    .range(["#ffe099", "#f9ccc2" , "#fcff7f"]);
+
+  /*
+  * The function calculateAvgScores takes in dataPoints as a parameter and an int that represents the number of years.
+  * This function calculates the average of each data type and returns an array with those averages
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function calculateAvgScores(dataPoints, numYears){
+    var tempdata = [];
+    if(numYears === 3){
+      var tempSum = 0;
+      for(var i = 0; i < 16; ++i){
+        tempSum = dataPoints[i].count+dataPoints[i+16].count+dataPoints[i+32].count;
+        tempSum = tempSum / numYears;
+        tempdata.push(tempSum);
+      }
+    }
+    else if(numYears === 2){
+      var tempSum = 0;
+      for(var i = 0; i < 16; ++i){
+        tempSum = dataPoints[i].count+dataPoints[i+16].count;
+        tempSum = tempSum / numYears;
+        tempdata.push(tempSum);
+      }
+    }
+    else{
+      for(var i = 0; i < 16; ++i){
+        tempdata.push(dataPoints[i].count);
+      }
+    }
+    return tempdata;
+  }
+
+  /*
+  * The function deteleText is used to delete the text legend on the right hand side and the gray layer of the progress bar.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function deteleText() {
+    for(var i = 0; i < 16; ++i){
+      var tempID = "#t"+(i+1);
+      var tempSmallID = "#smallrect"+(i+1);
+      var tempBigID = "#bigrect"+(i+1);
+      svg.select(tempID).remove();
+      svg.select(tempSmallID).remove();
+      svg.select(tempBigID).remove();
+    }
+  }
+
+  /*
+  * The function fillData fills an array of objects with data that will be plotted with data points.
+  * Each object consists of count (the score out of 100), label (the title of the category it belongs to), and id (the id that will be used for that specifc data point).
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function fillData(yearsToFill) {
+    var tempData = [];
+    var totalNumberDataPoints = yearsToFill*16; //16 because there are 16 different data points we fill per year
+    var tempID = 0;
+    for(var i = 1; i <= totalNumberDataPoints; ++i){
+      tempID++;
+      var tempDataCount = getScore(i);
+      var tempDataLabel = getLabel(i);
+      var tempObjData = {'count': (Math.round(tempDataCount*100)/100), 'label': tempDataLabel, 'id': "c"+tempID};
+      tempData.push(tempObjData);
+    }
+    return tempData;
+  }
+
+  /*
+  * The function getCX returns the CX of data point that is passed in as a parameter.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function  getCX(thisElement) {
+    return parseInt(thisElement.attributes.cx.nodeValue)+12;
+  }
+
+  /*
+  * The function getCY returns the CY of data point that is passed in as a parameter.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function  getCY(thisElement) {
+    return parseInt(thisElement.attributes.cy.nodeValue)-8;
+  }
+
+  /*
+  * parameters: givenID (string), y (int), and type (string)
+  * return: int, string, or array of strings depending of type (parameter)
+  * The function getInfo takes in the three parameters, the "y" parameter only matters when type is data.
+  * The purpose of this function is to give all the IDs and and desired information depending on type. This fucntion was a combination of getter functions from previous commit.
+  * The reason for combining all functions was to make more simple to understand and make code less cluttered with fucntions.
+  * For more information refer to Issue 357.
+  */
+  function getInfo(givenID, y, type) {
+    var selectID = [];
+    switch (givenID) {
+    case "c1": case "c17": case "c33": case "t1": case "bigrect1": case "checkbox1":
+      if(type === "color"){
+        return "#1f77b4";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c1", "c17", "c33"];
+        }else if(y > 1){
+          selectID = ["c1", "c17"];
+        }else{
+          selectID = ["c1"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "1";
+      }
+      else if(type === "textRep"){
+        return "t1";
+      }
+      else if(type === "landName"){
+        return "Carbon Sequestration";
+      }
+      else if(type === "boxY"){
+        return 45;
+      }
+      else if(type === "boxID"){
+        return "b1";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect1", "#bigrect1"];
+        return selectID;
+      }
+      break;
+    case "c2": case "c18": case "c34": case "t2": case "bigrect2": case "checkbox2":
+      if(type === "color"){
+        return "#aec7e8";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c2", "c18", "c34"];
+        }else if(y > 1){
+          selectID = ["c2", "c18"];
+        }else{
+          selectID = ["c2"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "2";
+      }
+      else if(type === "textRep"){
+        return "t2";
+      }
+      else if(type === "landName"){
+        return "Biodiversity";
+      }
+      else if(type === "boxY"){
+        return 75;
+      }
+      else if(type === "boxID"){
+        return "b2";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect2", "#bigrect2"];
+        return selectID;
+      }
+      break;
+    case "c3": case "c19": case "c35": case "t3": case "bigrect3": case "checkbox3":
+      if(type === "color"){
+        return "#ff7f0e";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c3", "c19", "c35"];
+        }else if(y > 1){
+          selectID = ["c3", "c19"];
+        }else{
+          selectID = ["c3"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "3";
+      }
+      else if(type === "textRep"){
+        return "t3";
+      }
+      else if(type === "landName"){
+        return "Game Wildlife";
+      }
+      else if(type === "boxY"){
+        return 105;
+      }
+      else if(type === "boxID"){
+        return "b3";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect3", "#bigrect3"];
+        return selectID;
+      }
+      break;
+    case "c4": case "c20": case "c36": case "t4": case "bigrect4": case "checkbox4":
+      if(type === "color"){
+        return "#ffbb78";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c4", "c20", "c36"];
+        }else if(y > 1){
+          selectID = ["c4", "c20"];
+        }else{
+          selectID = ["c4"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "4";
+      }
+      else if(type === "textRep"){
+        return "t4";
+      }
+      else if(type === "landName"){
+        return "Erosion Control";
+      }
+      else if(type === "boxY"){
+        return 135;
+      }
+      else if(type === "boxID"){
+        return "b4";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect4", "#bigrect4"];
+        return selectID;
+      }
+      break;
+    case "c5": case "c21": case "c37": case "t5": case "bigrect5": case "checkbox5":
+      if(type === "color"){
+        return "#2ca02c";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c5", "c21", "c37"];
+        }else if(y > 1){
+          selectID = ["c5", "c21"];
+        }else{
+          selectID = ["c5"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "5";
+      }
+      else if(type === "textRep"){
+        return "t5";
+      }
+      else if(type === "landName"){
+        return "Nitrate Pollution Control";
+      }
+      else if(type === "boxY"){
+        return 165;
+      }
+      else if(type === "boxID"){
+        return "b5";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect5", "#bigrect5"];
+        return selectID;
+      }
+      break;
+    case "c6": case "c22": case "c38": case "t6": case "bigrect6": case "checkbox6":
+      if(type === "color"){
+        return "#98df8a";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c6", "c22", "c38"];
+        }else if(y > 1){
+          selectID = ["c6", "c22"];
+        }else{
+          selectID = ["c6"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "6";
+      }
+      else if(type === "textRep"){
+        return "t6";
+      }
+      else if(type === "landName"){
+        return "Phosphorus Pollution Control";
+      }
+      else if(type === "boxY"){
+        return 195;
+      }
+      else if(type === "boxID"){
+        return "b6";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect6", "#bigrect6"];
+        return selectID;
+      }
+      break;
+    case "c7": case "c23": case "c39": case "t7": case "bigrect7": case "checkbox7":
+      if(type === "color"){
+        return "#9467bd";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c7", "c23", "c39"];
+        }else if(y > 1){
+          selectID = ["c7", "c23"];
+        }else{
+          selectID = ["c7"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "7";
+      }
+      else if(type === "textRep"){
+        return "t7";
+      }
+      else if(type === "landName"){
+        return "Sediment Control";
+      }
+      else if(type === "boxY"){
+        return 225;
+      }
+      else if(type === "boxID"){
+        return "b7";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect7", "#bigrect7"];
+        return selectID;
+      }
+      break;
+    case "c8": case "c24": case "c40": case "t8": case "bigrect8": case "checkbox8":
+      if(type === "color"){
+        return "#c5b0d5";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c8", "c24", "c40"];
+        }else if(y > 1){
+          selectID = ["c8", "c24"];
+        }else{
+          selectID = ["c8"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "8";
+      }
+      else if(type === "textRep"){
+        return "t8";
+      }
+      else if(type === "landName"){
+        return "Alfalfa Hay";
+      }
+      else if(type === "boxY"){
+        return 255;
+      }
+      else if(type === "boxID"){
+        return "b8";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect8", "#bigrect8"];
+        return selectID;
+      }
+      break;
+    case "c9": case "c25": case "c41": case "t9": case "bigrect9": case "checkbox9":
+      if(type === "color"){
+        return "#8c564b";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c9", "c25", "c41"];
+        }else if(y > 1){
+          selectID = ["c9", "c25"];
+        }else{
+          selectID = ["c9"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "9";
+      }
+      else if(type === "textRep"){
+        return "t9";
+      }
+      else if(type === "landName"){
+        return "Cattle";
+      }
+      else if(type === "boxY"){
+        return 285;
+      }
+      else if(type === "boxID"){
+        return "b9";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect9", "#bigrect9"];
+        return selectID;
+      }
+      break;
+    case "c10": case "c26": case "c42": case "t10": case "bigrect10": case "checkbox10":
+      if(type === "color"){
+        return "#c49c94";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c10", "c26", "c42"];
+        }else if(y > 1){
+          selectID = ["c10", "c26"];
+        }else{
+          selectID = ["c10"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "10";
+      }
+      else if(type === "textRep"){
+        return "t10";
+      }
+      else if(type === "landName"){
+        return "Corn Grain";
+      }
+      else if(type === "boxY"){
+        return 315;
+      }
+      else if(type === "boxID"){
+        return "b10";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect10", "#bigrect10"];
+        return selectID;
+      }
+      break;
+    case "c11": case "c27": case "c43": case "t11": case "bigrect11": case "checkbox11":
+      if(type === "color"){
+        return "#e377c2";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c11", "c27", "c43"];
+        }else if(y > 1){
+          selectID = ["c11", "c27"];
+        }else{
+          selectID = ["c11"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "11";
+      }
+      else if(type === "textRep"){
+        return "t11";
+      }
+      else if(type === "landName"){
+        return "Grass Hay";
+      }
+      else if(type === "boxY"){
+        return 345;
+      }
+      else if(type === "boxID"){
+        return "b11";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect11", "#bigrect11"];
+        return selectID;
+      }
+      break;
+    case "c12": case "c28": case "c44": case "t12": case "bigrect12": case "checkbox12":
+      if(type === "color"){
+        return "#9e4a6a";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c12", "c28", "c44"];
+        }else if(y > 1){
+          selectID = ["c12", "c28"];
+        }else{
+          selectID = ["c12"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "12";
+      }
+      else if(type === "textRep"){
+        return "t12";
+      }
+      else if(type === "landName"){
+        return "Switchgrass Biomass";
+      }
+      else if(type === "boxY"){
+        return 375;
+      }
+      else if(type === "boxID"){
+        return "b12";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect12", "#bigrect12"];
+        return selectID;
+      }
+      break;
+    case "c13": case "c29": case "c45": case "t13": case "bigrect13": case "checkbox13":
+      if(type === "color"){
+        return "#ba6f14";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c13", "c29", "c45"];
+        }else if(y > 1){
+          selectID = ["c13", "c29"];
+        }else{
+          selectID = ["c13"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "13";
+      }
+      else if(type === "textRep"){
+        return "t13";
+      }
+      else if(type === "landName"){
+        return "Mixed Fruits and Vegetables";
+      }
+      else if(type === "boxY"){
+        return 405;
+      }
+      else if(type === "boxID"){
+        return "b13";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect13", "#bigrect13"];
+        return selectID;
+      }
+      break;
+    case "c14": case "c30": case "c46": case "t14": case "bigrect14": case "checkbox14":
+      if(type === "color"){
+        return "#24e2cf";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c14", "c30", "c46"];
+        }else if(y > 1){
+          selectID = ["c14", "c30"];
+        }else{
+          selectID = ["c14"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "14";
+      }
+      else if(type === "textRep"){
+        return "t14";
+      }
+      else if(type === "landName"){
+        return "Short-Rotation Woody Biomass";
+      }
+      else if(type === "boxY"){
+        return 435;
+      }
+      else if(type === "boxID"){
+        return "b14";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect14", "#bigrect14"];
+        return selectID;
+      }
+      break;
+    case "c15": case "c31": case "c47": case "t15": case "bigrect15": case "checkbox15":
+      if(type === "color"){
+        return "#02d6fc";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c15", "c31", "c47"];
+        }else if(y > 1){
+          selectID = ["c15", "c31"];
+        }else{
+          selectID = ["c15"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "15";
+      }
+      else if(type === "textRep"){
+        return "t15";
+      }
+      else if(type === "landName"){
+        return "Soybeans";
+      }
+      else if(type === "boxY"){
+        return 465;
+      }
+      else if(type === "boxID"){
+        return "b15";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect15", "#bigrect15"];
+        return selectID;
+      }
+      break;
+    case "c16": case "c32": case "c48": case "t16": case "bigrect16": case "checkbox16":
+      if(type === "color"){
+        return "#bcf5ff";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c16", "c32", "c48"];
+        }else if(y > 1){
+          selectID = ["c16", "c32"];
+        }else{
+          selectID = ["c16"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "16";
+      }
+      else if(type === "textRep"){
+        return "t16";
+      }
+      else if(type === "landName"){
+        return "Wood";
+      }
+      else if(type === "boxY"){
+        return 495;
+      }
+      else if(type === "boxID"){
+        return "b16";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect16", "#bigrect16"];
+        return selectID;
+      }
+      break;
+    }
+  }
+
+  /*
+  * The function getLabel will take in id (an int) as a parameter that will return the appropriate label for each valid int passed.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getLabel(id) {
+    switch (id) {
+      case 1: case 17: case 33:
+        return "Carbon Sequestration";
+      break;
+      case 2: case 18: case 34:
+        return "Biodiversity";
+      break;
+      case 3: case 19: case 35:
+        return "Game Wildlife";
+      break;
+      case 4: case 20: case 36:
+        return "Erosion Control";
+      break;
+      case 5: case 21: case 37:
+        return "Nitrate Pollution Control";
+      break;
+      case 6: case 22: case 38:
+        return "Phosphorus Pollution Control";
+      break;
+      case 7: case 23: case 39:
+        return "Sediment Control";
+      break;
+      case 8: case 24: case 40:
+        return "Alfalfa Hay";
+      break;
+      case 9: case 25: case 41:
+        return "Cattle";
+      break;
+      case 10: case 26: case 42:
+        return "Corn Grain";
+      break;
+      case 11: case 27: case 43:
+        return "Grass Hay";
+      break;
+      case 12: case 28: case 44:
+        return "Switchgrass Biomass";
+      break;
+      case 13: case 29: case 45:
+        return "Mixed Fruits and Vegetables";
+      break;
+      case 14: case 30: case 46:
+        return "Short-rotation Woody Biomass";
+      break;
+      case 15: case 31: case 47:
+        return "Soybeans";
+      break;
+      case 16: case 32: case 48:
+        return "Wood";
+      break;
+    }
+  }
+
+  /*
+  * The function getScore will take in id (an int) as a parameter that will determine what type of score the program needs i.e Corn Grain score.
+  * This fucntion also call the getYearForScore to get what year of that specific category you are looking for.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getScore(id) {
+    switch (id) {
+      case 1: case 17: case 33:
+        return Totals.carbonSequestrationScore[getYearForScore(id)];
+      break;
+      case 2: case 18: case 34:
+        return Totals.biodiversityPointsScore[getYearForScore(id)];
+      break;
+      case 3: case 19: case 35:
+        return Totals.gameWildlifePointsScore[getYearForScore(id)];
+      break;
+      case 4: case 20: case 36:
+        return Totals.grossErosionScore[getYearForScore(id)];
+      break;
+      case 5: case 21: case 37:
+        return Totals.nitrateConcentrationScore[getYearForScore(id)];
+      break;
+      case 6: case 22: case 38:
+        return Totals.phosphorusLoadScore[getYearForScore(id)];
+      break;
+      case 7: case 23: case 39:
+        return Totals.sedimentDeliveryScore[getYearForScore(id)];
+      break;
+      case 8: case 24: case 40:
+        return Totals.alfalfaHayYieldScore[getYearForScore(id)];
+      break;
+      case 9: case 25: case 41:
+        return Totals.cattleYieldScore[getYearForScore(id)];
+      break;
+      case 10: case 26: case 42:
+        return Totals.cornGrainYieldScore[getYearForScore(id)];
+      break;
+      case 11: case 27: case 43:
+        return Totals.grassHayYieldScore[getYearForScore(id)];
+      break;
+      case 12: case 28: case 44:
+        return Totals.switchgrassYieldScore[getYearForScore(id)];
+      break;
+      case 13: case 29: case 45:
+        return Totals.mixedFruitsAndVegetablesYieldScore[getYearForScore(id)];
+      break;
+      case 14: case 30: case 46:
+        return Totals.shortRotationWoodyBiomassYieldScore[getYearForScore(id)];
+      break;
+      case 15: case 31: case 47:
+        return Totals.soybeanYieldScore[getYearForScore(id)];
+      break;
+      case 16: case 32: case 48:
+        return Totals.woodYieldScore[getYearForScore(id)];
+      break;
+    }
+  }
+
+  /*
+  * The function getScoreOfLandType returns the score of the type of land put in as a parameter.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getScoreOfLandType(id) {
+    for(var properties in dataset){
+      if(dataset[properties].id === id){
+        return dataset[properties].count;
+      }
+    }
+    return 123456789;
+  }
+
+  /*
+  * The function getText returns a string that will be used over hover options.
+  * The string will be as follows: "landName: landScore".
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getText(thisElement){
+    var tempText = getInfo(thisElement.id, 0, "landName")+": "+getScoreOfLandType(thisElement.id);
+    return tempText;
+  }
+
+  /*
+  * The function getYearForScore will take in id (an int) as a parameter that will determine what year that falls under.
+  * This fucntion is used in getScore to get the right year of each land type, i.e 1-16 is the first cycle of each of the land types, 17-32 is the second cycle and so on.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function getYearForScore(tempID){
+    if (tempID > 0 && tempID < 17){
+      return 1;
+    }else if(tempID > 16 && tempID < 33){
+      return 2;
+    }else{
+      return 3;
+    }
+  }
+
+  /*
+  * The function newRCalculator takes in an HTML element and checks the R of that element and based on that returns the new R.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function newRCalculator(thisElement) {
+    //element that is being clicked has not been clicked
+    var thisElementR = parseInt(thisElement.attributes.r.nodeValue);
+    if(thisElementR === 10){
+      return 15;
+    }
+    else if(thisElementR !== 10){
+      return 10;
+    }
+  }
+
+  /*
+  * The function placeStandards is used to place elements into the div that will NOT be modified, this includes but is not limeted to each year rectangle, and arrow diagram.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function placeStandards(years) {
+    //the variable gradient is used to created the gradient settings for gradient colors of arrowpath, id is "arrow-indicator-grad"
+    var gradient = svg.append("defs").append("linearGradient")
+        .attr("id", "arrow-indicator-grad")
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "0%")
+        .attr("y2", "100%");
+
+    //adding the first gradient color, blue
+    gradient.append("stop")
+        .attr("offset", "0%")
+        .style("stop-color", "#2171b5")
+        .style("stop-opacity", "90");
+
+    //adding the second gradient color, red
+    gradient.append("stop")
+        .attr("offset", "100%")
+        .style("stop-color", "#cc4c02")
+        .style("stop-opacity", "90");
+
+    //the variable lineData is the points that are used to create the svg-path arrow
+    var lineData = [{'x':25, 'y':50}, {'x':40, 'y': 75},
+                   {'x':30, 'y':75}, {'x':30, 'y': 500},
+                   {'x':20, 'y':500}, {'x':20, 'y': 75},
+                   {'x':10, 'y':75}, {'x':25, 'y': 50}];
+
+    //The lineFunction is a variable that uses functions to return x and y of each lineData, this is used to create the arrow path
+    var lineFunction = d3.line()
+                      .x(function(d){return d.x;})
+                      .y(function(d){return d.y;})
+                      .curve(d3.curveLinear);
+
+    //The lineGraph variable adds the arrow path to the svg element.
+    var lineGraph = svg.append('path')
+                   .attr('d', lineFunction(lineData))
+                   .attr('stroke', 'none')
+                   .attr('fill', 'url(#arrow-indicator-grad)');
+
+
+    //In this for loop the rectangles are being drawn
+    //There will be x number of rectangles for x number of years
+    for(var i = 0; i < years; ++i){
+      //Draw the Rectangle, rect is the term used for rectangles
+      var rectangle = svg.append("rect")
+                          .attr("x", (i*100)+50)
+                          .attr("y", 50)
+                          .attr("width", 100)
+                          .attr("height", 450)
+                          .attr("rx", 15)
+                          .style("fill", "none")
+                          .style("stroke", "black")
+                          .style("stroke-width", "3px")
+                          .style("fill", color(i));
+
+      //This is going to add all the names of categories that are in the dataset.
+      svg.append("text")
+          .attr("x", (100+(i*100)))
+          .attr("y", 525)
+          .text(("Year "+(i+1)))
+          .style("fill", "#000000")
+          .attr("text-anchor", "middle")
+          .style("font-size", "1.0em")
+          .style("font-weight", "bold");
+    }
+
+    //This is going to add all the names of categories that are in the dataset.
+    svg.append("text")
+        .attr("x", (700-textXPosChange))
+        .attr("y", 35)
+        .text("Average Score")
+        .style("fill", "#888")
+        .attr("text-anchor", "middle")
+        .style("font-size", "1.0em");
+
+    //This is going to add all the names of categories that are in the dataset.
+    svg.append("text")
+        .attr("x", (807-textXPosChange))
+        .attr("y", 35)
+        .text("Hide")
+        .style("fill", "#888")
+        .attr("text-anchor", "middle")
+        .style("font-size", "1.0em");
+
+
+    //the variableTextXPos is used to place the text "Score (out of 100)"" on top of the data boxes in the correct x-position as it changes depending on number of years of data.
+    var scoreTextXPos = 50;
+    if(years === 3){
+      scoreTextXPos = 200;
+    }else if (years === 2) {
+      scoreTextXPos = 150;
+    }else{
+      scoreTextXPos = 100;
+    }
+
+    //This is going to add all the names of categories that are in the dataset.
+    svg.append("text")
+        .attr("x", scoreTextXPos)
+        .attr("y", 35)
+        .text("Score (out of 100)")
+        .style("fill", "#888")
+        .attr("text-anchor", "middle")
+        .style("font-size", "1.0em");
+
+    //adding the checkboxes
+    for(var i = 1; i < 17; ++i){
+      svg.append("rect")
+        .attr("width", 15)
+        .attr("height", 15)
+        .attr("x", (500 + years*100))
+        .attr("y", (25 + i*30))
+        .attr("rx", 2)
+        .attr("class", "checkbox")
+        .attr("id", ("checkbox"+i))
+        .style("fill", "white")
+        .style("stroke", "black")
+        .style("stroke-width", 2);
+    }
+  }
+
+  /*
+  * The function placeText is used to place the text legend on the right hand side and the gray layer of the progress bar.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function placeText(dataSet, years) {
+    //the variable scoreData is used to hold all the average scores
+    var scoreData = calculateAvgScores(dataSet, years);
+
+    //Pattern injection
+    var defs = svg.append("defs");
+
+    //the variable patter is used to create the patter to be used to fill in smallrect elements
+    var pattern = defs.append("pattern")
+    		.attr("id","hash4_4")
+        .attr("width","8")
+        .attr("height","8")
+        .attr("patternUnits","userSpaceOnUse")
+        .attr("patternTransform","rotate(45)")
+    	  .append("rect")
+    		  .attr("width","4")
+          .attr("height","8")
+          .attr("transform","translate(0,0)")
+          .attr("fill","#0087ff" );
+
+
+    //this for loop adds the texts of data types
+    for(var i = 0; i < 16; ++i){
+      svg.append("text")
+          .attr("x", (525 - textXPosChange))
+          .attr("y", (65+i*30))
+          .attr("id", ("t"+(i+1)))
+          .attr("class", "info")
+          .text(dataSet[i].label)
+          .style("fill", "gray")
+          .attr("text-anchor", "middle")
+          .style("font-size", "1.0em")
+
+      //adding small rect progress bars
+      if(listOfHiddenRects.includes("#smallrect"+(i+1))){
+        svg.append("rect")
+            .attr("fill", "url(#hash4_4)")
+            .attr("x", (650 - textXPosChange))
+            .attr("y", 55+i*30)
+            .attr("rx", 5)
+            .attr("width", 100)
+            .attr("height", 10)
+            .attr("id", ("smallrect"+(i+1)))
+            .attr("visibility", "hidden")
+            .style("stroke", "black")
+            .style("stroke-width", 2);
+      }
+      else{
+        svg.append("rect")
+            .attr("fill", "url(#hash4_4)")
+            .attr("x", (650 - textXPosChange))
+            .attr("y", 55+i*30)
+            .attr("rx", 5)
+            .attr("width", 100)
+            .attr("height", 10)
+            .attr("id", ("smallrect"+(i+1)))
+            .attr("visibility", "visible")
+            .style("stroke", "black")
+            .style("stroke-width", 2);
+      }
+    }
+
+    for(var l = 0; l < scoreData.length; ++l){
+      function calculateWidth() {
+        if(scoreData[l] == 100){
+          return 0;
+        }
+        else if(scoreData[l] <= 10){
+          return (scoreData[l]*.35);
+        }
+        else{
+          return (scoreData[l]*.25);
+        }
+      }
+
+      //the variable tempX is so that the second rectangle (end) is at the appropriate X location.
+      var tempX = progressBarX + calculateWidth() - 0.15;
+      //progress bar
+      if(listOfHiddenRects.includes("#bigrect"+(l+1))){
+        svg.append("rect")
+            .attr("x", (progressBarX))
+            .attr("y", (55+l*30))
+            .attr("rx", 5)
+            .attr("width", scoreData[l])
+            .attr("height", 10)
+            .attr("id", ("bigrect"+(l+1)))
+            .attr("fill", getInfo("bigrect"+(l+1), 0, "color"))
+            .attr("visibility", "hidden")
+            .style("stroke", "black")
+            .style("stroke-width", 1.5);
+      }
+      else{
+        svg.append("rect")
+            .attr("x", (progressBarX))
+            .attr("y", (55+l*30))
+            .attr("rx", 5)
+            .attr("width", scoreData[l])
+            .attr("height", 10)
+            .attr("id", ("bigrect"+(l+1)))
+            .attr("fill", getInfo("bigrect"+(l+1), 0, "color"))
+            .attr("visibility", "visible")
+            .style("stroke", "black")
+            .style("stroke-width", 1.5);
+      }
+    }
+    renderData(dataSet);
+  }
+
+
+  /*
+  * The function plotDataPoints is used to place the data points inside the appropriate year container.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function plotDataPoints(data){
+    //the variable circles binds data and connects it with circle HTML elements.
+    var circles = svg.selectAll("circle").data(data);
+
+    //the variable i is used to put the circles in the appropriate location.
+    var i = 1;
+
+    // the circles enter puts the datapoints on the graph
+    circles.enter().append("circle")
+      .attr("r", 10)
+      .style("fill", "gray")
+      .style("opacity", 0.3)
+      .attr("cx", function (){
+        var tempCX = Math.ceil(i/16);
+        i++;
+        return tempCX*100;
+      })
+      .attr("cy", function (d){
+        var tempCY = 450 * (d.count/100);
+        return (500-tempCY);
+      })
+      .attr("id",  function (d){ var id = d.id; i++; return id; })
+      .attr("class", "info")
+      .attr("stroke", "black")
+      .attr("stroke-width", 1);
+
+    // On circles exit it removes all the circles that are placed in, this is for good D3.js practice and so that circles from previous data do not appear.
+    circles.exit().remove();
+  }
+
+  /*
+  * The function renderData takes in an array of objects as data and number of years.
+  * This function was created for Issue 357. For more information refer to Issue 357.
+  */
+  function renderData(data){
+    //the variable dataSet holds the data that is passed in as parameter
+    var dataSet = data;
+
+    //the variable color holds the d3 color scheme.
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+    //the variable clickables is used to select all the datapoints and the legend on the right hand side
+    var clickables = svg.selectAll(".info");
+
+    //the variable clickables is used to select all the datapoints and the legend on the right hand side
+    var checkboxes = svg.selectAll(".checkbox");
+
+    //the variable textRep is used to assign the ID of the legend of the land type.
+    var textRep = "";
+
+    //the variable bigBarRep is used to assign the ID of the bar graph that holds color and displays average score.
+    var bigBarRep = "";
+
+    //the following code is used to do all the event listeners for the clickables elements.
+    clickables
+      .on('mouseover', function (d) {
+         d3.select(this).style("cursor", "pointer");
+         var id = this.id;
+         textRep = "#"+getInfo(id, 0, "textRep");
+         var cantChangeTxtColor = listOfClickedText.includes(textRep);
+         //this is to do hover effect on hovering a CIRCLE
+         if(id.charAt(0) === "c"){
+           var text = getText(this);
+           if(!cantChangeTxtColor){
+             svg.select(textRep).style("fill", "black");
+           }
+           svg.append("rect")
+               .attr("x", (getCX(this)-15))
+               .attr("y", (getCY(this)-25))
+               .attr("rx", 5)
+               .attr("ry", 5)
+               .attr("width", 300)
+               .attr("height", 30)
+               .attr("id", "textbox")
+               .attr("class", "info")
+               .style("fill", "#9cc1fc")
+               .style("opacity", 0.8)
+           svg.append("text")
+                 .attr("x", (getCX(this)+115))
+                 .attr("y", (getCY(this)-5))
+                 .attr("id", "tempText")
+                 .style("text-anchor","middle")
+                 .text(text);
+         }
+         else{//this is to do hover effect on hovering a TEXT
+           if(!cantChangeTxtColor){
+             d3.select(this).style("fill", "black");
+           }
+         }
+      })
+      .on('mouseout', function (d) {
+        d3.select(this).style("cursor", "default");
+        var id = this.id;
+        //assigning the Rep variable to use to make changes to those elements
+        textRep = getInfo(id, 0, "textRep");
+        //this is to do hover effect on hovering a CIRCLE
+        //removes the text box and the text on top of the text box
+        if(id.charAt(0) === "c"){
+          svg.select("#textbox").remove();
+          svg.select("#tempText").remove();
+          if(!listOfClickedText.includes(textRep)){
+            svg.select("#"+textRep).style("fill", "gray");
+          }
+        }
+        else{//this is to do hover effect on hovering a TEXT
+          if(!listOfClickedText.includes(textRep)){
+            svg.select("#"+textRep).style("fill", "gray");
+          }
+        }
+      })
+      .on('click', function (d) {
+        var id = this.id;
+
+        d3.selection.prototype.moveToFront = function() {
+          return this.each(function() {
+            this.parentNode.appendChild(this);
+          });
+        };
+
+        //the variable circlesToChange is used to hold list of all circles that need to change
+        var circlesToChange = getInfo(id, years, "data");
+
+        //if you clicked on a circle all circles & text that are tied within must change color
+        if(id.charAt(0) === "c"){
+          //the variable newR is used to have the new value Radius for circles to be changed
+          var newR = newRCalculator(this);
+
+          //assigning the Rep variables to use to make changes to those elements
+          textRep = getInfo(id, 0, "textRep");
+          bigBarRep = "bigrect"+getInfo(id, 0, "barRep");
+
+          //if it was already clicked, RESET everything back to previous version
+          if(newR === 10){
+            //the for loop below resets the color of each circle to normal state: color--GRAY, opacity--0.3 and REMOVES each circle from the clicked data point array
+            for(var i = 0; i < circlesToChange.length; ++i){
+              svg.select("#"+circlesToChange[i]).style("opacity", 0.3).style("fill", "gray");
+              listOfClickedPoints.splice(circlesToChange[i], 1);
+            }
+
+            //the variable tempBBoxID is used to temporarily store the ID of the background box that is related to the circle who's attributes are being changed
+            //variable is used to remove the background box of circle
+            var tempBBoxID = "#"+getInfo(id, 0, "boxID");
+            svg.select(tempBBoxID).remove();
+
+            //changing the text of legend that belongs to data point to gray and resetting color of progress bar to assined color of data point
+            svg.select("#"+textRep).style("fill", "gray");
+            svg.select("#"+bigBarRep).style("fill", getInfo(id, 0, "color"));
+
+            //removes the text associated with data point from clicked text array
+            var index = listOfClickedText.indexOf(textRep);
+            if (index > -1) {
+              listOfClickedText.splice(index, 1);
+            }
+
+            //removes the progress bar associated with data point from progress bar array
+            var index2 = listOfProgressBars.indexOf(bigBarRep);
+            if (index2 > -1) {
+              listOfProgressBars.splice(index2, 1);
+            }
+
+            //removes the background box associated with data point from background box array
+            var index3 = listOfBackGroundBoxes.indexOf(getInfo(id, 0, "boxID"));
+            if (index3 > -1) {
+              listOfBackGroundBoxes.splice(index3, 1);
+            }
+          }//else if data point was not clicked
+          else{//the data point is not selected, make new changes, NOT RESET
+
+            //adds the new text that is connected to clicked data point to array of clicked text
+            listOfClickedText.push(textRep);
+
+            //adds the new progress bar that is connected to clicked data point to array of selected progress bars
+            listOfProgressBars.push(bigBarRep);
+
+            listOfBackGroundBoxes.push(getInfo(id, 0, "boxID"));
+
+            //remove texts so background box could be at the bottom
+            deteleText();
+
+            //add background box
+            svg.append("rect")
+                .attr("x", (100+(100*years)))
+                .attr("y", getInfo(id, 0, "boxY"))
+                .attr("rx", 5)
+                .attr("ry", 5)
+                .attr("width", 375)
+                .attr("height", 30)
+                .attr("id", getInfo(id, 0, "boxID"))
+                .style("fill", getInfo(id, 0, "color"))
+                .style("opacity", 0.3)
+                .attr("visibility", "none");
+
+            //places text back on top layer above background boxes
+            placeText(dataset, years);
+
+            circlesToChange = getInfo(id, years, "data");
+
+            //the for loop below resets the color of each circle to changed state: color--varies, opacity--0.8 and ADDS each circle to the clicked data point array
+            for(var i = 0; i < circlesToChange.length; ++i){
+              svg.select("#"+circlesToChange[i]).style("opacity", 5.0).style("fill", getInfo(id, 0, "color"));
+              svg.select("#"+circlesToChange[i]).moveToFront();
+              svg.select("#textbox").remove();
+              svg.select("#tempText").remove();
+              listOfClickedPoints.push(circlesToChange[i]);
+            }
+
+            //the for loop below changes all the text that have been click to color black text
+            for(var i = 0; i < listOfClickedText.length; ++i){
+              svg.select("#"+listOfClickedText[i]).style("fill", "black");
+            }
+
+            //the for loop below changes all the progress bars that have been selected to color black
+            for(var i = 0; i < listOfProgressBars.length; ++i){
+              svg.select("#"+listOfProgressBars[i]).style("fill", "black");
+            }
+          }
+        }
+        else{//if you select a text
+
+          //assigning the Rep variables to use to make changes to those elements
+          textRep = getInfo(id, 0, "textRep");
+          bigBarRep = "bigrect"+getInfo(id, 0, "barRep");
+
+          //undo changes
+          if(listOfClickedText.includes(textRep)) {
+            newR = 10;
+            //the for loop below resets the color of each circle to normal state: color--GRAY, opacity--0.3 and REMOVES each circle from the clicked data point array
+            for(var i = 0; i < circlesToChange.length; ++i){
+              svg.select("#"+circlesToChange[i]).style("opacity", 0.3).style("fill", "gray");
+              listOfClickedPoints.splice(circlesToChange[i], 1);
+            }
+
+            //the variable tempBBoxID is used to temporarily store the ID of the background box that is related to the circle who's attributes are being changed
+            //variable is used to remove the background box of circle
+            var tempBBoxID = "#"+getInfo(id, 0, "boxID");
+            svg.select(tempBBoxID).remove();
+
+            //changing the text of legend that belongs to data point to gray and resetting color of progress bar to assined color of data point
+            svg.select("#"+textRep).style("fill", "gray");
+            svg.select("#"+bigBarRep).style("fill", getInfo(id, 0, "color"));
+
+            //removes the text associated with data point from clicked text array
+            var index = listOfClickedText.indexOf(textRep);
+            if (index > -1) {
+              listOfClickedText.splice(index, 1);
+            }
+
+            //removes the progress bar associated with data point from progress bar array
+            var index2 = listOfProgressBars.indexOf(bigBarRep);
+            if (index2 > -1) {
+              listOfProgressBars.splice(index2, 1);
+            }
+
+            //removes the background box associated with data point from background box array
+            var index3 = listOfBackGroundBoxes.indexOf(getInfo(id, 0, "boxID"));
+            if (index3 > -1) {
+              listOfBackGroundBoxes.splice(index3, 1);
+            }
+          }
+          else {//make changes
+            newR = 15;
+
+            //adds the new text that is connected to clicked data point to array of clicked text
+            listOfClickedText.push(textRep);
+
+            //adds the new progress bar that is connected to clicked data point to array of selected progress bars
+            listOfProgressBars.push(bigBarRep);
+
+            listOfBackGroundBoxes.push(getInfo(id, 0, "boxID"));
+
+            //remove texts so background box could be at the bottom
+            deteleText();
+
+            //add background box
+            svg.append("rect")
+                .attr("x", (100+(100*years)))
+                .attr("y", getInfo(id, 0, "boxY"))
+                .attr("rx", 5)
+                .attr("ry", 5)
+                .attr("width", 375)
+                .attr("height", 30)
+                .attr("id", getInfo(id, 0, "boxID"))
+                .style("fill", getInfo(id, 0, "color"))
+                .style("opacity", 0.3)
+                .attr("visibility", "none");
+
+            //places text back on top layer above background boxes
+            placeText(dataset, years);
+
+            //the for loop below resets the color of each circle to changed state: color--varies, opacity--0.8 and ADDS each circle to the clicked data point array
+            for(var i = 0; i < circlesToChange.length; ++i){
+              svg.select("#"+circlesToChange[i]).style("opacity", 5.0).style("fill", getInfo(id, 0, "color"));
+              svg.select("#"+circlesToChange[i]).moveToFront();
+              svg.select("#textbox").remove();
+              svg.select("#tempText").remove();
+              listOfClickedPoints.push(circlesToChange[i]);
+            }
+
+            //the for loop below changes all the text that have been click to color black text
+            for(var i = 0; i < listOfClickedText.length; ++i){
+              svg.select("#"+listOfClickedText[i]).style("fill", "black");
+            }
+
+            //the for loop below changes all the progress bars that have been selected to color black
+            for(var i = 0; i < listOfProgressBars.length; ++i){
+              svg.select("#"+listOfProgressBars[i]).style("fill", "black");
+            }
+          }
+        }
+
+        //-----------------------------------------------------------------------------------------
+        //changing all circles to new radius
+        for(var i = 0; i < circlesToChange.length; ++i){
+          svg.select("#"+circlesToChange[i]).attr('r', newR);
+        }
+      });
+
+    //the following code is used to do all the event listeners for the checkboxes elements.
+    checkboxes
+      .on('mouseover', function(){
+        d3.select(this).style("cursor", "pointer");
+      })
+      .on('mouseout', function(){
+        d3.select(this).style("cursor", "default");
+      })
+      .on('click', function(){
+        //checks if checkbox is unclicked to be changed to click
+        if(this.style.fill === "white"){
+          //the line below changes the checkbox to "gray" meaning hide option was selected
+          d3.select(this).style("fill", "gray");
+
+          //the below two variables is used to hold all the elements that will change (progress bars and data points)
+          var progressBars= getInfo(this.id, 0, "progressBars");
+          var selectedDataPoints = getInfo(this.id ,years, "data");
+
+          //the for loop below sets necessary progress bars to hidden
+          for(var i = 0; i < progressBars.length; ++i){
+            svg.select(progressBars[i]).attr("visibility", "hidden");
+            listOfHiddenRects.push(progressBars[i]);
+          }
+
+          //the for loop below sets necessary data points to hidden
+          for(var i = 0; i < selectedDataPoints.length; ++i){
+            svg.select("#"+selectedDataPoints[i]).attr("visibility", "hidden");
+          }
+        }
+        else{
+          //the line below changes the checkbox to "white" meaning hide option was not selected
+          d3.select(this).style("fill", "white");
+
+          //the below two variables is used to hold all the elements that will change (progress bars and data points)
+          var progressBars= getInfo(this.id, 0, "progressBars");
+          var selectedDataPoints = getInfo(this.id ,years, "data");
+
+          //the for loop below sets necessary progress bars to visible
+          for(var i = 0; i < progressBars.length; ++i){
+            svg.select(progressBars[i]).attr("visibility", "visible");
+            var index = listOfHiddenRects.indexOf(progressBars[i]);
+            if (index > -1) {
+              listOfHiddenRects.splice(index, 1);
+            }
+          }
+
+          //the for loop below sets necessary data points to visible
+          for(var i = 0; i < selectedDataPoints.length; ++i){
+            svg.select("#"+selectedDataPoints[i]).attr("visibility", "visible");
+          }
+        }
+      });
+  }
+
+
+  placeText(dataset, years);
+  placeStandards(years);
+  plotDataPoints(dataset)
+  renderData(dataset);
+
+//--------------------End of Render function
 }
