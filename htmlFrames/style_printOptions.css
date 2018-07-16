@@ -125,7 +125,7 @@ label {
   transition: background-color .2s, box-shadow .2s;
   /*user-select: none;*/
   white-space: nowrap;
-  /*width: var(--button-width);*/
+  width: 6vw;
 }
 
 img {
