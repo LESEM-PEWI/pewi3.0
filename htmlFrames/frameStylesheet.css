@@ -484,7 +484,7 @@
   }
 }
 
-#modalConflictFrame {
+#modalConflictFrame, #modalPrecipConflictFrame {
   display: none;
   animation-duration: 1.0s;
   animation-name: showEffect;
@@ -518,7 +518,7 @@
   text-align: justify;
 }
 
-#cancelButton, #setPriorityButton, #optionsBox {
+#cancelButton, #setPriorityButton, #optionsBox, #selectButton, #customButton {
   font-family: 'Amatic SC', cursive;
 }
 
@@ -534,6 +534,51 @@
    top: 10vw;
    left: 25.2%;
    height: 0vw;
+ }
+
+ #mapList {
+   display: none;
+   margin-top: 0.5vw;
+ }
+
+ #precipMapSelectBox {
+   width: 13vw;
+   height: 2.3vw;
+   margin-bottom: 1vw;
+ }
+
+.precipSelectBox {
+   width: 6vw;
+   font-size: 1.2vw;
+ }
+
+ #customButton {
+   margin-top: 2vw;
+ }
+
+ .yearPrecipContainer {
+   font-size: 1.8vw;
+ }
+
+ #precipList {
+   display: none;
+   margin-top: 1vw;
+ }
+
+ #okButton, #cancelPrecipButton {
+   display: none;
+   width: 5vw;
+   height: 2vw;
+   font-size: 2vw;
+   line-height: 1.9vw;
+ }
+
+ #okButton {
+   left: 0vw;
+ }
+
+ #cancelPrecipButton {
+   left: 0vw;
  }
 
 .conflictButton {

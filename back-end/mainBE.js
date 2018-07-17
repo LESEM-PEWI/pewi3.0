@@ -5,6 +5,7 @@ var isAggregateConflictDetected = false; // Indicates whether there's a aggregat
 var nextFileIndex = 0; // next uploaded file should be process
 var mergedFiles = []; // stores all merged files
 var filesUploaded; // stores uploaded files
+var hasPrecipConclict = false; // indicates whether there's a precipitation level conflict or not
 
 //calculate() function brings the results up to date
 //  this is currently set to calculate up to year 3 for testing purposes
@@ -165,6 +166,15 @@ function overlayBoard(board) {
   // console.log(board);
 
   var utilityWindow = document.getElementById("startUpFrame").contentWindow.document.getElementById("startupDialogueOverlay").contentWindow;
+  if(!hasPrecipConclict) {
+    for(var y = 0; y < board.calculatedToYear; y++) {
+      var precipIndex = convertPrecipToIndex(parseFloat(initData[1][29+y]));
+      if(precipIndex !== board.precipitationIndex[y]) {
+        hasPrecipConclict = true;
+      }
+    }
+  }
+
   for (var i = 0; i < initData.length; i++) {
     //get the tile set up
     var tile = new Tile(initData[i], board);
@@ -176,12 +186,13 @@ function overlayBoard(board) {
         utilityWindow.document.getElementById("modalConflictFrame").style.display = "block";
         utilityWindow.document.getElementById("conflictText").innerHTML += "Merged Map - Currently includes the following files: ";
         for(var i = 0; i < mergedFiles.length; i++){
-          utilityWindow.document.getElementById("conflictText").innerHTML += "<" + mergedFiles[i] + ">";
+          console.log(mergedFiles[i]);
+          utilityWindow.document.getElementById("conflictText").innerHTML += "&lt;" + mergedFiles[i] + "&gt;";
           if(i != mergedFiles.length - 1)
             utilityWindow.document.getElementById("conflictText").innerHTML += ", ";
         }
         utilityWindow.document.getElementById("conflictText").innerHTML += ". These files were successfully merged.<br><br>";
-        utilityWindow.document.getElementById("conflictText").innerHTML += "Current Map to Merge - <" + filesUploaded[nextFileIndex].name + "> has a conflict with the above merged maps.";
+        utilityWindow.document.getElementById("conflictText").innerHTML += "Current Map to Merge - &lt" + filesUploaded[nextFileIndex].name + "&gt; has a conflict with the above merged maps.";
 
         isAggregateConflictDetected = true;
 

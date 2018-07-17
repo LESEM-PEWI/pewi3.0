@@ -99,13 +99,25 @@ Cleaned and Prepared - August 2016
     </div>
   </div>
 
+  <div id="modalPrecipConflictFrame">
+    <div id="conflictPopupBox">
+      <div id="conflictPrecipText">There's a precipitation level conflict between uploaded maps.<br><br></div>
+      <div id="selectButton" class="conflictButton" onclick="generateMapList();" style="display:block;">Select one map to use precip from</div>
+      <div id="mapList"></div>
+      <div id="customButton" class="conflictButton" onclick="generatePrecipList();" style="display:block;">Customize precip levels</div>
+      <div id="precipList"></div>
+      <div id="okButton" class="conflictButton" onclick="confirmPrecipSelection();">OK</div>
+      <div id="cancelPrecipButton" class="conflictButton" onclick="cancelPrecip();">Cancel</div>
+    </div>
+  </div>
+
   <script>
     // var input = document.getElementById("file-upload");
     var ul = document.getElementById("fileList");
 
     bindSimulationFileListener();
 
-
+    // toggleOptionsBox will show/hide the "Merged Map" and "Current Map" button
     function toggleOptionsBox() {
       if(document.getElementById("optionsBox").style.height != "18vw"){
         document.getElementById("optionsBox").style.height = "18vw";
@@ -123,9 +135,10 @@ Cleaned and Prepared - August 2016
       }
     }
 
+    // cancelUploadFiles will clear all the data that loaded from the upload files
     function cancelUploadFiles() {
       document.getElementById("modalConflictFrame").style.display = "none";
-      document.getElementById("conflictText").innerHTML = "There's a conflict between uploaded maps.<br>";
+      document.getElementById("conflictText").innerHTML = "There's a conflict between uploaded maps.<br><br>";
       emptyFileList();
       // remove the file handler
       window.top.cleanCurrentBoardData();
@@ -133,6 +146,7 @@ Cleaned and Prepared - August 2016
       window.top.isAggregateChoiceMade = false;
       window.top.nextFileIndex = 0;
       window.top.filesUploaded = null;
+      window.top.hasPrecipConclict = false;
 
       updateInfo("Ready. Upload csv map files.");
     }
@@ -149,6 +163,119 @@ Cleaned and Prepared - August 2016
 
     }
 
+    //  generatePrecipList will generate a drop down box which ables user to select one map to set precip levels
+    function generateMapList() {
+      if(document.getElementById("mapList").style.display != 'block'){
+        // dynamically generate a drop down box which contains names of all the file uploaded
+        if(document.getElementById("mapList").innerHTML === ""){
+          var selectEle = document.createElement("select");
+          selectEle.id = "precipMapSelectBox";
+          selectEle.className = "precipSelectBox";
+
+          for(var i = 0; i < window.top.filesUploaded.length; i++) {
+            var optionEle = document.createElement("option");
+            optionEle.value = i;
+            optionEle.innerHTML = window.top.filesUploaded[i].name;
+            selectEle.appendChild(optionEle);
+          }
+          document.getElementById("mapList").appendChild(selectEle);
+        }
+        // document.getElementById("selectButton").style.backgroundColor = "#003d4d";
+        document.getElementById("mapList").style.display = 'block';
+        document.getElementById("customButton").style.display = 'none';
+        document.getElementById("okButton").style.display = 'inline-block';
+        document.getElementById("cancelPrecipButton").style.display = 'inline-block';
+      }
+      else {
+        // document.getElementById("selectButton").style.backgroundColor = "#40a4df";
+        document.getElementById("mapList").style.display = 'none';
+        document.getElementById("customButton").style.display = 'block';
+        document.getElementById("okButton").style.display = 'none';
+        document.getElementById("cancelPrecipButton").style.display = 'none';
+      }
+    }
+
+    //  generatePrecipList will generate a drop down box which ables user to select precip data to set precip levels
+    function generatePrecipList() {
+      if(document.getElementById("precipList").style.display != 'block'){
+
+        if(document.getElementById("precipList").innerHTML === ""){
+          // dynamically generate drop down boxs which contains precip data, calculatedToYear value decides the number of drop down boxs
+          for(var y = 0; y <= window.top.boardData[window.top.currentBoard].calculatedToYear; y++) {
+            var precipYear = document.createElement("div");
+            precipYear.id = "year" + y + "Precip";
+            precipYear.className = "yearPrecipContainer";
+            precipYear.innerHTML = "Year " + y + ":&nbsp;";
+            var selectEle = document.createElement("select");
+            selectEle.id = "year" + y + "PrecipSelectBox";
+            selectEle.className = "precipSelectBox";
+            for(var i = 0; i < window.top.precip.length; i++){
+              var optionEle = document.createElement("option");
+              optionEle.value = i;
+              optionEle.innerHTML = window.top.precip[i];
+              selectEle.appendChild(optionEle);
+            }
+            precipYear.appendChild(selectEle);
+            document.getElementById("precipList").appendChild(precipYear);
+          }
+
+        }
+        // document.getElementById("selectButton").style.backgroundColor = "#003d4d";
+        document.getElementById("precipList").style.display = 'block';
+        document.getElementById("selectButton").style.display = 'none';
+        document.getElementById("okButton").style.display = 'inline-block';
+        document.getElementById("cancelPrecipButton").style.display = 'inline-block';
+      }
+      else {
+        // document.getElementById("selectButton").style.backgroundColor = "#40a4df";
+        document.getElementById("precipList").style.display = 'none';
+        document.getElementById("selectButton").style.display = 'block';
+        document.getElementById("okButton").style.display = 'none';
+        document.getElementById("cancelPrecipButton").style.display = 'none';
+      }
+    }
+
+    // cancelPrecip will return to previous options page which users would be able to choose which option to deal with precip conflict
+    function cancelPrecip() {
+      if(document.getElementById("selectButton").style.display === "block"){
+        generateMapList();
+      }
+      else {
+        generatePrecipList();
+      }
+    }
+
+    // When OK button is clicked, confirmPrecipSelection will get the data from the drop down box, and set the corresponding precip levels according
+    // to the option user seleteced
+    function confirmPrecipSelection() {
+      if(document.getElementById("selectButton").style.display === "block") {
+        //get the file index and read the file again
+        var fileIndex = Number(document.getElementById("precipMapSelectBox").value);
+        var reader = new FileReader();
+        reader.readAsText(window.top.filesUploaded[fileIndex]);
+        reader.onload = function(e) {
+          //setup data from reader (file) into intiData global
+          if (window.top.parseInitial(reader.result)) {
+            for(var y = 0; y <= window.top.boardData[window.top.currentBoard].calculatedToYear; y++) {
+              // console.log("File: Year " + y, Number(window.top.initData[1][29 + y]));
+              // Here, all we need to do is just update the value of window.top.boardData[window.top.currentBoard].precipitation[y].
+              window.top.boardData[window.top.currentBoard].precipitation[y] = Number(window.top.initData[1][29 + y]);
+            }
+            window.top.boardData[window.top.currentBoard].updateBoard();
+          }
+        }
+      }
+      else {
+        for(var y = 0; y <= window.top.boardData[window.top.currentBoard].calculatedToYear; y++) {
+          var precipIndex = Number(document.getElementById("year" + y + "PrecipSelectBox").value);
+          window.top.boardData[window.top.currentBoard].precipitation[y] = window.top.precip[precipIndex];
+        }
+        window.top.boardData[window.top.currentBoard].updateBoard();
+      }
+      // once decision is made, we should hide the modalPrecipConflictFrame window.
+      document.getElementById("modalPrecipConflictFrame").style.display = "none";
+    }
+
     //attach the file upload event to our functions for simulating
     function bindSimulationFileListener() {
       //jquery attachment
@@ -163,9 +290,9 @@ Cleaned and Prepared - August 2016
     //assist in downloading the currently aggregated map
     //uses filesaver.js for compatibility purposes
     function downloadAggregateMap() {
-      emptyFileList();
-      // remove the file handler
-      window.top.filesUploaded = null;
+      // emptyFileList();
+      // // remove the file handler
+      // window.top.filesUploaded = null;
 
       //data from function in helpersFE.js
       var data = window.top.writeFileToDownloadString();
@@ -250,6 +377,22 @@ Cleaned and Prepared - August 2016
       emptyFileList();
       // clear the boardData
       boardData = [];
+      // initialize all related variables
+      window.top.isAggregateConflictDetected = false;
+      window.top.isAggregateChoice = void 0;
+      window.top.nextFileIndex = 0;
+      window.top.filesUploaded = null;
+      window.top.hasPrecipConclict = false;
+      window.top.mergedFiles = [];
+      document.getElementById("selectButton").style.display = "block";
+      document.getElementById("customButton").style.display = "block";
+      document.getElementById("mapList").innerHTML = "";
+      document.getElementById("precipList").innerHTML = "";
+      document.getElementById("mapList").style.display = "none";
+      document.getElementById("precipList").style.display = "none";
+      document.getElementById("okButton").style.display = 'none';
+      document.getElementById("cancelPrecipButton").style.display = 'none';
+
       window.top.filesUploaded = document.getElementById("file-upload").files;
       // check files number
       if (window.top.filesUploaded.length > 6) {
