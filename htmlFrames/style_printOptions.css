@@ -124,8 +124,9 @@ label {
   text-align: center;
   transition: background-color .2s, box-shadow .2s;
   /*user-select: none;*/
-  white-space: nowrap;
-  width: 6vw;
+  white-space: normal;
+  width: 8.2vw;
+  vertical-align: top;
 }
 
 img {
@@ -133,7 +134,7 @@ img {
 }
 
 label div {
-  display: inline-block;
+  /* display: inline-block; */
   font-size: 1vw;
 }
 
