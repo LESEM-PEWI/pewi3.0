@@ -3205,7 +3205,7 @@ function Tile(tileArray, board) {
       this.results[year].nativeVegetationHDFlag = 0;
     } //end elseif for native vegatation and other high diversity land uses
 
-    //flag native vegatation and comparatively high diversity or low input land uses //// QUESTION:
+    //flag native vegatation and comparatively high diversity or low input land uses
     if(bmp.noTill === 'false' && bmp.coverCrop === 'false' && bmp.gWaterway === 'false' && bmp.contouringOrTerracing === 'false')
     {
     //  console.log("all four are deactivated");
@@ -3475,23 +3475,6 @@ function Tile(tileArray, board) {
         //HERE??
         case "conservationCorn":
           return 0.020;
-          //if cell is stream adjacent- regular + ((#BMPs off)/5)* (regular conventional corn - regular conservation corn) - // COMBAK: after formula is fixed
-          // if(this.streamNetwork == 1)
-          // {
-          //   return (0.020+(((5 - bmp.numSwitchesOn)/5)*(0.085-0.020)));
-          // }
-          // else
-          // {
-          //   getStreamBuffer();
-          //   bmp.streamBuffer = sessionStorage.getItem('sB');
-          //   var otherSwitches = bmp.numSwitchesOn;
-          //   if(bmp.streamBuffer === 'true')
-          //   {
-          //     otherSwitches-=1;
-          //     return (0.020+(((4 - otherSwitches)/4)*(0.085-0.020)));
-          //   }
-          //   return (0.020+(((4 - bmp.numSwitchesOn)/4)*(0.085-0.020)));
-          // }
         case "conservationSoybean":
           return 0.031;
         case "conventionalCorn":
@@ -3548,7 +3531,12 @@ function Tile(tileArray, board) {
   }; //end this.coverManagementFactor
 
   //Calculate supportPracticeFactor for rusle- P
+  // COMBAK:
+  //If the Contouring or Terracing switch under best management practices is turned on,
+  //if the slope of the cell is greater than 2%, then supportPracticeFactor is a product of contourSubfactor and terraceSubfactor
+  //for all the other cases, 1 is returned.
   this.supportPracticeFactor = function(year) {
+
     if (this.landType[year] == LandUseType.none)
     {
       return 0;
@@ -3557,17 +3545,20 @@ function Tile(tileArray, board) {
     {
       if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean)
       {
-        //// QUESTION: is it that the slope>2% then if the cT is true, or the other way around?
+        //
         getContouringOrTerracing();
         bmp.contouringOrTerracing = sessionStorage.getItem('cT');
         if (bmp.contouringOrTerracing === 'true')
         {
           if(this.topography > 1)
           {
+            //console.log("Slope is > 2 %");
+            //console.log("P is "+this.contourSubfactor(year) * this.terraceSubfactor());
             return this.contourSubfactor(year) * this.terraceSubfactor();
           }
         }
      }
+  //   console.log("Slope is less than 2% so returning 1 ");
      return 1;
     } //end elseif
   }; //end this.supportPracticeFactor
@@ -4065,41 +4056,60 @@ function Tile(tileArray, board) {
     // COMBAK:
     //The P application factor depends on the time and method factor; which changes based on the land use and
       //with the use of BMPs. When the tile is adjacent to the stream - TM = 1-((0.2)*((5-bmp.numSwitchesOn)/5))
-      //if it isn't - TM = 1-((0.2)*((4-bmp.numSwitchesOn)/4))
+      //if it isn't - TM = 1-((0.2)*((4-bmp.numSwitchesOn)/4)), i.e, the stream bufffer switch isn't considered
     if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean || this.landType[year] == LandUseType.permanentPasture ||
       this.landType[year] == LandUseType.rotationalGrazing || this.landType[year] == LandUseType.grassHay)
       {
+        getStreamBuffer();
+        bmp.streamBuffer = sessionStorage.getItem('sB');
+        bmp.numSwitchesOn = sessionStorage.getItem('nSOn');
         if(this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean)
         {
+    //      console.log("Land type conservation crop");
+          //var timeMethodFactor =0;
           if(this.streamNetwork == 1)
-          {
+          {//console.log("Stream adjacent");
+            //console.log("number of swtiches on " +bmp.numSwitchesOn);
             var timeMethodFactor = 1-((0.2)*((5-bmp.numSwitchesOn)/5));
+          //  console.log("time method factor is "+ timeMethodFactor);
+          //  console.log("Total "+(this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005);
             return (this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005;
           }
           else //if it is not stream adjacent
           {
-            getStreamBuffer();
-            bmp.streamBuffer = sessionStorage.getItem('sB');
+            //console.log("Not stream adjacent");
             var otherSwitches = bmp.numSwitchesOn;
+
             if(bmp.streamBuffer === 'true')
             {
+              //console.log("Stream buffer on");
               otherSwitches-=1;
+              //console.log("Other switches "+otherSwitches);
               var timeMethodFactor = 1-((0.2)*((4-otherSwitches)/4));
+              //console.log("Time method factor is "+ timeMethodFactor);
+              //console.log("Total "+(this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005);
               return (this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005;
             }
+            //console.log("Stream Buffer is off ");
+            //console.log("Number of switches on "+bmp.numSwitchesOn);
             var timeMethodFactor = 1-((0.2)*((4-bmp.numSwitchesOn)/4));
+            //console.log("TMF "+timeMethodFactor);
+            //console.log("Total "+(this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005);
             return (this.PApplicationRate[year] / 4.58) * 0.5 * timeMethodFactor * 0.005;
           }
         }
+    //    console.log("different land type use " +(this.PApplicationRate[year] / 4.58) * 0.5 * 1 * 0.005);
         return (this.PApplicationRate[year] / 4.58) * 0.5 * 1 * 0.005; //instead of 0.5,
       }
       else if (this.landType[year] == LandUseType.alfalfa)
       {
+      //  console.log("For alfalfa "+(this.PApplicationRate[year] / 4.58) * 0.5 * 0.9 * 0.005);
         return (this.PApplicationRate[year] / 4.58) * 0.5 * 0.9 * 0.005;
       }
       else if (this.landType[year] == LandUseType.conventionalCorn || this.landType[year] == LandUseType.conventionalSoybean ||
       this.landType[year] == LandUseType.mixedFruitsVegetables)
       {
+    //    console.log("For conventional crop " + (this.PApplicationRate[year] / 4.58) * 0.5 * ((0.6 + 1.0) / 2) * 0.005);
         return (this.PApplicationRate[year] / 4.58) * 0.5 * ((0.6 + 1.0) / 2) * 0.005;
       }
     return 0;
@@ -4112,29 +4122,57 @@ function Tile(tileArray, board) {
   };
 
   // COMBAK: if- else question
+  //The calculations on this function is based on whether or not the cell is adjacent to the stream.
+  //Detailed comments below
   this.enrichmentFactor = function(year) {
     if (this.landType[year] == LandUseType.conventionalCorn || this.landType[year] == LandUseType.conventionalSoybean ||
-      this.landType[year] == LandUseType.mixedFruitsVegetables){
+      this.landType[year] == LandUseType.mixedFruitsVegetables)
+    {
+    //  console.log("Land type isnt what you wanted so 1.1");
         return 1.1;
-    } else {
-      //for all the others including conservation corn and soybean, the formula is as follows -
+    }
+    else
+    {
+      //for including conservation corn and soybean, the formula is as follows -
       //if the tile is stream adjacent
       //1.3 - 0.2*(#bmp off)/5
-      if(this.streamNetwork == 1)
-      {
-        return (1.3-((0.2)*((5-bmp.numSwitchesOn)/5)));
-      }
-      else //if not stream adjacent and stream buffer is off 1.3 - 0.2*(#bmp off)/4
+      if(this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean)
       {
         getStreamBuffer();
         bmp.streamBuffer = sessionStorage.getItem('sB');
-        var otherSwitches = bmp.numSwitchesOn;
-        if(bmp.streamBuffer === 'true')
+        bmp.numSwitchesOn = sessionStorage.getItem('nSOn');
+        if(this.streamNetwork == 1)
         {
-          otherSwitches-=1;
-          return (1.3-((0.2)*((4-otherSwitches)/4)));
+          //console.log("swtches on "+bmp.numSwitchesOn);
+          //console.log("stream adjacent so " +(1.3-((0.2)*((5-bmp.numSwitchesOn)/5))));
+          return (1.3-((0.2)*((5-bmp.numSwitchesOn)/5)));
         }
-        return (1.3-((0.2)*((4-bmp.numSwitchesOn)/4)));
+        else //if not stream adjacent and stream buffer is off 1.3 - 0.2*(#bmp off)/4
+        {
+        //  console.log("not adjacent to the lake");
+          //getStreamBuffer();
+          //bmp.streamBuffer = sessionStorage.getItem('sB');
+          var otherSwitches = bmp.numSwitchesOn;
+          //If stream buffer switch is turned on, ignore it
+          if(bmp.streamBuffer === 'true')
+          {
+            //console.log("stream buffer is true");
+            otherSwitches-=1;
+          //  console.log("other switches " +otherSwitches);
+        //    console.log("result here is "+ (1.3-((0.2)*((4-otherSwitches)/4))));
+            return (1.3-((0.2)*((4-otherSwitches)/4)));
+          }
+  //        console.log("stream buffer is falses");
+    ///      console.log(bmp.numSwitchesOn);
+      //    console.log("result here is "+(1.3-((0.2)*((4-bmp.numSwitchesOn)/4))));
+          return (1.3-((0.2)*((4-bmp.numSwitchesOn)/4)));
+        }
+      }
+      //for all other land uses
+      else
+      {
+//        console.log("for all other land uses return 1.3");
+        return 1.3;
       }
     }
   };
@@ -4157,6 +4195,7 @@ function Tile(tileArray, board) {
   //the tile-level method for nitrate delivery
   //since nitrate levels are calculated at subWatershed level, tile level calculations output
   // row crop multiplier times conservation row crop multiplier
+  //For the best management practices, we only modify the conservation row crop multiplier.
   // COMBAK:
   this.nitrateSubcalculation = function(year) {
 
@@ -4165,67 +4204,88 @@ function Tile(tileArray, board) {
       if (this.landType[year] == LandUseType.conservationCorn || this.landType[year] == LandUseType.conservationSoybean)
       {
         var conservationRowCropMultiplier = 0;
+      //  console.log("Conservation Crop ");
         //Des Moines lobe. See function printSoilType(tileId) method in helpersFE.js to get the list of soil types
+        //
         if (this.soilType == "A" || this.soilType == "B" || this.soilType == "C" || this.soilType == "L" || this.soilType == "N" || this.soilType == "O")
-        {
+        {// console.log("Des Moines Lobe "+this.soilType);
           //if tile is stream adjacent
           if(this.streamNetwork == 1)
           {
+            //the conservation row crop multiplier  = 0.69+ 0.31*(# of bmpswitches off/5) - when it is stream adjacent
+          //  console.log("stream adjacent and switches off "+(5-bmp.numSwitchesOn));
             conservationRowCropMultiplier = 0.69 + (0.31*((5-bmp.numSwitchesOn)/5));
+          //  console.log("CCM is "+conservationRowCropMultiplier);
           }
           else  //not stream adjacent
           {
+            //the conservation row crop multiplier  = 0.69+ 0.31*(# of bmpswitches off/4) - when it is not stream adjacent
+          //  console.log("Not stream Adjacent ");
             getStreamBuffer();
             bmp.streamBuffer = sessionStorage.getItem('sB');
+            bmp.numSwitchesOn = sessionStorage.getItem('nSOn');
             var otherSwitches = bmp.numSwitchesOn;
+            //now if the stream buffer is ON, ignore it.
             if(bmp.streamBuffer === 'true')
             {
               otherSwitches-=1;
+            //  console.log("SB ON ");
+            //  console.log("off switches "+(4-otherSwitches));
               conservationRowCropMultiplier = 0.69 + (0.31*((4-otherSwitches)/4));
+            //  console.log("CCM "+conservationRowCropMultiplier);
             }
             else
             {
+          //    console.log("SB off and number of switches off is "+(4-bmp.numSwitchesOn));
               conservationRowCropMultiplier = 0.69 + (0.31*((4-bmp.numSwitchesOn)/4));
+          //    console.log("CCM "+conservationRowCropMultiplier);
             }
           }
           this.results[year].cropMultiplier = 0.14 * this.area * conservationRowCropMultiplier;
         }
         else //not in Des Moines lobe.
         {
+          //exactly the same as above
+        //  console.log("Not in DSM "+this.soilType);
           //this.results[year].cropMultiplier = 0.14 * this.area * 0.62;
-          if (this.soilType == "A" || this.soilType == "B" || this.soilType == "C" || this.soilType == "L" || this.soilType == "N" || this.soilType == "O")
-          {
             //if tile is stream adjacent
             if(this.streamNetwork == 1)
             {
+          //    console.log("STream adjacent");
               conservationRowCropMultiplier = 0.62 + (0.38*((5-bmp.numSwitchesOn)/5));
+          //    console.log("CCM is "+conservationRowCropMultiplier);
             }
             else  //not stream adjacent
             {
+          //    console.log("Not stream adjacent ");
               getStreamBuffer();
               bmp.streamBuffer = sessionStorage.getItem('sB');
+              bmp.numSwitchesOn = sessionStorage.getItem('nSOn');
               var otherSwitches = bmp.numSwitchesOn;
               if(bmp.streamBuffer === 'true')
               {
                 otherSwitches-=1;
                 conservationRowCropMultiplier = 0.62 + (0.38*((4-otherSwitches)/4));
+            //    console.log("SB is ON and switches off "+(4-otherSwitches) + "CCM is "+conservationRowCropMultiplier);
               }
               else
               {
                 conservationRowCropMultiplier = 0.62 + (0.38*((4-bmp.numSwitchesOn)/4));
+            //    console.log("SB is OFF and switches off "+(4-bmp.numSwitchesOn)+" CCM is "+conservationRowCropMultiplier);
               }
             }
             this.results[year].cropMultiplier = 0.14 * this.area * conservationRowCropMultiplier;
-          }
         }
       } //end for conservation
       else
       {
+    //    console.log("Not conservation and land typ "+this.soilType);
         this.results[year].cropMultiplier = 0.14 * this.area;
       }
     }
     else
     {
+  //    console.log("Probably no land use "+this.soilType);
       this.results[year].cropMultiplier = 0;
     }
 
@@ -4428,6 +4488,8 @@ function Tile(tileArray, board) {
 };
 //end construction of Tile
 //The following are the functions used for Best Management Practices
+//These methods track down which BMP switches are turned on
+//Also keeps a record of how many switches are on.
 
 function getTill()
 {

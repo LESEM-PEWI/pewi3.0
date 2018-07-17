@@ -60,7 +60,7 @@ body {
 }
 
   .switch1 {
-  display: inline;
+  display:inline;
   left: 500px;
   width: 24px;
   height: 24px;
@@ -111,7 +111,7 @@ body {
   height: 24px;
   width: 24px;
   left: 6px;
-  bottom: 15px;
+  bottom: 13px;
   background-color: white;
   -webkit-transition: .1s;
   transition: .1s;
@@ -133,7 +133,7 @@ input:checked + .slider:before {
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 26px;
+  border-radius: 50px;
 }
 
 .slider.round:before {
