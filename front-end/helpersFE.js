@@ -678,7 +678,7 @@ function setProgressbarMinMaxValues(id, option, value) {
   }
 
 
-  
+
 }
 
 //Adds the given tileId and painter to the undoArr
@@ -1896,6 +1896,11 @@ function executePrintOptions(isDownload) {
     nitrate: false,
     erosion: false,
     phosphorus: false,
+    sediment: false,
+    carbon: false,
+    gamewildlife: false,
+    biodiversity: false,
+    nitratetile: false,
     // features
     featureUserViewpoint: false,
     flood: false,
@@ -1903,7 +1908,7 @@ function executePrintOptions(isDownload) {
     boundary: false,
     drainage: false,
     soil: false,
-    topography: false,
+    topo: false,
     // yields
     yieldUserViewpoint: false,
     corn: false,
@@ -3849,7 +3854,7 @@ function randomizeBoard() {
 //The argument bypassFromKeyEvent helps the t key and r key switch up the board when pressed
 //  to change topography and random tiles, but keep the board highlighted
 function refreshBoard(bypassFromKeyEvent) {
-  
+
   if (mesh != null) {
     scene.remove(mesh);
   }

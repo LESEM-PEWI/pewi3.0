@@ -1970,6 +1970,11 @@ function Printer() {
       case 'nitrate':
       case 'erosion':
       case 'phosphorus':
+      case 'sediment':
+      case 'carbon':
+      case 'gamewildlife':
+      case 'biodiversity':
+      case 'nitratetile':
         // paste Year 1 level map
         if (toPrint.year1 === true) {
           // check if it's needed to add page
@@ -2090,6 +2095,11 @@ function Printer() {
       case 'nitrate':
       case 'erosion':
       case 'phosphorus':
+      case 'sediment':
+      case 'carbon':
+      case 'gamewildlife':
+      case 'biodiversity':
+      case 'nitratetile':
         if (toPrint.year1 === true) {
           transitionToYear(1);
           displayLevels(type);
@@ -2168,12 +2178,18 @@ function Printer() {
       case 'nitrate': return 'Subwatershed Nitrate-N Percent Contribution';
       case 'erosion': return 'Gross Erosion';
       case 'phosphorus': return 'Phosphorus Index Risk Assessment';
+      case 'sediment': return 'Sediment Control';
+      case 'carbon': return 'Carbon Sequestration';
+      case 'gamewildlife': return 'Game Wildlife';
+      case 'biodiversity': return 'Biodiversity';
+      case 'nitratetile': return 'Cell Nitrate Score';
       // features
       case 'flood': return 'Flood Frequency';
       case 'wetlands': return 'Strategic Wetlands';
       case 'boundary': return 'Subwatershed Boundaries';
       case 'drainage': return 'Drainage Class';
       case 'soil': return 'Soil Class';
+      case 'topo': return 'Topography';
       // yields
       case 'corn': return 'Corn Grain Yield';
       case 'soybean': return 'Soybean Yield';
