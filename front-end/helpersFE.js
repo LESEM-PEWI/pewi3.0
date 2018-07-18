@@ -2539,7 +2539,7 @@ function getHighlightedInfo(tileId) {
         //create string for strategic wetlands
       case 6:
         if (boardData[currentBoard].map[tileId].strategicWetland == 1)
-          highlightString = "Strategic Wetland" + "<br>";
+          highlightString = "Strategic" + "<br>";
         else
           if((Number(boardData[currentBoard].map[tileId].topography) <= 1))
           {
