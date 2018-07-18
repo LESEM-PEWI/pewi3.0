@@ -282,11 +282,15 @@
   /*width: 400px;*/
 }
 
+#simulationButton {
+  margin-top: 2.5%;
+}
+
 #addFile, #downloadFile {
   /*height: 40px;*/
   line-height: 90%;
   margin-left: 17px;
-  margin-left: 4.1%;
+  margin-left: 6%;
   width: 84.1%;
 }
 
@@ -314,7 +318,8 @@
   display: inline-block;
   height: 0px;
   margin-left: 2.4%;
-  margin-top: 20px;
+  margin-top: 5px;
+  /* display: none; */
   overflow: hidden;
   position: relative;
   width: 96.2%;
@@ -333,11 +338,16 @@
   border: aqua;
   border-radius: 30px;
   display: none;
-  left: 65vw;
+  left: 63vw;
   margin: 1vw;
   padding: 1.5vw;
   position: absolute;
-  top: 30vw;
+  top: 23vw;
+}
+
+#fileList {
+  position: relative;
+  left: -0.8vw;
 }
 
 
@@ -463,4 +473,142 @@
   #startupInformationText {
     left: 52%;
   }
+}
+
+@keyframes showEffect {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#modalConflictFrame, #modalPrecipConflictFrame {
+  display: none;
+  animation-duration: 1.0s;
+  animation-name: showEffect;
+  background-color: rgba(0, 0, 0, 0.89);
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+}
+
+ #conflictPopupBox, #optionsBox {
+  border-radius: 6px;
+  display: inline-block;
+  color: #FFFFFF;
+  /* font-family: 'Amatic SC', cursive; */
+  font-size: 2.8vw;
+  font-weight: bold;
+  line-height: 130%;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  -webkit-transition-duration: 1s;
+  transition-duration: 1s;
+
+}
+
+#conflictText {
+  font-size: 2vw;
+  line-height: 100%;
+  text-align: justify;
+}
+
+#cancelButton, #setPriorityButton, #optionsBox, #selectButton, #customButton {
+  font-family: 'Amatic SC', cursive;
+}
+
+ #conflictPopupBox {
+   width: 50vw;
+   top: 10vw;
+   left: 25%;
+ }
+
+ #optionsBox {
+   /* display: none; */
+   width: 50vw;
+   top: 10vw;
+   left: 25.2%;
+   height: 0vw;
+ }
+
+ #mapList {
+   display: none;
+   margin-top: 0.5vw;
+ }
+
+ #precipMapSelectBox {
+   width: 13vw;
+   height: 2.3vw;
+   margin-bottom: 1vw;
+ }
+
+.precipSelectBox {
+   width: 6vw;
+   font-size: 1.2vw;
+ }
+
+ #customButton {
+   margin-top: 2vw;
+ }
+
+ .yearPrecipContainer {
+   font-size: 1.8vw;
+ }
+
+ #precipList {
+   display: none;
+   margin-top: 1vw;
+ }
+
+ #okButton, #cancelPrecipButton {
+   display: none;
+   width: 5vw;
+   height: 2vw;
+   font-size: 2vw;
+   line-height: 1.9vw;
+ }
+
+ #okButton {
+   left: 0vw;
+ }
+
+ #cancelPrecipButton {
+   left: 0vw;
+ }
+
+.conflictButton {
+  position: relative;
+  background-color: #40A4DF;
+  border: 2px solid white;
+  border-radius: 12px;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: 'Amatic SC', cursive;
+  font-size: 2.5vw;
+  font-weight: bold;
+  line-height: 110%;
+  padding: 5px;
+  text-align: center;
+  width: 15vw;
+  left: 17vw;
+
+}
+
+.conflictButton:hover {
+  background-color: #7cc1e9;
+}
+
+#cancelButton, #setPriorityButton, #mergedMapButton, #currentMapButton {
+  margin-top: 4%;
+  position: relative;
+}
+
+#mergedMapButton, #currentMapButton {
+  width: 12vw;
+  left: 18.3vw;
 }
