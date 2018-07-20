@@ -1896,6 +1896,11 @@ function executePrintOptions(isDownload) {
     nitrate: false,
     erosion: false,
     phosphorus: false,
+    sediment: false,
+    carbon: false,
+    gamewildlife: false,
+    biodiversity: false,
+    nitratetile: false,
     // features
     featureUserViewpoint: false,
     flood: false,
@@ -1903,7 +1908,7 @@ function executePrintOptions(isDownload) {
     boundary: false,
     drainage: false,
     soil: false,
-    topography: false,
+    topo: false,
     // yields
     yieldUserViewpoint: false,
     corn: false,
