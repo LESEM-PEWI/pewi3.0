@@ -186,13 +186,13 @@ function overlayBoard(board) {
         utilityWindow.document.getElementById("modalConflictFrame").style.display = "block";
         utilityWindow.document.getElementById("conflictText").innerHTML += "Merged Map - Currently includes the following files: ";
         for(var i = 0; i < mergedFiles.length; i++){
-          console.log(mergedFiles[i]);
+          // console.log(mergedFiles[i]);
           utilityWindow.document.getElementById("conflictText").innerHTML += "&lt;" + mergedFiles[i] + "&gt;";
           if(i != mergedFiles.length - 1)
             utilityWindow.document.getElementById("conflictText").innerHTML += ", ";
         }
         utilityWindow.document.getElementById("conflictText").innerHTML += ". These files were successfully merged.<br><br>";
-        utilityWindow.document.getElementById("conflictText").innerHTML += "Current Map to Merge - &lt" + filesUploaded[nextFileIndex].name + "&gt; has a conflict with the above merged maps.";
+        utilityWindow.document.getElementById("conflictText").innerHTML += "Current Map to Merge - &lt;" + filesUploaded[nextFileIndex].name + "&gt; has a conflict with the above merged maps.";
 
         isAggregateConflictDetected = true;
 
