@@ -563,3 +563,47 @@ label[for=file-upload], #sim-message-repeat {
 #file-upload {
     display: none;
 }
+
+/*snackbar notification */
+#snackbarNotification {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+    position: fixed;
+    z-index: 1;
+    left:6%;
+    bottom: 22%;
+}
+
+#snackbarNotification.show {
+    visibility: visible;
+    -webkit-animation: fadein 1.0s, fadeout 1.0s 2.5s;
+    animation: fadein 1.0s, fadeout 1.0s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
