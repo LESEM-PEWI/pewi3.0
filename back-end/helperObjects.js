@@ -1096,6 +1096,7 @@ function GameBoard() {
   //Use this only when you need to update all of the tiles, such as initially or when precip is changed
   //  otherwise, avoid using this function and update tiles individually since this is computationally intensive
   this.updateBoard = function() {
+    // this.map[0].sumAreaHelper();
     for (var y = 1; y <= this.calculatedToYear; y++) {
       for (var i = 0; i < this.map.length; i++) {
         this.map[i].update(y);
@@ -1133,6 +1134,8 @@ function GameBoard() {
     panLimitLeft = 1 * tileWidth - (tileWidth * maxWidth - tileWidth) / 2;
     panLimitRight = maxWidth * tileWidth - (tileWidth * maxWidth - tileWidth) / 2;
 
+    // Calculate the Area and subwatershed area of the whole map, since these areas are constant, we only need to call it once when establishing the board.
+    this.map[0].sumAreaHelper();
 
   }; //end establishBoardArea
 
@@ -3178,7 +3181,7 @@ function Tile(tileArray, board) {
   this.updateNitrate = function(upToYear) {
 
     for (var y = 1; y <= upToYear; y++) {
-      this.sumAreaHelper();
+      // this.sumAreaHelper(); // We don't have to call this function every single time when landtype is changed, since the Area is constant. Call it once is enough
       this.precipitationMultiplierHelper(y);
       this.cropMultiplierHelper(y);
       this.calculateNitrateConcentrationHelper(y);
@@ -3361,6 +3364,8 @@ function Tile(tileArray, board) {
 
     this.finalArea = tempArea;
     this.subWatershedArea =  tempSubwatershedArea;
+    console.log("this.finalArea",this.finalArea);
+    console.log("this.subWatershedArea",this.subWatershedArea);
   }; //end this.sumAreaHelper()
 
 
