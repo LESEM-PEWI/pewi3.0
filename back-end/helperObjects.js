@@ -1113,6 +1113,9 @@ function GameBoard() {
     var maxHeight = 0;
     var maxWidth = 0;
 
+    // Calculate the Area and subwatershed area of the whole map, since these areas are constant, we only need to call it once when establishing the board.
+    this.map[0].sumAreaHelper();
+
     for (var i = 0; i < this.map.length; i++) {
       tempArea += this.map[i].area;
       if (this.map[i].row > maxHeight) {
@@ -1121,6 +1124,8 @@ function GameBoard() {
       if (this.map[i].column > maxWidth) {
         maxWidth++;
       }
+      this.map[i].finalArea = this.map[0].finalArea;
+      this.map[i].subWatershedArea = this.map[0].subWatershedArea;
     } //end for all Cells
 
     //update Board watershed Area for some tile level calculations!
@@ -1134,8 +1139,7 @@ function GameBoard() {
     panLimitLeft = 1 * tileWidth - (tileWidth * maxWidth - tileWidth) / 2;
     panLimitRight = maxWidth * tileWidth - (tileWidth * maxWidth - tileWidth) / 2;
 
-    // Calculate the Area and subwatershed area of the whole map, since these areas are constant, we only need to call it once when establishing the board.
-    this.map[0].sumAreaHelper();
+
 
   }; //end establishBoardArea
 
@@ -2283,6 +2287,10 @@ function Results(board) {
   this.woodYieldScore = [0, 0, 0, 0];
   this.shortRotationWoodyBiomassYieldScore = [0, 0, 0, 0];
 
+  this.totalArea = 0;
+  this.totalStreamCells = 0;
+  this.totalStrategicWetlandCells = 0;
+
 
   //Function to sum the values of calculatedCarbonSequestration for each tile
   this.sumCarbon = function() {
@@ -2420,7 +2428,9 @@ function Results(board) {
   //---end helper methods for assisting in calculateNitrateConcentration
 
   //preliminary function that sums area and stream network cells (allows flexibility with map layout)
-  this.sumArea = function() {
+  // IIFE, this function only need to be called once, since all the variables we wanted are constantm, it's unnecessary to calculate them again and again.
+  // So we could immediately invoke this function to initialize variables
+  this.sumArea = (function(self) {
     var tempArea = 0;
     var tempStreamCells = 0; //stream buffer is on a Cell Basis, not area (see table S5)
     var tempStrategicWetlandCells = 0;
@@ -2443,11 +2453,16 @@ function Results(board) {
     } //end for all Cells
 
     //sum all of the areas of the tiles
-    this.totalArea = tempArea;
-    this.totalStreamCells = tempStreamCells;
-    this.totalStrategicWetlandCells = tempStrategicWetlandCells;
-    this.subwatershedArea = tempSubwatershedArea;
-  }; //end this.sumArea()
+    self.totalArea = tempArea;
+    self.totalStreamCells = tempStreamCells;
+    self.totalStrategicWetlandCells = tempStrategicWetlandCells;
+    self.subwatershedArea = tempSubwatershedArea;
+    console.log("self", self);
+    // console.log("this.totalArea",self.totalArea);
+    // console.log("this.totalStreamCells",self.totalStreamCells);
+    // console.log("this.totalStrategicWetlandCells",self.totalStrategicWetlandCells);
+    // console.log("this.subwatershedArea",self.subwatershedArea);
+  })(this); //end this.sumArea()
 
   //subcalculations based on flags for biodiversity and game wildlife
   //---These calculations must be done at the board level as they involve tile percentages
@@ -3060,7 +3075,7 @@ function Results(board) {
 
   this.update = function() {
 
-    this.sumArea();
+    // this.sumArea(); This function only need to called once, since totalArea, totalStreamCells, totalStrategicWetlandCells, subwatershedArea are constant, we don't have to call it every time when update the board
 
     //update this as functions are added
     this.sumCarbon();
@@ -3365,7 +3380,7 @@ function Tile(tileArray, board) {
     this.finalArea = tempArea;
     this.subWatershedArea =  tempSubwatershedArea;
     console.log("this.finalArea",this.finalArea);
-    console.log("this.subWatershedArea",this.subWatershedArea);
+    // console.log("this.subWatershedArea",this.subWatershedArea);
   }; //end this.sumAreaHelper()
 
 
