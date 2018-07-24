@@ -61,8 +61,10 @@
     //reset all elements to original styling
     document.getElementById('graphics').style.display = "none";
     document.getElementById('numbers').style.display = "none";
+    document.getElementById('econ').style.display = "none";
     document.getElementById('tab1').className = "tab";
     document.getElementById('tab2').className = "tab";
+    document.getElementById('tab3').className = "tab";
     //then update the selected tab appropriately
     if (tabNumber == 1) {
       document.getElementById('graphics').style.display = "block";
@@ -75,6 +77,12 @@
       document.getElementById('tab2').className = "tabSelected";
       if(parent.getTracking()) {
         parent.pushClick(0,parent.getStamp(),59,0,null);
+      }
+    }else if (tabNumber == 3) {
+      document.getElementById('econ').style.display = "block";
+      document.getElementById('tab3').className = "tabSelected";
+      if(parent.getTracking()) {
+        parent.pushClick(0,parent.getStamp(),60,0,null);
       }
     } //end else if block
   } //end toggleToTab

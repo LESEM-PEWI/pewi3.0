@@ -284,7 +284,12 @@ function displayResults() {
 
   //Create results table and append it to the proper tab of the results frame
   var numericalTableString = generateResultsTable();
+
+  var economics = generateEconomicsTables();
+
   document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsN').innerHTML = numericalTableString;
+
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('econNumbers').innerHTML = economics;
 
   //refresh frame properties
   document.getElementById('resultsFrame').contentWindow.refreshPie();
@@ -1768,6 +1773,77 @@ function drawPrecipitationInformationChart() {
 //     .attr('checked', "")
 //     .attr('type', 'checkbox');
 // } //end drawYieldRadar()
+var htmlTableString = "";
+
+function generateEconomicsTables() {
+  var cl = "accordion";
+  var pan = "panel";
+  htmlTableString = "<button class ="+cl+">Section 1</button><div class = "+pan+"><p>Lorem ipsum...</p></div><button class ="+cl+">Section 2</button><div class = "+pan+"><p>Lorem ipsum...</p></div><button class ="+cl+">Section 3</button><div class = "+pan+"><p>Lorem ipsum...</p></div>"
+
+  // var file = "./Info_Trackers.csv";
+  //
+  // var values = [];
+  // var test = [];
+  // var nontest = [];
+  // var res;
+  //
+  // $.ajax({
+  //   async: false,
+  //   type: "GET",
+  //   url: file,
+  //   dataType: "text",
+  //   contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+  //   success: function(data) {
+  //     res = data.split(/\r\n/);
+  //   },
+  //   error: function(data) {
+  //     console.log(JSON.stringify(data));
+  //   }
+  // });
+  //
+  // for(var i = 1; i < 2; ++i){
+  //   getTable(res[i]);
+  // }
+  // htmlTableString += "</table>"
+
+  return htmlTableString;
+}
+
+// function applyEventListeners() {
+//   var coll = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName("collapsible").innerHTML;
+//   var i;
+//
+//   console.log(coll.length);
+//
+//   for (i = 0; i < coll.length; i++) {
+//     coll[i].addEventListener("click", function() {
+//       this.classList.toggle("active");
+//       var content = this.nextElementSibling;
+//       if (content.style.maxHeight){
+//         content.style.maxHeight = null;
+//       } else {
+//         content.style.maxHeight = content.scrollHeight + "px";
+//       }
+//     });
+//   }
+// }
+
+function getTable(data){
+  var result = data.split(/;/)
+  htmlTableString += "<tr>";
+  for(var i = 1; i < result.length; ++i){
+    if(i == 1){
+      htmlTableString += "<th>"+result[i]+"</th>";
+      console.log("here");
+    }else{
+      htmlTableString += "<th>"+result[i]+"</th>";
+      console.log("here too");
+    }
+  }
+
+  htmlTableString += "</tr>";
+  console.log(htmlTableString);
+}
 
 //generateResultsTable creates the string of html with all the numerical results
 // the code here is a little dense, but entirely straightforward

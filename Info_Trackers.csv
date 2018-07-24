@@ -1,0 +1,697 @@
+LU_ID;Land-Use;Sub Crop;Years Applicable;Frequency;Time - Cost Type ;Action - Cost Type;Cost Name; Source 1 Value ; Dependent Variable ; Source 1 Context and/ or Calculations ;Source 1 Citation;Description
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Tandem disk - FIXED;$4.70 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Tandem disk - VARIABLE;$3.50 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Apply nitrogen - FIXED;$4.40 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Apply nitrogen - VARIABLE;$4.50 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Field cultivate - FIXED;$2.70 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Field cultivate - VARIABLE;$2.80 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Plant - FIXED;$5.90 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Plant - VARIABLE;$4.90 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Spray - FIXED;$2.20 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Spray - VARIABLE;$2.00 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Inputs;Seed - Inputs;$97.90 ; planting rate, seed price ;$3.2632/1000 kernels * 30,000 kernels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Inputs;Nitrogen - Inputs;$39.30 ; nitrogen price ;$0.30/lb * 131 lbs/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Inputs;Phosphate - Inputs;$26.52 ; phosphate price ;$0.39/lb * 68 lbs/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Inputs;Potash - Inputs;$14.58 ; potash price ;$0.27/lb * 54 lbs/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Inputs;Lime - Inputs;$4.90 ; lime price ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Inputs;Herbicide - Inputs;$28.00 ; herbicide price ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Constant;Other;Crop Insurance;$11.00 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Constant;Other;Miscellaneous;$10.00 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Constant;Other;Interest on preharvest variable costs;$9.66 ; amount self-financed, credit line ;5.5% for 8 months;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Harvest;Machinery;Combine - Equipment - FIXED;$13.30 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Harvest;Machinery;Combine - Equipment - VARIABLE;$6.90 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Harvest;Machinery;Grain Cart - Equipment - FIXED;$6.30 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Harvest;Machinery;Grain Cart - Equipment - VARIABLE;$3.10 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Harvest;Machinery;Haul - Equipment - FIXED per bushel;$7.94 ; yield ;$0.0441/bushel * 180 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Harvest;Machinery;Haul - Equipment - VARIABLE per bushel;$7.07 ; yield ;$0.03925/bushel * 180 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Harvest;Machinery;Drying - Equipment - FIXED per bushel;$9.00 ; yield ;$0.05/bushel * 180 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Harvest;Machinery;Drying - Equipment - VARIABLE per bushel;$32.40 ; yield ;$0.18/bushel * 180 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Harvest;Machinery;Handling - Equipment - FIXED per bushel;$3.20 ; yield ;$0.0178/bushel * 180 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Harvest;Machinery;Handling - Equipment - VARIABLE per bushel;$3.65 ; yield ;$0.0203/bushel * 180 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Constant;Labor;Labor - Operator;$35.70 ; labor wage ;2.55 hrs/acre * $14/hr;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Constant;Rent;Cash Rent Equivalent - Land;$219.00 ; rent rate ;$219/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Chisel plow - FIXED;$3.60 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Chisel plow - VARIABLE;$4.00 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Tandem disk - FIXED;$4.70 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Tandem disk - VARIABLE;$3.50 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Apply nitrogen - FIXED;$4.40 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Apply nitrogen - VARIABLE;$4.50 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Field cultivate - FIXED;$2.70 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Field cultivate - VARIABLE;$2.80 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Plant - FIXED;$5.90 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Plant - VARIABLE;$4.90 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Spray - FIXED;$2.20 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Machinery;Spray - VARIABLE;$2.00 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Inputs;Seed - Inputs;$97.90 ; seeding rate, seed price ;$3.2632/1000 kernels * 30,000 kernels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Inputs;Nitrogen - Inputs;$55.80 ; application rate, nitrogen price ;$0.3/lb * 186 lbs/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Inputs;Phosphate - Inputs;$24.18 ; application rate, phosphate price ;$0.39/lb * 62 lbs/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Inputs;Potash - Inputs;$13.50 ; application rate, potash price ;$0.27/lb * 50 lbs/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Inputs;Lime - Inputs;$4.90 ; application rate, lime price ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Inputs;Herbicide - Inputs;$28.00 ; application rate, herbicide price ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Preharvest;Inputs;Insecticide;$23.30 ; application rate, insecticide price ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Constant;Other;Crop Insurance;$11.00 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Constant;Other;Miscellaneous;$10.00 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Constant;Other;Interest on preharvest variable costs;$11.22 ; amount self-financed, credit line ;5.5% for 8 months;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Harvest;Machinery;Combine - Equipment - FIXED;$13.30 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Harvest;Machinery;Combine - Equipment - VARIABLE;$6.90 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Harvest;Machinery;Grain Cart - Equipment - FIXED;$6.30 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Harvest;Machinery;Grain Cart - Equipment - VARIABLE;$3.10 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Harvest;Machinery;Haul - Equipment - FIXED per bushel;$7.28 ; yield ;$0.0441/bushel * 165 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Harvest;Machinery;Haul - Equipment - VARIABLE per bushel;$6.48 ; yield ;$0.03925/bushel * 165 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Harvest;Machinery;Drying - Equipment - FIXED per bushel;$8.25 ; yield ;$0.05/bushel * 165 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Harvest;Machinery;Drying - Equipment - VARIABLE per bushel;$29.70 ; yield ;$0.18/bushel * 165 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Harvest;Machinery;Handling - Equipment - FIXED per bushel;$2.94 ; yield ;$0.0178/bushel * 165 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Harvest;Machinery;Handling - Equipment - VARIABLE per bushel;$3.35 ; yield ;$0.0203/bushel * 165 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Constant;Labor;Labor - Operator;$39.20 ; labor wage ;2.8 hrs/acre * $14/hr;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Corn;All;Annual;Constant;Rent;Cash Rent Equivalent - Land;$219.00 ; rent ;$219/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+2;Conservation Corn;Corn after Soybean;All;Annual;Constant;Other;Savings (total no-till savings);($25.00); n/a ;ISU professor Mahdi Al-Kaisi cites $25-30/acre savings for corn;Use the SAME budget as conventional tillage, but apply this cost savings (reduces passes from 8 to 5 with no yield penalty, as per article);a
+2;Conservation Corn;Corn after Corn;All;Annual;Constant;Other;Savings (total no-till savings);($25.00); n/a ;ISU professor Mahdi Al-Kaisi cites $25-30/acre savings for corn;Use the SAME budget as conventional tillage, but apply this cost savings (reduces passes from 8 to 5 with no yield penalty, as per article);a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Machinery;Chisel plow - FIXED;$3.60 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Machinery;Chisel plow - VARIABLE;$4.00 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Machinery;Tandem disk - FIXED;$4.70 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Machinery;Tandem disk - VARIABLE;$3.50 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Machinery;Field cultivate - FIXED;$2.70 ; n/a ;;;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Machinery;Field cultivate - VARIABLE;$2.80 ; n/a ;;;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Machinery;Plant - FIXED;$5.90 ; n/a ;;;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Machinery;Plant - VARIABLE;$4.90 ; n/a ;;;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Machinery;Spray 1-2 - FIXED;$4.40 ; spray count ;$2.20/spray;;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Machinery;Spray 1-2 - VARIABLE;$4.00 ; spray count ;$2.00/spray;;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Inputs;Seed - Inputs;$52.00 ; planting rate, seed price ;$52.00/unit * 1 unit/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Inputs;Phosphate - Inputs;$15.60 ; application rate, phosphase price ;$0.39/lb * 40 lbs/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Inputs;Potash - Inputs;$20.25 ; application rate, potash price ;$0.27/lb * 75 lbs/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Inputs;Lime - Inputs;$4.90 ; application rate, lime price ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Preharvest;Inputs;Herbicide - Inputs;$36.30 ; application rate, herbicide price ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Constant;Other;Crop Insurance;$8.90 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Constant;Other;Miscellaneous;$10.00 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Constant;Other;Interest on preharvest variable costs;$6.46 ; amount self-financed, credit line ;5.5% for 8 months;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Harvest;Machinery;Combine - Equipment - FIXED;$8.50 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Harvest;Machinery;Combine - Equipment - VARIABLE;$4.20 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Harvest;Machinery;Grain Cart - Equipment - FIXED;$6.30 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Harvest;Machinery;Grain Cart - Equipment - VARIABLE;$3.10 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Harvest;Machinery;Haul - Equipment - FIXED per bushel;$2.21 ; yield ;$0.0441/bushel * 50 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Harvest;Machinery;Haul - Equipment - VARIABLE per bushel;$1.96 ; yield ;$0.03925/bushel * 50 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Harvest;Machinery;Handling - Equipment - FIXED per bushel;$0.89 ; yield ;$0.0178/bushel * 50 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Harvest;Machinery;Handling - Equipment - VARIABLE per bushel;$1.02 ; yield ;$0.0203/bushel * 50 bushels/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Constant;Labor;Labor - Operator;$30.80 ; labor wage ;$14/hr * 2.2 hrs/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+3;Conventional Soybean;Soybean after Corn;All;Annual;Constant;Rent;Cash Rent Equivalent - Land;$219.00 ; rent ;$219/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+4;Conservation Soybean;Soybean after Corn;All;Annual;Constant;Other;Savings (total no-till savings);($18.00); n/a ;ISU professor Mahdi Al-Kaisi cites $18-20/acre savings for soybean;Use the SAME budget as conventional tillage, but apply this cost savings (reduces passes from 8 to 5 with no yield penalty, as per article);a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spray Herbicide - FIXED;$2.20 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spray Herbicide - VARIABLE;$2.00 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Tandem disk (twice) - FIXED;$9.40 ; n/a ;2 times - Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Tandem disk (twice) - VARIABLE;$7.00 ; n/a ;2 times - Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spread fertilizer - FIXED;$2.00 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spread fertilizer - VARIABLE;$1.60 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Harrow - FIXED;$2.10 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Harrow - VARIABLE;$1.50 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Seed (drill) - FIXED;$4.60 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Seed (drill) - VARIABLE;$4.10 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Seed;$72.48 ; application rate, seed price ;"Ag Decision Maker,
+15 lbs @ $4.832/lb";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Fertilizer - P;$13.53 ; application rate, phosphate price ;"Ag Decision Maker,
+35 lbs @ $0.3866/lb";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Fertilizer - Potash;$33.95 ; application rate, potash price ;"Ag Decision Maker,
+125 lbs @ $0.2716/lb";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Herbicide;$13.00 ;application rate, herbicide price;$17 - unless confirmed otherwise, assuming this occurs at every establishment;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Lime;$18.00 ;application rate, lime price;$31 - unless confirmed otherwise, assuming this occurs at every establishment;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Labor;Labor - Pre-harvest;$14.00 ; wage rate ;1.0 hours @ $14/hour;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Labor;Labor - harvest - cutting;$42.00 ; wage rate, # cuttings ;"1.5 hours @ $14/hour……PER CUT
+Assumes x2 cuts Establishment Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Mower-Conditioner - FIXED;$11.00 ; # cuttings ;" $5.50…….PER CUT
+Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$6.40 ; # cuttings ;" $4.40…….PER CUT
+Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Rake - FIXED;$6.40 ; # cuttings ;" $3.20……PER CUT
+Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Rake - VARIABLE;$4.00 ; # cuttings ;" $2.00……PER CUT
+Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Baling - FIXED;$16.40 ; # cuttings ;" $8.2…..PER CUT
+Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Baling - VARIABLE;$10.60 ; # cuttings ;" $5.30……PER CUT
+Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Hauling - FIXED;$9.65 ; tons/cutting/ # cuttings ; $1.93 per ton @ 2.5 tons/cutting * 2 cuttings ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Hauling - VARIABLE;$15.35 ; tons/cutting/ # cuttings ; $3.07 per ton @ 2.5 tons/cutting * 2 cuttings ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Constant;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 per acre;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Machinery;Fertilizer Spreader - FIXED;$2.00 ; n/a ;$2.00 FIXED;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Machinery;Fertilizer Spreader - VARIABLE;$1.60 ; n/a ;$1.60 VARIABLE;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Input;Annual Fertilizer - P;$20.28 ; application rate, phosphate price ;(13 lbs/1 ton Alfalfa) @ ($0.45/lb) @ 4 tons Alfalfa;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Input;Annual Fertilizer - Potash;$54.00 ; application rate, potash price ;(50 lbs/1 ton Alfalfa) @ ($0.35/lb) @ 4 tons Alfalfa;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Constant;Other;Crop Insurance;$2.00 ; n/a ;$2/acre crop insurance premium;;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Labor;Labor - harvest - cutting;$56.00 ; labor wage, # cuttings ;"1.33 hours @ $14/hour……PER CUT
+Assumes x3 cuts per Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Constant;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 Cash rent equivalent;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Mower-Conditioner - FIXED;$16.50 ; # cuttings ;" $5.50…….PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$13.20 ; # cuttings ;" $4.40…….PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Rake - FIXED;$9.60 ; # cuttings ;" $3.20……PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Rake - VARIABLE;$6.00 ; # cuttings ;" $2.00……PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Baling - FIXED;$24.60 ; # cuttings ;" $8.20…..PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Baling - VARIABLE;$15.90 ; # cuttings ;" $5.30……PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Hauling - FIXED;$7.72 ; yield per cutting, # cuttings ; $1.93 per ton @ 4 tons/acre/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Hauling - VARIABLE;$12.28 ; yield per cutting, # cuttings ; $3.07 per ton @ 4 tons/acre/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+6;Permanent Pasture;;all;Annual;Preharvest;Rent;Preharvest - Feed - Pasture - VARIABLE;$50.00 ; rent ;Assumed rent;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Pasture Fertilizer & Miscellaneous - VARIABLE;$20.00 ; n/a ;Assumed;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn - VARIABLE;$5.44 ; yield ;4 bu @ $ 3.40/bu     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Salt & Minerals - VARIABLE;$2.16 ; yield ;60 bu @ $ 0.09/bu     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Alfalfa-Brome Hay - VARIABLE;$79.80 ; yield ;2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn Stalks - VARIABLE;$4.80 ; yield ;"??? Call and ask question ???
+2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount)";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Input;Veterinary & Health - VARIABLE;$10.00 ; yield ;$25 per unit / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Machinery;Machinery, Equipment, Fuel, & Repairs - VARIABLE;$6.00 ; yield ;$15 per unit / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Other;Marketing & Miscellaneous - VARIABLE;$8.00 ; yield ;$20 per unit / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Other;Interest on variable costs;$7.45 ; other values ;8%, 6 months, applied to all variable costs;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Labor;Preharvest Labor;$44.80 ; labor wage ;8 hours @ $14/hr     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Machinery;Machinery, Equipment, Housing, & Fences - FIXED;$26.04 ; n/a ;Assumed / 2.5 acres (bring down to 1 acre);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Other;Interest & Insurance on Breeding Herd;$43.28 ; n/a ;Assumed / 2.5 acres (bring down to 1 acre);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Other;Bull Depreciation/Replacement;$4.80 ; n/a ;Assumed / 2.5 acres (bring down to 1 acre);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Rent;Preharvest - Feed - Pasture - VARIABLE;$50.00 ; rent ;Assumed rent;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+;;;all;Annual;Preharvest;Input;Preharvest - Feed - Pasture Fertilizer & Miscellaneous - VARIABLE;$31.43 ; n/a ;Assumed, modified (55/35) for changed stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+;;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn - VARIABLE;$8.55 ; yield ;"4 bu @ $ 3.40/bu     / 2.5 acres (bring it down to per acre amount)
+Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+;;;all;Annual;Preharvest;Input;Preharvest - Feed - Salt & Minerals - VARIABLE;$3.39 ; yield ;"60 bu @ $ 0.09/bu     / 2.5 acres (bring it down to per acre amount)
+Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+;;;all;Annual;Preharvest;Input;Preharvest - Feed - Alfalfa-Brome Hay - VARIABLE;$125.40 ; yield ;"2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount)
+Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+;;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn Stalks - VARIABLE;$7.54 ; yield ;"??? Call and ask question ???
+2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount)
+Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+;;;all;Annual;Preharvest;Input;Veterinary & Health - VARIABLE;$15.71 ; yield ;"$25 per unit / 2.5 acres (bring it down to per acre amount)
+Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+MODIFY;;;all;Annual;Preharvest;Machinery;Machinery, Equipment, Fuel, & Repairs - VARIABLE;$6.00 ; yield ;$15 per unit / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+;;;all;Annual;Preharvest;Other;Marketing & Miscellaneous - VARIABLE;$12.57 ; yield ;"$20 per unit / 2.5 acres (bring it down to per acre amount)
+Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+;;;all;Annual;Preharvest;Other;Interest on variable costs;$10.42 ; other values ;8%, 6 months, applied to all variable costs;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+MODIFY;;;all;Annual;Preharvest;Labor;Preharvest Labor;$44.80 ; labor wage ;8 hours @ $14/hr     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+MODIFY;;;all;Annual;Preharvest;Machinery;Machinery, Equipment, Housing, & Fences - FIXED;$26.04 ; n/a ;Assumed / 2.5 acres (bring down to 1 acre);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+;;;all;Annual;Preharvest;Other;Interest & Insurance on Breeding Herd;$68.01 ; n/a ;"Assumed / 2.5 acres (bring down to 1 acre)
+Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+;;;all;Annual;Preharvest;Other;Bull Depreciation/Replacement;$7.54 ; n/a ;"Assumed / 2.5 acres (bring down to 1 acre)
+Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spray Herbicide - FIXED;$2.20 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spray Herbicide - VARIABLE;$2.00 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Tandem disk (twice) - FIXED;$9.40 ; n/a ;2 times - Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Tandem disk (twice) - VARIABLE;$7.00 ; n/a ;2 times - Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spread fertilizer - FIXED;$2.00 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spread fertilizer - VARIABLE;$1.60 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Harrow - FIXED;$2.10 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Harrow - VARIABLE;$1.50 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Seed (drill) - FIXED;$4.60 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Seed (drill) - VARIABLE;$4.10 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Seed;$72.48 ; application rate, seed price ;"Ag Decision Maker,
+15 lbs @ $4.832/lb alfalfa seed";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Fertilizer - P;$13.53 ; application rate, phosphate price ;"Ag Decision Maker,
+35 lbs @ $(13.53/35)/lb";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Fertilizer - Potash;$33.95 ; application rate, potash price ;"Ag Decision Maker,
+125 lbs @ $(33.95/125)/lb";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Herbicide;$13.30 ;application rate, herbicide price;$13.3 - unless confirmed otherwise, assuming this occurs at every establishment;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Lime;$18.00 ;application rate, lime price;$18 - unless confirmed otherwise, assuming this occurs at every establishment;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Farmer Labor;Labor - Pre-harvest;$14.00 ; labor wage ;1.0 hours @ $14/hour;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Farmer Labor;Labor - harvest - cutting;$42.00 ; labor wage, # cuttings ;"1.5 hours @ $14/hour……PER CUT (2 cuts)
+Assumes x2 cuts Establishment Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Mower-Conditioner - FIXED;$11.00 ; # cuttings ;" $5.50…….PER CUT
+Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$8.80 ; # cuttings ;" $4.40…….PER CUT
+Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Rake - FIXED;$6.40 ; # cuttings ;" $3.20……PER CUT
+Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Rake - VARIABLE;$4.00 ; # cuttings ;" $2.00……PER CUT
+Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Baling - FIXED;$16.40 ; # cuttings ;" $8.2…..PER CUT
+Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Baling - VARIABLE;$10.60 ; # cuttings ;" $5.3.00……PER CUT
+Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Hauling - FIXED;$9.65 ; Cuttings, yield (tons) ; $1.93 per ton @ 2.5 tons/cutting * 2 cuttings/acre/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Hauling - VARIABLE;$15.35 ; Cuttings, yield (tons) ; $3.07 per ton @ 2.5 tons/acre/year * 2 cuttings/acre/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 per acre;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Fertilizer Spreader - FIXED;$2.00 ; n/a ;$2.00 FIXED;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Fertilizer Spreader - VARIABLE;$1.60 ; n/a ;$1.60 VARIABLE;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Input;Annual Fertilizer - P;$20.28 ; application rate, phosphate price ;(13 lbs/1 ton Alfalfa) @ ($0.39/lb) @ 4 tons Alfalfa;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Input;Annual Fertilizer - Potash;$54.00 ; application rate, potash price ;(50 lbs/1 ton Alfalfa) @ ($0.27/lb) @ 4 tons Alfalfa;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Other;Crop Insurance;$2.00 ; n/a ;$2/acre (assuming 3 cuts @ 4 tons/cut);;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Farmer Labor;Labor - harvest - cutting;$56.00 ; labor wage, # cuttings ;"1.33 hours @ $14/hour……PER CUT
+Assumes x3 cuts per Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 Cash rent equivalent;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Mower-Conditioner - FIXED;$16.50 ; # cuttings ;" $5.50…….PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$13.20 ; # cuttings ;" $4.40…….PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Rake - FIXED;$9.60 ; # cuttings ;" $3.20……PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Rake - VARIABLE;$6.00 ; # cuttings ;" $2.00……PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Baling - FIXED;$24.60 ; # cuttings ;" $8.20…..PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Baling - VARIABLE;$15.90 ; # cuttings ;" $5.30……PER CUT
+Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Hauling - FIXED;$23.16 ; Cuttings, yield (tons) ; $1.93 per ton @ 4 tons/cutting * 3 cuttings/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Hauling - VARIABLE;$36.84 ; Cuttings, yield (tons) ; $3.07 per ton @ 4 tons/cutting * 3 cuttings/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
+Alfalfa or Alfalfa-grass Hay Budget";a
+9;Prairie;;;;;;;;;;;a
+10;Conservation Forest;;;;;;;;;;;a
+11;Conventional Forest;;;;;;;;;;;a
+12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Preharvest - Disk;$9.45 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+no repeat if reseeding";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Preharvest - Harrow;$6.25 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+no repeat if reseeding";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Preharvest - Airflow spreader (seed and fertilizers);$7.70 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+repeat if reseeding (25% chance)";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Spraying chemicals;$5.15 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Seed;;;repeat if reseeding (25% chance);http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Fertilizer - P;$11.10 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+30lb @ $0.37/lb
+repeat if reseeding (25% chance)";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Fertilizer - K;$9.20 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+40lb @ $0.23/lb
+repeat if reseeding (25% chance)";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Lime;$63.00 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+no repeat if reseeding
+3 tons @ $21/ton";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Herbicides;$7.74 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+Pursuit+     3 oz @ $53/gal
+MSO            32 oz @ $1.75/pt
+2,4D             1.5 pts @ $16/gal
+repeat if reseeding (25% chance)";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Fertilizer - N;$31.00 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+100lb @ $0.31/lb";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Fertilizer - P;$2.87 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+1.94lb @ $0.37/lb";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Fertilizer - K;$20.98 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+22.8lb @ $0.23/lb";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Herbicides;$7.74 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+Pursuit+     3 oz @ $53/gal
+MSO            32 oz @ $1.75/pt
+2,4D             1.5 pts @ $16/gal";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Preharvest;Custom Labor;Liquid N application;$4.80 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Preharvest;Custom Labor;Bulk fertilizer spreader;$3.20 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Preharvest;Custom Labor;Sprayer;$5.15 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Harvest;Custom Labor;Mow/conditioning;$10.75 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Harvest;Custom Labor;Rake;$5.30 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Harvest;Custom Labor;Baling: large square ($10.70 bale);$90.11 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+$10.70/bale";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Harvest;Custom Labor;Staging;$23.16 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+$2.75/bale";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Other;Custom Labor;Storage;$16.67 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+Assumes used for ethanol, therefore MUST be storage indoors.";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Transport;Custom Labor;Field to Storage;$121.98 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+Truck costs - $86.33
+Loader costs (labor, tractor, and fuel) - $35.65";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Transport;Custom Labor;Storage to Plant;$173.06 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
+Truck costs - $151.67
+Loader cost - 21.39";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Inputs;Aspen bare root stock (seedlings);$133.26 ;;"890 seedlings/hectare => 360.17 seedlings/acre
+$0.37/seedling";Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Custom Labor;Tree planting;$195.00 ;;$481.85/hectare => $195.00/acre;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Machinery;Mowing - Machinery Only;$20.20 ;;"Based on mower-conditioner  - equipment component only
+x2 cuts";Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Labor;Mowing - Labor Only;$2.96 ;;"Based on mower-conditioner  - consider reevaluting for Iowa custom rates
+$10/hr, 0.148 hrs/acre, 2 cuts";Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+13;Short-rotation Woody Bioenergy;;all;Annual;Maintenance;Inputs;Fertilizer - N;$19.40 ;;34kg/hectare => 13.76kg/acre    @ $1.39/kg;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+13;Short-rotation Woody Bioenergy;;all;Annual;Maintenance;Maintenance;Bulk fertilizer spreader - N - Machinery Only;$3.50 ;;1 application @           $8.65/hectare  =>  $3.5/acre;;a
+13;Short-rotation Woody Bioenergy;;all;Annual;Maintenance;Labor;Bulk fertilizer spreader - N - Labor Only;$0.61 ;;"1 application @           0.151 hr/hectare  =>  0.0611 hr/acre
+@  $10/hr";;a
+13;Short-rotation Woody Bioenergy;;all;Annual;Constant;Rent;Land Rent;$158.90 ;;Annual rent rate;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Inputs;Fertilizer - Phosphorus;$31.50 ;;56kg/hectare => 22.66kg/acre    @ $1.39/kg;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Inputs;Fertilizer - Potassium;$54.84 ;;112kg/hectare => 45.32kg/acre    @ $1.21/kg;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Maintenance;Bulk fertilizer spreader - Phosphorus - Machinery Only;$3.50 ;;1 application @           $8.65/hectare  =>  $3.5/acre;;a
+13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Labor;Bulk fertilizer spreader - Phosphorus - Labor Only;$0.61 ;;"1 application @           0.151 hr/hectare  =>  0.0611 hr/acre
+@  $10/hr";;a
+13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Maintenance;Bulk fertilizer spreader - Potassium - Machinery Only;$3.50 ;;1 application @           $8.65/hectare  =>  $3.5/acre;;a
+13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Labor;Bulk fertilizer spreader - Potassium - Labor Only;$0.61 ;;"1 application @           0.151 hr/hectare  =>  0.0611 hr/acre
+@  $10/hr";;a
+13;Short-rotation Woody Bioenergy;;7;Every 7 years;Harvest;Custom Labor;Feller buncher/forwarder;;;$28.67/dry Mg @ _____ Mg/acre;;a
+13;Short-rotation Woody Bioenergy;;7;Every 7 years;Harvest;Custom Labor;Staging (gathering biomass for transport);;;$6.72/Mg @  _____ Mg/acre;;a
+13;Short-rotation Woody Bioenergy;;7;Every 7 years;Harvest;Custom Labor;Wood chipping;;;$13.23/Mg @ _____ dry Mg/acre;;a
+14;Wetland;;1;Every 50 years;Establishment;Labor;Design cost;$647.50 ;;;;a
+14;Wetland;;1;Every 50 years;Establishment;Labor;Contract fees;$313.50 ;;;;a
+14;Wetland;;1;Every 50 years;Establishment;Labor;Seeding buffer;$3.95 ;;$22.61/hectare   =>   $5.08/acre;;a
+14;Wetland;;1;Every 50 years;Establishment;;Seed cost;$468.07 ;;medium cost, per range cited in source;;a
+14;Wetland;;1;Every 50 years;Establishment;;Weir plate;$600.00 ;;"$30/sqft for 40ft x 5ft sheet pile plate
+Assumes 1 per 10 acre wetland/grass buffer block";;a
+14;Wetland;;1;Every 50 years;Establishment;;Control structure;$212.75 ;;medium cost, per range cited in source;;a
+14;Wetland;;1;Every 50 years;Establishment;;Land acquisition;$543.33 ;;raw cost for 10 acres (assumes $13,426 per hectare  =>  $5433.32/acre);;a
+14;Wetland;;Jan-50;Every year;Maintenance;;Time to manage;$142.47 ;;Spot mowing 10% of buffer area @ 74.13/hectare treated;;a
+14;Wetland;;40;Every 40 years;Maintenance;;Control structure and weir replacement;$208.58 ;;True present value cost of weir replacement, new structure, and 16 hrs of earth work @ $40/hr;;a
+15;Mixed Fruits & Vegetables;Green Beans;;Annual;Establishment;;Green Beans - Assumptions;  $-    ;;"Ag Decision Maker, Specialty Green Beans
+4' rows, 100' beds ==== assume 70 beds/acre";http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Seed - Cover Crops - VARIABLE;$31.50 ;;0.6 lbs seed/bed * $0.75/lb seed * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Seed - VARIABLE;$1,400.00 ;;2 lbs seed/bed * $10/lb seed * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Fertilization - VARIABLE;$63.00 ;;6 lbs fertilizer/bed * $0.15/lb fert * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Labor - Cover crop - VARIABLE;$35.00 ;;0.05 hrs/bed * $10/hr * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Labor - Bed preparation - VARIABLE;$140.00 ;;0.20 hrs/bed * $10/hrs * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Labor - Fertilizer spreading - VARIABLE;$70.00 ;;0.10 hrs/bed * $10/hr * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Labor - Planting - VARIABLE;$105.00 ;;0.15 hrs/bed * $10/hr * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Labor - Irrigation set up - VARIABLE;$175.00 ;;0.25 hrs/bed * $10/hr * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Labor - Weeding - VARIABLE;$1,400.00 ;;2.00 hrs/bed * $10/hr * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Harvest;;Harvest - 1 lb bags - VARIABLE;$252.00 ;;120 lbs beans/bed * 1 bag/lb * $0.03/bag * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Harvest;;Harvest Labor - VARIABLE;$10,500.00 ;;15 hrs/bed * $10/hr * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Harvest;;Packaging - VARIABLE;$350.00 ;;0.50 hrs/bed * @10/hr * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Equipment;;Ownership Costs - Irrigation System - FIXED;$79.80 ;;$1.14/bed * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Equipment;;Ownership Costs - Machinery - FIXED;$499.80 ;;$7.14/bed * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Land Rent;;Ownership Costs - Land - FIXED;$158.90 ;;$2.27/bed * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Seed-cover crop;$45.00 ;;75 lbs/acre * $0.60/lb;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Plants;$500.00 ;;5000 plants * ($100/1000 plants);http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Fertilization;$45.00 ;;300 lbs/acre * $0.15/lb;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Straw mulch;$315.00 ;;7 large round bales * $45/bale;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Labor - Cover crop - VARIABLE;$30.00 ;;3 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Labor - Land preparation - trench;$10.00 ;;1 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Labor - Fertilizer spreading;$10.00 ;;1 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Labor - Transplanting;$180.00 ;;18 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Labor - Hand Hoeing;$900.00 ;;90 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Labor - Pull off blossoms;$20.00 ;;2 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Labor - Mulching;$160.00 ;;16 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;1;Every 3 Years;Establishment - Year 0;;Labor - Irrigation set up;$40.00 ;;4 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;all;Annual;Production Years 1, 2, 3;;Fertilization;$45.00 ;;300 lbs/acre * $0.15/lb;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;all;Annual;Production Years 1, 2, 3;;Straw Mulch;$315.00 ;;7 large round bales * $45/bale;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;all;Annual;Production Years 1, 2, 3;;Labor - Remove Mulch;$80.00 ;;8 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;all;Annual;Production Years 1, 2, 3;;Fertilizer Spreading;$10.00 ;;1 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;all;Annual;Production Years 1, 2, 3;;Hand Hoeing;$300.00 ;;30 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;all;Annual;Production Years 1, 2, 3;;Mowing;$10.00 ;;1 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;all;Annual;Production Years 1, 2, 3;;Renovation;$40.00 ;;4 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;all;Annual;Production Years 1, 2, 3;;Mulching;$160.00 ;;16 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;all;Annual;Production Years 1, 2, 3;;Irrigation Tear Down and Set Up;$20.00 ;;2 hrs/acre * $10/hr;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;2;Every 3 Years;Production Year 1;;Harvesting Containers;$150.00 ;;1000 containers/4000 qts * 4000 qts/acre * $0.15/container;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;2;Every 3 Years;Production Year 1;;Harvest Trays for U-Pick;$100.00 ;;100 trays/4000 qts * 4000 qts/acre * $1.00/tray;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;2;Every 3 Years;Production Year 1;;Harvest Labor - Pickers;$750.00 ;;1000 qts * $0.75/qt;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;3;Every 3 Years;Production Year 2;;Harvesting Containers;$150.00 ;;1000 containers/4000 qts * 4000 qts/acre * $0.15/container;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;3;Every 3 Years;Production Year 2;;Harvest Trays for U-Pick;$75.00 ;;75 trays/4000 qts * 4000 qts/acre * $1.00/tray;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;3;Every 3 Years;Production Year 2;;Harvest Labor - Pickers;$750.00 ;;1000 qts * $0.75/qt;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;4;Every 3 Years;Production Year 3;;Harvesting Containers;$150.00 ;;1000 containers/4000 qts * 4000 qts/acre * $0.15/container;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;4;Every 3 Years;Production Year 3;;Harvest Trays for U-Pick;$50.00 ;;50 trays/4000 qts * 4000 qts/acre * $1.00/tray;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;4;Every 3 Years;Production Year 3;;Harvest Labor - Pickers;$750.00 ;;1000 qts * $0.75/qt;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;2,3,4;Annual;Production Years 1, 2, 3;;Ownership Costs - Irrigation System - FIXED;$80.00 ;;$80/acre;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;2,3,4;Annual;Production Years 1, 2, 3;;Ownership Costs - Machinery - FIXED;$500.00 ;;$500/acre;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Strawberries;2,3,4;Annual;Production Years 1, 2, 3;;Ownership Costs - Land - FIXED;$160.00 ;;$160/acre;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Preharvest;Inputs;Lime;$10.00 ;;0.5 ton/acre * $20/ton;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Preharvest;Inputs;Fertilizer;$120.00 ;;$120/acre;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Preharvest;Inputs;Seed;$120.00 ;;2 lbs/acre * $60/lb;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Preharvest;;Black Plastic/Drip Lines;$382.00 ;;$382/acre;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Preharvest;Inputs;Herbicides;$40.92 ;;$40.92/acre;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Preharvest;Inputs;Insecticides;$107.66 ;;$107.66/acre;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Preharvest;Inputs;Fungicides;$167.20 ;;$167.20/acre;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Preharvest;;Pollination;$75.00 ;;$75.00/hive * 1 hive/acre;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Preharvest;;Machinery Variable Costs;$70.07 ;;$70.07/acre;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Harvest;;Boxes;$495.00 ;;450 boxes/acre * $1.10/box;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Harvest;;Plastic Disposal;$162.00 ;;18 hrs/acre * $9/hr;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Harvest;;Plastic Disposal Fee;$10.00 ;;disposal fee assumed @ $10/acre;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Harvest;;Hired Labor (Harvesting/ Hauling/ Handling);$540.00 ;;60 hours/acre * $9.00/hr;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Harvest;;Marketing Costs;$540.00 ;;assumed 10% gross;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Harvest;;Hauling Variable Costs;$40.50 ;;450 boxes/acre * $0.09/box for hauling;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Fixed;;Machinery and Equipment - FIXED;$70.70 ;;calculations not provided;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Fixed;;Depreciation on Irrigation System - FIXED;$189.57 ;;calculations not provided;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Fixed;;Taxes on Land - FIXED;$5.00 ;;calculations not provided;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Fixed;;Insurance - FIXED;$81.00 ;;calculations not provided;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Winter Squash;all;Annual;Preharvest;Labor;Operator and Unpaid Family Labor;$300.00 ;;20 hrs/acre * $15/hr;http://www.uky.edu/ccd/tools/budgets;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;Other;Drainage Tile Installation - Custom;$4,360.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;Material;Lime (2 tons/acre) - Material Costs;$90.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;Material;Lime (2 tons/acre) - Custom;$10.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Herbicide application - Equipment Cost;$10.50 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Herbicide application - Material Cost;$30.24 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Stone removal & land maintenance - Unskilled Labor Costs;$135.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Stone removal & land maintenance - Equipment Costs;$165.87 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Soil Sampling - Skilled Labor Costs;$4.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Soil Sampling - Material Costs;$4.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Fall fertilization - Skilled Labor Costs;$12.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Fall fertilization - Equipment Costs;$8.56 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Fall fertilization - Material Costs;$75.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Plowing - Custom;$50.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Discing (x2) - Custom;$46.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Establishment;;Pickup truck (10,000 miles for 50 acre/year) - Equipment Costs;$75.03 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Floating/dragging - Skilled Labor Costs;$20.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Floating/dragging - Equipment Costs;$15.79 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Laser Planting ($3.50/vine) - Custom;$1,250.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Laser Planting ($3.50/vine) - Material Costs;$2,823.33 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Fertilization (banded) - Skilled Labor Costs;$12.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Fertilization (banded) - Equipment Costs;$8.56 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Fertilization (banded) - Material Costs;$7.50 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Hilling up - Skilled Labor Costs;$30.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Hilling up - Equipment Costs;$21.64 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Hilling up - Unskilled Labor Costs;$20.25 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Chem. Weed control - trellis - Skilled Labor Costs;$25.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Chem. Weed control - trellis - Equipment Costs;$20.56 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Chem. Weed control - trellis - Material Costs;$14.34 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Trellis construction - Skilled Labor Costs;$1,200.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Trellis construction - Equipment Costs;$317.50 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Trellis construction - Material Costs;$3,470.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Spot herbicide - hand application - Skilled Labor Costs;$20.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Spot herbicide - hand application - Material Costs;$15.24 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Cultivation (x2) - Skilled Labor Costs;$24.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Cultivation (x2) - Equipment Costs;$21.64 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Sprays 1-3 (all year 1 sprays) - Mancozeb 75DF;$36.45 ;;Mancozeb 75DF 3lbs/acre * $4.05/lb * 3 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Sprays 1-3 (all year 1 sprays) - Sulfur;$6.00 ;;Sulfur 4 lbs/acre * $0.50/lb * 3 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Sprays 1-3 (all year 1 sprays) - Spreader;$1.88 ;;Spreader 4 oz./acre * $20/gal * 3 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Sprays 1-3 (all year 1 sprays) - Equipment Costs;$25.14 ;;??? 8.38*3 ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Sprays 1-3 (all year 1 sprays) - Skilled Labor Costs;$24.00 ;;0.4 hours * $20/hour * 3 sprays;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Seed cover crop - Skilled Labor Costs;$12.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Seed cover crop - Equipment Costs;$8.56 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Seed cover crop - Material Costs;$11.25 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);1;;Preharvest;;Pickup truck (10,000 miles for 50 acre/year) - Equipment Costs;$75.03 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Pruning & brush removal - Skilled Labor Costs;$60.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Tying & renewal - Unskilled Labor Costs;$27.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Tying & renewal - Material Costs;$4.50 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Vine Replacement - Skilled Labor Costs;$40.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Vine Replacement - Equipment Costs;$37.97 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Vine Replacement - Material Costs;$56.47 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Spring Replacement - Skilled Labor Costs;$12.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Spring Replacement - Equipment Costs;$8.56 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Spring Replacement - Material Costs;$7.50 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Chem. Weed control-trellis - Skilled Labor Costs;$25.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Chem. Weed control-trellis - Equipment Costs;$22.25 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Chem. Weed control-trellis - Material Costs;$66.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Suckering - Unskilled Labor Costs;$33.75 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Cluster removal - Unskilled Labor Costs;$33.75 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Take away (de-hilling) - Skilled Labor Costs;$60.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Take away (de-hilling) - Equipment Costs;$45.09 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Hand Hoe - Unskilled Labor Costs;$54.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Spot herbicide (x2) - hand application - Skilled Labor Costs;$16.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Spot herbicide (x2) - hand application - Equipment Costs;$9.86 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Spot herbicide (x2) - hand application - Material Costs;$42.76 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Hilling up - Skilled Labor Costs;$60.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Hilling up - Equipment Costs;$27.05 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Sprays 1-4 (all year 2 sprays) - Mancozeb 75DF;$48.60 ;;Mancozeb 75DF 3lbs/acre * $4.05/lb * 4 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Sprays 1-4 (all year 2 sprays) - Sulfur;$8.00 ;;Sulfur 4 lbs/acre * $0.50/lb * 4 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Sprays 1-4 (all year 2 sprays) - Spreader;$2.50 ;;Spreader 4 oz./acre * $20/gal * 4 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Sprays 1-4 (all year 2 sprays) - Skilled Labor Costs;$32.00 ;;0.4 hours * $20/hour * 4 sprays;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Sprays 1-4 (all year 2 sprays) - Equipment Costs;$33.52 ;;??? $8.38 * 4 sprays ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Mowing (x4) - Skilled Labor Costs;$52.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Mowing (x4) - Equipment Costs;$42.28 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Rogueing;$13.50 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);2;;Preharvest;;Pickup truck (10,000 miles for 50 acre/year);$75.03 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Pruning and brush pulling ($0.45/vine) - Custom;$363.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Tying & renewal ($0.23/vine) - Custom;$185.53 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Tying & renewal ($0.23/vine) - Material Costs;$4.50 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Brush chopping (x1) - Skilled Labor Costs;$24.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Brush chopping (x1) - Equipment Costs;$21.36 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Vine Replacement - Skilled Labor Costs;$40.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Vine Replacement - Equipment Costs;$37.97 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Vine Replacement - Material Costs;$56.47 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Chem. Weed control - trellis - Skilled Labor Costs;$52.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Chem. Weed control - trellis - Equipment Costs;$32.89 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Chem. Weed control - trellis - Material Costs;$66.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Suckering - Unskilled Labor Costs;$54.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Cluster removal - Unskilled Labor Costs;$54.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Take away (de-hilling) - Skilled Labor Costs;$60.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Take away (de-hilling) - Equipment Costs;$45.09 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Hand Hoe - Unskilled Labor Costs;$54.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Bird control - Skilled Labor Costs;$60.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Spot herbicide (x2) - hand application - Skilled Labor Costs;$16.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Spot herbicide (x2) - hand application - Equipment Costs;$9.86 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Spot herbicide (x2) - hand application - Material Costs;$42.76 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 1-2 - Mancozeb 75DF;$24.30 ;;Mancozeb 75DF 3 lbs/acre * $4.05/lb * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 1-2 - Sulfur;$4.00 ;;Sulfur 4 lbs/acre * $0.50/lb * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 1-2 - Spreader;$1.25 ;;Spreader 4 oz./acre * $20/gal * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 1-2 - Skilled Labor Costs;$24.00 ;;0.6 hours * $20/hour * 2 sprays;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 1-2 - Equipment Costs;$27.94 ;;??? $13.97 * 2 sprays ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 3-4 - Revus Top;$32.76 ;;Revus Top 7 oz/acre * $2.34/oz * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 3-4 - Sulfur;$4.00 ;;Sulfur 4 lbs/acre * $0.50/lb * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 3-4 - Spreader;$1.25 ;;Spreader 4 oz./acre * $20/gal * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 3-4 - Skilled Labor Costs;$24.00 ;;0.6 hours * $20/hour * 2 sprays;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 3-4 - Equipment Costs;$27.94 ;;??? $13.97 * 2 sprays ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 5-8 - Captan 80WP;$66.00 ;;Captan 80WP 2.5 lbs/acre * $6.60/lb * 4 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 5-8 - Sulfur;$10.00 ;;Sulfur 5 lbs/acre * $0.50/lb * 4 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 5-8 - Spreader;$2.50 ;;Spreader 4 oz./acre * $20/gal * 4 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 5-8 - Skilled Labor Costs;$48.00 ;;0.6 hours * $20/hour * 4 sprays;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Sprays 5-8 - Equipment Costs;$55.88 ;;??? $13.97 * 4 sprays ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Mowing (x4) - Skilled Labor Costs;$52.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Mowing (x4) - Equipment Costs;$42.28 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Hilling up - Skilled Labor Costs;$34.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Hilling up - Equipment Costs;$27.05 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);3;;Preharvest;;Pickup truck (10,000 miles for 50 acre/year);$75.03 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Pruning+brush pulling ($0.45/vine) - Custom;$363.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Brush chopping - Skilled Labor Costs;$24.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Brush chopping - Equipment Costs;$21.36 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Trellis maintenance - Skilled Labor Costs;$80.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Trellis maintenance - Equipment Costs;$16.59 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Trellis maintenance - Materials Costs;$30.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Tying & renewal ($0.23/vine) - Custom Labor;$185.53 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Tying & renewal ($0.23/vine) - Material Costs;$3.15 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Vine Replacement - Skilled Labor Costs;$40.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Vine Replacement - Equipment Costs;$37.97 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Vine Replacement - Material Costs;$56.47 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Chem. Weed control - trellis - Skilled Labor Costs;$52.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Chem. Weed control - trellis - Equipment Costs;$32.89 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Chem. Weed control - trellis - Material Costs;$9.19 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Soil applic of Solubor (w/ herb. Spray) - Material Costs;$4.23 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spot herbicide - hand application - Skilled Labor Costs;$8.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spot herbicide - hand application - Equipment Cost;$4.93 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spot herbicide - hand application - Material Costs;$21.38 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Suckering - Unskilled Labor Costs;$54.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Cluster removal - Unskilled Labor Costs;$54.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Shoot thinning - Unskilled Labor Costs;$81.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Take-away (de-hilling) - Skilled Labor Costs;$60.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Take-away (de-hilling) - Equipment Costs;$45.09 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Bird control - Skilled Labor Costs;$60.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Sprays 1-2 - Mancozeb 75DF;$24.30 ;;Mancozeb 75DF 3 lbs/acre * $4.05/lb * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Sprays 1-2 - Sulfur;$4.00 ;;Sulfur 4 lbs/acre * $0.50/lb * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Sprays 1-2 - Spreader;$1.25 ;;Spreader 4 oz./acre * $20/gal * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Sprays 1-2 - Skilled Labor Costs;$24.00 ;;0.6 hours * $20/hour * 2 sprays;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Sprays 1-2 - Equipment Costs;$27.94 ;;??? $13.97 * 2 sprays ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 3 - Mancozeb 75DF;$12.15 ;;Mancozeb 75DF 3 lbs/acre * $4.05/lb * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 3 - Sulfur;$2.50 ;;Sulfur 5 lbs/acre * $0.50/lb * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 3 - Spreader;$0.63 ;;Spreader 4 oz./acre * $20/gal * 2 sprays;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 3 - Skilled Labor Costs;$12.00 ;;0.6 hours * $20/hour * 1 spray;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 3 - Equipment Costs;$13.97 ;;??? $13.97 * 1 spray ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 4 - Revus Top;$16.38 ;;Revus Top 7 oz/acre * $2.34/oz * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 4 - Sulfur;$2.00 ;;Sulfur 5 lbs/acre * $0.50/lb * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 4 - Spreader;$0.63 ;;Spreader 4 oz./acre * $20/gal * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 4 - Skilled Labor Costs;$12.00 ;;0.6 hours * $20/hour * 1 spray;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 4 - Equipment Costs;$13.97 ;;??? $13.97 * 1 spray ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 5 - Vivando;$18.80 ;;Vivando 10 oz/acre * $1.88/oz * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 5 - Mancozeb 75DF;$16.20 ;;Mancozeb 75DF 4 lbs/acre * $4.05/lb * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 5 - Skilled Labor Costs;$12.00 ;;0.6 hours * $20/hour * 1 spray;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 5 - Equipment Costs;$13.97 ;;??? $13.97 * 1 spray ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 6 - Pristine 38WG;$32.50 ;;Pristine 38WG 10 fl oz/acre * $3.25/oz * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 6 - Sulfur;$2.50 ;;Sulfur 5 lbs/acre * $0.50/lb * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 6 - Skilled Labor Costs;$12.00 ;;0.6 hours * $20/hour * 1 spray;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 6 - Equipment Costs;$13.97 ;;??? $13.97 * 1 spray ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 7 - Revus Top;$16.38 ;;Revus Top 7 oz/acre * $2.34/oz * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 7 - Carvaryl 4L;$22.50 ;;Carvaryl 4L 2 qt/acre * $45/gal * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 7 - Spreader;$0.63 ;;Spreader 4 oz./acre * $20/gal * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 7 - Skilled Labor Costs;$12.00 ;;0.6 hours * $20/hour * 1 spray;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 7 - Equipment Costs;$13.97 ;;??? $13.97 * 1 spray ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 8 - Pristine 38WG;$40.63 ;;Pristine 38WG 12.5 fl oz/acre * $3.25/oz * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 8 - Sulfur;$2.50 ;;Sulfur 5 lbs/acre * $0.50/lb * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 8 - ProPhyt;$7.90 ;;ProPhyt 2.5 pt/acre * $3.16/pt * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 8 - Skilled Labor Costs;$12.00 ;;0.6 hours * $20/hour * 1 spray;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 8 - Equipment Costs;$13.97 ;;??? $13.97 * 1 spray ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 9-10 - Sulfur;$8.00 ;;Sulfur 8 lbs/acre * $0.50/lb * 2 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 9-10 - ProPhyt;$15.80 ;;ProPhyt 2.5 pt/acre * $3.16/pt * 2 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 9-10 - Spreader;$1.25 ;;Spreader 4 oz./acre * $20/gal * 2 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Sprays 9-10 - Skilled Labor Costs;$24.00 ;;0.6 hours * $20/hour * 2 sprays;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Sprays 9-10 - Equipment Costs;$27.94 ;;??? $13.97 * 2 sprays ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 11 - Captan 80 WP;$16.50 ;;Captan 80WP 2.5 lbs/acre * $6.60/lb * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 11 - Sulfur;$2.50 ;;Sulfur 5 lbs/acre * $0.50/lb * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 11 - Vanguard 75WP;$37.50 ;;Vanguard 75WP 10 oz/acre * $3.75/oz * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 11 - Spreader;$0.63 ;;Spreader 4 oz./acre * $20/gal * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 11 - Skilled Labor Costs;$12.00 ;;0.6 hours * $20/hour * 1 spray;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 11 - Equipment Costs;$13.97 ;;??? $13.97 * 1 spray ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 12 - Captan 80 WP;$16.50 ;;Captan 80WP 2.5 lbs/acre * $6.60/lb * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 12 - Sulfur;$2.50 ;;Sulfur 5 lbs/acre * $0.50/lb * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 12 - Elevate 50 WP;$42.75 ;;Elevate 50 WP 1 lbs/acre * $42.75/oz * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 12 - Spreader;$0.63 ;;Spreader 4 oz./acre * $20/gal * 1 spray;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 12 - Skilled Labor Costs;$12.00 ;;0.6 hours * $20/hour * 1 spray;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Spray 12 - Equipment Costs;$13.97 ;;??? $13.97 * 1 spray ???;;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Mowing (x4) - Skilled Labor Costs;$52.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Mowing (x4) - Equipment Costs;$42.28 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Lime (1 in 5 years) - Skilled Labor Costs;$2.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Lime (1 in 5 years) - Equipment Costs;$4.88 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Lime (1 in 5 years) - Material Costs;$9.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Pickup truck (10,000 miles for 50 acre/year) - Equipment Costs;$75.03 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Shoot positioning/move catch wires (first path) - Unskilled Labor Costs;$81.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Shoot positioning/move catch wires (second path) - Unskilled Labor Costs;$81.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Mechanical leaf removal - Skilled Labor Costs;$64.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Mechanical leaf removal - Equipment Costs;$19.20 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Summer pruning (x2) - Skilled Labor Costs;$52.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Summer pruning (x2) - Equipment Costs;$42.69 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Petiole sampling ($88 for every 2 years) - Skilled Labor Costs;$2.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Petiole sampling ($88 for every 2 years) - Material Costs;$1.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Soil sampling (every 5 years) - Skilled Labor Costs;$2.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Soil sampling (every 5 years) - Material Costs;$0.40 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Hilling-up - Skilled Labor Costs;$34.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Hilling-up - Equipment Costs;$27.05 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Fall fertilization - Skilled Labor Costs;$6.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Fall fertilization - Equipment Costs;$5.14 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Fall fertilization - Material Costs;$25.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
+15;Mixed Fruits & Vegetables;Grapes (Conventional);22-Apr;;Preharvest;;Crop insurance - Other;$109.00 ;;;http://publications.dyson.cornell.edu/outreach/extensionpdf/2014/Cornell-Dyson-eb1401.pdf;a
