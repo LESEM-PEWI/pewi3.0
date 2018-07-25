@@ -578,8 +578,8 @@ label[for=file-upload], #sim-message-repeat {
     font-weight: bold;
     position: fixed;
     z-index: 1;
-    left:6%;
-    bottom: 22%;
+    left:115px;
+    bottom: 25px;
 }
 
 #snackbarNotification.show {
@@ -589,21 +589,21 @@ label[for=file-upload], #sim-message-repeat {
 }
 
 @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
+    from {left: 0; opacity: 0;}
+    to {left: 115px; opacity: 1;}
 }
 
 @keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
+    from {left: 0; opacity: 0;}
+    to {left:115px; opacity: 1;}
 }
 
 @-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+    from {left: 115px; opacity: 1;}
+    to {left: 0; opacity: 0;}
 }
 
 @keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+    from {left: 115px; opacity: 1;}
+    to {left: 0; opacity: 0;}
 }
