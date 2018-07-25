@@ -1103,6 +1103,7 @@ function calculateResults() {
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(tileId) {
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
+    console.log("In changeLandTypeTile");
     //Add tile to the undoArr
     if (!undo) {
       addChange(tileId);

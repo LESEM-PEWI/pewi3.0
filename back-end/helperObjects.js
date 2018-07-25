@@ -2994,6 +2994,7 @@ function Results(board) {
     this.phosphorusRiskAssessment = phosphorusRisk;
     this.tileNitrate = tileNitrate;
 
+
   }; //end this.mapIt
 
   //Helper method for mapIt function to calculate grossErosionRate tile indicies
