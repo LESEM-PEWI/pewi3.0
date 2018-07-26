@@ -3803,6 +3803,7 @@ function randomAllowed(modeName) {
 function randomizeBoard() {
 
   var prevPainter = painter;
+  var isWetlandOn = true;
   //Range of values for each land-use type
   var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   randomizing = true;
@@ -3813,6 +3814,9 @@ function randomizeBoard() {
       if (document.getElementById('parameters').innerHTML.indexOf('paint' + j + "\n") != -1) {
         //If it's toggled off, remove the landuse type for randomization
         var removedIndex = randomPainterTile.indexOf(j);
+        if(j == 14){
+          isWetlandOn = false;
+        }
         for (var x = 0; x < 15; x++) {
           if (removedIndex == x) {
             randomPainterTile.splice(removedIndex, 1);
@@ -3822,7 +3826,6 @@ function randomizeBoard() {
       }
     } // end for
 
-
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
       //Random tiles will keep getting added to the map as long as the tile exists
@@ -3830,11 +3833,16 @@ function randomizeBoard() {
         //wetlands are restricted within flat lands, i.e 0-2% only
         if((Number(boardData[currentBoard].map[i].topography) >= 2))
         {
-          randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15];
+          // If wetland is toggle on, we should remove the wetland option since wetlands are restricted within flat lands.
+          if(isWetlandOn && randomPainterTile.indexOf(14) != -1){
+            randomPainterTile.splice(randomPainterTile.indexOf(14), 1);
+          }
         }
         else
         {
-          randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+          // If wetland is toggle on, we should add the wetland option back.
+          if(isWetlandOn && randomPainterTile.indexOf(14) == -1)
+            randomPainterTile.push(14);
         }
         undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
