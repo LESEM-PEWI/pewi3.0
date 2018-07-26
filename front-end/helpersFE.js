@@ -861,7 +861,7 @@ function addTile(tile) {
 
 //addYearAndTransition updates the years to switch between in the left console and transitions to the new year
 function addYearAndTransition() {
-
+  var snackBar = document.getElementById("snackbarNotification");
   var totalYearsAllowed = 3;
   var nextYear = boardData[currentBoard].calculatedToYear+1;
   document.getElementById("yearToCopy").options[1].style.display = 'block';
@@ -930,7 +930,9 @@ function addYearAndTransition() {
   }
 
   if (nextYear > totalYearsAllowed) {
-    alert("Cannot add more than 3 years!");
+    snackBar.innerHTML = "Cannot add more than 3 years!";
+    snackBar.className = "show";
+    setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
     nextYear -= 1;
     switchYearTab(nextYear);
     transitionToYear(nextYear);
@@ -949,6 +951,7 @@ function addYearAndTransition() {
 //uses the helper year2and3Delete() in the special cases
 function deleteYearAndTransition()
 {
+  var snackBar = document.getElementById("snackbarNotification");
   var currMaxYear = boardData[currentBoard].calculatedToYear;
   maxYear = currMaxYear;
   if(curTracking)
@@ -969,7 +972,9 @@ function deleteYearAndTransition()
         //if selected year is 1 and there are no other years
         if(currMaxYear == 1)
          {
-           alert("Cannot delete year 1!");
+           snackBar.innerHTML = "Cannot delete year 1!";
+          snackBar.className = "show";
+          setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
            yearSelected = 1;
            currMaxYear = 1;
            g_isDeleted = false;
@@ -983,7 +988,9 @@ function deleteYearAndTransition()
            document.getElementById("year" + currMaxYear + "Button").style.display = "none";
            document.getElementById("yearToCopy").options[currMaxYear].style.display = 'none';
            document.getElementById("yearToPaste").options[currMaxYear].style.display = 'none';
-           alert("Year 2 is now Year 1!");
+           snackBar.innerHTML = "Year 2 is now Year 1!";
+           snackBar.className = "show";
+           setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
            //copy year 2 to year 1 - including the precipitation
            boardData[currentBoard].precipitation[yearSelected] = boardData[currentBoard].precipitation[2];
            document.getElementById("year" + yearSelected+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearSelected]);
@@ -3617,6 +3624,7 @@ function painterSelect(brushNumberValue) {
 
 function pasteYear()
 {
+  var snackBar = document.getElementById("snackbarNotification");
   document.getElementById("yearPasteButton").classList.toggle("show");
   var yearToPasteIn = document.getElementById("yearToPaste").value;
     for (var i = 0; i < boardData[currentBoard].map.length; i++)
@@ -3627,7 +3635,9 @@ function pasteYear()
     boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
     boardData[currentBoard].updateBoard();
     refreshBoard();
-    alert("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
+    snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
+    snackBar.className = "show";
+    setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
     document.getElementById("yearToCopy").value = 0;
     document.getElementById("yearToPaste").value = 0;
     document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
@@ -5963,7 +5973,10 @@ function year2and3Delete() {
   boardData[currentBoard].calculatedToYear = 2;
   yearSelected = 2;
   currMaxYear = 2;
-  alert("Year 3 is now Year 2!");
+  var snackBar = document.getElementById("snackbarNotification");
+  snackBar.innerHTML = "Year 3 is now Year 2!";
+  snackBar.className = "show";
+  setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
 }
 
 
