@@ -1427,6 +1427,7 @@ option {
 .year-styled-select {
   background: #3498DB;
   border-radius: 6px;
+  border: 1px solid black;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
