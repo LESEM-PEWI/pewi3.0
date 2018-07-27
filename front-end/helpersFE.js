@@ -1103,7 +1103,6 @@ function calculateResults() {
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(tileId) {
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
-    console.log("In changeLandTypeTile");
     //Add tile to the undoArr
     if (!undo) {
       addChange(tileId);
@@ -1122,11 +1121,20 @@ function changeLandTypeTile(tileId) {
         }
         else
         {
-          meshMaterials[tileId].map = textureArray[painter];
-          // record the data changes in boardData
-          boardData[currentBoard].map[tileId].landType[currentYear] = painter;
-          // update boardData figures
-          boardData[currentBoard].map[tileId].update(currentYear);
+          // If the land type remains the same, then do nothing, otherwise,change the land type, and update progress bars
+          if(meshMaterials[tileId].map != textureArray[painter]){
+            // console.log('Change the land type in tile which id is ', tileId);
+            meshMaterials[tileId].map = textureArray[painter];
+            // record the data changes in boardData
+            boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+            // update boardData figures
+            boardData[currentBoard].map[tileId].update(currentYear);
+
+
+            // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
+            calculateResults();
+            refreshProgressBar(currentYear);
+          }
         }
       } else if (multiplayerAssigningModeOn) {
         meshMaterials[tileId].map = multiplayerTextureArray[painter];
@@ -1138,9 +1146,6 @@ function changeLandTypeTile(tileId) {
     }
   } // end outter if
 
-  // Whenever tile of land type is changed, we'd better recalculate the results
-  calculateResults();
-  refreshProgressBar(currentYear);
 } //end changeLandTypeTile
 
 //Updates Nitrate score for entire map since each individual Tile's score hinges on landtypes across the entire map
@@ -3799,6 +3804,7 @@ function randomAllowed(modeName) {
 function randomizeBoard() {
 
   var prevPainter = painter;
+  var isWetlandOn = true;
   //Range of values for each land-use type
   var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   randomizing = true;
@@ -3809,15 +3815,20 @@ function randomizeBoard() {
       if (document.getElementById('parameters').innerHTML.indexOf('paint' + j + "\n") != -1) {
         //If it's toggled off, remove the landuse type for randomization
         var removedIndex = randomPainterTile.indexOf(j);
-        for (var x = 0; x < 15; x++) {
-          if (removedIndex == x) {
-            randomPainterTile.splice(removedIndex, 1);
-          }
-        } // end for
+        if(j == 14){
+          isWetlandOn = false;
+        }
+        randomPainterTile.splice(removedIndex, 1);
+
+        // What the heck, What's this for loop for??? Why didn't call randomPainterTile.splice(removedIndex, 1) directly???
+        // for (var x = 0; x < 15; x++) {
+        //   if (removedIndex == x) {
+        //     randomPainterTile.splice(removedIndex, 1);
+        //   }
+        // } // end for
 
       }
     } // end for
-
 
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       //if tile exists
@@ -3826,11 +3837,16 @@ function randomizeBoard() {
         //wetlands are restricted within flat lands, i.e 0-2% only
         if((Number(boardData[currentBoard].map[i].topography) >= 2))
         {
-          randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15];
+          // If wetland is toggle on, we should remove the wetland option since wetlands are restricted within flat lands.
+          if(isWetlandOn && randomPainterTile.indexOf(14) != -1){
+            randomPainterTile.splice(randomPainterTile.indexOf(14), 1);
+          }
         }
         else
         {
-          randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+          // If wetland is toggle on, we should add the wetland option back.
+          if(isWetlandOn && randomPainterTile.indexOf(14) == -1)
+            randomPainterTile.push(14);
         }
         undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
