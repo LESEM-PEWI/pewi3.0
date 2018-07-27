@@ -598,40 +598,55 @@ text {
   /* >= 1200px */
 }
 
-.collapsible {
-    background-color: #ffffff;
+* {
+  text-decoration: none;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  }
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul .inner {
+  width: 95%;
+  padding-left: 1em;
+  overflow: hidden;
+  display: none;
+}
+ul table{
+  table-layout: fixed;
+  width: 75%;
+}
+
+ul li {
+  margin: .5em 0;
+}
+
+ul li a.toggle {
+  width: 75%;
+  display: block;
+  /* background: rgba(0,0,0,0.78); */
+  background: #969696;
+  color: #fefefe;
+  padding: .75em;
+  border-radius: 0.15em;
+  transition: .3s ease;
+}
+
+ul li a.toggle:hover {
+  background: rgba(0, 0, 0, 0.78);
+}
+
+#plus:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
     color: black;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    border: solid;
-    border-width: .5;
-    outline: none;
-    font-size: 15px;
-}
-
-.active, .collapsible:hover {
-    background-color: #555;
-}
-
-.collapsible:after {
-    content: '\002B';
-    color: white;
-    font-weight: bold;
     float: right;
     margin-left: 5px;
 }
 
-.active:after {
-    content: "\2212";
-}
-
-.content {
-    padding: 0 18px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-    background-color: #f1f1f1;
+#minus:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+    color: white;
 }

@@ -285,11 +285,9 @@ function displayResults() {
   //Create results table and append it to the proper tab of the results frame
   var numericalTableString = generateResultsTable();
 
-  var economics = generateEconomicsTables();
+  generateEconomicsTables();
 
   document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsN').innerHTML = numericalTableString;
-
-  document.getElementById('resultsFrame').contentWindow.document.getElementById('econNumbers').innerHTML = economics;
 
   //refresh frame properties
   document.getElementById('resultsFrame').contentWindow.refreshPie();
@@ -1773,76 +1771,183 @@ function drawPrecipitationInformationChart() {
 //     .attr('checked', "")
 //     .attr('type', 'checkbox');
 // } //end drawYieldRadar()
-var htmlTableString = "";
 
 function generateEconomicsTables() {
-  var cl = "accordion";
-  var pan = "panel";
-  htmlTableString = "<button class ="+cl+">Section 1</button><div class = "+pan+"><p>Lorem ipsum...</p></div><button class ="+cl+">Section 2</button><div class = "+pan+"><p>Lorem ipsum...</p></div><button class ="+cl+">Section 3</button><div class = "+pan+"><p>Lorem ipsum...</p></div>"
+  var convCorn = "";
+  var consCorn = "";
+  var convSoy = "";
+  var consSoy = "";
+  var alf = "";
+  var permPas = "";
+  var rotGraz = "";
+  var grassHay = "";
+  var prairie = "";
+  var consFor = "";
+  var convFor = "";
+  var switchG = "";
+  var shortRWB = "";
+  var wetland = "";
+  var mixedFruitsV = "";
 
-  // var file = "./Info_Trackers.csv";
-  //
-  // var values = [];
-  // var test = [];
-  // var nontest = [];
-  // var res;
-  //
-  // $.ajax({
-  //   async: false,
-  //   type: "GET",
-  //   url: file,
-  //   dataType: "text",
-  //   contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-  //   success: function(data) {
-  //     res = data.split(/\r\n/);
-  //   },
-  //   error: function(data) {
-  //     console.log(JSON.stringify(data));
-  //   }
-  // });
-  //
-  // for(var i = 1; i < 2; ++i){
-  //   getTable(res[i]);
-  // }
-  // htmlTableString += "</table>"
+  var file = "./Info_Trackers.csv";
 
-  return htmlTableString;
-}
+  var results = [];
+  var res;
 
-// function applyEventListeners() {
-//   var coll = document.getElementById('resultsFrame').contentWindow.document.getElementsByClassName("collapsible").innerHTML;
-//   var i;
-//
-//   console.log(coll.length);
-//
-//   for (i = 0; i < coll.length; i++) {
-//     coll[i].addEventListener("click", function() {
-//       this.classList.toggle("active");
-//       var content = this.nextElementSibling;
-//       if (content.style.maxHeight){
-//         content.style.maxHeight = null;
-//       } else {
-//         content.style.maxHeight = content.scrollHeight + "px";
-//       }
-//     });
-//   }
-// }
+  var source = "../htmlFrames/imgs/text.png"
 
-function getTable(data){
-  var result = data.split(/;/)
-  htmlTableString += "<tr>";
-  for(var i = 1; i < result.length; ++i){
-    if(i == 1){
-      htmlTableString += "<th>"+result[i]+"</th>";
-      console.log("here");
-    }else{
-      htmlTableString += "<th>"+result[i]+"</th>";
-      console.log("here too");
+  $.ajax({
+    async: false,
+    type: "GET",
+    url: file,
+    dataType: "text",
+    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+    success: function(data) {
+      res = data.split(/\r\n/);
+    },
+    error: function(data) {
+      console.log(JSON.stringify(data));
     }
+  });
+
+  for(var i = 0; i < res.length; ++i){
+    var tempObj = getObj(res[i], "T");
+    results.push(tempObj);
+  }
+  results.splice(0,1);
+
+  updateTables(results);
+  setTables("T");
+  clearTableVars();
+
+  for(var i = 0; i < res.length; ++i){
+    var tempObj = getObj(res[i], "A");
+    results.push(tempObj);
+  }
+  results.splice(0,1);
+
+  updateTables(results);
+  setTables("A");
+  clearTableVars();
+
+  function clearTableVars() {
+    convCorn, consCorn, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV = "";
+    results = [];
   }
 
-  htmlTableString += "</tr>";
-  console.log(htmlTableString);
+  function updateTables(values) {
+    convCorn = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    consCorn = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    convSoy = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    consSoy = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    alf = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    permPas = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    rotGraz = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    grassHay = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    prairie = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    consFor = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    convFor = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    switchG = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    shortRWB = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    wetland = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+    mixedFruitsV = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Time of Year</th><th>Description</th></tr>";
+
+
+    for(var i = 0; i < values.length; ++i){
+      switch (values[i].landUse) {
+        case "Conventional Corn":
+        convCorn += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Conservation Corn":
+        consCorn += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Conventional Soybean":
+        convSoy += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Conservation Soybean":
+        consSoy += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Alfalfa":
+        alf += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Permanent Pasture":
+        permPas += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Rotational Grazing":
+        rotGraz += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Grass Hay":
+        grassHay += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Prairie":
+        prairie += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Conservation Forest":
+        consFor += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Conventional Forest":
+        convFor += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Switchgrass":
+        switchG += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Short-rotation Woody Bioenergy":
+        shortRWB += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Wetland":
+        wetland += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Mixed Fruits & Vegetables":
+        mixedFruitsV += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+      }
+    }
+    convCorn += "</table>";
+    consCorn += "</table>";
+    convSoy += "</table>";
+    consSoy += "</table>";
+    alf += "</table>";
+    permPas += "</table>";
+    rotGraz += "</table>";
+    prairie += "</table>";
+    consFor += "</table>";
+    convFor += "</table>";
+    switchG += "</table>";
+    shortRWB += "</table>";
+    wetland += "</table>";
+    mixedFruitsV += "</table>";
+  }
+
+  function setTables(timeOrAction) {
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convCorn'+timeOrAction).innerHTML = convCorn;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consCorn'+timeOrAction).innerHTML = consCorn;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convSoybean'+timeOrAction).innerHTML = convSoy;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consSoybean'+timeOrAction).innerHTML = consSoy;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('alfalfa'+timeOrAction).innerHTML = alf;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('permanentPasture'+timeOrAction).innerHTML = permPas;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('rotationalGrazing'+timeOrAction).innerHTML = rotGraz;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('grassHay'+timeOrAction).innerHTML = grassHay;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('prairie'+timeOrAction).innerHTML = prairie;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consForest'+timeOrAction).innerHTML = consFor;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convForest'+timeOrAction).innerHTML = convFor;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('switchgrass'+timeOrAction).innerHTML = switchG;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('shortRWB'+timeOrAction).innerHTML = shortRWB;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('wetland'+timeOrAction).innerHTML = wetland;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('mixedFaV'+timeOrAction).innerHTML = mixedFruitsV;
+  }
+}
+
+
+function getObj(data, tOrA){
+  var result = data.split(/;/)
+  if(tOrA === "T"){
+    var obj = {landUse: result[1], costName: result[7], name: "Time", TorA: result[5], value: result[8], timeOfYear: result[4], description: result[12]};
+  }
+  else if(tOrA === "A"){
+    var obj = {landUse: result[1], costName: result[7], name: "Action", TorA: result[6], value: result[8], timeOfYear: result[4], description: result[12]};
+  }
+
+  return obj;
 }
 
 //generateResultsTable creates the string of html with all the numerical results

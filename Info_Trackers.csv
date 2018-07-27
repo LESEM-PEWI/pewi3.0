@@ -1,5 +1,5 @@
 LU_ID;Land-Use;Sub Crop;Years Applicable;Frequency;Time - Cost Type ;Action - Cost Type;Cost Name; Source 1 Value ; Dependent Variable ; Source 1 Context and/ or Calculations ;Source 1 Citation;Description
-1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Tandem disk - FIXED;$4.70 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
+1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Tandem disk - FIXED;$4.70 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;This product is below test test test test test.
 1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Tandem disk - VARIABLE;$3.50 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
 1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Apply nitrogen - FIXED;$4.40 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
 1;Conventional Corn;Corn after Soybean;All;Annual;Preharvest;Machinery;Apply nitrogen - VARIABLE;$4.50 ; n/a ;;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
@@ -130,25 +130,25 @@ Alfalfa or Alfalfa-grass Hay Budget";a
 Alfalfa or Alfalfa-grass Hay Budget";a
 5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Labor;Labor - Pre-harvest;$14.00 ; wage rate ;1.0 hours @ $14/hour;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Labor;Labor - harvest - cutting;$42.00 ; wage rate, # cuttings ;"1.5 hours @ $14/hour……PER CUT
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Labor;Labor - harvest - cutting;$42.00 ; wage rate, # cuttings ;"1.5 hours @ $14/hourï¿½ï¿½PER CUT
 Assumes x2 cuts Establishment Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Mower-Conditioner - FIXED;$11.00 ; # cuttings ;" $5.50…….PER CUT
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Mower-Conditioner - FIXED;$11.00 ; # cuttings ;" $5.50ï¿½ï¿½.PER CUT
 Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$6.40 ; # cuttings ;" $4.40…….PER CUT
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$6.40 ; # cuttings ;" $4.40ï¿½ï¿½.PER CUT
 Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Rake - FIXED;$6.40 ; # cuttings ;" $3.20……PER CUT
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Rake - FIXED;$6.40 ; # cuttings ;" $3.20ï¿½ï¿½PER CUT
 Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Rake - VARIABLE;$4.00 ; # cuttings ;" $2.00……PER CUT
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Rake - VARIABLE;$4.00 ; # cuttings ;" $2.00ï¿½ï¿½PER CUT
 Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Baling - FIXED;$16.40 ; # cuttings ;" $8.2…..PER CUT
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Baling - FIXED;$16.40 ; # cuttings ;" $8.2ï¿½..PER CUT
 Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Baling - VARIABLE;$10.60 ; # cuttings ;" $5.30……PER CUT
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Baling - VARIABLE;$10.60 ; # cuttings ;" $5.30ï¿½ï¿½PER CUT
 Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
 5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Hauling - FIXED;$9.65 ; tons/cutting/ # cuttings ; $1.93 per ton @ 2.5 tons/cutting * 2 cuttings ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
@@ -166,27 +166,27 @@ Alfalfa or Alfalfa-grass Hay Budget";a
 5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Input;Annual Fertilizer - Potash;$54.00 ; application rate, potash price ;(50 lbs/1 ton Alfalfa) @ ($0.35/lb) @ 4 tons Alfalfa;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
 5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Constant;Other;Crop Insurance;$2.00 ; n/a ;$2/acre crop insurance premium;;a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Labor;Labor - harvest - cutting;$56.00 ; labor wage, # cuttings ;"1.33 hours @ $14/hour……PER CUT
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Labor;Labor - harvest - cutting;$56.00 ; labor wage, # cuttings ;"1.33 hours @ $14/hourï¿½ï¿½PER CUT
 Assumes x3 cuts per Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
 5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Constant;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 Cash rent equivalent;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Mower-Conditioner - FIXED;$16.50 ; # cuttings ;" $5.50…….PER CUT
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Mower-Conditioner - FIXED;$16.50 ; # cuttings ;" $5.50ï¿½ï¿½.PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$13.20 ; # cuttings ;" $4.40…….PER CUT
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$13.20 ; # cuttings ;" $4.40ï¿½ï¿½.PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Rake - FIXED;$9.60 ; # cuttings ;" $3.20……PER CUT
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Rake - FIXED;$9.60 ; # cuttings ;" $3.20ï¿½ï¿½PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Rake - VARIABLE;$6.00 ; # cuttings ;" $2.00……PER CUT
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Rake - VARIABLE;$6.00 ; # cuttings ;" $2.00ï¿½ï¿½PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Baling - FIXED;$24.60 ; # cuttings ;" $8.20…..PER CUT
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Baling - FIXED;$24.60 ; # cuttings ;" $8.20ï¿½..PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Baling - VARIABLE;$15.90 ; # cuttings ;" $5.30……PER CUT
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Baling - VARIABLE;$15.90 ; # cuttings ;" $5.30ï¿½ï¿½PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
 5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Hauling - FIXED;$7.72 ; yield per cutting, # cuttings ; $1.93 per ton @ 4 tons/acre/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
@@ -266,25 +266,25 @@ Alfalfa or Alfalfa-grass Hay Budget";a
 Alfalfa or Alfalfa-grass Hay Budget";a
 8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Farmer Labor;Labor - Pre-harvest;$14.00 ; labor wage ;1.0 hours @ $14/hour;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Farmer Labor;Labor - harvest - cutting;$42.00 ; labor wage, # cuttings ;"1.5 hours @ $14/hour……PER CUT (2 cuts)
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Farmer Labor;Labor - harvest - cutting;$42.00 ; labor wage, # cuttings ;"1.5 hours @ $14/hourï¿½ï¿½PER CUT (2 cuts)
 Assumes x2 cuts Establishment Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Mower-Conditioner - FIXED;$11.00 ; # cuttings ;" $5.50…….PER CUT
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Mower-Conditioner - FIXED;$11.00 ; # cuttings ;" $5.50ï¿½ï¿½.PER CUT
 Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$8.80 ; # cuttings ;" $4.40…….PER CUT
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$8.80 ; # cuttings ;" $4.40ï¿½ï¿½.PER CUT
 Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Rake - FIXED;$6.40 ; # cuttings ;" $3.20……PER CUT
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Rake - FIXED;$6.40 ; # cuttings ;" $3.20ï¿½ï¿½PER CUT
 Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Rake - VARIABLE;$4.00 ; # cuttings ;" $2.00……PER CUT
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Rake - VARIABLE;$4.00 ; # cuttings ;" $2.00ï¿½ï¿½PER CUT
 Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Baling - FIXED;$16.40 ; # cuttings ;" $8.2…..PER CUT
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Baling - FIXED;$16.40 ; # cuttings ;" $8.2ï¿½..PER CUT
 Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Baling - VARIABLE;$10.60 ; # cuttings ;" $5.3.00……PER CUT
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Baling - VARIABLE;$10.60 ; # cuttings ;" $5.3.00ï¿½ï¿½PER CUT
 Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
 8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Hauling - FIXED;$9.65 ; Cuttings, yield (tons) ; $1.93 per ton @ 2.5 tons/cutting * 2 cuttings/acre/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
@@ -302,27 +302,27 @@ Alfalfa or Alfalfa-grass Hay Budget";a
 8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Input;Annual Fertilizer - Potash;$54.00 ; application rate, potash price ;(50 lbs/1 ton Alfalfa) @ ($0.27/lb) @ 4 tons Alfalfa;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
 8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Other;Crop Insurance;$2.00 ; n/a ;$2/acre (assuming 3 cuts @ 4 tons/cut);;a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Farmer Labor;Labor - harvest - cutting;$56.00 ; labor wage, # cuttings ;"1.33 hours @ $14/hour……PER CUT
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Farmer Labor;Labor - harvest - cutting;$56.00 ; labor wage, # cuttings ;"1.33 hours @ $14/hourï¿½ï¿½PER CUT
 Assumes x3 cuts per Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
 8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 Cash rent equivalent;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Mower-Conditioner - FIXED;$16.50 ; # cuttings ;" $5.50…….PER CUT
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Mower-Conditioner - FIXED;$16.50 ; # cuttings ;" $5.50ï¿½ï¿½.PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$13.20 ; # cuttings ;" $4.40…….PER CUT
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$13.20 ; # cuttings ;" $4.40ï¿½ï¿½.PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Rake - FIXED;$9.60 ; # cuttings ;" $3.20……PER CUT
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Rake - FIXED;$9.60 ; # cuttings ;" $3.20ï¿½ï¿½PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Rake - VARIABLE;$6.00 ; # cuttings ;" $2.00……PER CUT
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Rake - VARIABLE;$6.00 ; # cuttings ;" $2.00ï¿½ï¿½PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Baling - FIXED;$24.60 ; # cuttings ;" $8.20…..PER CUT
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Baling - FIXED;$24.60 ; # cuttings ;" $8.20ï¿½..PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Baling - VARIABLE;$15.90 ; # cuttings ;" $5.30……PER CUT
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Baling - VARIABLE;$15.90 ; # cuttings ;" $5.30ï¿½ï¿½PER CUT
 Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
 Alfalfa or Alfalfa-grass Hay Budget";a
 8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Hauling - FIXED;$23.16 ; Cuttings, yield (tons) ; $1.93 per ton @ 4 tons/cutting * 3 cuttings/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
