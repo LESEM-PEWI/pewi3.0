@@ -648,5 +648,8 @@ ul li a.toggle:hover {
 
 #minus:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
-    color: white;
+    font-size: 13px;
+    color: black;
+    float: right;
+    margin-left: 5px;
 }

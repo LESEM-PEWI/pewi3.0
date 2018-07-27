@@ -1803,7 +1803,8 @@ function generateEconomicsTables() {
     dataType: "text",
     contentType: "application/x-www-form-urlencoded;charset=UTF-8",
     success: function(data) {
-      res = data.split(/\r\n/);
+      res = data.split(/\n/);
+      res = res.split(/\r/);
     },
     error: function(data) {
       console.log(JSON.stringify(data));
