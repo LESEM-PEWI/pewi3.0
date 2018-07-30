@@ -2291,22 +2291,28 @@ function Results(board) {
   this.totalStreamCells = 0;
   this.totalStrategicWetlandCells = 0;
 
+  this.isResultCalculated = false;
 
   //Function to sum the values of calculatedCarbonSequestration for each tile
-  this.sumCarbon = function() {
+  this.sumCarbon = function(tileID, currYear) {
 
-    var tempCarbonSum = [0, 0, 0, 0];
+    if(this.isResultCalculated == false) {
+      var tempCarbonSum = [0, 0, 0, 0];
 
-    for (var y = 1; y <= board.calculatedToYear; y++) {
+      for (var y = 1; y <= board.calculatedToYear; y++) {
 
-      //For each tile, add the carbon sequestration value to the results array in corresponding year y
-      for (var i = 0; i < board.map.length; i++) {
-        tempCarbonSum[y] += board.map[i].results[y].calculatedCarbonSequestration;
-      }
+        //For each tile, add the carbon sequestration value to the results array in corresponding year y
+        for (var i = 0; i < board.map.length; i++) {
+          tempCarbonSum[y] += board.map[i].results[y].calculatedCarbonSequestration;
+        }
 
-      //PEWI calculations are reported in megagrams, the previous calculation in kilograms therefore divide by 1000
-      this.carbonSequestration[y] = tempCarbonSum[y] / 1000;
-    } //end for
+        //PEWI calculations are reported in megagrams, the previous calculation in kilograms therefore divide by 1000
+        this.carbonSequestration[y] = tempCarbonSum[y] / 1000;
+      } //end for
+    }
+    else {
+
+    }
 
   }; //end this.sumCarbon
 

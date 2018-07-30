@@ -7,9 +7,11 @@ var mergedFiles = []; // stores all merged files
 var filesUploaded; // stores uploaded files
 var hasPrecipConclict = false; // indicates whether there's a precipitation level conflict or not
 
+// I think we can delete this function, It's not been used.
+// BTW, board1 is not a global variable, not a parameter either, so what're the purpose of this function and the next one?
 //calculate() function brings the results up to date
 //  this is currently set to calculate up to year 3 for testing purposes
-function calculate() {
+function calculate1212() {
   board1.calculatedToYear = 3;
   // update all tile level calculations
   board1.updateBoard();
@@ -20,7 +22,7 @@ function calculate() {
   Totals.update();
 } //end calculate()
 
-
+// I think we can also delete this function, It's not been used anywhere.
 //update Display object for simple text read out
 function display() {
   // var x = document.createElement("P");
