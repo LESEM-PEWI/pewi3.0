@@ -3386,7 +3386,7 @@ function Tile(tileArray, board) {
 
     this.finalArea = tempArea;
     this.subWatershedArea =  tempSubwatershedArea;
-    console.log("this.finalArea",this.finalArea);
+    // console.log("this.finalArea",this.finalArea);
     // console.log("this.subWatershedArea",this.subWatershedArea);
   }; //end this.sumAreaHelper()
 
