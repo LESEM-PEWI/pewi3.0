@@ -2434,7 +2434,7 @@ function Results(board) {
   //---end helper methods for assisting in calculateNitrateConcentration
 
   //preliminary function that sums area and stream network cells (allows flexibility with map layout)
-  // IIFE, this function only need to be called once, since all the variables we wanted are constantm, it's unnecessary to calculate them again and again.
+  // IIFE, this function only need to be called once, since all the variables we wanted are constant, it's unnecessary to calculate them again and again.
   // So we could immediately invoke this function to initialize variables
   this.sumArea = (function(self) {
     var tempArea = 0;
@@ -2463,7 +2463,7 @@ function Results(board) {
     self.totalStreamCells = tempStreamCells;
     self.totalStrategicWetlandCells = tempStrategicWetlandCells;
     self.subwatershedArea = tempSubwatershedArea;
-    console.log("self", self);
+    // console.log("self", self);
     // console.log("this.totalArea",self.totalArea);
     // console.log("this.totalStreamCells",self.totalStreamCells);
     // console.log("this.totalStrategicWetlandCells",self.totalStrategicWetlandCells);

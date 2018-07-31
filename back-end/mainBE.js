@@ -11,7 +11,7 @@ var hasPrecipConclict = false; // indicates whether there's a precipitation leve
 // BTW, board1 is not a global variable, not a parameter either, so what're the purpose of this function and the next one?
 //calculate() function brings the results up to date
 //  this is currently set to calculate up to year 3 for testing purposes
-function calculate1212() {
+function calculate() {
   board1.calculatedToYear = 3;
   // update all tile level calculations
   board1.updateBoard();

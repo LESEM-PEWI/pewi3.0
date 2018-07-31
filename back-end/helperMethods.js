@@ -76,7 +76,7 @@ function initDataIsCorrupt() {
     return 1;
   }
   // Each cell is an array, check the length of each cell
-  for (var i = 0; i < initData.length; i++) {
+  // for (var i = 0; i < initData.length; i++) {
     /**
     if (initData[i].length !=32 && initData[i].length !=33 ) {
     console.log("something wrong inside at row " + i + "in initData");
@@ -92,7 +92,7 @@ function initDataIsCorrupt() {
   //   //XXX can further check each value one by one
   //
   // } // end for
-} // end for
+// } // end for
 // console.log("initData passed checking!");
 // not corrupt
 return 0;

@@ -1100,7 +1100,6 @@ function calculateResults() {
   //contaminatedRiver(Totals);
 } //end calculateResults
 
-var oldTotal;
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(tileId) {
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
@@ -1134,7 +1133,6 @@ function changeLandTypeTile(tileId) {
 
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
             calculateResults();
-            oldTotal = Totals;
             refreshProgressBar(currentYear);
           }
         }
@@ -1821,11 +1819,9 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
   mapIsHighlighted = true;
 
   //update results
-  //I think there's no need to redefine Totals and update it.
-  Totals = new Results(boardData[currentBoard]);
-  console.log("oldTotal", oldTotal);
-  console.log("Totals", Totals);
-  Totals.update();
+  //I think there's no need to redefine Totals and update it. Since there's nothing changed in boardData
+  // Totals = new Results(boardData[currentBoard]);
+  // Totals.update();
 
   //add highlighted textures to the map
   //for each tile in the board
@@ -5252,7 +5248,7 @@ function toggleVisibility() {
 
 
   //toggle Precip visibility
-  for (var y = 0; y <= boardData[currentBoard].calculatedToYear; y++) {
+  for (var y = 0; y <= 3; y++) {
     document.getElementById("year" + y + "PrecipContainer").style.display = "block";
 
     var elementIdString = "year" + y + "Precip";
