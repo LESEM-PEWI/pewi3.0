@@ -2291,12 +2291,27 @@ function Results(board) {
   this.totalStreamCells = 0;
   this.totalStrategicWetlandCells = 0;
 
-  this.isResultCalculated = false;
+  this.tileCarbonSequestration = Array(4);
+  for(var i = 1; i < 4; i++){
+    this.tileCarbonSequestration[i] = [];
+  }
+  this.sumCarbonSequestration = [0, 0, 0, 0];
+
+  this.tileGrossErosion = Array(4);
+  for(var i = 1; i < 4; i++){
+    this.tileGrossErosion[i] = [];
+  }
 
   //Function to sum the values of calculatedCarbonSequestration for each tile
-  this.sumCarbon = function(tileID, currYear) {
+  this.sumCarbon = function(tileId, year) {
+    // First time loading the board, we need to calculate the results in map level
+    if(typeof tileId == 'undefined') {
 
-    if(this.isResultCalculated == false) {
+      this.tileCarbonSequestration = Array(4);
+      for(var i = 1; i < 4; i++){
+        this.tileCarbonSequestration[i] = [];
+      }
+      this.sumCarbonSequestration = [0, 0, 0, 0];
       var tempCarbonSum = [0, 0, 0, 0];
 
       for (var y = 1; y <= board.calculatedToYear; y++) {
@@ -2304,32 +2319,50 @@ function Results(board) {
         //For each tile, add the carbon sequestration value to the results array in corresponding year y
         for (var i = 0; i < board.map.length; i++) {
           tempCarbonSum[y] += board.map[i].results[y].calculatedCarbonSequestration;
+          this.sumCarbonSequestration[y] += board.map[i].results[y].calculatedCarbonSequestration;
+          this.tileCarbonSequestration[y][i] = board.map[i].results[y].calculatedCarbonSequestration;
         }
 
         //PEWI calculations are reported in megagrams, the previous calculation in kilograms therefore divide by 1000
         this.carbonSequestration[y] = tempCarbonSum[y] / 1000;
+
+        // this.carbonSequestration[y] = this.carbonSequestration[y] * (1 / 0.90718474);
       } //end for
     }
+    // only one tile is changed, we need to calculate the results in tile level
     else {
+      var subCarbonSum = this.sumCarbonSequestration[year] - this.tileCarbonSequestration[year][tileId];
 
+      this.tileCarbonSequestration[year][tileId] = board.map[tileId].results[year].calculatedCarbonSequestration;
+      this.sumCarbonSequestration[year] = subCarbonSum + this.tileCarbonSequestration[year][tileId];
+      this.carbonSequestration[year] = this.sumCarbonSequestration[year] / 1000;
+
+      // this.carbonSequestration[year] = this.carbonSequestration[year] * (1 / 0.90718474);
     }
+
 
   }; //end this.sumCarbon
 
   //Function to sum the values of calculatedGrossErosion for each tile
-  this.sumGrossErosion = function() {
+  this.sumGrossErosion = function(tileId, year) {
 
-    var tempErosionSum = [0, 0, 0, 0];
+    if(typeof tileId == 'undefined') {
+      this.grossErosion = [0, 0, 0, 0];
+      for (var y = 1; y <= board.calculatedToYear; y++) {
 
-    for (var y = 1; y <= board.calculatedToYear; y++) {
+        //For each tile, add the gross erosion rate value * tile area to the results array in corresponding year y
+        for (var i = 0; i < board.map.length; i++) {
+          this.grossErosion[y] += board.map[i].results[y].calculatedGrossErosionRate * board.map[i].area;
+          this.tileGrossErosion[y][i] = board.map[i].results[y].calculatedGrossErosionRate * board.map[i].area;
+        } //end for each tile
+      } //end for all year
+    }
+    else {
+      var subErossionSum = this.grossErosion[year] - this.tileGrossErosion[year][tileId];
+      this.tileGrossErosion[year][tileId] = board.map[tileId].results[y].calculatedGrossErosionRate * board.map[tileId].area;
+      this.grossErosion[year] = subErossionSum + this.tileGrossErosion[year][tileId];
+    }
 
-      //For each tile, add the gross erosion rate value * tile area to the results array in corresponding year y
-      for (var i = 0; i < board.map.length; i++) {
-        tempErosionSum[y] += (board.map[i].results[y].calculatedGrossErosionRate * board.map[i].area);
-      } //end for each tile
-
-      this.grossErosion[y] = tempErosionSum[y];
-    } //end for all year
   }; //end this.sumGrossErosion
 
   //Function to sum the values of phosphorusDelivered for each tile
@@ -3023,12 +3056,14 @@ function Results(board) {
   }
 
 
-  this.updateScores = function() {
+  this.updateScores = function(y) {
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
       this.gameWildlifePointsScore[y] = this.gameWildlifePoints[y] * 10;
       this.biodiversityPointsScore[y] = this.biodiversityPoints[y] * 10;
       this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
+
+
       // console.log("this.carbonSequestration[y]", this.carbonSequestration[y]);
       // console.log("board.minimums.carbonMin = ",board.minimums.carbonMin);
       // console.log("board.maximums.carbonMax = ",board.maximums.carbonMax);
@@ -3071,6 +3106,8 @@ function Results(board) {
 
     }
 
+    //Correction for Carbon Sequestrations
+    // this.carbonSequestration[currentYear] = this.carbonSequestration[y] * (1 / 0.90718474);
 
   }
 
@@ -3080,12 +3117,12 @@ function Results(board) {
   //updates all the necessary values by going through updated tiles
   //note that some calculations depend on results of other calculations so be careful about reorganizing
 
-  this.update = function() {
+  this.update = function(tileId, year) {
 
     // this.sumArea(); This function only need to called once, since totalArea, totalStreamCells, totalStrategicWetlandCells, subwatershedArea are constant, we don't have to call it every time when update the board
 
     //update this as functions are added
-    this.sumCarbon();
+    this.sumCarbon(tileId, year);
     this.sumGrossErosion();
     this.sumPhosphorus();
     this.sumSedimentDeliveryToStream();

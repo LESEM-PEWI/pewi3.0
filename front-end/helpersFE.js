@@ -1088,14 +1088,14 @@ function calculateCutoffs() {
 
 //calculateResults triggers the results calculations by updating Totals
 // deprecated?
-function calculateResults() {
+function calculateResults(tileId, year) {
   //Totals = new Results(boardData[currentBoard]);
-  Totals.update();
+  Totals.update(tileId, year);
 
   //Correction for Carbon Sequestrations
-  for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
-    Totals.carbonSequestration[y] = Totals.carbonSequestration[y] * (1 / 0.90718474);
-  }
+  // for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
+  // Totals.carbonSequestration[year] = Totals.carbonSequestration[year] * (1 / 0.90718474);
+  // }
 
   //contaminatedRiver(Totals);
 } //end calculateResults
@@ -1130,9 +1130,8 @@ function changeLandTypeTile(tileId) {
             // update boardData figures
             boardData[currentBoard].map[tileId].update(currentYear);
 
-
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
-            calculateResults();
+            calculateResults(tileId, currentYear);
             refreshProgressBar(currentYear);
           }
         }
