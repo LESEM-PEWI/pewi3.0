@@ -2305,7 +2305,7 @@ function Results(board) {
   //Function to sum the values of calculatedCarbonSequestration for each tile
   this.sumCarbon = function(tileId, year) {
     // First time loading the board, we need to calculate the results in map level
-    if(typeof tileId == 'undefined') {
+    if(typeof tileId == 'undefined' && typeof year == 'undefined') {
 
       this.tileCarbonSequestration = Array(4);
       for(var i = 1; i < 4; i++){
@@ -2313,7 +2313,6 @@ function Results(board) {
       }
       this.sumCarbonSequestration = [0, 0, 0, 0];
       var tempCarbonSum = [0, 0, 0, 0];
-
       for (var y = 1; y <= board.calculatedToYear; y++) {
 
         //For each tile, add the carbon sequestration value to the results array in corresponding year y
@@ -3056,55 +3055,69 @@ function Results(board) {
   }
 
 
-  this.updateScores = function(y) {
+  this.updateScores = function(year) {
 
-    for (var y = 1; y <= board.calculatedToYear; y++) {
-      this.gameWildlifePointsScore[y] = this.gameWildlifePoints[y] * 10;
-      this.biodiversityPointsScore[y] = this.biodiversityPoints[y] * 10;
-      this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
-
-
-      // console.log("this.carbonSequestration[y]", this.carbonSequestration[y]);
-      // console.log("board.minimums.carbonMin = ",board.minimums.carbonMin);
-      // console.log("board.maximums.carbonMax = ",board.maximums.carbonMax);
-      // console.log("board.maximums.carbonMax - board.minimums.carbonMin = ", board.maximums.carbonMax - board.minimums.carbonMin);
-      // console.log("this.carbonSequestrationScore[y] / 100 = ", this.carbonSequestrationScore[y] / 100);
-      // console.log("this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin) = ", this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin));
-      // console.log("rawValue = ", this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin) + board.minimums.carbonMin);
-      this.grossErosionScore[y] = 100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
-
-      this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin));
-      this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin));
-      this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin));
-
-      this.cornGrainYieldScore[y] = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax;
-      this.soybeanYieldScore[y] = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax;
-      this.alfalfaHayYieldScore[y] = 100 * this.yieldResults[y].alfalfaHayYield / board.maximums.alfalfaMax;
-      this.grassHayYieldScore[y] = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax;
-      this.woodYieldScore[y] = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax;
-      this.cattleYieldScore[y] = 100 * this.yieldResults[y].cattleYield / board.maximums.cattleMax;
-      this.switchgrassYieldScore[y] = 100 * this.yieldResults[y].switchgrassYield / board.maximums.switchgrassMax;
-      this.shortRotationWoodyBiomassYieldScore[y] = 100 * this.yieldResults[y].shortRotationWoodyBiomassYield / board.maximums.shortRotationWoodyBiomassMax;
-      this.mixedFruitsAndVegetablesYieldScore[y] = 100 * this.yieldResults[y].mixedFruitsAndVegetablesYield / board.maximums.mixedFruitsAndVegetablesMax;
-
-      this.conventionalCornLandUseScore[y] = 100 * this.landUseResults[y].conventionalCornLandUse / this.totalArea;
-      this.conservationCornLandUseScore[y] = 100 * this.landUseResults[y].conservationCornLandUse / this.totalArea;
-      this.conventionalSoybeanLandUseScore[y] = 100 * this.landUseResults[y].conventionalSoybeanLandUse / this.totalArea;
-      this.conservationSoybeanLandUseScore[y] = 100 * this.landUseResults[y].conservationSoybeanLandUse / this.totalArea;
-      this.mixedFruitsAndVegetablesLandUseScore[y] = 100 * this.landUseResults[y].mixedFruitsVegetablesLandUse / this.totalArea;
-      this.permanentPastureLandUseScore[y] = 100 * this.landUseResults[y].permanentPastureLandUse / this.totalArea;
-      this.rotationalGrazingLandUseScore[y] = 100 * this.landUseResults[y].rotationalGrazingLandUse / this.totalArea;
-      this.grassHayLandUseScore[y] = 100 * this.landUseResults[y].grassHayLandUse / this.totalArea;
-      this.switchgrassLandUseScore[y] = 100 * this.landUseResults[y].switchgrassLandUse / this.totalArea;
-      this.prairieLandUseScore[y] = 100 * this.landUseResults[y].prairieLandUse / this.totalArea;
-      this.wetlandLandUseScore[y] = 100 * this.landUseResults[y].wetlandLandUse / this.totalArea;
-      this.alfalfaLandUseScore[y] = 100 * this.landUseResults[y].alfalfaLandUse / this.totalARea;
-      this.conventionalForestLandUseScore[y] = 100 * this.landUseResults[y].conventionalForestLandUse / this.totalArea;
-      this.conservationForestLandUseScore[y] = 100 * this.landUseResults[y].conservationForestLandUse / this.totalArea;
-      this.shortRotationWoodyBioenergyLandUseScore[y] = 100 * this.landUseResults[y].shortRotationWoodyBioenergyLandUse / this.totalArea;
+    // if(typeof year == 'undefined'){
+      // var temp = false;
+      for (var y = 1; y <= board.calculatedToYear; y++) {
+        this.gameWildlifePointsScore[y] = this.gameWildlifePoints[y] * 10;
+        this.biodiversityPointsScore[y] = this.biodiversityPoints[y] * 10;
+        if(typeof year == 'undefined') {
+          this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
+        }
+        else {
+          if(year === y) {
+            this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
+          }
+        }
 
 
-    }
+
+        // console.log("this.carbonSequestration[y]", this.carbonSequestration[y]);
+        // console.log("board.minimums.carbonMin = ",board.minimums.carbonMin);
+        // console.log("board.maximums.carbonMax = ",board.maximums.carbonMax);
+        // console.log("board.maximums.carbonMax - board.minimums.carbonMin = ", board.maximums.carbonMax - board.minimums.carbonMin);
+        // console.log("this.carbonSequestrationScore[y] / 100 = ", this.carbonSequestrationScore[y] / 100);
+        // console.log("this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin) = ", this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin));
+        // console.log("rawValue = ", this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin) + board.minimums.carbonMin);
+        this.grossErosionScore[y] = 100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
+
+        this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin));
+        this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin));
+        this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin));
+
+        this.cornGrainYieldScore[y] = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax;
+        this.soybeanYieldScore[y] = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax;
+        this.alfalfaHayYieldScore[y] = 100 * this.yieldResults[y].alfalfaHayYield / board.maximums.alfalfaMax;
+        this.grassHayYieldScore[y] = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax;
+        this.woodYieldScore[y] = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax;
+        this.cattleYieldScore[y] = 100 * this.yieldResults[y].cattleYield / board.maximums.cattleMax;
+        this.switchgrassYieldScore[y] = 100 * this.yieldResults[y].switchgrassYield / board.maximums.switchgrassMax;
+        this.shortRotationWoodyBiomassYieldScore[y] = 100 * this.yieldResults[y].shortRotationWoodyBiomassYield / board.maximums.shortRotationWoodyBiomassMax;
+        this.mixedFruitsAndVegetablesYieldScore[y] = 100 * this.yieldResults[y].mixedFruitsAndVegetablesYield / board.maximums.mixedFruitsAndVegetablesMax;
+
+        this.conventionalCornLandUseScore[y] = 100 * this.landUseResults[y].conventionalCornLandUse / this.totalArea;
+        this.conservationCornLandUseScore[y] = 100 * this.landUseResults[y].conservationCornLandUse / this.totalArea;
+        this.conventionalSoybeanLandUseScore[y] = 100 * this.landUseResults[y].conventionalSoybeanLandUse / this.totalArea;
+        this.conservationSoybeanLandUseScore[y] = 100 * this.landUseResults[y].conservationSoybeanLandUse / this.totalArea;
+        this.mixedFruitsAndVegetablesLandUseScore[y] = 100 * this.landUseResults[y].mixedFruitsVegetablesLandUse / this.totalArea;
+        this.permanentPastureLandUseScore[y] = 100 * this.landUseResults[y].permanentPastureLandUse / this.totalArea;
+        this.rotationalGrazingLandUseScore[y] = 100 * this.landUseResults[y].rotationalGrazingLandUse / this.totalArea;
+        this.grassHayLandUseScore[y] = 100 * this.landUseResults[y].grassHayLandUse / this.totalArea;
+        this.switchgrassLandUseScore[y] = 100 * this.landUseResults[y].switchgrassLandUse / this.totalArea;
+        this.prairieLandUseScore[y] = 100 * this.landUseResults[y].prairieLandUse / this.totalArea;
+        this.wetlandLandUseScore[y] = 100 * this.landUseResults[y].wetlandLandUse / this.totalArea;
+        this.alfalfaLandUseScore[y] = 100 * this.landUseResults[y].alfalfaLandUse / this.totalARea;
+        this.conventionalForestLandUseScore[y] = 100 * this.landUseResults[y].conventionalForestLandUse / this.totalArea;
+        this.conservationForestLandUseScore[y] = 100 * this.landUseResults[y].conservationForestLandUse / this.totalArea;
+        this.shortRotationWoodyBioenergyLandUseScore[y] = 100 * this.landUseResults[y].shortRotationWoodyBioenergyLandUse / this.totalArea;
+
+
+      }
+    // }
+    // else{
+
+    // }
 
     //Correction for Carbon Sequestrations
     // this.carbonSequestration[currentYear] = this.carbonSequestration[y] * (1 / 0.90718474);
@@ -3134,7 +3147,8 @@ function Results(board) {
     this.calculateGameWildLifePoints();
     this.calculateBiodiversityPoints(); //Game Wildlife must come first as it alone calls sumFlagPercentages()
 
-    this.updateScores();
+    this.updateScores(year);
+    // console.log(this.carbonSequestration[1]);
 
   }; //end this.update()
 

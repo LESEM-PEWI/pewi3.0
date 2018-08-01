@@ -1093,9 +1093,14 @@ function calculateResults(tileId, year) {
   Totals.update(tileId, year);
 
   //Correction for Carbon Sequestrations
-  // for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
-  // Totals.carbonSequestration[year] = Totals.carbonSequestration[year] * (1 / 0.90718474);
-  // }
+  if(typeof year == 'undefined') {
+    for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
+      Totals.carbonSequestration[y] = Totals.carbonSequestration[y] * (1 / 0.90718474);
+    }
+  }
+  else {
+    Totals.carbonSequestration[year] = Totals.carbonSequestration[year] * (1 / 0.90718474);
+  }
 
   //contaminatedRiver(Totals);
 } //end calculateResults

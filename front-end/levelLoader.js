@@ -167,7 +167,7 @@ function loadLevel(level) {
       $(document).ready(function() {
         refreshProgressBar(1);
       });
-      
+
       break;
   }
 
