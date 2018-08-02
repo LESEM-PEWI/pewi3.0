@@ -18,6 +18,56 @@
   box-sizing: border-box;
 }
 
+/* Styling for popup tab titles*/
+#toolsTabTitle, #terrainTabTitle, #precipTabTitle, #yearTabTitle, #levelsTabTitle, #featuresTabTitle, #yieldTabTitle {
+    top: 0vw;
+    left: 3vw;
+    width: 300%;
+    height: inherit;
+    /* float: right; */
+    color: #fff;
+    font-family: 'Amatic SC', cursive;
+    font-family: var(--button-font-family);
+    font-size: 1.6vw;
+    font-weight: bold;
+    text-align: center;
+    padding: 12% 0;
+    position: absolute;
+    overflow: hidden;
+    background-image: url('./imgs/consoleTexture.png');
+    background-repeat: repeat;
+    box-shadow: 0px 0px 5px 0px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+    border-radius: 0px 6px 6px 0px;
+    animation: 2s slide-right;
+    transition-duration:0.4s;
+    transition-duration: var(--transition-duration);
+    /* Safari */
+    -webkit-transition-duration: var(--transition-duration);
+    /* z-index specififes the stack order, in other words, it makes itself appears on top of others*/
+    z-index: 1;
+
+  }
+/* Text slides out to right effect*/
+  @keyframes slide-right {
+    from {
+      width: 0%;
+    }
+
+    to {
+      width: 300%;
+    }
+  }
+
+/* Safari 4.0 - 8.0 */
+  @-webkit-keyframes slide-right {
+    from {
+      width: 0%;
+    }
+
+    to {
+      width: 300%;
+    }
+  }
 
 /**Styling for index Menu**/
 #indexmenu, #combineButton {
@@ -162,6 +212,7 @@
   left: 5vw;
   top: 0vw;
 }
+
 /* toolsButton to slide the left console */
 #toolsButton {
   /*border-bottom-right-radius: 5px;*/
@@ -292,7 +343,7 @@
 /* The content div of each tab */
 .consoleTab {
   height: 100%;
-  padding: 3%;
+  /* padding: 3%; */
   width: 100%;
 }
 
@@ -357,6 +408,7 @@
 }
 
 
+
 /*terrain selector*/
 .landSelectorIcon {
   margin: 0.5vw;
@@ -373,7 +425,7 @@
 
 /* levels map selector */
 .levelsSelectorIcon {
-  margin: 1vw 3vw 1.2vw;
+  margin: 1vw 1vw 1.2vw;
 }
 
 
@@ -443,6 +495,7 @@
 
 /*precip selector*/
 .styled-select {
+  transition: background-color 0.2s ease;
   background: #3b3b3b;
   border-radius: 6px;
   -webkit-border-radius: 6px;
@@ -454,6 +507,12 @@
   text-align: center;
 }
 
+.styled-select:hover
+{
+    background-image:none !important;
+    background-color:#656224 !important;
+}
+
 #year0PrecipContainer {
 }
 
@@ -462,6 +521,835 @@ select {
   font-size: var(--font-size);
   margin: 5%;
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    bottom: 0px;
+    left: 70px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.tooltip .tooltiptext::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltiptext:hover {
+    display: none;
+}
+
+
+.tooltipPrecip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltipPrecip .tooltiptextPrecip {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    bottom: 2px;
+    left: 130px;
+    opacity: 0;
+
+}
+
+.tooltipPrecip .tooltiptextPrecip::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+.tooltipPrecip:hover .tooltiptextPrecip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.styled-select:hover .tooltiptextPrecip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+.tooltiptextPrecip:hover {
+    display: none;
+}
+
+
+
+
+/**The next 300 lines are repitions of the same css for each of the Physical Features buttons. I couldn't get it to work when they all share a class.**/
+
+/**flood container **/
+.tooltipPhysicalFeaturesFlood {
+    position: relative;
+    display: inline-block;
+}
+
+/**Wetlands container**/
+.tooltipPhysicalFeaturesWetlands{
+  position: relative;
+  display: inline-block;
+}
+
+/**Subwatershed container**/
+.tooltipPhysicalFeaturesSubwatershed{
+  position: relative;
+  display: inline-block;
+}
+
+/**Drainage container**/
+.tooltipPhysicalFeaturesDrainage{
+  position: relative;
+  display: inline-block;
+}
+
+/**Soil container**/
+.tooltipPhysicalFeaturesSoil{
+  position: relative;
+  display: inline-block;
+}
+
+/**Topography container**/
+.tooltipPhysicalFeaturesTopography{
+  position: relative;
+  display: inline-block;
+}
+
+/**Flood specs**/
+.tooltipPhysicalFeaturesFlood .tooltiptextPhysicalFeatures {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 110px;
+    bottom: -2px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Wetlands specs**/
+.tooltipPhysicalFeaturesWetlands .tooltiptextPhysicalFeatures {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 110px;
+    bottom: -2px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Subwatershed specs**/
+.tooltipPhysicalFeaturesSubwatershed .tooltiptextPhysicalFeatures {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 110px;
+    bottom: -2px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Drainage specs**/
+.tooltipPhysicalFeaturesDrainage .tooltiptextPhysicalFeatures {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 110px;
+    bottom: -2px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Soil specs**/
+.tooltipPhysicalFeaturesSoil .tooltiptextPhysicalFeatures {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 110px;
+    bottom: -2px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Topography specs**/
+.tooltipPhysicalFeaturesTopography .tooltiptextPhysicalFeatures {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 110px;
+    bottom: -2px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**More flood specs for tooltip**/
+.tooltipPhysicalFeaturesFlood .tooltiptextPhysicalFeatures::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More wetlands specs for tooltip**/
+.tooltipPhysicalFeaturesWetlands .tooltiptextPhysicalFeatures::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More subwatershed specs for tooltip**/
+.tooltipPhysicalFeaturesSubwatershed .tooltiptextPhysicalFeatures::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More drainage specs for tooltip**/
+.tooltipPhysicalFeaturesDrainage .tooltiptextPhysicalFeatures::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More soil specs for tooltip**/
+.tooltipPhysicalFeaturesSoil .tooltiptextPhysicalFeatures::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More topography specs for tooltip**/
+.tooltipPhysicalFeaturesTopography .tooltiptextPhysicalFeatures::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**Hover for flood**/
+.tooltipPhysicalFeaturesFlood:hover .tooltiptextPhysicalFeatures {
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for wetlands**/
+.tooltipPhysicalFeaturesWetlands:hover .tooltiptextPhysicalFeatures {
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for subwatershed**/
+.tooltipPhysicalFeaturesSubwatershed:hover .tooltiptextPhysicalFeatures {
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for drainage**/
+.tooltipPhysicalFeaturesDrainage:hover .tooltiptextPhysicalFeatures {
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for soil**/
+.tooltipPhysicalFeaturesSoil:hover .tooltiptextPhysicalFeatures {
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for topography**/
+.tooltipPhysicalFeaturesTopography:hover .tooltiptextPhysicalFeatures {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltiptextPhysicalFeatures:hover {
+    display: none;
+}
+
+
+
+
+
+/**Container for Nitrate**/
+.tooltipResultsNitrate {
+    position: relative;
+    display: inline-block;
+}
+
+/**Container for Erosion**/
+.tooltipResultsErosion {
+    position: relative;
+    display: inline-block;
+}
+
+/**Container for Phosphorus**/
+.tooltipResultsPhosphorus{
+    position: relative;
+    display: inline-block;
+}
+
+/**Container for Sediment**/
+.tooltipResultsSediment{
+    position: relative;
+    display: inline-block;
+}
+
+/**Container for Carbon**/
+.tooltipResultsCarbon{
+    position: relative;
+    display: inline-block;
+}
+
+/**Container for Game Wildlife**/
+.tooltipResultsGameWildlife{
+    position: relative;
+    display: inline-block;
+}
+
+/**Container for Game Wildlife**/
+.tooltipResultsBiodiversity{
+    position: relative;
+    display: inline-block;
+}
+
+/**Container for Nitrate Tile**/
+.tooltipResultsNitrateTile{
+    position: relative;
+    display: inline-block;
+}
+
+/**Nitrate specs**/
+.tooltipResultsNitrate .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 150px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 68px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Erosion Specs**/
+.tooltipResultsErosion .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 153px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 68px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Phosphorus specs**/
+.tooltipResultsPhosphorus .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 68px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Sediment specs**/
+.tooltipResultsSediment .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 68px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Carbon specs**/
+.tooltipResultsCarbon .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 68px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Game Wildlife specs**/
+.tooltipResultsGameWildlife .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 68px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Biodiversity specs**/
+.tooltipResultsBiodiversity .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 68px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**Nitrate Tile specs**/
+.tooltipResultsNitrateTile .tooltiptextResults {
+    visibility: hidden;
+    font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
+    width: 130px;
+    height: 65px;
+    background-color:rgba(58, 58, 58, .9);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 20px;
+    /* padding: 6px 0; */
+    position: absolute;
+    z-index: 1;
+    left: 68px;
+    bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/**More Nitrate specs for tooltip**/
+.tooltipResultsNitrate .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More Erosion specs for tooltip**/
+.tooltipResultsErosion .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More Phosphorus specs for tooltip**/
+.tooltipResultsPhosphorus .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More Sediment specs for tooltip**/
+.tooltipResultsSediment .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More Carbon specs for tooltip**/
+.tooltipResultsCarbon .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More Game Wildlife specs for tooltip**/
+.tooltipResultsGameWildlife .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More Biodiversity specs for tooltip**/
+.tooltipResultsBiodiversity .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**More Nitrate Tile specs for tooltip**/
+.tooltipResultsNitrateTile .tooltiptextResults::after {
+  right: 100%;
+	top: 50%;
+  border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: #88b7d5;
+	border-width: 10px;
+	margin-top: -10px;
+}
+
+/**Hover for Nitrate**/
+.tooltipResultsNitrate:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for Erosion**/
+.tooltipResultsErosion:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for Phosphorus**/
+.tooltipResultsPhosphorus:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for Sediment**/
+.tooltipResultsSediment:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for Carbon**/
+.tooltipResultsCarbon:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for Game Wildlife**/
+.tooltipResultsGameWildlife:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for Biodiversity**/
+.tooltipResultsBiodiversity:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+/**Hover for Nitrate Tile**/
+.tooltipResultsNitrateTile:hover .tooltiptextResults{
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltiptextResults:hover {
+    display: none;
+}
+
+
+
+
 
 .year-precip-select {
   height: 1.8vw;
@@ -476,7 +1364,7 @@ option {
 
 
 /** year buttons div**/
-.yearButton {
+ .yearButton {
   height: 2.5vw;
   height: var(--selector-icon-length);
   margin-left: 3vw;
@@ -489,6 +1377,42 @@ option {
   display: none;
 }
 
+#year1Button
+{
+  position: absolute;
+  top: 15%;
+  right: 58%;
+}
+
+#year2Button
+{
+  position: absolute;
+  top: 11.25%;
+  right: 20%;
+}
+
+#year3Button
+{
+  position: absolute;
+  top: 25%;
+  right: 58%;
+}
+
+/** styling for year add and delete button in the year tab of sandbox mode **/
+#yearAddButton
+{
+  position: absolute;
+  top:50%;
+  right:58%;
+}
+
+#yearDeleteButton
+{
+  position: absolute;
+  top:50%;
+  right:20%;
+}
+
 /** year buttons**/
 .yearSelected {
   box-shadow: 0px 0px 16px 5px rgba(14, 71, 204, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
@@ -498,10 +1422,38 @@ option {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
-.DetailsList-title {
+/* drop down menus of the year tab */
+
+.year-styled-select {
+  background: #3498DB;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.8), 0 17px 50px 0 rgba(0, 0, 0, 0.6);
   color: #fff;
-  font-size: 0.9vw;
   margin: 0.5vw;
+  padding: 0.2vw;
+  text-align: center;
+}
+
+#yearCopyButton
+{
+  position: absolute;
+  top: 65%;
+  left: 11%;
+}
+
+#yearPasteButton
+{
+  position: absolute;
+  top: 80%;
+  left: 11%;
+}
+
+
+.yearCopyPasteSelect {
+  height: 1.8vw;
+  width: 5vw;
 }
 
 /* detail lists */
@@ -519,18 +1471,27 @@ option {
   -webkit-transition-duration: var(--transition-duration);
   /* Safari */
   transition-duration: var(--transition-duration);
+
 }
 
 .DetailsList {
   left: 14vw;
 }
 
+
+.DetailsList-title {
+  color: #fff;
+  font-size: 0.9vw;
+  margin: 0.5vw;
+}
+
+
 .DetailsListRolled {
   left: -1000px;
 }
 
 .levelDetailsList {
-  width: 8.5vw;
+  width: 12vw;
 }
 
 .physicalDetailsList {
@@ -632,6 +1593,13 @@ table {
   .tabButtons, #toolsButton, #undoButton {
     left: 57px;
   }
+
+ /* #toolsButton:hover #toolsTitle {
+    visibility: visible;
+    display: block;
+ } */
+
+
   #undoButton {
     height: 18px;
     top: 25px;
@@ -695,7 +1663,7 @@ table {
     left: 78px;
   }
   .levelDetailsList {
-    width: 51px;
+    width: 100px;
   }
   .physicalDetailsList {
     width: 89px;

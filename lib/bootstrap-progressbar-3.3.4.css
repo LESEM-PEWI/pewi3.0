@@ -1,0 +1,221 @@
+/*! bootstrap-progressbar v0.9.0 | Copyright (c) 2012-2015 Stephan Groß | MIT license | http://www.minddust.com */
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+.progress {
+  overflow: hidden;
+  height: 1.3vw;
+  width: 13vw;
+  /* margin-bottom: 10px; */
+  border-radius: 12px;
+  border: 1px solid white;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 5px 1px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
+
+  /* box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); */
+}
+.progress-bar {
+  float: left;
+  width: 0%;
+  height: 100%;
+  text-align: center;
+  background-color: #008080;
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+
+  -webkit-transition: width 1s ease;
+  -o-transition: width 1s ease;
+  transition: width 1s ease;
+}
+.progress{
+  /* position: relative; */
+  background-image: url('.././imgs/consoleTexture.png');
+  display: inline-block;
+  float: right;
+  margin-top: 7px;
+}
+
+.progress img {
+  /* display: none; */
+  width: 0.2vw;
+  height: 2vw;
+  position: absolute;
+}
+
+.progress .progressbar-back-text {
+  font-size: 1vw;
+  color: white;
+  line-height: 1.4vw;
+}
+
+.progress .progressbar-front-text {
+  font-size: 1vw;
+  color: white;
+  line-height: 1.4vw;
+}
+
+.progressBarTitle {
+  display: inline-block;
+  font-family: 'Amatic SC';
+  font-size: 1.8vw;
+  color: white;
+  align-self: right;
+}
+
+#gameWildlifeProgressBar, #biodiversityProgressBar, #carbonProgressBar,#erosionProgressBar,
+#phoshorusProgressBar, #sedimentProgressBar, #nitrateProgressBar,#totalYieldsProgressBar,
+#cornGrainProgressBar, #soybeansProgressBar, #fruitsAndVegetablesProgressBar, #cattleProgressBar,
+#alfalfaHayProgressBar, #grassHayProgressBar, #switchgrassBiomassProgressBar,
+#woodProgressBar, #woodyBiomassProgressBar {
+  margin-bottom: -4px;
+}
+
+.progressBarContainer {
+  position: absolute;
+  top: 15vw;
+  right: 5vw;
+}
+
+.progress.active .progress-bar,
+.progress-bar.active {
+  -webkit-animation: progress-bar-stripes 1s linear infinite;
+  -o-animation: progress-bar-stripes 1s linear infinite;
+  animation: progress-bar-stripes 1s linear infinite;
+}
+.progress-bar-gameWildlife {
+  background-color: #5cb85c;
+}
+
+.progress-bar-biodiversity {
+  background-color: #5bc0de;
+}
+
+.progress-bar-carbon {
+  background-color: #f0ad4e;
+}
+
+.progress-bar-erosion {
+  background-color: #d9534f;
+}
+
+.progress-bar-nitrate {
+  background-color: #9ACD32;
+}
+.progress-bar-phoshorus {
+  background-color: #0099DC;
+}
+.progress-bar-sediment {
+  background-color: #A53300;
+}
+.progress-bar-totalYields {
+  background-color: #009633;
+}
+.progress-bar-cornGrain {
+  background-color: #A0522D;
+}
+.progress-bar-soybeans {
+  background-color: #4169E1;
+}
+.progress-bar-fruitsAndVegetables {
+  background-color: #16a085;
+}
+.progress-bar-cattle {
+  background-color: #beef00;
+}
+.progress-bar-alfalfaHay {
+  background-color: #1aafb8;
+}
+.progress-bar-grassHay {
+  background-color: #D2691E;
+}
+.progress-bar-switchgrassBiomass {
+  background-color: #ffde2a;
+}
+.progress-bar-wood {
+  background-color: #228B22;
+}
+.progress-bar-woodyBiomass {
+  background-color: #FF8C00;
+}
+.progress {
+  position: relative;
+}
+.progress .progress-bar {
+  position: absolute;
+  overflow: hidden;
+  /* line-height: 20px; */
+}
+.progress .progressbar-back-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* font-size: 12px; */
+  /* line-height: 20px; */
+  text-align: center;
+}
+.progress .progressbar-front-text {
+  display: block;
+  width: 100%;
+  /* font-size: 12px; */
+  /* line-height: 20px; */
+  text-align: center;
+}
+.progress.right .progress-bar {
+  right: 0;
+}
+.progress.right .progressbar-front-text {
+  position: absolute;
+  right: 0;
+}
+
+.gameWildlifeScoreDetails, .carbonScoreDetails, .erosionScoreDetails,.nitrateScoreDetails,
+.phoshorusScoreDetails, .sedimentScoreDetails,.totalScoreDetails, .biodiversityScoreDetails,
+.cornGrainScoreDetails,.soybeansScoreDetails, .fruitsAndVegetablesScoreDetails, .cattleScoreDetails,
+.alfalfaHayScoreDetails, .grassHayScoreDetails, .switchgrassBiomassScoreDetails, .woodScoreDetails,
+.woodyBiomassScoreDetails {
+  background-image: url('.././imgs/consoleTexture.png');
+  position: absolute;
+  left: 1vw;
+  width: 18vw;
+  height: auto;
+  font-size: 1.5vw;
+  color: white;
+  display: none;
+  z-index: 1;
+  text-align: center;
+  border-radius: 10px;
+  border: solid 3px white;
+  box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+  padding: 0.5vw 1vw 1vw 1vw;
+}
+
+
+.min-max-details {
+  background-image: url('.././imgs/consoleTexture.png');
+  position: absolute;
+  left: 2.5vw;
+  width: 13vw;
+  height: auto;
+  font-size: 1.5vw;
+  color: white;
+  display: none;
+  z-index: 1;
+  border: solid 3px white;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 0px 25px 0px rgba(124, 193, 233, 0.8), 0 17px 50px 0 rgba(30, 90, 224, 0.6);
+  padding: 0.5vw 1vw 1vw 1vw;
+}

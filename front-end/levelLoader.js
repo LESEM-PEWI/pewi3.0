@@ -44,6 +44,34 @@ function init() {
 
 } //end init
 
+// get ecosystem scores and load them to the corresponding progress bars based on which year user want to load.
+function refreshProgressBar(yearToLoad) {
+  $('.progress .progress-bar-gameWildlife').attr('data-transitiongoal', Math.round(Totals.gameWildlifePointsScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-biodiversity').attr('data-transitiongoal', Math.round(Totals.biodiversityPointsScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-carbon').attr('data-transitiongoal', Math.round(Totals.carbonSequestrationScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-erosion').attr('data-transitiongoal', Math.round(Totals.grossErosionScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-nitrate').attr('data-transitiongoal', Math.round(Totals.nitrateConcentrationScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-phoshorus').attr('data-transitiongoal', Math.round(Totals.phosphorusLoadScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-sediment').attr('data-transitiongoal', Math.round(Totals.sedimentDeliveryScore[yearToLoad] * 10) / 10);
+  var tempTotal = (Totals.nitrateConcentrationScore[yearToLoad] + Totals.phosphorusLoadScore[yearToLoad] + Totals.sedimentDeliveryScore[yearToLoad] +
+    Totals.carbonSequestrationScore[yearToLoad] + Totals.grossErosionScore[yearToLoad] + Totals.gameWildlifePointsScore[yearToLoad] + Totals.biodiversityPointsScore[yearToLoad]) / 7;
+  $('.progress .progress-bar-totalYields').attr('data-transitiongoal', Math.min(Math.round(tempTotal * 10) / 10, 100));
+
+  $('.progress .progress-bar-cornGrain').attr('data-transitiongoal', Math.round(Totals.cornGrainYieldScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-soybeans').attr('data-transitiongoal', Math.round(Totals.soybeanYieldScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-fruitsAndVegetables').attr('data-transitiongoal', Math.round(Totals.mixedFruitsAndVegetablesYieldScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-cattle').attr('data-transitiongoal', Math.round(Totals.cattleYieldScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-alfalfaHay').attr('data-transitiongoal', Math.round(Totals.alfalfaHayYieldScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-grassHay').attr('data-transitiongoal', Math.round(Totals.grassHayYieldScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-switchgrassBiomass').attr('data-transitiongoal', Math.round(Totals.switchgrassYieldScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-wood').attr('data-transitiongoal', Math.round(Totals.woodYieldScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-woodyBiomass').attr('data-transitiongoal', Math.round(Totals.shortRotationWoodyBiomassYieldScore[yearToLoad] * 10) / 10);
+
+  $('.progress .progress-bar').progressbar(
+    // {display_text: 'center', percent_format: function(p) {return p;}}
+  );
+}
+
 //getFileForExercise can retrieve file name from exercise/level number for the level loader
 function getFileForExercise(exercise) {
 
@@ -81,7 +109,9 @@ function loadLevel(level) {
       levelGlobal = 0;
       multiplayerExit();
       initWorkspace('./data.csv');
-      document.getElementById('parameters').innerHTML = "";
+      // document.getElementById('parameters').innerHTML = "";
+      document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
+                                                        "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
       // console.log("window log:" + window.top.document.getElementById('parameters').innerHTML);
       // console.log("document log:" + document.getElementById('parameters').innerHTML);
       parent.saveAndRandomize();
@@ -99,8 +129,14 @@ function loadLevel(level) {
           togglePopupDisplay();
         }, 5000);
       }
+      calculateResults();
+      // Show the progress bars
+      document.getElementById('progressBarContainer').style.display = 'block';
+      $(document).ready(function() {
+        refreshProgressBar(1);
+      });
       break;
-      //multiplayer assigning mode
+    //multiplayer assigning mode
     case -1:
       multiplayerAssigningModeOn = true;
 
@@ -115,7 +151,23 @@ function loadLevel(level) {
       levelGlobal = level;
       loadLevelDetails("./levels/specs/" + getFileForExercise(level));
       initWorkspace('./data.csv');
+      document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
+                                                        "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
+
+      var yieldProgressbarIds = ["cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+                            "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar"];
+
+      for (var i = 0; i < yieldProgressbarIds.length; i++) {
+        window.frames[6].document.getElementById(yieldProgressbarIds[i]).checked = true;
+      }
       document.getElementById('popup').className = 'popup';
+      calculateResults();
+      // Show the progress bars
+      document.getElementById('progressBarContainer').style.display = 'block';
+      $(document).ready(function() {
+        refreshProgressBar(1);
+      });
+
       break;
   }
 

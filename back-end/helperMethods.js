@@ -76,7 +76,7 @@ function initDataIsCorrupt() {
     return 1;
   }
   // Each cell is an array, check the length of each cell
-  for (var i = 0; i < initData.length; i++) {
+  // for (var i = 0; i < initData.length; i++) {
     /**
     if (initData[i].length !=32 && initData[i].length !=33 ) {
     console.log("something wrong inside at row " + i + "in initData");
@@ -92,7 +92,7 @@ function initDataIsCorrupt() {
   //   //XXX can further check each value one by one
   //
   // } // end for
-} // end for
+// } // end for
 // console.log("initData passed checking!");
 // not corrupt
 return 0;
@@ -125,11 +125,12 @@ function parseInitial(data) {
 
   //get data from invisible div on page
   var strRawContents = data;
+  // console.log('strRawContents', strRawContents);
   //split based on escape chars
   while (strRawContents.indexOf("\r") >= 0)
     strRawContents = strRawContents.replace("\r", "");
   var arrLines = strRawContents.split("\n");
-
+  // console.log('strRawContents', strRawContents);
   //for each line in the file, split line by comma and push to the initData array
   for (var i = 1; i < arrLines.length; i++) {
     var curLine = arrLines[i];
@@ -143,7 +144,7 @@ function parseInitial(data) {
   //   console.log("Inner content is not correct.");
   //   return 0;
   // }
-
+// console.log(initData);
   // // success
   return 1;
 
