@@ -2300,6 +2300,8 @@ function Results(board) {
   this.tilePhosphorusLoad = Array(4);
 
   this.tileSedimentDelivery = Array(4);
+  this.tileYieldResults = Array(4);
+  this.tileLandType = Array(4);
 
   //Function to sum the values of calculatedCarbonSequestration for each tile
   this.sumCarbon = function(tileId, year) {
@@ -2747,118 +2749,237 @@ function Results(board) {
   }; //end calculations of biodiversity points
 
   //Function to sum the values of YieldTile to YieldValueArray
-  this.sumYields = function() {
+  this.sumYields = function(tileId, year) {
 
-    var tempYieldResults = Array(4);
-    tempYieldResults[0] = {
-      cornGrainYield: 0,
-      soybeanYield: 0,
-      alfalfaHayYield: 0,
-      grassHayYield: 0,
-      woodYield: 0,
-      cattleYield: 0,
-      switchgrassYield: 0,
-      shortRotationWoodyBiomassYield: 0,
-      mixedFruitsAndVegetablesYield: 0,
-    };
-    tempYieldResults[1] = {
-      cornGrainYield: 0,
-      soybeanYield: 0,
-      alfalfaHayYield: 0,
-      grassHayYield: 0,
-      woodYield: 0,
-      cattleYield: 0,
-      switchgrassYield: 0,
-      shortRotationWoodyBiomassYield: 0,
-      mixedFruitsAndVegetablesYield: 0,
-      cornGrainYieldScore: 0
-    };
-    tempYieldResults[2] = {
-      cornGrainYield: 0,
-      soybeanYield: 0,
-      alfalfaHayYield: 0,
-      grassHayYield: 0,
-      woodYield: 0,
-      cattleYield: 0,
-      switchgrassYield: 0,
-      shortRotationWoodyBiomassYield: 0,
-      mixedFruitsAndVegetablesYield: 0
-    };
-    tempYieldResults[3] = {
-      cornGrainYield: 0,
-      soybeanYield: 0,
-      alfalfaHayYield: 0,
-      grassHayYield: 0,
-      woodYield: 0,
-      cattleYield: 0,
-      switchgrassYield: 0,
-      shortRotationWoodyBiomassYield: 0,
-      mixedFruitsAndVegetablesYield: 0
-    };
+    if(typeof tileId == 'undefined'){
 
-    for (var y = 1; y <= board.calculatedToYear; y++) {
-
-      //For each tile, add the tile yield Values * tile area to variables corresponding to each yield type
-      for (var i = 0; i < board.map.length; i++) {
-
-        var yieldValueToStore = board.map[i].results[y].calculatedYieldTile * board.map[i].area;
-
-        switch (LandUseType.getType(board.map[i].landType[y])) {
-          case "none":
-            //Do Nothing
-            break;
-          case "conventionalCorn":
-            tempYieldResults[y].cornGrainYield += yieldValueToStore;
-            break;
-          case "conservationCorn":
-            tempYieldResults[y].cornGrainYield += yieldValueToStore;
-            break;
-          case "conventionalSoybean":
-            tempYieldResults[y].soybeanYield += yieldValueToStore;
-            break;
-          case "conservationSoybean":
-            tempYieldResults[y].soybeanYield += yieldValueToStore;
-            break;
-          case "alfalfa":
-            tempYieldResults[y].alfalfaHayYield += yieldValueToStore;
-            break;
-          case "permanentPasture":
-            tempYieldResults[y].cattleYield += yieldValueToStore;
-            break;
-          case "rotationalGrazing":
-            tempYieldResults[y].cattleYield += yieldValueToStore;
-            break;
-          case "grassHay":
-            tempYieldResults[y].grassHayYield += yieldValueToStore;
-            break;
-          case "prairie":
-            //Do nothing - does not report yield
-            break;
-          case "conservationForest":
-            tempYieldResults[y].woodYield += yieldValueToStore;
-            break;
-          case "conventionalForest":
-            tempYieldResults[y].woodYield += yieldValueToStore;
-            break;
-          case "switchgrass":
-            tempYieldResults[y].switchgrassYield += yieldValueToStore;
-            break;
-          case "shortRotationWoodyBioenergy":
-            tempYieldResults[y].shortRotationWoodyBiomassYield += yieldValueToStore;
-            break;
-          case "wetland":
-            //Do nothing - does not report yield
-            break;
-          case "mixedFruitsVegetables":
-            tempYieldResults[y].mixedFruitsAndVegetablesYield += yieldValueToStore;
-            break;
-        }
-
+      this.yieldResults = Array(4);
+      this.yieldResults[0] = {
+        cornGrainYield: 0,
+        soybeanYield: 0,
+        alfalfaHayYield: 0,
+        grassHayYield: 0,
+        woodYield: 0,
+        cattleYield: 0,
+        switchgrassYield: 0,
+        shortRotationWoodyBiomassYield: 0,
+        mixedFruitsAndVegetablesYield: 0,
+      };
+      this.yieldResults[1] = {
+        cornGrainYield: 0,
+        soybeanYield: 0,
+        alfalfaHayYield: 0,
+        grassHayYield: 0,
+        woodYield: 0,
+        cattleYield: 0,
+        switchgrassYield: 0,
+        shortRotationWoodyBiomassYield: 0,
+        mixedFruitsAndVegetablesYield: 0,
+        cornGrainYieldScore: 0
+      };
+      this.yieldResults[2] = {
+        cornGrainYield: 0,
+        soybeanYield: 0,
+        alfalfaHayYield: 0,
+        grassHayYield: 0,
+        woodYield: 0,
+        cattleYield: 0,
+        switchgrassYield: 0,
+        shortRotationWoodyBiomassYield: 0,
+        mixedFruitsAndVegetablesYield: 0
+      };
+      this.yieldResults[3] = {
+        cornGrainYield: 0,
+        soybeanYield: 0,
+        alfalfaHayYield: 0,
+        grassHayYield: 0,
+        woodYield: 0,
+        cattleYield: 0,
+        switchgrassYield: 0,
+        shortRotationWoodyBiomassYield: 0,
+        mixedFruitsAndVegetablesYield: 0
+      };
+      this.tileYieldResults = Array(4);
+      for(var i = 1; i < 4; i++){
+        this.tileYieldResults[i] = [];
+      }
+      this.tileLandType = Array(4);
+      for(var i = 1; i < 4; i++){
+        this.tileLandType[i] = [];
       }
 
+      for (var y = 1; y <= board.calculatedToYear; y++) {
+
+        //For each tile, add the tile yield Values * tile area to variables corresponding to each yield type
+        for (var i = 0; i < board.map.length; i++) {
+
+          var yieldValueToStore = board.map[i].results[y].calculatedYieldTile * board.map[i].area;
+          this.tileYieldResults[y][i] = board.map[i].results[y].calculatedYieldTile * board.map[i].area;
+          this.tileLandType[y][i] = LandUseType.getType(board.map[i].landType[y]);
+
+          switch (LandUseType.getType(board.map[i].landType[y])) {
+            case "none":
+              //Do Nothing
+              break;
+            case "conventionalCorn":
+              this.yieldResults[y].cornGrainYield += yieldValueToStore;
+              break;
+            case "conservationCorn":
+              this.yieldResults[y].cornGrainYield += yieldValueToStore;
+              break;
+            case "conventionalSoybean":
+              this.yieldResults[y].soybeanYield += yieldValueToStore;
+              break;
+            case "conservationSoybean":
+              this.yieldResults[y].soybeanYield += yieldValueToStore;
+              break;
+            case "alfalfa":
+              this.yieldResults[y].alfalfaHayYield += yieldValueToStore;
+              break;
+            case "permanentPasture":
+              this.yieldResults[y].cattleYield += yieldValueToStore;
+              break;
+            case "rotationalGrazing":
+              this.yieldResults[y].cattleYield += yieldValueToStore;
+              break;
+            case "grassHay":
+              this.yieldResults[y].grassHayYield += yieldValueToStore;
+              break;
+            case "prairie":
+              //Do nothing - does not report yield
+              break;
+            case "conservationForest":
+              this.yieldResults[y].woodYield += yieldValueToStore;
+              break;
+            case "conventionalForest":
+              this.yieldResults[y].woodYield += yieldValueToStore;
+              break;
+            case "switchgrass":
+              this.yieldResults[y].switchgrassYield += yieldValueToStore;
+              break;
+            case "shortRotationWoodyBioenergy":
+              this.yieldResults[y].shortRotationWoodyBiomassYield += yieldValueToStore;
+              break;
+            case "wetland":
+              //Do nothing - does not report yield
+              break;
+            case "mixedFruitsVegetables":
+              this.yieldResults[y].mixedFruitsAndVegetablesYield += yieldValueToStore;
+              break;
+          }
+
+        }
+      }
+    }
+    else {
+      var prevLandType = this.tileLandType[year][tileId];
+      var yieldValueToStore = board.map[tileId].results[year].calculatedYieldTile * board.map[tileId].area;
+      switch (LandUseType.getType(board.map[tileId].landType[year])) {
+        case "none":
+          //Do Nothing
+          break;
+        case "conventionalCorn":
+          this.yieldResults[year].cornGrainYield += yieldValueToStore;
+          break;
+        case "conservationCorn":
+          this.yieldResults[year].cornGrainYield += yieldValueToStore;
+          break;
+        case "conventionalSoybean":
+          this.yieldResults[year].soybeanYield += yieldValueToStore;
+          break;
+        case "conservationSoybean":
+          this.yieldResults[year].soybeanYield += yieldValueToStore;
+          break;
+        case "alfalfa":
+          this.yieldResults[year].alfalfaHayYield += yieldValueToStore;
+          break;
+        case "permanentPasture":
+          this.yieldResults[year].cattleYield += yieldValueToStore;
+          break;
+        case "rotationalGrazing":
+          this.yieldResults[year].cattleYield += yieldValueToStore;
+          break;
+        case "grassHay":
+          this.yieldResults[year].grassHayYield += yieldValueToStore;
+          break;
+        case "prairie":
+          //Do nothing - does not report yield
+          break;
+        case "conservationForest":
+          this.yieldResults[year].woodYield += yieldValueToStore;
+          break;
+        case "conventionalForest":
+          this.yieldResults[year].woodYield += yieldValueToStore;
+          break;
+        case "switchgrass":
+          this.yieldResults[year].switchgrassYield += yieldValueToStore;
+          break;
+        case "shortRotationWoodyBioenergy":
+          this.yieldResults[year].shortRotationWoodyBiomassYield += yieldValueToStore;
+          break;
+        case "wetland":
+          //Do nothing - does not report yield
+          break;
+        case "mixedFruitsVegetables":
+          this.yieldResults[year].mixedFruitsAndVegetablesYield += yieldValueToStore;
+          break;
+      }
+
+      switch (prevLandType){
+        case "none":
+          //Do Nothing
+          break;
+        case "conventionalCorn":
+          this.yieldResults[year].cornGrainYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "conservationCorn":
+          this.yieldResults[year].cornGrainYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "conventionalSoybean":
+          this.yieldResults[year].soybeanYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "conservationSoybean":
+          this.yieldResults[year].soybeanYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "alfalfa":
+          this.yieldResults[year].alfalfaHayYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "permanentPasture":
+          this.yieldResults[year].cattleYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "rotationalGrazing":
+          this.yieldResults[year].cattleYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "grassHay":
+          this.yieldResults[year].grassHayYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "prairie":
+          //Do nothing - does not report yield
+          break;
+        case "conservationForest":
+          this.yieldResults[year].woodYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "conventionalForest":
+          this.yieldResults[year].woodYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "switchgrass":
+          this.yieldResults[year].switchgrassYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "shortRotationWoodyBioenergy":
+          this.yieldResults[year].shortRotationWoodyBiomassYield -= this.tileYieldResults[year][tileId];
+          break;
+        case "wetland":
+          //Do nothing - does not report yield
+          break;
+        case "mixedFruitsVegetables":
+          this.yieldResults[year].mixedFruitsAndVegetablesYield -= this.tileYieldResults[year][tileId];
+          break;
+      }
+      this.tileYieldResults[year][tileId] = yieldValueToStore;
+      this.tileLandType[year][tileId] = LandUseType.getType(board.map[tileId].landType[year]);
     }
 
-    this.yieldResults = tempYieldResults;
+    // this.yieldResults = tempYieldRes1ults;
 
   }; //end sumYields
 
@@ -3175,7 +3296,7 @@ function Results(board) {
     this.sumGrossErosion(tileId, year);
     this.sumPhosphorus(tileId, year);
     this.sumSedimentDeliveryToStream(tileId, year);
-    this.sumYields();
+    this.sumYields(tileId, year);
     this.sumLandUse();
     this.calculateNitrateConcentration();
     this.mapIt();
