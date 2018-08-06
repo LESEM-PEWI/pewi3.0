@@ -161,6 +161,13 @@ function loadLevel(level) {
         window.frames[6].document.getElementById(yieldProgressbarIds[i]).checked = true;
       }
       document.getElementById('popup').className = 'popup';
+      calculateResults();
+      // Show the progress bars
+      document.getElementById('progressBarContainer').style.display = 'block';
+      $(document).ready(function() {
+        refreshProgressBar(1);
+      });
+
       break;
   }
 

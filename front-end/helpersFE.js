@@ -1095,13 +1095,18 @@ function calculateCutoffs() {
 
 //calculateResults triggers the results calculations by updating Totals
 // deprecated?
-function calculateResults() {
+function calculateResults(tileId, year) {
   //Totals = new Results(boardData[currentBoard]);
-  Totals.update();
+  Totals.update(tileId, year);
 
   //Correction for Carbon Sequestrations
-  for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
-    Totals.carbonSequestration[y] = Totals.carbonSequestration[y] * (1 / 0.90718474);
+  if(typeof year == 'undefined') {
+    for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
+      Totals.carbonSequestration[y] = Totals.carbonSequestration[y] * (1 / 0.90718474);
+    }
+  }
+  else {
+    Totals.carbonSequestration[year] = Totals.carbonSequestration[year] * (1 / 0.90718474);
   }
 
   //contaminatedRiver(Totals);
@@ -1128,11 +1133,19 @@ function changeLandTypeTile(tileId) {
         }
         else
         {
-          meshMaterials[tileId].map = textureArray[painter];
-          // record the data changes in boardData
-          boardData[currentBoard].map[tileId].landType[currentYear] = painter;
-          // update boardData figures
-          boardData[currentBoard].map[tileId].update(currentYear);
+          // If the land type remains the same, then do nothing, otherwise,change the land type, and update progress bars
+          if(meshMaterials[tileId].map != textureArray[painter]){
+            // console.log('Change the land type in tile which id is ', tileId);
+            meshMaterials[tileId].map = textureArray[painter];
+            // record the data changes in boardData
+            boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+            // update boardData figures
+            boardData[currentBoard].map[tileId].update(currentYear);
+
+            // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
+            calculateResults(tileId, currentYear);
+            refreshProgressBar(currentYear);
+          }
         }
       } else if (multiplayerAssigningModeOn) {
         meshMaterials[tileId].map = multiplayerTextureArray[painter];
@@ -1144,9 +1157,6 @@ function changeLandTypeTile(tileId) {
     }
   } // end outter if
 
-  // Whenever tile of land type is changed, we'd better recalculate the results
-  calculateResults();
-  refreshProgressBar(currentYear);
 } //end changeLandTypeTile
 
 //Updates Nitrate score for entire map since each individual Tile's score hinges on landtypes across the entire map
@@ -1820,8 +1830,9 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
   mapIsHighlighted = true;
 
   //update results
-  Totals = new Results(boardData[currentBoard]);
-  Totals.update();
+  //I think there's no need to redefine Totals and update it. Since there's nothing changed in boardData
+  // Totals = new Results(boardData[currentBoard]);
+  // Totals.update();
 
   //add highlighted textures to the map
   //for each tile in the board
@@ -3827,11 +3838,15 @@ function randomizeBoard() {
         if(j == 14){
           isWetlandOn = false;
         }
-        for (var x = 0; x < 15; x++) {
-          if (removedIndex == x) {
-            randomPainterTile.splice(removedIndex, 1);
-          }
-        } // end for
+        randomPainterTile.splice(removedIndex, 1);
+
+        // What the heck, What's this for loop for??? Why didn't call randomPainterTile.splice(removedIndex, 1) directly???
+        // for (var x = 0; x < 15; x++) {
+        //   if (removedIndex == x) {
+        //     randomPainterTile.splice(removedIndex, 1);
+        //   }
+        // } // end for
+
 
       }
     } // end for
@@ -5253,7 +5268,7 @@ function toggleVisibility() {
 
 
   //toggle Precip visibility
-  for (var y = 0; y <= boardData[currentBoard].calculatedToYear; y++) {
+  for (var y = 0; y <= 3; y++) {
     document.getElementById("year" + y + "PrecipContainer").style.display = "block";
 
     var elementIdString = "year" + y + "Precip";

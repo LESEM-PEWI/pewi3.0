@@ -262,6 +262,8 @@ Cleaned and Prepared - August 2016
               window.top.boardData[window.top.currentBoard].precipitation[y] = Number(window.top.initData[1][29 + y]);
             }
             window.top.boardData[window.top.currentBoard].updateBoard();
+            // clear the initData, otherwise, the map data might be corrupted.
+            window.top.initData = [];
           }
         }
       }
