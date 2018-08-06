@@ -282,6 +282,12 @@ tr:hover {
   margin: 1%;
 }
 
+
+#graphContainer {
+  height: 100%;
+  width: 750px;
+}
+
 #contentsG {
   height: 100%;
   left: 25%;
@@ -302,7 +308,27 @@ tr:hover {
                               not supported by any browser */
 }
 
-#landUseTypeContainer {}
+
+#econ {
+  height: 100%;
+  left: 25%;
+  position: absolute;
+  /*width: 800px;*/
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                              not supported by any browser */
+}
+
 
 #yearHolder {
   /*border: 3px solid #fdc72f;*/
@@ -326,7 +352,6 @@ tr:hover {
   height: 0;
   position: relative;
   width: 0;
-  left: 53%;
 }
 
 .upArrow, .upArrowDisabled {
@@ -342,6 +367,7 @@ tr:hover {
 
 .upArrow:hover {
   opacity: 0.6;
+  cursor: pointer;
 }
 
 .upArrowDisabled {
@@ -365,6 +391,7 @@ tr:hover {
 
 .downArrow:hover {
   opacity: 0.6;
+  cursor: pointer;
 }
 
 .barData {
@@ -554,7 +581,7 @@ text {
   width: 38.3%;
 }
 
-/*
+
 #container {
   border: 3px solid #6ac5ac;
   display: -webkit-flex;
@@ -574,17 +601,23 @@ text {
   flex: 3;
   border: 3px solid #d64078;
 }
-*/
 
 #results-header {
   position: static;
 }
 
 #yearArrows {
-  display: block;
-  position: relative;
   top: 25%;
 }
+
+
+#timeActionArrows {
+  width: auto;
+  height: auto;
+  float: left;
+  top: 50%;
+}
+
 
 @media screen and (max-width: 768px) {
   /*<= 768px */
@@ -616,7 +649,7 @@ ul .inner {
 }
 ul table{
   table-layout: fixed;
-  width: 75%;
+  width: 85%;
 }
 
 ul li {
@@ -624,7 +657,7 @@ ul li {
 }
 
 ul li a.toggle {
-  width: 75%;
+  width: 85%;
   display: block;
   /* background: rgba(0,0,0,0.78); */
   background: #969696;
@@ -652,4 +685,34 @@ ul li a.toggle:hover {
     color: black;
     float: right;
     margin-left: 5px;
+}
+
+.leftE {
+  width: 250px;
+  float: left;
+}
+
+.rightE {
+  /*height: 100%;*/
+  height: 400px;
+  width: 445px;
+  float: right;
+}
+
+.holder {
+  width: 100px;
+  height: 100px;
+}
+
+#yearUpEcon {
+  left: 25%
+}
+
+#yearDownEcon {
+  left: 25%
+}
+
+#yearTextEcon {
+  font-size: 20px;
+  font-weight: bold;
 }

@@ -117,9 +117,8 @@ Cleaned and Prepared - August 2016
       </div>
 
       <div style="display:none;" id="econ"><br>
-        <div id="econNumbers" style="margin:10px; margin-top:2px;">
-        </div>
-        <ul class="accordion">
+        <div>
+          <ul class="accordion">
           <li>
             <a class="toggle" href="javascript:void(0);" id="plus">Conventional Corn</a>
             <ul class="inner">
@@ -346,8 +345,18 @@ Cleaned and Prepared - August 2016
             </ul>
           </li>
         </ul>
-
-       <script>
+        </div>
+        <div id="graphContainer">
+          <div class="leftE">
+            <div class="holder"></div>
+            <div id="yearTextEcon">Change Time or Action</div>
+            <div id="yearUpEcon" onclick="changeLandPieBy(1);" class="upArrow"></div>
+            <div id="yearDownEcon" onclick="changeLandPieBy(-1);" class="downArrow"></div>
+          </div>
+          <div class = "rightE" id="econPieChart"></div>
+        </div>
+      </div>
+      <script>
          $('.toggle').click(function(e) {
           e.preventDefault();
 
@@ -357,24 +366,16 @@ Cleaned and Prepared - August 2016
                $this.next().removeClass('show');
                $this.next().slideUp(350);
                this.setAttribute("id", "plus");
-               // $('#minus').each(function(i){
-               //   console.log(i);
-               //   // $(i).setAttribute("id", "plus");
-               // });
            } else {
                $this.parent().parent().find('li .inner').removeClass('show');
                $this.parent().parent().find('li .inner').slideUp(350);
                $this.next().toggleClass('show');
                $this.next().slideToggle(350);
                this.setAttribute("id", "minus");
-               console.log($this);
-               // $this.parent().setAttribute("id", "minus");
            }
          });
       </script>
-
-      </div>
-
+    </div>
     </div>
   </div>
 

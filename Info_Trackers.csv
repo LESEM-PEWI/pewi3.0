@@ -95,111 +95,53 @@ LU_ID;Land-Use;Sub Crop;Years Applicable;Frequency;Time - Cost Type ;Action - Co
 3;Conventional Soybean;Soybean after Corn;All;Annual;Constant;Labor;Labor - Operator;$30.80 ; labor wage ;$14/hr * 2.2 hrs/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
 3;Conventional Soybean;Soybean after Corn;All;Annual;Constant;Rent;Cash Rent Equivalent - Land;$219.00 ; rent ;$219/acre;https://www.extension.iastate.edu/agdm/crops/html/a1-20.html;a
 4;Conservation Soybean;Soybean after Corn;All;Annual;Constant;Other;Savings (total no-till savings);($18.00); n/a ;ISU professor Mahdi Al-Kaisi cites $18-20/acre savings for soybean;Use the SAME budget as conventional tillage, but apply this cost savings (reduces passes from 8 to 5 with no yield penalty, as per article);a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spray Herbicide - FIXED;$2.20 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spray Herbicide - VARIABLE;$2.00 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Tandem disk (twice) - FIXED;$9.40 ; n/a ;2 times - Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Tandem disk (twice) - VARIABLE;$7.00 ; n/a ;2 times - Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spread fertilizer - FIXED;$2.00 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spread fertilizer - VARIABLE;$1.60 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Harrow - FIXED;$2.10 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Harrow - VARIABLE;$1.50 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Seed (drill) - FIXED;$4.60 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Seed (drill) - VARIABLE;$4.10 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Seed;$72.48 ; application rate, seed price ;"Ag Decision Maker,
-15 lbs @ $4.832/lb";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Fertilizer - P;$13.53 ; application rate, phosphate price ;"Ag Decision Maker,
-35 lbs @ $0.3866/lb";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Fertilizer - Potash;$33.95 ; application rate, potash price ;"Ag Decision Maker,
-125 lbs @ $0.2716/lb";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Herbicide;$13.00 ;application rate, herbicide price;$17 - unless confirmed otherwise, assuming this occurs at every establishment;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Lime;$18.00 ;application rate, lime price;$31 - unless confirmed otherwise, assuming this occurs at every establishment;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Labor;Labor - Pre-harvest;$14.00 ; wage rate ;1.0 hours @ $14/hour;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Labor;Labor - harvest - cutting;$42.00 ; wage rate, # cuttings ;"1.5 hours @ $14/hour��PER CUT
-Assumes x2 cuts Establishment Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Mower-Conditioner - FIXED;$11.00 ; # cuttings ;" $5.50��.PER CUT
-Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$6.40 ; # cuttings ;" $4.40��.PER CUT
-Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Rake - FIXED;$6.40 ; # cuttings ;" $3.20��PER CUT
-Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Rake - VARIABLE;$4.00 ; # cuttings ;" $2.00��PER CUT
-Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Baling - FIXED;$16.40 ; # cuttings ;" $8.2�..PER CUT
-Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Baling - VARIABLE;$10.60 ; # cuttings ;" $5.30��PER CUT
-Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Hauling - FIXED;$9.65 ; tons/cutting/ # cuttings ; $1.93 per ton @ 2.5 tons/cutting * 2 cuttings ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Hauling - VARIABLE;$15.35 ; tons/cutting/ # cuttings ; $3.07 per ton @ 2.5 tons/cutting * 2 cuttings ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;1;Year 1, Every 4 years;Constant;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 per acre;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Machinery;Fertilizer Spreader - FIXED;$2.00 ; n/a ;$2.00 FIXED;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Machinery;Fertilizer Spreader - VARIABLE;$1.60 ; n/a ;$1.60 VARIABLE;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Input;Annual Fertilizer - P;$20.28 ; application rate, phosphate price ;(13 lbs/1 ton Alfalfa) @ ($0.45/lb) @ 4 tons Alfalfa;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Input;Annual Fertilizer - Potash;$54.00 ; application rate, potash price ;(50 lbs/1 ton Alfalfa) @ ($0.35/lb) @ 4 tons Alfalfa;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spray Herbicide - FIXED;$2.20 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spray Herbicide - VARIABLE;$2.00 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Tandem disk (twice) - FIXED;$9.40 ; n/a ;2 times - Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Tandem disk (twice) - VARIABLE;$7.00 ; n/a ;2 times - Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spread fertilizer - FIXED;$2.00 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Spread fertilizer - VARIABLE;$1.60 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Harrow - FIXED;$2.10 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Harrow - VARIABLE;$1.50 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Seed (drill) - FIXED;$4.60 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Machinery;Seed (drill) - VARIABLE;$4.10 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Seed;$72.48 ; application rate, seed price ;Ag Decision Maker, 15 lbs @ $4.832/lb;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Fertilizer - P;$13.53 ; application rate, phosphate price ;Ag Decision Maker, 35 lbs @ $0.3866/lb;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Fertilizer - Potash;$33.95 ; application rate, potash price ;Ag Decision Maker, 125 lbs @ $0.2716/lb;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Herbicide;$13.00 ;application rate, herbicide price;$17 - unless confirmed otherwise, assuming this occurs at every establishment;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Inputs;Lime;$18.00 ;application rate, lime price;$31 - unless confirmed otherwise, assuming this occurs at every establishment;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Establishment;Labor;Labor - Pre-harvest;$14.00 ; wage rate ;1.0 hours @ $14/hour;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Labor;Labor - harvest - cutting;$42.00 ; wage rate, # cuttings ;1.5 hours @ $14/hour��PER CUT Assumes x2 cuts Establishment Year;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Mower-Conditioner - FIXED;$11.00 ; # cuttings ; $5.50��.PER CUT Assumes 2 cut Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$6.40 ; # cuttings ; $4.40��.PER CUT Assumes 2 cut Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Rake - FIXED;$6.40 ; # cuttings ; $3.20��PER CUT Assumes 2 cut Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Rake - VARIABLE;$4.00 ; # cuttings ; $2.00��PER CUT Assumes 2 cut Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Baling - FIXED;$16.40 ; # cuttings ; $8.2�..PER CUT Assumes 2 cuts Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Baling - VARIABLE;$10.60 ; # cuttings ; $5.30��PER CUT Assumes 2 cuts Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Hauling - FIXED;$9.65 ; tons/cutting/ # cuttings ; $1.93 per ton @ 2.5 tons/cutting * 2 cuttings ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Harvest;Machinery;Harvesting - Hauling - VARIABLE;$15.35 ; tons/cutting/ # cuttings ; $3.07 per ton @ 2.5 tons/cutting * 2 cuttings ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;1;Year 1, Every 4 years;Constant;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 per acre;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Machinery;Fertilizer Spreader - FIXED;$2.00 ; n/a ;$2.00 FIXED;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Machinery;Fertilizer Spreader - VARIABLE;$1.60 ; n/a ;$1.60 VARIABLE;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Input;Annual Fertilizer - P;$20.28 ; application rate, phosphate price ;(13 lbs/1 ton Alfalfa) @ ($0.45/lb) @ 4 tons Alfalfa;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Preharvest;Input;Annual Fertilizer - Potash;$54.00 ; application rate, potash price ;(50 lbs/1 ton Alfalfa) @ ($0.35/lb) @ 4 tons Alfalfa;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
 5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Constant;Other;Crop Insurance;$2.00 ; n/a ;$2/acre crop insurance premium;;a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Labor;Labor - harvest - cutting;$56.00 ; labor wage, # cuttings ;"1.33 hours @ $14/hour��PER CUT
-Assumes x3 cuts per Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Constant;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 Cash rent equivalent;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Mower-Conditioner - FIXED;$16.50 ; # cuttings ;" $5.50��.PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$13.20 ; # cuttings ;" $4.40��.PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Rake - FIXED;$9.60 ; # cuttings ;" $3.20��PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Rake - VARIABLE;$6.00 ; # cuttings ;" $2.00��PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Baling - FIXED;$24.60 ; # cuttings ;" $8.20�..PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Baling - VARIABLE;$15.90 ; # cuttings ;" $5.30��PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Hauling - FIXED;$7.72 ; yield per cutting, # cuttings ; $1.93 per ton @ 4 tons/acre/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Hauling - VARIABLE;$12.28 ; yield per cutting, # cuttings ; $3.07 per ton @ 4 tons/acre/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Labor;Labor - harvest - cutting;$56.00 ; labor wage, # cuttings ;1.33 hours @ $14/hour��PER CUT Assumes x3 cuts per Year;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Constant;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 Cash rent equivalent;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Mower-Conditioner - FIXED;$16.50 ; # cuttings ; $5.50��.PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$13.20 ; # cuttings ; $4.40��.PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Rake - FIXED;$9.60 ; # cuttings ; $3.20��PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Rake - VARIABLE;$6.00 ; # cuttings ; $2.00��PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Baling - FIXED;$24.60 ; # cuttings ; $8.20�..PER CUTAssumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Baling - VARIABLE;$15.90 ; # cuttings ; $5.30��PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Hauling - FIXED;$7.72 ; yield per cutting, # cuttings ; $1.93 per ton @ 4 tons/acre/year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+5;Alfalfa;;2,3,4;Years 2, 3, 4 (4 yr cycle);Harvest;Machinery;Harvesting - Hauling - VARIABLE;$12.28 ; yield per cutting, # cuttings ; $3.07 per ton @ 4 tons/acre/year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
 6;Permanent Pasture;;all;Annual;Preharvest;Rent;Preharvest - Feed - Pasture - VARIABLE;$50.00 ; rent ;Assumed rent;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
 6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Pasture Fertilizer & Miscellaneous - VARIABLE;$20.00 ; n/a ;Assumed;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
 6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn - VARIABLE;$5.44 ; yield ;4 bu @ $ 3.40/bu     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
 6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Salt & Minerals - VARIABLE;$2.16 ; yield ;60 bu @ $ 0.09/bu     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
 6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Alfalfa-Brome Hay - VARIABLE;$79.80 ; yield ;2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn Stalks - VARIABLE;$4.80 ; yield ;"??? Call and ask question ???
-2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount)";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+6;Permanent Pasture;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn Stalks - VARIABLE;$4.80 ; yield ;??? Call and ask question ??? 2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
 6;Permanent Pasture;;all;Annual;Preharvest;Input;Veterinary & Health - VARIABLE;$10.00 ; yield ;$25 per unit / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
 6;Permanent Pasture;;all;Annual;Preharvest;Machinery;Machinery, Equipment, Fuel, & Repairs - VARIABLE;$6.00 ; yield ;$15 per unit / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
 6;Permanent Pasture;;all;Annual;Preharvest;Other;Marketing & Miscellaneous - VARIABLE;$8.00 ; yield ;$20 per unit / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
@@ -209,213 +151,113 @@ Alfalfa or Alfalfa-grass Hay Budget";a
 6;Permanent Pasture;;all;Annual;Preharvest;Other;Interest & Insurance on Breeding Herd;$43.28 ; n/a ;Assumed / 2.5 acres (bring down to 1 acre);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
 6;Permanent Pasture;;all;Annual;Preharvest;Other;Bull Depreciation/Replacement;$4.80 ; n/a ;Assumed / 2.5 acres (bring down to 1 acre);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
 7;Rotational Grazing;;all;Annual;Preharvest;Rent;Preharvest - Feed - Pasture - VARIABLE;$50.00 ; rent ;Assumed rent;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-;;;all;Annual;Preharvest;Input;Preharvest - Feed - Pasture Fertilizer & Miscellaneous - VARIABLE;$31.43 ; n/a ;Assumed, modified (55/35) for changed stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-;;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn - VARIABLE;$8.55 ; yield ;"4 bu @ $ 3.40/bu     / 2.5 acres (bring it down to per acre amount)
-Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-;;;all;Annual;Preharvest;Input;Preharvest - Feed - Salt & Minerals - VARIABLE;$3.39 ; yield ;"60 bu @ $ 0.09/bu     / 2.5 acres (bring it down to per acre amount)
-Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-;;;all;Annual;Preharvest;Input;Preharvest - Feed - Alfalfa-Brome Hay - VARIABLE;$125.40 ; yield ;"2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount)
-Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-;;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn Stalks - VARIABLE;$7.54 ; yield ;"??? Call and ask question ???
-2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount)
-Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-;;;all;Annual;Preharvest;Input;Veterinary & Health - VARIABLE;$15.71 ; yield ;"$25 per unit / 2.5 acres (bring it down to per acre amount)
-Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-MODIFY;;;all;Annual;Preharvest;Machinery;Machinery, Equipment, Fuel, & Repairs - VARIABLE;$6.00 ; yield ;$15 per unit / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-;;;all;Annual;Preharvest;Other;Marketing & Miscellaneous - VARIABLE;$12.57 ; yield ;"$20 per unit / 2.5 acres (bring it down to per acre amount)
-Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-;;;all;Annual;Preharvest;Other;Interest on variable costs;$10.42 ; other values ;8%, 6 months, applied to all variable costs;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-MODIFY;;;all;Annual;Preharvest;Labor;Preharvest Labor;$44.80 ; labor wage ;8 hours @ $14/hr     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-MODIFY;;;all;Annual;Preharvest;Machinery;Machinery, Equipment, Housing, & Fences - FIXED;$26.04 ; n/a ;Assumed / 2.5 acres (bring down to 1 acre);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-;;;all;Annual;Preharvest;Other;Interest & Insurance on Breeding Herd;$68.01 ; n/a ;"Assumed / 2.5 acres (bring down to 1 acre)
-Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-;;;all;Annual;Preharvest;Other;Bull Depreciation/Replacement;$7.54 ; n/a ;"Assumed / 2.5 acres (bring down to 1 acre)
-Modified (55/35) for increased stocking density";https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spray Herbicide - FIXED;$2.20 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spray Herbicide - VARIABLE;$2.00 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Tandem disk (twice) - FIXED;$9.40 ; n/a ;2 times - Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Tandem disk (twice) - VARIABLE;$7.00 ; n/a ;2 times - Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spread fertilizer - FIXED;$2.00 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spread fertilizer - VARIABLE;$1.60 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Harrow - FIXED;$2.10 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Harrow - VARIABLE;$1.50 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Seed (drill) - FIXED;$4.60 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Seed (drill) - VARIABLE;$4.10 ; n/a ;Ag Decision Maker;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Seed;$72.48 ; application rate, seed price ;"Ag Decision Maker,
-15 lbs @ $4.832/lb alfalfa seed";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Fertilizer - P;$13.53 ; application rate, phosphate price ;"Ag Decision Maker,
-35 lbs @ $(13.53/35)/lb";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Fertilizer - Potash;$33.95 ; application rate, potash price ;"Ag Decision Maker,
-125 lbs @ $(33.95/125)/lb";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Herbicide;$13.30 ;application rate, herbicide price;$13.3 - unless confirmed otherwise, assuming this occurs at every establishment;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Lime;$18.00 ;application rate, lime price;$18 - unless confirmed otherwise, assuming this occurs at every establishment;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Farmer Labor;Labor - Pre-harvest;$14.00 ; labor wage ;1.0 hours @ $14/hour;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Farmer Labor;Labor - harvest - cutting;$42.00 ; labor wage, # cuttings ;"1.5 hours @ $14/hour��PER CUT (2 cuts)
-Assumes x2 cuts Establishment Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Mower-Conditioner - FIXED;$11.00 ; # cuttings ;" $5.50��.PER CUT
-Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$8.80 ; # cuttings ;" $4.40��.PER CUT
-Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Rake - FIXED;$6.40 ; # cuttings ;" $3.20��PER CUT
-Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Rake - VARIABLE;$4.00 ; # cuttings ;" $2.00��PER CUT
-Assumes 2 cut Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Baling - FIXED;$16.40 ; # cuttings ;" $8.2�..PER CUT
-Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Baling - VARIABLE;$10.60 ; # cuttings ;" $5.3.00��PER CUT
-Assumes 2 cuts Establishment Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Hauling - FIXED;$9.65 ; Cuttings, yield (tons) ; $1.93 per ton @ 2.5 tons/cutting * 2 cuttings/acre/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Hauling - VARIABLE;$15.35 ; Cuttings, yield (tons) ; $3.07 per ton @ 2.5 tons/acre/year * 2 cuttings/acre/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 per acre;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Fertilizer Spreader - FIXED;$2.00 ; n/a ;$2.00 FIXED;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Fertilizer Spreader - VARIABLE;$1.60 ; n/a ;$1.60 VARIABLE;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Input;Annual Fertilizer - P;$20.28 ; application rate, phosphate price ;(13 lbs/1 ton Alfalfa) @ ($0.39/lb) @ 4 tons Alfalfa;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Input;Annual Fertilizer - Potash;$54.00 ; application rate, potash price ;(50 lbs/1 ton Alfalfa) @ ($0.27/lb) @ 4 tons Alfalfa;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
+7;Rotational Grazing;;all;Annual;Preharvest;Input;Preharvest - Feed - Pasture Fertilizer & Miscellaneous - VARIABLE;$31.43 ; n/a ;Assumed, modified (55/35) for changed stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn - VARIABLE;$8.55 ; yield ;4 bu @ $ 3.40/bu     / 2.5 acres (bring it down to per acre amount) Modified (55/35) for increased stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Input;Preharvest - Feed - Salt & Minerals - VARIABLE;$3.39 ; yield ;60 bu @ $ 0.09/bu     / 2.5 acres (bring it down to per acre amount) Modified (55/35) for increased stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Input;Preharvest - Feed - Alfalfa-Brome Hay - VARIABLE;$125.40 ; yield ;2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount) Modified (55/35) for increased stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Input;Preharvest - Feed - Corn Stalks - VARIABLE;$7.54 ; yield ;??? Call and ask question ??? 2.1 bu @ $ 95/bu     / 2.5 acres (bring it down to per acre amount) Modified (55/35) for increased stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Input;Veterinary & Health - VARIABLE;$15.71 ; yield ;$25 per unit / 2.5 acres (bring it down to per acre amount) Modified (55/35) for increased stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Machinery;Machinery, Equipment, Fuel, & Repairs - VARIABLE;$6.00 ; yield ;$15 per unit / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Other;Marketing & Miscellaneous - VARIABLE;$12.57 ; yield ;$20 per unit / 2.5 acres (bring it down to per acre amount) Modified (55/35) for increased stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Other;Interest on variable costs;$10.42 ; other values ;8%, 6 months, applied to all variable costs;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Labor;Preharvest Labor;$44.80 ; labor wage ;8 hours @ $14/hr     / 2.5 acres (bring it down to per acre amount);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Machinery;Machinery, Equipment, Housing, & Fences - FIXED;$26.04 ; n/a ;Assumed / 2.5 acres (bring down to 1 acre);https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Other;Interest & Insurance on Breeding Herd;$68.01 ; n/a ;Assumed / 2.5 acres (bring down to 1 acre) Modified (55/35) for increased stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+7;Rotational Grazing;;all;Annual;Preharvest;Other;Bull Depreciation/Replacement;$7.54 ; n/a ;Assumed / 2.5 acres (bring down to 1 acre) Modified (55/35) for increased stocking density;https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spray Herbicide - FIXED;$2.20 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spray Herbicide - VARIABLE;$2.00 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Tandem disk (twice) - FIXED;$9.40 ; n/a ;2 times - Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Tandem disk (twice) - VARIABLE;$7.00 ; n/a ;2 times - Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spread fertilizer - FIXED;$2.00 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Spread fertilizer - VARIABLE;$1.60 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Harrow - FIXED;$2.10 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Harrow - VARIABLE;$1.50 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Seed (drill) - FIXED;$4.60 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;;Seed (drill) - VARIABLE;$4.10 ; n/a ;Ag Decision Maker;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Seed;$72.48 ; application rate, seed price ;Ag Decision Maker, 15 lbs @ $4.832/lb alfalfa seed;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Fertilizer - P;$13.53 ; application rate, phosphate price ;Ag Decision Maker, 35 lbs @ $(13.53/35)/lb;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Fertilizer - Potash;$33.95 ; application rate, potash price ;Ag Decision Maker, 125 lbs @ $(33.95/125)/lb;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Herbicide;$13.30 ;application rate, herbicide price;$13.3 - unless confirmed otherwise, assuming this occurs at every establishment;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Input;Lime;$18.00 ;application rate, lime price;$18 - unless confirmed otherwise, assuming this occurs at every establishment;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Farmer Labor;Labor - Pre-harvest;$14.00 ; labor wage ;1.0 hours @ $14/hour;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Farmer Labor;Labor - harvest - cutting;$42.00 ; labor wage, # cuttings ;1.5 hours @ $14/hour��PER CUT (2 cuts) Assumes x2 cuts Establishment Year;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Mower-Conditioner - FIXED;$11.00 ; # cuttings ; $5.50��.PER CUT Assumes 2 cut Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$8.80 ; # cuttings ; $4.40��.PER CUT Assumes 2 cut Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Rake - FIXED;$6.40 ; # cuttings ; $3.20��PER CUT Assumes 2 cut Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Rake - VARIABLE;$4.00 ; # cuttings ; $2.00��PER CUT Assumes 2 cut Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Baling - FIXED;$16.40 ; # cuttings ; $8.2�..PER CUT Assumes 2 cuts Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Baling - VARIABLE;$10.60 ; # cuttings ; $5.3.00��PER CUT Assumes 2 cuts Establishment Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Hauling - FIXED;$9.65 ; Cuttings, yield (tons) ; $1.93 per ton @ 2.5 tons/cutting * 2 cuttings/acre/year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Machinery;Harvesting - Hauling - VARIABLE;$15.35 ; Cuttings, yield (tons) ; $3.07 per ton @ 2.5 tons/acre/year * 2 cuttings/acre/year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;1;Every 4 years;Establishment - Year 1;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 per acre;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Fertilizer Spreader - FIXED;$2.00 ; n/a ;$2.00 FIXED;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Fertilizer Spreader - VARIABLE;$1.60 ; n/a ;$1.60 VARIABLE;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Input;Annual Fertilizer - P;$20.28 ; application rate, phosphate price ;(13 lbs/1 ton Alfalfa) @ ($0.39/lb) @ 4 tons Alfalfa;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Input;Annual Fertilizer - Potash;$54.00 ; application rate, potash price ;(50 lbs/1 ton Alfalfa) @ ($0.27/lb) @ 4 tons Alfalfa;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
 8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Other;Crop Insurance;$2.00 ; n/a ;$2/acre (assuming 3 cuts @ 4 tons/cut);;a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Farmer Labor;Labor - harvest - cutting;$56.00 ; labor wage, # cuttings ;"1.33 hours @ $14/hour��PER CUT
-Assumes x3 cuts per Year";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 Cash rent equivalent;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Mower-Conditioner - FIXED;$16.50 ; # cuttings ;" $5.50��.PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$13.20 ; # cuttings ;" $4.40��.PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Rake - FIXED;$9.60 ; # cuttings ;" $3.20��PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Rake - VARIABLE;$6.00 ; # cuttings ;" $2.00��PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Baling - FIXED;$24.60 ; # cuttings ;" $8.20�..PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Baling - VARIABLE;$15.90 ; # cuttings ;" $5.30��PER CUT
-Assumes 3 cuts per Year ";"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Hauling - FIXED;$23.16 ; Cuttings, yield (tons) ; $1.93 per ton @ 4 tons/cutting * 3 cuttings/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Hauling - VARIABLE;$36.84 ; Cuttings, yield (tons) ; $3.07 per ton @ 4 tons/cutting * 3 cuttings/year ;"http://www.extension.iastate.edu/agdm/decisionaidsall.html
-Alfalfa or Alfalfa-grass Hay Budget";a
-9;Prairie;;;;;;;;;;;a
-10;Conservation Forest;;;;;;;;;;;a
-11;Conventional Forest;;;;;;;;;;;a
-12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Preharvest - Disk;$9.45 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-no repeat if reseeding";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Preharvest - Harrow;$6.25 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-no repeat if reseeding";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Preharvest - Airflow spreader (seed and fertilizers);$7.70 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-repeat if reseeding (25% chance)";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Farmer Labor;Labor - harvest - cutting;$56.00 ; labor wage, # cuttings ;1.33 hours @ $14/hour��PER CUT Assumes x3 cuts per Year;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Land;Land - Cash rent equivalent, before seeding;$109.00 ; rent ;$109 Cash rent equivalent;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Mower-Conditioner - FIXED;$16.50 ; # cuttings ; $5.50��.PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Mower-Conditioner - VARIABLE;$13.20 ; # cuttings ; $4.40��.PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Rake - FIXED;$9.60 ; # cuttings ; $3.20��PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Rake - VARIABLE;$6.00 ; # cuttings ; $2.00��PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Baling - FIXED;$24.60 ; # cuttings ; $8.20�..PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Baling - VARIABLE;$15.90 ; # cuttings ; $5.30��PER CUT Assumes 3 cuts per Year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Hauling - FIXED;$23.16 ; Cuttings, yield (tons) ; $1.93 per ton @ 4 tons/cutting * 3 cuttings/year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+8;Grass Hay;;2,3,4;Years 2, 3, 4;Production Years 2, 3, 4;Machinery;Harvesting - Hauling - VARIABLE;$36.84 ; Cuttings, yield (tons) ; $3.07 per ton @ 4 tons/cutting * 3 cuttings/year ;http://www.extension.iastate.edu/agdm/decisionaidsall.html;a
+9;Prairie;;;;;;;$0.00 ;;;;a
+10;Conservation Forest;;;;;;;$0.00 ;;;;a
+11;Conventional Forest;;;;;;;$0.00 ;;;;a
+12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Preharvest - Disk;$9.45 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey no repeat if reseeding;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Preharvest - Harrow;$6.25 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Surveyno repeat if reseeding;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Preharvest - Airflow spreader (seed and fertilizers);$7.70 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Surveyrepeat if reseeding (25% chance);http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
 12;Switchgrass;;1;Every 11 years;Establishment;Custom Labor;Custom - Spraying chemicals;$5.15 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Seed;;;repeat if reseeding (25% chance);http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Fertilizer - P;$11.10 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-30lb @ $0.37/lb
-repeat if reseeding (25% chance)";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Fertilizer - K;$9.20 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-40lb @ $0.23/lb
-repeat if reseeding (25% chance)";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Lime;$63.00 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-no repeat if reseeding
-3 tons @ $21/ton";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Herbicides;$7.74 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-Pursuit+     3 oz @ $53/gal
-MSO            32 oz @ $1.75/pt
-2,4D             1.5 pts @ $16/gal
-repeat if reseeding (25% chance)";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Fertilizer - N;$31.00 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-100lb @ $0.31/lb";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Fertilizer - P;$2.87 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-1.94lb @ $0.37/lb";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Fertilizer - K;$20.98 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-22.8lb @ $0.23/lb";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Herbicides;$7.74 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-Pursuit+     3 oz @ $53/gal
-MSO            32 oz @ $1.75/pt
-2,4D             1.5 pts @ $16/gal";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Seed;$0.00 ;;repeat if reseeding (25% chance);http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Fertilizer - P;$11.10 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey 30lb @ $0.37/lb repeat if reseeding (25% chance);http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Fertilizer - K;$9.20 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey 40lb @ $0.23/lb repeat if reseeding (25% chance);http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Lime;$63.00 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey no repeat if reseeding 3 tons @ $21/ton;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;1;Every 11 years;Establishment;Inputs;Herbicides;$7.74 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey Pursuit+ 3 oz @ $53/gal, MSO 32 oz @ $1.75/pt 2,4D 1.5 pts @ $16/gal repeat if reseeding (25% chance);http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Fertilizer - N;$31.00 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey 100lb @ $0.31/lb;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Fertilizer - P;$2.87 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey 1.94lb @ $0.37/lb;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Fertilizer - K;$20.98 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey 22.8lb @ $0.23/lb;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Operational;Inputs;Herbicides;$7.74 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate SurveyPursuit+ 3 oz @ $53/gal, MSO 32 oz @ $1.75/pt2,4D 1.5 pts @ $16/gal;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
 12;Switchgrass;;11-Feb;Annual after yr1;Preharvest;Custom Labor;Liquid N application;$4.80 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
 12;Switchgrass;;11-Feb;Annual after yr1;Preharvest;Custom Labor;Bulk fertilizer spreader;$3.20 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
 12;Switchgrass;;11-Feb;Annual after yr1;Preharvest;Custom Labor;Sprayer;$5.15 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
 12;Switchgrass;;11-Feb;Annual after yr1;Harvest;Custom Labor;Mow/conditioning;$10.75 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
 12;Switchgrass;;11-Feb;Annual after yr1;Harvest;Custom Labor;Rake;$5.30 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;11-Feb;Annual after yr1;Harvest;Custom Labor;Baling: large square ($10.70 bale);$90.11 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-$10.70/bale";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;11-Feb;Annual after yr1;Harvest;Custom Labor;Staging;$23.16 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-$2.75/bale";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;11-Feb;Annual after yr1;Other;Custom Labor;Storage;$16.67 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-Assumes used for ethanol, therefore MUST be storage indoors.";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;11-Feb;Annual after yr1;Transport;Custom Labor;Field to Storage;$121.98 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-Truck costs - $86.33
-Loader costs (labor, tractor, and fuel) - $35.65";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-12;Switchgrass;;11-Feb;Annual after yr1;Transport;Custom Labor;Storage to Plant;$173.06 ;;"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey
-Truck costs - $151.67
-Loader cost - 21.39";http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
-13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Inputs;Aspen bare root stock (seedlings);$133.26 ;;"890 seedlings/hectare => 360.17 seedlings/acre
-$0.37/seedling";Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+12;Switchgrass;;11-Feb;Annual after yr1;Harvest;Custom Labor;Baling: large square ($10.70 bale);$90.11 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey $10.70/bale;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Harvest;Custom Labor;Staging;$23.16 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey $2.75/bale;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Other;Custom Labor;Storage;$16.67 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey Assumes used for ethanol, therefore MUST be storage indoors.;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Transport;Custom Labor;Field to Storage;$121.98 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey Truck costs - $86.33 Loader costs (labor, tractor, and fuel) - $35.65;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+12;Switchgrass;;11-Feb;Annual after yr1;Transport;Custom Labor;Storage to Plant;$173.06 ;;Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey Truck costs - $151.67 Loader cost - 21.39;http://www.extension.iastate.edu/agdm/crops/html/a1-22.html;a
+13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Inputs;Aspen bare root stock (seedlings);$133.26 ;;890 seedlings/hectare => 360.17 seedlings/acre $0.37/seedling;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
 13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Custom Labor;Tree planting;$195.00 ;;$481.85/hectare => $195.00/acre;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
-13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Machinery;Mowing - Machinery Only;$20.20 ;;"Based on mower-conditioner  - equipment component only
-x2 cuts";Attached article Manatt et al. 2013 Environ.Res. Lett.;a
-13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Labor;Mowing - Labor Only;$2.96 ;;"Based on mower-conditioner  - consider reevaluting for Iowa custom rates
-$10/hr, 0.148 hrs/acre, 2 cuts";Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Machinery;Mowing - Machinery Only;$20.20 ;;Based on mower-conditioner  - equipment component only x2 cuts;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
+13;Short-rotation Woody Bioenergy;;1;Every 7 years;Establishment;Labor;Mowing - Labor Only;$2.96 ;;Based on mower-conditioner  - consider reevaluting for Iowa custom rates $10/hr, 0.148 hrs/acre, 2 cuts;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
 13;Short-rotation Woody Bioenergy;;all;Annual;Maintenance;Inputs;Fertilizer - N;$19.40 ;;34kg/hectare => 13.76kg/acre    @ $1.39/kg;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
 13;Short-rotation Woody Bioenergy;;all;Annual;Maintenance;Maintenance;Bulk fertilizer spreader - N - Machinery Only;$3.50 ;;1 application @           $8.65/hectare  =>  $3.5/acre;;a
-13;Short-rotation Woody Bioenergy;;all;Annual;Maintenance;Labor;Bulk fertilizer spreader - N - Labor Only;$0.61 ;;"1 application @           0.151 hr/hectare  =>  0.0611 hr/acre
-@  $10/hr";;a
+13;Short-rotation Woody Bioenergy;;all;Annual;Maintenance;Labor;Bulk fertilizer spreader - N - Labor Only;$0.61 ;;1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $10/hr;;a
 13;Short-rotation Woody Bioenergy;;all;Annual;Constant;Rent;Land Rent;$158.90 ;;Annual rent rate;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
 13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Inputs;Fertilizer - Phosphorus;$31.50 ;;56kg/hectare => 22.66kg/acre    @ $1.39/kg;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
 13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Inputs;Fertilizer - Potassium;$54.84 ;;112kg/hectare => 45.32kg/acre    @ $1.21/kg;Attached article Manatt et al. 2013 Environ.Res. Lett.;a
 13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Maintenance;Bulk fertilizer spreader - Phosphorus - Machinery Only;$3.50 ;;1 application @           $8.65/hectare  =>  $3.5/acre;;a
-13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Labor;Bulk fertilizer spreader - Phosphorus - Labor Only;$0.61 ;;"1 application @           0.151 hr/hectare  =>  0.0611 hr/acre
-@  $10/hr";;a
+13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Labor;Bulk fertilizer spreader - Phosphorus - Labor Only;$0.61 ;;1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $10/hr;;a
 13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Maintenance;Bulk fertilizer spreader - Potassium - Machinery Only;$3.50 ;;1 application @           $8.65/hectare  =>  $3.5/acre;;a
-13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Labor;Bulk fertilizer spreader - Potassium - Labor Only;$0.61 ;;"1 application @           0.151 hr/hectare  =>  0.0611 hr/acre
-@  $10/hr";;a
-13;Short-rotation Woody Bioenergy;;7;Every 7 years;Harvest;Custom Labor;Feller buncher/forwarder;;;$28.67/dry Mg @ _____ Mg/acre;;a
-13;Short-rotation Woody Bioenergy;;7;Every 7 years;Harvest;Custom Labor;Staging (gathering biomass for transport);;;$6.72/Mg @  _____ Mg/acre;;a
-13;Short-rotation Woody Bioenergy;;7;Every 7 years;Harvest;Custom Labor;Wood chipping;;;$13.23/Mg @ _____ dry Mg/acre;;a
+13;Short-rotation Woody Bioenergy;;7-Feb;Annual years 2-7;Maintenance;Labor;Bulk fertilizer spreader - Potassium - Labor Only;$0.61 ;;1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $10/hr;;a
+13;Short-rotation Woody Bioenergy;;7;Every 7 years;Harvest;Custom Labor;Feller buncher/forwarder;$0.00 ;;$28.67/dry Mg @ _____ Mg/acre;;a
+13;Short-rotation Woody Bioenergy;;7;Every 7 years;Harvest;Custom Labor;Staging (gathering biomass for transport);$0.00 ;;$6.72/Mg @  _____ Mg/acre;;a
+13;Short-rotation Woody Bioenergy;;7;Every 7 years;Harvest;Custom Labor;Wood chipping;$0.00 ;;$13.23/Mg @ _____ dry Mg/acre;;a
 14;Wetland;;1;Every 50 years;Establishment;Labor;Design cost;$647.50 ;;;;a
 14;Wetland;;1;Every 50 years;Establishment;Labor;Contract fees;$313.50 ;;;;a
 14;Wetland;;1;Every 50 years;Establishment;Labor;Seeding buffer;$3.95 ;;$22.61/hectare   =>   $5.08/acre;;a
 14;Wetland;;1;Every 50 years;Establishment;;Seed cost;$468.07 ;;medium cost, per range cited in source;;a
-14;Wetland;;1;Every 50 years;Establishment;;Weir plate;$600.00 ;;"$30/sqft for 40ft x 5ft sheet pile plate
-Assumes 1 per 10 acre wetland/grass buffer block";;a
+14;Wetland;;1;Every 50 years;Establishment;;Weir plate;$600.00 ;;$30/sqft for 40ft x 5ft sheet pile plate Assumes 1 per 10 acre wetland/grass buffer block;;a
 14;Wetland;;1;Every 50 years;Establishment;;Control structure;$212.75 ;;medium cost, per range cited in source;;a
 14;Wetland;;1;Every 50 years;Establishment;;Land acquisition;$543.33 ;;raw cost for 10 acres (assumes $13,426 per hectare  =>  $5433.32/acre);;a
 14;Wetland;;Jan-50;Every year;Maintenance;;Time to manage;$142.47 ;;Spot mowing 10% of buffer area @ 74.13/hectare treated;;a
 14;Wetland;;40;Every 40 years;Maintenance;;Control structure and weir replacement;$208.58 ;;True present value cost of weir replacement, new structure, and 16 hrs of earth work @ $40/hr;;a
-15;Mixed Fruits & Vegetables;Green Beans;;Annual;Establishment;;Green Beans - Assumptions;  $-    ;;"Ag Decision Maker, Specialty Green Beans
-4' rows, 100' beds ==== assume 70 beds/acre";http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
+15;Mixed Fruits & Vegetables;Green Beans;;Annual;Establishment;;Green Beans - Assumptions;$0.00 ;;Ag Decision Maker, Specialty Green Beans 4' rows, 100' beds ==== assume 70 beds/acre;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
 15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Seed - Cover Crops - VARIABLE;$31.50 ;;0.6 lbs seed/bed * $0.75/lb seed * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
 15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Seed - VARIABLE;$1,400.00 ;;2 lbs seed/bed * $10/lb seed * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
 15;Mixed Fruits & Vegetables;Green Beans;all;Annual;Establishment;;Fertilization - VARIABLE;$63.00 ;;6 lbs fertilizer/bed * $0.15/lb fert * 70 beds;http://www.extension.iastate.edu/agdm/decisionaidscd.html;a
