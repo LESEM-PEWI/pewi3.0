@@ -2453,7 +2453,7 @@ function Results(board) {
   this.calculateNitrateConcentration = function() {
 
     //note, the calculations are done incrementally with the subWatershedNitrate array for clarity
-
+if(typeof tileId == 'undefined'){
     var tempNitrateConcentration = [0, 0, 0, 0];
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
@@ -2495,6 +2495,34 @@ function Results(board) {
     } //end for all years
 
     this.nitrateConcentration = tempNitrateConcentration;
+  }
+
+  else{
+
+    var subw = board.map[tileId].subwatershed;
+    var score = 0;
+    var mult = 1;
+    var foundWet = false;
+    for (var i = 0; i < board.map.length; i++) {
+      if(board.map[i].subwatershed == subw){
+        score += board.map[i].results[year].cropMultiplier;
+        if((board.map[i].landType[year] == LandUseType.wetland) && board.map[i].strategicWetland == 1 && !foundWet){
+          mult=0.48;
+          foundWet = true;
+        }
+      }
+    }
+    score /= this.subwatershedArea[subw];
+    score *= 100*this.precipitationMultiplier(year)*mult;
+    score = (score < 2) ? 2 : score;
+    score = score * this.subwatershedArea[subw] / this.totalArea;
+    this.nitrateConcentration[year] -= this.subWatershedNitrate[year][subw];
+    this.subWatershedNitrate[year][subw] = score;
+    this.nitrateConcentration[year] += score;
+
+}
+
+
   }; //end this.calculateNitrateConcentration()
 
   //helper methods for assisting in calculateNitrateConcentration
@@ -3314,7 +3342,7 @@ function Results(board) {
     this.sumSedimentDeliveryToStream(tileId, year);
     this.sumYields(tileId, year);
     this.sumLandUse();
-    this.calculateNitrateConcentration();
+    this.calculateNitrateConcentration(tileId, year);
     this.mapIt();
 
     this.calculateGameWildLifePoints();
