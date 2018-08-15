@@ -1141,10 +1141,9 @@ function changeLandTypeTile(tileId) {
             boardData[currentBoard].map[tileId].landType[currentYear] = painter;
             // update boardData figures
             boardData[currentBoard].map[tileId].update(currentYear);
-
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
             calculateResults(tileId, currentYear);
-            refreshProgressBar(currentYear);
+
           }
         }
       } else if (multiplayerAssigningModeOn) {
@@ -1174,6 +1173,7 @@ function changeLandTypeTileNitrate(){
         }
       }
     }
+    refreshProgressBar(currentYear);
   } // end outter if
 } //end changeLandTypeTile
 
@@ -1436,6 +1436,7 @@ function combineMulti(givenPlayers) {
   merging = true;
   givenPlayers.sort();
   changeSelectedPaintTo(givenPlayers[0]);
+
 
   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
     var curValue = boardData[currentBoard].map[i].landType[currentYear];
@@ -2864,7 +2865,7 @@ function highlightTile(tileId) {
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
 
       //update the information displayed in the delayed hover div by cursor
-      myTimer = setTimeout(function() {
+
         document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" +  getSlope(tileId) + "\n" + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
         //May use strings and iterate through them for removing hover information
         var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]);
@@ -2883,7 +2884,7 @@ function highlightTile(tileId) {
           //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
         }
         //this is where you should include the code about the topography for the hover over button
-      }, 500);
+
     }
 
   } else {
@@ -3226,6 +3227,7 @@ function onDocumentMouseMove(event) {
         } // end if highlighting tiles
        } // end if grid painter brush
 
+
       //if painter tool type is the clickAndDrag painter
       else if (clickAndDrag) {
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
@@ -3339,6 +3341,7 @@ function onDocumentMouseDown(event) {
             pushClick(0, getStamp(), 83, 0, null);
           }
 
+
           for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
             if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
@@ -3347,6 +3350,7 @@ function onDocumentMouseDown(event) {
 
             }
           }
+
 
           changeLandTypeTileNitrate();
 
