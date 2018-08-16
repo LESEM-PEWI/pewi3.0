@@ -3405,11 +3405,11 @@ function render(years){
           .style("font-size", "1.0em")
           .style("font-weight", "bold");
     }
-    //This is for the title above the graph 
+    //This is for the title above the graph
     svg.append("text")
         .attr("x", (503-textXPosChange))
         .attr("y", 15)
-        .text("Ecosystem Services Score")
+        .text("Ecosystem Service Scores")
         .style("fill", "#000")
         .attr("text-anchor", "middle")
         .style("font-size", "1.36em")
