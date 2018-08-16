@@ -2676,7 +2676,7 @@ function getHighlightedInfo(tileId) {
         highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
         break;
       case 23:
-        highlightString = "Nitrate Tile: " + (Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2) + "<br>";
+        highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>";
         break;
     }
     return highlightString;
@@ -6220,6 +6220,13 @@ function getTileBiodiversityInfoText(score){
   else if (score>7.5) return "Very High Impact"
 }
 
+function getTileNitrateInfoText(score){
+if(score>=0 && score<510) return "Very Low Impact";
+else if(score>=510 && score<1020) return "Low Impact";
+else if(score>=1020 && score<1530) return "Moderate Impact";
+else if(score>=1530 && score<2040) return "High Impact";
+else if(score>2040) return "Very High Impact";
+}
 
 function getTilePrecipitationMultiplier(year){
 
