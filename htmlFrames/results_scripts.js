@@ -20,6 +20,14 @@
     //parent is index.html
     //resultsDisplay.js
     parent.drawD3LandPieChart(toggleYearForLandPlotBy(numberOfYears), isLandPlotOnCategories);
+    parent.drawD3EconPieChart(toggleYearForLandPlotBy(numberOfYears), isLandPlotOnCategories);
+  } //end changeLandPieBy()
+
+  //changeLandPieBy toggles the year and then calls the pie graph function
+  function changeEconPieBy(numberOfYears) {
+    //parent is index.html
+    //resultsDisplay.js
+    parent.drawD3EconPieChart(toggleYearForEconPlotBy(numberOfYears), isLandPlotOnCategories);
   } //end changeLandPieBy()
 
   /*
@@ -106,6 +114,7 @@
     document.getElementById('yearDownLand').onclick = function() {
       changeLandPieBy(-1);
     };
+
     //then if one of the limits have been reached, turn off that toggle
     if (year == upTo) {
       document.getElementById('yearUpLand').className = "upArrowDisabled";
@@ -120,6 +129,43 @@
 
     return year;
   } //end toggleYearForLandPlotBy()
+
+
+
+  //toggleYearForLandPlotBy(), examines the current year and the limits
+  // up and down arrow are turned off if one or both present the opportunity
+  // for surpassing an upper or lower limit.
+  function toggleYearForEconPlotBy(yearsToChange) {
+    //grab info from div, since passing data between frames is difficult
+    var upTo = Number(document.getElementById('upTo').innerHTML);
+    var year = Number(document.getElementById('landYear').innerHTML);
+
+    year = year + yearsToChange;
+
+    //reset functionality
+    document.getElementById('yearUpEcon').className = "upArrow";
+    document.getElementById('yearUpEcon').onclick = function() {
+      changeEconPieBy(1);
+    };
+    document.getElementById('yearDownEcon').className = "downArrow";
+    document.getElementById('yearDownEcon').onclick = function() {
+      changeEconPieBy(-1);
+    };
+
+    //then if one of the limits have been reached, turn off that toggle
+    if (year == upTo) {
+      document.getElementById('yearUpEcon').className = "upArrowDisabled";
+      document.getElementById('yearUpEcon').onclick = function() {};
+    }
+    //cannot be an else if, in the case where upTo == 1
+    if (year == 1) {
+      document.getElementById('yearDownEcon').className = "downArrowDisabled";
+      document.getElementById('yearDownEcon').onclick = function() {};
+    }
+
+    return year;
+  } //end toggleYearForEconPlotBy()
+
 
 /*  function toggleCategoriesSpider(toggleNumber)
   {

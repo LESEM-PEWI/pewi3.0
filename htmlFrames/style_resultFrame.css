@@ -383,6 +383,14 @@ tr:hover {
   border-color: #c9c9d1 transparent transparent transparent;
 }
 
+.upArrowDisabledEcon {
+  border-color: #c9c9d1 transparent transparent transparent;
+}
+
+.downArrowDisabledEcon {
+  border-color: #c9c9d1 transparent transparent transparent;
+}
+
 .downArrow {
   border-color: #000000 transparent transparent transparent;
   opacity: 1;
@@ -704,13 +712,13 @@ ul li a.toggle:hover {
   height: 100px;
 }
 
-#yearUpEcon {
+/* #yearUpEcon {
   left: 25%
 }
 
 #yearDownEcon {
   left: 25%
-}
+} */
 
 #yearTextEcon {
   font-size: 20px;
