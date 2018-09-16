@@ -281,6 +281,9 @@ var RadarChart = {
 
 var tempResult;
 
+
+var totalsLandUseArr = [];
+
 //displayResults writes the html for the results iframe with updates results from Totals
 function displayResults() {
 
@@ -2210,7 +2213,7 @@ function generateEconomicsTables() {
   }
   results.splice(0,1);
 
-  console.log(results);
+
 
   //getting total for each land use and grand total by calling getEconomicsData
   getEconomicsData(results);
@@ -2463,6 +2466,9 @@ function getEconomicsData(data) {
   }
 
   var totals = [convCorn, consCorn, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV];
+  console.log(convCorn);
+
+  totalsLandUseArr = [convCorn, consCorn, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV];
 
   for(var i = 0; i < names.length; ++i){
     var tempObj = {label: names[i], count: totals[i], number: (totals[i]/total)};
@@ -3200,4 +3206,54 @@ function strategicWetlandFinder(playerNumber) {
     }
   }
   return strategicWetlandCount;
+}
+
+
+function findBar(givenString){
+  var aTags = document.getElementsByTagName("a");
+  var found;
+
+  for (var i = 0; i < aTags.length; i++) {
+    if (aTags[i].textContent === givenString) {
+      found = aTags[i];
+      return found;
+    }
+  }
+  return 0;
+}
+
+function placeTotalsOnBars(){
+  var convCorn = findBar('Conventional Corn');
+  var consCorn = findBar('Conservation Corn');
+  var convSoy = findBar('Conventional Soybean');
+  var consSoy = findBar('Conservation Soybean');
+  var alfalfa = findBar('Alfalfa');
+  var permPas = findBar('Permanent Pasture');
+  var rotGraz = findBar('Rotational Grazing');
+  var grassHay = findBar('Grass Hay');
+  var prairie = findBar('Prairie');
+  var consFor = findBar('Conservation Forest');
+  var convFor = findBar('Conventional Forest');
+  var switchgrass = findBar('Switchgrass');
+  var shortRWB = findBar('Short-Rotation Woody Bioenergy');
+  var wetland = findBar('Wetland');
+  var mixedFaV = findBar ('Mixed Fruits & Vegetables');
+
+  console.log(totalsLandUseArr);
+
+  convCorn.firstChild.nodeValue += (" Total: $" + totalsLandUseArr[0]);
+  consCorn.firstChild.nodeValue += (" Total: $" + totalsLandUseArr[1]);
+  convSoy.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[2]);
+  consSoy.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[3]);
+  alfalfa.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[4]);
+  permPas.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[5]);
+  rotGraz.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[6]);
+  grassHay.firstChild.nodeValue += (" Total: $" + totalsLandUseArr[7]);
+  prairie.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[8]);
+  consFor.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[9]);
+  convFor.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[10]);
+  switchgrass.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[11]);
+  shortRWB.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[12]);
+  wetland.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[13]);
+  mixedFaV.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[14]);
 }
