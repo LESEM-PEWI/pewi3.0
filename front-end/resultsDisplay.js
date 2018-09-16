@@ -281,9 +281,6 @@ var RadarChart = {
 
 var tempResult;
 
-
-var totalsLandUseArr = [];
-
 //displayResults writes the html for the results iframe with updates results from Totals
 function displayResults() {
 
@@ -2466,9 +2463,24 @@ function getEconomicsData(data) {
   }
 
   var totals = [convCorn, consCorn, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV];
-  console.log(convCorn);
 
-  totalsLandUseArr = [convCorn, consCorn, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV];
+  localStorage.setItem("convCorn", convCorn.toFixed(2));
+  localStorage.setItem("consCorn", consCorn.toFixed(2));
+  localStorage.setItem("convSoy", convSoy.toFixed(2));
+  localStorage.setItem("consSoy", consSoy.toFixed(2));
+  localStorage.setItem("alf", alf.toFixed(2));
+  localStorage.setItem("permPas", permPas.toFixed(2));
+  localStorage.setItem("rotGraz", rotGraz.toFixed(2));
+  localStorage.setItem("grassHay", grassHay.toFixed(2));
+  localStorage.setItem("prairie", prairie.toFixed(2));
+  localStorage.setItem("consFor", consFor.toFixed(2));
+  localStorage.setItem("convFor", convFor.toFixed(2));
+  localStorage.setItem("switchG", switchG.toFixed(2));
+  localStorage.setItem("shortRWB", shortRWB.toFixed(2));
+  localStorage.setItem("wetland", wetland.toFixed(2));
+  localStorage.setItem("mixedFruitsV", mixedFruitsV.toFixed(2));
+
+
 
   for(var i = 0; i < names.length; ++i){
     var tempObj = {label: names[i], count: totals[i], number: (totals[i]/total)};
@@ -3239,21 +3251,19 @@ function placeTotalsOnBars(){
   var wetland = findBar('Wetland');
   var mixedFaV = findBar ('Mixed Fruits & Vegetables');
 
-  console.log(totalsLandUseArr);
-
-  convCorn.firstChild.nodeValue += (" Total: $" + totalsLandUseArr[0]);
-  consCorn.firstChild.nodeValue += (" Total: $" + totalsLandUseArr[1]);
-  convSoy.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[2]);
-  consSoy.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[3]);
-  alfalfa.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[4]);
-  permPas.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[5]);
-  rotGraz.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[6]);
-  grassHay.firstChild.nodeValue += (" Total: $" + totalsLandUseArr[7]);
-  prairie.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[8]);
-  consFor.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[9]);
-  convFor.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[10]);
-  switchgrass.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[11]);
-  shortRWB.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[12]);
-  wetland.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[13]);
-  mixedFaV.firstChild.nodeValue += ("  Total: $" + totalsLandUseArr[14]);
+  convCorn.firstChild.nodeValue += (" Total: $" + localStorage.getItem('convCorn'));
+  consCorn.firstChild.nodeValue += (" Total: $" + localStorage.getItem('consCorn'));
+  convSoy.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('convSoy'));
+  consSoy.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('consSoy'));
+  alfalfa.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('alf'));
+  permPas.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('permPas'));
+  rotGraz.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('rotGraz'));
+  grassHay.firstChild.nodeValue += (" Total: $" + localStorage.getItem('grassHay'));
+  prairie.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('prairie'));
+  consFor.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('consFor'));
+  convFor.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('convFor'));
+  switchgrass.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('switchG'));
+  shortRWB.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('shortRWB'));
+  wetland.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('wetland'));
+  mixedFaV.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('mixedFruitsV'));
 }
