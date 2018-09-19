@@ -3267,3 +3267,21 @@ function placeTotalsOnBars(){
   wetland.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('wetland'));
   mixedFaV.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('mixedFruitsV'));
 }
+
+
+function enterpriseBudgets() {
+  var accordion = document.getElementById("accordionContainer");
+  var graph = document.getElementById("graphContainer");
+  var enterpriseButton = document.getElementById("enterpriseBudgetsButton");
+  console.log(enterpriseButton);
+  if(accordion.style.display === "none"){
+    accordion.style.display = "block";
+    graph.style.display = "block";
+    enterpriseButton.innerHTML = "View Enterprise Budgets";
+  }
+  else{
+    accordion.style.display = "none";
+    graph.style.display = "none";
+    enterpriseButton.innerHTML = "Return to Econ Module";
+  }
+}
