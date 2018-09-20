@@ -724,3 +724,7 @@ ul li a.toggle:hover {
   font-size: 20px;
   font-weight: bold;
 }
+
+#accordionContainer2 {
+  width: 600px;
+}

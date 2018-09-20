@@ -2157,6 +2157,7 @@ function drawPrecipitationInformationChart() {
 // } //end drawYieldRadar()
 
 function generateEconomicsTables() {
+  //if the var has "E" close to the end of var name, it is for enterprise table
   var convCorn = ""; //convCorn = corn after soybean
   var convCorn2 = ""; // convCorn2 = corn after corn
   var consCorn = ""; //consCorn = corn after soybean
@@ -2354,6 +2355,25 @@ function generateEconomicsTables() {
     document.getElementById('resultsFrame').contentWindow.document.getElementById('shortRWB'+timeOrAction).innerHTML = shortRWB;
     document.getElementById('resultsFrame').contentWindow.document.getElementById('wetland'+timeOrAction).innerHTML = wetland;
     document.getElementById('resultsFrame').contentWindow.document.getElementById('mixedFaV'+timeOrAction).innerHTML = mixedFruitsV;
+
+
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convCornE'+timeOrAction).innerHTML = convCorn;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convCornE2'+timeOrAction).innerHTML = convCorn2;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consCornE'+timeOrAction).innerHTML = consCorn;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consCornE2'+timeOrAction).innerHTML = consCorn2;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convSoybeanE'+timeOrAction).innerHTML = convSoy;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consSoybeanE'+timeOrAction).innerHTML = consSoy;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('alfalfaE'+timeOrAction).innerHTML = alf;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('permanentPastureE'+timeOrAction).innerHTML = permPas;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('rotationalGrazingE'+timeOrAction).innerHTML = rotGraz;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('grassHayE'+timeOrAction).innerHTML = grassHay;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('prairieE'+timeOrAction).innerHTML = prairie;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consForestE'+timeOrAction).innerHTML = consFor;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convForestE'+timeOrAction).innerHTML = convFor;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('switchgrassE'+timeOrAction).innerHTML = switchG;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('shortRWBE'+timeOrAction).innerHTML = shortRWB;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('wetlandE'+timeOrAction).innerHTML = wetland;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('mixedFaVE'+timeOrAction).innerHTML = mixedFruitsV;
   }
 
 }
@@ -3235,6 +3255,12 @@ function findBar(givenString){
 }
 
 function placeTotalsOnBars(){
+  var accordion = document.getElementById("accordionContainer");
+  if(accordion.style.display === "none"){
+    return;
+  }
+
+
   var convCorn = findBar('Conventional Corn');
   var consCorn = findBar('Conservation Corn');
   var convSoy = findBar('Conventional Soybean');
@@ -3271,15 +3297,19 @@ function placeTotalsOnBars(){
 
 function enterpriseBudgets() {
   var accordion = document.getElementById("accordionContainer");
+  var enterpriseTable = document.getElementById("accordionContainer2");
   var graph = document.getElementById("graphContainer");
   var enterpriseButton = document.getElementById("enterpriseBudgetsButton");
-  console.log(enterpriseButton);
   if(accordion.style.display === "none"){
+    enterpriseTable.style.display = "none";
+
     accordion.style.display = "block";
     graph.style.display = "block";
     enterpriseButton.innerHTML = "View Enterprise Budgets";
   }
   else{
+    enterpriseTable.style.display = "block";
+
     accordion.style.display = "none";
     graph.style.display = "none";
     enterpriseButton.innerHTML = "Return to Econ Module";
