@@ -1539,7 +1539,7 @@ function Printer() {
     } else {
       // --user clicked preview--
       // window.frames[7].document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
-            document.getElementById("printOptions").contentWindow.document.getElementById("pdf_preview").setAttribute("src", window.URL.createObjectURL(new Blob([doc.output()], {type: 'application/pdf'})));
+            document.getElementById("printOptions").contentWindow.document.getElementById("pdf_preview").setAttribute("src", doc.output('dataurlstring'));
 
       // new window
       // doc.output('dataurlnewwindow');
