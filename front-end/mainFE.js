@@ -515,6 +515,11 @@ function initWorkspace(file) {
 
   //setup stats display
   stats.domElement.id = 'statFrame';
+  stats.domElement.style.top = null; //for some reason deleting the attributes does not work you must set them to null
+  stats.domElement.style.left = null;
+  stats.domElement.style.right = "0px";
+  stats.domElement.style.bottom = "0px";
+  stats.domElement.style.position = "absolute";
   document.body.appendChild(stats.domElement);
 
   //Setup scene, toggle options, and add the background
