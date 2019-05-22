@@ -56,8 +56,8 @@ function refreshProgressBar(yearToLoad) {
   //var tempTotal = (Totals.nitrateConcentrationScore[yearToLoad] + Totals.phosphorusLoadScore[yearToLoad] + Totals.sedimentDeliveryScore[yearToLoad] +
   //  Totals.carbonSequestrationScore[yearToLoad] + Totals.grossErosionScore[yearToLoad] + Totals.gameWildlifePointsScore[yearToLoad] + Totals.biodiversityPointsScore[yearToLoad]) / 7;
 
-  var tempTotal = (Totals.cornGrainYieldScore[yearToLoad] + Totals.soybeanYieldScore[yearToLoad] + Totals.mixedFruitsAndVegetablesYieldScore[yearToLoad] + Totals.alfalfaHayYieldScore[yearToLoad] + Totals.grassHayYieldScore[yearToLoad] +
-                    Totals.switchgrassYieldScore[yearToLoad] + Totals.cattleYieldScore[yearToLoad] + Totals.woodYieldScore[yearToLoad] + Totals.shortRotationWoodyBiomassYieldScore[yearToLoad]) / 9;
+  var tempTotal = Totals.cornGrainYieldScore[yearToLoad] + Totals.soybeanYieldScore[yearToLoad] + Totals.mixedFruitsAndVegetablesYieldScore[yearToLoad] + Totals.alfalfaHayYieldScore[yearToLoad] + Totals.grassHayYieldScore[yearToLoad] +
+                    Totals.switchgrassYieldScore[yearToLoad] + Totals.cattleYieldScore[yearToLoad] + Totals.woodYieldScore[yearToLoad] + Totals.shortRotationWoodyBiomassYieldScore[yearToLoad];
 
   $('.progress .progress-bar-totalYields').attr('data-transitiongoal', Math.min(Math.round(tempTotal * 10) / 10, 100));
 
