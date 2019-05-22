@@ -3408,7 +3408,7 @@ function render(years){
     //This is for the title above the graph
     svg.append("text")
         .attr("x", (503-textXPosChange))
-        .attr("y", 15)
+        .attr("y", 20)
         .text("Ecosystem Service Scores")
         .style("fill", "#000")
         .attr("text-anchor", "middle")
@@ -3418,7 +3418,7 @@ function render(years){
     //This is going to add all the names of categories that are in the dataset.
     svg.append("text")
         .attr("x", (700-textXPosChange))
-        .attr("y", 35)
+        .attr("y", 45)
         .text("Average Score")
         .style("fill", "#888")
         .attr("text-anchor", "middle")
@@ -3483,15 +3483,13 @@ function render(years){
     //the variable patter is used to create the patter to be used to fill in smallrect elements
     var pattern = defs.append("pattern")
     		.attr("id","hash4_4")
-        .attr("width","8")
-        .attr("height","8")
+        .attr("width","126")
+        .attr("height","125")
         .attr("patternUnits","userSpaceOnUse")
-        .attr("patternTransform","rotate(45)")
-    	  .append("rect")
-    		  .attr("width","4")
-          .attr("height","8")
-          .attr("transform","translate(0,0)")
-          .attr("fill","#0087ff" );
+        .append("image")
+          .attr("xlink:href", "../imgs/consoleTexture.png")
+          .attr('width', 126)
+          .attr('height', 125);
 
 
     //this for loop adds the texts of data types
@@ -3522,7 +3520,7 @@ function render(years){
       }
       else{
         svg.append("rect")
-            .attr("fill", "url(#hash4_4)")
+            .attr("fill", 'url(#hash4_4)')
             .attr("x", (650 - textXPosChange))
             .attr("y", 55+i*30)
             .attr("rx", 5)
