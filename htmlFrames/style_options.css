@@ -288,15 +288,9 @@ body {
 
   #exitOptionsButton1{
     width: 12vw;
-    right: 5%;
+    right: .5%;
     top: 12%;
   }
-
-  exitOptionsButton1.sticky {
-    position: sticky;
-    top:12;
-  }
-
 
   #progressBarAggregateTool {
     position: relative;
