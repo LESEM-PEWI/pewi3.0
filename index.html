@@ -57,7 +57,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/1.4.1/stackblur.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
-     
+
   <!-- object oriented javascript back-end implementation from PEWI 2.1 -->
   <script src="./back-end/helperMethods.js"></script>
   <script src="./back-end/helperObjects.js"></script>
@@ -368,7 +368,7 @@
           <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);">
             <div class="tooltipPrecip">
               <h4>Year 0:</h4>
-              <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
+              <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi(); setupStaticBackground();">
                   <option value=0>24.58</option>
                   <option value=1>28.18</option>
                   <option value=2>30.39</option>
@@ -388,7 +388,7 @@
           <div id="year1PrecipContainer" class="styled-select" onmouseover="getPrecipType(1);">
             <div class="tooltipPrecip">
               <h4>Year 1:</h4>
-              <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();">
+              <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -406,7 +406,7 @@
           <div id="year2PrecipContainer" class="styled-select" onmouseover="getPrecipType(2);">
             <div class="tooltipPrecip">
               <h4>Year 2:</h4>
-              <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi();">
+              <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -424,7 +424,7 @@
           <div id="year3PrecipContainer" class="styled-select" onmouseover="getPrecipType(3);">
             <div class="tooltipPrecip">
               <h4>Year 3:</h4>
-              <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi();">
+              <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -449,7 +449,7 @@
         <div id="year1Button" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="icon yearSelected" src="./imgs/one.png"></div>
         <div id="year2Button" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="icon yearImageHidden" src="./imgs/two.png"></div>
         <div id="year3Button" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="icon yearImageHidden" src="./imgs/three.png"></div>
-        <div id="yearAddButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
+        <div id="yearAddButton" onclick="addYearAndTransition();setupStaticBackground();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
         <div id="yearDeleteButton" onclick="deleteYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearDeleteImage" class="icon yearNotSelected" src="./imgs/deleteYear.png"></div>
         <div id="yearCopyButton" class="year-styled-select">
           <h4>Copy From:</h4>
@@ -462,7 +462,7 @@
         </div>
         <div id="yearPasteButton" class="year-styled-select">
           <h4>Paste To:</h4>
-          <select id="yearToPaste" class="yearCopyPasteSelect" onChange="pasteYear();">
+          <select id="yearToPaste" class="yearCopyPasteSelect" onChange="pasteYear();setupStaticBackground();">
               <option value=0>      </option>
               <option value=1>Year 1</option>
               <option value=2>Year 2</option>

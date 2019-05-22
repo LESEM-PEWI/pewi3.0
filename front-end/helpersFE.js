@@ -5080,6 +5080,7 @@ function switchYearTab(yearNumberToChangeTo) {
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
   document.getElementById(yearIdString).className = "icon yearSelected";
   refreshProgressBar(currentYear);
+  setupStaticBackground();
   // store last users action ( print function )
   if (!modalUp) {
     storeCurrentCameraSession(3, yearNumberToChangeTo);
@@ -5244,7 +5245,7 @@ function toggleVisibility() {
   if (!multiplayerAssigningModeOn) {
     for (var i = 1; i <= 15; i++) {
       var string = "paint" + i;
-      document.getElementById(string).style.display = "inline-block";
+      document.getElementById(string).parentNode.style.display = "inline-block";
     }
 
     document.getElementById('progressBarContainer').style.display = "block";
@@ -5305,7 +5306,7 @@ function toggleVisibility() {
 
         default:
           if (arrLines[i].slice(0, 5) == 'paint') {
-            document.getElementById(arrLines[i]).style.display = "none";
+            document.getElementById(arrLines[i]).parentNode.style.display = "none"; //If you do the child instead of the parent the parent becomes empty and still takes up space
           }
           break;
       } // end switch

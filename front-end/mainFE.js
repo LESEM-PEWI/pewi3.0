@@ -515,6 +515,11 @@ function initWorkspace(file) {
 
   //setup stats display
   stats.domElement.id = 'statFrame';
+  stats.domElement.style.top = null; //for some reason deleting the attributes does not work you must set them to null
+  stats.domElement.style.left = null;
+  stats.domElement.style.right = "0px";
+  stats.domElement.style.bottom = "0px";
+  stats.domElement.style.position = "absolute";
   document.body.appendChild(stats.domElement);
 
   //Setup scene, toggle options, and add the background
@@ -795,7 +800,11 @@ function setupRiver() {
 //setupStaticBackground uses the old pewi graphics as a background image
 function setupStaticBackground() {
 
-  var r = Math.floor(Math.random() * oldPewiBackgrounds.length);
+var r = 2;
+switch(printPrecipYearType()){
+  case 'Dry': r = 0; break;
+    case 'Normal': r = 1; break;
+}
 
   var bg = new THREE.Mesh(
     new THREE.PlaneGeometry(2, 2, 0),
