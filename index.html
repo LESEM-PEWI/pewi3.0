@@ -57,7 +57,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/1.4.1/stackblur.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
-     
+
   <!-- object oriented javascript back-end implementation from PEWI 2.1 -->
   <script src="./back-end/helperMethods.js"></script>
   <script src="./back-end/helperObjects.js"></script>
@@ -368,7 +368,7 @@
           <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);">
             <div class="tooltipPrecip">
               <h4>Year 0:</h4>
-              <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
+              <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi(); setupStaticBackground();">
                   <option value=0>24.58</option>
                   <option value=1>28.18</option>
                   <option value=2>30.39</option>
@@ -388,7 +388,7 @@
           <div id="year1PrecipContainer" class="styled-select" onmouseover="getPrecipType(1);">
             <div class="tooltipPrecip">
               <h4>Year 1:</h4>
-              <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();">
+              <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -406,7 +406,7 @@
           <div id="year2PrecipContainer" class="styled-select" onmouseover="getPrecipType(2);">
             <div class="tooltipPrecip">
               <h4>Year 2:</h4>
-              <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi();">
+              <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -424,7 +424,7 @@
           <div id="year3PrecipContainer" class="styled-select" onmouseover="getPrecipType(3);">
             <div class="tooltipPrecip">
               <h4>Year 3:</h4>
-              <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi();">
+              <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>

@@ -800,7 +800,11 @@ function setupRiver() {
 //setupStaticBackground uses the old pewi graphics as a background image
 function setupStaticBackground() {
 
-  var r = Math.floor(Math.random() * oldPewiBackgrounds.length);
+var r = 2;
+switch(printPrecipYearType()){
+  case 'Dry': r = 0; break;
+    case 'Normal': r = 1; break;
+}
 
   var bg = new THREE.Mesh(
     new THREE.PlaneGeometry(2, 2, 0),

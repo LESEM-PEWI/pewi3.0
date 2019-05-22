@@ -5049,6 +5049,7 @@ function switchYearTab(yearNumberToChangeTo) {
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
   document.getElementById(yearIdString).className = "icon yearSelected";
   refreshProgressBar(currentYear);
+  setupStaticBackground();
   // store last users action ( print function )
   if (!modalUp) {
     storeCurrentCameraSession(3, yearNumberToChangeTo);
