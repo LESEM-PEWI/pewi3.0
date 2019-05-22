@@ -49,7 +49,7 @@ var year2to3 = false; //true if year 2 is deleted when year 3 is present; false 
 var maxYear = 0; //maximum number of years present currently on the board - only used for deletetion of years
 var yearCopyPaste = 0; //used for copying and pasting the selected year
 var selectedLandType = 0; //keeps track of which land is selected
-
+var resultsMappedHover=false;
 // arrays
 
 //var arrLines;
@@ -2484,6 +2484,70 @@ function getHighlightColor(highlightType, tileId) {
 
 } //end getHighlightColor
 
+//translate raw score to catalog score for result tab in hover information
+function catalogScoreCarbonSequestration(score){
+  if(score>=0&&score<4.04){
+    return "Very Low";
+  }else if(score>4.04&&score<8.09){
+    return "Low";
+  }else if(score>8.09&&score<12.13){
+    return "Meduim";
+  }else if(score>12.13&&score<16.17){
+    return "High";
+  }else if(score>16.17){
+    return "Very High";
+  }
+}
+//translate raw gross Erosion score to catalog score in results tab when hover a tile
+function catalogScoreGrossErosion(score){
+  if(score<0.5){
+    return "Very Low";
+  }else if(score>0.5&&score<2){
+    return "Low";
+  }else if(score>2&&score<3.5){
+    return "Meduim";
+  }else if(score>3.5&&score<5){
+    return "High";
+  }else if(score>5){
+    return "Very High";
+  }
+}
+//translate raw gross Erosion score to catalog score in results tab when hover a tile
+function catalogScoreSedimentControl(score){
+  if(score>0&&score<9.94){
+    return "Very Low";
+  }else if(score>9.94&&score<19.88){
+    return "Low";
+  }else if(score>19.88&&score<29.82){
+    return "Meduim";
+  }else if(score>29.82&&score<39.76){
+    return "High";
+  }else if(score>39.76){
+    return "Very High";
+  }
+}
+function floodFrequencyCatalogScore(scoreFloodFrequency){
+  switch (scoreFloodFrequency) {
+     case 0:
+      return "None";
+       break;
+     case 10:
+       return "None";
+       break;
+     case 20:
+       return "Rare";
+       break;
+     case 30:
+       return "Occasionally";
+       break;
+     case 40:
+       return "Frequently";
+       break;
+     case 50:
+       return "Ponded";
+       break;
+   }
+}
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
@@ -2494,6 +2558,7 @@ function getHighlightedInfo(tileId) {
   } else {
 
     var highlightString = "";
+      console.log(currentHighlightType);
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
@@ -2501,35 +2566,36 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for gross erosion levels
       case 2:
-        highlightString = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>";
+        highlightString = catalogScoreGrossErosion(Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2))+"<br>"+
+        Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>";
         break;
         //create string for phosphorus load levels
       case 3:
         highlightString = (boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>";
         break;
         //create string for flood frequency levels
-      case 4:
-        switch (Number(boardData[currentBoard].map[tileId].floodFrequency)) {
-          case 0:
-            highlightString = "None" + "<br>";
-            break;
-          case 10:
-            highlightString = "None" + "<br>";
-            break;
-          case 20:
-            highlightString = "Rare" + "<br>";
-            break;
-          case 30:
-            highlightString = "Occasionally" + "<br>";
-            break;
-          case 40:
-            highlightString = "Frequently" + "<br>";
-            break;
-          case 50:
-            highlightString = "Ponded" + "<br>";
-            break;
-        }
-        break;
+      // case 4:
+      //   switch (Number(boardData[currentBoard].map[tileId].floodFrequency)) {
+      //     case 0:
+      //       highlightString = "None" + "<br>";
+      //       break;
+      //     case 10:
+      //       highlightString = "None" + "<br>";
+      //       break;
+      //     case 20:
+      //       highlightString = "Rare" + "<br>";
+      //       break;
+      //     case 30:
+      //       highlightString = "Occasionally" + "<br>";
+      //       break;
+      //     case 40:
+      //       highlightString = "Frequently" + "<br>";
+      //       break;
+      //     case 50:
+      //       highlightString = "Ponded" + "<br>";
+      //       break;
+      //   }
+      //   break;
         //create string for drainage classification
       case 5:
         var drainage = Number(boardData[currentBoard].map[tileId].drainageClass);
@@ -2661,11 +2727,13 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for sediment control
       case 19:
-        highlightString = (Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile) * Number(boardData[currentBoard].map[tileId].area)).toFixed(2) + " tons" + "<br>";
+        highlightString = catalogScoreSedimentControl((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile) * Number(boardData[currentBoard].map[tileId].area)).toFixed(2))+"<br>"+
+        (Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile) * Number(boardData[currentBoard].map[tileId].area)).toFixed(2) + " tons" + "<br>";
         break;
         //create string for carbon sequestration
       case 20:
-        highlightString = (Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1) + " tons" + "<br>";
+        highlightString = catalogScoreCarbonSequestration((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1))+"<br>"+
+        (Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1) + " tons" + "<br>";
         break;
         //create string for Game Wildlife score
       case 21:
@@ -2841,7 +2909,14 @@ function hideMultiDownload() {
   document.getElementById('multiplayer').style.visibility = "hidden";
   document.activeElement.blur();
 } //end hideMultiDownload
+function getFloodFrequencyName(floodFrequencyNum){
+  switch (floodFrequencyNum) {
+    case 0:
+      return "None"
 
+
+  }
+}
 //highlightTile updates the tile that should be highlighted.
 function highlightTile(tileId) {
 
@@ -2855,7 +2930,6 @@ function highlightTile(tileId) {
   if (previousHover != null) {
     meshMaterials[previousHover].emissive.setHex(0x000000);
   }
-
   //highlight the new tile
   //if not a tile
   if (tileId != -1 && !modalUp) {
@@ -2873,30 +2947,113 @@ function highlightTile(tileId) {
       //Highlight a nonzero land type tile
       meshMaterials[tileId].emissive.setHex(0x7f7f7f);
       previousHover = tileId;
-
       //update HUD with current information
       //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + "Current Cell: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
 
       //update the information displayed in the delayed hover div by cursor
+      // document.getElementById("levelsButton").onclick=function(){
+      //   resultsMappedHover=true;
+      // }
+      //console.log(boardData[currentBoard].map[tileId]);
+      console.log(currentHighlightType);
+      // if(resultsMappedHover){
+      //   document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")"
+      //   + "<br>"+getHighlightedInfo(tileId);
+      // }
+      // if(!resultsMappedHover){
+        var info4=getHighlightedInfo(tileId);
+        var info5="Subwatershed: "+ boardData[currentBoard].map[tileId].subwatershed;
+        var info6="FloodFrequency: "+floodFrequencyCatalogScore(Number(boardData[currentBoard].map[tileId].floodFrequency));
+        var info7="Drainage Level:";
+        var info8=getSuitable(tileId);
 
-        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId) + "\n" +  getSlope(tileId) + "\n" + getSuitable(tileId) + "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
-        //May use strings and iterate through them for removing hover information
-        var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]);
-        var info2 = "Precipitation: " + printPrecipYearType();
-        var info3 = "Soil Type: " + printSoilType(tileId);
-        if (document.getElementById('parameters').innerHTML.includes('hover1')) {
-          document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info1 + "<br>", '');
+        document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" +
+        info4 +  getSlope(tileId) + "\n" +"Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" +
+        "Precipitation: " +printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId) + info5+"<br>"+info6+ "<br>" + info7+"<br>" +info8;
+          //May use strings and iterate through them for removing hover information
+          var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]);
+          var info2 = "Precipitation: " + printPrecipYearType();
+          var info3 = "Soil Type: " + printSoilType(tileId);
+          if (document.getElementById('parameters').innerHTML.includes('hover1')) {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info1 + "<br>", '');
+            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
+          if (document.getElementById('parameters').innerHTML.includes('hover2')) {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info2 + "<br>", '');
+            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
+          if (document.getElementById('parameters').innerHTML.includes('hover3')) {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info3, '');
+            //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
+          if (document.getElementById('parameters').innerHTML.includes('hover4')) {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info4, '');
           //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
-        }
-        if (document.getElementById('parameters').innerHTML.includes('hover2')) {
-          document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info2 + "<br>", '');
+          }
+          if (document.getElementById('parameters').innerHTML.includes('hover5')) {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info5 +"<br>", '');
           //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
-        }
-        if (document.getElementById('parameters').innerHTML.includes('hover3')) {
-          document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info3, '');
+          }
+          if (document.getElementById('parameters').innerHTML.includes('hover6')&&currentHighlightType!=4) {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info6 +"<br>", '');
           //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
-        }
+          }
+          if (document.getElementById('parameters').innerHTML.includes('hover7')) {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info7 +"<br>", '');
+          //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
+          if (document.getElementById('parameters').innerHTML.includes('hover8')) {
+            document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info8, '');
+          //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+          }
+      //}
+      //console.log(currentHighlightType);
+      // var info4=getHighlightedInfo(tileId);
+      // var info5="Subwatershed: "+ boardData[currentBoard].map[tileId].subwatershed;
+      // var info6="FloodFrequency: ";
+      // var info7="Drainage Level:";
+      // var info8=getSuitable(tileId);
+      //
+      // document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" +
+      // info4 +  getSlope(tileId) + "\n" +"Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]) + "<br>" +
+      // "Precipitation: " +printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId) + info5+"<br>"+info6+ "<br>" + info7+"<br>" +info8;
+      //   //May use strings and iterate through them for removing hover information
+      //   var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]);
+      //   var info2 = "Precipitation: " + printPrecipYearType();
+      //   var info3 = "Soil Type: " + printSoilType(tileId);
+      //   if (document.getElementById('parameters').innerHTML.includes('hover1')) {
+      //     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info1 + "<br>", '');
+      //     //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+      //   }
+      //   if (document.getElementById('parameters').innerHTML.includes('hover2')) {
+      //     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info2 + "<br>", '');
+      //     //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+      //   }
+      //   if (document.getElementById('parameters').innerHTML.includes('hover3')) {
+      //     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info3, '');
+      //     //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+      //   }
+      //   if (document.getElementById('parameters').innerHTML.includes('hover4')) {
+      //     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info4, '');
+      //   //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+      //   }
+      //   if (document.getElementById('parameters').innerHTML.includes('hover5')) {
+      //     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info5 +"<br>", '');
+      //   //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+      //   }
+      //   if (document.getElementById('parameters').innerHTML.includes('hover6')) {
+      //     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info6 +"<br>", '');
+      //   //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+      //   }
+      //   if (document.getElementById('parameters').innerHTML.includes('hover7')) {
+      //     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info7 +"<br>", '');
+      //   //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+      //   }
+      //   if (document.getElementById('parameters').innerHTML.includes('hover8')) {
+      //     document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info8, '');
+      //   //document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" + getHighlightedInfo(tileId)  + "Precipitation: " + printPrecipYearType() + "<br>" + "Soil Type: " + printSoilType(tileId);
+      //   }
         //this is where you should include the code about the topography for the hover over button
 
     }
@@ -3758,44 +3915,44 @@ function printSoilType(tileId) {
       break;
   }
 //"Game Wildlife: " + getTileGameWildlifeInfoText(getTileGameWildlifeScore(tileId)) + "<br>"
-  if (document.getElementById('parameters').innerHTML.includes('hover4') && currentHighlightType != 0) {
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile) * Number(boardData[currentBoard].map[tileId].area)).toFixed(2) + " tons" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1) + " tons" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Game Wildlife: " + getTileGameWildlifeInfoText(getTileGameWildlifeScore(tileId)) + "<br>");
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>");
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(1) + " animals/acre/yr" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSwitchgrassYield() / 0.445407279029).toFixed(2) + " Mg/ha/yr" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getWoodYield() / 171.875).toFixed(2) + " m3/ha/yr" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("608.6 tons/acre/yr" + "<br>", '');
-  }
-  if (document.getElementById('parameters').innerHTML.includes('hover5')) {
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>", '');
-  }
-  if (document.getElementById('parameters').innerHTML.includes('hover6')) {
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("None" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Rare" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Occasionally" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Frequently" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Ponded" + "<br>", '');
-  }
-  if (document.getElementById('parameters').innerHTML.includes('hover7')) {
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Very Poor" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Poor" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Somewhat Poor" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Moderate / Well" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Excessive" + "<br>", '');
-  }
-  if (document.getElementById('parameters').innerHTML.includes('hover8')) {
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Strategic Wetland" + "<br>", '');
-    document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Non-Strategic Wetland", '');
-  }
+  // if (document.getElementById('parameters').innerHTML.includes('hover4') && currentHighlightType != 0) {
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "%" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedGrossErosionRate).toFixed(2) + " t/ac/yr" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedSedimentDeliveryToStreamTile) * Number(boardData[currentBoard].map[tileId].area)).toFixed(2) + " tons" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace((Number(boardData[currentBoard].map[tileId].results[yearSelected].calculatedCarbonSequestration/1000)*1.10231).toFixed(1) + " tons" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Game Wildlife: " + getTileGameWildlifeInfoText(getTileGameWildlifeScore(tileId)) + "<br>");
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>");
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(1) + " animals/acre/yr" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getSwitchgrassYield() / 0.445407279029).toFixed(2) + " Mg/ha/yr" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(Number(boardData[currentBoard].map[tileId].getWoodYield() / 171.875).toFixed(2) + " m3/ha/yr" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("608.6 tons/acre/yr" + "<br>", '');
+  // }
+  // if (document.getElementById('parameters').innerHTML.includes('hover5')) {
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Subwatershed " + boardData[currentBoard].map[tileId].subwatershed + "<br>", '');
+  // }
+  // if (document.getElementById('parameters').innerHTML.includes('hover6')) {
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("None" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Rare" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Occasionally" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Frequently" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Ponded" + "<br>", '');
+  // }
+  // if (document.getElementById('parameters').innerHTML.includes('hover7')) {
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Very Poor" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Poor" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Somewhat Poor" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Moderate / Well" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Excessive" + "<br>", '');
+  // }
+  // if (document.getElementById('parameters').innerHTML.includes('hover8')) {
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Strategic Wetland" + "<br>", '');
+  //   document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace("Non-Strategic Wetland", '');
+  // }
   return highlightString;
 }
 
@@ -4954,6 +5111,7 @@ function switchConsoleTab(value) {
   switch (value) {
     case 1:
       inDispLevels = false;
+      resultsMappedHover=false;
       if (curTracking) {
         pushClick(0, getStamp(), 4, 0, null);
       }
@@ -4963,6 +5121,7 @@ function switchConsoleTab(value) {
       break;
     case 2:
       inDispLevels = false;
+      resultsMappedHover=false;
       if (curTracking) {
         pushClick(0, getStamp(), 5, 0, null);
       }
@@ -4972,6 +5131,7 @@ function switchConsoleTab(value) {
       updateIndexPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Glossary</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
       break;
     case 3:
+      resultsMappedHover=true;
       inDispLevels = true;
       if (curTracking) {
         pushClick(0, getStamp(), 7, 0, null);
@@ -4982,6 +5142,7 @@ function switchConsoleTab(value) {
       break;
     case 4:
       inDispLevels = true;
+      resultsMappedHover=false;
       if (curTracking) {
         pushClick(0, getStamp(), 8, 0, null);
       }
@@ -4991,6 +5152,7 @@ function switchConsoleTab(value) {
       break;
     case 5:
       inDispLevels = false;
+      resultsMappedHover=false;
       if (curTracking) {
         pushClick(0, getStamp(), 9, 0, null);
       }
@@ -4999,6 +5161,7 @@ function switchConsoleTab(value) {
       break;
     case 6:
       inDispLevels = false;
+      resultsMappedHover=false;
       if (curTracking) {
         pushClick(0, getStamp(), 6, 0, null);
       }
@@ -5009,6 +5172,7 @@ function switchConsoleTab(value) {
       break;
     case 7:
       inDispLevels = true;
+      resultsMappedHover=false;
       if (curTracking) {
         pushClick(0, getStamp(), 68, 0, null);
       }

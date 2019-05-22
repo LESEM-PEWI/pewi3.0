@@ -183,9 +183,9 @@ function Click(c1, c2, c3, c4, c5) {
         //When the user clicks the land-type icon
       case 4:
         if (action) {
-          return switchConsoleTab(1);
           break;
         } else {
+            console.log("adsd");
           return "Land-use icon was clicked";
           break;
         }
