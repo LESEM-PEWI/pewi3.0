@@ -1107,6 +1107,7 @@ function drawEcosystemRadar(yearArray) {
     }, {
       label: "Total Sum Yields",
       axis: "Total Yields",
+
       value: Math.min((Totals.cornGrainYieldScore[y]  + Totals.soybeanYieldScore[y]  + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y]  + Totals.grassHayYieldScore[y]  +
       Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y]) / 100, 100),
     }, {

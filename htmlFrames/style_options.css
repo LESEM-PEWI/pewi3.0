@@ -28,18 +28,6 @@ body {
    width: 100%;
   }
 
-  #exitOptionsButton {
-    margin-left: 5%;
-   margin-top: 5%;
-   width: 12vw;
-  }
-
-#resetOptionsPage{
-    margin-left: 30%;
-   margin-top: 5%;
-   width: 12vw;
-}
-
   #optionsMainHolder {
    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
    margin: 0px 15% 0px 15%;
@@ -283,6 +271,22 @@ body {
 
   #closeDiv:hover {
     cursor: pointer;
+  }
+
+/* The next two tags make the "SAVE & EXIT", and the "RESE%T OPTIONS" stay in the bottom right corner permanently
+*/
+  #exitOptionsButton{
+    position: fixed;
+    width: 12vw;
+    bottom:100px;
+    right:30px;
+  }
+
+  #resetOptionsPage{
+    position: fixed;
+    width: 12vw;
+    bottom: 20px;
+    right: 30px;
   }
 
   #progressBarAggregateTool {
