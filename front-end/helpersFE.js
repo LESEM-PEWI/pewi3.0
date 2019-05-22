@@ -975,8 +975,8 @@ function deleteYearAndTransition()
         if(currMaxYear == 1)
          {
            snackBar.innerHTML = "Cannot delete year 1!";
-          snackBar.className = "show";
-          setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+           snackBar.className = "show";
+           setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
            yearSelected = 1;
            currMaxYear = 1;
            g_isDeleted = false;
@@ -987,6 +987,13 @@ function deleteYearAndTransition()
            g_year1delete = true;
           // g_isDeleted = true;
            response = "Deleted!";
+
+           //make copy field blank if deleted year was selected
+           if(yearSelected == yearCopyPaste){
+             document.getElementById("yearToCopy").value = 0;
+             document.getElementById("yearPasteButton").style.display = "none";
+           }
+           
            document.getElementById("year" + currMaxYear + "Button").style.display = "none";
            document.getElementById("yearToCopy").options[currMaxYear].style.display = 'none';
            document.getElementById("yearToPaste").options[currMaxYear].style.display = 'none';
@@ -1016,6 +1023,13 @@ function deleteYearAndTransition()
       else if(yearSelected == 2 && currMaxYear == 3)
       {
         response = "Deleted!";
+
+        //make copy field blank if deleted year was selected
+        if(yearSelected == yearCopyPaste){
+          document.getElementById("yearToCopy").value = 0;
+          document.getElementById("yearPasteButton").style.display = "none";
+        }
+
         //delete the button of the year - actual deletion is done in transitionToYear
         document.getElementById("year3Button").style.display = "none";
         document.getElementById("yearToCopy").options[3].style.display = 'none';
@@ -1030,13 +1044,22 @@ function deleteYearAndTransition()
         document.getElementById("year" + yearSelected + "Button").style.display = "none";
         document.getElementById("yearToCopy").options[yearSelected].style.display = 'none';
         document.getElementById("yearToPaste").options[yearSelected].style.display = 'none';
+
+        //make copy field blank if deleted year was selected
+        if(yearSelected == yearCopyPaste){
+          document.getElementById("yearToCopy").value = 0;
+          document.getElementById("yearPasteButton").style.display = "none";
+        }
+
         currMaxYear -=1;
         yearSelected -= 1;
         g_isDeleted = true;
+
         //switch to the previous year
         transitionToYear(yearSelected);
         switchYearTab(yearSelected);
       }
+
     }
     else
     {
