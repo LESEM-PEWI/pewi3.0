@@ -166,7 +166,7 @@ function toggleTabTitle(value, dir) {
         document.getElementById(value).innerHTML = 'years&nbsp;selection';
         break;
       case 'levelsTabTitle':
-        document.getElementById(value).innerHTML = 'results&nbsp;mapped';
+        document.getElementById(value).innerHTML = 'result&nbsp;maps';
         break;
       case 'featuresTabTitle':
         document.getElementById(value).innerHTML = 'physical&nbsp;features';
@@ -296,9 +296,11 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('totalScoreDetails')[0].childNodes;
         // 0 - 100 value
-        var totalScore = Math.min((Totals.nitrateConcentrationScore[currentYear] +
-          Totals.phosphorusLoadScore[currentYear] + Totals.sedimentDeliveryScore[currentYear] + Totals.carbonSequestrationScore[currentYear] +
-          Totals.grossErosionScore[currentYear] + Totals.gameWildlifePointsScore[currentYear] + Totals.biodiversityPointsScore[currentYear]) / 7, 100);
+
+        var totalScore = Math.min(Totals.cornGrainYieldScore[currentYear] +
+          Totals.soybeanYieldScore[currentYear] + Totals.mixedFruitsAndVegetablesYieldScore[currentYear] + Totals.alfalfaHayYieldScore[currentYear] +
+          Totals.grassHayYieldScore[currentYear] + Totals.switchgrassYieldScore[currentYear] + Totals.cattleYieldScore[currentYear] + Totals.woodYieldScore[currentYear] + Totals.shortRotationWoodyBiomassYieldScore[currentYear], 100);
+
         childNodes[5].innerHTML = 'Current: ' + Math.round(totalScore * 10) / 10  + '/100';
 
         document.getElementsByClassName('totalScoreDetails')[0].style.display = 'block';
@@ -1493,6 +1495,8 @@ function copyYear()
   document.getElementById("yearPasteButton").style.display = "block";
   //Hide the option of pasting the same year to itself
   document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'none';
+
+
 } //end copyYear
 
 //createFlock displays an animated flock of birds for 10 seconds
@@ -3664,6 +3668,10 @@ function pasteYear()
     boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
     boardData[currentBoard].updateBoard();
     refreshBoard();
+
+    calculateResults();
+    refreshProgressBar(currentYear);
+
     snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
     snackBar.className = "show";
     setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
