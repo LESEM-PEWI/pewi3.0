@@ -286,10 +286,20 @@ body {
     cursor: pointer;
   }
 
-  #exitOptionsButton1{
+/* This is the save and exit button that is always viewable
+*/
+  #exitOptionsButton2{
+    position: fixed;
     width: 12vw;
-    right: .5%;
-    top: 12%;
+    bottom:100px;
+    right:30px;
+  }
+
+  #resetOptionsPage1{
+    position: fixed;
+    width: 12vw;
+    bottom: 20px;
+    right: 30px;
   }
 
   #progressBarAggregateTool {

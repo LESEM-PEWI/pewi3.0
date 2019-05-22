@@ -38,16 +38,6 @@ Cleaned and Prepared - July 2016
   <!-- <script type= "text/javascript" src="../front-end/helpersFE.js"></script> -->
   <script src="../lib/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="./options_script.js"></script>
-
-  <style>
-    div.sticky {
-      position: sticky;
-      bottom: 0;
-      top: 5%;
-      right: .5%;
-    }
-</style>
-
 </head>
 
 <body>
@@ -60,20 +50,7 @@ Cleaned and Prepared - July 2016
 
   <!--Line below was added to add exit button on top right of Instructor Options page. Reference Issue 362 for details. -->
   <div id="closeDiv"><img id="closeOptions" onclick="undoSelectedOptions(); checkIfSaved(); parent.resetOptions();" src="../imgs/close_black.png"></div>
-
-
-
-
-
   <div id="optionsMainHolder">
-
-
-    <div class="sticky">
-      <div id="exitOptionsButton1" class="mainButton" onclick="saveCurrentOptionsState();">Save & Exit</div>
-    </div>
-
-
-
     <div class="optionsHeader" style="margin-top:15px;">
       Land Use Types
       <br>
@@ -284,14 +261,19 @@ Cleaned and Prepared - July 2016
       <label for="statFrame"> Application Statistics On </label>
     </div>
 
+
+    <!-- This was the code the placed the save and exit and reset options button at the bottom of the screen
      <div style="width:100%;height:200px;position:relative;">
       <div id="exitOptionsButton" class="mainButton" onclick="saveCurrentOptionsState();">Save & Exit</div>
-    <!-- The line below was changed to for Issue 368. Reference Issue 368 for more information. -->
+     The line below was changed to for Issue 368. Reference Issue 368 for more information.
     <div id="resetOptionsPage" class="mainButton" onclick="resetOptionsSelected(); parent.resetOptions();">Reset Options</div>
     </div>
+    -->
 
 
   </div>
+<div id="exitOptionsButton2" class="mainButton" onclick="saveCurrentOptionsState();">Save & Exit</div>
+<div id="resetOptionsPage1" class="mainButton" onclick="resetOptionsSelected(); parent.resetOptions();">Reset Options</div>
 
 </body>
 
