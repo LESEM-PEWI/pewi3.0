@@ -296,6 +296,7 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('totalScoreDetails')[0].childNodes;
         // 0 - 100 value
+        
         // var totalScore = Math.min((Totals.nitrateConcentrationScore[currentYear] +
         //   Totals.phosphorusLoadScore[currentYear] + Totals.sedimentDeliveryScore[currentYear] + Totals.carbonSequestrationScore[currentYear] +
         //   Totals.grossErosionScore[currentYear] + Totals.gameWildlifePointsScore[currentYear] + Totals.biodiversityPointsScore[currentYear]) / 7, 100);
@@ -304,9 +305,6 @@ function toggleScoreDetails(factor) {
           Totals.soybeanYieldScore[currentYear] + Totals.mixedFruitsAndVegetablesYieldScore[currentYear] + Totals.alfalfaHayYieldScore[currentYear] +
           Totals.grassHayYieldScore[currentYear] + Totals.switchgrassYieldScore[currentYear] + Totals.cattleYieldScore[currentYear] + Totals.woodYieldScore[currentYear] + Totals.shortRotationWoodyBiomassYieldScore[currentYear]) / 9, 100);
 
-
-        // var totalScore = Math.min((Totals.cornGrainYieldScore[currentYear] + Totals.soybeanYieldScore[currentYear] + Totals.mixedFruitsAndVegetablesYieldScore[currentYear] + Totals.alfalfaHayYieldScore[currentYear] +
-        //   Totals.grassHayYieldScore[currentYear] + Totals.switchgrassYieldScore[currentYear] + Totals.cattleYieldScore[currentYear] + Totals.woodYieldScore[currentYear] + Totals.shortRotationWoodyBiomassYieldScore) / 9, 100);
 
         childNodes[5].innerHTML = 'Current: ' + Math.round(totalScore * 10) / 10  + '/100';
 

@@ -28,6 +28,7 @@ body {
    width: 100%;
   }
 
+
   #exitOptionsButton {
     margin-left: 5%;
    margin-top: 5%;
@@ -284,6 +285,18 @@ body {
   #closeDiv:hover {
     cursor: pointer;
   }
+
+  #exitOptionsButton1{
+    width: 12vw;
+    right: 5%;
+    top: 12%;
+  }
+
+  exitOptionsButton1.sticky {
+    position: sticky;
+    top:12;
+  }
+
 
   #progressBarAggregateTool {
     position: relative;

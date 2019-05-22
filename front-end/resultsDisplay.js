@@ -1109,7 +1109,7 @@ function drawEcosystemRadar(yearArray) {
       axis: "Total Yields",
       //value: Math.min((Totals.nitrateConcentrationScore[y] + Totals.phosphorusLoadScore[y] + Totals.sedimentDeliveryScore[y] + Totals.carbonSequestrationScore[y] + Totals.grossErosionScore[y] + Totals.gameWildlifePointsScore[y] + Totals.biodiversityPointsScore[y]) / 700, 100),
       value: Math.min((Totals.cornGrainYieldScore[y] + Totals.soybeanYieldScore[y] + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] + Totals.grassHayYieldScore[y] + Totals.switchgrassYieldScore[y] +
-                        Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y]) / 900, 100),
+                        Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y]) / 900results, 100),
     }, {
       label: "Phosphorus Load",
       axis: "Phosphorus",
