@@ -2405,12 +2405,18 @@ function multiplayerResults() {
     // console.log("multiplayer results is: " +inMultiplayer+", should be true");
     document.getElementById('resultsFrame').contentWindow.document.getElementById("yearHolder").style.display = "none";
     document.getElementById('resultsFrame').contentWindow.document.getElementById("radarContainer").style.display = "none";
+    document.getElementById('resultsFrame').contentWindow.document.getElementById("landUseTitle").style.display = "none";
+    document.getElementById('resultsFrame').contentWindow.document.getElementById("landUseTitleMulti").style.display = "block";
+    document.getElementById('resultsFrame').contentWindow.document.getElementById("scoreChart").style.display = "none";
   }
   else{
     // console.log("multiplayer results is: " +inMultiplayer+", should be false");
     // console.log("making visibility of div tags to true");
     document.getElementById('resultsFrame').contentWindow.document.getElementById("yearHolder").style.display = "block";
     document.getElementById('resultsFrame').contentWindow.document.getElementById("radarContainer").style.display = "block";
+    document.getElementById('resultsFrame').contentWindow.document.getElementById("landUseTitle").style.display = "block";
+    document.getElementById('resultsFrame').contentWindow.document.getElementById("landUseTitleMulti").style.display = "none";
+    document.getElementById('resultsFrame').contentWindow.document.getElementById("scoreChart").style.display = "block";
   }
 }
 
