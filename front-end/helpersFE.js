@@ -166,7 +166,7 @@ function toggleTabTitle(value, dir) {
         document.getElementById(value).innerHTML = 'years&nbsp;selection';
         break;
       case 'levelsTabTitle':
-        document.getElementById(value).innerHTML = 'results&nbsp;mapped';
+        document.getElementById(value).innerHTML = 'result&nbsp;maps';
         break;
       case 'featuresTabTitle':
         document.getElementById(value).innerHTML = 'physical&nbsp;features';
