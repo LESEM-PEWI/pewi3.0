@@ -1493,6 +1493,8 @@ function copyYear()
   document.getElementById("yearPasteButton").style.display = "block";
   //Hide the option of pasting the same year to itself
   document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'none';
+
+
 } //end copyYear
 
 //createFlock displays an animated flock of birds for 10 seconds
@@ -3664,6 +3666,10 @@ function pasteYear()
     boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
     boardData[currentBoard].updateBoard();
     refreshBoard();
+
+    calculateResults();
+    refreshProgressBar(currentYear);
+
     snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
     snackBar.className = "show";
     setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
