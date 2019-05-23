@@ -2579,12 +2579,11 @@ function getHighlightedInfo(tileId) {
   if (currentHighlightType <= 0) {
     return "";
   } else {
-
     var highlightString = "";
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>";
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+Totals.nitrateContribution[currentYear][tileId].toFixed(4)+"<br>";
         break;
         //create string for gross erosion levels
       case 2:
@@ -2646,43 +2645,43 @@ function getHighlightedInfo(tileId) {
           switch(soil)
           {
             case "A":
-            highlightString = printSoilType(tileId)+"13.2-13.9 Mg/hr/yr" + "<br>";
+            highlightString = printSoilType(tileId);
             break;
             case "B":
-            highlightString =  printSoilType(tileId)+"0 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
             case "C":
-            highlightString = printSoilType(tileId)+"13.9-15.1 Mg/hr/yr" + "<br>";
+            highlightString = printSoilType(tileId);
             break;
             case "D":
-            highlightString =  printSoilType(tileId)+"11.2-13.2 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
             case "G":
-            highlightString =  printSoilType(tileId)+"0 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
             case "K":
-            highlightString =  printSoilType(tileId)+"11.2-13.2 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
             case "L":
-            highlightString =  printSoilType(tileId)+"13.9-15.1 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
             case "M":
-            highlightString =  printSoilType(tileId)+"13.2-13.9 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
             case "N":
-            highlightString =  printSoilType(tileId)+"13.2-13.9 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
             case "O":
-            highlightString =  printSoilType(tileId)+"11.2-13.2 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
             case "Q":
-            highlightString =  printSoilType(tileId)+"13.2-13.9 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
             case "T":
-            highlightString =  printSoilType(tileId)+"13.2-13.9 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
             case "Y":
-            highlightString =  printSoilType(tileId)+"11.2-13.2 Mg/hr/yr" + "<br>";
+            highlightString =  printSoilType(tileId);
             break;
           }
         break;
@@ -2742,7 +2741,7 @@ function getHighlightedInfo(tileId) {
         highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
         break;
       case 23:
-        highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>";
+        highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>"+boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate.toFixed(2)+"<br>";
         break;
     }
     return highlightString;
@@ -2953,10 +2952,10 @@ function highlightTile(tileId) {
       //update HUD with current information
       //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + "Current Cell: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
-
+      console.log(boardData[currentBoard].map[tileId]);
       //update the information displayed in the delayed hover div by cursor
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear])+ "<br>";
-      var info2 = "Precipitation: " + printPrecipYearType()+ ", "+boardData[currentBoard].precipitation[currentYear]+" inches"+"<br>";
+      var info2 = "Precipitation: " + printPrecipYearType()+ ", "+boardData[currentBoard].precipitation[currentYear]+" in"+"<br>";
       var info3 = "Soil Type: " + printSoilType(tileId);
       var info4=getHighlightedInfo(tileId);
       var info5="Subwatershed: "+ boardData[currentBoard].map[tileId].subwatershed+"<br>";
