@@ -2583,7 +2583,7 @@ function getHighlightedInfo(tileId) {
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+Totals.nitrateContribution[currentYear][tileId].toFixed(4)+"<br>";
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+Totals.nitrateContribution[currentYear][tileId].toFixed(4)+" ppm"+"<br>";
         break;
         //create string for gross erosion levels
       case 2:
