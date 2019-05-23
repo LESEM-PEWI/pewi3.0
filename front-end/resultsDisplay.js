@@ -2623,7 +2623,7 @@ function render(years){
     switch (givenID) {
     case "c1": case "c17": case "c33": case "t1": case "bigrect1": case "checkbox1":
       if(type === "color"){
-        return "#1f77b4";
+        return "#f0ad4e";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2657,7 +2657,7 @@ function render(years){
       break;
     case "c2": case "c18": case "c34": case "t2": case "bigrect2": case "checkbox2":
       if(type === "color"){
-        return "#aec7e8";
+        return "#5bc0de";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2691,7 +2691,7 @@ function render(years){
       break;
     case "c3": case "c19": case "c35": case "t3": case "bigrect3": case "checkbox3":
       if(type === "color"){
-        return "#ff7f0e";
+        return "#5cb85c";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2725,7 +2725,7 @@ function render(years){
       break;
     case "c4": case "c20": case "c36": case "t4": case "bigrect4": case "checkbox4":
       if(type === "color"){
-        return "#ffbb78";
+        return "#d9534f";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2759,7 +2759,7 @@ function render(years){
       break;
     case "c5": case "c21": case "c37": case "t5": case "bigrect5": case "checkbox5":
       if(type === "color"){
-        return "#2ca02c";
+        return "#9ACD32";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2793,7 +2793,7 @@ function render(years){
       break;
     case "c6": case "c22": case "c38": case "t6": case "bigrect6": case "checkbox6":
       if(type === "color"){
-        return "#98df8a";
+        return "#0099DC";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2827,7 +2827,7 @@ function render(years){
       break;
     case "c7": case "c23": case "c39": case "t7": case "bigrect7": case "checkbox7":
       if(type === "color"){
-        return "#9467bd";
+        return "#A53300";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2861,7 +2861,7 @@ function render(years){
       break;
     case "c8": case "c24": case "c40": case "t8": case "bigrect8": case "checkbox8":
       if(type === "color"){
-        return "#c5b0d5";
+        return "#1aafb8";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2895,7 +2895,7 @@ function render(years){
       break;
     case "c9": case "c25": case "c41": case "t9": case "bigrect9": case "checkbox9":
       if(type === "color"){
-        return "#8c564b";
+        return "#beef00";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2929,7 +2929,7 @@ function render(years){
       break;
     case "c10": case "c26": case "c42": case "t10": case "bigrect10": case "checkbox10":
       if(type === "color"){
-        return "#c49c94";
+        return "#A0522D";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2963,7 +2963,7 @@ function render(years){
       break;
     case "c11": case "c27": case "c43": case "t11": case "bigrect11": case "checkbox11":
       if(type === "color"){
-        return "#e377c2";
+        return "#D2691E";
       }
       else if(type === "data"){
         if(y > 2){
@@ -2997,7 +2997,7 @@ function render(years){
       break;
     case "c12": case "c28": case "c44": case "t12": case "bigrect12": case "checkbox12":
       if(type === "color"){
-        return "#9e4a6a";
+        return "#ffde2a";
       }
       else if(type === "data"){
         if(y > 2){
@@ -3031,7 +3031,7 @@ function render(years){
       break;
     case "c13": case "c29": case "c45": case "t13": case "bigrect13": case "checkbox13":
       if(type === "color"){
-        return "#ba6f14";
+        return "#16a085";
       }
       else if(type === "data"){
         if(y > 2){
@@ -3065,7 +3065,7 @@ function render(years){
       break;
     case "c14": case "c30": case "c46": case "t14": case "bigrect14": case "checkbox14":
       if(type === "color"){
-        return "#24e2cf";
+        return "#FF8C00";
       }
       else if(type === "data"){
         if(y > 2){
@@ -3099,7 +3099,7 @@ function render(years){
       break;
     case "c15": case "c31": case "c47": case "t15": case "bigrect15": case "checkbox15":
       if(type === "color"){
-        return "#02d6fc";
+        return "#4169E1";
       }
       else if(type === "data"){
         if(y > 2){
@@ -3133,7 +3133,7 @@ function render(years){
       break;
     case "c16": case "c32": case "c48": case "t16": case "bigrect16": case "checkbox16":
       if(type === "color"){
-        return "#bcf5ff";
+        return "#228B22";
       }
       else if(type === "data"){
         if(y > 2){
@@ -3610,6 +3610,20 @@ function render(years){
       .attr("stroke", "black")
       .attr("stroke-width", 1);
 
+      //This checks to see if all values are 0 and if so we can hide them by default.
+      outerloop: for(var i = 0; i < data.length / years; i++){ //loops through every tracked datapoint
+        for(var j = 0; j < years; j++){
+          if(data[i + j * (data.length / years)].count !== 0){
+            continue outerloop;
+          }
+        }
+        svg.select('#checkbox' + (i + 1)).style('fill', 'gray');
+        svg.selectAll(getInfo('checkbox' + (i + 1), 0, "progressBars")).attr('visibility', 'hidden');
+        listOfHiddenRects = listOfHiddenRects.concat(getInfo('checkbox' + (i + 1), 0, "progressBars"));
+        for(var j = 0; j < years; j++){
+          svg.select('#' + data[i + j * (data.length / years)].id).attr('visibility', 'hidden');
+        }
+      }
     // On circles exit it removes all the circles that are placed in, this is for good D3.js practice and so that circles from previous data do not appear.
     circles.exit().remove();
   }
@@ -3671,19 +3685,35 @@ function render(years){
          else{//this is to do hover effect on hovering a TEXT
            if(!cantChangeTxtColor){
              d3.select(this).style("fill", "black");
+
+             circlesToChange = getInfo(id, years, "data");
+
+             //the for loop below resets the color of each circle to changed state: color--varies, opacity--0.8 and ADDS each circle to the clicked data point array
+             for(var i = 0; i < circlesToChange.length; ++i){
+               svg.select("#"+circlesToChange[i]).style("opacity", 5.0).style("fill", getInfo(id, 0, "color"))
+               .attr('r', 15).moveToFront();
+               svg.select("#textbox").remove();
+               svg.select("#tempText").remove();
+               listOfClickedPoints.push(circlesToChange[i]);
+             }
+
+             //the for loop below changes all the text that have been click to color black text
+             for(var i = 0; i < listOfClickedText.length; ++i){
+               svg.select("#"+listOfClickedText[i]).style("fill", "black");
+             }
            }
          }
       })
       .on('mouseout', function (d) {
         d3.select(this).style("cursor", "default");
         var id = this.id;
+          svg.select("#textbox").remove();
+          svg.select("#tempText").remove();
         //assigning the Rep variable to use to make changes to those elements
         textRep = getInfo(id, 0, "textRep");
         //this is to do hover effect on hovering a CIRCLE
         //removes the text box and the text on top of the text box
         if(id.charAt(0) === "c"){
-          svg.select("#textbox").remove();
-          svg.select("#tempText").remove();
           if(!listOfClickedText.includes(textRep)){
             svg.select("#"+textRep).style("fill", "gray");
           }
@@ -3691,6 +3721,10 @@ function render(years){
         else{//this is to do hover effect on hovering a TEXT
           if(!listOfClickedText.includes(textRep)){
             svg.select("#"+textRep).style("fill", "gray");
+            circlesToChange = getInfo(id, years, "data");
+            for(var i = 0; i < circlesToChange.length; ++i){
+              svg.select("#"+circlesToChange[i]).style("opacity", 0.3).style("fill", "gray").attr('r', 10);
+            }
           }
         }
       })
@@ -3794,11 +3828,6 @@ function render(years){
             for(var i = 0; i < listOfClickedText.length; ++i){
               svg.select("#"+listOfClickedText[i]).style("fill", "black");
             }
-
-            //the for loop below changes all the progress bars that have been selected to color black
-            for(var i = 0; i < listOfProgressBars.length; ++i){
-              svg.select("#"+listOfProgressBars[i]).style("fill", "black");
-            }
           }
         }
         else{//if you select a text
@@ -3885,11 +3914,6 @@ function render(years){
             //the for loop below changes all the text that have been click to color black text
             for(var i = 0; i < listOfClickedText.length; ++i){
               svg.select("#"+listOfClickedText[i]).style("fill", "black");
-            }
-
-            //the for loop below changes all the progress bars that have been selected to color black
-            for(var i = 0; i < listOfProgressBars.length; ++i){
-              svg.select("#"+listOfProgressBars[i]).style("fill", "black");
             }
           }
         }
