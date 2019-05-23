@@ -85,7 +85,8 @@
 
 .progressBarContainer {
   position: absolute;
-  top: 15vw;
+  /* top: 15vw; */
+  top: 13vw;
   right: 5vw;
 }
 
