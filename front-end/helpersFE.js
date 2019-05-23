@@ -2574,7 +2574,6 @@ function getHighlightedInfo(tileId) {
   } else {
 
     var highlightString = "";
-      console.log(currentHighlightType);
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
@@ -2948,7 +2947,7 @@ function highlightTile(tileId) {
       //update HUD with current information
       //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + "Current Cell: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
-      console.log(boardData[currentBoard].map[tileId]);
+
       //update the information displayed in the delayed hover div by cursor
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear])+ "<br>";
       var info2 = "Precipitation: " + printPrecipYearType()+ "<br>";
@@ -2966,8 +2965,6 @@ function highlightTile(tileId) {
         streamNetworkHover="False";
       }
       var info10="Stream Border: "+streamNetworkHover;
-      console.log(boardData[currentBoard].map[tileId].streamNetwork);
-      console.log(info10);
       switch (currentHighlightType) {
         case 4:
           info6="";
@@ -2985,7 +2982,6 @@ function highlightTile(tileId) {
           info3="";
           break;
       }
-      console.log((document.getElementById('parameters').innerHTML.includes('hover6')&&currentHighlightType!=4));
       document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" +
       info4 +  info9 +info1 +info2 + info3 + info5+info6+ info7+info8+info10;
         //May use strings and iterate through them for removing hover information
