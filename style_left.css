@@ -273,39 +273,35 @@
   top: var(--first-consoleButton-top);
 }
 
-
-/* left consoleButton, precipatation button */
-#precipButton {
-  top: 18.28vw;
-  top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
-}
-
-
-/* left consoleButton, year button */
-#yearButton {
-  top: 21.09vw;
-  top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
-}
-
-
-/* left consoleButton, levels button */
-#levelsButton {
-  top: 23.9vw;
-  top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
-}
-
-
 /* left consoleButton, features button */
 #featuresButton {
   top: 26.71vw;
-  top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
+  top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
 }
-
 
 /* left consoleButton, yield button */
 #yieldButton {
   /*border-bottom-right-radius: 5px;*/
   top: 29.52vw;
+  top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
+}
+
+/* left consoleButton, year button */
+#yearButton {
+  top: 21.09vw;
+  top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
+}
+
+/* left consoleButton, precipatation button */
+#precipButton {
+  top: 18.28vw;
+  top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
+}
+
+/* This is the result maps tab */
+/* left consoleButton, levels button */
+#levelsButton {
+  top: 23.9vw;
   top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
 }
 
