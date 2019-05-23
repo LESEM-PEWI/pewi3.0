@@ -2564,6 +2564,13 @@ function drainageClassClassification(drainage) {
       return "Excessive" + "<br>";
   } //end switch
 }
+function phoshorusIndexRiskAssessmentClassification(pindex) {
+  if (pindex >= 0 && pindex <= 1) return "Very Low"+"<br>";
+  else if (pindex > 1 && pindex <= 2) return "Low"+"<br>";
+  else if (pindex > 2 && pindex <= 5) return "Medium"+"<br>";
+  else if (pindex > 5 && pindex <= 15) return "High"+"<br>";
+  else if (pindex > 15) return "Very High"+"<br>";
+}
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
@@ -2574,6 +2581,7 @@ function getHighlightedInfo(tileId) {
   } else {
 
     var highlightString = "";
+    console.log(currentHighlightType);
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
@@ -2586,7 +2594,8 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for phosphorus load levels
       case 3:
-        highlightString = (boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>";
+        highlightString = phoshorusIndexRiskAssessmentClassification((boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2))
+        +(boardData[currentBoard].map[tileId].results[currentYear].phosphorusDelivered / boardData[currentBoard].map[tileId].area).toFixed(2) + " lb/ac/yr" + "<br>";
         break;
         //create string for flood frequency levels
       case 4:
