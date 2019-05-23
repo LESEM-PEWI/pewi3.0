@@ -572,13 +572,13 @@ function Click(c1, c2, c3, c4, c5) {
           return "Flood Frequency was clicked";
           break;
         }
-        //When the user selects Strategic Wetlands
+        //When the user selects Wetland Suitability
       case 46:
         if (action) {
           return displayLevels('wetland');
           break;
         } else {
-          return "Strategic Wetlands was clicked";
+          return "Wetland Suitability was clicked";
           break;
         }
         //When the user selects Subwatershed Boundaries
@@ -1385,7 +1385,7 @@ function Printer() {
             saveScreenshotMapType(property);
 
             // make legend if needed
-            if (property !== 'wetlands' && property !== 'boundary' && property !== "yearUserViewpoint"  &&
+            if (/*property !== 'wetlands' &&*/ property !== 'boundary' && property !== "yearUserViewpoint"  &&
                 property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
                 property !== "yieldUserViewpoint") {
               makeLegendBox(property); // create legend object
@@ -2192,7 +2192,7 @@ function Printer() {
       case 'nitratetile': return 'Cell Nitrate Score';
       // features
       case 'flood': return 'Flood Frequency';
-      case 'wetlands': return 'Strategic Wetlands';
+      case 'wetlands': return 'Wetland Suitability';
       case 'boundary': return 'Subwatershed Boundaries';
       case 'drainage': return 'Drainage Class';
       case 'soil': return 'Soil Class';
