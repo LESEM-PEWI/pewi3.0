@@ -3330,7 +3330,7 @@ function render(years){
     switch(printPrecipYearType(year)){
       case 'Dry': return '#67dee5'; break;
       case 'Normal': return '#4b98d9'; break;
-      default: return '#284772';
+      default: return '#2847dd';
     }
   }
 
