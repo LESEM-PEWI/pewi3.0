@@ -2581,7 +2581,6 @@ function getHighlightedInfo(tileId) {
   } else {
 
     var highlightString = "";
-    console.log(currentHighlightType);
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
@@ -2644,7 +2643,6 @@ function getHighlightedInfo(tileId) {
         break;
       case 8:
           var soil = boardData[currentBoard].map[tileId].soilType;
-          console.log(soil);
           switch(soil)
           {
             case "A":
@@ -2747,7 +2745,6 @@ function getHighlightedInfo(tileId) {
         highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>";
         break;
     }
-    console.log("last: "+currentHighlightType);
     return highlightString;
   } // END if/else
 
@@ -2959,7 +2956,7 @@ function highlightTile(tileId) {
 
       //update the information displayed in the delayed hover div by cursor
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear])+ "<br>";
-      var info2 = "Precipitation: " + printPrecipYearType()+ "<br>";
+      var info2 = "Precipitation: " + printPrecipYearType()+ ", "+boardData[currentBoard].precipitation[currentYear]+" inches"+"<br>";
       var info3 = "Soil Type: " + printSoilType(tileId);
       var info4=getHighlightedInfo(tileId);
       var info5="Subwatershed: "+ boardData[currentBoard].map[tileId].subwatershed+"<br>";
@@ -2969,9 +2966,9 @@ function highlightTile(tileId) {
       var info9=getSlope(tileId);
       var streamNetworkHover;
       if(boardData[currentBoard].map[tileId].streamNetwork==1){
-        streamNetworkHover="True";
+        streamNetworkHover="Yes";
       }else{
-        streamNetworkHover="False";
+        streamNetworkHover="No";
       }
       var info10="Stream Border: "+streamNetworkHover;
       switch (currentHighlightType) {

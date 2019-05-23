@@ -185,7 +185,6 @@ function Click(c1, c2, c3, c4, c5) {
         if (action) {
           break;
         } else {
-            console.log("adsd");
           return "Land-use icon was clicked";
           break;
         }
