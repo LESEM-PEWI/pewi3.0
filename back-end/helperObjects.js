@@ -1385,7 +1385,7 @@ function Printer() {
             saveScreenshotMapType(property);
 
             // make legend if needed
-            if (/*property !== 'wetlands' &&*/ property !== 'boundary' && property !== "yearUserViewpoint"  &&
+            if (property !== 'boundary' && property !== "yearUserViewpoint"  &&
                 property !== "levelUserViewpoint" && property !== "featureUserViewpoint" &&
                 property !== "yieldUserViewpoint") {
               makeLegendBox(property); // create legend object
