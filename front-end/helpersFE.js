@@ -3700,9 +3700,9 @@ function printLandUseType(type) {
 } //end printLandUseType
 
 //printPrecipYearType returns the precipitation category of the year's precipitation
-function printPrecipYearType() {
-
-  var precipLevel = boardData[currentBoard].precipitation[currentYear];
+function printPrecipYearType(year) {
+   //This checks to see if a year was specified. This function riginally assumed the current year.
+    var precipLevel = boardData[currentBoard].precipitation[year] || boardData[currentBoard].precipitation[currentYear];
 
   if (precipLevel == 24.58 || precipLevel == 28.18) {
     return "Dry";

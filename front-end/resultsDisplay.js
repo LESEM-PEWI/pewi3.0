@@ -3325,6 +3325,15 @@ function render(years){
   * The function newRCalculator takes in an HTML element and checks the R of that element and based on that returns the new R.
   * This function was created for Issue 357. For more information refer to Issue 357.
   */
+
+  function getPrecipColor(year){
+    switch(printPrecipYearType(year)){
+      case 'Dry': return '#67dee5'; break;
+      case 'Normal': return '#4b98d9'; break;
+      default: return '#284772';
+    }
+  }
+
   function newRCalculator(thisElement) {
     //element that is being clicked has not been clicked
     var thisElementR = parseInt(thisElement.attributes.r.nodeValue);
@@ -3393,7 +3402,8 @@ function render(years){
                           .style("fill", "none")
                           .style("stroke", "black")
                           .style("stroke-width", "3px")
-                          .style("fill", color(i));
+                          .style('opacity', .5)
+                          .style("fill", getPrecipColor(i+1));
 
       //This is going to add all the names of categories that are in the dataset.
       svg.append("text")
@@ -3632,6 +3642,21 @@ function render(years){
   * The function renderData takes in an array of objects as data and number of years.
   * This function was created for Issue 357. For more information refer to Issue 357.
   */
+
+  d3.selection.prototype.moveToFront = function() {
+    return this.each(function() {
+      this.parentNode.appendChild(this);
+    });
+  };
+
+d3.selection.prototype.moveToBack = function() {
+   return this.each(function() {
+      var firstChild = this.parentNode.firstChild;
+      if (firstChild) {
+        this.parentNode.insertBefore(this, firstChild);
+      }
+    });
+  }
   function renderData(data){
     //the variable dataSet holds the data that is passed in as parameter
     var dataSet = data;
@@ -3689,7 +3714,7 @@ function render(years){
              circlesToChange = getInfo(id, years, "data");
 
              //the for loop below resets the color of each circle to changed state: color--varies, opacity--0.8 and ADDS each circle to the clicked data point array
-             for(var i = 0; i < circlesToChange.length; ++i){
+             for(var i = 0; i < circlesToChange.length; i++){
                svg.select("#"+circlesToChange[i]).style("opacity", 5.0).style("fill", getInfo(id, 0, "color"))
                .attr('r', 15).moveToFront();
                svg.select("#textbox").remove();
@@ -3723,7 +3748,7 @@ function render(years){
             svg.select("#"+textRep).style("fill", "gray");
             circlesToChange = getInfo(id, years, "data");
             for(var i = 0; i < circlesToChange.length; ++i){
-              svg.select("#"+circlesToChange[i]).style("opacity", 0.3).style("fill", "gray").attr('r', 10);
+              svg.select("#"+circlesToChange[i]).style("opacity", 0.3).style("fill", "gray").attr('r', 10).moveToBack();
             }
           }
         }
@@ -3731,11 +3756,6 @@ function render(years){
       .on('click', function (d) {
         var id = this.id;
 
-        d3.selection.prototype.moveToFront = function() {
-          return this.each(function() {
-            this.parentNode.appendChild(this);
-          });
-        };
 
         //the variable circlesToChange is used to hold list of all circles that need to change
         var circlesToChange = getInfo(id, years, "data");
