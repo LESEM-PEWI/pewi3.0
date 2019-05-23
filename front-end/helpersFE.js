@@ -2526,6 +2526,7 @@ function SedimentControlClassification(score){
     return "Very High";
   }
 }
+//get flood frequency classification in text
 function floodFrequencyClassification(scoreFloodFrequency){
   switch (scoreFloodFrequency) {
      case 0:
@@ -2542,8 +2543,8 @@ function floodFrequencyClassification(scoreFloodFrequency){
        return "Ponded";
    }
 }
+//get drainage classification in text
 function drainageClassClassification(drainage) {
-  //var drainage = Number(boardData[currentBoard].map[tileId].drainageClass);
   switch (drainage) {
     case 70:
       return "Very Poor" + "<br>";
@@ -2821,7 +2822,12 @@ function getSlope(tileId)
       break;
   }// end switch
 }// end getSlope
-
+/**
+ * get Wetland Suitability in text
+ *
+ * @param tileId
+ * @returns type of wetland Suitability in text
+ */
 function getSuitable(tileId){
   if (boardData[currentBoard].map[tileId].strategicWetland == 1)
     return "Wetland Suitability: Strategic" + "<br>";
@@ -2942,7 +2948,7 @@ function highlightTile(tileId) {
       //update HUD with current information
       //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + "Current Cell: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
-
+      console.log(boardData[currentBoard].map[tileId]);
       //update the information displayed in the delayed hover div by cursor
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear])+ "<br>";
       var info2 = "Precipitation: " + printPrecipYearType()+ "<br>";
@@ -2953,6 +2959,15 @@ function highlightTile(tileId) {
       var info7="Drainage Level :"+drainageClassClassification(Number(boardData[currentBoard].map[tileId].drainageClass));
       var info8=getSuitable(tileId);
       var info9=getSlope(tileId);
+      var streamNetworkHover;
+      if(boardData[currentBoard].map[tileId].streamNetwork==1){
+        streamNetworkHover="True";
+      }else{
+        streamNetworkHover="False";
+      }
+      var info10="Stream Border: "+streamNetworkHover;
+      console.log(boardData[currentBoard].map[tileId].streamNetwork);
+      console.log(info10);
       switch (currentHighlightType) {
         case 4:
           info6="";
@@ -2972,7 +2987,7 @@ function highlightTile(tileId) {
       }
       console.log((document.getElementById('parameters').innerHTML.includes('hover6')&&currentHighlightType!=4));
       document.getElementById("hover-info").innerHTML = "(" + boardData[currentBoard].map[tileId].row + "," + boardData[currentBoard].map[tileId].column + ")" + "<br>" +
-      info4 +  info9 +info1 +info2 + info3 + info5+info6+ info7+info8;
+      info4 +  info9 +info1 +info2 + info3 + info5+info6+ info7+info8+info10;
         //May use strings and iterate through them for removing hover information
         if (document.getElementById('parameters').innerHTML.includes('hover1')&&currentHighlightType!=0) {
           document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace(info1, '');
@@ -3000,6 +3015,9 @@ function highlightTile(tileId) {
         }
         if (document.getElementById('parameters').innerHTML.includes('hover9')&&currentHighlightType!=9) {
           document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace( info9, '');
+        }
+        if (document.getElementById('parameters').innerHTML.includes('hover10')) {
+          document.getElementById("hover-info").innerHTML = document.getElementById("hover-info").innerHTML.replace( info10, '');
         }
       //this is where you should include the code about the topography for the hover over button
 
