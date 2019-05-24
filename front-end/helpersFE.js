@@ -5124,7 +5124,8 @@ function toggleReplacementFrame(options) {
   var modal = document.getElementById('modalReplacement');
   innermodal = modal.contentDocument || modal.contentWindow.document;
   if(modal.style.visibility === 'visible'){
-    modal.style.visibility = 'invisible'
+    console.log('here');
+    modal.style.visibility = 'hidden';
     modalUp = false;
   }
   else {
