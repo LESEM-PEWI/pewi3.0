@@ -993,7 +993,7 @@ function deleteYearAndTransition()
              document.getElementById("yearToCopy").value = 0;
              document.getElementById("yearPasteButton").style.display = "none";
            }
-           
+
            document.getElementById("year" + currMaxYear + "Button").style.display = "none";
            document.getElementById("yearToCopy").options[currMaxYear].style.display = 'none';
            document.getElementById("yearToPaste").options[currMaxYear].style.display = 'none';
@@ -4469,37 +4469,14 @@ function saveAndRandomize() {
   //for whole board (as long as randomization is allowed)
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     //getRandomInt is in back-end helperMethods
-    for (var j = 1; j <= 15; j++) { //Check to see if the landuse type is toggled off or not
-      if (document.getElementById('parameters').innerHTML.indexOf('paint' + j + "\n") != -1) {
-        //If it's toggled off, remove the landuse type for randomization
-        var removedIndex = randomPainterTile.indexOf(j); //2
 
-        for (var x = 0; x < 15; x++) {
-          if (removedIndex == x) {
-            delete randomPainterTile[removedIndex];
-
-            for (var k = 1; k <= 15; k++) {
-              if (document.getElementById('parameters').innerHTML.indexOf('paint' + k + "\n") === -1) {
-                delete randomPainterTile[removedIndex];
-                randomPainterTile[removedIndex] = k;
-                break;
-              } // end if
-            } // END for
-
-          } // end if
-        } // end for
-
-      } // end if
-    } //end for
-
-    var newDefaultLandUse = 1;
-    //finding a new default
-    for (var r = 1; r <= 15; r++) {
-      if (randomPainterTile.indexOf(r) != -1) {
-        newDefaultLandUse = r;
-        break;
+    for (var j = 0; j <= randomPainterTile.length; j++) { //Check to see if the landuse type is toggled off or not
+      if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j]) !== -1) {
+        randomPainterTile.splice(j--, 1)
       }
     }
+    var newDefaultLandUse = randomPainterTile[0];
+    
     var forNitrateCalc = Array(4);
     forNitrateCalc[0] = Array(828);
     forNitrateCalc[1] = Array(828);
