@@ -121,6 +121,7 @@ var hotkeyArr = [
 
 // for print function
 var data = []; // stores precip data for results page
+var activeLandUses = [];
 var radarLegendColors = [],
   radarLegendItems = [];
 var tempLegendItems = [],
@@ -4472,31 +4473,27 @@ function saveAndRandomize() {
 
     for (var j = 0; j <= randomPainterTile.length; j++) { //Check to see if the landuse type is toggled off or not
       if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j]) !== -1) {
-        randomPainterTile.splice(j--, 1)
+        randomPainterTile.splice(j--, 1);
+        console.log(randomPainterTile);
       }
     }
     var newDefaultLandUse = randomPainterTile[0];
-    
+
     var forNitrateCalc = Array(4);
     forNitrateCalc[0] = Array(828);
     forNitrateCalc[1] = Array(828);
     forNitrateCalc[2] = Array(828);
     forNitrateCalc[3] = Array(828);
 
-    for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
+    outer: for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
-        //if tile exists
-        //Change the land use for a tile if it was restricted
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
-          painter = newDefaultLandUse;
-          meshMaterials[j].map = textureArray[painter];
-          boardData[currentBoard].map[j].landType[i] = painter;
-          boardData[currentBoard].map[j].update(i);
-          forNitrateCalc[i][j] = 1;
+          console.log('in');
+          toggleReplacementFrame(randomPainterTile);
+          activeLandUses = randomPainterTile;
+          break outer;
         }
-
       }
-
     }
     for (var n = 1; n < forNitrateCalc.length; n++) {
       for (var t = 0; t < forNitrateCalc[n].length; t++) {
@@ -4505,19 +4502,15 @@ function saveAndRandomize() {
         }
       }
     }
-
-
-
-
     painter = newDefaultLandUse; //end for all tiles
     //'unselect' the previously selected icon
     var painterElementId = "paint" + prevPainter;
     document.getElementById(painterElementId).className = "landSelectorIcon icon";
     //change the selected painter to the new default land use
     changeSelectedPaintTo(newDefaultLandUse);
-    refreshBoard();
   }
 } //end saveandRandomize
+
 
 //selectAnimation is a switch to trigger animations
 function selectAnimation(animation) {
@@ -5093,6 +5086,7 @@ function toggleEscapeFrame() {
   if (document.getElementById('confirmEscape').style.height == "20vw") {
     confirmEscape();
   }
+  console.log(modalUp);
 
   if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
     document.getElementById('modalEscapeFrame').style.display = "block";
@@ -5124,6 +5118,45 @@ function toggleEscapeFrame() {
   }
 
 } //end toggleEscapeFrame
+
+
+function toggleReplacementFrame(options) {
+  var modal = document.getElementById('modalReplacement');
+  innermodal = modal.contentDocument || modal.contentWindow.document;
+  if(modal.style.visibility === 'visible'){
+    modal.style.visibility = 'invisible'
+    modalUp = false;
+  }
+  else {
+    modal.style.visibility = 'visible'
+    select = innermodal.getElementById('replacementSelect');
+    while(select.firstChild){
+      select.removeChild(select.firstChild);
+    }
+    options.forEach(function(option){
+      var opt = document.createElement('option');
+      opt.innerHTML = LandUseType.getPrintFriendlyType(option);
+      opt.value = option;
+      select.appendChild(opt)
+    });
+    modalUp = true;
+  }
+}
+
+function fillDeactivatedLands(){
+  var modal = document.getElementById('modalReplacement');
+  innermodal = modal.contentDocument || modal.contentWindow.document;
+  select = innermodal.getElementById('replacementSelect');
+  for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
+    for (var j = 0; j < boardData[currentBoard].map.length; j++) {
+      if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !activeLandUses.includes(boardData[currentBoard].map[j].landType[i])) {
+        boardData[currentBoard].map[j].landType[i] = parseInt(select.value);
+      }
+    }
+  }
+  toggleReplacementFrame();
+  refreshBoard();
+}
 
 //toggleIndex displays and hides the codex
 function toggleIndex() {
