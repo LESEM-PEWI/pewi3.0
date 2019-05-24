@@ -15,12 +15,14 @@
     background-position: 0 0;
   }
 }
+
 .progress {
   overflow: hidden;
   height: 1.3vw;
   width: 13vw;
   /* margin-bottom: 10px; */
   border-radius: 12px;
+  color: white;
   border: 1px solid white;
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   box-shadow: 1px 1px 5px 1px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
@@ -39,6 +41,10 @@
   -webkit-transition: width 1s ease;
   -o-transition: width 1s ease;
   transition: width 1s ease;
+
+  /* -webkit-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease; */
 }
 .progress{
   /* position: relative; */
