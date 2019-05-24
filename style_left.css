@@ -1615,13 +1615,13 @@ table {
     display: block;
  } */
 
-/* Commenting this one out. There is another definition of this in this file*/
-/*  #undoButton {
+
+  #undoButton {
     height: 18px;
-    top: 25px;
+    top: 1px;
     width: 18px;
     left: 57px
-  } */
+  }
   #toolsButton {
     top: 64px;
   }
