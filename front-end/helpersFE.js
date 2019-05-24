@@ -993,7 +993,7 @@ function deleteYearAndTransition()
              document.getElementById("yearToCopy").value = 0;
              document.getElementById("yearPasteButton").style.display = "none";
            }
-           
+
            document.getElementById("year" + currMaxYear + "Button").style.display = "none";
            document.getElementById("yearToCopy").options[currMaxYear].style.display = 'none';
            document.getElementById("yearToPaste").options[currMaxYear].style.display = 'none';
@@ -1394,6 +1394,9 @@ function closeEmailFrame() {
 
 // close printOptions frame
 function closePrintOptions() {
+  //adjust camera aspect back to normal setting
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
   //scroll page to top, so that next time options is loaded it starts there
   window.frames[7].scrollTo(0, 0);
 
@@ -4916,6 +4919,9 @@ function startOptions() {
 // startPrintOptions displays the printOptions page
 function startPrintOptions() {
 
+  //adjust camera aspect to a constant so that maps are not stretched when printing
+  camera.aspect = 1.5;
+  camera.updateProjectionMatrix();
   //if nothing else has precedence
   if (!modalUp) {
     // save the last state that user have
