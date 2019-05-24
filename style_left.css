@@ -150,6 +150,12 @@
   width: 12.5vw;
 }
 
+.flydisplayleft {
+  left: 25%
+  border-radius: 0 6px 6px 0;
+
+}
+
 /* left console clickable buttons */
 .consoleButton {
   background-color: rgba(0, 0, 0, 0.7);
@@ -173,7 +179,7 @@
 
 
 /* painter brush tab */
-#settingsTab {
+.settingsTab {
   height: 3vw;
   left: 0;
   position: absolute;
@@ -183,21 +189,25 @@
   transition-duration: var(--transition-duration);
   top: 4vw;
   /*top: calc(var(--left-console-top-value) + var(--left-console-height));*/
-  width: 9.6vw;
-  width: var(--left-console-width);
+  /* changed width from 9.6 */
+  /*width: 9.6vw;*/
+  width: calc(var(--left-console-width) + var(--left-console-button-length));
+
 }
 
-/* undo button */
-#undoButton {
-  /*border-bottom-right-radius: 5px;*/
+/* undo button  changing from #undoButton*/
+ #undoButton {
+ /*border-bottom-right-radius: 5px;*/
   border-radius: 50%;
   cursor: pointer;
-  height: 3vw;
   height: var(--left-console-button-length);
+  height: 3vw;
   width: 3vw;
-  width: var(--left-console-button-length);
-  top: 4vw;
+  width: var(--left-console-button-length);*/
+  /*top: 4vw; Removing this almost aligns Undo with cellpaint gridpaint but not completely*/
+  left: 4vw;
 }
+
 #undoButton:hover {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
@@ -222,7 +232,7 @@
 
 
 /* tabButtons class: container for consoleButton class */
-.tabButtons, #toolsButton, #undoButton {
+.tabButtons, #toolsButton, #undoButton{
   left: 9.6vw;
   left: var(--left-console-width);
   position: absolute;
@@ -373,6 +383,13 @@
 .rightcol {
   left: 5vw;
 }
+
+/*.undocol {
+  height: var(--left-console-button-length);
+  width: 2.2vw;
+  left: 4vw;
+  display: block;
+}*/
 
 
 /**inner elements of left console**/
@@ -625,12 +642,9 @@ select {
 }
 
 
-
 .tooltiptextPrecip:hover {
     display: none;
 }
-
-
 
 
 /**The next 300 lines are repitions of the same css for each of the Physical Features buttons. I couldn't get it to work when they all share a class.**/
@@ -1578,7 +1592,7 @@ table {
     top: 23px;
     width: 57.6px;
   }
-  .consoleButton, #undoButton {
+  .consoleButton {
     height: 18px;
     width: 18px;
   }
@@ -1592,7 +1606,7 @@ table {
     margin: 4px;
     width: 12px;
   }
-  .tabButtons, #toolsButton, #undoButton {
+  .tabButtons, #toolsButton, #undoButton{
     left: 57px;
   }
 
@@ -1601,12 +1615,13 @@ table {
     display: block;
  } */
 
-
-  #undoButton {
+/* Commenting this one out. There is another definition of this in this file*/
+/*  #undoButton {
     height: 18px;
     top: 25px;
     width: 18px;
-  }
+    left: 57px
+  } */
   #toolsButton {
     top: 64px;
   }

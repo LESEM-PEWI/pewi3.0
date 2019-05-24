@@ -194,11 +194,38 @@
     </script>
     <!-- style="display: inline; visibility: hidden;-->
     <div id="flyover" class="fly"> </div>
+
+
+
     <!--Create Glossary button on screen-->
     <div id="indexmenu" onclick="toggleIndex();">Glossary</div>
 
-    <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
-    <img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+
+    <!-- painter brush and Undo -->
+    <div id="settingsTab" class="settingsTab">
+      <div id="cellpaint" class="leftcol">
+        <div class="tooltip">
+          <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
+          <span class="tooltiptext"> Cell Paint </span>
+        </div>
+      </div>
+
+      <div id="gridpaint" class="rightcol">
+        <div class="tooltip">
+          <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
+          <span class="tooltiptext"> Grid Paint </span>
+        </div>
+      </div>
+
+    <div id="undo" class="undocol">
+        <!-- <div class="tooltip">-->
+          <img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+          <!-- <span class="tooltiptext"> Undo </span>
+        </div> -->
+      </div>
+    </div>
+
+
 
     <!-- **BEGIN Left Side Console**
       with land-type painter, precipitation, ecosystem indicators and feature highlighting functions -->
@@ -368,7 +395,7 @@
           <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);">
             <div class="tooltipPrecip">
               <h4>Year 0:</h4>
-              <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi(); setupStaticBackground();">
+              <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
                   <option value=0>24.58</option>
                   <option value=1>28.18</option>
                   <option value=2>30.39</option>
@@ -388,7 +415,7 @@
           <div id="year1PrecipContainer" class="styled-select" onmouseover="getPrecipType(1);">
             <div class="tooltipPrecip">
               <h4>Year 1:</h4>
-              <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi(); setupStaticBackground();">
+              <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -406,7 +433,7 @@
           <div id="year2PrecipContainer" class="styled-select" onmouseover="getPrecipType(2);">
             <div class="tooltipPrecip">
               <h4>Year 2:</h4>
-              <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi(); setupStaticBackground();">
+              <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -424,7 +451,7 @@
           <div id="year3PrecipContainer" class="styled-select" onmouseover="getPrecipType(3);">
             <div class="tooltipPrecip">
               <h4>Year 3:</h4>
-              <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi(); setupStaticBackground();">
+              <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -449,7 +476,7 @@
         <div id="year1Button" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="icon yearSelected" src="./imgs/one.png"></div>
         <div id="year2Button" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="icon yearImageHidden" src="./imgs/two.png"></div>
         <div id="year3Button" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="icon yearImageHidden" src="./imgs/three.png"></div>
-        <div id="yearAddButton" onclick="addYearAndTransition();setupStaticBackground();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
+        <div id="yearAddButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
         <div id="yearDeleteButton" onclick="deleteYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearDeleteImage" class="icon yearNotSelected" src="./imgs/deleteYear.png"></div>
         <div id="yearCopyButton" class="year-styled-select">
           <h4>Copy From:</h4>
@@ -462,7 +489,7 @@
         </div>
         <div id="yearPasteButton" class="year-styled-select">
           <h4>Paste To:</h4>
-          <select id="yearToPaste" class="yearCopyPasteSelect" onChange="pasteYear();setupStaticBackground();">
+          <select id="yearToPaste" class="yearCopyPasteSelect" onChange="pasteYear();">
               <option value=0>      </option>
               <option value=1>Year 1</option>
               <option value=2>Year 2</option>
@@ -1412,12 +1439,6 @@
 
     </div>
 
-    <!-- painter brush -->
-    <div id="settingsTab">
-      <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
-      <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
-
-    </div>
 
     <!-- END left console, there is a lot happening there -->
 
@@ -1812,18 +1833,14 @@
     </script>
 
 
-
-    <img id="emailIcon" class="upperButton" src="./imgs/emailIcon.png" onclick="showEmail();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-    <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="emailIcon" class="upperButton" src="./imgs/emailIcon.png" title= "Email" onclick="showEmail();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" title= "Credits" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="recordIcon" class="upperButton" style="visibility:hidden;" width="40px" src="./imgs/recordingIcon.gif">
-    <img id="homebutton" class="upperButton" src="imgs/Home_Icon.png" onclick="toggleEscapeFrame();">
-    <img id="printButton" class="upperButton" src="imgs/Button_Print.svg" onclick="startPrintOptions();" style="display:block;">
+    <img id="homebutton" class="upperButton" src="imgs/Home_Icon.png" title= "Home" onclick="toggleEscapeFrame();">
+    <img id="printButton" class="upperButton" src="imgs/Button_Print.svg" title="Print" onclick="startPrintOptions();" >
 
 
 
-
-    <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
-    <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
     <!-- order now becomes important to make sure elements stack and cover correctly -->
 
