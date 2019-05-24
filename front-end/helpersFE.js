@@ -116,7 +116,11 @@ var hotkeyArr = [
   [87, null],
   [83, null],
   [79, null],
-  [81, null]
+  [81, null],
+  [38, null],
+  [40, null],
+  [37, null],
+  [39, null]
 ];
 
 // for print function
@@ -993,7 +997,7 @@ function deleteYearAndTransition()
              document.getElementById("yearToCopy").value = 0;
              document.getElementById("yearPasteButton").style.display = "none";
            }
-           
+
            document.getElementById("year" + currMaxYear + "Button").style.display = "none";
            document.getElementById("yearToCopy").options[currMaxYear].style.display = 'none';
            document.getElementById("yearToPaste").options[currMaxYear].style.display = 'none';
@@ -2979,7 +2983,6 @@ function highlightTile(tileId) {
       //update HUD with current information
       //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + "Current Cell: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
-      console.log(boardData[currentBoard].map[tileId]);
       //update the information displayed in the delayed hover div by cursor
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear])+ "<br>";
       var info2 = "Precipitation: " + printPrecipYearType()+ ", "+boardData[currentBoard].precipitation[currentYear]+" in"+"<br>";
@@ -3543,7 +3546,7 @@ function onDocumentKeyDown(event) {
     //   event = window.event;
     // }
     // var keycode = event.keyCode || event.charCode;
-
+    console.log(event.keyCode);
     switch (event.keyCode) {
       //case shift - update isShiftDown
       case 16:
