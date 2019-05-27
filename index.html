@@ -192,16 +192,23 @@
         })
       });
     </script>
+
     <!-- style="display: inline; visibility: hidden;-->
     <div id="flyover" class="fly"> </div>
-
-
-
-    <!--Create Glossary button on screen.-->
+    <!--Create Glossary button on screen-->
     <div id="indexmenu" onclick="toggleIndex();">Glossary</div>
 
+    <!-- UNDO button -->
+    <div id="undo" class="undocol">
+      <div class="tooltip">
+        <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+        <img id="undoButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+        <span class="tooltiptext"> Undo </span>
+      </div>
+    </div>
 
-    <!-- painter brush and Undo -->
+
+    <!-- painter brush -->
     <div id="settingsTab" class="settingsTab">
       <div id="cellpaint" class="leftcol">
         <div class="tooltip">
@@ -217,14 +224,10 @@
         </div>
       </div>
 
-    <div id="undo" class="undocol">
-        <div class="tooltip">-->
-          <img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-           <span class="tooltiptext"> Undo </span>
-        </div>
-      </div>
     </div>
 
+    <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+    <!--<img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"> -->
 
 
     <!-- **BEGIN Left Side Console**
@@ -245,6 +248,16 @@
         <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle', 0);" onmouseout="toggleTabTitle('terrainTabTitle', 1);">
         <div id="terrainTabTitle" style="display:none;"></div>
       </div>
+      <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
+      <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);">
+        <img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png" onmouseover="toggleTabTitle('featuresTabTitle', 0);" onmouseout="toggleTabTitle('featuresTabTitle', 1);">
+        <div id="featuresTabTitle" style="display:none;"></div>
+      </div>
+
+      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);">
+        <img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png" onmouseover="toggleTabTitle('yieldTabTitle', 0);" onmouseout="toggleTabTitle('yieldTabTitle', 1);">
+        <div id="yieldTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Cloud, raindrops, sun icon" by Yannick Lung (http://yannicklung.com/) with free commercial use / Inverted and resized -->
       <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);">
         <img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png" onmouseover="toggleTabTitle('precipTabTitle', 0);" onmouseout="toggleTabTitle('precipTabTitle', 1);">
@@ -256,20 +269,11 @@
         <div id="yearTabTitle" style="display:none;"></div>
       </div>
       <!-- "Filter, levels, settings icon" by Yash Ranpara (https://www.iconfinder.com/yash11) with free commerical use / Inverted and resized -->
-      <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);">
+      <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3)">
         <img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png" onmouseover="toggleTabTitle('levelsTabTitle', 0);" onmouseout="toggleTabTitle('levelsTabTitle', 1);">
         <div id="levelsTabTitle" style="display:none;"></div>
       </div>
-      <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
-      <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);">
-        <img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png" onmouseover="toggleTabTitle('featuresTabTitle', 0);" onmouseout="toggleTabTitle('featuresTabTitle', 1);">
-        <div id="featuresTabTitle" style="display:none;"></div>
-      </div>
 
-      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);">
-        <img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png" onmouseover="toggleTabTitle('yieldTabTitle', 0);" onmouseout="toggleTabTitle('yieldTabTitle', 1);">
-        <div id="yieldTabTitle" style="display:none;"></div>
-      </div>
 
     </div>
 
@@ -395,7 +399,7 @@
           <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);">
             <div class="tooltipPrecip">
               <h4>Year 0:</h4>
-              <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi();">
+              <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi(); setupStaticBackground();">
                   <option value=0>24.58</option>
                   <option value=1>28.18</option>
                   <option value=2>30.39</option>
@@ -415,7 +419,7 @@
           <div id="year1PrecipContainer" class="styled-select" onmouseover="getPrecipType(1);">
             <div class="tooltipPrecip">
               <h4>Year 1:</h4>
-              <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi();">
+              <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -433,7 +437,7 @@
           <div id="year2PrecipContainer" class="styled-select" onmouseover="getPrecipType(2);">
             <div class="tooltipPrecip">
               <h4>Year 2:</h4>
-              <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi();">
+              <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -451,7 +455,7 @@
           <div id="year3PrecipContainer" class="styled-select" onmouseover="getPrecipType(3);">
             <div class="tooltipPrecip">
               <h4>Year 3:</h4>
-              <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi();">
+              <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
                 <option value=1>28.18</option>
                 <option value=2>30.39</option>
@@ -476,7 +480,7 @@
         <div id="year1Button" onclick="transitionToYear(1); switchYearTab(1);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year1Image" class="icon yearSelected" src="./imgs/one.png"></div>
         <div id="year2Button" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="icon yearImageHidden" src="./imgs/two.png"></div>
         <div id="year3Button" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="icon yearImageHidden" src="./imgs/three.png"></div>
-        <div id="yearAddButton" onclick="addYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
+        <div id="yearAddButton" onclick="addYearAndTransition();setupStaticBackground();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
         <div id="yearDeleteButton" onclick="deleteYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearDeleteImage" class="icon yearNotSelected" src="./imgs/deleteYear.png"></div>
         <div id="yearCopyButton" class="year-styled-select">
           <h4>Copy From:</h4>
@@ -489,7 +493,7 @@
         </div>
         <div id="yearPasteButton" class="year-styled-select">
           <h4>Paste To:</h4>
-          <select id="yearToPaste" class="yearCopyPasteSelect" onChange="pasteYear();">
+          <select id="yearToPaste" class="yearCopyPasteSelect" onChange="pasteYear();setupStaticBackground();">
               <option value=0>      </option>
               <option value=1>Year 1</option>
               <option value=2>Year 2</option>
@@ -525,19 +529,19 @@
           <center>
             <h1 class="DetailsList-title">Gross Erosion</h1></center>
           <div class="legendColor" style="background-color: #654321">
-            <p class="levelsTextDetails">> 5 t/ac/yr</p>
+            <p class="levelsTextDetails">Very High</p>
           </div>
           <div class="legendColor" style="background-color: #8b4513">
-            <p class="levelsTextDetails">3.5-5 t/ac/yr</p>
+            <p class="levelsTextDetails">High</p>
           </div>
           <div class="legendColor" style="background-color: #919246">
-            <p class="levelsTextDetails">2-3.5 t/ac/yr</p>
+            <p class="levelsTextDetails">Medium</p>
           </div>
           <div class="legendColor" style="background-color: #e3c972">
-            <p class="levelsTextDetails">0.5-2 t/ac/yr</p>
+            <p class="levelsTextDetails">Low</p>
           </div>
           <div class="legendColor" style="background-color: #ffffc9">
-            <p class="levelsTextDetails">< 0.5 t/ac/yr</p>
+            <p class="levelsTextDetails">Very Low</p>
           </div>
         </div>
 
@@ -566,19 +570,19 @@
           <center>
             <h1 class="DetailsList-title">Sediment Control</h1></center>
           <div class="legendColor" style="background-color: #02635b;">
-            <p class="levelsTextDetails">>39.76 tons</p>
+            <p class="levelsTextDetails">Very High</p>
           </div>
           <div class="legendColor" style="background-color: #22877f;">
-            <p class="levelsTextDetails">29.82-39.76 tons</p>
+            <p class="levelsTextDetails">High</p>
           </div>
           <div class="legendColor" style="background-color: #5ab8b1;">
-            <p class="levelsTextDetails">19.88-29.82 tons</p>
+            <p class="levelsTextDetails">Medium</p>
           </div>
           <div class="legendColor" style="background-color: #a7dfdb;">
-            <p class="levelsTextDetails">9.94-19.88 tons</p>
+            <p class="levelsTextDetails">Low</p>
           </div>
           <div class="legendColor" style="background-color: #daf2f0;">
-            <p class="levelsTextDetails">0-9.94 tons</p>
+            <p class="levelsTextDetails">Very Low</p>
           </div>
         </div>
 
@@ -586,19 +590,19 @@
           <center>
             <h1 class="DetailsList-title">Carbon Sequestration</h1></center>
           <div class="legendColor" style="background-color: #042402;">
-            <p class="levelsTextDetails">>16.17 tons</p>
+            <p class="levelsTextDetails">Very High</p>
           </div>
           <div class="legendColor" style="background-color: #1d4d19;">
-            <p class="levelsTextDetails">12.13-16.17 tons</p>
+            <p class="levelsTextDetails">High</p>
           </div>
           <div class="legendColor" style="background-color: #346b2f;">
-            <p class="levelsTextDetails">8.09-12.13 tons</p>
+            <p class="levelsTextDetails">Medium</p>
           </div>
           <div class="legendColor" style="background-color: #64a95e;">
-            <p class="levelsTextDetails">4.04-8.09 tons</p>
+            <p class="levelsTextDetails">Low</p>
           </div>
           <div class="legendColor" style="background-color: #d5f0d3;">
-            <p class="levelsTextDetails">0-4.04 tons</p>
+            <p class="levelsTextDetails">Very Low</p>
           </div>
         </div>
 
@@ -1439,7 +1443,6 @@
 
     </div>
 
-
     <!-- END left console, there is a lot happening there -->
 
     <!-- div which responsible for the progress bar -->
@@ -1831,6 +1834,7 @@
         // XXX SCRIPT438: Object doesn't support property or method 'downloadClicked'
       } // end triggerDownloadSequence()
     </script>
+
 
 
     <img id="emailIcon" class="upperButton" src="./imgs/emailIcon.png" title= "Email" onclick="showEmail();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">

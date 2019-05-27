@@ -150,12 +150,6 @@
   width: 12.5vw;
 }
 
-.flydisplayleft {
-  left: 25%
-  border-radius: 0 6px 6px 0;
-
-}
-
 /* left console clickable buttons */
 .consoleButton {
   background-color: rgba(0, 0, 0, 0.7);
@@ -179,7 +173,7 @@
 
 
 /* painter brush tab */
-.settingsTab {
+#settingsTab {
   height: 3vw;
   left: 0;
   position: absolute;
@@ -189,25 +183,26 @@
   transition-duration: var(--transition-duration);
   top: 4vw;
   /*top: calc(var(--left-console-top-value) + var(--left-console-height));*/
-  /* changed width from 9.6 */
-  /*width: 9.6vw;*/
-  width: calc(var(--left-console-width) + var(--left-console-button-length));
-
+  width: 9.6vw;
+  width: var(--left-console-width);
 }
 
-/* undo button  changing from #undoButton.*/
- #undoButton {
- /*border-bottom-right-radius: 5px;*/
+#undo {
+  height: 3vw;
+  top: 4vw;
+  position: absolute;
+}
+
+#undoButton {
+  /*border-bottom-right-radius: 5px;*/
   border-radius: 50%;
   cursor: pointer;
-  height: var(--left-console-button-length);
   height: 3vw;
+  height: var(--left-console-button-length);
   width: 3vw;
-  width: var(--left-console-button-length);*/
-  /*top: 4vw; Removing this almost aligns Undo with cellpaint gridpaint but not completely*/
-  left: 4vw;
+  width: var(--left-console-button-length);
+  top: 4vw;
 }
-
 #undoButton:hover {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
@@ -232,7 +227,7 @@
 
 
 /* tabButtons class: container for consoleButton class */
-.tabButtons, #toolsButton, #undoButton{
+.tabButtons, #toolsButton{
   left: 9.6vw;
   left: var(--left-console-width);
   position: absolute;
@@ -283,39 +278,35 @@
   top: var(--first-consoleButton-top);
 }
 
-
-/* left consoleButton, precipatation button */
-#precipButton {
-  top: 18.28vw;
-  top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
-}
-
-
-/* left consoleButton, year button */
-#yearButton {
-  top: 21.09vw;
-  top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
-}
-
-
-/* left consoleButton, levels button */
-#levelsButton {
-  top: 23.9vw;
-  top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
-}
-
-
 /* left consoleButton, features button */
 #featuresButton {
   top: 26.71vw;
-  top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
+  top: calc(var(--first-consoleButton-top) + var(--consoleButton-height));
 }
-
 
 /* left consoleButton, yield button */
 #yieldButton {
   /*border-bottom-right-radius: 5px;*/
   top: 29.52vw;
+  top: calc(var(--first-consoleButton-top) + 2*var(--consoleButton-height));
+}
+
+/* left consoleButton, year button */
+#yearButton {
+  top: 21.09vw;
+  top: calc(var(--first-consoleButton-top) + 3*var(--consoleButton-height));
+}
+
+/* left consoleButton, precipatation button */
+#precipButton {
+  top: 18.28vw;
+  top: calc(var(--first-consoleButton-top) + 4*var(--consoleButton-height));
+}
+
+/* This is the result maps tab */
+/* left consoleButton, levels button */
+#levelsButton {
+  top: 23.9vw;
   top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
 }
 
@@ -384,13 +375,12 @@
   left: 5vw;
 }
 
-/*.undocol {
-  height: var(--left-console-button-length);
-  width: 2.2vw;
-  left: 4vw;
+.undocol {
+  width: 3.5vw;
   display: block;
-}*/
-
+  position: absolute;
+  left: 10vw;
+}
 
 /**inner elements of left console**/
 
@@ -642,9 +632,12 @@ select {
 }
 
 
+
 .tooltiptextPrecip:hover {
     display: none;
 }
+
+
 
 
 /**The next 300 lines are repitions of the same css for each of the Physical Features buttons. I couldn't get it to work when they all share a class.**/
@@ -1592,6 +1585,18 @@ table {
     top: 23px;
     width: 57.6px;
   }
+
+  #undo {
+    top: 23px;
+    height: 23px;
+
+  }
+
+  #undoButton {
+    height: 18px;
+    width: 18px;
+  }
+
   .consoleButton {
     height: 18px;
     width: 18px;
@@ -1606,7 +1611,7 @@ table {
     margin: 4px;
     width: 12px;
   }
-  .tabButtons, #toolsButton, #undoButton{
+  .tabButtons, #toolsButton {
     left: 57px;
   }
 
@@ -1616,12 +1621,7 @@ table {
  } */
 
 
-  #undoButton {
-    height: 18px;
-    top: 1px;
-    width: 18px;
-    left: 57px
-  }
+
   #toolsButton {
     top: 64px;
   }
