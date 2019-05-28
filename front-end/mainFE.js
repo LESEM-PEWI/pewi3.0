@@ -293,10 +293,14 @@ function birdAnimation() {
 } //end birdAnimation
 
 //Event function that is called when screen is changed
+// Adding navigation keys, asdw
 function CamView(e) {
   tempKeys = giveHotkeys();
   var Uma = String.fromCharCode(tempKeys[11][0]);
   document.getElementById("flyover").innerHTML = "FlyOver Mode, Hit " + Uma +  " to Exit";
+  document.getElementById("flyASDW").style.display = "block";
+  document.getElementById("flyNavigKeys").style.display = "block";
+
   if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
     if(curTracking) {
       pushClick(0,getStamp(),85,0,null);
@@ -827,11 +831,14 @@ switch(printPrecipYearType()){
 } //end setupStaticBackground
 
 //showMainMenu uses the esc key to return to the startup screen
+// Adding navigation keys, asdw
 function showMainMenu() {
   //Checking the flag variable to know which camera is functional.
   if (ToggleCam == 1){
     changeCam2();
     document.getElementById("flyover").innerHTML = "";
+    document.getElementById("flyASDW").style.display = "none";
+    document.getElementById("flyNavigKeys").style.display = "none";
     //Reseting camera 2 position when sandbox is reloaded
     camera2.position.x = 70;
     camera2.position.y = 25;
