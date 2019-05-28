@@ -993,7 +993,7 @@ function deleteYearAndTransition()
              document.getElementById("yearToCopy").value = 0;
              document.getElementById("yearPasteButton").style.display = "none";
            }
-           
+
            document.getElementById("year" + currMaxYear + "Button").style.display = "none";
            document.getElementById("yearToCopy").options[currMaxYear].style.display = 'none';
            document.getElementById("yearToPaste").options[currMaxYear].style.display = 'none';
@@ -1394,6 +1394,9 @@ function closeEmailFrame() {
 
 // close printOptions frame
 function closePrintOptions() {
+
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
   //scroll page to top, so that next time options is loaded it starts there
   window.frames[7].scrollTo(0, 0);
 
@@ -1408,6 +1411,11 @@ function closePrintOptions() {
   document.removeEventListener('keyup', printOptionsEsc);
   window.frames[7].document.removeEventListener('keyup', printOptionsEsc);
 } // end closePrintOptions
+
+function resizeForPrinting() {
+  camera.aspect = 1.5;
+  camera.updateProjectionMatrix();
+}
 
 //closeUploadDownloadFrame closes the credits iframe
 function closeUploadDownloadFrame() {
@@ -3810,8 +3818,10 @@ function pasteYear()
     {
       boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearCopyPaste];
     } //end for loop
-    //copy the precipitation
-    boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
+    //copy the precipitation if the settings allow for a change in precip
+    if(!document.getElementById('parameters').innerHTML.includes('precipOff')){
+      boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
+    }
     boardData[currentBoard].updateBoard();
     refreshBoard();
 
@@ -4999,6 +5009,9 @@ function startOptions() {
 
 // startPrintOptions displays the printOptions page
 function startPrintOptions() {
+
+    camera.aspect = 1.5;
+    camera.updateProjectionMatrix();
 
   //if nothing else has precedence
   if (!modalUp) {
