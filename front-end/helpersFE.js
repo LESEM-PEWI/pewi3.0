@@ -3546,7 +3546,6 @@ function onDocumentKeyDown(event) {
     //   event = window.event;
     // }
     // var keycode = event.keyCode || event.charCode;
-    console.log(event.keyCode);
     switch (event.keyCode) {
       //case shift - update isShiftDown
       case 16:
