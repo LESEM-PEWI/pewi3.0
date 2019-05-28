@@ -2259,6 +2259,8 @@ function generateResultsTable() {
       switch (l) {
         case 0:
           htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
+          //htmlTableString += "<tr>";
+        //  htmlTableString += "<td><b>" + "Yield" + "<b></td>";
           break;
       } //end switch
 
