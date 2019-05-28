@@ -3818,8 +3818,10 @@ function pasteYear()
     {
       boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearCopyPaste];
     } //end for loop
-    //copy the precipitation
-    boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
+    //copy the precipitation if the settings allow for a change in precip
+    if(!document.getElementById('parameters').innerHTML.includes('precipOff')){
+      boardData[currentBoard].precipitation[yearToPasteIn] = boardData[currentBoard].precipitation[yearCopyPaste];
+    }
     boardData[currentBoard].updateBoard();
     refreshBoard();
 
