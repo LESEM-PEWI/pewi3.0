@@ -27,8 +27,8 @@
   */
   var selectedOptionsFalse = [];
   var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
-  "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode",
-  "Arrow Up","Arrow Down","Arrow Left","Arrow Right"];
+  "Move Right","Move Left","Move Forward","Move Backward","Toggle Overlay","Toggle Flying Mode",
+  "Pivot Flat","Pivot Upright","Rotate Counterclockwise","Rotate Clockwise"];
 
 
   //the saveCurrentOptionsState function is called when the save/exit button is pressed
@@ -296,8 +296,6 @@
           tempInput1.innerHTML=tempChar;
         }
 
-          //tempInput1.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",1)");
-          //tempInput1.setAttribute("onkeydown","this.value = this.value");
           tempInput1.setAttribute("size","5");
           tempInput1.setAttribute("height","5");
           tempSpan.appendChild(tempInput1);
