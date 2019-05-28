@@ -192,13 +192,43 @@
         })
       });
     </script>
+
     <!-- style="display: inline; visibility: hidden;-->
     <div id="flyover" class="fly"> </div>
     <!--Create Glossary button on screen-->
     <div id="indexmenu" onclick="toggleIndex();">Glossary</div>
 
+    <!-- UNDO button -->
+    <div id="undo" class="undocol">
+      <div class="tooltip">
+        <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+        <img id="undoButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+        <span class="tooltiptext"> Undo </span>
+      </div>
+    </div>
+
+
+    <!-- painter brush -->
+    <div id="settingsTab" class="settingsTab">
+      <div id="cellpaint" class="leftcol">
+        <div class="tooltip">
+          <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
+          <span class="tooltiptext"> Cell Paint </span>
+        </div>
+      </div>
+
+      <div id="gridpaint" class="rightcol">
+        <div class="tooltip">
+          <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
+          <span class="tooltiptext"> Grid Paint </span>
+        </div>
+      </div>
+
+    </div>
+
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
-    <img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <!--<img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"> -->
+
 
     <!-- **BEGIN Left Side Console**
       with land-type painter, precipitation, ecosystem indicators and feature highlighting functions -->
@@ -1413,13 +1443,6 @@
 
     </div>
 
-    <!-- painter brush -->
-    <div id="settingsTab">
-      <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
-      <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
-
-    </div>
-
     <!-- END left console, there is a lot happening there -->
 
     <!-- div which responsible for the progress bar -->
@@ -1764,7 +1787,7 @@
     <!-- Create buttons in upper right corner: upperHud-->
     <img id="pewiLogo" src="./imgs/updatedPewiLogo.png">
     <img id="logoBase" src="./imgs/inGameLogo.png">
-    <img id="DownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" onclick="triggerDownloadSequence();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="DownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" title="Download" onclick="triggerDownloadSequence();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
     <!--This class will hold the input element, so we'll hide this one-->
     <div class="uploadFile1">
@@ -1773,7 +1796,7 @@
                 <!--This element is used to align the button with everything else in the top right-->
                 <div id="uploadFile" class="upperButton">
                   <!--Here's the button image itself, give it its own class so it's animation works properly-->
-                  <img id="UploadButton" class="uploadButtonClass" src = "./imgs/UploadImage.png" style="height: 3vw" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+                  <img id="UploadButton" class="uploadButtonClass" src = "./imgs/UploadImage.png" title="Upload" style="height: 3vw" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
                 </div>
             </label>
       <!--And here's the input we'll be hiding-->
@@ -1814,17 +1837,14 @@
 
 
 
-    <img id="emailIcon" class="upperButton" src="./imgs/emailIcon.png" onclick="showEmail();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-    <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="emailIcon" class="upperButton" src="./imgs/emailIcon.png" title= "Email" onclick="showEmail();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" title= "Credits" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="recordIcon" class="upperButton" style="visibility:hidden;" width="40px" src="./imgs/recordingIcon.gif">
-    <img id="homebutton" class="upperButton" src="imgs/Home_Icon.png" onclick="toggleEscapeFrame();">
-    <img id="printButton" class="upperButton" src="imgs/Button_Print.svg" onclick="startPrintOptions();" style="display:block;">
+    <img id="homebutton" class="upperButton" src="imgs/Home_Icon.png" title= "Home" onclick="toggleEscapeFrame();">
+    <img id="printButton" class="upperButton" src="imgs/Button_Print.svg" title="Print" onclick="startPrintOptions();" >
 
 
 
-
-    <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
-    <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
     <!-- order now becomes important to make sure elements stack and cover correctly -->
 
