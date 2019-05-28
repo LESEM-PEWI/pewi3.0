@@ -978,8 +978,15 @@ function toggleCameraView(){
     //Checking the flag variable to know which camera is functional.
     if (ToggleCam == 1){changeCam2();}
     else{ChangeCam();}
-    if (ToggleCam == 1){document.getElementById('flyover').style.display = "block"}
-    else{document.getElementById('flyover').style.display = "none";}
+    if (ToggleCam == 1) {
+      document.getElementById('flyover').style.display = "block";
+      document.getElementById("flyASDW").style.display = "block";
+      document.getElementById("flyNavigKeys").style.display = "block";
+    }
+    else{document.getElementById('flyover').style.display = "none";
+    document.getElementById("flyASDW").style.display = "none";
+    document.getElementById("flyNavigKeys").style.display = "none";
+  }
 }
 
 //zoomAnimation updates field of view positions for zoom animation
