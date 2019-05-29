@@ -3836,6 +3836,10 @@ function pasteYear()
     document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
     document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'block';
     document.getElementById("yearPasteButton").style.display = "none";
+
+
+    // trying to copy the steps over so that it can be undone on the copied year
+    undoArr[yearToPastIn] = undoArr[yearCopyPaste];
 } //end pasteYear
 
 //Pauses the sim (and related times)
@@ -4092,7 +4096,7 @@ function resetMultiPlayer() {
 // this function closes the iframe, blurs the frame, and
 // takes the parameters set by it to order the page elements
 function resetOptions() {
-undoArr[currentYear] = [];
+
   //close frame
   modalUp = false;
   document.getElementById('options').style.visibility = "hidden";
