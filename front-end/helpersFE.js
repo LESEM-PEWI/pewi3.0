@@ -2571,6 +2571,10 @@ function phoshorusIndexRiskAssessmentClassification(pindex) {
   else if (pindex > 5 && pindex <= 15) return "High"+"<br>";
   else if (pindex > 15) return "Very High"+"<br>";
 }
+
+function calculateSubwatershedTotalNitrateScore(){
+
+}
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
@@ -2583,7 +2587,8 @@ function getHighlightedInfo(tileId) {
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+Totals.nitrateContribution[currentYear][tileId].toFixed(4)+" ppm"+"<br>";
+        var subwatershed=boardData[currentBoard].map[tileId].subwatershed;
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+boardData[currentBoard].map[tileId].subWatershedNitrateNoMin[subwatershed].toFixed(4)+" ppm"+"<br>";
         break;
         //create string for gross erosion levels
       case 2:
@@ -2741,6 +2746,8 @@ function getHighlightedInfo(tileId) {
         highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
         break;
       case 23:
+      console.log(boardData[currentBoard]);
+      // console.log(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate);
         highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>"+boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate.toFixed(2)+"<br>";
         break;
     }
