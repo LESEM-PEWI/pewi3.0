@@ -116,7 +116,8 @@ var hotkeyArr = [
   [87, null],
   [83, null],
   [79, null],
-  [81, null]
+  [81, null],
+  [80,null]
 ];
 
 // for print function
@@ -4072,7 +4073,8 @@ function resetHotkeys() {
     [87, null],
     [83, null],
     [79, null],
-    [81, null]
+    [81, null],
+    [80, null]
   ];
   updateKeys();
 } //end resetHotkeys()
