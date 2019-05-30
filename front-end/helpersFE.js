@@ -3838,8 +3838,12 @@ function pasteYear()
     document.getElementById("yearPasteButton").style.display = "none";
 
 
-    // trying to copy the steps over so that it can be undone on the copied year
-    undoArr[yearToPastIn] = undoArr[yearCopyPaste];
+    // copy the undo arr over so that the undo works on the copied year
+    for(var i = 0; i < undoArr[yearCopyPaste].length; i++)
+    {
+    undoArr[yearToPasteIn][i] = undoArr[yearCopyPaste][i];
+    }
+
 } //end pasteYear
 
 //Pauses the sim (and related times)
