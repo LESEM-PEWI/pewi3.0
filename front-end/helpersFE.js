@@ -3838,11 +3838,11 @@ function pasteYear()
     document.getElementById("yearPasteButton").style.display = "none";
 
 
-    // copy the undo arr over so that the undo works on the copied year
-    for(var i = 0; i < undoArr[yearCopyPaste].length; i++)
-    {
-    undoArr[yearToPasteIn][i] = undoArr[yearCopyPaste][i];
-    }
+    //reset the year being pasted on so that there is no weird extra stuff if the copy is not as long as the original
+    undoArr[yearToPasteIn] = [];
+
+    // makes a deep copy of all the arrays inside of undoArr so that the undo for the copy is fully functional
+    undoArr[yearToPasteIn] = JSON.parse(JSON.stringify(undoArr[yearCopyPaste]));
 
 } //end pasteYear
 
@@ -4456,6 +4456,11 @@ function reversePrecipValue(val)
 
 //revertChanges undos the users previous tile changes, and goes back to the previous board instance
 function revertChanges() {
+
+
+  // this function will remove all undo steps after the first occurence of one that involves a tile that is toggled off
+  removeAfterFirstNotAllowed(undoArr, currentYear);
+
   //For storing clicks
   if (curTracking) {
     pushClick(0, getStamp(), 30, 0, null);
@@ -4476,6 +4481,8 @@ function revertChanges() {
     }
     undo = false;
     painter = tempPainter;
+
+
   }
 }
 
@@ -6912,3 +6919,42 @@ if (typeof module !== "undefined" && module.exports) {
 //     console.log("detachEvent");
 //   }
 // }
+
+
+  /**
+  This function looks through the undoArr for the given year, and deletes everything after the first land type not allowed is found.
+  @param undoArray the undoArr
+  @param theYear the year that is being modified
+  **/
+
+  function removeAfterFirstNotAllowed(undoArray, theYear)
+  {
+    notAllowedArray = getLandUseNotAllowed();
+
+    for(var i = undoArray[theYear].length - 1; i >= 0; i--)
+    {
+      if(notAllowedArray.includes(undoArray[theYear][i][1]))
+      {
+        undoArray[theYear] = undoArray[theYear].slice(i + 1);
+        break;
+      }
+    }
+  }
+
+  /**
+  This function returns an array of land use types that are currently toggled of. This is used in the removeAfterFirstNotAllowed function right above.
+  **/
+  function getLandUseNotAllowed()
+  {
+    var toReturn = [];
+
+    for(var i = 1; i <= 15; i++)
+    {
+      if(document.getElementById('parameters').innerHTML.indexOf('paint' + i + "\n") != -1)
+      {
+        toReturn.push(i);
+      }
+    }
+
+    return toReturn;
+  }
