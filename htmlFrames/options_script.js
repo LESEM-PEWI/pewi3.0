@@ -561,6 +561,7 @@
           minInput.placeholder = minValue;
           // console.log(progressbarIds[i]);
           if(i != 16){
+            //use onblur to have autofill occur after the cell is clicked off
             minInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','min', this.value))");
           }
           else{
@@ -584,6 +585,7 @@
           maxInput.placeholder = maxValue;
           maxInput.setAttribute("type","text");
           if(i != 16){
+            //use onblur to have autofill occur after the cell is clicked off
             maxInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','max', this.value))");
           }
           else{
@@ -606,6 +608,7 @@
           actualMinInput.id = "actualMin" + i;
           actualMinInput.className = "actualMinInput";
           actualMinInput.placeholder = actualMinValue;
+          //use onblur to have autofill occur after the cell is clicked off
           actualMinInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','actualMin', this.value))");
           actualMinInput.setAttribute("onkeydown","this.value = this.value");
           actualMinInput.setAttribute("onfocusout","setPlaceholderValue('actualMin" + i + "',this.value)");
@@ -627,6 +630,7 @@
           actualMaxInput.id = "actualMax" + i;
           actualMaxInput.className = "actualMaxInput";
           actualMaxInput.placeholder = actualMaxValue;
+          //use onblur to have autofill occur after the cell is clicked off
           actualMaxInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','actualMax', this.value))");
           actualMaxInput.setAttribute("onkeydown","this.value = this.value");
           actualMaxInput.setAttribute("onfocusout","setPlaceholderValue('actualMax" + i + "',this.value)");
