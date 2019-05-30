@@ -4014,6 +4014,126 @@ d3.selection.prototype.moveToBack = function() {
   placeStandards(years);
   plotDataPoints(dataset)
   renderData(dataset);
+  displayEconomics();
 
 //--------------------End of Render function
+}
+
+function displayEconomics() {
+  var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsE');
+  var window = document.getElementById('resultsFrame');
+  colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
+  var econData = economics.getInstance().data;
+  var econData = econData.map((d, i) => {
+    return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
+  });
+  console.log(econData);
+  data = [];
+  econData.forEach((el) => {
+    for(var i =1; i <= 3; i++){
+      d = {}
+      d.cost = el.cost;
+      d.year = i;
+      d.landUse = el.landUse;
+      d.revenue = el.cost * (Math.random()*-2);
+      d.profit = Math.max(d.revenue + d.cost, 0);
+      d.loss = Math.min(d.revenue + d.cost, 0);
+      data.push(d);
+    }
+  });
+  data = data.filter(el => {
+    return el != null;
+  })
+  console.log(data);
+  stackTypes = ['cost','revenue','profit','loss'];
+
+  layers = d3.stack().keys(stackTypes)
+  .offset(d3.stackOffsetDiverging)
+  (data);
+
+  var margin = {top: 40, right: 10, bottom: 20, left: 10},
+  width = window.clientWidth*.9 - margin.left - margin.right,
+  height = window.clientWidth*.5 - margin.top - margin.bottom; //give or take the golden ratio
+
+  groupKey = 'landUse';
+  var x0 = d3.scaleBand()
+  .domain(data.map(function(d) { return d.landUse + ""; }))
+  .rangeRound([margin.left, width - margin.right])
+  .paddingInner(0)
+
+  var x = d3.scaleBand()
+  .domain(data.map(function(d) {return d.year}))
+  .rangeRound([0, x0.bandwidth()])
+  .padding(.05)
+
+  var y = d3.scaleLinear()
+  .domain([d3.min(layers, stackMin), d3.max(layers, stackMax)])
+  .rangeRound([height - margin.bottom, margin.top]);
+
+  var xAxis = d3.axisBottom(x)
+  .tickSize(0)
+  .tickPadding(6);
+
+  var svg = d3.select(econBody).append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+  var layer = svg.selectAll(".layer") //makes sure the rectangle gets drawn in a particular order
+    .data(layers)
+    .enter().append("g")
+      .attr("class", "layer")
+      .attr("layernum",function(d, i) { return i; })
+      .style("margin-left", function(d) { return "3px"; })
+      .style("fill", function(d, i) { return colors[i]; });
+
+  var rect = layer.selectAll("rect")
+    .data(function(d) { return d; })
+    .enter().append("rect")
+      .attr("transform", function(d) {return "translate(" + x0(d.data.landUse) + ",0)"; })
+      .attr("x", function(d) { return x(d.data.year); })
+      .attr("y", function(d) {if (d[1] > 0) return y(0) - (y(d[0])- y(d[1])); else return y(0); }) //if the bar is positive the height has to be consi
+      .attr("width", x.bandwidth)
+      .attr("height", function(d){return y(d[0])- y(d[1]);});
+
+  svg.append("g")
+  .attr("transform", "translate(0," + y(0) + ")")
+  .style("font", "14px Arial")
+  .call(d3.axisBottom(x0));
+
+  legend = svg.append("g")
+  .attr("transform", "translate(" + width +",0)")
+  .attr("text-anchor", "end")
+  .attr("font-family", "sans-serif")
+  .attr("font-size", 15)
+  .selectAll("g")
+    .data(colors)
+    .enter().append("g")
+  .attr("transform", function(d, i) {return "translate(0," + (20 * i) + ")";});
+
+  legend.append("rect")
+    .attr("x", -19)
+    .attr("width", 19)
+    .attr("height", 19)
+    .attr("fill", (d, i) => colors[i]);
+
+  legend.append("text")
+    .attr("x", -24)
+    .attr("y", 9.5)
+    .attr("dy", "0.35em")
+    .text((d,i) => stackTypes[i]);
+
+}
+
+function stackMin(layers) {
+  return d3.min(layers, function(d) {
+    return d[0];
+  });
+}
+
+function stackMax(layers) {
+  return d3.max(layers, function(d) {
+    return d[1];
+  });
 }
