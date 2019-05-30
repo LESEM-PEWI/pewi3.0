@@ -35,7 +35,7 @@
   //as needed
   //the parent page is then called to hide the options iframe
   function saveCurrentOptionsState() {
-    
+
     //find the elements that are able to be checked
     var toggledElements = document.getElementsByClassName('toggle');
     var tempString = "";
@@ -560,10 +560,12 @@
           // console.log(parent.document.getElementById(progressbarIds[i]));
           minInput.placeholder = minValue;
           // console.log(progressbarIds[i]);
-          if(i != 16)
-            minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','min', this.value))");
-          else
+          if(i != 16){
+            minInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','min', this.value))");
+          }
+          else{
             minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', this.value)");
+          }
           minInput.setAttribute("onkeydown","this.value = this.value");
           minInput.setAttribute("onfocusout","setPlaceholderValue('min" + i + "',this.value)");
           minInput.setAttribute("size","5");
@@ -581,10 +583,12 @@
           maxInput.className = "maxInput";
           maxInput.placeholder = maxValue;
           maxInput.setAttribute("type","text");
-          if(i != 16)
-            maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','max', this.value))");
-          else
+          if(i != 16){
+            maxInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','max', this.value))");
+          }
+          else{
             maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', this.value)");
+          }
           maxInput.setAttribute("onkeydown","this.value = this.value");
           maxInput.setAttribute("onfocusout","setPlaceholderValue('max" + i + "',this.value)");
           maxInput.setAttribute("size","5");
@@ -602,7 +606,7 @@
           actualMinInput.id = "actualMin" + i;
           actualMinInput.className = "actualMinInput";
           actualMinInput.placeholder = actualMinValue;
-          actualMinInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','actualMin', this.value))");
+          actualMinInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','actualMin', this.value))");
           actualMinInput.setAttribute("onkeydown","this.value = this.value");
           actualMinInput.setAttribute("onfocusout","setPlaceholderValue('actualMin" + i + "',this.value)");
           actualMinInput.setAttribute("size","5");
@@ -623,7 +627,7 @@
           actualMaxInput.id = "actualMax" + i;
           actualMaxInput.className = "actualMaxInput";
           actualMaxInput.placeholder = actualMaxValue;
-          actualMaxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','actualMax', this.value))");
+          actualMaxInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','actualMax', this.value))");
           actualMaxInput.setAttribute("onkeydown","this.value = this.value");
           actualMaxInput.setAttribute("onfocusout","setPlaceholderValue('actualMax" + i + "',this.value)");
           actualMaxInput.setAttribute("size","5");
