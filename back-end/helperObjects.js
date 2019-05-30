@@ -3414,6 +3414,7 @@ function Tile(tileArray, board) {
   this.cropMult = Array(828);
   this.precipMult = 0;
   this.sumUnderTwo = 0;
+  this.subWatershedtotalpointNitrate=Array(22);
 
   //create a blank results holder sized to hold 3 years of results (year 0 = results[0])
   this.results = Array(4);
@@ -3571,7 +3572,6 @@ function Tile(tileArray, board) {
     var res = this.subWatershedNitrateNoMin;
     var score = 100*precip*crop*area;
     var wetlandMultiplier = 1;
-
     //Determine if there is a strategic wetland in use in this Tile's subWatershed
     for(var t = 0, tl=board.map.length; t < tl; t++){
       if ((subwatershed == board.map[t].subwatershed) && (board.map[t].landType[year] == LandUseType.wetland) && board.map[t].strategicWetland == 1) {
