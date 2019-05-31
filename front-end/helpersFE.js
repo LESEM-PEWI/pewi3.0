@@ -3811,9 +3811,19 @@ function painterSelect(brushNumberValue) {
 
 function pasteYear()
 {
+
+
+
   var snackBar = document.getElementById("snackbarNotification");
   document.getElementById("yearPasteButton").classList.toggle("show");
   var yearToPasteIn = document.getElementById("yearToPaste").value;
+
+
+  // trying to push the current map so that it can be undone after undoing the paste
+   var currentMap = getMap(yearToPasteIn);
+   undoArr[yearToPasteIn].push(currentMap);
+
+
     for (var i = 0; i < boardData[currentBoard].map.length; i++)
     {
       boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearCopyPaste];
@@ -3838,11 +3848,10 @@ function pasteYear()
     document.getElementById("yearPasteButton").style.display = "none";
 
 
-    //reset the year being pasted on so that there is no weird extra stuff if the copy is not as long as the original
-    undoArr[yearToPasteIn] = [];
 
-    // makes a deep copy of all the arrays inside of undoArr so that the undo for the copy is fully functional
-    undoArr[yearToPasteIn] = JSON.parse(JSON.stringify(undoArr[yearCopyPaste]));
+    // makes a deep copy of all the arrays inside of undoArr for the given year so that the undo for the copy is fully functional
+    var newStuff = JSON.parse(JSON.stringify(undoArr[yearCopyPaste]));
+    undoArr[yearToPasteIn] = undoArr[yearToPasteIn].concat(newStuff);
 
 } //end pasteYear
 
@@ -6990,10 +6999,10 @@ finds a usable type
   {
     var toReturn = getCurrentLandType();
     var notAllowed = getLandUseNotAllowed();
-    var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15];
 
-    // if the current selection is toggled off
-    if(notAllowed.includes(toReturn))
+    // if the current selection is toggled off, or wetland because it would set the whole map to wetland
+    if(notAllowed.includes(toReturn)|| toReturn == 14)
     {
       // loop through to find the first one that is toggled on
       for (var r = 1; r <= 15; r++)
@@ -7006,5 +7015,29 @@ finds a usable type
       }
 
     }
+    return toReturn;
+  }
+
+
+// this is not working yet
+  function getMap(year)
+  {
+    var tileIDs = [];
+    var landTypes = [];
+
+    // loop through the map and get each tiles ID and landtype
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+
+      //check if the tile is actually a game tile
+      if(boardData[currentBoard].map[i].landType[year] != 0)
+      {
+        tileIDs.push(i);
+        landTypes.push(boardData[currentBoard].map[i].landType[year]);
+      }
+
+    } // end for
+
+    var toReturn = [tileIDs, landTypes];
+
     return toReturn;
   }
