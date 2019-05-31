@@ -7019,7 +7019,12 @@ finds a usable type
   }
 
 
-// this is not working yet
+/**
+ *This function returns a copy of the tile IDs and their land types for use in the undo funcion. It is used to make a copy of the year before it gets pasted over.
+ *That copy is then pushed to that years undo array so that it can be undone after the pasted has been undone.
+ * @param  {[type]} year [The year to copy]
+ * @return {[type]}      [An array with an array of IDs and an array of land types to push into the undoArr]
+ */
   function getMap(year)
   {
     var tileIDs = [];
