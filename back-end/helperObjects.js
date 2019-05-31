@@ -1068,6 +1068,34 @@ function Click(c1, c2, c3, c4, c5) {
             return customMouseInput(this.tileID,true);
           else
             return "User dragged mouse while holding the right mouse button";
+
+        case 101:
+          if (action) {
+            document.getElementById("yearToCopy").selectedIndex = this.tileID;
+            return copyYear();
+            break;
+          }
+
+          else {
+            return "Copied year " + this.tileID;
+            break;
+          }
+
+        case 102:
+          if(action) {
+            document.getElementById("yearToPaste").selectedIndex = this.tileID;
+            document.getElementById("yearPasteButton").classList.toggle("show");
+            return pasteYear();
+            break;
+          }
+
+          else {
+            return "Pasted in year " + this.tileID;
+            break;
+          }
+
+
+
     }
   }
 }

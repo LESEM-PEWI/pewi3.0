@@ -1524,9 +1524,14 @@ function copyYear()
   document.getElementById("yearCopyButton").classList.toggle("show");
   yearCopyPaste = document.getElementById("yearToCopy").value;
   document.getElementById("yearPasteButton").style.display = "block";
+  document.getElementById("yearToCopy").style.display = "block";
   //Hide the option of pasting the same year to itself
   document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'none';
-
+  if (curTracking)
+  {
+    // sending the yearCopyPaste value at tileID position to store it and reproduce it during run simulation
+    pushClick(0, getStamp(), 101, 0, yearCopyPaste);
+  }
 
 } //end copyYear
 
@@ -3827,15 +3832,22 @@ function pasteYear()
 
     calculateResults();
     refreshProgressBar(currentYear);
+    if (!isSimRunning()) {
+      snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
+      snackBar.className = "show";
+      setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+    }
 
-    snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
-    snackBar.className = "show";
-    setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
     document.getElementById("yearToCopy").value = 0;
     document.getElementById("yearToPaste").value = 0;
     document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
     document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'block';
     document.getElementById("yearPasteButton").style.display = "none";
+    if (curTracking)
+    {
+      // sending the yearToPasteIn value at tileID position to store it and reproduce it during run simulation
+      pushClick(0, getStamp(), 102, 0, yearToPasteIn);
+    }
 } //end pasteYear
 
 //Pauses the sim (and related times)
@@ -5465,7 +5477,11 @@ function toggleVisibility() {
   // is selected
 
   //check to see if the year we are on is no longer a year... if so, well, switch to y1
+  // Suppose you are on year 3, the map shows the tiles of year 3. If you delete year 3 now, the map transforms to year 2.
+  // Similarly, if you are on year 2 and delete year 2, the map transforms to year 1
+  // When a year is deleted, its style.display changes to "none". Using this, the yearMax value is reduced by 1
   var yearMax = 3;
+  // Changing the yearMax value when year 3 or 2 is deleted
   if (document.getElementById("year3Button").style.display == "none") yearMax = 2;
   if (document.getElementById("year2Button").style.display == "none") yearMax = 1;
 
