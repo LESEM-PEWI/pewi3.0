@@ -2451,15 +2451,18 @@ if(typeof tileId == 'undefined'){
     var score = 0;
     var mult = 1;
     var foundWet = false;
-    for (var i = 0; i < board.map.length; i++) {
-      if(board.map[i].subwatershed == subw){
-        score += board.map[i].results[year].cropMultiplier;
-        if((board.map[i].landType[year] == LandUseType.wetland) && board.map[i].strategicWetland == 1 && !foundWet){
-          mult=0.48;
-          foundWet = true;
-        }
-      }
-    }
+    // var subWatershedArray=board.map.filter(
+    //   function
+    // );
+    // for (var i = 0; i < board.map.length; i++) {
+    //   if(board.map[i].subwatershed == subw){
+    //     score += board.map[i].results[year].cropMultiplier;
+    //     if((board.map[i].landType[year] == LandUseType.wetland) && board.map[i].strategicWetland == 1 && !foundWet){
+    //       mult=0.48;
+    //       foundWet = true;
+    //     }
+    //   }
+    // }
     score /= this.subwatershedArea[subw];
     score *= 100*this.precipitationMultiplier(year)*mult;
     score = (score < 2) ? 2 : score;
