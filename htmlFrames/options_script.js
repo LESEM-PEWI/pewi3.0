@@ -712,37 +712,102 @@
     var siblingId;
     var siblingValue;
     var isValid = false;
-    if(id.indexOf("min") != -1){
-      siblingId = "max" + id.charAt(id.length - 1);
-      siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
-      if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
-        isValid = true;
+    //grab the id number from the id
+    var idNum = "";
+    for(var i = 0; i < id.length; i++){
+      if(!isNaN(id.charAt(i))){
+        idNum += id.charAt(i);
+      }
     }
-    if(id.indexOf("max") != -1){
-      siblingId = "min" + id.charAt(id.length - 1);
-      siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
-      if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
-        isValid = true;
+
+    //since 3-6 are reversed min/max we need to adjust the conditons
+    if(idNum != 3 && idNum != 4 && idNum != 5 && idNum != 6){
+      if(id.indexOf("min") != -1){
+        siblingId = "max" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("max") != -1){
+        siblingId = "min" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("actualMin") != -1){
+        siblingId = "actualMax" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("actualMax") != -1){
+        siblingId = "actualMin" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(isNaN(value) || value == "" ){
+        isValid = false;
+      }
     }
-    if(id.indexOf("actualMin") != -1){
-      siblingId = "actualMax" + id.charAt(id.length - 1);
-      siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
-      if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
-        isValid = true;
-    }
-    if(id.indexOf("actualMax") != -1){
-      siblingId = "actualMin" + id.charAt(id.length - 1);
-      siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
-      if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
-        isValid = true;
-    }
-    if(isNaN(value) || value == "" ){
-      isValid = false;
+    else{
+      if(id.indexOf("min") != -1){
+        siblingId = "max" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("max") != -1){
+        siblingId = "min" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("actualMin") != -1){
+        siblingId = "actualMax" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("actualMax") != -1){
+        siblingId = "actualMin" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(isNaN(value) || value == "" ){
+        isValid = false;
+      }
     }
 
     if(isValid){
+      if(id.indexOf("min") != -1 || id.indexOf("max") != -1){
+        if(value < 0){
+          value = 0;
+        }
+        else if(value > 100){
+          value = 100;
+        }
       document.getElementById(id).placeholder = value;
       document.getElementById(id).value = "";
+      }
+      else if(id.indexOf("actualMin") != -1 || id.indexOf("actualMax") != -1){
+        var minVal = parent.getRawValue(0, idNum);
+        var maxVal = parent.getRawValue(100, idNum);
+        if(idNum == 3 || idNum == 4 || idNum == 5 || idNum == 6){
+          var temp = maxVal;
+          maxVal = minVal;
+          minVal = temp;
+        }
+        if(value < minVal){
+          value = minVal;
+        }
+        else if(value > maxVal){
+          value = maxVal;
+        }
+        document.getElementById(id).placeholder = value;
+        document.getElementById(id).value = "";
+      }
     }
     else {
       document.getElementById(id).value = "";
@@ -754,8 +819,15 @@
 
   function convertAndUpdate(id, option, value) {
     var idNum = progressbarIds.indexOf(id);
+    var minVal = parent.getRawValue(0, idNum);
+    var maxVal = parent.getRawValue(100, idNum);
 
     if(idNum == 16) return;
+    if(idNum == 3 || idNum == 4 || idNum == 5 || idNum == 6){
+      var temp = maxVal;
+      maxVal = minVal;
+      minVal = temp;
+    }
     if(option == "min" || option == "max"){
       // get english raw value
       var rawValue = parent.getRawValue(value, idNum);
@@ -769,11 +841,21 @@
 
       if(option == "min"){
         // Set actualMin raw value
-        document.getElementById("actualMin" + idNum).placeholder = rawValue;
+        var val = parseFloat(document.getElementById("max" + idNum).placeholder);
+        if(value <= val || isNaN(val)){
+          if(rawValue <= maxVal && rawValue >= minVal && value != ""){
+              document.getElementById("actualMin" + idNum).placeholder = rawValue;
+          }
+        }
       }
       else {
         // Set actualMax raw value
-        document.getElementById("actualMax" + idNum).placeholder = rawValue;
+        var val = parseFloat(document.getElementById("min" + idNum).placeholder);
+        if(value >= val || isNaN(val)){
+          if(rawValue <= maxVal && rawValue >= minVal && value != ""){
+            document.getElementById("actualMax" + idNum).placeholder = rawValue;
+          }
+        }
       }
       // return the min/max value since we will need it as a parameter in setProgressbarMinMaxValues function.
       return value;
@@ -785,11 +867,39 @@
       var minOrMaxValue = Math.round(getScores(idNum, value) * 100) / 100;
       if(option == "actualMin"){
         // Set 0 - 100 Min value based on the raw value
-        document.getElementById("min" + idNum).placeholder = minOrMaxValue;
+        var val = parseFloat(document.getElementById("actualMax" + idNum).placeholder);
+        if(idNum != 3 && idNum != 4 && idNum != 5 && idNum != 6){
+          if(value <= val || isNaN(val)){
+            if(value <= maxVal && value >= minVal && value != ""){
+              document.getElementById("min" + idNum).placeholder = minOrMaxValue;
+            }
+          }
+        }
+        else{
+          if(value >= val || isNaN(val)){
+            if(value <= maxVal && value >= minVal && value != ""){
+              document.getElementById("min" +idNum).placeholder = minOrMaxValue;
+            }
+          }
+        }
       }
       else {
         // Set 0 - 100 Max value based on the raw value
-        document.getElementById("max" + idNum).placeholder = minOrMaxValue;
+        var val = parseFloat(document.getElementById("actualMin" + idNum).placeholder);
+        if(idNum != 3 && idNum != 4 && idNum != 5 && idNum != 6){
+          if(value >= val || isNaN(val)){
+            if(value <= maxVal && value >= minVal && value != ""){
+              document.getElementById("max" + idNum).placeholder = minOrMaxValue;
+            }
+          }
+        }
+        else {
+          if(value <= val || isNaN(val)){
+            if(value <= maxVal && value >= minVal && value != ""){
+              document.getElementById("max" + idNum).placeholder = minOrMaxValue;
+            }
+          }
+        }
       }
       // return the min/max value since we will need it as a parameter in setProgressbarMinMaxValues function.
       return minOrMaxValue;
