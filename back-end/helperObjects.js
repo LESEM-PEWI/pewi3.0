@@ -1068,7 +1068,7 @@ function Click(c1, c2, c3, c4, c5) {
             return customMouseInput(this.tileID,true);
           else
             return "User dragged mouse while holding the right mouse button";
-
+        // Copy a year
         case 101:
           if (action) {
             document.getElementById("yearToCopy").selectedIndex = this.tileID;
@@ -1080,7 +1080,7 @@ function Click(c1, c2, c3, c4, c5) {
             return "Copied year " + this.tileID;
             break;
           }
-
+        // Paste a year
         case 102:
           if(action) {
             document.getElementById("yearToPaste").selectedIndex = this.tileID;
@@ -1091,6 +1091,32 @@ function Click(c1, c2, c3, c4, c5) {
 
           else {
             return "Pasted in year " + this.tileID;
+            break;
+          }
+
+        // When user deletes a year.
+        // this.tileID here denotes var yearSelected from helpersFE.js
+        case 103:
+          if (action) {
+            var deleteInfo = this.tileID;
+            // Extracting year to be deleted
+            var yearSelected = parseInt(deleteInfo.substring(0,1), 10);
+            // Extracting delete confirmation window popup input (OK/cancel)
+            var deleteConfirm = deleteInfo.substring(1);
+            // This is to be displayed to the person who runs the simulation.
+            // In this way he would know what the user had selected while recording
+            var snackBar = document.getElementById("snackbarNotification");
+            snackBar.innerHTML = "Click " + deleteConfirm + " at Confirmation popup";
+            snackBar.className = "show";
+            setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+            // Transition to the selected year
+            transitionToYear(yearSelected);
+            switchYearTab(yearSelected);
+            return deleteYearAndTransition();
+            break;
+          }
+          else {
+            return "User wanted to delete a year";
             break;
           }
 

@@ -47,6 +47,8 @@ var g_year1delete = false; //true if year 1 is deleted when there are other year
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board - only used for deletetion of years
+// flag to know if user selected OK/cancel at the 'Are you sure you want to delete?'-popup. Only used for running recorded simulations
+var deleteConfirm = false;
 var yearCopyPaste = 0; //used for copying and pasting the selected year
 var selectedLandType = 0; //keeps track of which land is selected
 var resultsMappedHover=false;
@@ -956,10 +958,7 @@ function deleteYearAndTransition()
   var snackBar = document.getElementById("snackbarNotification");
   var currMaxYear = boardData[currentBoard].calculatedToYear;
   maxYear = currMaxYear;
-  if(curTracking)
-  {
-    pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO
-  }
+
 //if somehow the selected year is year 0, don't have an option for deleting the year
   if(!yearSelected)
   {
@@ -969,6 +968,7 @@ function deleteYearAndTransition()
     var response;
     if(confirm("Are you sure you want to delete year " + yearSelected + "?" ))
     {
+
       if(yearSelected == 1)
       {
         //if selected year is 1 and there are no other years
@@ -1058,11 +1058,13 @@ function deleteYearAndTransition()
         //switch to the previous year
         transitionToYear(yearSelected);
         switchYearTab(yearSelected);
-      }
 
+      }
+      deleteConfirm = true;
     }
     else
     {
+        deleteConfirm = false;
         response = "Not Deleted!";
         g_isDeleted = false;
     }
@@ -1075,6 +1077,20 @@ function deleteYearAndTransition()
     // refresh the progress bar
     // calculateResults();
     refreshProgressBar(currentYear);
+    if(curTracking)
+    {
+      var userResponseForDel = "";
+      if (deleteConfirm === true) // comparison working correctly!
+      {
+        userResponseForDel = "OK";
+      }
+      else {
+        userResponseForDel = "cancel";
+      }
+      // concatenating the two information (yearSelected & deleteConfirm) as one string, so that both can be stored in one column
+      var deleteInfo = yearSelected.toString() + userResponseForDel;
+      pushClick(0, getStamp(), 103, 0 , deleteInfo); 
+    }
 }// end deleteYearAndTransition
 
 
@@ -4547,8 +4563,8 @@ function runSimulation() {
        The columns are:-- clickID, time stamp, click type, time gap, Description of click, Extra data
        All units of time is milli Milliseconds.
        The sixth column or Extra data is often referred to as the tileID. It stores the id of the tile whose land use is changed,
-       When a tile is not clicked, it stores other values (as in cases of precip and copy/paste).
-       To save code length, the tileID (or Extra data) column is used to store Precip values, copy paste year values.
+       When a tile is not clicked, it stores other values (as in cases of precip and copy/paste/delete). This is done to save code length.
+       (tileID (or Extra data) column is used to store Precip values, copy paste year values)
     */
     var tempID = tempArr[0]; // clickID
     var tempStamp = tempArr[1]; // time stamp
@@ -4556,7 +4572,7 @@ function runSimulation() {
     var tempGap = tempArr[3]; // time gap
 
     /* Each value of tempType, in the if-statement below, indicates a case number in the Click() function of file helperObjects.js.
-       55 - "A tile was painted (single selection)"
+  case 55 - "A tile was painted (single selection)"
        34 - "Year 0 Precip Modified", 35 - "Year 1 Precip Modified", 36 - "Year 2 Precip Modified", 37 - "Year 3 Precip Modified"
        80 - "Click an entry in index page" (Note: here index denotes Glossary in pewi 4.0 and later versions)
        81 - "Click Advanced tab", 82 - "Click General tab"
@@ -4566,9 +4582,8 @@ function runSimulation() {
        94 - "User scrolled in the results page"
        101 - " Copied year __"
        102 - "Pasted in year __"
-
     */
-    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102) {
+    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 || tempType == 103) {
       var tempTile = tempArr[5]; // Extra data
     }
     if (tempType == 56 || tempType == 99 || tempType == 100) {
