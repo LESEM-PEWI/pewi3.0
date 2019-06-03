@@ -3832,11 +3832,11 @@ function pasteYear()
 
     calculateResults();
     refreshProgressBar(currentYear);
-    if (!isSimRunning()) {
+    //if (!isSimRunning()) {
       snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
       snackBar.className = "show";
       setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
-    }
+    //}
 
     document.getElementById("yearToCopy").value = 0;
     document.getElementById("yearToPaste").value = 0;
@@ -4540,13 +4540,36 @@ function runSimulation() {
   document.getElementById("simSlider").max = endTime;
   //First, populate the clicks
   for (var i = 1; i < simulationData.length; i++) {
+    // Splits the .csv file by ','
     var tempArr = simulationData[i].split(',');
-    var tempID = tempArr[0];
-    var tempStamp = tempArr[1];
-    var tempType = tempArr[2];
-    var tempGap = tempArr[3];
-    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94) {
-      var tempTile = tempArr[5];
+
+    /* Populates the following variables from the columns of .csv file.
+       The columns are:-- clickID, time stamp, click type, time gap, Description of click, Extra data
+       All units of time is milli Milliseconds.
+       The sixth column or Extra data is often referred to as the tileID. It stores the id of the tile whose land use is changed,
+       When a tile is not clicked, it stores other values (as in cases of precip and copy/paste).
+       To save code length, the tileID (or Extra data) column is used to store Precip values, copy paste year values.
+    */
+    var tempID = tempArr[0]; // clickID
+    var tempStamp = tempArr[1]; // time stamp
+    var tempType = tempArr[2]; // click type
+    var tempGap = tempArr[3]; // time gap
+
+    /* Each value of tempType, in the if-statement below, indicates a case number in the Click() function of file helperObjects.js.
+       55 - "A tile was painted (single selection)"
+       34 - "Year 0 Precip Modified", 35 - "Year 1 Precip Modified", 36 - "Year 2 Precip Modified", 37 - "Year 3 Precip Modified"
+       80 - "Click an entry in index page" (Note: here index denotes Glossary in pewi 4.0 and later versions)
+       81 - "Click Advanced tab", 82 - "Click General tab"
+       91 - "User zoomed in/out of PEWI map"
+       92 - "User scrolled in the about page"
+       93 - "User scrolled in the index page"
+       94 - "User scrolled in the results page"
+       101 - " Copied year __"
+       102 - "Pasted in year __"
+
+    */
+    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102) {
+      var tempTile = tempArr[5]; // Extra data
     }
     if (tempType == 56 || tempType == 99 || tempType == 100) {
       var tempTile = [];
@@ -5092,6 +5115,7 @@ function switchConsoleTab(value) {
 
   //update the left console tab according to the value selected
   switch (value) {
+    // Painters Tab or land use icon selected
     case 1:
       inDispLevels = false;
       resultsMappedHover=false;
@@ -5102,6 +5126,7 @@ function switchConsoleTab(value) {
       document.getElementById('painterTab').style.display = "block";
       updateIndexPopup('These are the <span style="color:orange;">15</span> different <span style="color:orange;">land use types</span>. To learn more about them, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Land Use"</span>.');
       break;
+      // Precipitation tab selected
     case 2:
       inDispLevels = false;
       resultsMappedHover=false;
@@ -5113,6 +5138,7 @@ function switchConsoleTab(value) {
       yearPrecipManager();
       updateIndexPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Glossary</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
       break;
+    // 'Result maps' icon selected
     case 3:
       resultsMappedHover=true;
       inDispLevels = true;
@@ -5123,6 +5149,7 @@ function switchConsoleTab(value) {
       document.getElementById('levelsTab').style.display = "block";
       updateIndexPopup('This is the <span style="color:orange;">Levels Tab,</span> where you can learn about <span style="color:yellow;">Soil Quality and Water Quality</span>.');
       break;
+      // Physical features tab selected
     case 4:
       inDispLevels = true;
       resultsMappedHover=false;
@@ -5133,6 +5160,7 @@ function switchConsoleTab(value) {
       document.getElementById('featuresTab').style.display = "block";
       updateIndexPopup('This is the <span style="color:orange;">Physical Features Tab</span>, where you will find information on topography, soil properties, subwatershed boundaries, and strategic wetland areas.');
       break;
+    // ** No description given of what this case does **
     case 5:
       inDispLevels = false;
       resultsMappedHover=false;
@@ -5142,6 +5170,7 @@ function switchConsoleTab(value) {
       document.getElementById('settingsImg').className = "imgSelected";
       document.getElementById('settingsTab').style.display = "block";
       break;
+    // Year selection tab selected
     case 6:
       inDispLevels = false;
       resultsMappedHover=false;
@@ -5153,6 +5182,7 @@ function switchConsoleTab(value) {
       yearCopyPasteInit();
       updateIndexPopup('The <span style="color:orange;">Years Tab</span> allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
       break;
+    // Yield base rate tab selected
     case 7:
       inDispLevels = true;
       resultsMappedHover=false;

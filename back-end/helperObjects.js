@@ -207,7 +207,7 @@ function Click(c1, c2, c3, c4, c5) {
           return "Year selection tab was clicked";
           break;
         }
-        //When the user clicks the assessment icon
+        //When the user clicks the assessment icon/ 'Result maps' icon
       case 7:
         if (action) {
           return switchConsoleTab(3);
