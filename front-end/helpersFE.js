@@ -1160,6 +1160,7 @@ function changeLandTypeTile(tileId) {
         {
           // If the land type remains the same, then do nothing, otherwise,change the land type, and update progress bars
           if(meshMaterials[tileId].map != textureArray[painter]){
+            console.log(Totals);
             // console.log('Change the land type in tile which id is ', tileId);
             meshMaterials[tileId].map = textureArray[painter];
             // record the data changes in boardData
