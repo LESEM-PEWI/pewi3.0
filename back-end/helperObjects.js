@@ -2398,8 +2398,9 @@ function Results(board) {
 
   //function to calculate the nitrates for each subWatershed
   //the total value is then the sum of each subWatershed calculation
-  this.calculateNitrateConcentration = function() {
-
+  this.calculateNitrateConcentration = function(tileId,year) {
+console.log(typeof tileId);
+//console.log(tileId);
     //note, the calculations are done incrementally with the subWatershedNitrate array for clarity
 if(typeof tileId == 'undefined'){
     var tempNitrateConcentration = [0, 0, 0, 0];
@@ -2443,6 +2444,7 @@ if(typeof tileId == 'undefined'){
     } //end for all years
 
     this.nitrateConcentration = tempNitrateConcentration;
+    console.log("no");
   }
 
   else{
@@ -2451,18 +2453,22 @@ if(typeof tileId == 'undefined'){
     var score = 0;
     var mult = 1;
     var foundWet = false;
-    // var subWatershedArray=board.map.filter(
-    //   function
-    // );
-    // for (var i = 0; i < board.map.length; i++) {
-    //   if(board.map[i].subwatershed == subw){
-    //     score += board.map[i].results[year].cropMultiplier;
-    //     if((board.map[i].landType[year] == LandUseType.wetland) && board.map[i].strategicWetland == 1 && !foundWet){
-    //       mult=0.48;
-    //       foundWet = true;
-    //     }
-    //   }
-    // }
+    var subWatershedArray=board.map.filter(
+      function(item){
+        return item.subwatershed==board.map[tileId].subwatershed;
+      }
+    );
+    console.log(subWatershedArray);
+    console.log("nitrate");
+    for (var i = 0; i < board.map.length; i++) {
+      if(board.map[i].subwatershed == subw){
+        score += board.map[i].results[year].cropMultiplier;
+        if((board.map[i].landType[year] == LandUseType.wetland) && board.map[i].strategicWetland == 1 && !foundWet){
+          mult=0.48;
+          foundWet = true;
+        }
+      }
+    }
     score /= this.subwatershedArea[subw];
     score *= 100*this.precipitationMultiplier(year)*mult;
     score = (score < 2) ? 2 : score;
@@ -3245,7 +3251,7 @@ if(typeof tileId == 'undefined'){
   this.update = function(tileId, year) {
 
     // this.sumArea(); This function only need to called once, since totalArea, totalStreamCells, totalStrategicWetlandCells, subwatershedArea are constant, we don't have to call it every time when update the board
-
+    console.log("update: "+tileId);
     //update this as functions are added
     if(typeof tileId == 'undefined' && typeof year == 'undefined') {
       this.initializeMap(tileId,year);
@@ -3258,6 +3264,7 @@ if(typeof tileId == 'undefined'){
     this.sumYields(tileId, year);
     this.sumLandUse();
     this.calculateNitrateConcentration(tileId, year);
+    console.log("asdsa");
     this.mapIt();
 
     this.calculateGameWildLifePoints();
