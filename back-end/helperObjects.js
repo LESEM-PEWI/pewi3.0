@@ -2319,6 +2319,10 @@ function Results(board) {
   this.tileYieldResults = Array(4);
   this.tileLandType = Array(4);
 
+  /**
+   * when initialize the map and tile, create array and assign value to array
+   * @return {[type]} [description]
+   */
   this.initializeMap=function(){
     for(var i = 1; i < 4; i++){
       this.tileCarbonSequestration[i] = [];
@@ -2735,7 +2739,14 @@ if(typeof tileId == 'undefined'){
     } //end for loop year
 
   }; //end calculations of biodiversity points
-
+  /**
+   * sum yield helper function to calculate the total yield in the type
+   * @param  {[array]} results [description]
+   * @param  {[int]} type    [description]
+   * @param  {[int]} y       [description]
+   * @param  {[int]} score   [description]
+   * @return {[type]}         [description]
+   */
   function sumYieldHelper(results,type,y,score){
     switch (type) {
             case "none":
