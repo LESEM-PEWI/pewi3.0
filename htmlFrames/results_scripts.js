@@ -239,6 +239,24 @@
       //so make sure to add the graph back
       window.top.addBackYearToRadar(yearToToggle);
     } //end else/if group
+
+    /*// Trying to implement cursor tracking of radar chart
+    if (parent.getTracking())
+    {
+      if (yearToToggle == 1)
+      {
+        parent.pushClick(0, parent.getStamp(), 62, 0, null);
+      }
+      if (yearToToggle == 2)
+      {
+        parent.pushClick(0, parent.getStamp(), 63, 0, null);
+      }
+      if (yearToToggle == 3)
+      {
+        parent.pushClick(0, parent.getStamp(), 64, 0, null);
+      }
+    } */
+
   } //end radarPlotYearToggle()
 
   //this function is nearly identical to the similarly named one above,

@@ -476,7 +476,9 @@ function initializeCamera() {
 
     //Event listners for scrolling using the wheel or scroll bar ( Used exclusively by click tracking...for now)
     window.frames[0].onscroll = onWheelViewCredits;
-    window.frames[3].onscroll = onWheelViewResults;
+    //window.frames[4].onscroll = onWheelViewResults;
+    //adding 6/4/2019 line above commented
+    window.frames[4].addEventListener('scroll', onWheelViewResults);
 
 } //end initializeCamera
 
@@ -635,7 +637,7 @@ function onWheelViewCredits(e) {
 //Event function that is called when a user is scrolling in results
 function onWheelViewResults(e) {
   if(curTracking && scrollGap) {
-    pushClick(0,getStamp(),94,0,window.frames[3].pageYOffset);
+    pushClick(0,getStamp(),94,0,window.frames[4].scrollY);
   }
 }
 

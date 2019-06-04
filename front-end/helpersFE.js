@@ -1089,7 +1089,7 @@ function deleteYearAndTransition()
       }
       // concatenating the two information (yearSelected & deleteConfirm) as one string, so that both can be stored in one column
       var deleteInfo = yearSelected.toString() + userResponseForDel;
-      pushClick(0, getStamp(), 103, 0 , deleteInfo); 
+      pushClick(0, getStamp(), 103, 0 , deleteInfo);
     }
 }// end deleteYearAndTransition
 
@@ -4420,6 +4420,7 @@ function resultsStart() {
     // addEvent(document, 'keyup', resultsEsc);
   } //end if
 } //end resultsStart
+
 
 //Resumes the sim (and related times)
 function resumeSim() {
