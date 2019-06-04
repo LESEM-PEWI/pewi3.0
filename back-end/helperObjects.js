@@ -2344,9 +2344,11 @@ function Results(board) {
 
         // this.carbonSequestration[y] = this.carbonSequestration[y] * (1 / 0.90718474);
       } //end for
+      console.log("carbon loop");
     }
     // only one tile is changed, we need to calculate the results in tile level
     else {
+      console.log("carbon once");
       var subCarbonSum = this.sumCarbonSequestration[year] - this.tileCarbonSequestration[year][tileId];
 
       this.tileCarbonSequestration[year][tileId] = board.map[tileId].results[year].calculatedCarbonSequestration;
@@ -2376,8 +2378,10 @@ function Results(board) {
           this.tileGrossErosion[y][i] = board.map[i].results[y].calculatedGrossErosionRate * board.map[i].area;
         } //end for each tile
       } //end for all year
+      console.log("gross erosion loop");
     }
     else {
+      console.log("gross erosion once");
       var subErossionSum = this.grossErosion[year] - this.tileGrossErosion[year][tileId];
       this.tileGrossErosion[year][tileId] = board.map[tileId].results[year].calculatedGrossErosionRate * board.map[tileId].area;
       this.grossErosion[year] = subErossionSum + this.tileGrossErosion[year][tileId];
@@ -2408,7 +2412,7 @@ function Results(board) {
         } //end for all tiles
         this.phosphorusLoad[y] = (this.sumPhosphorusLoad[y] / 2000);
       } //end for all years
-
+      console.log("phosphorus loop");
     }
     else {
       var subPhosphorusSum = this.sumPhosphorusLoad[year] - this.tilePhosphorusLoad[year][tileId];
@@ -2416,6 +2420,7 @@ function Results(board) {
       this.tilePhosphorusLoad[year][tileId] = board.map[tileId].results[year].phosphorusDelivered;
       this.sumPhosphorusLoad[year] = subPhosphorusSum + this.tilePhosphorusLoad[year][tileId];
       this.phosphorusLoad[year] = (this.sumPhosphorusLoad[year] / 2000);
+      console.log("phoshorus once");
     }
 
   }; //end this.sumPhosphorus
@@ -2551,6 +2556,7 @@ if(typeof tileId == 'undefined'){
   // IIFE, this function only need to be called once, since all the variables we wanted are constant, it's unnecessary to calculate them again and again.
   // So we could immediately invoke this function to initialize variables
   this.sumArea = (function(self) {
+    console.log("sumArea loop");
     var tempArea = 0;
     var tempStreamCells = 0; //stream buffer is on a Cell Basis, not area (see table S5)
     var tempStrategicWetlandCells = 0;
@@ -2856,7 +2862,7 @@ if(typeof tileId == 'undefined'){
 
         //For each tile, add the tile yield Values * tile area to variables corresponding to each yield type
         for (var i = 0; i < board.map.length; i++) {
-
+          console.log("sumYields loop");
           var yieldValueToStore = board.map[i].results[y].calculatedYieldTile * board.map[i].area;
           this.tileYieldResults[y][i] = board.map[i].results[y].calculatedYieldTile * board.map[i].area;
           this.tileLandType[y][i] = LandUseType.getType(board.map[i].landType[y]);
@@ -2916,6 +2922,7 @@ if(typeof tileId == 'undefined'){
       }
     }
     else {
+      console.log("sumYields once");
       var prevLandType = this.tileLandType[year][tileId];
       var yieldValueToStore = board.map[tileId].results[year].calculatedYieldTile * board.map[tileId].area;
       switch (LandUseType.getType(board.map[tileId].landType[year])) {
@@ -3104,7 +3111,7 @@ if(typeof tileId == 'undefined'){
 
       //For each tile, add tile area to variables corresponding to each land use type
       for (var i = 0; i < board.map.length; i++) {
-
+        console.log("sumLandUse loop");
         switch (LandUseType.getType(board.map[i].landType[y])) {
           case "none":
             //Do Nothing
@@ -3212,7 +3219,7 @@ if(typeof tileId == 'undefined'){
 
       //For each watershed store nitrate percent contribution
       for (var i = 0; i < this.subwatershedArea.length; i++) {
-
+        console.log("mapit loop");
         watershedPercent[y].push(this.subWatershedNitrate[y][i] / (this.subwatershedArea[i] / this.totalArea) * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y]);
 
       }
@@ -3220,6 +3227,7 @@ if(typeof tileId == 'undefined'){
       //For each tile, store grossErosionRate and phosphorusRiskAssessment indices calculated by submethods
       //TODO: Phosphorus Risk Assessment
       for (var i = 0; i < board.map.length; i++) {
+        console.log("map it loop 2");
         grossErosionSeverity[y].push(this.getGrossErosionSeverity(board.map[i].results[y].calculatedGrossErosionRate));
         phosphorusRisk[y].push(this.getPhosphorusRiskAssessment(board.map[i].results[y].phosphorusDelivered / board.map[i].area));
         nitrateContribution[y].push(watershedPercent[y][board.map[i].subwatershed]);
