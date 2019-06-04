@@ -4050,7 +4050,6 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
   var instance;
   var options = [];
   function init() {
-    calculateDataTotalsGraphic1()
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1svg');
     window = document.getElementById('resultsFrame');
     var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
