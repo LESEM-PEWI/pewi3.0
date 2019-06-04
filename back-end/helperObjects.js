@@ -1120,6 +1120,28 @@ function Click(c1, c2, c3, c4, c5) {
             break;
           }
 
+        // When user changes main pie chart from Land Category to List
+        case 104:
+          if (action) {
+            return window.frames[4].toggleCategoriesPie(1);
+            break;
+          }
+          else {
+            return "Year pie toggled to List";
+            break;
+          }
+
+          // When user changes main pie chart from Land List to Category
+          case 105:
+            if (action) {
+              return window.frames[4].toggleCategoriesPie(0); //random number to denote default
+              break;
+            }
+            else {
+              return "Year pie toggled to Categories";
+              break;
+            }
+
 
 
     }
