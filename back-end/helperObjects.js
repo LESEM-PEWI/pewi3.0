@@ -2330,8 +2330,12 @@ function Results(board) {
       }
       this.sumCarbonSequestration = [0, 0, 0, 0];
       // var tempCarbonSum = [0, 0, 0, 0];
-      for (var y = 1; y <= board.calculatedToYear; y++) {
-
+      //for (var y = 1; y <= board.calculatedToYear; y++) {
+      var y=year;
+      if(typeof year=="undefined"){
+        console.log(1);
+        y=1;
+      }
         //For each tile, add the carbon sequestration value to the results array in corresponding year y
         for (var i = 0; i < board.map.length; i++) {
           // tempCarbonSum[y] += board.map[i].results[y].calculatedCarbonSequestration;
@@ -2343,7 +2347,7 @@ function Results(board) {
         this.carbonSequestration[y] = this.sumCarbonSequestration[y] / 1000;
 
         // this.carbonSequestration[y] = this.carbonSequestration[y] * (1 / 0.90718474);
-      } //end for
+      //} //end for
       console.log("carbon loop");
     }
     // only one tile is changed, we need to calculate the results in tile level
@@ -2374,11 +2378,11 @@ function Results(board) {
 
         //For each tile, add the gross erosion rate value * tile area to the results array in corresponding year y
         for (var i = 0; i < board.map.length; i++) {
+          console.log("gross erosion loop");
           this.grossErosion[y] += board.map[i].results[y].calculatedGrossErosionRate * board.map[i].area;
           this.tileGrossErosion[y][i] = board.map[i].results[y].calculatedGrossErosionRate * board.map[i].area;
         } //end for each tile
       } //end for all year
-      console.log("gross erosion loop");
     }
     else {
       console.log("gross erosion once");
@@ -2409,10 +2413,10 @@ function Results(board) {
         for (var i = 0; i < board.map.length; i++) {
           this.sumPhosphorusLoad[y] += (board.map[i].results[y].phosphorusDelivered);
           this.tilePhosphorusLoad[y][i] = board.map[i].results[y].phosphorusDelivered;
+          console.log("phosphorus loop");
         } //end for all tiles
         this.phosphorusLoad[y] = (this.sumPhosphorusLoad[y] / 2000);
       } //end for all years
-      console.log("phosphorus loop");
     }
     else {
       var subPhosphorusSum = this.sumPhosphorusLoad[year] - this.tilePhosphorusLoad[year][tileId];
@@ -2440,6 +2444,7 @@ function Results(board) {
 
         //For each tile, add the sediment delivery tile value * tile area to the results array in corresponding year y
         for (var i = 0; i < board.map.length; i++) {
+          console.log("sedimentDelivery loop");
           this.sedimentDelivery[y] += (board.map[i].results[y].calculatedSedimentDeliveryToStreamTile * board.map[i].area);
           this.tileSedimentDelivery[y][i] = board.map[i].results[y].calculatedSedimentDeliveryToStreamTile * board.map[i].area;
         } //end for each tile
@@ -2447,6 +2452,7 @@ function Results(board) {
       } //end for all years
     }
     else {
+      console.log("sedimentDelivery once");
       var subSedimentDeliverySum = this.sedimentDelivery[year] - this.tileSedimentDelivery[year][tileId];
       this.tileSedimentDelivery[year][tileId] = board.map[tileId].results[year].calculatedSedimentDeliveryToStreamTile * board.map[tileId].area;
       this.sedimentDelivery[year] = subSedimentDeliverySum + this.tileSedimentDelivery[year][tileId];
@@ -2455,7 +2461,7 @@ function Results(board) {
 
   //function to calculate the nitrates for each subWatershed
   //the total value is then the sum of each subWatershed calculation
-  this.calculateNitrateConcentration = function() {
+  this.calculateNitrateConcentration = function(tileId,year) {
 
     //note, the calculations are done incrementally with the subWatershedNitrate array for clarity
 if(typeof tileId == 'undefined'){
@@ -2466,7 +2472,7 @@ if(typeof tileId == 'undefined'){
       var subWatershedNitrate = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
       for (var i = 0; i < board.map.length; i++) {
-
+        console.log("calculateNitrateConcentration");
         subWatershedNitrate[board.map[i].subwatershed] += board.map[i].results[y].cropMultiplier;
 
         if ((board.map[i].landType[y] == LandUseType.wetland) && board.map[i].strategicWetland == 1) {
@@ -2477,6 +2483,7 @@ if(typeof tileId == 'undefined'){
       } //end for all cells, adding Crop Multipliers
 
       for (var s = 1; s < this.subwatershedArea.length; s++) {
+        console.log("calculateNitrateConcentration 2");
         //divide to accomodate for row crop multiplier
         if (subWatershedNitrate[s] == 0 && this.subwatershedArea[s] == 0) {
           subWatershedNitrate[s] = 0;
@@ -2509,6 +2516,7 @@ if(typeof tileId == 'undefined'){
     var mult = 1;
     var foundWet = false;
     for (var i = 0; i < board.map.length; i++) {
+      console.log("calculateNitrateConcentration loop");
       if(board.map[i].subwatershed == subw){
         score += board.map[i].results[year].cropMultiplier;
         if((board.map[i].landType[year] == LandUseType.wetland) && board.map[i].strategicWetland == 1 && !foundWet){
@@ -2593,7 +2601,7 @@ if(typeof tileId == 'undefined'){
   //subcalculations based on flags for biodiversity and game wildlife
   //---These calculations must be done at the board level as they involve tile percentages
   this.sumFlagPercentages = function() {
-
+    console.log(Totals);
     //for all years that have been calculated
     for (var y = 1; y <= board.calculatedToYear; y++) {
 
@@ -2608,7 +2616,7 @@ if(typeof tileId == 'undefined'){
 
       //for all tiles
       for (var i = 0; i < board.map.length; i++) {
-
+        console.log("sumFlagPercentages");
         if (board.map[i].results[y].nativeVegetationFlag) {
           tempAreaNativeVegetation += board.map[i].area;
         }
@@ -2664,6 +2672,7 @@ if(typeof tileId == 'undefined'){
     this.sumFlagPercentages();
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
+      console.log("calculateGameWildLifePoints");
       var tempScore = 0;
 
       //native vegetation and other high diversity land uses points
@@ -3035,7 +3044,8 @@ if(typeof tileId == 'undefined'){
   }; //end sumYields
 
   //Function to sum the areas of land use to landUseResults
-  this.sumLandUse = function() {
+  this.sumLandUse = function(tileId,year) {
+
 
     var tempLandUseResults = Array(4);
     tempLandUseResults[0] = {
@@ -3342,7 +3352,7 @@ if(typeof tileId == 'undefined'){
   this.update = function(tileId, year) {
 
     // this.sumArea(); This function only need to called once, since totalArea, totalStreamCells, totalStrategicWetlandCells, subwatershedArea are constant, we don't have to call it every time when update the board
-
+    // 
     //update this as functions are added
     this.sumCarbon(tileId, year);
     this.sumGrossErosion(tileId, year);
@@ -3357,6 +3367,7 @@ if(typeof tileId == 'undefined'){
     this.calculateBiodiversityPoints(); //Game Wildlife must come first as it alone calls sumFlagPercentages()
 
     this.updateScores(year);
+    console.log("year:"+year);
     // console.log(this.carbonSequestration[1]);
 
   }; //end this.update()

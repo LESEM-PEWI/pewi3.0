@@ -1122,6 +1122,7 @@ function calculateCutoffs() {
 // deprecated?
 function calculateResults(tileId, year) {
   //Totals = new Results(boardData[currentBoard]);
+  console.log("calculate result:"+year);
   Totals.update(tileId, year);
 
   //Correction for Carbon Sequestrations
