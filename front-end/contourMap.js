@@ -1,6 +1,4 @@
-/*
-This file contains the code that creates the contour map.
- */
+
 
 /**
  * This function bring all the pieces together and puts the contour map over the current map.
@@ -44,14 +42,26 @@ function groupByElevation(map)
       var slope = map[i].topography;
 
       //this array will hold the row and column number for the tiles in this group
-      var groupsRowCol = [[]];
+      var groupsRowCol = [];
 
-      var currentTile = [map[i].row, map[i].column];
+      // this array holds the tiles left to check for this group
+      var toCheck = [];
+
+      var currentTile = [parseInt(map[i].row,10), parseInt(map[i].column, 10)];
       groupsRowCol.push(currentTile);
 
 
 
-      checkAdjacentTiles(currentTile, groupsRowCol, slope, tilesToCheck);
+      checkAdjacentTiles(currentTile, slope, map, toCheck, tilesChecked);
+
+      while(toCheck.length > 0)
+      {
+        //pop the last tile in toCheck and add it to the groupsRowCol array, then check its adjacent tiles
+        currentTile = toCheck.pop();
+        groupsRowCol.push(currentTile);
+
+        checkAdjacentTiles(currentTile, slope, map, toCheck, tilesChecked);
+      }
 
       toReturn[slope].push(groupsRowCol);
     }
@@ -61,72 +71,75 @@ function groupByElevation(map)
 
   }
 
+  return toReturn;
+}
+
 /**
  * This function checks the given tiles neighbors to see if they have the same elevation value. If they do they are pushed into an array that stores a group of tiles.
  * @param  {[type]} tile       [Tile whos neighbors are being looked at]
- * @param  {[type]} groupArray [The array holding the position of the tiles with the same elevation]
  * @param  {[type]} slope      [Elevation value]
  */
-function checkAdjacentTiles(tile, groupArray, slope, tilesToCheck)
+function checkAdjacentTiles(tile, slope, map, toCheck, tilesChecked)
 {
-  var row = tile[0];
-  var col = tile[1];
+  var row = parseInt(tile[0], 10);
+  var col = parseInt(tile[1], 10);
 
-  if(map[getID(row, col + 1)].topography == slope)
-  {
-    checkAdjacentTiles([row, col + 1], groupArray, slope, tilesToCheck);
-    groupArray.push([row, col + 1]);
-    tilesChecked++;
-  }
 
-  if(map[getID(row, col - 1)].topography == slope)
-  {
-    checkAdjacentTiles([row, col - 1], groupArray, slope, tilesToCheck);
-    groupArray.push([row, col - 1]);
-    tilesChecked++;
-  }
+    // check to the right
+    if(col != 23 && !(toCheck.includes((row, col + 1))) && map[getID(row, col + 1)].topography == slope && map[getID(row, col + 1)].landtype != 0 )
+    {
+      toCheck.push([row, col + 1]);
+      tilesChecked++;
+    }
 
-  if(map[getID(row + 1, col)].topography == slope)
-  {
-    checkAdjacentTiles([row + 1, col], groupArray, slope, tilesToCheck);
-    groupArray.push([row + 1, col]);
-    tilesChecked++;
-  }
+    // check to the left
+    if(col != 1 && !(toCheck.includes((row, col - 1))) && map[getID(row, col - 1)].topography == slope && map[getID(row, col - 1)].landtype != 0)
+    {
+      toCheck.push([row, col - 1]);
+      tilesChecked++;
+    }
 
-  if(map[getID(row - 1, col)].topography == slope)
-  {
-    checkAdjacentTiles([row - 1, col], groupArray, slope, tilesToCheck);
-    groupArray.push([row - 1, col]);
-    tilesChecked++;
-  }
+    //check below
+    if(row != 36 && !(toCheck.includes((row + 1, col))) && map[getID(row + 1, col)].topography == slope && map[getID(row + 1, col)].landtype != 0)
+    {
+      toCheck.push([row + 1, col]);
+      tilesChecked++;
+    }
 
-  if(map[getID(row + 1, col + 1)].topography == slope)
-  {
-    checkAdjacentTiles([row + 1, col + 1], groupArray, slope, tilesToCheck);
-    groupArray.push([row + 1, col + 1]);
-    tilesChecked++;
-  }
+    // check up
+    if(row != 1 && !(toCheck.includes((row - 1, col))) && map[getID(row - 1, col)].topography == slope && map[getID(row - 1, col)].landtype != 0)
+    {
+      toCheck.push([row - 1, col]);
+      tilesChecked++;
+    }
 
-  if(map[getID(row - 1, col + 1)].topography == slope)
-  {
-    checkAdjacentTiles([row - 1, col + 1], groupArray, slope, tilesToCheck);
-    groupArray.push([row - 1, col + 1]);
-    tilesChecked++;
-  }
+    // check down and right
+    if(row != 36 && !(toCheck.includes((row + 1, col + 1))) && map[getID(row + 1, col + 1)].topography == slope && map[getID(row + 1, col + 1)].landtype != 0)
+    {
+      toCheck.push([row + 1, col + 1]);
+      tilesChecked++;
+    }
 
-  if(map[getID(row - 1, col - 1)].topography == slope)
-  {
-    checkAdjacentTiles([row - 1, col - 1], groupArray, slope, tilesToCheck);
-    groupArray.push([row - 1, col - 1]);
-    tilesChecked++;
-  }
+    // check up and right
+    if(row != 1 && !(toCheck.includes((row - 1, col + 1))) && col != 23 && map[getID(row - 1, col + 1)].topography == slope && map[getID(row - 1, col + 1)].landtype != 0)
+    {
+      toCheck.push([row - 1, col + 1]);
+      tilesChecked++;
+    }
 
-  if(map[getID(row + 1, col - 1)].topography == slope)
-  {
-    checkAdjacentTiles([row + 1, col - 1], groupArray, slope, tilesToCheck);
-    groupArray.push([row + 1, col - 1]);
-    tilesChecked++;
-  }
+    // check up and left
+    if(row != 1 && col != 1 && !(toCheck.includes((row - 1, col - 1))) && map[getID(row - 1, col - 1)].topography == slope && map[getID(row - 1, col - 1)].landtype != 0)
+    {
+      toCheck.push([row - 1, col - 1]);
+      tilesChecked++;
+    }
+
+    //check down and left
+    if(col != 1 && row != 36 && !(toCheck.includes((row + 1, col - 1))) && map[getID(row + 1, col - 1)].topography == slope && map[getID(row + 1, col - 1)].landtype != 0)
+    {
+      toCheck.push([row + 1, col - 1]);
+      tilesChecked++;
+    }
 
 }
 
