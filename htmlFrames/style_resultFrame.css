@@ -412,6 +412,10 @@ text {
   width: 40%;
 }
 
+.displaynone {
+  display:none;
+}
+
 #toggleYearPie {
   background-color: rgba(40, 44, 42, 0.03);
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);

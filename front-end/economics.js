@@ -1,7 +1,7 @@
 var economics = (function () { //Singleton for getting economics data from the budgets csv
   var instance;
   var rawData;
-  var data; //
+  var data;
   function init() {
 
     function divideByCategory (listofCats){
@@ -35,7 +35,7 @@ var economics = (function () { //Singleton for getting economics data from the b
     })
     return {//public fields
       data: this.data,
-      rawData; this.rawData
+      rawData: this.rawData
     };
   };
   return {
@@ -48,4 +48,4 @@ var economics = (function () { //Singleton for getting economics data from the b
   };
 })();
 
-economics.getInstance();
+economics.getInstance();//kind of a precalc? Not really but its calculated before its needed.
