@@ -297,6 +297,8 @@ function displayResults() {
   render(boardData[currentBoard].calculatedToYear);
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
+  econGraphic1 = EconomicsGraphic1().getInstance().render();
+
 
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
@@ -4016,4 +4018,261 @@ d3.selection.prototype.moveToBack = function() {
   renderData(dataset);
 
 //--------------------End of Render function
+}
+
+function createMockDataGraphic1(){
+  var econData = economics.getInstance().data;
+  econData = econData.map((d, i) => {
+    return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
+  });
+  data = [];
+  econData.forEach((el) => {
+    for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
+      d = {}
+      d.year = i;
+      d.landUse = el.landUse;
+      d.Cost = el.cost;
+      d.Revenue = el.cost * (Math.random()*-2);
+      d.Profit = Math.max(d.Revenue + d.Cost, 0);
+      d.Loss = Math.min(d.Revenue + d.Cost, 0);
+      data.push(d);
+    }
+  });
+  return data;
+
+}
+
+function calculateDataTotals(){
+
+}
+
+function EconomicsGraphic1() { //This is a singleton class use getInstance() to retrieve the instance
+  var instance;
+  var options = [];
+  function init() {
+    calculateDataTotalsGraphic1()
+    var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1svg');
+    window = document.getElementById('resultsFrame');
+    var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
+    var stackTypes = ['Cost','Revenue','Profit','Loss'];
+    var fullData = createMockDataGraphic1();
+
+
+    var margin = {top: 40, right: 10, bottom: 20, left: 60};
+    var width = 1800*.7 - margin.left - margin.right;
+    var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+
+    var groupKey = 'landUse';
+    svg = d3.select(econBody);
+    svg
+    .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    formatData = function(options){ //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
+
+      options = options || []; //to ensure a defined options
+      tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
+      data = tempData.filter(el => {
+        if(options.indexOf(el.landUse.replace(/\s/g,'')) > -1) return false;
+        if(options.indexOf(el.year) > -1) return false;        if(options.indexOf('Cost') > -1) el.Cost = 0;
+        if(options.indexOf('Revenue') > -1) el.Revenue = 0;
+        if(options.indexOf('Profit') > -1) el.Profit = 0;
+        if(options.indexOf('Loss') > -1) el.Loss = 0;
+        return el != null;
+      });
+
+      return data;
+    }
+
+    drawBars = function() {
+      let data = formatData(options);
+
+      let layers = d3.stack().keys(stackTypes) //formats data into groups, in this case we want to stack base off of cost/revenue etc...
+        .offset(d3.stackOffsetDiverging)
+        (data);
+
+      var layer = svg.selectAll(".layer") //draw 1 layer at a time, we want loss and profit to drawn last so they arent covered.
+        .data(layers)
+        .enter().append("g")
+        .attr("class", "layer")
+        .attr("layernum",function(d, i) {return i; })
+        .style("margin-left", function(d) { return "3px"; })
+        .style("fill", function(d, i) { return colors[i]; }); //determines color for each layer
+
+      let x0 = d3.scaleBand() //There are 2 x functions because landUse determine 1 part of x factor and year determines the other
+        .domain(data.map(function(d) {return d.landUse + ""; }))
+        .rangeRound([margin.left, width - margin.right])
+        .paddingInner(.1); //padding between groups
+
+      let x = d3.scaleBand() //this one does a small adjustment based off of year
+        .domain(data.map(function(d) {return d.year}))
+        .rangeRound([0, x0.bandwidth()]) //note that the max is the previous x's width so it divides that piece equally
+        .padding(.05); //padding between elements in the same group
+
+      let y = d3.scaleLinear()
+      .domain([d3.min(layers, stackMin), d3.max(layers, stackMax)])//determine the min and max value graph needs to show
+      .rangeRound([height - margin.bottom, margin.top]);
+
+      var rect = layer.selectAll("rect")
+        .data(function(d) {return d; })
+        .enter().append("rect")
+          .attr("transform", function(d) { return "translate(" + x0(d.data.landUse) + ",0)"; })//translate using 1 of the x's
+          .attr("x", function(d) {return x(d.data.year); }) //set x to the other so that when combined they get their own unique x value
+          .attr("y", function(d) {if (d[1] > 0) return y(0) - (y(d[0])- y(d[1])); else return y(0); }) //if the bar is positive the height has to be consi
+          .attr("width", x.bandwidth)
+          .attr("height", function(d){return y(d[0])- y(d[1]);})
+
+      var xAxis = svg.append("g") //only named variable for clarity of what this is
+        .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
+
+        .call(d3.axisBottom(x0))
+
+      var yAxis = svg.append("g")
+      .attr("transform", "translate(" + margin.left + ", 0)")
+      .style("font", "14px Arial")
+      .call(d3.axisLeft(y));
+    }
+
+    var drawLegend = function (){
+      legend = svg.append("g")
+        .attr("transform", "translate(" + width +",0)")
+        .attr("text-anchor", "end")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 15)
+      .selectAll("g")
+        .data(colors)
+        .enter().append("g")
+      .attr("transform", function(d, i) {return "translate(0," + (20 * i) + ")";});
+
+      legend.append("rect")
+        .attr("x", -19)
+        .attr("width", 19)
+        .attr("height", 19)
+        .attr("fill", (d, i) => colors[i]);
+
+      legend.append("text")
+        .attr("x", -24)
+        .attr("y", 9.5)
+        .attr("dy", "0.35em")
+        .text((d,i) => stackTypes[i]);
+    }
+
+    var addOptions = function (){ //This adds the toggle effects to the screen
+      var select = document.createElement('select');
+       //safe check to see if the options were already added to the select.
+      var box = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Options');
+      box.innerHTML = '';
+      box.append(select);
+      select.onchange = d => {
+        console.log(select.value)
+        document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses').style.display = 'none';
+        document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Economics').style.display = 'none';
+        document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years').style.display = 'none';
+        document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1' + select.value).style.display = 'block';
+
+      }
+      choices = ["Land Uses", "Years", "Economics"];
+      choices.forEach(choice => {
+        container = document.createElement("div");
+        container.id = 'econGraphic1' + choice.replace(/\s/g,'');
+        container.style.display = 'none';
+        box.appendChild(container)
+
+        option = document.createElement("option");
+        option.innerHTML = choice;
+        option.value = choice.replace(/\s/g,'');
+        select.appendChild(option);
+      });
+
+      container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses')
+      container.style.display = 'block';
+      economics.getInstance().data.map(d => d.landUse).forEach(d => {
+        cell = document.createElement('div');
+        cell.innerHTML = d;
+        checkBox = document.createElement('input');
+        checkBox.type = 'checkbox';
+        checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
+        checkBox.style.float = 'right';
+        cell.appendChild(checkBox);
+        container.appendChild(cell);
+      })
+
+      container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years')
+      for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+        cell = document.createElement('div');
+        cell.innerHTML = 'Year ' + i;
+        checkBox = document.createElement('input');
+        checkBox.type = 'checkbox';
+        checkBox.onclick = event => alterOptions(i);
+        checkBox.style.float = 'right';
+        cell.appendChild(checkBox);
+        container.appendChild(cell);
+      }
+
+      container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Economics')
+      stackTypes.forEach(type => {
+        cell = document.createElement('div');
+        cell.innerHTML = type;
+        checkBox = document.createElement('input');
+        checkBox.type = 'checkbox';
+        checkBox.onclick = event => alterOptions(type);
+        checkBox.style.float = 'right';
+        cell.appendChild(checkBox);
+        container.appendChild(cell);
+      });
+    }
+
+    alterOptions= function (option){ //This changes the options array to contain up to date options
+      if (options.includes(option)){
+        options.splice(options.indexOf(option),1);
+      }
+      else {
+        options.push(option);
+      }
+      rerender();
+    }
+
+    var render = function (){
+      svg.selectAll("*").remove();
+      //just delete all contents for redraw, it is a lot easier for a graph that needs to move things
+    // definetely possible to do otherwise, but a little out of scope.
+      drawBars();
+      drawLegend();
+      addOptions();
+    }
+    var rerender = function (){ //We dont want to rebuild the options when we need to render again
+      svg.selectAll("*").remove();
+      drawBars();
+      drawLegend();
+    }
+    return {
+      drawBars: drawBars,
+      drawLegend: drawLegend,
+      render: render,
+    };
+  };
+  return {
+    getInstance: function () { //To ensure singularity
+      if ( !instance ) {
+        instance = init();
+      }
+      return instance;
+    }
+  };
+}
+
+
+
+function stackMin(layers) {
+  return d3.min(layers, function(d) {
+    return d[0];
+  });
+}
+
+function stackMax(layers) {
+  return d3.max(layers, function(d) {
+    return d[1];
+  });
 }
