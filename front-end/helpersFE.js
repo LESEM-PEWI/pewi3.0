@@ -807,7 +807,6 @@ function addTile(tile) {
 
     meshMaterials.push(tileMaterial);
   } else if (tile.landType[0] == -1) {
-
     tileMaterial = new THREE.MeshBasicMaterial({
       color: 0xFFFFFF,
       transparent: true,
