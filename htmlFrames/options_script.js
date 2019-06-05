@@ -376,7 +376,12 @@
   * settings, but changed their mind in the process then those changes would be undone.
   * For more information refer to Issue 362.
   */
-  function undoSelectedOptions(){
+  function undoSelectedOptions() {
+
+    if (parent.getTracking()) {
+      parent.pushClick(0, parent.getStamp(), 109, 0, null);
+    }
+
     /*
     * Iterate through all elements in selectedOptionsTrue and manually sets them to true, for being checked.
     */
@@ -413,7 +418,8 @@
     }
   }
 
-  function checkIfSaved(){
+  function checkIfSaved() {
+
     if(!savedOptions){
 
       /*

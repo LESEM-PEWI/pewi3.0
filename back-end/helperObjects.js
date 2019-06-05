@@ -1164,7 +1164,7 @@ function Click(c1, c2, c3, c4, c5) {
               break;
             }
 
-            case 108: // does not work!
+            case 108:
               if (action) {
                 return window.frames[6].saveCurrentOptionsState();
                 break;
@@ -1173,6 +1173,16 @@ function Click(c1, c2, c3, c4, c5) {
                 return " Customize window closed: Save & Exit";
                 break;
               }
+
+              case 109:
+                if (action) {
+                  return window.frames[6].undoSelectedOptions();
+                  break;
+                }
+                else {
+                  return " Customize window closed: Esc [X] button";
+                  break;
+                }
 
 
 
