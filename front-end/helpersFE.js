@@ -1121,6 +1121,7 @@ function calculateCutoffs() {
 //calculateResults triggers the results calculations by updating Totals
 // deprecated?
 function calculateResults(tileId, year) {
+  console.log("calculateResults: "+tileId+" "+year);
   //Totals = new Results(boardData[currentBoard]);
   Totals.update(tileId, year);
 
@@ -5659,6 +5660,9 @@ function updatePrecip(year) {
   boardData[currentBoard].updateBoard();
 
   // update the results and progress bars whenever precipitation is changed.
+  // for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+  //   calculateResults(i,year);
+  // }
   calculateResults();
   refreshProgressBar(currentYear);
 } //updatePrecip

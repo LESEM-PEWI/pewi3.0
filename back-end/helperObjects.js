@@ -2318,6 +2318,7 @@ function Results(board) {
   this.tileSedimentDelivery = Array(4);
   this.tileYieldResults = Array(4);
   this.tileLandType = Array(4);
+  this.tileLandArea=Array(4);
   /**
    * when initialize the map and tile, create array and assign value to array
    * @return {[type]} [description]
@@ -2449,12 +2450,16 @@ function Results(board) {
       this.tileSedimentDelivery[i] = [];
       this.tileYieldResults[i] = [];
       this.tileLandType[i] = [];
+      this.tileLandArea[i]=[];
+      this.grossErosion[i]=0;
+      this.sumPhosphorusLoad[i]=0;
+      this.sedimentDelivery[i]=0;
     }
     var tempNitrateConcentration = [0, 0, 0, 0];
     this.sumCarbonSequestration = [0, 0, 0, 0];
     // var tempCarbonSum = [0, 0, 0, 0];
-    for (var y = 1; y <= board.calculatedToYear; y++) {
-
+    //for (var y = 1; y <= board.calculatedToYear; y++) {
+    y=yearSelected;
       var wetlandMultiplier = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
       var subWatershedNitrate = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -2470,10 +2475,11 @@ function Results(board) {
         this.tilePhosphorusLoad[y][i] = board.map[i].results[y].phosphorusDelivered;
         this.sedimentDelivery[y] += (board.map[i].results[y].calculatedSedimentDeliveryToStreamTile * board.map[i].area);
         this.tileSedimentDelivery[y][i] = board.map[i].results[y].calculatedSedimentDeliveryToStreamTile * board.map[i].area;
-
+        this.tileLandArea[y][i]=board.map[i].area;
         var yieldValueToStore = board.map[i].results[y].calculatedYieldTile * board.map[i].area;
         this.tileYieldResults[y][i] = board.map[i].results[y].calculatedYieldTile * board.map[i].area;
         this.tileLandType[y][i] = LandUseType.getType(board.map[i].landType[y]);
+
         sumYieldHelper(this.yieldResults,LandUseType.getType(board.map[i].landType[y]),y,yieldValueToStore);
 
         subWatershedNitrate[board.map[i].subwatershed] += board.map[i].results[y].cropMultiplier;
@@ -2509,8 +2515,9 @@ function Results(board) {
         tempNitrateConcentration[y] += subWatershedNitrate[s];
       } //end for all watersheds
       this.subWatershedNitrate[y] = subWatershedNitrate;
-    } //end for
+    //} //end for
     this.nitrateConcentration = tempNitrateConcentration;
+    console.log(this.grossErosion);
   }
 
   //Function to sum the values of calculatedCarbonSequestration for each tile
@@ -2657,7 +2664,7 @@ function Results(board) {
   //subcalculations based on flags for biodiversity and game wildlife
   //---These calculations must be done at the board level as they involve tile percentages
   this.sumFlagPercentages = function() {
-
+    y=yearSelected;
     //for all years that have been calculated
     for (var y = 1; y <= board.calculatedToYear; y++) {
 
@@ -2922,15 +2929,14 @@ function Results(board) {
           }
   }
   //Function to sum the values of YieldTile to YieldValueArray
-  this.sumYields = function(tileId, year) {
+  this.sumYieldsAndsumlandUse = function(tileId, year) {
 
-      console.log("sum yield");
+      console.log("sum yield sum land use");
       var prevLandType = this.tileLandType[year][tileId];
-      console.log("sum yield: "+prevLandType);
       var yieldValueToStore = board.map[tileId].results[year].calculatedYieldTile * board.map[tileId].area;
       sumYieldHelper(this.yieldResults,LandUseType.getType(board.map[tileId].landType[year]),year,yieldValueToStore);
-      //sumLandUseHelper(this.landUseResults,LandUseType.getType(board.map[tileId].landType[year]),year,board.map[tileId].area);
-      //sumLandUseHelperSubstraction(this.landUseResults,prevLandType,year,)
+      sumLandUseHelper(this.landUseResults,LandUseType.getType(board.map[tileId].landType[year]),year,board.map[tileId].area);
+      sumLandUseHelperSubstraction(this.landUseResults,prevLandType,year,this.tileLandArea[year][tileId]);
       switch (prevLandType){
         case "none":
           //Do Nothing
@@ -2983,7 +2989,7 @@ function Results(board) {
       }
       this.tileYieldResults[year][tileId] = yieldValueToStore;
       this.tileLandType[year][tileId] = LandUseType.getType(board.map[tileId].landType[year]);
-
+      this.tileLandArea[year][tileId]=board.map[tileId].area;
     // this.yieldResults = tempYieldRes1ults;
 
   }; //end sumYields
@@ -3092,128 +3098,6 @@ function Results(board) {
         break;
     }
   }
-  //Function to sum the areas of land use to landUseResults
-  this.sumLandUse = function(tileId,year) {
-    var prevLandType = this.tileLandType[year][tileId];
-    console.log("sum land: "+prevLandType);
-
-    //console.log(this.tileLandType[year][tileId]);
-    //var prevlandUse=this.tileLandType[year][tileId];
-    // switch (LandUseType.getType(board.map[i].landType[y])) {
-    //       case "none":
-    //         //Do Nothing
-    //         break;
-    //       case "conventionalCorn":
-    //         this.landUseResults[y].conventionalCornLandUse += board.map[i].area;
-    //         break;
-    //       case "conservationCorn":
-    //         this.landUseResults[y].conservationCornLandUse += board.map[i].area;
-    //         break;
-    //       case "conventionalSoybean":
-    //         this.landUseResults[y].conventionalSoybeanLandUse += board.map[i].area;
-    //         break;
-    //       case "conservationSoybean":
-    //         this.landUseResults[y].conservationSoybeanLandUse += board.map[i].area;
-    //         break;
-    //       case "alfalfa":
-    //         this.landUseResults[y].alfalfaLandUse += board.map[i].area;
-    //         break;
-    //       case "permanentPasture":
-    //         this.landUseResults[y].permanentPastureLandUse += board.map[i].area;
-    //         break;
-    //       case "rotationalGrazing":
-    //         this.landUseResults[y].rotationalGrazingLandUse += board.map[i].area;
-    //         break;
-    //       case "grassHay":
-    //         this.landUseResults[y].grassHayLandUse += board.map[i].area;
-    //         break;
-    //       case "prairie":
-    //         this.landUseResults[y].prairieLandUse += board.map[i].area;
-    //         break;
-    //       case "conservationForest":
-    //         this.landUseResults[y].conservationForestLandUse += board.map[i].area;
-    //         break;
-    //       case "conventionalForest":
-    //         this.landUseResults[y].conventionalForestLandUse += board.map[i].area;
-    //         break;
-    //       case "switchgrass":
-    //         this.landUseResults[y].switchgrassLandUse += board.map[i].area;
-    //         break;
-    //       case "shortRotationWoodyBioenergy":
-    //         this.landUseResults[y].shortRotationWoodyBioenergyLandUse += board.map[i].area;
-    //         break;
-    //       case "wetland":
-    //         this.landUseResults[y].wetlandLandUse += board.map[i].area;
-    //         break;
-    //       case "mixedFruitsVegetables":
-    //         this.landUseResults[y].mixedFruitsVegetablesLandUse += board.map[i].area;
-    //         break;
-    //     }
-    // for (var y = 1; y <= board.calculatedToYear; y++) {
-    //
-    //   //For each tile, add tile area to variables corresponding to each land use type
-    //   for (var i = 0; i < board.map.length; i++) {
-    //     console.log("sumlanduse");
-    //     sumLandUseHelper(this.landUseResults,LandUseType.getType(board.map[i].landType[y]),y,board.map[i].area);
-    //     switch (LandUseType.getType(board.map[i].landType[y])) {
-    //       case "none":
-    //         //Do Nothing
-    //         break;
-    //       case "conventionalCorn":
-    //         this.landUseResults[y].conventionalCornLandUse += board.map[i].area;
-    //         break;
-    //       case "conservationCorn":
-    //         this.landUseResults[y].conservationCornLandUse += board.map[i].area;
-    //         break;
-    //       case "conventionalSoybean":
-    //         this.landUseResults[y].conventionalSoybeanLandUse += board.map[i].area;
-    //         break;
-    //       case "conservationSoybean":
-    //         this.landUseResults[y].conservationSoybeanLandUse += board.map[i].area;
-    //         break;
-    //       case "alfalfa":
-    //         this.landUseResults[y].alfalfaLandUse += board.map[i].area;
-    //         break;
-    //       case "permanentPasture":
-    //         this.landUseResults[y].permanentPastureLandUse += board.map[i].area;
-    //         break;
-    //       case "rotationalGrazing":
-    //         this.landUseResults[y].rotationalGrazingLandUse += board.map[i].area;
-    //         break;
-    //       case "grassHay":
-    //         this.landUseResults[y].grassHayLandUse += board.map[i].area;
-    //         break;
-    //       case "prairie":
-    //         this.landUseResults[y].prairieLandUse += board.map[i].area;
-    //         break;
-    //       case "conservationForest":
-    //         this.landUseResults[y].conservationForestLandUse += board.map[i].area;
-    //         break;
-    //       case "conventionalForest":
-    //         this.landUseResults[y].conventionalForestLandUse += board.map[i].area;
-    //         break;
-    //       case "switchgrass":
-    //         this.landUseResults[y].switchgrassLandUse += board.map[i].area;
-    //         break;
-    //       case "shortRotationWoodyBioenergy":
-    //         this.landUseResults[y].shortRotationWoodyBioenergyLandUse += board.map[i].area;
-    //         break;
-    //       case "wetland":
-    //         this.landUseResults[y].wetlandLandUse += board.map[i].area;
-    //         break;
-    //       case "mixedFruitsVegetables":
-    //         this.landUseResults[y].mixedFruitsVegetablesLandUse += board.map[i].area;
-    //         break;
-    //     }
-    //
-    //   }
-    //
-    // }
-
-    //this.landUseResults = this.landUseTypeTotals;
-
-  }; //end sumLandUse
-
   //Function to store values of nitrateConcentration, grossErosionRate, and phosphorusRiskAssessment per tile for maps
   //check this function!
   this.mapIt = function() {
@@ -3333,7 +3217,8 @@ function Results(board) {
         // console.log("this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin) = ", this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin));
         // console.log("rawValue = ", this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin) + board.minimums.carbonMin);
         this.grossErosionScore[y] = 100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
-
+        console.log("gross Erosion Score"+this.grossErosionScore[y]);
+        console.log("grossErosion: "+this.grossErosion[y]);
         this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin));
         this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin));
         this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin));
@@ -3383,7 +3268,8 @@ function Results(board) {
   //note that some calculations depend on results of other calculations so be careful about reorganizing
 
   this.update = function(tileId, year) {
-
+    console.log("hello year selected "+yearSelected);
+    console.log("update: "+year);
     // this.sumArea(); This function only need to called once, since totalArea, totalStreamCells, totalStrategicWetlandCells, subwatershedArea are constant, we don't have to call it every time when update the board
     console.log("update: "+tileId);
     //update this as functions are added
@@ -3395,9 +3281,9 @@ function Results(board) {
       this.sumPhosphorus(tileId, year);
       this.sumSedimentDeliveryToStream(tileId, year);
       this.calculateNitrateConcentration(tileId, year);
-      this.sumYields(tileId, year);
-      this.sumLandUse(tileId,year);
+      this.sumYieldsAndsumlandUse(tileId, year);
     }
+
     //this.sumLandUse();
     this.mapIt();
 
