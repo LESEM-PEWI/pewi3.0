@@ -5029,6 +5029,11 @@ function sortPlayers() {
 
 // startOptions displays the options page
 function startOptions() {
+
+  if (curTracking) {
+    pushClick(0, getStamp(), 107, 0, null);
+  }
+
   //if nothing else has precedence
   if (!modalUp) { //commented for debugging
     modalUp = true;
@@ -5056,7 +5061,6 @@ function startOptions() {
     }
   }
 } // end startOptions
-
 
 // startPrintOptions displays the printOptions page
 function startPrintOptions() {
@@ -5275,6 +5279,9 @@ function toggleChangeLandType() {
 //toggleEscapeFrame displays and hides the div that allows the user to go to the main menu, options, or directory
 function toggleEscapeFrame() {
 
+  /* This condition is selected when 'Yes' option of 'Menu Menu'-button is clicked in the Modal escape frame
+      Check file index.html <div class="mainEscapeButton" id="yesConfirmEscape" ...>
+  */
   if (document.getElementById('confirmEscape').style.height == "20vw") {
     confirmEscape();
   }
@@ -5296,8 +5303,8 @@ function toggleEscapeFrame() {
     modalUp = true;
   }
 
-  /* This condition is selected when [X] button is clicked in the Modal escape frame
-      Check file index.html <div id="modalEscapeFrame"> 
+  /* This condition is selected when [X]-button OR Customize-button is clicked in the Modal escape frame
+      Check file index.html <div id="modalEscapeFrame">
   */
   else if (document.getElementById('modalEscapeFrame').style.display == "block" && modalUp)
   {

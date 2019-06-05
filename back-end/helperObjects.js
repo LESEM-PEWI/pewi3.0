@@ -1154,6 +1154,27 @@ function Click(c1, c2, c3, c4, c5) {
               break;
             }
 
+          case 107:
+            if (action) {
+              return startOptions();
+              break;
+            }
+            else {
+              return " Customize button was clicked";
+              break;
+            }
+
+            case 108: // does not work!
+              if (action) {
+                return window.frames[6].saveCurrentOptionsState();
+                break;
+              }
+              else {
+                return " Customize window closed: Save & Exit";
+                break;
+              }
+
+
 
 
     }

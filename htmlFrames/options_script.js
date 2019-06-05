@@ -35,7 +35,12 @@
   //as needed
   //the parent page is then called to hide the options iframe
   function saveCurrentOptionsState() {
-    
+
+    // in re-play mode, the options page doesn't hide when save&exit is clicked: TO-DO
+    if (parent.getTracking()) {
+    parent.pushClick(0, parent.getStamp(), 108, 0, null);
+  }
+
     //find the elements that are able to be checked
     var toggledElements = document.getElementsByClassName('toggle');
     var tempString = "";
@@ -150,6 +155,7 @@
     selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
     selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
     recordCurrentOptions();
+
   } //end function saveCurrentOptionsState
 
 
