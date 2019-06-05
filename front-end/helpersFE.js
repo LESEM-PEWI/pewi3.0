@@ -5279,20 +5279,35 @@ function toggleEscapeFrame() {
     confirmEscape();
   }
 
+  /* This condition is selected when home button is clicked or Esc-key is pressed
+      Check file index.html <img id="homebutton" ..>
+  */
   if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
     document.getElementById('modalEscapeFrame').style.display = "block";
     document.getElementById('exitToMenuButton').style.visibility = "visible";
     document.getElementById('optionsButton').style.visibility = "visible";
     document.getElementById('escapeButton').style.visibility = "visible";
+    if (curTracking) {
+      pushClick(0, getStamp(), 106, 0, null);
+    }
     /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "visible";
     */
     modalUp = true;
-  } else if (document.getElementById('modalEscapeFrame').style.display == "block" && modalUp) {
+  }
+
+  /* This condition is selected when [X] button is clicked in the Modal escape frame
+      Check file index.html <div id="modalEscapeFrame"> 
+  */
+  else if (document.getElementById('modalEscapeFrame').style.display == "block" && modalUp)
+  {
     document.getElementById('modalEscapeFrame').style.display = "none";
     document.getElementById('exitToMenuButton').style.visibility = "hidden";
     document.getElementById('optionsButton').style.visibility = "hidden";
     document.getElementById('escapeButton').style.visibility = "hidden";
+    if (curTracking) {
+      pushClick(0, getStamp(), 106, 0, null);
+    }
     /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "hidden";
     */

@@ -1142,6 +1142,18 @@ function Click(c1, c2, c3, c4, c5) {
               break;
             }
 
+          case 106:
+            if (action) {
+              return toggleEscapeFrame();
+              break;
+            }
+            else {
+              // Clicking 'home' and pressing 'Esc'-key brings up the
+              // frame <div id = "modalEscapeFrame">
+              return "Home/Esc button was clicked";
+              break;
+            }
+
 
 
     }
