@@ -3422,6 +3422,8 @@ function Tile(tileArray, board) {
   this.results[2] = {};
   this.results[3] = {};
 
+
+
   //Basic functionality methods
   //---------------------------
   this.getID = function() {
@@ -3468,7 +3470,7 @@ function Tile(tileArray, board) {
 
   //===================================================================================
 
-
+  //
 
   //Modules for subcalculations at the tile level
   //---------------------------------------------
