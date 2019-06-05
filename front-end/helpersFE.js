@@ -1161,6 +1161,7 @@ function changeLandTypeTile(tileId) {
           // If the land type remains the same, then do nothing, otherwise,change the land type, and update progress bars
           if(meshMaterials[tileId].map != textureArray[painter]){
             console.log(Totals);
+            console.log(boardData[currentBoard].map[tileId]);
             // console.log('Change the land type in tile which id is ', tileId);
             meshMaterials[tileId].map = textureArray[painter];
             // record the data changes in boardData
@@ -1169,7 +1170,7 @@ function changeLandTypeTile(tileId) {
             boardData[currentBoard].map[tileId].update(currentYear);
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
             calculateResults(tileId, currentYear);
-
+            console.log(boardData[currentBoard].map[tileId]);
           }
         }
       } else if (multiplayerAssigningModeOn) {

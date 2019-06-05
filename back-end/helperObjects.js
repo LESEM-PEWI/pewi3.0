@@ -2318,12 +2318,80 @@ function Results(board) {
   this.tileSedimentDelivery = Array(4);
   this.tileYieldResults = Array(4);
   this.tileLandType = Array(4);
-
   /**
    * when initialize the map and tile, create array and assign value to array
    * @return {[type]} [description]
    */
   this.initializeMap=function(){
+
+    this.landUseResults[0] = {
+      conventionalCornLandUse: 0,
+      conservationCornLandUse: 0,
+      conventionalSoybeanLandUse: 0,
+      conservationSoybeanLandUse: 0,
+      mixedFruitsVegetablesLandUse: 0,
+      permanentPastureLandUse: 0,
+      rotationalGrazingLandUse: 0,
+      grassHayLandUse: 0,
+      switchgrassLandUse: 0,
+      prairieLandUse: 0,
+      wetlandLandUse: 0,
+      alfalfaLandUse: 0,
+      conservationForestLandUse: 0,
+      conventionalForestLandUse: 0,
+      shortRotationWoodyBioenergyLandUse: 0
+    };
+    this.landUseResults[1] = {
+      conventionalCornLandUse: 0,
+      conservationCornLandUse: 0,
+      conventionalSoybeanLandUse: 0,
+      conservationSoybeanLandUse: 0,
+      mixedFruitsVegetablesLandUse: 0,
+      permanentPastureLandUse: 0,
+      rotationalGrazingLandUse: 0,
+      grassHayLandUse: 0,
+      switchgrassLandUse: 0,
+      prairieLandUse: 0,
+      wetlandLandUse: 0,
+      alfalfaLandUse: 0,
+      conservationForestLandUse: 0,
+      conventionalForestLandUse: 0,
+      shortRotationWoodyBioenergyLandUse: 0
+    };
+    this.landUseResults[2] = {
+      conventionalCornLandUse: 0,
+      conservationCornLandUse: 0,
+      conventionalSoybeanLandUse: 0,
+      conservationSoybeanLandUse: 0,
+      mixedFruitsVegetablesLandUse: 0,
+      permanentPastureLandUse: 0,
+      rotationalGrazingLandUse: 0,
+      grassHayLandUse: 0,
+      switchgrassLandUse: 0,
+      prairieLandUse: 0,
+      wetlandLandUse: 0,
+      alfalfaLandUse: 0,
+      conservationForestLandUse: 0,
+      conventionalForestLandUse: 0,
+      shortRotationWoodyBioenergyLandUse: 0
+    };
+    this.landUseResults[3] = {
+      conventionalCornLandUse: 0,
+      conservationCornLandUse: 0,
+      conventionalSoybeanLandUse: 0,
+      conservationSoybeanLandUse: 0,
+      mixedFruitsVegetablesLandUse: 0,
+      permanentPastureLandUse: 0,
+      rotationalGrazingLandUse: 0,
+      grassHayLandUse: 0,
+      switchgrassLandUse: 0,
+      prairieLandUse: 0,
+      wetlandLandUse: 0,
+      alfalfaLandUse: 0,
+      conservationForestLandUse: 0,
+      conventionalForestLandUse: 0,
+      shortRotationWoodyBioenergyLandUse: 0
+    };
 
     this.yieldResults = Array(4);
     this.yieldResults[0] = {
@@ -2412,6 +2480,8 @@ function Results(board) {
         if ((board.map[i].landType[y] == LandUseType.wetland) && board.map[i].strategicWetland == 1) {
           wetlandMultiplier[board.map[i].subwatershed] = 0.48;
         } //end if
+
+        sumLandUseHelper(this.landUseResults,LandUseType.getType(board.map[i].landType[y]),y,board.map[i].area);
       }
 
       //PEWI calculations are reported in megagrams, the previous calculation in kilograms therefore divide by 1000
@@ -2856,9 +2926,11 @@ function Results(board) {
 
       console.log("sum yield");
       var prevLandType = this.tileLandType[year][tileId];
+      console.log("sum yield: "+prevLandType);
       var yieldValueToStore = board.map[tileId].results[year].calculatedYieldTile * board.map[tileId].area;
       sumYieldHelper(this.yieldResults,LandUseType.getType(board.map[tileId].landType[year]),year,yieldValueToStore);
-
+      //sumLandUseHelper(this.landUseResults,LandUseType.getType(board.map[tileId].landType[year]),year,board.map[tileId].area);
+      //sumLandUseHelperSubstraction(this.landUseResults,prevLandType,year,)
       switch (prevLandType){
         case "none":
           //Do Nothing
@@ -2916,140 +2988,229 @@ function Results(board) {
 
   }; //end sumYields
 
-  //Function to sum the areas of land use to landUseResults
-  this.sumLandUse = function() {
-
-    var tempLandUseResults = Array(4);
-    tempLandUseResults[0] = {
-      conventionalCornLandUse: 0,
-      conservationCornLandUse: 0,
-      conventionalSoybeanLandUse: 0,
-      conservationSoybeanLandUse: 0,
-      mixedFruitsVegetablesLandUse: 0,
-      permanentPastureLandUse: 0,
-      rotationalGrazingLandUse: 0,
-      grassHayLandUse: 0,
-      switchgrassLandUse: 0,
-      prairieLandUse: 0,
-      wetlandLandUse: 0,
-      alfalfaLandUse: 0,
-      conservationForestLandUse: 0,
-      conventionalForestLandUse: 0,
-      shortRotationWoodyBioenergyLandUse: 0
-    };
-    tempLandUseResults[1] = {
-      conventionalCornLandUse: 0,
-      conservationCornLandUse: 0,
-      conventionalSoybeanLandUse: 0,
-      conservationSoybeanLandUse: 0,
-      mixedFruitsVegetablesLandUse: 0,
-      permanentPastureLandUse: 0,
-      rotationalGrazingLandUse: 0,
-      grassHayLandUse: 0,
-      switchgrassLandUse: 0,
-      prairieLandUse: 0,
-      wetlandLandUse: 0,
-      alfalfaLandUse: 0,
-      conservationForestLandUse: 0,
-      conventionalForestLandUse: 0,
-      shortRotationWoodyBioenergyLandUse: 0
-    };
-    tempLandUseResults[2] = {
-      conventionalCornLandUse: 0,
-      conservationCornLandUse: 0,
-      conventionalSoybeanLandUse: 0,
-      conservationSoybeanLandUse: 0,
-      mixedFruitsVegetablesLandUse: 0,
-      permanentPastureLandUse: 0,
-      rotationalGrazingLandUse: 0,
-      grassHayLandUse: 0,
-      switchgrassLandUse: 0,
-      prairieLandUse: 0,
-      wetlandLandUse: 0,
-      alfalfaLandUse: 0,
-      conservationForestLandUse: 0,
-      conventionalForestLandUse: 0,
-      shortRotationWoodyBioenergyLandUse: 0
-    };
-    tempLandUseResults[3] = {
-      conventionalCornLandUse: 0,
-      conservationCornLandUse: 0,
-      conventionalSoybeanLandUse: 0,
-      conservationSoybeanLandUse: 0,
-      mixedFruitsVegetablesLandUse: 0,
-      permanentPastureLandUse: 0,
-      rotationalGrazingLandUse: 0,
-      grassHayLandUse: 0,
-      switchgrassLandUse: 0,
-      prairieLandUse: 0,
-      wetlandLandUse: 0,
-      alfalfaLandUse: 0,
-      conservationForestLandUse: 0,
-      conventionalForestLandUse: 0,
-      shortRotationWoodyBioenergyLandUse: 0
-    };
-
-    for (var y = 1; y <= board.calculatedToYear; y++) {
-
-      //For each tile, add tile area to variables corresponding to each land use type
-      for (var i = 0; i < board.map.length; i++) {
-        console.log("sumlanduse");
-        switch (LandUseType.getType(board.map[i].landType[y])) {
-          case "none":
-            //Do Nothing
-            break;
-          case "conventionalCorn":
-            tempLandUseResults[y].conventionalCornLandUse += board.map[i].area;
-            break;
-          case "conservationCorn":
-            tempLandUseResults[y].conservationCornLandUse += board.map[i].area;
-            break;
-          case "conventionalSoybean":
-            tempLandUseResults[y].conventionalSoybeanLandUse += board.map[i].area;
-            break;
-          case "conservationSoybean":
-            tempLandUseResults[y].conservationSoybeanLandUse += board.map[i].area;
-            break;
-          case "alfalfa":
-            tempLandUseResults[y].alfalfaLandUse += board.map[i].area;
-            break;
-          case "permanentPasture":
-            tempLandUseResults[y].permanentPastureLandUse += board.map[i].area;
-            break;
-          case "rotationalGrazing":
-            tempLandUseResults[y].rotationalGrazingLandUse += board.map[i].area;
-            break;
-          case "grassHay":
-            tempLandUseResults[y].grassHayLandUse += board.map[i].area;
-            break;
-          case "prairie":
-            tempLandUseResults[y].prairieLandUse += board.map[i].area;
-            break;
-          case "conservationForest":
-            tempLandUseResults[y].conservationForestLandUse += board.map[i].area;
-            break;
-          case "conventionalForest":
-            tempLandUseResults[y].conventionalForestLandUse += board.map[i].area;
-            break;
-          case "switchgrass":
-            tempLandUseResults[y].switchgrassLandUse += board.map[i].area;
-            break;
-          case "shortRotationWoodyBioenergy":
-            tempLandUseResults[y].shortRotationWoodyBioenergyLandUse += board.map[i].area;
-            break;
-          case "wetland":
-            tempLandUseResults[y].wetlandLandUse += board.map[i].area;
-            break;
-          case "mixedFruitsVegetables":
-            tempLandUseResults[y].mixedFruitsVegetablesLandUse += board.map[i].area;
-            break;
-        }
-
-      }
-
+  function sumLandUseHelper(results,type,y,score){
+    switch (type) {
+      case "none":
+        //Do Nothing
+        break;
+      case "conventionalCorn":
+        results[y].conventionalCornLandUse += score;
+        break;
+      case "conservationCorn":
+        results[y].conservationCornLandUse += score;
+        break;
+      case "conventionalSoybean":
+        results[y].conventionalSoybeanLandUse += score;
+        break;
+      case "conservationSoybean":
+        results[y].conservationSoybeanLandUse += score;
+        break;
+      case "alfalfa":
+        results[y].alfalfaLandUse += score;
+        break;
+      case "permanentPasture":
+        results[y].permanentPastureLandUse += score;
+        break;
+      case "rotationalGrazing":
+        results[y].rotationalGrazingLandUse += score;
+        break;
+      case "grassHay":
+        results[y].grassHayLandUse += score;
+        break;
+      case "prairie":
+        results[y].prairieLandUse += score;
+        break;
+      case "conservationForest":
+        results[y].conservationForestLandUse += score;
+        break;
+      case "conventionalForest":
+        results[y].conventionalForestLandUse += score;
+        break;
+      case "switchgrass":
+        results[y].switchgrassLandUse += score;
+        break;
+      case "shortRotationWoodyBioenergy":
+        results[y].shortRotationWoodyBioenergyLandUse += score;
+        break;
+      case "wetland":
+        results[y].wetlandLandUse += score;
+        break;
+      case "mixedFruitsVegetables":
+        results[y].mixedFruitsVegetablesLandUse += score;
+        break;
     }
+  }
+  function sumLandUseHelperSubstraction(results,type,y,score){
+    switch (type) {
+      case "none":
+        //Do Nothing
+        break;
+      case "conventionalCorn":
+        results[y].conventionalCornLandUse -= score;
+        break;
+      case "conservationCorn":
+        results[y].conservationCornLandUse -= score;
+        break;
+      case "conventionalSoybean":
+        results[y].conventionalSoybeanLandUse -= score;
+        break;
+      case "conservationSoybean":
+        results[y].conservationSoybeanLandUse -= score;
+        break;
+      case "alfalfa":
+        results[y].alfalfaLandUse -= score;
+        break;
+      case "permanentPasture":
+        results[y].permanentPastureLandUse -= score;
+        break;
+      case "rotationalGrazing":
+        results[y].rotationalGrazingLandUse -= score;
+        break;
+      case "grassHay":
+        results[y].grassHayLandUse -= score;
+        break;
+      case "prairie":
+        results[y].prairieLandUse -= score;
+        break;
+      case "conservationForest":
+        results[y].conservationForestLandUse -= score;
+        break;
+      case "conventionalForest":
+        results[y].conventionalForestLandUse -= score;
+        break;
+      case "switchgrass":
+        results[y].switchgrassLandUse -= score;
+        break;
+      case "shortRotationWoodyBioenergy":
+        results[y].shortRotationWoodyBioenergyLandUse -= score;
+        break;
+      case "wetland":
+        results[y].wetlandLandUse -= score;
+        break;
+      case "mixedFruitsVegetables":
+        results[y].mixedFruitsVegetablesLandUse -= score;
+        break;
+    }
+  }
+  //Function to sum the areas of land use to landUseResults
+  this.sumLandUse = function(tileId,year) {
+    var prevLandType = this.tileLandType[year][tileId];
+    console.log("sum land: "+prevLandType);
 
-    this.landUseResults = tempLandUseResults;
+    //console.log(this.tileLandType[year][tileId]);
+    //var prevlandUse=this.tileLandType[year][tileId];
+    // switch (LandUseType.getType(board.map[i].landType[y])) {
+    //       case "none":
+    //         //Do Nothing
+    //         break;
+    //       case "conventionalCorn":
+    //         this.landUseResults[y].conventionalCornLandUse += board.map[i].area;
+    //         break;
+    //       case "conservationCorn":
+    //         this.landUseResults[y].conservationCornLandUse += board.map[i].area;
+    //         break;
+    //       case "conventionalSoybean":
+    //         this.landUseResults[y].conventionalSoybeanLandUse += board.map[i].area;
+    //         break;
+    //       case "conservationSoybean":
+    //         this.landUseResults[y].conservationSoybeanLandUse += board.map[i].area;
+    //         break;
+    //       case "alfalfa":
+    //         this.landUseResults[y].alfalfaLandUse += board.map[i].area;
+    //         break;
+    //       case "permanentPasture":
+    //         this.landUseResults[y].permanentPastureLandUse += board.map[i].area;
+    //         break;
+    //       case "rotationalGrazing":
+    //         this.landUseResults[y].rotationalGrazingLandUse += board.map[i].area;
+    //         break;
+    //       case "grassHay":
+    //         this.landUseResults[y].grassHayLandUse += board.map[i].area;
+    //         break;
+    //       case "prairie":
+    //         this.landUseResults[y].prairieLandUse += board.map[i].area;
+    //         break;
+    //       case "conservationForest":
+    //         this.landUseResults[y].conservationForestLandUse += board.map[i].area;
+    //         break;
+    //       case "conventionalForest":
+    //         this.landUseResults[y].conventionalForestLandUse += board.map[i].area;
+    //         break;
+    //       case "switchgrass":
+    //         this.landUseResults[y].switchgrassLandUse += board.map[i].area;
+    //         break;
+    //       case "shortRotationWoodyBioenergy":
+    //         this.landUseResults[y].shortRotationWoodyBioenergyLandUse += board.map[i].area;
+    //         break;
+    //       case "wetland":
+    //         this.landUseResults[y].wetlandLandUse += board.map[i].area;
+    //         break;
+    //       case "mixedFruitsVegetables":
+    //         this.landUseResults[y].mixedFruitsVegetablesLandUse += board.map[i].area;
+    //         break;
+    //     }
+    // for (var y = 1; y <= board.calculatedToYear; y++) {
+    //
+    //   //For each tile, add tile area to variables corresponding to each land use type
+    //   for (var i = 0; i < board.map.length; i++) {
+    //     console.log("sumlanduse");
+    //     sumLandUseHelper(this.landUseResults,LandUseType.getType(board.map[i].landType[y]),y,board.map[i].area);
+    //     switch (LandUseType.getType(board.map[i].landType[y])) {
+    //       case "none":
+    //         //Do Nothing
+    //         break;
+    //       case "conventionalCorn":
+    //         this.landUseResults[y].conventionalCornLandUse += board.map[i].area;
+    //         break;
+    //       case "conservationCorn":
+    //         this.landUseResults[y].conservationCornLandUse += board.map[i].area;
+    //         break;
+    //       case "conventionalSoybean":
+    //         this.landUseResults[y].conventionalSoybeanLandUse += board.map[i].area;
+    //         break;
+    //       case "conservationSoybean":
+    //         this.landUseResults[y].conservationSoybeanLandUse += board.map[i].area;
+    //         break;
+    //       case "alfalfa":
+    //         this.landUseResults[y].alfalfaLandUse += board.map[i].area;
+    //         break;
+    //       case "permanentPasture":
+    //         this.landUseResults[y].permanentPastureLandUse += board.map[i].area;
+    //         break;
+    //       case "rotationalGrazing":
+    //         this.landUseResults[y].rotationalGrazingLandUse += board.map[i].area;
+    //         break;
+    //       case "grassHay":
+    //         this.landUseResults[y].grassHayLandUse += board.map[i].area;
+    //         break;
+    //       case "prairie":
+    //         this.landUseResults[y].prairieLandUse += board.map[i].area;
+    //         break;
+    //       case "conservationForest":
+    //         this.landUseResults[y].conservationForestLandUse += board.map[i].area;
+    //         break;
+    //       case "conventionalForest":
+    //         this.landUseResults[y].conventionalForestLandUse += board.map[i].area;
+    //         break;
+    //       case "switchgrass":
+    //         this.landUseResults[y].switchgrassLandUse += board.map[i].area;
+    //         break;
+    //       case "shortRotationWoodyBioenergy":
+    //         this.landUseResults[y].shortRotationWoodyBioenergyLandUse += board.map[i].area;
+    //         break;
+    //       case "wetland":
+    //         this.landUseResults[y].wetlandLandUse += board.map[i].area;
+    //         break;
+    //       case "mixedFruitsVegetables":
+    //         this.landUseResults[y].mixedFruitsVegetablesLandUse += board.map[i].area;
+    //         break;
+    //     }
+    //
+    //   }
+    //
+    // }
+
+    //this.landUseResults = this.landUseTypeTotals;
 
   }; //end sumLandUse
 
@@ -3235,8 +3396,9 @@ function Results(board) {
       this.sumSedimentDeliveryToStream(tileId, year);
       this.calculateNitrateConcentration(tileId, year);
       this.sumYields(tileId, year);
+      this.sumLandUse(tileId,year);
     }
-    this.sumLandUse();
+    //this.sumLandUse();
     this.mapIt();
 
     this.calculateGameWildLifePoints();
