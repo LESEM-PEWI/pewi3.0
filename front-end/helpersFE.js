@@ -5186,6 +5186,9 @@ function switchYearTab(yearNumberToChangeTo) {
   //then toggle on the selected year
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
   document.getElementById(yearIdString).className = "icon yearSelected";
+  console.log("toggle change year:"+yearNumberToChangeTo);
+  //need to recalculate the value for the progress bar.
+  calculateResults();
   refreshProgressBar(currentYear);
   setupStaticBackground();
   // store last users action ( print function )
