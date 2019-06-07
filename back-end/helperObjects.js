@@ -1184,6 +1184,12 @@ function Click(c1, c2, c3, c4, c5) {
                   break;
                 }
 
+              case 110:
+                if(action)
+                  return window.frames[6].scrollTo(0,parseInt(this.tileID));
+                else
+                  return "User scrolled in the customization page";
+
 
 
 

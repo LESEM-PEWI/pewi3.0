@@ -477,7 +477,7 @@ function initializeCamera() {
     //Event listners for scrolling using the wheel or scroll bar ( Used exclusively by click tracking...for now)
     window.frames[0].onscroll = onWheelViewCredits;
     window.frames[4].addEventListener('scroll', onWheelViewResults);
-
+    window.frames[6].addEventListener('scroll', onWheelViewCustomize);
 } //end initializeCamera
 
 //initializeLighting adds the lighting with specifications to the scene
@@ -638,6 +638,14 @@ function onWheelViewResults(e) {
     pushClick(0,getStamp(),94,0,window.frames[4].scrollY);
   }
 }
+
+//Event function that is called when a user is scrolling in customize window
+function onWheelViewCustomize(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),110,0,window.frames[6].scrollY);
+  }
+}
+
 
 //renderBackground creates the static background always behind viewpoint
 //  this function used to select for the creation of a skybox
