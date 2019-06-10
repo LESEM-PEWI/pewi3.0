@@ -885,7 +885,6 @@ function addYearAndTransition() {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
     document.getElementById("year" + nextYear + "Button").style.display = "block";
-//    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
     //special case for adding year 3 when year 2 has been previously deleted in the presence of year 3
     if (year2to3)
     {
@@ -894,7 +893,6 @@ function addYearAndTransition() {
 
       document.getElementById("yearToCopy").options[3].style.display = 'block';
       document.getElementById("yearToPaste").options[3].style.display = 'block';
-//      document.getElementById("year3precipContainer").style.display = "block";
       year2to3 = false;
     }
 
@@ -905,8 +903,6 @@ function addYearAndTransition() {
 
     document.getElementById("yearToCopy").options[nextYear].style.display = 'block';
     document.getElementById("yearToPaste").options[nextYear].style.display = 'block';
-
-//    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
 
     }
   }
@@ -950,9 +946,10 @@ function addYearAndTransition() {
 } //end addYearAndTransition
 
 
-//deleteYearAndTransition deletes the selected year
-//Gets the year selected from transitionToYear, when the user selects which year to delete
-//uses the helper year2and3Delete() in the special cases
+/* deleteYearAndTransition deletes the selected year
+   Gets the year selected from transitionToYear, when the user selects which year to delete
+   uses the helper year2and3Delete() in the special cases
+*/
 function deleteYearAndTransition()
 {
   var snackBar = document.getElementById("snackbarNotification");
@@ -969,11 +966,7 @@ function deleteYearAndTransition()
   {
     yearSelected = 1;
   }
-//promt- "Are you sure you want to delete Year #?" -using a confirm box
     var response;
-    //if(confirm("Are you sure you want to delete year " + yearSelected + "?" ))
-    //{
-
       if(yearSelected == 1)
       {
         //if selected year is 1 and there are no other years
@@ -1096,10 +1089,10 @@ function deleteYearAndTransition()
 }// end deleteYearAndTransition
 
 // function to be called if user decides to not delete a year.
-/*changed*/
+
 function yearNotDeleted() {
 
-  //response = "Not Deleted!";
+
   g_isDeleted = false;
   // Remove Yes/no confirmation buttons after user has selected an option
   document.getElementById('yesDelete').style.display = "none";

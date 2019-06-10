@@ -1107,7 +1107,7 @@ function Click(c1, c2, c3, c4, c5) {
           }
           else {
             var  yearSelected = this.tileID;
-            return "User deleted year " + yearSelected; // **-- to-do: see if you ca insert year number --**
+            return "User deleted year " + yearSelected;
             break;
           }
 
@@ -1139,8 +1139,7 @@ function Click(c1, c2, c3, c4, c5) {
               break;
             }
             else {
-              // Clicking 'home' and pressing 'Esc'-key brings up the
-              // frame <div id = "modalEscapeFrame">
+              // Clicking 'home' and pressing 'Esc'-key brings up the frame <div id = "modalEscapeFrame">
               return "Home/Esc button was clicked";
               break;
             }
