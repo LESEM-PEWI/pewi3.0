@@ -3613,7 +3613,6 @@ function Tile(tileArray, board) {
     var res = this.subWatershedNitrateNoMin;
     var score = 100*precip*crop*area;
     var wetlandMultiplier = 1;
-
     //Determine if there is a strategic wetland in use in this Tile's subWatershed
     for(var t = 0, tl=board.map.length; t < tl; t++){
       if ((subwatershed == board.map[t].subwatershed) && (board.map[t].landType[year] == LandUseType.wetland) && board.map[t].strategicWetland == 1) {

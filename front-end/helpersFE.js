@@ -2187,6 +2187,7 @@ function getHighlightColor(highlightType, tileId) {
   }
 
   else if (highlightType == "nitratetile") {
+
     var nitratescore = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate);
     if(nitratescore>=0 && nitratescore<510) return getBoldedCells(tileId, 210);
     else if(nitratescore>=510 && nitratescore<1020) return getBoldedCells(tileId, 211);
@@ -2606,6 +2607,23 @@ function phoshorusIndexRiskAssessmentClassification(pindex) {
   else if (pindex > 5 && pindex <= 15) return "High"+"<br>";
   else if (pindex > 15) return "Very High"+"<br>";
 }
+/**
+ * generate the total nitrate point based on the subWatershed cell.
+ * @param  {int} tileId id in array of map
+ * @return {int}        total point
+ */
+function calculateSubwatershedTotalNitrateScore(tileId){
+  var result=boardData[currentBoard].map.filter(
+    function(item){
+      return item.subwatershed==boardData[currentBoard].map[tileId].subwatershed;
+    }
+  );
+  var total=0;
+    for (var i = 0; i < result.length; i++) {
+      total+=result[i].results[currentYear].calculatedTileNitrate;
+    }
+    return total;
+}
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
@@ -2618,7 +2636,8 @@ function getHighlightedInfo(tileId) {
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+Totals.nitrateContribution[currentYear][tileId].toFixed(4)+" ppm"+"<br>";
+        var subwatershed=boardData[currentBoard].map[tileId].subwatershed;
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+boardData[currentBoard].map[tileId].subWatershedNitrateNoMin[subwatershed].toFixed(4)+" ppm"+"<br>";
         break;
         //create string for gross erosion levels
       case 2:
@@ -2776,7 +2795,10 @@ function getHighlightedInfo(tileId) {
         highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
         break;
       case 23:
-        highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>"+boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate.toFixed(2)+"<br>";
+        var subwatershed=boardData[currentBoard].map[tileId].subwatershed;
+        //calculate the nitrate cell equation- single cell point / total point in subWatershed * subWatershed nitrate
+        highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>"+
+        ((boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate/calculateSubwatershedTotalNitrateScore(tileId))*boardData[currentBoard].map[tileId].subWatershedNitrateNoMin[subwatershed]).toFixed(4)+" ppm <br>";
         break;
     }
     return highlightString;
@@ -2987,7 +3009,7 @@ function highlightTile(tileId) {
       //update HUD with current information
       //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + "Current Cell: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
-      console.log(boardData[currentBoard].map[tileId]);
+      
       //update the information displayed in the delayed hover div by cursor
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear])+ "<br>";
       var info2 = "Precipitation: " + printPrecipYearType()+ ", "+boardData[currentBoard].precipitation[currentYear]+" in"+"<br>";
