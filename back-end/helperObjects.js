@@ -3643,42 +3643,14 @@ function Tile(tileArray, board) {
   //This function sums the area of all the tiles residing within subwatersheds
   //that have a Nitrate score under 2
   this.sumAreasUnderTwo = function(year){
-    var object=[];
-    var array;
-    var sum1=0;
-    //console.log(this.subWatershedNitrateNoMin.length);
-   //  for(var i=1;i<this.subWatershedNitrateNoMin.length;i++){
-   //    if(this.subWatershedNitrateNoMin[i]<2){
-   //      //object.push({subWatershed:i,value:this.subWatershedNitrateNoMin[i]});
-   //      array=board.map.filter(
-   //        function (item){
-   //          return item.subwatershed== i;
-   //        }
-   //      );
-   //      for (var i = 0; i < array.length; i++) {
-   //        sum1+=array[i];
-   //      }
-   //      // sum1+=array=>array.reduce((a,b)=>a+b,0);
-   //      // console.log("sum: "+sum1);
-   //    }
-   //  }
-   // console.log(sum1);
-    // var array=this.subWatershedNitrateNoMin.filter(
-    //   function (item) {
-    //     return item<2,item.indexOf(item);
-    //   }
-    // );
-    //console.log(object);
     var sum = 0;
     var arr = this.subWatershedNitrateNoMin;
     for(var i=0, il=board.map.length; i<il; i++){
-      //console.log("sumAreasUnderTwo");
       if(arr[board.map[i].subwatershed]<2){
         sum+=board.map[i].area;
       }
     }
     this.sumUnderTwo = sum;
-    console.log("sumUnderTwo: "+this.s);
   };//end this.sumAreasUnderTwo()
 
 
