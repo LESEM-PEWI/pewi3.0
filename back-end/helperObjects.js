@@ -114,7 +114,49 @@ var LandUseType = {
         return "NOT FOUND";
     } //end switch
 
+  },
+
+  getNumericalType: function(type)
+  {
+      switch (type) {
+        case "None":
+          return 0;
+        case "Conventional Corn":
+          return 1;
+        case "Conservation Corn":
+          return 2;
+        case "Conventional Soybean":
+          return 3;
+        case "Conservation Soybean":
+          return 4;
+        case "Alfalfa":
+          return 5;
+        case "Permanent Pasture":
+          return 6;
+        case "Rotational Grazing":
+          return 7;
+        case "Grass Hay":
+          return 8;
+        case "Prairie":
+          return 9;
+        case "Conservation Forest":
+          return 10;
+        case "Convential Forest":
+          return 11;
+        case "Switchgrass":
+          return 12;
+        case "Short Rotation Woody Bioenergy":
+          return 13;
+        case "Wetland":
+          return 14;
+        case "Mixed Fruits and Vegetables":
+          return 15;
+        default:
+          return "NOT FOUND";
+    }
   }
+
+
 
 };
 //end definition of landUseType

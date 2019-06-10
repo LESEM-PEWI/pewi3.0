@@ -3811,9 +3811,19 @@ function painterSelect(brushNumberValue) {
 
 function pasteYear()
 {
+
+
+
   var snackBar = document.getElementById("snackbarNotification");
   document.getElementById("yearPasteButton").classList.toggle("show");
   var yearToPasteIn = document.getElementById("yearToPaste").value;
+
+
+  // trying to push the current map so that it can be undone after undoing the paste
+   var currentMap = getMap(yearToPasteIn);
+   undoArr[yearToPasteIn].push(currentMap);
+
+
     for (var i = 0; i < boardData[currentBoard].map.length; i++)
     {
       boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearCopyPaste];
@@ -3836,6 +3846,13 @@ function pasteYear()
     document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
     document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'block';
     document.getElementById("yearPasteButton").style.display = "none";
+
+
+
+    // makes a deep copy of all the arrays inside of undoArr for the given year so that the undo for the copy is fully functional
+    var newStuff = JSON.parse(JSON.stringify(undoArr[yearCopyPaste]));
+    undoArr[yearToPasteIn] = undoArr[yearToPasteIn].concat(newStuff);
+
 } //end pasteYear
 
 //Pauses the sim (and related times)
@@ -4092,7 +4109,7 @@ function resetMultiPlayer() {
 // this function closes the iframe, blurs the frame, and
 // takes the parameters set by it to order the page elements
 function resetOptions() {
-undoArr[currentYear] = [];
+
   //close frame
   modalUp = false;
   document.getElementById('options').style.visibility = "hidden";
@@ -4448,6 +4465,11 @@ function reversePrecipValue(val)
 
 //revertChanges undos the users previous tile changes, and goes back to the previous board instance
 function revertChanges() {
+
+
+  // this function will remove all undo steps after the first occurence of one that involves a tile that is toggled off
+  removeAfterFirstNotAllowed(undoArr, currentYear);
+
   //For storing clicks
   if (curTracking) {
     pushClick(0, getStamp(), 30, 0, null);
@@ -4468,6 +4490,8 @@ function revertChanges() {
     }
     undo = false;
     painter = tempPainter;
+
+
   }
 }
 
@@ -4586,14 +4610,9 @@ function saveAndRandomize() {
       } // end if
     } //end for
 
-    var newDefaultLandUse = 1;
-    //finding a new default
-    for (var r = 1; r <= 15; r++) {
-      if (randomPainterTile.indexOf(r) != -1) {
-        newDefaultLandUse = r;
-        break;
-      }
-    }
+    // selects new land type by picking the current selected type, or the first toggled on type
+    newDefaultLandUse = getNewLandType();
+
     var forNitrateCalc = Array(4);
     forNitrateCalc[0] = Array(828);
     forNitrateCalc[1] = Array(828);
@@ -6904,3 +6923,126 @@ if (typeof module !== "undefined" && module.exports) {
 //     console.log("detachEvent");
 //   }
 // }
+
+
+  /**
+  This function looks through the undoArr for the given year, and deletes everything after the first land type not allowed is found.
+  @param undoArray the undoArr
+  @param theYear the year that is being modified
+  **/
+
+  function removeAfterFirstNotAllowed(undoArray, theYear)
+  {
+    notAllowedArray = getLandUseNotAllowed();
+
+    if(notAllowedArray.length == 0) // if all tiles are allowed then end here
+      return;
+
+    for(var i = undoArray[theYear].length - 1; i >= 0; i--)
+    {
+
+      if (Array.isArray(undoArray[theYear][i][1])) //check to see if we are undoing a grid paint, so we need to search the whole thing in case there are types not allowed underneath
+      {
+        for(var j = 0; j < undoArray[theYear][i][1].length; j++)
+        {
+          if (notAllowedArray.includes(undoArray[theYear][i][1][j]))
+          {
+            undoArray[theYear] = undoArray[theYear].slice(i + 1);
+            return; //used return so it will break out of both loops
+          }
+        }
+      }
+
+
+      else if (notAllowedArray.includes(undoArray[theYear][i][1])) // takes care of being covered by a cell paint tile
+      {
+        undoArray[theYear] = undoArray[theYear].slice(i + 1);
+        break;
+      }
+    }
+  }
+
+  /**
+  This function returns an array of land use types that are currently toggled of. This is used in the removeAfterFirstNotAllowed function right above.
+  **/
+  function getLandUseNotAllowed()
+  {
+    var toReturn = [];
+
+    for(var i = 1; i <= 15; i++)
+    {
+      if(document.getElementById('parameters').innerHTML.indexOf('paint' + i + "\n") != -1)
+      {
+        toReturn.push(i);
+      }
+    }
+
+    return toReturn;
+  }
+
+/**
+This method gets the land use type that is currently selected by the user, this is used to fill
+the map with the current selection if tiles on the map are toggled off.
+**/
+  function getCurrentLandType()
+  {
+    var currentType = LandUseType.getNumericalType(printLandUseType(painter)); // set equal to the current land type that is selected, numerical value
+    return currentType;
+  }
+
+
+/**
+This function is used to set the new default land use type. It sets to the current selected, but if it cant do that it starts at 1 and moveds up until it
+finds a usable type
+**/
+  function getNewLandType()
+  {
+    var toReturn = getCurrentLandType();
+    var notAllowed = getLandUseNotAllowed();
+    var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15];
+
+    // if the current selection is toggled off, or wetland because it would set the whole map to wetland
+    if(notAllowed.includes(toReturn)|| toReturn == 14)
+    {
+      // loop through to find the first one that is toggled on
+      for (var r = 1; r <= 15; r++)
+      {
+        if (!(notAllowed.includes(r)))
+        {
+          toReturn = r;
+          break;
+        }
+      }
+
+    }
+    return toReturn;
+  }
+
+
+/**
+ *This function returns a copy of the tile IDs and their land types for use in the undo funcion. It is used to make a copy of the year before it gets pasted over.
+ *That copy is then pushed to that years undo array so that it can be undone after the pasted has been undone.
+ * @param  {[type]} year [The year to copy]
+ * @return {[type]}      [An array with an array of IDs and an array of land types to push into the undoArr]
+ */
+  function getMap(year)
+  {
+    var tileIDs = [];
+    var landTypes = [];
+
+    // loop through the map and get each tiles ID and landtype
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+
+      //check if the tile is actually a game tile
+      if(boardData[currentBoard].map[i].landType[year] != 0)
+      {
+        tileIDs.push(i);
+        landTypes.push(boardData[currentBoard].map[i].landType[year]);
+      }
+
+    } // end for
+
+    var toReturn = [tileIDs, landTypes];
+
+    return toReturn;
+  }
