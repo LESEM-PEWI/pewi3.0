@@ -2483,7 +2483,7 @@ function Results(board) {
 
       //For each tile, add the carbon sequestration value to the results array in corresponding year y
       for (var i = 0; i < board.map.length; i++) {
-        console.log("initialmap");
+        //console.log("initialmap");
 
         //assign value to 2d array in results
         this.sumCarbonSequestration[y] += board.map[i].results[y].calculatedCarbonSequestration;
@@ -2542,7 +2542,7 @@ function Results(board) {
 
   //Function to sum the values of calculatedCarbonSequestration for each tile
   this.sumCarbon = function(tileId, year) {
-    console.log("sumCarbon");
+    //console.log("sumCarbon");
     // First time loading the board, we need to calculate the results in map level
       var subCarbonSum = this.sumCarbonSequestration[year] - this.tileCarbonSequestration[year][tileId];
 
@@ -2558,7 +2558,7 @@ function Results(board) {
 
   //Function to sum the values of calculatedGrossErosion for each tile
   this.sumGrossErosion = function(tileId, year) {
-    console.log("sumGrossErosion");
+    //console.log("sumGrossErosion");
       var subErossionSum = this.grossErosion[year] - this.tileGrossErosion[year][tileId];
       this.tileGrossErosion[year][tileId] = board.map[tileId].results[year].calculatedGrossErosionRate * board.map[tileId].area;
       this.grossErosion[year] = subErossionSum + this.tileGrossErosion[year][tileId];
@@ -2570,7 +2570,7 @@ function Results(board) {
   // this.tilePhosphorusLoad = Array(4);
 
   this.sumPhosphorus = function(tileId, year) {
-    console.log("sumPhosphorus");
+    //console.log("sumPhosphorus");
       var subPhosphorusSum = this.sumPhosphorusLoad[year] - this.tilePhosphorusLoad[year][tileId];
       this.tilePhosphorusLoad[year][tileId] = board.map[tileId].results[year].phosphorusDelivered;
       this.sumPhosphorusLoad[year] = subPhosphorusSum + this.tilePhosphorusLoad[year][tileId];
@@ -2580,7 +2580,7 @@ function Results(board) {
 
   //Function to sum the values of sedimentDeliveryToStream
   this.sumSedimentDeliveryToStream = function(tileId, year) {
-    console.log("sumSedimentDeliveryToStream");
+    //console.log("sumSedimentDeliveryToStream");
       var subSedimentDeliverySum = this.sedimentDelivery[year] - this.tileSedimentDelivery[year][tileId];
       this.tileSedimentDelivery[year][tileId] = board.map[tileId].results[year].calculatedSedimentDeliveryToStreamTile * board.map[tileId].area;
       this.sedimentDelivery[year] = subSedimentDeliverySum + this.tileSedimentDelivery[year][tileId];
@@ -2589,7 +2589,7 @@ function Results(board) {
   //function to calculate the nitrates for each subWatershed
   //the total value is then the sum of each subWatershed calculation
   this.calculateNitrateConcentration = function(tileId,year) {
-    console.log(typeof tileId);
+    //console.log(typeof tileId);
     //note, the calculations are done incrementally with the subWatershedNitrate array for clarity
 
     var subw = board.map[tileId].subwatershed;
@@ -2601,8 +2601,8 @@ function Results(board) {
         return item.subwatershed==board.map[tileId].subwatershed;
       }
     );
-    console.log(subWatershedArray);
-    console.log("calculateNitrateConcentration");
+    //console.log(subWatershedArray);
+    //console.log("calculateNitrateConcentration");
     for (var i = 0; i < board.map.length; i++) {
       if(board.map[i].subwatershed == subw){
         score += board.map[i].results[year].cropMultiplier;
@@ -2699,7 +2699,7 @@ function Results(board) {
 
       //for all tiles
       for (var i = 0; i < board.map.length; i++) {
-        console.log("sumFlagPercentages do not need to change");
+        //console.log("sumFlagPercentages do not need to change");
         if (board.map[i].results[y].nativeVegetationFlag) {
           tempAreaNativeVegetation += board.map[i].area;
         }
@@ -2755,7 +2755,7 @@ function Results(board) {
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
       var tempScore = 0;
-      console.log("calculateGameWildLifePoints");
+      //console.log("calculateGameWildLifePoints");
       //native vegetation and other high diversity land uses points
       if (this.nativeVegetationHDPercent[y] == 100) {
         tempScore += 4;
@@ -2824,7 +2824,7 @@ function Results(board) {
 
     for (var y = 1; y <= board.calculatedToYear; y++) {
       var tempScore = 0
-      console.log("calculateBiodiversityPoints");
+      //console.log("calculateBiodiversityPoints");
       //native vegetation points
       if (this.nativeVegetationPercent[y] == 100) {
         tempScore += 4;
@@ -2950,7 +2950,7 @@ function Results(board) {
   //Function to sum the values of YieldTile to YieldValueArray
   this.sumYieldsAndsumlandUse = function(tileId, year) {
 
-      console.log("sum yield sum land use");
+      //console.log("sum yield sum land use");
       var prevLandType = this.tileLandType[year][tileId];
       var yieldValueToStore = board.map[tileId].results[year].calculatedYieldTile * board.map[tileId].area;
       sumYieldHelper(this.yieldResults,LandUseType.getType(board.map[tileId].landType[year]),year,yieldValueToStore);
@@ -3125,7 +3125,7 @@ function Results(board) {
 
       //For each watershed store nitrate percent contribution
       for (var i = 0; i < this.subwatershedArea.length; i++) {
-        console.log("subWatershedArea");
+        //console.log("subWatershedArea");
         this.watershedPercent[y].push(this.subWatershedNitrate[y][i] / (this.subwatershedArea[i] / this.totalArea) * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y]);
 
       }
@@ -3137,7 +3137,7 @@ function Results(board) {
         this.phosphorusRiskAssessment[y][i]=this.getPhosphorusRiskAssessment(board.map[i].results[y].phosphorusDelivered / board.map[i].area);
         this.nitrateContribution[y][i]=this.watershedPercent[y][board.map[i].subwatershed];
         this.tileNitrate[y][i]=board.map[i].results[y].calculatedTileNitrate;
-        console.log("mapit: erosion and phoshorus");
+        //console.log("mapit: erosion and phoshorus");
       }
     //}
 
@@ -3567,7 +3567,7 @@ function Tile(tileArray, board) {
 
   //Helper method, does same calculations as Results.nitrateSubcalculation but updates values
   //for use in Tile Nitrate calculation
-  this.cropMultiplierHelper = function(year) {
+  this.cropMultiplierHelper = function(year,i) {
     for(var i=0, il=board.map.length; i<il; i++){
       //console.log("cropMultiplierHelper");
     if ((board.map[i].landType[year] > LandUseType.none && board.map[i].landType[year] < LandUseType.alfalfa) || board.map[i].landType[year] == LandUseType.mixedFruitsVegetables) {
@@ -3611,45 +3611,15 @@ function Tile(tileArray, board) {
   //This function sums the area of all the tiles residing within subwatersheds
   //that have a Nitrate score under 2
   this.sumAreasUnderTwo = function(year){
-    var object=[];
-    var array;
-    var sum1=0;
-    //console.log(this.subWatershedNitrateNoMin.length);
-   //  for(var i=1;i<this.subWatershedNitrateNoMin.length;i++){
-   //    if(this.subWatershedNitrateNoMin[i]<2){
-   //      //object.push({subWatershed:i,value:this.subWatershedNitrateNoMin[i]});
-   //      array=board.map.filter(
-   //        function (item){
-   //          return item.subwatershed== i;
-   //        }
-   //      );
-   //      for (var i = 0; i < array.length; i++) {
-   //        sum1+=array[i];
-   //      }
-   //      // sum1+=array=>array.reduce((a,b)=>a+b,0);
-   //      // console.log("sum: "+sum1);
-   //    }
-   //  }
-   // console.log(sum1);
-    // var array=this.subWatershedNitrateNoMin.filter(
-    //   function (item) {
-    //     return item<2,item.indexOf(item);
-    //   }
-    // );
-    //console.log(object);
     var sum = 0;
     var arr = this.subWatershedNitrateNoMin;
     for(var i=0, il=board.map.length; i<il; i++){
-      //console.log("sumAreasUnderTwo");
       if(arr[board.map[i].subwatershed]<2){
         sum+=board.map[i].area;
       }
     }
     this.sumUnderTwo = sum;
-    console.log("sumUnderTwo: "+this.s);
   };//end this.sumAreasUnderTwo()
-
-
 
   /*----------------------------
        CARBON SEQUESTRATION
