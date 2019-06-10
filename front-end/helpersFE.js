@@ -1933,29 +1933,12 @@ function executePrintOptions(isDownload) {
   var arrLines = strRawContents.split("\n");
   // global array that record the print options
   toPrint = {
-    // map
+    // land use map
     yearUserViewpoint: false,
     year1: false,
     year2: false,
     year3: false,
-    // results
-    resultsTable1: false,
-    resultsTable2: false,
-    resultsTable4: false,
-    resultsLanduse: false,
-    resultsEcosystem: false,
-    resultsPrecip: false,
-    // levels
-    levelUserViewpoint: false,
-    nitrate: false,
-    erosion: false,
-    phosphorus: false,
-    sediment: false,
-    carbon: false,
-    gamewildlife: false,
-    biodiversity: false,
-    nitratetile: false,
-    // features
+    // feature maps
     featureUserViewpoint: false,
     flood: false,
     wetlands: false,
@@ -1963,7 +1946,7 @@ function executePrintOptions(isDownload) {
     drainage: false,
     soil: false,
     topo: false,
-    // yields
+    // yield maps
     yieldUserViewpoint: false,
     corn: false,
     soybean: false,
@@ -1973,7 +1956,24 @@ function executePrintOptions(isDownload) {
     grasshay: false,
     switchgrass: false,
     wood: false,
-    short: false
+    short: false,
+    // result maps
+    levelUserViewpoint: false,
+    nitrate: false,
+    erosion: false,
+    phosphorus: false,
+    sediment: false,
+    carbon: false,
+    gamewildlife: false,
+    biodiversity: false,
+    nitratetile: false,
+    // results
+    resultsTable1: false,
+    resultsTable2: false,
+    resultsTable4: false,
+    resultsLanduse: false,
+    resultsEcosystem: false,
+    resultsPrecip: false,
   };
 
   // set chosen ones to true
