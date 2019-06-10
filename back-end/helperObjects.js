@@ -2319,6 +2319,45 @@ function Results(board) {
   this.tileYieldResults = Array(4);
   this.tileLandType = Array(4);
   this.tileLandArea=Array(4);
+  this.watershedPercent = Array(4);
+  this.watershedPercent = [
+    [],
+    [],
+    [],
+    []
+  ];
+
+  this.nitrateContribution = Array(4);
+  this.nitrateContribution = [
+    [],
+    [],
+    [],
+    []
+  ];
+
+  this.grossErosionSeverity = Array(4);
+  this.grossErosionSeverity = [
+    [],
+    [],
+    [],
+    []
+  ];
+
+  this.phosphorusRiskAssessment = Array(4);
+  this.phosphorusRiskAssessment = [
+    [],
+    [],
+    [],
+    []
+  ];
+
+this.tileNitrate = Array(4);
+ this.tileNitrate = [
+   [],
+   [],
+   [],
+   []
+ ];
   /**
    * when initialize the map and tile, create array and assign value to array
    * @return {[type]} [description]
@@ -2465,10 +2504,6 @@ function Results(board) {
 
       //For each tile, add the carbon sequestration value to the results array in corresponding year y
       for (var i = 0; i < board.map.length; i++) {
-<<<<<<< HEAD
-=======
-        console.log("initialmap");
->>>>>>> parent of e416fa1... changed
 
         console.log("initialmap");
         // tempCarbonSum[y] += board.map[i].results[y].calculatedCarbonSequestration;
@@ -3107,56 +3142,12 @@ function Results(board) {
   //check this function!
   this.mapIt = function() {
 
-    var watershedPercent = Array(4);
-    watershedPercent = [
-      [],
-      [],
-      [],
-      []
-    ];
-
-    var nitrateContribution = Array(4);
-    nitrateContribution = [
-      [],
-      [],
-      [],
-      []
-    ];
-
-    var grossErosionSeverity = Array(4);
-    grossErosionSeverity = [
-      [],
-      [],
-      [],
-      []
-    ];
-
-    var phosphorusRisk = Array(4);
-    phosphorusRisk = [
-      [],
-      [],
-      [],
-      []
-    ];
-
-    var tileNitrate = Array(4);
-   tileNitrate = [
-     [],
-     [],
-     [],
-     []
-   ];
-
     for (var y = 1; y <= board.calculatedToYear; y++) {
 
       //For each watershed store nitrate percent contribution
       for (var i = 0; i < this.subwatershedArea.length; i++) {
         console.log("subWatershedArea");
-<<<<<<< HEAD
-        watershedPercent[y].push(this.subWatershedNitrate[y][i] / (this.subwatershedArea[i] / this.totalArea) * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y]);
-=======
         this.watershedPercent[y].push(this.subWatershedNitrate[y][i] / (this.subwatershedArea[i] / this.totalArea) * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y]);
->>>>>>> parent of e416fa1... changed
 
       }
 
@@ -3167,20 +3158,10 @@ function Results(board) {
         this.phosphorusRiskAssessment[y][i]=this.getPhosphorusRiskAssessment(board.map[i].results[y].phosphorusDelivered / board.map[i].area);
         this.nitrateContribution[y][i]=this.watershedPercent[y][board.map[i].subwatershed];
         this.tileNitrate[y][i]=board.map[i].results[y].calculatedTileNitrate;
-<<<<<<< HEAD
-        //console.log("mapit: erosion and phoshorus");
-
-=======
         console.log("mapit: erosion and phoshorus");
->>>>>>> parent of e416fa1... changed
       }
     }
 
-    this.watershedPercent = watershedPercent;
-    this.nitrateContribution = nitrateContribution;
-    this.grossErosionSeverity = grossErosionSeverity;
-    this.phosphorusRiskAssessment = phosphorusRisk;
-    this.tileNitrate = tileNitrate;
 
 
   }; //end this.mapIt
