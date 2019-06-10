@@ -2465,14 +2465,9 @@ function Results(board) {
 
       //For each tile, add the carbon sequestration value to the results array in corresponding year y
       for (var i = 0; i < board.map.length; i++) {
-<<<<<<< HEAD
-        //console.log("initialmap");
 
-        //assign value to 2d array in results
-=======
         console.log("initialmap");
         // tempCarbonSum[y] += board.map[i].results[y].calculatedCarbonSequestration;
->>>>>>> parent of 0a9d254... removed some loop
         this.sumCarbonSequestration[y] += board.map[i].results[y].calculatedCarbonSequestration;
         this.tileCarbonSequestration[y][i] = board.map[i].results[y].calculatedCarbonSequestration;
         this.grossErosion[y] += board.map[i].results[y].calculatedGrossErosionRate * board.map[i].area;
@@ -3152,32 +3147,20 @@ function Results(board) {
 
       //For each watershed store nitrate percent contribution
       for (var i = 0; i < this.subwatershedArea.length; i++) {
-<<<<<<< HEAD
-        //console.log("subWatershedArea");
-        this.watershedPercent[y].push(this.subWatershedNitrate[y][i] / (this.subwatershedArea[i] / this.totalArea) * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y]);
-=======
         console.log("subWatershedArea");
         watershedPercent[y].push(this.subWatershedNitrate[y][i] / (this.subwatershedArea[i] / this.totalArea) * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y]);
->>>>>>> parent of 0a9d254... removed some loop
 
       }
 
       //For each tile, store grossErosionRate and phosphorusRiskAssessment indices calculated by submethods
       //TODO: Phosphorus Risk Assessment
       for (var i = 0; i < board.map.length; i++) {
-<<<<<<< HEAD
         this.grossErosionSeverity[y][i]=this.getGrossErosionSeverity(board.map[i].results[y].calculatedGrossErosionRate);
         this.phosphorusRiskAssessment[y][i]=this.getPhosphorusRiskAssessment(board.map[i].results[y].phosphorusDelivered / board.map[i].area);
         this.nitrateContribution[y][i]=this.watershedPercent[y][board.map[i].subwatershed];
         this.tileNitrate[y][i]=board.map[i].results[y].calculatedTileNitrate;
         //console.log("mapit: erosion and phoshorus");
-=======
-        grossErosionSeverity[y].push(this.getGrossErosionSeverity(board.map[i].results[y].calculatedGrossErosionRate));
-        phosphorusRisk[y].push(this.getPhosphorusRiskAssessment(board.map[i].results[y].phosphorusDelivered / board.map[i].area));
-        nitrateContribution[y].push(watershedPercent[y][board.map[i].subwatershed]);
-        tileNitrate[y].push(board.map[i].results[y].calculatedTileNitrate);
-        console.log("mapit: erosion and phoshorus");
->>>>>>> parent of 0a9d254... removed some loop
+
       }
     }
 
