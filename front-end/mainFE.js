@@ -389,6 +389,11 @@ function confirmYearDelete() {
     document.getElementById('confirmYearDelete').style.display = "block";
     document.getElementById('yesDelete').style.display = "block";
     document.getElementById('noDelete').style.display = "block";
+
+    if(curTracking)
+    {
+      pushClick(0, getStamp(), 112, 0 , null);
+    }
   }
 
 

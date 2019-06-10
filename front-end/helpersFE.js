@@ -990,8 +990,9 @@ function deleteYearAndTransition()
          else
          {
            g_year1delete = true;
-          // g_isDeleted = true;
-           response = "Deleted!";
+           snackBar.innerHTML = "Deleted year " + yearSelected + "!";
+           snackBar.className = "show";
+           setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
            // Remove Yes/no confirmation buttons after user has selected an option
            document.getElementById('yesDelete').style.display = "none";
            document.getElementById('noDelete').style.display = "none";
@@ -1032,7 +1033,9 @@ function deleteYearAndTransition()
       //special case - deletes year 2 when year 3 is present and then makes year 2 = year 3 and the next year, i.e year 3 as default
       else if(yearSelected == 2 && currMaxYear == 3)
       {
-        response = "Deleted!";
+        snackBar.innerHTML = "Deleted year " + yearSelected + "!";
+        snackBar.className = "show";
+        setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         // Remove Yes/no confirmation buttons after user has selected an option
         document.getElementById('yesDelete').style.display = "none";
         document.getElementById('noDelete').style.display = "none";
@@ -1053,7 +1056,9 @@ function deleteYearAndTransition()
       }
       else
       {
-        response = "Deleted!";
+        snackBar.innerHTML = "Deleted year " + yearSelected + "!";
+        snackBar.className = "show";
+        setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         //delete the button of the year - actual deletion is done in transitionToYear
         document.getElementById("year" + yearSelected + "Button").style.display = "none";
         document.getElementById("yearToCopy").options[yearSelected].style.display = 'none';
@@ -1078,15 +1083,7 @@ function deleteYearAndTransition()
         document.getElementById('confirmYearDelete').style.display = "none";
 
       }
-      /*changed*/
-      /*deleteConfirm = true;
-    }
-    else
-    {
-        deleteConfirm = false;
-        response = "Not Deleted!";
-        g_isDeleted = false;
-    } */
+
     //if the maximum year is 1 now, don't show the option in  the copy and paste boxes
     if(boardData[currentBoard].calculatedToYear == 1)
     {

@@ -1102,7 +1102,6 @@ function Click(c1, c2, c3, c4, c5) {
             // Transition to the selected year
             transitionToYear(yearSelected);
             switchYearTab(yearSelected);
-            confirmYearDelete();
             return deleteYearAndTransition();
             break;
           }
@@ -1188,7 +1187,16 @@ function Click(c1, c2, c3, c4, c5) {
                   return yearNotDeleted();
                 }
                 else {
-                  return "Year deleted";
+                  return "User did not delete year";
+                }
+
+              // When clicks the 'delete year' button
+              case 112:
+                if (action) {
+                  return confirmYearDelete();
+                }
+                else {
+                  return "User clicked 'delete year'-button";
                 }
 
 
