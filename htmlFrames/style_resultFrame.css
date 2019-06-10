@@ -544,6 +544,19 @@ text {
   width: 38.3%;
 }
 
+.tooltip{
+    position      : absolute;
+    text-align    : center;
+    padding       : 8px;
+    border        : none;
+    border-radius : 8px;
+    margin-top    : -30px;
+    background    : black;
+    color         : white;
+    pointer-events: none;
+    opacity:      : .7;
+}
+
 /*
 #container {
   border: 3px solid #6ac5ac;

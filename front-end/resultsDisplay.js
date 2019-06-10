@@ -4051,6 +4051,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
   var options = [];
   function init() {
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1svg');
+    var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1');
     window = document.getElementById('resultsFrame');
     var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
     var stackTypes = ['Cost','Revenue','Profit','Loss'];
@@ -4096,9 +4097,9 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
         .data(layers)
         .enter().append("g")
         .attr("class", "layer")
-        .attr("layernum",function(d, i) {return i; })
+        .attr("layernum",function(d, i) {return d.key; })
         .style("margin-left", function(d) { return "3px"; })
-        .style("fill", function(d, i) { return colors[i]; }); //determines color for each layer
+        .style("fill", function(d, i) { return colors[i]; })//determines color for each layer
 
       let x0 = d3.scaleBand() //There are 2 x functions because landUse determine 1 part of x factor and year determines the other
         .domain(data.map(function(d) {return d.landUse + ""; }))
@@ -4114,6 +4115,30 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
       .domain([d3.min(layers, stackMin), d3.max(layers, stackMax)])//determine the min and max value graph needs to show
       .rangeRound([height - margin.bottom, margin.top]);
 
+      //following code is to add tooltips
+      var tooltip = d3.select(econGraphic1).append("div")
+          .attr("class", "tooltip")
+          .style("visibility", "hidden")
+          .attr("id", "graph1tt")
+          .style("opacity", ".7");
+
+      tooltip.append("span")
+          .attr("id", "econGraphic1Value")
+          .style("display", "block")
+
+      tooltip.append("span")
+          .attr("id", "econGraphic1LU")
+          .style("display", "block")
+
+      //the following code is to add a rectangle around the hovered things
+      //We cant just change the border since the border will be covered by higher layered rects
+      var outlineRect = svg.append("rect")
+      .attr("stroke", "black")
+      .attr("stroke-width", "3px")
+      .style("visibility", "hidden")
+      .style("fill", "none")
+      .attr("width", x.bandwidth);
+
       var rect = layer.selectAll("rect")
         .data(function(d) {return d; })
         .enter().append("rect")
@@ -4122,16 +4147,61 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
           .attr("y", function(d) {if (d[1] > 0) return y(0) - (y(d[0])- y(d[1])); else return y(0); }) //if the bar is positive the height has to be consi
           .attr("width", x.bandwidth)
           .attr("height", function(d){return y(d[0])- y(d[1]);})
+          .on("mouseover", function(d) {tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
+            tooltip.select("#econGraphic1LU").text("Land Use: " + d.data.landUse)
+            let econType = this.parentNode.getAttribute("layernum")
+            tooltip.select("#econGraphic1Value").text(econType +": $" + d.data[econType])
+            outlineRect.attr("transform", "translate(" + x0(d.data.landUse) + ",0)")
+            outlineRect.style("visibility", "visible")
+            outlineRect.attr("x", this.getAttribute("x"))
+            outlineRect.attr("y", this.getAttribute("y"))
+            outlineRect.attr("height", this.getAttribute("height"))
+          })
+          .on("mouseout", function(d) {tooltip.style("visibility", "hidden")
+          outlineRect.style("visibility", "hidden")
+          })
+          .on("mousemove", d => {
+            tooltip
+            .style('left', (d3.event.pageX + 10) +"px")
+            .style('top', (d3.event.pageY + 10) + "px")
+          });
 
-      var xAxis = svg.append("g") //only named variable for clarity of what this is
+
+        //following code adds xAxis to graph
+      var xAxis = svg.append("g")
         .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
-
         .call(d3.axisBottom(x0))
+      svg.selectAll("g.tick")
+        .style("stroke-dasharray", ("3,3"))
+        .selectAll("text")
+          .attr("fill", "purple")
+          .attr("y", y(y.domain()[0]/1.2)-y(0) + 7)
 
-      var yAxis = svg.append("g")
-      .attr("transform", "translate(" + margin.left + ", 0)")
-      .style("font", "14px Arial")
-      .call(d3.axisLeft(y));
+      svg.append("text")
+        .attr("transform",
+          "translate(" + (width/2) + " ," +
+          (height-20) + ")")
+        .style("text-anchor", "left")
+        .text("Land Uses");
+
+        //following code adds yAxis to graph
+      var yAxis = d3.axisLeft(y)
+        .tickFormat(function (d){
+          var isNegative = d < 0 ? '-' : '';
+          return isNegative + '$' + Math.abs(d);})
+        // .tickSize(-width)  //These lines are for horizontal guidelines
+        // .tickSizeOuter(0)
+      svg.append("g")
+        .attr("transform", "translate(" + margin.left + ", 0)")
+        .call(yAxis);
+
+      svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Value");
     }
 
     var drawLegend = function (){
@@ -4165,7 +4235,6 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
       box.innerHTML = '';
       box.append(select);
       select.onchange = d => {
-        console.log(select.value)
         document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses').style.display = 'none';
         document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Economics').style.display = 'none';
         document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years').style.display = 'none';
@@ -4194,6 +4263,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
         checkBox.type = 'checkbox';
         checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
         checkBox.style.float = 'right';
+        checkBox.checked = true;
         cell.appendChild(checkBox);
         container.appendChild(cell);
       })
@@ -4206,6 +4276,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
         checkBox.type = 'checkbox';
         checkBox.onclick = event => alterOptions(i);
         checkBox.style.float = 'right';
+        checkBox.checked = true;
         cell.appendChild(checkBox);
         container.appendChild(cell);
       }
@@ -4218,6 +4289,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
         checkBox.type = 'checkbox';
         checkBox.onclick = event => alterOptions(type);
         checkBox.style.float = 'right';
+        checkBox.checked = true;
         cell.appendChild(checkBox);
         container.appendChild(cell);
       });
@@ -4262,16 +4334,16 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
   };
 }
 
-
-
 function stackMin(layers) {
   return d3.min(layers, function(d) {
-    return d[0];
+    if(d[0] < 0) return 1.2* (d[0]- d[1]);
+    return 0;
   });
 }
 
 function stackMax(layers) {
   return d3.max(layers, function(d) {
-    return d[1];
+    if(d[1] > 0) return 1.2 * (d[1] - d[0]);
+    return 0;
   });
 }
