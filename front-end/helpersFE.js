@@ -2755,7 +2755,7 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for short-rotation woody biomass yield
       case 18:
-        highlightString = "608.6 tons/acre/yr" + "<br>";
+        highlightString = "9.99 tons/acre/yr" + "<br>";
         break;
         //create string for sediment control
       case 19:
