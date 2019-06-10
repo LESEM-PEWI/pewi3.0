@@ -383,6 +383,15 @@ function confirmEscape() {
   }
 } //end toggleEscape
 
+// buttons to be shown when user clicks on the 'delete' button
+function confirmYearDelete() {
+
+    document.getElementById('confirmYearDelete').style.display = "block";
+    document.getElementById('yesDelete').style.display = "block";
+    document.getElementById('noDelete').style.display = "block";
+  }
+
+
 /** createThreeFramework instantiates the renderer and scene to render 3D environment
  *   renderer = new THREE.WebGLRenderer(); above
  *

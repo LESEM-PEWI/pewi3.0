@@ -48,7 +48,7 @@ var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board - only used for deletetion of years
 // flag to know if user selected OK/cancel at the 'Are you sure you want to delete?'-popup. Only used for running recorded simulations
-var deleteConfirm = false;
+//var deleteConfirm = false;
 var yearCopyPaste = 0; //used for copying and pasting the selected year
 var selectedLandType = 0; //keeps track of which land is selected
 var resultsMappedHover=false;
@@ -958,6 +958,11 @@ function deleteYearAndTransition()
   var snackBar = document.getElementById("snackbarNotification");
   var currMaxYear = boardData[currentBoard].calculatedToYear;
   maxYear = currMaxYear;
+  // cursor tracking
+  if(curTracking)
+  {
+    pushClick(0, getStamp(), 103, 0 , yearSelected);
+  }
 
 //if somehow the selected year is year 0, don't have an option for deleting the year
   if(!yearSelected)
@@ -966,8 +971,8 @@ function deleteYearAndTransition()
   }
 //promt- "Are you sure you want to delete Year #?" -using a confirm box
     var response;
-    if(confirm("Are you sure you want to delete year " + yearSelected + "?" ))
-    {
+    //if(confirm("Are you sure you want to delete year " + yearSelected + "?" ))
+    //{
 
       if(yearSelected == 1)
       {
@@ -1058,16 +1063,20 @@ function deleteYearAndTransition()
         //switch to the previous year
         transitionToYear(yearSelected);
         switchYearTab(yearSelected);
-
+        // Remove Yes/no confirmation buttons after user has selected an option
+        document.getElementById('yesDelete').style.display = "none";
+        document.getElementById('noDelete').style.display = "none";
+        document.getElementById('confirmYearDelete').style.display = "none";
       }
-      deleteConfirm = true;
+      /*changed*/
+      /*deleteConfirm = true;
     }
     else
     {
         deleteConfirm = false;
         response = "Not Deleted!";
         g_isDeleted = false;
-    }
+    } */
     //if the maximum year is 1 now, don't show the option in  the copy and paste boxes
     if(boardData[currentBoard].calculatedToYear == 1)
     {
@@ -1077,21 +1086,23 @@ function deleteYearAndTransition()
     // refresh the progress bar
     // calculateResults();
     refreshProgressBar(currentYear);
-    if(curTracking)
-    {
-      var userResponseForDel = "";
-      if (deleteConfirm === true) // comparison working correctly!
-      {
-        userResponseForDel = "OK";
-      }
-      else {
-        userResponseForDel = "cancel";
-      }
-      // concatenating the two information (yearSelected & deleteConfirm) as one string, so that both can be stored in one column
-      var deleteInfo = yearSelected.toString() + userResponseForDel;
-      pushClick(0, getStamp(), 103, 0 , deleteInfo);
-    }
 }// end deleteYearAndTransition
+
+// function to be called if user decides to not delete a year.
+/*changed*/
+function yearNotDeleted() {
+
+  //response = "Not Deleted!";
+  g_isDeleted = false;
+  // Remove Yes/no confirmation buttons after user has selected an option
+  document.getElementById('yesDelete').style.display = "none";
+  document.getElementById('noDelete').style.display = "none";
+  document.getElementById('confirmYearDelete').style.display = "none";
+  if (curTracking)
+  {
+    pushClick(0, getStamp(), 111, 0, null);
+  }
+}
 
 
 
@@ -5279,7 +5290,7 @@ function toggleChangeLandType() {
 //toggleEscapeFrame displays and hides the div that allows the user to go to the main menu, options, or directory
 function toggleEscapeFrame() {
 
-  /* This condition is selected when 'Yes' option of 'Menu Menu'-button is clicked in the Modal escape frame
+  /* This condition is selected when 'Yes' option under 'Menu Menu'-button is clicked in the Modal escape frame
       Check file index.html <div class="mainEscapeButton" id="yesConfirmEscape" ...>
   */
   if (document.getElementById('confirmEscape').style.height == "20vw") {

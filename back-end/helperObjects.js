@@ -1094,21 +1094,11 @@ function Click(c1, c2, c3, c4, c5) {
             break;
           }
 
-        // When user deletes a year.
+        // When user confirms 'Yes' to delete a year.
         // this.tileID here denotes var yearSelected from helpersFE.js
         case 103:
           if (action) {
-            var deleteInfo = this.tileID;
-            // Extracting year to be deleted
-            var yearSelected = parseInt(deleteInfo.substring(0,1), 10);
-            // Extracting delete confirmation window popup input (OK/cancel)
-            var deleteConfirm = deleteInfo.substring(1);
-            // This is to be displayed to the person who runs the simulation.
-            // In this way he would know what the user had selected while recording
-            var snackBar = document.getElementById("snackbarNotification");
-            snackBar.innerHTML = "Click " + deleteConfirm + " at Confirmation popup";
-            snackBar.className = "show";
-            setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+            var yearSelected = this.tileID;
             // Transition to the selected year
             transitionToYear(yearSelected);
             switchYearTab(yearSelected);
@@ -1116,7 +1106,8 @@ function Click(c1, c2, c3, c4, c5) {
             break;
           }
           else {
-            return "User wanted to delete a year";
+            var  yearSelected = this.tileID;
+            return "User deleted year " + yearSelected; // **-- to-do: see if you ca insert year number --**
             break;
           }
 
@@ -1153,7 +1144,7 @@ function Click(c1, c2, c3, c4, c5) {
               return "Home/Esc button was clicked";
               break;
             }
-
+          // When user clicks the customization button
           case 107:
             if (action) {
               return startOptions();
@@ -1163,7 +1154,7 @@ function Click(c1, c2, c3, c4, c5) {
               return " Customize button was clicked";
               break;
             }
-
+              // When user closes the customization frame using save & exit button
             case 108:
               if (action) {
                 return window.frames[6].saveCurrentOptionsState();
@@ -1173,7 +1164,7 @@ function Click(c1, c2, c3, c4, c5) {
                 return " Customize window closed: Save & Exit";
                 break;
               }
-
+              // When user closes the customization frame using Esc or [X] button
               case 109:
                 if (action) {
                   return window.frames[6].undoSelectedOptions();
@@ -1183,12 +1174,22 @@ function Click(c1, c2, c3, c4, c5) {
                   return " Customize window closed: Esc [X] button";
                   break;
                 }
-
+              // When user scrolls in customization frame
               case 110:
                 if(action)
                   return window.frames[6].scrollTo(0,parseInt(this.tileID));
                 else
                   return "User scrolled in the customization page";
+
+              // When decides to delete a year
+              case 111:
+                if (action) {
+                  return yearNotDeleted();
+                }
+                else {
+                  return "Year deleted";
+                }
+
 
 
 

@@ -226,6 +226,14 @@
 
     </div>
 
+    <!-- Delete Confirmation -->
+    <div id = "confirmYearDelete">
+      Are you sure you want to delete this year?
+      <div class="mainEscapeButton" id = "yesDelete" onclick="deleteYearAndTransition();"> Yes </div>
+      <div class="mainEscapeButton" id = "noDelete" onclick= "yearNotDeleted();"> No </div>
+    </div>
+
+
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
     <!--<img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"> -->
 
@@ -391,11 +399,6 @@
           <div id="precipTitle">
             <h3>Precipitation</h3></div>
 
-
-
-
-
-
           <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);">
             <div class="tooltipPrecip">
               <h4>Year 0:</h4>
@@ -411,10 +414,6 @@
               <span class="tooltiptextPrecip" id="precipspan0"></span>
             </div>
           </div>
-
-
-
-
 
           <div id="year1PrecipContainer" class="styled-select" onmouseover="getPrecipType(1);">
             <div class="tooltipPrecip">
@@ -433,7 +432,6 @@
           </div>
           <!-- <script type="text/javascript"> document.write(getPrecipType(1))</script>  -->
 
-
           <div id="year2PrecipContainer" class="styled-select" onmouseover="getPrecipType(2);">
             <div class="tooltipPrecip">
               <h4>Year 2:</h4>
@@ -449,8 +447,6 @@
               <span class="tooltiptextPrecip" id="precipspan2"></span>
             </div>
           </div>
-
-
 
           <div id="year3PrecipContainer" class="styled-select" onmouseover="getPrecipType(3);">
             <div class="tooltipPrecip">
@@ -481,7 +477,7 @@
         <div id="year2Button" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="icon yearImageHidden" src="./imgs/two.png"></div>
         <div id="year3Button" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="icon yearImageHidden" src="./imgs/three.png"></div>
         <div id="yearAddButton" onclick="addYearAndTransition();setupStaticBackground();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
-        <div id="yearDeleteButton" onclick="deleteYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearDeleteImage" class="icon yearNotSelected" src="./imgs/deleteYear.png"></div>
+        <div id="yearDeleteButton" onclick = "confirmYearDelete();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearDeleteImage" class="icon yearNotSelected" src="./imgs/deleteYear.png"></div>
         <div id="yearCopyButton" class="year-styled-select">
           <h4>Copy From:</h4>
           <select id="yearToCopy" class="yearCopyPasteSelect" onChange="copyYear();">

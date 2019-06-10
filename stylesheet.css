@@ -351,7 +351,7 @@ body {
   background-color: #7cc1e9 !important;
 }
 
-#exitToMenuButton {
+#exitToMenuButton{
   animation-duration: 1.2s;
   animation-name: showEffect;
   visibility: hidden;
@@ -444,16 +444,31 @@ body {
   width: 13.2vw;
 }
 
-#yesConfirmEscape {
+#yesConfirmEscape, #yesDelete {
   margin: 0 auto;
   margin-bottom: 20px;
   margin-top: 20px;
 }
 
-#noConfirmEscape {
+#noConfirmEscape, #noDelete {
   margin: 0 auto;
 }
 
+#confirmYearDelete {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  display: none;
+  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
+  font-size: 1.5vw;
+  font-size: var(--button-font-size);
+  height: auto;
+  left: 40%;
+  position: absolute;
+  text-align: center;
+  top: 30%;
+  width: 12.5vw;
+}
 
 /* style of all the iframe */
 
