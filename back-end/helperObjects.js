@@ -3422,6 +3422,9 @@ function Tile(tileArray, board) {
   this.results[2] = {};
   this.results[3] = {};
 
+// this array will hold the sides that the tile needs to have contour lines placed on
+  this.contourLines = Array();
+
 
 
   //Basic functionality methods

@@ -11,18 +11,14 @@ function createContourMap()
 
   var lines = getLines(map);
 
-  displayLines(lines);
-
-  //this will store the groups of tiles that are that are adjacent and have the same elevation
-  //var elevationGroups = groupByElevation(map);
-
-  // //creates the groups of contour lines that will be displayed on the map
-  // var contourLineGroups = createContours(elevationGroups);
-  //
-  // //display the contour lines
-  // displayContours(contourLineGroups);
+  displayLines(lines, map);
 }
 
+/**
+ * This function goes through the map and checks to the side of every tile. If the adjacent tiles have a different elevation / topography value, that side is pushed to an array for that tile so we know there needs to tbe a contour line there.
+ * @param  {[Array]} map [The current board]
+ * @return {[Array]}     [An array with each tile, and where they need to have contour lines around them]
+ */
 function getLines(map)
 {
 
@@ -41,7 +37,6 @@ function getLines(map)
       {
         thisCellsLines.push("top");
         map[i].contourLines.push("top");
-        map[i].showContourLines("top");
       }
 
       //check the tile below
@@ -49,7 +44,6 @@ function getLines(map)
       {
         thisCellsLines.push("bottom");
         map[i].contourLines.push("bottom");
-        map[i].showContourLines("bottom");
       }
 
       //check the tile to the right
@@ -57,7 +51,6 @@ function getLines(map)
       {
         thisCellsLines.push("right");
         map[i].contourLines.push("right");
-        map[i].showContourLines("right");
       }
 
       //check the tile to the left
@@ -65,7 +58,6 @@ function getLines(map)
       {
         thisCellsLines.push("left");
         map[i].contourLines.push("left");
-        map[i].showContourLines("left");
       }
 
 
@@ -75,13 +67,35 @@ function getLines(map)
   return toReturn;
 }
 
-function displayLines(lines)
+function displayLines(lines, map)
 {
 
+
+  for(var i = 0; i < map.length; i++)
+  {
+    var tile = document.createElement("div");
+
+    tile.id="tile" + i;
+    tile.innerHTML = tile.id;
+
+    var tileHolderDiv = document.getElementsByClassName("tiles");
+  }
 }
 
 
 function getID(row, col)
 {
   return 23 * (row - 1) + col;
+}
+
+/**
+ * Open a pop up window to confirm if the user wants to load the topo map.
+ */
+function confirmTopoMap()
+{
+  if(window.confirm("Do you want to load the contour map?"))
+  {
+    window.open("file:///C:/Users/jweiland/Desktop/PEWI/CODE/pewi3.0/htmlFrames/contourMap.html");
+    createContourMap();
+  }
 }
