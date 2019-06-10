@@ -35,7 +35,6 @@
   //as needed
   //the parent page is then called to hide the options iframe
   function saveCurrentOptionsState() {
-
     //find the elements that are able to be checked
     var toggledElements = document.getElementsByClassName('toggle');
     var tempString = "";

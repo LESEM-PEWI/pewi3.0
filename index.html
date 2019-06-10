@@ -192,13 +192,43 @@
         })
       });
     </script>
+
     <!-- style="display: inline; visibility: hidden;-->
     <div id="flyover" class="fly"> </div>
     <!--Create Glossary button on screen-->
     <div id="indexmenu" onclick="toggleIndex();">Glossary</div>
 
+    <!-- UNDO button -->
+    <div id="undo" class="undocol">
+      <div class="tooltip">
+        <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
+        <img id="undoButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+        <span class="tooltiptext"> Undo </span>
+      </div>
+    </div>
+
+
+    <!-- painter brush -->
+    <div id="settingsTab" class="settingsTab">
+      <div id="cellpaint" class="leftcol">
+        <div class="tooltip">
+          <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
+          <span class="tooltiptext"> Cell Paint </span>
+        </div>
+      </div>
+
+      <div id="gridpaint" class="rightcol">
+        <div class="tooltip">
+          <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
+          <span class="tooltiptext"> Grid Paint </span>
+        </div>
+      </div>
+
+    </div>
+
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
-    <img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <!--<img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"> -->
+
 
     <!-- **BEGIN Left Side Console**
       with land-type painter, precipitation, ecosystem indicators and feature highlighting functions -->
@@ -218,6 +248,16 @@
         <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle', 0);" onmouseout="toggleTabTitle('terrainTabTitle', 1);">
         <div id="terrainTabTitle" style="display:none;"></div>
       </div>
+      <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
+      <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);">
+        <img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png" onmouseover="toggleTabTitle('featuresTabTitle', 0);" onmouseout="toggleTabTitle('featuresTabTitle', 1);">
+        <div id="featuresTabTitle" style="display:none;"></div>
+      </div>
+
+      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);">
+        <img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png" onmouseover="toggleTabTitle('yieldTabTitle', 0);" onmouseout="toggleTabTitle('yieldTabTitle', 1);">
+        <div id="yieldTabTitle" style="display:none;"></div>
+      </div>
       <!-- "Cloud, raindrops, sun icon" by Yannick Lung (http://yannicklung.com/) with free commercial use / Inverted and resized -->
       <div id="precipButton" class="consoleButton" onclick="switchConsoleTab(2);">
         <img id="precipImg" class="imgNotSelected" src="./imgs/precipIcon.png" onmouseover="toggleTabTitle('precipTabTitle', 0);" onmouseout="toggleTabTitle('precipTabTitle', 1);">
@@ -229,20 +269,11 @@
         <div id="yearTabTitle" style="display:none;"></div>
       </div>
       <!-- "Filter, levels, settings icon" by Yash Ranpara (https://www.iconfinder.com/yash11) with free commerical use / Inverted and resized -->
-      <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3);">
+      <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3)">
         <img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png" onmouseover="toggleTabTitle('levelsTabTitle', 0);" onmouseout="toggleTabTitle('levelsTabTitle', 1);">
         <div id="levelsTabTitle" style="display:none;"></div>
       </div>
-      <!-- "Holiday, ocean, river, sea, summer, water, wave, ..." by Olya Philipenko (https://www.iconfinder.com/hk12215) with free commercial / Inverted and resized -->
-      <div id="featuresButton" class="consoleButton" onclick="switchConsoleTab(4);">
-        <img id="featuresImg" class="imgNotSelected" src="./imgs/featuresIcon.png" onmouseover="toggleTabTitle('featuresTabTitle', 0);" onmouseout="toggleTabTitle('featuresTabTitle', 1);">
-        <div id="featuresTabTitle" style="display:none;"></div>
-      </div>
 
-      <div id="yieldButton" class="consoleButton" onclick="switchConsoleTab(7);">
-        <img id="yieldImg" class="imgNotSelected" src="./imgs/yieldProductivityIcon.png" onmouseover="toggleTabTitle('yieldTabTitle', 0);" onmouseout="toggleTabTitle('yieldTabTitle', 1);">
-        <div id="yieldTabTitle" style="display:none;"></div>
-      </div>
 
     </div>
 
@@ -498,19 +529,19 @@
           <center>
             <h1 class="DetailsList-title">Gross Erosion</h1></center>
           <div class="legendColor" style="background-color: #654321">
-            <p class="levelsTextDetails">> 5 t/ac/yr</p>
+            <p class="levelsTextDetails">Very High</p>
           </div>
           <div class="legendColor" style="background-color: #8b4513">
-            <p class="levelsTextDetails">3.5-5 t/ac/yr</p>
+            <p class="levelsTextDetails">High</p>
           </div>
           <div class="legendColor" style="background-color: #919246">
-            <p class="levelsTextDetails">2-3.5 t/ac/yr</p>
+            <p class="levelsTextDetails">Medium</p>
           </div>
           <div class="legendColor" style="background-color: #e3c972">
-            <p class="levelsTextDetails">0.5-2 t/ac/yr</p>
+            <p class="levelsTextDetails">Low</p>
           </div>
           <div class="legendColor" style="background-color: #ffffc9">
-            <p class="levelsTextDetails">< 0.5 t/ac/yr</p>
+            <p class="levelsTextDetails">Very Low</p>
           </div>
         </div>
 
@@ -539,19 +570,19 @@
           <center>
             <h1 class="DetailsList-title">Sediment Control</h1></center>
           <div class="legendColor" style="background-color: #02635b;">
-            <p class="levelsTextDetails">>39.76 tons</p>
+            <p class="levelsTextDetails">Very High</p>
           </div>
           <div class="legendColor" style="background-color: #22877f;">
-            <p class="levelsTextDetails">29.82-39.76 tons</p>
+            <p class="levelsTextDetails">High</p>
           </div>
           <div class="legendColor" style="background-color: #5ab8b1;">
-            <p class="levelsTextDetails">19.88-29.82 tons</p>
+            <p class="levelsTextDetails">Medium</p>
           </div>
           <div class="legendColor" style="background-color: #a7dfdb;">
-            <p class="levelsTextDetails">9.94-19.88 tons</p>
+            <p class="levelsTextDetails">Low</p>
           </div>
           <div class="legendColor" style="background-color: #daf2f0;">
-            <p class="levelsTextDetails">0-9.94 tons</p>
+            <p class="levelsTextDetails">Very Low</p>
           </div>
         </div>
 
@@ -559,19 +590,19 @@
           <center>
             <h1 class="DetailsList-title">Carbon Sequestration</h1></center>
           <div class="legendColor" style="background-color: #042402;">
-            <p class="levelsTextDetails">>16.17 tons</p>
+            <p class="levelsTextDetails">Very High</p>
           </div>
           <div class="legendColor" style="background-color: #1d4d19;">
-            <p class="levelsTextDetails">12.13-16.17 tons</p>
+            <p class="levelsTextDetails">High</p>
           </div>
           <div class="legendColor" style="background-color: #346b2f;">
-            <p class="levelsTextDetails">8.09-12.13 tons</p>
+            <p class="levelsTextDetails">Medium</p>
           </div>
           <div class="legendColor" style="background-color: #64a95e;">
-            <p class="levelsTextDetails">4.04-8.09 tons</p>
+            <p class="levelsTextDetails">Low</p>
           </div>
           <div class="legendColor" style="background-color: #d5f0d3;">
-            <p class="levelsTextDetails">0-4.04 tons</p>
+            <p class="levelsTextDetails">Very Low</p>
           </div>
         </div>
 
@@ -636,49 +667,49 @@
         </div>
 
         <div class="leftcol">
-        <!-- "Letter N Ig Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <div class="tooltipResultsNitrate">
-          <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/Ns.png" onclick="displayLevels('nitrate');">
-          <span class="tooltiptextResults">Subwatershed Nitrate-N Percent Contribution</span>
-        </div>
-        <!-- "Letter E gold Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <div class="tooltipResultsErosion">
-          <img id="erosionIcon" class="levelsSelectorIcon icon" src="./imgs/E.png" onclick="displayLevels('erosion');">
-          <span class="tooltiptextResults">Gross Erosion</span>
-        </div>
-        <!-- "Letter P blue Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-        <div class="tooltipResultsPhosphorus">
-          <img id="phoshorusIcon" class="levelsSelectorIcon icon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
-          <span class="tooltiptextResults">Phosphorus Index Risk Assessment</span>
-        </div>
-        <!--"S.png icon created by Sam Kerr"-->
-        <div class="tooltipResultsSediment">
-          <img id="sedimentIcon" class="levelsSelectorIcon icon" src="./imgs/S.png" onclick="displayLevels('sediment');">
-          <span class="tooltiptextResults">Sediment Runoff</span>
-        </div>
+          <!--"B.png icon created by Sam Kerr"-->
+          <div class="tooltipResultsBiodiversity">
+            <img id="biodiversityIcon" class="levelsSelectorIcon icon" src="./imgs/B.png" onclick="displayLevels('biodiversity');">
+            <span class="tooltiptextResults">Biodiversity</span>
+          </div>
+          <!-- "Letter E gold Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
+          <div class="tooltipResultsErosion">
+            <img id="erosionIcon" class="levelsSelectorIcon icon" src="./imgs/E.png" onclick="displayLevels('erosion');">
+            <span class="tooltiptextResults">Gross Erosion</span>
+          </div>
+          <!-- "Letter N Ig Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
+          <div class="tooltipResultsNitrate">
+            <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/Ns.png" onclick="displayLevels('nitrate');">
+            <span class="tooltiptextResults">Subwatershed Nitrate-N Percent Contribution</span>
+          </div>
+          <!-- "Letter P blue Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
+          <div class="tooltipResultsPhosphorus">
+            <img id="phoshorusIcon" class="levelsSelectorIcon icon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
+            <span class="tooltiptextResults">Phosphorus Index Risk Assessment</span>
+          </div>
 
       </div>
 
 
       <div class="rightcol">
-        <!--"C.png icon created by Sam Kerr"-->
-        <div class="tooltipResultsCarbon">
-          <img id="carbonIcon" class="levelsSelectorIcon icon" src="./imgs/C.png" onclick="displayLevels('carbon');">
-          <span class="tooltiptextResults">Carbon Sequestration</span>
-        </div>
         <!--"G.png icon created by Sam Kerr"-->
         <div class="tooltipResultsGameWildlife">
           <img id="gamewildlifeIcon" class="levelsSelectorIcon icon" src="./imgs/G.png" onclick="displayLevels('gamewildlife');">
           <span class="tooltiptextResults">Game Wildlife</span>
         </div>
-        <!--"B.png icon created by Sam Kerr"-->
-        <div class="tooltipResultsBiodiversity">
-          <img id="biodiversityIcon" class="levelsSelectorIcon icon" src="./imgs/B.png" onclick="displayLevels('biodiversity');">
-          <span class="tooltiptextResults">Biodiversity</span>
+        <!--"C.png icon created by Sam Kerr"-->
+        <div class="tooltipResultsCarbon">
+          <img id="carbonIcon" class="levelsSelectorIcon icon" src="./imgs/C.png" onclick="displayLevels('carbon');">
+          <span class="tooltiptextResults">Carbon Sequestration</span>
         </div>
         <div class="tooltipResultsNitrateTile">
           <img id="nitratetileIcon" class="levelsSelectorIcon icon" src="./imgs/N.png" onclick="displayLevels('nitratetile');">
           <span class="tooltiptextResults">Cell Nitrate</span>
+        </div>
+        <!--"S.png icon created by Sam Kerr"-->
+        <div class="tooltipResultsSediment">
+          <img id="sedimentIcon" class="levelsSelectorIcon icon" src="./imgs/S.png" onclick="displayLevels('sediment');">
+          <span class="tooltiptextResults">Sediment Runoff</span>
         </div>
 
       </div>
@@ -1313,7 +1344,7 @@
           <center>
             <h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Key</h1></center>
           <div class="legendColor" style="background-color: #734D26;">
-            <p class="levelsTextDetails">608.6 tons/acre/yr</p>
+            <p class="levelsTextDetails">9.99 tons/acre/yr</p>
           </div>
 
           <center>
@@ -1409,13 +1440,6 @@
         </div>
 
       </div>
-
-    </div>
-
-    <!-- painter brush -->
-    <div id="settingsTab">
-      <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
-      <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
 
     </div>
 
@@ -1763,7 +1787,7 @@
     <!-- Create buttons in upper right corner: upperHud-->
     <img id="pewiLogo" src="./imgs/updatedPewiLogo.png">
     <img id="logoBase" src="./imgs/inGameLogo.png">
-    <img id="DownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" onclick="triggerDownloadSequence();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="DownloadButton" class="upperButton" src="./imgs/uploadDownloadIcon.png" title="Download" onclick="triggerDownloadSequence();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
     <!--This class will hold the input element, so we'll hide this one-->
     <div class="uploadFile1">
@@ -1772,7 +1796,7 @@
                 <!--This element is used to align the button with everything else in the top right-->
                 <div id="uploadFile" class="upperButton">
                   <!--Here's the button image itself, give it its own class so it's animation works properly-->
-                  <img id="UploadButton" class="uploadButtonClass" src = "./imgs/UploadImage.png" style="height: 3vw" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+                  <img id="UploadButton" class="uploadButtonClass" src = "./imgs/UploadImage.png" title="Upload" style="height: 3vw" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
                 </div>
             </label>
       <!--And here's the input we'll be hiding-->
@@ -1813,17 +1837,14 @@
 
 
 
-    <img id="emailIcon" class="upperButton" src="./imgs/emailIcon.png" onclick="showEmail();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-    <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="emailIcon" class="upperButton" src="./imgs/emailIcon.png" title= "Email" onclick="showEmail();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
+    <img id="creditsButton" class="upperButton" src="./imgs/credits_button.png" title= "Credits" onclick="showCredits();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
     <img id="recordIcon" class="upperButton" style="visibility:hidden;" width="40px" src="./imgs/recordingIcon.gif">
-    <img id="homebutton" class="upperButton" src="imgs/Home_Icon.png" onclick="toggleEscapeFrame();">
-    <img id="printButton" class="upperButton" src="imgs/Button_Print.svg" onclick="startPrintOptions();" style="display:block;">
+    <img id="homebutton" class="upperButton" src="imgs/Home_Icon.png" title= "Home" onclick="toggleEscapeFrame();">
+    <img id="printButton" class="upperButton" src="imgs/Button_Print.svg" title="Print" onclick="startPrintOptions();" >
 
 
 
-
-    <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
-    <img id="undoButton" class="upperButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
     <!-- order now becomes important to make sure elements stack and cover correctly -->
 
