@@ -2358,106 +2358,136 @@ this.tileNitrate = Array(4);
    [],
    []
  ];
+
+ this.landUseResults[0] = {
+   conventionalCornLandUse: 0,
+   conservationCornLandUse: 0,
+   conventionalSoybeanLandUse: 0,
+   conservationSoybeanLandUse: 0,
+   mixedFruitsVegetablesLandUse: 0,
+   permanentPastureLandUse: 0,
+   rotationalGrazingLandUse: 0,
+   grassHayLandUse: 0,
+   switchgrassLandUse: 0,
+   prairieLandUse: 0,
+   wetlandLandUse: 0,
+   alfalfaLandUse: 0,
+   conservationForestLandUse: 0,
+   conventionalForestLandUse: 0,
+   shortRotationWoodyBioenergyLandUse: 0
+ };
+ this.landUseResults[1] = {
+   conventionalCornLandUse: 0,
+   conservationCornLandUse: 0,
+   conventionalSoybeanLandUse: 0,
+   conservationSoybeanLandUse: 0,
+   mixedFruitsVegetablesLandUse: 0,
+   permanentPastureLandUse: 0,
+   rotationalGrazingLandUse: 0,
+   grassHayLandUse: 0,
+   switchgrassLandUse: 0,
+   prairieLandUse: 0,
+   wetlandLandUse: 0,
+   alfalfaLandUse: 0,
+   conservationForestLandUse: 0,
+   conventionalForestLandUse: 0,
+   shortRotationWoodyBioenergyLandUse: 0
+ };
+ this.landUseResults[2] = {
+   conventionalCornLandUse: 0,
+   conservationCornLandUse: 0,
+   conventionalSoybeanLandUse: 0,
+   conservationSoybeanLandUse: 0,
+   mixedFruitsVegetablesLandUse: 0,
+   permanentPastureLandUse: 0,
+   rotationalGrazingLandUse: 0,
+   grassHayLandUse: 0,
+   switchgrassLandUse: 0,
+   prairieLandUse: 0,
+   wetlandLandUse: 0,
+   alfalfaLandUse: 0,
+   conservationForestLandUse: 0,
+   conventionalForestLandUse: 0,
+   shortRotationWoodyBioenergyLandUse: 0
+ };
+ this.landUseResults[3] = {
+   conventionalCornLandUse: 0,
+   conservationCornLandUse: 0,
+   conventionalSoybeanLandUse: 0,
+   conservationSoybeanLandUse: 0,
+   mixedFruitsVegetablesLandUse: 0,
+   permanentPastureLandUse: 0,
+   rotationalGrazingLandUse: 0,
+   grassHayLandUse: 0,
+   switchgrassLandUse: 0,
+   prairieLandUse: 0,
+   wetlandLandUse: 0,
+   alfalfaLandUse: 0,
+   conservationForestLandUse: 0,
+   conventionalForestLandUse: 0,
+   shortRotationWoodyBioenergyLandUse: 0
+ };
+
+ this.yieldResults = Array(4);
+ this.yieldResults[0] = {
+   cornGrainYield: 0,
+   soybeanYield: 0,
+   alfalfaHayYield: 0,
+   grassHayYield: 0,
+   woodYield: 0,
+   cattleYield: 0,
+   switchgrassYield: 0,
+   shortRotationWoodyBiomassYield: 0,
+   mixedFruitsAndVegetablesYield: 0,
+ };
+ this.yieldResults[1] = {
+   cornGrainYield: 0,
+   soybeanYield: 0,
+   alfalfaHayYield: 0,
+   grassHayYield: 0,
+   woodYield: 0,
+   cattleYield: 0,
+   switchgrassYield: 0,
+   shortRotationWoodyBiomassYield: 0,
+   mixedFruitsAndVegetablesYield: 0,
+   cornGrainYieldScore: 0
+ };
+ this.yieldResults[2] = {
+   cornGrainYield: 0,
+   soybeanYield: 0,
+   alfalfaHayYield: 0,
+   grassHayYield: 0,
+   woodYield: 0,
+   cattleYield: 0,
+   switchgrassYield: 0,
+   shortRotationWoodyBiomassYield: 0,
+   mixedFruitsAndVegetablesYield: 0
+ };
+ this.yieldResults[3] = {
+   cornGrainYield: 0,
+   soybeanYield: 0,
+   alfalfaHayYield: 0,
+   grassHayYield: 0,
+   woodYield: 0,
+   cattleYield: 0,
+   switchgrassYield: 0,
+   shortRotationWoodyBiomassYield: 0,
+   mixedFruitsAndVegetablesYield: 0
+ };
+ this.tileYieldResults = Array(4);
+ this.tileLandType = Array(4);
   /**
    * when initialize the map and tile, create array and assign value to array
    * @return {[type]} [description]
    */
   this.initializeMap=function(){
 
-    this.landUseResults[0] = {
-      conventionalCornLandUse: 0,
-      conservationCornLandUse: 0,
-      conventionalSoybeanLandUse: 0,
-      conservationSoybeanLandUse: 0,
-      mixedFruitsVegetablesLandUse: 0,
-      permanentPastureLandUse: 0,
-      rotationalGrazingLandUse: 0,
-      grassHayLandUse: 0,
-      switchgrassLandUse: 0,
-      prairieLandUse: 0,
-      wetlandLandUse: 0,
-      alfalfaLandUse: 0,
-      conservationForestLandUse: 0,
-      conventionalForestLandUse: 0,
-      shortRotationWoodyBioenergyLandUse: 0
-    };
-    this.landUseResults[1] = {
-      conventionalCornLandUse: 0,
-      conservationCornLandUse: 0,
-      conventionalSoybeanLandUse: 0,
-      conservationSoybeanLandUse: 0,
-      mixedFruitsVegetablesLandUse: 0,
-      permanentPastureLandUse: 0,
-      rotationalGrazingLandUse: 0,
-      grassHayLandUse: 0,
-      switchgrassLandUse: 0,
-      prairieLandUse: 0,
-      wetlandLandUse: 0,
-      alfalfaLandUse: 0,
-      conservationForestLandUse: 0,
-      conventionalForestLandUse: 0,
-      shortRotationWoodyBioenergyLandUse: 0
-    };
-    this.landUseResults[2] = {
-      conventionalCornLandUse: 0,
-      conservationCornLandUse: 0,
-      conventionalSoybeanLandUse: 0,
-      conservationSoybeanLandUse: 0,
-      mixedFruitsVegetablesLandUse: 0,
-      permanentPastureLandUse: 0,
-      rotationalGrazingLandUse: 0,
-      grassHayLandUse: 0,
-      switchgrassLandUse: 0,
-      prairieLandUse: 0,
-      wetlandLandUse: 0,
-      alfalfaLandUse: 0,
-      conservationForestLandUse: 0,
-      conventionalForestLandUse: 0,
-      shortRotationWoodyBioenergyLandUse: 0
-    };
-    this.landUseResults[3] = {
-      conventionalCornLandUse: 0,
-      conservationCornLandUse: 0,
-      conventionalSoybeanLandUse: 0,
-      conservationSoybeanLandUse: 0,
-      mixedFruitsVegetablesLandUse: 0,
-      permanentPastureLandUse: 0,
-      rotationalGrazingLandUse: 0,
-      grassHayLandUse: 0,
-      switchgrassLandUse: 0,
-      prairieLandUse: 0,
-      wetlandLandUse: 0,
-      alfalfaLandUse: 0,
-      conservationForestLandUse: 0,
-      conventionalForestLandUse: 0,
-      shortRotationWoodyBioenergyLandUse: 0
-    };
-
-    this.yieldResults = Array(4);
-    this.yieldResults[0] = {
-      cornGrainYield: 0,
-      soybeanYield: 0,
-      alfalfaHayYield: 0,
-      grassHayYield: 0,
-      woodYield: 0,
-      cattleYield: 0,
-      switchgrassYield: 0,
-      shortRotationWoodyBiomassYield: 0,
-      mixedFruitsAndVegetablesYield: 0,
-    };
-    this.yieldResults[1] = {
-      cornGrainYield: 0,
-      soybeanYield: 0,
-      alfalfaHayYield: 0,
-      grassHayYield: 0,
-      woodYield: 0,
-      cattleYield: 0,
-      switchgrassYield: 0,
-      shortRotationWoodyBiomassYield: 0,
-      mixedFruitsAndVegetablesYield: 0,
-      cornGrainYieldScore: 0
-    };
-    this.yieldResults[2] = {
+    var tempNitrateConcentration = [0, 0, 0, 0];
+    this.sumCarbonSequestration = [0, 0, 0, 0];
+    // var tempCarbonSum = [0, 0, 0, 0];
+    //for (var y = 1; y <= board.calculatedToYear; y++) {
+    y=yearSelected;
+    this.yieldResults[y] = {
       cornGrainYield: 0,
       soybeanYield: 0,
       alfalfaHayYield: 0,
@@ -2468,20 +2498,23 @@ this.tileNitrate = Array(4);
       shortRotationWoodyBiomassYield: 0,
       mixedFruitsAndVegetablesYield: 0
     };
-    this.yieldResults[3] = {
-      cornGrainYield: 0,
-      soybeanYield: 0,
-      alfalfaHayYield: 0,
-      grassHayYield: 0,
-      woodYield: 0,
-      cattleYield: 0,
-      switchgrassYield: 0,
-      shortRotationWoodyBiomassYield: 0,
-      mixedFruitsAndVegetablesYield: 0
+    this.landUseResults[y] = {
+      conventionalCornLandUse: 0,
+      conservationCornLandUse: 0,
+      conventionalSoybeanLandUse: 0,
+      conservationSoybeanLandUse: 0,
+      mixedFruitsVegetablesLandUse: 0,
+      permanentPastureLandUse: 0,
+      rotationalGrazingLandUse: 0,
+      grassHayLandUse: 0,
+      switchgrassLandUse: 0,
+      prairieLandUse: 0,
+      wetlandLandUse: 0,
+      alfalfaLandUse: 0,
+      conservationForestLandUse: 0,
+      conventionalForestLandUse: 0,
+      shortRotationWoodyBioenergyLandUse: 0
     };
-    this.tileYieldResults = Array(4);
-    this.tileLandType = Array(4);
-
     for(var i = 1; i < 4; i++){
       this.tileCarbonSequestration[i] = [];
       this.tileGrossErosion[i] = [];
@@ -2494,11 +2527,6 @@ this.tileNitrate = Array(4);
       this.sumPhosphorusLoad[i]=0;
       this.sedimentDelivery[i]=0;
     }
-    var tempNitrateConcentration = [0, 0, 0, 0];
-    this.sumCarbonSequestration = [0, 0, 0, 0];
-    // var tempCarbonSum = [0, 0, 0, 0];
-    //for (var y = 1; y <= board.calculatedToYear; y++) {
-    y=yearSelected;
       var wetlandMultiplier = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
       var subWatershedNitrate = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -2616,12 +2644,6 @@ this.tileNitrate = Array(4);
     var score = 0;
     var mult = 1;
     var foundWet = false;
-    var subWatershedArray=board.map.filter(
-      function(item){
-        return item.subwatershed==board.map[tileId].subwatershed;
-      }
-    );
-    console.log(subWatershedArray);
     console.log("calculateNitrateConcentration");
     for (var i = 0; i < board.map.length; i++) {
       if(board.map[i].subwatershed == subw){
@@ -2706,7 +2728,7 @@ this.tileNitrate = Array(4);
   this.sumFlagPercentages = function() {
     y=yearSelected;
     //for all years that have been calculated
-    for (var y = 1; y <= board.calculatedToYear; y++) {
+    //for (var y = 1; y <= board.calculatedToYear; y++) {
 
       var tempAreaNativeVegetation = 0;
       var tempAreaNativeVegetationHD = 0;
@@ -2767,7 +2789,7 @@ this.tileNitrate = Array(4);
       //for results hud
       this.strategicWetlandCells[y] = tempCellsWetlandOnStrategic;
 
-    } //end for loop of all years calculated
+    //} //end for loop of all years calculated
   }; //end Sum percentages
 
   this.calculateGameWildLifePoints = function() {
@@ -3141,8 +3163,8 @@ this.tileNitrate = Array(4);
   //Function to store values of nitrateConcentration, grossErosionRate, and phosphorusRiskAssessment per tile for maps
   //check this function!
   this.mapIt = function() {
-
-    for (var y = 1; y <= board.calculatedToYear; y++) {
+    y=yearSelected;
+    //for (var y = 1; y <= board.calculatedToYear; y++) {
 
       //For each watershed store nitrate percent contribution
       for (var i = 0; i < this.subwatershedArea.length; i++) {
@@ -3160,7 +3182,7 @@ this.tileNitrate = Array(4);
         this.tileNitrate[y][i]=board.map[i].results[y].calculatedTileNitrate;
         console.log("mapit: erosion and phoshorus");
       }
-    }
+    //}
 
 
 
