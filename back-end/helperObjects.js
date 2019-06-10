@@ -1877,7 +1877,7 @@ function Printer() {
       case 'year':
         // Create precipitation info as legend box for LandUse Map
         // first get text and color
-        text = "Precipitation: " + boardData[currentBoard].precipitation[type.substr(-1)];
+        text = "Precipitation: " + boardData[currentBoard].precipitation[type.substr(-1)] + "  in.";
         color = "rgb(29, 187, 245)";
         addLegendLine(type, color, text); // add line to legend here
 
