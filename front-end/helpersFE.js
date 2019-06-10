@@ -992,6 +992,11 @@ function deleteYearAndTransition()
            g_year1delete = true;
           // g_isDeleted = true;
            response = "Deleted!";
+           // Remove Yes/no confirmation buttons after user has selected an option
+           document.getElementById('yesDelete').style.display = "none";
+           document.getElementById('noDelete').style.display = "none";
+           document.getElementById('confirmYearDelete').style.display = "none";
+           }
 
            //make copy field blank if deleted year was selected
            if(yearSelected == yearCopyPaste){
@@ -1022,12 +1027,16 @@ function deleteYearAndTransition()
              year2and3Delete();
           }
          }
-      }
+
 
       //special case - deletes year 2 when year 3 is present and then makes year 2 = year 3 and the next year, i.e year 3 as default
       else if(yearSelected == 2 && currMaxYear == 3)
       {
         response = "Deleted!";
+        // Remove Yes/no confirmation buttons after user has selected an option
+        document.getElementById('yesDelete').style.display = "none";
+        document.getElementById('noDelete').style.display = "none";
+        document.getElementById('confirmYearDelete').style.display = "none";
 
         //make copy field blank if deleted year was selected
         if(yearSelected == yearCopyPaste){
@@ -1067,6 +1076,7 @@ function deleteYearAndTransition()
         document.getElementById('yesDelete').style.display = "none";
         document.getElementById('noDelete').style.display = "none";
         document.getElementById('confirmYearDelete').style.display = "none";
+
       }
       /*changed*/
       /*deleteConfirm = true;
