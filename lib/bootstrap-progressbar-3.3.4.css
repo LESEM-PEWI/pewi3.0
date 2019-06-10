@@ -38,7 +38,6 @@
   -webkit-transition: width 1s ease;
   -o-transition: width 1s ease;
   transition: width 1s ease;
-  border-radius: 12px;
 }
 
 .progress{
