@@ -297,6 +297,7 @@ function displayResults() {
   render(boardData[currentBoard].calculatedToYear);
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
+
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
   //============= END DEPRECATED
@@ -1830,6 +1831,7 @@ function generateResultsTable() {
   * The htmlTableString variable is used to keep track of which players have a parcel size greater than 0.
   */
   var htmlTableString = "";
+
   //The code below is creating the first table
   htmlTableString += "<table id='table1' class='resultsTable'>";
 
