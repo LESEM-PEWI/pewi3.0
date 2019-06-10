@@ -47,7 +47,6 @@
   display: inline-block;
   float: right;
   margin-top: 7px;
-
 }
 
 .progress img {
@@ -96,8 +95,6 @@
   -webkit-animation: progress-bar-stripes 1s linear infinite;
   -o-animation: progress-bar-stripes 1s linear infinite;
   animation: progress-bar-stripes 1s linear infinite;
-
-
 }
 .progress-bar-gameWildlife {
   background-color: #5cb85c;
