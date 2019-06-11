@@ -4116,19 +4116,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
       .rangeRound([height - margin.bottom, margin.top]);
 
       //following code is to add tooltips
-      var tooltip = d3.select(econGraphic1).append("div")
-          .attr("class", "tooltip")
-          .style("visibility", "hidden")
-          .attr("id", "graph1tt")
-          .style("opacity", ".7");
-
-      tooltip.append("span")
-          .attr("id", "econGraphic1Value")
-          .style("display", "block")
-
-      tooltip.append("span")
-          .attr("id", "econGraphic1LU")
-          .style("display", "block")
+      var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph1tt"));
 
       //the following code is to add a rectangle around the hovered things
       //We cant just change the border since the border will be covered by higher layered rects
@@ -4138,6 +4126,11 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
       .style("visibility", "hidden")
       .style("fill", "none")
       .attr("width", x.bandwidth);
+
+      formatMoney = function(d){ //This is to put the negative sign in front of the dollar sign
+        var isNegative = d < 0 ? '-' : '';
+        return isNegative + '$' + Math.abs(d);
+      }
 
       var rect = layer.selectAll("rect")
         .data(function(d) {return d; })
@@ -4150,7 +4143,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
           .on("mouseover", function(d) {tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
             tooltip.select("#econGraphic1LU").text("Land Use: " + d.data.landUse)
             let econType = this.parentNode.getAttribute("layernum")
-            tooltip.select("#econGraphic1Value").text(econType +": $" + d.data[econType])
+            tooltip.select("#econGraphic1Value").text(econType +": " + formatMoney(d.data[econType]))
             outlineRect.attr("transform", "translate(" + x0(d.data.landUse) + ",0)")
             outlineRect.style("visibility", "visible")
             outlineRect.attr("x", this.getAttribute("x"))
@@ -4172,7 +4165,6 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
         .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
         .call(d3.axisBottom(x0))
       svg.selectAll("g.tick")
-        .style("stroke-dasharray", ("3,3"))
         .selectAll("text")
           .attr("fill", "purple")
           .attr("y", y(y.domain()[0]/1.2)-y(0) + 7)
@@ -4186,14 +4178,15 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
 
         //following code adds yAxis to graph
       var yAxis = d3.axisLeft(y)
-        .tickFormat(function (d){
-          var isNegative = d < 0 ? '-' : '';
-          return isNegative + '$' + Math.abs(d);})
-        // .tickSize(-width)  //These lines are for horizontal guidelines
-        // .tickSizeOuter(0)
+        .tickFormat(d => formatMoney(d))
+        .tickSize(-width)  //These lines are for horizontal guidelines
+        .tickSizeOuter(0)
       svg.append("g")
         .attr("transform", "translate(" + margin.left + ", 0)")
         .call(yAxis);
+
+      svg.selectAll("g.tick")
+        .style("stroke-dasharray", ("3,3"))
 
       svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -4226,36 +4219,43 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
         .attr("y", 9.5)
         .attr("dy", "0.35em")
         .text((d,i) => stackTypes[i]);
+
+        svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("text-decoration", "underline")
+        .text("Economic Data by Land Use");
     }
 
     var addOptions = function (){ //This adds the toggle effects to the screen
-      var select = document.createElement('select');
-       //safe check to see if the options were already added to the select.
-      var box = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Options');
-      box.innerHTML = '';
-      box.append(select);
-      select.onchange = d => {
-        document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses').style.display = 'none';
-        document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Economics').style.display = 'none';
-        document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years').style.display = 'none';
-        document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1' + select.value).style.display = 'block';
+      let doc = document.getElementById('resultsFrame').contentWindow.document;
+      let box = doc.getElementById('econGraphic1Options');
 
+      let selectionChange = (d, button) => {
+        doc.getElementById('econGraphic1LandUses').style.display = 'none';
+        doc.getElementById('econGraphic1Economics').style.display = 'none';
+        doc.getElementById('econGraphic1Years').style.display = 'none';
+        doc.getElementById('econGraphic1' + d).style.display = 'block';
+        buttonLU.classList.remove('selected');
+        buttonYear.classList.remove('selected');
+        buttonEconomics.classList.remove('selected');
+        button.classList.add('selected');
       }
-      choices = ["Land Uses", "Years", "Economics"];
-      choices.forEach(choice => {
-        container = document.createElement("div");
-        container.id = 'econGraphic1' + choice.replace(/\s/g,'');
-        container.style.display = 'none';
-        box.appendChild(container)
 
-        option = document.createElement("option");
-        option.innerHTML = choice;
-        option.value = choice.replace(/\s/g,'');
-        select.appendChild(option);
-      });
+
+      buttonLU = doc.getElementById('econGraphic1LUOptions')
+      buttonLU.onclick = event => {selectionChange("LandUses", buttonLU)};
+      buttonYear = doc.getElementById('econGraphic1YearsOptions')
+      buttonYear.onclick = event => {selectionChange("Years", buttonYear)}
+      buttonEconomics = doc.getElementById('econGraphic1EconomicsOptions')
+      buttonEconomics.onclick = event => {selectionChange("Economics", buttonEconomics)};
+      
+      selectionChange('LandUses', buttonLU);
 
       container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses')
-      container.style.display = 'block';
+      container.innerHTML = '';
       economics.getInstance().data.map(d => d.landUse).forEach(d => {
         cell = document.createElement('div');
         cell.innerHTML = d;
@@ -4269,6 +4269,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
       })
 
       container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years')
+      container.innerHTML = '';
       for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
         cell = document.createElement('div');
         cell.innerHTML = 'Year ' + i;
@@ -4282,6 +4283,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
       }
 
       container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Economics')
+      container.innerHTML = '';
       stackTypes.forEach(type => {
         cell = document.createElement('div');
         cell.innerHTML = type;

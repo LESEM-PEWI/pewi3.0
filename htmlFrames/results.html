@@ -124,6 +124,17 @@ Cleaned and Prepared - August 2016
         <div id="econGraphic1">
           <svg id="econGraphic1svg" style="display:inline-block;"></svg>
           <div id ="econGraphic1Options" style="display:inline-block;vertical-align:top;border: 2px;">
+            <button class="button selected" id="econGraphic1LUOptions" type="button">Land Uses</button>
+            <button class="button" id="econGraphic1YearsOptions" type="button">Years</button>
+            <button class="button" id="econGraphic1EconomicsOptions" type="button">Economics</button>
+            <div id="econGraphic1LandUses"></div>
+            <div id="econGraphic1Economics" style="display:none;"></div>
+            <div id="econGraphic1Years" style="display:none;"></div>
+
+          </div>
+          <div class="tooltip" style="visibility:hidden;opacity:.7;" id = "graph1tt">
+          <span id="econGraphic1Value" style="display:block"></span>
+          <span id="econGraphic1LU" style="display:block"></span>
           </div>
         </div>
       </div>
