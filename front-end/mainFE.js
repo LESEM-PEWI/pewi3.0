@@ -492,6 +492,7 @@ function initializeCamera() {
     window.frames[0].onscroll = onWheelViewCredits;
     window.frames[4].addEventListener('scroll', onWheelViewResults);
     window.frames[6].addEventListener('scroll', onWheelViewCustomize);
+    window.frames[7].addEventListener('scroll', onWheelViewPrint);
 } //end initializeCamera
 
 //initializeLighting adds the lighting with specifications to the scene
@@ -657,6 +658,13 @@ function onWheelViewResults(e) {
 function onWheelViewCustomize(e) {
   if(curTracking && scrollGap) {
     pushClick(0,getStamp(),110,0,window.frames[6].scrollY);
+  }
+}
+
+//Event function that is called when a user is scrolling in customize window
+function onWheelViewPrint(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),114,0,window.frames[7].scrollY);
   }
 }
 

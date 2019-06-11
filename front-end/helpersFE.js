@@ -1422,6 +1422,10 @@ function closeEmailFrame() {
 // close printOptions frame
 function closePrintOptions() {
 
+  if (curTracking) {
+    pushClick(0, getStamp(), 115, null);
+  }
+
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   //scroll page to top, so that next time options is loaded it starts there
@@ -4595,7 +4599,7 @@ function runSimulation() {
        101 - " Copied year __"
        102 - "Pasted in year __"
     */
-    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 || tempType == 103 || tempType == 110) {
+    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 || tempType == 103 || tempType == 110 || tempType == 114) {
       var tempTile = tempArr[5]; // Extra data
     }
     if (tempType == 56 || tempType == 99 || tempType == 100) {
@@ -5075,6 +5079,10 @@ function startOptions() {
 
 // startPrintOptions displays the printOptions page
 function startPrintOptions() {
+
+    if(curTracking) {
+      pushClick(0,getStamp(),113,0,null);
+    }
 
     camera.aspect = 1.5;
     camera.updateProjectionMatrix();

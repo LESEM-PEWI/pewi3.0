@@ -253,7 +253,7 @@ function Click(c1, c2, c3, c4, c5) {
           return "Results tab was clicked";
           break;
         }
-        //When the user clicks out of the results tab
+      //When the user clicks out of the results tab
       case 13:
         if (action) {
           return resultsEnd();
@@ -1197,6 +1197,35 @@ function Click(c1, c2, c3, c4, c5) {
                 else {
                   return "User clicked 'delete year'-button";
                 }
+
+                // When clicks the 'print' button
+                case 113:
+                  if (action) {
+                    return startPrintOptions();
+                  }
+                  else {
+                    return "User clicked the 'Print'-button";
+                  }
+
+                  // When scrolls in the print page
+                  case 114:
+                    if (action) {
+                      return window.frames[7].scrollTo(0,parseInt(this.tileID));
+                    }
+                    else {
+                      return "User scrolled in the print page";
+                    }
+
+                  //When the user clicks out of the results tab
+                  case 115:
+                    if (action) {
+                        return closePrintOptions();
+                        break;
+                      }
+                    else {
+                        return "Print page was closed";
+                        break;
+                      }
 
 
 
