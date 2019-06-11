@@ -780,30 +780,36 @@
       }
     }
 
+    //find min and max val for raw values
+    var minVal = parent.getRawValue(0, idNum);
+    var maxVal = parent.getRawValue(100, idNum);
+
     if(isValid){
       if(id.indexOf("min") != -1 || id.indexOf("max") != -1){
         if(value < 0){
           value = 0;
+          document.getElementById("actualMin" + idNum).placeholder = minVal;
         }
         else if(value > 100){
           value = 100;
+          document.getElementById("actualMax" + idNum).placeholder = maxVal;
         }
       document.getElementById(id).placeholder = value;
       document.getElementById(id).value = "";
       }
       else if(id.indexOf("actualMin") != -1 || id.indexOf("actualMax") != -1){
-        var minVal = parent.getRawValue(0, idNum);
-        var maxVal = parent.getRawValue(100, idNum);
-        if(idNum == 3 || idNum == 4 || idNum == 5 || idNum == 6){
+        /*if(idNum == 3 || idNum == 4 || idNum == 5 || idNum == 6){
           var temp = maxVal;
           maxVal = minVal;
           minVal = temp;
-        }
+        }*/
         if(value < minVal){
           value = minVal;
+          document.getElementById("min" + idNum).placeholder = 0;
         }
         else if(value > maxVal){
           value = maxVal;
+          document.getElementById("max" + idNum).placeholder = 100;
         }
         document.getElementById(id).placeholder = value;
         document.getElementById(id).value = "";
