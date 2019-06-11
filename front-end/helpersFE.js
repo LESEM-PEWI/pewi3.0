@@ -22,7 +22,9 @@ var lastPainter = null;
 var lastSelectedPainter = 1;
 var leftToolConsoleWasOpen;
 var mesh = null; // mesh store the whole view on the scene
+var mesh2= null;
 var meshGeometry = new THREE.Geometry();
+var meshGeometry2 = new THREE.Geometry();
 var optionsString = ""; //string that stores toggeled off options
 var overlayedToggled = false;
 var paintSwitch = false;
@@ -60,6 +62,7 @@ var boids = [],
 var columnCutOffs = [];
 var highlightedTiles = [];
 var meshMaterials = [];
+var meshOverlay = [];
 var rowCutOffs = []; //y coor of top left corner of each tile
 var undoArr = [
   [],
@@ -741,6 +744,7 @@ function addTile(tile) {
 
   var tileGeometry = new THREE.Geometry();
   var tileMaterial;
+  var tileMaterial2;
 
   var v1, v2, v3, v4;
 
@@ -796,6 +800,46 @@ function addTile(tile) {
 
 
 
+
+  if (tile.landType[0] == 0) {
+
+    tileMaterial2 = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.0
+    });
+
+    meshOverlay.push(tileMaterial2);
+  } else if (tile.landType[0] == -1) {
+
+    tileMaterial2 = new THREE.MeshBasicMaterial({
+      color: 0xFFFFFF,
+      transparent: true,
+      opacity: 0.7
+    });
+
+    meshOverlay.push(tileMaterial2);
+
+  } else {
+
+    if (!multiplayerAssigningModeOn) {
+      tileMaterial2 = new THREE.MeshLambertMaterial({
+        map: textureArray[tile.landType[currentYear]],
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.4
+      });
+    } else {
+      tileMaterial2 = new THREE.MeshLambertMaterial({
+        map: ((tile.landType[currentYear] < multiplayerTextureArray.length) ? multiplayerTextureArray[tile.landType[currentYear]] : null),
+        side: THREE.DoubleSide
+      });
+    }
+    meshOverlay.push(tileMaterial2);
+  }
+
+
+
   //choose the relevant texture to add to the tile faces
   if (tile.landType[0] == 0) {
 
@@ -821,7 +865,9 @@ function addTile(tile) {
     if (!multiplayerAssigningModeOn) {
       tileMaterial = new THREE.MeshLambertMaterial({
         map: textureArray[tile.landType[currentYear]],
-        side: THREE.DoubleSide
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.8
       });
     } else {
       tileMaterial = new THREE.MeshLambertMaterial({
@@ -845,6 +891,7 @@ function addTile(tile) {
 
   //create a new mesh from the two faces for the tile
   var newTile = new THREE.Mesh(tileGeometry, tileMaterial);
+  var newTile2 = new THREE.Mesh(tileGeometry, tileMaterial2);
 
   //change the x and z position of the tile dependent on the row and column that it is in
   newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide) / 2;
@@ -857,6 +904,17 @@ function addTile(tile) {
   //add the tile to the meshGeometry which contains all vertices/faces of the merged tiles
   newTile.updateMatrix();
   meshGeometry.merge(newTile.geometry, newTile.matrix);
+
+  newTile2.position.x = tile.column * tileWidth - (tileWidth * tilesWide) / 2;
+  newTile2.position.y = 0;
+  newTile2.position.z = tile.row * tileHeight - (tileHeight * tilesHigh) / 2;
+
+  //add the mapID to the
+  newTile2.mapID = mapID;
+
+  //add the tile to the meshGeometry which contains all vertices/faces of the merged tiles
+  newTile2.updateMatrix();
+  meshGeometry2.merge(newTile2.geometry, newTile2.matrix);
 
 } //end addTile
 
@@ -1162,6 +1220,7 @@ function changeLandTypeTile(tileId) {
           if(meshMaterials[tileId].map != textureArray[painter]){
             // console.log('Change the land type in tile which id is ', tileId);
             meshMaterials[tileId].map = textureArray[painter];
+            meshOverlay[tileId].map = textureArray[painter];
             // record the data changes in boardData
             boardData[currentBoard].map[tileId].landType[currentYear] = painter;
             // update boardData figures
@@ -1173,6 +1232,7 @@ function changeLandTypeTile(tileId) {
         }
       } else if (multiplayerAssigningModeOn) {
         meshMaterials[tileId].map = multiplayerTextureArray[painter];
+        meshOverlay[titleId].map = multiplayerTextureArray[painter];
         boardData[currentBoard].map[tileId].landType[currentYear] = painter;
       } // end if/else
     } // end if
@@ -1637,9 +1697,18 @@ function displayBoard() {
     meshGeometry.faces[i + 1].materialIndex = i / 2;
   }
 
+  for (var i = 0; i < meshGeometry2.faces.length; i += 2) {
+    meshGeometry2.faces[i].materialIndex = i / 2;
+    meshGeometry2.faces[i + 1].materialIndex = i / 2;
+  }
   //create one mesh from the meshGeometry and meshMaterials objects
   mesh = new THREE.Mesh(meshGeometry, new THREE.MeshFaceMaterial(meshMaterials));
+  mesh2 = new THREE.Mesh(meshGeometry2, new THREE.MeshFaceMaterial(meshOverlay));
+
+  scene.add(mesh2);
   scene.add(mesh);
+  //scene.add(mesh2);
+
 
   //calculate locations of tiles on grid for highlighting and landType changes
   calculateCutoffs();
@@ -1830,7 +1899,7 @@ function displayLevels(overlayHighlightType) {
 
   //map is not previously highlighted
   if (!mapIsHighlighted) {
-    drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
+    drawOverlayOntoBoard(selectionHighlightNumber, overlayHighlightType);
   }
   //if the map is previously highlighted
   else {
@@ -1849,7 +1918,7 @@ function displayLevels(overlayHighlightType) {
       //close previous legend
       showLevelDetails(-1 * currentHighlightType);
       //highlight board
-      drawLevelsOntoBoard(selectionHighlightNumber, overlayHighlightType);
+      drawOverlayOntoBoard(selectionHighlightNumber, overlayHighlightType);
     } //end else/if group
   } //end else/if mapIsHighlighted
 
@@ -1877,6 +1946,7 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
       //then change mesh material
       meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
+      meshOverlay[i].map = highlightArray[getHighlightColor(highlightType, i)];
     } //end if
   } //end for
 
@@ -1885,6 +1955,33 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
   currentHighlightType = selectionHighlightNumber;
   currentHighlightTypeString = highlightType;
 } //end drawLevelsOntoBoard
+
+
+function drawOverlayOntoBoard(selectionHighlightNumber, highlightType) {
+
+  //change global highlighting setting to set
+  mapIsHighlighted = true;
+
+  //update results
+  //I think there's no need to redefine Totals and update it. Since there's nothing changed in boardData
+  // Totals = new Results(boardData[currentBoard]);
+  // Totals.update();
+
+  //add highlighted textures to the map
+  //for each tile in the board
+  for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+    //if there is an actual tile there
+    if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
+      //then change mesh material
+      meshOverlay[i].map = highlightArray[getHighlightColor(highlightType, i)];
+    } //end if
+  } //end for
+
+
+  showLevelDetails(selectionHighlightNumber);
+  currentHighlightType = selectionHighlightNumber;
+  currentHighlightTypeString = highlightType;
+}
 
 //endMultiAssignMode displays the multiPlayer element
 function endMultiplayerAssignMode() {
@@ -2966,6 +3063,7 @@ function highlightTile(tileId) {
   //if a previous tile was selected for highlighting, unhighlight that tile
   if (previousHover != null) {
     meshMaterials[previousHover].emissive.setHex(0x000000);
+    meshOverlay[previousHover].emissive.setHex(0x000000);
   }
   //highlight the new tile
   //if not a tile
@@ -2983,6 +3081,8 @@ function highlightTile(tileId) {
 
       //Highlight a nonzero land type tile
       meshMaterials[tileId].emissive.setHex(0x7f7f7f);
+      meshOverlay[tileId].emissive.setHex(0x7f7f7f);
+
       previousHover = tileId;
       //update HUD with current information
       //Bottom part of screen
@@ -3358,6 +3458,7 @@ function onDocumentMouseMove(event) {
       if (painterTool.status == 2) {
         for (var i = 0; i < highlightedTiles.length; i++) {
           meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
+          meshOverlay[highlightedTiles[i] - 1].emissive.setHex(0x000000);
         }
       }
 
@@ -3377,6 +3478,8 @@ function onDocumentMouseMove(event) {
         //clear Previous highlighting
         for (var i = 0; i < highlightedTiles.length; i++) {
          meshMaterials[highlightedTiles[i] - 1].emissive.setHex(0x000000);
+         meshOverlay[highlightedTiles[i] - 1].emissive.setHex(0x000000);
+
         }
 
         //if the tile we are on is an actual tile, then highlight accordingly
@@ -3481,6 +3584,8 @@ function onDocumentMouseDown(event) {
                   for(var i=0; i<changedTiles.length; i++)
                   {
                     meshMaterials[changedTiles[i]-1].emissive.setHex(0x000000);
+                    meshOverlay[changedTiles[i]-1].emissive.setHex(0x000000);
+
                   } //end for
                 } //end if-else
                 //reset painterTooling status as not active
@@ -4040,8 +4145,13 @@ function refreshBoard(bypassFromKeyEvent) {
     scene.remove(mesh);
   }
 
+  if(mesh2 != null) {
+    scene.remove(mesh2);
+  }
+
   meshGeometry = new THREE.Geometry();
   meshMaterials = [];
+  meshOverlay = [];
 
   //if the map is just being changed normally, not when it is highlighted and t or r were pressed
   if (!bypassFromKeyEvent) {
@@ -4607,6 +4717,8 @@ function saveAndRandomize() {
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
           painter = newDefaultLandUse;
           meshMaterials[j].map = textureArray[painter];
+          meshOverlay[j].map = textureArray[painter];
+
           boardData[currentBoard].map[j].landType[i] = painter;
           boardData[currentBoard].map[j].update(i);
           forNitrateCalc[i][j] = 1;

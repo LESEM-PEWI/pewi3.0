@@ -921,6 +921,7 @@ function switchToZoomView(tile) {
 
     //update the mesh textures
     meshMaterials[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+    meshOverlay[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
 
     //update the land use types for each year
     boardData[currentBoard].map[i].landType[1] = boardData[fullBoardBeforeZoom].map[tile].landType[1];
