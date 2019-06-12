@@ -4131,7 +4131,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
         var isNegative = d < 0 ? '-' : '';
         return isNegative + '$' + Math.abs(d);
       }
-
+      //draws the bars as well as adding listeners for hover
       var rect = layer.selectAll("rect")
         .data(function(d) {return d; })
         .enter().append("rect")
@@ -4163,23 +4163,33 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
         //following code adds xAxis to graph
       var xAxis = svg.append("g")
         .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
+        .style("font-weight", "bold")
         .call(d3.axisBottom(x0))
       svg.selectAll("g.tick")
         .selectAll("text")
           .attr("fill", "purple")
-          .attr("y", y(y.domain()[0]/1.2)-y(0) + 7)
+          .attr("y", y(y.domain()[0]/1.1)-y(0) + 7)
 
       svg.append("text")
         .attr("transform",
           "translate(" + (width/2) + " ," +
-          (height-20) + ")")
+          (height) + ")")
         .style("text-anchor", "left")
         .text("Land Uses");
+
+      svg.append("text")
+        .attr("transform",
+          "translate(" + (width/2) + " ," +
+          (25) + ")")
+        .style("text-anchor", "left")
+        .style("font-weight", "bold")
+        .style("font-size", "1.5vmax")
+        .text("Economics By Land Use");
 
         //following code adds yAxis to graph
       var yAxis = d3.axisLeft(y)
         .tickFormat(d => formatMoney(d))
-        .tickSize(-width)  //These lines are for horizontal guidelines
+        .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
         .tickSizeOuter(0)
       svg.append("g")
         .attr("transform", "translate(" + margin.left + ", 0)")
@@ -4251,7 +4261,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
       buttonYear.onclick = event => {selectionChange("Years", buttonYear)}
       buttonEconomics = doc.getElementById('econGraphic1EconomicsOptions')
       buttonEconomics.onclick = event => {selectionChange("Economics", buttonEconomics)};
-      
+
       selectionChange('LandUses', buttonLU);
 
       container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses')
@@ -4338,14 +4348,14 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
 
 function stackMin(layers) {
   return d3.min(layers, function(d) {
-    if(d[0] < 0) return 1.2* (d[0]- d[1]);
+    if(d[0] < 0) return 1.1* (d[0]- d[1]);
     return 0;
   });
 }
 
 function stackMax(layers) {
   return d3.max(layers, function(d) {
-    if(d[1] > 0) return 1.2 * (d[1] - d[0]);
+    if(d[1] > 0) return 1.1 * (d[1] - d[0]);
     return 0;
   });
 }
