@@ -36,7 +36,6 @@
   //the parent page is then called to hide the options iframe
   function saveCurrentOptionsState() {
 
-    // in re-play mode, the options page doesn't hide when save&exit is clicked: TO-DO
     if (parent.getTracking()) {
     parent.pushClick(0, parent.getStamp(), 108, 0, null);
   }

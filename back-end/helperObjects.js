@@ -542,7 +542,7 @@ function Click(c1, c2, c3, c4, c5) {
           return displayLevels('nitrate');
           break;
         } else {
-          return "Nitrate Percent was clicked";
+          return "Subwatershed Nitrate-N Percent Contribution was clicked";
           break;
         }
         //When the user selects Gross Erosion icon
@@ -554,7 +554,7 @@ function Click(c1, c2, c3, c4, c5) {
           return "Gross Erosion was clicked";
           break;
         }
-        //When the user selects Phosphorus Index Risk
+      //When the user selects Phosphorus Index Risk
       case 44:
         if (action) {
           return displayLevels('phosphorus');
@@ -1122,113 +1122,167 @@ function Click(c1, c2, c3, c4, c5) {
             break;
           }
 
-          // When user changes main pie chart from Land List to Category
-          case 105:
-            if (action) {
-              return window.frames[4].toggleCategoriesPie(0); //random number to denote default
-              break;
-            }
-            else {
-              return "Year pie toggled to Categories";
-              break;
-            }
+        // When user changes main pie chart from Land List to Category
+        case 105:
+          if (action) {
+            return window.frames[4].toggleCategoriesPie(0); //random number to denote default
+            break;
+          }
+          else {
+            return "Year pie toggled to Categories";
+            break;
+          }
 
-          case 106:
+        case 106:
+          if (action) {
+            return toggleEscapeFrame();
+            break;
+          }
+          else {
+            // Clicking 'home' and pressing 'Esc'-key brings up the frame <div id = "modalEscapeFrame">
+            return "Home/Esc button was clicked";
+            break;
+          }
+        // When user clicks the customization button
+        case 107:
+          if (action) {
+            return startOptions();
+            break;
+          }
+          else {
+            return " Customize button was clicked";
+            break;
+          }
+          // When user closes the customization frame using save & exit button
+          case 108:
             if (action) {
-              return toggleEscapeFrame();
+              return window.frames[6].saveCurrentOptionsState();
               break;
             }
             else {
-              // Clicking 'home' and pressing 'Esc'-key brings up the frame <div id = "modalEscapeFrame">
-              return "Home/Esc button was clicked";
+              return " Customize window closed: Save & Exit";
               break;
             }
-          // When user clicks the customization button
-          case 107:
+          // When user closes the customization frame using Esc or [X] button
+          case 109:
             if (action) {
-              return startOptions();
+              return window.frames[6].undoSelectedOptions();
               break;
             }
             else {
-              return " Customize button was clicked";
+              return " Customize window closed: Esc [X] button";
               break;
             }
-              // When user closes the customization frame using save & exit button
-            case 108:
+          // When user scrolls in customization frame
+          case 110:
+            if(action) {
+              return window.frames[6].scrollTo(0,parseInt(this.tileID));
+            }
+            else {
+              return "User scrolled in the customization page";
+            }
+          // When decides to delete a year
+          case 111:
+            if (action) {
+              return yearNotDeleted();
+            }
+            else {
+              return "User did not delete year";
+            }
+          // When clicks the 'delete year' button
+          case 112:
+            if (action) {
+              return confirmYearDelete();
+            }
+            else {
+              return "User clicked 'delete year'-button";
+            }
+          // When clicks the 'print' button
+          case 113:
+            if (action) {
+              return startPrintOptions();
+            }
+            else {
+              return "User clicked the 'Print'-button";
+            }
+          // When scrolls in the print page
+          case 114:
+            if (action) {
+              return window.frames[7].scrollTo(0,parseInt(this.tileID));
+            }
+            else {
+              return "User scrolled in the print page";
+            }
+          //When the user clicks out of the results tab
+          case 115:
+            if (action) {
+                return closePrintOptions();
+                break;
+              }
+            else {
+                return "Print page was closed";
+                break;
+            }
+          // When user clicks preview pdf/ download button to-do
+          case 116:
+            if (action) {
+              return window.frames[7].saveCurrentPrintOptions(0);
+              break;
+            }
+            else {
+              return " User clicked preview pdf/download button print page";
+              break;
+            }
+          //When the user selects Biodiversity
+          case 117:
+            if (action) {
+              return displayLevels('biodiversity');
+              break;
+            }
+            else {
+              return "Biodiversity was clicked";
+              break;
+            }
+          //When the user selects gamewildlife
+          case 118:
+            if (action) {
+              return displayLevels('gamewildlife');
+              break;
+            }
+            else {
+              return "Gamewildlife was clicked";
+              break;
+            }
+          //When the user selects gamewildlife
+          case 119:
+            if (action) {
+              return displayLevels('carbon');
+              break;
+            }
+            else {
+              return "Carbon Sequestration was clicked";
+              break;
+            }
+            //When the user selects nitratetile or cell nitrate
+            case 120:
               if (action) {
-                return window.frames[6].saveCurrentOptionsState();
+                return displayLevels('nitratetile');
                 break;
               }
               else {
-                return " Customize window closed: Save & Exit";
+                return "Cell nitrate was clicked";
                 break;
               }
-              // When user closes the customization frame using Esc or [X] button
-              case 109:
-                if (action) {
-                  return window.frames[6].undoSelectedOptions();
-                  break;
-                }
-                else {
-                  return " Customize window closed: Esc [X] button";
-                  break;
-                }
-              // When user scrolls in customization frame
-              case 110:
-                if(action)
-                  return window.frames[6].scrollTo(0,parseInt(this.tileID));
-                else
-                  return "User scrolled in the customization page";
-
-              // When decides to delete a year
-              case 111:
-                if (action) {
-                  return yearNotDeleted();
-                }
-                else {
-                  return "User did not delete year";
-                }
-
-              // When clicks the 'delete year' button
-              case 112:
-                if (action) {
-                  return confirmYearDelete();
-                }
-                else {
-                  return "User clicked 'delete year'-button";
-                }
-
-                // When clicks the 'print' button
-                case 113:
-                  if (action) {
-                    return startPrintOptions();
-                  }
-                  else {
-                    return "User clicked the 'Print'-button";
-                  }
-
-                  // When scrolls in the print page
-                  case 114:
-                    if (action) {
-                      return window.frames[7].scrollTo(0,parseInt(this.tileID));
-                    }
-                    else {
-                      return "User scrolled in the print page";
-                    }
-
-                  //When the user clicks out of the results tab
-                  case 115:
-                    if (action) {
-                        return closePrintOptions();
-                        break;
-                      }
-                    else {
-                        return "Print page was closed";
-                        break;
-                      }
-
-
-
+            //When the user selects sediment
+            case 121:
+              if (action) {
+                return displayLevels('sediment');
+                break;
+              }
+              else {
+                return "Sediment Runoff was clicked";
+                break;
+              }
 
 
     }

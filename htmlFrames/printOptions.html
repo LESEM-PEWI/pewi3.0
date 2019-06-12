@@ -109,6 +109,11 @@ Cleaned and Prepared - July 2016 XXX
     // each of the options is evaluated and the text for the print-option-parameters div is generated
     // as needed
     function saveCurrentPrintOptions(isDownload) {
+      /* to-do: verify */
+      if (getTracking()) {
+      pushClick(0, getStamp(), 116, 0, null);
+    }
+
       // clean the preview
       document.getElementById('pdf_preview').setAttribute('src', '')
       // find the elements that are able to be checked

@@ -1822,7 +1822,7 @@ function displayLevels(overlayHighlightType) {
      selectionHighlightNumber = 19;
      updateIndexPopup('To learn more about <span style="color:orange;">Sediment Control</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
      if (curTracking) {
-       pushClick(0, getStamp(), 78, 0, null);
+       pushClick(0, getStamp(), 121, 0, null);
      }
      break;
 
@@ -1830,7 +1830,7 @@ function displayLevels(overlayHighlightType) {
     selectionHighlightNumber = 20;
     updateIndexPopup('To learn more about <span style="color:orange;">Carbon Sequestration</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
-      pushClick(0, getStamp(), 79, 0, null);
+      pushClick(0, getStamp(), 119, 0, null);
     }
     break;
 
@@ -1838,7 +1838,7 @@ function displayLevels(overlayHighlightType) {
     selectionHighlightNumber = 21;
     updateIndexPopup('To learn more about <span style="color:orange;">Game Wildlife</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
-      pushClick(0, getStamp(), 80, 0, null);
+      pushClick(0, getStamp(), 118, 0, null);
     }
     break;
 
@@ -1846,7 +1846,7 @@ function displayLevels(overlayHighlightType) {
     selectionHighlightNumber = 22;
     updateIndexPopup('To learn more about <span style="color:orange;">Biodiversity</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
-      pushClick(0, getStamp(), 81, 0, null);
+      pushClick(0, getStamp(), 117, 0, null);
     }
     break;
 
@@ -1854,7 +1854,7 @@ function displayLevels(overlayHighlightType) {
     selectionHighlightNumber = 23;
     updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
-      pushClick(0, getStamp(), 82, 0, null);
+      pushClick(0, getStamp(), 120, 0, null);
     }
     break;
   } //end switch
