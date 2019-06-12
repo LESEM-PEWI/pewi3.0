@@ -125,6 +125,7 @@ var hotkeyArr = [
 
 // for print function
 var data = []; // stores precip data for results page
+var activeLandUses = [];
 var radarLegendColors = [],
   radarLegendItems = [];
 var tempLegendItems = [],
@@ -4611,31 +4612,14 @@ function saveAndRandomize() {
   //for whole board (as long as randomization is allowed)
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     //getRandomInt is in back-end helperMethods
-    for (var j = 1; j <= 15; j++) { //Check to see if the landuse type is toggled off or not
-      if (document.getElementById('parameters').innerHTML.indexOf('paint' + j + "\n") != -1) {
-        //If it's toggled off, remove the landuse type for randomization
-        var removedIndex = randomPainterTile.indexOf(j); //2
-
-        for (var x = 0; x < 15; x++) {
-          if (removedIndex == x) {
-            delete randomPainterTile[removedIndex];
-
-            for (var k = 1; k <= 15; k++) {
-              if (document.getElementById('parameters').innerHTML.indexOf('paint' + k + "\n") === -1) {
-                delete randomPainterTile[removedIndex];
-                randomPainterTile[removedIndex] = k;
-                break;
-              } // end if
-            } // END for
-
-          } // end if
-        } // end for
-
-      } // end if
-    } //end for
-
-    // selects new land type by picking the current selected type, or the first toggled on type
-    newDefaultLandUse = getNewLandType();
+    
+    for (var j = 0; j <= randomPainterTile.length; j++) { //Check to see if the landuse type is toggled off or not
+      if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j]) !== -1) {
+        randomPainterTile.splice(j--, 1);
+        console.log(randomPainterTile);
+      }
+    }
+    var newDefaultLandUse = randomPainterTile[0];
 
     var forNitrateCalc = Array(4);
     forNitrateCalc[0] = Array(828);
@@ -4643,20 +4627,15 @@ function saveAndRandomize() {
     forNitrateCalc[2] = Array(828);
     forNitrateCalc[3] = Array(828);
 
-    for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
+    outer: for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
-        //if tile exists
-        //Change the land use for a tile if it was restricted
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
-          painter = newDefaultLandUse;
-          meshMaterials[j].map = textureArray[painter];
-          boardData[currentBoard].map[j].landType[i] = painter;
-          boardData[currentBoard].map[j].update(i);
-          forNitrateCalc[i][j] = 1;
+          console.log('in');
+          toggleReplacementFrame(randomPainterTile);
+          activeLandUses = randomPainterTile;
+          break outer;
         }
-
       }
-
     }
     for (var n = 1; n < forNitrateCalc.length; n++) {
       for (var t = 0; t < forNitrateCalc[n].length; t++) {
@@ -4665,19 +4644,15 @@ function saveAndRandomize() {
         }
       }
     }
-
-
-
-
     painter = newDefaultLandUse; //end for all tiles
     //'unselect' the previously selected icon
     var painterElementId = "paint" + prevPainter;
     document.getElementById(painterElementId).className = "landSelectorIcon icon";
     //change the selected painter to the new default land use
     changeSelectedPaintTo(newDefaultLandUse);
-    refreshBoard();
   }
 } //end saveandRandomize
+
 
 //selectAnimation is a switch to trigger animations
 function selectAnimation(animation) {
@@ -5263,6 +5238,7 @@ function toggleEscapeFrame() {
   if (document.getElementById('confirmEscape').style.height == "20vw") {
     confirmEscape();
   }
+  console.log(modalUp);
 
   if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
     document.getElementById('modalEscapeFrame').style.display = "block";
@@ -5294,6 +5270,46 @@ function toggleEscapeFrame() {
   }
 
 } //end toggleEscapeFrame
+
+
+function toggleReplacementFrame(options) {
+  var modal = document.getElementById('modalReplacement');
+  innermodal = modal.contentDocument || modal.contentWindow.document;
+  if(modal.style.visibility === 'visible'){
+    console.log('here');
+    modal.style.visibility = 'hidden';
+    modalUp = false;
+  }
+  else {
+    modal.style.visibility = 'visible'
+    select = innermodal.getElementById('replacementSelect');
+    while(select.firstChild){
+      select.removeChild(select.firstChild);
+    }
+    options.forEach(function(option){
+      var opt = document.createElement('option');
+      opt.innerHTML = LandUseType.getPrintFriendlyType(option);
+      opt.value = option;
+      select.appendChild(opt)
+    });
+    modalUp = true;
+  }
+}
+
+function fillDeactivatedLands(){
+  var modal = document.getElementById('modalReplacement');
+  innermodal = modal.contentDocument || modal.contentWindow.document;
+  select = innermodal.getElementById('replacementSelect');
+  for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
+    for (var j = 0; j < boardData[currentBoard].map.length; j++) {
+      if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !activeLandUses.includes(boardData[currentBoard].map[j].landType[i])) {
+        boardData[currentBoard].map[j].landType[i] = parseInt(select.value);
+      }
+    }
+  }
+  toggleReplacementFrame();
+  refreshBoard();
+}
 
 //toggleIndex displays and hides the codex
 function toggleIndex() {
