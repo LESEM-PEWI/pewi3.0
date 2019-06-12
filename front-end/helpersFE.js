@@ -116,7 +116,11 @@ var hotkeyArr = [
   [87, null],
   [83, null],
   [79, null],
-  [81, null]
+  [81, null],
+  [38, null],
+  [40, null],
+  [37, null],
+  [39, null]
 ];
 
 // for print function
@@ -1934,29 +1938,12 @@ function executePrintOptions(isDownload) {
   var arrLines = strRawContents.split("\n");
   // global array that record the print options
   toPrint = {
-    // map
+    // land use map
     yearUserViewpoint: false,
     year1: false,
     year2: false,
     year3: false,
-    // results
-    resultsTable1: false,
-    resultsTable2: false,
-    resultsTable4: false,
-    resultsLanduse: false,
-    resultsEcosystem: false,
-    resultsPrecip: false,
-    // levels
-    levelUserViewpoint: false,
-    nitrate: false,
-    erosion: false,
-    phosphorus: false,
-    sediment: false,
-    carbon: false,
-    gamewildlife: false,
-    biodiversity: false,
-    nitratetile: false,
-    // features
+    // feature maps
     featureUserViewpoint: false,
     flood: false,
     wetlands: false,
@@ -1964,7 +1951,7 @@ function executePrintOptions(isDownload) {
     drainage: false,
     soil: false,
     topo: false,
-    // yields
+    // yield maps
     yieldUserViewpoint: false,
     corn: false,
     soybean: false,
@@ -1974,7 +1961,24 @@ function executePrintOptions(isDownload) {
     grasshay: false,
     switchgrass: false,
     wood: false,
-    short: false
+    short: false,
+    // result maps
+    levelUserViewpoint: false,
+    nitrate: false,
+    erosion: false,
+    phosphorus: false,
+    sediment: false,
+    carbon: false,
+    gamewildlife: false,
+    biodiversity: false,
+    nitratetile: false,
+    // results
+    resultsTable1: false,
+    resultsTable2: false,
+    resultsTable4: false,
+    resultsLanduse: false,
+    resultsEcosystem: false,
+    resultsPrecip: false,
   };
 
   // set chosen ones to true
@@ -2188,6 +2192,7 @@ function getHighlightColor(highlightType, tileId) {
   }
 
   else if (highlightType == "nitratetile") {
+
     var nitratescore = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate);
     if(nitratescore>=0 && nitratescore<510) return getBoldedCells(tileId, 210);
     else if(nitratescore>=510 && nitratescore<1020) return getBoldedCells(tileId, 211);
@@ -2607,6 +2612,23 @@ function phoshorusIndexRiskAssessmentClassification(pindex) {
   else if (pindex > 5 && pindex <= 15) return "High"+"<br>";
   else if (pindex > 15) return "Very High"+"<br>";
 }
+/**
+ * generate the total nitrate point based on the subWatershed cell.
+ * @param  {int} tileId id in array of map
+ * @return {int}        total point
+ */
+function calculateSubwatershedTotalNitrateScore(tileId){
+  var result=boardData[currentBoard].map.filter(
+    function(item){
+      return item.subwatershed==boardData[currentBoard].map[tileId].subwatershed;
+    }
+  );
+  var total=0;
+    for (var i = 0; i < result.length; i++) {
+      total+=result[i].results[currentYear].calculatedTileNitrate;
+    }
+    return total;
+}
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
@@ -2619,7 +2641,8 @@ function getHighlightedInfo(tileId) {
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+Totals.nitrateContribution[currentYear][tileId].toFixed(4)+" ppm"+"<br>";
+        var subwatershed=boardData[currentBoard].map[tileId].subwatershed;
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+boardData[currentBoard].map[tileId].subWatershedNitrateNoMin[subwatershed].toFixed(4)+" ppm"+"<br>";
         break;
         //create string for gross erosion levels
       case 2:
@@ -2756,7 +2779,7 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for short-rotation woody biomass yield
       case 18:
-        highlightString = "608.6 tons/acre/yr" + "<br>";
+        highlightString = "9.99 tons/acre/yr" + "<br>";
         break;
         //create string for sediment control
       case 19:
@@ -2777,7 +2800,10 @@ function getHighlightedInfo(tileId) {
         highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
         break;
       case 23:
-        highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>"+boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate.toFixed(2)+"<br>";
+        var subwatershed=boardData[currentBoard].map[tileId].subwatershed;
+        //calculate the nitrate cell equation- single cell point / total point in subWatershed * subWatershed nitrate
+        highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>"+
+        ((boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate/calculateSubwatershedTotalNitrateScore(tileId))*boardData[currentBoard].map[tileId].subWatershedNitrateNoMin[subwatershed]).toFixed(4)+" ppm <br>";
         break;
     }
     return highlightString;
@@ -2988,7 +3014,6 @@ function highlightTile(tileId) {
       //update HUD with current information
       //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + "Current Cell: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
-      console.log(boardData[currentBoard].map[tileId]);
       //update the information displayed in the delayed hover div by cursor
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear])+ "<br>";
       var info2 = "Precipitation: " + printPrecipYearType()+ ", "+boardData[currentBoard].precipitation[currentYear]+" in"+"<br>";
@@ -3552,7 +3577,6 @@ function onDocumentKeyDown(event) {
     //   event = window.event;
     // }
     // var keycode = event.keyCode || event.charCode;
-
     switch (event.keyCode) {
       //case shift - update isShiftDown
       case 16:
@@ -3812,9 +3836,19 @@ function painterSelect(brushNumberValue) {
 
 function pasteYear()
 {
+
+
+
   var snackBar = document.getElementById("snackbarNotification");
   document.getElementById("yearPasteButton").classList.toggle("show");
   var yearToPasteIn = document.getElementById("yearToPaste").value;
+
+
+  // trying to push the current map so that it can be undone after undoing the paste
+   var currentMap = getMap(yearToPasteIn);
+   undoArr[yearToPasteIn].push(currentMap);
+
+
     for (var i = 0; i < boardData[currentBoard].map.length; i++)
     {
       boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearCopyPaste];
@@ -3837,6 +3871,13 @@ function pasteYear()
     document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
     document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'block';
     document.getElementById("yearPasteButton").style.display = "none";
+
+
+
+    // makes a deep copy of all the arrays inside of undoArr for the given year so that the undo for the copy is fully functional
+    var newStuff = JSON.parse(JSON.stringify(undoArr[yearCopyPaste]));
+    undoArr[yearToPasteIn] = undoArr[yearToPasteIn].concat(newStuff);
+
 } //end pasteYear
 
 //Pauses the sim (and related times)
@@ -4093,7 +4134,7 @@ function resetMultiPlayer() {
 // this function closes the iframe, blurs the frame, and
 // takes the parameters set by it to order the page elements
 function resetOptions() {
-undoArr[currentYear] = [];
+
   //close frame
   modalUp = false;
   document.getElementById('options').style.visibility = "hidden";
@@ -4449,6 +4490,11 @@ function reversePrecipValue(val)
 
 //revertChanges undos the users previous tile changes, and goes back to the previous board instance
 function revertChanges() {
+
+
+  // this function will remove all undo steps after the first occurence of one that involves a tile that is toggled off
+  removeAfterFirstNotAllowed(undoArr, currentYear);
+
   //For storing clicks
   if (curTracking) {
     pushClick(0, getStamp(), 30, 0, null);
@@ -4469,6 +4515,8 @@ function revertChanges() {
     }
     undo = false;
     painter = tempPainter;
+
+
   }
 }
 
@@ -4564,7 +4612,6 @@ function saveAndRandomize() {
   //for whole board (as long as randomization is allowed)
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     //getRandomInt is in back-end helperMethods
-
     for (var j = 0; j <= randomPainterTile.length; j++) { //Check to see if the landuse type is toggled off or not
       if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j]) !== -1) {
         randomPainterTile.splice(j--, 1);
@@ -6915,3 +6962,126 @@ if (typeof module !== "undefined" && module.exports) {
 //     console.log("detachEvent");
 //   }
 // }
+
+
+  /**
+  This function looks through the undoArr for the given year, and deletes everything after the first land type not allowed is found.
+  @param undoArray the undoArr
+  @param theYear the year that is being modified
+  **/
+
+  function removeAfterFirstNotAllowed(undoArray, theYear)
+  {
+    notAllowedArray = getLandUseNotAllowed();
+
+    if(notAllowedArray.length == 0) // if all tiles are allowed then end here
+      return;
+
+    for(var i = undoArray[theYear].length - 1; i >= 0; i--)
+    {
+
+      if (Array.isArray(undoArray[theYear][i][1])) //check to see if we are undoing a grid paint, so we need to search the whole thing in case there are types not allowed underneath
+      {
+        for(var j = 0; j < undoArray[theYear][i][1].length; j++)
+        {
+          if (notAllowedArray.includes(undoArray[theYear][i][1][j]))
+          {
+            undoArray[theYear] = undoArray[theYear].slice(i + 1);
+            return; //used return so it will break out of both loops
+          }
+        }
+      }
+
+
+      else if (notAllowedArray.includes(undoArray[theYear][i][1])) // takes care of being covered by a cell paint tile
+      {
+        undoArray[theYear] = undoArray[theYear].slice(i + 1);
+        break;
+      }
+    }
+  }
+
+  /**
+  This function returns an array of land use types that are currently toggled of. This is used in the removeAfterFirstNotAllowed function right above.
+  **/
+  function getLandUseNotAllowed()
+  {
+    var toReturn = [];
+
+    for(var i = 1; i <= 15; i++)
+    {
+      if(document.getElementById('parameters').innerHTML.indexOf('paint' + i + "\n") != -1)
+      {
+        toReturn.push(i);
+      }
+    }
+
+    return toReturn;
+  }
+
+/**
+This method gets the land use type that is currently selected by the user, this is used to fill
+the map with the current selection if tiles on the map are toggled off.
+**/
+  function getCurrentLandType()
+  {
+    var currentType = LandUseType.getNumericalType(printLandUseType(painter)); // set equal to the current land type that is selected, numerical value
+    return currentType;
+  }
+
+
+/**
+This function is used to set the new default land use type. It sets to the current selected, but if it cant do that it starts at 1 and moveds up until it
+finds a usable type
+**/
+  function getNewLandType()
+  {
+    var toReturn = getCurrentLandType();
+    var notAllowed = getLandUseNotAllowed();
+    var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15];
+
+    // if the current selection is toggled off, or wetland because it would set the whole map to wetland
+    if(notAllowed.includes(toReturn)|| toReturn == 14)
+    {
+      // loop through to find the first one that is toggled on
+      for (var r = 1; r <= 15; r++)
+      {
+        if (!(notAllowed.includes(r)))
+        {
+          toReturn = r;
+          break;
+        }
+      }
+
+    }
+    return toReturn;
+  }
+
+
+/**
+ *This function returns a copy of the tile IDs and their land types for use in the undo funcion. It is used to make a copy of the year before it gets pasted over.
+ *That copy is then pushed to that years undo array so that it can be undone after the pasted has been undone.
+ * @param  {[type]} year [The year to copy]
+ * @return {[type]}      [An array with an array of IDs and an array of land types to push into the undoArr]
+ */
+  function getMap(year)
+  {
+    var tileIDs = [];
+    var landTypes = [];
+
+    // loop through the map and get each tiles ID and landtype
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+
+      //check if the tile is actually a game tile
+      if(boardData[currentBoard].map[i].landType[year] != 0)
+      {
+        tileIDs.push(i);
+        landTypes.push(boardData[currentBoard].map[i].landType[year]);
+      }
+
+    } // end for
+
+    var toReturn = [tileIDs, landTypes];
+
+    return toReturn;
+  }

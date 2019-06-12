@@ -69,6 +69,7 @@ body {
 
   .hkInputs1 {
     left: 72%;
+    top:0px;
   }
 
   .hkInputs2 {
@@ -254,7 +255,7 @@ body {
     border-top-right-radius: 25px;
   }
 
-  #hk12, #pb16 {
+  #hk16, #pb16 {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
   }
