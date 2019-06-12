@@ -2476,17 +2476,29 @@ this.tileNitrate = Array(4);
  };
  this.tileYieldResults = Array(4);
  this.tileLandType = Array(4);
+ for(var i = 1; i < 4; i++){
+   this.tileCarbonSequestration[i] = [];
+   this.tileGrossErosion[i] = [];
+   this.tilePhosphorusLoad[i] = [];
+   this.tileSedimentDelivery[i] = [];
+   this.tileYieldResults[i] = [];
+   this.tileLandType[i] = [];
+   this.tileLandArea[i]=[];
+   this.grossErosion[i]=0;
+   this.sumPhosphorusLoad[i]=0;
+   this.sedimentDelivery[i]=0;
+ }
+
   /**
    * when initialize the map and tile, create array and assign value to array
    * @return {[type]} [description]
    */
-  this.initializeMap=function(){
-
-    var tempNitrateConcentration = [0, 0, 0, 0];
-    this.sumCarbonSequestration = [0, 0, 0, 0];
+  this.initializeMap=function(y){
+    //console.log("initializeMap y: "+y);
+    //var tempNitrateConcentration = [0, 0, 0, 0];
     // var tempCarbonSum = [0, 0, 0, 0];
     //for (var y = 1; y <= board.calculatedToYear; y++) {
-    y=yearSelected;
+    //y=yearSelected;
     this.yieldResults[y] = {
       cornGrainYield: 0,
       soybeanYield: 0,
@@ -2515,18 +2527,22 @@ this.tileNitrate = Array(4);
       conventionalForestLandUse: 0,
       shortRotationWoodyBioenergyLandUse: 0
     };
-    for(var i = 1; i < 4; i++){
-      this.tileCarbonSequestration[i] = [];
-      this.tileGrossErosion[i] = [];
-      this.tilePhosphorusLoad[i] = [];
-      this.tileSedimentDelivery[i] = [];
-      this.tileYieldResults[i] = [];
-      this.tileLandType[i] = [];
-      this.tileLandArea[i]=[];
-      this.grossErosion[i]=0;
-      this.sumPhosphorusLoad[i]=0;
-      this.sedimentDelivery[i]=0;
-    }
+    this.nitrateConcentration[y]=0;
+
+    //for(var i = 1; i < 4; i++){
+      this.tileCarbonSequestration[y] = [];
+      this.tileGrossErosion[y] = [];
+      this.tilePhosphorusLoad[y] = [];
+      this.tileSedimentDelivery[y] = [];
+      this.tileYieldResults[y] = [];
+      this.tileLandType[y] = [];
+      this.tileLandArea[y]=[];
+      this.grossErosion[y]=0;
+      this.sumPhosphorusLoad[y]=0;
+      this.sedimentDelivery[y]=0;
+      this.sumCarbonSequestration[y]=0;
+
+    //}
       var wetlandMultiplier = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
       var subWatershedNitrate = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -2559,7 +2575,8 @@ this.tileNitrate = Array(4);
       }
 
       //PEWI calculations are reported in megagrams, the previous calculation in kilograms therefore divide by 1000
-      this.carbonSequestration[y] = this.sumCarbonSequestration[y] / 1000;
+      //this.carbonSequestration[y] = this.sumCarbonSequestration[y] / 1000;
+      this.carbonSequestration[y] = (this.sumCarbonSequestration[y] / 1000)*(1/0.90718474);
       this.phosphorusLoad[y] = (this.sumPhosphorusLoad[y] / 2000);
       // this.carbonSequestration[y] = this.carbonSequestration[y] * (1 / 0.90718474);
 
@@ -2580,23 +2597,24 @@ this.tileNitrate = Array(4);
         }
 
         //keep a running total of the amount each year by adding together subWatershed values
-        tempNitrateConcentration[y] += subWatershedNitrate[s];
+        //tempNitrateConcentration[y] += subWatershedNitrate[s];
+        this.nitrateConcentration[y] += subWatershedNitrate[s];
       } //end for all watersheds
       this.subWatershedNitrate[y] = subWatershedNitrate;
     //} //end for
-    this.nitrateConcentration = tempNitrateConcentration;
-    console.log(this.grossErosion);
+    //this.nitrateConcentration = tempNitrateConcentration;
+  
   }
 
   //Function to sum the values of calculatedCarbonSequestration for each tile
   this.sumCarbon = function(tileId, year) {
-    console.log("sumCarbon");
+    //console.log("sumCarbon");
     // First time loading the board, we need to calculate the results in map level
       var subCarbonSum = this.sumCarbonSequestration[year] - this.tileCarbonSequestration[year][tileId];
 
       this.tileCarbonSequestration[year][tileId] = board.map[tileId].results[year].calculatedCarbonSequestration;
       this.sumCarbonSequestration[year] = subCarbonSum + this.tileCarbonSequestration[year][tileId];
-      this.carbonSequestration[year] = this.sumCarbonSequestration[year] / 1000;
+      this.carbonSequestration[year] = (this.sumCarbonSequestration[year] / 1000)*(1/0.90718474);
 
       // this.carbonSequestration[year] = this.carbonSequestration[year] * (1 / 0.90718474);
 
@@ -2606,7 +2624,7 @@ this.tileNitrate = Array(4);
 
   //Function to sum the values of calculatedGrossErosion for each tile
   this.sumGrossErosion = function(tileId, year) {
-    console.log("sumGrossErosion");
+    //console.log("sumGrossErosion");
       var subErossionSum = this.grossErosion[year] - this.tileGrossErosion[year][tileId];
       this.tileGrossErosion[year][tileId] = board.map[tileId].results[year].calculatedGrossErosionRate * board.map[tileId].area;
       this.grossErosion[year] = subErossionSum + this.tileGrossErosion[year][tileId];
@@ -2618,7 +2636,7 @@ this.tileNitrate = Array(4);
   // this.tilePhosphorusLoad = Array(4);
 
   this.sumPhosphorus = function(tileId, year) {
-    console.log("sumPhosphorus");
+    //console.log("sumPhosphorus");
       var subPhosphorusSum = this.sumPhosphorusLoad[year] - this.tilePhosphorusLoad[year][tileId];
       this.tilePhosphorusLoad[year][tileId] = board.map[tileId].results[year].phosphorusDelivered;
       this.sumPhosphorusLoad[year] = subPhosphorusSum + this.tilePhosphorusLoad[year][tileId];
@@ -2628,7 +2646,7 @@ this.tileNitrate = Array(4);
 
   //Function to sum the values of sedimentDeliveryToStream
   this.sumSedimentDeliveryToStream = function(tileId, year) {
-    console.log("sumSedimentDeliveryToStream");
+    //console.log("sumSedimentDeliveryToStream");
       var subSedimentDeliverySum = this.sedimentDelivery[year] - this.tileSedimentDelivery[year][tileId];
       this.tileSedimentDelivery[year][tileId] = board.map[tileId].results[year].calculatedSedimentDeliveryToStreamTile * board.map[tileId].area;
       this.sedimentDelivery[year] = subSedimentDeliverySum + this.tileSedimentDelivery[year][tileId];
@@ -2644,7 +2662,7 @@ this.tileNitrate = Array(4);
     var score = 0;
     var mult = 1;
     var foundWet = false;
-    console.log("calculateNitrateConcentration");
+    //console.log("calculateNitrateConcentration");
     for (var i = 0; i < board.map.length; i++) {
       if(board.map[i].subwatershed == subw){
         score += board.map[i].results[year].cropMultiplier;
@@ -2725,8 +2743,8 @@ this.tileNitrate = Array(4);
 
   //subcalculations based on flags for biodiversity and game wildlife
   //---These calculations must be done at the board level as they involve tile percentages
-  this.sumFlagPercentages = function() {
-    y=yearSelected;
+  this.sumFlagPercentages = function(y) {
+    //y=yearSelected;
     //for all years that have been calculated
     //for (var y = 1; y <= board.calculatedToYear; y++) {
 
@@ -2741,7 +2759,7 @@ this.tileNitrate = Array(4);
 
       //for all tiles
       for (var i = 0; i < board.map.length; i++) {
-        console.log("sumFlagPercentages do not need to change");
+        //console.log("sumFlagPercentages do not need to change");
         if (board.map[i].results[y].nativeVegetationFlag) {
           tempAreaNativeVegetation += board.map[i].area;
         }
@@ -2792,13 +2810,13 @@ this.tileNitrate = Array(4);
     //} //end for loop of all years calculated
   }; //end Sum percentages
 
-  this.calculateGameWildLifePoints = function() {
+  this.calculateGameWildLifePoints = function(y) {
 
-    this.sumFlagPercentages();
+    this.sumFlagPercentages(y);
 
-    for (var y = 1; y <= board.calculatedToYear; y++) {
+    //for (var y = 1; y <= board.calculatedToYear; y++) {
       var tempScore = 0;
-      console.log("calculateGameWildLifePoints");
+      //console.log("calculateGameWildLifePoints");
       //native vegetation and other high diversity land uses points
       if (this.nativeVegetationHDPercent[y] == 100) {
         tempScore += 4;
@@ -2857,15 +2875,15 @@ this.tileNitrate = Array(4);
 
       this.gameWildlifePoints[y] = tempScore;
 
-    } //end for loop year
+    //} //end for loop year
 
   }; //end calculations of game and wildlife points
 
 
   //calculations for the scoreing of biodiversity (done at board level)
-  this.calculateBiodiversityPoints = function() {
+  this.calculateBiodiversityPoints = function(y) {
 
-    for (var y = 1; y <= board.calculatedToYear; y++) {
+    //for (var y = 1; y <= board.calculatedToYear; y++) {
       var tempScore = 0
       console.log("calculateBiodiversityPoints");
       //native vegetation points
@@ -2927,7 +2945,7 @@ this.tileNitrate = Array(4);
 
       this.biodiversityPoints[y] = tempScore;
 
-    } //end for loop year
+    //} //end for loop year
 
   }; //end calculations of biodiversity points
   /**
@@ -2992,8 +3010,6 @@ this.tileNitrate = Array(4);
   }
   //Function to sum the values of YieldTile to YieldValueArray
   this.sumYieldsAndsumlandUse = function(tileId, year) {
-
-      console.log("sum yield sum land use");
       var prevLandType = this.tileLandType[year][tileId];
       var yieldValueToStore = board.map[tileId].results[year].calculatedYieldTile * board.map[tileId].area;
       sumYieldHelper(this.yieldResults,LandUseType.getType(board.map[tileId].landType[year]),year,yieldValueToStore);
@@ -3052,7 +3068,6 @@ this.tileNitrate = Array(4);
       this.tileYieldResults[year][tileId] = yieldValueToStore;
       this.tileLandType[year][tileId] = LandUseType.getType(board.map[tileId].landType[year]);
       this.tileLandArea[year][tileId]=board.map[tileId].area;
-    // this.yieldResults = tempYieldRes1ults;
 
   }; //end sumYields
 
@@ -3162,8 +3177,8 @@ this.tileNitrate = Array(4);
   }
   //Function to store values of nitrateConcentration, grossErosionRate, and phosphorusRiskAssessment per tile for maps
   //check this function!
-  this.mapIt = function() {
-    y=yearSelected;
+  this.mapIt = function(year) {
+    y=year;
     //for (var y = 1; y <= board.calculatedToYear; y++) {
 
       //For each watershed store nitrate percent contribution
@@ -3207,22 +3222,17 @@ this.tileNitrate = Array(4);
     return "";
   }
 
-
+/**
+ * update the score out of 100.
+ * @param  {[type]} year [description]
+ *
+ */
   this.updateScores = function(year) {
 
-    // if(typeof year == 'undefined'){
-      // var temp = false;
       for (var y = 1; y <= board.calculatedToYear; y++) {
         this.gameWildlifePointsScore[y] = this.gameWildlifePoints[y] * 10;
         this.biodiversityPointsScore[y] = this.biodiversityPoints[y] * 10;
-        if(typeof year == 'undefined') {
-          this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
-        }
-        else {
-          if(year === y) {
-            this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
-          }
-        }
+        this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
 
 
 
@@ -3234,8 +3244,6 @@ this.tileNitrate = Array(4);
         // console.log("this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin) = ", this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin));
         // console.log("rawValue = ", this.carbonSequestrationScore[y] / 100 * (board.maximums.carbonMax - board.minimums.carbonMin) + board.minimums.carbonMin);
         this.grossErosionScore[y] = 100 * ((board.maximums.erosionMax - this.grossErosion[y]) / (board.maximums.erosionMax - board.minimums.erosionMin));
-        console.log("gross Erosion Score"+this.grossErosionScore[y]);
-        console.log("grossErosion: "+this.grossErosion[y]);
         this.nitrateConcentrationScore[y] = 100 * ((board.maximums.nitrateMax - this.nitrateConcentration[y]) / (board.maximums.nitrateMax - board.minimums.nitrateMin));
         this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin));
         this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin));
@@ -3285,13 +3293,12 @@ this.tileNitrate = Array(4);
   //note that some calculations depend on results of other calculations so be careful about reorganizing
 
   this.update = function(tileId, year) {
-    console.log("hello year selected "+yearSelected);
-    console.log("update: "+year);
+    //console.log("hello year selected "+yearSelected);
     // this.sumArea(); This function only need to called once, since totalArea, totalStreamCells, totalStrategicWetlandCells, subwatershedArea are constant, we don't have to call it every time when update the board
-    console.log("update: "+tileId);
     //update this as functions are added
-    if(typeof tileId == 'undefined' && typeof year == 'undefined') {
-      this.initializeMap(tileId,year);
+    if(typeof tileId == 'undefined') {
+    //if(typeof tileId == 'undefined' && typeof year == 'undefined') {
+      this.initializeMap(year);
     }else{
       this.sumCarbon(tileId, year);
       this.sumGrossErosion(tileId, year);
@@ -3302,10 +3309,10 @@ this.tileNitrate = Array(4);
     }
 
     //this.sumLandUse();
-    this.mapIt();
+    this.mapIt(year);
 
-    this.calculateGameWildLifePoints();
-    this.calculateBiodiversityPoints(); //Game Wildlife must come first as it alone calls sumFlagPercentages()
+    this.calculateGameWildLifePoints(year);
+    this.calculateBiodiversityPoints(year); //Game Wildlife must come first as it alone calls sumFlagPercentages()
 
     this.updateScores(year);
     // console.log(this.carbonSequestration[1]);

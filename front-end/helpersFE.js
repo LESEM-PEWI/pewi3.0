@@ -1118,23 +1118,20 @@ function calculateCutoffs() {
 
 } //end calculateCutoffs
 
-//calculateResults triggers the results calculations by updating Totals
-// deprecated?
-function calculateResults(tileId, year) {
-  console.log("calculateResults: "+tileId+" "+year);
-  //Totals = new Results(boardData[currentBoard]);
+/**
+ * calculateResults triggers the results calculations by updating Totals
+ * @param  {[type]} tileId [description]
+ * @param  {[type]} y     year
+ *
+ */
+function calculateResults(tileId, y) {
+  var year;
+  if(typeof y!='undefined'){
+    year=y;
+  }else{
+    year=yearSelected;
+  }
   Totals.update(tileId, year);
-
-  //Correction for Carbon Sequestrations
-  if(typeof year == 'undefined') {
-    for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
-      Totals.carbonSequestration[y] = Totals.carbonSequestration[y] * (1 / 0.90718474);
-    }
-  }
-  else {
-    Totals.carbonSequestration[year] = Totals.carbonSequestration[year] * (1 / 0.90718474);
-  }
-
   //contaminatedRiver(Totals);
 } //end calculateResults
 
@@ -3827,8 +3824,9 @@ function pasteYear()
     }
     boardData[currentBoard].updateBoard();
     refreshBoard();
-
-    calculateResults();
+    calculateResults(undefined,yearToPasteIn);
+    console.log(Totals);
+    //calculateResults();
     refreshProgressBar(currentYear);
 
     snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
@@ -5663,7 +5661,7 @@ function updatePrecip(year) {
   // for (var i = 0; i < boardData[currentBoard].map.length; i++) {
   //   calculateResults(i,year);
   // }
-  calculateResults();
+  calculateResults(undefined,year);
   refreshProgressBar(currentYear);
 } //updatePrecip
 
