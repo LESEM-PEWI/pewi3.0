@@ -1158,8 +1158,8 @@ function changeLandTypeTile(tileId) {
         {
           // If the land type remains the same, then do nothing, otherwise,change the land type, and update progress bars
           if(meshMaterials[tileId].map != textureArray[painter]){
-            console.log(Totals);
-            console.log(boardData[currentBoard].map[tileId]);
+            //console.log(Totals);
+            //console.log(boardData[currentBoard].map[tileId]);
             // console.log('Change the land type in tile which id is ', tileId);
             meshMaterials[tileId].map = textureArray[painter];
             // record the data changes in boardData
@@ -1168,7 +1168,7 @@ function changeLandTypeTile(tileId) {
             boardData[currentBoard].map[tileId].update(currentYear);
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
             calculateResults(tileId, currentYear);
-            console.log(boardData[currentBoard].map[tileId]);
+            //console.log(boardData[currentBoard].map[tileId]);
           }
         }
       } else if (multiplayerAssigningModeOn) {
@@ -1183,21 +1183,34 @@ function changeLandTypeTile(tileId) {
 
 } //end changeLandTypeTile
 
-//Updates Nitrate score for entire map since each individual Tile's score hinges on landtypes across the entire map
-//This function is called after each instance of a changeLandTypeTile() call
-function changeLandTypeTileNitrate(){
+// //Updates Nitrate score for entire map since each individual Tile's score hinges on landtypes across the entire map
+// //This function is called after each instance of a changeLandTypeTile() call
+// function changeLandTypeTileNitrate(){
+//   console.log("changeLandTypeTileNitrate");
+//   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
+//     //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
+//     //Hence the for loop
+//     for(var n = 0, nl=boardData[currentBoard].map.length; n<nl; n++){
+//       //if land type of tile is nonzero
+//       if (boardData[currentBoard].map[n].landType[currentYear] != 0) {
+//         //change the materials of the faces in the meshMaterials array and update the boardData
+//         if (!multiplayerAssigningModeOn) {
+//           boardData[currentBoard].map[n].updateNitrate(currentYear);
+//         }
+//       }
+//     }
+//     refreshProgressBar(currentYear);
+//   } // end outter if
+// } //end changeLandTypeTile
+
+function changeLandTypeTileNitrate(tileId){
+  console.log("changeLandTypeTileNitrate");
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
     //Hence the for loop
-    for(var n = 0, nl=boardData[currentBoard].map.length; n<nl; n++){
-      //if land type of tile is nonzero
-      if (boardData[currentBoard].map[n].landType[currentYear] != 0) {
-        //change the materials of the faces in the meshMaterials array and update the boardData
         if (!multiplayerAssigningModeOn) {
-          boardData[currentBoard].map[n].updateNitrate(currentYear);
+          boardData[currentBoard].map[tileId].updateNitrate(currentYear);
         }
-      }
-    }
     refreshProgressBar(currentYear);
   } // end outter if
 } //end changeLandTypeTile
