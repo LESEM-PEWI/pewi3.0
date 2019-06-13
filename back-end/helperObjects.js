@@ -1283,6 +1283,18 @@ function Click(c1, c2, c3, c4, c5) {
                 return "Sediment Runoff was clicked";
                 break;
               }
+            //When the user hovers over progress bars
+            case 122:
+              if (action) {
+                return  toggleScoreDetails(this.tileID);
+                break;
+              }
+              else {
+                return "User hovered over " + this.tileID + " progress bar";
+                break;
+              }
+
+
 
 
     }

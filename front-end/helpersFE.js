@@ -201,11 +201,18 @@ if(dir == 1){
 
 // Show score details when hover over progress bar
 function toggleScoreDetails(factor) {
+  // To include hover effects on progressbars in cur tracking mode
+  if (curTracking)
+  {
+      pushClick(0, getStamp(), 122, 0, factor);
+  }
   switch (factor){
     case 'gameWildlife':
-      if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block')
-        document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
-      else{
+      if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block') {
+         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
+         console.log("GW out");
+        }
+      else {
         var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
         // console.log(childNodes);
         // 0 - 100 value
@@ -213,12 +220,16 @@ function toggleScoreDetails(factor) {
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Totals.gameWildlifePoints[currentYear] + ' pts / yr';
         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
+        console.log("GW in");
       }
     break;
     case 'carbon':
-      if(document.getElementsByClassName('carbonScoreDetails')[0].style.display == 'block')
-        document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'none';
-      else{
+      if(document.getElementsByClassName('carbonScoreDetails')[0].style.display == 'block') {
+         document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'none';
+         console.log("carbon out");
+      }
+
+      else {
         var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
         // 0 - 100 value
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10  + '/100';
@@ -226,11 +237,14 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
         (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
         document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
+        console.log("carbon in");
       }
     break;
     case 'biodiversity':
-      if(document.getElementsByClassName('biodiversityScoreDetails')[0].style.display == 'block')
-        document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'none';
+      if(document.getElementsByClassName('biodiversityScoreDetails')[0].style.display == 'block') {
+         document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'none';
+         console.log("biodiv out");
+       }
       else{
         var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -238,12 +252,15 @@ function toggleScoreDetails(factor) {
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10 + ' pts / yr';
         document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'block';
+        console.log("biodiv in");
       }
     break;
     case 'erosion':
-      if(document.getElementsByClassName('erosionScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('erosionScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'none';
-      else{
+        console.log("erosion out");
+      }
+      else {
         var childNodes = document.getElementsByClassName('erosionScoreDetails')[0].childNodes;
         // 0 - 100 value
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grossErosionScore[currentYear] * 10) / 10  + '/100';;
@@ -251,11 +268,14 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.grossErosion[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
           (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
+        console.log("erosion in");
       }
     break;
     case 'nitrate':
-      if(document.getElementsByClassName('nitrateScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('nitrateScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'none';
+        console.log("nitrate out");
+      }
       else{
         var childNodes = document.getElementsByClassName('nitrateScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -264,11 +284,14 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' ppm / yr' + '<br>' +
           Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' mg/L / yr';
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
+        console.log("nitrate in");
       }
     break;
     case 'phoshorus':
-      if(document.getElementsByClassName('phoshorusScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('phoshorusScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'none';
+        console.log("phosphorus out");
+      }
       else{
         var childNodes = document.getElementsByClassName('phoshorusScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -277,11 +300,13 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
           Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg / yr';
         document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'block';
+        console.log("phosphorus in");
       }
     break;
     case 'sediment':
-      if(document.getElementsByClassName('sedimentScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('sedimentScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('sedimentScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -293,8 +318,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'total':
-      if(document.getElementsByClassName('totalScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('totalScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('totalScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('totalScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -309,8 +335,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'cornGrain':
-      if(document.getElementsByClassName('cornGrainScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('cornGrainScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('cornGrainScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -323,8 +350,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'soybeans':
-      if(document.getElementsByClassName('soybeansScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('soybeansScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('soybeansScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -337,8 +365,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'fruitsAndVegetables':
-      if(document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -351,8 +380,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'cattle':
-      if(document.getElementsByClassName('cattleScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('cattleScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('cattleScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('cattleScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -364,8 +394,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'alfalfaHay':
-      if(document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('alfalfaHayScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -378,8 +409,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'grassHay':
-      if(document.getElementsByClassName('grassHayScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('grassHayScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('grassHayScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('grassHayScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -392,8 +424,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'switchgrassBiomass':
-      if(document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -406,8 +439,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'wood':
-      if(document.getElementsByClassName('woodScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('woodScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('woodScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('woodScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -420,8 +454,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'woodyBiomass':
-      if(document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('woodyBiomassScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -2030,6 +2065,7 @@ function executePrintOptions(isDownload) {
 
 //Handles exporting the clicks given by the user
 function exportTracking() {
+
   //Initial action is equal to time elapsed at that point
   if (clickTrackings.length > 0) {
     clickTrackings[0].timeGap = clickTrackings[0].timeStamp;
@@ -2038,7 +2074,8 @@ function exportTracking() {
       ['ClickID', 'Time Stamp (Milliseconds)', 'Click Type', 'Time Gap (Milliseconds)', 'Description of click', 'Extra Data', startTime, endTime, startTime.getTime(), endTime.getTime()]
     ];
     for (var j = 0; j < clickTrackings.length; j++) {
-      A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
+      A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID]);
+
     }
     var csvRows = [];
     for (var i = 0; i < A.length; i++) {
@@ -2062,7 +2099,15 @@ function finishProperties() {
   var tempClicks = [];
   tempClicks.push(clickTrackings[0]);
   for (var i = 1; i < clickTrackings.length; i++) {
-    if (clickTrackings[i].tileID != clickTrackings[i - 1].tileID || clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
+    /* To make sure onmouseover(), onmouseout() hover functions of progress bars is written to the .csv file, check if function type is 122
+       -- Need to find a better way to do it, though!
+       -- could add a dedicated column that is separate from the tileID column, to the .csv file that caters to extra info like,
+       -- (precip, add/del year, user info in confirmation pages etc. solely to be used for cursor tracking purposes)
+       --
+    */
+    var clickFunctionType = parseInt(clickTrackings[i].functionType);
+
+    if (clickFunctionType == 122 || clickTrackings[i].tileID != clickTrackings[i - 1].tileID || clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
       clickTrackings[i].clickID = i;
       clickTrackings[i].timeGap = (clickTrackings[i].timeStamp - clickTrackings[i - 1].timeStamp);
       tempClicks.push(clickTrackings[i]);
@@ -4575,7 +4620,7 @@ function runSimulation() {
     // Splits the .csv file by ','
     var tempArr = simulationData[i].split(',');
 
-    /* Populates the following variables from the columns of .csv file.
+    /* Comment: Populates the following variables from the columns of .csv file.
        The columns are:-- clickID, time stamp, click type, time gap, Description of click, Extra data
        All units of time is milli Milliseconds.
        The sixth column or Extra data is often referred to as the tileID. It stores the id of the tile whose land use is changed,
@@ -4587,7 +4632,7 @@ function runSimulation() {
     var tempType = tempArr[2]; // click type
     var tempGap = tempArr[3]; // time gap
 
-    /* Each value of tempType, in the if-statement below, indicates a case number in the Click() function of file helperObjects.js.
+    /* Comment: Each value of tempType, in the if-statement below, indicates a case number in the Click() function of file helperObjects.js.
   case 55 - "A tile was painted (single selection)"
        34 - "Year 0 Precip Modified", 35 - "Year 1 Precip Modified", 36 - "Year 2 Precip Modified", 37 - "Year 3 Precip Modified"
        80 - "Click an entry in index page" (Note: here index denotes Glossary in pewi 4.0 and later versions)
@@ -4599,7 +4644,7 @@ function runSimulation() {
        101 - " Copied year __"
        102 - "Pasted in year __"
     */
-    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 || tempType == 103 || tempType == 110 || tempType == 114) {
+    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 || tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122) {
       var tempTile = tempArr[5]; // Extra data
     }
     if (tempType == 56 || tempType == 99 || tempType == 100) {
