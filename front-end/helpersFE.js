@@ -1168,7 +1168,7 @@ function changeLandTypeTile(tileId) {
             boardData[currentBoard].map[tileId].update(currentYear);
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
             calculateResults(tileId, currentYear);
-            //console.log(boardData[currentBoard].map[tileId]);
+            console.log(boardData[currentBoard].map[tileId]);
           }
         }
       } else if (multiplayerAssigningModeOn) {
@@ -1208,9 +1208,15 @@ function changeLandTypeTileNitrate(tileId){
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
     //Hence the for loop
+    for(var n = 0, nl=boardData[currentBoard].map.length; n<nl; n++){
+      //if land type of tile is nonzero
+      if (boardData[currentBoard].map[n].landType[currentYear] != 0) {
+        //change the materials of the faces in the meshMaterials array and update the boardData
         if (!multiplayerAssigningModeOn) {
-          boardData[currentBoard].map[tileId].updateNitrate(currentYear);
+          boardData[currentBoard].map[n].updateNitrate(currentYear);
         }
+      }
+    }
     refreshProgressBar(currentYear);
   } // end outter if
 } //end changeLandTypeTile
