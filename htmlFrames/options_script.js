@@ -27,8 +27,7 @@
   */
   var selectedOptionsFalse = [];
   var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
-  "Move Right","Move Left","Move Forward","Move Backward","Toggle Overlay","Toggle Flying Mode",
-  "Pivot Flat","Pivot Upright","Rotate Counterclockwise","Rotate Clockwise"];
+      "Print","Move Right","Move Left","Move Forward","Move Backward","Toggle Overlay","Toggle Flying Mode","Pivot Flat","Pivot Upright","Rotate Counterclockwise","Rotate Clockwise"];
 
 
   //the saveCurrentOptionsState function is called when the save/exit button is pressed
