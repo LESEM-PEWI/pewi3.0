@@ -4612,7 +4612,7 @@ function saveAndRandomize() {
   //for whole board (as long as randomization is allowed)
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     //getRandomInt is in back-end helperMethods
-    
+
     for (var j = 0; j <= randomPainterTile.length; j++) { //Check to see if the landuse type is toggled off or not
       if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j]) !== -1) {
         randomPainterTile.splice(j--, 1);
@@ -5276,12 +5276,12 @@ function toggleReplacementFrame(options) {
   var modal = document.getElementById('modalReplacement');
   innermodal = modal.contentDocument || modal.contentWindow.document;
   if(modal.style.visibility === 'visible'){
-    console.log('here');
-    modal.style.visibility = 'hidden';
+    modal.style.display = 'none';
     modalUp = false;
   }
   else {
-    modal.style.visibility = 'visible'
+    modal.style.display = 'block';
+    modal.style.visibility = 'visible';
     select = innermodal.getElementById('replacementSelect');
     while(select.firstChild){
       select.removeChild(select.firstChild);
