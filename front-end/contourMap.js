@@ -6,6 +6,7 @@ function drawGrid(c, canvas, map, lines) {
   var rectWidth = 40;
   var rectHeight = 25;
 
+// if the map size ever changes, the array variables need to be changed
   for (var j = 0; j < 36; j++)
   {
     rectYPos = 50 + j * 25;
@@ -15,8 +16,8 @@ function drawGrid(c, canvas, map, lines) {
        if(map[i +(j*23)].baseLandUseType != 0)
        {
         //drawBorder(rectXPos, rectYPos, rectWidth, rectHeight, c);
-        //c.fillStyle='#FFF';
-        //c.fillRect(rectXPos, rectYPos, rectWidth, rectHeight);
+        c.fillStyle=getColor(map[i+(j*23)].topography);
+        c.fillRect(rectXPos, rectYPos, rectWidth, rectHeight);
 
         drawMapLines(lines[i + (j *23)], rectXPos, rectYPos, c);
       }
@@ -94,6 +95,32 @@ function getLines(map)
         map[i].contourLines.push("left");
       }
 
+      //checking to see if the diagonals shared the topo value for smooth line purposes
+      if(row != 1)
+      {
+        if (col != 1 && map[getID(row -1, col -1)].topography == topo && map[getID(row - 1, col - 1)].baseLandUseType != 0 && !(thisCellsLines.includes("top")) && !(thisCellsLines.includes("left")))
+        {
+          thisCellsLines.push("top left");
+        }
+        if (col != 23 && map[getID(row - 1, col + 1)].topography == topo && map[getID(row - 1, col + 1)].baseLandUseType != 0 && !(thisCellsLines.includes("top")) && !(thisCellsLines.includes("right")))
+        {
+          thisCellsLines.push("top right");
+        }
+      }
+
+      if(row != 36)
+      {
+        if(col != 1 && map[getID(row + 1, col - 1)].topography == topo && map[getID(row + 1, col - 1)].baseLandUseType != 0 && !(thisCellsLines.includes("bottom")) && !(thisCellsLines.includes("left")))
+        {
+          thisCellsLines.push("bottom left");
+        }
+
+        if (col != 23 && map[getID(row + 1, col + 1)].topography == topo && map[getID(row + 1, col + 1)].baseLandUseType != 0 && !(thisCellsLines.includes("bottom")) && !(thisCellsLines.includes("right")))
+        {
+          thisCellsLines.push("bottom right");
+        }
+      }
+
 
     }
     toReturn.push(thisCellsLines);
@@ -137,19 +164,22 @@ function confirmTopoMap()
 
 function drawMapLines(tile, x, y, c){
 
-  c.lineWidth = 5;
+  c.lineWidth = 3;
+
+  // if(tile.includes("top") && tile.includes("right"))
+  // {
+  //   c.beginPath();
+  //   c.lineTo(x,y);
+  //   c.lineTo(x+35, y);
+  //   c.arcTo(x+40, y, x+40, y+20, 5);
+  //   c.lineTo(x+40, y+25);
+  //   c.stroke();
+  // }
 
   if(tile.includes("top")){
     c.beginPath();
     c.lineTo(x,y);
     c.lineTo(x+40,y);
-    c.stroke();
-  }
-
-  if(tile.includes("bottom")){
-    c.beginPath();
-    c.lineTo(x, y+25);
-    c.lineTo(x+40, y+25);
     c.stroke();
   }
 
@@ -160,10 +190,58 @@ function drawMapLines(tile, x, y, c){
     c.stroke();
   }
 
+  // if(tile.includes("top") && tile.includes("bottom"))
+  // {
+  //   c.moveTo(x+5,y);
+  //   c.arcTo(x, y, x, y+25, 5);
+  //   c.lineTo(x, y+25);
+  //   c.stroke();
+  // }
+
+  if(tile.includes("bottom")){
+    c.beginPath();
+    c.lineTo(x, y+25);
+    c.lineTo(x+40, y+25);
+    c.stroke();
+  }
+
   if(tile.includes("left")){
     c.beginPath();
     c.lineTo(x, y+25);
     c.lineTo(x, y);
     c.stroke();
+  }
+}
+
+function getColor(value)
+{
+  if(value == 0)
+  {
+    return "#EBEDEF";
+  }
+
+  if(value == 1)
+  {
+    return "#AEB6BF";
+  }
+
+  if(value == 2)
+  {
+    return "#5D6D7E";
+  }
+
+  if(value == 3)
+  {
+    return "#2E4053";
+  }
+
+  if(value == 4)
+  {
+    return "#212F3C";
+  }
+
+  if(value == 5)
+  {
+    return "#17202A";
   }
 }
