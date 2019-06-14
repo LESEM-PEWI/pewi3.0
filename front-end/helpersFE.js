@@ -1167,7 +1167,7 @@ function changeLandTypeTile(tileId) {
             // update boardData figures
             boardData[currentBoard].map[tileId].update(currentYear);
             changeLandTypeTileNitrate(tileId);
-            //console.log(Totals);
+            console.log(boardData[currentBoard]);
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
             calculateResults(tileId, currentYear);
             //console.log(boardData[currentBoard].map[tileId]);
