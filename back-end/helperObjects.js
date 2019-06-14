@@ -1293,6 +1293,16 @@ function Click(c1, c2, c3, c4, c5) {
                 return "User hovered over " + this.tileID + " progress bar";
                 break;
               }
+            //When the user hovers over a tile
+            case 123:
+              if (action) {
+                return  highlightTile(this.tileID);
+                break;
+              }
+              else {
+                return "User hovered over tile: " + this.tileID ;
+                break;
+              }
 
 
 

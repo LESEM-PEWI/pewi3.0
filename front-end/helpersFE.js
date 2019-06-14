@@ -210,7 +210,6 @@ function toggleScoreDetails(factor) {
     case 'gameWildlife':
       if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block') {
          document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
-         console.log("GW out");
         }
       else {
         var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
@@ -220,13 +219,13 @@ function toggleScoreDetails(factor) {
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Totals.gameWildlifePoints[currentYear] + ' pts / yr';
         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
-        console.log("GW in");
+
       }
     break;
     case 'carbon':
       if(document.getElementsByClassName('carbonScoreDetails')[0].style.display == 'block') {
          document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'none';
-         console.log("carbon out");
+
       }
 
       else {
@@ -237,13 +236,13 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
         (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
         document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
-        console.log("carbon in");
+
       }
     break;
     case 'biodiversity':
       if(document.getElementsByClassName('biodiversityScoreDetails')[0].style.display == 'block') {
          document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'none';
-         console.log("biodiv out");
+
        }
       else{
         var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
@@ -252,13 +251,13 @@ function toggleScoreDetails(factor) {
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10 + ' pts / yr';
         document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'block';
-        console.log("biodiv in");
+
       }
     break;
     case 'erosion':
       if(document.getElementsByClassName('erosionScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'none';
-        console.log("erosion out");
+
       }
       else {
         var childNodes = document.getElementsByClassName('erosionScoreDetails')[0].childNodes;
@@ -268,13 +267,13 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.grossErosion[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
           (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
-        console.log("erosion in");
+
       }
     break;
     case 'nitrate':
       if(document.getElementsByClassName('nitrateScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'none';
-        console.log("nitrate out");
+
       }
       else{
         var childNodes = document.getElementsByClassName('nitrateScoreDetails')[0].childNodes;
@@ -284,13 +283,13 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' ppm / yr' + '<br>' +
           Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' mg/L / yr';
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
-        console.log("nitrate in");
+
       }
     break;
     case 'phoshorus':
       if(document.getElementsByClassName('phoshorusScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'none';
-        console.log("phosphorus out");
+
       }
       else{
         var childNodes = document.getElementsByClassName('phoshorusScoreDetails')[0].childNodes;
@@ -300,7 +299,7 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
           Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg / yr';
         document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'block';
-        console.log("phosphorus in");
+
       }
     break;
     case 'sediment':
@@ -3038,6 +3037,9 @@ function getFloodFrequencyName(floodFrequencyNum){
 //highlightTile updates the tile that should be highlighted.
 function highlightTile(tileId) {
 
+  if (curTracking) {
+    pushClick(0, getStamp(), 123, 0, tileId);
+  }
   //clear the information in the delayed information hover div
   document.getElementById("hover-info").innerHTML = "";
   if (myTimer != null) {
@@ -4644,7 +4646,7 @@ function runSimulation() {
        101 - " Copied year __"
        102 - "Pasted in year __"
     */
-    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 || tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122) {
+    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 || tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122 || tempType == 123) {
       var tempTile = tempArr[5]; // Extra data
     }
     if (tempType == 56 || tempType == 99 || tempType == 100) {
