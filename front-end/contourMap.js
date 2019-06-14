@@ -1,6 +1,6 @@
 
 
-function drawGrid(c, canvas, map) {
+function drawGrid(c, canvas, map, lines) {
    var rectXPos = 50;
   var rectYPos = 50;
   var rectWidth = 40;
@@ -14,9 +14,11 @@ function drawGrid(c, canvas, map) {
       rectXPos = 40 * i + 50;
        if(map[i +(j*23)].baseLandUseType != 0)
        {
-        drawBorder(rectXPos, rectYPos, rectWidth, rectHeight, c);
-        c.fillStyle='#FFF';
-        c.fillRect(rectXPos, rectYPos, rectWidth, rectHeight);
+        //drawBorder(rectXPos, rectYPos, rectWidth, rectHeight, c);
+        //c.fillStyle='#FFF';
+        //c.fillRect(rectXPos, rectYPos, rectWidth, rectHeight);
+
+        drawMapLines(lines[i + (j *23)], rectXPos, rectYPos, c);
       }
     }
     rectXPos = 50;
@@ -43,7 +45,7 @@ function createContourMap(c, canvas)
 
   var lines = getLines(map);
 
-  drawGrid(c, canvas, map);
+  drawGrid(c, canvas, map, lines);
 }
 
 /**
@@ -129,5 +131,39 @@ function confirmTopoMap()
     canvas.height = window.innerHeight;
     var c = canvas.getContext('2d');
     createContourMap(c, canvas);
+
+  }
+}
+
+function drawMapLines(tile, x, y, c){
+
+  c.lineWidth = 5;
+
+  if(tile.includes("top")){
+    c.beginPath();
+    c.lineTo(x,y);
+    c.lineTo(x+40,y);
+    c.stroke();
+  }
+
+  if(tile.includes("bottom")){
+    c.beginPath();
+    c.lineTo(x, y+25);
+    c.lineTo(x+40, y+25);
+    c.stroke();
+  }
+
+  if(tile.includes("right")){
+    c.beginPath();
+    c.lineTo(x+40, y);
+    c.lineTo(x+40, y+25);
+    c.stroke();
+  }
+
+  if(tile.includes("left")){
+    c.beginPath();
+    c.lineTo(x, y+25);
+    c.lineTo(x, y);
+    c.stroke();
   }
 }
