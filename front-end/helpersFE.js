@@ -2123,6 +2123,8 @@ function getGridOutline(startTile, endTile) {
   return tileArray;
 }
 
+
+
 //getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
 function getHighlightColor(highlightType, tileId) {
 
@@ -6904,3 +6906,8 @@ if (typeof module !== "undefined" && module.exports) {
 //   }
 // }
 //
+//
+
+// function getBoardAndMapData(){
+//   return boardData[currentYear].map;
+// }

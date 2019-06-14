@@ -12,6 +12,7 @@ var player = { speed:3, turnSpeed:Math.PI*0.02 };
 var renderer = new THREE.WebGLRenderer();
 var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
+
 //application data
 var boardData = [];
 var clickTrackings = []; //array for storing all clicks in when click-tracking is enabled
@@ -23,7 +24,10 @@ var Totals; //global current calculated results, NOTE, should be reassigned ever
 //status trackers
 var allLoaded = false;
 var counter = 0;
+
 var currentBoard = -1;
+
+
 var currentYear = 1;
 var currentPlayer = 0;
 var isShiftDown = false;
@@ -34,6 +38,12 @@ var painter = 1;
 var previousHover = null;
 var tToggle = false; //topology off by default
 var uploadedBoard = false;
+
+// variables for making the contour map
+var theMap;
+var theLines;
+
+
 
 //Variables for Zoom Function
 var fov = null,
@@ -1010,3 +1020,5 @@ function zoomAnimation() {
   }
 
 } //end zoomAnimation
+
+//export { boardData[currentYear].map as theMap};
