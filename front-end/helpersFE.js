@@ -143,9 +143,14 @@ window.onbeforeunload = confirmExit;
 
 // Toggled popup text when hover over the Tabs in the left console
 function toggleTabTitle(value, dir) {
-  // document.getElementById(value).style.zIndex = '1';
 
-  // console.log(document.getElementsByClassName('DetailsList'));
+  // To include hover effects of Tab titles in cur tracking mode
+  if (curTracking)
+  {
+      pushClick(0, getStamp(), 124, 0, dir+value);
+  }
+
+
   if (document.getElementById(value).style.display === 'none') {
     // Set the corresponding titles when hover over one
     switch (value) {
@@ -2106,7 +2111,9 @@ function finishProperties() {
     */
     var clickFunctionType = parseInt(clickTrackings[i].functionType);
 
-    if (clickFunctionType == 122 || clickTrackings[i].tileID != clickTrackings[i - 1].tileID || clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
+    if (clickFunctionType == 122 || clickFunctionType == 124 || clickTrackings[i].tileID != clickTrackings[i - 1].tileID ||
+        clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
+
       clickTrackings[i].clickID = i;
       clickTrackings[i].timeGap = (clickTrackings[i].timeStamp - clickTrackings[i - 1].timeStamp);
       tempClicks.push(clickTrackings[i]);
@@ -4646,7 +4653,9 @@ function runSimulation() {
        101 - " Copied year __"
        102 - "Pasted in year __"
     */
-    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 || tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122 || tempType == 123) {
+    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 ||
+        tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 ||
+        tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122 || tempType == 123 || tempType == 124) {
       var tempTile = tempArr[5]; // Extra data
     }
     if (tempType == 56 || tempType == 99 || tempType == 100) {

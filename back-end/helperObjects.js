@@ -1304,6 +1304,20 @@ function Click(c1, c2, c3, c4, c5) {
                 break;
               }
 
+            //When the user hovers over Tab titles
+            case 124:
+              var dir = this.tileID.substring(0,1);
+              var value = this.tileID.substring(1);
+              if (action) {
+
+                return  toggleTabTitle(value, dir);
+                break;
+              }
+              else {
+                return "User hovered over " + value + ".";
+                break;
+              }
+
 
 
 
