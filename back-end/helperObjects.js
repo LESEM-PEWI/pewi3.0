@@ -1309,12 +1309,23 @@ function Click(c1, c2, c3, c4, c5) {
               var dir = this.tileID.substring(0,1);
               var value = this.tileID.substring(1);
               if (action) {
+                if (this.tileID === 'toolsTabTitle') {
+                  return toggleTabTitle('toolsTabTitle');
+                }
+                else {
+                  return  toggleTabTitle(value, dir);
+                }
 
-                return  toggleTabTitle(value, dir);
                 break;
               }
               else {
-                return "User hovered over " + value + ".";
+                if (this.tileID === 'toolsTabTitle') {
+                  return "User hovered over toolsTabTitle.";
+                }
+                else {
+                  return "User hovered over " + value + ".";
+                }
+
                 break;
               }
 

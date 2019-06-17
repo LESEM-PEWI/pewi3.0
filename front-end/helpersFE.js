@@ -147,7 +147,12 @@ function toggleTabTitle(value, dir) {
   // To include hover effects of Tab titles in cur tracking mode
   if (curTracking)
   {
+    if (value === 'toolsTabTitle') {
+      pushClick(0, getStamp(), 124, 0, value);
+    }
+    else {
       pushClick(0, getStamp(), 124, 0, dir+value);
+    }    
   }
 
 
