@@ -16,8 +16,8 @@ function drawGrid(c, canvas, map, lines) {
        if(map[i +(j*23)].baseLandUseType != 0)
        {
         //drawBorder(rectXPos, rectYPos, rectWidth, rectHeight, c);
-        c.fillStyle=getColor(map[i+(j*23)].topography);
-        c.fillRect(rectXPos, rectYPos, rectWidth, rectHeight);
+        // c.fillStyle=getColor(map[i+(j*23)].topography);
+        // c.fillRect(rectXPos, rectYPos, rectWidth, rectHeight);
 
         drawMapLines(lines[i + (j *23)], rectXPos, rectYPos, c);
       }
@@ -166,16 +166,6 @@ function drawMapLines(tile, x, y, c){
 
   c.lineWidth = 3;
 
-  // if(tile.includes("top") && tile.includes("right"))
-  // {
-  //   c.beginPath();
-  //   c.lineTo(x,y);
-  //   c.lineTo(x+35, y);
-  //   c.arcTo(x+40, y, x+40, y+20, 5);
-  //   c.lineTo(x+40, y+25);
-  //   c.stroke();
-  // }
-
   if(tile.includes("top")){
     c.beginPath();
     c.lineTo(x,y);
@@ -189,14 +179,6 @@ function drawMapLines(tile, x, y, c){
     c.lineTo(x+40, y+25);
     c.stroke();
   }
-
-  // if(tile.includes("top") && tile.includes("bottom"))
-  // {
-  //   c.moveTo(x+5,y);
-  //   c.arcTo(x, y, x, y+25, 5);
-  //   c.lineTo(x, y+25);
-  //   c.stroke();
-  // }
 
   if(tile.includes("bottom")){
     c.beginPath();
@@ -244,4 +226,6 @@ function getColor(value)
   {
     return "#17202A";
   }
+
+  return 'white';
 }
