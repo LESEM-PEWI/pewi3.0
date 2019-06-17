@@ -117,6 +117,7 @@ var hotkeyArr = [
   [83, null],
   [79, null],
   [81, null],
+  [80,null]
   [38, null],
   [40, null],
   [37, null],
@@ -3583,29 +3584,6 @@ function onDocumentKeyDown(event) {
         isShiftDown = true;
         break;
 
-        //case t - toggle topography
-      case hotkeyArr[2][0]:
-      case hotkeyArr[2][1]:
-        //setting the camera y position to a specific hight when toggle is pressed.
-        if (camera2.position.y < 27)
-          camera2.position.y = 27;
-        if (modalUp !== true) {
-          if (curTracking) {
-            pushClick(0, getStamp(), 32, 0, null);
-          }
-          tToggle ? tToggle = false : tToggle = true;
-
-          //in the case when the map is highlighted:
-          if (mapIsHighlighted) {
-            refreshBoard(true);
-          }
-          //if the map is not highlighted:
-          else {
-            refreshBoard();
-          }
-          setupRiver();
-        }
-        break;
         //case e - reset camera position
       case hotkeyArr[0][0]:
       case hotkeyArr[0][1]:
@@ -3652,6 +3630,86 @@ function onDocumentKeyDown(event) {
         }
         break;
 
+        //case t - toggle topography
+      case hotkeyArr[2][0]:
+      case hotkeyArr[2][1]:
+        //setting the camera y position to a specific hight when toggle is pressed.
+        if (camera2.position.y < 27)
+          camera2.position.y = 27;
+        if (modalUp !== true) {
+          if (curTracking) {
+            pushClick(0, getStamp(), 32, 0, null);
+          }
+          tToggle ? tToggle = false : tToggle = true;
+
+          //in the case when the map is highlighted:
+          if (mapIsHighlighted) {
+            refreshBoard(true);
+          }
+          //if the map is not highlighted:
+          else {
+            refreshBoard();
+          }
+          setupRiver();
+        }
+        break;
+
+        // case u - undo key
+      case hotkeyArr[3][0]:
+      case hotkeyArr[3][1]:
+        revertChanges();
+        break;
+
+        // key b - clickTrackings
+      case hotkeyArr[4][0]:
+      case hotkeyArr[4][1]:
+        if (!curTracking) {
+          curTracking = true;
+          //Starting date is recorded
+          startTime = new Date();
+          clickTrackings = [];
+          document.getElementById("recordIcon").style.visibility = "visible";
+        } else {
+          continueTracking();
+        }
+        break;
+        //no default handler
+
+        //case v - key to record multiplayer fields
+      case hotkeyArr[5][0]:
+      case hotkeyArr[5][1]:
+        if (multiplayerAssigningModeOn) {
+          endMultiplayerAssignMode();
+        }
+        break;
+
+        // cases 6 through 9 are in mainFE.js under the animate function
+
+        // case o - toggleOverlay
+      case hotkeyArr[10][0]:
+      case hotkeyArr[10][1]:
+        if (previousOverlay != null) {
+          if (curTracking) {
+            pushClick(0, getStamp(), 31, 0, null);
+          }
+          toggleOverlay();
+        }
+        break;
+
+        //case 11 is in mainFE.js under the CamView function
+
+        // key to open print screen
+      case hotkeyArr[12][0]:
+      case hotkeyArr[12][1]:
+        // If not in the multi-player mode, we should not disable the 'P' key
+        if (!multiplayerAssigningModeOn) {
+          startPrintOptions();
+        }
+
+        break;
+
+
+
         //case z -- for zoom functions
       case 90:
         //track the z down key
@@ -3671,13 +3729,6 @@ function onDocumentKeyDown(event) {
         }
         break;
 
-        //case v - key to record multiplayer fields
-      case hotkeyArr[5][0]:
-      case hotkeyArr[5][1]:
-        if (multiplayerAssigningModeOn) {
-          endMultiplayerAssignMode();
-        }
-        break;
 
         //case esc - view escape menu
       case 27:
@@ -3711,46 +3762,7 @@ function onDocumentKeyDown(event) {
           break;
         }
         break;
-        // case u - undo key
-      case hotkeyArr[3][0]:
-      case hotkeyArr[3][1]:
-        revertChanges();
-        break;
 
-        // case o - toggleOverlay
-      case hotkeyArr[10][0]:
-      case hotkeyArr[10][1]:
-        if (previousOverlay != null) {
-          if (curTracking) {
-            pushClick(0, getStamp(), 31, 0, null);
-          }
-          toggleOverlay();
-        }
-        break;
-
-        // key b - clickTrackings
-      case hotkeyArr[4][0]:
-      case hotkeyArr[4][1]:
-        if (!curTracking) {
-          curTracking = true;
-          //Starting date is recorded
-          startTime = new Date();
-          clickTrackings = [];
-          document.getElementById("recordIcon").style.visibility = "visible";
-        } else {
-          continueTracking();
-        }
-        break;
-        //no default handler
-
-        // hit P to see pdf output
-      case 80:
-        // If not in the multi-player mode, we should not disable the 'P' key
-        if (!multiplayerAssigningModeOn) {
-          startPrintOptions();
-        }
-
-        break;
     } //end switch
   }
 } //end onDocumentKeyDown
@@ -4114,7 +4126,8 @@ function resetHotkeys() {
     [87, null],
     [83, null],
     [79, null],
-    [81, null]
+    [81, null],
+    [80, null]
   ];
   updateKeys();
 } //end resetHotkeys()
@@ -4721,7 +4734,7 @@ function setSimBoolean(newValue) {
 } //end setSimBoolean
 
 //Sets the simUpload boolean value
-function setUpload(givenValue) {
+function setUpload(hotkeyValue) {
   uploadedBoard = givenValue;
 } //end setUpload()
 
@@ -5275,12 +5288,12 @@ function toggleReplacementFrame(options) {
   var modal = document.getElementById('modalReplacement');
   innermodal = modal.contentDocument || modal.contentWindow.document;
   if(modal.style.visibility === 'visible'){
-    console.log('here');
-    modal.style.visibility = 'hidden';
+    modal.style.display = 'none';
     modalUp = false;
   }
   else {
-    modal.style.visibility = 'visible'
+    modal.style.display = 'block';
+    modal.style.visibility = 'visible';
     select = innermodal.getElementById('replacementSelect');
     while(select.firstChild){
       select.removeChild(select.firstChild);
