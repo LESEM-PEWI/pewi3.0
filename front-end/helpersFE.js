@@ -3493,6 +3493,7 @@ function onDocumentMouseDown(event) {
             } else {
               //just a normal tile change
               changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
+              console.log(boardData);
               //changeLandTypeTileNitrate();
               //Change variable for painting click and drag status
               clickAndDrag = true;

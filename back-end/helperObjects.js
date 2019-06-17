@@ -1102,28 +1102,22 @@ function GameBoard() {
   //  otherwise, avoid using this function and update tiles individually since this is computationally intensive
   this.updateBoard = function() {
     // this.map[0].sumAreaHelper();
-    //y=yearSelected;
-    //this.cropMultiplier();
-    for (var y = 1; y <= this.calculatedToYear; y++) {
+    y=yearSelected;
+    //for (var y = 1; y <= this.calculatedToYear; y++) {
       for (var i = 0; i < this.map.length; i++) {
         console.log("update Board");
         this.map[i].update(y);
         //this.map[i].updateNitrate(y);
       }
-      this.precipitationMultiplierHelper(y);
-      this.cropMultiplierHelper(y);
-      this.calculateNitrateConcentrationHelper(y);
-      this.sumAreasUnderTwo(y);
-      this.tileNitrateCalculation(y);
-      // this.cropMultiplierMap(y);
-      // console.log();
-      // for (var i = 0; i < this.map.length; i++) {
-      //   this.map[i].updateNitrate(y);
-      // }
-    }
+      this.precipitationMultiplierHelperAlltile(y);
+      this.cropMultiplierHelperAlltile(y);
+      this.calculateNitrateConcentrationHelperAlltile(y);
+      this.sumAreasUnderTwoAlltile(y);
+      this.tileNitrateCalculationAlltile(y);
+    //}
   }; //end updateBoard
 
-  this.precipitationMultiplierHelper = function(year){
+  this.precipitationMultiplierHelperAlltile = function(year){
     console.log("precipitationMultiplierHelper");
     if (this.precipitation[year] == 24.58 || this.precipitation[year] == 28.18) // If it's a dry year
     {
@@ -1143,7 +1137,7 @@ function GameBoard() {
     }
   };//end this.precipitationMultiplierHelper
 
-  this.cropMultiplierHelper = function(year) {
+  this.cropMultiplierHelperAlltile = function(year) {
     for(var i=0, il=this.map.length; i<il; i++){
       console.log("cropMultiplierHelper");
     if ((this.map[i].landType[year] > LandUseType.none && this.map[i].landType[year] < LandUseType.alfalfa) || this.map[i].landType[year] == LandUseType.mixedFruitsVegetables) {
@@ -1163,7 +1157,7 @@ function GameBoard() {
 
   }; //end this.cropMultiplierHelper
 
-  this.calculateNitrateConcentrationHelper = function(year) {
+  this.calculateNitrateConcentrationHelperAlltile = function(year) {
       var precip = this.precipMult;
       var wetlandMultiplier = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
       var subWatershedNitrateNoMin = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -1191,7 +1185,7 @@ function GameBoard() {
       this.subWatershedNitrateNoMin = subWatershedNitrateNoMin;
   }; //end this.calculateNitrateConcentrationHelper()
 
-  this.sumAreasUnderTwo = function(year){
+  this.sumAreasUnderTwoAlltile = function(year){
     var sum = 0;
     var arr = this.subWatershedNitrateNoMin;
     for(var i=0, il=this.map.length; i<il; i++){
@@ -1203,7 +1197,7 @@ function GameBoard() {
     this.sumUnderTwo = sum;
   };//end this.sumAreasUnderTwo()
 
-  this.tileNitrateCalculation = function(year){
+  this.tileNitrateCalculationAlltile = function(year){
     var precip = this.precipMult;
     var sut = this.sumUnderTwo;
     var res = this.subWatershedNitrateNoMin;
@@ -3543,7 +3537,7 @@ function Tile(tileArray, board) {
   this.finalArea = 0;
   this.subWatershedNitrateNoMin = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   this.subWatershedArea = 0;
-  this.cropMult = Array(828);
+  //this.cropMult = Array(828);
   this.precipMult = 0;
   this.sumUnderTwo = 0;
 
@@ -3587,7 +3581,7 @@ function Tile(tileArray, board) {
   //Since tile Nitrate score requires readings from entire map, it needs its own update function
   //This function is only called by changeLandTypeTileNitrate() in helpersFE
   this.updateNitrate = function(upToYear) {
-
+    console.log(board);
     for (var y = 1; y <= upToYear; y++) {
       // this.sumAreaHelper(); // We don't have to call this function every single time when landtype is changed, since the Area is constant. Call it once is enough
       this.precipitationMultiplierHelper(y);
@@ -3699,19 +3693,26 @@ function Tile(tileArray, board) {
   this.tileNitrateCalculation = function(year){
     var subwatershed = this.subwatershed;
     var precip = this.precipMult;
-    var crop = this.cropMult[this.id-1];
+    var crop = board.cropMult[this.id-1];
     var area = this.area;
     var sut = this.sumUnderTwo;
-    var res = this.subWatershedNitrateNoMin;
+    var res = board.subWatershedNitrateNoMin;
     var score = 100*precip*crop*area;
     var wetlandMultiplier = 1;
     //Determine if there is a strategic wetland in use in this Tile's subWatershed
-    for(var t = 0, tl=board.map.length; t < tl; t++){
-      if ((subwatershed == board.map[t].subwatershed) && (board.map[t].landType[year] == LandUseType.wetland) && board.map[t].strategicWetland == 1) {
+    var subWatershedtile=board.map.filter(
+      function(key){
+        return key.subwatershed==subwatershed;
+      }
+    );
+    for(var t = 0, tl=subWatershedtile.length; t < tl; t++){
+      console.log("tileNitrateCalculation");
+      if ((subWatershedtile[t].landType[year] == LandUseType.wetland) && subWatershedtile[t].strategicWetland == 1) {
         wetlandMultiplier = 0.48;
         break;
       }
     }
+    
     score *= wetlandMultiplier;
 
     //If Tile is in subwatershed with score below 2, do more stuff
@@ -3720,7 +3721,7 @@ function Tile(tileArray, board) {
       var paa = diff/sut;  //per-acr-adjustment
       score+=paa*this.area;
     }
-
+    console.log(score);
     this.results[year].calculatedTileNitrate = score;
 
   };//end this.tileNitrateCalculation
@@ -3730,33 +3731,36 @@ function Tile(tileArray, board) {
   //that is unecessary for Tile Nitrate calculations
   this.calculateNitrateConcentrationHelper = function(year) {
 
-      var areaArr = this.subWatershedArea;
+      var n=this.subwatershed;
+      var area = this.subWatershedArea[n];
       var areaTotal = this.finalArea;
       var precip = this.precipMult;
-      var tempNitrateConcentration = [0, 0, 0, 0];
+      var wetlandMultiplier =1;
+      var subWatershedtile=board.map.filter(
+        function(key){
+          return key.subwatershed==n;
+        }
+      );
 
-      var wetlandMultiplier = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-      var subWatershedNitrateNoMin = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      for (var i = 0, il=board.map.length; i < il; i++) {
+      board.subWatershedNitrateNoMin[n]=0;
 
+      for(var i=0, il=subWatershedtile.length; i<il; i++){
+        console.log("calculateNitrateConcentrationHelper");
+        board.subWatershedNitrateNoMin[n]+=board.cropMult[subWatershedtile[i].id-1];
 
-        subWatershedNitrateNoMin[board.map[i].subwatershed] += this.cropMult[i];
-        if ((board.map[i].landType[year] == LandUseType.wetland) && board.map[i].strategicWetland == 1) {
-          wetlandMultiplier[board.map[i].subwatershed] = 0.48;
+        if ((subWatershedtile[i].landType[year] == LandUseType.wetland) &&
+         subWatershedtile[i].strategicWetland == 1) {
+          wetlandMultiplier[n] = 0.48;
         } //end if
       } //end for all cells, adding Crop Multipliers
+      if(board.subWatershedNitrateNoMin[n]==0&&area==0){
+        board.subWatershedNitrateNoMin[n]=0;
+      }else{
+        board.subWatershedNitrateNoMin[n] /=area;
+        board.subWatershedNitrateNoMin[n]*=100*precip *wetlandMultiplier *(area/areaTotal);
+      }
 
-      for (var s = 1, sl=areaArr.length; s < sl; s++) {
-        //divide to accomodate for row crop multiplier
-        if (subWatershedNitrateNoMin[s] == 0 && areaArr[s] == 0) {
-          subWatershedNitrateNoMin[s] = 0;
-        } else {
-          subWatershedNitrateNoMin[s] /= areaArr[s];
-          subWatershedNitrateNoMin[s] *= 100 * precip * wetlandMultiplier[s] * (areaArr[s]/areaTotal);
-        }
-      } //end for all watersheds
-
-      this.subWatershedNitrateNoMin = subWatershedNitrateNoMin;
+      console.log(board.subWatershedNitrateNoMin);
   }; //end this.calculateNitrateConcentrationHelper()
 
   //This function sums the area of the entire map
@@ -3779,26 +3783,36 @@ function Tile(tileArray, board) {
   //Helper method, does same calculations as Results.nitrateSubcalculation but updates values
   //for use in Tile Nitrate calculation
   this.cropMultiplierHelper = function(year) {
-    for(var i=0, il=board.map.length; i<il; i++){
-    if ((board.map[i].landType[year] > LandUseType.none && board.map[i].landType[year] < LandUseType.alfalfa) || board.map[i].landType[year] == LandUseType.mixedFruitsVegetables) {
-      if (board.map[i].landType[year] == LandUseType.conservationCorn || board.map[i].landType[year] == LandUseType.conservationSoybean) {
-        if (board.map[i].soilType == "A" || board.map[i].soilType == "B" || board.map[i].soilType == "C" || board.map[i].soilType == "L" || board.map[i].soilType == "N" || board.map[i].soilType == "O") {
-          this.cropMult[i] = 0.14 * board.map[i].area * 0.69;
+    var n=board.map[this.id-1].subwatershed;
+    var subWatershedtile=board.map.filter(
+      function(key){
+        return key.subwatershed==n;
+      }
+    );
+    for(var i=0, il=subWatershedtile.length; i<il; i++){
+      console.log("cropMultiplierHelper");
+      var landtype=subWatershedtile[i].landType[year];
+      var soiltype=subWatershedtile[i].soilType;
+      var tileid=subWatershedtile[i].id-1;
+      if ((landtype > LandUseType.none && landtype < LandUseType.alfalfa) || landtype == LandUseType.mixedFruitsVegetables) {
+        if (landtype == LandUseType.conservationCorn || landtype == LandUseType.conservationSoybean) {
+          if (soiltype == "A" || soiltype == "B" || soiltype == "C" || soiltype == "L" || soiltype == "N" || soiltype == "O") {
+            board.cropMult[tileid] = 0.14 * board.map[tileid].area * 0.69;
+          } else {
+            board.cropMult[tileid] = 0.14 * board.map[tileid].area * 0.62;
+          }
         } else {
-          this.cropMult[i] = 0.14 * board.map[i].area * 0.62;
+          board.cropMult[tileid] = 0.14 * board.map[tileid].area;
         }
       } else {
-        this.cropMult[i] = 0.14 * board.map[i].area;
+        board.cropMult[tileid] = 0;
       }
-    } else {
-      this.cropMult[i] = 0;
     }
-  }
-
   }; //end this.cropMultiplierHelper
 
   //Helper method, same calculations as Results.precipitationMultiplier
   this.precipitationMultiplierHelper = function(year){
+    console.log("precipitationMultiplierHelper");
     if (board.precipitation[year] == 24.58 || board.precipitation[year] == 28.18) // If it's a dry year
     {
       this.precipMult = 0.86;
@@ -3823,6 +3837,7 @@ function Tile(tileArray, board) {
     var sum = 0;
     var arr = this.subWatershedNitrateNoMin;
     for(var i=0, il=board.map.length; i<il; i++){
+      console.log("sumAreasUnderTwo");
       if(arr[board.map[i].subwatershed]<2){
         sum+=board.map[i].area;
       }
