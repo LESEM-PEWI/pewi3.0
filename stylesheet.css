@@ -387,6 +387,11 @@ body {
     cursor: pointer;
 }
 
+#checkOverlay{
+  position: absolute;
+  top: 75%;
+}
+
 #directoryButton {
   animation-duration: 0.4s;
   animation-name: showEffect;

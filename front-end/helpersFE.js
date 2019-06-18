@@ -824,7 +824,7 @@ function addTile(tile) {
 
     if (!multiplayerAssigningModeOn) {
       tileMaterial2 = new THREE.MeshLambertMaterial({
-        map: textureArray[tile.landType[currentYear]],
+        map: grayTextureArray[tile.landType[currentYear]],
         side: THREE.DoubleSide,
         transparent: true,
         opacity: 0.4
@@ -864,10 +864,10 @@ function addTile(tile) {
 
     if (!multiplayerAssigningModeOn) {
       tileMaterial = new THREE.MeshLambertMaterial({
-        map: textureArray[tile.landType[currentYear]],
+        map: grayTextureArray[tile.landType[currentYear]],
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.8
+        opacity: 1.0
       });
     } else {
       tileMaterial = new THREE.MeshLambertMaterial({
@@ -1217,10 +1217,10 @@ function changeLandTypeTile(tileId) {
         else
         {
           // If the land type remains the same, then do nothing, otherwise,change the land type, and update progress bars
-          if(meshMaterials[tileId].map != textureArray[painter]){
+          if(meshMaterials[tileId].map != grayTextureArray[painter]){
             // console.log('Change the land type in tile which id is ', tileId);
-            meshMaterials[tileId].map = textureArray[painter];
-            meshOverlay[tileId].map = textureArray[painter];
+            meshMaterials[tileId].map = grayTextureArray[painter];
+            meshOverlay[tileId].map = grayTextureArray[painter];
             // record the data changes in boardData
             boardData[currentBoard].map[tileId].landType[currentYear] = painter;
             // update boardData figures
@@ -1945,7 +1945,7 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
     //if there is an actual tile there
     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
       //then change mesh material
-      meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
+      //meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
       meshOverlay[i].map = highlightArray[getHighlightColor(highlightType, i)];
     } //end if
   } //end for
@@ -1974,6 +1974,7 @@ function drawOverlayOntoBoard(selectionHighlightNumber, highlightType) {
     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
       //then change mesh material
       meshOverlay[i].map = highlightArray[getHighlightColor(highlightType, i)];
+      //meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
     } //end if
   } //end for
 
@@ -4716,8 +4717,8 @@ function saveAndRandomize() {
         //Change the land use for a tile if it was restricted
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
           painter = newDefaultLandUse;
-          meshMaterials[j].map = textureArray[painter];
-          meshOverlay[j].map = textureArray[painter];
+          meshMaterials[j].map = grayTextureArray[painter];
+          meshOverlay[j].map = grayTextureArray[painter];
 
           boardData[currentBoard].map[j].landType[i] = painter;
           boardData[currentBoard].map[j].update(i);
