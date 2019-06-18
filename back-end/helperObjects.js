@@ -1104,7 +1104,6 @@ function GameBoard() {
     // this.map[0].sumAreaHelper();
     y=yearSelected;
       for (var i = 0; i < this.map.length; i++) {
-        console.log("update Board");
         this.map[i].update(y);
       }
       this.precipitationMultiplierHelperAlltile(y);
