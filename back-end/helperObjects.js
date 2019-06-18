@@ -114,7 +114,49 @@ var LandUseType = {
         return "NOT FOUND";
     } //end switch
 
+  },
+
+  getNumericalType: function(type)
+  {
+      switch (type) {
+        case "None":
+          return 0;
+        case "Conventional Corn":
+          return 1;
+        case "Conservation Corn":
+          return 2;
+        case "Conventional Soybean":
+          return 3;
+        case "Conservation Soybean":
+          return 4;
+        case "Alfalfa":
+          return 5;
+        case "Permanent Pasture":
+          return 6;
+        case "Rotational Grazing":
+          return 7;
+        case "Grass Hay":
+          return 8;
+        case "Prairie":
+          return 9;
+        case "Conservation Forest":
+          return 10;
+        case "Convential Forest":
+          return 11;
+        case "Switchgrass":
+          return 12;
+        case "Short Rotation Woody Bioenergy":
+          return 13;
+        case "Wetland":
+          return 14;
+        case "Mixed Fruits and Vegetables":
+          return 15;
+        default:
+          return "NOT FOUND";
+    }
   }
+
+
 
 };
 //end definition of landUseType
@@ -1877,7 +1919,7 @@ function Printer() {
       case 'year':
         // Create precipitation info as legend box for LandUse Map
         // first get text and color
-        text = "Precipitation: " + boardData[currentBoard].precipitation[type.substr(-1)];
+        text = "Precipitation: " + boardData[currentBoard].precipitation[type.substr(-1)] + "  in.";
         color = "rgb(29, 187, 245)";
         addLegendLine(type, color, text); // add line to legend here
 
@@ -3590,7 +3632,6 @@ function Tile(tileArray, board) {
     var res = this.subWatershedNitrateNoMin;
     var score = 100*precip*crop*area;
     var wetlandMultiplier = 1;
-
     //Determine if there is a strategic wetland in use in this Tile's subWatershed
     for(var t = 0, tl=board.map.length; t < tl; t++){
       if ((subwatershed == board.map[t].subwatershed) && (board.map[t].landType[year] == LandUseType.wetland) && board.map[t].strategicWetland == 1) {
