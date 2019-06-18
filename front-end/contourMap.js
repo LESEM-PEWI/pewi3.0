@@ -165,6 +165,11 @@ function confirmTopoMap()
 function drawMapLines(tile, x, y, c){
 
   c.lineWidth = 3;
+//   var path = new Path({
+// 	segments: [[30, 75], [30, 25], [80, 25], [80, 75]],
+// 	strokeColor: 'black',
+// 	closed: true
+// });
 
   if(tile.includes("top")){
     c.beginPath();
