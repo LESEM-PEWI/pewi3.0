@@ -111,13 +111,13 @@ var hotkeyArr = [
   [85, null],
   [66, null],
   [86, null],
+  [80, null],
   [68, null],
   [65, null],
   [87, null],
   [83, null],
   [79, null],
   [81, null],
-  [80,null]
   [38, null],
   [40, null],
   [37, null],
@@ -1128,7 +1128,7 @@ function calculateCutoffs() {
 // deprecated?
 function calculateResults(tileId, year) {
   //Totals = new Results(boardData[currentBoard]);
-  console.log("calculate result:"+year);
+  
   Totals.update(tileId, year);
 
   //Correction for Carbon Sequestrations

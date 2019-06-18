@@ -253,7 +253,7 @@
         var tempSpan = document.createElement("span");
           tempHotkey.appendChild(tempSpan);
       var tempInput1;
-      if(tempIndex>11){
+      if(tempIndex>12){
         //arrows key in div
         tempInput1=document.createElement("div");
       }else{
@@ -285,7 +285,7 @@
             tempChar="→";
           }
           //hot keys without arrows key & available to change
-          if(tempIndex<12){
+          if(tempIndex<13){
           tempInput1.placeholder = tempChar;
           tempInput1.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",1)");
           tempInput1.setAttribute("onkeydown","this.value = this.value");
