@@ -1167,7 +1167,6 @@ function changeLandTypeTile(tileId) {
             // update boardData figures
             boardData[currentBoard].map[tileId].update(currentYear);
             changeLandTypeTileNitrate(tileId);
-            console.log(boardData[currentBoard]);
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
             calculateResults(tileId, currentYear);
             //console.log(boardData[currentBoard].map[tileId]);
@@ -1188,7 +1187,6 @@ function changeLandTypeTile(tileId) {
 //Updates Nitrate score for entire map since each individual Tile's score hinges on landtypes across the entire map
 //This function is called after each instance of a changeLandTypeTile() call
 function changeLandTypeTileNitrate(tileId){
-  console.log("changeLandTypeTileNitrate");
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
     //Hence the for loop
@@ -3404,7 +3402,7 @@ function onDocumentMouseMove(event) {
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
         if (boardData[currentBoard].map[currentTile].landType[0] != 0){
            changeLandTypeTile(currentTile);
-           //changeLandTypeTileNitrate();
+           
          }
       } else {
         //just a normal highlighting
@@ -3493,7 +3491,7 @@ function onDocumentMouseDown(event) {
             } else {
               //just a normal tile change
               changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
-              console.log(boardData);
+
               //changeLandTypeTileNitrate();
               //Change variable for painting click and drag status
               clickAndDrag = true;
