@@ -4625,7 +4625,6 @@ function saveAndRandomize() {
   //for whole board (as long as randomization is allowed)
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     //getRandomInt is in back-end helperMethods
-
     for (var j = 0; j <= randomPainterTile.length; j++) { //Check to see if the landuse type is toggled off or not
       if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j]) !== -1) {
         randomPainterTile.splice(j--, 1);
