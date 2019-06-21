@@ -759,18 +759,18 @@ function addTile(tile) {
   var riverHeight = 1;
 
   //Calculate the heights of vertices by averaging topographies of adjacent tiles and create a vector for each corner
-  if (tToggle) {
-    var h1 = (topN24 + topN23 + topN1 + tile.topography) / 4 * 5;
-    var h2 = (topN23 + topN22 + top1 + tile.topography) / 4 * 5;
-    var h3 = (top24 + top23 + top1 + tile.topography) / 4 * 5;
-    var h4 = (top22 + top23 + topN1 + tile.topography) / 4 * 5;
 
-    v1 = new THREE.Vector3(0, h1, 0);
-    v2 = new THREE.Vector3(tileWidth, h2, 0);
-    v3 = new THREE.Vector3(tileWidth, h3, tileHeight);
-    v4 = new THREE.Vector3(0, h4, tileHeight);
+    tile.h1 = (topN24 + topN23 + topN1 + tile.topography) / 4 * 5;
+    tile.h2 = (topN23 + topN22 + top1 + tile.topography) / 4 * 5;
+    tile.h3 = (top24 + top23 + top1 + tile.topography) / 4 * 5;
+    tile.h4 = (top22 + top23 + topN1 + tile.topography) / 4 * 5;
+if (tToggle) {
+    v1 = new THREE.Vector3(0, tile.h1, 0);
+    v2 = new THREE.Vector3(tileWidth, tile.h2, 0);
+    v3 = new THREE.Vector3(tileWidth, tile.h3, tileHeight);
+    v4 = new THREE.Vector3(0, tile.h4, tileHeight);
 
-    riverHeight = (h1 + h2 + h3 + h4) / 4;
+    riverHeight = (tile.h1 + tile.h2 + tile.h3 + tile.h4) / 4;
   } else {
     v1 = new THREE.Vector3(0, 0, 0);
     v2 = new THREE.Vector3(tileWidth, 0, 0);
@@ -849,6 +849,8 @@ function addTile(tile) {
   newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide) / 2;
   newTile.position.y = 0;
   newTile.position.z = tile.row * tileHeight - (tileHeight * tilesHigh) / 2;
+
+  tile.position = newTile.position;
 
   //add the mapID to the
   newTile.mapID = mapID;
@@ -4041,6 +4043,8 @@ function refreshBoard(bypassFromKeyEvent) {
     scene.remove(mesh);
   }
 
+
+
   meshGeometry = new THREE.Geometry();
   meshMaterials = [];
 
@@ -4056,6 +4060,9 @@ function refreshBoard(bypassFromKeyEvent) {
     displayBoard();
     displayLevels(currentHighlightTypeString);
   }
+
+var lines = new ContourMap();
+lines.drawContours();
 
 } //end refreshBoard
 
