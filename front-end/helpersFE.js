@@ -152,7 +152,7 @@ function toggleTabTitle(value, dir) {
     }
     else {
       pushClick(0, getStamp(), 124, 0, dir+value);
-    }    
+    }
   }
 
 
@@ -209,6 +209,24 @@ if(dir == 1){
 }
 }
 
+// Show tab titles when hovered over, hide when not hovering
+function toggleTabTitleHovers(factor) {
+
+  if (curTracking)
+  {
+      pushClick(0, getStamp(), 125, 0, factor);
+  }
+
+  if(document.getElementById(factor).style.visibility == 'visible' && document.getElementById(factor).style.opacity == 1) {
+     document.getElementById(factor).style.visibility = 'hidden';
+     document.getElementById(factor).style.opacity = 0;
+    }
+  else {
+    document.getElementById(factor).style.visibility = 'visible';
+    document.getElementById(factor).style.opacity = 1;
+  }
+}
+
 // Show score details when hover over progress bar
 function toggleScoreDetails(factor) {
   // To include hover effects on progressbars in cur tracking mode
@@ -217,6 +235,7 @@ function toggleScoreDetails(factor) {
       pushClick(0, getStamp(), 122, 0, factor);
   }
   switch (factor){
+
     case 'gameWildlife':
       if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block') {
          document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
@@ -2116,7 +2135,8 @@ function finishProperties() {
     */
     var clickFunctionType = parseInt(clickTrackings[i].functionType);
 
-    if (clickFunctionType == 122 || clickFunctionType == 124 || clickTrackings[i].tileID != clickTrackings[i - 1].tileID ||
+    if (clickFunctionType == 122 || clickFunctionType == 124 || clickFunctionType == 125 ||
+        clickTrackings[i].tileID != clickTrackings[i - 1].tileID ||
         clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
 
       clickTrackings[i].clickID = i;
@@ -4657,10 +4677,12 @@ function runSimulation() {
        94 - "User scrolled in the results page"
        101 - " Copied year __"
        102 - "Pasted in year __"
+       124 - "User hovered over tab titles"
+       125 - "User hovered over tab icons"
     */
     if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 ||
         tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 ||
-        tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122 || tempType == 123 || tempType == 124) {
+        tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122 || tempType == 123 || tempType == 124 || tempType == 125) {
       var tempTile = tempArr[5]; // Extra data
     }
     if (tempType == 56 || tempType == 99 || tempType == 100) {

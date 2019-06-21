@@ -293,44 +293,45 @@
         <div id="painterTab-leftcol" class="leftcol">
 
           <div class="tooltip">
-            <img id="paint1" class="landSelectorIcon iconSelected" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);">
-            <span class="tooltiptext">Conventional Corn</span>
+            <img id="paint1" class="landSelectorIcon iconSelected" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);" onmouseover="toggleTabTitleHovers('tooltip-conventional-corn');" onmouseout="toggleTabTitleHovers('tooltip-conventional-corn');">
+            <span id="tooltip-conventional-corn" class="tooltiptext">Conventional Corn</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint3" class="landSelectorIcon icon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);">
-            <span class="tooltiptext">Conventional Soybean</span>
+            <img id="paint3" class="landSelectorIcon icon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);" onmouseover="toggleTabTitleHovers('tooltip-conventional-soybean');" onmouseout="toggleTabTitleHovers('tooltip-conventional-soybean');">
+            <span id="tooltip-conventional-soybean" class="tooltiptext">Conventional Soybean</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint15" class="landSelectorIcon icon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);">
-            <span class="tooltiptext">Mixed Fruits and Vegetables</span>
+            <img id="paint15" class="landSelectorIcon icon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);" onmouseover="toggleTabTitleHovers('tooltip-mixedFruitsVegetables');" onmouseout="toggleTabTitleHovers('tooltip-mixedFruitsVegetables');">
+            <span id="tooltip-mixedFruitsVegetables" class="tooltiptext">Mixed Fruits and Vegetables</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint8" class="landSelectorIcon icon" src="./imgs/grassHay.png" onclick="changeSelectedPaintTo(8);">
-            <span class="tooltiptext">Grass Hay</span>
+            <img id="paint8" class="landSelectorIcon icon" src="./imgs/grassHay.png" onclick="changeSelectedPaintTo(8);" onmouseover="toggleTabTitleHovers('tooltip-grassHay');" onmouseout="toggleTabTitleHovers('tooltip-grassHay');">
+            <span id="tooltip-grassHay" class="tooltiptext">Grass Hay</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint6" class="landSelectorIcon icon" src="./imgs/permanentPasture.png" onclick="changeSelectedPaintTo(6);">
-            <span class="tooltiptext">Permanent Pasture</span>
+            <img id="paint6" class="landSelectorIcon icon" src="./imgs/permanentPasture.png" onclick="changeSelectedPaintTo(6);" onmouseover="toggleTabTitleHovers('tooltip-permanentPasture');" onmouseout="toggleTabTitleHovers('tooltip-permanentPasture');">
+            <span id="tooltip-permanentPasture" class="tooltiptext">Permanent Pasture</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint14" class="landSelectorIcon icon" src="./imgs/wetland.png" onclick="changeSelectedPaintTo(14);">
-            <span class="tooltiptext">Wetland</span>
+            <img id="paint14" class="landSelectorIcon icon" src="./imgs/wetland.png" onclick="changeSelectedPaintTo(14);" onmouseover="toggleTabTitleHovers('tooltip-wetland');" onmouseout="toggleTabTitleHovers('tooltip-wetland');">
+            <span id="tooltip-wetland" class="tooltiptext">Wetland</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint11" class="landSelectorIcon icon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);">
-            <span class="tooltiptext">Conventional Forest</span>
+            <img id="paint11" class="landSelectorIcon icon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);" onmouseover="toggleTabTitleHovers('tooltip-conventional-forest');" onmouseout="toggleTabTitleHovers('tooltip-conventional-forest');">
+            <span id="tooltip-conventional-forest" class="tooltiptext">Conventional Forest</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint13" class="landSelectorIcon icon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);">
-            <span class="tooltiptext">Short Rotation Woody Bioenergy</span>
+            <img id="paint13" class="landSelectorIcon icon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);" onmouseover="toggleTabTitleHovers('tooltip-shortRotationWoodyBioenergy');" onmouseout="toggleTabTitleHovers('tooltip-shortRotationWoodyBioenergy');">
+            <span id="tooltip-shortRotationWoodyBioenergy" class="tooltiptext">Short Rotation Woody Bioenergy</span>
           </div>
+
           <!-- multiplayer mode  -->
           <div id="leftPlayerCon"></div>
 
@@ -339,43 +340,45 @@
         <div id="painterTab-rightcol" class="rightcol">
 
           <div class="tooltip">
-            <img id="paint2" class="landSelectorIcon icon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
-            <span class="tooltiptext">Conservation Corn</span>
+            <img id="paint2" class="landSelectorIcon icon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); " onmouseover="toggleTabTitleHovers('tooltip-conservation-corn');" onmouseout="toggleTabTitleHovers('tooltip-conservation-corn');">
+            <span id="tooltip-conservation-corn" class="tooltiptext">Conservation Corn</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint4" class="landSelectorIcon icon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
-            <span class="tooltiptext">Conservation Soybean</span>
+            <img id="paint4" class="landSelectorIcon icon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);" onmouseover="toggleTabTitleHovers('tooltip-conservation-soybean');" onmouseout="toggleTabTitleHovers('tooltip-conservation-soybean');">
+            <span id="tooltip-conservation-soybean" class="tooltiptext">Conservation Soybean</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint5" class="landSelectorIcon icon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
-            <span class="tooltiptext">Alfafa Hay</span>
+            <img id="paint5" class="landSelectorIcon icon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);" onmouseover="toggleTabTitleHovers('tooltip-alfalfaHay');" onmouseout="toggleTabTitleHovers('tooltip-alfalfaHay');">
+            <span id="tooltip-alfalfaHay" class="tooltiptext">Alfafa Hay</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint12" class="landSelectorIcon icon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);">
-            <span class="tooltiptext">Switch Grass</span>
+            <img id="paint12" class="landSelectorIcon icon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);" onmouseover="toggleTabTitleHovers('tooltip-switchGrass');" onmouseout="toggleTabTitleHovers('tooltip-switchGrass');">
+            <span id="tooltip-switchGrass" class="tooltiptext">Switch Grass</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint7" class="landSelectorIcon icon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);">
-            <span class="tooltiptext">Rotational Grazing</span>
+            <img id="paint7" class="landSelectorIcon icon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);" onmouseover="toggleTabTitleHovers('tooltip-rotationalGrazing');" onmouseout="toggleTabTitleHovers('tooltip-rotationalGrazing');">
+            <span id="tooltip-rotationalGrazing" class="tooltiptext">Rotational Grazing</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint9" class="landSelectorIcon icon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);">
-            <span class="tooltiptext">Prarie</span>
+            <img id="paint9" class="landSelectorIcon icon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);" onmouseover="toggleTabTitleHovers('tooltip-prairie');" onmouseout="toggleTabTitleHovers('tooltip-prairie');">
+            <span id="tooltip-prairie" class="tooltiptext">Prarie</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint10" class="landSelectorIcon icon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);">
-            <span class="tooltiptext">Conservation Forest</span>
+            <img id="paint10" class="landSelectorIcon icon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);" onmouseover="toggleTabTitleHovers('tooltip-conservation-forest');" onmouseout="toggleTabTitleHovers('tooltip-conservation-forest');">
+            <span id="tooltip-conservation-forest" class="tooltiptext">Conservation Forest</span>
           </div>
 
           <!-- multiplayer mode  -->
           <div id="rightPlayerCon"></div>
         </div>
+
+
         <div id="playerOptions" style="display: inline; visibility: hidden;">
           <div id="playerDeleteButton" onclick="deleteAndSort();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
             <img id="playerDeleteImage" style="display:inline-block;" class="playerIcon icon" src="./imgs/deleteYear.png"></div>

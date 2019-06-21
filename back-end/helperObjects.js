@@ -1329,6 +1329,18 @@ function Click(c1, c2, c3, c4, c5) {
                 break;
               }
 
+            //When the user hovers over a tab icon
+            case 125:
+              if (action) {
+                //document.getElementById(this.tileID).style.opacity == 0;
+                return  toggleTabTitleHovers(this.tileID);
+                break;
+              }
+              else {
+                return "User hovered over tab: " + this.tileID ;
+                break;
+              }
+
 
 
 

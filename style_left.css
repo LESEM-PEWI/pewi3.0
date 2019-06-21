@@ -535,7 +535,7 @@ select {
     display: inline-block;
 }
 
-.tooltip .tooltiptext {
+ .tooltip .tooltiptext {
     visibility: hidden;
     font-family: Helvetica, Georgia, Arial, "Helvetica Neue", sans-serif;
     width: 130px;
@@ -571,6 +571,7 @@ select {
 	margin-top: -10px;
 }
 
+/*
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
@@ -579,7 +580,7 @@ select {
 .tooltiptext:hover {
     display: none;
 }
-
+*/
 
 .tooltipPrecip {
     position: relative;
