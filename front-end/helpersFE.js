@@ -823,12 +823,25 @@ function addTile(tile) {
   } else {
 
     if (!multiplayerAssigningModeOn) {
-      tileMaterial2 = new THREE.MeshLambertMaterial({
-        map: grayTextureArray[tile.landType[currentYear]],
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.4
-      });
+
+      var checkbox = document.getElementById("toggleOverlay");
+      if(!checkbox.checked){
+        tileMaterial2 = new THREE.MeshLambertMaterial({
+          map: grayTextureArray[tile.landType[currentYear]],
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 1.0
+        });
+
+      }
+      else{
+        tileMaterial2 = new THREE.MeshLambertMaterial({
+          map: grayTextureArray[tile.landType[currentYear]],
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.4
+        });
+      }
     } else {
       tileMaterial2 = new THREE.MeshLambertMaterial({
         map: ((tile.landType[currentYear] < multiplayerTextureArray.length) ? multiplayerTextureArray[tile.landType[currentYear]] : null),
@@ -1707,8 +1720,6 @@ function displayBoard() {
 
   scene.add(mesh2);
   scene.add(mesh);
-  //scene.add(mesh2);
-
 
   //calculate locations of tiles on grid for highlighting and landType changes
   calculateCutoffs();
@@ -1896,31 +1907,31 @@ function displayLevels(overlayHighlightType) {
   if (selectionHighlightNumber != 0) {
     previousOverlay = overlayHighlightType;
   }
-
-  //map is not previously highlighted
-  if (!mapIsHighlighted) {
-    drawOverlayOntoBoard(selectionHighlightNumber, overlayHighlightType);
-  }
-  //if the map is previously highlighted
-  else {
-    //if the highlight is the same... turn it off
-    if (currentHighlightType == selectionHighlightNumber || selectionHighlightNumber == 0) {
-
-      mapIsHighlighted = false;
-      refreshBoard();
-      showLevelDetails(-1 * currentHighlightType);
-      currentHighlightType = 0;
-      currentHighlightTypeString = null;
-
+    if (!mapIsHighlighted) {
+        drawOverlayOntoBoard(selectionHighlightNumber, overlayHighlightType);
     }
-    //else if the highlighting is different, let's change to the new highlighting
+    //if the map is previously highlighted
     else {
-      //close previous legend
-      showLevelDetails(-1 * currentHighlightType);
-      //highlight board
-      drawOverlayOntoBoard(selectionHighlightNumber, overlayHighlightType);
-    } //end else/if group
-  } //end else/if mapIsHighlighted
+      //if the highlight is the same... turn it off
+      if (currentHighlightType == selectionHighlightNumber || selectionHighlightNumber == 0) {
+
+        mapIsHighlighted = false;
+        refreshBoard();
+        showLevelDetails(-1 * currentHighlightType);
+        currentHighlightType = 0;
+        currentHighlightTypeString = null;
+
+      }
+      //else if the highlighting is different, let's change to the new highlighting
+      else {
+        //close previous legend
+        showLevelDetails(-1 * currentHighlightType);
+        //highlight board
+        drawOverlayOntoBoard(selectionHighlightNumber, overlayHighlightType);
+      } //end else/if group
+    }
+
+  //}
 
   // store last users action ( print function )
   if (!modalUp) {
@@ -1945,8 +1956,8 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
     //if there is an actual tile there
     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
       //then change mesh material
-      //meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
-      meshOverlay[i].map = highlightArray[getHighlightColor(highlightType, i)];
+      //meshOverlay[i].map = highlightArray[getHighlightColor(highlightType, i)];
+      meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
     } //end if
   } //end for
 
