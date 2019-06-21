@@ -209,7 +209,9 @@ if(dir == 1){
 }
 }
 
-// Show tab titles when hovered over, hide when not hovering
+/* Show tab titles when hovered over, hide when not hovering
+   Here 'factor' is the span id of the tooltip (or hover text and its container) that needs to be made visible.
+*/
 function toggleTabTitleHovers(factor) {
 
   if (curTracking)
