@@ -765,6 +765,7 @@ function addTile(tile) {
     var h2 = (topN23 + topN22 + top1 + tile.topography) / 4 * 5;
     var h3 = (top24 + top23 + top1 + tile.topography) / 4 * 5;
     var h4 = (top22 + top23 + topN1 + tile.topography) / 4 * 5;
+    console.log(h1)
 
     v1 = new THREE.Vector3(0, h1, 0);
     v2 = new THREE.Vector3(tileWidth, h2, 0);

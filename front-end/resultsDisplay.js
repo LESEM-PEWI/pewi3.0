@@ -4121,6 +4121,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
       //the following code is to add a rectangle around the hovered things
       //We cant just change the border since the border will be covered by higher layered rects
       var outlineRect = svg.append("rect")
+      .attr("rx", x.bandwidth()*.05)
       .attr("stroke", "black")
       .attr("stroke-width", "3px")
       .style("visibility", "hidden")
@@ -4138,8 +4139,10 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
           .attr("transform", function(d) { return "translate(" + x0(d.data.landUse) + ",0)"; })//translate using 1 of the x's
           .attr("x", function(d) {return x(d.data.year); }) //set x to the other so that when combined they get their own unique x value
           .attr("y", function(d) {if (d[1] > 0) return y(0) - (y(d[0])- y(d[1])); else return y(0); }) //if the bar is positive the height has to be consi
+          .attr("rx", x.bandwidth()*.05)
           .attr("width", x.bandwidth)
           .attr("height", function(d){return y(d[0])- y(d[1]);})
+          .attr("ry", x.bandwidth()*.05)
           .on("mouseover", function(d) {tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
             tooltip.select("#econGraphic1LU").text("Land Use: " + d.data.landUse)
             let econType = this.parentNode.getAttribute("layernum")
@@ -4149,6 +4152,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
             outlineRect.attr("x", this.getAttribute("x"))
             outlineRect.attr("y", this.getAttribute("y"))
             outlineRect.attr("height", this.getAttribute("height"))
+            outlineRect.attr("ry", this.getAttribute("ry"))
           })
           .on("mouseout", function(d) {tooltip.style("visibility", "hidden")
           outlineRect.style("visibility", "hidden")
