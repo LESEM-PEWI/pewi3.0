@@ -1124,23 +1124,21 @@ function calculateCutoffs() {
 
 } //end calculateCutoffs
 
-//calculateResults triggers the results calculations by updating Totals
-// deprecated?
-function calculateResults(tileId, year) {
-  //Totals = new Results(boardData[currentBoard]);
+/**
+ * calculateResults triggers the results calculations by updating Totals
+ * @param  {[type]} tileId [description]
+ * @param  {[type]} y     year
+ *
+ */
+function calculateResults(tileId, y) {
+  var year;
+  if(typeof y!='undefined'){
+    year=y;
+  }else{
+    year=yearSelected;
 
+  }
   Totals.update(tileId, year);
-
-  //Correction for Carbon Sequestrations
-  if(typeof year == 'undefined') {
-    for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
-      Totals.carbonSequestration[y] = Totals.carbonSequestration[y] * (1 / 0.90718474);
-    }
-  }
-  else {
-    Totals.carbonSequestration[year] = Totals.carbonSequestration[year] * (1 / 0.90718474);
-  }
-
   //contaminatedRiver(Totals);
 } //end calculateResults
 
@@ -1167,15 +1165,18 @@ function changeLandTypeTile(tileId) {
         {
           // If the land type remains the same, then do nothing, otherwise,change the land type, and update progress bars
           if(meshMaterials[tileId].map != textureArray[painter]){
+            //console.log(Totals);
+            //console.log(boardData[currentBoard].map[tileId]);
             // console.log('Change the land type in tile which id is ', tileId);
             meshMaterials[tileId].map = textureArray[painter];
             // record the data changes in boardData
             boardData[currentBoard].map[tileId].landType[currentYear] = painter;
             // update boardData figures
             boardData[currentBoard].map[tileId].update(currentYear);
+            changeLandTypeTileNitrate(tileId);
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
             calculateResults(tileId, currentYear);
-
+            //console.log(boardData[currentBoard].map[tileId]);
           }
         }
       } else if (multiplayerAssigningModeOn) {
@@ -1192,26 +1193,22 @@ function changeLandTypeTile(tileId) {
 
 //Updates Nitrate score for entire map since each individual Tile's score hinges on landtypes across the entire map
 //This function is called after each instance of a changeLandTypeTile() call
-function changeLandTypeTileNitrate(){
+function changeLandTypeTileNitrate(tileId){
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
     //Hence the for loop
-    for(var n = 0, nl=boardData[currentBoard].map.length; n<nl; n++){
+    //for(var n = 0, nl=boardData[currentBoard].map.length; n<nl; n++){
       //if land type of tile is nonzero
-      if (boardData[currentBoard].map[n].landType[currentYear] != 0) {
+      if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
         //change the materials of the faces in the meshMaterials array and update the boardData
         if (!multiplayerAssigningModeOn) {
-          boardData[currentBoard].map[n].updateNitrate(currentYear);
+          boardData[currentBoard].map[tileId].updateNitrate(currentYear);
         }
       }
-    }
+    //}
     refreshProgressBar(currentYear);
   } // end outter if
 } //end changeLandTypeTile
-
-
-
-
 
 //paintChange changes the highlighted color of the selected painter and updates painter
 function changeSelectedPaintTo(newPaintValue) {
@@ -1485,7 +1482,7 @@ function combineMulti(givenPlayers) {
     }
   }
 
-changeLandTypeTileNitrate();
+//changeLandTypeTileNitrate();
 
   //Delete the other (now unused) players
   givenPlayers.shift();
@@ -3433,7 +3430,7 @@ function onDocumentMouseMove(event) {
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
         if (boardData[currentBoard].map[currentTile].landType[0] != 0){
            changeLandTypeTile(currentTile);
-           changeLandTypeTileNitrate();
+           
          }
       } else {
         //just a normal highlighting
@@ -3490,7 +3487,7 @@ function onDocumentMouseDown(event) {
                   undoGridPainters.push(boardData[currentBoard].map[changedTiles[i] - 1].landType[currentYear]);
                   changeLandTypeTile(changedTiles[i] - 1);
                 }
-                changeLandTypeTileNitrate();
+                //changeLandTypeTileNitrate();
                 if (curTracking) {
                   pushClick(0, getStamp(), 56, 0, tempGridArr);
                 }
@@ -3522,7 +3519,8 @@ function onDocumentMouseDown(event) {
             } else {
               //just a normal tile change
               changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
-              changeLandTypeTileNitrate();
+
+              //changeLandTypeTileNitrate();
               //Change variable for painting click and drag status
               clickAndDrag = true;
             } // end if/else
@@ -3552,7 +3550,7 @@ function onDocumentMouseDown(event) {
           }
 
 
-          changeLandTypeTileNitrate();
+          //changeLandTypeTileNitrate();
 
         }
         //Inserts the block of land use types into the undoArr
@@ -3872,8 +3870,9 @@ function pasteYear()
     }
     boardData[currentBoard].updateBoard();
     refreshBoard();
-
-    calculateResults();
+    calculateResults(undefined,yearToPasteIn);
+    console.log(Totals);
+    //calculateResults();
     refreshProgressBar(currentYear);
 
     snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
@@ -4073,7 +4072,7 @@ function randomizeBoard() {
       }
     } //end for all tiles
 
-    changeLandTypeTileNitrate();
+    //changeLandTypeTileNitrate();
   }
   randomizing = false;
   painter = prevPainter;
@@ -4525,7 +4524,7 @@ function revertChanges() {
     } else {
       painter = tempTileAndPainter[1];
       changeLandTypeTile(tempTileAndPainter[0]);
-      changeLandTypeTileNitrate();
+      //changeLandTypeTileNitrate();
     }
     undo = false;
     painter = tempPainter;
@@ -5657,7 +5656,7 @@ function undoGrid(givenTilesAndPainter) {
     changeLandTypeTile(tile);
   }
 
-  changeLandTypeTileNitrate();
+  //changeLandTypeTileNitrate();
 } //end givenTilesAndPainter
 
 //Determines if the tile to be added is unique (non-repeated in paint and tileId)
@@ -5729,7 +5728,10 @@ function updatePrecip(year) {
   boardData[currentBoard].updateBoard();
 
   // update the results and progress bars whenever precipitation is changed.
-  calculateResults();
+  // for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+  //   calculateResults(i,year);
+  // }
+  calculateResults(undefined,year);
   refreshProgressBar(currentYear);
 } //updatePrecip
 
