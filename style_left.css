@@ -576,6 +576,8 @@ select {
   left: 110px;
 }
 
+
+
 /* For the blue arrow attached to the hover text box*/
 .tooltip .tooltiptext::after {
   right: 100%;

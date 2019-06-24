@@ -202,8 +202,8 @@
     <div id="undo" class="undocol">
       <div class="tooltip">
         <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
-        <img id="undoButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-        <span class="tooltiptext"> Undo </span>
+        <img id="undoButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleTabTitleHovers('tooltip-undo');" onmouseout="toggleTabTitleHovers('tooltip-undo');">
+        <span id="tooltip-undo" class="tooltiptext tooltipLandUse"> Undo </span>
       </div>
     </div>
 
@@ -212,15 +212,15 @@
     <div id="settingsTab" class="settingsTab">
       <div id="cellpaint" class="leftcol">
         <div class="tooltip">
-          <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
-          <span class="tooltiptext"> Cell Paint </span>
+          <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);" onmouseover="toggleTabTitleHovers('tooltip-cellPaint');" onmouseout="toggleTabTitleHovers('tooltip-cellPaint');">
+          <span id="tooltip-cellPaint" class="tooltiptext tooltipLandUse"> Cell Paint </span>
         </div>
       </div>
 
       <div id="gridpaint" class="rightcol">
         <div class="tooltip">
-          <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
-          <span class="tooltiptext"> Grid Paint </span>
+          <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);" onmouseover="toggleTabTitleHovers('tooltip-gridPaint');" onmouseout="toggleTabTitleHovers('tooltip-gridPaint');">
+          <span id="tooltip-gridPaint" class="tooltiptext tooltipLandUse"> Grid Paint </span>
         </div>
       </div>
 
