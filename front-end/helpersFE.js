@@ -5495,14 +5495,22 @@ function togglePopupDisplay() {
       if (curTracking) {
         pushClick(0, getStamp(), 14, 0, null);
       }
-      document.getElementById("popup").className = "popupHidden";
-      document.getElementById("bookMarkButton").className = "bookMarkButtonRolled";
+        // Bookmark popup locked in simulation replay mode
+      //if(!isSimRunning()) {
+        document.getElementById("popup").className = "popupHidden";
+        document.getElementById("bookMarkButton").className = "bookMarkButtonRolled";
+      //}
+
     } else {
       if (curTracking) {
         pushClick(0, getStamp(), 54, 0, null);
       }
-      document.getElementById("popup").className = "popup";
-      document.getElementById("bookMarkButton").className = "bookMarkButton";
+      // Bookmark popup locked in simulation replay mode
+      if(!isSimRunning()) {
+        document.getElementById("popup").className = "popup";
+        document.getElementById("bookMarkButton").className = "bookMarkButton";
+      }
+
     }
   } //end if
 } // togglePopupDisplay()
