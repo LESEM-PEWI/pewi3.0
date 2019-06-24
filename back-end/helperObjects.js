@@ -2365,19 +2365,13 @@ function Results(board) {
   this.sumCarbon = function(tileId, year) {
     // First time loading the board, we need to calculate the results in map level
     if(typeof tileId == 'undefined' && typeof year == 'undefined') {
-
       this.tileCarbonSequestration = Array(4);
       for(var i = 1; i < 4; i++){
         this.tileCarbonSequestration[i] = [];
       }
       this.sumCarbonSequestration = [0, 0, 0, 0];
       // var tempCarbonSum = [0, 0, 0, 0];
-      //for (var y = 1; y <= board.calculatedToYear; y++) {
-      var y=year;
-      if(typeof year=="undefined"){
-
-        y=1;
-      }
+      for (var y = 1; y <= board.calculatedToYear; y++) {
         //For each tile, add the carbon sequestration value to the results array in corresponding year y
         for (var i = 0; i < board.map.length; i++) {
           // tempCarbonSum[y] += board.map[i].results[y].calculatedCarbonSequestration;
@@ -2389,7 +2383,7 @@ function Results(board) {
         this.carbonSequestration[y] = this.sumCarbonSequestration[y] / 1000;
 
         // this.carbonSequestration[y] = this.carbonSequestration[y] * (1 / 0.90718474);
-      //} //end for
+      } //end for
 
     }
     // only one tile is changed, we need to calculate the results in tile level
