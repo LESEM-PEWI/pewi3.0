@@ -36,11 +36,29 @@ var economics = (function () { //Singleton for getting economics data from the b
       console.log(data2);
       //lists.forEach(cat => {
         this.rawData.forEach(dataPoint => {
-          if (!data2[dataPoint['LU_ID']]) {
-            data2[dataPoint['LU_ID']] = {'landUse': dataPoint['Land-Use'],'array':[]}
+          var landuseNum=dataPoint['LU_ID'];
+          if (!data2[landuseNum]) {
+            data2[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
           } // We need to create a path to the data that we want to pull out
-          console.log(dataPoint);
-          data2[dataPoint['LU_ID']]['array'].push(dataPoint);
+          //console.log(dataPoint);
+          data2[landuseNum]['array'].push(dataPoint);
+          if(!data2[landuseNum][lists[0]]){
+            data2[landuseNum][lists[0]]=[];
+          }
+          if(!data2[landuseNum][lists[1]]){
+            data2[landuseNum][lists[1]]=[];
+          }
+          //console.log(data2[landuseNum][lists[0]]['array']);
+          // console.log(data2[landuseNum][lists[0]]);
+          // console.log(dataPoint[lists[0]]);
+          // console.log();
+          if(!data2[landuseNum][lists[0]].includes(dataPoint[lists[0]])){
+            data2[landuseNum][lists[0]].push(dataPoint[lists[0]]);
+          }
+          if(!data2[landuseNum][lists[1]].includes(dataPoint[lists[1]])){
+            data2[landuseNum][lists[1]].push(dataPoint[lists[1]]);
+          }
+          //data2[dataPoint['LU_ID']][cat]['array'].push(dataPoint);
         });
       //});
       console.log(data2);
@@ -49,7 +67,7 @@ var economics = (function () { //Singleton for getting economics data from the b
     d3.csv('./budgets.csv', function(data){
       this.rawData = data;
       divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
-      chart4Information(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
+      chart4Information(['Action - Cost Type', 'Time - Cost Type']);
     })
     return {//public fields
       data: this.data,
