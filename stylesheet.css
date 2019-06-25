@@ -389,7 +389,9 @@ body {
 
 #checkOverlay{
   position: absolute;
-  top: 75%;
+  top: 47vw;
+  height: 75%;
+
 }
 
 #directoryButton {
