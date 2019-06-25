@@ -823,25 +823,22 @@ function addTile(tile) {
   } else {
 
     if (!multiplayerAssigningModeOn) {
+      tileMaterial2 = new THREE.MeshLambertMaterial({
+        map: grayTextureArray[tile.landType[currentYear]],
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.4
+      });
 
       var checkbox = document.getElementById("toggleOverlay");
-      if(!checkbox.checked){
-        tileMaterial2 = new THREE.MeshLambertMaterial({
-          map: grayTextureArray[tile.landType[currentYear]],
-          side: THREE.DoubleSide,
-          transparent: true,
-          opacity: 1.0
-        });
 
+      if(!checkbox.checked){
+        tileMaterial2.opacity = 1.0;
       }
-      else{
-        tileMaterial2 = new THREE.MeshLambertMaterial({
-          map: grayTextureArray[tile.landType[currentYear]],
-          side: THREE.DoubleSide,
-          transparent: true,
-          opacity: 0.4
-        });
+      else {
+        tileMaterial2.opacity = 0.4;
       }
+
     } else {
       tileMaterial2 = new THREE.MeshLambertMaterial({
         map: ((tile.landType[currentYear] < multiplayerTextureArray.length) ? multiplayerTextureArray[tile.landType[currentYear]] : null),
@@ -1957,7 +1954,8 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
       //then change mesh material
       //meshOverlay[i].map = highlightArray[getHighlightColor(highlightType, i)];
-      meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
+        meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
+
     } //end if
   } //end for
 
@@ -1984,8 +1982,7 @@ function drawOverlayOntoBoard(selectionHighlightNumber, highlightType) {
     //if there is an actual tile there
     if (boardData[currentBoard].map[i].landType[currentYear] != 0) {
       //then change mesh material
-      meshOverlay[i].map = highlightArray[getHighlightColor(highlightType, i)];
-      //meshMaterials[i].map = highlightArray[getHighlightColor(highlightType, i)];
+        meshOverlay[i].map = highlightArray[getHighlightColor(highlightType, i)];
     } //end if
   } //end for
 
@@ -4162,6 +4159,7 @@ function refreshBoard(bypassFromKeyEvent) {
   }
 
   meshGeometry = new THREE.Geometry();
+  meshGeometry2 = new THREE.Geometry();
   meshMaterials = [];
   meshOverlay = [];
 
