@@ -238,14 +238,13 @@ function animationFrames() {
     if (bgScene != null) {
       renderer.render(bgScene, bgCam);
     }
-
     //wait # update frames to check
     if (counter > 20) {
       gameDirector();
       counter = 0;
     }
     counter += 1;
-
+  
     requestAnimationFrame(animate);
     // render the according webgl
     renderer.render(scene, camera);

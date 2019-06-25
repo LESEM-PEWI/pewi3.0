@@ -1106,13 +1106,21 @@ function GameBoard() {
       for (var i = 0; i < this.map.length; i++) {
         this.map[i].update(y);
       }
-      this.precipitationMultiplierHelperAlltile(y);
-      this.cropMultiplierHelperAlltile(y);
-      this.calculateNitrateConcentrationHelperAlltile(y);
-      this.sumAreasUnderTwoAlltile(y);
-      this.tileNitrateCalculationAlltile(y);
+      // this.precipitationMultiplierHelperAlltile(y);
+      // this.cropMultiplierHelperAlltile(y);
+      // this.calculateNitrateConcentrationHelperAlltile(y);
+      // this.sumAreasUnderTwoAlltile(y);
+      // this.tileNitrateCalculationAlltile(y);
+      this.updateAllTileNitrate(y);
   }; //end updateBoard
 
+   this.updateAllTileNitrate=function(y){
+    this.precipitationMultiplierHelperAlltile(y);
+    this.cropMultiplierHelperAlltile(y);
+    this.calculateNitrateConcentrationHelperAlltile(y);
+    this.sumAreasUnderTwoAlltile(y);
+    this.tileNitrateCalculationAlltile(y);
+  }
   /**
    * precipitation multiplier for all tile
    * @param  {[type]} year [description]
@@ -2677,7 +2685,6 @@ this.tileNitrate = Array(4);
 
       //For each tile, add the carbon sequestration value to the results array in corresponding year y
       for (var i = 0; i < board.map.length; i++) {
-
         this.sumCarbonSequestration[y] += board.map[i].results[y].calculatedCarbonSequestration;
         this.tileCarbonSequestration[y][i] = board.map[i].results[y].calculatedCarbonSequestration;
         this.grossErosion[y] += board.map[i].results[y].calculatedGrossErosionRate * board.map[i].area;
