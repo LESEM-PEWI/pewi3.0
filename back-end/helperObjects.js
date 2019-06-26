@@ -114,7 +114,49 @@ var LandUseType = {
         return "NOT FOUND";
     } //end switch
 
+  },
+
+  getNumericalType: function(type)
+  {
+      switch (type) {
+        case "None":
+          return 0;
+        case "Conventional Corn":
+          return 1;
+        case "Conservation Corn":
+          return 2;
+        case "Conventional Soybean":
+          return 3;
+        case "Conservation Soybean":
+          return 4;
+        case "Alfalfa":
+          return 5;
+        case "Permanent Pasture":
+          return 6;
+        case "Rotational Grazing":
+          return 7;
+        case "Grass Hay":
+          return 8;
+        case "Prairie":
+          return 9;
+        case "Conservation Forest":
+          return 10;
+        case "Convential Forest":
+          return 11;
+        case "Switchgrass":
+          return 12;
+        case "Short Rotation Woody Bioenergy":
+          return 13;
+        case "Wetland":
+          return 14;
+        case "Mixed Fruits and Vegetables":
+          return 15;
+        default:
+          return "NOT FOUND";
+    }
   }
+
+
 
 };
 //end definition of landUseType
@@ -2020,7 +2062,7 @@ function Printer() {
       case 'year':
         // Create precipitation info as legend box for LandUse Map
         // first get text and color
-        text = "Precipitation: " + boardData[currentBoard].precipitation[type.substr(-1)];
+        text = "Precipitation: " + boardData[currentBoard].precipitation[type.substr(-1)] + "  in.";
         color = "rgb(29, 187, 245)";
         addLegendLine(type, color, text); // add line to legend here
 
@@ -2478,6 +2520,7 @@ function Results(board) {
     []
   ];
 
+
   this.grossErosionSeverity = Array(4);
   this.grossErosionSeverity = [
     [],
@@ -2632,6 +2675,7 @@ this.tileNitrate = Array(4);
    this.sedimentDelivery[i]=0;
  }
 
+
   /**
    * when initialize the map and tile, create array and assign value to array
    * change precipitation or add new year or upload a new map,
@@ -2685,6 +2729,7 @@ this.tileNitrate = Array(4);
 
       //For each tile, add the carbon sequestration value to the results array in corresponding year y
       for (var i = 0; i < board.map.length; i++) {
+
         this.sumCarbonSequestration[y] += board.map[i].results[y].calculatedCarbonSequestration;
         this.tileCarbonSequestration[y][i] = board.map[i].results[y].calculatedCarbonSequestration;
         this.grossErosion[y] += board.map[i].results[y].calculatedGrossErosionRate * board.map[i].area;
@@ -2700,6 +2745,7 @@ this.tileNitrate = Array(4);
 
         sumYieldHelper(this.yieldResults,LandUseType.getType(board.map[i].landType[y]),y,yieldValueToStore);
 
+
         subWatershedNitrate[board.map[i].subwatershed] += board.map[i].results[y].cropMultiplier;
         if ((board.map[i].landType[y] == LandUseType.wetland) && board.map[i].strategicWetland == 1) {
           wetlandMultiplier[board.map[i].subwatershed] = 0.48;
@@ -2714,6 +2760,7 @@ this.tileNitrate = Array(4);
       this.phosphorusLoad[y] = (this.sumPhosphorusLoad[y] / 2000);
 
       for (var s = 1; s < this.subwatershedArea.length; s++) {
+
         //divide to accomodate for row crop multiplier
         if (subWatershedNitrate[s] == 0 && this.subwatershedArea[s] == 0) {
           subWatershedNitrate[s] = 0;
@@ -2801,6 +2848,7 @@ this.tileNitrate = Array(4);
     var mult = 1;
     var foundWet = false;
     for (var i = 0; i < board.map.length; i++) {
+
       if(board.map[i].subwatershed == subw){
         score += board.map[i].results[year].cropMultiplier;
         if((board.map[i].landType[year] == LandUseType.wetland) && board.map[i].strategicWetland == 1 && !foundWet){
@@ -2879,12 +2927,14 @@ this.tileNitrate = Array(4);
     self.subwatershedArea = tempSubwatershedArea;
   })(this); //end this.sumArea()
 
+
   /**
    * subcalculations based on flags for biodiversity and game wildlife
    * ---These calculations must be done at the board level as they involve tile percentages
    * @param  {[int]} y year
    */
   this.sumFlagPercentages = function(y) {
+
       var tempAreaNativeVegetation = 0;
       var tempAreaNativeVegetationHD = 0;
       var tempAreaNativeDiverseOrLowInput = 0;
@@ -2896,7 +2946,7 @@ this.tileNitrate = Array(4);
 
       //for all tiles
       for (var i = 0; i < board.map.length; i++) {
-        //console.log("sumFlagPercentages do not need to change");
+
         if (board.map[i].results[y].nativeVegetationFlag) {
           tempAreaNativeVegetation += board.map[i].area;
         }
@@ -3082,6 +3132,7 @@ this.tileNitrate = Array(4);
       this.biodiversityPoints[y] = tempScore;
 
   }; //end calculations of biodiversity points
+
   /**
    * sum yield helper function to calculate the total yield in the type
    * @param  {[array]} results array of results
@@ -3091,6 +3142,7 @@ this.tileNitrate = Array(4);
    */
   function sumYieldHelper(results,type,y,score){
     switch (type) {
+
             case "none":
               //Do Nothing
               break;
@@ -3208,6 +3260,7 @@ this.tileNitrate = Array(4);
 
   }; //end sumYields
 
+
   /**
    * helper method of sum land use
    * @param  {[type]} results [arry of results]
@@ -3265,6 +3318,7 @@ this.tileNitrate = Array(4);
       case "mixedFruitsVegetables":
         results[y].mixedFruitsVegetablesLandUse += score;
         break;
+
     }
   }
   /**
@@ -3335,7 +3389,9 @@ this.tileNitrate = Array(4);
   this.mapIt = function(y) {
       //For each watershed store nitrate percent contribution
       for (var i = 0; i < this.subwatershedArea.length; i++) {
+
         this.watershedPercent[y][i]=this.subWatershedNitrate[y][i] / (this.subwatershedArea[i] / this.totalArea) * (this.subwatershedArea[i] / board.watershedArea) / this.nitrateConcentration[y];
+
       }
       //For each tile, store grossErosionRate and phosphorusRiskAssessment indices calculated by submethods
       for (var i = 0; i < board.map.length; i++) {
