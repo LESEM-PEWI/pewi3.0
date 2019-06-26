@@ -21,9 +21,25 @@
   width: 3vw;
 }
 
-/* .upperButton:hover {
+/* .upperButton:hover. {
   border-bottom: 2px groove white;
 } */
+
+#homebutton {
+  left: 1vw;
+}
+
+#homebutton:hover {
+  border-bottom: 2px groove white;
+}
+
+#printButton {
+  left: 5.5vw;
+}
+
+#printButton:hover {
+    border-bottom: 2px groove white;
+}
 
 #creditsButton {
   right: 0vw;
