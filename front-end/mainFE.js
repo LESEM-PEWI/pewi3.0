@@ -219,7 +219,6 @@ function animationFrames() {
 
   //render animations
   requestAnimationFrame(function animate() {
-  console.log("requestAnimationFrame");
     birdAnimation();
     zoomAnimation();
 

@@ -1234,7 +1234,7 @@ function GameBoard() {
           subWatershedNitrateNoMin[s] *= 100 * precip * wetlandMultiplier[s] * (areaArr[s]/areaTotal);
         }
       } //end for all watersheds
-
+      this.wetlandMultiplier=wetlandMultiplier;
       this.subWatershedNitrateNoMin = subWatershedNitrateNoMin;
   }; //end this.calculateNitrateConcentrationHelper()
 
@@ -1270,10 +1270,10 @@ function GameBoard() {
       var crop = this.cropMult[t];
       var area = this.map[t].area;
       var score = 100*precip*crop*area;
-      if ((subwatershed == this.map[t].subwatershed) && (this.map[t].landType[year] == LandUseType.wetland) && this.map[t].strategicWetland == 1) {
-        wetlandMultiplier = 0.48;
-      }
-      score *= wetlandMultiplier;
+      // if ((subwatershed == this.map[t].subwatershed) && (this.map[t].landType[year] == LandUseType.wetland) && this.map[t].strategicWetland == 1) {
+      //   wetlandMultiplier = 0.48;
+      // }
+      score *= this.wetlandMultiplier[subwatershed];
       //If Tile is in subwatershed with score below 2, do more stuff
       if(res[subwatershed]<2){
         var diff = 2-res[subwatershed];
@@ -3553,7 +3553,6 @@ function Tile(tileArray, board) {
   this.rusleValues = Array(6);
   this.ephemeralGullyErosionValue = Array(6);
   this.finalArea = 0;
-  this.subWatershedNitrateNoMin = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   this.subWatershedArea = 0;
   //this.cropMult = Array(828);
   this.precipMult = 0;
@@ -3770,7 +3769,7 @@ function Tile(tileArray, board) {
         board.subWatershedNitrateNoMin[n]+=board.cropMult[subWatershedtile[i].id-1];
 
         if ((subWatershedtile[i].landType[year] == LandUseType.wetland) && subWatershedtile[i].strategicWetland == 1) {
-          wetlandMultiplier[n] = 0.48;
+          wetlandMultiplier = 0.48;
         } //end if
       } //end for all cells, adding Crop Multipliers
       if(board.subWatershedNitrateNoMin[n]==0&&area==0){
@@ -3850,7 +3849,7 @@ function Tile(tileArray, board) {
   //that have a Nitrate score under 2
   this.sumAreasUnderTwo = function(year){
     var sum = 0;
-    var arr = this.subWatershedNitrateNoMin;
+    var arr = board.subWatershedNitrateNoMin;
     for(var i=0, il=board.map.length; i<il; i++){
       if(arr[board.map[i].subwatershed]<2){
         sum+=board.map[i].area;

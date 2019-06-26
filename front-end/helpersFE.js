@@ -1198,16 +1198,19 @@ function changeLandTypeTileNitrate(tileId){
     //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
     //Hence the for loop
       if(typeof tileId=='undefined'){
+        console.log("nitrate whole");
         boardData[currentBoard].updateAllTileNitrate(currentYear);
       }else{
         //if land type of tile is nonzero
         if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
           //change the materials of the faces in the meshMaterials array and update the boardData
           if (!multiplayerAssigningModeOn) {
+
             boardData[currentBoard].map[tileId].updateNitrate(currentYear);
           }
         }
     }
+
     refreshProgressBar(currentYear);
   } // end outter if
 } //end changeLandTypeTile
@@ -2633,7 +2636,7 @@ function calculateSubwatershedTotalNitrateScore(tileId){
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
-
+  console.log(boardData[currentBoard].map[tileId]);
   //return information about the tile that is highlighted
   if (currentHighlightType <= 0) {
     return "";
@@ -2643,7 +2646,7 @@ function getHighlightedInfo(tileId) {
       //create string for nitrate levels
       case 1:
         var subwatershed=boardData[currentBoard].map[tileId].subwatershed;
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+boardData[currentBoard].map[tileId].subWatershedNitrateNoMin[subwatershed].toFixed(4)+" ppm"+"<br>";
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+boardData[currentBoard].subWatershedNitrateNoMin[subwatershed].toFixed(4)+" ppm"+"<br>";
         break;
         //create string for gross erosion levels
       case 2:
@@ -2804,7 +2807,7 @@ function getHighlightedInfo(tileId) {
         var subwatershed=boardData[currentBoard].map[tileId].subwatershed;
         //calculate the nitrate cell equation- single cell point / total point in subWatershed * subWatershed nitrate
         highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>"+
-        ((boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate/calculateSubwatershedTotalNitrateScore(tileId))*boardData[currentBoard].map[tileId].subWatershedNitrateNoMin[subwatershed]).toFixed(4)+" ppm <br>";
+        ((boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate/calculateSubwatershedTotalNitrateScore(tileId))*boardData[currentBoard].subWatershedNitrateNoMin[subwatershed]).toFixed(4)+" ppm <br>";
         break;
     }
     return highlightString;
