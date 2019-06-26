@@ -1265,14 +1265,10 @@ function GameBoard() {
     var res = this.subWatershedNitrateNoMin;
     //Determine if there is a strategic wetland in use in this Tile's subWatershed
     for(var t = 0, tl=this.map.length; t < tl; t++){
-      var wetlandMultiplier = 1;
       var subwatershed = this.map[t].subwatershed;
       var crop = this.cropMult[t];
       var area = this.map[t].area;
       var score = 100*precip*crop*area;
-      // if ((subwatershed == this.map[t].subwatershed) && (this.map[t].landType[year] == LandUseType.wetland) && this.map[t].strategicWetland == 1) {
-      //   wetlandMultiplier = 0.48;
-      // }
       score *= this.wetlandMultiplier[subwatershed];
       //If Tile is in subwatershed with score below 2, do more stuff
       if(res[subwatershed]<2){
