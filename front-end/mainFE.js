@@ -219,7 +219,7 @@ function animationFrames() {
 
   //render animations
   requestAnimationFrame(function animate() {
-
+  console.log("requestAnimationFrame");
     birdAnimation();
     zoomAnimation();
 
@@ -245,7 +245,7 @@ function animationFrames() {
       counter = 0;
     }
     counter += 1;
-  
+
     requestAnimationFrame(animate);
     // render the according webgl
     renderer.render(scene, camera);

@@ -1144,6 +1144,7 @@ function calculateResults(tileId, y) {
 
 //changeLandTypeTile changes the landType of a selected tile
 function changeLandTypeTile(tileId) {
+  //console.log(boardData[currentBoard].map[tileId]);
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //Add tile to the undoArr
     if (!undo) {
@@ -1483,7 +1484,7 @@ function combineMulti(givenPlayers) {
     }
   }
 
-//changeLandTypeTileNitrate();
+changeLandTypeTileNitrate();
 
   //Delete the other (now unused) players
   givenPlayers.shift();
@@ -3522,7 +3523,7 @@ function onDocumentMouseDown(event) {
               //just a normal tile change
               changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
               changeLandTypeTileNitrate(getTileID(intersects[0].point.x, -intersects[0].point.z));
-              //changeLandTypeTileNitrate();
+
               //Change variable for painting click and drag status
               clickAndDrag = true;
             } // end if/else
@@ -3552,7 +3553,7 @@ function onDocumentMouseDown(event) {
           }
 
           changeLandTypeTileNitrate();
-          //changeLandTypeTileNitrate();
+
 
         }
         //Inserts the block of land use types into the undoArr
@@ -3873,8 +3874,7 @@ function pasteYear()
     boardData[currentBoard].updateBoard();
     refreshBoard();
     calculateResults(undefined,yearToPasteIn);
-    console.log(Totals);
-    //calculateResults();
+
     refreshProgressBar(currentYear);
 
     snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
@@ -4071,8 +4071,7 @@ function randomizeBoard() {
         undoGridPainters.push(boardData[currentBoard].map[i].landType[currentYear]);
         painter = randomPainterTile[Math.floor(Math.random() * randomPainterTile.length)];
         changeLandTypeTile(i);
-        console.log("random");
-        //changeLandTypeTileNitrate(i);
+
       }
     } //end for all tiles
     changeLandTypeTileNitrate();
@@ -4527,7 +4526,7 @@ function revertChanges() {
     } else {
       painter = tempTileAndPainter[1];
       changeLandTypeTile(tempTileAndPainter[0]);
-      //changeLandTypeTileNitrate();
+      changeLandTypeTileNitrate();
     }
     undo = false;
     painter = tempPainter;
@@ -5659,7 +5658,7 @@ function undoGrid(givenTilesAndPainter) {
     changeLandTypeTile(tile);
   }
   changeLandTypeTileNitrate();
-  //changeLandTypeTileNitrate();
+
 } //end givenTilesAndPainter
 
 //Determines if the tile to be added is unique (non-repeated in paint and tileId)
