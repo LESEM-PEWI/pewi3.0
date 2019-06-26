@@ -1106,11 +1106,6 @@ function GameBoard() {
       for (var i = 0; i < this.map.length; i++) {
         this.map[i].update(y);
       }
-      // this.precipitationMultiplierHelperAlltile(y);
-      // this.cropMultiplierHelperAlltile(y);
-      // this.calculateNitrateConcentrationHelperAlltile(y);
-      // this.sumAreasUnderTwoAlltile(y);
-      // this.tileNitrateCalculationAlltile(y);
       this.updateAllTileNitrate(y);
   }; //end updateBoard
 

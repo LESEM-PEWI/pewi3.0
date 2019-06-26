@@ -8,8 +8,6 @@ function gameDirector() {
     if(levelGlobal){
 
         //aggregate tile results
-        //Totals.update() ;
-        //calculateResults();
 
         if(levelGlobal!=0){
           calculateResults();
