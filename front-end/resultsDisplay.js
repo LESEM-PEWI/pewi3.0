@@ -298,7 +298,7 @@ function displayResults() {
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
   econGraphic1 = EconomicsGraphic1().getInstance().render();
-
+  econGraphic4 = EconomicsGraphic4().getInstance();
 
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
@@ -2260,12 +2260,12 @@ function generateResultsTable() {
 
       //keep track of subheadings, just 1 this time
       switch (l) {
-        case 0:  
+        case 0:
           //htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
             //put Yield header, in bold
             htmlTableString += "<tr>";
             htmlTableString += "<td><b>" + "Yield" + "<b></td>";
-            
+
             //calculate total score for each year and place next to Yield header
             for(var y = 1; y <= upToYear; y++){
               htmlTableString += "<td><b>";
@@ -4378,4 +4378,31 @@ function stackMax(layers) {
     if(d[1] > 0) return 1.1 * (d[1] - d[0]);
     return 0;
   });
+}
+function econGraphic4DisplayData(landType,costType,cost){
+  console.log("asd");
+  var econdata=economics.getInstance().data2;
+  console.log(economics.getInstance().data2);
+
+}
+function EconomicsGraphic4() {
+  var instance;
+  var options = [];
+  function init() {
+    econGraphic4DisplayData();
+    var render = function (){
+    }
+
+    return {
+      render: render,
+    };
+  };
+  return {
+    getInstance: function () { //To ensure singularity
+      if ( !instance ) {
+        instance = init();
+      }
+      return instance;
+    }
+  };
 }

@@ -72,7 +72,7 @@ var economics = (function () { //Singleton for getting economics data from the b
     return {//public fields
       data: this.data,
       rawData: this.rawData,
-      data2: this.data2
+      data2: data2
     };
   };
   return {
