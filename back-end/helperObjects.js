@@ -1158,6 +1158,7 @@ function GameBoard() {
     this.sumAreasUnderTwoAlltile(y);
     this.tileNitrateCalculationAlltile(y);
   }
+
   /**
    * precipitation multiplier for all tile
    * @param  {[type]} year [description]
@@ -3602,7 +3603,6 @@ function Tile(tileArray, board) {
     );
     y=yearSelected;
       for (var i = 0; i < subWatershedtile.length; i++) {
-        subWatershedtile[i].sumAreaHelper();
         subWatershedtile[i].precipitationMultiplierHelper(y);
         subWatershedtile[i].cropMultiplierHelper(y);
         subWatershedtile[i].calculateNitrateConcentrationHelper(y);
@@ -3763,7 +3763,6 @@ function Tile(tileArray, board) {
 
       for(var i=0, il=subWatershedtile.length; i<il; i++){
         board.subWatershedNitrateNoMin[n]+=board.cropMult[subWatershedtile[i].id-1];
-
         if ((subWatershedtile[i].landType[year] == LandUseType.wetland) && subWatershedtile[i].strategicWetland == 1) {
           wetlandMultiplier = 0.48;
         } //end if

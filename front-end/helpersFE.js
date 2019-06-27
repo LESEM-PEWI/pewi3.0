@@ -1198,7 +1198,7 @@ function changeLandTypeTileNitrate(tileId){
     //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
     //Hence the for loop
       if(typeof tileId=='undefined'){
-        console.log("nitrate whole");
+
         boardData[currentBoard].updateAllTileNitrate(currentYear);
       }else{
         //if land type of tile is nonzero
@@ -2636,7 +2636,7 @@ function calculateSubwatershedTotalNitrateScore(tileId){
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
-  console.log(boardData[currentBoard].map[tileId]);
+  
   //return information about the tile that is highlighted
   if (currentHighlightType <= 0) {
     return "";
