@@ -199,11 +199,16 @@
     <!--Create Glossary button on screen-->
     <div id="indexmenu" onclick="toggleIndex();">Glossary</div>
 
-    <div id="checkOverlay">
-      <input type="checkbox" onclick="refreshBoard();" id="toggleOverlay" name="toggleOverlay" checked>
-      <label for="toggleOverlay">Toggle Overlay</label>
+
+    <div id="checkheader" style="display:none;">
+      <h3>Toggle Overlay</h3>
     </div>
 
+
+    <div class="checkOverlay" style="display:none;">
+      <input type="checkbox" onclick="refreshBoard();redrawOverlay();" value="1" id="toggleOverlay" name="toggleOverlay" />
+      <label for="toggleOverlay"></label>
+    </div>
 
     <!-- UNDO button -->
     <div id="undo" class="undocol">

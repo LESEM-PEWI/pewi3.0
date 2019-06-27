@@ -824,7 +824,7 @@ function addTile(tile) {
 
     if (!multiplayerAssigningModeOn) {
       tileMaterial2 = new THREE.MeshLambertMaterial({
-        map: grayTextureArray[tile.landType[currentYear]],
+        map: textureArray[tile.landType[currentYear]],
         side: THREE.DoubleSide,
         transparent: true,
         opacity: 0.4
@@ -834,9 +834,13 @@ function addTile(tile) {
 
       if(!checkbox.checked){
         tileMaterial2.opacity = 1.0;
+        tileMaterial2.map = textureArray[tile.landType[currentYear]];
+        overlayedToggled = false;
       }
       else {
         tileMaterial2.opacity = 0.4;
+        tileMaterial2.map = grayTextureArray[tile.landType[currentYear]];
+        overlayedToggled = true;
       }
 
     } else {
@@ -879,6 +883,15 @@ function addTile(tile) {
         transparent: true,
         opacity: 1.0
       });
+
+      /*var checkbox = document.getElementById("toggleOverlay");
+
+      if(!checkbox.checked){
+        tileMaterial.map = textureArray[tile.landType[currentYear]];
+      }
+      else {
+        tileMaterial.map = grayTextureArray[tile.landType[currentYear]];
+      }*/
     } else {
       tileMaterial = new THREE.MeshLambertMaterial({
         map: ((tile.landType[currentYear] < multiplayerTextureArray.length) ? multiplayerTextureArray[tile.landType[currentYear]] : null),
@@ -1229,8 +1242,14 @@ function changeLandTypeTile(tileId) {
           // If the land type remains the same, then do nothing, otherwise,change the land type, and update progress bars
           if(meshMaterials[tileId].map != grayTextureArray[painter]){
             // console.log('Change the land type in tile which id is ', tileId);
-            meshMaterials[tileId].map = grayTextureArray[painter];
-            meshOverlay[tileId].map = grayTextureArray[painter];
+            if(overlayedToggled != true){
+              meshMaterials[tileId].map = textureArray[painter];
+              meshOverlay[tileId].map = textureArray[painter];
+            }
+            else{
+              meshOverlay[tileId].map = grayTextureArray[painter];
+              meshMaterials[tileId].map = grayTextureArray[painter];
+            }
             // record the data changes in boardData
             boardData[currentBoard].map[tileId].landType[currentYear] = painter;
             // update boardData figures
@@ -1937,7 +1956,7 @@ function displayLevels(overlayHighlightType) {
 } //end displayLevels()
 
 //here we draw the correct tile colors onto the board material mesh
-function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
+/*function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
 
   //change global highlighting setting to set
   mapIsHighlighted = true;
@@ -1964,7 +1983,181 @@ function drawLevelsOntoBoard(selectionHighlightNumber, highlightType) {
   currentHighlightType = selectionHighlightNumber;
   currentHighlightTypeString = highlightType;
 } //end drawLevelsOntoBoard
+*/
+//Called when toggle overlay button is clicked, redraws overlay with new transparency
+function redrawOverlay(highlightType){
+  var selectionHighlightNumber = 0;
 
+  highlightType = previousOverlay;
+
+  switch (highlightType) {
+    case 'nitrate':
+      selectionHighlightNumber = 1;
+      updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 42, 0, null);
+      }
+      break;
+    case 'erosion':
+      selectionHighlightNumber = 2;
+      updateIndexPopup('To learn more about <span style="color:orange;">Erosion</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Soil Quality"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 43, 0, null);
+      }
+      break;
+    case 'phosphorus':
+      selectionHighlightNumber = 3;
+      updateIndexPopup('To learn more about <span style="color:orange;">Phosphorus</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 44, 0, null);
+      }
+      break;
+    case 'flood':
+      selectionHighlightNumber = 4;
+      updateIndexPopup('This map shows the <span style="color:orange;">frequency of flooding</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 45, 0, null);
+      }
+      break;
+    case 'drainage':
+      selectionHighlightNumber = 5;
+      updateIndexPopup('This map shows the <span style="color:orange;">drainage</span> for each pixel. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 48, 0, null);
+      }
+      break;
+    case 'wetlands':
+      selectionHighlightNumber = 6;
+      updateIndexPopup('This map shows the locations for each <span style="color:orange;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 46, 0, null);
+      }
+      break;
+    case 'boundary':
+      selectionHighlightNumber = 7;
+      updateIndexPopup('This map shows the <span style="color:orange;">boundaries of each subwatershed</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 47, 0, null);
+      }
+      break;
+    case 'soil':
+      selectionHighlightNumber = 8;
+      updateIndexPopup('There are <span style="color:orange;">thirteen</span> different soil classes that each have different properties. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 49, 0, null);
+      }
+      break;
+    case 'topo':
+      selectionHighlightNumber = 9;
+      updateIndexPopup('This map shows the <span style="color:orange;">topography</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 50, 0, null);
+      }
+      break;
+      // yield
+    case 'corn':
+      selectionHighlightNumber = 10;
+      if (curTracking) {
+        pushClick(0, getStamp(), 69, 0, null);
+      }
+      break;
+    case 'soybean':
+      selectionHighlightNumber = 11;
+      if (curTracking) {
+        pushClick(0, getStamp(), 70, 0, null);
+      }
+      break;
+    case 'fruit':
+      selectionHighlightNumber = 12;
+      if (curTracking) {
+        pushClick(0, getStamp(), 71, 0, null);
+      }
+      break;
+    case 'cattle':
+      selectionHighlightNumber = 13;
+      if (curTracking) {
+        pushClick(0, getStamp(), 72, 0, null);
+      }
+      break;
+    case 'alfalfa':
+      selectionHighlightNumber = 14;
+      if (curTracking) {
+        pushClick(0, getStamp(), 73, 0, null);
+      }
+      break;
+    case 'grasshay':
+      selectionHighlightNumber = 15;
+      if (curTracking) {
+        pushClick(0, getStamp(), 74, 0, null);
+      }
+      break;
+    case 'switchgrass':
+      selectionHighlightNumber = 16;
+      if (curTracking) {
+        pushClick(0, getStamp(), 75, 0, null);
+      }
+      break;
+    case 'wood':
+      selectionHighlightNumber = 17;
+      if (curTracking) {
+        pushClick(0, getStamp(), 76, 0, null);
+      }
+      break;
+    case 'short':
+      selectionHighlightNumber = 18;
+      if (curTracking) {
+        pushClick(0, getStamp(), 77, 0, null);
+      }
+      break;
+    case 'sediment':
+     selectionHighlightNumber = 19;
+     updateIndexPopup('To learn more about <span style="color:orange;">Sediment Control</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+     if (curTracking) {
+       pushClick(0, getStamp(), 78, 0, null);
+     }
+     break;
+
+    case 'carbon':
+    selectionHighlightNumber = 20;
+    updateIndexPopup('To learn more about <span style="color:orange;">Carbon Sequestration</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 79, 0, null);
+    }
+    break;
+
+    case 'gamewildlife':
+    selectionHighlightNumber = 21;
+    updateIndexPopup('To learn more about <span style="color:orange;">Game Wildlife</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 80, 0, null);
+    }
+    break;
+
+    case 'biodiversity':
+    selectionHighlightNumber = 22;
+    updateIndexPopup('To learn more about <span style="color:orange;">Biodiversity</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 81, 0, null);
+    }
+    break;
+
+    case 'nitratetile':
+    selectionHighlightNumber = 23;
+    updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    if (curTracking) {
+      pushClick(0, getStamp(), 82, 0, null);
+    }
+    break;
+  }
+
+
+  if(highlightType != null){
+    drawOverlayOntoBoard(selectionHighlightNumber, highlightType);
+    showLevelDetails(selectionHighlightNumber);
+
+  }
+
+}
 
 function drawOverlayOntoBoard(selectionHighlightNumber, highlightType) {
 
@@ -5210,6 +5403,11 @@ function switchConsoleTab(value) {
       }
       document.getElementById('terrainImg').className = "imgSelected";
       document.getElementById('painterTab').style.display = "block";
+      var overlay = document.getElementsByClassName('checkOverlay');
+      for(var i = 0; i < overlay.length; i++){
+        overlay[i].style.display = "none";
+      }
+      document.getElementById('checkheader').style.display = "none";
       updateIndexPopup('These are the <span style="color:orange;">15</span> different <span style="color:orange;">land use types</span>. To learn more about them, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Land Use"</span>.');
       break;
     case 2:
@@ -5220,6 +5418,11 @@ function switchConsoleTab(value) {
       }
       document.getElementById('precipImg').className = "imgSelected";
       document.getElementById('precipTab').style.display = "block";
+      var overlay = document.getElementsByClassName('checkOverlay');
+      for(var i = 0; i < overlay.length; i++){
+        overlay[i].style.display = "none";
+      }
+      document.getElementById('checkheader').style.display = "none";
       yearPrecipManager();
       updateIndexPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Glossary</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
       break;
@@ -5231,6 +5434,11 @@ function switchConsoleTab(value) {
       }
       document.getElementById('levelsImg').className = "imgSelected";
       document.getElementById('levelsTab').style.display = "block";
+      var overlay = document.getElementsByClassName('checkOverlay');
+      for(var i = 0; i < overlay.length; i++){
+        overlay[i].style.display = "block";
+      }
+      document.getElementById('checkheader').style.display = "block";
       updateIndexPopup('This is the <span style="color:orange;">Levels Tab,</span> where you can learn about <span style="color:yellow;">Soil Quality and Water Quality</span>.');
       break;
     case 4:
@@ -5241,6 +5449,11 @@ function switchConsoleTab(value) {
       }
       document.getElementById('featuresImg').className = "imgSelected";
       document.getElementById('featuresTab').style.display = "block";
+      var overlay = document.getElementsByClassName('checkOverlay');
+      for(var i = 0; i < overlay.length; i++){
+        overlay[i].style.display = "block";
+      }
+      document.getElementById('checkheader').style.display = "block";
       updateIndexPopup('This is the <span style="color:orange;">Physical Features Tab</span>, where you will find information on topography, soil properties, subwatershed boundaries, and strategic wetland areas.');
       break;
     case 5:
@@ -5251,6 +5464,11 @@ function switchConsoleTab(value) {
       }
       document.getElementById('settingsImg').className = "imgSelected";
       document.getElementById('settingsTab').style.display = "block";
+      var overlay = document.getElementsByClassName('checkOverlay');
+      for(var i = 0; i < overlay.length; i++){
+        overlay[i].style.display = "none";
+      }
+      document.getElementById('checkheader').style.display = "none";
       break;
     case 6:
       inDispLevels = false;
@@ -5260,6 +5478,11 @@ function switchConsoleTab(value) {
       }
       document.getElementById('calendarImg').className = "imgSelected";
       document.getElementById('yearsTab').style.display = "block";
+      var overlay = document.getElementsByClassName('checkOverlay');
+      for(var i = 0; i < overlay.length; i++){
+        overlay[i].style.display = "none";
+      }
+      document.getElementById('checkheader').style.display = "none";
       yearCopyPasteInit();
       updateIndexPopup('The <span style="color:orange;">Years Tab</span> allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
       break;
@@ -5271,12 +5494,17 @@ function switchConsoleTab(value) {
       }
       document.getElementById('yieldImg').className = "imgSelected";
       document.getElementById('yieldTab').style.display = "block";
+      var overlay = document.getElementsByClassName('checkOverlay');
+      for(var i = 0; i < overlay.length; i++){
+        overlay[i].style.display = "block";
+      }
+      document.getElementById('checkheader').style.display = "block";
       updateIndexPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
       break;
   } // END switch
 
   //check if the map needs the levels legend displayed
-  if (mapIsHighlighted) {
+  if (mapIsHighlighted && value == 1) {
     displayLevels();
   }
 

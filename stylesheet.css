@@ -387,10 +387,84 @@ body {
     cursor: pointer;
 }
 
-#checkOverlay{
+
+
+input[type=checkbox] {
+    visibility: hidden;
+}
+
+.checkOverlay {
+  width: 7.6vw;
+  height: 2.6vw;
+  top: 43.5vw;
+  left: 0.5vw;
+
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+
+  border-radius: 50px;
   position: absolute;
-  top: 47vw;
-  height: 75%;
+
+}
+
+.checkOverlay:before {
+  content: 'On';
+  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  position: absolute;
+  top: 0.3vw;
+  left: 1vw;
+  height: 2vw;
+  color: orange;
+  font-size: 1.75vw;
+}
+.checkOverlay:after {
+  content: 'Off';
+  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  position: absolute;
+  top: 0.3vw;
+  left: 5.0vw;
+  height: 2vw;
+  color: #ddd;
+
+  font-size: 1.75vw;
+}
+
+
+.checkOverlay label {
+  display: block;
+  width: 3.5vw;
+  height: 1.8vw;
+  border-radius: 50px;
+
+  transition: all .5s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 0.4vw;
+  z-index: 1;
+  left: 0.5vw;
+  background: #ddd;
+}
+
+.checkOverlay input[type=checkbox]:checked + label {
+  left: 3.65vw;
+  background: orange;
+}
+
+#checkheader {
+  color: #ddd;
+  width: 11vw;
+  height: 3.2vw;
+  top: 41vw;
+  left: 0.5vw;
+  position: absolute;
+  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  font-size: 1.85vw;
 
 }
 
