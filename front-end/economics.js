@@ -2,7 +2,7 @@ var economics = (function () { //Singleton for getting economics data from the b
   var instance;
   var rawData;
   var data;
-  var data2=[];
+  var data2=Array();
 
   function init() {
     console.log(this);
@@ -33,8 +33,6 @@ var economics = (function () { //Singleton for getting economics data from the b
       console.log(this.data)
     }
     function chart4Information(lists) {
-      console.log(data2);
-      //lists.forEach(cat => {
         this.rawData.forEach(dataPoint => {
           var landuseNum=dataPoint['LU_ID'];
           if (!data2[landuseNum]) {
@@ -42,25 +40,15 @@ var economics = (function () { //Singleton for getting economics data from the b
           } // We need to create a path to the data that we want to pull out
           //console.log(dataPoint);
           data2[landuseNum]['array'].push(dataPoint);
-          if(!data2[landuseNum][lists[0]]){
-            data2[landuseNum][lists[0]]=[];
-          }
-          if(!data2[landuseNum][lists[1]]){
-            data2[landuseNum][lists[1]]=[];
-          }
-          //console.log(data2[landuseNum][lists[0]]['array']);
-          // console.log(data2[landuseNum][lists[0]]);
-          // console.log(dataPoint[lists[0]]);
-          // console.log();
-          if(!data2[landuseNum][lists[0]].includes(dataPoint[lists[0]])){
-            data2[landuseNum][lists[0]].push(dataPoint[lists[0]]);
-          }
-          if(!data2[landuseNum][lists[1]].includes(dataPoint[lists[1]])){
-            data2[landuseNum][lists[1]].push(dataPoint[lists[1]]);
-          }
-          //data2[dataPoint['LU_ID']][cat]['array'].push(dataPoint);
+          lists.forEach(cat => {
+            if(!data2[landuseNum][cat]){
+              data2[landuseNum][cat]=[];
+            }
+            if(!data2[landuseNum][cat].includes(dataPoint[cat])){
+              data2[landuseNum][cat].push(dataPoint[cat]);
+            }
+          });
         });
-      //});
       console.log(data2);
     }
 

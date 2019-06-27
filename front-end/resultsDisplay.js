@@ -4379,17 +4379,31 @@ function stackMax(layers) {
     return 0;
   });
 }
-function econGraphic4DisplayData(landType,costType,cost){
-  console.log("asd");
+function econGraphic4DisplayData(landUse,costType,cost){
   var econdata=economics.getInstance().data2;
-  console.log(economics.getInstance().data2);
+  var econdata=econdata.filter(function(item){
+    return item.landUse==landUse;
+  });
+  // var econdata=econdata[0].array.filter(function(item){
+  //   return item[costType]==cost;
+  // });
+  // console.log(econdata);
+  // var item;
+  // var i=0;
+  // econdata.forEach(data=>{
+  //   if(!item[i].costname){
+  //     item[i]={'costname':data}
+  //   }
+  // });
+  // econdata=
+  // for(var i=0;i<)
 
 }
 function EconomicsGraphic4() {
   var instance;
   var options = [];
   function init() {
-    econGraphic4DisplayData();
+    econGraphic4DisplayData("Mixed Fruits and Vegetables","Time - Cost Type","Fixed");
     var render = function (){
     }
 
