@@ -14,7 +14,7 @@ function confirmTopoMap()
   }
 }
 
-function saveAsImage(renderer) {
+function saveAsImage(renderer, tileNum) {
         var imgData, imgNode;
          var strDownloadMime = "image/octet-stream";
 
@@ -22,7 +22,7 @@ function saveAsImage(renderer) {
             var strMime = "image/png";
             imgData = renderer.domElement.toDataURL(strMime);
 
-            saveFile(imgData.replace(strMime, strDownloadMime), "test.png");
+            saveFile(imgData.replace(strMime, strDownloadMime), "testTileNum" + tileNum + ".png");
 
         } catch (e) {
             console.log(e);
@@ -46,18 +46,50 @@ function saveAsImage(renderer) {
 
 function drawToCanvas(lines)
 {
-  var printScene = new THREE.Scene;
-  var printRenderer = new THREE.WebGLRenderer;
-  printRenderer.setSize(400,400);
-  var printCamera = new THREE.PerspectiveCamera(35, 180/120, 0.1, 10000);
+  var printScene = new THREE.Scene();
+  printScene.background = new THREE.Color( 0xffffff );
+  var printRenderer = new THREE.WebGLRenderer({preserveDrawingBuffer : true});
+  // printRenderer.setSize(tileWidth, tileHeight);
+  printRenderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild( printRenderer.domElement);
+  var texture = new THREE.Texture(printRenderer.canvas);
+  texture.needsUpdate = true;
+  // var printCamera = new THREE.PerspectiveCamera(90, 180/120, 0.1, 1000);
+  var printCamera = camera.clone();
+  printCamera.position.x = tileWidth/2;
+  printCamera.position.y = 5;
+  printCamera.position.z = tileHeight/2;
 
-  for (var i = 0; i < lines.length; i++)
+  // for (var i = 0; i < lines.length; i++)
+  // {
+  //   printScene.add(lines[i]);
+  // }
+  // lines.forEach(line => {
+  //    printScene.add(line);
+  // });
+  for(var i = 0; i < lines.length; i++)
   {
-    printScene.add(lines[i]);
+    if(lines[i]){
+      for(var j = 0; j < lines[i].length; j++)
+      {
+        printScene.add(lines[i][j]);
+      }
+      printRenderer.render(printScene, printCamera);
+      //window.open(printRenderer.domElement.toDataURL('image/png'), 'screenshot' + i);
+      saveAsImage(printRenderer, i);
+      for(var j = 0; j < lines[i].length; j++)
+      {
+        printScene.remove(lines[i][j]);
+      }
+
+    }
   }
 
-  printRenderer.render(printScene, printCamera);
-  saveAsImage(printRenderer);
+  // printRenderer.render(printScene, camera);
+  // window.open(printRenderer.domElement.toDataURL('image/png'), 'screenshot');
+   // scene.add(lines);
+  // renderer.render(scene, camera);
+  //saveAsImage(printRenderer);
 }
 
 
@@ -102,6 +134,7 @@ function ContourMap(){
     {
       var plane = this.drawPlane(i);
       for(var j = 0; j < meshGeometry.faces.length; j++){
+
         let a = meshGeometry.vertices[meshGeometry.faces[j].a]
         let b = meshGeometry.vertices[meshGeometry.faces[j].b]
         let c = meshGeometry.vertices[meshGeometry.faces[j].c]
@@ -112,21 +145,35 @@ function ContourMap(){
         if(this.setPointOfIntersection(lineAB, plane)) points.vertices.push(this.setPointOfIntersection(lineAB, plane));
         if(this.setPointOfIntersection(lineBC, plane)) points.vertices.push(this.setPointOfIntersection(lineBC, plane));
         if(this.setPointOfIntersection(lineCA, plane)) points.vertices.push(this.setPointOfIntersection(lineCA, plane));
+
+        let points2 = new THREE.Geometry();
+        if(this.setPointOfIntersection(lineAB, plane)) points2.vertices.push(this.subtractPoints(this.setPointOfIntersection(lineAB, plane), this.map[Math.floor(j/2)].position));
+        if(this.setPointOfIntersection(lineBC, plane)) points2.vertices.push(this.subtractPoints(this.setPointOfIntersection(lineBC, plane), this.map[Math.floor(j/2)].position));
+        if(this.setPointOfIntersection(lineCA, plane)) points2.vertices.push(this.subtractPoints(this.setPointOfIntersection(lineCA, plane), this.map[Math.floor(j/2)].position));
         var line = new THREE.LineSegments( points, material );
+        var line2 = new THREE.LineSegments( points2, material );
 
 
         if(points.vertices[0] && this.map[Math.floor(j/2)].baseLandUseType != 0){
+          lines[Math.floor(j/2)] = lines[Math.floor(j/2)] || [];
           scene.add(line);
-          lines.push(line);
+
+           var index = Math.floor(j/2);
+            lines[Math.floor(j/2)].push(line2);
         }
 
 
       }
     }
-    renderer.render(scene, camera)
+    drawToCanvas(lines);
+    renderer.render(scene, camera);
 
 
 
+  }
+
+  this.subtractPoints = function(p1, p2){
+    return new THREE.Vector3(p1.x - p2.x, 0, p1.z - p2.z);
   }
 
   this.setPointOfIntersection = function(line, plane) {
