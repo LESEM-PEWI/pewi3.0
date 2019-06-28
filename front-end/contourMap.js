@@ -11,18 +11,25 @@ function confirmTopoMap()
 {
   if(window.confirm("Do you want to load the contour map?"))
   {
+    var lines = new ContourMap();
+    lines.drawContours();
+
+    var images = loadTopoImages(lines.tileNumbers);
   }
 }
 
-function saveAsImage(renderer, tileNum) {
+function saveAsImage(renderer, tileNum, zipFile) {
         var imgData, imgNode;
          var strDownloadMime = "image/octet-stream";
 
         try {
             var strMime = "image/png";
             imgData = renderer.domElement.toDataURL(strMime);
+            imgData = imgData.substr(22);
 
-            saveFile(imgData.replace(strMime, strDownloadMime), "testTileNum" + tileNum + ".png");
+            zipFile.file("TileNum" + tileNum + ".png", imgData, {base64 : true});
+            console.log(imgData);
+            // saveFile(imgData.replace(strMime, strDownloadMime), "testTileNum" + tileNum + ".png");
 
         } catch (e) {
             console.log(e);
@@ -44,11 +51,12 @@ function saveAsImage(renderer, tileNum) {
         }
     }
 
-function drawToCanvas(lines)
+function drawToCanvas(lines, tileNumbers)
 {
   var printScene = new THREE.Scene();
-  printScene.background = new THREE.Color( 0xffffff );
-  var printRenderer = new THREE.WebGLRenderer({preserveDrawingBuffer : true});
+  //printScene.background = new THREE.Color( 0xffffff );
+  var printRenderer = new THREE.WebGLRenderer({preserveDrawingBuffer : true, alpha : true});
+  //renderer.setClearColor( 0xffffff, 0);
   // printRenderer.setSize(tileWidth, tileHeight);
   printRenderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild( printRenderer.domElement);
@@ -56,17 +64,19 @@ function drawToCanvas(lines)
   texture.needsUpdate = true;
   // var printCamera = new THREE.PerspectiveCamera(90, 180/120, 0.1, 1000);
   var printCamera = camera.clone();
-  printCamera.position.x = tileWidth/2;
-  printCamera.position.y = 5;
-  printCamera.position.z = tileHeight/2;
 
-  // for (var i = 0; i < lines.length; i++)
-  // {
-  //   printScene.add(lines[i]);
-  // }
-  // lines.forEach(line => {
-  //    printScene.add(line);
-  // });
+
+  printCamera.position.x = tileWidth/2.0;
+  printCamera.position.y = 8;
+  printCamera.position.z = tileHeight/2.0;
+
+printCamera.aspect = tileWidth  / tileHeight;
+printCamera.updateProjectionMatrix();
+printRenderer.setSize(256, 128);
+
+var zip = new JSZip();
+var zipFile = zip.folder("images");
+
   for(var i = 0; i < lines.length; i++)
   {
     if(lines[i]){
@@ -76,14 +86,25 @@ function drawToCanvas(lines)
       }
       printRenderer.render(printScene, printCamera);
       //window.open(printRenderer.domElement.toDataURL('image/png'), 'screenshot' + i);
-      saveAsImage(printRenderer, i);
+      //
+        saveAsImage(printRenderer, i, zipFile);
+
       for(var j = 0; j < lines[i].length; j++)
       {
         printScene.remove(lines[i][j]);
       }
 
+      tileNumbers.push(i);
+
     }
   }
+zip.generateAsync({type:"blob"})
+.then(function (blob) {
+    saveAs(blob, "topopgraphy.zip");
+});
+
+  // location.href="data:application/zip;base64,"+content;
+
 
   // printRenderer.render(printScene, camera);
   // window.open(printRenderer.domElement.toDataURL('image/png'), 'screenshot');
@@ -98,6 +119,7 @@ function ContourMap(){
 
   this.map = boardData[currentBoard].map;
   this.pointsOfIntersection = new THREE.Geometry();
+  this.tileNumbers = [];
 
 
   this.drawLine = function(){
@@ -165,7 +187,7 @@ function ContourMap(){
 
       }
     }
-    drawToCanvas(lines);
+    drawToCanvas(lines, this.tileNumbers);
     renderer.render(scene, camera);
 
 
@@ -262,6 +284,31 @@ function ContourMap(){
 
     return plane;
   }
+
+
+}
+
+
+function loadTopoImages(tileNumbers){
+
+  var textureLoader = new THREE.TextureLoader();
+  var string = './imgs/topography/images/TileNum';
+  var topoImages = [];
+
+  for(var i = 0; i < tileNumbers.length; i++){
+      topoImages.push(textureLoader.load(string + tileNumbers[i] + '.png'));
+  }
+
+  return topoImages;
+
+}
+
+
+
+
+function overlayTopoPics(){
+
+
 
 
 }

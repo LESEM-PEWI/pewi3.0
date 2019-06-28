@@ -2990,7 +2990,7 @@ function highlightTile(tileId) {
       //update HUD with current information
       //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + "Current Cell: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
-      console.log(boardData[currentBoard].map[tileId]);
+
       //update the information displayed in the delayed hover div by cursor
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear])+ "<br>";
       var info2 = "Precipitation: " + printPrecipYearType()+ ", "+boardData[currentBoard].precipitation[currentYear]+" in"+"<br>";
@@ -3583,6 +3583,11 @@ function onDocumentKeyDown(event) {
           }
           setupRiver();
         }
+
+        // Call thing to overlay pictures here
+        // var lines = new ContourMap();
+        // lines.drawContours();
+
         break;
         //case e - reset camera position
       case hotkeyArr[0][0]:
@@ -4061,8 +4066,8 @@ function refreshBoard(bypassFromKeyEvent) {
     displayLevels(currentHighlightTypeString);
   }
 
-var lines = new ContourMap();
-lines.drawContours();
+// var lines = new ContourMap();
+// lines.drawContours();
 
 } //end refreshBoard
 
