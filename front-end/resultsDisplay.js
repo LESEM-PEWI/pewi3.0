@@ -298,7 +298,7 @@ function displayResults() {
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
   econGraphic1 = EconomicsGraphic1().getInstance().render();
-  econGraphic4 = EconomicsGraphic4().getInstance();
+  econGraphic4 = EconomicsGraphic4().getInstance().render();
 
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
@@ -4076,7 +4076,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
     var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
     var stackTypes = ['Cost','Revenue','Profit','Loss'];
     var fullData = createMockDataGraphic1();
-
+    console.log(fullData);
 
     var margin = {top: 40, right: 10, bottom: 20, left: 60};
     var width = 1800*.7 - margin.left - margin.right;
@@ -4379,32 +4379,61 @@ function stackMax(layers) {
     return 0;
   });
 }
+function exists(arr, search) {
+    return arr.some(row => row.includes(search));
+}
+
+
 function econGraphic4DisplayData(landUse,costType,cost){
   var econdata=economics.getInstance().data2;
-  var econdata=econdata.filter(function(item){
+  econdata=econdata.filter(function(item){
     return item.landUse==landUse;
   });
-  // var econdata=econdata[0].array.filter(function(item){
-  //   return item[costType]==cost;
-  // });
-  // console.log(econdata);
-  // var item;
-  // var i=0;
-  // econdata.forEach(data=>{
-  //   if(!item[i].costname){
-  //     item[i]={'costname':data}
-  //   }
-  // });
-  // econdata=
-  // for(var i=0;i<)
-
-}
+  econdata=econdata[0].array.filter(function(item){
+    return item[costType]==cost;
+  });
+  data=[];
+  for (var i = 0; i < econdata.length; i++) {
+    if(data.some(e=>e.costname===econdata[i]['Cost Name'])){
+      objIndex = data.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
+      data[objIndex].value+=parseFloat(econdata[i].Value);
+    }else{
+      data.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
+    }
+  }
+  console.log(data);
+return data;
+ }
 function EconomicsGraphic4() {
   var instance;
   var options = [];
+  var displaydata;
+  var econdata;
   function init() {
-    econGraphic4DisplayData("Mixed Fruits and Vegetables","Time - Cost Type","Fixed");
+    econdata=economics.getInstance().data2;
+    displaydata=econGraphic4DisplayData("Switchgrass","Time - Cost Type","Operational");
+    console.log(displaydata.map(function(d) {return d.costname; }));
+    var data = [[50, "red"], [100, "teal"], [125, "yellow"], [75, "purple"], [25, "green"]];
+
+    var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4svg');
+    var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
+    window = document.getElementById('resultsFrame');
+    var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
+    var stackTypes = ['Cost','Revenue','Profit','Loss'];
+
+    //var margin = {top: 40, right: 10, bottom: 20, left: 60};
+    // var width = 1800*.7 - margin.left - margin.right;
+    // var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+    var drawBarsfunction=function(){
+      // let x = d3.scaleBand() //There are 2 x functions because landUse determine 1 part of x factor and year determines the other
+      //   .domain(displaydata.map(function(d) {return d.name + ""; }))
+      //   .rangeRound([margin.left, width - margin.right])
+      //   .paddingInner(.1); //padding between groups
+
+
+    }
     var render = function (){
+      drawBarsfunction();
     }
 
     return {
