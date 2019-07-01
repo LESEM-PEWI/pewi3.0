@@ -312,6 +312,7 @@ body {
   left: 0px;
   position: fixed;
   top: 0px;
+  z-index: 1000;
   visibility: hidden;
   width: 100%;
 }
@@ -416,7 +417,7 @@ input[type=checkbox] {
   top: 0.3vw;
   left: 1vw;
   height: 2vw;
-  color: orange;
+  color: #009633;
   font-size: 1.75vw;
 }
 .checkOverlay:after {
@@ -428,7 +429,7 @@ input[type=checkbox] {
   top: 0.3vw;
   left: 5.0vw;
   height: 2vw;
-  color: #ddd;
+  color: white;
 
   font-size: 1.75vw;
 }
@@ -446,12 +447,12 @@ input[type=checkbox] {
   top: 0.4vw;
   z-index: 1;
   left: 0.5vw;
-  background: #ddd;
+  background: white;
 }
 
 .checkOverlay input[type=checkbox]:checked + label {
   left: 3.65vw;
-  background: orange;
+  background: #009633;
 }
 
 #checkheader {

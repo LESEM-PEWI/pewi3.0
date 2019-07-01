@@ -5065,7 +5065,7 @@ function showLevelDetails(value) {
 
   //If there is a legend to show, make sure it's visible as the hover tab may have hidden it
   if(typeof document.getElementsByClassName('DetailsList')[0] !== 'undefined'){
-  document.getElementsByClassName('DetailsList')[0].style.visibility = 'visible';
+    document.getElementsByClassName('DetailsList')[0].style.visibility = 'visible';
   }
 
   switch (value) {
@@ -5197,6 +5197,8 @@ function showLevelDetails(value) {
       document.getElementById("nitratetileDetailsList").className = "DetailsList levelDetailsList";
       break;
   } // END switch
+
+
   //hide ecosystem indicator legends
   if ((value > -4 && value < 0) || (value<=-19 && value>=-23)) {
     globalLegend = false;
@@ -5508,6 +5510,7 @@ function switchConsoleTab(value) {
     displayLevels();
   }
 
+  showLevelDetails();
   // store last users action ( print function )
   if (!modalUp) {
     storeCurrentCameraSession(2, value);
