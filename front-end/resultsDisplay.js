@@ -4076,7 +4076,6 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
     var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
     var stackTypes = ['Cost','Revenue','Profit','Loss'];
     var fullData = createMockDataGraphic1();
-    console.log(fullData);
 
     var margin = {top: 40, right: 10, bottom: 20, left: 60};
     var width = 1800*.7 - margin.left - margin.right;
@@ -4401,7 +4400,7 @@ function econGraphic4DisplayData(landUse,costType,cost){
       data.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
     }
   }
-  console.log(data);
+  //console.log(data);
 return data;
  }
 function EconomicsGraphic4() {
@@ -4411,24 +4410,102 @@ function EconomicsGraphic4() {
   var econdata;
   function init() {
     econdata=economics.getInstance().data2;
-    displaydata=econGraphic4DisplayData("Switchgrass","Time - Cost Type","Operational");
-    console.log(displaydata.map(function(d) {return d.costname; }));
-    var data = [[50, "red"], [100, "teal"], [125, "yellow"], [75, "purple"], [25, "green"]];
+    //displaydata=econGraphic4DisplayData("Switchgrass","Time - Cost Type","Operational");
+    displaydata=econGraphic4DisplayData("Mixed Fruits and Vegetables","Time - Cost Type","Preharvest");
+    // console.log(displaydata.map(function(d) {return d.costname+""; }));
 
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4svg');
     var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
     window = document.getElementById('resultsFrame');
-    var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
-    var stackTypes = ['Cost','Revenue','Profit','Loss'];
+    var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F','#191970'];
 
-    //var margin = {top: 40, right: 10, bottom: 20, left: 60};
-    // var width = 1800*.7 - margin.left - margin.right;
-    // var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+    // options
+    var margin = {top: 40, right: 10, bottom: 20, left: 50};
+    var width = 1600 - margin.left - margin.right;
+    var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+    var rectWidth = 100;
+    // svg element
+    var svg = d3.select(econBody);
+    svg = d3.select(econBody);
+    svg
+    .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // scales
+    //var xMax = 5 * rectWidth;
+
+    var xScale = d3.scaleBand()
+    	.domain(displaydata.map(function(d){ return d.costname;}))
+    	.range([margin.left, width - margin.right]);
+      //.padding(.1);
+    var yMax = d3.max(displaydata, function(d){return d.value});
+    var yScale = d3.scaleLinear()
+    	.domain([0, yMax])
+    	.range([height - margin.bottom, margin.top]);
+
+      svg.append("text")
+          .attr("transform",
+            "translate(" + (width/2) + " ," +
+            (25) + ")")
+          .style("text-anchor", "left")
+          .style("font-weight", "bold")
+          .style("font-size", "1.5vmax")
+          .text("Economics By Cost Type");
+
+      svg.append("text")
+          .attr("transform",
+            "translate(" + (width/2) + " ," +
+            (height+margin.bottom) + ")")
+          .style("text-anchor", "left")
+          .text("Cost Name");
+
+      svg.append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 0)
+          .attr("x", 0 - (height / 2))
+          .attr("dy", "1em")
+          .style("text-anchor", "middle")
+          .text("Value");
+
     var drawBarsfunction=function(){
-      // let x = d3.scaleBand() //There are 2 x functions because landUse determine 1 part of x factor and year determines the other
-      //   .domain(displaydata.map(function(d) {return d.name + ""; }))
-      //   .rangeRound([margin.left, width - margin.right])
-      //   .paddingInner(.1); //padding between groups
+      // bars
+    console.log(xScale.bandwidth());;
+    var rect = svg.selectAll('rect')
+    	.data(displaydata)
+    	.enter().append('rect')
+    	.attr('x', function(d, i){
+        return xScale(d.costname)+25})
+    	.attr('y', function(d){
+        return yScale(d.value)})
+    	.attr('width', xScale.bandwidth() - margin.left)
+    	.attr('height', function(d){
+        return height - margin.bottom - yScale(d.value)})
+			.attr('fill', function(d,i){
+        return colors[i]});
+    	//.attr('margin-left', 0);
+
+    // axes
+    var xAxis = d3.axisBottom()
+    	.scale(xScale);
+    var yAxis = d3.axisLeft()
+    	.scale(yScale);
+
+    svg.append('g')
+      	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
+      	.call(xAxis);
+    svg.selectAll('g.tick')
+        .selectAll('text')
+        .attr('fill','purple');
+        // .attr("transform", function(d) {
+        //     return "rotate(-65) "
+        // });
+        //.attr('transform','rotate(-90deg)');
+      svg.append('g')
+      	.attr('transform', 'translate(' + [margin.left, 0] + ')')
+      	.call(yAxis);
+
+
 
 
     }
