@@ -4384,7 +4384,7 @@ function exists(arr, search) {
 
 
 function econGraphic4DisplayData(landUse,costType,cost){
-  var econdata=economics.getInstance().data2;
+  var econdata=economics.getInstance().data4;
   econdata=econdata.filter(function(item){
     return item.landUse==landUse;
   });
@@ -4405,13 +4405,13 @@ return data;
  }
 function EconomicsGraphic4() {
   var instance;
-  var options = [];
+  var options = ["Mixed Fruits and Vegetables"];
   var displaydata;
   var econdata;
   function init() {
-    econdata=economics.getInstance().data2;
+    econdata=economics.getInstance().data4;
     //displaydata=econGraphic4DisplayData("Switchgrass","Time - Cost Type","Operational");
-    displaydata=econGraphic4DisplayData("Mixed Fruits and Vegetables","Time - Cost Type","Preharvest");
+    // displaydata=econGraphic4DisplayData("Mixed Fruits and Vegetables","Time - Cost Type","Preharvest");
     // console.log(displaydata.map(function(d) {return d.costname+""; }));
 
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4svg');
@@ -4419,7 +4419,6 @@ function EconomicsGraphic4() {
     window = document.getElementById('resultsFrame');
     var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F','#191970'];
 
-    // options
     var margin = {top: 40, right: 10, bottom: 60, left: 50};
     var width = 1800 *0.7- margin.left - margin.right;
     var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
@@ -4435,89 +4434,113 @@ function EconomicsGraphic4() {
     // scales
     //var xMax = 5 * rectWidth;
 
-    var xScale = d3.scaleBand()
-    	.domain(displaydata.map(function(d){ return d.costname;}))
-    	.range([margin.left, width - margin.right]);
-      //.padding(.1);
-    var yMax = d3.max(displaydata, function(d){return d.value});
-    var yScale = d3.scaleLinear()
-    	.domain([0, yMax])
-    	.range([height - margin.bottom, margin.top]);
-
-      svg.append("text")
-          .attr("transform",
-            "translate(" + (width/2) + " ," +
-            (25) + ")")
-          .style("text-anchor", "left")
-          .style("font-weight", "bold")
-          .style("font-size", "1.5vmax")
-          .text("Economics By Cost Type");
-
-      svg.append("text")
-          .attr("transform",
-            "translate(" + (width/2) + " ," +
-            (height+margin.bottom) + ")")
-          .style("text-anchor", "left")
-          .text("Cost Name");
-
-      svg.append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 0)
-          .attr("x", 0 - (height / 2))
-          .attr("dy", "1em")
-          .style("text-anchor", "middle")
-          .text("Value");
-
     var drawBarsfunction=function(){
-      // bars
-    console.log(xScale.bandwidth());
-    var rect = svg.selectAll('rect')
-    	.data(displaydata)
-    	.enter().append('rect')
-    	.attr('x', function(d, i){
-        return xScale(d.costname)+25})
-    	.attr('y', function(d){
-        return yScale(d.value)})
-    	.attr('width', xScale.bandwidth() - margin.left)
-    	.attr('height', function(d){
-        return height - margin.bottom - yScale(d.value)})
-			.attr('fill', function(d,i){
-        return colors[i]});
-    	//.attr('margin-left', 0);
 
-    // axes
-    var xAxis = d3.axisBottom()
-    	.scale(xScale);
-    var yAxis = d3.axisLeft(yScale)
-    	.tickSize(-width)
-      .tickSizeOuter(0);
+      displaydata=econGraphic4DisplayData(options[0],"Time - Cost Type","Preharvest");
 
-    svg.append('g')
-      	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
-      	.call(xAxis);
-    svg.selectAll('g.tick')
-        .selectAll('text')
-        .attr('fill','purple')
-        .attr("transform", function(d) {
-            return "rotate(-65) "
-        })
-        .attr("text-anchor", "end")
-      //  .attr('transform','rotate(-90deg)');
-      svg.append('g')
-      	.attr('transform', 'translate(' + margin.left + ',0)')
-      	.call(yAxis);
-      svg.selectAll("g.tick")
-       .style("stroke-dasharray", ("3,3"))
+        var xScale = d3.scaleBand()
+        	.domain(displaydata.map(function(d){ return d.costname;}))
+        	.range([margin.left, width - margin.right]);
+          //.padding(.1);
+        var yMax = d3.max(displaydata, function(d){return d.value});
+        var yScale = d3.scaleLinear()
+        	.domain([0, yMax])
+        	.range([height - margin.bottom, margin.top]);
+          // bars
+        var rect = svg.selectAll('rect')
+        	.data(displaydata)
+        	.enter().append('rect')
+        	.attr('x', function(d, i){
+            return xScale(d.costname)+25})
+        	.attr('y', function(d){
+            return yScale(d.value)})
+        	.attr('width', xScale.bandwidth() - margin.left)
+        	.attr('height', function(d){
+            return height - margin.bottom - yScale(d.value)})
+    			.attr('fill', function(d,i){
+            return colors[i]});
+        	//.attr('margin-left', 0);
+
+        // axes
+        var xAxis = d3.axisBottom()
+        	.scale(xScale);
+        var yAxis = d3.axisLeft(yScale)
+        	.tickSize(-width)
+          .tickSizeOuter(0);
+
+        svg.append('g')
+          	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
+          	.call(xAxis);
+        svg.selectAll('g.tick')
+            .selectAll('text')
+            .attr('fill','purple')
+            .attr("transform", function(d) {
+                return "rotate(-65) "
+            })
+            .attr("text-anchor", "end")
+          //  .attr('transform','rotate(-90deg)');
+          svg.append('g')
+          	.attr('transform', 'translate(' + margin.left + ',0)')
+          	.call(yAxis);
+          svg.selectAll("g.tick")
+           .style("stroke-dasharray", ("3,3"))
+
+          svg.append("text")
+             .attr("transform",
+               "translate(" + (width/2) + " ," +
+               (25) + ")")
+             .style("text-anchor", "left")
+             .style("font-weight", "bold")
+             .style("font-size", "1.5vmax")
+             .text("Economics By Cost Type");
+     
+           svg.append("text")
+               .attr("transform",
+                 "translate(" + (width/2) + " ," +
+                 (height+margin.bottom) + ")")
+               .style("text-anchor", "left")
+               .text("Cost Name");
+
+           svg.append("text")
+               .attr("transform", "rotate(-90)")
+               .attr("y", 0)
+               .attr("x", 0 - (height / 2))
+               .attr("dy", "1em")
+               .style("text-anchor", "middle")
+               .text("Value");
+        }
+
+        var addOptions=function(){
+          let  doc =document.getElementById('resultsFrame').contentWindow.document;
+          let  box=doc.getElementById('econGraphic4Options');
+          container=document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4LandUses');
+          container.innerHTML='';
+          economics.getInstance().data4.map(d=>d.landUse).forEach(d=>{
+            cell=document.createElement('div');
+            cell.innerHTML=d;
+            inputbox=document.createElement('input');
+            inputbox.name='econ4LU';
+            inputbox.type='radio';
+            inputbox.style.float='right';
+            inputbox.onclick=event=>optionCLick(d);
+            cell.appendChild(inputbox);
+            container.append(cell);
+          });
+          // container=box.contentWindow.document.getElementById('econGraphic4LandUses');
+          // container.innerHTML="asd";
     }
-    var addOptions=function(){
-      let  doc =document.getElementById('resultsFrame').contentWindow.document;
-      let  box=doc.getElementById('econGraphic4Options');
-      console.log(doc);
-      console.log(box);
-      // container=box.contentWindow.document.getElementById('econGraphic4LandUses');
-      // container.innerHTML="asd";
+
+    var optionCLick=function(d){
+      options[0]=d;
+      console.log(options);
+      rerender();
+    }
+    var rerender=function(){
+      svg.selectAll("*").remove();
+      drawBarsfunction();
     }
     var render = function (){
+      svg.selectAll("*").remove();
       drawBarsfunction();
       addOptions();
     }

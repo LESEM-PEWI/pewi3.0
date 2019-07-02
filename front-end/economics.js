@@ -2,7 +2,7 @@ var economics = (function () { //Singleton for getting economics data from the b
   var instance;
   var rawData;
   var data;
-  var data2=Array();
+  var data4=Array();
 
   function init() {
     console.log(this);
@@ -35,21 +35,21 @@ var economics = (function () { //Singleton for getting economics data from the b
     function chart4Information(lists) {
         this.rawData.forEach(dataPoint => {
           var landuseNum=dataPoint['LU_ID'];
-          if (!data2[landuseNum]) {
-            data2[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
+          if (!data4[landuseNum]) {
+            data4[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
           } // We need to create a path to the data that we want to pull out
           //console.log(dataPoint);
-          data2[landuseNum]['array'].push(dataPoint);
+          data4[landuseNum]['array'].push(dataPoint);
           lists.forEach(cat => {
-            if(!data2[landuseNum][cat]){
-              data2[landuseNum][cat]=[];
+            if(!data4[landuseNum][cat]){
+              data4[landuseNum][cat]=[];
             }
-            if(!data2[landuseNum][cat].includes(dataPoint[cat])){
-              data2[landuseNum][cat].push(dataPoint[cat]);
+            if(!data4[landuseNum][cat].includes(dataPoint[cat])){
+              data4[landuseNum][cat].push(dataPoint[cat]);
             }
           });
         });
-      console.log(data2);
+      console.log(data4);
     }
 
     d3.csv('./budgets.csv', function(data){
@@ -60,7 +60,7 @@ var economics = (function () { //Singleton for getting economics data from the b
     return {//public fields
       data: this.data,
       rawData: this.rawData,
-      data2: data2
+      data4: data4
     };
   };
   return {
