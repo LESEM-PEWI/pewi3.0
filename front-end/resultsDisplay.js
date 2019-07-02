@@ -4420,8 +4420,8 @@ function EconomicsGraphic4() {
     var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F','#191970'];
 
     // options
-    var margin = {top: 40, right: 10, bottom: 20, left: 50};
-    var width = 1600 - margin.left - margin.right;
+    var margin = {top: 40, right: 10, bottom: 60, left: 50};
+    var width = 1800 *0.7- margin.left - margin.right;
     var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
     var rectWidth = 100;
     // svg element
@@ -4429,9 +4429,9 @@ function EconomicsGraphic4() {
     svg = d3.select(econBody);
     svg
     .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     // scales
     //var xMax = 5 * rectWidth;
 
@@ -4470,7 +4470,7 @@ function EconomicsGraphic4() {
 
     var drawBarsfunction=function(){
       // bars
-    console.log(xScale.bandwidth());;
+    console.log(xScale.bandwidth());
     var rect = svg.selectAll('rect')
     	.data(displaydata)
     	.enter().append('rect')
@@ -4488,29 +4488,38 @@ function EconomicsGraphic4() {
     // axes
     var xAxis = d3.axisBottom()
     	.scale(xScale);
-    var yAxis = d3.axisLeft()
-    	.scale(yScale);
+    var yAxis = d3.axisLeft(yScale)
+    	.tickSize(-width)
+      .tickSizeOuter(0);
 
     svg.append('g')
       	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
       	.call(xAxis);
     svg.selectAll('g.tick')
         .selectAll('text')
-        .attr('fill','purple');
-        // .attr("transform", function(d) {
-        //     return "rotate(-65) "
-        // });
-        //.attr('transform','rotate(-90deg)');
+        .attr('fill','purple')
+        .attr("transform", function(d) {
+            return "rotate(-65) "
+        })
+        .attr("text-anchor", "end")
+      //  .attr('transform','rotate(-90deg)');
       svg.append('g')
-      	.attr('transform', 'translate(' + [margin.left, 0] + ')')
+      	.attr('transform', 'translate(' + margin.left + ',0)')
       	.call(yAxis);
-
-
-
-
+      svg.selectAll("g.tick")
+       .style("stroke-dasharray", ("3,3"))
+    }
+    var addOptions=function(){
+      let  doc =document.getElementById('resultsFrame').contentWindow.document;
+      let  box=doc.getElementById('econGraphic4Options');
+      console.log(doc);
+      console.log(box);
+      // container=box.contentWindow.document.getElementById('econGraphic4LandUses');
+      // container.innerHTML="asd";
     }
     var render = function (){
       drawBarsfunction();
+      addOptions();
     }
 
     return {
