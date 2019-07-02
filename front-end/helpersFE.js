@@ -800,6 +800,7 @@ function addTile(tile) {
 
 
 
+  //add texture to mesh for the overlay
 
   if (tile.landType[0] == 0) {
 
@@ -832,6 +833,7 @@ function addTile(tile) {
 
       var checkbox = document.getElementById("toggleOverlay");
 
+      //if the overlay toggle is off, set opacity to 1, else make it transluscent
       if(!checkbox.checked){
         tileMaterial2.opacity = 1.0;
         tileMaterial2.map = textureArray[tile.landType[currentYear]];
@@ -5406,6 +5408,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('terrainImg').className = "imgSelected";
       document.getElementById('painterTab').style.display = "block";
+      //hide overlay toggle switch
       var overlay = document.getElementsByClassName('checkOverlay');
       for(var i = 0; i < overlay.length; i++){
         overlay[i].style.display = "none";
@@ -5421,6 +5424,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('precipImg').className = "imgSelected";
       document.getElementById('precipTab').style.display = "block";
+      //hide overlay toggle switch
       var overlay = document.getElementsByClassName('checkOverlay');
       for(var i = 0; i < overlay.length; i++){
         overlay[i].style.display = "none";
@@ -5437,6 +5441,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('levelsImg').className = "imgSelected";
       document.getElementById('levelsTab').style.display = "block";
+      //show overlay toggle switch
       var overlay = document.getElementsByClassName('checkOverlay');
       for(var i = 0; i < overlay.length; i++){
         overlay[i].style.display = "block";
@@ -5452,6 +5457,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('featuresImg').className = "imgSelected";
       document.getElementById('featuresTab').style.display = "block";
+      //show overlay toggle switch
       var overlay = document.getElementsByClassName('checkOverlay');
       for(var i = 0; i < overlay.length; i++){
         overlay[i].style.display = "block";
@@ -5467,6 +5473,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('settingsImg').className = "imgSelected";
       document.getElementById('settingsTab').style.display = "block";
+      //hide overlay toggle switch
       var overlay = document.getElementsByClassName('checkOverlay');
       for(var i = 0; i < overlay.length; i++){
         overlay[i].style.display = "none";
@@ -5481,6 +5488,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('calendarImg').className = "imgSelected";
       document.getElementById('yearsTab').style.display = "block";
+      //hide overlay toggle switch
       var overlay = document.getElementsByClassName('checkOverlay');
       for(var i = 0; i < overlay.length; i++){
         overlay[i].style.display = "none";
@@ -5498,6 +5506,8 @@ function switchConsoleTab(value) {
       document.getElementById('yieldImg').className = "imgSelected";
       document.getElementById('yieldTab').style.display = "block";
       var overlay = document.getElementsByClassName('checkOverlay');
+      //show overlay toggle switch
+
       for(var i = 0; i < overlay.length; i++){
         overlay[i].style.display = "block";
       }
