@@ -70,6 +70,7 @@
   <script src="./front-end/mainFE.js"></script>
   <script src="./front-end/helpersFE.js" info></script>
   <script src="./front-end/levelLoader.js"></script>
+  <script src="./front-end/economics.js"></script>
 
   <!-- import bootstrap-progressbar library -->
   <script type="text/javascript" src="./lib/bootstrap-progressbar.js"></script>
@@ -1406,6 +1407,7 @@
       <div id="yieldTab" class="consoleTab" style="display: none;">
 
 
+
         <div class="leftcol">
 
           <div class="tooltip">
@@ -1456,7 +1458,6 @@
             <span class="tooltiptext">Wood Yield</span>
           </div>
         </div>
-
       </div>
 
     </div>
@@ -1912,6 +1913,7 @@
     <iframe id="multiplayer" class="fullPageIframe" src="./htmlFrames/multiDownload.html"></iframe>
     <iframe id="options" class="fullPageIframe" src="./htmlFrames/options.html"></iframe>
     <iframe id="printOptions" class="fullPageIframe" src="./htmlFrames/printOptions.html"></iframe>
+        <iframe id="modalReplacement" class="fullPageIframe" src="./htmlFrames/replacementFrame.html"></iframe>
 
   </div>
   <!-- End of page div, this is all of the meaningful content for in-game -->
@@ -1936,10 +1938,15 @@
     </div>
   </div>
 
+
   <!-- Javascript to stop event propogation for bug fix in modalEscapeFrame (above) -->
   <script>
     //prevent modalEscapeFrame from being clicked on when using the buttons stored in the frame
     $("#escapeMenu").click(function(e) {
+      e.stopPropagation();
+      return false;
+    });
+    $("#replacementContent").click(function(e) {
       e.stopPropagation();
       return false;
     });

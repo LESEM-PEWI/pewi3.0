@@ -352,6 +352,11 @@ body {
   background-color: #7cc1e9 !important;
 }
 
+#replacementSelect {
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
 #exitToMenuButton {
   animation-duration: 1.2s;
   animation-name: showEffect;
@@ -487,6 +492,14 @@ input[type=checkbox] {
   width: 300px;
 }
 
+#replacementContent{
+  height: 200px;
+  left: 42%;
+  top: 7vw;
+  position: absolute;
+  width: 300px;
+}
+
 @keyframes showEffect {
   from {
     opacity: 0;
@@ -526,6 +539,25 @@ input[type=checkbox] {
   width: 13.2vw;
 }
 
+.modalText {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 6px;
+    display: inline-block;
+    color: #FFFFFF;
+    font-family: 'Amatic SC', cursive;
+    font-family: var(--button-font-family);
+    font-size: calc(var(--font-sze)*2.5);
+    font-weight: bold;
+    left: -0.5vw;
+    line-height: 130%;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    -webkit-transition-duration: 1s;
+    transition-duration: 1s;
+    width: 13.2vw;
+}
+
 #yesConfirmEscape {
   margin: 0 auto;
   margin-bottom: 20px;
@@ -549,6 +581,14 @@ input[type=checkbox] {
   width: 100%;
 }
 
+.modalFrame {
+  animation-duration: 1.0s;
+  animation-name: showEffect;
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  position: fixed;
+  width: 100%;
+}
 
 
 #hover-div {
