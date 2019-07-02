@@ -1239,10 +1239,11 @@ function changeLandTypeTile(tileId) {
         }
         else
         {
+          var checkbox = document.getElementById("toggleOverlay");
           // If the land type remains the same, then do nothing, otherwise,change the land type, and update progress bars
           if(meshMaterials[tileId].map != grayTextureArray[painter]){
             // console.log('Change the land type in tile which id is ', tileId);
-            if(overlayedToggled != true){
+            if(overlayedToggled != true  || checkbox.checked == false){
               meshMaterials[tileId].map = textureArray[painter];
               meshOverlay[tileId].map = textureArray[painter];
             }
