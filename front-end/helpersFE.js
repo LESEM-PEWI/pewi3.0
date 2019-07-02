@@ -3064,9 +3064,7 @@ function getFloodFrequencyName(floodFrequencyNum){
   switch (floodFrequencyNum) {
     case 0:
       return "None"
-
-
-  }
+    }
 }
 //highlightTile updates the tile that should be highlighted.
 function highlightTile(tileId) {
@@ -4684,7 +4682,8 @@ function runSimulation() {
     */
     if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 ||
         tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 ||
-        tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122 || tempType == 123 || tempType == 124 || tempType == 125) {
+        tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122 || tempType == 123 || tempType == 124 || tempType == 125 ||
+        tempType == 126) {
       var tempTile = tempArr[5]; // Extra data
     }
     if (tempType == 56 || tempType == 99 || tempType == 100) {

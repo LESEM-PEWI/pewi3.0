@@ -867,17 +867,19 @@ function Click(c1, c2, c3, c4, c5) {
         } else {
           return "Woody Biomass yield selected";
         }
+      // user clicks on Glossary button to open it.
+      // Index is renamed to be Glossary
       case 78:
         if (action) {
           return toggleIndex();
         } else {
-          return "Index opened";
+          return "Glossary opened";
         }
       case 79:
         if (action) {
           return toggleIndex();
         } else {
-          return "Index closed";
+          return "Glossary closed";
         }
 
         // Action inside index page, click on entry
@@ -1339,6 +1341,16 @@ function Click(c1, c2, c3, c4, c5) {
               else {
                 return "User hovered over tab: " + this.tileID ;
                 break;
+              }
+
+            case 126:
+              if (action) {
+                window.frames[7].document.getElementById(this.tileID+'-toggle').checked = true;
+                return window.frames[7].toggleGroupCheckbox(this.tileID);
+                break;
+              }
+              else {
+                return "User clicked "+ this.tileID + " group checkbox";
               }
 
 

@@ -152,6 +152,10 @@ Cleaned and Prepared - July 2016 XXX
     // check/uncheck all checkboxes for the group
     function toggleGroupCheckbox(group) {
 
+      if (parent.getTracking()) {
+        parent.pushClick(0, parent.getStamp(), 126, 0, group);
+      }
+
       var options = document.getElementById(group + "-group-checkbox").getElementsByTagName('input');
       var groupCheckboxIcon = document.getElementById(group+"-checked-icon");
 
@@ -166,7 +170,8 @@ Cleaned and Prepared - July 2016 XXX
 
         default:
           for (var i = 0; i < options.length; i++) {
-            options[i].checked = document.getElementById(group+'-toggle').checked;
+            var test = document.getElementById(group+'-toggle').checked;
+            options[i].checked = test;
           }
           break;
       }
