@@ -114,16 +114,22 @@ var hotkeyArr = [
   [85, null],
   [66, null],
   [86, null],
+  [80, null],
   [68, null],
   [65, null],
   [87, null],
   [83, null],
   [79, null],
-  [81, null]
+  [81, null],
+  [38, null],
+  [40, null],
+  [37, null],
+  [39, null]
 ];
 
 // for print function
 var data = []; // stores precip data for results page
+var activeLandUses = [];
 var radarLegendColors = [],
   radarLegendItems = [];
 var tempLegendItems = [],
@@ -1201,22 +1207,21 @@ function calculateCutoffs() {
 
 } //end calculateCutoffs
 
-//calculateResults triggers the results calculations by updating Totals
-// deprecated?
-function calculateResults(tileId, year) {
-  //Totals = new Results(boardData[currentBoard]);
+/**
+ * calculateResults triggers the results calculations by updating Totals
+ * @param  {[type]} tileId [description]
+ * @param  {[type]} y     year
+ *
+ */
+function calculateResults(tileId, y) {
+  var year;
+  if(typeof y!='undefined'){
+    year=y;
+  }else{
+    year=yearSelected;
+
+  }
   Totals.update(tileId, year);
-
-  //Correction for Carbon Sequestrations
-  if(typeof year == 'undefined') {
-    for(var y = 1; y <= boardData[currentBoard].calculatedToYear; y++){
-      Totals.carbonSequestration[y] = Totals.carbonSequestration[y] * (1 / 0.90718474);
-    }
-  }
-  else {
-    Totals.carbonSequestration[year] = Totals.carbonSequestration[year] * (1 / 0.90718474);
-  }
-
   //contaminatedRiver(Totals);
 } //end calculateResults
 
@@ -1257,9 +1262,10 @@ function changeLandTypeTile(tileId) {
             boardData[currentBoard].map[tileId].landType[currentYear] = painter;
             // update boardData figures
             boardData[currentBoard].map[tileId].update(currentYear);
+            changeLandTypeTileNitrate(tileId);
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
             calculateResults(tileId, currentYear);
-
+            //console.log(boardData[currentBoard].map[tileId]);
           }
         }
       } else if (multiplayerAssigningModeOn) {
@@ -1277,26 +1283,22 @@ function changeLandTypeTile(tileId) {
 
 //Updates Nitrate score for entire map since each individual Tile's score hinges on landtypes across the entire map
 //This function is called after each instance of a changeLandTypeTile() call
-function changeLandTypeTileNitrate(){
+function changeLandTypeTileNitrate(tileId){
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //If this function is called, it means changeLandTypeTile() was just called, meaning every tile in the map needs to be recalculated
     //Hence the for loop
-    for(var n = 0, nl=boardData[currentBoard].map.length; n<nl; n++){
+    //for(var n = 0, nl=boardData[currentBoard].map.length; n<nl; n++){
       //if land type of tile is nonzero
-      if (boardData[currentBoard].map[n].landType[currentYear] != 0) {
+      if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
         //change the materials of the faces in the meshMaterials array and update the boardData
         if (!multiplayerAssigningModeOn) {
-          boardData[currentBoard].map[n].updateNitrate(currentYear);
+          boardData[currentBoard].map[tileId].updateNitrate(currentYear);
         }
       }
-    }
+    //}
     refreshProgressBar(currentYear);
   } // end outter if
 } //end changeLandTypeTile
-
-
-
-
 
 //paintChange changes the highlighted color of the selected painter and updates painter
 function changeSelectedPaintTo(newPaintValue) {
@@ -1570,7 +1572,7 @@ function combineMulti(givenPlayers) {
     }
   }
 
-changeLandTypeTileNitrate();
+//changeLandTypeTileNitrate();
 
   //Delete the other (now unused) players
   givenPlayers.shift();
@@ -2235,29 +2237,12 @@ function executePrintOptions(isDownload) {
   var arrLines = strRawContents.split("\n");
   // global array that record the print options
   toPrint = {
-    // map
+    // land use map
     yearUserViewpoint: false,
     year1: false,
     year2: false,
     year3: false,
-    // results
-    resultsTable1: false,
-    resultsTable2: false,
-    resultsTable4: false,
-    resultsLanduse: false,
-    resultsEcosystem: false,
-    resultsPrecip: false,
-    // levels
-    levelUserViewpoint: false,
-    nitrate: false,
-    erosion: false,
-    phosphorus: false,
-    sediment: false,
-    carbon: false,
-    gamewildlife: false,
-    biodiversity: false,
-    nitratetile: false,
-    // features
+    // feature maps
     featureUserViewpoint: false,
     flood: false,
     wetlands: false,
@@ -2265,7 +2250,7 @@ function executePrintOptions(isDownload) {
     drainage: false,
     soil: false,
     topo: false,
-    // yields
+    // yield maps
     yieldUserViewpoint: false,
     corn: false,
     soybean: false,
@@ -2275,7 +2260,24 @@ function executePrintOptions(isDownload) {
     grasshay: false,
     switchgrass: false,
     wood: false,
-    short: false
+    short: false,
+    // result maps
+    levelUserViewpoint: false,
+    nitrate: false,
+    erosion: false,
+    phosphorus: false,
+    sediment: false,
+    carbon: false,
+    gamewildlife: false,
+    biodiversity: false,
+    nitratetile: false,
+    // results
+    resultsTable1: false,
+    resultsTable2: false,
+    resultsTable4: false,
+    resultsLanduse: false,
+    resultsEcosystem: false,
+    resultsPrecip: false,
   };
 
   // set chosen ones to true
@@ -2489,6 +2491,7 @@ function getHighlightColor(highlightType, tileId) {
   }
 
   else if (highlightType == "nitratetile") {
+
     var nitratescore = Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate);
     if(nitratescore>=0 && nitratescore<510) return getBoldedCells(tileId, 210);
     else if(nitratescore>=510 && nitratescore<1020) return getBoldedCells(tileId, 211);
@@ -2908,6 +2911,23 @@ function phoshorusIndexRiskAssessmentClassification(pindex) {
   else if (pindex > 5 && pindex <= 15) return "High"+"<br>";
   else if (pindex > 15) return "Very High"+"<br>";
 }
+/**
+ * generate the total nitrate point based on the subWatershed cell.
+ * @param  {int} tileId id in array of map
+ * @return {int}        total point
+ */
+function calculateSubwatershedTotalNitrateScore(tileId){
+  var result=boardData[currentBoard].map.filter(
+    function(item){
+      return item.subwatershed==boardData[currentBoard].map[tileId].subwatershed;
+    }
+  );
+  var total=0;
+    for (var i = 0; i < result.length; i++) {
+      total+=result[i].results[currentYear].calculatedTileNitrate;
+    }
+    return total;
+}
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
@@ -2920,7 +2940,8 @@ function getHighlightedInfo(tileId) {
     switch (currentHighlightType) {
       //create string for nitrate levels
       case 1:
-        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+Totals.nitrateContribution[currentYear][tileId].toFixed(4)+" ppm"+"<br>";
+        var subwatershed=boardData[currentBoard].map[tileId].subwatershed;
+        highlightString = (Totals.nitrateContribution[currentYear][tileId] * 100).toFixed(2) + "% Nitrate by subwatershed" + "<br>"+boardData[currentBoard].map[tileId].subWatershedNitrateNoMin[subwatershed].toFixed(4)+" ppm"+"<br>";
         break;
         //create string for gross erosion levels
       case 2:
@@ -3057,7 +3078,7 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for short-rotation woody biomass yield
       case 18:
-        highlightString = "608.6 tons/acre/yr" + "<br>";
+        highlightString = "9.99 tons/acre/yr" + "<br>";
         break;
         //create string for sediment control
       case 19:
@@ -3078,7 +3099,10 @@ function getHighlightedInfo(tileId) {
         highlightString = "Biodiversity: " + getTileBiodiversityInfoText(getTileBiodiversityScore(tileId)) + "<br>";
         break;
       case 23:
-        highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>"+boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate.toFixed(2)+"<br>";
+        var subwatershed=boardData[currentBoard].map[tileId].subwatershed;
+        //calculate the nitrate cell equation- single cell point / total point in subWatershed * subWatershed nitrate
+        highlightString = "Nitrate Tile: " + getTileNitrateInfoText((Number(boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate)).toFixed(2)) + "<br>"+
+        ((boardData[currentBoard].map[tileId].results[currentYear].calculatedTileNitrate/calculateSubwatershedTotalNitrateScore(tileId))*boardData[currentBoard].map[tileId].subWatershedNitrateNoMin[subwatershed]).toFixed(4)+" ppm <br>";
         break;
     }
     return highlightString;
@@ -3292,7 +3316,6 @@ function highlightTile(tileId) {
       //update HUD with current information
       //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + "Current Cell: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
-      console.log(boardData[currentBoard].map[tileId]);
       //update the information displayed in the delayed hover div by cursor
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear])+ "<br>";
       var info2 = "Precipitation: " + printPrecipYearType()+ ", "+boardData[currentBoard].precipitation[currentYear]+" in"+"<br>";
@@ -3713,7 +3736,7 @@ function onDocumentMouseMove(event) {
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
         if (boardData[currentBoard].map[currentTile].landType[0] != 0){
            changeLandTypeTile(currentTile);
-           changeLandTypeTileNitrate();
+           
          }
       } else {
         //just a normal highlighting
@@ -3770,7 +3793,7 @@ function onDocumentMouseDown(event) {
                   undoGridPainters.push(boardData[currentBoard].map[changedTiles[i] - 1].landType[currentYear]);
                   changeLandTypeTile(changedTiles[i] - 1);
                 }
-                changeLandTypeTileNitrate();
+                //changeLandTypeTileNitrate();
                 if (curTracking) {
                   pushClick(0, getStamp(), 56, 0, tempGridArr);
                 }
@@ -3804,7 +3827,8 @@ function onDocumentMouseDown(event) {
             } else {
               //just a normal tile change
               changeLandTypeTile(getTileID(intersects[0].point.x, -intersects[0].point.z));
-              changeLandTypeTileNitrate();
+
+              //changeLandTypeTileNitrate();
               //Change variable for painting click and drag status
               clickAndDrag = true;
             } // end if/else
@@ -3834,7 +3858,7 @@ function onDocumentMouseDown(event) {
           }
 
 
-          changeLandTypeTileNitrate();
+          //changeLandTypeTileNitrate();
 
         }
         //Inserts the block of land use types into the undoArr
@@ -3861,36 +3885,12 @@ function onDocumentKeyDown(event) {
     //   event = window.event;
     // }
     // var keycode = event.keyCode || event.charCode;
-
     switch (event.keyCode) {
       //case shift - update isShiftDown
       case 16:
         isShiftDown = true;
         break;
 
-        //case t - toggle topography
-      case hotkeyArr[2][0]:
-      case hotkeyArr[2][1]:
-        //setting the camera y position to a specific hight when toggle is pressed.
-        if (camera2.position.y < 27)
-          camera2.position.y = 27;
-        if (modalUp !== true) {
-          if (curTracking) {
-            pushClick(0, getStamp(), 32, 0, null);
-          }
-          tToggle ? tToggle = false : tToggle = true;
-
-          //in the case when the map is highlighted:
-          if (mapIsHighlighted) {
-            refreshBoard(true);
-          }
-          //if the map is not highlighted:
-          else {
-            refreshBoard();
-          }
-          setupRiver();
-        }
-        break;
         //case e - reset camera position
       case hotkeyArr[0][0]:
       case hotkeyArr[0][1]:
@@ -3937,6 +3937,86 @@ function onDocumentKeyDown(event) {
         }
         break;
 
+        //case t - toggle topography
+      case hotkeyArr[2][0]:
+      case hotkeyArr[2][1]:
+        //setting the camera y position to a specific hight when toggle is pressed.
+        if (camera2.position.y < 27)
+          camera2.position.y = 27;
+        if (modalUp !== true) {
+          if (curTracking) {
+            pushClick(0, getStamp(), 32, 0, null);
+          }
+          tToggle ? tToggle = false : tToggle = true;
+
+          //in the case when the map is highlighted:
+          if (mapIsHighlighted) {
+            refreshBoard(true);
+          }
+          //if the map is not highlighted:
+          else {
+            refreshBoard();
+          }
+          setupRiver();
+        }
+        break;
+
+        // case u - undo key
+      case hotkeyArr[3][0]:
+      case hotkeyArr[3][1]:
+        revertChanges();
+        break;
+
+        // key b - clickTrackings
+      case hotkeyArr[4][0]:
+      case hotkeyArr[4][1]:
+        if (!curTracking) {
+          curTracking = true;
+          //Starting date is recorded
+          startTime = new Date();
+          clickTrackings = [];
+          document.getElementById("recordIcon").style.visibility = "visible";
+        } else {
+          continueTracking();
+        }
+        break;
+        //no default handler
+
+        //case v - key to record multiplayer fields
+      case hotkeyArr[5][0]:
+      case hotkeyArr[5][1]:
+        if (multiplayerAssigningModeOn) {
+          endMultiplayerAssignMode();
+        }
+        break;
+
+        // cases 6 through 9 are in mainFE.js under the animate function
+
+        // case o - toggleOverlay
+      case hotkeyArr[10][0]:
+      case hotkeyArr[10][1]:
+        if (previousOverlay != null) {
+          if (curTracking) {
+            pushClick(0, getStamp(), 31, 0, null);
+          }
+          toggleOverlay();
+        }
+        break;
+
+        //case 11 is in mainFE.js under the CamView function
+
+        // key to open print screen
+      case hotkeyArr[12][0]:
+      case hotkeyArr[12][1]:
+        // If not in the multi-player mode, we should not disable the 'P' key
+        if (!multiplayerAssigningModeOn) {
+          startPrintOptions();
+        }
+
+        break;
+
+
+
         //case z -- for zoom functions
       case 90:
         //track the z down key
@@ -3956,13 +4036,6 @@ function onDocumentKeyDown(event) {
         }
         break;
 
-        //case v - key to record multiplayer fields
-      case hotkeyArr[5][0]:
-      case hotkeyArr[5][1]:
-        if (multiplayerAssigningModeOn) {
-          endMultiplayerAssignMode();
-        }
-        break;
 
         //case esc - view escape menu
       case 27:
@@ -3996,46 +4069,7 @@ function onDocumentKeyDown(event) {
           break;
         }
         break;
-        // case u - undo key
-      case hotkeyArr[3][0]:
-      case hotkeyArr[3][1]:
-        revertChanges();
-        break;
 
-        // case o - toggleOverlay
-      case hotkeyArr[10][0]:
-      case hotkeyArr[10][1]:
-        if (previousOverlay != null) {
-          if (curTracking) {
-            pushClick(0, getStamp(), 31, 0, null);
-          }
-          toggleOverlay();
-        }
-        break;
-
-        // key b - clickTrackings
-      case hotkeyArr[4][0]:
-      case hotkeyArr[4][1]:
-        if (!curTracking) {
-          curTracking = true;
-          //Starting date is recorded
-          startTime = new Date();
-          clickTrackings = [];
-          document.getElementById("recordIcon").style.visibility = "visible";
-        } else {
-          continueTracking();
-        }
-        break;
-        //no default handler
-
-        // hit P to see pdf output
-      case 80:
-        // If not in the multi-player mode, we should not disable the 'P' key
-        if (!multiplayerAssigningModeOn) {
-          startPrintOptions();
-        }
-
-        break;
     } //end switch
   }
 } //end onDocumentKeyDown
@@ -4121,9 +4155,19 @@ function painterSelect(brushNumberValue) {
 
 function pasteYear()
 {
+
+
+
   var snackBar = document.getElementById("snackbarNotification");
   document.getElementById("yearPasteButton").classList.toggle("show");
   var yearToPasteIn = document.getElementById("yearToPaste").value;
+
+
+  // trying to push the current map so that it can be undone after undoing the paste
+   var currentMap = getMap(yearToPasteIn);
+   undoArr[yearToPasteIn].push(currentMap);
+
+
     for (var i = 0; i < boardData[currentBoard].map.length; i++)
     {
       boardData[currentBoard].map[i].landType[yearToPasteIn] = boardData[currentBoard].map[i].landType[yearCopyPaste];
@@ -4134,8 +4178,9 @@ function pasteYear()
     }
     boardData[currentBoard].updateBoard();
     refreshBoard();
-
-    calculateResults();
+    calculateResults(undefined,yearToPasteIn);
+    console.log(Totals);
+    //calculateResults();
     refreshProgressBar(currentYear);
 
     snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
@@ -4146,6 +4191,13 @@ function pasteYear()
     document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
     document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'block';
     document.getElementById("yearPasteButton").style.display = "none";
+
+
+
+    // makes a deep copy of all the arrays inside of undoArr for the given year so that the undo for the copy is fully functional
+    var newStuff = JSON.parse(JSON.stringify(undoArr[yearCopyPaste]));
+    undoArr[yearToPasteIn] = undoArr[yearToPasteIn].concat(newStuff);
+
 } //end pasteYear
 
 //Pauses the sim (and related times)
@@ -4328,7 +4380,7 @@ function randomizeBoard() {
       }
     } //end for all tiles
 
-    changeLandTypeTileNitrate();
+    //changeLandTypeTileNitrate();
   }
   randomizing = false;
   painter = prevPainter;
@@ -4388,7 +4440,8 @@ function resetHotkeys() {
     [87, null],
     [83, null],
     [79, null],
-    [81, null]
+    [81, null],
+    [80, null]
   ];
   updateKeys();
 } //end resetHotkeys()
@@ -4408,7 +4461,7 @@ function resetMultiPlayer() {
 // this function closes the iframe, blurs the frame, and
 // takes the parameters set by it to order the page elements
 function resetOptions() {
-undoArr[currentYear] = [];
+
   //close frame
   modalUp = false;
   document.getElementById('options').style.visibility = "hidden";
@@ -4764,6 +4817,11 @@ function reversePrecipValue(val)
 
 //revertChanges undos the users previous tile changes, and goes back to the previous board instance
 function revertChanges() {
+
+
+  // this function will remove all undo steps after the first occurence of one that involves a tile that is toggled off
+  removeAfterFirstNotAllowed(undoArr, currentYear);
+
   //For storing clicks
   if (curTracking) {
     pushClick(0, getStamp(), 30, 0, null);
@@ -4780,10 +4838,12 @@ function revertChanges() {
     } else {
       painter = tempTileAndPainter[1];
       changeLandTypeTile(tempTileAndPainter[0]);
-      changeLandTypeTileNitrate();
+      //changeLandTypeTileNitrate();
     }
     undo = false;
     painter = tempPainter;
+
+
   }
 }
 
@@ -4879,47 +4939,22 @@ function saveAndRandomize() {
   //for whole board (as long as randomization is allowed)
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     //getRandomInt is in back-end helperMethods
-    for (var j = 1; j <= 15; j++) { //Check to see if the landuse type is toggled off or not
-      if (document.getElementById('parameters').innerHTML.indexOf('paint' + j + "\n") != -1) {
-        //If it's toggled off, remove the landuse type for randomization
-        var removedIndex = randomPainterTile.indexOf(j); //2
-
-        for (var x = 0; x < 15; x++) {
-          if (removedIndex == x) {
-            delete randomPainterTile[removedIndex];
-
-            for (var k = 1; k <= 15; k++) {
-              if (document.getElementById('parameters').innerHTML.indexOf('paint' + k + "\n") === -1) {
-                delete randomPainterTile[removedIndex];
-                randomPainterTile[removedIndex] = k;
-                break;
-              } // end if
-            } // END for
-
-          } // end if
-        } // end for
-
-      } // end if
-    } //end for
-
-    var newDefaultLandUse = 1;
-    //finding a new default
-    for (var r = 1; r <= 15; r++) {
-      if (randomPainterTile.indexOf(r) != -1) {
-        newDefaultLandUse = r;
-        break;
+    for (var j = 0; j <= randomPainterTile.length; j++) { //Check to see if the landuse type is toggled off or not
+      if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j]) !== -1) {
+        randomPainterTile.splice(j--, 1);
+        console.log(randomPainterTile);
       }
     }
+    var newDefaultLandUse = randomPainterTile[0];
+
     var forNitrateCalc = Array(4);
     forNitrateCalc[0] = Array(828);
     forNitrateCalc[1] = Array(828);
     forNitrateCalc[2] = Array(828);
     forNitrateCalc[3] = Array(828);
 
-    for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
+    outer: for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
-        //if tile exists
-        //Change the land use for a tile if it was restricted
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
           painter = newDefaultLandUse;
           meshMaterials[j].map = grayTextureArray[painter];
@@ -4929,9 +4964,7 @@ function saveAndRandomize() {
           boardData[currentBoard].map[j].update(i);
           forNitrateCalc[i][j] = 1;
         }
-
       }
-
     }
     for (var n = 1; n < forNitrateCalc.length; n++) {
       for (var t = 0; t < forNitrateCalc[n].length; t++) {
@@ -4940,19 +4973,15 @@ function saveAndRandomize() {
         }
       }
     }
-
-
-
-
     painter = newDefaultLandUse; //end for all tiles
     //'unselect' the previously selected icon
     var painterElementId = "paint" + prevPainter;
     document.getElementById(painterElementId).className = "landSelectorIcon icon";
     //change the selected painter to the new default land use
     changeSelectedPaintTo(newDefaultLandUse);
-    refreshBoard();
   }
 } //end saveandRandomize
+
 
 //selectAnimation is a switch to trigger animations
 function selectAnimation(animation) {
@@ -5022,7 +5051,7 @@ function setSimBoolean(newValue) {
 } //end setSimBoolean
 
 //Sets the simUpload boolean value
-function setUpload(givenValue) {
+function setUpload(hotkeyValue) {
   uploadedBoard = givenValue;
 } //end setUpload()
 
@@ -5584,6 +5613,7 @@ function toggleEscapeFrame() {
   if (document.getElementById('confirmEscape').style.height == "20vw") {
     confirmEscape();
   }
+  console.log(modalUp);
 
   if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
     document.getElementById('modalEscapeFrame').style.display = "block";
@@ -5615,6 +5645,46 @@ function toggleEscapeFrame() {
   }
 
 } //end toggleEscapeFrame
+
+
+function toggleReplacementFrame(options) {
+  var modal = document.getElementById('modalReplacement');
+  innermodal = modal.contentDocument || modal.contentWindow.document;
+  if(modal.style.visibility === 'visible'){
+    modal.style.display = 'none';
+    modalUp = false;
+  }
+  else {
+    modal.style.display = 'block';
+    modal.style.visibility = 'visible';
+    select = innermodal.getElementById('replacementSelect');
+    while(select.firstChild){
+      select.removeChild(select.firstChild);
+    }
+    options.forEach(function(option){
+      var opt = document.createElement('option');
+      opt.innerHTML = LandUseType.getPrintFriendlyType(option);
+      opt.value = option;
+      select.appendChild(opt)
+    });
+    modalUp = true;
+  }
+}
+
+function fillDeactivatedLands(){
+  var modal = document.getElementById('modalReplacement');
+  innermodal = modal.contentDocument || modal.contentWindow.document;
+  select = innermodal.getElementById('replacementSelect');
+  for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
+    for (var j = 0; j < boardData[currentBoard].map.length; j++) {
+      if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !activeLandUses.includes(boardData[currentBoard].map[j].landType[i])) {
+        boardData[currentBoard].map[j].landType[i] = parseInt(select.value);
+      }
+    }
+  }
+  toggleReplacementFrame();
+  refreshBoard();
+}
 
 //toggleIndex displays and hides the codex
 function toggleIndex() {
@@ -5949,7 +6019,7 @@ function undoGrid(givenTilesAndPainter) {
     changeLandTypeTile(tile);
   }
 
-  changeLandTypeTileNitrate();
+  //changeLandTypeTileNitrate();
 } //end givenTilesAndPainter
 
 //Determines if the tile to be added is unique (non-repeated in paint and tileId)
@@ -6021,7 +6091,10 @@ function updatePrecip(year) {
   boardData[currentBoard].updateBoard();
 
   // update the results and progress bars whenever precipitation is changed.
-  calculateResults();
+  // for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+  //   calculateResults(i,year);
+  // }
+  calculateResults(undefined,year);
   refreshProgressBar(currentYear);
 } //updatePrecip
 
@@ -7268,3 +7341,126 @@ if (typeof module !== "undefined" && module.exports) {
 //     console.log("detachEvent");
 //   }
 // }
+
+
+  /**
+  This function looks through the undoArr for the given year, and deletes everything after the first land type not allowed is found.
+  @param undoArray the undoArr
+  @param theYear the year that is being modified
+  **/
+
+  function removeAfterFirstNotAllowed(undoArray, theYear)
+  {
+    notAllowedArray = getLandUseNotAllowed();
+
+    if(notAllowedArray.length == 0) // if all tiles are allowed then end here
+      return;
+
+    for(var i = undoArray[theYear].length - 1; i >= 0; i--)
+    {
+
+      if (Array.isArray(undoArray[theYear][i][1])) //check to see if we are undoing a grid paint, so we need to search the whole thing in case there are types not allowed underneath
+      {
+        for(var j = 0; j < undoArray[theYear][i][1].length; j++)
+        {
+          if (notAllowedArray.includes(undoArray[theYear][i][1][j]))
+          {
+            undoArray[theYear] = undoArray[theYear].slice(i + 1);
+            return; //used return so it will break out of both loops
+          }
+        }
+      }
+
+
+      else if (notAllowedArray.includes(undoArray[theYear][i][1])) // takes care of being covered by a cell paint tile
+      {
+        undoArray[theYear] = undoArray[theYear].slice(i + 1);
+        break;
+      }
+    }
+  }
+
+  /**
+  This function returns an array of land use types that are currently toggled of. This is used in the removeAfterFirstNotAllowed function right above.
+  **/
+  function getLandUseNotAllowed()
+  {
+    var toReturn = [];
+
+    for(var i = 1; i <= 15; i++)
+    {
+      if(document.getElementById('parameters').innerHTML.indexOf('paint' + i + "\n") != -1)
+      {
+        toReturn.push(i);
+      }
+    }
+
+    return toReturn;
+  }
+
+/**
+This method gets the land use type that is currently selected by the user, this is used to fill
+the map with the current selection if tiles on the map are toggled off.
+**/
+  function getCurrentLandType()
+  {
+    var currentType = LandUseType.getNumericalType(printLandUseType(painter)); // set equal to the current land type that is selected, numerical value
+    return currentType;
+  }
+
+
+/**
+This function is used to set the new default land use type. It sets to the current selected, but if it cant do that it starts at 1 and moveds up until it
+finds a usable type
+**/
+  function getNewLandType()
+  {
+    var toReturn = getCurrentLandType();
+    var notAllowed = getLandUseNotAllowed();
+    var randomPainterTile = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15];
+
+    // if the current selection is toggled off, or wetland because it would set the whole map to wetland
+    if(notAllowed.includes(toReturn)|| toReturn == 14)
+    {
+      // loop through to find the first one that is toggled on
+      for (var r = 1; r <= 15; r++)
+      {
+        if (!(notAllowed.includes(r)))
+        {
+          toReturn = r;
+          break;
+        }
+      }
+
+    }
+    return toReturn;
+  }
+
+
+/**
+ *This function returns a copy of the tile IDs and their land types for use in the undo funcion. It is used to make a copy of the year before it gets pasted over.
+ *That copy is then pushed to that years undo array so that it can be undone after the pasted has been undone.
+ * @param  {[type]} year [The year to copy]
+ * @return {[type]}      [An array with an array of IDs and an array of land types to push into the undoArr]
+ */
+  function getMap(year)
+  {
+    var tileIDs = [];
+    var landTypes = [];
+
+    // loop through the map and get each tiles ID and landtype
+    for (var i = 0; i < boardData[currentBoard].map.length; i++) {
+
+      //check if the tile is actually a game tile
+      if(boardData[currentBoard].map[i].landType[year] != 0)
+      {
+        tileIDs.push(i);
+        landTypes.push(boardData[currentBoard].map[i].landType[year]);
+      }
+
+    } // end for
+
+    var toReturn = [tileIDs, landTypes];
+
+    return toReturn;
+  }
