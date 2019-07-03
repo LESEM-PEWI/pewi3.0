@@ -2137,7 +2137,7 @@ function finishProperties() {
     */
     var clickFunctionType = parseInt(clickTrackings[i].functionType);
 
-    if (clickFunctionType == 122 || clickFunctionType == 124 || clickFunctionType == 125 ||
+    if (clickFunctionType == 122 || clickFunctionType == 124 || clickFunctionType == 125 || clickFunctionType == 126 ||
         clickTrackings[i].tileID != clickTrackings[i - 1].tileID ||
         clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
 

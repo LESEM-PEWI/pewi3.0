@@ -1342,10 +1342,17 @@ function Click(c1, c2, c3, c4, c5) {
                 return "User hovered over tab: " + this.tileID ;
                 break;
               }
-
+            // When user clicks on select/de-select group checkboxes in the Print page
             case 126:
               if (action) {
-                window.frames[7].document.getElementById(this.tileID+'-toggle').checked = true;
+                //var test2 = window.frames[7].document.getElementById(this.tileID+'-toggle').checked;
+                if (window.frames[7].document.getElementById(this.tileID+'-toggle').checked == false) {
+                  window.frames[7].document.getElementById(this.tileID+'-toggle').checked = true;
+                }
+                else {
+                  window.frames[7].document.getElementById(this.tileID+'-toggle').checked = false;
+                }
+                //window.frames[7].document.getElementById(this.tileID+'-toggle').checked = true;
                 return window.frames[7].toggleGroupCheckbox(this.tileID);
                 break;
               }
