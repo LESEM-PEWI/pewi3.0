@@ -1148,12 +1148,16 @@ function GameBoard() {
       for (var i = 0; i < this.map.length; i++) {
         this.map[i].update(y);
       }
-      this.precipitationMultiplierHelperAlltile(y);
-      this.cropMultiplierHelperAlltile(y);
-      this.calculateNitrateConcentrationHelperAlltile(y);
-      this.sumAreasUnderTwoAlltile(y);
-      this.tileNitrateCalculationAlltile(y);
+      this.updateAllTileNitrate(y);
   }; //end updateBoard
+
+   this.updateAllTileNitrate=function(y){
+    this.precipitationMultiplierHelperAlltile(y);
+    this.cropMultiplierHelperAlltile(y);
+    this.calculateNitrateConcentrationHelperAlltile(y);
+    this.sumAreasUnderTwoAlltile(y);
+    this.tileNitrateCalculationAlltile(y);
+  }
 
   /**
    * precipitation multiplier for all tile
@@ -1231,7 +1235,7 @@ function GameBoard() {
           subWatershedNitrateNoMin[s] *= 100 * precip * wetlandMultiplier[s] * (areaArr[s]/areaTotal);
         }
       } //end for all watersheds
-
+      this.wetlandMultiplier=wetlandMultiplier;
       this.subWatershedNitrateNoMin = subWatershedNitrateNoMin;
   }; //end this.calculateNitrateConcentrationHelper()
 
@@ -1262,15 +1266,11 @@ function GameBoard() {
     var res = this.subWatershedNitrateNoMin;
     //Determine if there is a strategic wetland in use in this Tile's subWatershed
     for(var t = 0, tl=this.map.length; t < tl; t++){
-      var wetlandMultiplier = 1;
       var subwatershed = this.map[t].subwatershed;
       var crop = this.cropMult[t];
       var area = this.map[t].area;
       var score = 100*precip*crop*area;
-      if ((subwatershed == this.map[t].subwatershed) && (this.map[t].landType[year] == LandUseType.wetland) && this.map[t].strategicWetland == 1) {
-        wetlandMultiplier = 0.48;
-      }
-      score *= wetlandMultiplier;
+      score *= this.wetlandMultiplier[subwatershed];
       //If Tile is in subwatershed with score below 2, do more stuff
       if(res[subwatershed]<2){
         var diff = 2-res[subwatershed];
@@ -2722,7 +2722,6 @@ this.tileNitrate = Array(4);
       //For each tile, add the carbon sequestration value to the results array in corresponding year y
       for (var i = 0; i < board.map.length; i++) {
 
-
         this.sumCarbonSequestration[y] += board.map[i].results[y].calculatedCarbonSequestration;
         this.tileCarbonSequestration[y][i] = board.map[i].results[y].calculatedCarbonSequestration;
         this.grossErosion[y] += board.map[i].results[y].calculatedGrossErosionRate * board.map[i].area;
@@ -3551,7 +3550,6 @@ function Tile(tileArray, board) {
   this.rusleValues = Array(6);
   this.ephemeralGullyErosionValue = Array(6);
   this.finalArea = 0;
-  this.subWatershedNitrateNoMin = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   this.subWatershedArea = 0;
   //this.cropMult = Array(828);
   this.precipMult = 0;
@@ -3605,7 +3603,6 @@ function Tile(tileArray, board) {
     );
     y=yearSelected;
       for (var i = 0; i < subWatershedtile.length; i++) {
-        subWatershedtile[i].sumAreaHelper();
         subWatershedtile[i].precipitationMultiplierHelper(y);
         subWatershedtile[i].cropMultiplierHelper(y);
         subWatershedtile[i].calculateNitrateConcentrationHelper(y);
@@ -3766,9 +3763,8 @@ function Tile(tileArray, board) {
 
       for(var i=0, il=subWatershedtile.length; i<il; i++){
         board.subWatershedNitrateNoMin[n]+=board.cropMult[subWatershedtile[i].id-1];
-
         if ((subWatershedtile[i].landType[year] == LandUseType.wetland) && subWatershedtile[i].strategicWetland == 1) {
-          wetlandMultiplier[n] = 0.48;
+          wetlandMultiplier = 0.48;
         } //end if
       } //end for all cells, adding Crop Multipliers
       if(board.subWatershedNitrateNoMin[n]==0&&area==0){
@@ -3848,7 +3844,7 @@ function Tile(tileArray, board) {
   //that have a Nitrate score under 2
   this.sumAreasUnderTwo = function(year){
     var sum = 0;
-    var arr = this.subWatershedNitrateNoMin;
+    var arr = board.subWatershedNitrateNoMin;
     for(var i=0, il=board.map.length; i<il; i++){
       if(arr[board.map[i].subwatershed]<2){
         sum+=board.map[i].area;

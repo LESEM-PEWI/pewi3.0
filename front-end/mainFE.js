@@ -219,7 +219,6 @@ function animationFrames() {
 
   //render animations
   requestAnimationFrame(function animate() {
-
     birdAnimation();
     zoomAnimation();
 
@@ -239,7 +238,6 @@ function animationFrames() {
     if (bgScene != null) {
       renderer.render(bgScene, bgCam);
     }
-
     //wait # update frames to check
     if (counter > 20) {
       gameDirector();

@@ -4,17 +4,20 @@
 //gameDirector monitors achievements in the PEWI levels/exercises
 // this function is called to be updated every 20 animation frames
 function gameDirector() {
-    
+
     if(levelGlobal){
-        
+
         //aggregate tile results
-        Totals.update() ;
-    
+
+        if(levelGlobal!=0){
+          calculateResults();
+        }
+
         //sandbox features
         if(levelGlobal == 0){
             //nothing currently
         }
-    
+
         //all features
         contaminatedRiver();
         objectiveCheck();
