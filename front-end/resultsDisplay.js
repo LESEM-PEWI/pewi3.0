@@ -4405,7 +4405,7 @@ return data;
  }
 function EconomicsGraphic4() {
   var instance;
-  var options = ["Mixed Fruits and Vegetables"];
+  var options = ["Mixed Fruits and Vegetables","Time - Cost Type","Preharvest"];
   var displaydata;
   var econdata;
   function init() {
@@ -4436,8 +4436,8 @@ function EconomicsGraphic4() {
 
     var drawBarsfunction=function(){
 
-      displaydata=econGraphic4DisplayData(options[0],"Time - Cost Type","Preharvest");
-
+      displaydata=econGraphic4DisplayData(options[0],options[1],options[2]);
+      console.log(displaydata);
         var xScale = d3.scaleBand()
         	.domain(displaydata.map(function(d){ return d.costname;}))
         	.range([margin.left, width - margin.right]);
@@ -4493,7 +4493,7 @@ function EconomicsGraphic4() {
              .style("font-weight", "bold")
              .style("font-size", "1.5vmax")
              .text("Economics By Cost Type");
-     
+
            svg.append("text")
                .attr("transform",
                  "translate(" + (width/2) + " ," +
@@ -4515,25 +4515,80 @@ function EconomicsGraphic4() {
           let  box=doc.getElementById('econGraphic4Options');
           container=document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4LandUses');
           container.innerHTML='';
+          cell=document.createElement('div');
+          cell.innerHTML='Land Use';
+          cell.className='landuse';
+          container.append(cell);
           economics.getInstance().data4.map(d=>d.landUse).forEach(d=>{
-            cell=document.createElement('div');
-            cell.innerHTML=d;
-            inputbox=document.createElement('input');
-            inputbox.name='econ4LU';
-            inputbox.type='radio';
-            inputbox.style.float='right';
-            inputbox.onclick=event=>optionCLick(d);
-            cell.appendChild(inputbox);
+            // cell=document.createElement('div');
+            // cell.innerHTML=d;
+            // inputbox=document.createElement('input');
+            // inputbox.name='econ4LU';
+            // inputbox.type='radio';
+            // inputbox.style.float='right';
+            // inputbox.onclick=event=>optionCLick(d,0);
+            // cell.appendChild(inputbox);
+            cell = createInputbox('div',d,'input','econ4LU',d,0);
             container.append(cell);
           });
           // container=box.contentWindow.document.getElementById('econGraphic4LandUses');
           // container.innerHTML="asd";
-    }
+          //costContainer=document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4CostName');
+          costContainer=doc.getElementById('econGraphic4CostOption');
+          typeSelection=document.createElement('select');
+          option1=document.createElement('option');
+          option1.value='Action';
+          option1.innerHTML='Action - Cost Type';
+          option1.onclick=event=>optionCLick(option1.innerHTML,1);
+          option2=document.createElement('option');
+          option2.value='Time';
+          option2.innerHTML='Time - Cost Type';
+          option2.onclick=event=>optionCLick(option2.innerHTML,1);
+          typeSelection.appendChild(option1);
+          typeSelection.appendChild(option2);
+          costContainer.append(typeSelection);
 
-    var optionCLick=function(d){
-      options[0]=d;
+        var costTypeList=economics.getInstance().data4.filter(function(item){
+          return item.landUse==options[0];
+        });
+        costTypeList=costTypeList[0][options[1]];
+        costTypeContainer=document.createElement('div');
+        costTypeContainer.className='list';
+        costTypeList.forEach(d=>{
+          input=createInputbox('div',d,'input','econ4costType',d,2);
+          costTypeContainer.appendChild(input);
+        //   cell=document.createElement('div');
+        //   cell.innerHTML=d;
+        //   inputbox=document.createElement('input');
+        //   inputbox.name='econ4costType';
+        //   inputbox.type='radio';
+        //   inputbox.style.float='right';
+        //   //inputbox.onclick=event=>optionCLick(d,0);
+        //   cell.appendChild(inputbox);
+        //   costTypeContainer.appendChild(cell);
+        });
+        costContainer.append(costTypeContainer);
+        // console.log(costTypeList);
+        // console.log(costTypeList[0][options[1]]);
+    }
+    function createInputbox(tag,innerhtml,inputTag,name,d,i){
+      cell=document.createElement(tag);
+      cell.innerHTML=innerhtml;
+      inputbox=document.createElement(inputTag);
+      inputbox.name=name;
+      inputbox.type='radio';
+      inputbox.style.float='right';
+      inputbox.onclick=event=>optionCLick(d,i);
+      cell.appendChild(inputbox);
+      return cell;
+    }
+    var optionCLick=function(d,i){
+      options[i]=d;
       console.log(options);
-      rerender();
+      if(i==2){
+        rerender();
+      }
+      //rerender();
     }
     var rerender=function(){
       svg.selectAll("*").remove();
