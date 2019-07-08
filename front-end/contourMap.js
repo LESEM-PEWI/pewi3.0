@@ -22,6 +22,7 @@ function confirmTopoMapLoad() {
     //var images = loadTopoImages(generatedContourMap.tileNumbers);
 
     overlayTopoImages(generatedContourMap.tileNumbers);
+    // overlayTopoImages();
   }
 }
 
@@ -37,7 +38,7 @@ function saveAsImage(renderer, tileNum, zipFile) {
     zipFile.file("TileNum" + tileNum + ".png", imgData, {
       base64: true
     });
-    console.log(imgData);
+    // console.log(imgData);
     // saveFile(imgData.replace(strMime, strDownloadMime), "testTileNum" + tileNum + ".png");
 
   } catch (e) {
@@ -107,7 +108,7 @@ function drawToCanvas(lines, tileNumbers) {
       type: "blob"
     })
     .then(function(blob) {
-      saveAs(blob, "topopgraphy.zip");
+      saveAs(blob, "topography.zip");
     });
 
   // location.href="data:application/zip;base64,"+content;
@@ -305,29 +306,37 @@ function loadTopoImage(tileNumber){
   var string = './imgs/topography/images/TileNum';
 
 
-  return textureLoader.load(string + tileNumber + '.png');
+  return textureLoader.load(string + tileNumber);
 
 
 }
 
 function overlayTopoImages(tileNumbers) {
 
-  for (var i = 0; i <tileNumbers.length; i++){
+  for (var i = 0; i < tileNumbers.length; i++){
 
-    var material = new THREE.MeshLambertMaterial({ map: loadTopoImage(tileNumbers[i]) });
+    var material = new THREE.MeshLambertMaterial({ map: loadTopoImage(tileNumbers[i]), side: THREE.DoubleSide });
 
     var geometry = new THREE.PlaneGeometry(tileWidth, tileHeight);
 
     var mesh = new THREE.Mesh(geometry, material);
 
     var position = boardData[currentBoard].map[tileNumbers[i]].position;
+
+    //adjust position befause one is based on the center on the other is based on the top right corner
     mesh.position.set(position.x + 9, position.y + 1, position.z + 6);
 
     //makes the tiles parallel to the map
     mesh.quaternion.copy( camera.quaternion );
 
+    mesh.updateMatrix();
+    meshGeometry.merge(mesh.geometry, mesh.matrix);
+
     scene.add(mesh);
   }
+
+
+
 
   renderer.render();
 

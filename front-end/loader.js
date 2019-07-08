@@ -4,6 +4,7 @@ var materialArray = [];
 var highlightArray = [];
 var oldPewiBackgrounds = [];
 var rainTexture;
+var tile0;
 
 //this function loads into the texture arrays the necessary images for creation of webGl
 //  materials. All are loaded via the three.js textureLoader
@@ -12,6 +13,11 @@ function loadResources() {
 
     //Add a textureLoader to load textures for THREE.js
     var textureLoader = new THREE.TextureLoader();
+
+
+    //stuff for the contourMap
+
+    tile0 = textureLoader.load('./imgs/topography/images/TileNum0.png');
 
     //Load the land type textures. Each land type has a number from 1 to 15.
     var textureClear = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_None.png');
