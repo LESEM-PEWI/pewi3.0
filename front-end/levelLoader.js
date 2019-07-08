@@ -216,9 +216,8 @@ function loadLevel(level) {
         } //end for
 
       } //end if
-
+      
     } //end for
-
     //call toggleVisibility to update new precipitation values
     toggleVisibility();
   } //end if level global is > 0
