@@ -743,11 +743,11 @@ function addPlayer(givenPlayer) {
   }
 }
 
-//flips the boolean overlayedToggled so that the transluscent map is set if the switch is clciked with no ocurrent overlay
+//flips the boolean overlayedToggled so that the transluscent map is set if the switch is clicked with no ocurrent overlay
 function switchOverlayTemp(){
   var checkbox = document.getElementById("toggleOverlay");
 
-  if(checkbox.checked == true){
+  if(checkbox.checked == true && overlayedToggled == true){
     overlayTemp = true;
   }
   else{
