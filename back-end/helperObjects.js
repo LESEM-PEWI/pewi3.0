@@ -888,7 +888,8 @@ function Click(c1, c2, c3, c4, c5) {
         // console.log(CODEX_HTML.document.getElementById(this.tileID).className);
         // simulation is running, do what we recorded (what the user did)
         if (action) {
-          if (CODEX_HTML.document.getElementById(this.tileID).className == "groupHeader" ||
+        /*  TO BE REMOVED AFTER THE LAST TESTING IS DONE.
+        if (CODEX_HTML.document.getElementById(this.tileID).className == "groupHeader" ||
             CODEX_HTML.document.getElementById(this.tileID).className == "selectedGroupHeader") {
             CODEX_HTML.toggleChildElements(this.tileID);
             CODEX_HTML.arrangeContent(this.tileID);
@@ -896,11 +897,23 @@ function Click(c1, c2, c3, c4, c5) {
             CODEX_HTML.document.getElementById(this.tileID).className == "selectedGroupElement") {
             CODEX_HTML.arrangeContent(this.tileID);
           }
-          return;
+          return;*/
+
+          if (window.frames[3].document.getElementById(this.tileID).className == "groupHeader" ||
+              window.frames[3].document.getElementById(this.tileID).className == "selectedGroupHeader") {
+              window.frames[3].toggleChildElements(this.tileID);
+              window.frames[3].arrangeContent(this.tileID);
+            } else if (window.frames[3].document.getElementById(this.tileID).className == "groupElement" ||
+              window.frames[3].document.getElementById(this.tileID).className == "selectedGroupElement") {
+              window.frames[3].arrangeContent(this.tileID);
+            }
+            return;
+
         }
         // record the event description in csv file
         else
-          return "Click an entry in index page";
+          return "Clicked entry " +  window.frames[3].document.getElementById(this.tileID).textContent + " in glossary page";
+
 
         break;
 
