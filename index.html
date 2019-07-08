@@ -207,7 +207,7 @@
 
 
     <div class="checkOverlay" style="display:none;">
-      <input type="checkbox" onclick="refreshBoard();redrawOverlay();" value="1" id="toggleOverlay" name="toggleOverlay" />
+      <input type="checkbox" onclick="switchOverlayTemp();refreshBoard();redrawOverlay();" value="1" id="toggleOverlay" name="toggleOverlay" unchecked/>
       <label for="toggleOverlay"></label>
     </div>
 
@@ -257,7 +257,7 @@
     <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
       <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-      <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);">
+      <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);refreshBoard();">
         <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle', 0);" onmouseout="toggleTabTitle('terrainTabTitle', 1);">
         <div id="terrainTabTitle" style="display:none;"></div>
       </div>

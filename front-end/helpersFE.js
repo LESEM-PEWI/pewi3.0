@@ -18,6 +18,7 @@ var curTracking = false;
 var endTime;
 var hoverOverride = false;
 var immutablePrecip = false;
+var overlayTemp = false;
 var lastPainter = null;
 var lastSelectedPainter = 1;
 var leftToolConsoleWasOpen;
@@ -742,6 +743,17 @@ function addPlayer(givenPlayer) {
   }
 }
 
+//flips the boolean overlayedToggled so that the transluscent map is set if the switch is clciked with no ocurrent overlay
+function switchOverlayTemp(){
+  var checkbox = document.getElementById("toggleOverlay");
+
+  if(checkbox.checked == true){
+    overlayTemp = true;
+  }
+  else{
+    overlayTemp = false;
+  }
+}
 //addTile constructs the geometry of a tile and adds it to the scene
 function addTile(tile) {
 
@@ -840,15 +852,15 @@ function addTile(tile) {
       var checkbox = document.getElementById("toggleOverlay");
 
       //if the overlay toggle is off, set opacity to 1, else make it transluscent
-      if(!checkbox.checked){
-        tileMaterial2.opacity = 1.0;
-        tileMaterial2.map = textureArray[tile.landType[currentYear]];
-        overlayedToggled = false;
-      }
-      else {
+      if(checkbox.checked && overlayTemp == true){
         tileMaterial2.opacity = 0.4;
         tileMaterial2.map = grayTextureArray[tile.landType[currentYear]];
-        overlayedToggled = true;
+        console.log(overlayTemp);
+      }
+      else{
+        tileMaterial2.opacity = 1.0;
+        tileMaterial2.map = textureArray[tile.landType[currentYear]];
+        console.log(overlayTemp);
       }
 
     } else {
@@ -1250,13 +1262,15 @@ function changeLandTypeTile(tileId) {
           // If the land type remains the same, then do nothing, otherwise,change the land type, and update progress bars
           if(meshMaterials[tileId].map != grayTextureArray[painter]){
             // console.log('Change the land type in tile which id is ', tileId);
-            if(overlayedToggled != true  || checkbox.checked == false){
-              meshMaterials[tileId].map = textureArray[painter];
-              meshOverlay[tileId].map = textureArray[painter];
-            }
-            else{
+            if(overlayTemp == true && checkbox.checked){
               meshOverlay[tileId].map = grayTextureArray[painter];
               meshMaterials[tileId].map = grayTextureArray[painter];
+
+            }
+            else{
+              meshMaterials[tileId].map = textureArray[painter];
+              meshOverlay[tileId].map = textureArray[painter];
+
             }
             // record the data changes in boardData
             boardData[currentBoard].map[tileId].landType[currentYear] = painter;
@@ -1756,6 +1770,7 @@ function displayFirework() {
 function displayLevels(overlayHighlightType) {
   var selectionHighlightNumber = 0;
 
+  var checkbox = document.getElementById("toggleOverlay");
   //update console tabs
   var element = document.getElementsByClassName('featureSelectorIcon iconSelected');
   if (element[0]) element[0].className = 'featureSelectorIcon icon';
@@ -1929,13 +1944,24 @@ function displayLevels(overlayHighlightType) {
     previousOverlay = overlayHighlightType;
   }
     if (!mapIsHighlighted) {
-        drawOverlayOntoBoard(selectionHighlightNumber, overlayHighlightType);
+      if(checkbox.checked == true){
+        overlayTemp = true;
+      }
+      else{
+        overlayTemp = false;
+      }
+      refreshBoard();
+
+      drawOverlayOntoBoard(selectionHighlightNumber, overlayHighlightType);
     }
     //if the map is previously highlighted
     else {
       //if the highlight is the same... turn it off
       if (currentHighlightType == selectionHighlightNumber || selectionHighlightNumber == 0) {
 
+        if(overlayTemp == true){
+          overlayTemp = false;
+        }
         mapIsHighlighted = false;
         refreshBoard();
         showLevelDetails(-1 * currentHighlightType);
@@ -3736,7 +3762,7 @@ function onDocumentMouseMove(event) {
         var currentTile = getTileID(intersects[0].point.x, -intersects[0].point.z);
         if (boardData[currentBoard].map[currentTile].landType[0] != 0){
            changeLandTypeTile(currentTile);
-           
+
          }
       } else {
         //just a normal highlighting
