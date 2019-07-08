@@ -4400,7 +4400,6 @@ function econGraphic4DisplayData(landUse,costType,cost){
       data.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
     }
   }
-  //console.log(data);
 return data;
  }
 function EconomicsGraphic4() {
@@ -4447,6 +4446,13 @@ function EconomicsGraphic4() {
         var yScale = d3.scaleLinear()
         	.domain([0, yMax])
         	.range([height - margin.bottom, margin.top]);
+        // var outlineRect=svg.append("rect")
+        //   .attr("stroke","black")
+        //   .attr("stroke-width","3px")
+        //   .style("visibility", "hidden")
+        //   .style("fill", "none")
+        //   .attr("width", '10px');
+        var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph4tt"));
           // bars
         var rect = svg.selectAll('rect')
         	.data(displaydata)
@@ -4460,10 +4466,24 @@ function EconomicsGraphic4() {
             return height - margin.bottom - yScale(d.value)})
     			.attr('fill', function(d,i){
             return colors[i]})
-          .on("mouseover",function(d){console.log("mouseover");
+          .on("mouseover",function(d){
+            tooltip.style("visibility","visible");
+            tooltip.select('#econGraphic4Value').text(d.value);
+            console.log("mouseover");
             console.log(this.getAttribute('x'));
             console.log(this.getAttribute('y'));
             console.log(xScale(d.costname));
+          })
+          .on("mouseout",function(){
+            tooltip.style("visibility","hidden");
+
+          })
+          .on("mousemove",function(d){
+            tooltip
+            .style('left', (d3.event.pageX + 10) +"px")
+            .style('top', (d3.event.pageY + 10) + "px")
+            console.log(d3.event.pageX);
+            console.log(d3.event.pageY);
           });
         	//.attr('margin-left', 0);
 
