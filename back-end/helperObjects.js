@@ -888,17 +888,6 @@ function Click(c1, c2, c3, c4, c5) {
         // console.log(CODEX_HTML.document.getElementById(this.tileID).className);
         // simulation is running, do what we recorded (what the user did)
         if (action) {
-        /*  TO BE REMOVED AFTER THE LAST TESTING IS DONE.
-        if (CODEX_HTML.document.getElementById(this.tileID).className == "groupHeader" ||
-            CODEX_HTML.document.getElementById(this.tileID).className == "selectedGroupHeader") {
-            CODEX_HTML.toggleChildElements(this.tileID);
-            CODEX_HTML.arrangeContent(this.tileID);
-          } else if (CODEX_HTML.document.getElementById(this.tileID).className == "groupElement" ||
-            CODEX_HTML.document.getElementById(this.tileID).className == "selectedGroupElement") {
-            CODEX_HTML.arrangeContent(this.tileID);
-          }
-          return;*/
-
           if (window.frames[3].document.getElementById(this.tileID).className == "groupHeader" ||
               window.frames[3].document.getElementById(this.tileID).className == "selectedGroupHeader") {
               window.frames[3].toggleChildElements(this.tileID);
@@ -923,7 +912,7 @@ function Click(c1, c2, c3, c4, c5) {
 
         // simulation is running, do what we recorded (what the user did)
         if (action)
-          return CODEX_HTML.showAdvancedDetail(this.tileID);
+          return window.frames[3].showAdvancedDetail(this.tileID);
         // record the event description in csv file
         else
           return "Click Advanced tab";
@@ -935,7 +924,7 @@ function Click(c1, c2, c3, c4, c5) {
 
         // simulation is running, do what we recorded (what the user did)
         if (action)
-          return CODEX_HTML.showLessDetail(this.tileID);
+          return window.frames[3].showLessDetail(this.tileID);
         // record the event description in csv file
         else
           return "Click General tab";
@@ -1372,6 +1361,13 @@ function Click(c1, c2, c3, c4, c5) {
               else {
                 return "User clicked "+ this.tileID + " group checkbox";
               }
+
+            //When the user scrolls in the glossary page
+            case 127:
+              if(action)
+                return window.frames[3].scrollTo(0,parseInt(this.tileID));
+              else
+                return "User scrolled in the glossary page";
 
 
 

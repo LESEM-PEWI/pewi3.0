@@ -2137,7 +2137,8 @@ function finishProperties() {
     */
     var clickFunctionType = parseInt(clickTrackings[i].functionType);
 
-    if (clickFunctionType == 122 || clickFunctionType == 124 || clickFunctionType == 125 || clickFunctionType == 126 ||
+    if (clickFunctionType == 80 || clickFunctionType == 81 || clickFunctionType == 82 ||
+        clickFunctionType == 122 || clickFunctionType == 124 || clickFunctionType == 125 || clickFunctionType == 126 ||
         clickTrackings[i].tileID != clickTrackings[i - 1].tileID ||
         clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
 
@@ -4683,7 +4684,7 @@ function runSimulation() {
     if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 ||
         tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 ||
         tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122 || tempType == 123 || tempType == 124 || tempType == 125 ||
-        tempType == 126) {
+        tempType == 126 || tempType == 127) {
       var tempTile = tempArr[5]; // Extra data
     }
     if (tempType == 56 || tempType == 99 || tempType == 100) {

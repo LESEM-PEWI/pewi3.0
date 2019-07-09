@@ -493,6 +493,7 @@ function initializeCamera() {
     window.frames[4].addEventListener('scroll', onWheelViewResults);
     window.frames[6].addEventListener('scroll', onWheelViewCustomize);
     window.frames[7].addEventListener('scroll', onWheelViewPrint);
+    window.frames[3].addEventListener('scroll', onWheelViewGlossary);
 } //end initializeCamera
 
 //initializeLighting adds the lighting with specifications to the scene
@@ -665,6 +666,13 @@ function onWheelViewCustomize(e) {
 function onWheelViewPrint(e) {
   if(curTracking && scrollGap) {
     pushClick(0,getStamp(),114,0,window.frames[7].scrollY);
+  }
+}
+
+//Event function that is called when a user is scrolling in glossary window
+function onWheelViewGlossary(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),127,0,window.frames[3].scrollY);
   }
 }
 
