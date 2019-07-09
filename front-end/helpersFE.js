@@ -828,6 +828,7 @@ if (tToggle) {
         side: THREE.DoubleSide
       });
     }
+
     meshMaterials.push(tileMaterial);
   }
 

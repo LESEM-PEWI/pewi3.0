@@ -10,6 +10,7 @@ var controls, controls1;
 var keyboard ={};
 var player = { speed:3, turnSpeed:Math.PI*0.02 };
 var renderer = new THREE.WebGLRenderer();
+// renderer.sortObjects = false;
 var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
 
