@@ -4578,6 +4578,7 @@ function EconomicsGraphic4() {
           });
 
           costSelector=doc.getElementById('costSelector');
+          costSelector.innerHTML="";
           typeSelection=document.createElement('select');
           option1=document.createElement('option');
           option1.value='Action';
