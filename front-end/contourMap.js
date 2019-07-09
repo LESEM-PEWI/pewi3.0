@@ -63,6 +63,7 @@ var saveFile = function(strData, filename) {
 
 function drawToCanvas(lines, tileNumbers) {
   var printScene = new THREE.Scene();
+  printScene.background =  new THREE.Color('blue')
   var printRenderer = new THREE.WebGLRenderer({
     preserveDrawingBuffer: true,
     alpha: true
@@ -160,6 +161,7 @@ function ContourMap() {
     var lines = [];
 
     var material = new THREE.LineBasicMaterial({
+      // color: 'black'
       color: 'black'
     });
 
@@ -306,7 +308,7 @@ function loadTopoImage(tileNumber){
   var string = './imgs/topography/images/TileNum';
 
 
-  return textureLoader.load(string + tileNumber);
+  return textureLoader.load(string + tileNumber + '.png');
 
 
 }
@@ -315,7 +317,7 @@ function overlayTopoImages(tileNumbers) {
 
   for (var i = 0; i < tileNumbers.length; i++){
 
-    var material = new THREE.MeshLambertMaterial({ map: loadTopoImage(tileNumbers[i]), side: THREE.DoubleSide });
+    var material = new THREE.MeshLambertMaterial({ map: loadTopoImage(tileNumbers[i]) , side: THREE.DoubleSide }); // do 'map: tile0' to show its working, just problem with contour line images
 
     var geometry = new THREE.PlaneGeometry(tileWidth, tileHeight);
 
