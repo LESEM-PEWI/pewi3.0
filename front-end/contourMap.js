@@ -131,6 +131,9 @@ function ContourMap() {
   this.map = boardData[currentBoard].map;
   this.pointsOfIntersection = new THREE.Geometry();
   this.tileNumbers = [];
+  // this.MeshLine = require( 'three.meshline' );
+  this.meshLine = new MeshLine();
+  this.meshLineMaterial = new MeshLineMaterial();
 
 
   this.drawLine = function() {
@@ -161,9 +164,9 @@ function ContourMap() {
     var interval = (max - min) / numContours;
 
     var lines = [];
+    var meshLines = [];
 
     var material = new THREE.LineBasicMaterial({
-      // color: 'black'
       color: 'black'
     });
 
@@ -189,20 +192,34 @@ function ContourMap() {
         var line = new THREE.LineSegments(points, material);
         var line2 = new THREE.LineSegments(points2, material);
 
+        //var meshLine = new THREE.MeshLine();
+        // this.meshLine.setGeometry(line2, function( p ) { return 5 } );
+
+
 
         if (points.vertices[0] && this.map[Math.floor(j / 2)].baseLandUseType != 0) {
           lines[Math.floor(j / 2)] = lines[Math.floor(j / 2)] || [];
-          // scene.add(line);
+          // meshLines[Math.floor(j / 2)] = meshLines[Math.floor(j / 2)] || [];
 
+
+
+          // var mesh = new THREE.Mesh(this.meshLine.geometry, this.meshLineMaterial);
+           //scene.add(line);
+           //
           var index = Math.floor(j / 2);
           lines[Math.floor(j / 2)].push(line2);
-        }
+          // meshLines[Math.floor(j / 2)].push(meshLine);
 
+
+        }
 
       }
     }
+
+
+
+
     drawToCanvas(lines, this.tileNumbers);
-    // renderer.render(scene, camera);
 
 
 
@@ -319,8 +336,9 @@ function overlayTopoImages(tileNumbers) {
 
   for (var i = 0; i < tileNumbers.length; i++){
 
-    var material = new THREE.MeshBasicMaterial({ map: loadTopoImage(tileNumbers[i]) , transparent: true, opacity: 1.0, color: 'black' });
+    var material = new THREE.MeshBasicMaterial({ map: loadTopoImage(tileNumbers[i]), transparent: true, opacity: 1, color: 'black' });
     material.depthWrite = false;
+    material.depthTest = false;
 
     var geometry = new THREE.PlaneGeometry(tileWidth, tileHeight);
 

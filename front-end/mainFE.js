@@ -40,11 +40,6 @@ var previousHover = null;
 var tToggle = false; //topology off by default
 var uploadedBoard = false;
 
-// variables for making the contour map
-var theMap;
-var theLines;
-
-
 
 //Variables for Zoom Function
 var fov = null,
