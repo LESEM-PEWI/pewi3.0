@@ -4404,15 +4404,11 @@ return data;
  }
 function EconomicsGraphic4() {
   var instance;
-  var options = ["Mixed Fruits and Vegetables","Action - Cost Type","Inputs"];
+  var options = ["Conventional Corn","Action - Cost Type","Machinery"];
   var displaydata;
   var econdata;
   function init() {
     econdata=economics.getInstance().data4;
-    //displaydata=econGraphic4DisplayData("Switchgrass","Time - Cost Type","Operational");
-    // displaydata=econGraphic4DisplayData("Mixed Fruits and Vegetables","Time - Cost Type","Preharvest");
-    // console.log(displaydata.map(function(d) {return d.costname+""; }));
-
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4svg');
     var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
     window = document.getElementById('resultsFrame');
@@ -4529,8 +4525,6 @@ function EconomicsGraphic4() {
 
         var addOptions=function(){
           let  doc =document.getElementById('resultsFrame').contentWindow.document;
-          let  box=doc.getElementById('econGraphic4Options');
-
           var selectedType=function(costType,option,name){
             optionCLick(costType,option);
             doc.getElementById("econGraphic4ActionType").style.display='none';
@@ -4545,7 +4539,6 @@ function EconomicsGraphic4() {
             costTypeListAction=costTypeList[0]['Action - Cost Type'];
             costTypeContainer=doc.getElementById("econGraphic4ActionType");
             costTypeContainer.innerHTML="";
-            costTypeContainer.className='list';
             costTypeListAction.forEach(d=>{
               input=createInputbox('div',d,'input','econ4costType',d,2);
               costTypeContainer.appendChild(input);
@@ -4555,7 +4548,6 @@ function EconomicsGraphic4() {
             costTypeListTime=costTypeList[0]['Time - Cost Type'];
             costTypeContainer=doc.getElementById("econGraphic4TimeType");
             costTypeContainer.innerHTML="";
-            costTypeContainer.className='list';
             costTypeListTime.forEach(d=>{
               input=createInputbox('div',d,'input','econ4costType',d,2);
               costTypeContainer.appendChild(input);
@@ -4569,11 +4561,15 @@ function EconomicsGraphic4() {
           cell.innerHTML='Land Use';
           cell.className='graphic4landuse';
           container.append(cell);
-          economics.getInstance().data4.map(d=>d.landUse).forEach(d=>{
+          economics.getInstance().data4.map(d=>d.landUse).forEach((d)=>{
             cell=document.createElement('div');
             cell.innerHTML=d;
+            cell.className="graphic4option";
             inputbox=document.createElement('input');
             inputbox.name="landuseoption";
+            if(d==options[0]){
+              inputbox.checked=true;
+            }
             inputbox.type='radio';
             inputbox.style.float='right';
             inputbox.onclick=function(event){optionCLick(d,0);createCostOption()};
@@ -4595,16 +4591,20 @@ function EconomicsGraphic4() {
           typeSelection.appendChild(option2);
           costSelector.appendChild(typeSelection);
 
-          //createCostOption();
+          createCostOption();
 
     }
 
     function createInputbox(tag,innerhtml,inputTag,name,d,i){
       cell=document.createElement(tag);
       cell.innerHTML=innerhtml;
+      cell.className="graphic4option"
       inputbox=document.createElement(inputTag);
       inputbox.name=name;
       inputbox.type='radio';
+      if(d==options[2]){
+        inputbox.checked=true;
+      }
       inputbox.style.float='right';
       inputbox.onclick=event=>optionCLick(d,i);
       cell.appendChild(inputbox);
@@ -4612,10 +4612,7 @@ function EconomicsGraphic4() {
     }
     var optionCLick=function(d,i){
       options[i]=d;
-      console.log(options);
-      if(i==2){
         rerender();
-      }
     }
     var rerender=function(){
       svg.selectAll("*").remove();

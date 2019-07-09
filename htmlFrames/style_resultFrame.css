@@ -590,6 +590,9 @@ text {
   width: 218px;
   text-align: center;
 }
+.graphic4option{
+  height: 20px;
+}
 /*
 #container {
   border: 3px solid #6ac5ac;

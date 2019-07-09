@@ -49,7 +49,6 @@ var economics = (function () { //Singleton for getting economics data from the b
             }
           });
         });
-      console.log(data4);
     }
 
     d3.csv('./budgets.csv', function(data){
