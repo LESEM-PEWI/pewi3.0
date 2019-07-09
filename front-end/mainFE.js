@@ -910,7 +910,14 @@ function switchToZoomView(tile) {
   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
     //update the mesh textures
-    meshMaterials[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+    if(overlayedToggled != true){
+      meshMaterials[i].map = grayTextureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+      meshOverlay[i].map = grayTextureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+    }
+    else{
+      meshMaterials[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+      meshOverlay[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+    }
 
     //update the land use types for each year
     boardData[currentBoard].map[i].landType[1] = boardData[fullBoardBeforeZoom].map[tile].landType[1];
