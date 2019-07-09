@@ -578,7 +578,18 @@ text {
   box-shadow: 0 0 30px rgba(0, 255, 255, .5);
 }
 
-
+.graphic4landuse{
+  font-size: 25px;
+  background-color: skyblue;
+  border-radius: 10px;
+  text-align: center;
+}
+#costSelector select{
+  font-size: 20px;
+  background-color: skyblue;
+  width: 218px;
+  text-align: center;
+}
 /*
 #container {
   border: 3px solid #6ac5ac;

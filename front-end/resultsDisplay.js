@@ -4446,13 +4446,8 @@ function EconomicsGraphic4() {
         var yScale = d3.scaleLinear()
         	.domain([0, yMax])
         	.range([height - margin.bottom, margin.top]);
-        // var outlineRect=svg.append("rect")
-        //   .attr("stroke","black")
-        //   .attr("stroke-width","3px")
-        //   .style("visibility", "hidden")
-        //   .style("fill", "none")
-        //   .attr("width", '10px');
         var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph4tt"));
+
           // bars
         var rect = svg.selectAll('rect')
         	.data(displaydata)
@@ -4469,10 +4464,6 @@ function EconomicsGraphic4() {
           .on("mouseover",function(d){
             tooltip.style("visibility","visible");
             tooltip.select('#econGraphic4Value').text(d.value);
-            console.log("mouseover");
-            console.log(this.getAttribute('x'));
-            console.log(this.getAttribute('y'));
-            console.log(xScale(d.costname));
           })
           .on("mouseout",function(){
             tooltip.style("visibility","hidden");
@@ -4480,10 +4471,8 @@ function EconomicsGraphic4() {
           })
           .on("mousemove",function(d){
             tooltip
-            .style('left', (d3.event.pageX + 10) +"px")
-            .style('top', (d3.event.pageY + 10) + "px")
-            console.log(d3.event.pageX);
-            console.log(d3.event.pageY);
+            .style('left', (d3.event.pageX ) +"px")
+            .style('top', (d3.event.pageY) + "px")
           });
         	//.attr('margin-left', 0);
 
@@ -4501,6 +4490,7 @@ function EconomicsGraphic4() {
             .selectAll('text')
             .attr('fill','purple')
             .attr('font-weight','bold')
+            .attr('font-size','12px')
             .attr("transform", function(d) {
                 return "rotate(-35) "
             })
@@ -4540,6 +4530,7 @@ function EconomicsGraphic4() {
         var addOptions=function(){
           let  doc =document.getElementById('resultsFrame').contentWindow.document;
           let  box=doc.getElementById('econGraphic4Options');
+
           var selectedType=function(costType,option,name){
             optionCLick(costType,option);
             doc.getElementById("econGraphic4ActionType").style.display='none';
@@ -4571,17 +4562,18 @@ function EconomicsGraphic4() {
             });
             costContainer.append(costTypeContainer);
           }
+
           container=document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4LandUses');
           container.innerHTML='';
           cell=document.createElement('div');
           cell.innerHTML='Land Use';
-          cell.className='landuse';
+          cell.className='graphic4landuse';
           container.append(cell);
           economics.getInstance().data4.map(d=>d.landUse).forEach(d=>{
             cell=document.createElement('div');
             cell.innerHTML=d;
             inputbox=document.createElement('input');
-            inputbox.name='econ4LU';
+            inputbox.name="landuseoption";
             inputbox.type='radio';
             inputbox.style.float='right';
             inputbox.onclick=function(event){optionCLick(d,0);createCostOption()};
@@ -4624,7 +4616,6 @@ function EconomicsGraphic4() {
       if(i==2){
         rerender();
       }
-      //rerender();
     }
     var rerender=function(){
       svg.selectAll("*").remove();
