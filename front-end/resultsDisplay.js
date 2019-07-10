@@ -4381,7 +4381,16 @@ function stackMax(layers) {
 function exists(arr, search) {
     return arr.some(row => row.includes(search));
 }
-
+/**
+ * Econ Module Graphic 4
+ */
+/**
+ * Data filter for the Econ Module Graphic 4
+ * @param   landUse  [description]
+ * @param   costType [Action or Time cost type]
+ * @param   cost     [cost type ]
+ * @return         [return costname and value]
+ */
 
 function econGraphic4DisplayData(landUse,costType,cost){
   var econdata=economics.getInstance().data4;
@@ -4402,6 +4411,10 @@ function econGraphic4DisplayData(landUse,costType,cost){
   }
 return data;
  }
+ /**
+  * Econ Module Graphic 4 render and information
+  *
+  */
 function EconomicsGraphic4() {
   var instance;
   var options = ["Conventional Corn","Action - Cost Type","Machinery"];
@@ -4415,25 +4428,26 @@ function EconomicsGraphic4() {
     var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
     '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
 
+    // scales
     var margin = {top: 40, right: 10, bottom: 60, left: 50};
     var width = 1800 *0.7- margin.left - margin.right;
     var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
     var rectWidth = 100;
     // svg element
     var svg = d3.select(econBody);
-    svg = d3.select(econBody);
     svg
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    // scales
-    //var xMax = 5 * rectWidth;
 
+    /**
+     * function draws bar on the chart
+     */
     var drawBarsfunction=function(){
 
       displaydata=econGraphic4DisplayData(options[0],options[1],options[2]);
-      console.log(displaydata);
+        //scale
         var xScale = d3.scaleBand()
         	.domain(displaydata.map(function(d){ return d.costname;}))
         	.range([margin.left, width - margin.right]);
@@ -4470,7 +4484,6 @@ function EconomicsGraphic4() {
             .style('left', (d3.event.pageX ) +"px")
             .style('top', (d3.event.pageY) + "px")
           });
-        	//.attr('margin-left', 0);
 
         // axes
         var xAxis = d3.axisBottom()
@@ -4479,6 +4492,7 @@ function EconomicsGraphic4() {
         	.tickSize(-width)
           .tickSizeOuter(0);
 
+        //cost name
         svg.append('g')
           	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
           	.call(xAxis);
@@ -4491,13 +4505,14 @@ function EconomicsGraphic4() {
                 return "rotate(-35) "
             })
             .attr("text-anchor", "end")
-          //  .attr('transform','rotate(-90deg)');
+        //scale value on y axis
           svg.append('g')
           	.attr('transform', 'translate(' + margin.left + ',0)')
           	.call(yAxis);
           svg.selectAll("g.tick")
            .style("stroke-dasharray", ("3,3"))
 
+        //grahic chart name on the top
           svg.append("text")
              .attr("transform",
                "translate(" + (width/2) + " ," +
@@ -4507,6 +4522,7 @@ function EconomicsGraphic4() {
              .style("font-size", "1.5vmax")
              .text("Economics By Cost Type");
 
+        //display cost name title on bottom
            svg.append("text")
                .attr("transform",
                  "translate(" + (width/2) + " ," +
@@ -4514,6 +4530,7 @@ function EconomicsGraphic4() {
                .style("text-anchor", "left")
                .text("Cost Name");
 
+        //display value title on y axis
            svg.append("text")
                .attr("transform", "rotate(-90)")
                .attr("y", 0)
@@ -4523,17 +4540,24 @@ function EconomicsGraphic4() {
                .text("Value");
         }
 
+        /**
+         * display the land use, action,time cost type
+         */
         var addOptions=function(){
           let  doc =document.getElementById('resultsFrame').contentWindow.document;
+
+          // selection dropdown menu for cost type
           var selectedType=function(costType,option,name){
             optionCLick(costType,option);
             doc.getElementById("econGraphic4ActionType").style.display='none';
             doc.getElementById("econGraphic4TimeType").style.display='none';
             doc.getElementById(name).style.display='block';
           }
+
+          //create Action, time cost type list
           function createCostOption(){
             costContainer=doc.getElementById('econGraphic4CostOption');
-            var costTypeList=economics.getInstance().data4.filter(function(item){
+            var costTypeList=econdata.filter(function(item){
               return item.landUse==options[0];
             });
             costTypeListAction=costTypeList[0]['Action - Cost Type'];
@@ -4555,13 +4579,14 @@ function EconomicsGraphic4() {
             costContainer.append(costTypeContainer);
           }
 
+          //land use input radio type
           container=document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4LandUses');
           container.innerHTML='';
           cell=document.createElement('div');
           cell.innerHTML='Land Use';
           cell.className='graphic4landuse';
           container.append(cell);
-          economics.getInstance().data4.map(d=>d.landUse).forEach((d)=>{
+          econdata.map(d=>d.landUse).forEach((d)=>{
             cell=document.createElement('div');
             cell.innerHTML=d;
             cell.className="graphic4option";
@@ -4577,6 +4602,7 @@ function EconomicsGraphic4() {
             container.append(cell);
           });
 
+          //option for action, time type selection
           costSelector=doc.getElementById('costSelector');
           costSelector.innerHTML="";
           typeSelection=document.createElement('select');
@@ -4596,6 +4622,7 @@ function EconomicsGraphic4() {
 
     }
 
+    //create input box html
     function createInputbox(tag,innerhtml,inputTag,name,d,i){
       cell=document.createElement(tag);
       cell.innerHTML=innerhtml;
@@ -4611,14 +4638,17 @@ function EconomicsGraphic4() {
       cell.appendChild(inputbox);
       return cell;
     }
+    //option selection
     var optionCLick=function(d,i){
       options[i]=d;
         rerender();
     }
+    //rerender the bar on the chart
     var rerender=function(){
       svg.selectAll("*").remove();
       drawBarsfunction();
     }
+    //render the first time
     var render = function (){
       svg.selectAll("*").remove();
       drawBarsfunction();

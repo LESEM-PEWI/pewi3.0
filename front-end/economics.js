@@ -8,7 +8,6 @@ var economics = (function () { //Singleton for getting economics data from the b
     console.log(this);
     function divideByCategory (listofCats){
       console.log(this.rawData);
-      console.log(this.data);
       listofCats.forEach(cat => {
         this.rawData.forEach(dataPoint => {
           if (!this.data[dataPoint['LU_ID']]) {
@@ -32,13 +31,13 @@ var economics = (function () { //Singleton for getting economics data from the b
       });
       console.log(this.data)
     }
+    //graphic 4 extract data from raw data
     function chart4Information(lists) {
         this.rawData.forEach(dataPoint => {
           var landuseNum=dataPoint['LU_ID'];
           if (!data4[landuseNum]) {
             data4[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
           } // We need to create a path to the data that we want to pull out
-          //console.log(dataPoint);
           data4[landuseNum]['array'].push(dataPoint);
           lists.forEach(cat => {
             if(!data4[landuseNum][cat]){
