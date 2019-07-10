@@ -4473,7 +4473,8 @@ function EconomicsGraphic4() {
             return colors[i]})
           .on("mouseover",function(d){
             tooltip.style("visibility","visible");
-            tooltip.select('#econGraphic4Value').text(d.value);
+            tooltip.select("#econGraphic4CostName").text(d.costname);
+            tooltip.select('#econGraphic4Value').text("$"+d.value.toFixed(2));
           })
           .on("mouseout",function(){
             tooltip.style("visibility","hidden");
@@ -4515,20 +4516,22 @@ function EconomicsGraphic4() {
         //grahic chart name on the top
           svg.append("text")
              .attr("transform",
-               "translate(" + (width/2) + " ," +
+               "translate(" + ((width/2)-110) + " ," +
                (25) + ")")
              .style("text-anchor", "left")
              .style("font-weight", "bold")
              .style("font-size", "1.5vmax")
-             .text("Economics By Cost Type");
+             .text("Cost($) vs Line Items/Individual Costs");
 
         //display cost name title on bottom
            svg.append("text")
                .attr("transform",
                  "translate(" + (width/2) + " ," +
-                 (height+margin.bottom) + ")")
+                 (height+margin.bottom+20) + ")")
                .style("text-anchor", "left")
-               .text("Cost Name");
+               .text("Line Items/Individual Costs")
+               .attr("font-size","1.5vmax")
+               .attr("font-weight","bold");
 
         //display value title on y axis
            svg.append("text")
@@ -4537,7 +4540,9 @@ function EconomicsGraphic4() {
                .attr("x", 0 - (height / 2))
                .attr("dy", "1em")
                .style("text-anchor", "middle")
-               .text("Value");
+               .text("Cost ($)")
+               .attr("font-size","1.5vmax")
+               .attr("font-weight","bold");
         }
 
         /**
