@@ -21,8 +21,8 @@ function confirmTopoMapLoad() {
 
     //var images = loadTopoImages(generatedContourMap.tileNumbers);
 
-    overlayTopoImages(generatedContourMap.tileNumbers);
-    // overlayTopoImages();
+    // overlayTopoImages(generatedContourMap.tileNumbers);
+    overlayTopoImages(boardData[currentBoard].map);
   }
 }
 
@@ -133,7 +133,10 @@ function ContourMap() {
   this.tileNumbers = [];
   // this.MeshLine = require( 'three.meshline' );
   this.meshLine = new MeshLine();
-  this.meshLineMaterial = new MeshLineMaterial();
+  this.meshLineMaterial = new MeshLineMaterial({
+    color: 'black',
+    lineWidth: 0.5
+  });
 
 
   this.drawLine = function() {
@@ -192,14 +195,21 @@ function ContourMap() {
         var line = new THREE.LineSegments(points, material);
         var line2 = new THREE.LineSegments(points2, material);
 
-        //var meshLine = new THREE.MeshLine();
-        // this.meshLine.setGeometry(line2, function( p ) { return 5 } );
+
+
 
 
 
         if (points.vertices[0] && this.map[Math.floor(j / 2)].baseLandUseType != 0) {
+
+          this.meshLine = new MeshLine();
+
+          this.meshLine.setGeometry(points2);
+          var mesh = new THREE.Mesh(this.meshLine.geometry, this.meshLineMaterial);
+
+
           lines[Math.floor(j / 2)] = lines[Math.floor(j / 2)] || [];
-          // meshLines[Math.floor(j / 2)] = meshLines[Math.floor(j / 2)] || [];
+          meshLines[Math.floor(j / 2)] = meshLines[Math.floor(j / 2)] || [];
 
 
 
@@ -208,7 +218,8 @@ function ContourMap() {
            //
           var index = Math.floor(j / 2);
           lines[Math.floor(j / 2)].push(line2);
-          // meshLines[Math.floor(j / 2)].push(meshLine);
+          meshLines[Math.floor(j / 2)].push(mesh);
+
 
 
         }
@@ -219,7 +230,7 @@ function ContourMap() {
 
 
 
-    drawToCanvas(lines, this.tileNumbers);
+    drawToCanvas(meshLines, this.tileNumbers);
 
 
 
@@ -303,23 +314,6 @@ function ContourMap() {
 
 }
 
-function loadTopoImages(tileNumbers) {
-
-  var textureLoader = new THREE.TextureLoader();
-
-  //this changes depending on the file location
-  var string = './imgs/topography/images/TileNum';
-  var topoImages = [];
-
-  for (var i = 0; i < tileNumbers.length; i++) {
-    var tile = tileNumbers[i];
-    topoImages.push(textureLoader.load(string + tile + '.png'));
-  }
-
-  return topoImages;
-
-}
-
 function loadTopoImage(tileNumber){
   var textureLoader = new THREE.TextureLoader();
 
@@ -328,15 +322,15 @@ function loadTopoImage(tileNumber){
 
 
   return textureLoader.load(string + tileNumber + '.png');
+  }
 
 
-}
+function overlayTopoImages(map) {
 
-function overlayTopoImages(tileNumbers) {
+  for (var i = 0; i < map.length; i++){
 
-  for (var i = 0; i < tileNumbers.length; i++){
-
-    var material = new THREE.MeshBasicMaterial({ map: loadTopoImage(tileNumbers[i]), transparent: true, opacity: 1, color: 'black' });
+    var material = new THREE.MeshBasicMaterial({ map: loadTopoImage(i), transparent: true, opacity: 1, color: 'black' });
+    // var material2 = loadTopoImage2(i);
     material.depthWrite = false;
     material.depthTest = false;
 
@@ -344,7 +338,7 @@ function overlayTopoImages(tileNumbers) {
 
     var mesh = new THREE.Mesh(geometry, material);
 
-    var position = boardData[currentBoard].map[tileNumbers[i]].position;
+    var position = boardData[currentBoard].map[i].position;
 
     //adjust position befause one is based on the center on the other is based on the top right corner
     mesh.position.set(position.x + 9, position.y + 1, position.z + 6);
@@ -357,11 +351,5 @@ function overlayTopoImages(tileNumbers) {
 
     scene.add(mesh);
   }
-
-
-
-
   renderer.render();
-
-
 }
