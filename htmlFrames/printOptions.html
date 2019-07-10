@@ -193,6 +193,24 @@ Cleaned and Prepared - July 2016 XXX
 
     } // end toggleGroupCheckbox
 
+
+    function toggleIndividualCheckbox (checkboxName) {
+
+        if (parent.getTracking()) {
+          parent.pushClick(0, parent.getStamp(), 127, 0, checkboxName);
+        }
+
+        if (parent.isSimRunning()) {
+          if (document.getElementById(checkboxName + '-checkbox').checked == false) {
+              document.getElementById(checkboxName + '-checkbox').checked = true;
+          }
+          else {
+              document.getElementById(checkboxName + '-checkbox').checked = false;
+          }
+        }
+
+    }
+
     // toggle user last view point and change style of view icon
     function toggleViewpoint(group) {
 
@@ -361,7 +379,7 @@ Cleaned and Prepared - July 2016 XXX
       </div>
 
       <div id="feature-group-checkbox" class="optionsSubContainer">
-        <input id="flood-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="flood-checkbox" onclick="toggleIndividualCheckbox('flood');" class="print-options-checkbox" type="checkbox">
         <label for="flood-checkbox">
           <div>
             <img src="../imgs/Icon_Flood_Frequency.svg">
@@ -369,7 +387,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="wetlands-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="wetlands-checkbox" onclick="toggleIndividualCheckbox('wetlands');" class="print-options-checkbox" type="checkbox">
         <label for="wetlands-checkbox">
           <div>
             <img src="../imgs/Icon_Strategic_Wetlands.svg">
@@ -377,7 +395,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="boundary-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="boundary-checkbox" onclick="toggleIndividualCheckbox('boundary');" class="print-options-checkbox" type="checkbox">
         <label for="boundary-checkbox">
           <div>
             <img src="../imgs/Icon_Subwatershed_Boundaries.svg">
@@ -385,7 +403,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="drainage-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="drainage-checkbox" onclick="toggleIndividualCheckbox('drainage');" class="print-options-checkbox" type="checkbox">
         <label for="drainage-checkbox">
           <div>
             <img src="../imgs/Icon_Drainage_Class.svg">
@@ -393,7 +411,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="soil-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="soil-checkbox" onclick="toggleIndividualCheckbox('soil');" class="print-options-checkbox" type="checkbox">
         <label for="soil-checkbox">
           <div>
             <img src="../imgs/Icon_Soil_Class.svg">
@@ -401,7 +419,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="topo-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="topo-checkbox" onclick="toggleIndividualCheckbox('topo');" class="print-options-checkbox" type="checkbox">
         <label for="topo-checkbox">
           <div>
             <img src="../imgs/Icon_Topography.svg">
@@ -427,7 +445,7 @@ Cleaned and Prepared - July 2016 XXX
       </div>
 
       <div id="yield-group-checkbox" class="optionsSubContainer">
-        <input id="corn-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="corn-checkbox" onclick="toggleIndividualCheckbox('corn');" class="print-options-checkbox" type="checkbox">
         <label for="corn-checkbox">
           <div>
             <img src="../imgs/cornGrainIcon.png">
@@ -435,7 +453,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="soybean-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="soybean-checkbox" onclick="toggleIndividualCheckbox('soybean');" class="print-options-checkbox" type="checkbox">
         <label for="soybean-checkbox">
           <div>
             <img src="../imgs/soybeanIcon.png">
@@ -443,7 +461,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="fruit-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="fruit-checkbox" onclick="toggleIndividualCheckbox('fruit');" class="print-options-checkbox" type="checkbox">
         <label for="fruit-checkbox">
           <div>
             <img src="../imgs/fruitIcon.png">
@@ -451,7 +469,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="cattle-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="cattle-checkbox" onclick="toggleIndividualCheckbox('cattle');" class="print-options-checkbox" type="checkbox">
         <label for="cattle-checkbox">
           <div>
             <img src="../imgs/cowIcon.png">
@@ -459,7 +477,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="alfalfa-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="alfalfa-checkbox" onclick="toggleIndividualCheckbox('alfalfa');" class="print-options-checkbox" type="checkbox">
         <label for="alfalfa-checkbox">
           <div>
             <img src="../imgs/alfalfaIcon.png">
@@ -467,7 +485,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="grasshay-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="grasshay-checkbox" onclick="toggleIndividualCheckbox('grasshay');" class="print-options-checkbox" type="checkbox">
         <label for="grasshay-checkbox">
           <div>
             <img src="../imgs/grassHayIcon.png">
@@ -475,7 +493,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="switchgrass-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="switchgrass-checkbox" onclick="toggleIndividualCheckbox('switchgrass');" class="print-options-checkbox" type="checkbox">
         <label for="switchgrass-checkbox">
           <div>
             <img src="../imgs/switchGrassIcon.png">
@@ -483,7 +501,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="wood-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="wood-checkbox" onclick="toggleIndividualCheckbox('wood');" class="print-options-checkbox" type="checkbox">
         <label for="wood-checkbox">
           <div>
             <img src="../imgs/woodIcon.png">
@@ -491,7 +509,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="short-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="short-checkbox" onclick="toggleIndividualCheckbox('short');" class="print-options-checkbox" type="checkbox">
         <label for="short-checkbox">
           <div>
             <img src="../imgs/woodyBiomassIcon.png">
@@ -517,7 +535,7 @@ Cleaned and Prepared - July 2016 XXX
       </div>
 
       <div id="level-group-checkbox" class="optionsSubContainer">
-        <input id="nitrate-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="nitrate-checkbox" onclick="toggleIndividualCheckbox('nitrate);" class="print-options-checkbox" type="checkbox">
         <label for="nitrate-checkbox">
           <div>
             <img src="../imgs/Ns.png">
@@ -525,7 +543,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="erosion-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="erosion-checkbox" onclick="toggleIndividualCheckbox('erosion');" class="print-options-checkbox" type="checkbox">
         <label for="erosion-checkbox">
           <div>
             <img src="../imgs/E.png">
@@ -533,7 +551,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="phosphorus-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="phosphorus-checkbox" onclick="toggleIndividualCheckbox('phosphorus');" class="print-options-checkbox" type="checkbox">
         <label for="phosphorus-checkbox">
           <div>
             <img src="../imgs/P.png">
@@ -541,7 +559,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="sediment-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="sediment-checkbox" onclick="toggleIndividualCheckbox('sediment');" class="print-options-checkbox" type="checkbox">
         <label for="sediment-checkbox">
           <div>
             <img src="../imgs/S.png">
@@ -549,7 +567,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="carbon-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="carbon-checkbox" onclick="toggleIndividualCheckbox('carbon');" class="print-options-checkbox" type="checkbox">
         <label for="carbon-checkbox">
           <div>
             <img src="../imgs/C.png">
@@ -557,7 +575,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="gamewildlife-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="gamewildlife-checkbox" onclick="toggleIndividualCheckbox('gamewildlife');" class="print-options-checkbox" type="checkbox">
         <label for="gamewildlife-checkbox">
           <div>
             <img src="../imgs/G.png">
@@ -565,7 +583,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="biodiversity-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="biodiversity-checkbox" onclick="toggleIndividualCheckbox('biodiversity');" class="print-options-checkbox" type="checkbox">
         <label for="biodiversity-checkbox">
           <div>
             <img src="../imgs/B.png">
@@ -573,7 +591,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="nitratetile-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="nitratetile-checkbox" onclick="toggleIndividualCheckbox('nitratetile');" class="print-options-checkbox" type="checkbox">
         <label for="nitratetile-checkbox">
           <div>
             <img src="../imgs/N.png">
@@ -596,7 +614,7 @@ Cleaned and Prepared - July 2016 XXX
       </div>
 
       <div id="result-group-checkbox" class="optionsSubContainer">
-        <input id="resultsTable1-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="resultsTable1-checkbox" onclick="toggleIndividualCheckbox('resultsTable1');" class="print-options-checkbox" type="checkbox">
         <label for="resultsTable1-checkbox">
           <div>
             <!-- "Research" icon made by Freepik on https://www.flaticon.com/authors/freepik from https://www.flaticon.com/search?word=tables%20data -->
@@ -606,7 +624,7 @@ Cleaned and Prepared - July 2016 XXX
           <span class="tooltiptext">Note: <br>It takes more time <br>to process table</span>
         </label>
 
-        <input id="resultsTable2-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="resultsTable2-checkbox" onclick="toggleIndividualCheckbox('resultsTable2');" class="print-options-checkbox" type="checkbox">
         <label for="resultsTable2-checkbox">
           <div>
             <!-- "Research" icon made by Freepik on https://www.flaticon.com/authors/freepik from https://www.flaticon.com/search?word=tables%20data -->
@@ -616,17 +634,17 @@ Cleaned and Prepared - July 2016 XXX
           <span class="tooltiptext">Note: <br>It takes more time <br>to process table</span>
         </label>
 
-        <input id="resultsTable4-checkbox" class="print-options-checkbox" type="checkbox">
-        <label for="resultsTable4-checkbox">
+        <input id="resultsTable3-checkbox" onclick="toggleIndividualCheckbox('resultsTable3');" class="print-options-checkbox" type="checkbox">
+        <label for="resultsTable3-checkbox">
           <div>
             <!-- "Research" icon made by Freepik on https://www.flaticon.com/authors/freepik from https://www.flaticon.com/search?word=tables%20data -->
             <img src="../imgs/spreadsheet-cell-row.png" style="border-radius: 0px;">
-            <p>Results Table 4</p>
+            <p>Results Table 3</p>
           </div>
           <span class="tooltiptext">Note: <br>It takes more time <br>to process table</span>
         </label>
 
-        <input id="resultsLanduse-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="resultsLanduse-checkbox" onclick="toggleIndividualCheckbox('resultsLanduse');" class="print-options-checkbox" type="checkbox">
         <label for="resultsLanduse-checkbox">
           <div>
             <!-- "Pie Chart" icon made by Madebyoliver on https://www.flaticon.com/authors/madebyoliver from https://www.flaticon.com/search?word=pie%20chart -->
@@ -635,7 +653,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="resultsEcosystem-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="resultsEcosystem-checkbox" onclick="toggleIndividualCheckbox('resultsEcosystem');" class="print-options-checkbox" type="checkbox">
         <label for="resultsEcosystem-checkbox">
           <div>
             <!-- "Radar Chart" icon made by Freepik on https://www.flaticon.com/authors/freepik from https://www.flaticon.com/search?word=radar%20chart -->
@@ -644,7 +662,7 @@ Cleaned and Prepared - July 2016 XXX
           </div>
         </label>
 
-        <input id="resultsPrecip-checkbox" class="print-options-checkbox" type="checkbox">
+        <input id="resultsPrecip-checkbox" onclick="toggleIndividualCheckbox('resultsPrecip');" class="print-options-checkbox" type="checkbox">
         <label for="resultsPrecip-checkbox">
           <div>
             <!-- "Bar Chart" icon made by Freepik on https://www.flaticon.com/authors/freepik from https://www.flaticon.com/search?word=radar%20chart -->
@@ -663,8 +681,8 @@ Cleaned and Prepared - July 2016 XXX
     <div id="" class="mainButton preview-btn" onclick="saveCurrentPrintOptions(0); parent.resizeForPrinting();">Preview PDF</div>
     <div id="" class="mainButton print-btn" onclick="downloadControl();">Download</div>
     <div id="" class="mainButton exit-btn" onclick="parent.closePrintOptions();">Exit</div>
-    <div id="" class="mainButton pdf-btn" onclick="window.open('../doc/general.pdf');">General Glossary PDF</div>
-    <div id="" class="mainButton advpdf-btn" onclick="window.open('../doc/advanced.pdf');">Advanced Glossary PDF</div>
+    <!--<div id="" class="mainButton pdf-btn" onclick="window.open('../doc/general.pdf');">General Glossary PDF</div>
+    <div id="" class="mainButton advpdf-btn" onclick="window.open('../doc/advanced.pdf');">Advanced Glossary PDF</div>-->
   </div>
 
 </body>

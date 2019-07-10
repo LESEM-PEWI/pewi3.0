@@ -1029,7 +1029,7 @@ function Click(c1, c2, c3, c4, c5) {
           if(action)
             return window.frames[3].frames[0].scrollTo(0,parseInt(this.tileID));
           else
-            return "User scrolled in the index page";
+            return "User scrolled in the glossary page";
         //When the user scrolls in the results page
         case 94:
           if(action)
@@ -1362,12 +1362,15 @@ function Click(c1, c2, c3, c4, c5) {
                 return "User clicked "+ this.tileID + " group checkbox";
               }
 
-            //When the user scrolls in the glossary page
-            case 127:
-              if(action)
-                return window.frames[3].scrollTo(0,parseInt(this.tileID));
-              else
-                return "User scrolled in the glossary page";
+              // when user clicks on an individual checkbox (ez, flood frequency or wetland) in print iframe.
+              case 127:
+                if (action) {
+                  return window.frames[7].toggleIndividualCheckbox(this.tileID);
+                }
+                else {
+                  return "user clicked " + this.tileID + " checkbox";
+                }
+
 
 
 

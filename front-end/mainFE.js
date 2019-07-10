@@ -672,7 +672,7 @@ function onWheelViewPrint(e) {
 //Event function that is called when a user is scrolling in glossary window
 function onWheelViewGlossary(e) {
   if(curTracking && scrollGap) {
-    pushClick(0,getStamp(),127,0,window.frames[3].scrollY);
+    pushClick(0,getStamp(),93,0,window.frames[3].scrollY);
   }
 }
 
