@@ -1,9 +1,4 @@
 
-
-var generatedContourMap;
-
-
-
 /**
  * Open a pop up window to confirm if the user wants to load the topo map.
  */
@@ -19,11 +14,12 @@ function confirmTopoMapGenerate() {
 function confirmTopoMapLoad() {
   if (window.confirm("Have you generated and moved the contour map files into PEWI?")) {
 
-    //var images = loadTopoImages(generatedContourMap.tileNumbers);
-
-    // overlayTopoImages(generatedContourMap.tileNumbers);
-    overlayTopoImages(boardData[currentBoard].map);
+    generatedContourMap = new ContourMap();
   }
+}
+
+function toggleTopoMap(){
+  generatedContourMap.toggleTopoMap();
 }
 
 function saveAsImage(renderer, tileNum, zipFile) {
@@ -137,6 +133,10 @@ function ContourMap() {
     color: 'black',
     lineWidth: 0.5
   });
+  this.mapIsOn = false;
+  this.tileImages = createTopoMeshes(this.map);
+  this.topoGeometries = [];
+
 
 
   this.drawLine = function() {
@@ -311,8 +311,101 @@ function ContourMap() {
     return plane;
   }
 
+  this.toggleTopoMap = function(){
+
+    if(tToggle){
+
+      this.create3DTopoMeshes(this.map);
+
+
+      if(this.mapIsOn){
+        for(var i = 0; i < this.tileImages3D.length; i++){
+          scene.remove(this.tileImages3D[i])
+          this.mapIsOn = false;
+        }
+      }
+      else{
+        for(var i = 0; i < this.tileImages3D.length; i++){
+          scene.add(this.tileImages3D[i])
+          this.mapIsOn = true;
+        }
+      }
+    }
+    else{
+      if(this.mapIsOn){
+        for(var i = 0; i < this.tileImages.length; i++){
+          scene.remove(this.tileImages[i])
+          this.mapIsOn = false;
+        }
+      }
+      else{
+        for(var i = 0; i < this.tileImages.length; i++){
+          scene.add(this.tileImages[i])
+          this.mapIsOn = true;
+        }
+      }
+    }
+  }
+
+
+  this.create3DTopoMeshes = function(map) {
+
+  var meshArray = [];
+
+    for (var i = 0; i < map.length; i++){
+
+      var material = new THREE.MeshBasicMaterial({ map: loadTopoImage(i), transparent: true, opacity: 1, color: 'black' }); //loadTopoImage(i)
+
+      // setting these false makes the transparency render correctly
+      material.depthWrite = false;
+      material.depthTest = false;
+
+      var geometry = new THREE.Geometry();
+      let tile = map[i];
+      geometry.vertices.push(new THREE.Vector3(0, tile.h1, 0));
+      geometry.vertices.push(new THREE.Vector3(tileWidth, tile.h2, 0));
+      geometry.vertices.push(new THREE.Vector3(tileWidth, tile.h3, tileHeight));
+      geometry.vertices.push(new THREE.Vector3(0, tile.h4, tileHeight));
+
+
+      var face = new THREE.Face3(2, 1, 0);
+      face.normal.set(0, 1, 0); // normal
+      geometry.faces.push(face);
+      geometry.faceVertexUvs[0].push([new THREE.Vector2(0, 0), new THREE.Vector2(0, 1), new THREE.Vector2(1, 1)]); // uvs
+
+      face = new THREE.Face3(3, 2, 0);
+
+      face.normal.set(0, 1, 0); // normal
+      geometry.faces.push(face);
+      geometry.faceVertexUvs[0].push([new THREE.Vector2(1, 0), new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)]); // uvs
+
+      var mesh = new THREE.Mesh(geometry, material);
+
+      var position = boardData[currentBoard].map[i].position;
+
+      //adjust position befause one is based on the center on the other is based on the top right corner
+      mesh.position.set(position.x, position.y + 1, position.z);
+
+      //makes the tiles parallel to the map
+      // mesh.quaternion.copy( camera.quaternion );
+
+      //mesh.rotation.z = Math.PI;
+
+      mesh.updateMatrix();
+      meshGeometry.merge(mesh.geometry, mesh.matrix);
+
+      meshArray.push(mesh);
+
+    }
+
+    return meshArray;
+  }
+  this.tileImages3D = this.create3DTopoMeshes(this.map);
+
 
 }
+
+
 
 function loadTopoImage(tileNumber){
   var textureLoader = new THREE.TextureLoader();
@@ -320,17 +413,20 @@ function loadTopoImage(tileNumber){
   //this changes depending on the file location
   var string = './imgs/topography/images/TileNum';
 
-
   return textureLoader.load(string + tileNumber + '.png');
-  }
+
+}
 
 
-function overlayTopoImages(map) {
+function createTopoMeshes(map) {
+
+var meshArray = [];
 
   for (var i = 0; i < map.length; i++){
 
-    var material = new THREE.MeshBasicMaterial({ map: loadTopoImage(i), transparent: true, opacity: 1, color: 'black' });
-    // var material2 = loadTopoImage2(i);
+    var material = new THREE.MeshBasicMaterial({ map: loadTopoImage(i), transparent: true, opacity: 1, color: 'black' }); //loadTopoImage(i)
+
+    // setting these false makes the transparency render correctly
     material.depthWrite = false;
     material.depthTest = false;
 
@@ -349,7 +445,44 @@ function overlayTopoImages(map) {
     mesh.updateMatrix();
     meshGeometry.merge(mesh.geometry, mesh.matrix);
 
-    scene.add(mesh);
+    meshArray.push(mesh);
+
   }
-  renderer.render();
+
+  return meshArray;
+}
+
+
+function create3DTopoMeshes(map) {
+
+var meshArray = [];
+
+  for (var i = 0; i < map.length; i++){
+
+    var material = new THREE.MeshBasicMaterial({ map: loadTopoImage(i), transparent: true, opacity: 1, color: 'black' }); //loadTopoImage(i)
+
+    // setting these false makes the transparency render correctly
+    material.depthWrite = false;
+    material.depthTest = false;
+
+    var geometry = generatedContourMap.topoGeometries[i];
+
+    var mesh = new THREE.Mesh(geometry, material);
+
+    var position = boardData[currentBoard].map[i].position;
+
+    //adjust position befause one is based on the center on the other is based on the top right corner
+    mesh.position.set(position.x + 9, position.y + 1, position.z + 6);
+
+    //makes the tiles parallel to the map
+    mesh.quaternion.copy( camera.quaternion );
+
+    mesh.updateMatrix();
+    meshGeometry.merge(mesh.geometry, mesh.matrix);
+
+    meshArray.push(mesh);
+
+  }
+
+  return meshArray;
 }

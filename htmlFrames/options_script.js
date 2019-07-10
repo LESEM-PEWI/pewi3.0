@@ -27,7 +27,7 @@
   */
   var selectedOptionsFalse = [];
   var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
-  "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode"];
+  "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode","Toggle Contour Map"];
 
 
   //the saveCurrentOptionsState function is called when the save/exit button is pressed
@@ -35,7 +35,7 @@
   //as needed
   //the parent page is then called to hide the options iframe
   function saveCurrentOptionsState() {
-    
+
     //find the elements that are able to be checked
     var toggledElements = document.getElementsByClassName('toggle');
     var tempString = "";

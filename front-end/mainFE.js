@@ -41,6 +41,10 @@ var tToggle = false; //topology off by default
 var uploadedBoard = false;
 
 
+
+var generatedContourMap;
+
+
 //Variables for Zoom Function
 var fov = null,
 zoomFactor = 1.0,
@@ -909,8 +913,10 @@ function switchBoards(newBoard) {
 
   //update Results to point to correct board since currentBoard is updated
   Totals = new Results(boardData[currentBoard]);
+  generatedContourMap = new ContourMap();
 
 } //end switchBoards
+
 
 //switchToZoomView updates a zoom template map with information from the current full map
 function switchToZoomView(tile) {

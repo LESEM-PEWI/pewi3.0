@@ -116,7 +116,8 @@ var hotkeyArr = [
   [87, null],
   [83, null],
   [79, null],
-  [81, null]
+  [81, null],
+  [67, null]
 ];
 
 // for print function
@@ -794,7 +795,9 @@ if (tToggle) {
   tileGeometry.faces.push(face);
   tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1, 0), new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)]); // uvs
 
-
+  if(tToggle){
+    generatedContourMap.topoGeometries.push(tileGeometry);
+  }
 
   //choose the relevant texture to add to the tile faces
   if (tile.landType[0] == 0) {
@@ -3585,10 +3588,6 @@ function onDocumentKeyDown(event) {
           setupRiver();
         }
 
-        // Call thing to overlay pictures here
-        // var lines = new ContourMap();
-        // lines.drawContours();
-
         break;
         //case e - reset camera position
       case hotkeyArr[0][0]:
@@ -3735,6 +3734,12 @@ function onDocumentKeyDown(event) {
         }
 
         break;
+
+      case hotkeyArr[12][0]:
+      case hotkeyArr[12][1]:
+          toggleTopoMap();
+          break;
+
     } //end switch
   }
 } //end onDocumentKeyDown
@@ -4086,7 +4091,8 @@ function resetHotkeys() {
     [87, null],
     [83, null],
     [79, null],
-    [81, null]
+    [81, null],
+    [67, null]
   ];
   updateKeys();
 } //end resetHotkeys()
