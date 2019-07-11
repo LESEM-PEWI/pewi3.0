@@ -3564,7 +3564,13 @@ function onDocumentKeyDown(event) {
         //case t - toggle topography
       case hotkeyArr[2][0]:
       case hotkeyArr[2][1]:
+
+
+        generatedContourMap.change2D3D();
+
+
         //setting the camera y position to a specific hight when toggle is pressed.
+
         if (camera2.position.y < 27)
           camera2.position.y = 27;
         if (modalUp !== true) {
@@ -3583,6 +3589,7 @@ function onDocumentKeyDown(event) {
           }
           setupRiver();
         }
+
 
         break;
         //case e - reset camera position

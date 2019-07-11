@@ -134,8 +134,11 @@ function ContourMap() {
     lineWidth: 0.5
   });
   this.mapIsOn = false;
+  this.mapIs2D = false;
+  this.mapis3D = false;
   this.tileImages = createTopoMeshes(this.map);
   this.topoGeometries = [];
+
 
 
 
@@ -314,35 +317,58 @@ function ContourMap() {
   this.toggleTopoMap = function(){
 
     if(tToggle){
-
-      this.create3DTopoMeshes(this.map);
-
-
       if(this.mapIsOn){
         for(var i = 0; i < this.tileImages3D.length; i++){
           scene.remove(this.tileImages3D[i])
           this.mapIsOn = false;
+          this.mapIs3D = false;
         }
       }
       else{
         for(var i = 0; i < this.tileImages3D.length; i++){
           scene.add(this.tileImages3D[i])
           this.mapIsOn = true;
+          this.mapIs3D = true;
         }
       }
     }
     else{
+
       if(this.mapIsOn){
         for(var i = 0; i < this.tileImages.length; i++){
           scene.remove(this.tileImages[i])
           this.mapIsOn = false;
+          this.mapIs2D = false;
         }
       }
       else{
         for(var i = 0; i < this.tileImages.length; i++){
           scene.add(this.tileImages[i])
           this.mapIsOn = true;
+          this.mapIs2D = true;
+
         }
+      }
+    }
+  }
+
+  this.change2D3D = function(){
+
+    if(this.mapIs2D){
+      for(var i = 0; i < this.tileImages3D.length; i++){
+        scene.remove(this.tileImages[i]);
+        scene.add(this.tileImages3D[i]);
+        this.mapIs2D = false;
+        this.mapIs3D = true;
+      }
+    }
+
+    else if(this.mapIs3D){
+      for(var i = 0; i < this.tileImages.length; i++){
+        scene.remove(this.tileImages3D[i]);
+        scene.add(this.tileImages[i]);
+        this.mapIs3D = false;
+        this.mapIs2D = true;
       }
     }
   }
@@ -362,10 +388,12 @@ function ContourMap() {
 
       var geometry = new THREE.Geometry();
       let tile = map[i];
-      geometry.vertices.push(new THREE.Vector3(0, tile.h1, 0));
-      geometry.vertices.push(new THREE.Vector3(tileWidth, tile.h2, 0));
-      geometry.vertices.push(new THREE.Vector3(tileWidth, tile.h3, tileHeight));
-      geometry.vertices.push(new THREE.Vector3(0, tile.h4, tileHeight));
+
+      //these are switch around from the add tile method because theres are backwards, I also added a geometry.applyMatrix below that flips the image over its x axis
+      geometry.vertices.push(new THREE.Vector3(0, tile.h2, 0));
+      geometry.vertices.push(new THREE.Vector3(tileWidth, tile.h1, 0));
+      geometry.vertices.push(new THREE.Vector3(tileWidth, tile.h4, tileHeight));
+      geometry.vertices.push(new THREE.Vector3(0, tile.h3, tileHeight));
 
 
 
