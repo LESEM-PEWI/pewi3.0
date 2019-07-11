@@ -354,7 +354,7 @@ function ContourMap() {
 
     for (var i = 0; i < map.length; i++){
 
-      var material = new THREE.MeshBasicMaterial({ map: loadTopoImage(i), transparent: true, opacity: 1, color: 'black' }); //loadTopoImage(i)
+      var material = new THREE.MeshBasicMaterial({ map: loadTopoImage(i), transparent: true, opacity: 1, color: 'black', side: THREE.DoubleSide }); //loadTopoImage(i)
 
       // setting these false makes the transparency render correctly
       material.depthWrite = false;
@@ -368,23 +368,28 @@ function ContourMap() {
       geometry.vertices.push(new THREE.Vector3(0, tile.h4, tileHeight));
 
 
+
+
+
       var face = new THREE.Face3(2, 1, 0);
       face.normal.set(0, 1, 0); // normal
       geometry.faces.push(face);
       geometry.faceVertexUvs[0].push([new THREE.Vector2(0, 0), new THREE.Vector2(0, 1), new THREE.Vector2(1, 1)]); // uvs
 
       face = new THREE.Face3(3, 2, 0);
-
       face.normal.set(0, 1, 0); // normal
       geometry.faces.push(face);
       geometry.faceVertexUvs[0].push([new THREE.Vector2(1, 0), new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)]); // uvs
+
+
+      geometry.applyMatrix(new THREE.Matrix4().makeScale(-1, 1, 1));
 
       var mesh = new THREE.Mesh(geometry, material);
 
       var position = boardData[currentBoard].map[i].position;
 
       //adjust position befause one is based on the center on the other is based on the top right corner
-      mesh.position.set(position.x, position.y + 1, position.z);
+      mesh.position.set(position.x + 18, position.y + 1, position.z );
 
       //makes the tiles parallel to the map
       // mesh.quaternion.copy( camera.quaternion );

@@ -795,10 +795,6 @@ if (tToggle) {
   tileGeometry.faces.push(face);
   tileGeometry.faceVertexUvs[0].push([new THREE.Vector2(1, 0), new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)]); // uvs
 
-  if(tToggle){
-    generatedContourMap.topoGeometries.push(tileGeometry);
-  }
-
   //choose the relevant texture to add to the tile faces
   if (tile.landType[0] == 0) {
 
