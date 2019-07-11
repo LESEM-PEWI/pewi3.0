@@ -4430,7 +4430,8 @@ function EconomicsGraphic4() {
 
     // scales
     var margin = {top: 40, right: 10, bottom: 60, left: 50};
-    var width = 1800 *0.7- margin.left - margin.right;
+    let windowWidth=window.innerWidth;
+    var width = windowWidth *0.8- margin.left - margin.right;
     var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
     var rectWidth = 100;
     // svg element
