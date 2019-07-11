@@ -4501,7 +4501,7 @@ function EconomicsGraphic4() {
             .selectAll('text')
             .attr('fill','purple')
             .attr('font-weight','bold')
-            .attr('font-size','12px')
+            .attr('font-size','10px')
             .attr("transform", function(d) {
                 return "rotate(-35) "
             })
@@ -4530,7 +4530,7 @@ function EconomicsGraphic4() {
                  (height+margin.bottom+20) + ")")
                .style("text-anchor", "left")
                .text("Line Items/Individual Costs")
-               .attr("font-size","1.5vmax")
+               .attr("font-size","1.1vmax")
                .attr("font-weight","bold");
 
         //display value title on y axis
@@ -4541,7 +4541,7 @@ function EconomicsGraphic4() {
                .attr("dy", "1em")
                .style("text-anchor", "middle")
                .text("Cost ($)")
-               .attr("font-size","1.5vmax")
+               .attr("font-size","1.1vmax")
                .attr("font-weight","bold");
         }
 
@@ -4611,6 +4611,7 @@ function EconomicsGraphic4() {
           costSelector=doc.getElementById('costSelector');
           costSelector.innerHTML="";
           typeSelection=document.createElement('select');
+          //typeSelection.style.width="100%";
           option1=document.createElement('option');
           option1.value='Action';
           option1.innerHTML='Action - Cost Type';
