@@ -3740,7 +3740,7 @@ function onDocumentKeyDown(event) {
 
       case hotkeyArr[12][0]:
       case hotkeyArr[12][1]:
-          toggleTopoMap();
+          generatedContourMap.toggleTopoMap();
           break;
 
     } //end switch
