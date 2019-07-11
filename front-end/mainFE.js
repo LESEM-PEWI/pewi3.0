@@ -298,8 +298,6 @@ function CamView(e) {
   tempKeys = giveHotkeys();
   var Uma = String.fromCharCode(tempKeys[11][0]);
   document.getElementById("flyover").innerHTML = "FlyOver Mode, Hit " + Uma +  " to Exit";
-  document.getElementById("flyASDW").style.display = "block";
-  document.getElementById("flyNavigKeys").style.display = "block";
 
   if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
     if(curTracking) {
