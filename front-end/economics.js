@@ -1,11 +1,10 @@
-var economics = (function () { //Singleton for getting economics data from the budgets csv
-  var instance;
-  var rawData;
-  var data;
-  function init() {
-
-    function divideByCategory (listofCats){
-      console.log(this.rawData);
+function Economics() { //Singleton for getting economics data from the budgets csv
+  this.rawData = [];
+  this.data = [];
+  this.init = function(){
+    console.log(this);
+    let divideByCategory = (listofCats) =>{
+      console.log(this);
       listofCats.forEach(cat => {
         this.rawData.forEach(dataPoint => {
           if (!this.data[dataPoint['LU_ID']]) {
@@ -29,23 +28,11 @@ var economics = (function () { //Singleton for getting economics data from the b
       });
       console.log(this.data)
     }
-    d3.csv('./budgets.csv', function(data){
+    d3.csv('./budgets.csv', (data) => {
       this.rawData = data;
       divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable'])
     })
-    return {//public fields
-      data: this.data,
-      rawData: this.rawData
-    };
-  };
-  return {
-    getInstance: function () { //To ensure singularity
-      if ( !instance ) {
-        instance = init();
-      }
-      return instance;
-    }
-  };
-})();
-
-economics.getInstance();//kind of a precalc? Not really but its calculated before its needed.
+  }
+};
+var economics = new Economics();
+economics.init();//kind of a precalc? Not really but its calculated before its needed.
