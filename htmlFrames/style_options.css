@@ -69,6 +69,7 @@ body {
 
   .hkInputs1 {
     left: 72%;
+    top:0px;
   }
 
   .hkInputs2 {
@@ -254,8 +255,9 @@ body {
     border-top-right-radius: 25px;
   }
 
+
  /* This is where you update to make the hokey aggregate tool look nice. Change #hk_ to the last hotkey*/
-  #hk13, #pb16 {
+  #hk17, #pb16 {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
   }
