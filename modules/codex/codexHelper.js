@@ -158,7 +158,7 @@ function init() {
 function onDocumentKeyDown(event) {
   switch (event.keyCode) {
     case 73:
-    parent.toggleIndex();
+    parent.toggleGlossary();
     break;
   } //end switch
 } //end onDocumentKeyDown

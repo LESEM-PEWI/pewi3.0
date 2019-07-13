@@ -196,7 +196,7 @@
     <!-- style="display: inline; visibility: hidden;-->
     <div id="flyover" class="fly"> </div>
     <!--Create Glossary button on screen-->
-    <div id="indexmenu" onclick="toggleIndex();">Glossary</div>
+    <div id="glossarymenu" onclick="toggleGlossary();">Glossary</div>
 
     <!-- UNDO button -->
     <div id="undo" class="undocol">
@@ -1776,10 +1776,10 @@
       <p id="popupText"></p>
     </div>
 
-    <!--Chat box for Index information -->
+    <!--Chat box for Glossary information -->
     <div id="backgroundInfoButton" class="backgroundInfoButton" onclick="toggleBackgroundInfoDisplay();"><img src="./imgs/questionIcon.png"></div>
     <div id="backgroundInfoBox" class="backgroundInfoBox">
-      <p id="indexPopupText" class="indexPopupText"></p>
+      <p id="glossaryPopupText" class="glossaryPopupText"></p>
     </div>
 
     <!-- **END Right Side Component** -->
@@ -1905,7 +1905,7 @@
     <div id="closeDiv"><img id="escapeButton" onclick="toggleEscapeFrame();" src="./imgs/close_black.png"></div>
     <div id="escapeMenu">
       <!--Commented out Glossary button, which is div below. Reference Issue 363 on explanation for removal.-->
-      <!--<div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleIndex() ;">Glossary</div>-->
+      <!--<div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleGlossary() ;">Glossary</div>-->
       <div class="mainEscapeButton" id="optionsButton" onclick="toggleEscapeFrame(); startOptions();">Customize</div>
       <!--The hover options feature is currently in the Options menu, but can be changed -->
       <!--<div class="mainEscapeButton" id="userSettingsButton" onclick="toggleEscapeFrame(); startOptions();">User Settings</div>-->
