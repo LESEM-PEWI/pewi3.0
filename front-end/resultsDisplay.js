@@ -4061,15 +4061,15 @@ function EconomicsGraphic1() {
   };
   var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1svg');
   var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1');
-  var window = document.getElementById('resultsFrame');
   var colors = ["#ffde2a", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
   var stackTypes = ['Cost','Revenue','Profit','Loss'];
   var fullData = createMockDataGraphic1();
 
 
-  var margin = {top: 40, right: 10, bottom: 20, left: 60};
-  var width = 1800*.7 - margin.left - margin.right;
-  var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+  var margin = {top: 40, right: 20, bottom: 50, left: 60};
+  var screenWidth = window.innerWidth;
+  var width = screenWidth*.8 - margin.left - margin.right;
+  var height = screenWidth*.40 - margin.top - margin.bottom; //give or take the golden ratio
 
   var groupKey = 'landUse';
   var svg = d3.select(econBody);
@@ -4129,8 +4129,7 @@ function EconomicsGraphic1() {
 
     //the following code is to add a rectangle around the hovered things
     //We cant just change the border since the border will be covered by higher layered rects
-    let outlineRect = svg.append("path")
-    .attr("rx", x.bandwidth()*.05)
+    let outlineRect = svg.append("rect")
     .attr("stroke", "black")
     .attr("stroke-width", "3px")
     .style("visibility", "hidden")
@@ -4142,30 +4141,30 @@ function EconomicsGraphic1() {
       return isNegative + '$' + Math.abs(d);
     }
     //draws the bars as well as adding listeners for hover
-    var rect = layer.selectAll("path")
+    var rect = layer.selectAll("rect")
     .data(function(d) {return d; })
-    .enter().append("path")
+    .enter().append("rect")
     .attr("transform", function(d) { return "translate(" + x0(d.data.landUse) + ",0)"; })//translate using 1 of the x's
-    // .attr("x", function(d) {return x(d.data.year); }) //set x to the other so that when combined they get their own unique x value
-    // .attr("y", function(d) {if (d[1] > 0) return y(0) - (y(d[0])- y(d[1])); else return y(0); }) //if the bar is positive the height has to be considered
-    // .attr("width", x.bandwidth)
-    // .attr("height", function(d){return y(d[0])- y(d[1]);}) this was replaced by manually drawing lines
-    .attr("d", function(d){
-      console.log(d);
-      return bar(x(d.data.year),y(0), x.bandwidth(),y(d[0])- y(d[1]), 10, d[1] > 0);
-    })
+    .attr("x", function(d) {return x(d.data.year); }) //set x to the other so that when combined they get their own unique x value
+    .attr("y", function(d) {if (d[1] > 0) return y(0) - (y(d[0])- y(d[1])); else return y(0); }) //if the bar is positive the height has to be considered
+    .attr("width", x.bandwidth)
+    .attr("height", function(d){return y(d[0])- y(d[1]);}) //this was replaced by manually drawing lines
+    // .attr("d", function(d){
+    //   console.log(d);
+    //   return bar(x(d.data.year),y(0), x.bandwidth(),y(d[0])- y(d[1]), 10, d[1] > 0);
+    // })
     .on("mouseover", function(d) {tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
       tooltip.select("#econGraphic1LU").text("Land Use: " + d.data.landUse)
       let econType = this.parentNode.getAttribute("layernum")
       tooltip.select("#econGraphic1Value").text(econType +": " + formatMoney(d.data[econType]));
       outlineRect.attr("transform", "translate(" + x0(d.data.landUse) + ",0)");
       outlineRect.style("visibility", "visible");
-      outlineRect.attr("d",
-        this.attributes.d.nodeValue+'stroke = "black" stroke-width="5" fill="none"');
-      // outlineRect.attr("x", this.getAttribute("x"))
-      // outlineRect.attr("y", this.getAttribute("y"))
-      // outlineRect.attr("height", this.getAttribute("height"))
-      // outlineRect.attr("ry", this.getAttribute("ry"))
+      // outlineRect.attr("d",
+        // this.attributes.d.nodeValue+'stroke = "black" stroke-width="5" fill="none"');
+      outlineRect.attr("x", this.getAttribute("x"))
+      outlineRect.attr("y", this.getAttribute("y"))
+      outlineRect.attr("height", this.getAttribute("height"))
+      outlineRect.attr("ry", this.getAttribute("ry"))
     })
     .on("mouseout", function(d) {tooltip.style("visibility", "hidden")
       outlineRect.style("visibility", "hidden")
@@ -4185,12 +4184,14 @@ function EconomicsGraphic1() {
   svg.selectAll("g.tick")
   .selectAll("text")
   .attr("fill", "purple")
-  .attr("y", y(y.domain()[0]/1.1)-y(0) + 7)
+  // .attr("y", y(y.domain()[0])-y(0))
+  .attr("transform", "translate(0," + (y(y.domain()[0])-y(0) - 12) +") rotate(-35)")
+  .style("text-anchor", "end")
 
   svg.append("text")
   .attr("transform",
   "translate(" + (width/2) + " ," +
-  (height) + ")")
+  (height + 50) + ")")
   .style("text-anchor", "left")
   .text("Land Uses");
 
