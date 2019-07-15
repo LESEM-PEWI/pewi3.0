@@ -299,6 +299,10 @@ function displayResults() {
   drawPrecipitationInformationChart();
   econGraphic1 = EconomicsGraphic1().getInstance().render();
 
+  econGraphic3 = EconomicsGraphic3().getInstance().render();
+
+
+
 
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
@@ -2260,12 +2264,12 @@ function generateResultsTable() {
 
       //keep track of subheadings, just 1 this time
       switch (l) {
-        case 0:  
+        case 0:
           //htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
             //put Yield header, in bold
             htmlTableString += "<tr>";
             htmlTableString += "<td><b>" + "Yield" + "<b></td>";
-            
+
             //calculate total score for each year and place next to Yield header
             for(var y = 1; y <= upToYear; y++){
               htmlTableString += "<td><b>";
@@ -4378,4 +4382,52 @@ function stackMax(layers) {
     if(d[1] > 0) return 1.1 * (d[1] - d[0]);
     return 0;
   });
+}
+
+function EconomicsGraphic3(){
+
+  var myData = [20, 50,30, 75, 15]
+  var margin = {top: 40, right: 10, bottom: 20, left: 60};
+  var width = 1800*.7 - margin.left - margin.right;
+  var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+
+  var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3svg');
+  var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3');
+
+  var myChart = d3.select(econBody)
+    .attr('width', width + margin.right + margin.left)
+    .attr('height', height + margin.top + margin.bottom)
+    .style('background', '#000')
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+  function drawAxis(){
+
+    var vScale = d3.scaleLinear()
+      .domain([0, d3.max(myData)])
+      .range([height, 0]);
+
+    var yAxis = d3.axisLeft()
+      .scale(yScale)
+      .ticks(5)
+      .tickPadding(5)
+
+      var yGuide = d3.select('svg')
+        .append('g')
+          yAxis(yGuide)
+          yGuide.selectAll('path')
+            .style('fill', 'none')
+            .style('stroke', '#000')
+          yGuide.selectAll('line')
+            .style('stroke', '#000')
+
+
+  }
+
+  function render(){
+    svg.selectAll("*").remove();
+    drawAxis();
+  }
+
+
 }
