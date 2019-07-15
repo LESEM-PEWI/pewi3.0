@@ -279,11 +279,17 @@ var RadarChart = {
   }
 }; //End Radar Object
 
+var tempResult;
+
 //displayResults writes the html for the results iframe with updates results from Totals
 function displayResults() {
 
   //Create results table and append it to the proper tab of the results frame
   var numericalTableString = generateResultsTable();
+
+  generateEconomicsTables();
+
+
   document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsN').innerHTML = numericalTableString;
 
   //refresh frame properties
@@ -291,6 +297,10 @@ function displayResults() {
 
   //create land Pie Chart
   drawD3LandPieChart(currentYear, false);
+
+  //create econ Pie Chart
+  drawD3EconPieChart(currentYear, false);
+
   //clearing scoreChart div tag, or else it will duplicate the scoreChart graph every time results is clicked on
   document.getElementById('resultsFrame').contentWindow.document.getElementById('scoreChart').innerHTML = ' ';
   //creating the scoreChart graph by calling the number of years that are currently
@@ -320,6 +330,7 @@ function displayResults() {
 
   //toggle the arrows on the results page
   document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0);
+  document.getElementById('resultsFrame').contentWindow.toggleYearForEconPlotBy(0);
 
   //=======DEPRECATED
   //document.getElementById('resultsFrame').contentWindow.toggleYearForESIAsterBy(0);
@@ -731,6 +742,382 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
   multiplayerResults();
 } //end drawD3LandPieChart()
+
+function drawD3EconPieChart(year, isTheChartInCategoryMode) {
+  // RESETTING THE TEMPORARY COLOR AND LEGEND ELEMENT nameArray
+  tempLegendItems = [];
+  tempLegendColors = [];
+  //remove the html that's already there, ie clear the chart
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('econPieChart').innerHTML = " ";
+  //pass data to the page that it needs, we do this by putting it in hidden divs
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('landYear').innerHTML = year;
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('upTo').innerHTML = boardData[currentBoard].calculatedToYear;
+
+   var inMultiplayer = localStorage.getItem('LSinMultiplayer');
+  /*
+  * The variable multiplayerColorPack is used to hold the colors that represent each player in the the multiplayer set up mode.
+  * For more information refer to Issue 386.
+  */
+  var multiplayerColorPack = ["#87ceee","#e6bb00","#cc6578","#127731","#c97b08","#302485"];
+  var totalCost = getTotalCost(tempResult, year);
+
+   var dataset = [{
+      label: 'Conventional Corn',
+      count: (tempResult[0].count*(Math.round(Totals.landUseResults[year].conventionalCornLandUse * 100) / 100)),
+      number: ((tempResult[0].count*(Math.round(Totals.landUseResults[year].conventionalCornLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conservation Corn',
+      count: (tempResult[1].count*(Math.round(Totals.landUseResults[year].conservationCornLandUse * 100) / 100)),
+      number: ((tempResult[1].count*(Math.round(Totals.landUseResults[year].conservationCornLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conventional Soybean',
+      count: (tempResult[2].count*(Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 100) / 100)),
+      number: ((tempResult[2].count*(Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conservation Soybean',
+      count: (tempResult[3].count*(Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 100) / 100)),
+      number: ((tempResult[3].count*(Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Mixed Fruits/Vegetables',
+      count: (tempResult[14].count*(Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse * 100) / 100)),
+      number: ((tempResult[14].count*(Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Permanent Pasture',
+      count: (tempResult[5].count*(Math.round(Totals.landUseResults[year].permanentPastureLandUse * 100) / 100)),
+      number: ((tempResult[5].count*(Math.round(Totals.landUseResults[year].permanentPastureLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Rotational Grazing',
+      count: (tempResult[6].count*(Math.round(Totals.landUseResults[year].rotationalGrazingLandUse * 100) / 100)),
+      number: ((tempResult[6].count*(Math.round(Totals.landUseResults[year].rotationalGrazingLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Grass Hay',
+      count: (tempResult[7].count*(Math.round(Totals.landUseResults[year].grassHayLandUse * 100) / 100)),
+      number: ((tempResult[7].count*(Math.round(Totals.landUseResults[year].grassHayLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Switchgrass',
+      count: (tempResult[11].count*(Math.round(Totals.landUseResults[year].switchgrassLandUse * 100) / 100)),
+      number: ((tempResult[11].count*(Math.round(Totals.landUseResults[year].switchgrassLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Prairie',
+      count: (tempResult[8].count*(Math.round(Totals.landUseResults[year].prairieLandUse * 100) / 100)),
+      number: ((tempResult[8].count*(Math.round(Totals.landUseResults[year].prairieLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Wetland',
+      count: (tempResult[13].count*(Math.round(Totals.landUseResults[year].wetlandLandUse * 100) / 100)),
+      number: ((tempResult[13].count*(Math.round(Totals.landUseResults[year].wetlandLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Alfalfa',
+      count: (tempResult[4].count*(Math.round(Totals.landUseResults[year].alfalfaLandUse * 100) / 100)),
+      number: ((tempResult[4].count*(Math.round(Totals.landUseResults[year].alfalfaLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conventional Forest',
+      count: (tempResult[10].count*(Math.round(Totals.landUseResults[year].conventionalForestLandUse * 100) / 100)),
+      number: ((tempResult[10].count*(Math.round(Totals.landUseResults[year].conventionalForestLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conservation Forest',
+      count: (tempResult[9].count*(Math.round(Totals.landUseResults[year].conservationForestLandUse * 100) / 100)),
+      number: ((tempResult[9].count*(Math.round(Totals.landUseResults[year].conservationForestLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Short Rotation Woody Bioenergy',
+      count: (tempResult[12].count*(Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 100) / 100)),
+      number: ((tempResult[12].count*(Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 100) / 100))/totalCost)
+    }];
+
+   //variables for the display of the chart on the page
+  // be careful about changing these values since they are tied closely to
+  // css styling on results page
+  // var width = 360;
+  // var height = 360;
+  // var radius = Math.min(width, height) / 2;
+  var w = Math.round(window.innerWidth * 0.38);
+  var h = Math.round(window.innerHeight * 0.382);
+
+   // if the pie chart is being drawn to be printed on a pdf then set the fixed size
+  if (printMode) {
+    w = h = 200;
+  }
+
+   var pieChart_length = Math.min(w, h);
+  var legendW = Math.round(pieChart_length * 1.06);
+
+   var radius = pieChart_length / 2;
+
+   //colors are assigned from one of the default scaling options
+  //if in multiplayer mode the color options will change else it will use default d3 schemeCategory20 colors
+  if(localStorage.getItem('LSinMultiplayer')==="true"){
+    var color = d3.scaleOrdinal(multiplayerColorPack);
+  }
+  else{
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+  }
+
+   //set up an object and array for referring back and forth to elements
+  var nameArray = [];
+  var colorLinker = {};
+
+   //document.getElementById('resultsFrame').contentWindow.document.getElementById('chart').innerHTML = "" ;
+  var chart = document.getElementById('resultsFrame').contentWindow.document.getElementById('econPieChart');
+
+   //d3 stuff here, I won't comment this section too heavily as it is mostly typical graphics
+  var svg = d3.select(chart)
+    .append('svg')
+    .attr("class", "graph-svg-component")
+    .attr("id", "pieSVGE")
+    // .attr('width', width + legendW) //leave room for legend so add 280
+    // .attr('height', height)
+    .attr('width', pieChart_length + legendW) //leave room for legend so add 280
+    .attr('height', pieChart_length)
+    .append('g')
+    .attr('transform', 'translate(' + (pieChart_length / 2) + ',' + (pieChart_length / 2) + ')');
+
+   var arc = d3.arc()
+    .outerRadius(radius)
+    .innerRadius(radius * 0.55)
+    .padAngle(0.01);
+
+   var pie = d3.pie()
+    .value(function(d) {
+      return d.count;
+    })
+    .sort(null);
+
+   //animation for the pie graph
+  function tweenPie(b) {
+    b.innerRadius = 0;
+    var i = d3.interpolate({
+      startAngle: 0,
+      endAngle: 0
+    }, b);
+    return function(t) {
+      return arc(i(t));
+    };
+  }
+
+   //create the elements for hover over information
+  var mouseoverInfo = d3.select(chart)
+    .append('g')
+    .attr('class', 'mouseoverInfo');
+
+   mouseoverInfo.append('div')
+    .attr('class', 'label');
+
+   mouseoverInfo.append('div')
+    .attr('class', 'count');
+
+   mouseoverInfo.append('div')
+    .attr('class', 'percent');
+
+   //let's add the arcs to the pie graph now
+  var path = svg.selectAll('path')
+    .data(pie(dataset))
+    .enter()
+    .append('path')
+    .attr('class', 'dataArc')
+    .attr('d', arc)
+    .attr('count', function(d) {
+      return d.data.number;
+    })
+    .attr('percent', function(d) {
+      return d.data.count;
+    })
+    .attr('fill', function(d, i) {
+      var hue = color(d.data.label);
+      //use these structures to keep track of what actually has a count
+      // for the legend
+      if (d.data.count != 0) {
+        nameArray.push(d.data.label);
+        colorLinker[d.data.label] = hue;
+      }
+      return hue;
+    })
+    .attr("id", function(d) {
+      return d.data.label;
+    })
+    .on('mouseover', function(d) {
+      //update the mouseover box
+      mouseoverInfo.select('.label').html(d.data.label);
+      mouseoverInfo.select('.count').html(("$"+(Math.round(d.data.count*10)/10)));
+      mouseoverInfo.select('.percent').html((Math.round(d.data.number*100)) + '%');
+      mouseoverInfo.style('border-color', color(d.data.label));
+      mouseoverInfo.style('opacity', 1);
+      mouseoverInfo.style('display', 'block');
+
+       //highlight the pie slice
+      d3.select(this).classed("arc", false);
+      d3.select(this).classed("arcHighlight", true);
+    })
+    .on('mouseout', function() {
+      //hide mouseover box
+      mouseoverInfo.style('display', 'none');
+
+       //unhighlight the pie slice
+      d3.select(this).classed("arcHighlight", false);
+      d3.select(this).classed("arc", true);
+    })
+    .transition()
+    .duration(900)
+    .attrTween("d", tweenPie);
+
+   //that's it for the pie chart, now we just need to add its legend information
+
+   //sizing for the colored squares and spaces
+  // var legendRectSize = 18;
+  // var legendSpacing = 4;
+  var legendRectSize = Math.round(0.05 * pieChart_length);
+  var legendSpacing = Math.round(0.22 * legendRectSize);
+
+   //add all the elements that have a nonzero count
+  var legend = svg.selectAll('.legend')
+    .data(nameArray)
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .on('mouseover', function(d) {
+      var current = getData(d);
+      //highlight text
+      d3.select(this).style("fill", "steelblue");
+
+       //highlight arc
+      var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
+      d3.select(slice).classed("arc", false)
+        .classed("arcHighlight", true);
+
+       //show appropriate mouseover info
+      mouseoverInfo.select('.label').html(d);
+      mouseoverInfo.select('.count').html(("$"+(Math.round(current.count*10)/10)));
+      mouseoverInfo.select('.percent').html((Math.round(current.number*100)) + '%');
+      mouseoverInfo.style('border-color', color(d));
+      mouseoverInfo.style('opacity', 1);
+      mouseoverInfo.style('display', 'block');
+
+     })
+    .on('mouseout', function(d) {
+
+       //set text back to black
+      d3.select(this).style("fill", "black");
+
+       //unhighlight the arc
+      var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
+      d3.select(slice).classed("arcHighlight", false);
+      d3.select(slice).classed("arc", true);
+
+       //undisplay the mouseover information box
+      mouseoverInfo.style('display', 'none');
+    })
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset = height * nameArray.length / 2;
+      var horz = pieChart_length / 2 + 20;
+      var vert = i * height - offset;
+      // var horz = width / 2 + 20;
+      return 'translate(' + horz + ',' + vert + ')';
+    });
+
+   //add legend color squares
+  legend.append('rect')
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', function(d) {
+      tempLegendColors.push(colorLinker[d]); // adds the legend color to array (for print function)
+      return colorLinker[d];
+    })
+    .style('stroke', function(d) {
+      return colorLinker[d];
+    });
+
+   //add legend text info
+  legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d) {
+      tempLegendItems.push(d); // adds the legend element to the array (for print function)
+      return d;
+    });
+
+   //lastly, now add the chart title in the center
+  // main chart title
+  svg.append("text")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text("Econ Numbers");
+  //also add the year below that
+  svg.append("text")
+    .attr("x", 0)
+    .attr("y", 25)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text(year);
+
+   function getData(data) {
+    for(var i = 0; i < dataset.length; ++i){
+      if(data === dataset[i].label){
+        return dataset[i];
+      }
+    }
+    return "none";
+  }
+
+   multiplayerResults();
+} //end drawD3LandPieChart()
+
+ function getTotalCost(data, givenYear) {
+  var cost = 0;
+  for(var i = 0; i < data.length; ++i){
+    switch (data[i].label) {
+      case "Conventional Corn":
+        cost += Totals.landUseResults[givenYear].conventionalCornLandUse*data[i].count;
+      break;
+      case "Conservation Corn":
+        cost += Totals.landUseResults[givenYear].conservationCornLandUse*data[i].count;
+      break;
+      case "Conventional Soybean":
+        cost += Totals.landUseResults[givenYear].conventionalSoybeanLandUse*data[i].count;
+      break;
+      case "Conservation Soybean":
+        cost += Totals.landUseResults[givenYear].conservationSoybeanLandUse*data[i].count;
+      break;
+      case "Alfalfa":
+        cost += Totals.landUseResults[givenYear].alfalfaLandUse*data[i].count;
+      break;
+      case "Permanent Pasture":
+        cost += Totals.landUseResults[givenYear].permanentPastureLandUse*data[i].count;
+      break;
+      case "Rotational Grazing":
+        cost += Totals.landUseResults[givenYear].rotationalGrazingLandUse*data[i].count;
+      break;
+      case "Grass Hay":
+        cost += Totals.landUseResults[givenYear].grassHayLandUse*data[i].count;
+      break;
+      case "Prairie":
+        cost += Totals.landUseResults[givenYear].prairieLandUse*data[i].count;
+      break;
+      case "Conservation Forest":
+        cost += Totals.landUseResults[givenYear].conservationForestLandUse*data[i].count;
+      break;
+      case "Conventional Forest":
+        cost += Totals.landUseResults[givenYear].conventionalForestLandUse*data[i].count;
+      break;
+      case "Switchgrass":
+        cost += Totals.landUseResults[givenYear].switchgrassLandUse*data[i].count;
+      break;
+      case "Short-rotation Woody Bioenergy":
+        cost += Totals.landUseResults[givenYear].shortRotationWoodyBioenergyLandUse*data[i].count;
+      break;
+      case "Wetland":
+        cost += Totals.landUseResults[givenYear].wetlandLandUse*data[i].count;
+      break;
+      case "Mixed Fruits & Vegetables":
+        cost += Totals.landUseResults[givenYear].mixedFruitsVegetablesLandUse*data[i].count;
+      break;
+    }
+  }
+
+   return cost;
+}
 
 //this funtion creates and animates the Ecoscores aster plot
 // it also creates the quality indicator gradients to the plot's right
@@ -1777,6 +2164,391 @@ function drawPrecipitationInformationChart() {
 //     .attr('type', 'checkbox');
 // } //end drawYieldRadar()
 
+
+function generateEconomicsTables() {
+  //if the var has "E" close to the end of var name, it is for enterprise table
+  var convCorn = ""; //convCorn = corn after soybean
+  var convCorn2 = ""; // convCorn2 = corn after corn
+  var consCorn = ""; //consCorn = corn after soybean
+  var consCorn2 = ""; //consCorn = corn after corn
+  var convSoy = "";
+  var consSoy = "";
+  var alf = "";
+  var permPas = "";
+  var rotGraz = "";
+  var grassHay = "";
+  var prairie = "";
+  var consFor = "";
+  var convFor = "";
+  var switchG = "";
+  var shortRWB = "";
+  var wetland = "";
+  var mixedFruitsV = "";
+
+
+   //file used for data
+  var file = "./Info_Trackers.csv";
+
+   //results array that holds data objects
+  var results = [];
+
+   //resulting parse from file variable
+  var res;
+
+  var source = "../htmlFrames/imgs/text.png"
+
+   //parsing the entire file and putting each cell into an the array res
+  $.ajax({
+    async: false,
+    type: "GET",
+    url: file,
+    dataType: "text",
+    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+    success: function(data) {
+      res = data.split(/\n/);
+      res = res.split(/\r/);
+    },
+    error: function(data) {
+      console.log(JSON.stringify(data));
+    }
+  });
+
+   //iterating through all the cells and creating TIME objects out of data then data into results array
+  for(var i = 0; i < res.length; ++i){
+    var tempObj = getObj(res[i], "T");
+    results.push(tempObj);
+  }
+  results.splice(0,1);
+
+
+
+   //getting total for each land use and grand total by calling getEconomicsData
+  getEconomicsData(results);
+
+   //updates the tables by calling updateTables
+  updateTables(results);
+  setTables("T");
+  clearTableVars();
+
+
+   //iterating through all the cells and creating ACTION objects out of data then data into results array
+  for(var i = 0; i < res.length; ++i){
+    var tempObj = getObj(res[i], "A");
+    results.push(tempObj);
+  }
+  results.splice(0,1);
+
+   updateTables(results);
+  setTables("A");
+  clearTableVars();
+
+   function clearTableVars() {
+    convCorn, convCorn2, consCorn, consCorn2, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV = "";
+    results = [];
+  }
+
+   function updateTables(values) {
+    convCorn = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    convCorn2 = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    consCorn = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    consCorn2 = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    convSoy = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    consSoy = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    alf = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    permPas = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    rotGraz = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    grassHay = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    prairie = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    consFor = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    convFor = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    switchG = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    shortRWB = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    wetland = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+    mixedFruitsV = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
+
+
+     for(var i = 0; i < values.length; ++i){
+      switch (values[i].landUse) {
+        case "Conventional Corn":
+          if(values[i].subCrop === "Corn after Soybean"){
+
+             convCorn += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+          }
+          else{
+            convCorn2 += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+          }
+        break;
+        case "Conservation Corn":
+          if(values[i].subCrop === "Corn after Soybean"){
+            consCorn += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+          }
+          else{
+            consCorn2 += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+          }
+        break;
+        case "Conventional Soybean":
+        convSoy += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Conservation Soybean":
+        consSoy += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Alfalfa":
+        alf += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Permanent Pasture":
+        permPas += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Rotational Grazing":
+        rotGraz += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Grass Hay":
+        grassHay += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Prairie":
+        prairie += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Conservation Forest":
+        consFor += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Conventional Forest":
+        convFor += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Switchgrass":
+        switchG += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Short-rotation Woody Bioenergy":
+        shortRWB += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Wetland":
+        wetland += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+        case "Mixed Fruits & Vegetables":
+        mixedFruitsV += "<tr><td>"+values[i].costName+"</td><td>"+values[i].TorA+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        break;
+      }
+    }
+
+     convCorn += "</table>";
+    convCorn2 += "</table>";
+    consCorn += "</table>";
+    consCorn2 += "</table>";
+    convSoy += "</table>";
+    consSoy += "</table>";
+    alf += "</table>";
+    permPas += "</table>";
+    rotGraz += "</table>";
+    prairie += "</table>";
+    consFor += "</table>";
+    convFor += "</table>";
+    switchG += "</table>";
+    shortRWB += "</table>";
+    wetland += "</table>";
+    mixedFruitsV += "</table>";
+  }
+
+   function setTables(timeOrAction) {
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convCorn'+timeOrAction).innerHTML = convCorn;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convCorn2'+timeOrAction).innerHTML = convCorn2;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consCorn'+timeOrAction).innerHTML = consCorn;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consCorn2'+timeOrAction).innerHTML = consCorn2;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convSoybean'+timeOrAction).innerHTML = convSoy;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consSoybean'+timeOrAction).innerHTML = consSoy;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('alfalfa'+timeOrAction).innerHTML = alf;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('permanentPasture'+timeOrAction).innerHTML = permPas;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('rotationalGrazing'+timeOrAction).innerHTML = rotGraz;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('grassHay'+timeOrAction).innerHTML = grassHay;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('prairie'+timeOrAction).innerHTML = prairie;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consForest'+timeOrAction).innerHTML = consFor;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convForest'+timeOrAction).innerHTML = convFor;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('switchgrass'+timeOrAction).innerHTML = switchG;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('shortRWB'+timeOrAction).innerHTML = shortRWB;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('wetland'+timeOrAction).innerHTML = wetland;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('mixedFaV'+timeOrAction).innerHTML = mixedFruitsV;
+
+
+     document.getElementById('resultsFrame').contentWindow.document.getElementById('convCornE'+timeOrAction).innerHTML = convCorn;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convCornE2'+timeOrAction).innerHTML = convCorn2;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consCornE'+timeOrAction).innerHTML = consCorn;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consCornE2'+timeOrAction).innerHTML = consCorn2;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convSoybeanE'+timeOrAction).innerHTML = convSoy;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consSoybeanE'+timeOrAction).innerHTML = consSoy;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('alfalfaE'+timeOrAction).innerHTML = alf;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('permanentPastureE'+timeOrAction).innerHTML = permPas;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('rotationalGrazingE'+timeOrAction).innerHTML = rotGraz;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('grassHayE'+timeOrAction).innerHTML = grassHay;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('prairieE'+timeOrAction).innerHTML = prairie;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('consForestE'+timeOrAction).innerHTML = consFor;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convForestE'+timeOrAction).innerHTML = convFor;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('switchgrassE'+timeOrAction).innerHTML = switchG;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('shortRWBE'+timeOrAction).innerHTML = shortRWB;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('wetlandE'+timeOrAction).innerHTML = wetland;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('mixedFaVE'+timeOrAction).innerHTML = mixedFruitsV;
+  }
+
+ }
+
+ function getEconomicsData(data) {
+  data.splice(-1,1);
+  tempResult = data;
+  var tempData = [];
+  var convCorn = 0;
+  var consCorn = 0;
+  var convSoy = 0;
+  var consSoy = 0;
+  var alf = 0;
+  var permPas = 0;
+  var rotGraz = 0;
+  var grassHay = 0;
+  var prairie = 0;
+  var consFor = 0;
+  var convFor = 0;
+  var switchG = 0;
+  var shortRWB = 0;
+  var wetland = 0;
+  var mixedFruitsV = 0;
+  var total = 0;
+  var names = ["Conventional Corn","Conservation Corn", "Conventional Soybean", "Conservation Soybean", "Alfalfa",
+              "Permanent Pasture", "Rotational Grazing", "Grass Hay", "Prairie", "Conservation Forest", "Conventional Forest",
+              "Switchgrass", "Short-rotation Woody Bioenergy", "Wetland", "Mixed Fruits & Vegetables"];
+
+   for(var i = 0; i < data.length; ++i){
+    switch (data[i].landUse) {
+      case "Conventional Corn":
+      var temp = getValue(data[i].value);
+      convCorn += temp;
+      total += temp;
+      break;
+      case "Conservation Corn":
+      var temp = getValue(data[i].value);
+      consCorn += temp;
+      total += temp;
+      break;
+      case "Conventional Soybean":
+      var temp = getValue(data[i].value);
+      convSoy += temp;
+      total += temp;
+      break;
+      case "Conservation Soybean":
+      var temp = getValue(data[i].value);
+      consSoy += temp;
+      total += temp;
+      break;
+      case "Alfalfa":
+      var temp = getValue(data[i].value);
+      alf += temp;
+      total += temp;
+      break;
+      case "Permanent Pasture":
+      var temp = getValue(data[i].value);
+      permPas += temp;
+      total += temp;
+      break;
+      case "Rotational Grazing":
+      var temp = getValue(data[i].value);
+      rotGraz += temp;
+      total += temp;
+      break;
+      case "Grass Hay":
+      var temp = getValue(data[i].value);
+      grassHay += temp;
+      total += temp;
+      break;
+      case "Prairie":
+      var temp = getValue(data[i].value);
+      prairie += temp;
+      total += temp;
+      break;
+      case "Conservation Forest":
+      var temp = getValue(data[i].value);
+      consFor += temp;
+      total += temp;
+      break;
+      case "Conventional Forest":
+      var temp = getValue(data[i].value);
+      convFor += temp;
+      total += temp;
+      break;
+      case "Switchgrass":
+      var temp = getValue(data[i].value);
+      switchG += temp;
+      total += temp;
+      break;
+      case "Short-rotation Woody Bioenergy":
+      var temp = getValue(data[i].value);
+      shortRWB += temp;
+      total += temp;
+      break;
+      case "Wetland":
+      var temp = getValue(data[i].value);
+      wetland += temp;
+      total += temp;
+      break;
+      case "Mixed Fruits & Vegetables":
+      var temp = getValue(data[i].value);
+      mixedFruitsV += temp;
+      total += temp;
+      break;
+    }
+  }
+
+   var totals = [convCorn, consCorn, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV];
+
+   localStorage.setItem("convCorn", convCorn.toFixed(2));
+  localStorage.setItem("consCorn", consCorn.toFixed(2));
+  localStorage.setItem("convSoy", convSoy.toFixed(2));
+  localStorage.setItem("consSoy", consSoy.toFixed(2));
+  localStorage.setItem("alf", alf.toFixed(2));
+  localStorage.setItem("permPas", permPas.toFixed(2));
+  localStorage.setItem("rotGraz", rotGraz.toFixed(2));
+  localStorage.setItem("grassHay", grassHay.toFixed(2));
+  localStorage.setItem("prairie", prairie.toFixed(2));
+  localStorage.setItem("consFor", consFor.toFixed(2));
+  localStorage.setItem("convFor", convFor.toFixed(2));
+  localStorage.setItem("switchG", switchG.toFixed(2));
+  localStorage.setItem("shortRWB", shortRWB.toFixed(2));
+  localStorage.setItem("wetland", wetland.toFixed(2));
+  localStorage.setItem("mixedFruitsV", mixedFruitsV.toFixed(2));
+
+
+
+   for(var i = 0; i < names.length; ++i){
+    var tempObj = {label: names[i], count: totals[i], number: (totals[i]/total)};
+    tempData.push(tempObj);
+  }
+  tempResult = tempData;
+}
+
+ function getValue(val) {
+  if(val.charAt(0) === '$'){
+    var temp = val.replace(/[^0-9\.-]+/g,"");
+    return parseFloat(temp);
+  }
+  else if(val.charAt(0) === '('){
+    var temp = val.substr(1);
+    temp = temp.substr(1);
+    temp = temp.substring(0, temp.length - 1);
+    temp = (-1 * temp);
+    return parseFloat(temp);
+  }
+  else {
+    console.log(val);
+    console.log("inside 0");
+    return 0;
+  }
+}
+
+ function getObj(data, tOrA){
+  var result = data.split(/;/)
+  if(tOrA === "T"){
+    var obj = {landUse: result[1], costName: result[7], name: "Time", TorA: result[5], value: result[8], timeOfYear: result[4], description: result[12], subCrop: result[2]};
+  }
+  else if(tOrA === "A"){
+    var obj = {landUse: result[1], costName: result[7], name: "Action", TorA: result[6], value: result[8], timeOfYear: result[4], description: result[12], subCrop: result[2]};
+  }
+
+   return obj;
+}
+
 //generateResultsTable creates the string of html with all the numerical results
 // the code here is a little dense, but entirely straightforward
 // where possible, loops are created for years
@@ -2260,12 +3032,12 @@ function generateResultsTable() {
 
       //keep track of subheadings, just 1 this time
       switch (l) {
-        case 0:  
+        case 0:
           //htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
             //put Yield header, in bold
             htmlTableString += "<tr>";
             htmlTableString += "<td><b>" + "Yield" + "<b></td>";
-            
+
             //calculate total score for each year and place next to Yield header
             for(var y = 1; y <= upToYear; y++){
               htmlTableString += "<td><b>";
@@ -2503,6 +3275,81 @@ function strategicWetlandFinder(playerNumber) {
     }
   }
   return strategicWetlandCount;
+}
+
+function findBar(givenString){
+  var aTags = document.getElementsByTagName("a");
+  var found;
+
+   for (var i = 0; i < aTags.length; i++) {
+    if (aTags[i].textContent === givenString) {
+      found = aTags[i];
+      return found;
+    }
+  }
+  return 0;
+}
+
+ function placeTotalsOnBars(){
+  var accordion = document.getElementById("accordionContainer");
+  if(accordion.style.display === "none"){
+    return;
+  }
+
+
+  var convCorn = findBar('Conventional Corn');
+  var consCorn = findBar('Conservation Corn');
+  var convSoy = findBar('Conventional Soybean');
+  var consSoy = findBar('Conservation Soybean');
+  var alfalfa = findBar('Alfalfa');
+  var permPas = findBar('Permanent Pasture');
+  var rotGraz = findBar('Rotational Grazing');
+  var grassHay = findBar('Grass Hay');
+  var prairie = findBar('Prairie');
+  var consFor = findBar('Conservation Forest');
+  var convFor = findBar('Conventional Forest');
+  var switchgrass = findBar('Switchgrass');
+  var shortRWB = findBar('Short-Rotation Woody Bioenergy');
+  var wetland = findBar('Wetland');
+  var mixedFaV = findBar ('Mixed Fruits & Vegetables');
+
+  convCorn.firstChild.nodeValue += (" Total: $" + localStorage.getItem('convCorn'));
+  consCorn.firstChild.nodeValue += (" Total: $" + localStorage.getItem('consCorn'));
+  convSoy.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('convSoy'));
+  consSoy.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('consSoy'));
+  alfalfa.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('alf'));
+  permPas.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('permPas'));
+  rotGraz.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('rotGraz'));
+  grassHay.firstChild.nodeValue += (" Total: $" + localStorage.getItem('grassHay'));
+  prairie.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('prairie'));
+  consFor.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('consFor'));
+  convFor.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('convFor'));
+  switchgrass.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('switchG'));
+  shortRWB.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('shortRWB'));
+  wetland.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('wetland'));
+  mixedFaV.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('mixedFruitsV'));
+}
+
+
+ function enterpriseBudgets() {
+  var accordion = document.getElementById("accordionContainer");
+  var enterpriseTable = document.getElementById("accordionContainer2");
+  var graph = document.getElementById("graphContainer");
+  var enterpriseButton = document.getElementById("enterpriseBudgetsButton");
+  if(accordion.style.display === "none"){
+    enterpriseTable.style.display = "none";
+
+     accordion.style.display = "block";
+    graph.style.display = "block";
+    enterpriseButton.innerHTML = "View Enterprise Budgets";
+  }
+  else{
+    enterpriseTable.style.display = "block";
+
+     accordion.style.display = "none";
+    graph.style.display = "none";
+    enterpriseButton.innerHTML = "Return to Econ Module";
+  }
 }
 
 /*
