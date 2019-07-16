@@ -1,5 +1,6 @@
 var economics = (function () { //Singleton for getting economics data from the budgets csv
   var instance;
+  var rawData_Enterprise_budgets;
   var rawData;
   var data;
   var data4=Array();
@@ -54,6 +55,10 @@ var economics = (function () { //Singleton for getting economics data from the b
       this.rawData = data;
       divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
       chart4Information(['Action - Cost Type', 'Time - Cost Type']);
+    })
+    d3.csv('./PEWI_Enterprise_Budgets  - Copy (2).csv', function(data){
+      this.rawData_Enterprise_budgets = data;
+      console.log(data);
     })
     return {//public fields
       data: this.data,

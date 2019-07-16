@@ -1,0 +1,89 @@
+LU_ID,Land-Use,Sub Crop,PerAcreORPerCell,TopographySlopes,StreamBorder,Year,Time of Year,Frequency,Time - Cost Type ,Action - Cost Type,Fixed/Variable,Cost Name,# Labor Hours, Value ,Context and/ or Calculations ,Description,Citation,,,,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Fixed,Chisel plow ,,$3.60 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Field Name,,,,Expected Yield ,182, bu./acre
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Variable,Chisel plow ,,$3.90 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Example,,,,Acres ,100,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Fixed,Tandem disk ,,$4.60 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,,,,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Variable,Tandem disk ,,$3.40 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,,,,Cost per Acre,,,Total Cost
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Fixed,Apply nitrogen ,,$4.30 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Preharvest machinery,,,Fixed,Variable,Total,All Acres
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Variable,Apply nitrogen ,,$4.40 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Chisel plow,,,$3.60,$3.90,$7.50,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Fixed,Field cultivate ,,$2.70 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Tandem disk,,,$4.60,$3.40,$8.00,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Variable,Field cultivate ,,$2.70 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Apply nitrogen,,,$4.30,$4.40,$8.70,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Fixed,Plant ,,$5.90 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Field cultivate,,,$2.70,$2.70,$5.40,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Variable,Plant ,,$4.80 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Plant,,,$5.90,$4.80,$10.70,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Fixed,Spray ,,$2.20 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Spray,,,$2.20,$2.00,$4.20,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Equipment,Variable,Spray ,,$2.00 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Custom hire,,,$0.00,$0.00,$0.00,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Input,Variable,Seed ,,$95.80 ,"$3.19/1000 kernels * 30,000 kernels/acre",,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Other,,,$0.00,$0.00,$0.00,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Input,Variable,Nitrogen ,,$70.68 ,$0.38/lb * 186 lbs/acre,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Other,,,$0.00,$0.00,$0.00,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Input,Variable,Phosphate,,$28.56 ,$0.42/lb * 68 lbs/acre,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    Total per acre,,,$23.30,$21.20,$44.50,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Input,Variable,Potash ,,$17.05 ,$0.31/lb * 55 lbs/acre,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    Total all acres,,,$0,$0,$0,----  
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Input,Variable,Lime ,,$5.71 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,,,,,, ,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Input,Variable,Herbicide ,,$48.36 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,"Seed, chemicals, etc.",,,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Preharvest,Input,Variable,Insecticide,,$15.16 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,  Seed,,,----  ,$95.80,$95.80,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Constant,Other,Variable,Crop Insurance,,$9.50 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    cost per 1000 kernels,,$3.19,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Constant,Other,Variable,Miscellaneous,,$10.00 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    kernels per acre,,"30,000",,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Constant,Other,Variable,Interest on preharvest variable costs,,$12.88 ,6.0% for 8 months,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,  Nitrogen,,,----  ,$70.68,$70.68,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Harvest,Equipment,Fixed,Combine ,,$13.10 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    price per pound,,$0.38,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Harvest,Equipment,Variable,Combine,,$6.70 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    pounds per acre,,186,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Harvest,Equipment,Fixed,Grain Cart ,,$6.30 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,  Phosphate,,,----  ,$28.56,$28.56,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Harvest,Equipment,Variable,Grain Cart ,,$3.00 ,,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    price per pound,,$0.42,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Harvest,Equipment,Fixed ,Haul ,,$7.94 ,$0.04/bushel * 182 bushels/acre,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    pounds per acre,,68,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Harvest,Equipment,Variable,Haul ,,$6.87 ,$0.04/bushel * 182 bushels/acre,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,  Potash,,,----  ,$17.05,$17.05,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Harvest,Equipment,Fixed ,Drying ,,$9.10 ,$0.05/bushel * 182 bushels/acre,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    price per pound,,$0.31,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Harvest,Equipment,Variable ,Drying ,,$30.14 ,$0.17/bushel * 182 bushels/acre,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    pounds per acre,,55,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Harvest,Equipment,Fixed,Handling ,,$3.21 ,$0.02/bushel * 182 bushels/acre,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,  Lime (annual cost),,,----  ,$5.71,$5.71,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Harvest,Equipment,Variable,Handling,,$3.52 ,$0.02/bushel * 182 bushels/acre,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,  Herbicide,,,----  ,$48.36,$48.36,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,1,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,  Insecticide,,,----  ,$15.16,$15.16,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,2,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,  Crop insurance,,,----  ,$9.50,$9.50,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,3,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,  Miscellaneous,,,----  ,$10.00,$10.00,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,4,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,  Interest on preharvest variable costs,,,----  ,$12.88,$12.88,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,5,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    length of period (months),,8,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,6,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    interest rate,,6.0%,,,             ,             
+2,Conservation Corn,Corn after Corn,Acre,,,1,7,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,      Total,,,----  ,$313.70,$313.70,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,8,Annual,Preharvest,Labor,Variable,Labor - Operator - Planting,0.221052632,$3.15 ,2.8 hrs/acre * $14.25/hr * .078947368,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,,,,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,9,Annual,Preharvest,Labor,Variable,Labor - Operator - Application,0.221052632,$3.15 ,2.8 hrs/acre * $14.25/hr * .078947368,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Harvest machinery,,,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,10,Annual,Preharvest,Labor,Variable,Labor - Operator - Application,0.221052632,$3.15 ,2.8 hrs/acre * $14.25/hr * .078947368,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Combine,,,$13.10,$6.70,$19.80,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,11,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Grain Cart,,,$6.30,$3.00,$9.30,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,12,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Haul,,,$7.94,$6.87,$14.81,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,13,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    Fixed- price per bushel,,$0.04,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,14,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    Variable- price per bushel,,$0.04,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,15,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Drying,,,$9.10,$30.14,$39.24,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,16,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,,$0.05,,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,17,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    Variable- price per bushel,,$0.17,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,18,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Handling,,,$3.21,$3.52,$6.73,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,19,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,0.221052632,$3.15 ,2.8 hrs/acre * $14.25/hr * .078947368,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    Fixed- price per bushel,,$0.02,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,20,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,0.221052632,$3.15 ,2.8 hrs/acre * $14.25/hr * .078947368,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    Variable- price per bushel,,$0.02,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,21,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,0.221052632,$3.15 ,2.8 hrs/acre * $14.25/hr * .078947368,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Custom hire,,,$0.00,$0.00,$0.00,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,22,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,0.221052632,$3.15 ,2.8 hrs/acre * $14.25/hr * .078947368,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    Total per acre,,,$39.65,$50.22,$89.88,$0
+2,Conservation Corn,Corn after Corn,Acre,,,1,23,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,    Total all acres,,,$0,$0,$0,----  
+2,Conservation Corn,Corn after Corn,Acre,,,1,24,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,$1.05 ,2.8 hrs/acre * $14.25/hr * .026315789,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,,,,,,,
+2,Conservation Corn,Corn after Corn,Acre,,,1,,Annual,Other,Other,Fixed,Cash Rent Equivalent ,,$223.00 ,$223/acre,,https://www.extension.iastate.edu/agdm/crops/html/a1-20.html,Labor,,, ,, , 
+,,,,,,,,,,,,,,,,,,  Operator,,,$39.90,----  ,$39.90,$0
+,,,,,,,,,,,,,,,,,,    Hours,,2.8,,,,
+,,,,,,,,,,,,,,,,,,    Rate per hour,,$14.25,,,,
+,,,,,,,,,,,,,,,,,,  Hired,,,----  ,$0.00,$0.00,$0
+,,,,,,,,,,,,,,,,,,    Hours,,0,,,, 
+,,,,,,,,,Weighting,%,,,,,,,,    Rate per hour,,$0.00,,,             ,             
+,,,,,,,Planting,8,3,0.078947368,,,,,,,,      Total,,,$39.90,$0.00,$39.90,$0
+,,,,,,,applications,9,3,0.078947368,,,,,,,,,,,,,,
+,,,,,,,applications,10,3,0.078947368,,,,,,,,Land,,,,,,
+,,,,,,,Harvest,19,3,0.078947368,,,,,,,,  Cash rent equivalent,,,$223.00,----  ,$223.00,$0
+,,,,,,,Harvest,20,3,0.078947368,,,,,,,,,,,,,,
+,,,,,,,Harvest,21,3,0.078947368,,,,,,,,"Total fixed, variable and all costs",,,,,             ,             
+,,,,,,,Harvest,22,3,0.078947368,,,,,,,,  Per acre,,,$325.85,$385.13,$710.98,$0
+,,,,,,,,1,1,0.026315789,,,,,,,,  Per bushel,,,$0.00,$0.00,$0.00,----  
+,,,,,,,,2,1,0.026315789,,,,,,,,  All acres,,,$0,$0,$0,----  
+,,,,,,,,3,1,0.026315789,,,,,,,,,,,,,,
+,,,,,,,,4,1,0.026315789,,,,,,,,,,,,Return per,Acre Over,Return
+,,,,,,,,5,1,0.026315789,,,,,,,,,,,,Variable Costs,All Costs,All Acres
+,,,,,,,,6,1,0.026315789,,,,,,,,Gross returns,,, ,,,
+,,,,,,,,7,1,0.026315789,,,,,,,,  Expected selling price,,$0.00, ,----  ,$0.00,$0
+,,,,,,,,11,1,0.026315789,,,,,,,,  Government payments,,, ,----  ,$0.00,$0
+,,,,,,,,12,1,0.026315789,,,,,,,,    Effective LDP rate,,$0.00,,----  ,$0.00,$0
+,,,,,,,,13,1,0.026315789,,,,,,,,      Total returns,,,,----  ,$0.00,$0
+,,,,,,,,14,1,0.026315789,,,,,,,,,,,,,             ,             
+,,,,,,,,15,1,0.026315789,,,,,,,,Net returns,,,,-$385.13,-$710.98,$0
+,,,,,,,,16,1,0.026315789,,,,,,,,,,,,,,
+,,,,,,,,17,1,0.026315789,,,,,,,,,,,,,,
+,,,,,,,,18,1,0.026315789,,,,,,,,,,,,,,
+,,,,,,,,23,1,0.026315789,,,,,,,,,,,,,,
+,,,,,,,,24,1,0.026315789,,,,,,,,,,,,,,
+,,,,,,,,,38,,,,,,,,,,,,,,,
