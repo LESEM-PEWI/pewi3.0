@@ -299,7 +299,7 @@ function displayResults() {
   drawPrecipitationInformationChart();
   econGraphic1 = EconomicsGraphic1().getInstance().render();
 
-  econGraphic3 = EconomicsGraphic3().getInstance().render();
+  econGraphic3 = EconomicsGraphic3().render();
 
 
 
@@ -4273,6 +4273,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
         doc.getElementById('econGraphic1Years').style.display = 'none';
         doc.getElementById('econGraphic1' + d).style.display = 'block';
         buttonLU.classList.remove('selected');
+
         buttonYear.classList.remove('selected');
         buttonEconomics.classList.remove('selected');
         button.classList.add('selected');
@@ -4386,7 +4387,7 @@ function stackMax(layers) {
 
 function EconomicsGraphic3(){
 
-  var myData = [20, 50,30, 75, 15]
+  var myData = [20, 50, 30, 75, 15]
   var margin = {top: 40, right: 10, bottom: 20, left: 60};
   var width = 1800*.7 - margin.left - margin.right;
   var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
@@ -4397,9 +4398,16 @@ function EconomicsGraphic3(){
   var myChart = d3.select(econBody)
     .attr('width', width + margin.right + margin.left)
     .attr('height', height + margin.top + margin.bottom)
-    .style('background', '#000')
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+  myChart.append("text")
+      .attr("transform",
+        "translate(" + (width/2) + " ," +
+        (25) + ")")
+      .style("text-anchor", "left")
+      .style("font-weight", "bold")
+      .style("font-size", "1.5vmax")
+      .text("Time/Action Totals");
 
   function drawAxis(){
 
@@ -4424,9 +4432,60 @@ function EconomicsGraphic3(){
 
   }
 
+  var addOptions = function (){ //This adds the toggle effects to the screen
+    let doc = document.getElementById('resultsFrame').contentWindow.document;
+    let box = doc.getElementById('econGraphic3Options');
+
+    let selectionChange = (d, button) => {
+      doc.getElementById('econGraphic3LandUses').style.display = 'none';
+      doc.getElementById('econGraphic3Economics').style.display = 'none';
+      doc.getElementById('econGraphic3' + d).style.display = 'block';
+      buttonLU.classList.remove('selected');
+      buttonEconomics.classList.remove('selected');
+      button.classList.add('selected');
+    }
+
+
+    buttonLU = doc.getElementById('econGraphic3LUOptions')
+    buttonLU.onclick = event => {selectionChange("LandUses", buttonLU)};
+    buttonEconomics = doc.getElementById('econGraphic3TimeAction')
+    buttonEconomics.onclick = event => {selectionChange("Economics", buttonEconomics)};
+
+    selectionChange('LandUses', buttonLU);
+
+    container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3LandUses')
+    container.innerHTML = '';
+    economics.getInstance().data.map(d => d.landUse).forEach(d => {
+      cell = document.createElement('div');
+      cell.innerHTML = d;
+      checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
+      checkBox.style.float = 'right';
+      checkBox.checked = true;
+      cell.appendChild(checkBox);
+      container.appendChild(cell);
+    })
+
+    // container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3Economics')
+    // container.innerHTML = '';
+    // stackTypes.forEach(type => {
+    //   cell = document.createElement('div');
+    //   cell.innerHTML = type;
+    //   checkBox = document.createElement('input');
+    //   checkBox.type = 'checkbox';
+    //   checkBox.onclick = event => alterOptions(type);
+    //   checkBox.style.float = 'right';
+    //   checkBox.checked = true;
+    //   cell.appendChild(checkBox);
+    //   container.appendChild(cell);
+    // });
+  }
+
   function render(){
     svg.selectAll("*").remove();
     drawAxis();
+    addOptions();
   }
 
 
