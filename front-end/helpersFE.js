@@ -4199,8 +4199,8 @@ function resetPresets() {
     roll(1);
   }
   //Resets index function
-  if (document.getElementById('index').style.display == "block") {
-    document.getElementById('index').style.display = "none";
+  if (document.getElementById('glossary').style.display == "block") {
+    document.getElementById('glossary').style.display = "none";
   }
   //Resets the undoArr
   resetUndo();
