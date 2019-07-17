@@ -1,9 +1,9 @@
 var economics = (function () { //Singleton for getting economics data from the budgets csv
   var instance;
-  var rawData2=Array();
   var rawData;
   var data;
   var data4=Array();
+  var data5=Array();
 
   function init() {
     console.log(this);
@@ -49,6 +49,7 @@ var economics = (function () { //Singleton for getting economics data from the b
             }
           });
         });
+        console.log(data4);
     }
 
     d3.csv('./budgets.csv', function(data){
@@ -57,13 +58,17 @@ var economics = (function () { //Singleton for getting economics data from the b
       chart4Information(['Action - Cost Type', 'Time - Cost Type']);
     })
     d3.csv('./budgets_2.csv', function(data){
-      console.log(data);
       data.forEach(dataPoint=>{
-        if(dataPoint["Time of Year"]!=""){
-          rawData2.push(dataPoint);
+        var landuseNum=dataPoint['LU_ID'];
+        if (!data5[landuseNum]) {
+          data5[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
+        } // We need to create a path to the data that we want to pull out
+        if(dataPoint['Time of Year']!=""){
+          data5[landuseNum]['array'].push(dataPoint);
+
         }
       })
-      console.log(rawData2);
+      console.log(data5);
     })
     return {//public fields
       data: this.data,

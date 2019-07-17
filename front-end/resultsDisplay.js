@@ -299,7 +299,7 @@ function displayResults() {
   drawPrecipitationInformationChart();
   econGraphic1 = EconomicsGraphic1().getInstance().render();
   econGraphic4 = EconomicsGraphic4().getInstance().render();
-
+  econGraphic5 = EconomicsGraphic5().getInstance().render();
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
   //============= END DEPRECATED
@@ -4670,6 +4670,29 @@ function EconomicsGraphic4() {
     getInstance: function () { //To ensure singularity
       if ( !instance ) {
         instance = init();
+      }
+      return instance;
+    }
+  };
+}
+
+
+
+function EconomicsGraphic5(){
+  var instance;
+  function init(){
+
+    var render=function() {
+
+    }
+    return{
+      render:render,
+    };
+  }
+  return{
+    getInstance:function(){
+      if(!instance){
+        instance=init();
       }
       return instance;
     }
