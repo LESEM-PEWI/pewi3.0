@@ -2170,7 +2170,7 @@ function generateEconomicsTables() {
   var convCorn = ""; //convCorn = corn after soybean
   var convCorn2 = ""; // convCorn2 = corn after corn
   var consCorn = ""; //consCorn = corn after soybean
-  var consCorn2 = ""; //consCorn = corn after corn
+  var consCorn2 = ""; //consCorn2 = corn after corn
   var convSoy = "";
   var consSoy = "";
   var alf = "";
@@ -2185,20 +2185,26 @@ function generateEconomicsTables() {
   var wetland = "";
   var mixedFruitsV = "";
 
+  var instance;
+  var rawData;
+  var data;
 
    //file used for data
-  var file = "./Info_Trackers.csv";
+  //var file = "./budgets.csv";
 
    //results array that holds data objects
   var results = [];
 
    //resulting parse from file variable
-  var res;
+  //var res;
 
-  var source = "../htmlFrames/imgs/text.png"
+//  var source = "../htmlFrames/imgs/text.png"
 
+  d3.csv('./budgets_2.csv', function(data){
+    this.rawData = data;
+  })
    //parsing the entire file and putting each cell into an the array res
-  $.ajax({
+  /*$.ajax({
     async: false,
     type: "GET",
     url: file,
@@ -2211,7 +2217,7 @@ function generateEconomicsTables() {
     error: function(data) {
       console.log(JSON.stringify(data));
     }
-  });
+  });*/
 
    //iterating through all the cells and creating TIME objects out of data then data into results array
   for(var i = 0; i < res.length; ++i){
@@ -2238,16 +2244,16 @@ function generateEconomicsTables() {
   }
   results.splice(0,1);
 
-   updateTables(results);
+  updateTables(results);
   setTables("A");
   clearTableVars();
 
-   function clearTableVars() {
+  function clearTableVars() {
     convCorn, convCorn2, consCorn, consCorn2, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV = "";
     results = [];
   }
 
-   function updateTables(values) {
+  function updateTables(values) {
     convCorn = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
     convCorn2 = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
     consCorn = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
@@ -2267,7 +2273,7 @@ function generateEconomicsTables() {
     mixedFruitsV = "<table><tr><th>Cost Name</th><th>"+values[0].name+"</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>";
 
 
-     for(var i = 0; i < values.length; ++i){
+    for(var i = 0; i < values.length; ++i){
       switch (values[i].landUse) {
         case "Conventional Corn":
           if(values[i].subCrop === "Corn after Soybean"){
@@ -2328,7 +2334,7 @@ function generateEconomicsTables() {
       }
     }
 
-     convCorn += "</table>";
+    convCorn += "</table>";
     convCorn2 += "</table>";
     consCorn += "</table>";
     consCorn2 += "</table>";
@@ -2346,7 +2352,7 @@ function generateEconomicsTables() {
     mixedFruitsV += "</table>";
   }
 
-   function setTables(timeOrAction) {
+  function setTables(timeOrAction) {
     document.getElementById('resultsFrame').contentWindow.document.getElementById('convCorn'+timeOrAction).innerHTML = convCorn;
     document.getElementById('resultsFrame').contentWindow.document.getElementById('convCorn2'+timeOrAction).innerHTML = convCorn2;
     document.getElementById('resultsFrame').contentWindow.document.getElementById('consCorn'+timeOrAction).innerHTML = consCorn;
@@ -2366,7 +2372,7 @@ function generateEconomicsTables() {
     document.getElementById('resultsFrame').contentWindow.document.getElementById('mixedFaV'+timeOrAction).innerHTML = mixedFruitsV;
 
 
-     document.getElementById('resultsFrame').contentWindow.document.getElementById('convCornE'+timeOrAction).innerHTML = convCorn;
+    document.getElementById('resultsFrame').contentWindow.document.getElementById('convCornE'+timeOrAction).innerHTML = convCorn;
     document.getElementById('resultsFrame').contentWindow.document.getElementById('convCornE2'+timeOrAction).innerHTML = convCorn2;
     document.getElementById('resultsFrame').contentWindow.document.getElementById('consCornE'+timeOrAction).innerHTML = consCorn;
     document.getElementById('resultsFrame').contentWindow.document.getElementById('consCornE2'+timeOrAction).innerHTML = consCorn2;
@@ -2385,7 +2391,7 @@ function generateEconomicsTables() {
     document.getElementById('resultsFrame').contentWindow.document.getElementById('mixedFaVE'+timeOrAction).innerHTML = mixedFruitsV;
   }
 
- }
+}//end generateEconomicsTables()
 
  function getEconomicsData(data) {
   data.splice(-1,1);
@@ -2411,7 +2417,7 @@ function generateEconomicsTables() {
               "Permanent Pasture", "Rotational Grazing", "Grass Hay", "Prairie", "Conservation Forest", "Conventional Forest",
               "Switchgrass", "Short-rotation Woody Bioenergy", "Wetland", "Mixed Fruits & Vegetables"];
 
-   for(var i = 0; i < data.length; ++i){
+  for(var i = 0; i < data.length; ++i){
     switch (data[i].landUse) {
       case "Conventional Corn":
       var temp = getValue(data[i].value);
@@ -2491,9 +2497,9 @@ function generateEconomicsTables() {
     }
   }
 
-   var totals = [convCorn, consCorn, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV];
+  var totals = [convCorn, consCorn, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV];
 
-   localStorage.setItem("convCorn", convCorn.toFixed(2));
+  localStorage.setItem("convCorn", convCorn.toFixed(2));
   localStorage.setItem("consCorn", consCorn.toFixed(2));
   localStorage.setItem("convSoy", convSoy.toFixed(2));
   localStorage.setItem("consSoy", consSoy.toFixed(2));
@@ -2511,14 +2517,14 @@ function generateEconomicsTables() {
 
 
 
-   for(var i = 0; i < names.length; ++i){
+  for(var i = 0; i < names.length; ++i){
     var tempObj = {label: names[i], count: totals[i], number: (totals[i]/total)};
     tempData.push(tempObj);
   }
   tempResult = tempData;
 }
 
- function getValue(val) {
+function getValue(val) {
   if(val.charAt(0) === '$'){
     var temp = val.replace(/[^0-9\.-]+/g,"");
     return parseFloat(temp);
@@ -2537,7 +2543,7 @@ function generateEconomicsTables() {
   }
 }
 
- function getObj(data, tOrA){
+function getObj(data, tOrA){
   var result = data.split(/;/)
   if(tOrA === "T"){
     var obj = {landUse: result[1], costName: result[7], name: "Time", TorA: result[5], value: result[8], timeOfYear: result[4], description: result[12], subCrop: result[2]};
