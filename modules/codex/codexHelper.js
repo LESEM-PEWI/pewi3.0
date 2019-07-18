@@ -321,7 +321,7 @@ function setUpCodexData(data) {
     } //end switch
   } //end while
 
-  document.getElementById('indexHolder').innerHTML = tableString;
+  document.getElementById('glossaryHolder').innerHTML = tableString;
   estalishHeights();
 } //end function setUpCodexData()
 
