@@ -299,7 +299,7 @@ function displayResults() {
   drawPrecipitationInformationChart();
   econGraphic1 = EconomicsGraphic1().getInstance().render();
 
-  EconomicsGraphic3();
+  // EconomicsGraphic3();
   console.log(economics.getInstance().data3)
 
 
@@ -4385,35 +4385,31 @@ function stackMax(layers) {
   });
 }
 
-function EconomicsGraphic3(){
-
-  var margin = {top: 40, right: 10, bottom: 20, left: 60};
-  var width = 1800*.7 - margin.left - margin.right;
-  var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
-
-  var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3svg');
-  var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3');
-
-  var myChart = d3.select(econBody)
-    .attr('width', width + margin.right + margin.left)
-    .attr('height', height + margin.top + margin.bottom)
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  myChart.append("text")
-      .attr("transform",
-        "translate(" + (width/2) + " ," +
-        (25) + ")")
-      .style("text-anchor", "left")
-      .style("font-weight", "bold")
-      .style("font-size", "1.5vmax")
-      .text("Time/Action Totals");
-
-
-
-
-  function render(){
-    svg.selectAll("*").remove();
-  }
-
-
-}
+// function EconomicsGraphic3(){
+//
+//   var margin = {top: 40, right: 10, bottom: 20, left: 60};
+//   var width = 1800*.7 - margin.left - margin.right;
+//   var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+//
+//   var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3svg');
+//   var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3');
+//
+//   var myChart = d3.select(econBody)
+//     .attr('width', width + margin.right + margin.left)
+//     .attr('height', height + margin.top + margin.bottom)
+//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+//
+//   myChart.append("text")
+//       .attr("transform",
+//         "translate(" + (width/2) + " ," +
+//         (25) + ")")
+//       .style("text-anchor", "left")
+//       .style("font-weight", "bold")
+//       .style("font-size", "1.5vmax")
+//       .text("Time/Action Totals");
+//
+//
+//
+//
+//
+// }

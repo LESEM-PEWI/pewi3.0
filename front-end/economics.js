@@ -2,7 +2,6 @@ var economics = (function () { //Singleton for getting economics data from the b
   var instance;
   var rawData;
   var data;
-  var data3 = Array();
   function init() {
 
     function divideByCategory (listofCats){
@@ -30,34 +29,13 @@ var economics = (function () { //Singleton for getting economics data from the b
       });
       console.log(this.data)
     }
-
-    function chart3Information(lists){
-      this.rawData.forEach(dataPoint => {
-        var landuseNum = dataPoint['LU_ID'];
-        if (!data3[landuseNum]){
-          data3[landuseNum] = {'landUse': dataPoint['Land-Use'], 'array':[]}
-        }
-        data3[landuseNum]['array'].push(dataPoint);
-        list.forEach(cat => {
-          if(!data3[landuseNum][cat]){
-            data3[landuseNum][cat]=[];
-          }
-          if(!data3[landuseNum][cat].includes(dataPoint[cat])){
-            data3[landuseNum][cat].push(dataPoint[cat]);
-          }
-        });
-      });
-    }
-
     d3.csv('./budgets.csv', function(data){
       this.rawData = data;
       divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable'])
-      chart3Information(['Action - Cost Type', 'Time - Cost Type'])
     })
     return {//public fields
       data: this.data,
       rawData: this.rawData
-      data3: data3
     };
   };
   return {
