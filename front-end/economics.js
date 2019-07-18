@@ -52,23 +52,18 @@ var economics = (function () { //Singleton for getting economics data from the b
         });
         console.log(data4);
     }
-    function graphic5information(){
+    function graphic5information(list){
       rawData2.forEach(dataPoint=>{
         var landuseNum=dataPoint['LU_ID'];
         if (!data5[landuseNum]) {
-          data5[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[],'Total Labor Cost':0,'Total Labor Hours':0,'Total Custom Hire Cost':0};
+          data5[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]};
         } // We need to create a path to the data that we want to pull out
         var subcrop=dataPoint['Sub Crop'];
-        if(subcrop!=""){
-          if(data5[landuseNum][subcrop]==null){
-            data5[landuseNum][subcrop]={};
-            data5[landuseNum][subcrop].total_labor_cost=0;
-            data5[landuseNum][subcrop].total_labor_hours=0;
-            data5[landuseNum][subcrop].total_custom_hire_cost=0;
+        if(subcrop!=""&&dataPoint['Time of Year']!=""){
+          if(!data5[landuseNum][subcrop]){
+             data5[landuseNum][subcrop]=[];
           }
-          data5[landuseNum][subcrop].total_labor_cost+=dataPoint[];
-          data5[landuseNum][subcrop].total_labor_hours=0;
-          data5[landuseNum][subcrop].total_custom_hire_cost=0;
+          data5[landuseNum][subcrop].push(dataPoint);
         }
         if(dataPoint['Time of Year']!=""){
           data5[landuseNum]['array'].push(dataPoint);
@@ -90,7 +85,8 @@ var economics = (function () { //Singleton for getting economics data from the b
     return {//public fields
       data: this.data,
       rawData: this.rawData,
-      data4: data4
+      data4: data4,
+      data5:data5,
     };
   };
   return {

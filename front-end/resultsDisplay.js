@@ -4409,6 +4409,7 @@ function econGraphic4DisplayData(landUse,costType,cost){
       data.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
     }
   }
+  console.log(data);
 return data;
  }
  /**
@@ -4675,15 +4676,30 @@ function EconomicsGraphic4() {
     }
   };
 }
+function graphic5DisplayInfo(econdata){
+  var data=[];
+  //econdata=economics.getInstance().data5;
+  console.log(econdata);
+  econdata.forEach(d=>{
+    console.log(d.array);
+    d.array.forEach(dataPoint=>{
+      if(data.some(e=>e.timeOfYear==dataPoint['Time of Year'])){
 
+      }else{
+          data.push({timeOfYear:dataPoint['Time of Year']})
+      }
+    })
+  });
+  console.log(data);
+}
 
 
 function EconomicsGraphic5(){
   var instance;
   var econdata;
   function init(){
-    econdata=economics.getInstance().data5();
-
+    econdata=economics.getInstance().data5;
+    graphic5DisplayInfo(econdata);
     var render=function() {
 
     }
