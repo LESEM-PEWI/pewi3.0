@@ -4680,7 +4680,9 @@ function EconomicsGraphic4() {
 
 function EconomicsGraphic5(){
   var instance;
+  var econdata;
   function init(){
+    econdata=economics.getInstance().data5();
 
     var render=function() {
 

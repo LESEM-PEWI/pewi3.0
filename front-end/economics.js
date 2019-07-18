@@ -1,6 +1,7 @@
 var economics = (function () { //Singleton for getting economics data from the budgets csv
   var instance;
   var rawData;
+  var rawData2;
   var data;
   var data4=Array();
   var data5=Array();
@@ -51,6 +52,31 @@ var economics = (function () { //Singleton for getting economics data from the b
         });
         console.log(data4);
     }
+    function graphic5information(){
+      rawData2.forEach(dataPoint=>{
+        var landuseNum=dataPoint['LU_ID'];
+        if (!data5[landuseNum]) {
+          data5[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[],'Total Labor Cost':0,'Total Labor Hours':0,'Total Custom Hire Cost':0};
+        } // We need to create a path to the data that we want to pull out
+        var subcrop=dataPoint['Sub Crop'];
+        if(subcrop!=""){
+          if(data5[landuseNum][subcrop]==null){
+            data5[landuseNum][subcrop]={};
+            data5[landuseNum][subcrop].total_labor_cost=0;
+            data5[landuseNum][subcrop].total_labor_hours=0;
+            data5[landuseNum][subcrop].total_custom_hire_cost=0;
+          }
+          data5[landuseNum][subcrop].total_labor_cost+=dataPoint[];
+          data5[landuseNum][subcrop].total_labor_hours=0;
+          data5[landuseNum][subcrop].total_custom_hire_cost=0;
+        }
+        if(dataPoint['Time of Year']!=""){
+          data5[landuseNum]['array'].push(dataPoint);
+
+        }
+      })
+      console.log(data5);
+    }
 
     d3.csv('./budgets.csv', function(data){
       this.rawData = data;
@@ -58,17 +84,8 @@ var economics = (function () { //Singleton for getting economics data from the b
       chart4Information(['Action - Cost Type', 'Time - Cost Type']);
     })
     d3.csv('./budgets_2.csv', function(data){
-      data.forEach(dataPoint=>{
-        var landuseNum=dataPoint['LU_ID'];
-        if (!data5[landuseNum]) {
-          data5[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
-        } // We need to create a path to the data that we want to pull out
-        if(dataPoint['Time of Year']!=""){
-          data5[landuseNum]['array'].push(dataPoint);
-
-        }
-      })
-      console.log(data5);
+      rawData2=data;
+      graphic5information();
     })
     return {//public fields
       data: this.data,
