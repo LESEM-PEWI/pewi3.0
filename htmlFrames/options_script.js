@@ -256,7 +256,9 @@
           tempHotkey.appendChild(tempSpan);
         //var tempInput1 = document.createElement("INPUT");
         // var tempInput1;
-      if(tempIndex>11){
+        //
+        //****** This is dumb, but this needs to increase if more hotkeys are added, leave the arrow keys at the end of the array, need to change conditional below as well, ctrl f for "other spot to fix"
+      if(tempIndex>13){
         //arrows key in div
         tempInput1=document.createElement("div");
       }else{
@@ -287,8 +289,10 @@
           if(curHotkeys[i-1][0]==39){
             tempChar="→";
           }
+
+          // *** this is the other spot to fix if adding more hotkeys
           //hot keys without arrows key & available to change
-          if(tempIndex<12){
+          if(tempIndex<14){
           tempInput1.placeholder = tempChar;
           tempInput1.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",1)");
           tempInput1.setAttribute("onkeydown","this.value = this.value");
@@ -325,7 +329,7 @@
         //   tempInput1.style.background = "#0f4d70";
         //   tempInput2.style.background = "#0f4d70";
         // }
-        // 
+        //
         // //Secondary col for hot key only
           if(curHotkeys[i-1][0]!=38&&curHotkeys[i-1][0]!=40&&curHotkeys[i-1][0]!=37&&curHotkeys[i-1][0]!=39){
             var tempInput2 = document.createElement("input");
