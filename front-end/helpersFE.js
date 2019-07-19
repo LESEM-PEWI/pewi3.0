@@ -4198,8 +4198,10 @@ function resetPresets() {
   if (document.getElementById('tabButtons').className != "tabButtons") {
     roll(1);
   }
-  //Resets index function
+  //Resets glossary function
+  //if (document.getElementById('index').style.display == "block") {
   if (document.getElementById('glossary').style.display == "block") {
+    //document.getElementById('index').style.display = "none";
     document.getElementById('glossary').style.display = "none";
   }
   //Resets the undoArr
@@ -5255,7 +5257,8 @@ function toggleEscapeFrame() {
 //toggleGlossary displays and hides the codex
 function toggleGlossary() {
 
-  if (document.getElementById('index').style.display != "block" && !modalUp) {
+  //if (document.getElementById('index').style.display != "block" && !modalUp) {
+  if (document.getElementById('glossary').style.display != "block" && !modalUp) {
     closeCreditFrame();
     closeEmailFrame();
     closeUploadDownloadFrame();
@@ -5266,29 +5269,39 @@ function toggleGlossary() {
     }
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
-    document.getElementById('index').style.display = "block";
-    document.addEventListener('keyup', indexEsc);
-    // addEvent(document, 'keyup', indexEsc);
-  } else if (document.getElementById('index').style.display == "block" && modalUp) {
-
+    //document.getElementById('index').style.display = "block";
+    document.getElementById('glossary').style.display = "block";
+    document.addEventListener('keyup', glossaryEsc);
+    // addEvent(document, 'keyup', glossaryEsc);
+  }
+  //else if (document.getElementById('index').style.display == "block" && modalUp) {
+  else if (document.getElementById('glossary').style.display == "block" && modalUp) {
     if (curTracking) {
       pushClick(0, getStamp(), 79, 0, null);
     }
     modalUp = false;
 
     document.getElementById('modalCodexFrame').style.display = "none";
-    document.getElementById('index').style.display = "none";
+    document.getElementById('glossary').style.display = "none";
+    //document.getElementById('index').style.display = "none";
     document.activeElement.blur();
 
-    document.getElementById('index').contentWindow.document.getElementById('square1').innerHTML = "<img src='./imgs/indexMain.png'>";
+    /*document.getElementById('index').contentWindow.document.getElementById('square1').innerHTML = "<img src='./imgs/indexMain.png'>";
     document.getElementById('index').contentWindow.document.getElementById('square2frame').src = "";
     document.getElementById('index').contentWindow.document.getElementById('switchGeneral').style.display = "none";
     document.getElementById('index').contentWindow.document.getElementById('switchAdvanced').style.display = "none";
     document.getElementById('index').contentWindow.document.getElementById('title').innerHTML = "";
+    */
+    document.getElementById('glossary').contentWindow.document.getElementById('square1').innerHTML = "<img src='./imgs/indexMain.png'>";
+    document.getElementById('glossary').contentWindow.document.getElementById('square2frame').src = "";
+    document.getElementById('glossary').contentWindow.document.getElementById('switchGeneral').style.display = "none";
+    document.getElementById('glossary').contentWindow.document.getElementById('switchAdvanced').style.display = "none";
+    document.getElementById('glossary').contentWindow.document.getElementById('title').innerHTML = "";
 
-    document.getElementById('index').contentWindow.resetHighlighting();
-    document.removeEventListener('keyup', indexEsc);
-    // removeEvent(document, 'keyup', indexEsc);
+    //document.getElementById('index').contentWindow.resetHighlighting();
+    document.getElementById('glossary').contentWindow.resetHighlighting();
+    document.removeEventListener('keyup', glossaryEsc);
+    // removeEvent(document, 'keyup', glossaryEsc);
   }
 } //end toggleGlossary
 
@@ -6226,7 +6239,7 @@ function downuploadEsc(e) {
 }
 
 //Function that closes the download index dialog when escape key is pressed
-function indexEsc(e) {
+function glossaryEsc(e) {
   if (e.keyCode == 27) {
     toggleGlossary();
   }
