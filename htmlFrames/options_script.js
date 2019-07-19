@@ -27,7 +27,8 @@
   */
   var selectedOptionsFalse = [];
   var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
-  "Rotate Clockwise/Move Right","Rotate Counterclockwise/Move Left","Pivot Flat/Move Forward","Pivot Upright/Move Backward","Toggle Overlay","Toggle Flying Mode","Toggle Contour Map"];
+  "Move Right","Move Left","Move Forward","Move Backward","Toggle Overlay","Toggle Flying Mode","Toggle Contour Map", "Print",
+  "Pivot Flat","Pivot Upright","Rotate Counterclockwise","Rotate Clockwise"];
 
 
   //the saveCurrentOptionsState function is called when the save/exit button is pressed
@@ -253,7 +254,15 @@
           tempHotkey.innerHTML = hotkeyDescrip[i-1];
         var tempSpan = document.createElement("span");
           tempHotkey.appendChild(tempSpan);
-        var tempInput1 = document.createElement("INPUT");
+        //var tempInput1 = document.createElement("INPUT");
+        // var tempInput1;
+      if(tempIndex>11){
+        //arrows key in div
+        tempInput1=document.createElement("div");
+      }else{
+        //hot key in input
+        tempInput1 = document.createElement("INPUT");
+      }
           tempInput1.id = "hki"+tempIndex+"e1";
           tempInput1.className = "hkInputs1";
           if(curHotkeys[i-1][0]==null){
@@ -261,36 +270,89 @@
           } else {
             var tempChar = String.fromCharCode(curHotkeys[i-1][0]);
           }
+          //arrow up keyboard key
+          if(curHotkeys[i-1][0]==38){
+            tempChar="↑";
+          }
+          //arrow down Keyboard key
+          if(curHotkeys[i-1][0]==40){
+            tempChar="↓";
+          }
+          //arrow left keyboard key
+          if(curHotkeys[i-1][0]==37){
+            tempChar="←";
+          }
+
+          //arrow right keyboard key
+          if(curHotkeys[i-1][0]==39){
+            tempChar="→";
+          }
+          //hot keys without arrows key & available to change
+          if(tempIndex<12){
           tempInput1.placeholder = tempChar;
           tempInput1.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",1)");
           tempInput1.setAttribute("onkeydown","this.value = this.value");
-          tempInput1.setAttribute("size","5");
-          tempInput1.setAttribute("height","5");
-          tempSpan.appendChild(tempInput1);
-        var tempInput2 = document.createElement("input");
-          tempInput2.id = "hki"+tempIndex+"e2";
-          tempInput2.className = "hkInputs2";
-          if(curHotkeys[i-1][1]==null){
-            tempChar = "N/A";
-          } else {
-            tempChar = String.fromCharCode(curHotkeys[i-1][1]);
-          }
-          tempInput2.placeholder = tempChar;
-          tempInput2.setAttribute("type","text");
-          tempInput2.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",2)");
-          tempInput2.setAttribute("onkeydown","this.value = this.value");
-          tempInput2.setAttribute("size","5");
-          tempInput2.setAttribute("height","5");
-          tempSpan.appendChild(tempInput2);
-        if(i%2==0) {
-          tempHotkey.style.background = "#2d5986";
-          tempInput1.style.background = "#2d5986";
-          tempInput2.style.background = "#2d5986";
-        } else {
-          tempHotkey.style.background = "#0f4d70";
-          tempInput1.style.background = "#0f4d70";
-          tempInput2.style.background = "#0f4d70";
+
+        }else{
+        //arrow keys
+        tempInput1.innerHTML=tempChar;
         }
+
+      tempInput1.setAttribute("size","5");
+      tempInput1.setAttribute("height","5");
+      tempSpan.appendChild(tempInput1);
+        // var tempInput2 = document.createElement("input");
+        //   tempInput2.id = "hki"+tempIndex+"e2";
+        //   tempInput2.className = "hkInputs2";
+        //   if(curHotkeys[i-1][1]==null){
+        //     tempChar = "N/A";
+        //   } else {
+        //     tempChar = String.fromCharCode(curHotkeys[i-1][1]);
+        //   }
+        //   tempInput2.placeholder = tempChar;
+        //   tempInput2.setAttribute("type","text");
+        //   tempInput2.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",2)");
+        //   tempInput2.setAttribute("onkeydown","this.value = this.value");
+        //   tempInput2.setAttribute("size","5");
+        //   tempInput2.setAttribute("height","5");
+        //   tempSpan.appendChild(tempInput2);
+        // if(i%2==0) {
+        //   tempHotkey.style.background = "#2d5986";
+        //   tempInput1.style.background = "#2d5986";
+        //   tempInput2.style.background = "#2d5986";
+        // } else {
+        //   tempHotkey.style.background = "#0f4d70";
+        //   tempInput1.style.background = "#0f4d70";
+        //   tempInput2.style.background = "#0f4d70";
+        // }
+        // 
+        // //Secondary col for hot key only
+          if(curHotkeys[i-1][0]!=38&&curHotkeys[i-1][0]!=40&&curHotkeys[i-1][0]!=37&&curHotkeys[i-1][0]!=39){
+            var tempInput2 = document.createElement("input");
+              tempInput2.id = "hki"+tempIndex+"e2";
+              tempInput2.className = "hkInputs2";
+              if(curHotkeys[i-1][1]==null){
+                tempChar = "N/A";
+              } else {
+                tempChar = String.fromCharCode(curHotkeys[i-1][1]);
+              }
+              tempInput2.placeholder = tempChar;
+              tempInput2.setAttribute("type","text");
+              tempInput2.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",2)");
+              tempInput2.setAttribute("onkeydown","this.value = this.value");
+              tempInput2.setAttribute("size","5");
+              tempInput2.setAttribute("height","5");
+              tempSpan.appendChild(tempInput2);
+            }
+            if(i%2==0) {
+              tempHotkey.style.background = "#2d5986";
+              tempInput1.style.background = "#2d5986";
+              tempInput2.style.background = "#2d5986";
+            } else {
+              tempHotkey.style.background = "#0f4d70";
+              tempInput1.style.background = "#0f4d70";
+              tempInput2.style.background = "#0f4d70";
+            }
         document.getElementById('hotkeySets').appendChild(tempHotkey);
       }
     } else {

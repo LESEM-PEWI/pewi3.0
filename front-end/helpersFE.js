@@ -117,7 +117,12 @@ var hotkeyArr = [
   [83, null],
   [79, null],
   [81, null],
-  [67, null]
+  [67, null],
+  [80, null],
+  [38, null],
+  [40, null],
+  [37, null],
+  [39, null]
 ];
 
 // for print function
@@ -3561,34 +3566,7 @@ function onDocumentKeyDown(event) {
         isShiftDown = true;
         break;
 
-        //case t - toggle topography
-      case hotkeyArr[2][0]:
-      case hotkeyArr[2][1]:
 
-
-        generatedContourMap.change2D3D();
-
-
-        //setting the camera y position to a specific hight when toggle is pressed.
-
-        if (camera2.position.y < 27)
-          camera2.position.y = 27;
-        if (modalUp !== true) {
-          if (curTracking) {
-            pushClick(0, getStamp(), 32, 0, null);
-          }
-          tToggle ? tToggle = false : tToggle = true;
-
-          //in the case when the map is highlighted:
-          if (mapIsHighlighted) {
-            refreshBoard(true);
-          }
-          //if the map is not highlighted:
-          else {
-            refreshBoard();
-          }
-          setupRiver();
-        }
 
 
         break;
@@ -3638,6 +3616,35 @@ function onDocumentKeyDown(event) {
         }
         break;
 
+        //case t - toggle topography
+      case hotkeyArr[2][0]:
+      case hotkeyArr[2][1]:
+
+        // changes the map images between 2d and 3d if needed
+        generatedContourMap.change2D3D();
+
+
+        //setting the camera y position to a specific hight when toggle is pressed.
+
+        if (camera2.position.y < 27)
+          camera2.position.y = 27;
+        if (modalUp !== true) {
+          if (curTracking) {
+            pushClick(0, getStamp(), 32, 0, null);
+          }
+          tToggle ? tToggle = false : tToggle = true;
+
+          //in the case when the map is highlighted:
+          if (mapIsHighlighted) {
+            refreshBoard(true);
+          }
+          //if the map is not highlighted:
+          else {
+            refreshBoard();
+          }
+          setupRiver();
+        }
+
         //case z -- for zoom functions
       case 90:
         //track the z down key
@@ -3656,6 +3663,27 @@ function onDocumentKeyDown(event) {
           switchToUnzoomedView(1, true);
         }
         break;
+
+        // case u - undo key
+      case hotkeyArr[3][0]:
+      case hotkeyArr[3][1]:
+        revertChanges();
+        break;
+
+        // key b - clickTrackings
+      case hotkeyArr[4][0]:
+      case hotkeyArr[4][1]:
+        if (!curTracking) {
+          curTracking = true;
+          //Starting date is recorded
+          startTime = new Date();
+          clickTrackings = [];
+          document.getElementById("recordIcon").style.visibility = "visible";
+        } else {
+          continueTracking();
+        }
+        break;
+        //no default handler
 
         //case v - key to record multiplayer fields
       case hotkeyArr[5][0]:
@@ -3697,11 +3725,7 @@ function onDocumentKeyDown(event) {
           break;
         }
         break;
-        // case u - undo key
-      case hotkeyArr[3][0]:
-      case hotkeyArr[3][1]:
-        revertChanges();
-        break;
+
 
         // case o - toggleOverlay
       case hotkeyArr[10][0]:
@@ -3714,34 +3738,22 @@ function onDocumentKeyDown(event) {
         }
         break;
 
-        // key b - clickTrackings
-      case hotkeyArr[4][0]:
-      case hotkeyArr[4][1]:
-        if (!curTracking) {
-          curTracking = true;
-          //Starting date is recorded
-          startTime = new Date();
-          clickTrackings = [];
-          document.getElementById("recordIcon").style.visibility = "visible";
-        } else {
-          continueTracking();
-        }
-        break;
-        //no default handler
 
-        // hit P to see pdf output
-      case 80:
+// contour map
+      case hotkeyArr[12][0]:
+      case hotkeyArr[12][1]:
+          generatedContourMap.toggleTopoMap();
+          break;
+
+// print
+      case hotkeyArr[13][0]:
+      case hotkeyArr[13][1]:
         // If not in the multi-player mode, we should not disable the 'P' key
         if (!multiplayerAssigningModeOn) {
           startPrintOptions();
         }
 
         break;
-
-      case hotkeyArr[12][0]:
-      case hotkeyArr[12][1]:
-          generatedContourMap.toggleTopoMap();
-          break;
 
     } //end switch
   }
@@ -4095,7 +4107,13 @@ function resetHotkeys() {
     [83, null],
     [79, null],
     [81, null],
-    [67, null]
+    [67, null],
+    [80, null],
+    [38, null],
+    [40, null],
+    [37, null],
+    [39, null]
+
   ];
   updateKeys();
 } //end resetHotkeys()
