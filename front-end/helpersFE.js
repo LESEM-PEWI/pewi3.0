@@ -115,7 +115,6 @@ var hotkeyArr = [
   [85, null],
   [66, null],
   [86, null],
-  [80, null],
   [68, null],
   [65, null],
   [87, null],
@@ -2966,7 +2965,7 @@ function calculateSubwatershedTotalNitrateScore(tileId){
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
-  
+
   //return information about the tile that is highlighted
   if (currentHighlightType <= 0) {
     return "";
@@ -3929,7 +3928,7 @@ function onDocumentKeyDown(event) {
       case 16:
         isShiftDown = true;
         break;
-        
+
         //case e - reset camera position
       case hotkeyArr[0][0]:
       case hotkeyArr[0][1]:
@@ -4007,7 +4006,7 @@ function onDocumentKeyDown(event) {
         }
         break;
 
-       
+
         //case z -- for zoom functions
       case 90:
         //track the z down key
@@ -7530,4 +7529,3 @@ finds a usable type
 
     return toReturn;
   }
-
