@@ -4058,6 +4058,7 @@ function createMockDataGraphic1(){
       data.push(d);
     }
   });
+  console.log(data);
   return data;
 
 }
@@ -4409,7 +4410,6 @@ function econGraphic4DisplayData(landUse,costType,cost){
       data.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
     }
   }
-  console.log(data);
 return data;
  }
  /**
@@ -4676,23 +4676,45 @@ function EconomicsGraphic4() {
     }
   };
 }
+
+// function graphic5DisplayInfo(econdata){
+//   var data=[];
+//   //var sumCallBack=(acc, cur)=>acc +cur;
+//   var initialValue=0;
+//   //econdata=economics.getInstance().data5;
+//   console.log(econdata);
+//
+//   econdata.forEach(d=>{
+//     var sum =d['array'].reduce(function (accumulator, currentValue){
+//       return accumulator+parseFloat(currentValue["# Labor Hours"]);
+//     },initialValue)
+//     console.log(sum);
+//     d={};
+//     d.time_of_year=d[]
+//     d.total_labor_hours=sum;
+//     data.push(d);
+//   });
+//
+//   console.log(data);
+// }
 function graphic5DisplayInfo(econdata){
   var data=[];
+  //var sumCallBack=(acc, cur)=>acc +cur;
+  var initialValue=0;
   //econdata=economics.getInstance().data5;
   console.log(econdata);
-  econdata.forEach(d=>{
-    console.log(d.array);
-    d.array.forEach(dataPoint=>{
-      if(data.some(e=>e.timeOfYear==dataPoint['Time of Year'])){
 
-      }else{
-          data.push({timeOfYear:dataPoint['Time of Year']})
-      }
-    })
+  econdata.forEach(d=>{
+    
+    if(data.some(e=>e.time_of_year===d['Time of Year'])){
+
+    }else{
+      data.push({time_of_year:d['Time of Year'], total_labor_hours:parseFloat(d['"# Labor Hours'])})
+    }
   });
+
   console.log(data);
 }
-
 
 function EconomicsGraphic5(){
   var instance;
