@@ -254,9 +254,8 @@
           tempHotkey.innerHTML = hotkeyDescrip[i-1];
         var tempSpan = document.createElement("span");
           tempHotkey.appendChild(tempSpan);
-        //var tempInput1 = document.createElement("INPUT");
-        // var tempInput1;
-        //
+
+        var tempInput1;
         //****** This is dumb, but this needs to increase if more hotkeys are added, leave the arrow keys at the end of the array, need to change conditional below as well, ctrl f for "other spot to fix"
       if(tempIndex>13){
         //arrows key in div
@@ -305,31 +304,8 @@
       tempInput1.setAttribute("size","5");
       tempInput1.setAttribute("height","5");
       tempSpan.appendChild(tempInput1);
-        // var tempInput2 = document.createElement("input");
-        //   tempInput2.id = "hki"+tempIndex+"e2";
-        //   tempInput2.className = "hkInputs2";
-        //   if(curHotkeys[i-1][1]==null){
-        //     tempChar = "N/A";
-        //   } else {
-        //     tempChar = String.fromCharCode(curHotkeys[i-1][1]);
-        //   }
-        //   tempInput2.placeholder = tempChar;
-        //   tempInput2.setAttribute("type","text");
-        //   tempInput2.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",2)");
-        //   tempInput2.setAttribute("onkeydown","this.value = this.value");
-        //   tempInput2.setAttribute("size","5");
-        //   tempInput2.setAttribute("height","5");
-        //   tempSpan.appendChild(tempInput2);
-        // if(i%2==0) {
-        //   tempHotkey.style.background = "#2d5986";
-        //   tempInput1.style.background = "#2d5986";
-        //   tempInput2.style.background = "#2d5986";
-        // } else {
-        //   tempHotkey.style.background = "#0f4d70";
-        //   tempInput1.style.background = "#0f4d70";
-        //   tempInput2.style.background = "#0f4d70";
-        // }
-        //
+
+
         // //Secondary col for hot key only
           if(curHotkeys[i-1][0]!=38&&curHotkeys[i-1][0]!=40&&curHotkeys[i-1][0]!=37&&curHotkeys[i-1][0]!=39){
             var tempInput2 = document.createElement("input");
