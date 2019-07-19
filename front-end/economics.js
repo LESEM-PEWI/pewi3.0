@@ -50,29 +50,29 @@ var economics = (function () { //Singleton for getting economics data from the b
             }
           });
         });
-        console.log(data4);
     }
     function graphic5information(list){
       rawData2.forEach(dataPoint=>{
         var landuseNum=dataPoint['LU_ID'];
         if (!data5[landuseNum]) {
-          data5[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]};
+          data5[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[],'subcrop':[]};
         } // We need to create a path to the data that we want to pull out
         var subcrop=dataPoint['Sub Crop'];
-        if(subcrop!=""&&dataPoint['Time of Year']!=""){
-          if(!data5[landuseNum][subcrop]){
-             data5[landuseNum][subcrop]=[];
-          }
-          data5[landuseNum][subcrop].push(dataPoint);
-        }
         if(dataPoint['Time of Year']!=""){
+        if(subcrop!=""){
+          if(!data5[landuseNum]['subcrop'].some(e=>e['subcrop']===subcrop)){
+             data5[landuseNum]['subcrop'].push({'array':[],'subcrop':subcrop});
+          }
+          var indexOfStevie = data5[landuseNum]['subcrop'].findIndex(i => i['subcrop'] === subcrop);
+          data5[landuseNum]['subcrop'][indexOfStevie]['array'].push(dataPoint);
+        }
+
           data5[landuseNum]['array'].push(dataPoint);
 
         }
       })
       console.log(data5);
     }
-
     d3.csv('./budgets.csv', function(data){
       this.rawData = data;
       divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
@@ -80,7 +80,7 @@ var economics = (function () { //Singleton for getting economics data from the b
     })
     d3.csv('./budgets_2.csv', function(data){
       rawData2=data;
-      graphic5information();
+      graphic5information(['total labor hours','total labor costs','total custom hire costs']);
     })
     return {//public fields
       data: this.data,
