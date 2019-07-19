@@ -5,6 +5,8 @@ var highlightArray = [];
 var oldPewiBackgrounds = [];
 var rainTexture;
 var tile0;
+var grayTextureArray;
+
 
 //this function loads into the texture arrays the necessary images for creation of webGl
 //  materials. All are loaded via the three.js textureLoader
@@ -38,6 +40,23 @@ function loadResources() {
     var textureWetland = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Wetland.png');//14
     var textureMixedFruitsVegetables = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Mixed_Fruits_and_Vegetables.png');//15
 
+    //load grayscale land type tectures
+    var grayConventionalCorn = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Conventional_Corn.png'); //1
+    var grayConservationCorn = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Conservation_Corn.png'); //2
+    var grayConventionalSoybean = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Conventional_Soybean.png');//3
+    var grayConservationSoybean = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Conservation_Soybean.png');//4
+    var grayAlfalfa = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Alfalfa.png');//5
+    var grayPermanentPasture = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Permanent_Pasture.png');//6
+    var grayRotationalGrazing = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Rotational_Grazing.png');//7
+    var grayGrassHay = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Hay.png');//8
+    var grayPrairie = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Prairie.png');//9
+    var grayConservationForest = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Conservation_Forest.png');//10
+    var grayConventionalForest = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Conventional_Forest.png');//11
+    var grayShortWoody = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Woody_Bioenergy.png');//12
+    var grayHerbs = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Herbaceous_Perennial_Bioene.png');//13
+    var grayWetland = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Wetland.png');//14
+    var grayMixedFruitsVegetables = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Mixed_Fruits_and_Vegetables.png');//15
+
     //yield textures
     //var textureCornGrain = textureLoader.load('./imgs/cell_images_bitmaps/cornGrainIcon.png'); //16
 
@@ -46,6 +65,13 @@ function loadResources() {
         textureAlfalfa, texturePermanentPasture, textureRotationalGrazing, textureGrassHay,
         texturePrairie, textureConservationForest, textureConventionalForest, textureHerbs, textureShortWoody,
         textureWetland, textureMixedFruitsVegetables,// textureCornGrain
+    ];
+
+    //Add the gray land type textures to textureArray
+    grayTextureArray = [textureClear, grayConventionalCorn, grayConservationCorn, grayConventionalSoybean, grayConservationSoybean,
+        grayAlfalfa, grayPermanentPasture, grayRotationalGrazing, grayGrassHay,
+        grayPrairie, grayConservationForest, grayConventionalForest, grayHerbs, grayShortWoody,
+        grayWetland, grayMixedFruitsVegetables,// textureCornGrain
     ];
 
     //Add old pewi backgrounds to array after loaded

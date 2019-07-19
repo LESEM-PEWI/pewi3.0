@@ -255,6 +255,7 @@ body {
     border-top-right-radius: 25px;
   }
 
+
  /* This is where you update to make the hokey aggregate tool look nice. Change #hk_ to the last hotkey*/
   #hk18, #pb16 {
     border-bottom-left-radius: 25px;

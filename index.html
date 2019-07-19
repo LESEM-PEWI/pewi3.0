@@ -74,6 +74,7 @@
   <script src="./front-end/levelLoader.js"></script>
   <script src="./front-end/paper-full.js"></script>
   <script src="./front-end/contourMap.js"></script>
+  <script src="./front-end/economics.js"></script>
 
 
   <!-- import bootstrap-progressbar library -->
@@ -200,8 +201,20 @@
 
     <!-- style="display: inline; visibility: hidden;-->
     <div id="flyover" class="fly"> </div>
+
     <!--Create Glossary button on screen-->
     <div id="indexmenu" onclick="toggleIndex();">Glossary</div>
+
+
+    <div id="checkheader" style="display:none;">
+      <h3>Toggle Overlay</h3>
+    </div>
+
+
+    <div class="checkOverlay" style="display:none;">
+      <input type="checkbox" onclick="switchOverlayTemp();refreshBoard();redrawOverlay();" value="1" id="toggleOverlay" name="toggleOverlay" unchecked/>
+      <label for="toggleOverlay"></label>
+    </div>
 
     <!-- UNDO button -->
     <div id="undo" class="undocol">
@@ -249,7 +262,7 @@
     <div id="tabButtons" class="tabButtons" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
 
       <!-- "Mountain" by Lee Mette on http://thenounproject.com with with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) / Colors inverted -->
-      <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);">
+      <div id="terrainButton" class="consoleButton" onclick="switchConsoleTab(1);refreshBoard();">
         <img id="terrainImg" class="imgSelected" src="./imgs/terrainIcon.png" onmouseover="toggleTabTitle('terrainTabTitle', 0);" onmouseout="toggleTabTitle('terrainTabTitle', 1);">
         <div id="terrainTabTitle" style="display:none;"></div>
       </div>
@@ -506,170 +519,171 @@
           </select>
         </div>
       </div>
+      <div id="nitrateDetailsList" class="DetailsListRolled levelDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Subwatershed Nitrate-N Percent Contribution</h1></center>
+        <div class="legendColor" style="background-color: #302486">
+          <p class="levelsTextDetails">>25% contribution</p>
+        </div>
+        <div class="legendColor" style="background-color: #0053b3">
+          <p class="levelsTextDetails">20-25% contribution</p>
+        </div>
+        <div class="legendColor" style="background-color: #2f7eb7">
+          <p class="levelsTextDetails">10-20% contribution</p>
+        </div>
+        <div class="legendColor" style="background-color: #41b7c5">
+          <p class="levelsTextDetails">5-10% contribution</p>
+        </div>
+        <div class="legendColor" style="background-color: #87ceee">
+          <p class="levelsTextDetails">0-5% contribution</p>
+        </div>
+      </div>
+
+      <div id="erosionDetailsList" class="DetailsListRolled levelDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Gross Erosion</h1></center>
+        <div class="legendColor" style="background-color: #654321">
+          <p class="levelsTextDetails">Very High</p>
+        </div>
+        <div class="legendColor" style="background-color: #8b4513">
+          <p class="levelsTextDetails">High</p>
+        </div>
+        <div class="legendColor" style="background-color: #919246">
+          <p class="levelsTextDetails">Medium</p>
+        </div>
+        <div class="legendColor" style="background-color: #e3c972">
+          <p class="levelsTextDetails">Low</p>
+        </div>
+        <div class="legendColor" style="background-color: #ffffc9">
+          <p class="levelsTextDetails">Very Low</p>
+        </div>
+      </div>
+
+      <div id="phosphorusDetailsList" class="DetailsListRolled levelDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Phosphorus Index Risk Assessment</h1></center>
+        <div class="legendColor" style="background-color: #871c12;">
+          <p class="levelsTextDetails">Very High</p>
+        </div>
+        <div class="legendColor" style="background-color: #9a3010;">
+          <p class="levelsTextDetails">High</p>
+        </div>
+        <div class="legendColor" style="background-color: #ad490d;">
+          <p class="levelsTextDetails">Medium</p>
+        </div>
+        <div class="legendColor" style="background-color: #c97b08;">
+          <p class="levelsTextDetails">Low</p>
+        </div>
+        <div class="legendColor" style="background-color: #e6bb00;">
+          <p class="levelsTextDetails">Very Low</p>
+        </div>
+      </div>
+
+
+      <div id="sedimentDetailsList" class="DetailsListRolled levelDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Sediment Control</h1></center>
+        <div class="legendColor" style="background-color: #02635b;">
+          <p class="levelsTextDetails">Very High</p>
+        </div>
+        <div class="legendColor" style="background-color: #22877f;">
+          <p class="levelsTextDetails">High</p>
+        </div>
+        <div class="legendColor" style="background-color: #5ab8b1;">
+          <p class="levelsTextDetails">Medium</p>
+        </div>
+        <div class="legendColor" style="background-color: #a7dfdb;">
+          <p class="levelsTextDetails">Low</p>
+        </div>
+        <div class="legendColor" style="background-color: #daf2f0;">
+          <p class="levelsTextDetails">Very Low</p>
+        </div>
+      </div>
+
+      <div id="carbonDetailsList" class="DetailsListRolled levelDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Carbon Sequestration</h1></center>
+        <div class="legendColor" style="background-color: #042402;">
+          <p class="levelsTextDetails">Very High</p>
+        </div>
+        <div class="legendColor" style="background-color: #1d4d19;">
+          <p class="levelsTextDetails">High</p>
+        </div>
+        <div class="legendColor" style="background-color: #346b2f;">
+          <p class="levelsTextDetails">Medium</p>
+        </div>
+        <div class="legendColor" style="background-color: #64a95e;">
+          <p class="levelsTextDetails">Low</p>
+        </div>
+        <div class="legendColor" style="background-color: #d5f0d3;">
+          <p class="levelsTextDetails">Very Low</p>
+        </div>
+      </div>
+
+      <div id="gamewildlifeDetailsList" class="DetailsListRolled levelDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Game Wildlife</h1></center>
+        <div class="legendColor" style="background-color: #871c12;">
+          <p class="levelsTextDetails">Very High Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #9a3010;">
+          <p class="levelsTextDetails">High Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #ad490d;">
+          <p class="levelsTextDetails">Moderate Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #c97b08;">
+          <p class="levelsTextDetails">Low Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #e6bb00;">
+          <p class="levelsTextDetails">Very Low Impact</p>
+        </div>
+      </div>
+
+      <div id="biodiversityDetailsList" class="DetailsListRolled levelDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Biodiversity</h1></center>
+        <div class="legendColor" style="background-color: #2f7eb7;">
+          <p class="levelsTextDetails">Very High Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #41b7c5;">
+          <p class="levelsTextDetails">High Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #7fcebb;">
+          <p class="levelsTextDetails">Moderate Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #c7eab4;">
+          <p class="levelsTextDetails">Low Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #ffffc9;">
+          <p class="levelsTextDetails">Very Low impact</p>
+        </div>
+      </div>
+
+      <div id="nitratetileDetailsList" class="DetailsListRolled levelDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Cell Nitrate Score</h1></center>
+        <div class="legendColor" style="background-color: #871c12;">
+          <p class="levelsTextDetails">Very High Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #9a3010;">
+          <p class="levelsTextDetails">High Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #ad490d;">
+          <p class="levelsTextDetails">Moderate Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #c97b08;">
+          <p class="levelsTextDetails">Low Impact</p>
+        </div>
+        <div class="legendColor" style="background-color: #e6bb00;">
+          <p class="levelsTextDetails">Very Low Impact</p>
+        </div>
+      </div>
 
       <!-- Ecosystem indicator highlighting display -->
       <div id="levelsTab" class="consoleTab" style="display:none;">
 
-        <div id="nitrateDetailsList" class="DetailsListRolled levelDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Subwatershed Nitrate-N Percent Contribution</h1></center>
-          <div class="legendColor" style="background-color: #302486">
-            <p class="levelsTextDetails">>25% contribution</p>
-          </div>
-          <div class="legendColor" style="background-color: #0053b3">
-            <p class="levelsTextDetails">20-25% contribution</p>
-          </div>
-          <div class="legendColor" style="background-color: #2f7eb7">
-            <p class="levelsTextDetails">10-20% contribution</p>
-          </div>
-          <div class="legendColor" style="background-color: #41b7c5">
-            <p class="levelsTextDetails">5-10% contribution</p>
-          </div>
-          <div class="legendColor" style="background-color: #87ceee">
-            <p class="levelsTextDetails">0-5% contribution</p>
-          </div>
-        </div>
 
-        <div id="erosionDetailsList" class="DetailsListRolled levelDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Gross Erosion</h1></center>
-          <div class="legendColor" style="background-color: #654321">
-            <p class="levelsTextDetails">Very High</p>
-          </div>
-          <div class="legendColor" style="background-color: #8b4513">
-            <p class="levelsTextDetails">High</p>
-          </div>
-          <div class="legendColor" style="background-color: #919246">
-            <p class="levelsTextDetails">Medium</p>
-          </div>
-          <div class="legendColor" style="background-color: #e3c972">
-            <p class="levelsTextDetails">Low</p>
-          </div>
-          <div class="legendColor" style="background-color: #ffffc9">
-            <p class="levelsTextDetails">Very Low</p>
-          </div>
-        </div>
-
-        <div id="phosphorusDetailsList" class="DetailsListRolled levelDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Phosphorus Index Risk Assessment</h1></center>
-          <div class="legendColor" style="background-color: #871c12;">
-            <p class="levelsTextDetails">Very High</p>
-          </div>
-          <div class="legendColor" style="background-color: #9a3010;">
-            <p class="levelsTextDetails">High</p>
-          </div>
-          <div class="legendColor" style="background-color: #ad490d;">
-            <p class="levelsTextDetails">Medium</p>
-          </div>
-          <div class="legendColor" style="background-color: #c97b08;">
-            <p class="levelsTextDetails">Low</p>
-          </div>
-          <div class="legendColor" style="background-color: #e6bb00;">
-            <p class="levelsTextDetails">Very Low</p>
-          </div>
-        </div>
-
-
-        <div id="sedimentDetailsList" class="DetailsListRolled levelDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Sediment Control</h1></center>
-          <div class="legendColor" style="background-color: #02635b;">
-            <p class="levelsTextDetails">Very High</p>
-          </div>
-          <div class="legendColor" style="background-color: #22877f;">
-            <p class="levelsTextDetails">High</p>
-          </div>
-          <div class="legendColor" style="background-color: #5ab8b1;">
-            <p class="levelsTextDetails">Medium</p>
-          </div>
-          <div class="legendColor" style="background-color: #a7dfdb;">
-            <p class="levelsTextDetails">Low</p>
-          </div>
-          <div class="legendColor" style="background-color: #daf2f0;">
-            <p class="levelsTextDetails">Very Low</p>
-          </div>
-        </div>
-
-        <div id="carbonDetailsList" class="DetailsListRolled levelDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Carbon Sequestration</h1></center>
-          <div class="legendColor" style="background-color: #042402;">
-            <p class="levelsTextDetails">Very High</p>
-          </div>
-          <div class="legendColor" style="background-color: #1d4d19;">
-            <p class="levelsTextDetails">High</p>
-          </div>
-          <div class="legendColor" style="background-color: #346b2f;">
-            <p class="levelsTextDetails">Medium</p>
-          </div>
-          <div class="legendColor" style="background-color: #64a95e;">
-            <p class="levelsTextDetails">Low</p>
-          </div>
-          <div class="legendColor" style="background-color: #d5f0d3;">
-            <p class="levelsTextDetails">Very Low</p>
-          </div>
-        </div>
-
-        <div id="gamewildlifeDetailsList" class="DetailsListRolled levelDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Game Wildlife</h1></center>
-          <div class="legendColor" style="background-color: #871c12;">
-            <p class="levelsTextDetails">Very High Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #9a3010;">
-            <p class="levelsTextDetails">High Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #ad490d;">
-            <p class="levelsTextDetails">Moderate Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #c97b08;">
-            <p class="levelsTextDetails">Low Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #e6bb00;">
-            <p class="levelsTextDetails">Very Low Impact</p>
-          </div>
-        </div>
-
-        <div id="biodiversityDetailsList" class="DetailsListRolled levelDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Biodiversity</h1></center>
-          <div class="legendColor" style="background-color: #2f7eb7;">
-            <p class="levelsTextDetails">Very High Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #41b7c5;">
-            <p class="levelsTextDetails">High Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #7fcebb;">
-            <p class="levelsTextDetails">Moderate Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #c7eab4;">
-            <p class="levelsTextDetails">Low Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #ffffc9;">
-            <p class="levelsTextDetails">Very Low impact</p>
-          </div>
-        </div>
-
-        <div id="nitratetileDetailsList" class="DetailsListRolled levelDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Cell Nitrate Score</h1></center>
-          <div class="legendColor" style="background-color: #871c12;">
-            <p class="levelsTextDetails">Very High Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #9a3010;">
-            <p class="levelsTextDetails">High Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #ad490d;">
-            <p class="levelsTextDetails">Moderate Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #c97b08;">
-            <p class="levelsTextDetails">Low Impact</p>
-          </div>
-          <div class="legendColor" style="background-color: #e6bb00;">
-            <p class="levelsTextDetails">Very Low Impact</p>
-          </div>
-        </div>
 
         <div class="leftcol">
           <!--"B.png icon created by Sam Kerr"-->
@@ -722,131 +736,133 @@
 
       </div>
 
+      <div id="floodDetailsList" class="DetailsListRolled physicalDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Flood Frequency</h1></center>
+        <div class="legendColor" style="background-color: #2f7eb7;">
+          <p class="levelsTextDetails">Ponded</p>
+        </div>
+        <div class="legendColor" style="background-color: #41b7c5;">
+          <p class="levelsTextDetails">Frequently</p>
+        </div>
+        <div class="legendColor" style="background-color: #7fcebb;">
+          <p class="levelsTextDetails">Occasionally</p>
+        </div>
+        <div class="legendColor" style="background-color: #c7eab4;">
+          <p class="levelsTextDetails">Rare</p>
+        </div>
+        <div class="legendColor" style="background-color: #ffffc9;">
+          <p class="levelsTextDetails" style="margin-top:10px;">None</p>
+        </div>
+      </div>
+
+      <div id="wetlandsDetailsList" class="DetailsListRolled physicalDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Wetland Suitability</h1></center>
+        <div class="legendColor" style="background-color: #302486;">
+          <p class="levelsTextDetails">Strategic</p>
+        </div>
+        <div class="legendColor" style="background-color: #38638b;">
+          <p class="levelsTextDetails">Suitable</p>
+        </div>
+        <div class="legendColor" style="background-color: #FFB347;">
+          <p class="levelsTextDetails">Not Suitable</p>
+        </div>
+      </div>
+
+      <div id="boundaryDetailsList"></div>
+
+      <div id="drainageDetailsList" class="DetailsListRolled physicalDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Drainage Class</h1></center>
+        <div class="legendColor" style="background-color: #bc892f;">
+          <p class="levelsTextDetails">Excessive</p>
+        </div>
+        <div class="legendColor" style="background-color: #837856;">
+          <p class="levelsTextDetails">Moderate / Well</p>
+        </div>
+        <div class="legendColor" style="background-color: #5e6e71;">
+          <p class="levelsTextDetails">Somewhat Poor</p>
+        </div>
+        <div class="legendColor" style="background-color: #38638b;">
+          <p class="levelsTextDetails">Poor</p>
+        </div>
+        <div class="legendColor" style="background-color: #0053b3;">
+          <p class="levelsTextDetails">Very Poor</p>
+        </div>
+      </div>
+
+      <div id="soilDetailsList" class="DetailsListRolled physicalDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Soil Type</h1></center>
+        <div class="legendColor" style="background-color: #097c2f">
+          <p class="levelsTextDetails" style="margin-top:10px;">Clarion 138B</p>
+        </div>
+        <div class="legendColor" style="background-color: #a84597">
+          <p class="levelsTextDetails">Buckney 1636</p>
+        </div>
+        <div class="legendColor" style="background-color: #919246">
+          <p class="levelsTextDetails">Canisteo 507</p>
+        </div>
+        <div class="legendColor" style="background-color: #c97b08">
+          <p class="levelsTextDetails">Downs 162D2</p>
+        </div>
+        <div class="legendColor" style="background-color: #9a3010">
+          <p class="levelsTextDetails">Gara-Armstrong 993E2</p>
+        </div>
+        <div class="legendColor" style="background-color: #c7eab4">
+          <p class="levelsTextDetails">Ackmore-Colo 5B</p>
+        </div>
+        <div class="legendColor" style="background-color: #cc6578">
+          <p class="levelsTextDetails">Coland 135</p>
+        </div>
+        <div class="legendColor" style="background-color: #e6bb00">
+          <p class="levelsTextDetails">Tama 120C2</p>
+        </div>
+        <div class="legendColor" style="background-color: #5e6e71">
+          <p class="levelsTextDetails">Nicollet 55</p>
+        </div>
+        <div class="legendColor" style="background-color: #837856">
+          <p class="levelsTextDetails">Okoboji 90</p>
+        </div>
+        <div class="legendColor" style="background-color: #41b7c5">
+          <p class="levelsTextDetails">Tama 120B</p>
+        </div>
+        <div class="legendColor" style="background-color: #0053b3">
+          <p class="levelsTextDetails">Muscatine 119</p>
+        </div>
+        <div class="legendColor" style="background-color: #87ceee">
+          <p class="levelsTextDetails">Nodaway 220</p>
+        </div>
+      </div>
+
+
+      <div id="topoDetailsList" class="DetailsListRolled physicalDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Topography</h1></center>
+        <div class="legendColor" style="background-color: #360b07;">
+          <p class="levelsTextDetails">Slope: 14-18%</p>
+        </div>
+        <div class="legendColor" style="background-color: #871c12;">
+          <p class="levelsTextDetails">Slope: 9-14%</p>
+        </div>
+        <div class="legendColor" style="background-color: #9a3010;">
+          <p class="levelsTextDetails">Slope: 5-9%</p>
+        </div>
+        <div class="legendColor" style="background-color: #ad490d;">
+          <p class="levelsTextDetails">Slope: 2-5%</p>
+        </div>
+        <div class="legendColor" style="background-color: #c97b08;">
+          <p class="levelsTextDetails">Slope: 1-2%</p>
+        </div>
+        <div class="legendColor" style="background-color: #e6bb00;">
+          <p class="levelsTextDetails" style="margin-top:10px;">Slope: 0-1%</p>
+        </div>
+      </div>
+
+
       <!-- Watershed feature display -->
       <div id="featuresTab" class="consoleTab" style="display:none;">
-        <div id="floodDetailsList" class="DetailsListRolled physicalDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Flood Frequency</h1></center>
-          <div class="legendColor" style="background-color: #2f7eb7;">
-            <p class="levelsTextDetails">Ponded</p>
-          </div>
-          <div class="legendColor" style="background-color: #41b7c5;">
-            <p class="levelsTextDetails">Frequently</p>
-          </div>
-          <div class="legendColor" style="background-color: #7fcebb;">
-            <p class="levelsTextDetails">Occasionally</p>
-          </div>
-          <div class="legendColor" style="background-color: #c7eab4;">
-            <p class="levelsTextDetails">Rare</p>
-          </div>
-          <div class="legendColor" style="background-color: #ffffc9;">
-            <p class="levelsTextDetails" style="margin-top:10px;">None</p>
-          </div>
-        </div>
-
-        <div id="wetlandsDetailsList" class="DetailsListRolled physicalDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Wetland Suitability</h1></center>
-          <div class="legendColor" style="background-color: #302486;">
-            <p class="levelsTextDetails">Strategic</p>
-          </div>
-          <div class="legendColor" style="background-color: #38638b;">
-            <p class="levelsTextDetails">Suitable</p>
-          </div>
-          <div class="legendColor" style="background-color: #FFB347;">
-            <p class="levelsTextDetails">Not Suitable</p>
-          </div>
-        </div>
-
-        <div id="boundaryDetailsList"></div>
-
-        <div id="drainageDetailsList" class="DetailsListRolled physicalDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Drainage Class</h1></center>
-          <div class="legendColor" style="background-color: #bc892f;">
-            <p class="levelsTextDetails">Excessive</p>
-          </div>
-          <div class="legendColor" style="background-color: #837856;">
-            <p class="levelsTextDetails">Moderate / Well</p>
-          </div>
-          <div class="legendColor" style="background-color: #5e6e71;">
-            <p class="levelsTextDetails">Somewhat Poor</p>
-          </div>
-          <div class="legendColor" style="background-color: #38638b;">
-            <p class="levelsTextDetails">Poor</p>
-          </div>
-          <div class="legendColor" style="background-color: #0053b3;">
-            <p class="levelsTextDetails">Very Poor</p>
-          </div>
-        </div>
-
-        <div id="soilDetailsList" class="DetailsListRolled physicalDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Soil Type</h1></center>
-          <div class="legendColor" style="background-color: #097c2f">
-            <p class="levelsTextDetails" style="margin-top:10px;">Clarion 138B</p>
-          </div>
-          <div class="legendColor" style="background-color: #a84597">
-            <p class="levelsTextDetails">Buckney 1636</p>
-          </div>
-          <div class="legendColor" style="background-color: #919246">
-            <p class="levelsTextDetails">Canisteo 507</p>
-          </div>
-          <div class="legendColor" style="background-color: #c97b08">
-            <p class="levelsTextDetails">Downs 162D2</p>
-          </div>
-          <div class="legendColor" style="background-color: #9a3010">
-            <p class="levelsTextDetails">Gara-Armstrong 993E2</p>
-          </div>
-          <div class="legendColor" style="background-color: #c7eab4">
-            <p class="levelsTextDetails">Ackmore-Colo 5B</p>
-          </div>
-          <div class="legendColor" style="background-color: #cc6578">
-            <p class="levelsTextDetails">Coland 135</p>
-          </div>
-          <div class="legendColor" style="background-color: #e6bb00">
-            <p class="levelsTextDetails">Tama 120C2</p>
-          </div>
-          <div class="legendColor" style="background-color: #5e6e71">
-            <p class="levelsTextDetails">Nicollet 55</p>
-          </div>
-          <div class="legendColor" style="background-color: #837856">
-            <p class="levelsTextDetails">Okoboji 90</p>
-          </div>
-          <div class="legendColor" style="background-color: #41b7c5">
-            <p class="levelsTextDetails">Tama 120B</p>
-          </div>
-          <div class="legendColor" style="background-color: #0053b3">
-            <p class="levelsTextDetails">Muscatine 119</p>
-          </div>
-          <div class="legendColor" style="background-color: #87ceee">
-            <p class="levelsTextDetails">Nodaway 220</p>
-          </div>
-        </div>
-
-
-        <div id="topoDetailsList" class="DetailsListRolled physicalDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Topography</h1></center>
-          <div class="legendColor" style="background-color: #360b07;">
-            <p class="levelsTextDetails">Slope: 14-18%</p>
-          </div>
-          <div class="legendColor" style="background-color: #871c12;">
-            <p class="levelsTextDetails">Slope: 9-14%</p>
-          </div>
-          <div class="legendColor" style="background-color: #9a3010;">
-            <p class="levelsTextDetails">Slope: 5-9%</p>
-          </div>
-          <div class="legendColor" style="background-color: #ad490d;">
-            <p class="levelsTextDetails">Slope: 2-5%</p>
-          </div>
-          <div class="legendColor" style="background-color: #c97b08;">
-            <p class="levelsTextDetails">Slope: 1-2%</p>
-          </div>
-          <div class="legendColor" style="background-color: #e6bb00;">
-            <p class="levelsTextDetails" style="margin-top:10px;">Slope: 0-1%</p>
-          </div>
-        </div>
 
 
 
@@ -886,512 +902,516 @@
 
       </div>
 
+
+      <div id="cornDetailsList" class="DetailsListRolled yieldDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Corn Grain Yield Key</h1></center>
+        <div class="legendColor" style="background-color: #bc892f;">
+          <p class="levelsTextDetails">13.9-15.1 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #e6bb00;">
+          <p class="levelsTextDetails">13.2-13.9 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #e3c972;">
+          <p class="levelsTextDetails">11.2-13.2 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #ffffc9;">
+          <p class="levelsTextDetails">0 Mg/ha/yr</p>
+        </div>
+
+        <center>
+          <h1 class="DetailsList-title">Corn Grain Precipitation Factor</h1></center>
+        <center>
+          <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
+        <table id="yieldTable">
+          <tr>
+            <th>Yield Type Precipitation Factor</th>
+            <th>Precipitation Level (in)/yr</th>
+          </tr>
+          <tr>
+            <td>0.75</td>
+            <td>45.1</td>
+          </tr>
+          <tr>
+            <td>0.90</td>
+            <td>36.5</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>34.3</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>32.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>30.4</td>
+          </tr>
+          <tr>
+            <td>0.90</td>
+            <td>28.2</td>
+          </tr>
+          <tr>
+            <td>0.75</td>
+            <td>24.6</td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="soybeanDetailsList" class="DetailsListRolled yieldDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Soybean Yield Key</h1></center>
+        <div class="legendColor" style="background-color: #00cc00;">
+          <p class="levelsTextDetails">4.30-4.70 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #66ff66;">
+          <p class="levelsTextDetails">3.90-4.30 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #ccffcc;">
+          <p class="levelsTextDetails">3.50-3.90 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #ffffff;">
+          <p class="levelsTextDetails">0 Mg/ha/yr</p>
+        </div>
+
+        <center>
+          <h1 class="DetailsList-title">Soybean Precipitation Factor</h1></center>
+        <center>
+          <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
+        <table id="yieldTable">
+          <tr>
+            <th>Yield Type Precipitation Factor </th>
+            <th>Precipitation Level (in)/yr</th>
+          </tr>
+          <tr>
+            <td>0.75</td>
+            <td>45.1</td>
+          </tr>
+          <tr>
+            <td>0.90</td>
+            <td>36.5</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>34.3</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>32.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>30.4</td>
+          </tr>
+          <tr>
+            <td>0.90</td>
+            <td>28.2</td>
+          </tr>
+          <tr>
+            <td>0.75</td>
+            <td>24.6</td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="fruitDetailsList" class="DetailsListRolled yieldDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Mixed Fruit and Vegetable Yield Key</h1></center>
+        <div class="legendColor" style="background-color: #aa4497;">
+          <p class="levelsTextDetails">16.45 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #66ff66;">
+          <p class="levelsTextDetails">14.80 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #e6bb00;">
+          <p class="levelsTextDetails">13.98 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #ff4000;">
+          <p class="levelsTextDetails">6.58 Mg/ha/yr</p>
+        </div>
+
+        <center>
+          <h1 class="DetailsList-title">Mixed Fruit and Vegetable Precipitation Factor</h1></center>
+        <center>
+          <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
+        <table id="yieldTable">
+          <tr>
+            <th>Yield Type Precipitation Factor </th>
+            <th>Precipitation Level (in)/yr</th>
+          </tr>
+          <tr>
+            <td>0.75</td>
+            <td>45.1</td>
+          </tr>
+          <tr>
+            <td>0.90</td>
+            <td>36.5</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>34.3</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>32.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>30.4</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>28.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>24.6</td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="cattleDetailsList" class="DetailsListRolled yieldDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Cattle Yield Key</h1></center>
+        <div class="legendColor" style="background-color: #000000;">
+          <p class="levelsTextDetails">6.1-6.7 animals/acre/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #5e6e71;">
+          <p class="levelsTextDetails">5.4-6.1 animals/acre/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #CECACA;">
+          <p class="levelsTextDetails">4.0-5.4 animals/acre/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #ffffff;">
+          <p class="levelsTextDetails">3.4-4.0 animals/acre/yr</p>
+        </div>
+
+        <center>
+          <h1 class="DetailsList-title">Cattle Precipitation Factor</h1></center>
+        <center>
+          <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
+        <table id="yieldTable">
+          <tr>
+            <th>Yield Type Precipitation Factor </th>
+            <th>Precipitation Level (in)/yr</th>
+          </tr>
+          <tr>
+            <td>0.95</td>
+            <td>45.1</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>36.5</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>34.3</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>32.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>30.4</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>28.2</td>
+          </tr>
+          <tr>
+            <td>0.95</td>
+            <td>24.6</td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="alfalfaDetailsList" class="DetailsListRolled yieldDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Alfalfa Yield Key</h1></center>
+        <div class="legendColor" style="background-color: #862254;">
+          <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #8B008B;">
+          <p class="levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #aa4497;">
+          <p class="levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #cc6578;">
+          <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
+        </div>
+
+        <center>
+          <h1 class="DetailsList-title">Alfalfa Precipitation Factor</h1></center>
+        <center>
+          <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
+        <table id="yieldTable">
+          <tr>
+            <th>Yield Type Precipitation Factor </th>
+            <th>Precipitation Level (in)/yr</th>
+          </tr>
+          <tr>
+            <td>0.95</td>
+            <td>45.1</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>36.5</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>34.3</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>32.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>30.4</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>28.2</td>
+          </tr>
+          <tr>
+            <td>0.95</td>
+            <td>24.6</td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="grasshayDetailsList" class="DetailsListRolled yieldDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Grass Hay Yield Key</h1></center>
+        <div class="legendColor" style="background-color: #187336;">
+          <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #00ff00;">
+          <p class="levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #66ff66;">
+          <p class="levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #d9ff66;">
+          <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
+        </div>
+
+        <center>
+          <h1 class="DetailsList-title">Grass Hay Precipitation Factor</h1></center>
+        <center>
+          <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
+        <table id="yieldTable">
+          <tr>
+            <th>Yield Type Precipitation Factor </th>
+            <th>Precipitation Level (in)/yr</th>
+          </tr>
+          <tr>
+            <td>0.95</td>
+            <td>45.1</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>36.5</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>34.3</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>32.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>30.4</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>28.2</td>
+          </tr>
+          <tr>
+            <td>0.95</td>
+            <td>24.6</td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="switchgrassDetailsList" class="DetailsListRolled yieldDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Switchgrass Yield Key</h1></center>
+        <div class="legendColor" style="background-color: #145214;">
+          <p class="levelsTextDetails">6.25-6.61 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #1f7a1f;">
+          <p class="levelsTextDetails">5.83-6.25 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #33cc33;">
+          <p class="levelsTextDetails">5.29-5.83 Mg/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #66ff66;">
+          <p class="levelsTextDetails">4.39-5.29 Mg/ha/yr</p>
+        </div>
+
+        <center>
+          <h1 class="DetailsList-title">Switchgrass Precipitation Factor</h1></center>
+        <center>
+          <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
+        <table id="yieldTable">
+          <tr>
+            <th>Yield Type Precipitation Factor </th>
+            <th>Precipitation Level (in)/yr</th>
+          </tr>
+          <tr>
+            <td>0.95</td>
+            <td>45.1</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>36.5</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>34.3</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>32.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>30.4</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>28.2</td>
+          </tr>
+          <tr>
+            <td>0.95</td>
+            <td>24.6</td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="woodDetailsList" class="DetailsListRolled yieldDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Wood Yield Key</h1></center>
+        <div class="legendColor" style="background-color: #734d26;">
+          <p class="levelsTextDetails">1.43-1.60 m3/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #ac7339;">
+          <p class="levelsTextDetails">1.02-1.43 m3/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #d9b38c;">
+          <p class="levelsTextDetails">0.73-1.02 m3/ha/yr</p>
+        </div>
+        <div class="legendColor" style="background-color: #f2e6d9;">
+          <p class="levelsTextDetails">0.50-0.73 m3/ha/yr</p>
+        </div>
+
+        <center>
+          <h1 class="DetailsList-title">Wood Precipitation Factor</h1></center>
+        <center>
+          <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
+        <table id="yieldTable">
+          <tr>
+            <th>Yield Type Precipitation Factor </th>
+            <th>Precipitation Level (in)/yr</th>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>45.1</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>36.5</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>34.3</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>32.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>30.4</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>28.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>24.6</td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div id="shortDetailsList" class="DetailsListRolled yieldDetailsList">
+        <center>
+          <h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Key</h1></center>
+        <div class="legendColor" style="background-color: #734D26;">
+          <p class="levelsTextDetails">608.6 tons/acre/yr</p>
+        </div>
+
+        <center>
+          <h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Precipitation Factor</h1></center>
+        <center>
+          <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
+
+        <table id="yieldTable">
+          <tr>
+            <th>Yield Type Precipitation Factor </th>
+            <th>Precipitation Level (id)/yr</th>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>45.1</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>36.5</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>34.3</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>32.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>30.4</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>28.2</td>
+          </tr>
+          <tr>
+            <td>1.00</td>
+            <td>24.6</td>
+          </tr>
+        </table>
+      </div>
+
       <!--Yield Productivity Overlay Maps -->
       <div id="yieldTab" class="consoleTab" style="display: none;">
-        <div id="cornDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Corn Grain Yield Key</h1></center>
-          <div class="legendColor" style="background-color: #bc892f;">
-            <p class="levelsTextDetails">13.9-15.1 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #e6bb00;">
-            <p class="levelsTextDetails">13.2-13.9 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #e3c972;">
-            <p class="levelsTextDetails">11.2-13.2 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #ffffc9;">
-            <p class="levelsTextDetails">0 Mg/ha/yr</p>
-          </div>
 
-          <center>
-            <h1 class="DetailsList-title">Corn Grain Precipitation Factor</h1></center>
-          <center>
-            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
 
-          <table id="yieldTable">
-            <tr>
-              <th>Yield Type Precipitation Factor</th>
-              <th>Precipitation Level (in)/yr</th>
-            </tr>
-            <tr>
-              <td>0.75</td>
-              <td>45.1</td>
-            </tr>
-            <tr>
-              <td>0.90</td>
-              <td>36.5</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>34.3</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>32.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>30.4</td>
-            </tr>
-            <tr>
-              <td>0.90</td>
-              <td>28.2</td>
-            </tr>
-            <tr>
-              <td>0.75</td>
-              <td>24.6</td>
-            </tr>
-          </table>
-        </div>
-
-        <div id="soybeanDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Soybean Yield Key</h1></center>
-          <div class="legendColor" style="background-color: #00cc00;">
-            <p class="levelsTextDetails">4.30-4.70 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #66ff66;">
-            <p class="levelsTextDetails">3.90-4.30 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #ccffcc;">
-            <p class="levelsTextDetails">3.50-3.90 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #ffffff;">
-            <p class="levelsTextDetails">0 Mg/ha/yr</p>
-          </div>
-
-          <center>
-            <h1 class="DetailsList-title">Soybean Precipitation Factor</h1></center>
-          <center>
-            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
-
-          <table id="yieldTable">
-            <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
-            </tr>
-            <tr>
-              <td>0.75</td>
-              <td>45.1</td>
-            </tr>
-            <tr>
-              <td>0.90</td>
-              <td>36.5</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>34.3</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>32.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>30.4</td>
-            </tr>
-            <tr>
-              <td>0.90</td>
-              <td>28.2</td>
-            </tr>
-            <tr>
-              <td>0.75</td>
-              <td>24.6</td>
-            </tr>
-          </table>
-        </div>
-
-        <div id="fruitDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Mixed Fruit and Vegetable Yield Key</h1></center>
-          <div class="legendColor" style="background-color: #aa4497;">
-            <p class="levelsTextDetails">16.45 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #66ff66;">
-            <p class="levelsTextDetails">14.80 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #e6bb00;">
-            <p class="levelsTextDetails">13.98 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #ff4000;">
-            <p class="levelsTextDetails">6.58 Mg/ha/yr</p>
-          </div>
-
-          <center>
-            <h1 class="DetailsList-title">Mixed Fruit and Vegetable Precipitation Factor</h1></center>
-          <center>
-            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
-
-          <table id="yieldTable">
-            <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
-            </tr>
-            <tr>
-              <td>0.75</td>
-              <td>45.1</td>
-            </tr>
-            <tr>
-              <td>0.90</td>
-              <td>36.5</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>34.3</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>32.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>30.4</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>28.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>24.6</td>
-            </tr>
-          </table>
-        </div>
-
-        <div id="cattleDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Cattle Yield Key</h1></center>
-          <div class="legendColor" style="background-color: #000000;">
-            <p class="levelsTextDetails">6.1-6.7 animals/acre/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #5e6e71;">
-            <p class="levelsTextDetails">5.4-6.1 animals/acre/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #CECACA;">
-            <p class="levelsTextDetails">4.0-5.4 animals/acre/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #ffffff;">
-            <p class="levelsTextDetails">3.4-4.0 animals/acre/yr</p>
-          </div>
-
-          <center>
-            <h1 class="DetailsList-title">Cattle Precipitation Factor</h1></center>
-          <center>
-            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
-
-          <table id="yieldTable">
-            <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
-            </tr>
-            <tr>
-              <td>0.95</td>
-              <td>45.1</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>36.5</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>34.3</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>32.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>30.4</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>28.2</td>
-            </tr>
-            <tr>
-              <td>0.95</td>
-              <td>24.6</td>
-            </tr>
-          </table>
-        </div>
-
-        <div id="alfalfaDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Alfalfa Yield Key</h1></center>
-          <div class="legendColor" style="background-color: #862254;">
-            <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #8B008B;">
-            <p class="levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #aa4497;">
-            <p class="levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #cc6578;">
-            <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
-          </div>
-
-          <center>
-            <h1 class="DetailsList-title">Alfalfa Precipitation Factor</h1></center>
-          <center>
-            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
-
-          <table id="yieldTable">
-            <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
-            </tr>
-            <tr>
-              <td>0.95</td>
-              <td>45.1</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>36.5</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>34.3</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>32.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>30.4</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>28.2</td>
-            </tr>
-            <tr>
-              <td>0.95</td>
-              <td>24.6</td>
-            </tr>
-          </table>
-        </div>
-
-        <div id="grasshayDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Grass Hay Yield Key</h1></center>
-          <div class="legendColor" style="background-color: #187336;">
-            <p class="levelsTextDetails">14.6-15.5 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #00ff00;">
-            <p class="levelsTextDetails">12.6-14.6 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #66ff66;">
-            <p class="levelsTextDetails">9.42-12.6 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #d9ff66;">
-            <p class="levelsTextDetails">8.07-9.42 Mg/ha/yr</p>
-          </div>
-
-          <center>
-            <h1 class="DetailsList-title">Grass Hay Precipitation Factor</h1></center>
-          <center>
-            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
-
-          <table id="yieldTable">
-            <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
-            </tr>
-            <tr>
-              <td>0.95</td>
-              <td>45.1</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>36.5</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>34.3</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>32.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>30.4</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>28.2</td>
-            </tr>
-            <tr>
-              <td>0.95</td>
-              <td>24.6</td>
-            </tr>
-          </table>
-        </div>
-
-        <div id="switchgrassDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Switchgrass Yield Key</h1></center>
-          <div class="legendColor" style="background-color: #145214;">
-            <p class="levelsTextDetails">6.25-6.61 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #1f7a1f;">
-            <p class="levelsTextDetails">5.83-6.25 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #33cc33;">
-            <p class="levelsTextDetails">5.29-5.83 Mg/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #66ff66;">
-            <p class="levelsTextDetails">4.39-5.29 Mg/ha/yr</p>
-          </div>
-
-          <center>
-            <h1 class="DetailsList-title">Switchgrass Precipitation Factor</h1></center>
-          <center>
-            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
-
-          <table id="yieldTable">
-            <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
-            </tr>
-            <tr>
-              <td>0.95</td>
-              <td>45.1</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>36.5</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>34.3</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>32.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>30.4</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>28.2</td>
-            </tr>
-            <tr>
-              <td>0.95</td>
-              <td>24.6</td>
-            </tr>
-          </table>
-        </div>
-
-        <div id="woodDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Wood Yield Key</h1></center>
-          <div class="legendColor" style="background-color: #734d26;">
-            <p class="levelsTextDetails">1.43-1.60 m3/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #ac7339;">
-            <p class="levelsTextDetails">1.02-1.43 m3/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #d9b38c;">
-            <p class="levelsTextDetails">0.73-1.02 m3/ha/yr</p>
-          </div>
-          <div class="legendColor" style="background-color: #f2e6d9;">
-            <p class="levelsTextDetails">0.50-0.73 m3/ha/yr</p>
-          </div>
-
-          <center>
-            <h1 class="DetailsList-title">Wood Precipitation Factor</h1></center>
-          <center>
-            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
-
-          <table id="yieldTable">
-            <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (in)/yr</th>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>45.1</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>36.5</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>34.3</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>32.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>30.4</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>28.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>24.6</td>
-            </tr>
-
-          </table>
-        </div>
-
-        <div id="shortDetailsList" class="DetailsListRolled yieldDetailsList">
-          <center>
-            <h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Key</h1></center>
-          <div class="legendColor" style="background-color: #734D26;">
-            <p class="levelsTextDetails">608.6 tons/acre/yr</p>
-          </div>
-
-          <center>
-            <h1 class="DetailsList-title">Short-Rotation Woody Biomass Yield Precipitation Factor</h1></center>
-          <center>
-            <h1 class="DetailsList-title">At Different Precipitation Levels</h1></center>
-
-          <table id="yieldTable">
-            <tr>
-              <th>Yield Type Precipitation Factor </th>
-              <th>Precipitation Level (id)/yr</th>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>45.1</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>36.5</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>34.3</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>32.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>30.4</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>28.2</td>
-            </tr>
-            <tr>
-              <td>1.00</td>
-              <td>24.6</td>
-            </tr>
-          </table>
-        </div>
 
         <div class="leftcol">
 
@@ -1443,7 +1463,6 @@
             <span class="tooltiptext">Wood Yield</span>
           </div>
         </div>
-
       </div>
 
     </div>
@@ -1899,7 +1918,8 @@
     <iframe id="multiplayer" class="fullPageIframe" src="./htmlFrames/multiDownload.html"></iframe>
     <iframe id="options" class="fullPageIframe" src="./htmlFrames/options.html"></iframe>
     <iframe id="printOptions" class="fullPageIframe" src="./htmlFrames/printOptions.html"></iframe>
-    <!-- <div id = "contourMapDiv" class = "fullPageIframe" src="./htmlFrames/contourMap.html"><div> -->
+    <iframe id="modalReplacement" class="fullPageIframe" src="./htmlFrames/replacementFrame.html"></iframe>
+
 
   </div>
   <!-- End of page div, this is all of the meaningful content for in-game -->
@@ -1924,10 +1944,15 @@
     </div>
   </div>
 
+
   <!-- Javascript to stop event propogation for bug fix in modalEscapeFrame (above) -->
   <script>
     //prevent modalEscapeFrame from being clicked on when using the buttons stored in the frame
     $("#escapeMenu").click(function(e) {
+      e.stopPropagation();
+      return false;
+    });
+    $("#replacementContent").click(function(e) {
       e.stopPropagation();
       return false;
     });
