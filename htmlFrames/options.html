@@ -38,6 +38,7 @@ Cleaned and Prepared - July 2016
   <!-- <script type= "text/javascript" src="../front-end/helpersFE.js"></script> -->
   <script src="../lib/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="./options_script.js"></script>
+
 </head>
 
 <body>
@@ -265,6 +266,17 @@ Cleaned and Prepared - July 2016
     <div class="optionsSubContainer">
       <input id="statFrame" type="checkbox" class="toggle">
       <label for="statFrame"> Application Statistics On </label>
+    </div>
+
+    <div class="optionsHeader">
+      Contour Lines
+      <br>
+      <hr>
+    </div>
+
+    <div class = "optionsSubContainer">
+      <input id="generaterContourLines" type="button" onclick="parent.confirmTopoMapGenerate();"/>
+      <label for="generaterContourLines">Generate Contour Map</label>
     </div>
 
 

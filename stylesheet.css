@@ -313,6 +313,7 @@ body {
   left: 0px;
   position: fixed;
   top: 0px;
+  z-index: 1000;
   visibility: hidden;
   width: 100%;
 }
@@ -352,6 +353,11 @@ body {
   background-color: #7cc1e9 !important;
 }
 
+#replacementSelect {
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
 #exitToMenuButton {
   animation-duration: 1.2s;
   animation-name: showEffect;
@@ -388,6 +394,87 @@ body {
     cursor: pointer;
 }
 
+
+
+input[type=checkbox] {
+    visibility: hidden;
+}
+
+.checkOverlay {
+  width: 7.6vw;
+  height: 2.6vw;
+  top: 43.5vw;
+  left: 0.5vw;
+
+  background-image: url('./imgs/consoleTexture.png');
+  background-repeat: repeat;
+
+  border-radius: 50px;
+  position: absolute;
+
+}
+
+.checkOverlay:before {
+  content: 'On';
+  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  position: absolute;
+  top: 0.3vw;
+  left: 1vw;
+  height: 2vw;
+  color: #009633;
+  font-size: 1.75vw;
+}
+.checkOverlay:after {
+  content: 'Off';
+  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  position: absolute;
+  top: 0.3vw;
+  left: 5.0vw;
+  height: 2vw;
+  color: white;
+
+  font-size: 1.75vw;
+}
+
+
+.checkOverlay label {
+  display: block;
+  width: 3.5vw;
+  height: 1.8vw;
+  border-radius: 50px;
+
+  transition: all .5s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 0.4vw;
+  z-index: 1;
+  left: 0.5vw;
+  background: white;
+}
+
+.checkOverlay input[type=checkbox]:checked + label {
+  left: 3.65vw;
+  background: #009633;
+}
+
+#checkheader {
+  color: #ddd;
+  width: 11vw;
+  height: 3.2vw;
+  top: 41vw;
+  left: 0.5vw;
+  position: absolute;
+  font-family: 'Amatic SC', cursive;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  font-size: 1.85vw;
+
+}
+
 #directoryButton {
   animation-duration: 0.4s;
   animation-name: showEffect;
@@ -399,6 +486,14 @@ body {
 }
 
 #escapeMenu {
+  height: 200px;
+  left: 42%;
+  top: 7vw;
+  position: absolute;
+  width: 300px;
+}
+
+#replacementContent{
   height: 200px;
   left: 42%;
   top: 7vw;
@@ -445,6 +540,25 @@ body {
   width: 13.2vw;
 }
 
+.modalText {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 6px;
+    display: inline-block;
+    color: #FFFFFF;
+    font-family: 'Amatic SC', cursive;
+    font-family: var(--button-font-family);
+    font-size: calc(var(--font-sze)*2.5);
+    font-weight: bold;
+    left: -0.5vw;
+    line-height: 130%;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    -webkit-transition-duration: 1s;
+    transition-duration: 1s;
+    width: 13.2vw;
+}
+
 #yesConfirmEscape {
   margin: 0 auto;
   margin-bottom: 20px;
@@ -468,6 +582,14 @@ body {
   width: 100%;
 }
 
+.modalFrame {
+  animation-duration: 1.0s;
+  animation-name: showEffect;
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  position: fixed;
+  width: 100%;
+}
 
 
 #hover-div {

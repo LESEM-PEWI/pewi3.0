@@ -297,11 +297,14 @@ function displayResults() {
   render(boardData[currentBoard].calculatedToYear);
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
+  econGraphic1 = EconomicsGraphic1().getInstance().render();
+  econGraphic4 = EconomicsGraphic4().getInstance().render();
 
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
   //============= END DEPRECATED
 
+  economics.mapChange();
   //create the radar plots
   var tempObj = []; //get an array of years to display
   for (var y = 1; y <= boardData[currentBoard].calculatedToYear; y++) {
@@ -2253,15 +2256,35 @@ function generateResultsTable() {
 
     //fill in table rows with data
 
+
     for (var l = 0; l < backendDataIdentifiers.length; l++) {
 
       //keep track of subheadings, just 1 this time
       switch (l) {
         case 0:
-          htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
-          //htmlTableString += "<tr>";
-        //  htmlTableString += "<td><b>" + "Yield" + "<b></td>";
-          break;
+          //htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
+            //put Yield header, in bold
+            htmlTableString += "<tr>";
+            htmlTableString += "<td><b>" + "Yield" + "<b></td>";
+
+            //calculate total score for each year and place next to Yield header
+            for(var y = 1; y <= upToYear; y++){
+              htmlTableString += "<td><b>";
+
+              var totalScore = Math.min(Totals.cornGrainYieldScore[y] +
+              Totals.soybeanYieldScore[y] + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] +
+              Totals.grassHayYieldScore[y] + Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y], 100);
+
+              htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
+
+              htmlTableString += "<b></td>";
+            }
+            htmlTableString += "<td><b>(out of 100)<b></td>";
+            //add extra spaces to fill out bar across screen
+            for(var y = 1; y <= (2*upToYear)+2; y++){
+              htmlTableString += "<td></td>";
+            }
+            break;
       } //end switch
 
       htmlTableString += "<tr>";
@@ -4016,4 +4039,640 @@ d3.selection.prototype.moveToBack = function() {
   renderData(dataset);
 
 //--------------------End of Render function
+}
+
+function createMockDataGraphic1(){
+  var econData = economics.data;
+  econData = econData.map((d, i) => {
+    return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
+  });
+  data = [];
+  econData.forEach((el) => {
+    for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
+      d = {}
+      d.year = i;
+      d.landUse = el.landUse;
+      d.Cost = el.cost;
+      d.Revenue = el.cost * (Math.random()*-2);
+      d.Profit = Math.max(d.Revenue + d.Cost, 0);
+      d.Loss = Math.min(d.Revenue + d.Cost, 0);
+      data.push(d);
+    }
+  });
+  return data;
+
+}
+
+function calculateDataTotals(){
+
+}
+
+function EconomicsGraphic1() { //This is a singleton class use getInstance() to retrieve the instance
+  var instance;
+  var options = [];
+  function init() {
+    var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1svg');
+    var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1');
+    window = document.getElementById('resultsFrame');
+    var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
+    var stackTypes = ['Cost','Revenue','Profit','Loss'];
+    var fullData = createMockDataGraphic1();
+
+    var margin = {top: 40, right: 10, bottom: 20, left: 60};
+    var width = 1800*.7 - margin.left - margin.right;
+    var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+
+    var groupKey = 'landUse';
+    svg = d3.select(econBody);
+    svg
+    .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    formatData = function(options){ //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
+
+      options = options || []; //to ensure a defined options
+      tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
+      data = tempData.filter(el => {
+        if(options.indexOf(el.landUse.replace(/\s/g,'')) > -1) return false;
+        if(options.indexOf(el.year) > -1) return false;        if(options.indexOf('Cost') > -1) el.Cost = 0;
+        if(options.indexOf('Revenue') > -1) el.Revenue = 0;
+        if(options.indexOf('Profit') > -1) el.Profit = 0;
+        if(options.indexOf('Loss') > -1) el.Loss = 0;
+        return el != null;
+      });
+
+      return data;
+    }
+
+    drawBars = function() {
+      let data = formatData(options);
+
+      let layers = d3.stack().keys(stackTypes) //formats data into groups, in this case we want to stack base off of cost/revenue etc...
+        .offset(d3.stackOffsetDiverging)
+        (data);
+
+      var layer = svg.selectAll(".layer") //draw 1 layer at a time, we want loss and profit to drawn last so they arent covered.
+        .data(layers)
+        .enter().append("g")
+        .attr("class", "layer")
+        .attr("layernum",function(d, i) {return d.key; })
+        .style("margin-left", function(d) { return "3px"; })
+        .style("fill", function(d, i) { return colors[i]; })//determines color for each layer
+
+      let x0 = d3.scaleBand() //There are 2 x functions because landUse determine 1 part of x factor and year determines the other
+        .domain(data.map(function(d) {return d.landUse + ""; }))
+        .rangeRound([margin.left, width - margin.right])
+        .paddingInner(.1); //padding between groups
+
+      let x = d3.scaleBand() //this one does a small adjustment based off of year
+        .domain(data.map(function(d) {return d.year}))
+        .rangeRound([0, x0.bandwidth()]) //note that the max is the previous x's width so it divides that piece equally
+        .padding(.05); //padding between elements in the same group
+
+      let y = d3.scaleLinear()
+      .domain([d3.min(layers, stackMin), d3.max(layers, stackMax)])//determine the min and max value graph needs to show
+      .rangeRound([height - margin.bottom, margin.top]);
+
+      //following code is to add tooltips
+      var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph1tt"));
+
+      //the following code is to add a rectangle around the hovered things
+      //We cant just change the border since the border will be covered by higher layered rects
+      var outlineRect = svg.append("rect")
+      .attr("stroke", "black")
+      .attr("stroke-width", "3px")
+      .style("visibility", "hidden")
+      .style("fill", "none")
+      .attr("width", x.bandwidth);
+
+      formatMoney = function(d){ //This is to put the negative sign in front of the dollar sign
+        var isNegative = d < 0 ? '-' : '';
+        return isNegative + '$' + Math.abs(d);
+      }
+      //draws the bars as well as adding listeners for hover
+      var rect = layer.selectAll("rect")
+        .data(function(d) {return d; })
+        .enter().append("rect")
+          .attr("transform", function(d) { return "translate(" + x0(d.data.landUse) + ",0)"; })//translate using 1 of the x's
+          .attr("x", function(d) {return x(d.data.year); }) //set x to the other so that when combined they get their own unique x value
+          .attr("y", function(d) {if (d[1] > 0) return y(0) - (y(d[0])- y(d[1])); else return y(0); }) //if the bar is positive the height has to be consi
+          .attr("width", x.bandwidth)
+          .attr("height", function(d){return y(d[0])- y(d[1]);})
+          .on("mouseover", function(d) {tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
+            tooltip.select("#econGraphic1LU").text("Land Use: " + d.data.landUse)
+            let econType = this.parentNode.getAttribute("layernum")
+            tooltip.select("#econGraphic1Value").text(econType +": " + formatMoney(d.data[econType]))
+            outlineRect.attr("transform", "translate(" + x0(d.data.landUse) + ",0)")
+            outlineRect.style("visibility", "visible")
+            outlineRect.attr("x", this.getAttribute("x"))
+            outlineRect.attr("y", this.getAttribute("y"))
+            outlineRect.attr("height", this.getAttribute("height"))
+          })
+          .on("mouseout", function(d) {tooltip.style("visibility", "hidden")
+          outlineRect.style("visibility", "hidden")
+          })
+          .on("mousemove", d => {
+            tooltip
+            .style('left', (d3.event.pageX + 10) +"px")
+            .style('top', (d3.event.pageY + 10) + "px")
+          });
+
+
+        //following code adds xAxis to graph
+      var xAxis = svg.append("g")
+        .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
+        .style("font-weight", "bold")
+        .call(d3.axisBottom(x0))
+      svg.selectAll("g.tick")
+        .selectAll("text")
+          .attr("fill", "purple")
+          .attr("y", y(y.domain()[0]/1.1)-y(0) + 7)
+
+      svg.append("text")
+        .attr("transform",
+          "translate(" + (width/2) + " ," +
+          (height) + ")")
+        .style("text-anchor", "left")
+        .text("Land Uses");
+
+      svg.append("text")
+        .attr("transform",
+          "translate(" + (width/2) + " ," +
+          (25) + ")")
+        .style("text-anchor", "left")
+        .style("font-weight", "bold")
+        .style("font-size", "1.5vmax")
+        .text("Economics By Land Use");
+
+        //following code adds yAxis to graph
+      var yAxis = d3.axisLeft(y)
+        .tickFormat(d => formatMoney(d))
+        .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
+        .tickSizeOuter(0)
+      svg.append("g")
+        .attr("transform", "translate(" + margin.left + ", 0)")
+        .call(yAxis);
+
+      svg.selectAll("g.tick")
+        .style("stroke-dasharray", ("3,3"))
+
+      svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Value");
+    }
+
+    var drawLegend = function (){
+      legend = svg.append("g")
+        .attr("transform", "translate(" + width +",0)")
+        .attr("text-anchor", "end")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 15)
+      .selectAll("g")
+        .data(colors)
+        .enter().append("g")
+      .attr("transform", function(d, i) {return "translate(0," + (20 * i) + ")";});
+
+      legend.append("rect")
+        .attr("x", -19)
+        .attr("width", 19)
+        .attr("height", 19)
+        .attr("fill", (d, i) => colors[i]);
+
+      legend.append("text")
+        .attr("x", -24)
+        .attr("y", 9.5)
+        .attr("dy", "0.35em")
+        .text((d,i) => stackTypes[i]);
+
+        svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("text-decoration", "underline")
+        .text("Economic Data by Land Use");
+    }
+
+    var addOptions = function (){ //This adds the toggle effects to the screen
+      let doc = document.getElementById('resultsFrame').contentWindow.document;
+      let box = doc.getElementById('econGraphic1Options');
+
+      let selectionChange = (d, button) => {
+        doc.getElementById('econGraphic1LandUses').style.display = 'none';
+        doc.getElementById('econGraphic1Economics').style.display = 'none';
+        doc.getElementById('econGraphic1Years').style.display = 'none';
+        doc.getElementById('econGraphic1' + d).style.display = 'block';
+        buttonLU.classList.remove('selected');
+        buttonYear.classList.remove('selected');
+        buttonEconomics.classList.remove('selected');
+        button.classList.add('selected');
+      }
+
+
+      buttonLU = doc.getElementById('econGraphic1LUOptions')
+      buttonLU.onclick = event => {selectionChange("LandUses", buttonLU)};
+      buttonYear = doc.getElementById('econGraphic1YearsOptions')
+      buttonYear.onclick = event => {selectionChange("Years", buttonYear)}
+      buttonEconomics = doc.getElementById('econGraphic1EconomicsOptions')
+      buttonEconomics.onclick = event => {selectionChange("Economics", buttonEconomics)};
+
+      selectionChange('LandUses', buttonLU);
+
+      container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses')
+      container.innerHTML = '';
+      economics.data.map(d => d.landUse).forEach(d => {
+        cell = document.createElement('div');
+        cell.innerHTML = d;
+        checkBox = document.createElement('input');
+        checkBox.type = 'checkbox';
+        checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
+        checkBox.style.float = 'right';
+        checkBox.checked = true;
+        cell.appendChild(checkBox);
+        container.appendChild(cell);
+      })
+
+      container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years')
+      container.innerHTML = '';
+      for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+        cell = document.createElement('div');
+        cell.innerHTML = 'Year ' + i;
+        checkBox = document.createElement('input');
+        checkBox.type = 'checkbox';
+        checkBox.onclick = event => alterOptions(i);
+        checkBox.style.float = 'right';
+        checkBox.checked = true;
+        cell.appendChild(checkBox);
+        container.appendChild(cell);
+      }
+
+      container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Economics')
+      container.innerHTML = '';
+      stackTypes.forEach(type => {
+        cell = document.createElement('div');
+        cell.innerHTML = type;
+        checkBox = document.createElement('input');
+        checkBox.type = 'checkbox';
+        checkBox.onclick = event => alterOptions(type);
+        checkBox.style.float = 'right';
+        checkBox.checked = true;
+        cell.appendChild(checkBox);
+        container.appendChild(cell);
+      });
+    }
+
+    alterOptions= function (option){ //This changes the options array to contain up to date options
+      if (options.includes(option)){
+        options.splice(options.indexOf(option),1);
+      }
+      else {
+        options.push(option);
+      }
+      rerender();
+    }
+
+    var render = function (){
+      svg.selectAll("*").remove();
+      //just delete all contents for redraw, it is a lot easier for a graph that needs to move things
+    // definetely possible to do otherwise, but a little out of scope.
+      drawBars();
+      drawLegend();
+      addOptions();
+    }
+    var rerender = function (){ //We dont want to rebuild the options when we need to render again
+      svg.selectAll("*").remove();
+      drawBars();
+      drawLegend();
+    }
+    return {
+      drawBars: drawBars,
+      drawLegend: drawLegend,
+      render: render,
+    };
+  };
+  return {
+    getInstance: function () { //To ensure singularity
+      if ( !instance ) {
+        instance = init();
+      }
+      return instance;
+    }
+  };
+}
+
+function stackMin(layers) {
+  return d3.min(layers, function(d) {
+    if(d[0] < 0) return 1.1* (d[0]- d[1]);
+    return 0;
+  });
+}
+
+function stackMax(layers) {
+  return d3.max(layers, function(d) {
+    if(d[1] > 0) return 1.1 * (d[1] - d[0]);
+    return 0;
+  });
+}
+function exists(arr, search) {
+    return arr.some(row => row.includes(search));
+}
+/**
+ * Econ Module Graphic 4
+ */
+/**
+ * Data filter for the Econ Module Graphic 4
+ * @param   landUse  [description]
+ * @param   costType [Action or Time cost type]
+ * @param   cost     [cost type ]
+ * @return         [return costname and value]
+ */
+
+function econGraphic4DisplayData(landUse,costType,cost){
+  var econdata=economics.data4;
+  econdata=econdata.filter(function(item){
+    return item.landUse==landUse;
+  });
+  econdata=econdata[0].array.filter(function(item){
+    return item[costType]==cost;
+  });
+  data=[];
+  for (var i = 0; i < econdata.length; i++) {
+    if(data.some(e=>e.costname===econdata[i]['Cost Name'])){
+      objIndex = data.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
+      data[objIndex].value+=parseFloat(econdata[i].Value);
+    }else{
+      data.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
+    }
+  }
+return data;
+ }
+ /**
+  * Econ Module Graphic 4 render and information
+  *
+  */
+function EconomicsGraphic4() {
+  var instance;
+  var options = ["Conventional Corn","Action - Cost Type","Machinery"];
+  var displaydata;
+  var econdata;
+  function init() {
+    econdata=economics.data4;
+    var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4svg');
+    var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
+    window = document.getElementById('resultsFrame');
+    var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
+    '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
+
+    // scales
+    var margin = {top: 40, right: 10, bottom: 60, left: 50};
+    let windowWidth=window.innerWidth;
+    var width = windowWidth *0.8- margin.left - margin.right;
+    var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+    var rectWidth = 100;
+    // svg element
+    var svg = d3.select(econBody);
+    svg
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    /**
+     * function draws bar on the chart
+     */
+    var drawBarsfunction=function(){
+
+      displaydata=econGraphic4DisplayData(options[0],options[1],options[2]);
+        //scale
+        var xScale = d3.scaleBand()
+        	.domain(displaydata.map(function(d){ return d.costname;}))
+        	.range([margin.left, width - margin.right]);
+          //.padding(.1);
+        var yMax = d3.max(displaydata, function(d){return d.value});
+        var yScale = d3.scaleLinear()
+        	.domain([0, yMax])
+        	.range([height - margin.bottom, margin.top]);
+        var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph4tt"));
+
+          // bars
+        var rect = svg.selectAll('rect')
+        	.data(displaydata)
+        	.enter().append('rect')
+        	.attr('x', function(d, i){
+            return xScale(d.costname)+25})
+        	.attr('y', function(d){
+            return yScale(d.value)})
+        	.attr('width', xScale.bandwidth() - margin.left)
+        	.attr('height', function(d){
+            return height - margin.bottom - yScale(d.value)})
+    			.attr('fill', function(d,i){
+            return colors[i]})
+          .on("mouseover",function(d){
+            tooltip.style("visibility","visible");
+            tooltip.select("#econGraphic4CostName").text(d.costname);
+            tooltip.select('#econGraphic4Value').text("$"+d.value.toFixed(2));
+          })
+          .on("mouseout",function(){
+            tooltip.style("visibility","hidden");
+
+          })
+          .on("mousemove",function(d){
+            tooltip
+            .style('left', (d3.event.pageX ) +"px")
+            .style('top', (d3.event.pageY) + "px")
+          });
+
+        // axes
+        var xAxis = d3.axisBottom()
+        	.scale(xScale);
+        var yAxis = d3.axisLeft(yScale)
+        	.tickSize(-width)
+          .tickSizeOuter(0);
+
+        //cost name
+        svg.append('g')
+          	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
+          	.call(xAxis);
+        svg.selectAll('g.tick')
+            .selectAll('text')
+            .attr('fill','purple')
+            .attr('font-weight','bold')
+            .attr('font-size','10px')
+            .attr("transform", function(d) {
+                return "rotate(-35) "
+            })
+            .attr("text-anchor", "end")
+        //scale value on y axis
+          svg.append('g')
+          	.attr('transform', 'translate(' + margin.left + ',0)')
+          	.call(yAxis);
+          svg.selectAll("g.tick")
+           .style("stroke-dasharray", ("3,3"))
+
+        //grahic chart name on the top
+          svg.append("text")
+             .attr("transform",
+               "translate(" + ((width/2)-110) + " ," +
+               (25) + ")")
+             .style("text-anchor", "left")
+             .style("font-weight", "bold")
+             .style("font-size", "1.5vmax")
+             .text("Cost($) vs Line Items/Individual Costs");
+
+        //display cost name title on bottom
+           svg.append("text")
+               .attr("transform",
+                 "translate(" + (width/2) + " ," +
+                 (height+margin.bottom+20) + ")")
+               .style("text-anchor", "left")
+               .text("Line Items/Individual Costs")
+               .attr("font-size","1.1vmax")
+               .attr("font-weight","bold");
+
+        //display value title on y axis
+           svg.append("text")
+               .attr("transform", "rotate(-90)")
+               .attr("y", 0)
+               .attr("x", 0 - (height / 2))
+               .attr("dy", "1em")
+               .style("text-anchor", "middle")
+               .text("Cost ($)")
+               .attr("font-size","1.1vmax")
+               .attr("font-weight","bold");
+        }
+
+        /**
+         * display the land use, action,time cost type
+         */
+        var addOptions=function(){
+          let  doc =document.getElementById('resultsFrame').contentWindow.document;
+
+          // selection dropdown menu for cost type
+          var selectedType=function(costType,option,name){
+            optionCLick(costType,option);
+            doc.getElementById("econGraphic4ActionType").style.display='none';
+            doc.getElementById("econGraphic4TimeType").style.display='none';
+            doc.getElementById(name).style.display='block';
+          }
+
+          //create Action, time cost type list
+          function createCostOption(){
+            costContainer=doc.getElementById('econGraphic4CostOption');
+            var costTypeList=econdata.filter(function(item){
+              return item.landUse==options[0];
+            });
+            costTypeListAction=costTypeList[0]['Action - Cost Type'];
+            costTypeContainer=doc.getElementById("econGraphic4ActionType");
+            costTypeContainer.innerHTML="";
+            costTypeListAction.forEach(d=>{
+              input=createInputbox('div',d,'input','econ4costType',d,2);
+              costTypeContainer.appendChild(input);
+            });
+            costContainer.append(costTypeContainer);
+
+            costTypeListTime=costTypeList[0]['Time - Cost Type'];
+            costTypeContainer=doc.getElementById("econGraphic4TimeType");
+            costTypeContainer.innerHTML="";
+            costTypeListTime.forEach(d=>{
+              input=createInputbox('div',d,'input','econ4costType',d,2);
+              costTypeContainer.appendChild(input);
+            });
+            costContainer.append(costTypeContainer);
+          }
+
+          //land use input radio type
+          container=document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4LandUses');
+          container.innerHTML='';
+          cell=document.createElement('div');
+          cell.innerHTML='Land Use';
+          cell.className='graphic4landuse';
+          container.append(cell);
+          econdata.map(d=>d.landUse).forEach((d)=>{
+            cell=document.createElement('div');
+            cell.innerHTML=d;
+            cell.className="graphic4option";
+            inputbox=document.createElement('input');
+            inputbox.name="landuseoption";
+            if(d==options[0]){
+              inputbox.checked=true;
+            }
+            inputbox.type='radio';
+            inputbox.style.float='right';
+            inputbox.onclick=function(event){optionCLick(d,0);createCostOption()};
+            cell.appendChild(inputbox);
+            container.append(cell);
+          });
+
+          //option for action, time type selection
+          costSelector=doc.getElementById('costSelector');
+          costSelector.innerHTML="";
+          typeSelection=document.createElement('select');
+          //typeSelection.style.width="100%";
+          option1=document.createElement('option');
+          option1.value='Action';
+          option1.innerHTML='Action - Cost Type';
+          option1.onclick=event=>selectedType(option1.innerHTML,1,"econGraphic4ActionType");
+          option2=document.createElement('option');
+          option2.value='Time';
+          option2.innerHTML='Time - Cost Type';
+          option2.onclick=event=>selectedType(option2.innerHTML,1,"econGraphic4TimeType");
+          typeSelection.appendChild(option1);
+          typeSelection.appendChild(option2);
+          costSelector.appendChild(typeSelection);
+
+          createCostOption();
+
+    }
+
+    //create input box html
+    function createInputbox(tag,innerhtml,inputTag,name,d,i){
+      cell=document.createElement(tag);
+      cell.innerHTML=innerhtml;
+      cell.className="graphic4option"
+      inputbox=document.createElement(inputTag);
+      inputbox.name=name;
+      inputbox.type='radio';
+      if(d==options[2]){
+        inputbox.checked=true;
+      }
+      inputbox.style.float='right';
+      inputbox.onclick=event=>optionCLick(d,i);
+      cell.appendChild(inputbox);
+      return cell;
+    }
+    //option selection
+    var optionCLick=function(d,i){
+      options[i]=d;
+        rerender();
+    }
+    //rerender the bar on the chart
+    var rerender=function(){
+      svg.selectAll("*").remove();
+      drawBarsfunction();
+    }
+    //render the first time
+    var render = function (){
+      svg.selectAll("*").remove();
+      drawBarsfunction();
+      addOptions();
+    }
+
+    return {
+      render: render,
+    };
+  };
+  return {
+    getInstance: function () { //To ensure singularity
+      if ( !instance ) {
+        instance = init();
+      }
+      return instance;
+    }
+  };
 }
