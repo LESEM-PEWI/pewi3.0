@@ -19,7 +19,7 @@
 <head>
 
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>PEWI Workspace</title>
 
   <!-- INCLUDES -->
@@ -43,9 +43,11 @@
   <!-- <script src="./lib/d3.min.js"></script> -->
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="./lib/three.min.js"></script>
+  <script src="./lib/THREE.MeshLine.js"></script>
   <script src="./lib/controls.js"></script>
   <script src="./lib/jquery-3.2.1.min.js"></script>
   <script src="./lib/stats.min.js"></script>
+  <script src="./lib/jszip.min.js"></script>
   <script src="./htmlFrames/results_scripts.js"></script>
 
   <!-- import jsPDF -->
@@ -70,7 +72,10 @@
   <script src="./front-end/mainFE.js"></script>
   <script src="./front-end/helpersFE.js" info></script>
   <script src="./front-end/levelLoader.js"></script>
+  <script src="./front-end/paper-full.js"></script>
+  <script src="./front-end/contourMap.js"></script>
   <script src="./front-end/economics.js"></script>
+
 
   <!-- import bootstrap-progressbar library -->
   <script type="text/javascript" src="./lib/bootstrap-progressbar.js"></script>
@@ -1913,7 +1918,8 @@
     <iframe id="multiplayer" class="fullPageIframe" src="./htmlFrames/multiDownload.html"></iframe>
     <iframe id="options" class="fullPageIframe" src="./htmlFrames/options.html"></iframe>
     <iframe id="printOptions" class="fullPageIframe" src="./htmlFrames/printOptions.html"></iframe>
-        <iframe id="modalReplacement" class="fullPageIframe" src="./htmlFrames/replacementFrame.html"></iframe>
+    <iframe id="modalReplacement" class="fullPageIframe" src="./htmlFrames/replacementFrame.html"></iframe>
+
 
   </div>
   <!-- End of page div, this is all of the meaningful content for in-game -->

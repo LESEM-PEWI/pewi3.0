@@ -115,13 +115,14 @@ var hotkeyArr = [
   [85, null],
   [66, null],
   [86, null],
-  [80, null],
   [68, null],
   [65, null],
   [87, null],
   [83, null],
   [79, null],
   [81, null],
+  [67, null],
+  [80, null],
   [38, null],
   [40, null],
   [37, null],
@@ -781,18 +782,18 @@ function addTile(tile) {
   var riverHeight = 1;
 
   //Calculate the heights of vertices by averaging topographies of adjacent tiles and create a vector for each corner
-  if (tToggle) {
-    var h1 = (topN24 + topN23 + topN1 + tile.topography) / 4 * 5;
-    var h2 = (topN23 + topN22 + top1 + tile.topography) / 4 * 5;
-    var h3 = (top24 + top23 + top1 + tile.topography) / 4 * 5;
-    var h4 = (top22 + top23 + topN1 + tile.topography) / 4 * 5;
 
-    v1 = new THREE.Vector3(0, h1, 0);
-    v2 = new THREE.Vector3(tileWidth, h2, 0);
-    v3 = new THREE.Vector3(tileWidth, h3, tileHeight);
-    v4 = new THREE.Vector3(0, h4, tileHeight);
+    tile.h1 = (topN24 + topN23 + topN1 + tile.topography) / 4 * 5;
+    tile.h2 = (topN23 + topN22 + top1 + tile.topography) / 4 * 5;
+    tile.h3 = (top24 + top23 + top1 + tile.topography) / 4 * 5;
+    tile.h4 = (top22 + top23 + topN1 + tile.topography) / 4 * 5;
+if (tToggle) {
+    v1 = new THREE.Vector3(0, tile.h1, 0);
+    v2 = new THREE.Vector3(tileWidth, tile.h2, 0);
+    v3 = new THREE.Vector3(tileWidth, tile.h3, tileHeight);
+    v4 = new THREE.Vector3(0, tile.h4, tileHeight);
 
-    riverHeight = (h1 + h2 + h3 + h4) / 4;
+    riverHeight = (tile.h1 + tile.h2 + tile.h3 + tile.h4) / 4;
   } else {
     v1 = new THREE.Vector3(0, 0, 0);
     v2 = new THREE.Vector3(tileWidth, 0, 0);
@@ -872,8 +873,6 @@ function addTile(tile) {
     meshOverlay.push(tileMaterial2);
   }
 
-
-
   //choose the relevant texture to add to the tile faces
   if (tile.landType[0] == 0) {
 
@@ -885,7 +884,6 @@ function addTile(tile) {
 
     meshMaterials.push(tileMaterial);
   } else if (tile.landType[0] == -1) {
-
     tileMaterial = new THREE.MeshBasicMaterial({
       color: 0xFFFFFF,
       transparent: true,
@@ -918,6 +916,7 @@ function addTile(tile) {
         side: THREE.DoubleSide
       });
     }
+
     meshMaterials.push(tileMaterial);
   }
 
@@ -940,6 +939,8 @@ function addTile(tile) {
   newTile.position.x = tile.column * tileWidth - (tileWidth * tilesWide) / 2;
   newTile.position.y = 0;
   newTile.position.z = tile.row * tileHeight - (tileHeight * tilesHigh) / 2;
+
+  tile.position = newTile.position;
 
   //add the mapID to the
   newTile.mapID = mapID;
@@ -2459,6 +2460,8 @@ function getGridOutline(startTile, endTile) {
   return tileArray;
 }
 
+
+
 //getHighlightColor determines the gradient of highlighting color for each tile dependent on type of map selected
 function getHighlightColor(highlightType, tileId) {
 
@@ -2962,7 +2965,7 @@ function calculateSubwatershedTotalNitrateScore(tileId){
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
-  
+
   //return information about the tile that is highlighted
   if (currentHighlightType <= 0) {
     return "";
@@ -3347,6 +3350,7 @@ function highlightTile(tileId) {
       //update HUD with current information
       //Bottom part of screen
       showInfo("Year: " + currentYear + "&#160;&#160;&#160;Precipitation: " + printPrecipYearType() + "&#160;&#160;&#160;Current Selection: " + printLandUseType(painter) + "&#160;&#160;&#160;" + "Current Cell: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear]));
+
       //update the information displayed in the delayed hover div by cursor
       var info1 = "Land Cover: " + printLandUseType(boardData[currentBoard].map[tileId].landType[currentYear])+ "<br>";
       var info2 = "Precipitation: " + printPrecipYearType()+ ", "+boardData[currentBoard].precipitation[currentYear]+" in"+"<br>";
@@ -3974,6 +3978,13 @@ function onDocumentKeyDown(event) {
         //case t - toggle topography
       case hotkeyArr[2][0]:
       case hotkeyArr[2][1]:
+
+
+        // changes the map images between 2d and 3d if needed
+        generatedContourMap.change2D3D();
+
+
+
         //setting the camera y position to a specific hight when toggle is pressed.
         if (camera2.position.y < 27)
           camera2.position.y = 27;
@@ -3992,6 +4003,26 @@ function onDocumentKeyDown(event) {
             refreshBoard();
           }
           setupRiver();
+        }
+        break;
+
+
+        //case z -- for zoom functions
+      case 90:
+        //track the z down key
+        zIsDown = true;
+        break;
+
+        //case 1 -- press z,1 and click tile to zoom in
+      case 49:
+        oneIsDown = true;
+        break;
+
+        //case 2 -- press z,2 to zoom out
+      case 50:
+        if (zIsDown && zoomedIn) {
+          //1 is dummy value for now
+          switchToUnzoomedView(1, true);
         }
         break;
 
@@ -4021,52 +4052,6 @@ function onDocumentKeyDown(event) {
       case hotkeyArr[5][1]:
         if (multiplayerAssigningModeOn) {
           endMultiplayerAssignMode();
-        }
-        break;
-
-        // cases 6 through 9 are in mainFE.js under the animate function
-
-        // case o - toggleOverlay
-      case hotkeyArr[10][0]:
-      case hotkeyArr[10][1]:
-        if (previousOverlay != null) {
-          if (curTracking) {
-            pushClick(0, getStamp(), 31, 0, null);
-          }
-          toggleOverlay();
-        }
-        break;
-
-        //case 11 is in mainFE.js under the CamView function
-
-        // key to open print screen
-      case hotkeyArr[12][0]:
-      case hotkeyArr[12][1]:
-        // If not in the multi-player mode, we should not disable the 'P' key
-        if (!multiplayerAssigningModeOn) {
-          startPrintOptions();
-        }
-
-        break;
-
-
-
-        //case z -- for zoom functions
-      case 90:
-        //track the z down key
-        zIsDown = true;
-        break;
-
-        //case 1 -- press z,1 and click tile to zoom in
-      case 49:
-        oneIsDown = true;
-        break;
-
-        //case 2 -- press z,2 to zoom out
-      case 50:
-        if (zIsDown && zoomedIn) {
-          //1 is dummy value for now
-          switchToUnzoomedView(1, true);
         }
         break;
 
@@ -4102,6 +4087,34 @@ function onDocumentKeyDown(event) {
           document.getElementById('pausePlay').style.width = '20px';
           break;
         }
+        break;
+
+        // case o - toggleOverlay
+      case hotkeyArr[10][0]:
+      case hotkeyArr[10][1]:
+        if (previousOverlay != null) {
+          if (curTracking) {
+            pushClick(0, getStamp(), 31, 0, null);
+          }
+          toggleOverlay();
+        }
+        break;
+
+
+// contour map
+      case hotkeyArr[12][0]:
+      case hotkeyArr[12][1]:
+          generatedContourMap.toggleTopoMap();
+          break;
+
+// print
+      case hotkeyArr[13][0]:
+      case hotkeyArr[13][1]:
+        // If not in the multi-player mode, we should not disable the 'P' key
+        if (!multiplayerAssigningModeOn) {
+          startPrintOptions();
+        }
+
         break;
 
     } //end switch
@@ -4435,9 +4448,12 @@ function refreshBoard(bypassFromKeyEvent) {
     scene.remove(mesh);
   }
 
+
+
   if(mesh2 != null) {
     scene.remove(mesh2);
   }
+
 
   meshGeometry = new THREE.Geometry();
   meshGeometry2 = new THREE.Geometry();
@@ -4457,6 +4473,9 @@ function refreshBoard(bypassFromKeyEvent) {
     displayLevels(currentHighlightTypeString);
   }
 
+// var lines = new ContourMap();
+// lines.drawContours();
+
 } //end refreshBoard
 
 //Resets the hotkey array to its default state
@@ -4474,7 +4493,12 @@ function resetHotkeys() {
     [83, null],
     [79, null],
     [81, null],
-    [80, null]
+    [67, null],
+    [80, null],
+    [38, null],
+    [40, null],
+    [37, null],
+    [39, null]
   ];
   updateKeys();
 } //end resetHotkeys()
@@ -7374,6 +7398,14 @@ if (typeof module !== "undefined" && module.exports) {
 //     console.log("detachEvent");
 //   }
 // }
+
+//
+//
+
+// function getBoardAndMapData(){
+//   return boardData[currentYear].map;
+// }
+
 
 
   /**

@@ -21,7 +21,7 @@ var hasPrecipConclict = false; // indicates whether there's a precipitation leve
 //   // update all board level calculations
 //   Totals.update();
 // } //end calculate()
-// 
+//
 // // I think we can also delete this function, It's not been used anywhere.
 // //update Display object for simple text read out
 // function display() {
