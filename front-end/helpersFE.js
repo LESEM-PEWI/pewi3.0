@@ -4638,6 +4638,8 @@ function resetPresets() {
   if (ToggleCam == 1) {
     changeCam2();
     document.getElementById("flyover").innerHTML = "";
+    document.getElementById("flyASDW").style.display = "none";
+    document.getElementById("flyNavigKeys").style.display = "none";
     //Reseting camera 2 position when sandbox is reloaded
     camera2.position.x = 70;
     camera2.position.y = 25;
