@@ -4497,7 +4497,7 @@ function EconomicsGraphic3(){
              .style("text-anchor", "left")
              .style("font-weight", "bold")
              .style("font-size", "1.5vmax")
-             .text("Cost($) vs Line Items/Individual Costs");
+             .text("Time/Action Totals");
 
         //display cost name title on bottom
            svg.append("text")
@@ -4669,6 +4669,8 @@ function exists(arr, search) {
  * @param   cost     [cost type ]
  * @return         [return costname and value]
  */
+
+// function econGraphic3DisplayData(){}
 
 function econGraphic4DisplayData(landUse,costType,cost){
   var econdata=economics.getInstance().data4;
