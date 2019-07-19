@@ -2745,6 +2745,7 @@ this.tileNitrate = Array(4);
 
         sumLandUseHelper(this.landUseResults,LandUseType.getType(board.map[i].landType[y]),y,board.map[i].area);
       }
+      economics.mapChange();
 
       //PEWI calculations are reported in megagrams, the previous calculation in kilograms therefore divide by 1000
       //this.carbonSequestration[y] = this.sumCarbonSequestration[y] / 1000;

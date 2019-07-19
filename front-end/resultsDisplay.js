@@ -304,6 +304,7 @@ function displayResults() {
   //drawEcosystemIndicatorsDisplay(currentYear);
   //============= END DEPRECATED
 
+  economics.mapChange();
   //create the radar plots
   var tempObj = []; //get an array of years to display
   for (var y = 1; y <= boardData[currentBoard].calculatedToYear; y++) {
@@ -4041,7 +4042,7 @@ d3.selection.prototype.moveToBack = function() {
 }
 
 function createMockDataGraphic1(){
-  var econData = economics.getInstance().data;
+  var econData = economics.data;
   econData = econData.map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
   });
@@ -4285,7 +4286,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
 
       container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses')
       container.innerHTML = '';
-      economics.getInstance().data.map(d => d.landUse).forEach(d => {
+      economics.data.map(d => d.landUse).forEach(d => {
         cell = document.createElement('div');
         cell.innerHTML = d;
         checkBox = document.createElement('input');
@@ -4393,7 +4394,7 @@ function exists(arr, search) {
  */
 
 function econGraphic4DisplayData(landUse,costType,cost){
-  var econdata=economics.getInstance().data4;
+  var econdata=economics.data4;
   econdata=econdata.filter(function(item){
     return item.landUse==landUse;
   });
@@ -4421,7 +4422,7 @@ function EconomicsGraphic4() {
   var displaydata;
   var econdata;
   function init() {
-    econdata=economics.getInstance().data4;
+    econdata=economics.data4;
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4svg');
     var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
     window = document.getElementById('resultsFrame');
