@@ -31,6 +31,7 @@
   "Pivot Flat","Pivot Upright","Rotate Counterclockwise","Rotate Clockwise"];
 
 
+
   //the saveCurrentOptionsState function is called when the save/exit button is pressed
   //each of the options is evaluated and the text for the parameters div is generated
   //as needed
@@ -255,8 +256,8 @@
         var tempSpan = document.createElement("span");
           tempHotkey.appendChild(tempSpan);
 
-        var tempInput1;
         //****** This is dumb, but this needs to increase if more hotkeys are added, leave the arrow keys at the end of the array, need to change conditional below as well, ctrl f for "other spot to fix"
+        var tempInput1;
       if(tempIndex>13){
         //arrows key in div
         tempInput1=document.createElement("div");
@@ -602,10 +603,13 @@
           // console.log(parent.document.getElementById(progressbarIds[i]));
           minInput.placeholder = minValue;
           // console.log(progressbarIds[i]);
-          if(i != 16)
-            minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','min', this.value))");
-          else
+          if(i != 16){
+            //use onblur to have autofill occur after the cell is clicked off
+            minInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','min', this.value))");
+          }
+          else{
             minInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', this.value)");
+          }
           minInput.setAttribute("onkeydown","this.value = this.value");
           minInput.setAttribute("onfocusout","setPlaceholderValue('min" + i + "',this.value)");
           minInput.setAttribute("size","5");
@@ -623,10 +627,13 @@
           maxInput.className = "maxInput";
           maxInput.placeholder = maxValue;
           maxInput.setAttribute("type","text");
-          if(i != 16)
-            maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','max', this.value))");
-          else
+          if(i != 16){
+            //use onblur to have autofill occur after the cell is clicked off
+            maxInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','max', this.value))");
+          }
+          else{
             maxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', this.value)");
+          }
           maxInput.setAttribute("onkeydown","this.value = this.value");
           maxInput.setAttribute("onfocusout","setPlaceholderValue('max" + i + "',this.value)");
           maxInput.setAttribute("size","5");
@@ -644,7 +651,8 @@
           actualMinInput.id = "actualMin" + i;
           actualMinInput.className = "actualMinInput";
           actualMinInput.placeholder = actualMinValue;
-          actualMinInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','actualMin', this.value))");
+          //use onblur to have autofill occur after the cell is clicked off
+          actualMinInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'min', convertAndUpdate('"+progressbarIds[i]+"','actualMin', this.value))");
           actualMinInput.setAttribute("onkeydown","this.value = this.value");
           actualMinInput.setAttribute("onfocusout","setPlaceholderValue('actualMin" + i + "',this.value)");
           actualMinInput.setAttribute("size","5");
@@ -665,7 +673,8 @@
           actualMaxInput.id = "actualMax" + i;
           actualMaxInput.className = "actualMaxInput";
           actualMaxInput.placeholder = actualMaxValue;
-          actualMaxInput.setAttribute("onkeyup","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','actualMax', this.value))");
+          //use onblur to have autofill occur after the cell is clicked off
+          actualMaxInput.setAttribute("onblur","parent.setProgressbarMinMaxValues('" + progressbarIds[i] + "', 'max', convertAndUpdate('"+progressbarIds[i]+"','actualMax', this.value))");
           actualMaxInput.setAttribute("onkeydown","this.value = this.value");
           actualMaxInput.setAttribute("onfocusout","setPlaceholderValue('actualMax" + i + "',this.value)");
           actualMaxInput.setAttribute("size","5");
@@ -746,37 +755,108 @@
     var siblingId;
     var siblingValue;
     var isValid = false;
-    if(id.indexOf("min") != -1){
-      siblingId = "max" + id.charAt(id.length - 1);
-      siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
-      if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
-        isValid = true;
-    }
-    if(id.indexOf("max") != -1){
-      siblingId = "min" + id.charAt(id.length - 1);
-      siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
-      if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
-        isValid = true;
-    }
-    if(id.indexOf("actualMin") != -1){
-      siblingId = "actualMax" + id.charAt(id.length - 1);
-      siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
-      if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
-        isValid = true;
-    }
-    if(id.indexOf("actualMax") != -1){
-      siblingId = "actualMin" + id.charAt(id.length - 1);
-      siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
-      if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
-        isValid = true;
-    }
-    if(isNaN(value) || value == "" ){
-      isValid = false;
+    //grab the id number from the id
+    var idNum = "";
+    for(var i = 0; i < id.length; i++){
+      if(!isNaN(id.charAt(i))){
+        idNum += id.charAt(i);
+      }
     }
 
+    //since 3-6 are reversed min/max we need to adjust the conditons
+    if(idNum != 3 && idNum != 4 && idNum != 5 && idNum != 6){
+      if(id.indexOf("min") != -1){
+        siblingId = "max" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("max") != -1){
+        siblingId = "min" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("actualMin") != -1){
+        siblingId = "actualMax" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("actualMax") != -1){
+        siblingId = "actualMin" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(isNaN(value) || value == "" ){
+        isValid = false;
+      }
+    }
+    else{
+      if(id.indexOf("min") != -1){
+        siblingId = "max" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("max") != -1){
+        siblingId = "min" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("actualMin") != -1){
+        siblingId = "actualMax" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue <= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(id.indexOf("actualMax") != -1){
+        siblingId = "actualMin" + id.charAt(id.length - 1);
+        siblingValue = parseFloat(document.getElementById(siblingId).placeholder);
+        if((!isNaN(siblingValue) && siblingValue >= value) || isNaN(siblingValue))
+          isValid = true;
+      }
+      if(isNaN(value) || value == "" ){
+        isValid = false;
+      }
+    }
+
+    //find min and max val for raw values
+    var minVal = parent.getRawValue(0, idNum);
+    var maxVal = parent.getRawValue(100, idNum);
+
     if(isValid){
+      if(id.indexOf("min") != -1 || id.indexOf("max") != -1){
+        if(value < 0){
+          value = 0;
+          document.getElementById("actualMin" + idNum).placeholder = minVal;
+        }
+        else if(value > 100){
+          value = 100;
+          document.getElementById("actualMax" + idNum).placeholder = maxVal;
+        }
       document.getElementById(id).placeholder = value;
       document.getElementById(id).value = "";
+      }
+      else if(id.indexOf("actualMin") != -1 || id.indexOf("actualMax") != -1){
+        /*if(idNum == 3 || idNum == 4 || idNum == 5 || idNum == 6){
+          var temp = maxVal;
+          maxVal = minVal;
+          minVal = temp;
+        }*/
+        if(value < minVal){
+          value = minVal;
+          document.getElementById("min" + idNum).placeholder = 0;
+        }
+        else if(value > maxVal){
+          value = maxVal;
+          document.getElementById("max" + idNum).placeholder = 100;
+        }
+        document.getElementById(id).placeholder = value;
+        document.getElementById(id).value = "";
+      }
     }
     else {
       document.getElementById(id).value = "";
@@ -788,8 +868,15 @@
 
   function convertAndUpdate(id, option, value) {
     var idNum = progressbarIds.indexOf(id);
+    var minVal = parent.getRawValue(0, idNum);
+    var maxVal = parent.getRawValue(100, idNum);
 
     if(idNum == 16) return;
+    if(idNum == 3 || idNum == 4 || idNum == 5 || idNum == 6){
+      var temp = maxVal;
+      maxVal = minVal;
+      minVal = temp;
+    }
     if(option == "min" || option == "max"){
       // get english raw value
       var rawValue = parent.getRawValue(value, idNum);
@@ -803,11 +890,21 @@
 
       if(option == "min"){
         // Set actualMin raw value
-        document.getElementById("actualMin" + idNum).placeholder = rawValue;
+        var val = parseFloat(document.getElementById("max" + idNum).placeholder);
+        if(value <= val || isNaN(val)){
+          if(rawValue <= maxVal && rawValue >= minVal && value != ""){
+              document.getElementById("actualMin" + idNum).placeholder = rawValue;
+          }
+        }
       }
       else {
         // Set actualMax raw value
-        document.getElementById("actualMax" + idNum).placeholder = rawValue;
+        var val = parseFloat(document.getElementById("min" + idNum).placeholder);
+        if(value >= val || isNaN(val)){
+          if(rawValue <= maxVal && rawValue >= minVal && value != ""){
+            document.getElementById("actualMax" + idNum).placeholder = rawValue;
+          }
+        }
       }
       // return the min/max value since we will need it as a parameter in setProgressbarMinMaxValues function.
       return value;
@@ -819,11 +916,39 @@
       var minOrMaxValue = Math.round(getScores(idNum, value) * 100) / 100;
       if(option == "actualMin"){
         // Set 0 - 100 Min value based on the raw value
-        document.getElementById("min" + idNum).placeholder = minOrMaxValue;
+        var val = parseFloat(document.getElementById("actualMax" + idNum).placeholder);
+        if(idNum != 3 && idNum != 4 && idNum != 5 && idNum != 6){
+          if(value <= val || isNaN(val)){
+            if(value <= maxVal && value >= minVal && value != ""){
+              document.getElementById("min" + idNum).placeholder = minOrMaxValue;
+            }
+          }
+        }
+        else{
+          if(value >= val || isNaN(val)){
+            if(value <= maxVal && value >= minVal && value != ""){
+              document.getElementById("min" +idNum).placeholder = minOrMaxValue;
+            }
+          }
+        }
       }
       else {
         // Set 0 - 100 Max value based on the raw value
-        document.getElementById("max" + idNum).placeholder = minOrMaxValue;
+        var val = parseFloat(document.getElementById("actualMin" + idNum).placeholder);
+        if(idNum != 3 && idNum != 4 && idNum != 5 && idNum != 6){
+          if(value >= val || isNaN(val)){
+            if(value <= maxVal && value >= minVal && value != ""){
+              document.getElementById("max" + idNum).placeholder = minOrMaxValue;
+            }
+          }
+        }
+        else {
+          if(value <= val || isNaN(val)){
+            if(value <= maxVal && value >= minVal && value != ""){
+              document.getElementById("max" + idNum).placeholder = minOrMaxValue;
+            }
+          }
+        }
       }
       // return the min/max value since we will need it as a parameter in setProgressbarMinMaxValues function.
       return minOrMaxValue;
