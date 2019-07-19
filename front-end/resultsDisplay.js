@@ -298,15 +298,9 @@ function displayResults() {
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
   econGraphic1 = EconomicsGraphic1().getInstance().render();
-<<<<<<< HEAD
-
-  // EconomicsGraphic3();
-  console.log(economics.getInstance().data3)
-
-
-=======
+  econGraphic4 = EconomicsGraphic3().getInstance().render();
   econGraphic4 = EconomicsGraphic4().getInstance().render();
->>>>>>> development
+
 
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
@@ -4387,37 +4381,281 @@ function stackMax(layers) {
     return 0;
   });
 }
-<<<<<<< HEAD
 
-// function EconomicsGraphic3(){
-//
-//   var margin = {top: 40, right: 10, bottom: 20, left: 60};
-//   var width = 1800*.7 - margin.left - margin.right;
-//   var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
-//
-//   var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3svg');
-//   var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3');
-//
-//   var myChart = d3.select(econBody)
-//     .attr('width', width + margin.right + margin.left)
-//     .attr('height', height + margin.top + margin.bottom)
-//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-//
-//   myChart.append("text")
-//       .attr("transform",
-//         "translate(" + (width/2) + " ," +
-//         (25) + ")")
-//       .style("text-anchor", "left")
-//       .style("font-weight", "bold")
-//       .style("font-size", "1.5vmax")
-//       .text("Time/Action Totals");
-//
-//
-//
-//
-//
-// }
-=======
+
+function EconomicsGraphic3(){
+
+  var instance;
+  var options = ["Conventional Corn","Action - Cost Type","Machinery"];
+  var displaydata;
+  var econdata;
+
+  var margin = {top: 40, right: 10, bottom: 20, left: 60};
+  var width = 1800*.7 - margin.left - margin.right;
+  var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+
+  function init() {
+    // we are using the same data
+    econdata=economics.getInstance().data4;
+    var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3svg');
+    var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3');
+    window = document.getElementById('resultsFrame');
+    var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
+    '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
+
+    // scales
+    var margin = {top: 40, right: 10, bottom: 60, left: 50};
+    let windowWidth=window.innerWidth;
+    var width = windowWidth *0.8- margin.left - margin.right;
+    var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+    var rectWidth = 100;
+    // svg element
+    var svg = d3.select(econBody);
+    svg
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    /**
+     * function draws bar on the chart
+     */
+    var drawBarsfunction=function(){
+
+      displaydata=econGraphic4DisplayData(options[0],options[1],options[2]);
+        //scale
+        var xScale = d3.scaleBand()
+        	.domain(displaydata.map(function(d){ return d.costname;}))
+        	.range([margin.left, width - margin.right]);
+          //.padding(.1);
+        var yMax = d3.max(displaydata, function(d){return d.value});
+        var yScale = d3.scaleLinear()
+        	.domain([0, yMax])
+        	.range([height - margin.bottom, margin.top]);
+        var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph4tt"));
+
+          // bars
+        var rect = svg.selectAll('rect')
+        	.data(displaydata)
+        	.enter().append('rect')
+        	.attr('x', function(d, i){
+            return xScale(d.costname)+25})
+        	.attr('y', function(d){
+            return yScale(d.value)})
+        	.attr('width', xScale.bandwidth() - margin.left)
+        	.attr('height', function(d){
+            return height - margin.bottom - yScale(d.value)})
+    			.attr('fill', function(d,i){
+            return colors[i]})
+          .on("mouseover",function(d){
+            tooltip.style("visibility","visible");
+            tooltip.select("#econGraphic4CostName").text(d.costname);
+            tooltip.select('#econGraphic4Value').text("$"+d.value.toFixed(2));
+          })
+          .on("mouseout",function(){
+            tooltip.style("visibility","hidden");
+
+          })
+          .on("mousemove",function(d){
+            tooltip
+            .style('left', (d3.event.pageX ) +"px")
+            .style('top', (d3.event.pageY) + "px")
+          });
+
+        // axes
+        var xAxis = d3.axisBottom()
+        	.scale(xScale);
+        var yAxis = d3.axisLeft(yScale)
+        	.tickSize(-width)
+          .tickSizeOuter(0);
+
+        //cost name
+        svg.append('g')
+          	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
+          	.call(xAxis);
+        svg.selectAll('g.tick')
+            .selectAll('text')
+            .attr('fill','purple')
+            .attr('font-weight','bold')
+            .attr('font-size','10px')
+            .attr("transform", function(d) {
+                return "rotate(-35) "
+            })
+            .attr("text-anchor", "end")
+        //scale value on y axis
+          svg.append('g')
+          	.attr('transform', 'translate(' + margin.left + ',0)')
+          	.call(yAxis);
+          svg.selectAll("g.tick")
+           .style("stroke-dasharray", ("3,3"))
+
+        //grahic chart name on the top
+          svg.append("text")
+             .attr("transform",
+               "translate(" + ((width/2)-110) + " ," +
+               (25) + ")")
+             .style("text-anchor", "left")
+             .style("font-weight", "bold")
+             .style("font-size", "1.5vmax")
+             .text("Cost($) vs Line Items/Individual Costs");
+
+        //display cost name title on bottom
+           svg.append("text")
+               .attr("transform",
+                 "translate(" + (width/2) + " ," +
+                 (height+margin.bottom+20) + ")")
+               .style("text-anchor", "left")
+               .text("Line Items/Individual Costs")
+               .attr("font-size","1.1vmax")
+               .attr("font-weight","bold");
+
+        //display value title on y axis
+           svg.append("text")
+               .attr("transform", "rotate(-90)")
+               .attr("y", 0)
+               .attr("x", 0 - (height / 2))
+               .attr("dy", "1em")
+               .style("text-anchor", "middle")
+               .text("Cost ($)")
+               .attr("font-size","1.1vmax")
+               .attr("font-weight","bold");
+        }
+
+        /**
+         * display the land use, action,time cost type
+         */
+        var addOptions=function(){
+          let  doc =document.getElementById('resultsFrame').contentWindow.document;
+
+          // selection dropdown menu for cost type
+          var selectedType=function(costType,option,name){
+            optionCLick(costType,option);
+            doc.getElementById("econGraphic4ActionType").style.display='none';
+            doc.getElementById("econGraphic4TimeType").style.display='none';
+            doc.getElementById(name).style.display='block';
+          }
+
+          //create Action, time cost type list
+          function createCostOption(){
+            costContainer=doc.getElementById('econGraphic4CostOption');
+            var costTypeList=econdata.filter(function(item){
+              return item.landUse==options[0];
+            });
+            costTypeListAction=costTypeList[0]['Action - Cost Type'];
+            costTypeContainer=doc.getElementById("econGraphic4ActionType");
+            costTypeContainer.innerHTML="";
+            costTypeListAction.forEach(d=>{
+              input=createInputbox('div',d,'input','econ4costType',d,2);
+              costTypeContainer.appendChild(input);
+            });
+            costContainer.append(costTypeContainer);
+
+            costTypeListTime=costTypeList[0]['Time - Cost Type'];
+            costTypeContainer=doc.getElementById("econGraphic4TimeType");
+            costTypeContainer.innerHTML="";
+            costTypeListTime.forEach(d=>{
+              input=createInputbox('div',d,'input','econ4costType',d,2);
+              costTypeContainer.appendChild(input);
+            });
+            costContainer.append(costTypeContainer);
+          }
+
+          //land use input radio type
+          container=document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4LandUses');
+          container.innerHTML='';
+          cell=document.createElement('div');
+          cell.innerHTML='Land Use';
+          cell.className='graphic4landuse';
+          container.append(cell);
+          econdata.map(d=>d.landUse).forEach((d)=>{
+            cell=document.createElement('div');
+            cell.innerHTML=d;
+            cell.className="graphic4option";
+            inputbox=document.createElement('input');
+            inputbox.name="landuseoption";
+            if(d==options[0]){
+              inputbox.checked=true;
+            }
+            inputbox.type='radio';
+            inputbox.style.float='right';
+            inputbox.onclick=function(event){optionCLick(d,0);createCostOption()};
+            cell.appendChild(inputbox);
+            container.append(cell);
+          });
+
+          //option for action, time type selection
+          costSelector=doc.getElementById('costSelector');
+          costSelector.innerHTML="";
+          typeSelection=document.createElement('select');
+          //typeSelection.style.width="100%";
+          option1=document.createElement('option');
+          option1.value='Action';
+          option1.innerHTML='Action - Cost Type';
+          option1.onclick=event=>selectedType(option1.innerHTML,1,"econGraphic4ActionType");
+          option2=document.createElement('option');
+          option2.value='Time';
+          option2.innerHTML='Time - Cost Type';
+          option2.onclick=event=>selectedType(option2.innerHTML,1,"econGraphic4TimeType");
+          typeSelection.appendChild(option1);
+          typeSelection.appendChild(option2);
+          costSelector.appendChild(typeSelection);
+
+          createCostOption();
+
+    }
+
+    //create input box html
+    function createInputbox(tag,innerhtml,inputTag,name,d,i){
+      cell=document.createElement(tag);
+      cell.innerHTML=innerhtml;
+      cell.className="graphic4option"
+      inputbox=document.createElement(inputTag);
+      inputbox.name=name;
+      inputbox.type='radio';
+      if(d==options[2]){
+        inputbox.checked=true;
+      }
+      inputbox.style.float='right';
+      inputbox.onclick=event=>optionCLick(d,i);
+      cell.appendChild(inputbox);
+      return cell;
+    }
+    //option selection
+    var optionCLick=function(d,i){
+      options[i]=d;
+        rerender();
+    }
+    //rerender the bar on the chart
+    var rerender=function(){
+      svg.selectAll("*").remove();
+      drawBarsfunction();
+    }
+    //render the first time
+    var render = function (){
+      svg.selectAll("*").remove();
+      drawBarsfunction();
+      addOptions();
+    }
+
+    return {
+      render: render,
+    };
+  };
+  return {
+    getInstance: function () { //To ensure singularity
+      if ( !instance ) {
+        instance = init();
+      }
+      return instance;
+    }
+  };
+}
+
+
+
+
+
+
 function exists(arr, search) {
     return arr.some(row => row.includes(search));
 }
@@ -4715,4 +4953,3 @@ function EconomicsGraphic4() {
     }
   };
 }
->>>>>>> development

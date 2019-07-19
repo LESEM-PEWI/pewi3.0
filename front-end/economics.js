@@ -54,12 +54,15 @@ var economics = (function () { //Singleton for getting economics data from the b
       this.rawData = data;
       divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
       chart4Information(['Action - Cost Type', 'Time - Cost Type']);
+      // console.log(this.rawData);
     })
     return {//public fields
       data: this.data,
       rawData: this.rawData,
       data4: data4
+
     };
+    console.log(data4)
   };
   return {
     getInstance: function () { //To ensure singularity
