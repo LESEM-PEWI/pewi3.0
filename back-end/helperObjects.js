@@ -865,13 +865,13 @@ function Click(c1, c2, c3, c4, c5) {
         }
       case 78:
         if (action) {
-          return toggleIndex();
+          return toggleGlossary();
         } else {
           return "Index opened";
         }
       case 79:
         if (action) {
-          return toggleIndex();
+          return toggleGlossary();
         } else {
           return "Index closed";
         }

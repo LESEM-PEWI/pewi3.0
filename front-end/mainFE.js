@@ -359,7 +359,7 @@ function confirmEscape() {
     };
     document.getElementById('directoryButton').onclick = function() {
       toggleEscapeFrame();
-      toggleIndex();
+      toggleGlossary();
     };
     document.getElementById('optionsButton').style.opacity = 1;
     document.getElementById('directoryButton').style.opacity = 1;
@@ -601,8 +601,8 @@ function onWheelViewCredits(e) {
   }
 }
 
-//Event function that is called when a user is scrolling in the index [Unused for now...need to find a way to record scroll bar position in nested iframe within index]
-//function onWheelViewIndex(e) {
+//Event function that is called when a user is scrolling in the Glossary [Unused for now...need to find a way to record scroll bar position in nested iframe within Glossary]
+//function onWheelViewGlossary(e) {
 //if(curTracking && scrollGap) {
 //pushClick(0,getStamp(),93,0,window.frames[2].frames[0].pageYOffset);
 //}

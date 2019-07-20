@@ -183,7 +183,7 @@
      <!-- style="display: inline; visibility: hidden;-->
     <div id = "flyover" class = "fly" > </div>
     <!--Create Glossary button on screen-->
-    <div id="indexmenu" onclick="toggleIndex();">Glossary</div>
+    <div id="glossarymenu" onclick="toggleGlossary();">Glossary</div>
 
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
     <img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
@@ -953,7 +953,7 @@
     <!--Chat box for Index information -->
     <div id="backgroundInfoButton" class="backgroundInfoButton" onclick="toggleBackgroundInfoDisplay();"><img src="./imgs/indexIcon.png"></div>
     <div id="backgroundInfoBox" class="backgroundInfoBox">
-      <p id="indexPopupText" class="indexPopupText"></p>
+      <p id="glossaryPopupText" class="glossaryPopupText"></p>
     </div>
 
     <!-- **END Right Side Component** -->
@@ -994,7 +994,7 @@
     <img id="closeCredits" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeCreditFrame() ;">
     <div id="modalUploadFrame"><iframe id="uploadDownloadFrame" style="display:none;" src="./htmlFrames/uploadDownload.html"></iframe></div>
     <img id="closeUploadDownload" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeUploadDownloadFrame();">
-    <div id="modalCodexFrame"><iframe id="index" src="./modules/codex/codex.html" allowfullscreen="allowfullscreen"></iframe></div>
+    <div id="modalCodexFrame"><iframe id="glossary" src="./modules/codex/codex.html" allowfullscreen="allowfullscreen"></iframe></div>
     <!-- index iframe has its own close button -->
 
     <!-- Include fireworks javascript library -->
@@ -1021,7 +1021,7 @@
 
   <div id="modalEscapeFrame">
     <div id="escapeMenu">
-      <div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleIndex() ;">Glossary</div>
+      <div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleGlossary() ;">Glossary</div>
       <div class="mainEscapeButton" id="optionsButton" onclick="toggleEscapeFrame(); startOptions();">Instructor Options</div>
       <!--The hover options feature is currently in the Options menu, but can be changed -->
       <!--<div class="mainEscapeButton" id="userSettingsButton" onclick="toggleEscapeFrame(); startOptions();">User Settings</div>-->
