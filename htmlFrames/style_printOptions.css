@@ -101,6 +101,17 @@ body {
   width: 100%;
 }
 
+#printMessage {
+  top: 5%;
+  right: 15%;
+  display: block;
+  color: #FFFFFF;
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.8vw;
+  font-weight: bold;
+  position: absolute;
+}
+
 input {
   height: 0%;
   position: absolute;
