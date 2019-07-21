@@ -402,55 +402,55 @@ function changeSelectedPaintTo(newPaintValue) {
     document.getElementById(painterElementId).className = "landSelectorIcon iconSelected";
     painter = newPaintValue;
 
-    //Index chat box entries for each landuse type
+    //Glossary chat box entries for each landuse type
     switch (painterElementId) {
       case 'paint1':
-      updateIndexPopup('To learn more about <span style="color:orange">Conventional Corn</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Conventional Corn</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint2':
-      updateIndexPopup('To learn more about <span style="color:orange">Conservation Corn</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Conservation Corn</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint3':
-      updateIndexPopup('To learn more about <span style="color:orange">Conventional Soybean</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Conventional Soybean</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint4':
-      updateIndexPopup('To learn more about <span style="color:orange">Conservation Soybean</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Conservation Soybean</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint5':
-      updateIndexPopup('To learn more about <span style="color:orange">Alfalfa Hay</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Alfalfa Hay</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint6':
-      updateIndexPopup('To learn more about <span style="color:orange">Permanent Pasture</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Permanent Pasture</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint7':
-      updateIndexPopup('To learm more about <span style="color:orange">Rotational Grazing</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learm more about <span style="color:orange">Rotational Grazing</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint8':
-      updateIndexPopup('To learn more about <span style="color:orange">Grass Hay</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Grass Hay</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint9':
-      updateIndexPopup('To learn more about <span style="color:orange">Prarie</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Prarie</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint10':
-      updateIndexPopup('To learn more about <span style="color:orange">Conservation Forest</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Conservation Forest</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint11':
-      updateIndexPopup('To learn more about <span style="color:orange">Conventional Forest</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Conventional Forest</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint12':
-      updateIndexPopup('To learn more about <span style="color:orange">Switch Grass</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Switch Grass</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint13':
-      updateIndexPopup('To learn more about <span style="color:orange">Short Rotation Woody Bioenergy</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Short Rotation Woody Bioenergy</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint14':
-      updateIndexPopup('To learn more about <span style="color:orange">Wetland</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Wetland</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       case 'paint15':
-      updateIndexPopup('To learn more about <span style="color:orange">Mixed Fruits and Vegetables</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange">Mixed Fruits and Vegetables</span>, go to the <span style="color:yellow">Index</span> and select <span style="color:yellow">"Land Use"</span>.');
       break;
       default:
-      updateIndexPopup('');
+      updateGlossaryPopup('');
       break;
     } // END switch
 
@@ -779,56 +779,56 @@ function displayLevels(overlayHighlightType) {
   switch (overlayHighlightType) {
     case 'nitrate':
     selectionHighlightNumber = 1;
-    updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Index</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Index</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 42, 0, null);
     }
     break;
     case 'erosion':
     selectionHighlightNumber = 2;
-    updateIndexPopup('To learn more about <span style="color:orange;">Erosion</span>, go to the <span style="color:yellow;">Index</span>, select "Modules" and then <span style="color:yellow;">"Soil Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Erosion</span>, go to the <span style="color:yellow;">Index</span>, select "Modules" and then <span style="color:yellow;">"Soil Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 43, 0, null);
     }
     break;
     case 'phosphorus':
     selectionHighlightNumber = 3;
-    updateIndexPopup('To learn more about <span style="color:orange;">Phosphorus</span>, go to the <span style="color:yellow;">Index</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Phosphorus</span>, go to the <span style="color:yellow;">Index</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 44, 0, null);
     }
     break;
     case 'flood':
     selectionHighlightNumber = 4;
-    updateIndexPopup('This map shows the <span style="color:orange;">frequency of flooding</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+    updateGlossaryPopup('This map shows the <span style="color:orange;">frequency of flooding</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 45, 0, null);
     }
     break;
     case 'drainage':
     selectionHighlightNumber = 5;
-    updateIndexPopup('This map shows the <span style="color:orange;">drainage</span> for each pixel. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+    updateGlossaryPopup('This map shows the <span style="color:orange;">drainage</span> for each pixel. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 48, 0, null);
     }
     break;
     case 'wetlands':
     selectionHighlightNumber = 6;
-    updateIndexPopup('This map shows the locations for each <span style="color:orange;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+    updateGlossaryPopup('This map shows the locations for each <span style="color:orange;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 46, 0, null);
     }
     break;
     case 'boundary':
     selectionHighlightNumber = 7;
-    updateIndexPopup('This map shows the <span style="color:orange;">boundaries of each subwatershed</span>. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+    updateGlossaryPopup('This map shows the <span style="color:orange;">boundaries of each subwatershed</span>. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 47, 0, null);
     }
     break;
     case 'soil':
     selectionHighlightNumber = 8;
-    updateIndexPopup('There are <span style="color:orange;">thirteen</span> different soil classes that each have different properties. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+    updateGlossaryPopup('There are <span style="color:orange;">thirteen</span> different soil classes that each have different properties. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 49, 0, null);
     }
@@ -2686,8 +2686,8 @@ function resetPresets() {
     roll(1);
   }
   //Resets index function
-  if(document.getElementById('index').style.display == "block") {
-    document.getElementById('index').style.display = "none";
+  if(document.getElementById('glossary').style.display == "block") {
+    document.getElementById('glossary').style.display = "none";
   }
   //Resets the undoArr
   resetUndo();
@@ -3185,56 +3185,56 @@ function showLevelDetails(value) {
     //show Corn class legend
     document.getElementById('cornClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('cornDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('<span style="color:orange;">Conventional Corn and Conservation Corn</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+    updateGlossaryPopup('<span style="color:orange;">Conventional Corn and Conservation Corn</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
     case 10:
     //show soy class legend
     document.getElementById('soyClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('soybeanDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('<span style="color:orange;">Conventional Soy and Conservation Soy</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+    updateGlossaryPopup('<span style="color:orange;">Conventional Soy and Conservation Soy</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
     case 11:
     //show fruit class legend
     document.getElementById('fruitClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('fruitDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about <span style="color:orange;">Mixed Fruits and Vegetable Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Mixed Fruits and Vegetable Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
     case 12:
     //show cattle class legend
     document.getElementById('cattleClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('cattleDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('<span style="color:orange;">Permanent Pasture and Rotational Grazing</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+    updateGlossaryPopup('<span style="color:orange;">Permanent Pasture and Rotational Grazing</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
     case 13:
     //show alfalfa class legend
     document.getElementById('alfalfaClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('alfalfaDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about Alfalfa Hay Yield, go to the Index, select "Modules", and then "Yield".');
-    updateIndexPopup('To learn more about <span style="color:orange;">Alfalfa Hay Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+    updateGlossaryPopup('To learn more about Alfalfa Hay Yield, go to the Index, select "Modules", and then "Yield".');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Alfalfa Hay Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
     case 14:
     //show grasshay class legend
     document.getElementById('grassHayClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('grasshayDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about <span style="color:orange;">Grass Hay Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Grass Hay Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
     case 15:
     //show switch grass class legend
     document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('switchgrassDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('To learn more about <span style="color:orange;">Switch Grass Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Switch Grass Yield</span>, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
     case 16:
     //show wood class legend
     document.getElementById('woodClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('woodDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('<span style="color:orange;">Conventional Forest and Conservation Forest</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+    updateGlossaryPopup('<span style="color:orange;">Conventional Forest and Conservation Forest</span> produce the same output based on soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
     case 17:
     //show short class legend
     document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
     document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
-    updateIndexPopup('<span style="color:orange;">Short-Rotation Woody Biomass</span> produces the same output, no matter the soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+    updateGlossaryPopup('<span style="color:orange;">Short-Rotation Woody Biomass</span> produces the same output, no matter the soil type. To learn more, go to the <span style="color:yellow">Index</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
     break;
   } // END switch
   //hide ecosystem indicator legends
@@ -3421,7 +3421,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('terrainImg').className = "imgSelected";
     document.getElementById('painterTab').style.display = "block";
-    updateIndexPopup('These are the <span style="color:orange;">15</span> different <span style="color:orange;">land use types</span>. To learn more about them, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Land Use"</span>.');
+    updateGlossaryPopup('These are the <span style="color:orange;">15</span> different <span style="color:orange;">land use types</span>. To learn more about them, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Land Use"</span>.');
     break;
     case 2:
     inDispLevels = false;
@@ -3430,7 +3430,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('precipImg').className = "imgSelected";
     document.getElementById('precipTab').style.display = "block";
-    updateIndexPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Index</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
+    updateGlossaryPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Index</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
     break;
     case 3:
     inDispLevels = true;
@@ -3439,7 +3439,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('levelsImg').className = "imgSelected";
     document.getElementById('levelsTab').style.display = "block";
-    updateIndexPopup('This is the <span style="color:orange;">Levels Tab,</span> where you can learn about <span style="color:yellow;">Soil Quality and Water Quality</span>.');
+    updateGlossaryPopup('This is the <span style="color:orange;">Levels Tab,</span> where you can learn about <span style="color:yellow;">Soil Quality and Water Quality</span>.');
     break;
     case 4:
     inDispLevels = true;
@@ -3448,7 +3448,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('featuresImg').className = "imgSelected";
     document.getElementById('featuresTab').style.display = "block";
-    updateIndexPopup('This is the <span style="color:orange;">Physical Features Tab</span>, where you will find information on topography, soil properties, subwatershed boundaries, and strategic wetland areas.');
+    updateGlossaryPopup('This is the <span style="color:orange;">Physical Features Tab</span>, where you will find information on topography, soil properties, subwatershed boundaries, and strategic wetland areas.');
     break;
     case 5:
     inDispLevels = false;
@@ -3465,7 +3465,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('calendarImg').className = "imgSelected";
     document.getElementById('yearsTab').style.display = "block";
-    updateIndexPopup('The <span style="color:orange;">Years Tab</span> allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
+    updateGlossaryPopup('The <span style="color:orange;">Years Tab</span> allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
     break;
     case 7:
     inDispLevels = true;
@@ -3474,7 +3474,7 @@ function switchConsoleTab(value) {
     }
     document.getElementById('yieldImg').className = "imgSelected";
     document.getElementById('yieldTab').style.display = "block";
-    updateIndexPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
+    updateGlossaryPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
     break;
   } // END switch
 
@@ -3570,10 +3570,10 @@ function toggleEscapeFrame() {
 
 } //end toggleEscapeFrame
 
-//toggleIndex displays and hides the codex
-function toggleIndex() {
+//toggleGlossary displays and hides the codex
+function toggleGlossary() {
 
-  if (document.getElementById('index').style.display != "block" && !modalUp) {
+  if (document.getElementById('glossary').style.display != "block" && !modalUp) {
     closeCreditFrame();
     closeUploadDownloadFrame();
     if (document.getElementById('modalResultsFrame').style.display == "block") resultsEnd();
@@ -3583,10 +3583,10 @@ function toggleIndex() {
     }
     modalUp = true;
     document.getElementById('modalCodexFrame').style.display = "block";
-    document.getElementById('index').style.display = "block";
-    document.addEventListener('keyup', indexEsc);
-    // addEvent(document, 'keyup', indexEsc);
-  } else if (document.getElementById('index').style.display == "block" && modalUp) {
+    document.getElementById('glossary').style.display = "block";
+    document.addEventListener('keyup', glossaryEsc);
+    // addEvent(document, 'keyup', glossaryEsc);
+  } else if (document.getElementById('glossary').style.display == "block" && modalUp) {
 
     if (curTracking) {
       pushClick(0, getStamp(), 79, 0, null);
@@ -3594,20 +3594,20 @@ function toggleIndex() {
     modalUp = false;
 
     document.getElementById('modalCodexFrame').style.display = "none";
-    document.getElementById('index').style.display = "none";
+    document.getElementById('glossary').style.display = "none";
     document.activeElement.blur();
 
-    document.getElementById('index').contentWindow.document.getElementById('square1').innerHTML = "<img src='./imgs/indexMain.png'>";
-    document.getElementById('index').contentWindow.document.getElementById('square2frame').src = "";
-    document.getElementById('index').contentWindow.document.getElementById('switchGeneral').style.display = "none";
-    document.getElementById('index').contentWindow.document.getElementById('switchAdvanced').style.display = "none";
-    document.getElementById('index').contentWindow.document.getElementById('title').innerHTML = "";
+    document.getElementById('glossary').contentWindow.document.getElementById('square1').innerHTML = "<img src='./imgs/indexMain.png'>";
+    document.getElementById('glossary').contentWindow.document.getElementById('square2frame').src = "";
+    document.getElementById('glossary').contentWindow.document.getElementById('switchGeneral').style.display = "none";
+    document.getElementById('glossary').contentWindow.document.getElementById('switchAdvanced').style.display = "none";
+    document.getElementById('glossary').contentWindow.document.getElementById('title').innerHTML = "";
 
-    document.getElementById('index').contentWindow.resetHighlighting();
-    document.removeEventListener('keyup', indexEsc);
-    // removeEvent(document, 'keyup', indexEsc);
+    document.getElementById('glossary').contentWindow.resetHighlighting();
+    document.removeEventListener('keyup', glossaryEsc);
+    // removeEvent(document, 'keyup', glossaryEsc);
   }
-} //end toggleIndex
+} //end toggleGlossary
 
 //toggleOverlay allows the user to quickly switch between an overlay map and the land type mode
 function toggleOverlay() {
@@ -3827,8 +3827,8 @@ function uniqueTileChange(tileId) {
   }
 } //end uniqueTileChange(tileId)
 
-function updateIndexPopup(string) {
-  window.parent.document.getElementById("indexPopupText").innerHTML = string;
+function updateGlossaryPopup(string) {
+  window.parent.document.getElementById("glossaryPopupText").innerHTML = string;
   window.parent.document.getElementById("backgroundInfoButton").style.background = '#' + Math.random().toString(16).slice(-6);
 }
 
@@ -4359,9 +4359,9 @@ function downuploadEsc(e) {
 }
 
 //Function that closes the download index dialog when escape key is pressed
-function indexEsc(e) {
+function glossaryEsc(e) {
   if (e.keyCode == 27) {
-    toggleIndex();
+    toggleGlossary();
   }
 }
 
