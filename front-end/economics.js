@@ -29,7 +29,7 @@ var economics = (function () { //Singleton for getting economics data from the b
       });
       console.log(this.data)
     }
-    d3.csv('./budgets.csv', function(data){
+    d3.csv('./budgets_2.csv', function(data){
       this.rawData = data;
       divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable'])
     })

@@ -2185,41 +2185,16 @@ function generateEconomicsTables() {
   var wetland = "";
   var mixedFruitsV = "";
 
-  var instance;
-  var rawData;
-  var data;
-
-   //file used for data
-  //var file = "./budgets.csv";
 
    //results array that holds data objects
   var results = [];
 
    //resulting parse from file variable
-  //var res;
+  var res;
 
 //  var source = "../htmlFrames/imgs/text.png"
 
-  d3.csv('./budgets_2.csv', function(data){
-    this.rawData = data;
-  })
-   //parsing the entire file and putting each cell into an the array res
-  /*$.ajax({
-    async: false,
-    type: "GET",
-    url: file,
-    dataType: "text",
-    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-    success: function(data) {
-      res = data.split(/\n/);
-      res = res.split(/\r/);
-    },
-    error: function(data) {
-      console.log(JSON.stringify(data));
-    }
-  });*/
-
-   //iterating through all the cells and creating TIME objects out of data then data into results array
+  res = rawData;
   for(var i = 0; i < res.length; ++i){
     var tempObj = getObj(res[i], "T");
     results.push(tempObj);
@@ -2391,6 +2366,26 @@ function generateEconomicsTables() {
     document.getElementById('resultsFrame').contentWindow.document.getElementById('mixedFaVE'+timeOrAction).innerHTML = mixedFruitsV;
   }
 
+
+   //parsing the entire file and putting each cell into an the array res
+  /*$.ajax({
+    async: false,
+    type: "GET",
+    url: file,
+    dataType: "text",
+    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+    success: function(data) {
+      res = data.split(/\n/);
+      res = res.split(/\r/);
+    },
+    error: function(data) {
+      console.log(JSON.stringify(data));
+    }
+  });*/
+
+   //iterating through all the cells and creating TIME objects out of data then data into results array
+
+
 }//end generateEconomicsTables()
 
  function getEconomicsData(data) {
@@ -2544,12 +2539,11 @@ function getValue(val) {
 }
 
 function getObj(data, tOrA){
-  var result = data.split(/;/)
   if(tOrA === "T"){
-    var obj = {landUse: result[1], costName: result[7], name: "Time", TorA: result[5], value: result[8], timeOfYear: result[4], description: result[12], subCrop: result[2]};
+    var obj = {landUse: data["Land-Use"], costName: data["Cost Name"], name: "Time", TorA: data["Time - Cost Type"], value: data["Value"], timeOfYear: data["Frequency"], description: data["Description"], subCrop: data["Sub Crop"]};
   }
   else if(tOrA === "A"){
-    var obj = {landUse: result[1], costName: result[7], name: "Action", TorA: result[6], value: result[8], timeOfYear: result[4], description: result[12], subCrop: result[2]};
+    var obj = {landUse: data["Land-Use"], costName: data["Cost Name"], name: "Action", TorA: data["Action - Cost Type"], value: data["Value"], timeOfYear: data["Frequency"], description: data["Description"], subCrop: data["Sub Crop"]};
   }
 
    return obj;
