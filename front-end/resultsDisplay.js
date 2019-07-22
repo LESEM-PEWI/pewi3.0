@@ -4699,36 +4699,150 @@ function EconomicsGraphic4() {
 // }
 function graphic5DisplayInfo(econdata){
   var data=[];
-  //var sumCallBack=(acc, cur)=>acc +cur;
-  var initialValue=0;
-  //econdata=economics.getInstance().data5;
   console.log(econdata);
-
   econdata.forEach(landuse=>{
     landuse['array'].forEach(d=>{
-      console.log(d['Time of Year']+" "+d['# Labor Hours']);
-      //console.log(d['# Labor Hours']);
       if(data.some(e=>e.time_of_year===d['Time of Year'])){
         objIndex = data.findIndex((obj => obj.time_of_year ===d['Time of Year']));
-        
-        data[objIndex].total_labor_hours+=parseFloat(d['# Labor Hours']);
+        if(d['# Labor Hours']!=""){
+          data[objIndex].total_labor_hours+=parseFloat(d['# Labor Hours']);
+        }
+        if(d['Action - Cost Type']=='Custom'){
+          data[objIndex].total_custom_hire_cost+=parseFloat(d['Value']);
+        }
+        data[objIndex].total_labor_costs+=parseFloat(d['Value']);
       }else{
-        data.push({time_of_year:d['Time of Year'], total_labor_hours:parseFloat(d['# Labor Hours']),total_labor_costs:0,total_custom_hire_cost:0})
+        var totalCustomHireCost=0;
+        if(d['Action - Cost Type']=='Custom'){
+          totalCustomHireCost=parseFloat(d['Value']);
+        }
+        data.push({time_of_year:d['Time of Year'], total_labor_hours:parseFloat(d['# Labor Hours']),total_labor_costs:parseFloat(d['Value']),total_custom_hire_cost:totalCustomHireCost})
       }
     })
   });
-
+  data=data.filter(function(d){
+    return d.time_of_year>0;
+  });
   console.log(data);
+  return data;
 }
 
 function EconomicsGraphic5(){
   var instance;
   var econdata;
+  var displaydata;
+  var keys=["total_labor_hours","total_labor_costs","total_custom_hire_cost"];
   function init(){
     econdata=economics.getInstance().data5;
-    graphic5DisplayInfo(econdata);
-    var render=function() {
+    var econBody= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5svg');
+    var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
 
+    //scale
+    var margin={top:40,right:10,bottom:60,left:50};
+    let windowWidth=window.innerWidth;
+    var width = windowWidth *0.8- margin.left - margin.right;
+    var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+    var rectWidth = 100;
+
+    //svg
+    var svg = d3.select(econBody);
+    svg
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    //graphic5DisplayInfo(econdata);
+    //https://observablehq.com/@d3/grouped-bar-chart
+    /**
+     * function draws bar on the chart
+     * @return {[type]} [description]
+     */
+     var drawBarsfunction=function(){
+         displaydata=graphic5DisplayInfo(econdata);
+         console.log(displaydata);
+         //scale
+         let x0=d3.scaleBand()
+         .domain(displaydata.map(d=>d.time_of_year))
+         .range([margin.left,width-margin.right])
+         .padding(.1);
+
+         let x1=d3.scaleBand()
+         .domain(keys)
+         .rangeRound([0,x0.bandwidth()])
+         .padding(.05);
+         console.log(d3.max(displaydata, d => d3.max(keys, key => d[key])));
+         let y=d3.scaleLinear()
+         .domain([0, d3.max(displaydata, d => d3.max(keys, key => d[key]))])
+         .rangeRound([height-margin.bottom,margin.top]);
+
+         svg.append('g')
+          .selectAll('g')
+          .data(displaydata)
+          .enter()
+          .append('g')
+          .attr('transform', d => 'translate(' + x0(d.time_of_year) + ',0)')
+          .selectAll('rect')
+          .data(d=>keys.map(key=>{return {key:key, value:d[key]}}))
+          .enter().append('rect')
+          .attr('x',d=>x1(d.key))
+          .attr('y',d=>y(d.value))
+          .attr('width', x1.bandwidth())
+          .attr('height', d => y(0) - y(d.value))
+          .attr('fill',d=>colors(d.key));
+
+         // axes
+       var xAxis = d3.axisBottom()
+         .scale(x0);
+       var yAxis = d3.axisLeft(y)
+         .tickSize(-width)
+         .tickSizeOuter(0);
+
+
+         //cost name
+          svg.append('g')
+            	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
+            	.call(xAxis);
+          svg.selectAll('g.tick')
+              .selectAll('text')
+              .attr('fill','purple')
+              .attr('font-weight','bold')
+              .attr('font-size','10px');
+
+
+          //scale value on y axis
+          svg.append('g')
+            	.attr('transform', 'translate(' + margin.left + ',0)')
+            	.call(yAxis);
+
+          svg.selectAll("g.tick")
+             .style("stroke-dasharray", ("3,3"));
+           svg.append("text")
+              .attr("transform",
+                "translate(" + (width/2) + " ," +
+                  (height) + ")")
+              .style("text-anchor", "left")
+              .text("Land Uses");
+
+          svg.append("text")
+            .attr("transform",
+              "translate(" + (width/2) + " ," +
+                (25) + ")")
+                .style("text-anchor", "left")
+                .style("font-weight", "bold")
+                .style("font-size", "1.5vmax")
+                .text("Economics By Land Use");
+          svg.append("text")
+             .attr("transform", "rotate(-90)")
+             .attr("y", 0)
+             .attr("x", 0 - (height / 2))
+             .attr("dy", "1em")
+             .style("text-anchor", "middle")
+             .text("Value");
+     }
+
+    var render=function() {
+      svg.selectAll("*").remove();
+      drawBarsfunction();
     }
     return{
       render:render,
