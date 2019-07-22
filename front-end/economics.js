@@ -3,11 +3,12 @@ var economics = (function () { //Singleton for getting economics data from the b
   var rawData;
   var data;
   var data4=Array();
+  var data3 = Array();
 
   function init() {
-    console.log(this);
+
     function divideByCategory (listofCats){
-      console.log(this.rawData);
+
       listofCats.forEach(cat => {
         this.rawData.forEach(dataPoint => {
           if (!this.data[dataPoint['LU_ID']]) {
@@ -29,7 +30,7 @@ var economics = (function () { //Singleton for getting economics data from the b
           Math.round(1000*this.data[dataPoint['LU_ID']][cat].total + 1000*Number.parseFloat(dataPoint['Value']))/1000
         });
       });
-      console.log(this.data)
+
     }
     //graphic 4 extract data from raw data
     function chart4Information(lists) {
@@ -50,11 +51,12 @@ var economics = (function () { //Singleton for getting economics data from the b
         });
     }
 
+
     d3.csv('./budgets.csv', function(data){
       this.rawData = data;
       divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
       chart4Information(['Action - Cost Type', 'Time - Cost Type']);
-      // console.log(this.rawData);
+
     })
     return {//public fields
       data: this.data,
@@ -62,7 +64,6 @@ var economics = (function () { //Singleton for getting economics data from the b
       data4: data4
 
     };
-    console.log(data4)
   };
   return {
     getInstance: function () { //To ensure singularity

@@ -298,7 +298,7 @@ function displayResults() {
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
   econGraphic1 = EconomicsGraphic1().getInstance().render();
-  econGraphic4 = EconomicsGraphic3().getInstance().render();
+  econGraphic3 = EconomicsGraphic3().getInstance().render();
   econGraphic4 = EconomicsGraphic4().getInstance().render();
 
 
@@ -4386,9 +4386,14 @@ function stackMax(layers) {
 function EconomicsGraphic3(){
 
   var instance;
-  var options = ["Conventional Corn","Action - Cost Type","Machinery"];
+  var options = ["Preharvest","Action - Cost Type","Machinery"];
   var displaydata;
   var econdata;
+  var equipmentcost;
+  var inputCost;
+  var otherCost;
+  var laborCost;
+  var customCost;
 
   var margin = {top: 40, right: 10, bottom: 20, left: 60};
   var width = 1800*.7 - margin.left - margin.right;
@@ -4423,6 +4428,8 @@ function EconomicsGraphic3(){
     var drawBarsfunction=function(){
 
       displaydata=econGraphic4DisplayData(options[0],options[1],options[2]);
+
+      var stuff = econGraphic3DisplayData("Preharvest", 1);
         //scale
         var xScale = d3.scaleBand()
         	.domain(displaydata.map(function(d){ return d.costname;}))
@@ -4670,7 +4677,31 @@ function exists(arr, search) {
  * @return         [return costname and value]
  */
 
-// function econGraphic3DisplayData(){}
+function econGraphic3DisplayData(timeCostType, year){
+  var data = new Array();
+  data['Equipment'] = new Array();
+  data['Input'] = new Array();
+  data['Labor'] = new Array();
+  data['Other'] = new Array();
+  data['Custom'] = new Array();
+
+  var econdata=economics.getInstance().data4;
+  econdata=econdata.filter(function(item){
+    return item['Year'] == year;
+  });
+
+  econdata=econdata.filter(function(item){
+    return item['Time - Cost Type'] == timeCostType;
+  });
+
+  for (var i = 0; i < econData.length; i++)
+  {
+    var type = econData[i]['Action - Cost Type'];
+    data[type] += econData[i]['Value'];
+  }
+
+  return data;
+}
 
 function econGraphic4DisplayData(landUse,costType,cost){
   var econdata=economics.getInstance().data4;
