@@ -2257,15 +2257,35 @@ function generateResultsTable() {
 
     //fill in table rows with data
 
+
     for (var l = 0; l < backendDataIdentifiers.length; l++) {
 
       //keep track of subheadings, just 1 this time
       switch (l) {
-        case 0:
-          htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
-          //htmlTableString += "<tr>";
-        //  htmlTableString += "<td><b>" + "Yield" + "<b></td>";
-          break;
+        case 0:  
+          //htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
+            //put Yield header, in bold
+            htmlTableString += "<tr>";
+            htmlTableString += "<td><b>" + "Yield" + "<b></td>";
+            
+            //calculate total score for each year and place next to Yield header
+            for(var y = 1; y <= upToYear; y++){
+              htmlTableString += "<td><b>";
+
+              var totalScore = Math.min(Totals.cornGrainYieldScore[y] +
+              Totals.soybeanYieldScore[y] + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] +
+              Totals.grassHayYieldScore[y] + Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y], 100);
+
+              htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
+
+              htmlTableString += "<b></td>";
+            }
+            htmlTableString += "<td><b>(out of 100)<b></td>";
+            //add extra spaces to fill out bar across screen
+            for(var y = 1; y <= (2*upToYear)+2; y++){
+              htmlTableString += "<td></td>";
+            }
+            break;
       } //end switch
 
       htmlTableString += "<tr>";
