@@ -20,6 +20,12 @@ var Economics = function () {
         }
         if(!this.data[dataPoint['LU_ID']][cat][dataPoint[cat]]){ //if this is the first value we need to read
           this.data[dataPoint['LU_ID']][cat][dataPoint[cat]] = Math.round(1000*Number.parseFloat(dataPoint['Value']))/1000;
+          if(!this.data[cat]){
+            this.data[cat] = [];
+          }
+          if(!this.data[cat].includes(dataPoint[cat])) {
+            this.data[cat].push(dataPoint[cat]);
+          }
         }
         else {//The value already exists so just add to it.
           this.data[dataPoint['LU_ID']][cat][dataPoint[cat]] = //trying to prevent floating point calculation errors so rounding to tenth of a cent

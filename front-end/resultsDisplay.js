@@ -300,6 +300,7 @@ function displayResults() {
   econGraphic1 = EconomicsGraphic1().getInstance().render();
   econGraphic4 = EconomicsGraphic4().getInstance().render();
 
+  econGraphic2 = new EconomicsGraphic2();
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
   //============= END DEPRECATED
@@ -4043,6 +4044,7 @@ d3.selection.prototype.moveToBack = function() {
 
 function createMockDataGraphic1(){
   var econData = economics.data;
+  var data = econData.map
   econData = econData.map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
   });
@@ -4675,4 +4677,74 @@ function EconomicsGraphic4() {
       return instance;
     }
   };
+}
+
+createMockDataGraphic2 = (currentSelection) =>{
+  var econData = economics.data
+  data = [];
+  econData.forEach(lu => {
+    arr = Object.keys(lu[currentSelection])
+    arr.splice(0,1)
+    arr.forEach(type => {
+      console.log(type)
+      d = {};
+      d.landUse = lu.landUse;
+      d.type = type;
+      d.value = lu[currentSelection][type];
+      data.push(d)
+    })
+  })
+  return data;
+
+
+}
+
+function EconomicsGraphic2(){
+  var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2svg');
+  var econGraphic2 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2');
+  var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
+  '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
+  var currentSelection = "Action - Cost Type"
+  var data = createMockDataGraphic2(currentSelection);
+  console.log(data);
+  keys = economics.data[currentSelection];
+
+  var margin = {top: 40, right: 10, bottom: 60, left: 50};
+  let windowWidth=window.innerWidth;
+  var width = windowWidth *0.8- margin.left - margin.right;
+  var height =1800*.45 - margin.top - margin.bottom;
+
+  svg = d3.select(econBody);
+  svg
+  .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  let x0 = d3.scaleBand()
+    .domain(data.map(function(d) {return d.landUse + ""; }))
+    .rangeRound([margin.left, width - margin.right])
+    .paddingInner(.1);
+
+  let x = d3.scaleBand()
+    .domain(data.map(function(d) {return d.type;}))
+    .rangeRound([0, x0.bandwidth()])
+    .padding(.05);
+
+  let y = d3.scaleLinear()
+    .domain([0, 10000])
+    .rangeRound([height - margin.bottom, margin.top]);
+
+    svg = d3.select(econBody);
+
+svg.selectAll("g")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("transform", d => "translate(" +x0(d.landUse) + ",0)")
+    .attr("x", d => x(d.type))
+    .attr("y", d => y(d.value))
+    .attr("width", x.bandwidth())
+    .attr("height", d => y(0) - y(d.value))
+    .attr("fill", d => colors[keys.indexOf(d.type)]);
 }
