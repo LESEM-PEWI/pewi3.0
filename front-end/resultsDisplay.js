@@ -4704,13 +4704,18 @@ function graphic5DisplayInfo(econdata){
   //econdata=economics.getInstance().data5;
   console.log(econdata);
 
-  econdata.forEach(d=>{
-    
-    if(data.some(e=>e.time_of_year===d['Time of Year'])){
-
-    }else{
-      data.push({time_of_year:d['Time of Year'], total_labor_hours:parseFloat(d['"# Labor Hours'])})
-    }
+  econdata.forEach(landuse=>{
+    landuse['array'].forEach(d=>{
+      console.log(d['Time of Year']+" "+d['# Labor Hours']);
+      //console.log(d['# Labor Hours']);
+      if(data.some(e=>e.time_of_year===d['Time of Year'])){
+        objIndex = data.findIndex((obj => obj.time_of_year ===d['Time of Year']));
+        
+        data[objIndex].total_labor_hours+=parseFloat(d['# Labor Hours']);
+      }else{
+        data.push({time_of_year:d['Time of Year'], total_labor_hours:parseFloat(d['# Labor Hours']),total_labor_costs:0,total_custom_hire_cost:0})
+      }
+    })
   });
 
   console.log(data);
@@ -4738,3 +4743,5 @@ function EconomicsGraphic5(){
     }
   };
 }
+objIndex = data.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
+data[objIndex].value+=parseFloat(econdata[i].Value);
