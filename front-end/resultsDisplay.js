@@ -281,6 +281,7 @@ var RadarChart = {
 
 //displayResults writes the html for the results iframe with updates results from Totals
 function displayResults() {
+  economics.mapChange();
 
   //Create results table and append it to the proper tab of the results frame
   var numericalTableString = generateResultsTable();
@@ -301,11 +302,11 @@ function displayResults() {
   econGraphic4 = EconomicsGraphic4().getInstance().render();
 
   econGraphic2 = new EconomicsGraphic2();
+  econGraphic2.render();
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
   //============= END DEPRECATED
 
-  economics.mapChange();
   //create the radar plots
   var tempObj = []; //get an array of years to display
   for (var y = 1; y <= boardData[currentBoard].calculatedToYear; y++) {
@@ -4045,12 +4046,14 @@ d3.selection.prototype.moveToBack = function() {
 function createMockDataGraphic1(){
   var econData = economics.data;
   var data = econData.map
-  econData = econData.map((d, i) => {
+  tempData = [];
+  data = [];
+  for(var i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+  tempData[i] = econData[i].map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
   });
-  data = [];
-  econData.forEach((el) => {
-    for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
+    console.log(econData[i])
+    tempData[i].forEach((el) => {
       d = {}
       d.year = i;
       d.landUse = el.landUse;
@@ -4059,8 +4062,8 @@ function createMockDataGraphic1(){
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
       d.Loss = Math.min(d.Revenue + d.Cost, 0);
       data.push(d);
-    }
-  });
+    });
+  }
   return data;
 
 }
@@ -4149,10 +4152,6 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
       .style("fill", "none")
       .attr("width", x.bandwidth);
 
-      formatMoney = function(d){ //This is to put the negative sign in front of the dollar sign
-        var isNegative = d < 0 ? '-' : '';
-        return isNegative + '$' + Math.abs(d);
-      }
       //draws the bars as well as adding listeners for hover
       var rect = layer.selectAll("rect")
         .data(function(d) {return d; })
@@ -4288,7 +4287,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
 
       container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses')
       container.innerHTML = '';
-      economics.data.map(d => d.landUse).forEach(d => {
+      economics.data[1].map(d => d.landUse).forEach(d => {
         cell = document.createElement('div');
         cell.innerHTML = d;
         checkBox = document.createElement('input');
@@ -4680,13 +4679,13 @@ function EconomicsGraphic4() {
 }
 
 createMockDataGraphic2 = (currentSelection) =>{
-  var econData = economics.data
+  var econData = economics.data[1]
+  console.log(econData)
   data = [];
   econData.forEach(lu => {
     arr = Object.keys(lu[currentSelection])
     arr.splice(0,1)
     arr.forEach(type => {
-      console.log(type)
       d = {};
       d.landUse = lu.landUse;
       d.type = type;
@@ -4706,8 +4705,7 @@ function EconomicsGraphic2(){
   '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
   var currentSelection = "Action - Cost Type"
   var data = createMockDataGraphic2(currentSelection);
-  console.log(data);
-  keys = economics.data[currentSelection];
+  keys = economics.data[1][currentSelection];
 
   var margin = {top: 40, right: 10, bottom: 60, left: 50};
   let windowWidth=window.innerWidth;
@@ -4732,19 +4730,121 @@ function EconomicsGraphic2(){
     .padding(.05);
 
   let y = d3.scaleLinear()
-    .domain([0, 10000])
+    .domain([0, 1.1*Math.max.apply(Math, data.map(function(d) { return d.value;}))])
     .rangeRound([height - margin.bottom, margin.top]);
 
-    svg = d3.select(econBody);
+  var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph2tt"));
 
-svg.selectAll("g")
-  .data(data)
-  .enter()
-  .append("rect")
-    .attr("transform", d => "translate(" +x0(d.landUse) + ",0)")
-    .attr("x", d => x(d.type))
-    .attr("y", d => y(d.value))
-    .attr("width", x.bandwidth())
-    .attr("height", d => y(0) - y(d.value))
-    .attr("fill", d => colors[keys.indexOf(d.type)]);
+    svg = d3.select(econBody);
+  this.render = () => {
+    svg.selectAll("*").remove();
+    addBars();
+    addLegend();
+    addAxes();
+    addTitle();
+  }
+
+  var addBars = () => {
+
+    svg.selectAll("g")
+      .data(data)
+      .enter()
+      .append("rect")
+        .attr("transform", d => "translate(" +x0(d.landUse) + ",0)")
+        .attr("x", d => x(d.type))
+        .attr("y", d => y(d.value))
+        .attr("width", x.bandwidth())
+        .attr("height", d => y(0) - y(d.value))
+        .attr("fill", d => colors[keys.indexOf(d.type)])
+        .on("mouseover", function(d) {
+          console.log(d);
+          tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
+          tooltip.select("#econGraphic2LU").text("Land Use: " + d.landUse)
+          // let econType = this.parentNode.getAttribute("layernum")
+          tooltip.select("#econGraphic2Value").text(d.type + " Cost: " + formatMoney(d.value))
+          outlineRect.attr("transform", "translate(" + x0(d.landUse) + ",0)")
+          outlineRect.style("visibility", "visible")
+          outlineRect.attr("x", this.getAttribute("x"))
+          outlineRect.attr("y", this.getAttribute("y"))
+          outlineRect.attr("height", this.getAttribute("height"))})
+          .on("mousemove", d => {
+            tooltip
+            .style('left', (d3.event.pageX + 10) +"px")
+            .style('top', (d3.event.pageY + 10) + "px")
+          })
+          .on("mouseout", function(d) {
+            tooltip.style("visibility", "hidden")
+            outlineRect.style("visibility", "hidden")
+          })
+
+          var outlineRect = svg.append("rect")
+          .attr("stroke", "black")
+          .attr("stroke-width", "2px")
+          .style("visibility", "hidden")
+          .style("fill", "none")
+          .attr("width", x.bandwidth);
+  }
+
+  var addLegend = () =>{
+    legend = svg.append("g")
+      .attr("transform", "translate(" + width +",0)")
+      .attr("text-anchor", "end")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", 15)
+    .selectAll("g")
+      .data(keys)
+      .enter().append("g")
+    .attr("transform", function(d, i) {return "translate(0," + (20 * i) + ")";});
+
+    legend.append("rect")
+      .attr("x", -19)
+      .attr("width", 19)
+      .attr("height", 19)
+      .attr("fill", (d, i) => colors[i]);
+
+    legend.append("text")
+      .attr("x", -24)
+      .attr("y", 9.5)
+      .attr("dy", "0.35em")
+      .text((d,i) => keys[i]);
+  }
+
+  var addAxes = () =>{
+    var xAxis = svg.append("g")
+      .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
+      .style("font-weight", "bold")
+      .call(d3.axisBottom(x0))
+    svg.selectAll("g.tick")
+      .selectAll("text")
+        .attr("fill", "purple")
+        .attr("y", y(y.domain()[0]/1.1)-y(0) + 7)
+        .attr("transform", "rotate(-35)")
+        .style("text-anchor", "end")
+
+    var yAxis = d3.axisLeft(y)
+      .tickFormat(d => formatMoney(d))
+      .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
+      .tickSizeOuter(0)
+    svg.append("g")
+      .attr("transform", "translate(" + margin.left + ", 0)")
+      .call(yAxis);
+
+    svg.selectAll("g.tick")
+      .style("stroke-dasharray", ("3,3"))
+  }
+  var addTitle = () => {
+    svg.append("text")
+      .attr("transform",
+        "translate(" + (width/2) + " ," +
+        (25) + ")")
+      .style("text-anchor", "left")
+      .style("font-weight", "bold")
+      .style("font-size", "1.5vmax")
+      .text("Cost by " + currentSelection);
+  }
+}
+
+formatMoney = function(d){ //This is to put the negative sign in front of the dollar sign
+  var isNegative = d < 0 ? '-' : '';
+  return isNegative + '$' + Math.abs(d);
 }
