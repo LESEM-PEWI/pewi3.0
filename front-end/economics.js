@@ -3,7 +3,7 @@ var economics = (function () { //Singleton for getting economics data from the b
   var rawData;
   var data;
   var data4=Array();
-  var data3 = Array();
+  var data3 = {time: {}, action: {}};
 
   function init() {
 
@@ -51,15 +51,35 @@ var economics = (function () { //Singleton for getting economics data from the b
         });
     }
 
+    function chart3Data(){
+      this.rawData.forEach( dataPoint => {
+        if(data3.time[dataPoint['Time - Cost Type']]){
+          data3.time[dataPoint['Time - Cost Type']] += Number.parseFloat(dataPoint['Value']);
+        }
+        else {
+          data3.time[dataPoint['Time - Cost Type']] = Number.parseFloat(dataPoint['Value']);
+        }
+        if(data3.action[dataPoint['Action - Cost Type']]){
+          data3.action[dataPoint['Action - Cost Type']] += Number.parseFloat(dataPoint['Value']);
+        }
+        else {
+          data3.action[dataPoint['Action - Cost Type']] = Number.parseFloat(dataPoint['Value']);
+        }
+      })
+      console.log(data3);
+    }
+
 
     d3.csv('./budgets.csv', function(data){
       this.rawData = data;
       divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
       chart4Information(['Action - Cost Type', 'Time - Cost Type']);
+      chart3Data();
 
     })
     return {//public fields
       data: this.data,
+      data3: data3,
       rawData: this.rawData,
       data4: data4
 

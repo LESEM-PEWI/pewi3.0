@@ -298,8 +298,9 @@ function displayResults() {
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
   econGraphic1 = EconomicsGraphic1().getInstance().render();
-  econGraphic3 = EconomicsGraphic3().getInstance().render();
+  // econGraphic3 = EconomicsGraphic3().getInstance().render();
   econGraphic4 = EconomicsGraphic4().getInstance().render();
+        var stuff = econGraphic3DisplayData("Preharvest", 1);
 
 
   //DEPRECATED, (create ecosystem indicators aster plot
@@ -4401,7 +4402,7 @@ function EconomicsGraphic3(){
 
   function init() {
     // we are using the same data
-    econdata=economics.getInstance().data4;
+    econdata=economics.getInstance().data;
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3svg');
     var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3');
     window = document.getElementById('resultsFrame');
@@ -4429,7 +4430,6 @@ function EconomicsGraphic3(){
 
       displaydata=econGraphic4DisplayData(options[0],options[1],options[2]);
 
-      var stuff = econGraphic3DisplayData("Preharvest", 1);
         //scale
         var xScale = d3.scaleBand()
         	.domain(displaydata.map(function(d){ return d.costname;}))
@@ -4685,7 +4685,8 @@ function econGraphic3DisplayData(timeCostType, year){
   data['Other'] = new Array();
   data['Custom'] = new Array();
 
-  var econdata=economics.getInstance().data4;
+  var econdata=economics.getInstance().data3;
+  console.log(econData);
   econdata=econdata.filter(function(item){
     return item['Year'] == year;
   });
