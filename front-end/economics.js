@@ -3,6 +3,7 @@ var Economics = function () {
   this.mapData = [];
   this.data = [];
   this.data4 = [];
+  this.data3 = [];
   d3.csv('./budgets.csv', data => { //after parsing the CSV file
     this.rawData = data;
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
@@ -52,22 +53,25 @@ var Economics = function () {
     });
   }
 
-  function chart3Data(){
-    this.rawData.forEach( dataPoint => {
-      if(data3.time[dataPoint['Time - Cost Type']]){
-        data3.time[dataPoint['Time - Cost Type']] += Number.parseFloat(dataPoint['Value']);
-      }
-      else {
-        data3.time[dataPoint['Time - Cost Type']] = Number.parseFloat(dataPoint['Value']);
-      }
-      if(data3.action[dataPoint['Action - Cost Type']]){
-        data3.action[dataPoint['Action - Cost Type']] += Number.parseFloat(dataPoint['Value']);
-      }
-      else {
-        data3.action[dataPoint['Action - Cost Type']] = Number.parseFloat(dataPoint['Value']);
-      }
-    })
-    console.log(data3);
+  this.chart3Data = () => {
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      this.data3[i] = {time: {}, action: {}};
+      this.mapData[i].forEach( dataPoint => {
+        if(this.data3[i].time[dataPoint['Time - Cost Type']]){
+          this.data3[i].time[dataPoint['Time - Cost Type']] += Number.parseFloat(dataPoint['Value']);
+        }
+        else {
+          this.data3[i].time[dataPoint['Time - Cost Type']] = Number.parseFloat(dataPoint['Value']);
+        }
+        if(this.data3[i].action[dataPoint['Action - Cost Type']]){
+          this.data3[i].action[dataPoint['Action - Cost Type']] += Number.parseFloat(dataPoint['Value']);
+        }
+        else {
+          this.data3[i].action[dataPoint['Action - Cost Type']] = Number.parseFloat(dataPoint['Value']);
+        }
+      })
+    }
+    console.log(this.data3);
   }
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
     let landUses = [];
@@ -89,6 +93,7 @@ var Economics = function () {
         this.mapData[i].push(copy)
       })
     }
+    this.chart3Data();
   }
 }
 var economics = new Economics();
