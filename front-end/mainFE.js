@@ -10,8 +10,10 @@ var controls, controls1;
 var keyboard ={};
 var player = { speed:3, turnSpeed:Math.PI*0.02 };
 var renderer = new THREE.WebGLRenderer();
+// renderer.sortObjects = false;
 var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
+
 //application data
 var boardData = [];
 var clickTrackings = []; //array for storing all clicks in when click-tracking is enabled
@@ -23,9 +25,13 @@ var Totals; //global current calculated results, NOTE, should be reassigned ever
 //status trackers
 var allLoaded = false;
 var counter = 0;
+
 var currentBoard = -1;
+
+
 var currentYear = 1;
 var currentPlayer = 0;
+
 var isShiftDown = false;
 var mapIsHighlighted = false;
 var modalUp = false;
@@ -34,6 +40,11 @@ var painter = 1;
 var previousHover = null;
 var tToggle = false; //topology off by default
 var uploadedBoard = false;
+
+
+
+var generatedContourMap;
+
 
 //Variables for Zoom Function
 var fov = null,
@@ -218,7 +229,6 @@ function animationFrames() {
 
   //render animations
   requestAnimationFrame(function animate() {
-
     birdAnimation();
     zoomAnimation();
 
@@ -238,7 +248,6 @@ function animationFrames() {
     if (bgScene != null) {
       renderer.render(bgScene, bgCam);
     }
-
     //wait # update frames to check
     if (counter > 20) {
       gameDirector();
@@ -293,10 +302,12 @@ function birdAnimation() {
 } //end birdAnimation
 
 //Event function that is called when screen is changed
+// Adding navigation keys, asdw
 function CamView(e) {
   tempKeys = giveHotkeys();
   var Uma = String.fromCharCode(tempKeys[11][0]);
   document.getElementById("flyover").innerHTML = "FlyOver Mode, Hit " + Uma +  " to Exit";
+
   if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
     if(curTracking) {
       pushClick(0,getStamp(),85,0,null);
@@ -531,11 +542,6 @@ function initWorkspace(file) {
 
   //setup stats display
   stats.domElement.id = 'statFrame';
-  stats.domElement.style.top = null; //for some reason deleting the attributes does not work you must set them to null
-  stats.domElement.style.left = null;
-  stats.domElement.style.right = "0px";
-  stats.domElement.style.bottom = "0px";
-  stats.domElement.style.position = "absolute";
   document.body.appendChild(stats.domElement);
 
   //Setup scene, toggle options, and add the background
@@ -838,11 +844,7 @@ function setupRiver() {
 //setupStaticBackground uses the old pewi graphics as a background image
 function setupStaticBackground() {
 
-var r = 2;
-switch(printPrecipYearType()){
-  case 'Dry': r = 0; break;
-    case 'Normal': r = 1; break;
-}
+  var r = Math.floor(Math.random() * oldPewiBackgrounds.length);
 
   var bg = new THREE.Mesh(
     new THREE.PlaneGeometry(2, 2, 0),
@@ -865,11 +867,14 @@ switch(printPrecipYearType()){
 } //end setupStaticBackground
 
 //showMainMenu uses the esc key to return to the startup screen
+// Adding navigation keys, asdw
 function showMainMenu() {
   //Checking the flag variable to know which camera is functional.
   if (ToggleCam == 1){
     changeCam2();
     document.getElementById("flyover").innerHTML = "";
+    document.getElementById("flyASDW").style.display = "none";
+    document.getElementById("flyNavigKeys").style.display = "none";
     //Reseting camera 2 position when sandbox is reloaded
     camera2.position.x = 70;
     camera2.position.y = 25;
@@ -941,8 +946,10 @@ function switchBoards(newBoard) {
 
   //update Results to point to correct board since currentBoard is updated
   Totals = new Results(boardData[currentBoard]);
+  generatedContourMap = new ContourMap();
 
 } //end switchBoards
+
 
 //switchToZoomView updates a zoom template map with information from the current full map
 function switchToZoomView(tile) {
@@ -958,7 +965,14 @@ function switchToZoomView(tile) {
   for (var i = 0; i < boardData[currentBoard].map.length; i++) {
 
     //update the mesh textures
-    meshMaterials[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+    if(overlayedToggled != true){
+      meshMaterials[i].map = grayTextureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+      meshOverlay[i].map = grayTextureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+    }
+    else{
+      meshMaterials[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+      meshOverlay[i].map = textureArray[boardData[fullBoardBeforeZoom].map[tile].landType[currentYear]];
+    }
 
     //update the land use types for each year
     boardData[currentBoard].map[i].landType[1] = boardData[fullBoardBeforeZoom].map[tile].landType[1];
@@ -1009,8 +1023,15 @@ function toggleCameraView(){
     //Checking the flag variable to know which camera is functional.
     if (ToggleCam == 1){changeCam2();}
     else{ChangeCam();}
-    if (ToggleCam == 1){document.getElementById('flyover').style.display = "block"}
-    else{document.getElementById('flyover').style.display = "none";}
+    if (ToggleCam == 1) {
+      document.getElementById('flyover').style.display = "block";
+      document.getElementById("flyASDW").style.display = "block";
+      document.getElementById("flyNavigKeys").style.display = "block";
+    }
+    else{document.getElementById('flyover').style.display = "none";
+    document.getElementById("flyASDW").style.display = "none";
+    document.getElementById("flyNavigKeys").style.display = "none";
+  }
 }
 
 //zoomAnimation updates field of view positions for zoom animation
@@ -1048,3 +1069,5 @@ function zoomAnimation() {
   }
 
 } //end zoomAnimation
+
+//export { boardData[currentYear].map as theMap};

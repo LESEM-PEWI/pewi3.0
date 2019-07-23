@@ -86,8 +86,10 @@
     //reset all elements to original styling
     document.getElementById('graphics').style.display = "none";
     document.getElementById('numbers').style.display = "none";
+    document.getElementById('economics').style.display = "none";
     document.getElementById('tab1').className = "tab";
     document.getElementById('tab2').className = "tab";
+    document.getElementById('tab3').className = "tab";
     //then update the selected tab appropriately
     if (tabNumber == 1) {
       document.getElementById('graphics').style.display = "block";
@@ -101,7 +103,10 @@
       if(parent.getTracking()) {
         parent.pushClick(0,parent.getStamp(),59,0,null);
       }
-    } //end else if block
+    } else if (tabNumber == 3) {
+      document.getElementById('economics').style.display = "block";
+      document.getElementById('tab3').className = "tabSelected";
+    }
   } //end toggleToTab
 
   //toggleYearForLandPlotBy(), examines the current year and the limits
