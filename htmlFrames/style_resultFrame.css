@@ -391,6 +391,7 @@ text {
   width: 100%;
 }
 
+
 .yearLabel, .precipValue, .precipType {
   font-weight: bold;
   margin-top: 10px;
@@ -414,6 +415,28 @@ text {
 
 .displaynone {
   display:none;
+}
+
+.blueheader{
+  background    : #2fceed;
+  text-align    : center;
+  padding       : 0px;
+  margin        : 0px;
+}
+
+.roundedBorder3{
+  border-radius : 5px;
+  border        : 2px solid black;
+  width         : 30%;
+  float         : left;
+  padding       : 0px;
+  margin        : 10px;
+}
+
+.optionsRow{
+  margin-left   : 3px;
+  margin-right  : 3px;
+  height        : 20px;
 }
 
 #toggleYearPie {

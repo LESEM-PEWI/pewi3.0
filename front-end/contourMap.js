@@ -427,7 +427,7 @@ function ContourMap() {
     return meshArray;
   }
 
-  // called odwn here because it has to be after the function declarationt
+  // called odwn here because it has to be after the function declaration
   this.tileImages3D = this.create3DTopoMeshes(this.map);
 }
 
