@@ -4699,31 +4699,29 @@ function EconomicsGraphic4() {
 // }
 function graphic5DisplayInfo(econdata){
   var data=[];
-  console.log(econdata);
   econdata.forEach(landuse=>{
     landuse['array'].forEach(d=>{
       if(data.some(e=>e.time_of_year===d['Time of Year'])){
         objIndex = data.findIndex((obj => obj.time_of_year ===d['Time of Year']));
         if(d['# Labor Hours']!=""){
-          data[objIndex].total_labor_hours+=parseFloat(d['# Labor Hours']);
+          data[objIndex]["Total Labor Hours"]+=parseFloat(d['# Labor Hours']);
         }
         if(d['Action - Cost Type']=='Custom'){
-          data[objIndex].total_custom_hire_cost+=parseFloat(d['Value']);
+          data[objIndex]["Total Custom Hire Cost"]+=parseFloat(d['Value']);
         }
-        data[objIndex].total_labor_costs+=parseFloat(d['Value']);
+        data[objIndex]["Total Labor Cost"]+=parseFloat(d['Value']);
       }else{
         var totalCustomHireCost=0;
         if(d['Action - Cost Type']=='Custom'){
           totalCustomHireCost=parseFloat(d['Value']);
         }
-        data.push({time_of_year:d['Time of Year'], total_labor_hours:parseFloat(d['# Labor Hours']),total_labor_costs:parseFloat(d['Value']),total_custom_hire_cost:totalCustomHireCost})
+        data.push({time_of_year:d['Time of Year'], "Total Labor Hours":parseFloat(d['# Labor Hours']),"Total Labor Cost":parseFloat(d['Value']),"Total Custom Hire Cost":totalCustomHireCost})
       }
     })
   });
   data=data.filter(function(d){
     return d.time_of_year>0;
   });
-  console.log(data);
   return data;
 }
 
@@ -4731,10 +4729,12 @@ function EconomicsGraphic5(){
   var instance;
   var econdata;
   var displaydata;
-  var keys=["total_labor_hours","total_labor_costs","total_custom_hire_cost"];
+  var keys=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
+  var legendText=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   function init(){
     econdata=economics.getInstance().data5;
     var econBody= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5svg');
+
     var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
 
     //scale
@@ -4770,10 +4770,16 @@ function EconomicsGraphic5(){
          .domain(keys)
          .rangeRound([0,x0.bandwidth()])
          .padding(.05);
-         console.log(d3.max(displaydata, d => d3.max(keys, key => d[key])));
+
          let y=d3.scaleLinear()
          .domain([0, d3.max(displaydata, d => d3.max(keys, key => d[key]))])
          .rangeRound([height-margin.bottom,margin.top]);
+
+         let y1=d3.scaleLinear()
+         .domain([0,d3.max(displaydata,d=>d[keys[0]])])
+         .rangeRound([height-margin.bottom,margin.top]);
+
+         var tooltip=d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph5tt"));
 
          svg.append('g')
           .selectAll('g')
@@ -4788,16 +4794,25 @@ function EconomicsGraphic5(){
           .attr('y',d=>y(d.value))
           .attr('width', x1.bandwidth())
           .attr('height', d => y(0) - y(d.value))
-          .attr('fill',d=>colors(d.key));
+          .attr('fill',d=>colors(d.key))
+          .on("mouseover",function(d){
+            tooltip.style('visibility','visible');
+            tooltip.select("#econGraphic5Name").text(d.key);
+            tooltip.select("#econGraphic5Value").text(d.value.toFixed(2));
+          })
+          .on("mouseout",function () {
+              tooltip.style('visibility','hidden');
+          })
+          .on("mousemove",function(){
+            tooltip.style('left',(d3.event.pageX)+"px")
+                    .style('top',(d3.event.pageY)+"px")
+          });
 
          // axes
        var xAxis = d3.axisBottom()
          .scale(x0);
-       var yAxis = d3.axisLeft(y)
-         .tickSize(-width)
-         .tickSizeOuter(0);
-
-
+       var yAxis = d3.axisLeft(y);
+       var yAxis1=d3.axisRight(y1);
          //cost name
           svg.append('g')
             	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
@@ -4813,36 +4828,77 @@ function EconomicsGraphic5(){
           svg.append('g')
             	.attr('transform', 'translate(' + margin.left + ',0)')
             	.call(yAxis);
+          svg.append('g')
+            .attr('transform','translate(' +width + ',0)')
+            .call(yAxis1);
 
-          svg.selectAll("g.tick")
-             .style("stroke-dasharray", ("3,3"));
+          // svg.selectAll("g.tick")
+          //    .style("stroke-dasharray", ("3,3"));
            svg.append("text")
               .attr("transform",
                 "translate(" + (width/2) + " ," +
-                  (height) + ")")
+                  (height-20) + ")")
               .style("text-anchor", "left")
+              .style("font-weight", "bold")
+              .attr("font-size","1.1vmax")
               .text("Land Uses");
 
           svg.append("text")
             .attr("transform",
               "translate(" + (width/2) + " ," +
                 (25) + ")")
-                .style("text-anchor", "left")
-                .style("font-weight", "bold")
-                .style("font-size", "1.5vmax")
-                .text("Economics By Land Use");
+            .style("text-anchor", "left")
+            .style("font-weight", "bold")
+            .style("font-size", "1.5vmax")
+            .text("Economics By Land Use");
           svg.append("text")
              .attr("transform", "rotate(-90)")
              .attr("y", 0)
              .attr("x", 0 - (height / 2))
              .attr("dy", "1em")
              .style("text-anchor", "middle")
+             .attr("font-size","1.1vmax")
+             .attr("font-weight","bold")
              .text("Value");
+
+           svg.append("text")
+              .attr("transform", "rotate(-90)")
+              .attr("y", width+margin.right+15)
+              .attr("x", 0 - (height / 2))
+              .attr("dy", "1em")
+              .style("text-anchor", "middle")
+              .attr("font-size","1.1vmax")
+              .attr("font-weight","bold")
+              .text("Hours");
+     }
+     var drawLegend=function(){
+         legend = svg.append("g")
+              .attr("transform", "translate(" +[width-50,margin.top]+")")
+              .attr("text-anchor", "end")
+              .attr("font-family", "sans-serif")
+              .attr("font-size", 15)
+              .selectAll("g")
+              .data(legendText)
+              .enter().append("g")
+              .attr("transform", function(d, i) {return "translate(0," + (20 * i) + ")";});
+        legend.append('rect')
+          .attr("x",20)
+          .attr("width",19)
+          .attr("height",19)
+          .attr("fill",colors);
+
+        legend.append("text")
+          .attr("x",18)
+          .attr("y",9.5)
+          .attr("dy","0.35em")
+          .text(d=>d);
+
      }
 
     var render=function() {
       svg.selectAll("*").remove();
       drawBarsfunction();
+      drawLegend();
     }
     return{
       render:render,
