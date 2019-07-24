@@ -2745,6 +2745,7 @@ this.tileNitrate = Array(4);
 
         sumLandUseHelper(this.landUseResults,LandUseType.getType(board.map[i].landType[y]),y,board.map[i].area);
       }
+      economics.mapChange();
 
       //PEWI calculations are reported in megagrams, the previous calculation in kilograms therefore divide by 1000
       //this.carbonSequestration[y] = this.sumCarbonSequestration[y] / 1000;
@@ -3562,6 +3563,11 @@ function Tile(tileArray, board) {
   this.results[2] = {};
   this.results[3] = {};
 
+// this array will hold the sides that the tile needs to have contour lines placed on
+  this.contourLines = Array();
+
+
+
   //Basic functionality methods
   //---------------------------
   this.getID = function() {
@@ -3615,7 +3621,7 @@ function Tile(tileArray, board) {
 
   //===================================================================================
 
-
+  //
 
   //Modules for subcalculations at the tile level
   //---------------------------------------------

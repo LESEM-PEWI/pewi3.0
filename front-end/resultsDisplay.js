@@ -297,13 +297,15 @@ function displayResults() {
   render(boardData[currentBoard].calculatedToYear);
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
-  econGraphic1 = EconomicsGraphic1().getInstance().render();
+  economicsGraphic1 = new EconomicsGraphic1();
+  economicsGraphic1.render();
   econGraphic4 = EconomicsGraphic4().getInstance().render();
   econGraphic5 = EconomicsGraphic5().getInstance().render();
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
   //============= END DEPRECATED
 
+  economics.mapChange();
   //create the radar plots
   var tempObj = []; //get an array of years to display
   for (var y = 1; y <= boardData[currentBoard].calculatedToYear; y++) {
@@ -4041,7 +4043,7 @@ d3.selection.prototype.moveToBack = function() {
 }
 
 function createMockDataGraphic1(){
-  var econData = economics.getInstance().data;
+  var econData = economics.data;
   econData = econData.map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
   });
@@ -4066,199 +4068,174 @@ function createMockDataGraphic1(){
 function calculateDataTotals(){
 
 }
+function EconomicsGraphic1() {
+  console.log(this);
+  this.options = [];
+  this.render =  () => {
+    svg.selectAll("*").remove();
+    //just delete all contents for redraw, it is a lot easier for a graph that needs to move things
+    // definetely possible to do otherwise, but a little out of scope.
+    drawBars();
+    drawLegend();
+    addOptions();
+  };
+  var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1svg');
+  var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1');
+  var colors = ["#ffde2a", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
+  var stackTypes = ['Cost','Revenue','Profit','Loss'];
+  var fullData = createMockDataGraphic1();
 
-function EconomicsGraphic1() { //This is a singleton class use getInstance() to retrieve the instance
-  var instance;
-  var options = [];
-  function init() {
-    var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1svg');
-    var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1');
-    window = document.getElementById('resultsFrame');
-    var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
-    var stackTypes = ['Cost','Revenue','Profit','Loss'];
-    var fullData = createMockDataGraphic1();
 
-    var margin = {top: 40, right: 10, bottom: 20, left: 60};
-    var width = 1800*.7 - margin.left - margin.right;
-    var height = 1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+  var margin = {top: 40, right: 20, bottom: 50, left: 60};
+  var screenWidth = window.innerWidth;
+  var width = screenWidth*.8 - margin.left - margin.right;
+  var height = screenWidth*.40 - margin.top - margin.bottom; //give or take the golden ratio
 
-    var groupKey = 'landUse';
-    svg = d3.select(econBody);
-    svg
-    .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var groupKey = 'landUse';
+  var svg = d3.select(econBody);
+  svg
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    formatData = function(options){ //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
+  var formatData = () => { //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
+    console.log(this);
+    tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
+    data = tempData.filter(el => {
+      if(this.options.indexOf(el.landUse.replace(/\s/g,'')) > -1) return false;
+      if(this.options.indexOf(el.year) > -1) return false;
+      if(this.options.indexOf('Cost') > -1) el.Cost = 0;
+      if(this.options.indexOf('Revenue') > -1) el.Revenue = 0;
+      if(this.options.indexOf('Profit') > -1) el.Profit = 0;
+      if(this.options.indexOf('Loss') > -1) el.Loss = 0;
+      return el != null;
+    });
 
-      options = options || []; //to ensure a defined options
-      tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
-      data = tempData.filter(el => {
-        if(options.indexOf(el.landUse.replace(/\s/g,'')) > -1) return false;
-        if(options.indexOf(el.year) > -1) return false;        if(options.indexOf('Cost') > -1) el.Cost = 0;
-        if(options.indexOf('Revenue') > -1) el.Revenue = 0;
-        if(options.indexOf('Profit') > -1) el.Profit = 0;
-        if(options.indexOf('Loss') > -1) el.Loss = 0;
-        return el != null;
-      });
+    return data;
+  }
 
-      return data;
+  var drawBars = () => {
+    let data = formatData();
+
+    let layers = d3.stack().keys(stackTypes) //formats data into groups, in this case we want to stack base off of cost/revenue etc...
+    .offset(d3.stackOffsetDiverging)
+    (data);
+
+    var layer = svg.selectAll(".layer") //draw 1 layer at a time, we want loss and profit to drawn last so they arent covered.
+    .data(layers)
+    .enter().append("g")
+    .attr("class", "layer")
+    .attr("layernum",function(d, i) {return d.key; })
+    .style("margin-left", function(d) { return "3px"; })
+    .style("fill", function(d, i) { return colors[i]; })//determines color for each layer
+
+    let x0 = d3.scaleBand() //There are 2 x functions because landUse determine 1 part of x factor and year determines the other
+    .domain(data.map(function(d) {return d.landUse + ""; }))
+    .rangeRound([margin.left, width - margin.right])
+    .paddingInner(.1); //padding between groups
+
+    let x = d3.scaleBand() //this one does a small adjustment based off of year
+    .domain(data.map(function(d) {return d.year}))
+    .rangeRound([0, x0.bandwidth()]) //note that the max is the previous x's width so it divides that piece equally
+    .padding(.05); //padding between elements in the same group
+
+    let y = d3.scaleLinear()
+    .domain([d3.min(layers, stackMin), d3.max(layers, stackMax)])//determine the min and max value graph needs to show
+    .rangeRound([height - margin.bottom, margin.top]);
+
+    //following code is to add tooltips
+    let tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph1tt"));
+
+    //the following code is to add a rectangle around the hovered things
+    //We cant just change the border since the border will be covered by higher layered rects
+    let outlineRect = svg.append("rect")
+    .attr("stroke", "black")
+    .attr("stroke-width", "3px")
+    .style("visibility", "hidden")
+    .style("fill", "none")
+    .attr("width", x.bandwidth);
+
+    let formatMoney = (d) => { //This is to put the negative sign in front of the dollar sign
+      var isNegative = d < 0 ? '-' : '';
+      return isNegative + '$' + Math.abs(d);
     }
-
-    drawBars = function() {
-      let data = formatData(options);
-
-      let layers = d3.stack().keys(stackTypes) //formats data into groups, in this case we want to stack base off of cost/revenue etc...
-        .offset(d3.stackOffsetDiverging)
-        (data);
-
-      var layer = svg.selectAll(".layer") //draw 1 layer at a time, we want loss and profit to drawn last so they arent covered.
-        .data(layers)
-        .enter().append("g")
-        .attr("class", "layer")
-        .attr("layernum",function(d, i) {return d.key; })
-        .style("margin-left", function(d) { return "3px"; })
-        .style("fill", function(d, i) { return colors[i]; })//determines color for each layer
-
-      let x0 = d3.scaleBand() //There are 2 x functions because landUse determine 1 part of x factor and year determines the other
-        .domain(data.map(function(d) {return d.landUse + ""; }))
-        .rangeRound([margin.left, width - margin.right])
-        .paddingInner(.1); //padding between groups
-
-      let x = d3.scaleBand() //this one does a small adjustment based off of year
-        .domain(data.map(function(d) {return d.year}))
-        .rangeRound([0, x0.bandwidth()]) //note that the max is the previous x's width so it divides that piece equally
-        .padding(.05); //padding between elements in the same group
-
-      let y = d3.scaleLinear()
-      .domain([d3.min(layers, stackMin), d3.max(layers, stackMax)])//determine the min and max value graph needs to show
-      .rangeRound([height - margin.bottom, margin.top]);
-
-      //following code is to add tooltips
-      var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph1tt"));
-
-      //the following code is to add a rectangle around the hovered things
-      //We cant just change the border since the border will be covered by higher layered rects
-      var outlineRect = svg.append("rect")
-      .attr("stroke", "black")
-      .attr("stroke-width", "3px")
-      .style("visibility", "hidden")
-      .style("fill", "none")
-      .attr("width", x.bandwidth);
-
-      formatMoney = function(d){ //This is to put the negative sign in front of the dollar sign
-        var isNegative = d < 0 ? '-' : '';
-        return isNegative + '$' + Math.abs(d);
-      }
-      //draws the bars as well as adding listeners for hover
-      var rect = layer.selectAll("rect")
-        .data(function(d) {return d; })
-        .enter().append("rect")
-          .attr("transform", function(d) { return "translate(" + x0(d.data.landUse) + ",0)"; })//translate using 1 of the x's
-          .attr("x", function(d) {return x(d.data.year); }) //set x to the other so that when combined they get their own unique x value
-          .attr("y", function(d) {if (d[1] > 0) return y(0) - (y(d[0])- y(d[1])); else return y(0); }) //if the bar is positive the height has to be consi
-          .attr("width", x.bandwidth)
-          .attr("height", function(d){return y(d[0])- y(d[1]);})
-          .on("mouseover", function(d) {tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
-            tooltip.select("#econGraphic1LU").text("Land Use: " + d.data.landUse)
-            let econType = this.parentNode.getAttribute("layernum")
-            tooltip.select("#econGraphic1Value").text(econType +": " + formatMoney(d.data[econType]))
-            outlineRect.attr("transform", "translate(" + x0(d.data.landUse) + ",0)")
-            outlineRect.style("visibility", "visible")
-            outlineRect.attr("x", this.getAttribute("x"))
-            outlineRect.attr("y", this.getAttribute("y"))
-            outlineRect.attr("height", this.getAttribute("height"))
-          })
-          .on("mouseout", function(d) {tooltip.style("visibility", "hidden")
-          outlineRect.style("visibility", "hidden")
-          })
-          .on("mousemove", d => {
-            tooltip
-            .style('left', (d3.event.pageX + 10) +"px")
-            .style('top', (d3.event.pageY + 10) + "px")
-          });
+    //draws the bars as well as adding listeners for hover
+    var rect = layer.selectAll("rect")
+    .data(function(d) {return d; })
+    .enter().append("rect")
+    .attr("transform", function(d) { return "translate(" + x0(d.data.landUse) + ",0)"; })//translate using 1 of the x's
+    .attr("x", function(d) {return x(d.data.year); }) //set x to the other so that when combined they get their own unique x value
+    .attr("y", function(d) {if (d[1] > 0) return y(0) - (y(d[0])- y(d[1])); else return y(0); }) //if the bar is positive the height has to be considered
+    .attr("width", x.bandwidth)
+    .attr("height", function(d){return y(d[0])- y(d[1]);}) //this was replaced by manually drawing lines
+    // .attr("d", function(d){
+    //   console.log(d);
+    //   return bar(x(d.data.year),y(0), x.bandwidth(),y(d[0])- y(d[1]), 10, d[1] > 0);
+    // })
+    .on("mouseover", function(d) {tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
+      tooltip.select("#econGraphic1LU").text("Land Use: " + d.data.landUse)
+      let econType = this.parentNode.getAttribute("layernum")
+      tooltip.select("#econGraphic1Value").text(econType +": " + formatMoney(d.data[econType]));
+      outlineRect.attr("transform", "translate(" + x0(d.data.landUse) + ",0)");
+      outlineRect.style("visibility", "visible");
+      // outlineRect.attr("d",
+        // this.attributes.d.nodeValue+'stroke = "black" stroke-width="5" fill="none"');
+      outlineRect.attr("x", this.getAttribute("x"))
+      outlineRect.attr("y", this.getAttribute("y"))
+      outlineRect.attr("height", this.getAttribute("height"))
+      outlineRect.attr("ry", this.getAttribute("ry"))
+    })
+    .on("mouseout", function(d) {tooltip.style("visibility", "hidden")
+      outlineRect.style("visibility", "hidden")
+    })
+    .on("mousemove", d => {
+      tooltip
+      .style('left', (d3.event.pageX + 10) +"px")
+      .style('top', (d3.event.pageY + 10) + "px")
+    });
 
 
-        //following code adds xAxis to graph
-      var xAxis = svg.append("g")
-        .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
-        .style("font-weight", "bold")
-        .call(d3.axisBottom(x0))
-      svg.selectAll("g.tick")
-        .selectAll("text")
-          .attr("fill", "purple")
-          .attr("y", y(y.domain()[0]/1.1)-y(0) + 7)
+  //following code adds xAxis to graph
+  var xAxis = svg.append("g")
+  .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
+  .style("font-weight", "bold")
+  .call(d3.axisBottom(x0))
+  svg.selectAll("g.tick")
+  .selectAll("text")
+  .attr("fill", "purple")
+  // .attr("y", y(y.domain()[0])-y(0))
+  .attr("transform", "translate(0," + (y(y.domain()[0])-y(0) - 12) +") rotate(-35)")
+  .style("text-anchor", "end")
 
-      svg.append("text")
-        .attr("transform",
-          "translate(" + (width/2) + " ," +
-          (height) + ")")
-        .style("text-anchor", "left")
-        .text("Land Uses");
+  svg.append("text")
+  .attr("transform",
+  "translate(" + (width/2) + " ," +
+  (height + 50) + ")")
+  .style("text-anchor", "left")
+  .text("Land Uses");
 
-      svg.append("text")
-        .attr("transform",
-          "translate(" + (width/2) + " ," +
-          (25) + ")")
-        .style("text-anchor", "left")
-        .style("font-weight", "bold")
-        .style("font-size", "1.5vmax")
-        .text("Economics By Land Use");
+  svg.append("text")
+  .attr("transform",
+  "translate(" + (width/2) + " ," +
+  (25) + ")")
+  .style("text-anchor", "left")
+  .style("font-weight", "bold")
+  .style("font-size", "1.5vmax")
+  .text("Economics By Land Use");
 
-        //following code adds yAxis to graph
-      var yAxis = d3.axisLeft(y)
-        .tickFormat(d => formatMoney(d))
-        .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
-        .tickSizeOuter(0)
-      svg.append("g")
-        .attr("transform", "translate(" + margin.left + ", 0)")
-        .call(yAxis);
+  //following code adds yAxis to graph
+  var yAxis = d3.axisLeft(y)
+  .tickFormat(d => formatMoney(d))
+  .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
+  .tickSizeOuter(0)
+  svg.append("g")
+  .attr("transform", "translate(" + margin.left + ", 0)")
+  .call(yAxis);
 
-      svg.selectAll("g.tick")
-        .style("stroke-dasharray", ("3,3"))
-
-      svg.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 0)
-        .attr("x", 0 - (height / 2))
-        .attr("dy", "1em")
-        .style("text-anchor", "middle")
-        .text("Value");
-    }
-
-    var drawLegend = function (){
-      legend = svg.append("g")
-        .attr("transform", "translate(" + width +",0)")
-        .attr("text-anchor", "end")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 15)
-      .selectAll("g")
-        .data(colors)
-        .enter().append("g")
-      .attr("transform", function(d, i) {return "translate(0," + (20 * i) + ")";});
-
-      legend.append("rect")
-        .attr("x", -19)
-        .attr("width", 19)
-        .attr("height", 19)
-        .attr("fill", (d, i) => colors[i]);
-
-      legend.append("text")
-        .attr("x", -24)
-        .attr("y", 9.5)
-        .attr("dy", "0.35em")
-        .text((d,i) => stackTypes[i]);
-
-        svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", 0 - (margin.top / 2))
-        .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .style("text-decoration", "underline")
-        .text("Economic Data by Land Use");
-    }
-
+  svg.selectAll("g.tick")
+  .style("stroke-dasharray", ("3,3"))
+}
     var addOptions = function (){ //This adds the toggle effects to the screen
       let doc = document.getElementById('resultsFrame').contentWindow.document;
       let box = doc.getElementById('econGraphic1Options');
@@ -4286,7 +4263,7 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
 
       container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses')
       container.innerHTML = '';
-      economics.getInstance().data.map(d => d.landUse).forEach(d => {
+      economics.data.map(d => d.landUse).forEach(d => {
         cell = document.createElement('div');
         cell.innerHTML = d;
         checkBox = document.createElement('input');
@@ -4298,72 +4275,150 @@ function EconomicsGraphic1() { //This is a singleton class use getInstance() to 
         container.appendChild(cell);
       })
 
-      container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years')
-      container.innerHTML = '';
-      for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
-        cell = document.createElement('div');
-        cell.innerHTML = 'Year ' + i;
-        checkBox = document.createElement('input');
-        checkBox.type = 'checkbox';
-        checkBox.onclick = event => alterOptions(i);
-        checkBox.style.float = 'right';
-        checkBox.checked = true;
-        cell.appendChild(checkBox);
-        container.appendChild(cell);
-      }
+  svg.append("text")
+  .attr("transform", "rotate(-90)")
+  .attr("y", 0)
+  .attr("x", 0 - (height / 2))
+  .attr("dy", "1em")
+  .style("text-anchor", "middle")
+  .text("Value");
+}
 
-      container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Economics')
-      container.innerHTML = '';
-      stackTypes.forEach(type => {
-        cell = document.createElement('div');
-        cell.innerHTML = type;
-        checkBox = document.createElement('input');
-        checkBox.type = 'checkbox';
-        checkBox.onclick = event => alterOptions(type);
-        checkBox.style.float = 'right';
-        checkBox.checked = true;
-        cell.appendChild(checkBox);
-        container.appendChild(cell);
-      });
+
+  function bar(x,y,w,h,r,f) {
+    if(h){
+      r = Math.min(r, h/2, w/2);
+      // x coordinates of top of arcs
+      let x0 = x + r;
+      let x1 = x + w - r;
+      // y coordinates of bottom of arcs
+      if(f){ //if positive round the tops
+        let y0 = y - h + r;
+        // assemble path:
+        let parts = [
+          "M",x,y,               // step 1
+          "L",x,y0,              // step 2
+          "A",r,r,0,0,1,x0,y-h,  // step 3
+          "L",x1,y-h,            // step 4
+          "A",r,r,0,0,1,x+w,y0,  // step 5
+          "L",x+w,y,             // step 6
+          "Z"                    // step 7
+         ];
+         return parts.join(" ");
+      }
+      else { //if negative roudn the bottoms
+        let y0 = y + h - r;
+        let parts = [
+          "M",x,y,               // step 1
+          "L",x,y0,              // step 2
+          "A",r,r,0,0,0,x0,y+h,  // step 3
+          "L",x1,y+h,            // step 4
+          "A",r,r,0,0,0,x+w,y0,  // step 5
+          "L",x+w,y,             // step 6
+          "Z"                    // step 7
+         ];
+         return parts.join(" ");
+      }
+    }
+  }
+
+  var drawLegend = () => {
+    legend = svg.append("g")
+    .attr("transform", "translate(" + width +",0)")
+    .attr("text-anchor", "end")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", 15)
+    .selectAll("g")
+    .data(colors)
+    .enter().append("g")
+    .attr("transform", function(d, i) {return "translate(0," + (20 * i) + ")";});
+
+    legend.append("rect")
+    .attr("x", -19)
+    .attr("width", 19)
+    .attr("height", 19)
+    .attr("fill", (d, i) => colors[i]);
+
+    legend.append("text")
+    .attr("x", -24)
+    .attr("y", 9.5)
+    .attr("dy", "0.35em")
+    .text((d,i) => stackTypes[i]);
+
+    svg.append("text")
+    .attr("x", (width / 2))
+    .attr("y", 0 - (margin.top / 2))
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px")
+    .style("text-decoration", "underline")
+    .text("Economic Data by Land Use");
+  }
+
+  var addOptions = () => { //This adds the toggle effects to the screen
+    let doc = document.getElementById('resultsFrame').contentWindow.document;
+    let box = doc.getElementById('econGraphic1Options');
+    doc.querySelectorAll(".optionsRow").forEach(row => {
+      row.parentNode.removeChild(row);
+    });
+
+    container = doc.getElementById('econGraphic1LandUses')
+    economics.data.map(d => d.landUse).forEach(d => {
+      cell = document.createElement('div');
+      cell.innerHTML = d;
+      cell.classList.add("optionsRow")
+      checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
+      checkBox.style.float = 'right';
+      checkBox.checked = true;
+      cell.appendChild(checkBox);
+      container.appendChild(cell);
+    })
+
+    container = doc.getElementById('econGraphic1Years')
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      cell = document.createElement('div');
+      cell.innerHTML = 'Year ' + i;
+      cell.classList.add("optionsRow")
+      checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.onclick = event => alterOptions(i);
+      checkBox.style.float = 'right';
+      checkBox.checked = true;
+      cell.appendChild(checkBox);
+      container.appendChild(cell);
     }
 
-    alterOptions= function (option){ //This changes the options array to contain up to date options
-      if (options.includes(option)){
-        options.splice(options.indexOf(option),1);
-      }
-      else {
-        options.push(option);
-      }
-      rerender();
-    }
+    container = doc.getElementById('econGraphic1Economics')
+    stackTypes.forEach(type => {
+      cell = document.createElement('div');
+      cell.innerHTML = type;
+      cell.classList.add("optionsRow")
+      checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.onclick = event => alterOptions(type);
+      checkBox.style.float = 'right';
+      checkBox.checked = true;
+      cell.appendChild(checkBox);
+      container.appendChild(cell);
+    });
+  }
 
-    var render = function (){
-      svg.selectAll("*").remove();
-      //just delete all contents for redraw, it is a lot easier for a graph that needs to move things
-    // definetely possible to do otherwise, but a little out of scope.
-      drawBars();
-      drawLegend();
-      addOptions();
+  var alterOptions = (option) => { //This changes the options array to contain up to date options
+    if (this.options.includes(option)){
+      this.options.splice(this.options.indexOf(option),1);
     }
-    var rerender = function (){ //We dont want to rebuild the options when we need to render again
-      svg.selectAll("*").remove();
-      drawBars();
-      drawLegend();
+    else {
+      this.options.push(option);
     }
-    return {
-      drawBars: drawBars,
-      drawLegend: drawLegend,
-      render: render,
-    };
-  };
-  return {
-    getInstance: function () { //To ensure singularity
-      if ( !instance ) {
-        instance = init();
-      }
-      return instance;
-    }
-  };
+    rerender();
+  }
+  console.log(this.render);
+  var rerender = () => { //We dont want to rebuild the options when we need to render again
+    svg.selectAll("*").remove();
+    drawBars();
+    drawLegend();
+  }
 }
 
 function stackMin(layers) {
@@ -4394,7 +4449,7 @@ function exists(arr, search) {
  */
 
 function econGraphic4DisplayData(landUse,costType,cost){
-  var econdata=economics.getInstance().data4;
+  var econdata=economics.data4;
   econdata=econdata.filter(function(item){
     return item.landUse==landUse;
   });
@@ -4422,7 +4477,7 @@ function EconomicsGraphic4() {
   var displaydata;
   var econdata;
   function init() {
-    econdata=economics.getInstance().data4;
+    econdata=economics.data4;
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4svg');
     var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
     window = document.getElementById('resultsFrame');
@@ -4712,7 +4767,8 @@ function EconomicsGraphic5(){
   var keys=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   var legendText=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   function init(){
-    econdata=economics.getInstance().data5;
+    econdata=economics.data5;
+    console.log(econdata);
     var econBody= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5svg');
 
     var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
@@ -4896,7 +4952,7 @@ function EconomicsGraphic5(){
          container.append(cell);
        }
      }
-     var optionClick(){
+     var optionClick = () => {
 
      }
     var render=function() {
@@ -4921,5 +4977,5 @@ function EconomicsGraphic5(){
     }
   };
 }
-objIndex = data.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
-data[objIndex].value+=parseFloat(econdata[i].Value);
+// objIndex = data.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
+// data[objIndex].value+=parseFloat(econdata[i].Value);
