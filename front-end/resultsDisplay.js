@@ -4704,13 +4704,23 @@ function EconomicsGraphic2(){
   var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
   '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
   var currentSelection = "Action - Cost Type"
-  var data = createMockDataGraphic2(currentSelection);
-  keys = economics.data[1][currentSelection];
+  var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph2tt"));
 
   var margin = {top: 40, right: 10, bottom: 60, left: 50};
   let windowWidth=window.innerWidth;
   var width = windowWidth *0.8- margin.left - margin.right;
   var height =1800*.45 - margin.top - margin.bottom;
+  var x0, x, y, data, keys; //initialize some variables so that they may be truly initialized in one function and accessed in a nother
+
+  var alterOptions = function (option){ //This changes the options array to contain up to date options
+    if (options.includes(option)){
+      options.splice(options.indexOf(option),1);
+    }
+    else {
+      options.push(option);
+    }
+    render();
+  }
 
   svg = d3.select(econBody);
   svg
@@ -4719,25 +4729,34 @@ function EconomicsGraphic2(){
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  let x0 = d3.scaleBand()
-    .domain(data.map(function(d) {return d.landUse + ""; }))
-    .rangeRound([margin.left, width - margin.right])
-    .paddingInner(.1);
+  scaleSetUp = () => {
+    console.log(this);
+    x0 = d3.scaleBand()
+      .domain(data.map(function(d) {return d.landUse + ""; }))
+      .rangeRound([margin.left, width - margin.right])
+      .paddingInner(.1);
 
-  let x = d3.scaleBand()
-    .domain(data.map(function(d) {return d.type;}))
-    .rangeRound([0, x0.bandwidth()])
-    .padding(.05);
+    x = d3.scaleBand()
+      .domain(data.map(function(d) {return d.type;}))
+      .rangeRound([0, x0.bandwidth()])
+      .padding(.05);
 
-  let y = d3.scaleLinear()
-    .domain([0, 1.1*Math.max.apply(Math, data.map(function(d) { return d.value;}))])
-    .rangeRound([height - margin.bottom, margin.top]);
+    y = d3.scaleLinear()
+      .domain([0, 1.1*Math.max.apply(Math, data.map(function(d) { return d.value;}))])
+      .rangeRound([height - margin.bottom, margin.top]);
+  }
 
-  var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph2tt"));
+  var readyData = () => {
+    data = createMockDataGraphic2(currentSelection);
+    keys = economics.data[1][currentSelection];
+  }
+
 
     svg = d3.select(econBody);
   this.render = () => {
     svg.selectAll("*").remove();
+    readyData();
+    scaleSetUp();
     addBars();
     addLegend();
     addAxes();
@@ -4775,14 +4794,14 @@ function EconomicsGraphic2(){
           .on("mouseout", function(d) {
             tooltip.style("visibility", "hidden")
             outlineRect.style("visibility", "hidden")
-          })
+          });
 
-          var outlineRect = svg.append("rect")
-          .attr("stroke", "black")
-          .attr("stroke-width", "2px")
-          .style("visibility", "hidden")
-          .style("fill", "none")
-          .attr("width", x.bandwidth);
+    var outlineRect = svg.append("rect")
+    .attr("stroke", "black")
+    .attr("stroke-width", "2px")
+    .style("visibility", "hidden")
+    .style("fill", "none")
+    .attr("width", x.bandwidth);
   }
 
   var addLegend = () =>{
@@ -4832,6 +4851,7 @@ function EconomicsGraphic2(){
     svg.selectAll("g.tick")
       .style("stroke-dasharray", ("3,3"))
   }
+
   var addTitle = () => {
     svg.append("text")
       .attr("transform",
@@ -4841,6 +4861,23 @@ function EconomicsGraphic2(){
       .style("font-weight", "bold")
       .style("font-size", "1.5vmax")
       .text("Cost by " + currentSelection);
+  }
+
+  var addOptions = () => {
+    container = doc.getElementById('econGraphic2LandUses')
+    economics.data.map(d => d.landUse).forEach(d => {
+      cell = document.createElement('div');
+      cell.innerHTML = d;
+      cell.classList.add("optionsRow")
+      checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
+      checkBox.style.float = 'right';
+      checkBox.checked = true;
+      cell.appendChild(checkBox);
+      container.appendChild(cell);
+    })
+
   }
 }
 
