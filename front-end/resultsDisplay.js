@@ -4677,26 +4677,6 @@ function EconomicsGraphic4() {
   };
 }
 
-// function graphic5DisplayInfo(econdata){
-//   var data=[];
-//   //var sumCallBack=(acc, cur)=>acc +cur;
-//   var initialValue=0;
-//   //econdata=economics.getInstance().data5;
-//   console.log(econdata);
-//
-//   econdata.forEach(d=>{
-//     var sum =d['array'].reduce(function (accumulator, currentValue){
-//       return accumulator+parseFloat(currentValue["# Labor Hours"]);
-//     },initialValue)
-//     console.log(sum);
-//     d={};
-//     d.time_of_year=d[]
-//     d.total_labor_hours=sum;
-//     data.push(d);
-//   });
-//
-//   console.log(data);
-// }
 function graphic5DisplayInfo(econdata){
   var data=[];
   econdata.forEach(landuse=>{
@@ -4894,11 +4874,39 @@ function EconomicsGraphic5(){
           .text(d=>d);
 
      }
+     var addOptions=function(){
+       let doc=document.getElementById('resultsFrame').contentWindow.document;
+       container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Year');
+       container.innerHTML="";
+       cell=document.createElement('div');
+       cell.innerHTML='Year';
+       cell.className='graphic5Year';
+       container.append(cell);
+       for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
+         cell=document.createElement('div');
+         cell.innerHTML="Year "+i;
+         inputbox=document.createElement('input');
+         inputbox.name="yearOption";
+         if(i==1){
+           inputbox.checked=true;
+         }
+         inputbox.type='radio';
+         inputbox.style.float='right';
+         cell.append(inputbox);
+         container.append(cell);
+       }
+     }
+     var optionClick(){
 
+     }
     var render=function() {
       svg.selectAll("*").remove();
       drawBarsfunction();
       drawLegend();
+      addOptions();
+    }
+    var rerender=function(){
+
     }
     return{
       render:render,

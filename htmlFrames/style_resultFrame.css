@@ -578,7 +578,7 @@ text {
   box-shadow: 0 0 30px rgba(0, 255, 255, .5);
 }
 
-.graphic4landuse{
+.graphic4landuse, .graphic5Year{
   font-size: 25px;
   background-color: skyblue;
   border-radius: 4px;
