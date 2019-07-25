@@ -203,8 +203,10 @@ function loadLevel(level) {
             if (i == currentYear) {
               if (!multiplayerAssigningModeOn) {
                 meshMaterials[j].map = textureArray[Number(levelSpecs.landTypeMonoculture[i])];
+                meshOverlay[j].map = textureArray[Number(levelSpecs.landTypeMonoculture[i])];
               } else {
                 meshMaterials[j].map = multiplayerTextureArray[Number(levelSpecs.landTypeMonoculture[i])];
+                meshOverlay[j].map = multiplayerTextureArray[Number(levelSpecs.landTypeMonoculture[i])];
               }
               boardData[currentBoard].map[j].update(currentYear);
             } //end if
@@ -214,9 +216,8 @@ function loadLevel(level) {
         } //end for
 
       } //end if
-
+      
     } //end for
-
     //call toggleVisibility to update new precipitation values
     toggleVisibility();
   } //end if level global is > 0

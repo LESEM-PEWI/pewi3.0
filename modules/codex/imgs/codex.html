@@ -1,0 +1,68 @@
+<!doctype html>
+
+<!--
+This page provides the structural elements for propogation of the codex.
+The central container is divided into left and right sections with the right section containing
+  square1 for images/videos and square2 for text/tables/math
+All of these sections are propogated automatically from the info in codexResources File.
+-->
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Workspace - Codex</title>
+    <!-- INCLUDES -->
+
+    <!--css-->
+    <link rel="stylesheet" type="text/css" href="./codexStylesheet.css">
+    <!--javascript-->
+    <script type="text/javascript" src="../.././lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="./codexHelper.js"></script>
+    <!--external fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+    <!-- /INCLUDES -->
+
+    <!--page scripting (codexHelper.js)-->
+    <script>
+        //listen for i key to exit (since page currently is the active element)
+        //    Whoever holds the conch gets to speak...
+        //    Conch! Conch! We don’t need the conch any more. We know who ought to say things.
+        document.addEventListener('keydown', onDocumentKeyDown, false);
+        // parent.addEvent(document, 'keydown', onDocumentKeyDown);
+
+        //propogate data onload
+        // init is a method declared in codexHelper.js, used to initialize data when this html file is loaded.
+        window.onload = init;
+    </script>
+
+</head>
+<body>
+    <!--page is divided into left and right containers, with right container having 2 squares -->
+    <div id="mainContainer">
+
+        <img id="closeIndex" class="closeButton" src="./imgs/close_black.png" onclick="parent.toggleIndex();">
+
+        <div id="leftContainer">
+            <div id="topicsHeader">TOPICS</div>
+            <div id="indexHolder"> </div>
+        </div>
+
+        <div id="rightContainer">
+            <div id="title"></div>
+
+            <div id="square1">
+                <img src="./imgs/indexMain.png">
+            </div>
+
+            <div id="square2">
+                <iframe id="square2frame"></iframe>
+            </div>
+        </div>
+
+        <div id="switchGeneral" class="switchContentDepthSelected">General</div>
+        <div id="switchAdvanced" class="switchContentDepth">Advanced</div>
+
+    </div>
+
+</body>
+</html>
