@@ -564,7 +564,7 @@ function loadingManager() {
 
   //DefaultLoadingManager.onProgress is a THREE.js function that tracks when items are loaded
   THREE.DefaultLoadingManager.onProgress = function(item, loaded, total) {
-    console.log(" loaded " + loaded + " of " + total);
+    //console.log(" loaded " + loaded + " of " + total);
   };
 
   //DefaultLoadingManager.onload updates boolean allLoaded when all resources are loaded

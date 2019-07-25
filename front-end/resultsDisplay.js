@@ -297,6 +297,7 @@ function displayResults() {
   render(boardData[currentBoard].calculatedToYear);
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
+  economics.mapChange();
   economicsGraphic1 = new EconomicsGraphic1();
   economicsGraphic1.render();
   econGraphic4 = EconomicsGraphic4().getInstance().render();
@@ -305,7 +306,6 @@ function displayResults() {
   //drawEcosystemIndicatorsDisplay(currentYear);
   //============= END DEPRECATED
 
-  economics.mapChange();
   //create the radar plots
   var tempObj = []; //get an array of years to display
   for (var y = 1; y <= boardData[currentBoard].calculatedToYear; y++) {
@@ -4734,29 +4734,33 @@ function EconomicsGraphic4() {
 
 function graphic5DisplayInfo(econdata){
   var data=[];
-  econdata.forEach(landuse=>{
+  for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+  data[i]=[];
+  econdata[i].forEach(landuse=>{
     landuse['array'].forEach(d=>{
-      if(data.some(e=>e.time_of_year===d['Time of Year'])){
-        objIndex = data.findIndex((obj => obj.time_of_year ===d['Time of Year']));
+      if(data[i].some(e=>e.time_of_year===d['Time of Year'])){
+        objIndex = data[i].findIndex((obj => obj.time_of_year ===d['Time of Year']));
         if(d['# Labor Hours']!=""){
-          data[objIndex]["Total Labor Hours"]+=parseFloat(d['# Labor Hours']);
+          data[i][objIndex]["Total Labor Hours"]+=parseFloat(d['# Labor Hours']);
         }
         if(d['Action - Cost Type']=='Custom'){
-          data[objIndex]["Total Custom Hire Cost"]+=parseFloat(d['Value']);
+          data[i][objIndex]["Total Custom Hire Cost"]+=parseFloat(d['Value']);
         }
-        data[objIndex]["Total Labor Cost"]+=parseFloat(d['Value']);
+        data[i][objIndex]["Total Labor Cost"]+=parseFloat(d['Value']);
       }else{
         var totalCustomHireCost=0;
         if(d['Action - Cost Type']=='Custom'){
           totalCustomHireCost=parseFloat(d['Value']);
         }
-        data.push({time_of_year:d['Time of Year'], "Total Labor Hours":parseFloat(d['# Labor Hours']),"Total Labor Cost":parseFloat(d['Value']),"Total Custom Hire Cost":totalCustomHireCost})
+        data[i].push({time_of_year:d['Time of Year'], "Total Labor Hours":parseFloat(d['# Labor Hours']),"Total Labor Cost":parseFloat(d['Value']),"Total Custom Hire Cost":totalCustomHireCost})
       }
     })
   });
-  data=data.filter(function(d){
+  data[i]=data[i].filter(function(d){
     return d.time_of_year>0;
   });
+}
+console.log(data);
   return data;
 }
 
@@ -4766,9 +4770,9 @@ function EconomicsGraphic5(){
   var displaydata;
   var keys=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   var legendText=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
+  var selectOption=1;
   function init(){
     econdata=economics.data5;
-    console.log(econdata);
     var econBody= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5svg');
 
     var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
@@ -4795,7 +4799,7 @@ function EconomicsGraphic5(){
      */
      var drawBarsfunction=function(){
          displaydata=graphic5DisplayInfo(econdata);
-         console.log(displaydata);
+         displaydata=displaydata[selectOption];
          //scale
          let x0=d3.scaleBand()
          .domain(displaydata.map(d=>d.time_of_year))
@@ -4807,16 +4811,17 @@ function EconomicsGraphic5(){
          .rangeRound([0,x0.bandwidth()])
          .padding(.05);
 
-         let y=d3.scaleLinear()
+         let y= d3.scaleLinear().rangeRound([height-margin.bottom,margin.top]);
+         let yleft=d3.scaleLinear()
          .domain([0, d3.max(displaydata, d => d3.max(keys, key => d[key]))])
          .rangeRound([height-margin.bottom,margin.top]);
 
-         let y1=d3.scaleLinear()
+         let yright=d3.scaleLinear()
          .domain([0,d3.max(displaydata,d=>d[keys[0]])])
          .rangeRound([height-margin.bottom,margin.top]);
 
          var tooltip=d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph5tt"));
-
+         console.log(displaydata);
          svg.append('g')
           .selectAll('g')
           .data(displaydata)
@@ -4827,9 +4832,19 @@ function EconomicsGraphic5(){
           .data(d=>keys.map(key=>{return {key:key, value:d[key]}}))
           .enter().append('rect')
           .attr('x',d=>x1(d.key))
-          .attr('y',d=>y(d.value))
+          .attr('y',d=>{
+            if(d.key=="Total Labor Hours"){
+              return yright(d.value);
+            }
+            return yleft(d.value);
+          })
           .attr('width', x1.bandwidth())
-          .attr('height', d => y(0) - y(d.value))
+          .attr('height', d =>{
+            if(d.key=="Total Labor Hours"){
+              return yright(0)-yright(d.value);
+            }
+            return yleft(0) - yleft(d.value);
+          })
           .attr('fill',d=>colors(d.key))
           .on("mouseover",function(d){
             tooltip.style('visibility','visible');
@@ -4847,8 +4862,8 @@ function EconomicsGraphic5(){
          // axes
        var xAxis = d3.axisBottom()
          .scale(x0);
-       var yAxis = d3.axisLeft(y);
-       var yAxis1=d3.axisRight(y1);
+       var yAxis = d3.axisLeft(yleft);
+       var yAxis1=d3.axisRight(yright);
          //cost name
           svg.append('g')
             	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
@@ -4948,12 +4963,14 @@ function EconomicsGraphic5(){
          }
          inputbox.type='radio';
          inputbox.style.float='right';
+         inputbox.onclick=event=>optionClick(i);
          cell.append(inputbox);
          container.append(cell);
        }
      }
-     var optionClick = () => {
-
+     var optionClick = (i) => {
+       selectOption=i;
+       rerender();
      }
     var render=function() {
       svg.selectAll("*").remove();
@@ -4962,7 +4979,8 @@ function EconomicsGraphic5(){
       addOptions();
     }
     var rerender=function(){
-
+      svg.selectAll("*").remove();
+      drawBarsfunction();
     }
     return{
       render:render,

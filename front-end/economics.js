@@ -38,30 +38,33 @@ var Economics = function () {
     //graphic 4 extract data from raw data
 
     this.graphic5information = function(list){
-      this.rawData2.forEach(dataPoint=>{
-        var landuseNum=dataPoint['LU_ID'];
-        if (!this.data5[landuseNum]) {
-          this.data5[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[],'subcrop':[]};
-        } // We need to create a path to the data that we want to pull out
-        var subcrop=dataPoint['Sub Crop'];
-        if(dataPoint['Time of Year']!=""){
-        if(subcrop!=""){
-          if(!this.data5[landuseNum]['subcrop'].some(e=>e['subcrop']===subcrop)){
-             this.data5[landuseNum]['subcrop'].push({'array':[],'subcrop':subcrop});
+      for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+        this.data5[i]=[];
+        this.mapData[i].forEach(dataPoint=>{
+          var landuseNum=dataPoint['LU_ID'];
+          if (!this.data5[i][landuseNum]) {
+            this.data5[i][landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[],'subcrop':[]};
+          } // We need to create a path to the data that we want to pull out
+          var subcrop=dataPoint['Sub Crop'];
+          if(dataPoint['Time of Year']!=""){
+          if(subcrop!=""){
+            if(!this.data5[i][landuseNum]['subcrop'].some(e=>e['subcrop']===subcrop)){
+               this.data5[i][landuseNum]['subcrop'].push({'array':[],'subcrop':subcrop});
+            }
+            var indexOfStevie = this.data5[i][landuseNum]['subcrop'].findIndex(i => i['subcrop'] === subcrop);
+            this.data5[i][landuseNum]['subcrop'][indexOfStevie]['array'].push(dataPoint);
           }
-          var indexOfStevie = this.data5[landuseNum]['subcrop'].findIndex(i => i['subcrop'] === subcrop);
-          this.data5[landuseNum]['subcrop'][indexOfStevie]['array'].push(dataPoint);
-        }
 
-          this.data5[landuseNum]['array'].push(dataPoint);
+            this.data5[i][landuseNum]['array'].push(dataPoint);
 
-        }
-      })
+          }
+        })
+    }
       console.log(this.data5);
     }
     d3.csv('./budgets_2.csv', (data) => {
       this.rawData2=data;
-      this.graphic5information(['total labor hours','total labor costs','total custom hire costs']);
+      //this.graphic5information(['total labor hours','total labor costs','total custom hire costs']);
     })
 
   this.chart4Information = function(lists) {
@@ -98,11 +101,12 @@ var Economics = function () {
       this.rawData2.forEach(dataPoint => {
         let copy = JSON.parse(JSON.stringify(dataPoint));
         copy["Value"] *= landUses[i][copy['LU_ID']];
-        // copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
+        copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
         this.mapData[i].push(copy)
       })
     }
     console.log(this.mapData);
+    this.graphic5information(['total labor hours','total labor costs','total custom hire costs']);
   }
 }
 var economics = new Economics();
