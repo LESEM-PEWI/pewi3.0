@@ -56,8 +56,7 @@ var Economics = function () {
       });
     });
   }
-  this.mapChange = function (){
-    console.log(this.mapData); //called when the map changes in order to edit the intermediate step.
+  this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
     let landUses = [];
     this.mapData = [];
     //Less than ideal coding, but given how Totals is structured the easiest way
