@@ -4445,15 +4445,29 @@ function stackMax(layers) {
 formatDataGraphic3 = () => {
   econData = economics.data3;
   data = []; //{year, cost type, vallue}
+  actions = new Array();
+  times = new Array();
   econData.forEach((year, i) => {
+
     Object.keys(year.action).forEach(key => {
     d = {};
     d.year = i;
     d.costType = key;
     d.value = year.action[key];
-    data.push(d);
+    actions.push(d);
+    });
+
+    Object.keys(year.time).forEach(key => {
+    d = {};
+    d.year = i;
+    d.costType = key;
+    d.value = year.action[key];
+    times.push(d);
     });
   });
+
+  data.push(actions);
+  data.push(times);
   return data;
 }
 
@@ -4465,6 +4479,8 @@ this.render = () => {
   drawBars();
   addOptions();
 };
+//action == 0 , type == 1
+var actionOrTypeCost = 0;
 
 var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3svg');
 var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3');
@@ -4483,7 +4499,6 @@ var screenWidth = window.innerWidth;
 var width = screenWidth * .8 - margin.left - margin.right;
 var height = screenWidth * .40 - margin.top - margin.bottom; //give or take the golden ratio
 var fullData = formatDataGraphic3();
-
 var econData = economics.data3;
 var keys = Object.keys(econData[1].action);
 var svg = d3.select(econBody);
@@ -4492,9 +4507,9 @@ svg
   .attr("height", height + margin.top + margin.bottom)
 
 
-  var formatData = () => { //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
+  var formatData = (type) => { //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
 
-    tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
+    tempData = JSON.parse(JSON.stringify(fullData[type])); //deepcopy to make changes to
     newData = tempData.filter(el => {
       if(this.options.indexOf(el.year) > -1) return false;
       return el != null;
@@ -4506,7 +4521,8 @@ svg
 
 var drawBars = () => {
 
-data = formatData();
+data = formatData(actionOrTypeCost);
+console.log(data);
 
   let x0 = d3.scaleBand()
     .domain(data.map(function(d) {
@@ -4687,6 +4703,48 @@ var addOptions = () => { //This adds the toggle effects to the screen
     cell.appendChild(checkBox);
     container.appendChild(cell);
   }
+
+  function toggleCostType(type, box){
+    if (type == "Action"){
+      actionOrTypeCost = 0;
+      box.checked = true;
+
+      let otherBox = doc.getElementById('timeCheckBox');
+      otherBox.checked = false;
+    }
+    else{
+      actionOrTypeCost = 1;
+      box.checked= true;
+
+      let otherBox = doc.getElementById('actionCheckBox');
+      otherBox.checked = false;
+    }
+
+    rerender();
+  }
+
+  container = doc.getElementById('econGraphic3CostType')
+  cell = document.createElement('div');
+  cell.id = 'actionCheckBox';
+  cell.innerHTML = 'Action';
+  checkBox = document.createElement('input');
+  checkBox.type = 'checkbox';
+  checkBox.onclick = event => toggleCostType('Action', checkBox);
+  checkBox.style.float = 'right';
+  checkBox.checked = true;
+  cell.appendChild(checkBox);
+  container.appendChild(cell);
+
+  cell = document.createElement('div');
+  cell.id = "timeCheckBox"
+  cell.innerHTML = 'Time';
+  checkBox = document.createElement('input');
+  checkBox.type = 'checkbox';
+  checkBox.onclick = event => toggleCostType('Time', checkBox);
+  checkBox.style.float = 'right';
+  checkBox.checked = false;
+  cell.appendChild(checkBox);
+  container.appendChild(cell);
 }
 
 var alterOption = (option) => { //This changes the options array to contain up to date options
