@@ -4483,7 +4483,7 @@ var margin = {
 var screenWidth = window.innerWidth;
 var width = screenWidth * .8 - margin.left - margin.right;
 var height = screenWidth * .40 - margin.top - margin.bottom; //give or take the golden ratio
-var data = formatDataGraphic3();
+var fullData = formatDataGraphic3();
 
 var econData = economics.data3;
 var keys = Object.keys(econData[1].action);
@@ -4492,7 +4492,22 @@ svg
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
 
+
+  var formatData = () => { //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
+    console.log(fullData);
+    tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
+    newData = tempData.filter(el => {
+      if(this.options.indexOf(el.year) > -1) return false;
+      return el != null;
+    });
+    console.log(newData);
+    return newData;
+
+  }
+
 var drawBars = () => {
+
+data = formatData();
 
   let x0 = d3.scaleBand()
     .domain(data.map(function(d) {
