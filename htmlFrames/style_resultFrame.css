@@ -619,6 +619,9 @@ text {
 .graphic4option{
   height: 20px;
 }
+.yAxisRight g text{
+  fill: #3182bd;
+}
 /*
 #container {
   border: 3px solid #6ac5ac;

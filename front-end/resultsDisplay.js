@@ -4734,6 +4734,13 @@ function EconomicsGraphic4() {
 
 function graphic5DisplayInfo(econdata){
   var data=[];
+  var twiceAMonth=["Early Jan.","Late Jan.","Early Feb.","Late Feb.",
+                  "Early Mar.","Late Mar.","Early Apr.","Late Apr.",
+                  "Early May","Late May","Early Jun.","Late Jun.",
+                  "Early Jul.","Late Jul.","Early Aug.","Late Aug.",
+                  "Early Sept.","Late Sept.","Early Oct.","Late Oct.",
+                  "Early Nov.","Late Nov.","Early Dec.","Late Dec."];
+  var month=0;
   for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
   data[i]=[];
   econdata[i].forEach(landuse=>{
@@ -4752,7 +4759,8 @@ function graphic5DisplayInfo(econdata){
         if(d['Action - Cost Type']=='Custom'){
           totalCustomHireCost=parseFloat(d['Value']);
         }
-        data[i].push({time_of_year:d['Time of Year'], "Total Labor Hours":parseFloat(d['# Labor Hours']),"Total Labor Cost":parseFloat(d['Value']),"Total Custom Hire Cost":totalCustomHireCost})
+        data[i].push({time_of_year:d['Time of Year'],twiceAMonth:twiceAMonth[month++],
+        "Total Labor Hours":parseFloat(d['# Labor Hours']),"Total Labor Cost":parseFloat(d['Value']),"Total Custom Hire Cost":totalCustomHireCost})
       }
     })
   });
@@ -4778,9 +4786,9 @@ function EconomicsGraphic5(){
     var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
 
     //scale
-    var margin={top:40,right:10,bottom:60,left:50};
+    var margin={top:40,right:10,bottom:60,left:80};
     let windowWidth=window.innerWidth;
-    var width = windowWidth *0.8- margin.left - margin.right;
+    var width = windowWidth *0.84- margin.left - margin.right;
     var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
     var rectWidth = 100;
 
@@ -4788,7 +4796,7 @@ function EconomicsGraphic5(){
     var svg = d3.select(econBody);
     svg
     .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     //graphic5DisplayInfo(econdata);
@@ -4802,7 +4810,7 @@ function EconomicsGraphic5(){
          displaydata=displaydata[selectOption];
          //scale
          let x0=d3.scaleBand()
-         .domain(displaydata.map(d=>d.time_of_year))
+         .domain(displaydata.map(d=>d.twiceAMonth))
          .range([margin.left,width-margin.right])
          .padding(.1);
 
@@ -4811,7 +4819,7 @@ function EconomicsGraphic5(){
          .rangeRound([0,x0.bandwidth()])
          .padding(.05);
 
-         let y= d3.scaleLinear().rangeRound([height-margin.bottom,margin.top]);
+
          let yleft=d3.scaleLinear()
          .domain([0, d3.max(displaydata, d => d3.max(keys, key => d[key]))])
          .rangeRound([height-margin.bottom,margin.top]);
@@ -4821,13 +4829,13 @@ function EconomicsGraphic5(){
          .rangeRound([height-margin.bottom,margin.top]);
 
          var tooltip=d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph5tt"));
-         console.log(displaydata);
+
          svg.append('g')
           .selectAll('g')
           .data(displaydata)
           .enter()
           .append('g')
-          .attr('transform', d => 'translate(' + x0(d.time_of_year) + ',0)')
+          .attr('transform', d => 'translate(' + x0(d.twiceAMonth) + ',0)')
           .selectAll('rect')
           .data(d=>keys.map(key=>{return {key:key, value:d[key]}}))
           .enter().append('rect')
@@ -4862,8 +4870,8 @@ function EconomicsGraphic5(){
          // axes
        var xAxis = d3.axisBottom()
          .scale(x0);
-       var yAxis = d3.axisLeft(yleft);
-       var yAxis1=d3.axisRight(yright);
+       var yAxisLeft = d3.axisLeft(yleft);
+       var yAxisRight=d3.axisRight(yright);
          //cost name
           svg.append('g')
             	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
@@ -4872,23 +4880,28 @@ function EconomicsGraphic5(){
               .selectAll('text')
               .attr('fill','purple')
               .attr('font-weight','bold')
-              .attr('font-size','10px');
+              .attr('font-size','10px')
+              .attr("transform", function(d) {
+                return "rotate(-35) "
+            })
+            .attr("text-anchor", "end");
 
 
           //scale value on y axis
           svg.append('g')
             	.attr('transform', 'translate(' + margin.left + ',0)')
-            	.call(yAxis);
+            	.call(yAxisLeft);
           svg.append('g')
             .attr('transform','translate(' +width + ',0)')
-            .call(yAxis1);
+            .attr('class','yAxisRight')
+            .call(yAxisRight);
 
           // svg.selectAll("g.tick")
           //    .style("stroke-dasharray", ("3,3"));
            svg.append("text")
               .attr("transform",
                 "translate(" + (width/2) + " ," +
-                  (height-20) + ")")
+                  (height) + ")")
               .style("text-anchor", "left")
               .style("font-weight", "bold")
               .attr("font-size","1.1vmax")
@@ -4914,7 +4927,7 @@ function EconomicsGraphic5(){
 
            svg.append("text")
               .attr("transform", "rotate(-90)")
-              .attr("y", width+margin.right+15)
+              .attr("y", width+margin.right+35)
               .attr("x", 0 - (height / 2))
               .attr("dy", "1em")
               .style("text-anchor", "middle")
@@ -4981,6 +4994,7 @@ function EconomicsGraphic5(){
     var rerender=function(){
       svg.selectAll("*").remove();
       drawBarsfunction();
+      drawLegend();
     }
     return{
       render:render,
