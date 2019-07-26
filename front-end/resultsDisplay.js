@@ -4454,7 +4454,6 @@ formatDataGraphic3 = () => {
     data.push(d);
     });
   });
-  console.log(data);
   return data;
 }
 
@@ -4494,13 +4493,13 @@ svg
 
 
   var formatData = () => { //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
-    console.log(fullData);
+
     tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
     newData = tempData.filter(el => {
       if(this.options.indexOf(el.year) > -1) return false;
       return el != null;
     });
-    console.log(newData);
+
     return newData;
 
   }
@@ -4531,6 +4530,9 @@ data = formatData();
 
   let tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph3tt"));
 
+  function addCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
   svg.selectAll("*").remove();
 
@@ -4546,7 +4548,8 @@ data = formatData();
     .attr("fill", d => colors[keys.indexOf(d.costType)])
     .on("mouseover", function(d) {
       tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
-      tooltip.select("#econGraphic3Value").text("Cost: $" + d.value.toFixed(2));
+      let displayNum = addCommas(d.value.toFixed(2));
+      tooltip.select("#econGraphic3Value").text("Cost: $" + displayNum);
       tooltip.select("#econGraphic3Category").text(d.costType)
     })
     .on("mouseout", function(d) {
