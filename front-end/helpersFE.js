@@ -6483,10 +6483,11 @@ function uploadCSV(reader) {
     initData = [];
 
     //updating the precip levels from the values in the uploaded file
-    boardData[currentBoard].precipitation[0] = data[29];
-    boardData[currentBoard].precipitation[1] = data[30];
-    boardData[currentBoard].precipitation[2] = data[31];
-    boardData[currentBoard].precipitation[3] = data[32];
+    // Changes to be made to add two columns - contour area, buffer area
+    boardData[currentBoard].precipitation[0] = data[29]; //31
+    boardData[currentBoard].precipitation[1] = data[30]; //32
+    boardData[currentBoard].precipitation[2] = data[31]; //33
+    boardData[currentBoard].precipitation[3] = data[32]; //34
 
     boardData[currentBoard].precipitationIndex[0] = getPrecipOptionsValue(data[29]);
     boardData[currentBoard].precipitationIndex[1] = getPrecipOptionsValue(data[30]);
