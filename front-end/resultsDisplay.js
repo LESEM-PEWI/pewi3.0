@@ -4710,10 +4710,10 @@ function EconomicsGraphic2(){
   var year = currentYear;
   var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph2tt"));
 
-  var margin = {top: 40, right: 10, bottom: 60, left: 50};
+  var margin = {top: 40, right: 10, bottom: 60, left: 55};
   let windowWidth=window.innerWidth;
   var width = windowWidth *0.8- margin.left - margin.right;
-  var height =1800*.45 - margin.top - margin.bottom;
+  var height =window.innerHeight*.6 - margin.top - margin.bottom;
   var x0, x, y, fullData, data, keys; //initialize some variables so that they may be truly initialized in one function and accessed in a nother
   var options = [];
 
@@ -4878,6 +4878,7 @@ function EconomicsGraphic2(){
   }
 
   var addAxes = () =>{
+    console.log("here");
     var xAxis = svg.append("g")
       .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
       .style("font-weight", "bold")
