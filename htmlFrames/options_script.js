@@ -27,7 +27,9 @@
   */
   var selectedOptionsFalse = [];
   var hotkeyDescrip = ["Resets Camera","Randomize PEWI map","Toggle Topography","Undo Previous Land Change","Toggle Recording Feature","Create Multiplayer Maps",
-      "Print","Move Right","Move Left","Move Forward","Move Backward","Toggle Overlay","Toggle Flying Mode","Pivot Flat","Pivot Upright","Rotate Counterclockwise","Rotate Clockwise"];
+  "Move Right","Move Left","Move Forward","Move Backward","Toggle Overlay","Toggle Flying Mode","Toggle Contour Map", "Print",
+  "Pivot Flat","Pivot Upright","Rotate Counterclockwise","Rotate Clockwise"];
+
 
 
   //the saveCurrentOptionsState function is called when the save/exit button is pressed
@@ -253,8 +255,10 @@
           tempHotkey.innerHTML = hotkeyDescrip[i-1];
         var tempSpan = document.createElement("span");
           tempHotkey.appendChild(tempSpan);
-      var tempInput1;
-      if(tempIndex>12){
+
+        //****** This is dumb, but this needs to increase if more hotkeys are added, leave the arrow keys at the end of the array, need to change conditional below as well, ctrl f for "other spot to fix"
+        var tempInput1;
+      if(tempIndex>13){
         //arrows key in div
         tempInput1=document.createElement("div");
       }else{
@@ -285,20 +289,25 @@
           if(curHotkeys[i-1][0]==39){
             tempChar="→";
           }
+
+          // *** this is the other spot to fix if adding more hotkeys
           //hot keys without arrows key & available to change
-          if(tempIndex<13){
+          if(tempIndex<14){
           tempInput1.placeholder = tempChar;
           tempInput1.setAttribute("onkeyup","parent.setHotkey(this.value,"+tempIndex+",1)");
           tempInput1.setAttribute("onkeydown","this.value = this.value");
+
         }else{
-          //arrow keys
-          tempInput1.innerHTML=tempChar;
+        //arrow keys
+        tempInput1.innerHTML=tempChar;
         }
 
-          tempInput1.setAttribute("size","5");
-          tempInput1.setAttribute("height","5");
-          tempSpan.appendChild(tempInput1);
-          //Secondary col for hot key only
+      tempInput1.setAttribute("size","5");
+      tempInput1.setAttribute("height","5");
+      tempSpan.appendChild(tempInput1);
+
+
+        // //Secondary col for hot key only
           if(curHotkeys[i-1][0]!=38&&curHotkeys[i-1][0]!=40&&curHotkeys[i-1][0]!=37&&curHotkeys[i-1][0]!=39){
             var tempInput2 = document.createElement("input");
               tempInput2.id = "hki"+tempIndex+"e2";

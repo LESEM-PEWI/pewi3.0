@@ -10,8 +10,10 @@ var controls, controls1;
 var keyboard ={};
 var player = { speed:3, turnSpeed:Math.PI*0.02 };
 var renderer = new THREE.WebGLRenderer();
+// renderer.sortObjects = false;
 var stats = new Stats();
 var SCREEN_WIDTH, ASPECT, NEAR, FAR;
+
 //application data
 var boardData = [];
 var clickTrackings = []; //array for storing all clicks in when click-tracking is enabled
@@ -23,7 +25,10 @@ var Totals; //global current calculated results, NOTE, should be reassigned ever
 //status trackers
 var allLoaded = false;
 var counter = 0;
+
 var currentBoard = -1;
+
+
 var currentYear = 1;
 var currentPlayer = 0;
 
@@ -35,6 +40,11 @@ var painter = 1;
 var previousHover = null;
 var tToggle = false; //topology off by default
 var uploadedBoard = false;
+
+
+
+var generatedContourMap;
+
 
 //Variables for Zoom Function
 var fov = null,
@@ -292,10 +302,12 @@ function birdAnimation() {
 } //end birdAnimation
 
 //Event function that is called when screen is changed
+// Adding navigation keys, asdw
 function CamView(e) {
   tempKeys = giveHotkeys();
   var Uma = String.fromCharCode(tempKeys[11][0]);
   document.getElementById("flyover").innerHTML = "FlyOver Mode, Hit " + Uma +  " to Exit";
+
   if (e.keyCode == tempKeys[11][0] || e.keyCode == tempKeys[11][1]) {
     if(curTracking) {
       pushClick(0,getStamp(),85,0,null);
@@ -817,11 +829,14 @@ function setupStaticBackground() {
 } //end setupStaticBackground
 
 //showMainMenu uses the esc key to return to the startup screen
+// Adding navigation keys, asdw
 function showMainMenu() {
   //Checking the flag variable to know which camera is functional.
   if (ToggleCam == 1){
     changeCam2();
     document.getElementById("flyover").innerHTML = "";
+    document.getElementById("flyASDW").style.display = "none";
+    document.getElementById("flyNavigKeys").style.display = "none";
     //Reseting camera 2 position when sandbox is reloaded
     camera2.position.x = 70;
     camera2.position.y = 25;
@@ -893,8 +908,10 @@ function switchBoards(newBoard) {
 
   //update Results to point to correct board since currentBoard is updated
   Totals = new Results(boardData[currentBoard]);
+  generatedContourMap = new ContourMap();
 
 } //end switchBoards
+
 
 //switchToZoomView updates a zoom template map with information from the current full map
 function switchToZoomView(tile) {
@@ -968,8 +985,15 @@ function toggleCameraView(){
     //Checking the flag variable to know which camera is functional.
     if (ToggleCam == 1){changeCam2();}
     else{ChangeCam();}
-    if (ToggleCam == 1){document.getElementById('flyover').style.display = "block"}
-    else{document.getElementById('flyover').style.display = "none";}
+    if (ToggleCam == 1) {
+      document.getElementById('flyover').style.display = "block";
+      document.getElementById("flyASDW").style.display = "block";
+      document.getElementById("flyNavigKeys").style.display = "block";
+    }
+    else{document.getElementById('flyover').style.display = "none";
+    document.getElementById("flyASDW").style.display = "none";
+    document.getElementById("flyNavigKeys").style.display = "none";
+  }
 }
 
 //zoomAnimation updates field of view positions for zoom animation
@@ -1007,3 +1031,5 @@ function zoomAnimation() {
   }
 
 } //end zoomAnimation
+
+//export { boardData[currentYear].map as theMap};

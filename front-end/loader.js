@@ -4,7 +4,9 @@ var materialArray = [];
 var highlightArray = [];
 var oldPewiBackgrounds = [];
 var rainTexture;
+var tile0;
 var grayTextureArray;
+
 
 //this function loads into the texture arrays the necessary images for creation of webGl
 //  materials. All are loaded via the three.js textureLoader
@@ -14,9 +16,15 @@ function loadResources() {
     //Add a textureLoader to load textures for THREE.js
     var textureLoader = new THREE.TextureLoader();
 
+
+    //stuff for the contourMap
+
+    tile0 = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Mixed_Fruits_and_Vegetables.png');
+
     //Load the land type textures. Each land type has a number from 1 to 15.
     var textureClear = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_None.png');
-    var textureConventionalCorn = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conventional_Corn.png'); //1
+    // var textureConventionalCorn = textureLoader.load('./imgs/topography/images/TileNum0.png'); //1 cell_images_bitmaps/LandUse_Conventional_Corn.png
+    var textureConventionalCorn = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conventional_Corn.png')
     var textureConservationCorn = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conservation_Corn.png'); //2
     var textureConventionalSoybean = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conventional_Soybean.png');//3
     var textureConservationSoybean = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Conservation_Soybean.png');//4
