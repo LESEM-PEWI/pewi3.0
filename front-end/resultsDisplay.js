@@ -4866,7 +4866,43 @@ function EconomicsGraphic5(){
             tooltip.style('left',(d3.event.pageX)+"px")
                     .style('top',(d3.event.pageY)+"px")
           });
+        var lineLabor=d3.line()
+            .x(d=>x0(d.twiceAMonth)+17)
+            .y(d=>yleft(d["Total Labor Cost"]))
+              .curve(d3.curveMonotoneX);
+          svg.append('path')
+            .attr("class","lineLabor")
+            .attr("d",lineLabor(displaydata))
+            .attr("stroke", "orange")
+            .attr("stroke-width", 2)
+            .attr("fill", "none")
+            .style("stroke-dasharray", ("3, 3"));
 
+        var lineHours=d3.line()
+          .x(d=>x0(d.twiceAMonth)+5)
+          .y(d=>yright(d["Total Labor Hours"]))
+          .curve(d3.curveMonotoneX)
+
+        svg.append('path')
+          .attr("class","lineHours")
+          .attr("d",lineHours(displaydata))
+          .attr("stroke", "blue")
+          .attr("stroke-width", 2)
+          .attr("fill", "none")
+          .style("stroke-dasharray", ("3, 3"));
+
+          var lineCustom=d3.line()
+            .x(d=>x0(d.twiceAMonth)+27)
+            .y(d=>yleft(d["Total Custom Hire Cost"]))
+            .curve(d3.curveMonotoneX)
+
+          svg.append('path')
+            .attr("class","lineCustom")
+            .attr("d",lineCustom(displaydata))
+            .attr("stroke", "green")
+            .attr("stroke-width", 2)
+            .attr("fill", "none")
+            .style("stroke-dasharray", ("3, 3"));
          // axes
        var xAxis = d3.axisBottom()
          .scale(x0);
@@ -4905,7 +4941,7 @@ function EconomicsGraphic5(){
               .style("text-anchor", "left")
               .style("font-weight", "bold")
               .attr("font-size","1.1vmax")
-              .text("Land Uses");
+              .text("Time");
 
           svg.append("text")
             .attr("transform",
@@ -4980,6 +5016,13 @@ function EconomicsGraphic5(){
          cell.append(inputbox);
          container.append(cell);
        }
+
+       container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Line');
+       container.innerHTML="";
+       cell=document.createElement('div');
+       cell.innerHTML='Line Selection';
+       cell.className='graphic5Year';
+       container.append(cell);
      }
      var optionClick = (i) => {
        selectOption=i;
