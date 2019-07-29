@@ -855,12 +855,10 @@ function addTile(tile) {
       if(checkbox.checked && overlayTemp == true){
         tileMaterial2.opacity = 0.4;
         tileMaterial2.map = grayTextureArray[tile.landType[currentYear]];
-        console.log(overlayTemp);
       }
       else{
         tileMaterial2.opacity = 1.0;
         tileMaterial2.map = textureArray[tile.landType[currentYear]];
-        console.log(overlayTemp);
       }
 
     } else {
@@ -2962,7 +2960,7 @@ function calculateSubwatershedTotalNitrateScore(tileId){
 //getHighlightedInfo returns the value of the corresponding highlighted setting in a tile
 //More hover information
 function getHighlightedInfo(tileId) {
-  
+
   //return information about the tile that is highlighted
   if (currentHighlightType <= 0) {
     return "";

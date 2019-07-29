@@ -59,8 +59,8 @@ Cleaned and Prepared - August 2016
     <div id="tab3" class="tab" onclick="toggleToTab(3);"><img src="./imgs/numbersIcon.png" />
       <span class="tab2text">Economics</span>
     </div>
-    <div id="tab4" class="tab" onclick="toggleToTab(4);"><img src="./imgs/numbersIcon.png" />
-      <span class="tab2text">Econ</span>
+    <div id="tab4" class="tab" onclick="toggleToTab(4);placeTotalsOnBars();"><img src="./imgs/moneybag.png" />
+      <span class="tab1text">Econ</span>
     </div>
 
 
@@ -126,9 +126,30 @@ Cleaned and Prepared - August 2016
         <div id="contentsN" style="margin:10px; margin-top:2px;"></div>
       </div>
 
-      <div style="display:none;" id="econ"><br>
 
-         <div id="accordionContainer">
+
+      <div style="display:none;" id="econ"><br>
+        <div style="display:inline-block;width:20%;vertical-align:top" >
+        <div id="tOrAbutton">
+          <h4>View By</h4>
+          <select id="timeOrAction" onChange="">
+              <option value=0>Time</option>
+              <option value=1>Action</option>
+              <option value=2>All</option>
+          </select>
+        </div>
+
+        <div id="yearCopyButton">
+          <h4>Year Select:</h4>
+          <select id="yearToCopy" onChange="">
+              <option value=0>Year 1</option>
+              <option value=1>Year 2</option>
+              <option value=2>Year 3</option>
+          </select>
+        </div>
+      </div>
+
+         <div id="accordionContainer" style="width:75%">
           <ul class="accordion">
 
            <li>
@@ -716,7 +737,7 @@ Cleaned and Prepared - August 2016
              </ul>
 
            </div>
-          <button href="#" id="enterpriseBudgetsButton" onclick="enterpriseBudgets()">View Enterprise Budgets</button>
+          <button href="#" id="enterpriseBudgetsButton" style="display:block" onclick="enterpriseBudgets()">View Enterprise Budgets</button>
 
        </div><!--End of econ module-->
 

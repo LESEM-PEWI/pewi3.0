@@ -760,7 +760,6 @@ function drawD3EconPieChart(year, isTheChartInCategoryMode) {
   */
   var multiplayerColorPack = ["#87ceee","#e6bb00","#cc6578","#127731","#c97b08","#302485"];
   var totalCost = getTotalCost(tempResult, year);
-
    var dataset = [{
       label: 'Conventional Corn',
       count: (tempResult[0].count*(Math.round(Totals.landUseResults[year].conventionalCornLandUse * 100) / 100)),
@@ -822,7 +821,6 @@ function drawD3EconPieChart(year, isTheChartInCategoryMode) {
       count: (tempResult[12].count*(Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 100) / 100)),
       number: ((tempResult[12].count*(Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 100) / 100))/totalCost)
     }];
-
    //variables for the display of the chart on the page
   // be careful about changing these values since they are tied closely to
   // css styling on results page
@@ -1061,8 +1059,10 @@ function drawD3EconPieChart(year, isTheChartInCategoryMode) {
     return "none";
   }
 
+//  console.log(dataset[0].count);
+
    multiplayerResults();
-} //end drawD3LandPieChart()
+} //end drawD3EconPieChart()
 
  function getTotalCost(data, givenYear) {
   var cost = 0;
@@ -2532,9 +2532,7 @@ function getValue(val) {
     return parseFloat(temp);
   }
   else {
-    console.log(val);
-    console.log("inside 0");
-    return 0;
+    return parseFloat(val);
   }
 }
 
@@ -2612,7 +2610,6 @@ function generateResultsTable() {
   //The following coditional statement is to modify the results table depending on the mode.
   //If the condition is true then it means that the results will be modified to the multiplayer mode, else it will be the same results table per every other mode.
   if(localStorage.getItem('LSinMultiplayer')==="true"){
-    console.log(boardData[currentBoard]);
 
     //add header
     //Players section of table START
@@ -3339,12 +3336,12 @@ function findBar(givenString){
   if(accordion.style.display === "none"){
     enterpriseTable.style.display = "none";
 
-     accordion.style.display = "block";
+     accordion.style.display = "inline-block";
     graph.style.display = "block";
     enterpriseButton.innerHTML = "View Enterprise Budgets";
   }
   else{
-    enterpriseTable.style.display = "block";
+    enterpriseTable.style.display = "inline-block";
 
      accordion.style.display = "none";
     graph.style.display = "none";
