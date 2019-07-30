@@ -4732,6 +4732,11 @@ function EconomicsGraphic4() {
   };
 }
 
+/**
+ * Grahpic 5 time of year, total labors cost, total custom hire cost, total labor hours
+ * @param  {[type]} econdata [data from economics.js]
+ * @return data
+ */
 function graphic5DisplayInfo(econdata){
   var data=[];
   var twiceAMonth=["Early Jan.","Late Jan.","Early Feb.","Late Feb.",
@@ -4772,6 +4777,12 @@ console.log(data);
   return data;
 }
 
+/**
+ * economics modules graphic 5
+ * y axis- value -total labor cost and total custom labor cost range
+ *       - hours - total labor Hours range
+ * x axis- twice a month with three cluster
+ */
 function EconomicsGraphic5(){
   var instance;
   var econdata;
@@ -4780,10 +4791,13 @@ function EconomicsGraphic5(){
   var legendText=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   var lineSelectionCheckbox=[true,true,true];
   var selectOption=1;
+
+  /**
+   * initialize the svg and draw bar and line
+   */
   function init(){
     econdata=economics.data5;
     var econBody= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5svg');
-
     var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
 
     //scale
@@ -4800,15 +4814,13 @@ function EconomicsGraphic5(){
     .attr("height", height+30)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    //graphic5DisplayInfo(econdata);
-    //https://observablehq.com/@d3/grouped-bar-chart
     /**
      * function draws bar on the chart
-     * @return {[type]} [description]
      */
      var drawBarsfunction=function(){
          displaydata=graphic5DisplayInfo(econdata);
          displaydata=displaydata[selectOption];
+
          //scale
          let x0=d3.scaleBand()
          .domain(displaydata.map(d=>d.twiceAMonth))
@@ -4820,7 +4832,6 @@ function EconomicsGraphic5(){
          .rangeRound([0,x0.bandwidth()])
          .padding(.05);
 
-
          let yleft=d3.scaleLinear()
          .domain([0, d3.max(displaydata, d => d3.max(keys, key => d[key]))])
          .rangeRound([height-margin.bottom,margin.top]);
@@ -4829,8 +4840,10 @@ function EconomicsGraphic5(){
          .domain([0,d3.max(displaydata,d=>d[keys[0]])])
          .rangeRound([height-margin.bottom,margin.top]);
 
+         //tooltip hover effect
          var tooltip=d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph5tt"));
 
+         //draw bars (three cluster)
          svg.append('g')
           .selectAll('g')
           .data(displaydata)
@@ -4868,6 +4881,7 @@ function EconomicsGraphic5(){
                     .style('top',(d3.event.pageY)+"px")
           });
 
+        //total labor hours line
         if(lineSelectionCheckbox[0]){
           var lineHours=d3.line()
             .x(d=>x0(d.twiceAMonth)+5)
@@ -4882,6 +4896,7 @@ function EconomicsGraphic5(){
             .attr("fill", "none");
             //.style("stroke-dasharray", ("3, 3"));
         }
+        //total labor cost line
         if(lineSelectionCheckbox[1]){
           var lineLabor=d3.line()
               .x(d=>x0(d.twiceAMonth)+17)
@@ -4895,12 +4910,12 @@ function EconomicsGraphic5(){
               .attr("fill", "none");
               //.style("stroke-dasharray", ("3, 3"));
         }
+        //total custom labor cost line
         if(lineSelectionCheckbox[2]){
           var lineCustom=d3.line()
             .x(d=>x0(d.twiceAMonth)+27)
             .y(d=>yleft(d["Total Custom Hire Cost"]))
-            .curve(d3.curveMonotoneX)
-
+            .curve(d3.curveMonotoneX);
           svg.append('path')
             .attr("class","lineCustom")
             .attr("d",lineCustom(displaydata))
@@ -4908,14 +4923,14 @@ function EconomicsGraphic5(){
             .attr("stroke-width", 4)
             .attr("fill", "none");
             //.style("stroke-dasharray", ("3, 3"));
-         // axes
         }
 
+        //x and y axis
        var xAxis = d3.axisBottom()
          .scale(x0);
        var yAxisLeft = d3.axisLeft(yleft);
        var yAxisRight=d3.axisRight(yright);
-         //cost name
+         //cost name and scale x axis
           svg.append('g')
             	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
             	.call(xAxis);
@@ -4939,6 +4954,7 @@ function EconomicsGraphic5(){
             .attr('class','yAxisRight')
             .call(yAxisRight);
 
+          //text on top, bottom, x axis, y axis
            svg.append("text")
               .attr("transform",
                 "translate(" + (width/2) + " ," +
@@ -4947,7 +4963,6 @@ function EconomicsGraphic5(){
               .style("font-weight", "bold")
               .attr("font-size","1.1vmax")
               .text("Time");
-
           svg.append("text")
             .attr("transform",
               "translate(" + (width/2) + " ," +
@@ -4965,7 +4980,6 @@ function EconomicsGraphic5(){
              .attr("font-size","1.1vmax")
              .attr("font-weight","bold")
              .text("Value");
-
            svg.append("text")
               .attr("transform", "rotate(-90)")
               .attr("y", width+margin.right+35)
@@ -4976,6 +4990,9 @@ function EconomicsGraphic5(){
               .attr("font-weight","bold")
               .text("Hours");
      }
+     /**
+      * draw legend on svg
+      */
      var drawLegend=function(){
          legend = svg.append("g")
               .attr("transform", "translate(" +[width-50,margin.top]+")")
@@ -4999,7 +5016,11 @@ function EconomicsGraphic5(){
           .text(d=>d);
 
      }
+     /**
+      * option year and line selection
+      */
      var addOptions=function(){
+       //year
        let doc=document.getElementById('resultsFrame').contentWindow.document;
        container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Year');
        container.innerHTML="";
@@ -5022,7 +5043,7 @@ function EconomicsGraphic5(){
          cell.append(inputbox);
          container.append(cell);
        }
-
+       //line selection
        container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Line');
        container.innerHTML="";
        cell=document.createElement('div');
@@ -5042,10 +5063,18 @@ function EconomicsGraphic5(){
          container.appendChild(cell);
        });
      }
+     /**
+      * switching year
+      * @param  {[type]} i [index]
+      */
      var optionYearClick = (i) => {
        selectOption=i;
        rerender();
      }
+     /**
+      * line selection
+      * @param  {[type]} i [index]
+      */
      var lineSelection=(i)=>{
        lineSelectionCheckbox[i]=!lineSelectionCheckbox[i];
        rerender();

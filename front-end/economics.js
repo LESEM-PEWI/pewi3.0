@@ -35,9 +35,10 @@ var Economics = function () {
     });
     console.log(this.data)
   }
-    //graphic 4 extract data from raw data
-
-    this.graphic5information = function(list){
+  /**
+   * grahpic 5 parse data
+   */
+    this.graphic5information = function(){
       for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
         this.data5[i]=[];
         this.mapData[i].forEach(dataPoint=>{
@@ -54,9 +55,7 @@ var Economics = function () {
             var indexOfStevie = this.data5[i][landuseNum]['subcrop'].findIndex(i => i['subcrop'] === subcrop);
             this.data5[i][landuseNum]['subcrop'][indexOfStevie]['array'].push(dataPoint);
           }
-
             this.data5[i][landuseNum]['array'].push(dataPoint);
-
           }
         })
     }
@@ -64,9 +63,8 @@ var Economics = function () {
     }
     d3.csv('./budgets_2.csv', (data) => {
       this.rawData2=data;
-      //this.graphic5information(['total labor hours','total labor costs','total custom hire costs']);
     })
-
+  //graphic 4 extract data from raw data
   this.chart4Information = function(lists) {
     this.rawData.forEach(dataPoint => {
       var landuseNum=dataPoint['LU_ID'];
@@ -106,7 +104,7 @@ var Economics = function () {
       })
     }
     console.log(this.mapData);
-    this.graphic5information(['total labor hours','total labor costs','total custom hire costs']);
+    this.graphic5information();
   }
 }
 var economics = new Economics();
