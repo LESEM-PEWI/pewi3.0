@@ -6241,6 +6241,7 @@ function togglePausePlay() {
  */
 function uploadClicked(files) {
 
+    console.log(undoArr)
   var reader;
 
   // check file type here
@@ -6263,8 +6264,9 @@ function uploadClicked(files) {
   // document.getElementById("year2Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[2]);
   // document.getElementById("year3Precip").value = getPrecipOptionsValue(boardData[currentBoard].precipitation[3]);
 
-  for(let i = 0; i <undoArr.length; i++){
+  for(let i = 0; i < undoArr.length; i++){
     undoArr[i] = [];
+    console.log(undoArr)
   }
 
   closeUploadDownloadFrame();
