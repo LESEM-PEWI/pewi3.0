@@ -70,7 +70,7 @@
   }
 
 /**Styling for index Menu**/
-#indexmenu, #combineButton {
+#glossarymenu, #combineButton {
 
   color: #FFFFFF;
   cursor: pointer;
@@ -89,7 +89,7 @@
 }
 
 /**Styling for index Menu**/
-#indexmenu {
+#glossarymenu {
   background-image: url('./imgs/consoleTexture.png');
   background-repeat: repeat;
   border-radius: 25px;
@@ -131,7 +131,7 @@
   top:55%;
 }
 
-#indexmenu:hover, #combineButton:hover {
+#glossarymenu:hover, #combineButton:hover {
   box-shadow: 0px 0px 5px 5px rgba(240, 166, 29, 0.3), 0 17px 50px 0 rgba(240, 166, 29, 0.1);
 }
 
@@ -817,7 +817,7 @@ table {
     width: 15px;
     margin: 2.5px;
   }
-  #indexmenu {
+  #glossarymenu {
     font-size: 14px;
     height: 18px;
     top: 46px;

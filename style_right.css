@@ -310,7 +310,7 @@
   transition-duration: var(--transition-duration);
 }
 
-.indexPopupText {
+.glossaryPopupText {
   color: white;
   padding: 1vw;
   position: relative;

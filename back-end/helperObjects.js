@@ -913,18 +913,18 @@ function Click(c1, c2, c3, c4, c5) {
       // Index is renamed to be Glossary
       case 78:
         if (action) {
-          return toggleIndex();
+          return toggleGlossary();
         } else {
           return "Glossary opened";
         }
       case 79:
         if (action) {
-          return toggleIndex();
+          return toggleGlossary();
         } else {
           return "Glossary closed";
         }
 
-        // Action inside index page, click on entry
+        // Action inside glossary page, click on entry
       case 80:
         console.log("Entry ID: " + this.tileID);
         // console.log(CODEX_HTML.document.getElementById(this.tileID).className);
@@ -944,11 +944,9 @@ function Click(c1, c2, c3, c4, c5) {
         // record the event description in csv file
         else
           return "Clicked entry " +  window.frames[3].document.getElementById(this.tileID).textContent + " in glossary page";
-
-
         break;
 
-        // Action inside index page, switch to Advanced
+        // Action inside glossary page, switch to Advanced
       case 81:
         console.log("Case 81 ID: " + this.tileID);
 
@@ -960,7 +958,7 @@ function Click(c1, c2, c3, c4, c5) {
           return "Click Advanced tab";
         break;
 
-        // Action inside index page, switch to General
+        // Action inside glossary page, switch to General
       case 82:
         console.log("Case 82 ID: " + this.tileID);
 
@@ -1066,12 +1064,13 @@ function Click(c1, c2, c3, c4, c5) {
             return window.frames[0].scrollTo(0,parseInt(this.tileID));
           else
             return "User scrolled in the about page";
-        //When the user scrolls in the index page, which is the codex.html
+        //When the user scrolls in the glossary page, which is the codex.html
         case 93:
           if(action)
             return window.frames[3].frames[0].scrollTo(0,parseInt(this.tileID));
           else
-            return "User scrolled in the glossary page";
+            return "User scrolled in the Glossary page";
+
         //When the user scrolls in the results page
         case 94:
           if(action)

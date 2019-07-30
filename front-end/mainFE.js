@@ -376,7 +376,7 @@ function confirmEscape() {
     /* Commented out Glossary button, which is the following lines below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').onclick = function() {
       toggleEscapeFrame();
-      toggleIndex();
+      toggleGlossary();
     };
     */
     document.getElementById('escapeButton').onclick = function() {
@@ -580,7 +580,7 @@ function loadingManager() {
 
   //DefaultLoadingManager.onProgress is a THREE.js function that tracks when items are loaded
   THREE.DefaultLoadingManager.onProgress = function(item, loaded, total) {
-    console.log(" loaded " + loaded + " of " + total);
+    // console.log(" loaded " + loaded + " of " + total);
   };
 
   //DefaultLoadingManager.onload updates boolean allLoaded when all resources are loaded
@@ -647,7 +647,7 @@ function onWheelViewCredits(e) {
   }
 }
 
-//Event function that is called when a user is scrolling in the index [Unused for now...need to find a way to record scroll bar position in nested iframe within index]
+//Event function that is called when a user is scrolling in the Glossary [Unused for now...need to find a way to record scroll bar position in nested iframe within index]
 //function onWheelViewIndex(e) {
 //if(curTracking && scrollGap) {
 //pushClick(0,getStamp(),93,0,window.frames[2].frames[0].pageYOffset);
