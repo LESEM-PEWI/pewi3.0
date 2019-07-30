@@ -4778,6 +4778,7 @@ function EconomicsGraphic5(){
   var displaydata;
   var keys=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   var legendText=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
+  var lineSelectionCheckbox=[true,true,true];
   var selectOption=1;
   function init(){
     econdata=economics.data5;
@@ -4796,7 +4797,7 @@ function EconomicsGraphic5(){
     var svg = d3.select(econBody);
     svg
     .attr("width", width + margin.left + margin.right)
-    .attr("height", height)
+    .attr("height", height+30)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     //graphic5DisplayInfo(econdata);
@@ -4866,31 +4867,35 @@ function EconomicsGraphic5(){
             tooltip.style('left',(d3.event.pageX)+"px")
                     .style('top',(d3.event.pageY)+"px")
           });
-        var lineLabor=d3.line()
-            .x(d=>x0(d.twiceAMonth)+17)
-            .y(d=>yleft(d["Total Labor Cost"]))
-              .curve(d3.curveMonotoneX);
+
+        if(lineSelectionCheckbox[0]){
+          var lineHours=d3.line()
+            .x(d=>x0(d.twiceAMonth)+5)
+            .y(d=>yright(d["Total Labor Hours"]))
+            .curve(d3.curveMonotoneX);
+
           svg.append('path')
-            .attr("class","lineLabor")
-            .attr("d",lineLabor(displaydata))
-            .attr("stroke", "orange")
-            .attr("stroke-width", 2)
-            .attr("fill", "none")
-            .style("stroke-dasharray", ("3, 3"));
-
-        var lineHours=d3.line()
-          .x(d=>x0(d.twiceAMonth)+5)
-          .y(d=>yright(d["Total Labor Hours"]))
-          .curve(d3.curveMonotoneX)
-
-        svg.append('path')
-          .attr("class","lineHours")
-          .attr("d",lineHours(displaydata))
-          .attr("stroke", "blue")
-          .attr("stroke-width", 2)
-          .attr("fill", "none")
-          .style("stroke-dasharray", ("3, 3"));
-
+            .attr("class","lineHours")
+            .attr("d",lineHours(displaydata))
+            .attr("stroke", "blue")
+            .attr("stroke-width", 4)
+            .attr("fill", "none");
+            //.style("stroke-dasharray", ("3, 3"));
+        }
+        if(lineSelectionCheckbox[1]){
+          var lineLabor=d3.line()
+              .x(d=>x0(d.twiceAMonth)+17)
+              .y(d=>yleft(d["Total Labor Cost"]))
+                .curve(d3.curveMonotoneX);
+            svg.append('path')
+              .attr("class","lineLabor")
+              .attr("d",lineLabor(displaydata))
+              .attr("stroke", "orange")
+              .attr("stroke-width", 4)
+              .attr("fill", "none");
+              //.style("stroke-dasharray", ("3, 3"));
+        }
+        if(lineSelectionCheckbox[2]){
           var lineCustom=d3.line()
             .x(d=>x0(d.twiceAMonth)+27)
             .y(d=>yleft(d["Total Custom Hire Cost"]))
@@ -4900,10 +4905,12 @@ function EconomicsGraphic5(){
             .attr("class","lineCustom")
             .attr("d",lineCustom(displaydata))
             .attr("stroke", "green")
-            .attr("stroke-width", 2)
-            .attr("fill", "none")
-            .style("stroke-dasharray", ("3, 3"));
+            .attr("stroke-width", 4)
+            .attr("fill", "none");
+            //.style("stroke-dasharray", ("3, 3"));
          // axes
+        }
+
        var xAxis = d3.axisBottom()
          .scale(x0);
        var yAxisLeft = d3.axisLeft(yleft);
@@ -4932,8 +4939,6 @@ function EconomicsGraphic5(){
             .attr('class','yAxisRight')
             .call(yAxisRight);
 
-          // svg.selectAll("g.tick")
-          //    .style("stroke-dasharray", ("3,3"));
            svg.append("text")
               .attr("transform",
                 "translate(" + (width/2) + " ," +
@@ -5005,6 +5010,7 @@ function EconomicsGraphic5(){
        for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
          cell=document.createElement('div');
          cell.innerHTML="Year "+i;
+         cell.className="graphic5YearSelection";
          inputbox=document.createElement('input');
          inputbox.name="yearOption";
          if(i==1){
@@ -5012,7 +5018,7 @@ function EconomicsGraphic5(){
          }
          inputbox.type='radio';
          inputbox.style.float='right';
-         inputbox.onclick=event=>optionClick(i);
+         inputbox.onclick=event=>optionYearClick(i);
          cell.append(inputbox);
          container.append(cell);
        }
@@ -5021,11 +5027,27 @@ function EconomicsGraphic5(){
        container.innerHTML="";
        cell=document.createElement('div');
        cell.innerHTML='Line Selection';
-       cell.className='graphic5Year';
+       cell.className='graphic5LineSelection';
        container.append(cell);
+       keys.map((k,i)=>{
+         cell=document.createElement('div');
+         cell.innerHTML=k+" Line";
+         cell.className="graphic5lineOption"
+         checkBox=document.createElement('input');
+         checkBox.type='checkbox';
+         checkBox.style.float='right';
+         checkBox.onclick= event=> lineSelection(i);
+         checkBox.checked=true;
+         cell.appendChild(checkBox);
+         container.appendChild(cell);
+       });
      }
-     var optionClick = (i) => {
+     var optionYearClick = (i) => {
        selectOption=i;
+       rerender();
+     }
+     var lineSelection=(i)=>{
+       lineSelectionCheckbox[i]=!lineSelectionCheckbox[i];
        rerender();
      }
     var render=function() {
