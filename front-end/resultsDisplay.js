@@ -4787,10 +4787,12 @@ function EconomicsGraphic5(){
   var instance;
   var econdata;
   var displaydata;
+  var displaykey=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   var keys=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   var legendText=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   var lineSelection=[""]
   var lineSelectionCheckbox=[true,true,true];
+  var barSelectionCheckbox=[true,true,true];
   var selectOption=1;
 
   /**
@@ -4852,7 +4854,9 @@ function EconomicsGraphic5(){
           .append('g')
           .attr('transform', d => 'translate(' + x0(d.twiceAMonth) + ',0)')
           .selectAll('rect')
-          .data(d=>keys.map(key=>{return {key:key, value:d[key]}}))
+          .data(d=>displaykey.map(key=>{
+            return {key:key, value:d[key]}
+          }))
           .enter().append('rect')
           .attr('x',d=>x1(d.key))
           .attr('y',d=>{
@@ -5064,6 +5068,25 @@ function EconomicsGraphic5(){
          cell.appendChild(checkBox);
          container.appendChild(cell);
        });
+
+        container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Bar');
+        container.innerHTML="";
+        cell=document.createElement('div');
+        cell.innerHTML='Bar Selection';
+        cell.className='graphic5LineSelection';
+        container.append(cell);
+        keys.map((k,i)=>{
+          cell=document.createElement('div');
+          cell.innerHTML=k+" Bar";
+          cell.className="graphic5lineOption"
+          checkBox=document.createElement('input');
+          checkBox.type='checkbox';
+          checkBox.style.float='right';
+          checkBox.checked=true;
+          checkBox.onclick= event=> barSelection(i);
+          cell.appendChild(checkBox);
+          container.appendChild(cell);
+        });
      }
      /**
       * switching year
@@ -5071,6 +5094,19 @@ function EconomicsGraphic5(){
       */
      var optionYearClick = (i) => {
        selectOption=i;
+       rerender();
+     }
+     var barSelection=(i)=>{
+       barSelectionCheckbox[i]=!barSelectionCheckbox[i];
+       console.log(barSelectionCheckbox);
+       if( !barSelectionCheckbox[i]){
+         displaykey[i]=""
+         //keys.splice(i,1);
+       }else{
+         displaykey[i]=keys[i];
+         //keys.splice(i,0,keyInitial[i]);
+       }
+       console.log(displaykey);
        rerender();
      }
      /**
