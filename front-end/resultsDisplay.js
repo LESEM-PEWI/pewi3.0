@@ -5059,7 +5059,19 @@ function EconomicsGraphic5(){
        keys.map((k,i)=>{
          cell=document.createElement('div');
          cell.innerHTML=k+" Line";
-         cell.className="graphic5lineOption"
+         cell.className="graphic5lineOption";
+         // lineSVG=document.createElement('svg');
+         // lineSVG.setAttribute("width",50);
+        // var line='<line x1="0" y1="0" x2="40" y2="0" style="stroke:rgb(255,0,0);stroke-width:4" />';
+         // line.setAttribute('x1', 0);
+         // line.setAttribute('y1', 0);
+         // line.setAttribute('x2', 40);
+         // line.setAttribute('y2', 0);
+         // line.setAttribute('stroke', "rgb(255,0,0)");
+         // line.setAttribute('stroke-width', 4);
+         //lineSVG.appendChild(line);
+        // lineSVG.innerHTML=line;
+         //cell.appendChild(lineSVG);
          checkBox=document.createElement('input');
          checkBox.type='checkbox';
          checkBox.style.float='right';
