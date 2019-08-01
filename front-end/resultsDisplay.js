@@ -4804,7 +4804,7 @@ function EconomicsGraphic5(){
     var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
 
     //scale
-    var margin={top:40,right:10,bottom:60,left:80};
+    var margin={top:60,right:10,bottom:60,left:80};
     let windowWidth=window.innerWidth;
     var width = windowWidth *0.84- margin.left - margin.right;
     var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
@@ -4898,8 +4898,8 @@ function EconomicsGraphic5(){
             .attr("d",lineHours(displaydata))
             .attr("stroke", "blue")
             .attr("stroke-width", 3)
-            .attr("fill", "none");
-            //.style("stroke-dasharray", ("3, 3"));
+            .attr("fill", "none")
+            .style("stroke-dasharray", ("0"));
         }
         //total labor cost line
         if(lineSelectionCheckbox[1]){
@@ -5021,6 +5021,28 @@ function EconomicsGraphic5(){
           .attr("dy","0.35em")
           .text(d=>d);
 
+          linelegend=svg.append("g")
+              .attr("transform", "translate(" +[width-50,margin.top+40]+")")
+              .attr("text-anchor", "end")
+              .attr("font-family", "sans-serif")
+              .attr("font-size", 12)
+              .selectAll("g")
+              .data(legendText)
+              .enter().append("g")
+              .attr("transform", function(d, i) {return "translate(" + [0,20*i] + ")";});
+
+        linelegend.append("line")//making a line for legend
+          .attr("x1", 3)
+          .attr("x2",25)
+          .attr("y1", -5)
+          .attr("y2", -5)
+          .style("stroke-dasharray",[5,5])//dashed array for line
+          .style("stroke",colors)
+          .style("stroke-width",3);
+
+          linelegend.append("text")
+            .text(d=>d+" line");
+
      }
      /**
       * option year and line selection
@@ -5060,18 +5082,18 @@ function EconomicsGraphic5(){
          cell=document.createElement('div');
          cell.innerHTML=k+" Line";
          cell.className="graphic5lineOption";
-         // lineSVG=document.createElement('svg');
+         lineSVG=document.createElement('svg');
          // lineSVG.setAttribute("width",50);
-        // var line='<line x1="0" y1="0" x2="40" y2="0" style="stroke:rgb(255,0,0);stroke-width:4" />';
-         // line.setAttribute('x1', 0);
-         // line.setAttribute('y1', 0);
-         // line.setAttribute('x2', 40);
-         // line.setAttribute('y2', 0);
-         // line.setAttribute('stroke', "rgb(255,0,0)");
-         // line.setAttribute('stroke-width', 4);
-         //lineSVG.appendChild(line);
-        // lineSVG.innerHTML=line;
-         //cell.appendChild(lineSVG);
+         var line=document.createElement('line');
+         line.setAttribute('x1', 3);
+         line.setAttribute('y1', 0);
+         line.setAttribute('x2', 40);
+         line.setAttribute('y2', 0);
+         line.setAttribute('stroke', "rgb(255,0,0)");
+         line.setAttribute('stroke-width', 4);
+         lineSVG.appendChild(line);
+        //lineSVG.innerHTML=line;
+         cell.appendChild(lineSVG);
          checkBox=document.createElement('input');
          checkBox.type='checkbox';
          checkBox.style.float='right';
