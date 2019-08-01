@@ -5041,6 +5041,9 @@ function EconomicsGraphic5(){
           .style("stroke-width",3);
 
           linelegend.append("text")
+            .attr("x",18)
+            .attr("y",9.5)
+            .attr("dy","0.35em")
             .text(d=>d+" line");
 
      }
