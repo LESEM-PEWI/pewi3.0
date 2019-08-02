@@ -87,7 +87,7 @@ body {
   */
 }
 
-#indexHolder {
+#glossaryHolder {
   height: 91.6%;
   overflow: auto;
   /*height: 550px;*/
@@ -336,7 +336,7 @@ img {
   */
 }
 
-#closeIndex {
+#closeGlossary {
   position: fixed;
   top: 1.4%;
   right: 1%;
