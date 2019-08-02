@@ -4745,8 +4745,8 @@ function graphic5DisplayInfo(econdata){
                   "Early Jul.","Late Jul.","Early Aug.","Late Aug.",
                   "Early Sept.","Late Sept.","Early Oct.","Late Oct.",
                   "Early Nov.","Late Nov.","Early Dec.","Late Dec."];
-  var month=0;
   for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+  var month=0;
   data[i]=[];
   econdata[i].forEach(landuse=>{
     landuse['array'].forEach(d=>{
@@ -4773,7 +4773,6 @@ function graphic5DisplayInfo(econdata){
     return d.time_of_year>0;
   });
 }
-console.log(data);
   return data;
 }
 
@@ -4790,7 +4789,7 @@ function EconomicsGraphic5(){
   var displaykey=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   var keys=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
   var legendText=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
-  var lineSelection=[""]
+  //var lineSelection=[""]
   var lineSelectionCheckbox=[true,true,true];
   var barSelectionCheckbox=[true,true,true];
   var selectOption=1;
@@ -4802,8 +4801,10 @@ function EconomicsGraphic5(){
     econdata=economics.data5;
     var econBody= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5svg');
     var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
-    var lineColor=d3.scaleOrdinal().range(["blue", 'orange','green']);
-    var lineStrokeDashArray=d3.scaleOrdinal().range([[0],[15],[1,7]]);
+    var lineColor=["blue", 'orange','green'];
+    var lineColorScale=d3.scaleOrdinal().range(lineColor);
+    var lineStrokeDashArray=[[0],[15],[1,7]];
+    var lineStrokeDashArrayScale=d3.scaleOrdinal().range(lineStrokeDashArray);
 
 
     //scale
@@ -4890,48 +4891,24 @@ function EconomicsGraphic5(){
           });
 
         //total labor hours line
-        if(lineSelectionCheckbox[0]){
-          var lineHours=d3.line()
-            .x(d=>x0(d.twiceAMonth)+x1(keys[0])+6)
-            .y(d=>yright(d["Total Labor Hours"]))
-            .curve(d3.curveMonotoneX);
+        for(let i=0;i<keys.length;i++){
+          if(lineSelectionCheckbox[i]){
+           var lineHours=d3.line()
+             .x(d=>x0(d.twiceAMonth)+x1(keys[i])+6)
+             .y(d=>{
+               return (keys[i]=="Total Labor Hours")?yright(d[keys[i]]):yleft(d[keys[i]]);
+             })
+             .curve(d3.curveMonotoneX);
 
-          svg.append('path')
-            .attr("class","lineHours")
-            .attr("d",lineHours(displaydata))
-            .attr("stroke", "blue")
-            .attr("stroke-width", 3)
-            .attr("fill", "none")
-            .style("stroke-dasharray", ("0"));
-        }
-        //total labor cost line
-        if(lineSelectionCheckbox[1]){
-          var lineLabor=d3.line()
-              .x(d=>x0(d.twiceAMonth)+x1(keys[1])+6)
-              .y(d=>yleft(d["Total Labor Cost"]))
-                .curve(d3.curveMonotoneX);
-            svg.append('path')
-              .attr("class","lineLabor")
-              .attr("d",lineLabor(displaydata))
-              .attr("stroke", "orange")
-              .attr("stroke-width", 3)
-              .attr("fill", "none")
-              .style("stroke-dasharray", "15");
-        }
-        //total custom labor cost line
-        if(lineSelectionCheckbox[2]){
-          var lineCustom=d3.line()
-            .x(d=>x0(d.twiceAMonth)+x1(keys[2])+6)
-            .y(d=>yleft(d["Total Custom Hire Cost"]))
-            .curve(d3.curveMonotoneX);
-          svg.append('path')
-            .attr("class","lineCustom")
-            .attr("d",lineCustom(displaydata))
-            .attr("stroke", "green")
-            .attr("stroke-width", 3)
-            .attr("fill", "none")
-            .attr("stroke-linecap","round")
-            .style("stroke-dasharray", ("1, 7"));
+           svg.append('path')
+             .attr("class","lineHours")
+             .attr("d",lineHours(displaydata))
+             .attr("stroke", lineColor[i])
+             .attr("stroke-width", 3)
+             .attr("fill", "none")
+             .style("stroke-dasharray", lineStrokeDashArray[i])
+             .attr("stroke-linecap","round");
+         }
         }
 
         //x and y axis
@@ -5039,9 +5016,10 @@ function EconomicsGraphic5(){
           .attr("x2",45)
           .attr("y1", 5)
           .attr("y2", 15)
-          .style("stroke-dasharray",lineStrokeDashArray)//dashed array for line
-          .style("stroke",lineColor)
-          .style("stroke-width",3);
+          .style("stroke-dasharray",lineStrokeDashArrayScale)//dashed array for line
+          .style("stroke",lineColorScale)
+          .style("stroke-width",3)
+          .attr("stroke-linecap","round");
 
           linelegend.append("text")
             .attr("x",18)
@@ -5088,19 +5066,6 @@ function EconomicsGraphic5(){
          cell=document.createElement('div');
          cell.innerHTML=k+" Line";
          cell.className="graphic5lineOption";
-
-         lineSVG=document.createElement('svg');
-         // lineSVG.setAttribute("width",50);
-         var line=document.createElement('line');
-         line.setAttribute('x1', 3);
-         line.setAttribute('y1', 0);
-         line.setAttribute('x2', 40);
-         line.setAttribute('y2', 0);
-         line.setAttribute('stroke', "rgb(255,0,0)");
-         line.setAttribute('stroke-width', 4);
-         lineSVG.appendChild(line);
-        //lineSVG.innerHTML=line;
-         cell.appendChild(lineSVG);
          checkBox=document.createElement('input');
          checkBox.type='checkbox';
          checkBox.style.float='right';
@@ -5110,6 +5075,7 @@ function EconomicsGraphic5(){
          container.appendChild(cell);
        });
 
+       //bar selection
         container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Bar');
         container.innerHTML="";
         cell=document.createElement('div');
@@ -5139,15 +5105,11 @@ function EconomicsGraphic5(){
      }
      var barSelection=(i)=>{
        barSelectionCheckbox[i]=!barSelectionCheckbox[i];
-       console.log(barSelectionCheckbox);
        if( !barSelectionCheckbox[i]){
          displaykey[i]=""
-         //keys.splice(i,1);
        }else{
          displaykey[i]=keys[i];
-         //keys.splice(i,0,keyInitial[i]);
        }
-       console.log(displaykey);
        rerender();
      }
      /**
