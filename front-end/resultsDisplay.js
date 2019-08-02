@@ -5418,4 +5418,3 @@ formatMoney = function(d){ //This is to put the negative sign in front of the do
   var isNegative = d < 0 ? '-' : '';
   return isNegative + '$' + Math.abs(d);
 }
-
