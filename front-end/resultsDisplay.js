@@ -4802,6 +4802,9 @@ function EconomicsGraphic5(){
     econdata=economics.data5;
     var econBody= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5svg');
     var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
+    var lineColor=d3.scaleOrdinal().range(["blue", 'orange','green']);
+    var lineStrokeDashArray=d3.scaleOrdinal().range([[0],[15],[1,7]]);
+
 
     //scale
     var margin={top:60,right:10,bottom:60,left:80};
@@ -5022,29 +5025,29 @@ function EconomicsGraphic5(){
           .text(d=>d);
 
           linelegend=svg.append("g")
-              .attr("transform", "translate(" +[width-50,margin.top+40]+")")
+              .attr("transform", "translate(" +[width-50,margin.top+60]+")")
               .attr("text-anchor", "end")
               .attr("font-family", "sans-serif")
-              .attr("font-size", 12)
+              .attr("font-size", 15)
               .selectAll("g")
               .data(legendText)
               .enter().append("g")
               .attr("transform", function(d, i) {return "translate(" + [0,20*i] + ")";});
 
         linelegend.append("line")//making a line for legend
-          .attr("x1", 3)
-          .attr("x2",25)
-          .attr("y1", -5)
-          .attr("y2", -5)
-          .style("stroke-dasharray",[5,5])//dashed array for line
-          .style("stroke",colors)
+          .attr("x1", 20)
+          .attr("x2",45)
+          .attr("y1", 5)
+          .attr("y2", 15)
+          .style("stroke-dasharray",lineStrokeDashArray)//dashed array for line
+          .style("stroke",lineColor)
           .style("stroke-width",3);
 
           linelegend.append("text")
             .attr("x",18)
             .attr("y",9.5)
             .attr("dy","0.35em")
-            .text(d=>d+" line");
+            .text(d=>d);
 
      }
      /**
@@ -5085,6 +5088,7 @@ function EconomicsGraphic5(){
          cell=document.createElement('div');
          cell.innerHTML=k+" Line";
          cell.className="graphic5lineOption";
+
          lineSVG=document.createElement('svg');
          // lineSVG.setAttribute("width",50);
          var line=document.createElement('line');
