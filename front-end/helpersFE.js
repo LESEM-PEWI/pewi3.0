@@ -50,6 +50,8 @@ var g_year1delete = false; //true if year 1 is deleted when there are other year
 var yearSelected = 1; //keeps track of which year is selected for deletion
 var year2to3 = false; //true if year 2 is deleted when year 3 is present; false otherwise
 var maxYear = 0; //maximum number of years present currently on the board - only used for deletetion of years
+// flag to know if user selected OK/cancel at the 'Are you sure you want to delete?'-popup. Only used for running recorded simulations
+//var deleteConfirm = false;
 var yearCopyPaste = 0; //used for copying and pasting the selected year
 var selectedLandType = 0; //keeps track of which land is selected
 var resultsMappedHover=false;
@@ -152,9 +154,19 @@ window.onbeforeunload = confirmExit;
 
 // Toggled popup text when hover over the Tabs in the left console
 function toggleTabTitle(value, dir) {
-  // document.getElementById(value).style.zIndex = '1';
 
-  // console.log(document.getElementsByClassName('DetailsList'));
+  // To include hover effects of Tab titles in cur tracking mode
+  if (curTracking)
+  {
+    if (value === 'toolsTabTitle') {
+      pushClick(0, getStamp(), 124, 0, value);
+    }
+    else {
+      pushClick(0, getStamp(), 124, 0, dir+value);
+    }
+  }
+
+
   if (document.getElementById(value).style.display === 'none') {
     // Set the corresponding titles when hover over one
     switch (value) {
@@ -208,13 +220,40 @@ if(dir == 1){
 }
 }
 
+/* Show tab titles when hovered over, hide when not hovering
+   Here 'factor' is the span id of the tooltip (or hover text and its container) that needs to be made visible.
+*/
+function toggleTabTitleHovers(factor) {
+
+  if (curTracking)
+  {
+      pushClick(0, getStamp(), 125, 0, factor);
+  }
+
+  if(document.getElementById(factor).style.visibility == 'visible' && document.getElementById(factor).style.opacity == 1) {
+     document.getElementById(factor).style.visibility = 'hidden';
+     document.getElementById(factor).style.opacity = 0;
+    }
+  else {
+    document.getElementById(factor).style.visibility = 'visible';
+    document.getElementById(factor).style.opacity = 1;
+  }
+}
+
 // Show score details when hover over progress bar
 function toggleScoreDetails(factor) {
+  // To include hover effects on progressbars in cur tracking mode
+  if (curTracking)
+  {
+      pushClick(0, getStamp(), 122, 0, factor);
+  }
   switch (factor){
+
     case 'gameWildlife':
-      if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block')
-        document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
-      else{
+      if(document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display == 'block') {
+         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'none';
+        }
+      else {
         var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
         // console.log(childNodes);
         // 0 - 100 value
@@ -222,12 +261,16 @@ function toggleScoreDetails(factor) {
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Totals.gameWildlifePoints[currentYear] + ' pts / yr';
         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
+
       }
     break;
     case 'carbon':
-      if(document.getElementsByClassName('carbonScoreDetails')[0].style.display == 'block')
-        document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'none';
-      else{
+      if(document.getElementsByClassName('carbonScoreDetails')[0].style.display == 'block') {
+         document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'none';
+
+      }
+
+      else {
         var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
         // 0 - 100 value
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10  + '/100';
@@ -235,11 +278,14 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
         (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
         document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
+
       }
     break;
     case 'biodiversity':
-      if(document.getElementsByClassName('biodiversityScoreDetails')[0].style.display == 'block')
-        document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'none';
+      if(document.getElementsByClassName('biodiversityScoreDetails')[0].style.display == 'block') {
+         document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'none';
+
+       }
       else{
         var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -247,12 +293,15 @@ function toggleScoreDetails(factor) {
         // convert English unit to Metric unit
         childNodes[7].innerHTML = Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10 + ' pts / yr';
         document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'block';
+
       }
     break;
     case 'erosion':
-      if(document.getElementsByClassName('erosionScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('erosionScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'none';
-      else{
+
+      }
+      else {
         var childNodes = document.getElementsByClassName('erosionScoreDetails')[0].childNodes;
         // 0 - 100 value
         childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grossErosionScore[currentYear] * 10) / 10  + '/100';;
@@ -260,11 +309,14 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.grossErosion[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
           (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
+
       }
     break;
     case 'nitrate':
-      if(document.getElementsByClassName('nitrateScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('nitrateScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'none';
+
+      }
       else{
         var childNodes = document.getElementsByClassName('nitrateScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -273,11 +325,14 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' ppm / yr' + '<br>' +
           Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' mg/L / yr';
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
+
       }
     break;
     case 'phoshorus':
-      if(document.getElementsByClassName('phoshorusScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('phoshorusScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'none';
+
+      }
       else{
         var childNodes = document.getElementsByClassName('phoshorusScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -286,11 +341,13 @@ function toggleScoreDetails(factor) {
         childNodes[7].innerHTML = Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
           Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg / yr';
         document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'block';
+
       }
     break;
     case 'sediment':
-      if(document.getElementsByClassName('sedimentScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('sedimentScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('sedimentScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -302,8 +359,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'total':
-      if(document.getElementsByClassName('totalScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('totalScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('totalScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('totalScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -318,8 +376,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'cornGrain':
-      if(document.getElementsByClassName('cornGrainScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('cornGrainScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('cornGrainScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -332,8 +391,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'soybeans':
-      if(document.getElementsByClassName('soybeansScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('soybeansScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('soybeansScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -346,8 +406,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'fruitsAndVegetables':
-      if(document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -360,8 +421,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'cattle':
-      if(document.getElementsByClassName('cattleScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('cattleScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('cattleScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('cattleScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -373,8 +435,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'alfalfaHay':
-      if(document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('alfalfaHayScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -387,8 +450,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'grassHay':
-      if(document.getElementsByClassName('grassHayScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('grassHayScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('grassHayScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('grassHayScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -401,8 +465,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'switchgrassBiomass':
-      if(document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -415,8 +480,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'wood':
-      if(document.getElementsByClassName('woodScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('woodScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('woodScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('woodScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -429,8 +495,9 @@ function toggleScoreDetails(factor) {
       }
     break;
     case 'woodyBiomass':
-      if(document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display == 'block')
+      if(document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display = 'none';
+      }
       else{
         var childNodes = document.getElementsByClassName('woodyBiomassScoreDetails')[0].childNodes;
         // 0 - 100 value
@@ -985,7 +1052,6 @@ function addYearAndTransition() {
     document.getElementById("year" + nextYear + "Button").className = "yearButton";
     document.getElementById("year" + nextYear + "Image").className = "icon yearNotSelected";
     document.getElementById("year" + nextYear + "Button").style.display = "block";
-//    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
     //special case for adding year 3 when year 2 has been previously deleted in the presence of year 3
     if (year2to3)
     {
@@ -994,7 +1060,6 @@ function addYearAndTransition() {
 
       document.getElementById("yearToCopy").options[3].style.display = 'block';
       document.getElementById("yearToPaste").options[3].style.display = 'block';
-//      document.getElementById("year3precipContainer").style.display = "block";
       year2to3 = false;
     }
 
@@ -1005,8 +1070,6 @@ function addYearAndTransition() {
 
     document.getElementById("yearToCopy").options[nextYear].style.display = 'block';
     document.getElementById("yearToPaste").options[nextYear].style.display = 'block';
-
-//    document.getElementById("year" + nextYear + "precipContainer").style.display = "block";
 
     }
   }
@@ -1050,27 +1113,27 @@ function addYearAndTransition() {
 } //end addYearAndTransition
 
 
-//deleteYearAndTransition deletes the selected year
-//Gets the year selected from transitionToYear, when the user selects which year to delete
-//uses the helper year2and3Delete() in the special cases
+/* deleteYearAndTransition deletes the selected year
+   Gets the year selected from transitionToYear, when the user selects which year to delete
+   uses the helper year2and3Delete() in the special cases
+*/
 function deleteYearAndTransition()
 {
   var snackBar = document.getElementById("snackbarNotification");
   var currMaxYear = boardData[currentBoard].calculatedToYear;
   maxYear = currMaxYear;
+  // cursor tracking
   if(curTracking)
   {
-    pushClick(0, getStamp(), 40, 0 , null); //double check this - // TODO
+    pushClick(0, getStamp(), 103, 0 , yearSelected);
   }
+
 //if somehow the selected year is year 0, don't have an option for deleting the year
   if(!yearSelected)
   {
     yearSelected = 1;
   }
-//promt- "Are you sure you want to delete Year #?" -using a confirm box
     var response;
-    if(confirm("Are you sure you want to delete year " + yearSelected + "?" ))
-    {
       if(yearSelected == 1)
       {
         //if selected year is 1 and there are no other years
@@ -1087,8 +1150,14 @@ function deleteYearAndTransition()
          else
          {
            g_year1delete = true;
-          // g_isDeleted = true;
-           response = "Deleted!";
+           snackBar.innerHTML = "Deleted year " + yearSelected + "!";
+           snackBar.className = "show";
+           setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+           // Remove Yes/no confirmation buttons after user has selected an option
+           document.getElementById('yesDelete').style.display = "none";
+           document.getElementById('noDelete').style.display = "none";
+           document.getElementById('confirmYearDelete').style.display = "none";
+           }
 
            //make copy field blank if deleted year was selected
            if(yearSelected == yearCopyPaste){
@@ -1119,12 +1188,18 @@ function deleteYearAndTransition()
              year2and3Delete();
           }
          }
-      }
+
 
       //special case - deletes year 2 when year 3 is present and then makes year 2 = year 3 and the next year, i.e year 3 as default
       else if(yearSelected == 2 && currMaxYear == 3)
       {
-        response = "Deleted!";
+        snackBar.innerHTML = "Deleted year " + yearSelected + "!";
+        snackBar.className = "show";
+        setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        // Remove Yes/no confirmation buttons after user has selected an option
+        document.getElementById('yesDelete').style.display = "none";
+        document.getElementById('noDelete').style.display = "none";
+        document.getElementById('confirmYearDelete').style.display = "none";
 
         //make copy field blank if deleted year was selected
         if(yearSelected == yearCopyPaste){
@@ -1141,7 +1216,9 @@ function deleteYearAndTransition()
       }
       else
       {
-        response = "Deleted!";
+        snackBar.innerHTML = "Deleted year " + yearSelected + "!";
+        snackBar.className = "show";
+        setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         //delete the button of the year - actual deletion is done in transitionToYear
         document.getElementById("year" + yearSelected + "Button").style.display = "none";
         document.getElementById("yearToCopy").options[yearSelected].style.display = 'none';
@@ -1160,14 +1237,13 @@ function deleteYearAndTransition()
         //switch to the previous year
         transitionToYear(yearSelected);
         switchYearTab(yearSelected);
+        // Remove Yes/no confirmation buttons after user has selected an option
+        document.getElementById('yesDelete').style.display = "none";
+        document.getElementById('noDelete').style.display = "none";
+        document.getElementById('confirmYearDelete').style.display = "none";
+
       }
 
-    }
-    else
-    {
-        response = "Not Deleted!";
-        g_isDeleted = false;
-    }
     //if the maximum year is 1 now, don't show the option in  the copy and paste boxes
     if(boardData[currentBoard].calculatedToYear == 1)
     {
@@ -1178,6 +1254,22 @@ function deleteYearAndTransition()
     // calculateResults();
     refreshProgressBar(currentYear);
 }// end deleteYearAndTransition
+
+// function to be called if user decides to not delete a year.
+
+function yearNotDeleted() {
+
+
+  g_isDeleted = false;
+  // Remove Yes/no confirmation buttons after user has selected an option
+  document.getElementById('yesDelete').style.display = "none";
+  document.getElementById('noDelete').style.display = "none";
+  document.getElementById('confirmYearDelete').style.display = "none";
+  if (curTracking)
+  {
+    pushClick(0, getStamp(), 111, 0, null);
+  }
+}
 
 
 
@@ -1509,6 +1601,10 @@ function closeEmailFrame() {
 // close printOptions frame
 function closePrintOptions() {
 
+  if (curTracking) {
+    pushClick(0, getStamp(), 115, null);
+  }
+
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   //scroll page to top, so that next time options is loaded it starts there
@@ -1638,9 +1734,14 @@ function copyYear()
   document.getElementById("yearCopyButton").classList.toggle("show");
   yearCopyPaste = document.getElementById("yearToCopy").value;
   document.getElementById("yearPasteButton").style.display = "block";
+  document.getElementById("yearToCopy").style.display = "block";
   //Hide the option of pasting the same year to itself
   document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'none';
-
+  if (curTracking)
+  {
+    // sending the yearCopyPaste value at tileID position to store it and reproduce it during run simulation
+    pushClick(0, getStamp(), 101, 0, yearCopyPaste);
+  }
 
 } //end copyYear
 
@@ -1908,7 +2009,7 @@ function displayLevels(overlayHighlightType) {
      selectionHighlightNumber = 19;
      updateGlossaryPopup('To learn more about <span style="color:orange;">Sediment Control</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
      if (curTracking) {
-       pushClick(0, getStamp(), 78, 0, null);
+       pushClick(0, getStamp(), 121, 0, null);
      }
      break;
 
@@ -1916,7 +2017,7 @@ function displayLevels(overlayHighlightType) {
     selectionHighlightNumber = 20;
     updateGlossaryPopup('To learn more about <span style="color:orange;">Carbon Sequestration</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
-      pushClick(0, getStamp(), 79, 0, null);
+      pushClick(0, getStamp(), 119, 0, null);
     }
     break;
 
@@ -1924,7 +2025,7 @@ function displayLevels(overlayHighlightType) {
     selectionHighlightNumber = 21;
     updateGlossaryPopup('To learn more about <span style="color:orange;">Game Wildlife</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
-      pushClick(0, getStamp(), 80, 0, null);
+      pushClick(0, getStamp(), 118, 0, null);
     }
     break;
 
@@ -1932,7 +2033,7 @@ function displayLevels(overlayHighlightType) {
     selectionHighlightNumber = 22;
     updateGlossaryPopup('To learn more about <span style="color:orange;">Biodiversity</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
-      pushClick(0, getStamp(), 81, 0, null);
+      pushClick(0, getStamp(), 117, 0, null);
     }
     break;
 
@@ -1940,7 +2041,7 @@ function displayLevels(overlayHighlightType) {
     selectionHighlightNumber = 23;
     updateGlossaryPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
-      pushClick(0, getStamp(), 82, 0, null);
+      pushClick(0, getStamp(), 120, 0, null);
     }
     break;
   } //end switch
@@ -2330,6 +2431,7 @@ function executePrintOptions(isDownload) {
 
 //Handles exporting the clicks given by the user
 function exportTracking() {
+
   //Initial action is equal to time elapsed at that point
   if (clickTrackings.length > 0) {
     clickTrackings[0].timeGap = clickTrackings[0].timeStamp;
@@ -2338,7 +2440,8 @@ function exportTracking() {
       ['ClickID', 'Time Stamp (Milliseconds)', 'Click Type', 'Time Gap (Milliseconds)', 'Description of click', 'Extra Data', startTime, endTime, startTime.getTime(), endTime.getTime()]
     ];
     for (var j = 0; j < clickTrackings.length; j++) {
-      A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID])
+      A.push([clickTrackings[j].clickID, clickTrackings[j].timeStamp, clickTrackings[j].functionType, clickTrackings[j].timeGap, clickTrackings[j].getAction(), clickTrackings[j].tileID]);
+
     }
     var csvRows = [];
     for (var i = 0; i < A.length; i++) {
@@ -2362,7 +2465,19 @@ function finishProperties() {
   var tempClicks = [];
   tempClicks.push(clickTrackings[0]);
   for (var i = 1; i < clickTrackings.length; i++) {
-    if (clickTrackings[i].tileID != clickTrackings[i - 1].tileID || clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
+    /* To make sure onmouseover(), onmouseout() hover functions of progress bars is written to the .csv file, check if function type is 122
+       -- Need to find a better way to do it, though!
+       -- could add a dedicated column that is separate from the tileID column, to the .csv file that caters to extra info like,
+       -- (precip, add/del year, user info in confirmation pages etc. solely to be used for cursor tracking purposes)
+       --
+    */
+    var clickFunctionType = parseInt(clickTrackings[i].functionType);
+
+    if (clickFunctionType == 80 || clickFunctionType == 81 || clickFunctionType == 82 ||
+        clickFunctionType == 122 || clickFunctionType == 124 || clickFunctionType == 125 || clickFunctionType == 126 ||
+        clickTrackings[i].tileID != clickTrackings[i - 1].tileID ||
+        clickTrackings[i].tileID == null || clickTrackings[i - 1].tileID == null) {
+
       clickTrackings[i].clickID = i;
       clickTrackings[i].timeGap = (clickTrackings[i].timeStamp - clickTrackings[i - 1].timeStamp);
       tempClicks.push(clickTrackings[i]);
@@ -3310,13 +3425,14 @@ function getFloodFrequencyName(floodFrequencyNum){
   switch (floodFrequencyNum) {
     case 0:
       return "None"
-
-
-  }
+    }
 }
 //highlightTile updates the tile that should be highlighted.
 function highlightTile(tileId) {
 
+  if (curTracking) {
+    pushClick(0, getStamp(), 123, 0, tileId);
+  }
   //clear the information in the delayed information hover div
   document.getElementById("hover-info").innerHTML = "";
   if (myTimer != null) {
@@ -4228,21 +4344,28 @@ function pasteYear()
     calculateResults(undefined,yearToPasteIn);
 
     refreshProgressBar(currentYear);
+    //if (!isSimRunning()) {
+      snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
+      snackBar.className = "show";
+      setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+    //}
 
-    snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
-    snackBar.className = "show";
-    setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
     document.getElementById("yearToCopy").value = 0;
     document.getElementById("yearToPaste").value = 0;
     document.getElementById("year" + yearToPasteIn+ "Precip").value = reversePrecipValue(boardData[currentBoard].precipitation[yearToPasteIn]);
     document.getElementById("yearToPaste").options[yearCopyPaste].style.display = 'block';
     document.getElementById("yearPasteButton").style.display = "none";
 
-
+    if (curTracking)
+    {
+      // sending the yearToPasteIn value at tileID position to store it and reproduce it during run simulation
+      pushClick(0, getStamp(), 102, 0, yearToPasteIn);
+    }
 
     // makes a deep copy of all the arrays inside of undoArr for the given year so that the undo for the copy is fully functional
     var newStuff = JSON.parse(JSON.stringify(undoArr[yearCopyPaste]));
     undoArr[yearToPasteIn] = undoArr[yearToPasteIn].concat(newStuff);
+
 
 } //end pasteYear
 
@@ -4823,6 +4946,7 @@ function resultsStart() {
   } //end if
 } //end resultsStart
 
+
 //Resumes the sim (and related times)
 function resumeSim() {
   paused = false;
@@ -4965,13 +5089,40 @@ function runSimulation() {
   document.getElementById("simSlider").max = endTime;
   //First, populate the clicks
   for (var i = 1; i < simulationData.length; i++) {
+    // Splits the .csv file by ','
     var tempArr = simulationData[i].split(',');
-    var tempID = tempArr[0];
-    var tempStamp = tempArr[1];
-    var tempType = tempArr[2];
-    var tempGap = tempArr[3];
-    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 || tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94) {
-      var tempTile = tempArr[5];
+
+    /* Comment: Populates the following variables from the columns of .csv file.
+       The columns are:-- clickID, time stamp, click type, time gap, Description of click, Extra data
+       All units of time is milli Milliseconds.
+       The sixth column or Extra data is often referred to as the tileID. It stores the id of the tile whose land use is changed,
+       When a tile is not clicked, it stores other values (as in cases of precip and copy/paste/delete). This is done to save code length.
+       (tileID (or Extra data) column is used to store Precip values, copy paste year values)
+    */
+    var tempID = tempArr[0]; // clickID
+    var tempStamp = tempArr[1]; // time stamp
+    var tempType = tempArr[2]; // click type
+    var tempGap = tempArr[3]; // time gap
+
+    /* Comment: Each value of tempType, in the if-statement below, indicates a case number in the Click() function of file helperObjects.js.
+  case 55 - "A tile was painted (single selection)"
+       34 - "Year 0 Precip Modified", 35 - "Year 1 Precip Modified", 36 - "Year 2 Precip Modified", 37 - "Year 3 Precip Modified"
+       80 - "Click an entry in index page" (Note: here index denotes Glossary in pewi 4.0 and later versions)
+       81 - "Click Advanced tab", 82 - "Click General tab"
+       91 - "User zoomed in/out of PEWI map"
+       92 - "User scrolled in the about page"
+       93 - "User scrolled in the index page"
+       94 - "User scrolled in the results page"
+       101 - " Copied year __"
+       102 - "Pasted in year __"
+       124 - "User hovered over tab titles"
+       125 - "User hovered over tab icons"
+    */
+    if (tempType == 55 || tempType == 34 || tempType == 35 || tempType == 36 || tempType == 37 || tempType == 80 || tempType == 81 ||
+        tempType == 82 || tempType == 91 || tempType == 92 || tempType == 93 || tempType == 94 || tempType == 101 || tempType == 102 ||
+        tempType == 103 || tempType == 110 || tempType == 114 || tempType == 122 || tempType == 123 || tempType == 124 || tempType == 125 ||
+        tempType == 126 || tempType == 127) {
+      var tempTile = tempArr[5]; // Extra data
     }
     if (tempType == 56 || tempType == 99 || tempType == 100) {
       var tempTile = [];
@@ -5388,6 +5539,11 @@ function sortPlayers() {
 
 // startOptions displays the options page
 function startOptions() {
+
+  if (curTracking) {
+    pushClick(0, getStamp(), 107, 0, null);
+  }
+
   //if nothing else has precedence
   if (!modalUp) { //commented for debugging
     modalUp = true;
@@ -5416,9 +5572,12 @@ function startOptions() {
   }
 } // end startOptions
 
-
 // startPrintOptions displays the printOptions page
 function startPrintOptions() {
+
+    if(curTracking) {
+      pushClick(0,getStamp(),113,0,null);
+    }
 
     camera.aspect = 1.5;
     camera.updateProjectionMatrix();
@@ -5490,6 +5649,7 @@ function switchConsoleTab(value) {
 
   //update the left console tab according to the value selected
   switch (value) {
+    // Painters Tab or land use icon selected
     case 1:
       inDispLevels = false;
       resultsMappedHover=false;
@@ -5506,6 +5666,7 @@ function switchConsoleTab(value) {
       document.getElementById('checkheader').style.display = "none";
       updateGlossaryPopup('These are the <span style="color:orange;">15</span> different <span style="color:orange;">land use types</span>. To learn more about them, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Land Use"</span>.');
       break;
+      // Precipitation tab selected
     case 2:
       inDispLevels = false;
       resultsMappedHover=false;
@@ -5523,6 +5684,7 @@ function switchConsoleTab(value) {
       yearPrecipManager();
       updateGlossaryPopup('This is the <span style="color:orange;">Precipitation Tab.</span> To learn more, go to the <span style="color:yellow;">Glossary</span> and select<span style="color:yellow;"> "Precipitation"</span>.');
       break;
+    // 'Result maps' icon selected
     case 3:
       resultsMappedHover=true;
       inDispLevels = true;
@@ -5540,6 +5702,7 @@ function switchConsoleTab(value) {
       updateGlossaryPopup('This is the <span style="color:orange;">Levels Tab,</span> where you can learn about <span style="color:yellow;">Soil Quality and Water Quality</span>.');
 
       break;
+      // Physical features tab selected
     case 4:
       inDispLevels = true;
       resultsMappedHover=false;
@@ -5559,6 +5722,7 @@ function switchConsoleTab(value) {
       updateGlossaryPopup('This is the <span style="color:orange;">Physical Features Tab</span>, where you will find information on topography, soil properties, subwatershed boundaries, and strategic wetland areas.');
 
       break;
+    // ** No description given of what this case does **
     case 5:
       inDispLevels = false;
       resultsMappedHover=false;
@@ -5574,6 +5738,7 @@ function switchConsoleTab(value) {
       }
       document.getElementById('checkheader').style.display = "none";
       break;
+    // Year selection tab selected
     case 6:
       inDispLevels = false;
       resultsMappedHover=false;
@@ -5591,6 +5756,7 @@ function switchConsoleTab(value) {
       yearCopyPasteInit();
       updateGlossaryPopup('The <span style="color:orange;">Years Tab</span> allows you to play across multiple years. Different years can affect impact of land use choices. Check them out!');
       break;
+    // Yield base rate tab selected
     case 7:
       inDispLevels = true;
       resultsMappedHover=false;
@@ -5677,25 +5843,43 @@ function toggleChangeLandType() {
 //toggleEscapeFrame displays and hides the div that allows the user to go to the main menu, options, or directory
 function toggleEscapeFrame() {
 
+  /* This condition is selected when 'Yes' option under 'Menu Menu'-button is clicked in the Modal escape frame
+      Check file index.html <div class="mainEscapeButton" id="yesConfirmEscape" ...>
+  */
   if (document.getElementById('confirmEscape').style.height == "20vw") {
     confirmEscape();
   }
   console.log(modalUp);
 
+  /* This condition is selected when home button is clicked or Esc-key is pressed
+      Check file index.html <img id="homebutton" ..>
+  */
   if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
     document.getElementById('modalEscapeFrame').style.display = "block";
     document.getElementById('exitToMenuButton').style.visibility = "visible";
     document.getElementById('optionsButton').style.visibility = "visible";
     document.getElementById('escapeButton').style.visibility = "visible";
+    if (curTracking) {
+      pushClick(0, getStamp(), 106, 0, null);
+    }
     /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "visible";
     */
     modalUp = true;
-  } else if (document.getElementById('modalEscapeFrame').style.display == "block" && modalUp) {
+  }
+
+  /* This condition is selected when [X]-button OR Customize-button is clicked in the Modal escape frame
+      Check file index.html <div id="modalEscapeFrame">
+  */
+  else if (document.getElementById('modalEscapeFrame').style.display == "block" && modalUp)
+  {
     document.getElementById('modalEscapeFrame').style.display = "none";
     document.getElementById('exitToMenuButton').style.visibility = "hidden";
     document.getElementById('optionsButton').style.visibility = "hidden";
     document.getElementById('escapeButton').style.visibility = "hidden";
+    if (curTracking) {
+      pushClick(0, getStamp(), 106, 0, null);
+    }
     /* Commented out Glossary button, which is line below. Reference Issue 363 on explanation for removal.
     document.getElementById('directoryButton').style.visibility = "hidden";
     */
@@ -5823,14 +6007,19 @@ function togglePopupDisplay() {
       if (curTracking) {
         pushClick(0, getStamp(), 14, 0, null);
       }
-      document.getElementById("popup").className = "popupHidden";
-      document.getElementById("bookMarkButton").className = "bookMarkButtonRolled";
-    } else {
+        document.getElementById("popup").className = "popupHidden";
+        document.getElementById("bookMarkButton").className = "bookMarkButtonRolled";
+    }
+    else {
       if (curTracking) {
         pushClick(0, getStamp(), 54, 0, null);
       }
-      document.getElementById("popup").className = "popup";
-      document.getElementById("bookMarkButton").className = "bookMarkButton";
+      // Bookmark popup locked in simulation replay mode
+      if(!isSimRunning()) {
+        document.getElementById("popup").className = "popup";
+        document.getElementById("bookMarkButton").className = "bookMarkButton";
+      }
+
     }
   } //end if
 } // togglePopupDisplay()
@@ -5977,7 +6166,11 @@ function toggleVisibility() {
   // is selected
 
   //check to see if the year we are on is no longer a year... if so, well, switch to y1
+  // Suppose you are on year 3, the map shows the tiles of year 3. If you delete year 3 now, the map transforms to year 2.
+  // Similarly, if you are on year 2 and delete year 2, the map transforms to year 1
+  // When a year is deleted, its style.display changes to "none". Using this, the yearMax value is reduced by 1
   var yearMax = 3;
+  // Changing the yearMax value when year 3 or 2 is deleted
   if (document.getElementById("year3Button").style.display == "none") yearMax = 2;
   if (document.getElementById("year2Button").style.display == "none") yearMax = 1;
 

@@ -394,6 +394,20 @@ function confirmEscape() {
   }
 } //end toggleEscape
 
+// buttons to be shown when user clicks on the 'delete' button
+function confirmYearDelete() {
+
+    document.getElementById('confirmYearDelete').style.display = "block";
+    document.getElementById('yesDelete').style.display = "block";
+    document.getElementById('noDelete').style.display = "block";
+
+    if(curTracking)
+    {
+      pushClick(0, getStamp(), 112, 0 , null);
+    }
+  }
+
+
 /** createThreeFramework instantiates the renderer and scene to render 3D environment
  *   renderer = new THREE.WebGLRenderer(); above
  *
@@ -487,8 +501,10 @@ function initializeCamera() {
 
     //Event listners for scrolling using the wheel or scroll bar ( Used exclusively by click tracking...for now)
     window.frames[0].onscroll = onWheelViewCredits;
-    window.frames[3].onscroll = onWheelViewResults;
-
+    window.frames[4].addEventListener('scroll', onWheelViewResults);
+    window.frames[6].addEventListener('scroll', onWheelViewCustomize);
+    window.frames[7].addEventListener('scroll', onWheelViewPrint);
+    window.frames[3].addEventListener('scroll', onWheelViewGlossary);
 } //end initializeCamera
 
 //initializeLighting adds the lighting with specifications to the scene
@@ -641,9 +657,31 @@ function onWheelViewCredits(e) {
 //Event function that is called when a user is scrolling in results
 function onWheelViewResults(e) {
   if(curTracking && scrollGap) {
-    pushClick(0,getStamp(),94,0,window.frames[3].pageYOffset);
+    pushClick(0,getStamp(),94,0,window.frames[4].scrollY);
   }
 }
+
+//Event function that is called when a user is scrolling in customize window
+function onWheelViewCustomize(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),110,0,window.frames[6].scrollY);
+  }
+}
+
+//Event function that is called when a user is scrolling in customize window
+function onWheelViewPrint(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),114,0,window.frames[7].scrollY);
+  }
+}
+
+//Event function that is called when a user is scrolling in glossary window
+function onWheelViewGlossary(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),93,0,window.frames[3].scrollY);
+  }
+}
+
 
 //renderBackground creates the static background always behind viewpoint
 //  this function used to select for the creation of a skybox

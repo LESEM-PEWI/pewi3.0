@@ -249,7 +249,7 @@ function Click(c1, c2, c3, c4, c5) {
           return "Year selection tab was clicked";
           break;
         }
-        //When the user clicks the assessment icon
+        //When the user clicks the assessment icon/ 'Result maps' icon
       case 7:
         if (action) {
           return switchConsoleTab(3);
@@ -295,7 +295,7 @@ function Click(c1, c2, c3, c4, c5) {
           return "Results tab was clicked";
           break;
         }
-        //When the user clicks out of the results tab
+      //When the user clicks out of the results tab
       case 13:
         if (action) {
           return resultsEnd();
@@ -584,7 +584,7 @@ function Click(c1, c2, c3, c4, c5) {
           return displayLevels('nitrate');
           break;
         } else {
-          return "Nitrate Percent was clicked";
+          return "Subwatershed Nitrate-N Percent Contribution was clicked";
           break;
         }
         //When the user selects Gross Erosion icon
@@ -596,7 +596,7 @@ function Click(c1, c2, c3, c4, c5) {
           return "Gross Erosion was clicked";
           break;
         }
-        //When the user selects Phosphorus Index Risk
+      //When the user selects Phosphorus Index Risk
       case 44:
         if (action) {
           return displayLevels('phosphorus');
@@ -909,6 +909,8 @@ function Click(c1, c2, c3, c4, c5) {
         } else {
           return "Woody Biomass yield selected";
         }
+      // user clicks on Glossary button to open it.
+      // Index is renamed to be Glossary
       case 78:
         if (action) {
           return toggleGlossary();
@@ -928,20 +930,20 @@ function Click(c1, c2, c3, c4, c5) {
         // console.log(CODEX_HTML.document.getElementById(this.tileID).className);
         // simulation is running, do what we recorded (what the user did)
         if (action) {
-          if (CODEX_HTML.document.getElementById(this.tileID).className == "groupHeader" ||
-            CODEX_HTML.document.getElementById(this.tileID).className == "selectedGroupHeader") {
-            CODEX_HTML.toggleChildElements(this.tileID);
-            CODEX_HTML.arrangeContent(this.tileID);
-          } else if (CODEX_HTML.document.getElementById(this.tileID).className == "groupElement" ||
-            CODEX_HTML.document.getElementById(this.tileID).className == "selectedGroupElement") {
-            CODEX_HTML.arrangeContent(this.tileID);
-          }
-          return;
+          if (window.frames[3].document.getElementById(this.tileID).className == "groupHeader" ||
+              window.frames[3].document.getElementById(this.tileID).className == "selectedGroupHeader") {
+              window.frames[3].toggleChildElements(this.tileID);
+              window.frames[3].arrangeContent(this.tileID);
+            } else if (window.frames[3].document.getElementById(this.tileID).className == "groupElement" ||
+              window.frames[3].document.getElementById(this.tileID).className == "selectedGroupElement") {
+              window.frames[3].arrangeContent(this.tileID);
+            }
+            return;
+
         }
         // record the event description in csv file
         else
-          return "Click an entry in glossary page";
-
+          return "Clicked entry " +  window.frames[3].document.getElementById(this.tileID).textContent + " in glossary page";
         break;
 
         // Action inside glossary page, switch to Advanced
@@ -950,7 +952,7 @@ function Click(c1, c2, c3, c4, c5) {
 
         // simulation is running, do what we recorded (what the user did)
         if (action)
-          return CODEX_HTML.showAdvancedDetail(this.tileID);
+          return window.frames[3].showAdvancedDetail(this.tileID);
         // record the event description in csv file
         else
           return "Click Advanced tab";
@@ -962,7 +964,7 @@ function Click(c1, c2, c3, c4, c5) {
 
         // simulation is running, do what we recorded (what the user did)
         if (action)
-          return CODEX_HTML.showLessDetail(this.tileID);
+          return window.frames[3].showLessDetail(this.tileID);
         // record the event description in csv file
         else
           return "Click General tab";
@@ -1068,6 +1070,7 @@ function Click(c1, c2, c3, c4, c5) {
             return window.frames[3].frames[0].scrollTo(0,parseInt(this.tileID));
           else
             return "User scrolled in the Glossary page";
+
         //When the user scrolls in the results page
         case 94:
           if(action)
@@ -1110,6 +1113,309 @@ function Click(c1, c2, c3, c4, c5) {
             return customMouseInput(this.tileID,true);
           else
             return "User dragged mouse while holding the right mouse button";
+        // Copy a year
+        case 101:
+          if (action) {
+            document.getElementById("yearToCopy").selectedIndex = this.tileID;
+            return copyYear();
+            break;
+          }
+
+          else {
+            return "Copied year " + this.tileID;
+            break;
+          }
+        // Paste a year
+        case 102:
+          if(action) {
+            document.getElementById("yearToPaste").selectedIndex = this.tileID;
+            document.getElementById("yearPasteButton").classList.toggle("show");
+            return pasteYear();
+            break;
+          }
+
+          else {
+            return "Pasted in year " + this.tileID;
+            break;
+          }
+
+        // When user confirms 'Yes' to delete a year.
+        // this.tileID here denotes var yearSelected from helpersFE.js
+        case 103:
+          if (action) {
+            var yearSelected = this.tileID;
+            // Transition to the selected year
+            transitionToYear(yearSelected);
+            switchYearTab(yearSelected);
+            return deleteYearAndTransition();
+            break;
+          }
+          else {
+            var  yearSelected = this.tileID;
+            return "User deleted year " + yearSelected;
+            break;
+          }
+
+        // When user changes main pie chart from Land Category to List
+        case 104:
+          if (action) {
+            return window.frames[4].toggleCategoriesPie(1);
+            break;
+          }
+          else {
+            return "Year pie toggled to List";
+            break;
+          }
+
+        // When user changes main pie chart from Land List to Category
+        case 105:
+          if (action) {
+            return window.frames[4].toggleCategoriesPie(0); //random number to denote default
+            break;
+          }
+          else {
+            return "Year pie toggled to Categories";
+            break;
+          }
+
+        case 106:
+          if (action) {
+            return toggleEscapeFrame();
+            break;
+          }
+          else {
+            // Clicking 'home' and pressing 'Esc'-key brings up the frame <div id = "modalEscapeFrame">
+            return "Home/Esc button was clicked";
+            break;
+          }
+        // When user clicks the customization button
+        case 107:
+          if (action) {
+            return startOptions();
+            break;
+          }
+          else {
+            return " Customize button was clicked";
+            break;
+          }
+          // When user closes the customization frame using save & exit button
+          case 108:
+            if (action) {
+              return window.frames[6].saveCurrentOptionsState();
+              break;
+            }
+            else {
+              return " Customize window closed: Save & Exit";
+              break;
+            }
+          // When user closes the customization frame using Esc or [X] button
+          case 109:
+            if (action) {
+              return window.frames[6].undoSelectedOptions();
+              break;
+            }
+            else {
+              return " Customize window closed: Esc [X] button";
+              break;
+            }
+          // When user scrolls in customization frame
+          case 110:
+            if(action) {
+              return window.frames[6].scrollTo(0,parseInt(this.tileID));
+            }
+            else {
+              return "User scrolled in the customization page";
+            }
+          // When decides to delete a year
+          case 111:
+            if (action) {
+              return yearNotDeleted();
+            }
+            else {
+              return "User did not delete year";
+            }
+          // When clicks the 'delete year' button
+          case 112:
+            if (action) {
+              return confirmYearDelete();
+            }
+            else {
+              return "User clicked 'delete year'-button";
+            }
+          // When clicks the 'print' button
+          case 113:
+            if (action) {
+              return startPrintOptions();
+            }
+            else {
+              return "User clicked the 'Print'-button";
+            }
+          // When scrolls in the print page
+          case 114:
+            if (action) {
+              return window.frames[7].scrollTo(0,parseInt(this.tileID));
+            }
+            else {
+              return "User scrolled in the print page";
+            }
+          //When the user clicks out of the results tab
+          case 115:
+            if (action) {
+                return closePrintOptions();
+                break;
+              }
+            else {
+                return "Print page was closed";
+                break;
+            }
+          // When user clicks preview pdf/ download button to-do
+          case 116:
+            if (action) {
+              return window.frames[7].saveCurrentPrintOptions(0);
+              break;
+            }
+            else {
+              return " User clicked preview pdf/download button print page";
+              break;
+            }
+          //When the user selects Biodiversity
+          case 117:
+            if (action) {
+              return displayLevels('biodiversity');
+              break;
+            }
+            else {
+              return "Biodiversity was clicked";
+              break;
+            }
+          //When the user selects gamewildlife
+          case 118:
+            if (action) {
+              return displayLevels('gamewildlife');
+              break;
+            }
+            else {
+              return "Gamewildlife was clicked";
+              break;
+            }
+          //When the user selects gamewildlife
+          case 119:
+            if (action) {
+              return displayLevels('carbon');
+              break;
+            }
+            else {
+              return "Carbon Sequestration was clicked";
+              break;
+            }
+            //When the user selects nitratetile or cell nitrate
+            case 120:
+              if (action) {
+                return displayLevels('nitratetile');
+                break;
+              }
+              else {
+                return "Cell nitrate was clicked";
+                break;
+              }
+            //When the user selects sediment
+            case 121:
+              if (action) {
+                return displayLevels('sediment');
+                break;
+              }
+              else {
+                return "Sediment Runoff was clicked";
+                break;
+              }
+            //When the user hovers over progress bars
+            case 122:
+              if (action) {
+                return  toggleScoreDetails(this.tileID);
+                break;
+              }
+              else {
+                return "User hovered over " + this.tileID + " progress bar";
+                break;
+              }
+            //When the user hovers over a tile
+            case 123:
+              if (action) {
+                return  highlightTile(this.tileID);
+                break;
+              }
+              else {
+                return "User hovered over tile: " + this.tileID ;
+                break;
+              }
+
+            //When the user hovers over Tab titles
+            case 124:
+              var dir = this.tileID.substring(0,1);
+              var value = this.tileID.substring(1);
+              if (action) {
+                if (this.tileID === 'toolsTabTitle') {
+                  return toggleTabTitle('toolsTabTitle');
+                }
+                else {
+                  return  toggleTabTitle(value, dir);
+                }
+
+                break;
+              }
+              else {
+                if (this.tileID === 'toolsTabTitle') {
+                  return "User hovered over toolsTabTitle.";
+                }
+                else {
+                  return "User hovered over " + value + ".";
+                }
+
+                break;
+              }
+
+            //When the user hovers over a tab icon
+            case 125:
+              if (action) {
+                //document.getElementById(this.tileID).style.opacity == 0;
+                return  toggleTabTitleHovers(this.tileID);
+                break;
+              }
+              else {
+                return "User hovered over tab: " + this.tileID ;
+                break;
+              }
+            // When user clicks on select/de-select group checkboxes in the Print page
+            case 126:
+              if (action) {
+                //var test2 = window.frames[7].document.getElementById(this.tileID+'-toggle').checked;
+                if (window.frames[7].document.getElementById(this.tileID+'-toggle').checked == false) {
+                  window.frames[7].document.getElementById(this.tileID+'-toggle').checked = true;
+                }
+                else {
+                  window.frames[7].document.getElementById(this.tileID+'-toggle').checked = false;
+                }
+                //window.frames[7].document.getElementById(this.tileID+'-toggle').checked = true;
+                return window.frames[7].toggleGroupCheckbox(this.tileID);
+                break;
+              }
+              else {
+                return "User clicked "+ this.tileID + " group checkbox";
+              }
+
+              // when user clicks on an individual checkbox (ez, flood frequency or wetland) in print iframe.
+              case 127:
+                if (action) {
+                  return window.frames[7].toggleIndividualCheckbox(this.tileID);
+                }
+                else {
+                  return "user clicked " + this.tileID + " checkbox";
+                }
+
+
+
+
+
     }
   }
 }

@@ -38,6 +38,10 @@
   //the parent page is then called to hide the options iframe
   function saveCurrentOptionsState() {
 
+    if (parent.getTracking()) {
+    parent.pushClick(0, parent.getStamp(), 108, 0, null);
+  }
+
     //find the elements that are able to be checked
     var toggledElements = document.getElementsByClassName('toggle');
     var tempString = "";
@@ -152,6 +156,7 @@
     selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
     selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
     recordCurrentOptions();
+
   } //end function saveCurrentOptionsState
 
 
@@ -413,7 +418,12 @@
   * settings, but changed their mind in the process then those changes would be undone.
   * For more information refer to Issue 362.
   */
-  function undoSelectedOptions(){
+  function undoSelectedOptions() {
+
+    if (parent.getTracking()) {
+      parent.pushClick(0, parent.getStamp(), 109, 0, null);
+    }
+
     /*
     * Iterate through all elements in selectedOptionsTrue and manually sets them to true, for being checked.
     */
@@ -450,7 +460,8 @@
     }
   }
 
-  function checkIfSaved(){
+  function checkIfSaved() {
+
     if(!savedOptions){
 
       /*
