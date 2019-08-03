@@ -4648,6 +4648,25 @@ function EconomicsGraphic4() {
 
           createCostOption();
 
+          container=doc.getElementById('econGraphic4Year');
+          cell=document.createElement('div');
+          cell.innerHTML="Year";
+          cell.className="graphic4landuse";
+          container.appendChild(cell);
+          for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
+            cell=document.createElement('div');
+            cell.innerHTML="Year "+i;
+            cell.className="grahpic5YearSelection";
+            inputbox=document.createElement('input');
+            inputbox.name="graphic4YearInputBox";
+            if(i==1){
+              input.checked=true;
+            }
+            inputbox.type='radio';
+            inputbox.style.float='right';
+            cell.append(inputbox);
+            container.appendChild(cell);
+          }
     }
 
     //create input box html
