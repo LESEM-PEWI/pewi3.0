@@ -4413,7 +4413,8 @@ function exists(arr, search) {
  * @return         [return costname and value]
  */
 
-function econGraphic4DisplayData(landUse,costType,cost){
+function econGraphic4DisplayData(landUse,costType,cost){'
+  console.log(econdata);
   var econdata=economics.data4;
   econdata=econdata.filter(function(item){
     return item.landUse==landUse;

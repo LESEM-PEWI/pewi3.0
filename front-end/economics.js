@@ -40,24 +40,29 @@ var Economics = function () {
   }
     //graphic 4 extract data from raw data
   this.chart4Information = function(lists) {
-    
-    this.rawData.forEach(dataPoint => {
-      var landuseNum=dataPoint['LU_ID'];
-      if (!this.data4[landuseNum]) {
-        this.data4[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
-      } // We need to create a path to the data that we want to pull out
-      this.data4[landuseNum]['array'].push(dataPoint);
-      lists.forEach(cat => {
-        if(!this.data4[landuseNum][cat]){
-          this.data4[landuseNum][cat]=[];
-        }
-        if(!this.data4[landuseNum][cat].includes(dataPoint[cat])){
-          this.data4[landuseNum][cat].push(dataPoint[cat]);
+    for(var i=1;i<=boardData[currentBoard].calculatedToYear;i++){
+      this.data4[i]=[];
+      this.mapData[i].forEach(dataPoint => {
+        if(dataPoint['Value']!=0){
+          var landuseNum=dataPoint['LU_ID'];
+          if (!this.data4[i][landuseNum]) {
+            this.data4[i][landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
+          } // We need to create a path to the data that we want to pull out
+          this.data4[i][landuseNum]['array'].push(dataPoint);
+          lists.forEach(cat => {
+            if(!this.data4[i][landuseNum][cat]){
+              this.data4[i][landuseNum][cat]=[];
+            }
+            if(!this.data4[i][landuseNum][cat].includes(dataPoint[cat])){
+              this.data4[i][landuseNum][cat].push(dataPoint[cat]);
+            }
+          });
         }
       });
-    });
+    }
+
     console.log(this.data4);
-    
+
   }
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
     let landUses = [];
@@ -81,6 +86,7 @@ var Economics = function () {
     }
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
+
   }
 }
 var economics = new Economics();
