@@ -4589,18 +4589,18 @@ function toggleLandUseFromTotal(landuse){
     // alter fullData
 
     for (var j = 0; j < fullData[0].length; j++){
-      if(yearData['action'][fullData[0][j].costType]){
+      if(yearData['action'][fullData[0][j].costType] && fullData[0][j].year == i){
         fullData[0][j].value += yearData['toggleVal'] * yearData['action'][fullData[0][j].costType];
 
       }
     }
 
     for (var j = 0; j < fullData[1].length; j++){
-      if(yearData['time'][fullData[1][j].costType]){
+      if(yearData['time'][fullData[1][j].costType] && fullData[1][j].year == i){
         fullData[1][j].value += yearData['toggleVal'] * yearData['time'][fullData[1][j].costType];
       }
     }
-  
+
     yearData['toggleVal'] *= -1;
     console.log(fullData);
     rerender();
