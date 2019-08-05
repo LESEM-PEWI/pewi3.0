@@ -40,6 +40,7 @@ var Economics = function () {
   }
     //graphic 4 extract data from raw data
   this.chart4Information = function(lists) {
+    
     this.rawData.forEach(dataPoint => {
       var landuseNum=dataPoint['LU_ID'];
       if (!this.data4[landuseNum]) {
@@ -55,6 +56,8 @@ var Economics = function () {
         }
       });
     });
+    console.log(this.data4);
+    
   }
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
     let landUses = [];

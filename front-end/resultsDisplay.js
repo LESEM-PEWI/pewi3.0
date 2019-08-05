@@ -4660,7 +4660,7 @@ function EconomicsGraphic4() {
             inputbox=document.createElement('input');
             inputbox.name="graphic4YearInputBox";
             if(i==1){
-              input.checked=true;
+              inputbox.checked=true;
             }
             inputbox.type='radio';
             inputbox.style.float='right';
