@@ -4413,9 +4413,8 @@ function exists(arr, search) {
  * @return         [return costname and value]
  */
 
-function econGraphic4DisplayData(landUse,costType,cost){'
-  console.log(econdata);
-  var econdata=economics.data4;
+function econGraphic4DisplayData(landUse,costType,cost,year){
+  var econdata=economics.data4[year];
   econdata=econdata.filter(function(item){
     return item.landUse==landUse;
   });
@@ -4442,8 +4441,10 @@ function EconomicsGraphic4() {
   var options = ["Conventional Corn","Action - Cost Type","Machinery"];
   var displaydata;
   var econdata;
+  var year=1;
   function init() {
     econdata=economics.data4;
+    // econdata=econdata[year];
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4svg');
     var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
     window = document.getElementById('resultsFrame');
@@ -4469,7 +4470,7 @@ function EconomicsGraphic4() {
      */
     var drawBarsfunction=function(){
 
-      displaydata=econGraphic4DisplayData(options[0],options[1],options[2]);
+      displaydata=econGraphic4DisplayData(options[0],options[1],options[2],year);
         //scale
         var xScale = d3.scaleBand()
         	.domain(displaydata.map(function(d){ return d.costname;}))
@@ -4585,7 +4586,8 @@ function EconomicsGraphic4() {
           //create Action, time cost type list
           function createCostOption(){
             costContainer=doc.getElementById('econGraphic4CostOption');
-            var costTypeList=econdata.filter(function(item){
+            costContainer.innerHTML="";
+            var costTypeList=econdata[year].filter(function(item){
               return item.landUse==options[0];
             });
             costTypeListAction=costTypeList[0]['Action - Cost Type'];
@@ -4614,7 +4616,7 @@ function EconomicsGraphic4() {
           cell.innerHTML='Land Use';
           cell.className='graphic4landuse';
           container.append(cell);
-          econdata.map(d=>d.landUse).forEach((d)=>{
+          econdata[year].map(d=>d.landUse).forEach((d)=>{
             cell=document.createElement('div');
             cell.innerHTML=d;
             cell.className="graphic4option";
@@ -4650,6 +4652,7 @@ function EconomicsGraphic4() {
           createCostOption();
 
           container=doc.getElementById('econGraphic4Year');
+          container.innerHTML="";
           cell=document.createElement('div');
           cell.innerHTML="Year";
           cell.className="graphic4landuse";
@@ -4665,11 +4668,12 @@ function EconomicsGraphic4() {
             }
             inputbox.type='radio';
             inputbox.style.float='right';
+            inputbox.onclick=event=>yearClick(i);
             cell.append(inputbox);
             container.appendChild(cell);
           }
     }
-
+    
     //create input box html
     function createInputbox(tag,innerhtml,inputTag,name,d,i){
       cell=document.createElement(tag);
@@ -4685,6 +4689,10 @@ function EconomicsGraphic4() {
       inputbox.onclick=event=>optionCLick(d,i);
       cell.appendChild(inputbox);
       return cell;
+    }
+    var yearClick=function(i){
+      year=i;
+      console.log(i);
     }
     //option selection
     var optionCLick=function(d,i){
