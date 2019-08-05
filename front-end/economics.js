@@ -60,7 +60,7 @@ var Economics = function () {
         }
       });
     }
-
+    this.data4
     console.log(this.data4);
 
   }
