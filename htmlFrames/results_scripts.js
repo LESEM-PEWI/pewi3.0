@@ -20,6 +20,18 @@
     //parent is index.html
     //resultsDisplay.js
     parent.drawD3LandPieChart(toggleYearForLandPlotBy(numberOfYears), isLandPlotOnCategories);
+
+    if (parent.getTracking())
+    {
+      if (numberOfYears == 1)
+      {
+        parent.pushClick(0, parent.getStamp(), 60, 0, null);
+      }
+      if (numberOfYears == -1)
+      {
+        parent.pushClick(0, parent.getStamp(), 61, 0, null);
+      }
+    }
   } //end changeLandPieBy()
 
   /*
@@ -37,18 +49,31 @@
   function toggleCategoriesPie(toggleSelectionValue) {
     //toggle necessary main page items
     if (toggleSelectionValue == 1) {
+
+      // currently at category
       document.getElementById('toggleYearPie').innerHTML = "To List";
       document.getElementById('toggleYearPie').onclick = function() {
         toggleCategoriesPie(0)
       };
       isLandPlotOnCategories = true;
-    } else {
-      //Default Setting
+      // Inserting conditions for cursor tracking mode (or Recording mode)
+      if(parent.getTracking()) {
+        parent.pushClick(0,parent.getStamp(),104,0,null);
+      }
+    }
+
+    else {
+
+      //Default Setting at List
       document.getElementById('toggleYearPie').innerHTML = "To Categories";
       document.getElementById('toggleYearPie').onclick = function() {
         toggleCategoriesPie(1)
       };
       isLandPlotOnCategories = false;
+      // Inserting conditions for cursor tracking mode (or Recording mode)
+      if(parent.getTracking()) {
+        parent.pushClick(0,parent.getStamp(),105,0,null);
+      }
     }
     //then regenerate pie chart
     changeLandPieBy(0);
@@ -219,6 +244,24 @@
       //so make sure to add the graph back
       window.top.addBackYearToRadar(yearToToggle);
     } //end else/if group
+
+    // Trying to implement cursor tracking of radar chart
+    if (parent.getTracking())
+    {
+      if (yearToToggle == 1)
+      {
+        parent.pushClick(0, parent.getStamp(), 62, 0, null);
+      }
+      if (yearToToggle == 2)
+      {
+        parent.pushClick(0, parent.getStamp(), 63, 0, null);
+      }
+      if (yearToToggle == 3)
+      {
+        parent.pushClick(0, parent.getStamp(), 64, 0, null);
+      }
+    } 
+
   } //end radarPlotYearToggle()
 
   //this function is nearly identical to the similarly named one above,

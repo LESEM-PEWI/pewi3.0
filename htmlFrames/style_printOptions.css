@@ -101,6 +101,17 @@ body {
   width: 100%;
 }
 
+#printMessage {
+  top: 5%;
+  right: 15%;
+  display: block;
+  color: #FFFFFF;
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.8vw;
+  font-weight: bold;
+  position: absolute;
+}
+
 input {
   height: 0%;
   position: absolute;
@@ -176,12 +187,12 @@ label .tooltiptext, .print-options-tool-icon .tooltiptext {
 label:hover .tooltiptext, .print-options-tool-icon:hover .tooltiptext {
   visibility: visible;
 }
-
+ /* styling the checkbox's label when checked by user*/
 input:checked+label {
   /*background-color: #003d4d;*/
   color: #fff;
 }
-
+/* styling the checkbox's image when checked by user*/
 input:checked+label img {
   box-shadow: 0px 0px 16px 5px rgba(64, 164, 223, 0.5), 0 17px 50px 0 rgba(14, 71, 204, 0.4);
 }

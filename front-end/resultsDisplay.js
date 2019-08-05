@@ -281,6 +281,7 @@ var RadarChart = {
 
 //displayResults writes the html for the results iframe with updates results from Totals
 function displayResults() {
+  economics.mapChange();
 
   //Create results table and append it to the proper tab of the results frame
   var numericalTableString = generateResultsTable();
@@ -304,15 +305,12 @@ function displayResults() {
   economicsGraphic3.render();
   econGraphic4 = EconomicsGraphic4().getInstance().render();
 
-
-
-
-
+  econGraphic2 = new EconomicsGraphic2();
+  econGraphic2.render();
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
   //============= END DEPRECATED
 
-  economics.mapChange();
   //create the radar plots
   var tempObj = []; //get an array of years to display
   for (var y = 1; y <= boardData[currentBoard].calculatedToYear; y++) {
@@ -4051,12 +4049,15 @@ d3.selection.prototype.moveToBack = function() {
 
 function createMockDataGraphic1(){
   var econData = economics.data;
-  econData = econData.map((d, i) => {
+  var data = econData.map
+  tempData = [];
+  data = [];
+  for(var i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+  tempData[i] = econData[i].map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
   });
-  data = [];
-  econData.forEach((el) => {
-    for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
+    console.log(econData[i])
+    tempData[i].forEach((el) => {
       d = {}
       d.year = i;
       d.landUse = el.landUse;
@@ -4065,8 +4066,8 @@ function createMockDataGraphic1(){
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
       d.Loss = Math.min(d.Revenue + d.Cost, 0);
       data.push(d);
-    }
-  });
+    });
+  }
   return data;
 
 }
@@ -4241,46 +4242,6 @@ function EconomicsGraphic1() {
 
   svg.selectAll("g.tick")
   .style("stroke-dasharray", ("3,3"))
-}
-    var addOptions = function (){ //This adds the toggle effects to the screen
-      let doc = document.getElementById('resultsFrame').contentWindow.document;
-      let box = doc.getElementById('econGraphic1Options');
-
-      let selectionChange = (d, button) => {
-        doc.getElementById('econGraphic1LandUses').style.display = 'none';
-        doc.getElementById('econGraphic1Economics').style.display = 'none';
-        doc.getElementById('econGraphic1Years').style.display = 'none';
-        doc.getElementById('econGraphic1' + d).style.display = 'block';
-        buttonLU.classList.remove('selected');
-
-        buttonYear.classList.remove('selected');
-        buttonEconomics.classList.remove('selected');
-        button.classList.add('selected');
-      }
-
-
-      buttonLU = doc.getElementById('econGraphic1LUOptions')
-      buttonLU.onclick = event => {selectionChange("LandUses", buttonLU)};
-      buttonYear = doc.getElementById('econGraphic1YearsOptions')
-      buttonYear.onclick = event => {selectionChange("Years", buttonYear)}
-      buttonEconomics = doc.getElementById('econGraphic1EconomicsOptions')
-      buttonEconomics.onclick = event => {selectionChange("Economics", buttonEconomics)};
-
-      selectionChange('LandUses', buttonLU);
-
-      container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses')
-      container.innerHTML = '';
-      economics.data.map(d => d.landUse).forEach(d => {
-        cell = document.createElement('div');
-        cell.innerHTML = d;
-        checkBox = document.createElement('input');
-        checkBox.type = 'checkbox';
-        checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
-        checkBox.style.float = 'right';
-        checkBox.checked = true;
-        cell.appendChild(checkBox);
-        container.appendChild(cell);
-      })
 
   svg.append("text")
   .attr("transform", "rotate(-90)")
@@ -4369,7 +4330,7 @@ function EconomicsGraphic1() {
     });
 
     container = doc.getElementById('econGraphic1LandUses')
-    economics.data.map(d => d.landUse).forEach(d => {
+    economics.data[1].map(d => d.landUse).forEach(d => {
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.classList.add("optionsRow")
@@ -5065,4 +5026,306 @@ function EconomicsGraphic4() {
       return instance;
     }
   };
+}
+
+createMockDataGraphic2 = (year, currentSelection) =>{
+}
+
+function EconomicsGraphic2(){
+  var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2svg');
+  var econGraphic2 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2');
+  var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
+  '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
+  var costCategories = ["Action - Cost Type", "Time - Cost Type"];
+  var currentSelection = "Action - Cost Type"
+  var year = currentYear;
+  var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph2tt"));
+
+  var margin = {top: 40, right: 10, bottom: 60, left: 55};
+  let windowWidth=window.innerWidth;
+  var width = windowWidth *0.8- margin.left - margin.right;
+  var height =window.innerHeight*.6 - margin.top - margin.bottom;
+  var x0, x, y, fullData, data, keys; //initialize some variables so that they may be truly initialized in one function and accessed in a nother
+  var options = [];
+
+  var alterOptions = (option, skip) =>{ //This changes the options array to contain up to date options
+    if (options.includes(option)){
+      options.splice(options.indexOf(option),1);
+    }
+    else {
+      options.push(option);
+    }
+    if(!skip) this.rerender();
+  }
+
+  svg = d3.select(econBody);
+  svg
+  .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  scaleSetUp = () => {
+    x0 = d3.scaleBand()
+      .domain(data.map(function(d) {return d.landUse + ""; }))
+      .rangeRound([margin.left, width - margin.right])
+      .paddingInner(.1);
+
+    x = d3.scaleBand()
+      .domain(data.map(function(d) {return d.type;}))
+      .rangeRound([0, x0.bandwidth()])
+      .padding(.05);
+
+    y = d3.scaleLinear()
+      .domain([0, 1.1*Math.max.apply(Math, data.map(function(d) { return d.value;}))])
+      .rangeRound([height - margin.bottom, margin.top]);
+  }
+
+  initOptions = () => {
+    var econData = economics.data[year]
+    econData.forEach(lu => {
+      if(lu[currentSelection].total === 0 && !options.includes(lu.landUse.replace(/\s/g,'')) ||
+      lu[currentSelection].total !== 0 && options.includes(lu.landUse.replace(/\s/g,''))){
+        alterOptions(lu.landUse.replace(/\s/g,''), true);
+      }
+    });
+  }
+
+  readyData = () => {
+    fullData = [];
+      var econData = economics.data[year]
+      econData.forEach(lu => {
+        arr = Object.keys(lu[currentSelection])
+        arr.splice(0,1)
+        arr.forEach(type => {
+          d = {};
+          d.landUse = lu.landUse;
+          d.type = type;
+          d.value = lu[currentSelection][type];
+          fullData.push(d)
+        })
+      })
+    keys = economics.data[1][currentSelection];
+  }
+
+  applyOptions = () => {
+    tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
+    data = tempData.filter(el => {
+      if(options.indexOf(el.landUse.replace(/\s/g,'')) > -1) return false;
+      if(options.indexOf(el.type.replace(/\s/g,'')) > -1) return false;
+      return true;
+    });
+  }
+
+  svg = d3.select(econBody);
+
+  this.render = () => {
+    svg.selectAll("*").remove();
+    readyData();
+    initOptions();
+    addOptions();
+    applyOptions();
+    scaleSetUp();
+    addBars();
+    addLegend();
+    addAxes();
+    addTitle();
+  }
+
+  this.rerender = () => {
+    svg.selectAll("*").remove();
+    readyData();
+    applyOptions();
+    scaleSetUp();
+    addBars();
+    addLegend();
+    addAxes();
+    addTitle();
+    addOptions();
+  }
+
+  var addBars = () => {
+
+    svg.selectAll("g")
+      .data(data)
+      .enter()
+      .append("rect")
+        .attr("transform", d => "translate(" +x0(d.landUse) + ",0)")
+        .attr("x", d => x(d.type))
+        .attr("y", d => y(d.value))
+        .attr("width", x.bandwidth())
+        .attr("height", d => y(0) - y(d.value))
+        .attr("fill", d => colors[keys.indexOf(d.type)])
+        .on("mouseover", function(d) {
+          tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
+          tooltip.select("#econGraphic2LU").text("Land Use: " + d.landUse)
+          // let econType = this.parentNode.getAttribute("layernum")
+          tooltip.select("#econGraphic2Value").text(d.type + " Cost: " + formatMoney(d.value))
+          outlineRect.attr("transform", "translate(" + x0(d.landUse) + ",0)")
+          outlineRect.style("visibility", "visible")
+          outlineRect.attr("x", this.getAttribute("x"))
+          outlineRect.attr("y", this.getAttribute("y"))
+          outlineRect.attr("height", this.getAttribute("height"))})
+          .on("mousemove", d => {
+            tooltip
+            .style('left', (d3.event.pageX + 10) +"px")
+            .style('top', (d3.event.pageY + 10) + "px")
+          })
+          .on("mouseout", function(d) {
+            tooltip.style("visibility", "hidden")
+            outlineRect.style("visibility", "hidden")
+          });
+
+    var outlineRect = svg.append("rect")
+    .attr("stroke", "black")
+    .attr("stroke-width", "2px")
+    .style("visibility", "hidden")
+    .style("fill", "none")
+    .attr("width", x.bandwidth);
+  }
+
+  var addLegend = () =>{
+    legend = svg.append("g")
+      .attr("transform", "translate(" + width +",0)")
+      .attr("text-anchor", "end")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", 15)
+    .selectAll("g")
+      .data(keys)
+      .enter().append("g")
+    .attr("transform", function(d, i) {return "translate(0," + (20 * i) + ")";});
+
+    legend.append("rect")
+      .attr("x", -19)
+      .attr("width", 19)
+      .attr("height", 19)
+      .attr("fill", (d, i) => colors[i]);
+
+    legend.append("text")
+      .attr("x", -24)
+      .attr("y", 9.5)
+      .attr("dy", "0.35em")
+      .text((d,i) => keys[i]);
+  }
+
+  var addAxes = () =>{
+    console.log("here");
+    var xAxis = svg.append("g")
+      .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
+      .style("font-weight", "bold")
+      .call(d3.axisBottom(x0))
+    svg.selectAll("g.tick")
+      .selectAll("text")
+        .attr("fill", "purple")
+        .attr("y", y(y.domain()[0]/1.1)-y(0) + 7)
+        .attr("transform", "rotate(-35)")
+        .style("text-anchor", "end")
+
+    var yAxis = d3.axisLeft(y)
+      .tickFormat(d => formatMoney(d))
+      .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
+      .tickSizeOuter(0)
+    svg.append("g")
+      .attr("transform", "translate(" + margin.left + ", 0)")
+      .call(yAxis);
+
+    svg.selectAll("g.tick")
+      .style("stroke-dasharray", ("3,3"))
+  }
+
+  var addTitle = () => {
+    svg.append("text")
+      .attr("transform",
+        "translate(" + (width/2) + " ," +
+        (25) + ")")
+      .style("text-anchor", "left")
+      .style("font-weight", "bold")
+      .style("font-size", "1.5vmax")
+      .text("Cost by " + currentSelection);
+  }
+
+  var addOptions = () => {
+    let doc = document.getElementById('resultsFrame').contentWindow.document;
+    container = doc.getElementById('econGraphic2LandUses')
+    container.querySelectorAll(".optionsRow").forEach(row =>{
+      row.parentNode.removeChild(row);
+    })
+
+    economics.data[1].map(d => d.landUse).forEach(d => {
+      cell = document.createElement('div');
+      cell.innerHTML = d;
+      cell.classList.add("optionsRow")
+      checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
+      checkBox.style.float = 'right';
+      if(!options.includes(d.replace(/\s/g,''))) checkBox.checked = true;
+      cell.appendChild(checkBox);
+      container.appendChild(cell);
+    })
+    container = doc.getElementById('econGraphic2Cats')
+    container.querySelectorAll(".optionsRow").forEach(row =>{
+      row.parentNode.removeChild(row);
+    })
+    doc.querySelectorAll("BR").forEach(row => {
+      row.parentNode.removeChild(row);
+    });
+    costCategories.forEach(d => {
+      cell = document.createElement('div');
+      cell.innerHTML = d;
+      cell.classList.add("optionsRow")
+      checkBox = document.createElement('input');
+      if(d === currentSelection) checkBox.checked = true;
+      checkBox.type = 'radio';
+      checkBox.name = 'econGraph2CostType';
+      checkBox.onclick = event => {
+        currentSelection = d;
+        this.rerender()};
+      checkBox.style.float = 'right';
+      cell.appendChild(checkBox);
+      container.appendChild(cell);
+    })
+    if(boardData[currentBoard].calculatedToYear > 1){
+      container.appendChild(document.createElement('BR'))
+      for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+        cell = document.createElement('div');
+        cell.innerHTML = 'Year ' + i;
+        cell.classList.add("optionsRow")
+        checkBox = document.createElement('input');
+        checkBox.type = 'radio';
+        checkBox.name = 'econGraph2Year';
+        checkBox.onclick = event => {
+          year = i;
+          initOptions();
+          this.rerender();
+        }
+        checkBox.style.float = 'right';
+        if(i === year) checkBox.checked = true;
+        cell.appendChild(checkBox);
+        container.appendChild(cell);
+      }
+    }
+    container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2Types')
+    container.querySelectorAll(".optionsRow").forEach(row => {
+      row.parentNode.removeChild(row);
+    });
+
+    keys.forEach(d => {
+      cell = document.createElement('div');
+      cell.innerHTML = d;
+      cell.classList.add("optionsRow")
+      checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
+      checkBox.style.float = 'right';
+      if(!options.includes(d)) checkBox.checked = true;
+      cell.appendChild(checkBox);
+      container.appendChild(cell);
+    })
+  }
+}
+
+formatMoney = function(d){ //This is to put the negative sign in front of the dollar sign
+  var isNegative = d < 0 ? '-' : '';
+  return isNegative + '$' + Math.abs(d);
 }
