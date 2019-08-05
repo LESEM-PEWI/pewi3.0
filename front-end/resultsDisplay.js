@@ -4771,7 +4771,7 @@ function EconomicsGraphic5(){
     econdata=economics.data5;
     var econBody= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5svg');
     var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
-    var lineColor=["blue", 'orange','green'];
+    var lineColor=["#3182bd", '#e6550d','#31a354'];
     var lineColorScale=d3.scaleOrdinal().range(lineColor);
     var lineStrokeDashArray=[[0],[15],[1,7]];
     var lineStrokeDashArrayScale=d3.scaleOrdinal().range(lineStrokeDashArray);
@@ -4926,7 +4926,7 @@ function EconomicsGraphic5(){
             .style("text-anchor", "left")
             .style("font-weight", "bold")
             .style("font-size", "1.5vmax")
-            .text("Economics By Land Use");
+            .text("Labor Demand Over Calender Year");
           svg.append("text")
              .attr("transform", "rotate(-90)")
              .attr("y", 0)
@@ -4935,7 +4935,7 @@ function EconomicsGraphic5(){
              .style("text-anchor", "middle")
              .attr("font-size","1.1vmax")
              .attr("font-weight","bold")
-             .text("Value");
+             .text("Cost ($)");
            svg.append("text")
               .attr("transform", "rotate(-90)")
               .attr("y", width+margin.right+35)
@@ -4944,7 +4944,7 @@ function EconomicsGraphic5(){
               .style("text-anchor", "middle")
               .attr("font-size","1.1vmax")
               .attr("font-weight","bold")
-              .text("Hours");
+              .text("Time (Hours)");
      }
      /**
       * draw legend on svg
@@ -4995,7 +4995,7 @@ function EconomicsGraphic5(){
             .attr("x",18)
             .attr("y",9.5)
             .attr("dy","0.35em")
-            .text(d=>d);
+            .text(d=>d+" Line");
 
      }
      /**
