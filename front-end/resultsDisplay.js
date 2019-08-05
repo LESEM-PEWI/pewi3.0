@@ -4921,12 +4921,12 @@ function EconomicsGraphic5(){
               .text("Time");
           svg.append("text")
             .attr("transform",
-              "translate(" + (width/2) + " ," +
+              "translate(" + (width/2-50) + " ," +
                 (25) + ")")
             .style("text-anchor", "left")
             .style("font-weight", "bold")
             .style("font-size", "1.5vmax")
-            .text("Labor Demand Over Calender Year");
+            .text("Labor Demand Over Calendar Year");
           svg.append("text")
              .attr("transform", "rotate(-90)")
              .attr("y", 0)
