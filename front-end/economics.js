@@ -4,6 +4,7 @@ var Economics = function () {
   this.data = [];
   this.data4 = [];
   this.data3 = [];
+  this.data3ByLU = [];
   d3.csv('./budgets_2.csv', data => { //after parsing the CSV file
 
     this.rawData = data;
@@ -79,6 +80,35 @@ var Economics = function () {
     }
     console.log(this.data3);
   }
+
+
+  this.chart3DataByLU = () => {
+    console.log(this.mapData)
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      this.data3ByLU[i] = {};
+      this.mapData[i].forEach( dataPoint => {
+        if(!this.data3ByLU[i][dataPoint['Land-Use']]){
+          this.data3ByLU[i][dataPoint['Land-Use']] = {time: {}, action: {}}
+        }
+
+        if(!this.data3ByLU[i][dataPoint['Land-Use']].time[dataPoint['Time - Cost Type']]){
+          this.data3ByLU[i][dataPoint['Land-Use']].time[dataPoint['Time - Cost Type']] = 0;
+        }
+
+        if(!this.data3ByLU[i][dataPoint['Land-Use']].action[dataPoint['Action - Cost Type']]){
+          this.data3ByLU[i][dataPoint['Land-Use']].action[dataPoint['Action - Cost Type']] = 0;
+        }
+
+        this.data3ByLU[i][dataPoint['Land-Use']].time[dataPoint['Time - Cost Type']] += dataPoint.Value;
+        this.data3ByLU[i][dataPoint['Land-Use']].action[dataPoint['Action - Cost Type']] += dataPoint.Value;
+
+        this.data3ByLU[i][dataPoint['Land-Use']].toggleVal = -1;
+      })
+    }
+
+    console.log(this.data3ByLU)
+  }
+
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
     let landUses = [];
     this.mapData = [];
@@ -100,6 +130,7 @@ var Economics = function () {
       })
     }
     this.chart3Data();
+    this.chart3DataByLU();
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
   }
