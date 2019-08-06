@@ -4580,32 +4580,34 @@ var drawBars = () => {
 
 function toggleLandUseFromTotal(landuse){
   let data = economics.data3ByLU;
+  let yearData = [];
 
   for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
-    let yearData = data[i][landuse];
+    yearData.push(data[i][landuse]);
+  }
     console.log(yearData);
     console.log(fullData);
 
     // alter fullData
 
     for (var j = 0; j < fullData[0].length; j++){
-      if(yearData['action'][fullData[0][j].costType] && fullData[0][j].year == i){
-        fullData[0][j].value += yearData['toggleVal'] * yearData['action'][fullData[0][j].costType];
+      if(yearData[fullData[0][j].year - 1]['action'][fullData[0][j].costType]){
+        fullData[0][j].value += yearData[fullData[0][j].year - 1]['toggleVal'] * yearData[fullData[0][j].year - 1]['action'][fullData[0][j].costType];
 
       }
     }
 
     for (var j = 0; j < fullData[1].length; j++){
-      if(yearData['time'][fullData[1][j].costType] && fullData[1][j].year == i){
-        fullData[1][j].value += yearData['toggleVal'] * yearData['time'][fullData[1][j].costType];
+      if(yearData[fullData[0][j].year - 1]['time'][fullData[1][j].costType]){
+        fullData[1][j].value += yearData[fullData[0][j].year - 1]['toggleVal'] * yearData[fullData[0][j].year - 1]['time'][fullData[1][j].costType];
       }
     }
 
-    yearData['toggleVal'] *= -1;
+    for(let i = 0; i <= boardData[currentBoard].calculatedToYear - 1; i++){
+      yearData[i]['toggleVal'] *= -1;
+    }
     console.log(fullData);
     rerender();
-
-  }
 }
 
 var addOptions = () => { //This adds the toggle effects to the screen
