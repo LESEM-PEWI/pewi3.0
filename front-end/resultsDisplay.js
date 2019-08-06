@@ -4415,12 +4415,9 @@ function exists(arr, search) {
 
 function econGraphic4DisplayData(landUse,costType,cost,year){
   var econdata=economics.data4[year];
-  console.log(econdata);
-  console.log(landUse);
   econdata=econdata.filter(function(item){
     return item.landUse==landUse;
   });
-  console.log(econdata);
   econdata=econdata[0].array.filter(function(item){
     return item[costType]==cost;
   });
@@ -4433,7 +4430,6 @@ function econGraphic4DisplayData(landUse,costType,cost,year){
       data.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
     }
   }
-  console.log(data);
 return data;
  }
  /**
@@ -4449,10 +4445,8 @@ function EconomicsGraphic4() {
   function init() {
     year=1;
     econdata=economics.data4;
-    console.log(econdata[year]);
     firstNotEmptyElement=econdata[year].find(e=>e!=null);
-    console.log(firstNotEmptyElement);
-    options = [firstNotEmptyElement.landUse,"Action - Cost Type","Machinery"];
+    options = [firstNotEmptyElement.landUse,"Action - Cost Type",firstNotEmptyElement['Action - Cost Type'][0]];
     // econdata=econdata[year];
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4svg');
     var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
@@ -4481,7 +4475,6 @@ function EconomicsGraphic4() {
     var drawBarsfunction=function(){
 
       displaydata=econGraphic4DisplayData(options[0],options[1],options[2],year);
-      console.log(displaydata);
 
         //scale
         var xScale = d3.scaleBand()
@@ -4493,7 +4486,7 @@ function EconomicsGraphic4() {
         	.domain([0, yMax])
         	.range([height - margin.bottom, margin.top]);
         var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph4tt"));
-        console.log(xScale.bandwidth());
+
           // bars
         var rect = svg.selectAll('rect')
         	.data(displaydata)
@@ -4585,8 +4578,6 @@ function EconomicsGraphic4() {
          * display the land use, action,time cost type
          */
         var addOptions=function(){
-          // let  doc =document.getElementById('resultsFrame').contentWindow.document;
-          console.log(options);
           // selection dropdown menu for cost type
           var selectedType=function(costType,option,name){
             optionCLick(costType,option);
@@ -4594,31 +4585,6 @@ function EconomicsGraphic4() {
             doc.getElementById("econGraphic4TimeType").style.display='none';
             doc.getElementById(name).style.display='block';
           }
-
-
-
-          // //land use input radio type
-          // container=document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4LandUses');
-          // container.innerHTML='';
-          // cell=document.createElement('div');
-          // cell.innerHTML='Land Use';
-          // cell.className='graphic4landuse';
-          // container.append(cell);
-          // econdata[year].map(d=>d.landUse).forEach((d)=>{
-          //   cell=document.createElement('div');
-          //   cell.innerHTML=d;
-          //   cell.className="graphic4option";
-          //   inputbox=document.createElement('input');
-          //   inputbox.name="landuseoption";
-          //   if(d==options[0]){
-          //     inputbox.checked=true;
-          //   }
-          //   inputbox.type='radio';
-          //   inputbox.style.float='right';
-          //   inputbox.onclick=function(event){optionCLick(d,0);createCostOption()};
-          //   cell.appendChild(inputbox);
-          //   container.append(cell);
-          // });
 
           landuseOption();
           //option for action, time type selection
@@ -4640,27 +4606,6 @@ function EconomicsGraphic4() {
 
           createCostOption();
 
-          // container=doc.getElementById('econGraphic4Year');
-          // container.innerHTML="";
-          // cell=document.createElement('div');
-          // cell.innerHTML="Year";
-          // cell.className="graphic4landuse";
-          // container.appendChild(cell);
-          // for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
-          //   cell=document.createElement('div');
-          //   cell.innerHTML="Year "+i;
-          //   cell.className="grahpic5YearSelection";
-          //   inputbox=document.createElement('input');
-          //   inputbox.name="graphic4YearInputBox";
-          //   if(i==1){
-          //     inputbox.checked=true;
-          //   }
-          //   inputbox.type='radio';
-          //   inputbox.style.float='right';
-          //   inputbox.onclick=event=>yearClick(i);
-          //   cell.append(inputbox);
-          //   container.appendChild(cell);
-          // }
     }
     function landuseOption(){
       //land use input radio type
@@ -4693,12 +4638,12 @@ function EconomicsGraphic4() {
       var costTypeList=econdata[year].filter(function(item){
         return item.landUse==options[0];
       });
-      console.log(costTypeList);
       costTypeListAction=costTypeList[0]['Action - Cost Type'];
       costTypeContainer=doc.getElementById("econGraphic4ActionType");
       costTypeContainer.innerHTML="";
       costTypeListAction.forEach(d=>{
-        input=createInputbox('div',d,'input','econ4costType',d,2);
+
+        input=createInputbox('div',d,'input','econ4ActioncostType',d,2);
         costTypeContainer.appendChild(input);
       });
       costContainer.append(costTypeContainer);
@@ -4707,7 +4652,7 @@ function EconomicsGraphic4() {
       costTypeContainer=doc.getElementById("econGraphic4TimeType");
       costTypeContainer.innerHTML="";
       costTypeListTime.forEach(d=>{
-        input=createInputbox('div',d,'input','econ4costType',d,2);
+        input=createInputbox('div',d,'input','econ4TimecostType',d,2);
         costTypeContainer.appendChild(input);
       });
       costContainer.append(costTypeContainer);
@@ -4761,7 +4706,6 @@ function EconomicsGraphic4() {
     //option selection
     var optionCLick=function(d,i){
       options[i]=d;
-      console.log(options);
         rerender();
     }
     //rerender the bar on the chart
@@ -4773,7 +4717,6 @@ function EconomicsGraphic4() {
     var render = function (){
       svg.selectAll("*").remove();
       drawBarsfunction();
-      console.log("render");
       yearOption();
       doc.getElementById("econGraphic4ActionType").style.display='block';
       doc.getElementById("econGraphic4TimeType").style.display='none';
