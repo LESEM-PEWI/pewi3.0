@@ -5152,12 +5152,20 @@ function saveAndRandomize() {
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     //getRandomInt is in back-end helperMethods
     for (var j = 0; j <= randomPainterTile.length; j++) { //Check to see if the landuse type is toggled off or not
-      if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j]) !== -1) {
+      if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j] + "\n") !== -1) {
         randomPainterTile.splice(j--, 1);
-        console.log(randomPainterTile);
       }
     }
-    var newDefaultLandUse = randomPainterTile[0];
+    console.log(randomPainterTile);
+    if(randomPainterTile.length === 0){
+      throw new Error('Please select at least one land use.');
+    }
+     //If the only land use selected is wetlands throw an Error
+     //This is because wetlands cannot be placed on tiles that are not suitable for wetlands
+    if(randomPainterTile == 14){
+      throw new Error('Wetlands cannot be the only selected land use. \nPlease select an additional land use.');
+    }
+    randomPainterTile[0] === 14 ? newDefaultLandUse = randomPainterTile[1]: newDefaultLandUse = randomPainterTile[0];
 
     var forNitrateCalc = Array(4);
     forNitrateCalc[0] = Array(828);
@@ -5657,7 +5665,7 @@ function switchConsoleTab(value) {
         pushClick(0, getStamp(), 4, 0, null);
       }
       document.getElementById('terrainImg').className = "imgSelected";
-      document.getElementById('painterTab').style.display = "block";     
+      document.getElementById('painterTab').style.display = "block";
       //hide overlay toggle switch
       var overlay = document.getElementsByClassName('checkOverlay');
       for(var i = 0; i < overlay.length; i++){
@@ -5712,7 +5720,7 @@ function switchConsoleTab(value) {
       document.getElementById('featuresImg').className = "imgSelected";
       document.getElementById('featuresTab').style.display = "block";
 
-    
+
       //show overlay toggle switch
       var overlay = document.getElementsByClassName('checkOverlay');
       for(var i = 0; i < overlay.length; i++){

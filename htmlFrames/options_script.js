@@ -143,7 +143,13 @@
       parent.optionsString=tempString;
       if(tempString.includes('paint'))
       {
-        parent.saveAndRandomize();
+        try {
+          parent.saveAndRandomize();
+        }
+        catch(error){
+          alert(error.message);
+          return;
+        }
       }
     } //end if
     //hide the options frame from the top frame (index.html)
@@ -207,7 +213,7 @@
               yearCounter += 1;
             }
           } else {
-            //if (document.getElementById(string)) document.getElementById(string).checked = 1;
+            if (document.getElementById(string)) document.getElementById(string).checked = 1;
           }
       } //end switch
     } //end for each line in the parameters div
