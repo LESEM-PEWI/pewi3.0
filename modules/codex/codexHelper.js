@@ -130,7 +130,7 @@ function estalishHeights() {
   //35 px for each element
   // heightConstant = 35 ;
   heightConstant = 2.7;
-
+  
   for (var i = 0; i < elementNum.length; i++) {
     if (elementNum[i]) {
       elementHeight[i] = heightConstant * elementNum[i];
