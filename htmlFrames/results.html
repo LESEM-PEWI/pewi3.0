@@ -130,18 +130,18 @@ Cleaned and Prepared - August 2016
 
       <div style="display:none;" id="econ"><br>
         <div style="display:inline-block;width:20%;vertical-align:top" >
-        <div id="tOrAbutton">
+        <!--<div id="tOrAbutton">
           <h4>View By</h4>
-          <select id="timeOrAction" onChange="">
+          <select id="timeOrAction" onChange="updateTorA();">
               <option value=0>Time</option>
               <option value=1>Action</option>
               <option value=2>All</option>
           </select>
-        </div>
+        </div>-->
 
         <div id="yearCopyButton">
           <h4>Year Select:</h4>
-          <select id="yearToCopy" onChange="">
+          <select id="yearSelect" onChange="changeYear();">
               <option value=0>Year 1</option>
               <option value=1>Year 2</option>
               <option value=2>Year 3</option>
@@ -156,34 +156,16 @@ Cleaned and Prepared - August 2016
             <a class="toggle" href="javascript:void(0);" id="plus">Conventional Corn</a>
             <ul class="inner">
             <li>
-            <a href="#" class="toggle" id="plus">Corn after Soybean</a>
-            <ul class = "inner">
-             <li>
-               <a href="javascript:;"  class="toggle" id="plus">Time for Conventional Corn after Soybean</a>
-               <div class="inner" id="convCornT">
-               </div>
-             </li>
-             <li>
-               <a href="javascript:;" class="toggle" id="plus">Action for Conventional Corn after Soybean</a>
-               <div class="inner" id="convCornA">
-               </div>
-             </li>
+            <a href="#" class="toggle" id="plus">Conventional Corn after Soybean</a>
+            <ul class = "inner" id="convCornASoy">
+
             </ul>
            </li>
 
             <li>
-             <a href="#" class="toggle" id="plus">Corn after Corn</a>
-             <ul class = "inner">
-               <li>
-                 <a href="javascript:;"  class="toggle" id="plus">Time for Conventional Corn after Corn</a>
-                 <div class="inner" id="convCorn2T">
-                 </div>
-               </li>
-               <li>
-                 <a href="javascript:;" class="toggle" id="plus">Action for Conventional Corn after Corn</a>
-                 <div class="inner" id="convCorn2A">
-                 </div>
-               </li>
+             <a href="#" class="toggle" id="plus">Conventional Corn after Corn</a>
+             <ul class = "inner" id="convCornACorn">
+
              </ul>
            </li>
            </ul>
@@ -193,232 +175,93 @@ Cleaned and Prepared - August 2016
            <a class="toggle" href="javascript:void(0);" id="plus">Conservation Corn</a>
            <ul class="inner">
              <li>
-               <a href="#" class="toggle" id="plus">Corn after Soybean</a>
-               <ul class = "inner">
-                 <li>
-                   <a href="javascript:;" class="toggle" id="plus">Time for Conservation Corn after Soybean</a>
-                   <div class="inner" id="consCornT">
-                   </div>
-                 </li>
-                 <li>
-                   <a href="javascript:;" class="toggle" id="plus">Action for Conservation Corn after Soybean</a>
-                   <div class="inner" id="consCornA">
-                   </div>
-                 </li>
+               <a href="#" class="toggle" id="plus">Conservation Corn after Soybean</a>
+               <ul class = "inner" id="consCornASoy">
                </ul>
              </li>
+
              <li>
-               <a href="#" class="toggle" id="plus">Corn after Corn</a>
-               <ul class = "inner">
-                 <li>
-                   <a href="javascript:;"  class="toggle" id="plus">Time for Conservation Corn after Corn</a>
-                   <div class="inner" id="consCorn2T">
-                   </div>
-                 </li>
-                 <li>
-                   <a href="javascript:;" class="toggle" id="plus">Action for Conservation Corn after Corn</a>
-                   <div class="inner" id="consCorn2A">
-                   </div>
-                 </li>
+               <a href="#" class="toggle" id="plus">Conservation Corn after Corn</a>
+               <ul class = "inner" id="consCornACorn">
                </ul>
              </li>
            </ul>
-
+           </li>
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Conventional Soybean</a>
-           <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Conventional Soybean</a>
-               <div class="inner" id="convSoybeanT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Conventional Soybean</a>
-               <div class="inner" id="convSoybeanA">
-               </div>
-             </li>
+           <ul class="inner" id="convSoybean">
            </ul>
          </li>
          <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Conservation Soybean</a>
-           <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Conservation Soybean</a>
-               <div class="inner" id="consSoybeanT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Conservation Soybean</a>
-               <div class="inner" id="consSoybeanA">
-               </div>
-             </li>
+           <ul class="inner" id="consSoybean">
            </ul>
          </li>
 
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Alfalfa</a>
-           <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Alfalfa</a>
-               <div class="inner" id="alfalfaT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Alfalfa</a>
-               <div class="inner" id="alfalfaA">
-               </div>
-             </li>
+           <ul class="inner" id="alfalfa">
            </ul>
          </li>
          <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Permanent Pasture</a>
-           <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Permanent Pasture</a>
-               <div class="inner" id="permanentPastureT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Permanent Pasture</a>
-               <div class="inner" id="permanentPastureA">
-               </div>
-             </li>
+           <ul class="inner" id="permPast">
            </ul>
          </li>
 
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Rotational Grazing</a>
-           <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Rotational Grazing</a>
-               <div class="inner" id="rotationalGrazingT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Rotational Grazing</a>
-               <div class="inner" id="rotationalGrazingA">
-               </div>
-             </li>
+           <ul class="inner" id="rotGraz">
            </ul>
          </li>
          <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Grass Hay</a>
-           <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Grass Hay</a>
-               <div class="inner" id="grassHayT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Grass Hay</a>
-               <div class="inner" id="grassHayA">
-               </div>
-             </li>
+           <ul class="inner" id="grassHay">
            </ul>
          </li>
 
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Prairie</a>
-           <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Prarie</a>
-               <div class="inner" id="prairieT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Prairie</a>
-               <div class="inner" id="prairieA">
-               </div>
-             </li>
+           <ul class="inner" id="prairie">
            </ul>
          </li>
 
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Conservation Forest</a>
-           <ul class="inner">
-             <li>
-               <a href="#" class="toggle" id="plus">Time for Conservation Forest</a>
-               <div class="inner" id="consForestT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Conservation Forest</a>
-               <div class="inner" id="consForestA">
-               </div>
-             </li>
+           <ul class="inner" id="consForest">
            </ul>
          </li>
+
+
          <li>
-
-
-            <a class="toggle" href="javascript:void(0);" id="plus">Conventional Forest</a>
-           <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Conventional Forest</a>
-               <div class="inner" id="convForestT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Conventional Forest</a>
-               <div class="inner" id="convForestA">
-               </div>
-             </li>
+          <a class="toggle" href="javascript:void(0);" id="plus">Conventional Forest</a>
+           <ul class="inner" id="convForest">
            </ul>
          </li>
 
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Switchgrass</a>
-           <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Switchgrass</a>
-               <div class="inner" id="switchgrassT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Switchgrass</a>
-               <div class="inner" id="switchgrassA">
-               </div>
-             </li>
+           <ul class="inner" id="switchGrass">
            </ul>
          </li>
 
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Short-Rotation Woody Bioenergy</a>
-           <ul class="inner">
-             <li>
-               <a href="#" class="toggle" id="plus">Time for Short-Rotation Woody Bioenergy</a>
-               <div class="inner" id="shortRWBT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Short-Rotation Woody Bioenergy</a>
-               <div class="inner" id="shortRWBA">
-               </div>
-             </li>
+           <ul class="inner" id="shortRWB">
            </ul>
          </li>
 
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Wetland</a>
-           <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Wetland</a>
-               <div class="inner" id="wetlandT">
-               </div>
-             </li>
-             <li>
-               <a href="#" class="toggle" id="plus">Action for Wetland</a>
-               <div class="inner" id="wetlandA">
-               </div>
-             </li>
+           <ul class="inner" id="wetland">
            </ul>
          </li>
 
@@ -426,18 +269,34 @@ Cleaned and Prepared - August 2016
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Mixed Fruits & Vegetables</a>
            <ul class="inner">
-             <li>
-               <a href="#"  class="toggle" id="plus">Time for Mixed Fruits & Vegetables</a>
-               <div class="inner" id="mixedFaVT">
-               </div>
+               <li>
+                 <a href="#" class="toggle" id="plus">Grapes</a>
+                 <ul class = "inner" id="grapes">
+             </ul>
              </li>
+
+
              <li>
-               <a href="#" class="toggle" id="plus">Action for Mixed Fruits & Vegetables</a>
-               <div class="inner" id="mixedFaVA">
-               </div>
+               <a href="#" class="toggle" id="plus">Green Beans</a>
+               <ul class = "inner" id="greenBeans">
+
+               </ul>
              </li>
+
+           <li>
+             <a href="#" class="toggle" id="plus">Squash</a>
+             <ul class = "inner" id="squash">
+             </ul>
+           </li>
+         <li>
+           <a href="#" class="toggle" id="plus">Strawberries</a>
+           <ul class = "inner" id="strawberries">
            </ul>
-        </div>
+         </li>
+       </ul>
+      </li>
+      </div>
+
 
          <div id="graphContainer">
           <div class="leftE">

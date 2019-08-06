@@ -3,13 +3,14 @@ var Economics = function () {
   this.mapData = [];
   this.data = [];
   this.data4 = [];
-  d3.csv('./budgets.csv', data => { //after parsing the CSV file
+  this.dataSubcrop = {};
+  d3.csv('./budgets_2.csv', data => { //after parsing the CSV file
     this.rawData = data;
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
   })
   this.divideByCategory = function (listofCats){
-    console.log(this.rawData);
+  //  console.log(this.rawData);
     listofCats.forEach(cat => {
       this.rawData.forEach(dataPoint => {
         if (!this.data[dataPoint['LU_ID']]) {
@@ -71,6 +72,23 @@ var Economics = function () {
         this.mapData[i].push(copy)
       })
     }
+    this.calcSubcrops();
+  }
+  this.calcSubcrops = function(){
+    this.dataSubcrop = {};
+    this.rawData.forEach(dataPoint => {
+      if(dataPoint['Sub Crop']){
+        if(!this.dataSubcrop[dataPoint['Land-Use']]){
+          this.dataSubcrop[dataPoint['Land-Use']] = {};
+        }
+        if(!this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']]){
+          this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']] = 0;
+        }
+        this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']] = 
+        Math.round(1000*this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']] + 1000*Number.parseFloat(dataPoint['Value']))/1000
+      }
+    })
+
   }
 }
 var economics = new Economics();
