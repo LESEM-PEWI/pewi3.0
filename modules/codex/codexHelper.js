@@ -130,7 +130,7 @@ function estalishHeights() {
   //35 px for each element
   // heightConstant = 35 ;
   heightConstant = 2.7;
-  
+
   for (var i = 0; i < elementNum.length; i++) {
     if (elementNum[i]) {
       elementHeight[i] = heightConstant * elementNum[i];
@@ -384,8 +384,8 @@ function toggleChildElements(idOfHeader) {
   //the sub div is named with the parent id and 'sub' appended
   var childString = idOfHeader + "sub";
 
-  heightString = elementHeight[idOfHeader] + "vw";
-
+  //heightString = elementHeight[idOfHeader] + "vw";
+  heightString = "auto";
   //if it is an unopened group Header, open it
   if (document.getElementById(idOfHeader).className == "groupHeader") {
 
