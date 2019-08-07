@@ -6,33 +6,38 @@ var Economics = function () {
   this.dataSubcrop = {};
   d3.csv('./budgets_2.csv', data => { //after parsing the CSV file
     this.rawData = data;
-    this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
-    this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
   })
   this.divideByCategory = function (listofCats){
-  //  console.log(this.rawData);
-    listofCats.forEach(cat => {
-      this.rawData.forEach(dataPoint => {
-        if (!this.data[dataPoint['LU_ID']]) {
-          this.data[dataPoint['LU_ID']] = {'landUse': dataPoint['Land-Use']};
-        } // We need to create a path to the data that we want to pull out
-        if (!this.data[dataPoint['LU_ID']][cat]){ //if this is the first time that we see a particular category for a particular land use
-          this.data[dataPoint['LU_ID']][cat] = {total: 0}; //Further path making
-        }
-        if(!this.data[dataPoint['LU_ID']][cat][dataPoint[cat]]){ //if this is the first value we need to read
-          this.data[dataPoint['LU_ID']][cat][dataPoint[cat]] = Math.round(1000*Number.parseFloat(dataPoint['Value']))/1000;
-        }
-        else {//The value already exists so just add to it.
-          this.data[dataPoint['LU_ID']][cat][dataPoint[cat]] = //trying to prevent floating point calculation errors so rounding to tenth of a cent
-          //ideally this.data[dataPoint['LU_ID']][cat][dataPoint[cat]] + Number.parseFloat(dataPoint['Value'])
-          Math.round(1000*(this.data[dataPoint['LU_ID']][cat][dataPoint[cat]] + Number.parseFloat(dataPoint['Value'])))/1000
-          this.data[dataPoint['LU_ID']][cat][dataPoint[cat]]
-        }
-        this.data[dataPoint['LU_ID']][cat].total = //either way add it to the total
-        Math.round(1000*this.data[dataPoint['LU_ID']][cat].total + 1000*Number.parseFloat(dataPoint['Value']))/1000
+    for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
+      this.data[i] = [];
+      listofCats.forEach(cat => {
+        this.mapData[i].forEach(dataPoint => {
+          if (!this.data[i][dataPoint['LU_ID']]) {
+            this.data[i][dataPoint['LU_ID']] = {'landUse': dataPoint['Land-Use']};
+          } // We need to create a path to the data that we want to pull out
+          if (!this.data[i][dataPoint['LU_ID']][cat]){ //if this is the first time that we see a particular category for a particular land use
+            this.data[i][dataPoint['LU_ID']][cat] = {total: 0}; //Further path making
+          }
+          if(!this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]]){ //if this is the first value we need to read
+            this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]] = Math.round(1000*Number.parseFloat(dataPoint['Value']))/1000;
+            if(!this.data[i][cat]){
+              this.data[i][cat] = [];
+            }
+            if(!this.data[i][cat].includes(dataPoint[cat])) {
+              this.data[i][cat].push(dataPoint[cat]);
+            }
+          }
+          else {//The value already exists so just add to it.
+            this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]] = //trying to prevent floating point calculation errors so rounding to tenth of a cent
+            //ideally this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]] + Number.parseFloat(dataPoint['Value'])
+            Math.round(1000*(this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]] + Number.parseFloat(dataPoint['Value'])))/1000
+            this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]]
+          }
+          this.data[i][dataPoint['LU_ID']][cat].total = //either way add it to the total
+          Math.round(1000*this.data[i][dataPoint['LU_ID']][cat].total + 1000*Number.parseFloat(dataPoint['Value']))/1000
+        });
       });
-    });
-    console.log(this.data)
+    }
   }
     //graphic 4 extract data from raw data
   this.chart4Information = function(lists) {
@@ -72,6 +77,8 @@ var Economics = function () {
         this.mapData[i].push(copy)
       })
     }
+    this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
+    this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
     this.calcSubcrops();
   }
   this.calcSubcrops = function(){
@@ -84,7 +91,7 @@ var Economics = function () {
         if(!this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']]){
           this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']] = 0;
         }
-        this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']] = 
+        this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']] =
         Math.round(1000*this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']] + 1000*Number.parseFloat(dataPoint['Value']))/1000
       }
     })
