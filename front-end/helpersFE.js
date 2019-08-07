@@ -6718,8 +6718,6 @@ function uploadCSV(reader) {
     else {
       var xys = data[33].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
       window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
-      saveAndRandomize(); //This makes sure that the land use selected is one that isn't disabled. 
-
       //make sure the locked land uses aren't seen on the side tool tab or on the map
       toggleVisibility();
     }
