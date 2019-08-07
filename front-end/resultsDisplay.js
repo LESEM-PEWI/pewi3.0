@@ -4520,7 +4520,7 @@ var drawBars = () => {
     .attr("x", d => x(d.year))
     .attr("y", d => y(d.value))
     .attr("width", x.bandwidth())
-    .attr("height", d => y(0) - y(d.value))
+    .attr("height", d => y(0) - y(Math.round(d.value)))
     .attr("fill", d => colors[keys.indexOf(d.costType)])
     .on("mouseover", function(d) {
       tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
