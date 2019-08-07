@@ -56,7 +56,7 @@
             }
             break;
           case "statFrame":
-            if (toggledElements[i].checked) {
+            if (!toggledElements[i].checked) {
               tempString += "statsOn" + "\n";
             }
             break;
@@ -186,7 +186,7 @@
           document.getElementById('year0').checked = 1;
           break;
         case "statsOn":
-          document.getElementById('statFrame').checked = 1;
+          document.getElementById('statFrame').checked = 0;
           break;
         case "skyboxOn":
           document.getElementById('skybox').checked = 1;
@@ -363,7 +363,8 @@
     var allCheckboxes = $(':checkbox');
     for(var i = 0; i < allCheckboxes.length; ++i){
       // All the YIELD progress bars should be checked.
-      if(i >= 31 && i <= 39){
+      console.log(i, allCheckboxes[i])
+      if(i >= 31 && i <= 39 || i == 45){
         $(':checkbox')[i].checked = true;
       }
       else {
