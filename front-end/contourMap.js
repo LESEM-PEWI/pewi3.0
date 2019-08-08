@@ -4,7 +4,6 @@
  */
 function confirmTopoMapGenerate() {
   if (window.confirm("Do you want to generate a new contour map?")) {
-    generatedContourMap = new ContourMap();
     generatedContourMap.drawContours();
   }
 }

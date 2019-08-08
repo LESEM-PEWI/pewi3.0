@@ -950,7 +950,7 @@ function switchBoards(newBoard) {
 
   //update Results to point to correct board since currentBoard is updated
   Totals = new Results(boardData[currentBoard]);
-  generatedContourMap = new ContourMap();
+  generatedContourMap = generatedContourMap || new ContourMap(); //to ensure that we don't make a new map if we don't need to.
 
 } //end switchBoards
 
