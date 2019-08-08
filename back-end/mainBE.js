@@ -170,8 +170,9 @@ function overlayBoard(board) {
   var utilityWindow = document.getElementById("startUpFrame").contentWindow.document.getElementById("startupDialogueOverlay").contentWindow;
   if(!hasPrecipConclict) {
     for(var y = 0; y < board.calculatedToYear; y++) {
-      //saveri data2 change ongoing
-      var precipIndex = convertPrecipToIndex(parseFloat(initData[1][29+y]));
+      // changing values for issue 576
+      //var precipIndex = convertPrecipToIndex(parseFloat(initData[1][29+y]));
+      var precipIndex = convertPrecipToIndex(parseFloat(initData[1][31+y]));
       if(precipIndex !== board.precipitationIndex[y]) {
         hasPrecipConclict = true;
       }
@@ -233,7 +234,7 @@ function propogateBoard(board) {
   //Loop through the years and assign precipitation levels
   for (var y = 0; y < 4; y++) {
     //var precipIndex = setPrecipitation();
-    // saveri: data2 change ongoing
+    // changing values for issue 576
 	//var precipIndex = convertPrecipToIndex(parseFloat(initData[1][29+y]));
   	var precipIndex = convertPrecipToIndex(parseFloat(initData[1][31+y]));
     board.precipitation[y] = precip[precipIndex];
