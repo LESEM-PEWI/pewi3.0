@@ -1938,7 +1938,7 @@ function generateResultsTable() {
     //END of Table 1 (Players)==================================================
 
     //Start of Precipitation table
-    htmlTableString += "<table id='table4' class='resultsTable'>";
+    htmlTableString += "<table id='table3' class='resultsTable'>";
 
     //add header
     htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Precipitation </th>";
@@ -1984,7 +1984,7 @@ function generateResultsTable() {
     //END of Table 2 (Precipitation)==================================================
 
     //Start of Strategic Wetland Use table
-    htmlTableString += "<table id='table4' class='resultsTable'>";
+    htmlTableString += "<table id='table3' class='resultsTable'>";
 
     //The code below is to add the column titles for Players section of results table
     //add header
@@ -2349,7 +2349,7 @@ function generateResultsTable() {
     //============================
     //TABLE FOUR, SPECIAL INDICATORS
 
-    htmlTableString += "<table id='table4' class='resultsTable'>";
+    htmlTableString += "<table id='table3' class='resultsTable'>";
 
     //add header row
 
