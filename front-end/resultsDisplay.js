@@ -4459,8 +4459,12 @@ function EconomicsGraphic3() {
   var screenWidth = window.innerWidth;
   var width = screenWidth * .8 - margin.left - margin.right;
   var height = screenWidth * .40 - margin.top - margin.bottom; //give or take the golden ratio
+
+  // this is the data that is put on the screen
   var fullData = formatDataGraphic3();
   var econData = economics.data3;
+
+  // keys to be displayed, action by default, but is changed in toggleCostType function
   var keys = Object.keys(econData[1].action);
   var svg = d3.select(econBody);
   svg
@@ -4577,20 +4581,24 @@ function EconomicsGraphic3() {
       .attr("font-weight", "bold");
   }
 
-
+/**
+ * [toggleLandUseFromTotal description]
+ * @param  {[type]} landuse [The landuse that is being toggled]
+ */
   function toggleLandUseFromTotal(landuse) {
+    //the data variable holds the econ data organized according to year and land use
     let data = economics.data3ByLU;
     let yearData = [];
 
+    //year data holds the data for all active years for the current land use being toggled
     for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
       yearData.push(data[i][landuse]);
     }
-    console.log(yearData);
-    console.log(fullData);
 
-    // alter fullData
 
+    // full data is altered here, full data is what is used to display the information on screen
     for (var j = 0; j < fullData[0].length; j++) {
+      //check to see if this cost type exists in yearData, some just dont have certain costs
       if (yearData[fullData[0][j].year - 1]['action'][fullData[0][j].costType]) {
         fullData[0][j].value += yearData[fullData[0][j].year - 1]['toggleVal'] * yearData[fullData[0][j].year - 1]['action'][fullData[0][j].costType];
 
@@ -4603,10 +4611,12 @@ function EconomicsGraphic3() {
       }
     }
 
+    // toggle this landuses toggleVal so that it will be toggled correctly next time
     for (let i = 0; i <= boardData[currentBoard].calculatedToYear - 1; i++) {
       yearData[i]['toggleVal'] *= -1;
     }
-    console.log(fullData);
+
+    // rerender so that the changes are displayed
     rerender();
   }
 
@@ -4629,6 +4639,7 @@ function EconomicsGraphic3() {
       checkBox.checked = true;
       checkBox.onclick = event => {
         alterOption(d.replace(/\s/g, ''));
+        //toggles this landuse from the total
         toggleLandUseFromTotal(d);
       }
       checkBox.style.float = 'right';
@@ -4650,7 +4661,12 @@ function EconomicsGraphic3() {
       container.appendChild(cell);
     }
 
-    function toggleCostType(type, box) {
+    /**
+     * [toggleCostType description]
+     * @param  {[type]} type [Action or Time cost]
+     * This function changes variables around so that the correct information is displayed
+     */
+    function toggleCostType(type) {
       if (type == "Action") {
         actionOrTimeCost = 0;
         keys = Object.keys(econData[1].action)
@@ -4670,7 +4686,7 @@ function EconomicsGraphic3() {
     checkBox = document.createElement('input');
     checkBox.type = 'radio';
     checkBox.name = 'econ3CostType';
-    checkBox.onclick = event => toggleCostType('Action', checkBox);
+    checkBox.onclick = event => toggleCostType('Action');
     checkBox.style.float = 'right';
     checkBox.checked = 'true';
     cell.appendChild(checkBox);
@@ -4683,7 +4699,7 @@ function EconomicsGraphic3() {
     checkBox = document.createElement('input');
     checkBox.type = 'radio';
     checkBox.name = 'econ3CostType';
-    checkBox.onclick = event => toggleCostType('Time', checkBox);
+    checkBox.onclick = event => toggleCostType('Time');
     checkBox.style.float = 'right';
     cell.appendChild(checkBox);
     container.appendChild(cell);
