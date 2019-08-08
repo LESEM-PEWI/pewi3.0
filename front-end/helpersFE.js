@@ -2195,7 +2195,7 @@ function redrawOverlay(highlightType){
   }
 
 }
-
+// For drawing overlay map
 function drawOverlayOntoBoard(selectionHighlightNumber, highlightType) {
 
   //change global highlighting setting to set
@@ -3316,7 +3316,7 @@ function getFloodFrequencyName(floodFrequencyNum){
 }
 //highlightTile updates the tile that should be highlighted.
 function highlightTile(tileId) {
-
+//console.log("mesh materials" , meshMaterials);
   //clear the information in the delayed information hover div
   document.getElementById("hover-info").innerHTML = "";
   if (myTimer != null) {

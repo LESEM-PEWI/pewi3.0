@@ -3539,7 +3539,8 @@ function Tile(tileArray, board) {
 
   //default settings for land use setup
   //years 4 and 5 are land use types used for calculations of minumum and maximum values
-  this.landType = [this.baseLandUseType, Number(tileArray[25]), Number(tileArray[26]), Number(tileArray[27]), LandUseType.prairie, LandUseType.conventionalSoybean];
+  // changing values - for issue 566
+  this.landType = [this.baseLandUseType, Number(tileArray[27]), Number(tileArray[28]), Number(tileArray[29]), LandUseType.prairie, LandUseType.conventionalSoybean];
 
   //results holding variables
   //these variables hold results from functions that other methods may need, this saves executing a base function multiple times

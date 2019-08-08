@@ -110,7 +110,8 @@ function loadLevel(level) {
     case 0:
       levelGlobal = 0;
       multiplayerExit();
-      initWorkspace('./data.csv');
+      //initWorkspace('./data.csv');
+      initWorkspace('./data2.csv');
       // document.getElementById('parameters').innerHTML = "";
       document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
                                                         "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
@@ -216,7 +217,7 @@ function loadLevel(level) {
         } //end for
 
       } //end if
-      
+
     } //end for
     //call toggleVisibility to update new precipitation values
     toggleVisibility();
