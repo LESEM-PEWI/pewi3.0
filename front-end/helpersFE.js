@@ -1346,7 +1346,7 @@ function changeLandTypeTile(tileId) {
         // by changing the reference on meshMaterials array, three.js will draw it on canvas automatically
 
         //wetlands are restricted within flat lands, i.e 0-2% only
-        if(selectedLandType == 14 && (Number(boardData[currentBoard].map[tileId].topography) >= 2) && !randomizing)
+        if(painter == 14 && (Number(boardData[currentBoard].map[tileId].topography) >= 2) && !randomizing)
         {
           //dont highlight
         }
