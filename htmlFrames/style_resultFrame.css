@@ -617,7 +617,7 @@ text {
   width:100%;
 }
 
-.graphic4option, .graphic5lineOption, .graphic5YearSelection{
+.graphic4option, .graphic5lineOption, .graphic5YearSelection,.grahpic4YearSelection{
   height: 20px;
 }
 .yAxisRight g text{
