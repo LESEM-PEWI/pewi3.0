@@ -4671,7 +4671,7 @@ function EconomicsGraphic4() {
       for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
         cell=document.createElement('div');
         cell.innerHTML="Year "+i;
-        cell.className="grahpic5YearSelection";
+        cell.className="grahpic4YearSelection";
         inputbox=document.createElement('input');
         inputbox.name="graphic4YearInputBox";
         if(i==1){
