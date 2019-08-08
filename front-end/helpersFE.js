@@ -5657,7 +5657,7 @@ function switchConsoleTab(value) {
         pushClick(0, getStamp(), 4, 0, null);
       }
       document.getElementById('terrainImg').className = "imgSelected";
-      document.getElementById('painterTab').style.display = "block";     
+      document.getElementById('painterTab').style.display = "block";
       //hide overlay toggle switch
       var overlay = document.getElementsByClassName('checkOverlay');
       for(var i = 0; i < overlay.length; i++){
@@ -5712,7 +5712,7 @@ function switchConsoleTab(value) {
       document.getElementById('featuresImg').className = "imgSelected";
       document.getElementById('featuresTab').style.display = "block";
 
-    
+
       //show overlay toggle switch
       var overlay = document.getElementsByClassName('checkOverlay');
       for(var i = 0; i < overlay.length; i++){
@@ -6452,8 +6452,6 @@ function togglePausePlay() {
  * @param files: the files handler
  */
 function uploadClicked(files) {
-
-    console.log(undoArr)
   var reader;
 
   // check file type here
@@ -6478,7 +6476,6 @@ function uploadClicked(files) {
 
   for(let i = 0; i < undoArr.length; i++){
     undoArr[i] = [];
-    console.log(undoArr)
   }
 
   closeUploadDownloadFrame();
