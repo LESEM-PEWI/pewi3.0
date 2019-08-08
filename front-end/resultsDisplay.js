@@ -1304,9 +1304,6 @@ function drawPrecipitationInformationChart() {
     container.select('.precipType').html(parent.data[year].adj);
 
     var img = " ";
-    console.log(parent);
-    console.log(parent.data);
-    console.log(parent.data[year].adj);
     switch (parent.data[year].adj) {
       case "Dry":
         // "Clouds" by https://icons8.com with free commercial use / Inserted oval under cload
