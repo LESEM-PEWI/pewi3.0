@@ -439,6 +439,12 @@ text {
   height        : 20px;
 }
 
+.optionsRowGraphic3{
+  margin-left   : 3px;
+  margin-right  : 3px;
+  height        : 20px;
+}
+
 #toggleYearPie {
   background-color: rgba(40, 44, 42, 0.03);
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);

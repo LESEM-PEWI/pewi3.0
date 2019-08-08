@@ -442,8 +442,10 @@ function loadTopoImage(tileNumber) {
 
   //this changes depending on the file location
   var string = './imgs/topography/images/TileNum';
-
-  return textureLoader.load(string + tileNumber + '.png');
+  try{
+    return textureLoader.load(string + tileNumber + '.png');
+  }
+  catch(err){}
 }
 
 /**
