@@ -1,10 +1,13 @@
 var Economics = function () {
   this.rawData;
+  this.rawData2;
   this.mapData = [];
   this.data = [];
   this.data4 = [];
   this.data3 = [];
   this.data3ByLU = [];
+  this.data5=[];
+  
   d3.csv('./budgets_2.csv', data => { //after parsing the CSV file
 
     this.rawData = data;
@@ -41,23 +44,60 @@ var Economics = function () {
       });
     }
   }
-    //graphic 4 extract data from raw data
+  /**
+   * grahpic 5 parse data
+   */
+    this.graphic5information = function(){
+      for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+        this.data5[i]=[];
+        this.mapData[i].forEach(dataPoint=>{
+          var landuseNum=dataPoint['LU_ID'];
+          if (!this.data5[i][landuseNum]) {
+            this.data5[i][landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[],'subcrop':[]};
+          } // We need to create a path to the data that we want to pull out
+          var subcrop=dataPoint['Sub Crop'];
+          if(dataPoint['Time of Year']!=""){
+          if(subcrop!=""){
+            if(!this.data5[i][landuseNum]['subcrop'].some(e=>e['subcrop']===subcrop)){
+               this.data5[i][landuseNum]['subcrop'].push({'array':[],'subcrop':subcrop});
+            }
+            var indexOfStevie = this.data5[i][landuseNum]['subcrop'].findIndex(i => i['subcrop'] === subcrop);
+            this.data5[i][landuseNum]['subcrop'][indexOfStevie]['array'].push(dataPoint);
+          }
+            this.data5[i][landuseNum]['array'].push(dataPoint);
+          }
+        })
+    }
+      console.log(this.data5);
+    }
+    d3.csv('./budgets_2.csv', (data) => {
+      this.rawData2=data;
+    })
+  //graphic 4 extract data from raw data
   this.chart4Information = function(lists) {
-    this.rawData.forEach(dataPoint => {
-      var landuseNum=dataPoint['LU_ID'];
-      if (!this.data4[landuseNum]) {
-        this.data4[landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
-      } // We need to create a path to the data that we want to pull out
-      this.data4[landuseNum]['array'].push(dataPoint);
-      lists.forEach(cat => {
-        if(!this.data4[landuseNum][cat]){
-          this.data4[landuseNum][cat]=[];
-        }
-        if(!this.data4[landuseNum][cat].includes(dataPoint[cat])){
-          this.data4[landuseNum][cat].push(dataPoint[cat]);
+    for(var i=1;i<=boardData[currentBoard].calculatedToYear;i++){
+      this.data4[i]=[];
+      this.mapData[i].forEach(dataPoint => {
+        if(dataPoint['Value']!=0){
+          var landuseNum=dataPoint['LU_ID'];
+          if (!this.data4[i][landuseNum]) {
+            this.data4[i][landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
+          } // We need to create a path to the data that we want to pull out
+          this.data4[i][landuseNum]['array'].push(dataPoint);
+          lists.forEach(cat => {
+            if(!this.data4[i][landuseNum][cat]){
+              this.data4[i][landuseNum][cat]=[];
+            }
+            if(!this.data4[i][landuseNum][cat].includes(dataPoint[cat])){
+              this.data4[i][landuseNum][cat].push(dataPoint[cat]);
+            }
+          });
         }
       });
-    });
+    }
+    this.data4
+    console.log(this.data4);
+
   }
 
   this.chart3Data = () => {
@@ -123,16 +163,22 @@ var Economics = function () {
         //this substring is to link different keys from different objects together... again less than ideal
         landUses[i][LandUseType[key.substring(0, key.length - 7)]] = Totals.landUseResults[i][key]
       }
-      this.rawData.forEach(dataPoint => {
+      this.rawData2.forEach(dataPoint => {
         let copy = JSON.parse(JSON.stringify(dataPoint));
         copy["Value"] *= landUses[i][copy['LU_ID']];
+        copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
         this.mapData[i].push(copy)
       })
     }
+
     this.chart3Data();
     this.chart3DataByLU();
+    this.graphic5information();
+
+
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
+
   }
 }
 var economics = new Economics();

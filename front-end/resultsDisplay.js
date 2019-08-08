@@ -298,15 +298,18 @@ function displayResults() {
   render(boardData[currentBoard].calculatedToYear);
   //create precipitation Bar Graph
   drawPrecipitationInformationChart();
-  // econGraphic3 = EconomicsGraphic3().getInstance().render();
+
+  economics.mapChange();
+
   economicsGraphic1 = new EconomicsGraphic1();
   economicsGraphic1.render();
   economicsGraphic3 = new EconomicsGraphic3();
   economicsGraphic3.render();
   econGraphic4 = EconomicsGraphic4().getInstance().render();
-
+  econGraphic5 = EconomicsGraphic5().getInstance().render();
   econGraphic2 = new EconomicsGraphic2();
   econGraphic2.render();
+
   //DEPRECATED, (create ecosystem indicators aster plot
   //drawEcosystemIndicatorsDisplay(currentYear);
   //============= END DEPRECATED
@@ -4066,8 +4069,10 @@ function createMockDataGraphic1(){
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
       d.Loss = Math.min(d.Revenue + d.Cost, 0);
       data.push(d);
+
     });
   }
+
   return data;
 
 }
@@ -4741,8 +4746,9 @@ function exists(arr, search) {
  */
 
 
-function econGraphic4DisplayData(landUse,costType,cost){
-  var econdata=economics.data4;
+function econGraphic4DisplayData(landUse,costType,cost,year){
+  var econdata=economics.data4[year];
+  
   econdata=econdata.filter(function(item){
     return item.landUse==landUse;
   });
@@ -4766,19 +4772,25 @@ return data;
   */
 function EconomicsGraphic4() {
   var instance;
-  var options = ["Conventional Corn","Action - Cost Type","Machinery"];
+  var options;
   var displaydata;
   var econdata;
+  var year;
   function init() {
+    year=1;
     econdata=economics.data4;
+    firstNotEmptyElement=econdata[year].find(e=>e!=null);
+    options = [firstNotEmptyElement.landUse,"Action - Cost Type",firstNotEmptyElement['Action - Cost Type'][0]];
+    // econdata=econdata[year];
     var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4svg');
     var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
     window = document.getElementById('resultsFrame');
+    let  doc =document.getElementById('resultsFrame').contentWindow.document;
     var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
     '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
 
     // scales
-    var margin = {top: 40, right: 10, bottom: 60, left: 50};
+    var margin = {top: 40, right: 10, bottom: 60, left: 80};
     let windowWidth=window.innerWidth;
     var width = windowWidth *0.8- margin.left - margin.right;
     var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
@@ -4796,7 +4808,8 @@ function EconomicsGraphic4() {
      */
     var drawBarsfunction=function(){
 
-      displaydata=econGraphic4DisplayData(options[0],options[1],options[2]);
+      displaydata=econGraphic4DisplayData(options[0],options[1],options[2],year);
+
         //scale
         var xScale = d3.scaleBand()
         	.domain(displaydata.map(function(d){ return d.costname;}))
@@ -4813,10 +4826,10 @@ function EconomicsGraphic4() {
         	.data(displaydata)
         	.enter().append('rect')
         	.attr('x', function(d, i){
-            return xScale(d.costname)+25})
+            return xScale(d.costname)+10})
         	.attr('y', function(d){
             return yScale(d.value)})
-        	.attr('width', xScale.bandwidth() - margin.left)
+        	.attr('width', xScale.bandwidth()-20)
         	.attr('height', function(d){
             return height - margin.bottom - yScale(d.value)})
     			.attr('fill', function(d,i){
@@ -4899,8 +4912,6 @@ function EconomicsGraphic4() {
          * display the land use, action,time cost type
          */
         var addOptions=function(){
-          let  doc =document.getElementById('resultsFrame').contentWindow.document;
-
           // selection dropdown menu for cost type
           var selectedType=function(costType,option,name){
             optionCLick(costType,option);
@@ -4909,54 +4920,7 @@ function EconomicsGraphic4() {
             doc.getElementById(name).style.display='block';
           }
 
-          //create Action, time cost type list
-          function createCostOption(){
-            costContainer=doc.getElementById('econGraphic4CostOption');
-            var costTypeList=econdata.filter(function(item){
-              return item.landUse==options[0];
-            });
-            costTypeListAction=costTypeList[0]['Action - Cost Type'];
-            costTypeContainer=doc.getElementById("econGraphic4ActionType");
-            costTypeContainer.innerHTML="";
-            costTypeListAction.forEach(d=>{
-              input=createInputbox('div',d,'input','econ4costType',d,2);
-              costTypeContainer.appendChild(input);
-            });
-            costContainer.append(costTypeContainer);
-
-            costTypeListTime=costTypeList[0]['Time - Cost Type'];
-            costTypeContainer=doc.getElementById("econGraphic4TimeType");
-            costTypeContainer.innerHTML="";
-            costTypeListTime.forEach(d=>{
-              input=createInputbox('div',d,'input','econ4costType',d,2);
-              costTypeContainer.appendChild(input);
-            });
-            costContainer.append(costTypeContainer);
-          }
-
-          //land use input radio type
-          container=document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4LandUses');
-          container.innerHTML='';
-          cell=document.createElement('div');
-          cell.innerHTML='Land Use';
-          cell.className='graphic4landuse';
-          container.append(cell);
-          econdata.map(d=>d.landUse).forEach((d)=>{
-            cell=document.createElement('div');
-            cell.innerHTML=d;
-            cell.className="graphic4option";
-            inputbox=document.createElement('input');
-            inputbox.name="landuseoption";
-            if(d==options[0]){
-              inputbox.checked=true;
-            }
-            inputbox.type='radio';
-            inputbox.style.float='right';
-            inputbox.onclick=function(event){optionCLick(d,0);createCostOption()};
-            cell.appendChild(inputbox);
-            container.append(cell);
-          });
-
+          landuseOption();
           //option for action, time type selection
           costSelector=doc.getElementById('costSelector');
           costSelector.innerHTML="";
@@ -4977,6 +4941,79 @@ function EconomicsGraphic4() {
           createCostOption();
 
     }
+    function landuseOption(){
+      //land use input radio type
+      container=document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4LandUses');
+      container.innerHTML='';
+      cell=document.createElement('div');
+      cell.innerHTML='Land Use';
+      cell.className='graphic4landuse';
+      container.append(cell);
+      econdata[year].map(d=>d.landUse).forEach((d)=>{
+        cell=document.createElement('div');
+        cell.innerHTML=d;
+        cell.className="graphic4option";
+        inputbox=document.createElement('input');
+        inputbox.name="landuseoption";
+        if(d==options[0]){
+          inputbox.checked=true;
+        }
+        inputbox.type='radio';
+        inputbox.style.float='right';
+        inputbox.onclick=function(event){optionCLick(d,0);createCostOption()};
+        cell.appendChild(inputbox);
+        container.append(cell);
+      });
+    }
+    //create Action, time cost type list
+    function createCostOption(){
+      costContainer=doc.getElementById('econGraphic4CostOption');
+
+      var costTypeList=econdata[year].filter(function(item){
+        return item.landUse==options[0];
+      });
+      costTypeListAction=costTypeList[0]['Action - Cost Type'];
+      costTypeContainer=doc.getElementById("econGraphic4ActionType");
+      costTypeContainer.innerHTML="";
+      costTypeListAction.forEach(d=>{
+
+        input=createInputbox('div',d,'input','econ4ActioncostType',d,2);
+        costTypeContainer.appendChild(input);
+      });
+      costContainer.append(costTypeContainer);
+
+      costTypeListTime=costTypeList[0]['Time - Cost Type'];
+      costTypeContainer=doc.getElementById("econGraphic4TimeType");
+      costTypeContainer.innerHTML="";
+      costTypeListTime.forEach(d=>{
+        input=createInputbox('div',d,'input','econ4TimecostType',d,2);
+        costTypeContainer.appendChild(input);
+      });
+      costContainer.append(costTypeContainer);
+    }
+    function yearOption(){
+      container=doc.getElementById('econGraphic4Year');
+      container.innerHTML="";
+      cell=document.createElement('div');
+      cell.innerHTML="Year";
+      cell.className="graphic4landuse";
+      container.appendChild(cell);
+      for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
+        cell=document.createElement('div');
+        cell.innerHTML="Year "+i;
+        cell.className="grahpic5YearSelection";
+        inputbox=document.createElement('input');
+        inputbox.name="graphic4YearInputBox";
+        if(i==1){
+          inputbox.checked=true;
+        }
+        inputbox.type='radio';
+        inputbox.style.float='right';
+        inputbox.onclick=event=>yearClick(i);
+        cell.append(inputbox);
+        container.appendChild(cell);
+      }
+    }
 
     //create input box html
     function createInputbox(tag,innerhtml,inputTag,name,d,i){
@@ -4994,6 +5031,12 @@ function EconomicsGraphic4() {
       cell.appendChild(inputbox);
       return cell;
     }
+    var yearClick=function(i){
+      year=i;
+      console.log(i);
+      console.log(options);
+      landuseOption();
+    }
     //option selection
     var optionCLick=function(d,i){
       options[i]=d;
@@ -5008,6 +5051,9 @@ function EconomicsGraphic4() {
     var render = function (){
       svg.selectAll("*").remove();
       drawBarsfunction();
+      yearOption();
+      doc.getElementById("econGraphic4ActionType").style.display='block';
+      doc.getElementById("econGraphic4TimeType").style.display='none';
       addOptions();
     }
 
@@ -5024,6 +5070,422 @@ function EconomicsGraphic4() {
     }
   };
 }
+
+
+/**
+ * Grahpic 5 time of year, total labors cost, total custom hire cost, total labor hours
+ * @param  {[type]} econdata [data from economics.js]
+ * @return data
+ */
+function graphic5DisplayInfo(econdata){
+  var data=[];
+  var twiceAMonth=["Early Jan.","Late Jan.","Early Feb.","Late Feb.",
+                  "Early Mar.","Late Mar.","Early Apr.","Late Apr.",
+                  "Early May","Late May","Early Jun.","Late Jun.",
+                  "Early Jul.","Late Jul.","Early Aug.","Late Aug.",
+                  "Early Sept.","Late Sept.","Early Oct.","Late Oct.",
+                  "Early Nov.","Late Nov.","Early Dec.","Late Dec."];
+  for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+  var month=0;
+  data[i]=[];
+  econdata[i].forEach(landuse=>{
+    landuse['array'].forEach(d=>{
+      if(data[i].some(e=>e.time_of_year===d['Time of Year'])){
+        objIndex = data[i].findIndex((obj => obj.time_of_year ===d['Time of Year']));
+        if(d['# Labor Hours']!=""){
+          data[i][objIndex]["Total Labor Hours"]+=parseFloat(d['# Labor Hours']);
+        }
+        if(d['Action - Cost Type']=='Custom'){
+          data[i][objIndex]["Total Custom Hire Cost"]+=parseFloat(d['Value']);
+        }
+        data[i][objIndex]["Total Labor Cost"]+=parseFloat(d['Value']);
+      }else{
+        var totalCustomHireCost=0;
+        if(d['Action - Cost Type']=='Custom'){
+          totalCustomHireCost=parseFloat(d['Value']);
+        }
+        data[i].push({time_of_year:d['Time of Year'],twiceAMonth:twiceAMonth[month++],
+        "Total Labor Hours":parseFloat(d['# Labor Hours']),"Total Labor Cost":parseFloat(d['Value']),"Total Custom Hire Cost":totalCustomHireCost})
+      }
+    })
+  });
+  data[i]=data[i].filter(function(d){
+    return d.time_of_year>0;
+  });
+}
+  return data;
+}
+
+/**
+ * economics modules graphic 5
+ * y axis- value -total labor cost and total custom labor cost range
+ *       - hours - total labor Hours range
+ * x axis- twice a month with three cluster
+ */
+function EconomicsGraphic5(){
+  var instance;
+  var econdata;
+  var displaydata;
+  var displaykey=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
+  var keys=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
+  var legendText=["Total Labor Hours","Total Labor Cost","Total Custom Hire Cost"];
+  //var lineSelection=[""]
+  var lineSelectionCheckbox=[true,true,true];
+  var barSelectionCheckbox=[true,true,true];
+  var selectOption=1;
+
+  /**
+   * initialize the svg and draw bar and line
+   */
+  function init(){
+    econdata=economics.data5;
+    var econBody= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5svg');
+    var colors = d3.scaleOrdinal().range(["#3182bd", '#e6550d','#31a354']);
+    var lineColor=["#3182bd", '#e6550d','#31a354'];
+    var lineColorScale=d3.scaleOrdinal().range(lineColor);
+    var lineStrokeDashArray=[[0],[15],[1,7]];
+    var lineStrokeDashArrayScale=d3.scaleOrdinal().range(lineStrokeDashArray);
+
+
+    //scale
+    var margin={top:60,right:10,bottom:60,left:80};
+    let windowWidth=window.innerWidth;
+    var width = windowWidth *0.84- margin.left - margin.right;
+    var height =1800*.45 - margin.top - margin.bottom; //give or take the golden ratio
+    var rectWidth = 100;
+
+    //svg
+    var svg = d3.select(econBody);
+    svg
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height+30)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    /**
+     * function draws bar on the chart
+     */
+     var drawBarsfunction=function(){
+         displaydata=graphic5DisplayInfo(econdata);
+         displaydata=displaydata[selectOption];
+
+         //scale
+         let x0=d3.scaleBand()
+         .domain(displaydata.map(d=>d.twiceAMonth))
+         .range([margin.left,width-margin.right])
+         .padding(.1);
+
+         let x1=d3.scaleBand()
+         .domain(keys)
+         .rangeRound([0,x0.bandwidth()])
+         .padding(.05);
+
+         let yleft=d3.scaleLinear()
+         .domain([0, d3.max(displaydata, d => d3.max(keys, key => d[key]))])
+         .rangeRound([height-margin.bottom,margin.top]);
+
+         let yright=d3.scaleLinear()
+         .domain([0,d3.max(displaydata,d=>d[keys[0]])])
+         .rangeRound([height-margin.bottom,margin.top]);
+
+         //tooltip hover effect
+         var tooltip=d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph5tt"));
+
+         //draw bars (three cluster)
+         svg.append('g')
+          .selectAll('g')
+          .data(displaydata)
+          .enter()
+          .append('g')
+          .attr('transform', d => 'translate(' + x0(d.twiceAMonth) + ',0)')
+          .selectAll('rect')
+          .data(d=>displaykey.map(key=>{
+            return {key:key, value:d[key]}
+          }))
+          .enter().append('rect')
+          .attr('x',d=>x1(d.key))
+          .attr('y',d=>{
+            if(d.key=="Total Labor Hours"){
+              return yright(d.value);
+            }
+            return yleft(d.value);
+          })
+          .attr('width', x1.bandwidth())
+          .attr('height', d =>{
+            if(d.key=="Total Labor Hours"){
+              return yright(0)-yright(d.value);
+            }
+            return yleft(0) - yleft(d.value);
+          })
+          .attr('fill',d=>colors(d.key))
+          .on("mouseover",function(d){
+            tooltip.style('visibility','visible');
+            tooltip.select("#econGraphic5Name").text(d.key);
+            tooltip.select("#econGraphic5Value").text(d.value.toFixed(2));
+          })
+          .on("mouseout",function () {
+              tooltip.style('visibility','hidden');
+          })
+          .on("mousemove",function(){
+            tooltip.style('left',(d3.event.pageX)+"px")
+                    .style('top',(d3.event.pageY)+"px")
+          });
+
+        //total labor hours line
+        for(let i=0;i<keys.length;i++){
+          if(lineSelectionCheckbox[i]){
+           var lineHours=d3.line()
+             .x(d=>x0(d.twiceAMonth)+x1(keys[i])+6)
+             .y(d=>{
+               return (keys[i]=="Total Labor Hours")?yright(d[keys[i]]):yleft(d[keys[i]]);
+             })
+             .curve(d3.curveMonotoneX);
+
+           svg.append('path')
+             .attr("class","lineHours")
+             .attr("d",lineHours(displaydata))
+             .attr("stroke", lineColor[i])
+             .attr("stroke-width", 3)
+             .attr("fill", "none")
+             .style("stroke-dasharray", lineStrokeDashArray[i])
+             .attr("stroke-linecap","round");
+         }
+        }
+
+        //x and y axis
+       var xAxis = d3.axisBottom()
+         .scale(x0);
+       var yAxisLeft = d3.axisLeft(yleft);
+       var yAxisRight=d3.axisRight(yright);
+         //cost name and scale x axis
+          svg.append('g')
+            	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
+            	.call(xAxis);
+          svg.selectAll('g.tick')
+              .selectAll('text')
+              .attr('fill','purple')
+              .attr('font-weight','bold')
+              .attr('font-size','10px')
+              .attr("transform", function(d) {
+                return "rotate(-35) "
+            })
+            .attr("text-anchor", "end");
+
+
+          //scale value on y axis
+          svg.append('g')
+            	.attr('transform', 'translate(' + margin.left + ',0)')
+            	.call(yAxisLeft);
+          svg.append('g')
+            .attr('transform','translate(' +width + ',0)')
+            .attr('class','yAxisRight')
+            .call(yAxisRight);
+
+          //text on top, bottom, x axis, y axis
+           svg.append("text")
+              .attr("transform",
+                "translate(" + (width/2) + " ," +
+                  (height) + ")")
+              .style("text-anchor", "left")
+              .style("font-weight", "bold")
+              .attr("font-size","1.1vmax")
+              .text("Time");
+          svg.append("text")
+            .attr("transform",
+              "translate(" + (width/2-50) + " ," +
+                (25) + ")")
+            .style("text-anchor", "left")
+            .style("font-weight", "bold")
+            .style("font-size", "1.5vmax")
+            .text("Labor Demand Over Calendar Year");
+          svg.append("text")
+             .attr("transform", "rotate(-90)")
+             .attr("y", 0)
+             .attr("x", 0 - (height / 2))
+             .attr("dy", "1em")
+             .style("text-anchor", "middle")
+             .attr("font-size","1.1vmax")
+             .attr("font-weight","bold")
+             .text("Cost ($)");
+           svg.append("text")
+              .attr("transform", "rotate(-90)")
+              .attr("y", width+margin.right+35)
+              .attr("x", 0 - (height / 2))
+              .attr("dy", "1em")
+              .style("text-anchor", "middle")
+              .attr("font-size","1.1vmax")
+              .attr("font-weight","bold")
+              .text("Time (Hours)");
+     }
+     /**
+      * draw legend on svg
+      */
+     var drawLegend=function(){
+         legend = svg.append("g")
+              .attr("transform", "translate(" +[width-50,margin.top]+")")
+              .attr("text-anchor", "end")
+              .attr("font-family", "sans-serif")
+              .attr("font-size", 15)
+              .selectAll("g")
+              .data(legendText)
+              .enter().append("g")
+              .attr("transform", function(d, i) {return "translate(0," + (20 * i) + ")";});
+        legend.append('rect')
+          .attr("x",20)
+          .attr("width",19)
+          .attr("height",19)
+          .attr("fill",colors);
+
+        legend.append("text")
+          .attr("x",18)
+          .attr("y",9.5)
+          .attr("dy","0.35em")
+          .text(d=>d);
+
+          linelegend=svg.append("g")
+              .attr("transform", "translate(" +[width-50,margin.top+60]+")")
+              .attr("text-anchor", "end")
+              .attr("font-family", "sans-serif")
+              .attr("font-size", 15)
+              .selectAll("g")
+              .data(legendText)
+              .enter().append("g")
+              .attr("transform", function(d, i) {return "translate(" + [0,20*i] + ")";});
+
+        linelegend.append("line")//making a line for legend
+          .attr("x1", 20)
+          .attr("x2",45)
+          .attr("y1", 5)
+          .attr("y2", 15)
+          .style("stroke-dasharray",lineStrokeDashArrayScale)//dashed array for line
+          .style("stroke",lineColorScale)
+          .style("stroke-width",3)
+          .attr("stroke-linecap","round");
+
+          linelegend.append("text")
+            .attr("x",18)
+            .attr("y",9.5)
+            .attr("dy","0.35em")
+            .text(d=>d+" Line");
+
+     }
+     /**
+      * option year and line selection
+      */
+     var addOptions=function(){
+       //year
+       let doc=document.getElementById('resultsFrame').contentWindow.document;
+       container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Year');
+       container.innerHTML="";
+       cell=document.createElement('div');
+       cell.innerHTML='Year';
+       cell.className='graphic5Year';
+       container.append(cell);
+       for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
+         cell=document.createElement('div');
+         cell.innerHTML="Year "+i;
+         cell.className="graphic5YearSelection";
+         inputbox=document.createElement('input');
+         inputbox.name="yearOption";
+         if(i==1){
+           inputbox.checked=true;
+         }
+         inputbox.type='radio';
+         inputbox.style.float='right';
+         inputbox.onclick=event=>optionYearClick(i);
+         cell.append(inputbox);
+         container.append(cell);
+       }
+       //line selection
+       container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Line');
+       container.innerHTML="";
+       cell=document.createElement('div');
+       cell.innerHTML='Line Selection';
+       cell.className='graphic5LineSelection';
+       container.append(cell);
+       keys.map((k,i)=>{
+         cell=document.createElement('div');
+         cell.innerHTML=k+" Line";
+         cell.className="graphic5lineOption";
+         checkBox=document.createElement('input');
+         checkBox.type='checkbox';
+         checkBox.style.float='right';
+         checkBox.onclick= event=> lineSelection(i);
+         checkBox.checked=true;
+         cell.appendChild(checkBox);
+         container.appendChild(cell);
+       });
+
+       //bar selection
+        container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Bar');
+        container.innerHTML="";
+        cell=document.createElement('div');
+        cell.innerHTML='Bar Selection';
+        cell.className='graphic5LineSelection';
+        container.append(cell);
+        keys.map((k,i)=>{
+          cell=document.createElement('div');
+          cell.innerHTML=k+" Bar";
+          cell.className="graphic5lineOption"
+          checkBox=document.createElement('input');
+          checkBox.type='checkbox';
+          checkBox.style.float='right';
+          checkBox.checked=true;
+          checkBox.onclick= event=> barSelection(i);
+          cell.appendChild(checkBox);
+          container.appendChild(cell);
+        });
+     }
+     /**
+      * switching year
+      * @param  {[type]} i [index]
+      */
+     var optionYearClick = (i) => {
+       selectOption=i;
+       rerender();
+     }
+     var barSelection=(i)=>{
+       barSelectionCheckbox[i]=!barSelectionCheckbox[i];
+       if( !barSelectionCheckbox[i]){
+         displaykey[i]=""
+       }else{
+         displaykey[i]=keys[i];
+       }
+       rerender();
+     }
+     /**
+      * line selection
+      * @param  {[type]} i [index]
+      */
+     var lineSelection=(i)=>{
+       lineSelectionCheckbox[i]=!lineSelectionCheckbox[i];
+       rerender();
+     }
+    var render=function() {
+      svg.selectAll("*").remove();
+      drawBarsfunction();
+      drawLegend();
+      addOptions();
+    }
+    var rerender=function(){
+      svg.selectAll("*").remove();
+      drawBarsfunction();
+      drawLegend();
+    }
+    return{
+      render:render,
+    };
+  }
+  return{
+    getInstance:function(){
+      if(!instance){
+        instance=init();
+      }
+      return instance;
+    }
+  };
+}
+// objIndex = data.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
+// data[objIndex].value+=parseFloat(econdata[i].Value);
 
 createMockDataGraphic2 = (year, currentSelection) =>{
 }
