@@ -143,7 +143,13 @@
       parent.optionsString=tempString;
       if(tempString.includes('paint'))
       {
-        parent.saveAndRandomize();
+        try {
+          parent.saveAndRandomize();
+        }
+        catch(error){
+          alert(error.message);
+          return;
+        }
       }
     } //end if
     //hide the options frame from the top frame (index.html)
