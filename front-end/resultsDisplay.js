@@ -4052,9 +4052,9 @@ d3.selection.prototype.moveToBack = function() {
 
 function createMockDataGraphic1(){
   var econData = economics.data;
-  var data = econData.map
+  var dataEcon1 = econData.map
   tempData = [];
-  data = [];
+  dataEcon1 = [];
   for(var i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
   tempData[i] = econData[i].map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
@@ -4068,12 +4068,12 @@ function createMockDataGraphic1(){
       d.Revenue = el.cost * (Math.random()*-2);
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
       d.Loss = Math.min(d.Revenue + d.Cost, 0);
-      data.push(d);
+      dataEcon1.push(d);
 
     });
   }
 
-  return data;
+  return dataEcon1;
 
 }
 
@@ -4114,7 +4114,7 @@ function EconomicsGraphic1() {
   var formatData = () => { //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
     console.log(this);
     tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
-    data = tempData.filter(el => {
+    data1 = tempData.filter(el => {
       if(this.options.indexOf(el.landUse.replace(/\s/g,'')) > -1) return false;
       if(this.options.indexOf(el.year) > -1) return false;
       if(this.options.indexOf('Cost') > -1) el.Cost = 0;
@@ -4124,7 +4124,7 @@ function EconomicsGraphic1() {
       return el != null;
     });
 
-    return data;
+    return data1;
   }
 
   var drawBars = () => {
@@ -4755,16 +4755,16 @@ function econGraphic4DisplayData(landUse,costType,cost,year){
   econdata=econdata[0].array.filter(function(item){
     return item[costType]==cost;
   });
-  data=[];
+  data4=[];
   for (var i = 0; i < econdata.length; i++) {
-    if(data.some(e=>e.costname===econdata[i]['Cost Name'])){
-      objIndex = data.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
-      data[objIndex].value+=parseFloat(econdata[i].Value);
+    if(data4.some(e=>e.costname===econdata[i]['Cost Name'])){
+      objIndex = data4.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
+      data4[objIndex].value+=parseFloat(econdata[i].Value);
     }else{
-      data.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
+      data4.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
     }
   }
-return data;
+return data4;
  }
  /**
   * Econ Module Graphic 4 render and information
