@@ -6412,7 +6412,8 @@ function uploadJSON(reader) {
 } // uploadJSON()
 
 /**
- *
+ * Reads a user selected .csv file and loads pewi map from the file.
+ * This is called when the 'Upload' button on pewi screen is pressed and a file is selected.
  *
  * @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
  */
@@ -6482,28 +6483,34 @@ function uploadCSV(reader) {
     //Clears data so the river isnt redrawn when new files are uploaded
     initData = [];
 
+    /* ** CHANGE COLUMN VALUES HERE - If Adding new columns to data.csv file, to update the read-in process **
+          (Since the column values are hard coded in the current system, you'll need to do this if you add new columns anywhere before the last column in data.csv )
+          NOTE: MUST DO THE SAME IN THREE OTHER PLACES -
+          1. function propogateBoard() in mainBE.js
+          2. function Tile() in helperObjects.js
+          3. function overlayBoard() in mainBE.js
+    */
     //updating the precip levels from the values in the uploaded file
-    // Changes to be made to add two columns - contour area, buffer area
-    boardData[currentBoard].precipitation[0] = data[29]; //31
-    boardData[currentBoard].precipitation[1] = data[30]; //32
-    boardData[currentBoard].precipitation[2] = data[31]; //33
-    boardData[currentBoard].precipitation[3] = data[32]; //34
+    boardData[currentBoard].precipitation[0] = data[31];
+    boardData[currentBoard].precipitation[1] = data[32];
+    boardData[currentBoard].precipitation[2] = data[33];
+    boardData[currentBoard].precipitation[3] = data[34];
 
-    boardData[currentBoard].precipitationIndex[0] = getPrecipOptionsValue(data[29]);
-    boardData[currentBoard].precipitationIndex[1] = getPrecipOptionsValue(data[30]);
-    boardData[currentBoard].precipitationIndex[2] = getPrecipOptionsValue(data[31]);
-    boardData[currentBoard].precipitationIndex[3] = getPrecipOptionsValue(data[32]);
+    boardData[currentBoard].precipitationIndex[0] = getPrecipOptionsValue(data[31]);
+    boardData[currentBoard].precipitationIndex[1] = getPrecipOptionsValue(data[32]);
+    boardData[currentBoard].precipitationIndex[2] = getPrecipOptionsValue(data[33]);
+    boardData[currentBoard].precipitationIndex[3] = getPrecipOptionsValue(data[34]);
 
     //load options from the csv
     //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes
     //the options page and shows the page is refreshed on the screen
-    if (headers.length == 33) {
+    if (headers.length == 35) {
       resetOptionsPage();
       toggleVisibility();
     }
     //else if the file has options, then it takes the options and places it in the parameter div of the html and reloads it.
     else {
-      var xys = data[33].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
+      var xys = data[35].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
       window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
       //make sure the locked land uses aren't seen on the side tool tab or on the map
       toggleVisibility();
