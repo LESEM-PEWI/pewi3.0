@@ -110,8 +110,7 @@ function loadLevel(level) {
     case 0:
       levelGlobal = 0;
       multiplayerExit();
-      //initWorkspace('./data.csv');
-      initWorkspace('./data2.csv');
+      initWorkspace('./data.csv');
       // document.getElementById('parameters').innerHTML = "";
       document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
                                                         "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
