@@ -384,8 +384,8 @@ function toggleChildElements(idOfHeader) {
   //the sub div is named with the parent id and 'sub' appended
   var childString = idOfHeader + "sub";
 
-  heightString = elementHeight[idOfHeader] + "vw";
-
+  //heightString = elementHeight[idOfHeader] + "vw";
+  heightString = "auto";
   //if it is an unopened group Header, open it
   if (document.getElementById(idOfHeader).className == "groupHeader") {
 

@@ -363,7 +363,6 @@
     var allCheckboxes = $(':checkbox');
     for(var i = 0; i < allCheckboxes.length; ++i){
       // All the YIELD progress bars should be checked.
-      console.log(i, allCheckboxes[i])
       if(i >= 31 && i <= 39 || i == 45){
         $(':checkbox')[i].checked = true;
       }

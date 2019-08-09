@@ -137,8 +137,9 @@ body {
   /*font-size: 80%;*/
   font-size: 3.3vmin;
   font-weight: bold;
-  height: 2.5vw;
+  /* height: 2.5vw; */
   padding-top: 0.2vw;
+  height: auto;
   /*height: 5%;*/
   /*padding-top: .8%;*/
   /*
