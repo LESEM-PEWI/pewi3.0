@@ -1306,7 +1306,7 @@ function drawPrecipitationInformationChart() {
     container.select('.yearLabel').html(parent.data[year].label);
     container.select('.precipValue').html(parent.data[year].value + " inches");
     container.select('.precipType').html(parent.data[year].adj);
-
+    
     var img = " ";
     switch (parent.data[year].adj) {
       case "Dry":
@@ -4410,7 +4410,7 @@ function stackMax(layers) {
 
 formatDataGraphic3 = () => {
   econData = economics.data3;
-  data = []; //{year, cost type, vallue}
+  econ3data = []; //{year, cost type, vallue}
   actions = new Array();
   times = new Array();
   econData.forEach((year, i) => {
@@ -4432,9 +4432,9 @@ formatDataGraphic3 = () => {
     });
   });
 
-  data.push(actions);
-  data.push(times);
-  return data;
+  econ3data.push(actions);
+  econ3data.push(times);
+  return econ3data;
 }
 
 function EconomicsGraphic3() {
@@ -4748,7 +4748,7 @@ function exists(arr, search) {
 
 function econGraphic4DisplayData(landUse,costType,cost,year){
   var econdata=economics.data4[year];
-  
+
   econdata=econdata.filter(function(item){
     return item.landUse==landUse;
   });
