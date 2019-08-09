@@ -3539,7 +3539,12 @@ function Tile(tileArray, board) {
 
   //default settings for land use setup
   //years 4 and 5 are land use types used for calculations of minumum and maximum values
-  // changing values - for issue 576
+  /* ** CHANGE COLUMN VALUES HERE - If Adding new columns to data.csv file (the core file from which PEWI loads in default case) **
+        (Since the column values are hard coded in the current system, you'll need to do this if you add new columns anywhere before the last column in data.csv )
+        NOTE: MUST DO THE SAME IN TWO OTHER PLACES -
+        1. function propogateBoard() in mainBE.js
+        2. function overlayBoard() in mainBE.js
+  */
   this.landType = [this.baseLandUseType, Number(tileArray[27]), Number(tileArray[28]), Number(tileArray[29]), LandUseType.prairie, LandUseType.conventionalSoybean];
 
   //results holding variables

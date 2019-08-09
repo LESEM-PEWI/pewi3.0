@@ -6534,7 +6534,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
     //To save options in the file, changing the options string so that it doesn't have \n because csv file will read it differntly
     var tempOptions = optionsString.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
     optionsString = tempOptions;
-    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
+    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,ContourArea,BufferArea,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
     if (optionsString !== "") {
       string += ",OptionsSelected";
     }
@@ -6605,6 +6605,36 @@ function writeFileToDownloadString(mapPlayerNumber) {
           boardData[currentBoard].map[i].strategicWetland + "," +
           boardData[currentBoard].map[i].riverStreams + ",";
       }
+
+      // Filling the Contour Area column
+      var topo = boardData[currentBoard].map[i].topography;
+      if (topo == 2) {
+        string += 0.0546 + ",";
+      }
+      else if (topo == 3) {
+        string += 0.0658 + ",";
+      }
+      else if (topo == 4) {
+        string += 0.082 + ",";
+      }
+      else if (topo == 5) {
+        string += 0.0938 + ",";
+      }
+      else {
+        string += 0 + ",";
+      }
+
+      // Filling the Buffer Area column
+      if (boardData[currentBoard].map[i].streamNetwork == 0) {
+        string += 0 + ",";
+      }
+      else if (boardData[currentBoard].map[i].streamNetwork == 1) {
+        string += 0.525 + ",";
+      }
+      else {
+        string += "NA" + ",";
+      }
+
 
       if (mapPlayerNumber > 0) {
         string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year1
