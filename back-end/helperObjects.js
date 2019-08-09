@@ -1813,7 +1813,7 @@ function Printer() {
 
           case 'resultsTable1':
           case 'resultsTable2':
-          case 'resultsTable4':
+          case 'resultsTable3':
           case 'resultsLanduse':
           case 'resultsEcosystem':
           case 'resultsPrecip':
@@ -1908,7 +1908,7 @@ function Printer() {
 
           case 'resultsTable1':
           case 'resultsTable2':
-          case 'resultsTable4':
+          case 'resultsTable3':
           // --resultsTables--
 
             // check if need to add page

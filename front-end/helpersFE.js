@@ -2407,7 +2407,7 @@ function executePrintOptions(isDownload) {
     // results
     resultsTable1: false,
     resultsTable2: false,
-    resultsTable4: false,
+    resultsTable3: false,
     resultsLanduse: false,
     resultsEcosystem: false,
     resultsPrecip: false,
