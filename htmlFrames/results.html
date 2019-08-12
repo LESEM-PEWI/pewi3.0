@@ -59,7 +59,7 @@ Cleaned and Prepared - August 2016
     <div id="tab3" class="tab" onclick="toggleToTab(3);"><img src="./imgs/numbersIcon.png" />
       <span class="tab2text">Economics</span>
     </div>
-    <div id="tab4" class="tab" onclick="toggleToTab(4);placeTotalsOnBars();"><img src="./imgs/moneybag.png" />
+    <div id="tab4" class="tab" onclick="toggleToTab(4);"><img src="./imgs/moneybag.png" />
       <span class="tab2text">Econ</span>
     </div>
 
@@ -142,9 +142,9 @@ Cleaned and Prepared - August 2016
         <div id="yearCopyButton">
           <h4>Year Select:</h4>
           <select id="yearSelect" onChange="changeYear();">
-              <option value=0>Year 1</option>
-              <option value=1>Year 2</option>
-              <option value=2>Year 3</option>
+              <option value=1>Year 1</option>
+              <option value=2>Year 2</option>
+              <option value=3>Year 3</option>
           </select>
         </div>
       </div>
@@ -157,14 +157,14 @@ Cleaned and Prepared - August 2016
             <ul class="inner">
             <li>
             <a href="#" class="toggle" id="plus">Conventional Corn after Soybean</a>
-            <ul class = "inner" id="convCornASoy">
+            <ul class = "inner" id="convCorn">
 
             </ul>
            </li>
 
             <li>
              <a href="#" class="toggle" id="plus">Conventional Corn after Corn</a>
-             <ul class = "inner" id="convCornACorn">
+             <ul class = "inner" id="convCorn2">
 
              </ul>
            </li>
@@ -176,13 +176,13 @@ Cleaned and Prepared - August 2016
            <ul class="inner">
              <li>
                <a href="#" class="toggle" id="plus">Conservation Corn after Soybean</a>
-               <ul class = "inner" id="consCornASoy">
+               <ul class = "inner" id="consCorn">
                </ul>
              </li>
 
              <li>
                <a href="#" class="toggle" id="plus">Conservation Corn after Corn</a>
-               <ul class = "inner" id="consCornACorn">
+               <ul class = "inner" id="consCorn2">
                </ul>
              </li>
            </ul>
@@ -190,24 +190,24 @@ Cleaned and Prepared - August 2016
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Conventional Soybean</a>
-           <ul class="inner" id="convSoybean">
+           <ul class="inner" id="convSoy">
            </ul>
          </li>
          <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Conservation Soybean</a>
-           <ul class="inner" id="consSoybean">
+           <ul class="inner" id="consSoy">
            </ul>
          </li>
 
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Alfalfa</a>
-           <ul class="inner" id="alfalfa">
+           <ul class="inner" id="alf">
            </ul>
          </li>
          <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Permanent Pasture</a>
-           <ul class="inner" id="permPast">
+           <ul class="inner" id="permPas">
            </ul>
          </li>
 
@@ -233,21 +233,21 @@ Cleaned and Prepared - August 2016
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Conservation Forest</a>
-           <ul class="inner" id="consForest">
+           <ul class="inner" id="consFor">
            </ul>
          </li>
 
 
          <li>
           <a class="toggle" href="javascript:void(0);" id="plus">Conventional Forest</a>
-           <ul class="inner" id="convForest">
+           <ul class="inner" id="convFor">
            </ul>
          </li>
 
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Switchgrass</a>
-           <ul class="inner" id="switchGrass">
+           <ul class="inner" id="switchG">
            </ul>
          </li>
 
@@ -271,26 +271,26 @@ Cleaned and Prepared - August 2016
            <ul class="inner">
                <li>
                  <a href="#" class="toggle" id="plus">Grapes</a>
-                 <ul class = "inner" id="grapes">
+                 <ul class = "inner" id="mixedFruitsVGrapes">
              </ul>
              </li>
 
 
              <li>
                <a href="#" class="toggle" id="plus">Green Beans</a>
-               <ul class = "inner" id="greenBeans">
+               <ul class = "inner" id="mixedFruitsVGreenB">
 
                </ul>
              </li>
 
            <li>
              <a href="#" class="toggle" id="plus">Squash</a>
-             <ul class = "inner" id="squash">
+             <ul class = "inner" id="mixedFruitsVSquash">
              </ul>
            </li>
          <li>
            <a href="#" class="toggle" id="plus">Strawberries</a>
-           <ul class = "inner" id="strawberries">
+           <ul class = "inner" id="mixedFruitsVStrawberries">
            </ul>
          </li>
        </ul>

@@ -82,19 +82,21 @@ var Economics = function () {
     this.calcSubcrops();
   }
   this.calcSubcrops = function(){
-    this.dataSubcrop = {};
-    this.rawData.forEach(dataPoint => {
-      if(dataPoint['Sub Crop']){
-        if(!this.dataSubcrop[dataPoint['Land-Use']]){
-          this.dataSubcrop[dataPoint['Land-Use']] = {};
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      this.dataSubcrop[i] = {};
+      this.mapData[i].forEach(dataPoint => {
+        if(dataPoint['Sub Crop']){
+          if(!this.dataSubcrop[i][dataPoint['Land-Use']]){
+            this.dataSubcrop[i][dataPoint['Land-Use']] = {};
+          }
+          if(!this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']]){
+            this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] = 0;
+          }
+          this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] =
+          Math.round(1000*this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] + 1000*Number.parseFloat(dataPoint['Value']))/1000
         }
-        if(!this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']]){
-          this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']] = 0;
-        }
-        this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']] =
-        Math.round(1000*this.dataSubcrop[dataPoint['Land-Use']][dataPoint['Sub Crop']] + 1000*Number.parseFloat(dataPoint['Value']))/1000
-      }
-    })
+      })
+    }
 
   }
 }
