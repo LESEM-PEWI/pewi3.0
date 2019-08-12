@@ -1306,7 +1306,7 @@ function drawPrecipitationInformationChart() {
     container.select('.yearLabel').html(parent.data[year].label);
     container.select('.precipValue').html(parent.data[year].value + " inches");
     container.select('.precipType').html(parent.data[year].adj);
-    
+
     var img = " ";
     switch (parent.data[year].adj) {
       case "Dry":
@@ -2185,13 +2185,66 @@ function generateResultsTable() {
       //keep track if we need to add the appropriate subheading lines
       switch (l) {
         case 0:
-          htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
+          //htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
+          //  //put Habitat header, in bold
+            htmlTableString += "<tr>";
+            htmlTableString += "<td><b>" + "Habitat" + "<b></td>";
+            //calculate total score for each year and place next to Habitat header
+            for(var y = 1; y <= upToYear; y++){
+              htmlTableString += "<td><b>";
+
+              var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y])/2;
+
+              htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
+
+              htmlTableString += "<b></td>";
+            }
+            htmlTableString += "<td><b>(out of 100)<b></td>";
+            //add extra spaces to fill out bar across screen
+            for(var y = 1; y <= (2*upToYear)+2; y++){
+              htmlTableString += "<td></td>";
+            }
+            break;
           break;
         case 2:
-          htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
+          //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
+          htmlTableString += "<tr>";
+          htmlTableString += "<td><b>" + "Soil Quality" + "<b></td>";
+          //calculate total score for each year and place next to Habitat header
+          for(var y = 1; y <= upToYear; y++){
+            htmlTableString += "<td><b>";
+
+            var totalScore = (Totals.carbonSequestrationScore[y]+Totals.grossErosionScore[y])/2;
+
+            htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
+
+            htmlTableString += "<b></td>";
+          }
+          htmlTableString += "<td><b>(out of 100)<b></td>";
+          //add extra spaces to fill out bar across screen
+          for(var y = 1; y <= (2*upToYear)+2; y++){
+            htmlTableString += "<td></td>";
+          }
           break;
         case 4:
-          htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
+          //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
+          htmlTableString += "<tr>";
+          htmlTableString += "<td><b>" + "Water Quality" + "<b></td>";
+          //calculate total score for each year and place next to Habitat header
+          for(var y = 1; y <= upToYear; y++){
+            htmlTableString += "<td><b>";
+
+            var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y])/3;
+
+            htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
+
+            htmlTableString += "<b></td>";
+          }
+          htmlTableString += "<td><b>(out of 100)<b></td>";
+          //add extra spaces to fill out bar across screen
+          for(var y = 1; y <= (2*upToYear)+2; y++){
+            htmlTableString += "<td></td>";
+          }
           break;
       } //end switch
 
