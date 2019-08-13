@@ -6727,7 +6727,7 @@ function uploadCSV(reader) {
       var xys = data[33].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
       window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
       //make sure the locked land uses aren't seen on the side tool tab or on the map
-      saveAndRandomize(); //This makes sure that the land use selected is one that isn't disabled. 
+      saveAndRandomize(); //This makes sure that the land use selected is one that isn't disabled.
       toggleVisibility();
     }
 
@@ -6754,7 +6754,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
   var string = "";
   if (typeof boardData[currentBoard] !== 'undefined') {
     //To save options in the file, changing the options string so that it doesn't have \n because csv file will read it differntly
-    var tempOptions = optionsString.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
+    var tempOptions = document.getElementById('parameters').innerHTML.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
     optionsString = tempOptions;
     string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
     if (optionsString !== "") {
