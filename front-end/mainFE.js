@@ -64,6 +64,18 @@ var takeScreenshot = false; // used in animationFrames
 
 //===================
 
+function checkZValue(){
+  if (camera.position.z  >= 150){
+    camera.position.set(camera.position.x, camera.position.y, 149)
+    controls.update();
+  }
+
+  if (camera.position.z <= -150){
+    camera.position.set(camera.position.x, camera.position.y, -149)
+    controls.update();
+  }
+}
+
 //Camera movements Controls for Camera2 ie second view
 function animate() {
   var hotkeys = giveHotkeys();
@@ -89,7 +101,6 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera2.rotation.y) * player.speed;
     camera2.position.x -= Math.sin(camera2.rotation.y) * player.speed;
-    console.log(camera2.position);
   }
 
   if (keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]) { // Handle S key - Back Words movements
@@ -111,7 +122,6 @@ function animate() {
     else
     camera2.position.z += Math.cos(camera2.rotation.y) * player.speed;
     camera2.position.x += Math.sin(camera2.rotation.y) * player.speed;
-    console.log(camera2.position);
   }
 
   if (keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // Handle A key - Left Side Movement
@@ -133,7 +143,7 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera2.rotation.y + Math.PI / 2) * player.speed;
     camera2.position.x -= Math.sin(camera2.rotation.y + Math.PI / 2) * player.speed;
-    console.log(camera2.position);
+    checkZValue();
   }
 
   if (keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // Handle D key - Right side Movements
@@ -155,7 +165,7 @@ function animate() {
     else
     camera2.position.z -= Math.cos(camera.rotation.y - Math.PI / 2) * player.speed;
     camera2.position.x -= Math.sin(camera.rotation.y - Math.PI / 2) * player.speed;
-    console.log(camera2.position);
+    checkZValue();
   }
 
   // Keyboard turn inputs
@@ -580,7 +590,7 @@ function loadingManager() {
 
   //DefaultLoadingManager.onProgress is a THREE.js function that tracks when items are loaded
   THREE.DefaultLoadingManager.onProgress = function(item, loaded, total) {
-
+    // console.log(" loaded " + loaded + " of " + total);
   };
 
   //DefaultLoadingManager.onload updates boolean allLoaded when all resources are loaded
@@ -950,7 +960,7 @@ function switchBoards(newBoard) {
 
   //update Results to point to correct board since currentBoard is updated
   Totals = new Results(boardData[currentBoard]);
-  generatedContourMap = generatedContourMap || new ContourMap(); //to ensure that we don't make a new map if we don't need to.
+  generatedContourMap = new ContourMap();
 
 } //end switchBoards
 
