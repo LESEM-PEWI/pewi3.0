@@ -5551,6 +5551,9 @@ function startOptions() {
   if (curTracking) {
     pushClick(0, getStamp(), 107, 0, null);
   }
+  selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
+  selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
+  document.getElementById('options').contentWindow.recordCurrentOptions();
 
   //if nothing else has precedence
   if (!modalUp) { //commented for debugging
@@ -6727,7 +6730,7 @@ function uploadCSV(reader) {
       var xys = data[33].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
       window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
       //make sure the locked land uses aren't seen on the side tool tab or on the map
-      saveAndRandomize(); //This makes sure that the land use selected is one that isn't disabled. 
+      saveAndRandomize(); //This makes sure that the land use selected is one that isn't disabled.
       toggleVisibility();
     }
 
