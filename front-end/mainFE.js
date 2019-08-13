@@ -580,7 +580,7 @@ function loadingManager() {
 
   //DefaultLoadingManager.onProgress is a THREE.js function that tracks when items are loaded
   THREE.DefaultLoadingManager.onProgress = function(item, loaded, total) {
-
+    // console.log(" loaded " + loaded + " of " + total);
   };
 
   //DefaultLoadingManager.onload updates boolean allLoaded when all resources are loaded
@@ -950,7 +950,7 @@ function switchBoards(newBoard) {
 
   //update Results to point to correct board since currentBoard is updated
   Totals = new Results(boardData[currentBoard]);
-  generatedContourMap = generatedContourMap || new ContourMap(); //to ensure that we don't make a new map if we don't need to.
+  generatedContourMap = new ContourMap();
 
 } //end switchBoards
 
