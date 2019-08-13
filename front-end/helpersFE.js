@@ -1344,7 +1344,7 @@ function changeLandTypeTile(tileId) {
         // by changing the reference on meshMaterials array, three.js will draw it on canvas automatically
 
         //wetlands are restricted within flat lands, i.e 0-2% only
-        if(selectedLandType == 14 && (Number(boardData[currentBoard].map[tileId].topography) >= 2) && !randomizing)
+        if(painter == 14 && (Number(boardData[currentBoard].map[tileId].topography) >= 2) && !randomizing)
         {
           //dont highlight
         }
@@ -1375,7 +1375,7 @@ function changeLandTypeTile(tileId) {
         }
       } else if (multiplayerAssigningModeOn) {
         meshMaterials[tileId].map = multiplayerTextureArray[painter];
-        meshOverlay[titleId].map = multiplayerTextureArray[painter];
+        meshOverlay[tileId].map = multiplayerTextureArray[painter];
         boardData[currentBoard].map[tileId].landType[currentYear] = painter;
       } // end if/else
     } // end if
@@ -1464,7 +1464,7 @@ function changeSelectedPaintTo(newPaintValue) {
         updateGlossaryPopup('To learn more about <span style="color:orange">Conventional Forest</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
         break;
       case 'paint12':
-        updateGlossaryPopup('To learn more about <span style="color:orange">Switch Grass</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        updateGlossaryPopup('To learn more about <span style="color:orange">Switchgrass</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
         break;
       case 'paint13':
         updateGlossaryPopup('To learn more about <span style="color:orange">Short Rotation Woody Bioenergy</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
@@ -2405,7 +2405,7 @@ function executePrintOptions(isDownload) {
     // results
     resultsTable1: false,
     resultsTable2: false,
-    resultsTable4: false,
+    resultsTable3: false,
     resultsLanduse: false,
     resultsEcosystem: false,
     resultsPrecip: false,
@@ -5150,12 +5150,20 @@ function saveAndRandomize() {
   if (localStorage.getItem("randAllow") == "true" && !multiplayerAssigningModeOn) {
     //getRandomInt is in back-end helperMethods
     for (var j = 0; j <= randomPainterTile.length; j++) { //Check to see if the landuse type is toggled off or not
-      if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j]) !== -1) {
+      if (document.getElementById('parameters').innerHTML.indexOf('paint' + randomPainterTile[j] + "\n") !== -1) {
         randomPainterTile.splice(j--, 1);
-        console.log(randomPainterTile);
       }
     }
-    var newDefaultLandUse = randomPainterTile[0];
+    console.log(randomPainterTile);
+    if(randomPainterTile.length === 0){
+      throw new Error('Please select at least one land use.');
+    }
+     //If the only land use selected is wetlands throw an Error
+     //This is because wetlands cannot be placed on tiles that are not suitable for wetlands
+    if(randomPainterTile == 14){
+      throw new Error('Wetlands cannot be the only selected land use. \nPlease select an additional land use.');
+    }
+    randomPainterTile[0] === 14 ? newDefaultLandUse = randomPainterTile[1]: newDefaultLandUse = randomPainterTile[0];
 
     var forNitrateCalc = Array(4);
     forNitrateCalc[0] = Array(828);
@@ -5393,10 +5401,10 @@ function showLevelDetails(value) {
       updateGlossaryPopup('To learn more about <span style="color:orange;">Grass Hay Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
     case 16:
-      //show switch grass class legend
+      //show switchgrass class legend
       document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
       document.getElementById('switchgrassDetailsList').className = "DetailsList yieldDetailsList";
-      updateGlossaryPopup('To learn more about <span style="color:orange;">Switch Grass Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange;">Switchgrass Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
     case 17:
       //show wood class legend
@@ -5541,6 +5549,9 @@ function startOptions() {
   if (curTracking) {
     pushClick(0, getStamp(), 107, 0, null);
   }
+  selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
+  selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
+  document.getElementById('options').contentWindow.recordCurrentOptions();
 
   //if nothing else has precedence
   if (!modalUp) { //commented for debugging
@@ -6717,6 +6728,7 @@ function uploadCSV(reader) {
       var xys = data[33].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
       window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
       //make sure the locked land uses aren't seen on the side tool tab or on the map
+      saveAndRandomize(); //This makes sure that the land use selected is one that isn't disabled.
       toggleVisibility();
     }
 
@@ -6743,7 +6755,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
   var string = "";
   if (typeof boardData[currentBoard] !== 'undefined') {
     //To save options in the file, changing the options string so that it doesn't have \n because csv file will read it differntly
-    var tempOptions = optionsString.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
+    var tempOptions = document.getElementById('parameters').innerHTML.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
     optionsString = tempOptions;
     string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
     if (optionsString !== "") {

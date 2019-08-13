@@ -56,7 +56,7 @@
             }
             break;
           case "statFrame":
-            if (toggledElements[i].checked) {
+            if (!toggledElements[i].checked) {
               tempString += "statsOn" + "\n";
             }
             break;
@@ -143,7 +143,13 @@
       parent.optionsString=tempString;
       if(tempString.includes('paint'))
       {
-        parent.saveAndRandomize();
+        try {
+          parent.saveAndRandomize();
+        }
+        catch(error){
+          alert(error.message);
+          return;
+        }
       }
     } //end if
     //hide the options frame from the top frame (index.html)
@@ -153,9 +159,6 @@
 
 
     savedOptions = true; //Sets the savedOption to true, this indicates that the changes were saved
-    selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
-    selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
-    recordCurrentOptions();
 
   } //end function saveCurrentOptionsState
 
@@ -186,7 +189,7 @@
           document.getElementById('year0').checked = 1;
           break;
         case "statsOn":
-          document.getElementById('statFrame').checked = 1;
+          document.getElementById('statFrame').checked = 0;
           break;
         case "skyboxOn":
           document.getElementById('skybox').checked = 1;
@@ -363,7 +366,7 @@
     var allCheckboxes = $(':checkbox');
     for(var i = 0; i < allCheckboxes.length; ++i){
       // All the YIELD progress bars should be checked.
-      if(i >= 31 && i <= 39){
+      if(i >= 31 && i <= 39 || i == 45){
         $(':checkbox')[i].checked = true;
       }
       else {
