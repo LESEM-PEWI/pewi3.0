@@ -1377,7 +1377,7 @@ function changeLandTypeTile(tileId) {
         }
       } else if (multiplayerAssigningModeOn) {
         meshMaterials[tileId].map = multiplayerTextureArray[painter];
-        meshOverlay[titleId].map = multiplayerTextureArray[painter];
+        meshOverlay[tileId].map = multiplayerTextureArray[painter];
         boardData[currentBoard].map[tileId].landType[currentYear] = painter;
       } // end if/else
     } // end if
