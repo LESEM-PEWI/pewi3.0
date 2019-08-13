@@ -1466,7 +1466,7 @@ function changeSelectedPaintTo(newPaintValue) {
         updateGlossaryPopup('To learn more about <span style="color:orange">Conventional Forest</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
         break;
       case 'paint12':
-        updateGlossaryPopup('To learn more about <span style="color:orange">Switch Grass</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        updateGlossaryPopup('To learn more about <span style="color:orange">Switchgrass</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
         break;
       case 'paint13':
         updateGlossaryPopup('To learn more about <span style="color:orange">Short Rotation Woody Bioenergy</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
@@ -5403,10 +5403,10 @@ function showLevelDetails(value) {
       updateGlossaryPopup('To learn more about <span style="color:orange;">Grass Hay Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
     case 16:
-      //show switch grass class legend
+      //show switchgrass class legend
       document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
       document.getElementById('switchgrassDetailsList').className = "DetailsList yieldDetailsList";
-      updateGlossaryPopup('To learn more about <span style="color:orange;">Switch Grass Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange;">Switchgrass Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
     case 17:
       //show wood class legend
