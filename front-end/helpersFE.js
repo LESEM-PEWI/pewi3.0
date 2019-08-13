@@ -195,7 +195,7 @@ function toggleTabTitle(value, dir) {
         document.getElementById(value).innerHTML = 'physical&nbsp;features';
         break;
       case 'yieldTabTitle':
-        document.getElementById(value).innerHTML = 'yield&nbsp;base&nbsp;rate';
+        document.getElementById(value).innerHTML = 'yield&nbsp;base&nbsp;rates';
         break;
     }
 
