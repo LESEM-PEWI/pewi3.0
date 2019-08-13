@@ -2131,63 +2131,63 @@ function redrawOverlay(highlightType){
   switch (highlightType) {
     case 'nitrate':
       selectionHighlightNumber = 1;
-      updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 42, 0, null);
       }
       break;
     case 'erosion':
       selectionHighlightNumber = 2;
-      updateIndexPopup('To learn more about <span style="color:orange;">Erosion</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Soil Quality"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange;">Erosion</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Soil Quality"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 43, 0, null);
       }
       break;
     case 'phosphorus':
       selectionHighlightNumber = 3;
-      updateIndexPopup('To learn more about <span style="color:orange;">Phosphorus</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange;">Phosphorus</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 44, 0, null);
       }
       break;
     case 'flood':
       selectionHighlightNumber = 4;
-      updateIndexPopup('This map shows the <span style="color:orange;">frequency of flooding</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the <span style="color:orange;">frequency of flooding</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 45, 0, null);
       }
       break;
     case 'drainage':
       selectionHighlightNumber = 5;
-      updateIndexPopup('This map shows the <span style="color:orange;">drainage</span> for each pixel. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the <span style="color:orange;">drainage</span> for each pixel. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 48, 0, null);
       }
       break;
     case 'wetlands':
       selectionHighlightNumber = 6;
-      updateIndexPopup('This map shows the locations for each <span style="color:orange;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the locations for each <span style="color:orange;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 46, 0, null);
       }
       break;
     case 'boundary':
       selectionHighlightNumber = 7;
-      updateIndexPopup('This map shows the <span style="color:orange;">boundaries of each subwatershed</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the <span style="color:orange;">boundaries of each subwatershed</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 47, 0, null);
       }
       break;
     case 'soil':
       selectionHighlightNumber = 8;
-      updateIndexPopup('There are <span style="color:orange;">thirteen</span> different soil classes that each have different properties. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('There are <span style="color:orange;">thirteen</span> different soil classes that each have different properties. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 49, 0, null);
       }
       break;
     case 'topo':
       selectionHighlightNumber = 9;
-      updateIndexPopup('This map shows the <span style="color:orange;">topography</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the <span style="color:orange;">topography</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 50, 0, null);
       }
@@ -2249,7 +2249,7 @@ function redrawOverlay(highlightType){
       break;
     case 'sediment':
      selectionHighlightNumber = 19;
-     updateIndexPopup('To learn more about <span style="color:orange;">Sediment Control</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+     updateGlossaryPopup('To learn more about <span style="color:orange;">Sediment Control</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
      if (curTracking) {
        pushClick(0, getStamp(), 78, 0, null);
      }
@@ -2257,7 +2257,7 @@ function redrawOverlay(highlightType){
 
     case 'carbon':
     selectionHighlightNumber = 20;
-    updateIndexPopup('To learn more about <span style="color:orange;">Carbon Sequestration</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Carbon Sequestration</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 79, 0, null);
     }
@@ -2265,7 +2265,7 @@ function redrawOverlay(highlightType){
 
     case 'gamewildlife':
     selectionHighlightNumber = 21;
-    updateIndexPopup('To learn more about <span style="color:orange;">Game Wildlife</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Game Wildlife</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 80, 0, null);
     }
@@ -2273,7 +2273,7 @@ function redrawOverlay(highlightType){
 
     case 'biodiversity':
     selectionHighlightNumber = 22;
-    updateIndexPopup('To learn more about <span style="color:orange;">Biodiversity</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Biodiversity</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 81, 0, null);
     }
@@ -2281,7 +2281,7 @@ function redrawOverlay(highlightType){
 
     case 'nitratetile':
     selectionHighlightNumber = 23;
-    updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 82, 0, null);
     }
