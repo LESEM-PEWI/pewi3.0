@@ -336,6 +336,16 @@ function displayResults() {
   document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0);
   document.getElementById('resultsFrame').contentWindow.toggleYearForEconPlotBy(0);
 
+
+  for(var i = 1; i <=3; i++){
+    if(i > boardData[currentBoard].calculatedToYear){
+      document.getElementById('resultsFrame').contentWindow.document.getElementById("yearSelect").options[i - 1].style.display = 'none';
+    }
+    else{
+      document.getElementById('resultsFrame').contentWindow.document.getElementById("yearSelect").options[i - 1].style.display = 'block';
+    }
+  }
+
   //=======DEPRECATED
   //document.getElementById('resultsFrame').contentWindow.toggleYearForESIAsterBy(0);
   //=======END DEPRECATED
@@ -2211,6 +2221,7 @@ function generateEconomicsTables() {
   'mixedFruitsVSquash': {landuse: "Mixed Fruits & Vegetables", subCrop:"Winter Squash"},
   'mixedFruitsVStrawberries': {landuse: "Mixed Fruits & Vegetables", subCrop:"Strawberries"}}
 
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('yearSelect').selectedIndex = currentYear - 1;
 
 
    //results array that holds data objects
@@ -3262,6 +3273,8 @@ function placeTotalsOnBars(year, scope){
   wetland.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('wetland'));
   mixedFaV.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('mixedFruitsV'));*/
 }
+
+
 
 function changeYear(){
   var yearVal = document.getElementById("yearSelect").value;
