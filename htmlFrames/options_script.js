@@ -159,9 +159,6 @@
 
 
     savedOptions = true; //Sets the savedOption to true, this indicates that the changes were saved
-    selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
-    selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
-    recordCurrentOptions();
 
   } //end function saveCurrentOptionsState
 

@@ -5551,6 +5551,9 @@ function startOptions() {
   if (curTracking) {
     pushClick(0, getStamp(), 107, 0, null);
   }
+  selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
+  selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
+  document.getElementById('options').contentWindow.recordCurrentOptions();
 
   //if nothing else has precedence
   if (!modalUp) { //commented for debugging
