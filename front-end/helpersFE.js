@@ -6224,6 +6224,10 @@ function transitionToYear(year) {
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year - 1] = boardData[currentBoard].map[i].landType[year];
     } // end for
+    if(overlayTemp == true){
+      overlayTemp = false;
+    }
+    mapIsHighlighted = false;
     boardData[currentBoard].updateBoard();
     refreshBoard();
     //now make the landtype of the one deleted to 1 - in this case, landtype[3] = 1
@@ -6259,6 +6263,10 @@ function transitionToYear(year) {
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year - 1] = boardData[currentBoard].map[i].landType[year];
     } //end for
+    if(overlayTemp == true){
+      overlayTemp = false;
+    }
+    mapIsHighlighted = false;
     boardData[currentBoard].updateBoard();
     refreshBoard();
     //if year 2 was the only other year, then make year 2 as default
@@ -6285,6 +6293,10 @@ function transitionToYear(year) {
   g_isDeleted = false;
   //update here for regular cases;
   if (!specialCase) {
+    if(overlayTemp == true){
+      overlayTemp = false;
+    }
+    mapIsHighlighted = false;
     boardData[currentBoard].updateBoard();
     refreshBoard();
   }
