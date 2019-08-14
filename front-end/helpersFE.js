@@ -6430,40 +6430,73 @@ function uploadCSV(reader) {
     var lines = [];
     var data;
     var yearsOwned = 1;
-    // console.log('reader.result = ', reader.result);
+
+    /* If two columns are missing, insert their headers here. Skip this step if csv file already contains the column headers/columns.
+    */
+    if (headers.length == 33) {
+      headers.splice(25, 0, "ContourArea", "BufferArea");
+    }
+
     for (var i = 1; i < allTextLines.length; i++) {
       // If download the file by openWith option, and then upload the file into PEWI, you can noticed that there is one additional line, and errors occur
       // because of this addition line. Since we know that there should be 829 lines in total, thus we deal with only the first 829 lines.
       if(i > 828) continue;
 
-      console.log("allTextLines.length = ",allTextLines.length);
+      // Array of all elements contained in row i  of the csv
       data = allTextLines[i].split(',');
+
+      // Value of contour area for this row
+      var topo = data[21];
+      var conArr;
+      if (topo == 2) {
+        conArr = 0.0546;
+      }
+      else if (topo == 3) {
+        conArr = 0.0658;
+      }
+      else if (topo == 4) {
+        conArr = 0.082;
+      }
+      else if (topo == 5) {
+        conArr = 0.0938;
+      }
+      else {
+        conArr = 0;
+      }
+
+      // Value of buffer area for this row
+      var streamNetwork = data[18];
+      var buffArr;
+      if (streamNetwork == 0) {
+        buffArr = 0;
+      }
+      else if (streamNetwork == 1) {
+        buffArr = 0.525;
+      }
+      else {
+        buffArr = "NA";
+      }
+
+      /* If values of columns 'contour area', 'buffer area' are not present in this row, then add them.
+         Skip this step if csv file already contains the columns.
+      */
+      if (data.length == 33) {
+        data.splice(25, 0, conArr, buffArr);
+      }
+
       var headlength = headers.length;
       if (data.length == headlength) {
         var tarr = [];
         for (var j = 0; j < headers.length; j++) {
           tarr.push(data[j]);
-          if (j == 28) {
+
+          if (j == 30) {
             yearsOwned = data[j];
           }
         }
         lines.push(tarr);
       } // end if
     } // end for
-    //XXX lines is empty
-    // window.top.document.getElementById('parameters').innerHTML;
-    // var yearsOwned = 1;
-    // This for loop iterates through the uploaded csv data file
-    // for (var i = 0; i < lines.length; i++) {
-    //
-    //     if (lines[i][26] != 1 && lines[i][26] != 0)
-    //       yearsOwned = 2;
-    //     if (lines[i][27] != 1 && lines[i][27] != 0){
-    //       yearsOwned = 3;
-    //       break;
-    //     }
-
-    // }
 
     if (yearsOwned == 2) {
       addingYearFromFile = true;
@@ -6483,13 +6516,6 @@ function uploadCSV(reader) {
     //Clears data so the river isnt redrawn when new files are uploaded
     initData = [];
 
-    /* ** CHANGE COLUMN VALUES HERE - If Adding new columns to data.csv file, to update the read-in process **
-          (Since the column values are hard coded in the current system, you'll need to do this if you add new columns anywhere before the last column in data.csv )
-          NOTE: MUST DO THE SAME IN THREE OTHER PLACES -
-          1. function propogateBoard() in mainBE.js
-          2. function Tile() in helperObjects.js
-          3. function overlayBoard() in mainBE.js
-    */
     //updating the precip levels from the values in the uploaded file
     boardData[currentBoard].precipitation[0] = data[31];
     boardData[currentBoard].precipitation[1] = data[32];
@@ -6504,6 +6530,7 @@ function uploadCSV(reader) {
     //load options from the csv
     //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes
     //the options page and shows the page is refreshed on the screen
+    // CHANGE COLUMN HEADER LENGTH HERE - If adding new columns
     if (headers.length == 35) {
       resetOptionsPage();
       toggleVisibility();
