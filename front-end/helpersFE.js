@@ -3194,16 +3194,18 @@ function getHighlightedInfo(tileId) {
         break;
         //Raw numbers are for conversion of the units (conversion doesn't exist in the back end)
         //create string for corn grain yield
+        //
+        // values multipilied by 14.8697 are being converted to bushels per acre, wood multiplied by 423.766 to convert to board-ft per acre
       case 10:
-        highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857 * 14.8697).toFixed(1) + " bu/ac/yr" + "<br>";
         break;
         //create string for soybean yield
       case 11:
-        highlightString = Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643 * 14.8697).toFixed(2) + " bu/ac/yr" + "<br>";
         break;
         //create string for  mixed fruit and vegetable yield
       case 12:
-        highlightString = Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492 * 0.44609).toFixed(2)  + " tons/ac/yr" + "<br>";
         break;
         //create string for cattle yield
       case 13:
@@ -3211,19 +3213,19 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for alfalfa yield
       case 14:
-        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638 * 0.44609).toFixed(2) + " tons/ac/yr" + "<br>";
         break;
         //create string for grass hay yield (same as alfalfa)
       case 15:
-        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638 * 0.44609).toFixed(2) + " tons/ac/yr" + "<br>";
         break;
         //create string for switchgrass yield
       case 16:
-        highlightString = Number(boardData[currentBoard].map[tileId].getSwitchgrassYield() / 0.445407279029).toFixed(2) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getSwitchgrassYield() / 0.445407279029 * 0.44609).toFixed(2) + " tons/ac/yr" + "<br>";
         break;
         //create string for wood yield
       case 17:
-        highlightString = Number(boardData[currentBoard].map[tileId].getWoodYield() / 171.875).toFixed(2) + " m3/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getWoodYield() / 171.875 * 423.766).toFixed(2) + " board-ft/ac/yr" + "<br>";
         break;
         //create string for short-rotation woody biomass yield
       case 18:
