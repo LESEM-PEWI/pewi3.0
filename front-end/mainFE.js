@@ -66,11 +66,10 @@ var takeScreenshot = false; // used in animationFrames
 
 //Camera movements Controls for Camera2 ie second view
 function animate() {
-  var hotkeys = giveHotkeys();
   requestAnimationFrame(animate);
 
   //Keyboard movement inputs
-  if (keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]) { // Handle W key - Forward Movements
+  if (keyboard[hotkeyArr[8][0]] || keyboard[hotkeyArr[8][1]]) { // Handle W key - Forward Movements
     if (curTracking) {
       pushClick(0, getStamp(), 86, 0, null);
     }
@@ -92,7 +91,7 @@ function animate() {
     console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]) { // Handle S key - Back Words movements
+  if (keyboard[hotkeyArr[9][0]] || keyboard[hotkeyArr[9][1]]) { // Handle S key - Back Words movements
     if (curTracking) {
       pushClick(0, getStamp(), 87, 0, null);
     }
@@ -114,7 +113,7 @@ function animate() {
     console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // Handle A key - Left Side Movement
+  if (keyboard[hotkeyArr[7][0]] || keyboard[hotkeyArr[7][1]]) { // Handle A key - Left Side Movement
     if (curTracking) {
       pushClick(0, getStamp(), 89, 0, null);
     }
@@ -136,7 +135,7 @@ function animate() {
     console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // Handle D key - Right side Movements
+  if (keyboard[hotkeyArr[6][0]] || keyboard[hotkeyArr[6][1]]) { // Handle D key - Right side Movements
     if (curTracking) {
       pushClick(0, getStamp(), 88, 0, null);
     }
@@ -220,7 +219,6 @@ function animate() {
       // console.log(camera2.position.y + " " + camera.position.z);
     }
   }
-  renderer.render(scene, camera);
 }
 
 //animationFrames is the key function involved in webGl
