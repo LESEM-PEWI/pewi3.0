@@ -3203,7 +3203,7 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for  mixed fruit and vegetable yield
       case 12:
-        highlightString = Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492).toFixed(2) * 14.8697 + " bu/ac/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492 * 14.8697).toFixed(2)  + " bu/ac/yr" + "<br>";
         break;
         //create string for cattle yield
       case 13:
