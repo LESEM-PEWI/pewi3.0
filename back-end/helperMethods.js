@@ -10,6 +10,8 @@
 // PRINTOPTIONS_HTML = window.frames[6],
 // STARTUP_HTML = window.frames[7];
 
+// find the respective frame numbers by typing windows.frames in console window of browser
+
 //global variable for initial board state, cleared after use
 var initData = [];
 

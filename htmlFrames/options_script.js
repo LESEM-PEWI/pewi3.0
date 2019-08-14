@@ -38,6 +38,10 @@
   //the parent page is then called to hide the options iframe
   function saveCurrentOptionsState() {
 
+    if (parent.getTracking()) {
+    parent.pushClick(0, parent.getStamp(), 108, 0, null);
+  }
+
     //find the elements that are able to be checked
     var toggledElements = document.getElementsByClassName('toggle');
     var tempString = "";
@@ -52,7 +56,7 @@
             }
             break;
           case "statFrame":
-            if (toggledElements[i].checked) {
+            if (!toggledElements[i].checked) {
               tempString += "statsOn" + "\n";
             }
             break;
@@ -139,7 +143,13 @@
       parent.optionsString=tempString;
       if(tempString.includes('paint'))
       {
-        parent.saveAndRandomize();
+        try {
+          parent.saveAndRandomize();
+        }
+        catch(error){
+          alert(error.message);
+          return;
+        }
       }
     } //end if
     //hide the options frame from the top frame (index.html)
@@ -149,9 +159,7 @@
 
 
     savedOptions = true; //Sets the savedOption to true, this indicates that the changes were saved
-    selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
-    selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
-    recordCurrentOptions();
+
   } //end function saveCurrentOptionsState
 
 
@@ -163,6 +171,7 @@
   function getCurrentOptionsState() {
     //raw text content in parameters div
     var strRawContents = window.top.document.getElementById('parameters').innerHTML;
+    console.log(strRawContents);
       // console.log("in the get current options state method"+strRawContents);
     //split based on escape chars
     while (strRawContents.indexOf("\r") >= 0) {
@@ -180,7 +189,7 @@
           document.getElementById('year0').checked = 1;
           break;
         case "statsOn":
-          document.getElementById('statFrame').checked = 1;
+          document.getElementById('statFrame').checked = 0;
           break;
         case "skyboxOn":
           document.getElementById('skybox').checked = 1;
@@ -202,7 +211,7 @@
               yearCounter += 1;
             }
           } else {
-            //if (document.getElementById(string)) document.getElementById(string).checked = 1;
+            if (document.getElementById(string)) document.getElementById(string).checked = 1;
           }
       } //end switch
     } //end for each line in the parameters div
@@ -357,7 +366,7 @@
     var allCheckboxes = $(':checkbox');
     for(var i = 0; i < allCheckboxes.length; ++i){
       // All the YIELD progress bars should be checked.
-      if(i >= 31 && i <= 39){
+      if(i >= 31 && i <= 39 || i == 45){
         $(':checkbox')[i].checked = true;
       }
       else {
@@ -413,7 +422,12 @@
   * settings, but changed their mind in the process then those changes would be undone.
   * For more information refer to Issue 362.
   */
-  function undoSelectedOptions(){
+  function undoSelectedOptions() {
+
+    if (parent.getTracking()) {
+      parent.pushClick(0, parent.getStamp(), 109, 0, null);
+    }
+
     /*
     * Iterate through all elements in selectedOptionsTrue and manually sets them to true, for being checked.
     */
@@ -450,7 +464,8 @@
     }
   }
 
-  function checkIfSaved(){
+  function checkIfSaved() {
+
     if(!savedOptions){
 
       /*

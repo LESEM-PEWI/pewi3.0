@@ -66,11 +66,10 @@ var takeScreenshot = false; // used in animationFrames
 
 //Camera movements Controls for Camera2 ie second view
 function animate() {
-  var hotkeys = giveHotkeys();
   requestAnimationFrame(animate);
 
   //Keyboard movement inputs
-  if (keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]) { // Handle W key - Forward Movements
+  if (keyboard[hotkeyArr[8][0]] || keyboard[hotkeyArr[8][1]]) { // Handle W key - Forward Movements
     if (curTracking) {
       pushClick(0, getStamp(), 86, 0, null);
     }
@@ -92,7 +91,7 @@ function animate() {
     console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]) { // Handle S key - Back Words movements
+  if (keyboard[hotkeyArr[9][0]] || keyboard[hotkeyArr[9][1]]) { // Handle S key - Back Words movements
     if (curTracking) {
       pushClick(0, getStamp(), 87, 0, null);
     }
@@ -114,7 +113,7 @@ function animate() {
     console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // Handle A key - Left Side Movement
+  if (keyboard[hotkeyArr[7][0]] || keyboard[hotkeyArr[7][1]]) { // Handle A key - Left Side Movement
     if (curTracking) {
       pushClick(0, getStamp(), 89, 0, null);
     }
@@ -136,7 +135,7 @@ function animate() {
     console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // Handle D key - Right side Movements
+  if (keyboard[hotkeyArr[6][0]] || keyboard[hotkeyArr[6][1]]) { // Handle D key - Right side Movements
     if (curTracking) {
       pushClick(0, getStamp(), 88, 0, null);
     }
@@ -220,7 +219,6 @@ function animate() {
       // console.log(camera2.position.y + " " + camera.position.z);
     }
   }
-  renderer.render(scene, camera);
 }
 
 //animationFrames is the key function involved in webGl
@@ -394,6 +392,20 @@ function confirmEscape() {
   }
 } //end toggleEscape
 
+// buttons to be shown when user clicks on the 'delete' button
+function confirmYearDelete() {
+
+    document.getElementById('confirmYearDelete').style.display = "block";
+    document.getElementById('yesDelete').style.display = "block";
+    document.getElementById('noDelete').style.display = "block";
+
+    if(curTracking)
+    {
+      pushClick(0, getStamp(), 112, 0 , null);
+    }
+  }
+
+
 /** createThreeFramework instantiates the renderer and scene to render 3D environment
  *   renderer = new THREE.WebGLRenderer(); above
  *
@@ -487,8 +499,10 @@ function initializeCamera() {
 
     //Event listners for scrolling using the wheel or scroll bar ( Used exclusively by click tracking...for now)
     window.frames[0].onscroll = onWheelViewCredits;
-    window.frames[3].onscroll = onWheelViewResults;
-
+    window.frames[4].addEventListener('scroll', onWheelViewResults);
+    window.frames[6].addEventListener('scroll', onWheelViewCustomize);
+    window.frames[7].addEventListener('scroll', onWheelViewPrint);
+    window.frames[3].addEventListener('scroll', onWheelViewGlossary);
 } //end initializeCamera
 
 //initializeLighting adds the lighting with specifications to the scene
@@ -564,7 +578,7 @@ function loadingManager() {
 
   //DefaultLoadingManager.onProgress is a THREE.js function that tracks when items are loaded
   THREE.DefaultLoadingManager.onProgress = function(item, loaded, total) {
-    console.log(" loaded " + loaded + " of " + total);
+    // console.log(" loaded " + loaded + " of " + total);
   };
 
   //DefaultLoadingManager.onload updates boolean allLoaded when all resources are loaded
@@ -641,9 +655,31 @@ function onWheelViewCredits(e) {
 //Event function that is called when a user is scrolling in results
 function onWheelViewResults(e) {
   if(curTracking && scrollGap) {
-    pushClick(0,getStamp(),94,0,window.frames[3].pageYOffset);
+    pushClick(0,getStamp(),94,0,window.frames[4].scrollY);
   }
 }
+
+//Event function that is called when a user is scrolling in customize window
+function onWheelViewCustomize(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),110,0,window.frames[6].scrollY);
+  }
+}
+
+//Event function that is called when a user is scrolling in customize window
+function onWheelViewPrint(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),114,0,window.frames[7].scrollY);
+  }
+}
+
+//Event function that is called when a user is scrolling in glossary window
+function onWheelViewGlossary(e) {
+  if(curTracking && scrollGap) {
+    pushClick(0,getStamp(),93,0,window.frames[3].scrollY);
+  }
+}
+
 
 //renderBackground creates the static background always behind viewpoint
 //  this function used to select for the creation of a skybox
@@ -806,7 +842,11 @@ function setupRiver() {
 //setupStaticBackground uses the old pewi graphics as a background image
 function setupStaticBackground() {
 
-  var r = Math.floor(Math.random() * oldPewiBackgrounds.length);
+  var r = 2;
+  switch(printPrecipYearType()){
+    case 'Dry': r = 0; break;
+      case 'Normal': r = 1; break;
+  }
 
   var bg = new THREE.Mesh(
     new THREE.PlaneGeometry(2, 2, 0),
