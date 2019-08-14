@@ -151,7 +151,8 @@
   top: 50px;
 }
 
-#startupButton1, #startupButton2, #startupButton3 {
+/*#startupButton1, #startupButton2, #startupButton3 {*/
+#startupButton1, #startupButton3 {
   margin-top: -25px;
   padding: 0;
   top: 50%;
@@ -159,18 +160,23 @@
 }
 
 #startupButton1 {
+  /* No 'left' attribute before removing startupButton2.
+  Adding this attribute now to push startupButton1 and startupButton3 closer
+  Check Issue562 for more details*/
+  left: 15%;
   -webkit-transition-duration: 1.5s;
   transition-duration: 1.5s;
 }
 
-#startupButton2 {
+/*#startupButton2 {
   left: 25%;
   -webkit-transition-duration: 2.2s;
   transition-duration: 2.2s;
-}
+}*/
 
 #startupButton3 {
-  left: 50%;
+  /* Previous value for 'left' (before removing startupButton2): 50% */
+  left: 35%;
   -webkit-transition-duration: 2.9s;
   transition-duration: 2.9s;
 }
@@ -271,13 +277,16 @@
  -------------------------
  **/
 
-#levelDesignerButton, #setupButton, #aggregateButton, #addFile, #downloadFile, #simulationButton, #goalOptimizationButton,#topoMapButton {
+
+#levelDesignerButton, #levelsButton, #setupButton, #aggregateButton, #addFile, #downloadFile, #simulationButton, #goalOptimizationButton,#topoMapButton {
   display: inline-block;
   margin-top: 7%;
   position: relative;
 }
 
-#levelDesignerButton, #setupButton, #aggregateButton, #simulationButton, #goalOptimizationButton, #topoMapButton {
+
+#levelDesignerButton, #levelsButton, #setupButton, #aggregateButton, #simulationButton, #goalOptimizationButton, #topoMapButton {
+
   width: 96.2%;
   /*width: 400px;*/
 }

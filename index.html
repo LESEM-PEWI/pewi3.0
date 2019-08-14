@@ -223,8 +223,8 @@
     <div id="undo" class="undocol">
       <div class="tooltip">
         <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
-        <img id="undoButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-        <span class="tooltiptext"> Undo </span>
+        <img id="undoButton" width="40px" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleTabTitleHovers('tooltip-undo');" onmouseout="toggleTabTitleHovers('tooltip-undo');">
+        <span id="tooltip-undo" class="tooltiptext tooltipLandUse"> Undo </span>
       </div>
     </div>
 
@@ -233,19 +233,27 @@
     <div id="settingsTab" class="settingsTab">
       <div id="cellpaint" class="leftcol">
         <div class="tooltip">
-          <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);">
-          <span class="tooltiptext"> Cell Paint </span>
+          <img id="cellPaint" class="painterIcon iconSelected" src="./imgs/hoverPainter.png" onclick="painterSelect(1);" onmouseover="toggleTabTitleHovers('tooltip-cellPaint');" onmouseout="toggleTabTitleHovers('tooltip-cellPaint');">
+          <span id="tooltip-cellPaint" class="tooltiptext tooltipLandUse"> Cell Paint </span>
         </div>
       </div>
 
       <div id="gridpaint" class="rightcol">
         <div class="tooltip">
-          <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);">
-          <span class="tooltiptext"> Grid Paint </span>
+          <img id="gridPaint" class="painterIcon icon" src="./imgs/gridPainter.png" onclick="painterSelect(2);" onmouseover="toggleTabTitleHovers('tooltip-gridPaint');" onmouseout="toggleTabTitleHovers('tooltip-gridPaint');">
+          <span id="tooltip-gridPaint" class="tooltiptext tooltipLandUse"> Grid Paint </span>
         </div>
       </div>
 
     </div>
+
+    <!-- Delete Confirmation -->
+    <div id = "confirmYearDelete">
+      Are you sure you want to delete this year?
+      <div class="mainEscapeButton" id = "yesDelete" onclick="deleteYearAndTransition();"> Yes </div>
+      <div class="mainEscapeButton" id = "noDelete" onclick= "yearNotDeleted();"> No </div>
+    </div>
+
 
     <!-- "Undo" icon made by Hadrien on http://www.flaticon.com/authors/hadrien with CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)-->
     <!--<img id="undoButton" src="./imgs/undo.png" onclick="revertChanges();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"> -->
@@ -306,44 +314,45 @@
         <div id="painterTab-leftcol" class="leftcol">
 
           <div class="tooltip">
-            <img id="paint1" class="landSelectorIcon iconSelected" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);">
-            <span class="tooltiptext">Conventional Corn</span>
+            <img id="paint1" class="landSelectorIcon iconSelected" src="./imgs/conventionalCorn.png" onclick="changeSelectedPaintTo(1);" onmouseover="toggleTabTitleHovers('tooltip-conventional-corn');" onmouseout="toggleTabTitleHovers('tooltip-conventional-corn');">
+            <span id="tooltip-conventional-corn" class="tooltiptext tooltipLandUse">Conventional Corn</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint3" class="landSelectorIcon icon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);">
-            <span class="tooltiptext">Conventional Soybean</span>
+            <img id="paint3" class="landSelectorIcon icon" src="./imgs/conventionalSoybean.png" onclick="changeSelectedPaintTo(3);" onmouseover="toggleTabTitleHovers('tooltip-conventional-soybean');" onmouseout="toggleTabTitleHovers('tooltip-conventional-soybean');">
+            <span id="tooltip-conventional-soybean" class="tooltiptext tooltipLandUse">Conventional Soybean</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint15" class="landSelectorIcon icon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);">
-            <span class="tooltiptext">Mixed Fruits and Vegetables</span>
+            <img id="paint15" class="landSelectorIcon icon" src="./imgs/fruits.png" onclick="changeSelectedPaintTo(15);" onmouseover="toggleTabTitleHovers('tooltip-mixedFruitsVegetables');" onmouseout="toggleTabTitleHovers('tooltip-mixedFruitsVegetables');">
+            <span id="tooltip-mixedFruitsVegetables" class="tooltiptext tooltipLandUse">Mixed Fruits and Vegetables</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint8" class="landSelectorIcon icon" src="./imgs/grassHay.png" onclick="changeSelectedPaintTo(8);">
-            <span class="tooltiptext">Grass Hay</span>
+            <img id="paint8" class="landSelectorIcon icon" src="./imgs/grassHay.png" onclick="changeSelectedPaintTo(8);" onmouseover="toggleTabTitleHovers('tooltip-grassHay');" onmouseout="toggleTabTitleHovers('tooltip-grassHay');">
+            <span id="tooltip-grassHay" class="tooltiptext tooltipLandUse">Grass Hay</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint6" class="landSelectorIcon icon" src="./imgs/permanentPasture.png" onclick="changeSelectedPaintTo(6);">
-            <span class="tooltiptext">Permanent Pasture</span>
+            <img id="paint6" class="landSelectorIcon icon" src="./imgs/permanentPasture.png" onclick="changeSelectedPaintTo(6);" onmouseover="toggleTabTitleHovers('tooltip-permanentPasture');" onmouseout="toggleTabTitleHovers('tooltip-permanentPasture');">
+            <span id="tooltip-permanentPasture" class="tooltiptext tooltipLandUse">Permanent Pasture</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint14" class="landSelectorIcon icon" src="./imgs/wetland.png" onclick="changeSelectedPaintTo(14);">
-            <span class="tooltiptext">Wetland</span>
+            <img id="paint14" class="landSelectorIcon icon" src="./imgs/wetland.png" onclick="changeSelectedPaintTo(14);" onmouseover="toggleTabTitleHovers('tooltip-wetland');" onmouseout="toggleTabTitleHovers('tooltip-wetland');">
+            <span id="tooltip-wetland" class="tooltiptext tooltipLandUse">Wetland</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint11" class="landSelectorIcon icon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);">
-            <span class="tooltiptext">Conventional Forest</span>
+            <img id="paint11" class="landSelectorIcon icon" src="./imgs/conventionalForest.png" onclick="changeSelectedPaintTo(11);" onmouseover="toggleTabTitleHovers('tooltip-conventional-forest');" onmouseout="toggleTabTitleHovers('tooltip-conventional-forest');">
+            <span id="tooltip-conventional-forest" class="tooltiptext tooltipLandUse">Conventional Forest</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint13" class="landSelectorIcon icon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);">
-            <span class="tooltiptext">Short Rotation Woody Bioenergy</span>
+            <img id="paint13" class="landSelectorIcon icon" src="./imgs/shortRotation.png" onclick="changeSelectedPaintTo(13);" onmouseover="toggleTabTitleHovers('tooltip-shortRotationWoodyBioenergy');" onmouseout="toggleTabTitleHovers('tooltip-shortRotationWoodyBioenergy');">
+            <span id="tooltip-shortRotationWoodyBioenergy" class="tooltiptext tooltipLandUse">Short Rotation Woody Bioenergy</span>
           </div>
+
           <!-- multiplayer mode  -->
           <div id="leftPlayerCon"></div>
 
@@ -352,43 +361,45 @@
         <div id="painterTab-rightcol" class="rightcol">
 
           <div class="tooltip">
-            <img id="paint2" class="landSelectorIcon icon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); ">
-            <span class="tooltiptext">Conservation Corn</span>
+            <img id="paint2" class="landSelectorIcon icon" src="./imgs/conservationCorn.png" onclick="changeSelectedPaintTo(2); " onmouseover="toggleTabTitleHovers('tooltip-conservation-corn');" onmouseout="toggleTabTitleHovers('tooltip-conservation-corn');">
+            <span id="tooltip-conservation-corn" class="tooltiptext tooltipLandUse">Conservation Corn</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint4" class="landSelectorIcon icon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);">
-            <span class="tooltiptext">Conservation Soybean</span>
+            <img id="paint4" class="landSelectorIcon icon" src="./imgs/conservationSoybean.png" onclick="changeSelectedPaintTo(4);" onmouseover="toggleTabTitleHovers('tooltip-conservation-soybean');" onmouseout="toggleTabTitleHovers('tooltip-conservation-soybean');">
+            <span id="tooltip-conservation-soybean" class="tooltiptext tooltipLandUse">Conservation Soybean</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint5" class="landSelectorIcon icon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);">
-            <span class="tooltiptext">Alfafa Hay</span>
+            <img id="paint5" class="landSelectorIcon icon" src="./imgs/alfalfa.png" onclick="changeSelectedPaintTo(5);" onmouseover="toggleTabTitleHovers('tooltip-alfalfaHay');" onmouseout="toggleTabTitleHovers('tooltip-alfalfaHay');">
+            <span id="tooltip-alfalfaHay" class="tooltiptext tooltipLandUse">Alfafa Hay</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint12" class="landSelectorIcon icon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);">
-            <span class="tooltiptext">Switch Grass</span>
+            <img id="paint12" class="landSelectorIcon icon" src="./imgs/herbaceous.png" onclick="changeSelectedPaintTo(12);" onmouseover="toggleTabTitleHovers('tooltip-switchGrass');" onmouseout="toggleTabTitleHovers('tooltip-switchGrass');">
+            <span id="tooltip-switchGrass" class="tooltiptext tooltipLandUse">Switchgrass</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint7" class="landSelectorIcon icon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);">
-            <span class="tooltiptext">Rotational Grazing</span>
+            <img id="paint7" class="landSelectorIcon icon" src="./imgs/rotationalGrazing.png" onclick="changeSelectedPaintTo(7);" onmouseover="toggleTabTitleHovers('tooltip-rotationalGrazing');" onmouseout="toggleTabTitleHovers('tooltip-rotationalGrazing');">
+            <span id="tooltip-rotationalGrazing" class="tooltiptext tooltipLandUse">Rotational Grazing</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint9" class="landSelectorIcon icon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);">
-            <span class="tooltiptext">Prarie</span>
+            <img id="paint9" class="landSelectorIcon icon" src="./imgs/prairie.png" onclick="changeSelectedPaintTo(9);" onmouseover="toggleTabTitleHovers('tooltip-prairie');" onmouseout="toggleTabTitleHovers('tooltip-prairie');">
+            <span id="tooltip-prairie" class="tooltiptext tooltipLandUse">Prarie</span>
           </div>
 
           <div class="tooltip">
-            <img id="paint10" class="landSelectorIcon icon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);">
-            <span class="tooltiptext">Conservation Forest</span>
+            <img id="paint10" class="landSelectorIcon icon" src="./imgs/conservationForest.png" onclick="changeSelectedPaintTo(10);" onmouseover="toggleTabTitleHovers('tooltip-conservation-forest');" onmouseout="toggleTabTitleHovers('tooltip-conservation-forest');">
+            <span id="tooltip-conservation-forest" class="tooltiptext tooltipLandUse">Conservation Forest</span>
           </div>
 
           <!-- multiplayer mode  -->
           <div id="rightPlayerCon"></div>
         </div>
+
+
         <div id="playerOptions" style="display: inline; visibility: hidden;">
           <div id="playerDeleteButton" onclick="deleteAndSort();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
             <img id="playerDeleteImage" style="display:inline-block;" class="playerIcon icon" src="./imgs/deleteYear.png"></div>
@@ -412,13 +423,9 @@
           <div id="precipTitle">
             <h3>Precipitation</h3></div>
 
-
-
-
-
-
-          <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);">
-            <div class="tooltipPrecip">
+          <div id="year0PrecipContainer" class="styled-select" onmouseover="getPrecipType(0);" onmouseout="getPrecipType(0);">
+            <!--<div class="tooltipPrecip">-->
+            <div class="tooltip">
               <h4>Year 0:</h4>
               <select id="year0Precip" class="year-precip-select" onChange="updatePrecip(0); rainOnPewi(); setupStaticBackground();">
                   <option value=0>24.58</option>
@@ -429,16 +436,12 @@
                   <option value=5>36.47</option>
                   <option value=6>45.10</option>
                 </select>
-              <span class="tooltiptextPrecip" id="precipspan0"></span>
+              <span class="tooltiptext tooltipPrecip" id="precipYear0"></span>
             </div>
           </div>
 
-
-
-
-
-          <div id="year1PrecipContainer" class="styled-select" onmouseover="getPrecipType(1);">
-            <div class="tooltipPrecip">
+          <div id="year1PrecipContainer" class="styled-select" onmouseover="getPrecipType(1);" onmouseout="getPrecipType(1);">
+            <div class="tooltip">
               <h4>Year 1:</h4>
               <select id="year1Precip" class="year-precip-select" onChange="updatePrecip(1); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
@@ -449,14 +452,13 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
-              <span class="tooltiptextPrecip" id="precipspan1"></span>
+              <span class="tooltiptext tooltipPrecip" id="precipYear1"></span>
             </div>
           </div>
           <!-- <script type="text/javascript"> document.write(getPrecipType(1))</script>  -->
 
-
-          <div id="year2PrecipContainer" class="styled-select" onmouseover="getPrecipType(2);">
-            <div class="tooltipPrecip">
+          <div id="year2PrecipContainer" class="styled-select" onmouseover="getPrecipType(2);" onmouseout="getPrecipType(2);">
+            <div class="tooltip">
               <h4>Year 2:</h4>
               <select id="year2Precip" class="year-precip-select" onChange="updatePrecip(2); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
@@ -467,14 +469,12 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
-              <span class="tooltiptextPrecip" id="precipspan2"></span>
+              <span class="tooltiptext tooltipPrecip" id="precipYear2"></span>
             </div>
           </div>
 
-
-
-          <div id="year3PrecipContainer" class="styled-select" onmouseover="getPrecipType(3);">
-            <div class="tooltipPrecip">
+          <div id="year3PrecipContainer" class="styled-select" onmouseover="getPrecipType(3);" onmouseout="getPrecipType(3);">
+            <div class="tooltip">
               <h4>Year 3:</h4>
               <select id="year3Precip" class="year-precip-select" onChange="updatePrecip(3); rainOnPewi(); setupStaticBackground();">
                 <option value=0>24.58</option>
@@ -485,7 +485,7 @@
                 <option value=5>36.47</option>
                 <option value=6>45.10</option>
             </select>
-              <span class="tooltiptextPrecip" id="precipspan3"></span>
+              <span class="tooltiptext tooltipPrecip" id="precipYear3"></span>
             </div>
           </div>
         </form>
@@ -502,7 +502,7 @@
         <div id="year2Button" onclick="transitionToYear(2); switchYearTab(2);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year2Image" class="icon yearImageHidden" src="./imgs/two.png"></div>
         <div id="year3Button" onclick="transitionToYear(3); switchYearTab(3);" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="year3Image" class="icon yearImageHidden" src="./imgs/three.png"></div>
         <div id="yearAddButton" onclick="addYearAndTransition();setupStaticBackground();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearAddImage" class="icon yearNotSelected" src="./imgs/addYear.png"></div>
-        <div id="yearDeleteButton" onclick="deleteYearAndTransition();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearDeleteImage" class="icon yearNotSelected" src="./imgs/deleteYear.png"></div>
+        <div id="yearDeleteButton" onclick = "confirmYearDelete();" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"><img id="yearDeleteImage" class="icon yearNotSelected" src="./imgs/deleteYear.png"></div>
         <div id="yearCopyButton" class="year-styled-select">
           <h4>Copy From:</h4>
           <select id="yearToCopy" class="yearCopyPasteSelect" onChange="copyYear();">
@@ -690,48 +690,47 @@
 
         <div class="leftcol">
           <!--"B.png icon created by Sam Kerr"-->
-          <div class="tooltipResultsBiodiversity">
-            <img id="biodiversityIcon" class="levelsSelectorIcon icon" src="./imgs/B.png" onclick="displayLevels('biodiversity');">
-            <span class="tooltiptextResults">Biodiversity</span>
+          <div class="tooltip">
+            <img id="biodiversityIcon" class="levelsSelectorIcon icon" src="./imgs/B.png" onclick="displayLevels('biodiversity');" onmouseover="toggleTabTitleHovers('tooltip-biodiversity');" onmouseout="toggleTabTitleHovers('tooltip-biodiversity');">
+            <span id="tooltip-biodiversity" class="tooltiptext tooltipResultsMapTab">Biodiversity</span>
           </div>
           <!-- "Letter E gold Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-          <div class="tooltipResultsErosion">
-            <img id="erosionIcon" class="levelsSelectorIcon icon" src="./imgs/E.png" onclick="displayLevels('erosion');">
-            <span class="tooltiptextResults">Gross Erosion</span>
+          <div class="tooltip">
+            <img id="erosionIcon" class="levelsSelectorIcon icon" src="./imgs/E.png" onclick="displayLevels('erosion');" onmouseover="toggleTabTitleHovers('tooltip-grossErosion');" onmouseout="toggleTabTitleHovers('tooltip-grossErosion');">
+            <span id="tooltip-grossErosion" class="tooltiptext tooltipResultsMapTab">Gross Erosion</span>
           </div>
           <!-- "Letter N Ig Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-          <div class="tooltipResultsNitrate">
-            <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/Ns.png" onclick="displayLevels('nitrate');">
-            <span class="tooltiptextResults">Subwatershed Nitrate-N Percent Contribution</span>
+          <div class="tooltip">
+            <img id="nitrateIcon" class="levelsSelectorIcon icon" src="./imgs/Ns.png" onclick="displayLevels('nitrate');" onmouseover="toggleTabTitleHovers('tooltip-subwatershedNitrate');" onmouseout="toggleTabTitleHovers('tooltip-subwatershedNitrate');">
+            <span id="tooltip-subwatershedNitrate" class="tooltiptext tooltipResultsMapTab">Subwatershed Nitrate-N Percent Contribution</span>
           </div>
           <!-- "Letter P blue Icon" by Supratim Nayak (http://www.iconarchive.com/artist/hydrattz.html) with free commercial use -->
-          <div class="tooltipResultsPhosphorus">
-            <img id="phoshorusIcon" class="levelsSelectorIcon icon" src="./imgs/P.png" onclick="displayLevels('phosphorus');">
-            <span class="tooltiptextResults">Phosphorus Index Risk Assessment</span>
+          <div class="tooltip">
+            <img id="phoshorusIcon" class="levelsSelectorIcon icon" src="./imgs/P.png" onclick="displayLevels('phosphorus');" onmouseover="toggleTabTitleHovers('tooltip-phosphorusIndex');" onmouseout="toggleTabTitleHovers('tooltip-phosphorusIndex');">
+            <span id="tooltip-phosphorusIndex" class="tooltiptext tooltipResultsMapTab">Phosphorus Index Risk Assessment</span>
           </div>
-
       </div>
 
 
       <div class="rightcol">
         <!--"G.png icon created by Sam Kerr"-->
-        <div class="tooltipResultsGameWildlife">
-          <img id="gamewildlifeIcon" class="levelsSelectorIcon icon" src="./imgs/G.png" onclick="displayLevels('gamewildlife');">
-          <span class="tooltiptextResults">Game Wildlife</span>
+        <div class="tooltip">
+          <img id="gamewildlifeIcon" class="levelsSelectorIcon icon" src="./imgs/G.png" onclick="displayLevels('gamewildlife');" onmouseover="toggleTabTitleHovers('tooltip-gamewildlife');" onmouseout="toggleTabTitleHovers('tooltip-gamewildlife');">
+          <span id="tooltip-gamewildlife" class="tooltiptext tooltipResultsMapTab">Game Wildlife</span>
         </div>
         <!--"C.png icon created by Sam Kerr"-->
-        <div class="tooltipResultsCarbon">
-          <img id="carbonIcon" class="levelsSelectorIcon icon" src="./imgs/C.png" onclick="displayLevels('carbon');">
-          <span class="tooltiptextResults">Carbon Sequestration</span>
+        <div class="tooltip">
+          <img id="carbonIcon" class="levelsSelectorIcon icon" src="./imgs/C.png" onclick="displayLevels('carbon');" onmouseover="toggleTabTitleHovers('tooltip-carbonSequestration');" onmouseout="toggleTabTitleHovers('tooltip-carbonSequestration');">
+          <span id="tooltip-carbonSequestration" class="tooltiptext tooltipResultsMapTab">Carbon Sequestration</span>
         </div>
-        <div class="tooltipResultsNitrateTile">
-          <img id="nitratetileIcon" class="levelsSelectorIcon icon" src="./imgs/N.png" onclick="displayLevels('nitratetile');">
-          <span class="tooltiptextResults">Cell Nitrate</span>
+        <div class="tooltip">
+          <img id="nitratetileIcon" class="levelsSelectorIcon icon" src="./imgs/N.png" onclick="displayLevels('nitratetile');" onmouseover="toggleTabTitleHovers('tooltip-cellNitrate');" onmouseout="toggleTabTitleHovers('tooltip-cellNitrate');">
+          <span id="tooltip-cellNitrate" class="tooltiptext tooltipResultsMapTab">Cell Nitrate</span>
         </div>
         <!--"S.png icon created by Sam Kerr"-->
-        <div class="tooltipResultsSediment">
-          <img id="sedimentIcon" class="levelsSelectorIcon icon" src="./imgs/S.png" onclick="displayLevels('sediment');">
-          <span class="tooltiptextResults">Sediment Runoff</span>
+        <div class="tooltip">
+          <img id="sedimentIcon" class="levelsSelectorIcon icon" src="./imgs/S.png" onclick="displayLevels('sediment');" onmouseover="toggleTabTitleHovers('tooltip-sedimentRunoff');" onmouseout="toggleTabTitleHovers('tooltip-sedimentRunoff');">
+          <span id="tooltip-sedimentRunoff" class="tooltiptext tooltipResultsMapTab">Sediment Runoff</span>
         </div>
 
       </div>
@@ -869,38 +868,35 @@
 
 
 
-
-
-
-        <div class="tooltipPhysicalFeaturesFlood">
-          <img id="floodFrequency" class="featureSelectorIcon icon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');">
-          <span class="tooltiptextPhysicalFeatures">Flood Frequency</span>
+        <div class="tooltip">
+          <img id="floodFrequency" class="featureSelectorIcon icon" src="./imgs/Icon_Flood_Frequency.svg" onclick="displayLevels('flood');" onmouseover="toggleTabTitleHovers('tooltip-floodFrequency');" onmouseout="toggleTabTitleHovers('tooltip-floodFrequency');">
+          <span id="tooltip-floodFrequency" class="tooltiptext tooltipPhysicalFeatures">Flood Frequency</span>
         </div>
 
 
-        <div class="tooltipPhysicalFeaturesWetlands">
-          <img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetlands');">
-          <span class="tooltiptextPhysicalFeatures">Wetland Suitability</span>
+        <div class="tooltip">
+          <img id="strategicWetlands" class="featureSelectorIcon icon" src="./imgs/Icon_Strategic_Wetlands.svg" onclick="displayLevels('wetlands');" onmouseover="toggleTabTitleHovers('tooltip-wetlandSuitability');" onmouseout="toggleTabTitleHovers('tooltip-wetlandSuitability');">
+          <span id="tooltip-wetlandSuitability" class="tooltiptext tooltipPhysicalFeatures">Wetland Suitability</span>
         </div>
 
-        <div class="tooltipPhysicalFeaturesSubwatershed">
-          <img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('boundary');">
-          <span class="tooltiptextPhysicalFeatures">Subwatershed Boundaries</span>
+        <div class="tooltip">
+          <img id="subwatershedBoundaries" class="featureSelectorIcon icon" src="./imgs/Icon_Subwatershed_Boundaries.svg" onclick="displayLevels('boundary');" onmouseover="toggleTabTitleHovers('tooltip-subwatershedBoundaries');" onmouseout="toggleTabTitleHovers('tooltip-subwatershedBoundaries');">
+          <span id="tooltip-subwatershedBoundaries" class="tooltiptext tooltipPhysicalFeatures">Subwatershed Boundaries</span>
         </div>
 
-        <div class="tooltipPhysicalFeaturesDrainage">
-          <img id="drainageClass" class="featureSelectorIcon icon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');">
-          <span class="tooltiptextPhysicalFeatures">Drainage Class</span>
+        <div class="tooltip">
+          <img id="drainageClass" class="featureSelectorIcon icon" src="./imgs/Icon_Drainage_Class.svg" onclick="displayLevels('drainage');" onmouseover="toggleTabTitleHovers('tooltip-drainageClass');" onmouseout="toggleTabTitleHovers('tooltip-drainageClass');">
+          <span id="tooltip-drainageClass" class="tooltiptext tooltipPhysicalFeatures">Drainage Class</span>
         </div>
 
-        <div class="tooltipPhysicalFeaturesSoil">
-          <img id="soilClass" class="featureSelectorIcon icon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');">
-          <span class="tooltiptextPhysicalFeatures">Soil Type</span>
+        <div class="tooltip">
+          <img id="soilClass" class="featureSelectorIcon icon" src="./imgs/Icon_Soil_Class.svg" onclick="displayLevels('soil');" onmouseover="toggleTabTitleHovers('tooltip-soilType');" onmouseout="toggleTabTitleHovers('tooltip-soilType');">
+          <span id="tooltip-soilType" class="tooltiptext tooltipPhysicalFeatures">Soil Type</span>
         </div>
 
-        <div class="tooltipPhysicalFeaturesTopography">
-          <img id="topoClass" class="featureSelectorIcon icon" src="./imgs/Icon_Topography.svg" onclick="displayLevels('topo');">
-          <span class="tooltiptextPhysicalFeatures">Topography</span>
+        <div class="tooltip">
+          <img id="topoClass" class="featureSelectorIcon icon" src="./imgs/Icon_Topography.svg" onclick="displayLevels('topo');" onmouseover="toggleTabTitleHovers('tooltip-topography');" onmouseout="toggleTabTitleHovers('tooltip-topography');">
+          <span id="tooltip-topography" class="tooltiptext tooltipPhysicalFeatures">Topography</span>
         </div>
 
       </div>
@@ -1419,51 +1415,51 @@
         <div class="leftcol">
 
           <div class="tooltip">
-            <img id="cornClass" class="yieldSelectorIcon icon" src="./imgs/cornGrainIcon.png" onclick="displayLevels('corn');">
-            <span class="tooltiptext">Corn Grain Yield</span>
+            <img id="cornClass" class="yieldSelectorIcon icon" src="./imgs/cornGrainIcon.png" onclick="displayLevels('corn');" onmouseover="toggleTabTitleHovers('tooltip-cornGrainYield');" onmouseout="toggleTabTitleHovers('tooltip-cornGrainYield');">
+            <span id="tooltip-cornGrainYield" class="tooltiptext tooltipLandUse">Corn Grain Yield</span>
           </div>
 
           <div class="tooltip">
-            <img id="fruitClass" class="yieldSelectorIcon icon" src="./imgs/fruitIcon.png" onclick="displayLevels('fruit');">
-            <span class="tooltiptext">Mixed Fruits and Vegetables Yield</span>
+            <img id="fruitClass" class="yieldSelectorIcon icon" src="./imgs/fruitIcon.png" onclick="displayLevels('fruit');" onmouseover="toggleTabTitleHovers('tooltip-mixedFruitsVegetablesYield');" onmouseout="toggleTabTitleHovers('tooltip-mixedFruitsVegetablesYield');">
+            <span id="tooltip-mixedFruitsVegetablesYield" class="tooltiptext tooltipLandUse">Mixed Fruits and Vegetables Yield</span>
           </div>
 
           <div class="tooltip">
-            <img id="alfalfaClass" class="yieldSelectorIcon icon" src="./imgs/alfalfaIcon.png" onclick="displayLevels('alfalfa');">
-            <span class="tooltiptext">Alafafa Hay Yield</span>
+            <img id="alfalfaClass" class="yieldSelectorIcon icon" src="./imgs/alfalfaIcon.png" onclick="displayLevels('alfalfa');" onmouseover="toggleTabTitleHovers('tooltip-alfalfaHayYield');" onmouseout="toggleTabTitleHovers('tooltip-alfalfaHayYield');">
+            <span id="tooltip-alfalfaHayYield" class="tooltiptext tooltipLandUse">Alafafa Hay Yield</span>
           </div>
 
           <div class="tooltip">
-            <img id="switchGrassClass" class="yieldSelectorIcon icon" src="./imgs/switchGrassIcon.png" onclick="displayLevels('switchgrass');">
-            <span class="tooltiptext">Switch Grass Yield</span>
+            <img id="switchGrassClass" class="yieldSelectorIcon icon" src="./imgs/switchGrassIcon.png" onclick="displayLevels('switchgrass');" onmouseover="toggleTabTitleHovers('tooltip-switchGrassYield');" onmouseout="toggleTabTitleHovers('tooltip-switchGrassYield');">
+            <span id="tooltip-switchGrassYield" class="tooltiptext tooltipLandUse">Switchgrass Yield</span>
           </div>
 
           <div class="tooltip">
-            <img id="shortClass" class="yieldSelectorIcon icon" src="./imgs/woodyBiomassIcon.png" onclick="displayLevels('short');">
-            <span class="tooltiptext">Woody Biomass Yield</span>
+            <img id="shortClass" class="yieldSelectorIcon icon" src="./imgs/woodyBiomassIcon.png" onclick="displayLevels('short');" onmouseover="toggleTabTitleHovers('tooltip-woodyBiomassYield');" onmouseout="toggleTabTitleHovers('tooltip-woodyBiomassYield');">
+            <span id="tooltip-woodyBiomassYield" class="tooltiptext tooltipLandUse">Woody Biomass Yield</span>
           </div>
         </div>
 
         <div class="rightcol">
 
           <div class="tooltip">
-            <img id="soyClass" class="yieldSelectorIcon icon" src="./imgs/soybeanIcon.png" onclick="displayLevels('soybean');">
-            <span class="tooltiptext">Soybean Yield</span>
+            <img id="soyClass" class="yieldSelectorIcon icon" src="./imgs/soybeanIcon.png" onclick="displayLevels('soybean');" onmouseover="toggleTabTitleHovers('tooltip-soybeanYield');" onmouseout="toggleTabTitleHovers('tooltip-soybeanYield');">
+            <span id="tooltip-soybeanYield" class="tooltiptext tooltipLandUse">Soybean Yield</span>
           </div>
 
           <div class="tooltip">
-            <img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" onclick="displayLevels('cattle');">
-            <span class="tooltiptext">Cattle Yield</span>
+            <img id="cattleClass" class="yieldSelectorIcon icon" src="./imgs/cowIcon.png" onclick="displayLevels('cattle');" onmouseover="toggleTabTitleHovers('tooltip-cattleYield');" onmouseout="toggleTabTitleHovers('tooltip-cattleYield');">
+            <span id="tooltip-cattleYield" class="tooltiptext tooltipLandUse">Cattle Yield</span>
           </div>
 
           <div class="tooltip">
-            <img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" onclick="displayLevels('grasshay');">
-            <span class="tooltiptext">Grass Hay Yield</span>
+            <img id="grassHayClass" class="yieldSelectorIcon icon" src="./imgs/grassHayIcon.png" onclick="displayLevels('grasshay');" onmouseover="toggleTabTitleHovers('tooltip-grassHayYield');" onmouseout="toggleTabTitleHovers('tooltip-grassHayYield');">
+            <span id="tooltip-grassHayYield" class="tooltiptext tooltipLandUse">Grass Hay Yield</span>
           </div>
 
           <div class="tooltip">
-            <img id="woodClass" class="yieldSelectorIcon icon" src="./imgs/woodIcon.png" onclick="displayLevels('wood');">
-            <span class="tooltiptext">Wood Yield</span>
+            <img id="woodClass" class="yieldSelectorIcon icon" src="./imgs/woodIcon.png" onclick="displayLevels('wood');" onmouseover="toggleTabTitleHovers('tooltip-woodYield');" onmouseout="toggleTabTitleHovers('tooltip-woodYield');">
+            <span id="tooltip-woodYield" class="tooltiptext tooltipLandUse">Wood Yield</span>
           </div>
         </div>
       </div>
@@ -1902,8 +1898,9 @@
     <img id="closeUploadDownload" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeUploadDownloadFrame();">
     <div id="modalEmailFrame"><iframe id="emailFrame" style="display:none;" src="./htmlFrames/contact_us.html"></iframe></div>
     <img id="closeEmail" class="closeButton" style="display:none;" src="./imgs/close_black.png" onclick="closeEmailFrame() ;">
-    <div id="modalCodexFrame"><iframe id="index" src="./modules/codex/codex.html" allowfullscreen="allowfullscreen"></iframe></div>
-    <!-- index iframe has its own close button -->
+    <!--<div id="modalCodexFrame"><iframe id="index" src="./modules/codex/codex.html" allowfullscreen="allowfullscreen"></iframe></div>-->
+    <div id="modalCodexFrame"><iframe id="glossary" src="./modules/codex/codex.html" allowfullscreen="allowfullscreen"></iframe></div>
+    <!-- glossary iframe has its own close button -->
 
     <!-- Include fireworks javascript library -->
     <div id="fireworks-template">

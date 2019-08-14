@@ -439,6 +439,12 @@ text {
   height        : 20px;
 }
 
+.optionsRowGraphic3{
+  margin-left   : 3px;
+  margin-right  : 3px;
+  height        : 20px;
+}
+
 #toggleYearPie {
   background-color: rgba(40, 44, 42, 0.03);
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, .6);
@@ -601,7 +607,7 @@ text {
   box-shadow: 0 0 30px rgba(0, 255, 255, .5);
 }
 
-.graphic4landuse{
+.graphic4landuse, .graphic5Year, .graphic5LineSelection{
   font-size: 25px;
   background-color: skyblue;
   border-radius: 4px;
@@ -616,8 +622,12 @@ text {
   border-radius: 4px;
   width:100%;
 }
-.graphic4option{
+
+.graphic4option, .graphic5lineOption, .graphic5YearSelection,.grahpic4YearSelection{
   height: 20px;
+}
+.yAxisRight g text{
+  fill: #3182bd;
 }
 /*
 #container {
