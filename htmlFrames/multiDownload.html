@@ -78,8 +78,6 @@ function addToZip(playerNumber) {
 }//end addToZip
 
 function createMultimapDownload() {
-  window.top.document.getElementById('parameters').innerHTML = "cornGrainProgressBar" + "\n" + "soybeansProgressBar"+"\n"+"fruitsAndVegetablesProgressBar"+"\n"+"cattleProgressBar"+"\n"+"alfalfaHayProgressBar"+"\n"+
-                                                  "grassHayProgressBar"+"\n"+"switchgrassBiomassProgressBar"+"\n"+"woodProgressBar"+"\n"+"woodyBiomassProgressBar";
     //get the number of players from the toggle tool
     var assignedPlayers = parent.getNumberOfPlayers();// Number(document.getElementById('playerNumber').innerHTML);
     //for each player, add their map to the zip folder

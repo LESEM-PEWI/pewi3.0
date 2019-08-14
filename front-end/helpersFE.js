@@ -198,7 +198,6 @@ function toggleTabTitle(value, dir) {
         document.getElementById(value).innerHTML = 'yield&nbsp;base&nbsp;rates';
         break;
     }
-
     document.getElementById(value).style.display = 'inline-block';
   } else {
     document.getElementById(value).style.display = 'none';
@@ -3736,6 +3735,9 @@ function multiplayerMode() {
     document.getElementById('pewiLogo').style.right = '18.5vw';
     // Hide the progress bar
     document.getElementById('progressBarContainer').style.display = 'none';
+    for(let i = 1; i <= 15; i++){
+      document.getElementById('paint' + i).style.display = 'none';
+    }
   }
 }
 
