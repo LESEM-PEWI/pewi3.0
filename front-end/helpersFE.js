@@ -6713,16 +6713,16 @@ function uploadCSV(reader) {
       /* If values of columns 'contour area', 'buffer area' are not present in this row, then add them.
          Skip this step if csv file already contains the columns.
       */
-      if (noContBuffArrCol = 1) {
+      if (noContBuffArrCol == 1) {
         data.splice(25, 0, contArr, buffArr);
         // reset flag
-        noContBuffArrCol = 0;
+        //noContBuffArrCol = 0;
       }
 
-      if (noYearsOwnedCol = 1) {
+      if (noYearsOwnedCol == 1) {
         data.splice(30, 0, 3);
         // reset flag
-        noYearsOwnedCol = 0;
+      //  noYearsOwnedCol = 0;
       }
 
       var headlength = headers.length;
