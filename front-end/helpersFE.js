@@ -6430,11 +6430,21 @@ function uploadCSV(reader) {
     var lines = [];
     var data;
     var yearsOwned = 1;
-
+    // Flag tat is raised when columns 'contour area', 'buffer area' are not present in the csv file
+    var noContBuffArrCol = 0;
+    // Flag that is raised when column 'YearsOwned' is not present in the csv file.
+    var noYearsOwnedCol = 0;
     /* If two columns are missing, insert their headers here. Skip this step if csv file already contains the column headers/columns.
     */
-    if (headers.length == 33) {
+    if (headers.indexOf("ContourArea") == -1) {
       headers.splice(25, 0, "ContourArea", "BufferArea");
+      noContBuffArrCol = 1;
+    }
+
+    // If column header YearsOwned is missing, add here. This happens with files downloaded from pewi-v3
+    if (headers.indexOf("YearsOwned") == -1) {
+      headers.splice(30, 0, "YearsOwned");
+      noYearsOwnedCol = 1;
     }
 
     for (var i = 1; i < allTextLines.length; i++) {
@@ -6447,21 +6457,21 @@ function uploadCSV(reader) {
 
       // Value of contour area for this row
       var topo = data[21];
-      var conArr;
+      var contArr;
       if (topo == 2) {
-        conArr = 0.0546;
+        contArr = 0.0546;
       }
       else if (topo == 3) {
-        conArr = 0.0658;
+        contArr = 0.0658;
       }
       else if (topo == 4) {
-        conArr = 0.082;
+        contArr = 0.082;
       }
       else if (topo == 5) {
-        conArr = 0.0938;
+        contArr = 0.0938;
       }
       else {
-        conArr = 0;
+        contArr = 0;
       }
 
       // Value of buffer area for this row
@@ -6480,8 +6490,16 @@ function uploadCSV(reader) {
       /* If values of columns 'contour area', 'buffer area' are not present in this row, then add them.
          Skip this step if csv file already contains the columns.
       */
-      if (data.length == 33) {
-        data.splice(25, 0, conArr, buffArr);
+      if (noContBuffArrCol = 1) {
+        data.splice(25, 0, contArr, buffArr);
+        // reset flag
+        noContBuffArrCol = 0;
+      }
+
+      if (noYearsOwnedCol = 1) {
+        data.splice(30, 0, 3);
+        // reset flag
+        noYearsOwnedCol = 0;
       }
 
       var headlength = headers.length;
