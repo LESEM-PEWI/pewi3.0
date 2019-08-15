@@ -2183,7 +2183,7 @@ function drawPrecipitationInformationChart() {
 //     .attr('checked', "")
 //     .attr('type', 'checkbox');
 // } //end drawYieldRadar()
-function tableSort(landuse, column){
+function tableSort(column){
   let values = generateEconTableData();
   values.sort(function(a,b){
     if(a[column] < b[column]) return -1;
@@ -2193,6 +2193,13 @@ function tableSort(landuse, column){
   this.parent.updateTables(values, this.parent);
 }
 
+function numSort(column){
+  let values = generateEconTableData();
+  values.sort(function(a,b){
+    return Number.parseFloat(a[column]) - Number.parseFloat(b[column]);
+  });
+  this.parent.updateTables(values, this.parent);
+}
 function generateEconTableData(){
   let results = []
   econ = economics.rawData || this.parent.economics.rawData;
@@ -2203,6 +2210,10 @@ function generateEconTableData(){
   }
   results.splice(0,1);
   return results;
+}
+
+function numFormatting(num){
+  return Number.parseFloat(num).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function generateEconomicsTables() {
@@ -2239,8 +2250,7 @@ function generateEconomicsTables() {
 
   this.clearTableVars = () => {
     Object.keys(econtables).forEach(key =>{
-      console.log('<table><tr><th>Cost Name</th><th onclick="tableSort('+ key)
-      econtables[key].table = '<table><tr><th onclick="tableSort(\'' + key +'\',\'costName\')">Cost Name</th><th onclick="tableSort(\'' + key +'\',\'time\')">Time</th><th onclick="tableSort(\'' + key +'\',\'action\')">Action</th><th>Value ($)</th><th>Frequency</th><th>Description</th></tr>'
+      econtables[key].table = '<table><tr><th onclick="tableSort(\'costName\')">Cost Name</th><th onclick="tableSort(\'time\')">Time</th><th onclick="tableSort(\'action\')">Action</th><th onclick="numSort(\'value\')">Value ($)</th><th>Frequency</th><th>Description</th></tr>'
     })
   }
 
@@ -2253,7 +2263,7 @@ function generateEconomicsTables() {
       Object.keys(econtables).forEach(key =>{
         if(curLandUse == econtables[key].landuse){
           if(!values[i].subCrop || values[i].subCrop == econtables[key].subCrop){
-            econtables[key].table += "<tr><td>"+values[i].costName+"</td><td>"+values[i].time+"</td><td>"+values[i].action+"</td><td>"+values[i].value+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+            econtables[key].table += "<tr><td>"+values[i].costName+"</td><td>"+values[i].time+"</td><td>"+values[i].action+'</td><td style="text-align:right">'+numFormatting(values[i].value)+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
           }
         }
       });
@@ -3291,30 +3301,30 @@ function placeTotalsOnBars(year, scope){
   var squash = findBar('Squash', scope);
   var strawberries = findBar('Strawberries', scope);
 
-  convCorn.firstChild.nodeValue = ("Conventional Corn Total: $" + scope.parent.economics.data[year][1]['Action - Cost Type'].total);
-  consCorn.firstChild.nodeValue = ("Conservation Corn Total: $" + scope.parent.economics.data[year][2]['Action - Cost Type'].total);
-  convSoy.firstChild.nodeValue = ("Conventional Soybean Total: $" + scope.parent.economics.data[year][3]['Action - Cost Type'].total);
-  consSoy.firstChild.nodeValue = ("Conservation Soybean Total: $" + scope.parent.economics.data[year][4]['Action - Cost Type'].total);
-  alfalfa.firstChild.nodeValue = ("Alfalfa Total: $" + scope.parent.economics.data[year][5]['Action - Cost Type'].total);
-  permPas.firstChild.nodeValue = ("Permanent Pasture Total: $" + scope.parent.economics.data[year][6]['Action - Cost Type'].total);
-  rotGraz.firstChild.nodeValue = ("Rotational Grazing Total: $" + scope.parent.economics.data[year][7]['Action - Cost Type'].total);
-  grassHay.firstChild.nodeValue = ("Grass Hay Total: $" + scope.parent.economics.data[year][8]['Action - Cost Type'].total);
-  /*prairie.firstChild.nodeValue = ("Prairie Total: $" + scope.parent.economics.data[9]['Action - Cost Type'].total);
-  consFor.firstChild.nodeValue = ("Conservation Forest Total: $" + scope.parent.economics.data[10]['Action - Cost Type'].total);
-  convFor.firstChild.nodeValue = ("Conventional Forest Total: $" + scope.parent.economics.data[11]['Action - Cost Type'].total);*/
-  switchgrass.firstChild.nodeValue = ("Switchgrass Total: $" + scope.parent.economics.data[year][12]['Action - Cost Type'].total);
-  shortRWB.firstChild.nodeValue = ("Short-Rotation Woody Bioenergy Total: $" + scope.parent.economics.data[year][13]['Action - Cost Type'].total);
-  wetland.firstChild.nodeValue = ("Wetland Total: $" + scope.parent.economics.data[year][14]['Action - Cost Type'].total);
-  mixedFaV.firstChild.nodeValue = ("Mixed Fruits & Vegetables Total: $" + scope.parent.economics.data[year][15]['Action - Cost Type'].total);
+  convCorn.firstChild.nodeValue = ("Conventional Corn Total: $" + numFormatting(scope.parent.economics.data[year][1]['Action - Cost Type'].total));
+  consCorn.firstChild.nodeValue = ("Conservation Corn Total: $" + numFormatting(scope.parent.economics.data[year][2]['Action - Cost Type'].total));
+  convSoy.firstChild.nodeValue = ("Conventional Soybean Total: $" + numFormatting(scope.parent.economics.data[year][3]['Action - Cost Type'].total));
+  consSoy.firstChild.nodeValue = ("Conservation Soybean Total: $" + numFormatting(scope.parent.economics.data[year][4]['Action - Cost Type'].total));
+  alfalfa.firstChild.nodeValue = ("Alfalfa Total: $" + numFormatting(scope.parent.economics.data[year][5]['Action - Cost Type'].total));
+  permPas.firstChild.nodeValue = ("Permanent Pasture Total: $" + numFormatting(scope.parent.economics.data[year][6]['Action - Cost Type'].total));
+  rotGraz.firstChild.nodeValue = ("Rotational Grazing Total: $" + numFormatting(scope.parent.economics.data[year][7]['Action - Cost Type'].total));
+  grassHay.firstChild.nodeValue = ("Grass Hay Total: $" + numFormatting(scope.parent.economics.data[year][8]['Action - Cost Type'].total));
+  /*prairie.firstChild.nodeValue = ("Prairie Total: $" + numFormatting(scope.parent.economics.data[9]['Action - Cost Type'].total));
+  consFor.firstChild.nodeValue = ("Conservation Forest Total: $" + numFormatting(scope.parent.economics.data[10]['Action - Cost Type'].total));
+  convFor.firstChild.nodeValue = ("Conventional Forest Total: $" + numFormatting(scope.parent.economics.data[11]['Action - Cost Type'].total));*/
+  switchgrass.firstChild.nodeValue = ("Switchgrass Total: $" + numFormatting(scope.parent.economics.data[year][12]['Action - Cost Type'].total));
+  shortRWB.firstChild.nodeValue = ("Short-Rotation Woody Bioenergy Total: $" + numFormatting(scope.parent.economics.data[year][13]['Action - Cost Type'].total));
+  wetland.firstChild.nodeValue = ("Wetland Total: $" + numFormatting(scope.parent.economics.data[year][14]['Action - Cost Type'].total));
+  mixedFaV.firstChild.nodeValue = ("Mixed Fruits & Vegetables Total: $" + numFormatting(scope.parent.economics.data[year][15]['Action - Cost Type'].total));
 
-  convCornASoy.firstChild.nodeValue = ("Conventional Corn after Soybean Total: $" + scope.parent.economics.dataSubcrop[year]['Conventional Corn']['Corn after Soybean']);
-  convCornACorn.firstChild.nodeValue = ("Conventional Corn after Corn Total: $" + scope.parent.economics.dataSubcrop[year]['Conventional Corn']['Corn after Corn']);
-  consCornASoy.firstChild.nodeValue = ("Conservation Corn after Soybean Total: $" + scope.parent.economics.dataSubcrop[year]['Conservation Corn']['Corn after Soybean']);
-  consCornACorn.firstChild.nodeValue = ("Conservation Corn after Corn Total: $" + scope.parent.economics.dataSubcrop[year]['Conservation Corn']['Corn after Corn']);
-  grapes.firstChild.nodeValue = ("Grapes Total: $" + scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Grapes (Conventional)']);
-  greenBeans.firstChild.nodeValue = ("Green Beans Total: $" + scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Green Beans']);
-  squash.firstChild.nodeValue = ("Squash Total: $" + scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Winter Squash']);
-  strawberries.firstChild.nodeValue = ("Strawberries Total: $" + scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Strawberries']);
+  convCornASoy.firstChild.nodeValue = ("Conventional Corn after Soybean Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conventional Corn']['Corn after Soybean']));
+  convCornACorn.firstChild.nodeValue = ("Conventional Corn after Corn Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conventional Corn']['Corn after Corn']));
+  consCornASoy.firstChild.nodeValue = ("Conservation Corn after Soybean Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conservation Corn']['Corn after Soybean']));
+  consCornACorn.firstChild.nodeValue = ("Conservation Corn after Corn Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conservation Corn']['Corn after Corn']));
+  grapes.firstChild.nodeValue = ("Grapes Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Grapes (Conventional)']));
+  greenBeans.firstChild.nodeValue = ("Green Beans Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Green Beans']));
+  squash.firstChild.nodeValue = ("Squash Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Winter Squash']));
+  strawberries.firstChild.nodeValue = ("Strawberries Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Strawberries']));
 
   /*convCorn.firstChild.nodeValue += (" Total: $" + localStorage.getItem('convCorn'));
   consCorn.firstChild.nodeValue += (" Total: $" + localStorage.getItem('consCorn'));
