@@ -6641,7 +6641,8 @@ function uploadJSON(reader) {
  * This function has been modified to be compatible with pewi-v3 and current development in 2019.
  * There are certain differences in the files of the above two versions -
  * - Current development of 2019 has 3 new columns added at indices 25, 26, 30 of the pewi-v3 csv file.
- * - The pewi-v3 csv has 2 empty columns at the end of its 'header' row, and 1 empty column at the end of all other rows. They are removed here for convenience.
+ * - The pewi-v3 csv has 2 empty columns at the end of its 'header' row, and 1 empty column at the end of all other rows.
+ *   The empty cols are removed here to make as little modification as possible to the existing code. 
  *
  * @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
  */
@@ -6733,8 +6734,6 @@ function uploadCSV(reader) {
           data.splice(35,1);
         }
       }
-
-
 
       var headlength = headers.length;
       if (data.length == headlength) {
