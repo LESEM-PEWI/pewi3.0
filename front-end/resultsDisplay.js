@@ -2196,7 +2196,7 @@ function tableSort(column){
 function numSort(column){
   let values = generateEconTableData();
   values.sort(function(a,b){
-    return Number.parseFloat(a[column]) - Number.parseFloat(b[column]);
+    return Number.parseFloat(b[column]) - Number.parseFloat(a[column]);
   });
   this.parent.updateTables(values, this.parent);
 }
@@ -2250,7 +2250,7 @@ function generateEconomicsTables() {
 
   this.clearTableVars = () => {
     Object.keys(econtables).forEach(key =>{
-      econtables[key].table = '<table><tr><th onclick="tableSort(\'costName\')">Cost Name</th><th onclick="tableSort(\'time\')">Time</th><th onclick="tableSort(\'action\')">Action</th><th onclick="numSort(\'value\')">Value ($)</th><th>Frequency</th><th>Description</th></tr>'
+      econtables[key].table = '<table><tr><th onclick="tableSort(\'costName\')">Cost Name</th><th onclick="tableSort(\'time\')">Time</th><th onclick="tableSort(\'action\')">Action</th><th onclick="numSort(\'value\')">Value</th><th>Frequency</th><th>Description</th></tr>'
     })
   }
 
@@ -2263,7 +2263,7 @@ function generateEconomicsTables() {
       Object.keys(econtables).forEach(key =>{
         if(curLandUse == econtables[key].landuse){
           if(!values[i].subCrop || values[i].subCrop == econtables[key].subCrop){
-            econtables[key].table += "<tr><td>"+values[i].costName+"</td><td>"+values[i].time+"</td><td>"+values[i].action+'</td><td style="text-align:right">'+numFormatting(values[i].value)+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+            econtables[key].table += "<tr><td>"+values[i].costName+"</td><td>"+values[i].time+"</td><td>"+values[i].action+'</td><td style="text-align:right">'+"$"+numFormatting(values[i].value)+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
           }
         }
       });
