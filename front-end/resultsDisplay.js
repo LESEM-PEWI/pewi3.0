@@ -3346,20 +3346,20 @@ function enterpriseBudgets(){
   var accordion = document.getElementById("accordionContainer");
   var enterpriseTable = document.getElementById("accordionContainer2");
   var graph = document.getElementById("graphContainer");
-  var enterpriseButton = document.getElementById("enterpriseBudgetsButton");
+  //var enterpriseButton = document.getElementById("enterpriseBudgetsButton");
   if(accordion.style.display === "none"){
     enterpriseTable.style.display = "none";
 
      accordion.style.display = "inline-block";
     graph.style.display = "block";
-    enterpriseButton.innerHTML = "View Enterprise Budgets";
+    //enterpriseButton.innerHTML = "View Enterprise Budgets";
   }
   else{
     enterpriseTable.style.display = "inline-block";
 
      accordion.style.display = "none";
     graph.style.display = "none";
-    enterpriseButton.innerHTML = "Return to Econ Module";
+    //enterpriseButton.innerHTML = "Return to Econ Module";
   }
 }
 
