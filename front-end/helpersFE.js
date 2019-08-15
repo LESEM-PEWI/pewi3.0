@@ -195,10 +195,9 @@ function toggleTabTitle(value, dir) {
         document.getElementById(value).innerHTML = 'physical&nbsp;features';
         break;
       case 'yieldTabTitle':
-        document.getElementById(value).innerHTML = 'yield&nbsp;base&nbsp;rate';
+        document.getElementById(value).innerHTML = 'yield&nbsp;base&nbsp;rates';
         break;
     }
-
     document.getElementById(value).style.display = 'inline-block';
   } else {
     document.getElementById(value).style.display = 'none';
@@ -2131,63 +2130,63 @@ function redrawOverlay(highlightType){
   switch (highlightType) {
     case 'nitrate':
       selectionHighlightNumber = 1;
-      updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 42, 0, null);
       }
       break;
     case 'erosion':
       selectionHighlightNumber = 2;
-      updateIndexPopup('To learn more about <span style="color:orange;">Erosion</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Soil Quality"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange;">Erosion</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Soil Quality"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 43, 0, null);
       }
       break;
     case 'phosphorus':
       selectionHighlightNumber = 3;
-      updateIndexPopup('To learn more about <span style="color:orange;">Phosphorus</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+      updateGlossaryPopup('To learn more about <span style="color:orange;">Phosphorus</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 44, 0, null);
       }
       break;
     case 'flood':
       selectionHighlightNumber = 4;
-      updateIndexPopup('This map shows the <span style="color:orange;">frequency of flooding</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the <span style="color:orange;">frequency of flooding</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 45, 0, null);
       }
       break;
     case 'drainage':
       selectionHighlightNumber = 5;
-      updateIndexPopup('This map shows the <span style="color:orange;">drainage</span> for each pixel. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the <span style="color:orange;">drainage</span> for each pixel. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 48, 0, null);
       }
       break;
     case 'wetlands':
       selectionHighlightNumber = 6;
-      updateIndexPopup('This map shows the locations for each <span style="color:orange;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the locations for each <span style="color:orange;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 46, 0, null);
       }
       break;
     case 'boundary':
       selectionHighlightNumber = 7;
-      updateIndexPopup('This map shows the <span style="color:orange;">boundaries of each subwatershed</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the <span style="color:orange;">boundaries of each subwatershed</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 47, 0, null);
       }
       break;
     case 'soil':
       selectionHighlightNumber = 8;
-      updateIndexPopup('There are <span style="color:orange;">thirteen</span> different soil classes that each have different properties. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('There are <span style="color:orange;">thirteen</span> different soil classes that each have different properties. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 49, 0, null);
       }
       break;
     case 'topo':
       selectionHighlightNumber = 9;
-      updateIndexPopup('This map shows the <span style="color:orange;">topography</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the <span style="color:orange;">topography</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 50, 0, null);
       }
@@ -2249,7 +2248,7 @@ function redrawOverlay(highlightType){
       break;
     case 'sediment':
      selectionHighlightNumber = 19;
-     updateIndexPopup('To learn more about <span style="color:orange;">Sediment Control</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+     updateGlossaryPopup('To learn more about <span style="color:orange;">Sediment Control</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
      if (curTracking) {
        pushClick(0, getStamp(), 78, 0, null);
      }
@@ -2257,7 +2256,7 @@ function redrawOverlay(highlightType){
 
     case 'carbon':
     selectionHighlightNumber = 20;
-    updateIndexPopup('To learn more about <span style="color:orange;">Carbon Sequestration</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Carbon Sequestration</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 79, 0, null);
     }
@@ -2265,7 +2264,7 @@ function redrawOverlay(highlightType){
 
     case 'gamewildlife':
     selectionHighlightNumber = 21;
-    updateIndexPopup('To learn more about <span style="color:orange;">Game Wildlife</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Game Wildlife</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 80, 0, null);
     }
@@ -2273,7 +2272,7 @@ function redrawOverlay(highlightType){
 
     case 'biodiversity':
     selectionHighlightNumber = 22;
-    updateIndexPopup('To learn more about <span style="color:orange;">Biodiversity</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Biodiversity</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 81, 0, null);
     }
@@ -2281,7 +2280,7 @@ function redrawOverlay(highlightType){
 
     case 'nitratetile':
     selectionHighlightNumber = 23;
-    updateIndexPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
+    updateGlossaryPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
     if (curTracking) {
       pushClick(0, getStamp(), 82, 0, null);
     }
@@ -3194,16 +3193,18 @@ function getHighlightedInfo(tileId) {
         break;
         //Raw numbers are for conversion of the units (conversion doesn't exist in the back end)
         //create string for corn grain yield
+        //
+        // values multipilied by 14.8697 are being converted to bushels per acre, wood multiplied by 423.766 to convert to board-ft per acre
       case 10:
-        highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857).toFixed(1) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857 * 14.8697).toFixed(1) + " bu/ac/yr" + "<br>";
         break;
         //create string for soybean yield
       case 11:
-        highlightString = Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643).toFixed(2) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getSoybeanYield() / 14.87414187643 * 14.8697).toFixed(2) + " bu/ac/yr" + "<br>";
         break;
         //create string for  mixed fruit and vegetable yield
       case 12:
-        highlightString = Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492).toFixed(2) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getMixedFruitsVegetablesYield() / 0.060801144492 * 0.44609).toFixed(2)  + " tons/ac/yr" + "<br>";
         break;
         //create string for cattle yield
       case 13:
@@ -3211,19 +3212,19 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for alfalfa yield
       case 14:
-        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638 * 0.44609).toFixed(2) + " tons/ac/yr" + "<br>";
         break;
         //create string for grass hay yield (same as alfalfa)
       case 15:
-        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638).toFixed(1) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getHayYield() / 0.446808510638 * 0.44609).toFixed(2) + " tons/ac/yr" + "<br>";
         break;
         //create string for switchgrass yield
       case 16:
-        highlightString = Number(boardData[currentBoard].map[tileId].getSwitchgrassYield() / 0.445407279029).toFixed(2) + " Mg/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getSwitchgrassYield() / 0.445407279029 * 0.44609).toFixed(2) + " tons/ac/yr" + "<br>";
         break;
         //create string for wood yield
       case 17:
-        highlightString = Number(boardData[currentBoard].map[tileId].getWoodYield() / 171.875).toFixed(2) + " m3/ha/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getWoodYield() / 171.875 * 423.766).toFixed(2) + " board-ft/ac/yr" + "<br>";
         break;
         //create string for short-rotation woody biomass yield
       case 18:
@@ -3736,6 +3737,9 @@ function multiplayerMode() {
     document.getElementById('pewiLogo').style.right = '18.5vw';
     // Hide the progress bar
     document.getElementById('progressBarContainer').style.display = 'none';
+    for(let i = 1; i <= 15; i++){
+      document.getElementById('paint' + i).style.display = 'none';
+    }
   }
 }
 
@@ -6224,6 +6228,10 @@ function transitionToYear(year) {
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year - 1] = boardData[currentBoard].map[i].landType[year];
     } // end for
+    if(overlayTemp == true){
+      overlayTemp = false;
+    }
+    mapIsHighlighted = false;
     boardData[currentBoard].updateBoard();
     refreshBoard();
     //now make the landtype of the one deleted to 1 - in this case, landtype[3] = 1
@@ -6259,6 +6267,10 @@ function transitionToYear(year) {
     for (var i = 0; i < boardData[currentBoard].map.length; i++) {
       boardData[currentBoard].map[i].landType[year - 1] = boardData[currentBoard].map[i].landType[year];
     } //end for
+    if(overlayTemp == true){
+      overlayTemp = false;
+    }
+    mapIsHighlighted = false;
     boardData[currentBoard].updateBoard();
     refreshBoard();
     //if year 2 was the only other year, then make year 2 as default
@@ -6285,6 +6297,10 @@ function transitionToYear(year) {
   g_isDeleted = false;
   //update here for regular cases;
   if (!specialCase) {
+    if(overlayTemp == true){
+      overlayTemp = false;
+    }
+    mapIsHighlighted = false;
     boardData[currentBoard].updateBoard();
     refreshBoard();
   }

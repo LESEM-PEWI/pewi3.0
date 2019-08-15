@@ -63,14 +63,12 @@ var printMode = false;
 var takeScreenshot = false; // used in animationFrames
 
 //===================
-
 //Camera movements Controls for Camera2 ie second view
 function animate() {
-  var hotkeys = giveHotkeys();
   requestAnimationFrame(animate);
 
   //Keyboard movement inputs
-  if (keyboard[hotkeys[8][0]] || keyboard[hotkeys[8][1]]) { // Handle W key - Forward Movements
+  if (keyboard[hotkeyArr[8][0]] || keyboard[hotkeyArr[8][1]]) { // Handle W key - Forward Movements
     if (curTracking) {
       pushClick(0, getStamp(), 86, 0, null);
     }
@@ -92,7 +90,7 @@ function animate() {
     console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[9][0]] || keyboard[hotkeys[9][1]]) { // Handle S key - Back Words movements
+  if (keyboard[hotkeyArr[9][0]] || keyboard[hotkeyArr[9][1]]) { // Handle S key - Back Words movements
     if (curTracking) {
       pushClick(0, getStamp(), 87, 0, null);
     }
@@ -114,10 +112,12 @@ function animate() {
     console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[7][0]] || keyboard[hotkeys[7][1]]) { // Handle A key - Left Side Movement
+  if (keyboard[hotkeyArr[7][0]] || keyboard[hotkeyArr[7][1]]) { // Handle A key - Left Side Movement
     if (curTracking) {
       pushClick(0, getStamp(), 89, 0, null);
     }
+
+    checkZVal();
     //Movements Restrictions and setting bounds
     //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
     //and if it does it resets it to that specific position set.
@@ -136,10 +136,12 @@ function animate() {
     console.log(camera2.position);
   }
 
-  if (keyboard[hotkeys[6][0]] || keyboard[hotkeys[6][1]]) { // Handle D key - Right side Movements
+  if (keyboard[hotkeyArr[6][0]] || keyboard[hotkeyArr[6][1]]) { // Handle D key - Right side Movements
     if (curTracking) {
       pushClick(0, getStamp(), 88, 0, null);
     }
+
+    checkZVal();
     //Movements Restrictions and setting bounds
     //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
     //and if it does it resets it to that specific position set.
@@ -220,7 +222,6 @@ function animate() {
       // console.log(camera2.position.y + " " + camera.position.z);
     }
   }
-  renderer.render(scene, camera);
 }
 
 //animationFrames is the key function involved in webGl
@@ -580,7 +581,7 @@ function loadingManager() {
 
   //DefaultLoadingManager.onProgress is a THREE.js function that tracks when items are loaded
   THREE.DefaultLoadingManager.onProgress = function(item, loaded, total) {
-
+    // console.log(" loaded " + loaded + " of " + total);
   };
 
   //DefaultLoadingManager.onload updates boolean allLoaded when all resources are loaded
@@ -950,7 +951,7 @@ function switchBoards(newBoard) {
 
   //update Results to point to correct board since currentBoard is updated
   Totals = new Results(boardData[currentBoard]);
-  generatedContourMap = generatedContourMap || new ContourMap(); //to ensure that we don't make a new map if we don't need to.
+  generatedContourMap = new ContourMap();
 
 } //end switchBoards
 

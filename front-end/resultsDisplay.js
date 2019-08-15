@@ -4070,23 +4070,16 @@ function createMockDataGraphic1(){
       d.Revenue = el.cost * (Math.random()*-2);
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
       d.Loss = Math.min(d.Revenue + d.Cost, 0);
-      data.push(d);
-
+      dataEcon1.push(d);
     });
   }
-
-  return data;
-
-}
-
-function calculateDataTotals(){
-
+  return dataEcon1;
 }
 function EconomicsGraphic1() {
-  console.log(this);
-  this.options = [];
-  this.render =  () => {
+  options = [];
+  this.render = () => {
     svg.selectAll("*").remove();
+    initOptions();
     //just delete all contents for redraw, it is a lot easier for a graph that needs to move things
     // definetely possible to do otherwise, but a little out of scope.
     drawBars();
@@ -4116,17 +4109,31 @@ function EconomicsGraphic1() {
   var formatData = () => { //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
     console.log(this);
     tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
-    data = tempData.filter(el => {
-      if(this.options.indexOf(el.landUse.replace(/\s/g,'')) > -1) return false;
-      if(this.options.indexOf(el.year) > -1) return false;
-      if(this.options.indexOf('Cost') > -1) el.Cost = 0;
-      if(this.options.indexOf('Revenue') > -1) el.Revenue = 0;
-      if(this.options.indexOf('Profit') > -1) el.Profit = 0;
-      if(this.options.indexOf('Loss') > -1) el.Loss = 0;
+    data1 = tempData.filter(el => {
+      if(options.indexOf(el.landUse.replace(/\s/g,'')) > -1) return false;
+      if(options.indexOf(el.year) > -1) return false;
+      if(options.indexOf('Cost') > -1) el.Cost = 0;
+      if(options.indexOf('Revenue') > -1) el.Revenue = 0;
+      if(options.indexOf('Profit') > -1) el.Profit = 0;
+      if(options.indexOf('Loss') > -1) el.Loss = 0;
       return el != null;
     });
 
     return data;
+  }
+
+  initOptions = () => {
+    var econData = economics.data
+    econData[1].forEach((lu, j) => {
+      let bool = true;
+      for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+        if(!(econData[i][j]["Action - Cost Type"].total === 0 && !options.includes(lu.landUse.replace(/\s/g,'')) ||
+        econData[i][j]["Action - Cost Type"].total !== 0 && options.includes(lu.landUse.replace(/\s/g,'')))){
+          bool = false;
+        }
+      }
+      if(bool) alterOptions(lu.landUse.replace(/\s/g,''), true);
+    });
   }
 
   var drawBars = () => {
@@ -4211,90 +4218,52 @@ function EconomicsGraphic1() {
 
 
   //following code adds xAxis to graph
-  var xAxis = svg.append("g")
-  .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
-  .style("font-weight", "bold")
-  .call(d3.axisBottom(x0))
-  svg.selectAll("g.tick")
-  .selectAll("text")
-  .attr("fill", "purple")
-  // .attr("y", y(y.domain()[0])-y(0))
-  .attr("transform", "translate(0," + (y(y.domain()[0])-y(0) - 12) +") rotate(-35)")
-  .style("text-anchor", "end")
+    var xAxis = svg.append("g")
+    .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
+    .style("font-weight", "bold")
+    .call(d3.axisBottom(x0))
+    svg.selectAll("g.tick")
+    .selectAll("text")
+    .attr("fill", "purple")
+    // .attr("y", y(y.domain()[0])-y(0))
+    .attr("transform", "translate(0," + (y(y.domain()[0])-y(0) - 12) +") rotate(-35)")
+    .style("text-anchor", "end")
 
-  svg.append("text")
-  .attr("transform",
-  "translate(" + (width/2) + " ," +
-  (height + 50) + ")")
-  .style("text-anchor", "left")
-  .text("Land Uses");
+    svg.append("text")
+    .attr("transform",
+    "translate(" + (width/2) + " ," +
+    (height + 50) + ")")
+    .style("text-anchor", "left")
+    .text("Land Uses");
 
-  svg.append("text")
-  .attr("transform",
-  "translate(" + (width/2) + " ," +
-  (25) + ")")
-  .style("text-anchor", "left")
-  .style("font-weight", "bold")
-  .style("font-size", "1.5vmax")
-  .text("Economics By Land Use");
+    svg.append("text")
+    .attr("transform",
+    "translate(" + (width/2) + " ," +
+    (25) + ")")
+    .style("text-anchor", "left")
+    .style("font-weight", "bold")
+    .style("font-size", "1.5vmax")
+    .text("Economics By Land Use");
 
-  //following code adds yAxis to graph
-  var yAxis = d3.axisLeft(y)
-  .tickFormat(d => formatMoney(d))
-  .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
-  .tickSizeOuter(0)
-  svg.append("g")
-  .attr("transform", "translate(" + margin.left + ", 0)")
-  .call(yAxis);
+    //following code adds yAxis to graph
+    var yAxis = d3.axisLeft(y)
+    .tickFormat(d => formatMoney(d))
+    .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
+    .tickSizeOuter(0)
+    svg.append("g")
+    .attr("transform", "translate(" + margin.left + ", 0)")
+    .call(yAxis);
 
-  svg.selectAll("g.tick")
-  .style("stroke-dasharray", ("3,3"))
+    svg.selectAll("g.tick")
+    .style("stroke-dasharray", ("3,3"))
 
-  svg.append("text")
-  .attr("transform", "rotate(-90)")
-  .attr("y", 0)
-  .attr("x", 0 - (height / 2))
-  .attr("dy", "1em")
-  .style("text-anchor", "middle")
-  .text("Value");
-}
-
-
-  function bar(x,y,w,h,r,f) {
-    if(h){
-      r = Math.min(r, h/2, w/2);
-      // x coordinates of top of arcs
-      let x0 = x + r;
-      let x1 = x + w - r;
-      // y coordinates of bottom of arcs
-      if(f){ //if positive round the tops
-        let y0 = y - h + r;
-        // assemble path:
-        let parts = [
-          "M",x,y,               // step 1
-          "L",x,y0,              // step 2
-          "A",r,r,0,0,1,x0,y-h,  // step 3
-          "L",x1,y-h,            // step 4
-          "A",r,r,0,0,1,x+w,y0,  // step 5
-          "L",x+w,y,             // step 6
-          "Z"                    // step 7
-         ];
-         return parts.join(" ");
-      }
-      else { //if negative roudn the bottoms
-        let y0 = y + h - r;
-        let parts = [
-          "M",x,y,               // step 1
-          "L",x,y0,              // step 2
-          "A",r,r,0,0,0,x0,y+h,  // step 3
-          "L",x1,y+h,            // step 4
-          "A",r,r,0,0,0,x+w,y0,  // step 5
-          "L",x+w,y,             // step 6
-          "Z"                    // step 7
-         ];
-         return parts.join(" ");
-      }
-    }
+    svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Value");
   }
 
   var drawLegend = () => {
@@ -4345,7 +4314,7 @@ function EconomicsGraphic1() {
       checkBox.type = 'checkbox';
       checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
       checkBox.style.float = 'right';
-      checkBox.checked = true;
+      if(!options.includes(d.replace(/\s/g,''))) checkBox.checked = true;
       cell.appendChild(checkBox);
       container.appendChild(cell);
     })
@@ -4379,16 +4348,15 @@ function EconomicsGraphic1() {
     });
   }
 
-  var alterOptions = (option) => { //This changes the options array to contain up to date options
-    if (this.options.includes(option)){
-      this.options.splice(this.options.indexOf(option),1);
+  var alterOptions = (option, skip) => { //This changes the options array to contain up to date options
+    if (options.includes(option)){
+      options.splice(options.indexOf(option),1);
     }
     else {
-      this.options.push(option);
+      options.push(option);
     }
-    rerender();
+    if(!skip) rerender();
   }
-  console.log(this.render);
   var rerender = () => { //We dont want to rebuild the options when we need to render again
     svg.selectAll("*").remove();
     drawBars();
@@ -5503,9 +5471,9 @@ function EconomicsGraphic2(){
   var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph2tt"));
 
   var margin = {top: 40, right: 10, bottom: 60, left: 55};
-  let windowWidth=window.innerWidth;
-  var width = windowWidth *0.8- margin.left - margin.right;
-  var height =window.innerHeight*.6 - margin.top - margin.bottom;
+  var screenWidth = window.innerWidth;
+  var width = screenWidth*.8 - margin.left - margin.right;
+  var height = screenWidth*.40 - margin.top - margin.bottom; //give or take the golden ratio
   var x0, x, y, fullData, data, keys; //initialize some variables so that they may be truly initialized in one function and accessed in a nother
   var options = [];
 
@@ -5545,8 +5513,8 @@ function EconomicsGraphic2(){
   initOptions = () => {
     var econData = economics.data[year]
     econData.forEach(lu => {
-      if(lu[currentSelection].total === 0 && !options.includes(lu.landUse.replace(/\s/g,'')) ||
-      lu[currentSelection].total !== 0 && options.includes(lu.landUse.replace(/\s/g,''))){
+      if(lu["Action - Cost Type"].total === 0 && !options.includes(lu.landUse.replace(/\s/g,'')) ||
+      lu["Action - Cost Type"].total !== 0 && options.includes(lu.landUse.replace(/\s/g,''))){
         alterOptions(lu.landUse.replace(/\s/g,''), true);
       }
     });
