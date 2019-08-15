@@ -1942,7 +1942,7 @@ function generateResultsTable() {
     //END of Table 1 (Players)==================================================
 
     //Start of Precipitation table
-    htmlTableString += "<table id='table3' class='resultsTable'>";
+    htmlTableString += "<table id='table4' class='resultsTable'>";
 
     //add header
     htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Precipitation </th>";
@@ -1988,7 +1988,7 @@ function generateResultsTable() {
     //END of Table 2 (Precipitation)==================================================
 
     //Start of Strategic Wetland Use table
-    htmlTableString += "<table id='table3' class='resultsTable'>";
+    htmlTableString += "<table id='table4' class='resultsTable'>";
 
     //The code below is to add the column titles for Players section of results table
     //add header
@@ -2027,9 +2027,9 @@ function generateResultsTable() {
     //===========================END OF RESTULTS TABLE (if version)
   }//end of if
   else {
-    htmlTableString += "<tr class='tableHeading'> <th> Land Use Category </th>";
+    htmlTableString += "<tr class='tableHeading'> <th width='34%'> Land Use Category </th>";
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
@@ -2150,7 +2150,7 @@ function generateResultsTable() {
 
     //add header row
 
-    htmlTableString += "<tr class='tableHeading'> <th> Ecosystem Service Indicator <br> / Measurement </th>";
+    htmlTableString += "<tr class='tableHeading'> <th width='34%'> Ecosystem Service Indicator <br> / Measurement </th>";
 
     for (var y = 1; y <= upToYear; y++) {
       htmlTableString += "<th>";
@@ -2185,66 +2185,13 @@ function generateResultsTable() {
       //keep track if we need to add the appropriate subheading lines
       switch (l) {
         case 0:
-          //htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
-          //  //put Habitat header, in bold
-            htmlTableString += "<tr>";
-            htmlTableString += "<td><b>" + "Habitat" + "<b></td>";
-            //calculate total score for each year and place next to Habitat header
-            for(var y = 1; y <= upToYear; y++){
-              htmlTableString += "<td><b>";
-
-              var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y])/2;
-
-              htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
-
-              htmlTableString += "<b></td>";
-            }
-            htmlTableString += "<td><b>(out of 100)<b></td>";
-            //add extra spaces to fill out bar across screen
-            for(var y = 1; y <= (2*upToYear)+2; y++){
-              htmlTableString += "<td></td>";
-            }
-            break;
+          htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
           break;
         case 2:
-          //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
-          htmlTableString += "<tr>";
-          htmlTableString += "<td><b>" + "Soil Quality" + "<b></td>";
-          //calculate total score for each year and place next to Habitat header
-          for(var y = 1; y <= upToYear; y++){
-            htmlTableString += "<td><b>";
-
-            var totalScore = (Totals.carbonSequestrationScore[y]+Totals.grossErosionScore[y])/2;
-
-            htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
-
-            htmlTableString += "<b></td>";
-          }
-          htmlTableString += "<td><b>(out of 100)<b></td>";
-          //add extra spaces to fill out bar across screen
-          for(var y = 1; y <= (2*upToYear)+2; y++){
-            htmlTableString += "<td></td>";
-          }
+          htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
           break;
         case 4:
-          //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
-          htmlTableString += "<tr>";
-          htmlTableString += "<td><b>" + "Water Quality" + "<b></td>";
-          //calculate total score for each year and place next to Habitat header
-          for(var y = 1; y <= upToYear; y++){
-            htmlTableString += "<td><b>";
-
-            var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y])/3;
-
-            htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
-
-            htmlTableString += "<b></td>";
-          }
-          htmlTableString += "<td><b>(out of 100)<b></td>";
-          //add extra spaces to fill out bar across screen
-          for(var y = 1; y <= (2*upToYear)+2; y++){
-            htmlTableString += "<td></td>";
-          }
+          htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
           break;
       } //end switch
 
@@ -2406,7 +2353,7 @@ function generateResultsTable() {
     //============================
     //TABLE FOUR, SPECIAL INDICATORS
 
-    htmlTableString += "<table id='table3' class='resultsTable'>";
+    htmlTableString += "<table id='table4' class='resultsTable'>";
 
     //add header row
 
@@ -4105,9 +4052,9 @@ d3.selection.prototype.moveToBack = function() {
 
 function createMockDataGraphic1(){
   var econData = economics.data;
-  var dataEcon1 = econData.map
+  var data = econData.map
   tempData = [];
-  dataEcon1 = [];
+  data = [];
   for(var i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
   tempData[i] = econData[i].map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
@@ -4121,12 +4068,12 @@ function createMockDataGraphic1(){
       d.Revenue = el.cost * (Math.random()*-2);
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
       d.Loss = Math.min(d.Revenue + d.Cost, 0);
-      dataEcon1.push(d);
+      data.push(d);
 
     });
   }
 
-  return dataEcon1;
+  return data;
 
 }
 
@@ -4167,7 +4114,7 @@ function EconomicsGraphic1() {
   var formatData = () => { //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
     console.log(this);
     tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
-    data1 = tempData.filter(el => {
+    data = tempData.filter(el => {
       if(this.options.indexOf(el.landUse.replace(/\s/g,'')) > -1) return false;
       if(this.options.indexOf(el.year) > -1) return false;
       if(this.options.indexOf('Cost') > -1) el.Cost = 0;
@@ -4177,7 +4124,7 @@ function EconomicsGraphic1() {
       return el != null;
     });
 
-    return data1;
+    return data;
   }
 
   var drawBars = () => {
@@ -4463,7 +4410,7 @@ function stackMax(layers) {
 
 formatDataGraphic3 = () => {
   econData = economics.data3;
-  econ3data = []; //{year, cost type, vallue}
+  data = []; //{year, cost type, vallue}
   actions = new Array();
   times = new Array();
   econData.forEach((year, i) => {
@@ -4485,9 +4432,9 @@ formatDataGraphic3 = () => {
     });
   });
 
-  econ3data.push(actions);
-  econ3data.push(times);
-  return econ3data;
+  data.push(actions);
+  data.push(times);
+  return data;
 }
 
 function EconomicsGraphic3() {
@@ -4808,16 +4755,16 @@ function econGraphic4DisplayData(landUse,costType,cost,year){
   econdata=econdata[0].array.filter(function(item){
     return item[costType]==cost;
   });
-  data4=[];
+  data=[];
   for (var i = 0; i < econdata.length; i++) {
-    if(data4.some(e=>e.costname===econdata[i]['Cost Name'])){
-      objIndex = data4.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
-      data4[objIndex].value+=parseFloat(econdata[i].Value);
+    if(data.some(e=>e.costname===econdata[i]['Cost Name'])){
+      objIndex = data.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
+      data[objIndex].value+=parseFloat(econdata[i].Value);
     }else{
-      data4.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
+      data.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
     }
   }
-return data4;
+return data;
  }
  /**
   * Econ Module Graphic 4 render and information
