@@ -52,6 +52,10 @@ th {
   background: rgba(256, 256, 256, 0);
 }
 
+.verticalLine {
+  border-right: 1px solid black;
+}
+
 tr:hover {
   background-color: rgba(154, 173, 163, 0.5);
 }
