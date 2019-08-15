@@ -1330,7 +1330,8 @@ function calculateResults(tileId, y) {
 } //end calculateResults
 
 //changeLandTypeTile changes the landType of a selected tile
-function changeLandTypeTile(tileId) {
+function changeLandTypeTile(tileId, inYear) {
+  let year = inYear || currentYear
   //console.log(boardData[currentBoard].map[tileId]);
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //Add tile to the undoArr
@@ -1338,7 +1339,7 @@ function changeLandTypeTile(tileId) {
       addChange(tileId);
     }
     //if land type of tile is nonzero
-    if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
+    if (boardData[currentBoard].map[tileId].landType[year] != 0) {
       //change the materials of the faces in the meshMaterials array and update the boardData
       if (!multiplayerAssigningModeOn) {
         // textureArray is a global array that links to each landType image, it was load in loader.js
@@ -1366,11 +1367,11 @@ function changeLandTypeTile(tileId) {
 
             }
             // record the data changes in boardData
-            boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+            boardData[currentBoard].map[tileId].landType[year] = painter;
             // update boardData figures
-            boardData[currentBoard].map[tileId].update(currentYear);
+            boardData[currentBoard].map[tileId].update(year);
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
-            calculateResults(tileId, currentYear);
+            calculateResults(tileId, year);
             //console.log(boardData[currentBoard].map[tileId]);
           }
         }
@@ -5180,13 +5181,12 @@ function saveAndRandomize() {
     outer: for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
-          painter = newDefaultLandUse;
           meshMaterials[j].map = grayTextureArray[painter];
           meshOverlay[j].map = grayTextureArray[painter];
+          activeLandUses = randomPainterTile;
 
-          boardData[currentBoard].map[j].landType[i] = painter;
-          boardData[currentBoard].map[j].update(i);
-          forNitrateCalc[i][j] = 1;
+          toggleReplacementFrame(randomPainterTile);
+          break outer;
         }
       }
     }
@@ -5916,7 +5916,7 @@ function toggleEscapeFrame() {
 function toggleReplacementFrame(options) {
   var modal = document.getElementById('modalReplacement');
   innermodal = modal.contentDocument || modal.contentWindow.document;
-  if(modal.style.visibility === 'visible'){
+  if(modal.style.display === 'block'){
     modal.style.display = 'none';
     modalUp = false;
   }
@@ -5928,6 +5928,7 @@ function toggleReplacementFrame(options) {
       select.removeChild(select.firstChild);
     }
     options.forEach(function(option){
+      if(option === 14) return;
       var opt = document.createElement('option');
       opt.innerHTML = LandUseType.getPrintFriendlyType(option);
       opt.value = option;
@@ -5938,18 +5939,22 @@ function toggleReplacementFrame(options) {
 }
 
 function fillDeactivatedLands(){
-  var modal = document.getElementById('modalReplacement');
-  innermodal = modal.contentDocument || modal.contentWindow.document;
-  select = innermodal.getElementById('replacementSelect');
+  let modal = document.getElementById('modalReplacement');
+  let innermodal = modal.contentDocument || modal.contentWindow.document;
+  let select = innermodal.getElementById('replacementSelect');
+  temp = painter; //Since changeLandTypeTile requires the global variable painter to paint we want to save it's state and change it back.
+  painter = parseInt(select.value);
   for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
     for (var j = 0; j < boardData[currentBoard].map.length; j++) {
       if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !activeLandUses.includes(boardData[currentBoard].map[j].landType[i])) {
-        boardData[currentBoard].map[j].landType[i] = parseInt(select.value);
+        changeLandTypeTile(j, i);
       }
     }
   }
   toggleReplacementFrame();
   refreshBoard();
+  painter = temp;
+  refreshProgressBar(currentYear);
 }
 
 //toggleGlossary displays and hides the codex
