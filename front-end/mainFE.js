@@ -117,7 +117,6 @@ function animate() {
       pushClick(0, getStamp(), 89, 0, null);
     }
 
-    checkZVal();
     //Movements Restrictions and setting bounds
     //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
     //and if it does it resets it to that specific position set.
@@ -141,7 +140,6 @@ function animate() {
       pushClick(0, getStamp(), 88, 0, null);
     }
 
-    checkZVal();
     //Movements Restrictions and setting bounds
     //The four if statements check if the four side of the pewi shed bounds for the camera pass a specific point set
     //and if it does it resets it to that specific position set.
