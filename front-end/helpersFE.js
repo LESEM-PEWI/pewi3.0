@@ -5180,13 +5180,12 @@ function saveAndRandomize() {
     outer: for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
-          painter = newDefaultLandUse;
           meshMaterials[j].map = grayTextureArray[painter];
           meshOverlay[j].map = grayTextureArray[painter];
+          activeLandUses = randomPainterTile;
 
-          boardData[currentBoard].map[j].landType[i] = painter;
-          boardData[currentBoard].map[j].update(i);
-          forNitrateCalc[i][j] = 1;
+          toggleReplacementFrame(randomPainterTile);
+          break outer;
         }
       }
     }
@@ -5916,7 +5915,7 @@ function toggleEscapeFrame() {
 function toggleReplacementFrame(options) {
   var modal = document.getElementById('modalReplacement');
   innermodal = modal.contentDocument || modal.contentWindow.document;
-  if(modal.style.visibility === 'visible'){
+  if(modal.style.display === 'block'){
     modal.style.display = 'none';
     modalUp = false;
   }
@@ -5928,6 +5927,7 @@ function toggleReplacementFrame(options) {
       select.removeChild(select.firstChild);
     }
     options.forEach(function(option){
+      if(option === 14) return;
       var opt = document.createElement('option');
       opt.innerHTML = LandUseType.getPrintFriendlyType(option);
       opt.value = option;
