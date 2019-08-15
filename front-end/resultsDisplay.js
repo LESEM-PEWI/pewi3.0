@@ -1794,6 +1794,7 @@ function generateResultsTable() {
 
   var toMetricFactorArea = 2.471;
   var upToYear = boardData[currentBoard].calculatedToYear;
+  var yearWidth = 17 / upToYear + "%";
 
   /*
   * The variable 'dataset' is a variable that holds all the information of map land distribution for multiplayer mode.
@@ -2027,30 +2028,30 @@ function generateResultsTable() {
     //===========================END OF RESTULTS TABLE (if version)
   }//end of if
   else {
-    htmlTableString += "<tr class='tableHeading'> <th> Land Use Category </th>";
+    htmlTableString += "<tr class='tableHeading'> <th width='28%'> Land Use Category </th>";
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Percentage</th>";
+    htmlTableString += "<th width='11%'>Percentage</th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Units (English) </th>";
+    htmlTableString += "<th width='11%'>Units (English) </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Units (Metric) </th>";
+    htmlTableString += "<th width='11%'>Units (Metric) </th>";
 
     htmlTableString += "</tr>";
 
@@ -2165,31 +2166,31 @@ function generateResultsTable() {
 
     //add header row
 
-    htmlTableString += "<tr class='tableHeading'> <th> Ecosystem Service Indicator <br> / Measurement </th>";
+    htmlTableString += "<tr class='tableHeading'> <th width='28%''> Ecosystem Service Indicator <br> / Measurement </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Score</th>";
+    htmlTableString += "<th width='11%'>Score</th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Units (English) </th>";
+    htmlTableString += "<th width='11%'>Units (English) </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Units (Metric) </th>";
+    htmlTableString += "<th width='11%'>Units (Metric) </th>";
 
     htmlTableString += "</tr>";
 
