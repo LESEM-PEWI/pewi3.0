@@ -5182,9 +5182,14 @@ function saveAndRandomize() {
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
           meshMaterials[j].map = grayTextureArray[painter];
           meshOverlay[j].map = grayTextureArray[painter];
-          activeLandUses = randomPainterTile;
+          var checkbox = window.top.document.getElementById("toggleOverlay");
+          bool = checkbox.checked;
+          checkbox.checked = false;
+          switchOverlayTemp();refreshBoard();redrawOverlay();
 
+          activeLandUses = randomPainterTile;
           toggleReplacementFrame(randomPainterTile);
+          checkbox.checked = bool;
           break outer;
         }
       }
