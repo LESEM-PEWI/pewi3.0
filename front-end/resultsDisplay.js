@@ -2057,12 +2057,19 @@ function generateResultsTable() {
     //Add Data Rows
 
     //this string will add empty tags to help format the lines on the table, these initial three are to cover the coumns percentage, units(english), and units(metric)
-    var format = "<td></td><td></td><td></td>";
-
-    // add three more for each year
-    for(var i = 1; i <= upToYear; i++){
-      format += "<td></td><td></td><td></td>";
+    var format = "";
+    if(upToYear == 1){
+      format = "<td></td><td class='verticalLine'></td><td></td><td class='verticalLine'></td>";
     }
+    else if(upToYear == 2){
+      format = "<td></td><td></td><td class='verticalLine'></td><td></td><td></td><td class='verticalLine'></td>";
+    }
+    else if(upToYear == 3){
+      format = "<td></td><td></td><td></td><td class='verticalLine'></td><td></td><td></td><td></td><td class='verticalLine'></td>";
+    }
+
+
+
 
     for (var l = 0; l < backendDataIdentifiers.length; l++) {
 
@@ -2094,7 +2101,7 @@ function generateResultsTable() {
 
       htmlTableString += "<tr>";
 
-      htmlTableString += "<td>" + frontendNames[l] + "</td>";
+      htmlTableString += "<td class='verticalLine'>" + frontendNames[l] + "</td>";
 
       for (var y = 1; y <= upToYear; y++) {
         htmlTableString += "<td>";
@@ -2106,7 +2113,7 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td>percent</td>";
+      htmlTableString += "<td class='verticalLine'>percent</td>";
 
       for (var y = 1; y <= upToYear; y++) {
         htmlTableString += "<td>";
@@ -2118,7 +2125,7 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td>acres</td>";
+      htmlTableString += "<td class='verticalLine'>acres</td>";
 
       for (var y = 1; y <= upToYear; y++) {
         htmlTableString += "<td>";
