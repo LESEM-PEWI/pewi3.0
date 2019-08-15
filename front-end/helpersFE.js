@@ -5182,6 +5182,7 @@ function saveAndRandomize() {
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
           meshMaterials[j].map = grayTextureArray[painter];
           meshOverlay[j].map = grayTextureArray[painter];
+          activeLandUses = randomPainterTile;
 
           toggleReplacementFrame(randomPainterTile);
           break outer;
