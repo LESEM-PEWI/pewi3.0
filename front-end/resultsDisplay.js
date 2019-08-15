@@ -1792,8 +1792,10 @@ function drawPrecipitationInformationChart() {
 // where possible, loops are created for years
 function generateResultsTable() {
 
+
   var toMetricFactorArea = 2.471;
   var upToYear = boardData[currentBoard].calculatedToYear;
+  var yearPercentageWidth = 11 / upToYear + "%";
 
   /*
   * The variable 'dataset' is a variable that holds all the information of map land distribution for multiplayer mode.
@@ -1942,7 +1944,7 @@ function generateResultsTable() {
     //END of Table 1 (Players)==================================================
 
     //Start of Precipitation table
-    htmlTableString += "<table id='table3' class='resultsTable'>";
+    htmlTableString += "<table id='table4' class='resultsTable'>";
 
     //add header
     htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Precipitation </th>";
@@ -1988,7 +1990,7 @@ function generateResultsTable() {
     //END of Table 2 (Precipitation)==================================================
 
     //Start of Strategic Wetland Use table
-    htmlTableString += "<table id='table3' class='resultsTable'>";
+    htmlTableString += "<table id='table4' class='resultsTable'>";
 
     //The code below is to add the column titles for Players section of results table
     //add header
@@ -2027,30 +2029,30 @@ function generateResultsTable() {
     //===========================END OF RESTULTS TABLE (if version)
   }//end of if
   else {
-    htmlTableString += "<tr class='tableHeading'> <th> Land Use Category </th>";
+    htmlTableString += "<tr class='tableHeading'> <th width='34%'> Land Use Category </th>";
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearPercentageWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Percentage</th>";
+    htmlTableString += "<th width='11%'>Percentage</th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearPercentageWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Units (English) </th>";
+    htmlTableString += "<th width='11%'>Units (English) </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearPercentageWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Units (Metric) </th>";
+    htmlTableString += "<th width='11%'>Units (Metric) </th>";
 
     htmlTableString += "</tr>";
 
@@ -2150,31 +2152,31 @@ function generateResultsTable() {
 
     //add header row
 
-    htmlTableString += "<tr class='tableHeading'> <th> Ecosystem Service Indicator <br> / Measurement </th>";
+    htmlTableString += "<tr class='tableHeading'> <th width='34%'> Ecosystem Service Indicator <br> / Measurement </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearPercentageWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Score</th>";
+    htmlTableString += "<th width='11%'>Score</th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearPercentageWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Units (English) </th>";
+    htmlTableString += "<th width='11%'>Units (English) </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th width=" + yearPercentageWidth + ">";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th>Units (Metric) </th>";
+    htmlTableString += "<th width='11%'>Units (Metric) </th>";
 
     htmlTableString += "</tr>";
 
@@ -2185,66 +2187,13 @@ function generateResultsTable() {
       //keep track if we need to add the appropriate subheading lines
       switch (l) {
         case 0:
-          //htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
-          //  //put Habitat header, in bold
-            htmlTableString += "<tr>";
-            htmlTableString += "<td><b>" + "Habitat" + "<b></td>";
-            //calculate total score for each year and place next to Habitat header
-            for(var y = 1; y <= upToYear; y++){
-              htmlTableString += "<td><b>";
-
-              var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y])/2;
-
-              htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
-
-              htmlTableString += "<b></td>";
-            }
-            htmlTableString += "<td><b>(out of 100)<b></td>";
-            //add extra spaces to fill out bar across screen
-            for(var y = 1; y <= (2*upToYear)+2; y++){
-              htmlTableString += "<td></td>";
-            }
-            break;
+          htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
           break;
         case 2:
-          //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
-          htmlTableString += "<tr>";
-          htmlTableString += "<td><b>" + "Soil Quality" + "<b></td>";
-          //calculate total score for each year and place next to Habitat header
-          for(var y = 1; y <= upToYear; y++){
-            htmlTableString += "<td><b>";
-
-            var totalScore = (Totals.carbonSequestrationScore[y]+Totals.grossErosionScore[y])/2;
-
-            htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
-
-            htmlTableString += "<b></td>";
-          }
-          htmlTableString += "<td><b>(out of 100)<b></td>";
-          //add extra spaces to fill out bar across screen
-          for(var y = 1; y <= (2*upToYear)+2; y++){
-            htmlTableString += "<td></td>";
-          }
+          htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
           break;
         case 4:
-          //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
-          htmlTableString += "<tr>";
-          htmlTableString += "<td><b>" + "Water Quality" + "<b></td>";
-          //calculate total score for each year and place next to Habitat header
-          for(var y = 1; y <= upToYear; y++){
-            htmlTableString += "<td><b>";
-
-            var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y])/3;
-
-            htmlTableString += (Math.round(totalScore * 10) / 10) + "<br>";
-
-            htmlTableString += "<b></td>";
-          }
-          htmlTableString += "<td><b>(out of 100)<b></td>";
-          //add extra spaces to fill out bar across screen
-          for(var y = 1; y <= (2*upToYear)+2; y++){
-            htmlTableString += "<td></td>";
-          }
+          htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
           break;
       } //end switch
 
@@ -2406,7 +2355,7 @@ function generateResultsTable() {
     //============================
     //TABLE FOUR, SPECIAL INDICATORS
 
-    htmlTableString += "<table id='table3' class='resultsTable'>";
+    htmlTableString += "<table id='table4' class='resultsTable'>";
 
     //add header row
 
@@ -4105,9 +4054,9 @@ d3.selection.prototype.moveToBack = function() {
 
 function createMockDataGraphic1(){
   var econData = economics.data;
-  var dataEcon1 = econData.map
+  var data = econData.map
   tempData = [];
-  dataEcon1 = [];
+  data = [];
   for(var i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
   tempData[i] = econData[i].map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
@@ -4170,7 +4119,7 @@ function EconomicsGraphic1() {
       return el != null;
     });
 
-    return data1;
+    return data;
   }
 
   initOptions = () => {
@@ -4431,7 +4380,7 @@ function stackMax(layers) {
 
 formatDataGraphic3 = () => {
   econData = economics.data3;
-  econ3data = []; //{year, cost type, vallue}
+  data = []; //{year, cost type, vallue}
   actions = new Array();
   times = new Array();
   econData.forEach((year, i) => {
@@ -4453,9 +4402,9 @@ formatDataGraphic3 = () => {
     });
   });
 
-  econ3data.push(actions);
-  econ3data.push(times);
-  return econ3data;
+  data.push(actions);
+  data.push(times);
+  return data;
 }
 
 function EconomicsGraphic3() {
@@ -4776,16 +4725,16 @@ function econGraphic4DisplayData(landUse,costType,cost,year){
   econdata=econdata[0].array.filter(function(item){
     return item[costType]==cost;
   });
-  data4=[];
+  data=[];
   for (var i = 0; i < econdata.length; i++) {
-    if(data4.some(e=>e.costname===econdata[i]['Cost Name'])){
-      objIndex = data4.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
-      data4[objIndex].value+=parseFloat(econdata[i].Value);
+    if(data.some(e=>e.costname===econdata[i]['Cost Name'])){
+      objIndex = data.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
+      data[objIndex].value+=parseFloat(econdata[i].Value);
     }else{
-      data4.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
+      data.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
     }
   }
-return data4;
+return data;
  }
  /**
   * Econ Module Graphic 4 render and information
