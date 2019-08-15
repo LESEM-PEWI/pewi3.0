@@ -4054,9 +4054,9 @@ d3.selection.prototype.moveToBack = function() {
 
 function createMockDataGraphic1(){
   var econData = economics.data;
-  var data = econData.map
+  var dataEcon1 = econData.map
   tempData = [];
-  data = [];
+  dataEcon1 = [];
   for(var i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
   tempData[i] = econData[i].map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
@@ -4119,7 +4119,7 @@ function EconomicsGraphic1() {
       return el != null;
     });
 
-    return data;
+    return data1;
   }
 
   initOptions = () => {
