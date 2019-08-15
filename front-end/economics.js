@@ -4,6 +4,8 @@ var Economics = function () {
   this.mapData = [];
   this.data = [];
   this.data4 = [];
+
+  this.dataSubcrop = {};
   this.data3 = [];
   this.data3ByLU = [];
   this.data5=[];
@@ -178,6 +180,25 @@ var Economics = function () {
 
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
+    this.calcSubcrops();
+  }
+  this.calcSubcrops = function(){
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      this.dataSubcrop[i] = {};
+      this.mapData[i].forEach(dataPoint => {
+        if(dataPoint['Sub Crop']){
+          if(!this.dataSubcrop[i][dataPoint['Land-Use']]){
+            this.dataSubcrop[i][dataPoint['Land-Use']] = {};
+          }
+          if(!this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']]){
+            this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] = 0;
+          }
+          this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] =
+          Math.round(1000*this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] + 1000*Number.parseFloat(dataPoint['Value']))/1000
+        }
+      })
+    }
+
 
   }
 }

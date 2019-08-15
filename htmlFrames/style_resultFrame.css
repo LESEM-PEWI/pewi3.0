@@ -141,6 +141,21 @@ tr:hover {
   right: 90%;
 }
 
+/* When selected and hovered*/
+
+ #tab3 .tab3text {
+  visibility: hidden;
+  font-size: small;
+  width: 60px;
+  color: #000;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: 70%;
+  right: 90%;
+}
+
+
 
 /*Graphics
 */
@@ -158,6 +173,17 @@ tr:hover {
 */
 
 #tab2:hover .tab2text {
+  visibility: visible;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  position: static;
+  top: 19%;
+  left: 23.5%;
+}
+
+/*Economics
+*/
+
+ #tab3:hover .tab3text {
   visibility: visible;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   position: static;
@@ -257,6 +283,13 @@ tr:hover {
   margin: 1%;
 }
 
+
+#graphContainer {
+  height: 100%;
+  left: 25%;
+  padding-left: 25%;
+}
+
 #contentsG {
   height: 100%;
   left: 25%;
@@ -277,7 +310,31 @@ tr:hover {
                               not supported by any browser */
 }
 
-#landUseTypeContainer {}
+
+#econ {
+  height: 100%;
+  display: inline-block;
+  /*width: 800px;*/
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                              not supported by any browser */
+}
+
+#accordionContainer {
+  display: inline-block;
+  width: 75%;
+
+}
 
 #yearHolder {
   /*border: 3px solid #fdc72f;*/
@@ -301,7 +358,6 @@ tr:hover {
   height: 0;
   position: relative;
   width: 0;
-  left: 53%;
 }
 
 .upArrow, .upArrowDisabled {
@@ -317,6 +373,7 @@ tr:hover {
 
 .upArrow:hover {
   opacity: 0.6;
+  cursor: pointer;
 }
 
 .upArrowDisabled {
@@ -332,6 +389,15 @@ tr:hover {
   border-color: #c9c9d1 transparent transparent transparent;
 }
 
+.upArrowDisabledEcon {
+  border-color: #c9c9d1 transparent transparent transparent;
+}
+
+.downArrowDisabledEcon {
+  border-color: #c9c9d1 transparent transparent transparent;
+}
+
+
 .downArrow {
   border-color: #000000 transparent transparent transparent;
   opacity: 1;
@@ -340,6 +406,7 @@ tr:hover {
 
 .downArrow:hover {
   opacity: 0.6;
+  cursor: pointer;
 }
 
 .barData {
@@ -609,6 +676,7 @@ text {
 }
 
 .graphic4landuse, .graphic5Year, .graphic5LineSelection{
+
   font-size: 25px;
   background-color: skyblue;
   border-radius: 4px;
@@ -650,17 +718,23 @@ text {
   flex: 3;
   border: 3px solid #d64078;
 }
-*/
+
 
 #results-header {
   position: static;
 }
 
 #yearArrows {
-  display: block;
-  position: relative;
   top: 25%;
 }
+
+#timeActionArrows {
+  width: auto;
+  height: auto;
+  float: left;
+  top: 50%;
+}
+
 
 @media screen and (max-width: 768px) {
   /*<= 768px */
@@ -672,4 +746,100 @@ text {
 
 @media screen and (min-width: 1200px) {
   /* >= 1200px */
+}
+
+* {
+  text-decoration: none;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  }
+
+ ul {
+  list-style: none;
+  padding: 0;
+}
+
+ ul .inner {
+  width: 95%;
+  padding-left: 1em;
+  overflow: hidden;
+  display: none;
+}
+ul table{
+  table-layout: fixed;
+  width: 85%;
+}
+
+ ul li {
+  margin: .5em 0;
+}
+
+ ul li a.toggle {
+  width: 85%;
+  display: block;
+  /* background: rgba(0,0,0,0.78); */
+  background: #969696;
+  color: #fefefe;
+  padding: .75em;
+  border-radius: 0.15em;
+  transition: .3s ease;
+}
+
+ ul li a.toggle:hover {
+  background: rgba(0, 0, 0, 0.78);
+}
+
+ #plus:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: black;
+    float: right;
+    margin-left: 5px;
+}
+
+ #minus:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+    font-size: 13px;
+    color: black;
+    float: right;
+    margin-left: 5px;
+}
+
+ .leftE {
+  width: 250px;
+  left: 25%;
+  padding-right: 15%;
+  padding-bottom: 450px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+ .rightE {
+  /*height: 100%;*/
+  height: 400px;
+  width: 445px;
+  display: inline-block;
+  vertical-align: top;
+
+
+}
+
+ .holder {
+  width: 100px;
+  height: 100px;
+}
+
+ /* #yearUpEcon {
+  left: 25%
+}
+ #yearDownEcon {
+  left: 25%
+} */
+
+ #yearTextEcon {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+ #accordionContainer2 {
+  width: 600px;
 }

@@ -922,12 +922,10 @@ if (tToggle) {
       if(checkbox.checked && overlayTemp == true){
         tileMaterial2.opacity = 0.4;
         tileMaterial2.map = grayTextureArray[tile.landType[currentYear]];
-        console.log(overlayTemp);
       }
       else{
         tileMaterial2.opacity = 1.0;
         tileMaterial2.map = textureArray[tile.landType[currentYear]];
-        console.log(overlayTemp);
       }
 
     } else {
