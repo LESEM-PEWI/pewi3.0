@@ -728,6 +728,25 @@ label[for=file-upload], #sim-message-repeat {
     bottom: 25px;
 }
 
+.modalText {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 6px;
+    display: inline-block;
+    color: #FFFFFF;
+    font-family: 'Amatic SC', cursive;
+    font-family: var(--button-font-family);
+    font-size: calc(var(--font-sze)*2.5);
+    font-weight: bold;
+    left: -0.5vw;
+    line-height: 130%;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    -webkit-transition-duration: 1s;
+    transition-duration: 1s;
+    width: 13.2vw;
+}
+
 #snackbarNotification.show {
     visibility: visible;
     -webkit-animation: fadein 1.0s, fadeout 1.0s 2.5s;
