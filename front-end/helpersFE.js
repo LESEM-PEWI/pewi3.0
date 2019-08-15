@@ -6638,13 +6638,17 @@ function uploadJSON(reader) {
  * Reads a user selected .csv file and loads pewi map from the file.
  * This is called when the 'Upload' button on pewi screen is pressed and a file is selected.
  *
+ * This function has been modified to be compatible with pewi-v3 and current development in 2019.
+ * There are certain differences in the files of the above two versions -
+ * - Current development of 2019 has 3 new columns added at indices 25, 26, 30 of the pewi-v3 csv file.
+ * - The pewi-v3 csv has 2 empty columns at the end of its 'header' row, and 1 empty column at the end of all other rows. They are removed here for convenience.
+ *
  * @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
  */
 function uploadCSV(reader) {
   //initData = [];
   reader.onload = function(e) {
     resetYearDisplay();
-    setupBoardFromUpload(reader.result);
     //Code to check if data multiple years are present in the file
     var allText = reader.result;
     //converting the csv into an array
@@ -6653,21 +6657,26 @@ function uploadCSV(reader) {
     var lines = [];
     var data;
     var yearsOwned = 1;
-    // Flag tat is raised when columns 'contour area', 'buffer area' are not present in the csv file
+    // Flag that is raised when columns 'contour area', 'buffer area' are not present in the csv file
     var noContBuffArrCol = 0;
     // Flag that is raised when column 'YearsOwned' is not present in the csv file.
     var noYearsOwnedCol = 0;
-    /* If two columns are missing, insert their headers here. Skip this step if csv file already contains the column headers/columns.
+
+    /* If columns are missing, insert their headers here. Skip this step if csv file already contains them.
+      This is for compatibility with older pewi versions.
     */
     if (headers.indexOf("ContourArea") == -1) {
       headers.splice(25, 0, "ContourArea", "BufferArea");
       noContBuffArrCol = 1;
-    }
 
-    // If column header YearsOwned is missing, add here. This happens with files downloaded from pewi-v3
-    if (headers.indexOf("YearsOwned") == -1) {
-      headers.splice(30, 0, "YearsOwned");
-      noYearsOwnedCol = 1;
+      // If column header YearsOwned is missing, add here. This happens with files downloaded from pewi-v3
+      if (headers.indexOf("YearsOwned") == -1) {
+        headers.splice(30, 0, "YearsOwned");
+        noYearsOwnedCol = 1;
+
+        // pewi-v3 files have two empty cols at the end of header, removing them here.
+        headers.splice(35,2);
+      }
     }
 
     for (var i = 1; i < allTextLines.length; i++) {
@@ -6710,20 +6719,22 @@ function uploadCSV(reader) {
         buffArr = "NA";
       }
 
-      /* If values of columns 'contour area', 'buffer area' are not present in this row, then add them.
+      /** If values of columns 'contour area', 'buffer area' are not present in this row, then add them.
+        * If 'Years owned' column is absent, add it here.
          Skip this step if csv file already contains the columns.
-      */
+      **/
       if (noContBuffArrCol == 1) {
         data.splice(25, 0, contArr, buffArr);
-        // reset flag
-        //noContBuffArrCol = 0;
+
+        if (noYearsOwnedCol == 1) {
+          data.splice(30, 0, 3);
+
+          // pewi-v3 files have one empty col at the end of each row (excluding header row), removing it here.
+          data.splice(35,1);
+        }
       }
 
-      if (noYearsOwnedCol == 1) {
-        data.splice(30, 0, 3);
-        // reset flag
-      //  noYearsOwnedCol = 0;
-      }
+
 
       var headlength = headers.length;
       if (data.length == headlength) {
@@ -6753,6 +6764,9 @@ function uploadCSV(reader) {
       boardData[currentBoard].calculatedToYear = 3;
       addingYearFromFile = false;
     }
+
+    initData = lines;
+    setupBoardFromUpload(lines);
 
     //Clears data so the river isnt redrawn when new files are uploaded
     initData = [];

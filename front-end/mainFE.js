@@ -735,7 +735,7 @@ function setupBoardFromUpload(data) {
     uploadedBoard = true;
     simUpload = data;
     var boardFromUpload = new GameBoard();
-    if (parseInitial(data)) {
+    if (data) {
       propogateBoard(boardFromUpload);
       switchBoards(boardFromUpload);
       previousHover = null;
