@@ -132,6 +132,7 @@ function parseInitial(data) {
   while (strRawContents.indexOf("\r") >= 0)
     strRawContents = strRawContents.replace("\r", "");
   var arrLines = strRawContents.split("\n");
+
   // console.log('strRawContents', strRawContents);
   //for each line in the file, split line by comma and push to the initData array
   for (var i = 1; i < arrLines.length; i++) {
