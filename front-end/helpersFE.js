@@ -2361,6 +2361,11 @@ function executePrintOptions(isDownload) {
   // initialize jspdfprinter as a global object
   jspdfprinter = new Printer();
 
+  var checkbox = window.top.document.getElementById("toggleOverlay");
+  bool = checkbox.checked;
+  checkbox.checked = false;
+  switchOverlayTemp();refreshBoard();redrawOverlay();
+
   // process chosen print options
   var strRawContents = document.getElementById('print-option-parameters').innerHTML;
   //split based on escape chars
@@ -2426,6 +2431,7 @@ function executePrintOptions(isDownload) {
     jspdfprinter.processing(isDownload);
     jspdfprinter = {}; // clean object
   }, 100);
+  checkbox.checked = bool;
 
 } //end executePrintOptions
 
