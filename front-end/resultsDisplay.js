@@ -2028,30 +2028,30 @@ function generateResultsTable() {
     //===========================END OF RESTULTS TABLE (if version)
   }//end of if
   else {
-    htmlTableString += "<tr class='tableHeading'> <th width='28%'> Land Use Category </th>";
+    htmlTableString += "<tr class='tableHeading'> <th width='28%' class='leftText'> Land Use Category </th>";
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Percentage</th>";
+    htmlTableString += "<th width='11%' class='centerText'>Percentage</th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Units (English) </th>";
+    htmlTableString += "<th width='11%' class='centerText'>Units (English) </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Units (Metric) </th>";
+    htmlTableString += "<th width='11%' class='centerText'>Units (Metric) </th>";
 
     htmlTableString += "</tr>";
 
@@ -2105,7 +2105,7 @@ function generateResultsTable() {
       htmlTableString += "<td class='verticalLine'>" + frontendNames[l] + "</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
         htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10) / 10) + "<br>";
@@ -2114,10 +2114,10 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td class='verticalLine'>percent</td>";
+      htmlTableString += "<td class='verticalLine centerText'>percent</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
         htmlTableString += (Math.round(Totals.landUseResults[y][tempString] * 10) / 10) + "<br>";
@@ -2126,10 +2126,10 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td class='verticalLine'>acres</td>";
+      htmlTableString += "<td class='verticalLine centerText'>acres</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
         htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / toMetricFactorArea * 10) / 10) + "<br>";
@@ -2139,7 +2139,7 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td>hectares</td></tr>";
+      htmlTableString += "<td class='centerText'>hectares</td></tr>";
     }
 
     htmlTableString += "</table><br>";
@@ -2166,31 +2166,31 @@ function generateResultsTable() {
 
     //add header row
 
-    htmlTableString += "<tr class='tableHeading'> <th width='28%''> Ecosystem Service Indicator <br> / Measurement </th>";
+    htmlTableString += "<tr class='tableHeading'> <th width='28%' class='leftText'> Ecosystem Service Indicator <br> / Measurement </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Score</th>";
+    htmlTableString += "<th width='11%' class='centerText'>Score</th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Units (English) </th>";
+    htmlTableString += "<th width='11%' class='centerText'>Units (English) </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Units (Metric) </th>";
+    htmlTableString += "<th width='11%' class='centerText'>Units (Metric) </th>";
 
     htmlTableString += "</tr>";
 
@@ -2207,7 +2207,7 @@ function generateResultsTable() {
             htmlTableString += "<td class='verticalLine'><b>" + "Habitat" + "<b></td>";
             //calculate total score for each year and place next to Habitat header
             for(var y = 1; y <= upToYear; y++){
-              htmlTableString += "<td><b>";
+              htmlTableString += "<td class='rightText'><b>";
 
               var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y])/2;
 
@@ -2215,11 +2215,11 @@ function generateResultsTable() {
 
               htmlTableString += "<b></td>";
             }
-            htmlTableString += "<td class='verticalLine'><b>(out of 100)<b></td>";
+            htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
             //add extra spaces to fill out bar across screen
             for(var y = 1; y <= (2*upToYear)+2; y++){
               if(y == ((2*upToYear) + 2) / 2){
-                htmlTableString += "<td  class='verticalLine'></td>";
+                htmlTableString += "<td  class='verticalLine centerText'></td>";
               }
               else{
                 htmlTableString += "<td></td>";
@@ -2233,7 +2233,7 @@ function generateResultsTable() {
           htmlTableString += "<td class='verticalLine'><b>" + "Soil Quality" + "<b></td>";
           //calculate total score for each year and place next to Habitat header
           for(var y = 1; y <= upToYear; y++){
-            htmlTableString += "<td><b>";
+            htmlTableString += "<td class='rightText'><b>";
 
             var totalScore = (Totals.carbonSequestrationScore[y]+Totals.grossErosionScore[y])/2;
 
@@ -2241,11 +2241,11 @@ function generateResultsTable() {
 
             htmlTableString += "<b></td>";
           }
-          htmlTableString += "<td class='verticalLine'><b>(out of 100)<b></td>";
+          htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
           //add extra spaces to fill out bar across screen
           for(var y = 1; y <= (2*upToYear)+2; y++){
             if(y == ((2*upToYear) + 2) / 2){
-              htmlTableString += "<td  class='verticalLine'></td>";
+              htmlTableString += "<td  class='verticalLine centerText'></td>";
             }
             else{
               htmlTableString += "<td></td>";
@@ -2258,7 +2258,7 @@ function generateResultsTable() {
           htmlTableString += "<td class='verticalLine'><b>" + "Water Quality" + "<b></td>";
           //calculate total score for each year and place next to Habitat header
           for(var y = 1; y <= upToYear; y++){
-            htmlTableString += "<td><b>";
+            htmlTableString += "<td class='rightText'><b>";
 
             var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y])/3;
 
@@ -2266,7 +2266,7 @@ function generateResultsTable() {
 
             htmlTableString += "<b></td>";
           }
-          htmlTableString += "<td class='verticalLine'><b>(out of 100)<b></td>";
+          htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
           //add extra spaces to fill out bar across screen
           for(var y = 1; y <= (2*upToYear)+2; y++){
             if(y == ((2*upToYear) + 2) / 2){
@@ -2284,7 +2284,7 @@ function generateResultsTable() {
       htmlTableString += "<td  class='verticalLine'>" + frontendNames[l] + "</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "Score";
         htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
@@ -2293,10 +2293,10 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td class='verticalLine'>(out of 100)</td>";
+      htmlTableString += "<td class='verticalLine centerText'>(out of 100)</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
         //Correction for Carbon Sequestrations
@@ -2311,13 +2311,13 @@ function generateResultsTable() {
       } //for each year
 
       //units cell, keep track which type of units we'll need
-      if (l < 2) htmlTableString += "<td class='verticalLine'>pts</td>";
-      if (2 <= l && l < 4) htmlTableString += "<td class='verticalLine'>tons</td>";
-      if (4 <= l && l < 5) htmlTableString += "<td class='verticalLine'>ppm</td>";
-      if (5 <= l && l < 8) htmlTableString += "<td class='verticalLine'>tons</td>";
+      if (l < 2) htmlTableString += "<td class='verticalLine centerText'>pts</td>";
+      if (2 <= l && l < 4) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
+      if (4 <= l && l < 5) htmlTableString += "<td class='verticalLine centerText'>ppm</td>";
+      if (5 <= l && l < 8) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td  class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
         htmlTableString += (Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10) + "<br>";
@@ -2327,10 +2327,10 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      if (l < 2) htmlTableString += "<td>pts</td>";
-      if (2 <= l && l < 4) htmlTableString += "<td>Mg</td>";
-      if (4 <= l && l < 5) htmlTableString += "<td>mg/L</td>";
-      if (5 <= l && l < 8) htmlTableString += "<td>Mg</td>";
+      if (l < 2) htmlTableString += "<td class='centerText'>pts</td>";
+      if (2 <= l && l < 4) htmlTableString += "<td class='centerText'>Mg</td>";
+      if (4 <= l && l < 5) htmlTableString += "<td class='centerText'>mg/L</td>";
+      if (5 <= l && l < 8) htmlTableString += "<td class='centerText'>Mg</td>";
     }
 
     //========================================
@@ -2362,7 +2362,7 @@ function generateResultsTable() {
 
             //calculate total score for each year and place next to Yield header
             for(var y = 1; y <= upToYear; y++){
-              htmlTableString += "<td><b>";
+              htmlTableString += "<td class='rightText'><b>";
 
               var totalScore = Math.min(Totals.cornGrainYieldScore[y] +
               Totals.soybeanYieldScore[y] + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] +
@@ -2372,7 +2372,7 @@ function generateResultsTable() {
 
               htmlTableString += "<b></td>";
             }
-            htmlTableString += "<td  class='verticalLine'><b>(out of 100)<b></td>";
+            htmlTableString += "<td  class='verticalLine centerText'><b>(out of 100)<b></td>";
             //add extra spaces to fill out bar across screen
             for(var y = 1; y <= (2*upToYear)+2; y++){
               if(y == ((2*upToYear) + 2) / 2){
@@ -2390,7 +2390,7 @@ function generateResultsTable() {
       htmlTableString += "<td class='verticalLine'>" + frontendNames[l] + "</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "Score";
         htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
@@ -2398,10 +2398,10 @@ function generateResultsTable() {
         htmlTableString += "</td>";
       } //for each year
       //units cell
-      htmlTableString += "<td class='verticalLine'>(out of 100)</td>";
+      htmlTableString += "<td class='verticalLine centerText'>(out of 100)</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
         htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * 10) / 10) + "<br>";
@@ -2410,15 +2410,15 @@ function generateResultsTable() {
       } //for each year
 
       //units cell, lots of different ones to keep track of here
-      if (l < 2) htmlTableString += "<td class='verticalLine'>bu</td>";
-      if (l == 2) htmlTableString += "<td class='verticalLine'>tons</td>";
-      if (l == 3) htmlTableString += "<td class='verticalLine'>animals</td>"; //what an odd unit
-      if (4 <= l && l < 7) htmlTableString += "<td class='verticalLine'>tons</td>";
-      if (l == 7) htmlTableString += "<td class='verticalLine'>board-ft</td>";
-      if (l == 8) htmlTableString += "<td class='verticalLine'>tons</td>";
+      if (l < 2) htmlTableString += "<td class='verticalLine centerText'>bu</td>";
+      if (l == 2) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
+      if (l == 3) htmlTableString += "<td class='verticalLine centerText'>animals</td>"; //what an odd unit
+      if (4 <= l && l < 7) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
+      if (l == 7) htmlTableString += "<td class='verticalLine centerText'>board-ft</td>";
+      if (l == 8) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
         htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10) + "<br>";
@@ -2429,12 +2429,12 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      if (l < 2) htmlTableString += "<td>Mg</td>";
-      if (l == 2) htmlTableString += "<td>Mg</td>";
-      if (l == 3) htmlTableString += "<td>animals</td>";
-      if (4 <= l && l < 7) htmlTableString += "<td>Mg</td>";
-      if (l == 7) htmlTableString += "<td>m^3</td>";
-      if (l == 8) htmlTableString += "<td>Mg</td>";
+      if (l < 2) htmlTableString += "<td class='centerText'>Mg</td>";
+      if (l == 2) htmlTableString += "<td class='centerText'>Mg</td>";
+      if (l == 3) htmlTableString += "<td class='centerText'>animals</td>";
+      if (4 <= l && l < 7) htmlTableString += "<td class='centerText'>Mg</td>";
+      if (l == 7) htmlTableString += "<td class='centerText'>m^3</td>";
+      if (l == 8) htmlTableString += "<td class='centerText'>Mg</td>";
     }
 
     htmlTableString += "</table><br>";
@@ -2447,10 +2447,10 @@ function generateResultsTable() {
     //add header row
 
 
-    htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Other Parameters </th>";
+    htmlTableString += "<tr class='tableHeading leftText'> <th style='width:220px;'> Other Parameters </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th class='leftText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
@@ -2458,7 +2458,7 @@ function generateResultsTable() {
     htmlTableString += "<th> </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th class='leftText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
