@@ -171,7 +171,6 @@
   function getCurrentOptionsState() {
     //raw text content in parameters div
     var strRawContents = window.top.document.getElementById('parameters').innerHTML;
-    console.log(strRawContents);
       // console.log("in the get current options state method"+strRawContents);
     //split based on escape chars
     while (strRawContents.indexOf("\r") >= 0) {

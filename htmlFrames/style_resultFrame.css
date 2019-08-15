@@ -30,6 +30,7 @@ body {
   border-bottom: 4px ridge #ddd;
   margin: 10px;
   width: 100%;
+  table-layout: fixed;
 }
 
 td {
