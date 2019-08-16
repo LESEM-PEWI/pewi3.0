@@ -1792,6 +1792,8 @@ function drawPrecipitationInformationChart() {
 // where possible, loops are created for years
 function generateResultsTable() {
 
+  // Tables 1 and 3 include classes verticalLine, centerText, rightText, and leftText. These are used to format the table by putting lines between different sections and aligning the text to look the best.
+
   var toMetricFactorArea = 2.471;
   var upToYear = boardData[currentBoard].calculatedToYear;
   var yearWidth = 17 / upToYear + "%";
