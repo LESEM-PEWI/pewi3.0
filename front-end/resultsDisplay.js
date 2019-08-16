@@ -652,7 +652,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
       //update the mouseover box
       var percent = d.data.count;
       mouseoverInfo.select('.label').html(d.data.label);
-      mouseoverInfo.select('.count').html(addCommas(d.data.number) + " acres");
+      mouseoverInfo.select('.count').html(addCommas((d.data.number).toFixed(1)) + " acres");
       mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100) + '%');
       mouseoverInfo.style('border-color', color(d.data.label));
       mouseoverInfo.style('opacity', 1);
@@ -961,7 +961,7 @@ function drawD3EconPieChart(year, isTheChartInCategoryMode) {
     .on('mouseover', function(d) {
       //update the mouseover box
       mouseoverInfo.select('.label').html(d.data.label);
-      mouseoverInfo.select('.count').html(("$"+addCommas(Math.round(d.data.count*10)/10)));
+      mouseoverInfo.select('.count').html("$"+addCommas((Math.round(d.data.count*10)/10).toFixed(2)));
       mouseoverInfo.select('.percent').html((Math.round(d.data.number*100)) + '%');
       mouseoverInfo.style('border-color', color(d.data.label));
       mouseoverInfo.style('opacity', 1);
