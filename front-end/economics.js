@@ -7,7 +7,7 @@ var Economics = function () {
   this.data3 = [];
   this.data3ByLU = [];
   this.data5=[];
-  yearCosts = [-1,1,1,1,1,4,1,1,4,1,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}]
+  yearCosts = [-1,1,1,1,1,4,1,1,4,40,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}]
 
   this.divideByCategory = function (listofCats){
     for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
