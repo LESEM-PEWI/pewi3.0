@@ -3398,7 +3398,7 @@ function render(years){
   * This function was created for Issue 357. For more information refer to Issue 357.
   */
   function getText(thisElement){
-    var tempText = getInfo(thisElement.id, 0, "landName")+": "+getScoreOfLandType(thisElement.id);
+    var tempText = getInfo(thisElement.id, 0, "landName")+": "+getScoreOfLandType(thisElement.id).toFixed(1);
     return tempText;
   }
 
