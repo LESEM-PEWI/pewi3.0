@@ -299,6 +299,8 @@ function displayResults() {
   //create land Pie Chart
   drawD3LandPieChart(currentYear, false);
 
+  drawD3EconRevPieChart(currentYear, false);
+
   //create econ Pie Chart
   drawD3EconPieChart(currentYear, false);
 
@@ -340,6 +342,7 @@ function displayResults() {
 
   //toggle the arrows on the results page
   document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0);
+  document.getElementById('resultsFrame').contentWindow.toggleYearForEconRevPlotBy(0);
   document.getElementById('resultsFrame').contentWindow.toggleYearForEconPlotBy(0);
 
 
@@ -1083,6 +1086,328 @@ function drawD3EconPieChart(year, isTheChartInCategoryMode) {
 
    multiplayerResults();
 } //end drawD3EconPieChart()
+
+
+function drawD3EconRevPieChart(year, isTheChartInCategoryMode) {
+  // RESETTING THE TEMPORARY COLOR AND LEGEND ELEMENT nameArray
+  tempLegendItems = [];
+  tempLegendColors = [];
+  //remove the html that's already there, ie clear the chart
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('econRevPieChart').innerHTML = " ";
+  //pass data to the page that it needs, we do this by putting it in hidden divs
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('landYear').innerHTML = year;
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('upTo').innerHTML = boardData[currentBoard].calculatedToYear;
+
+   var inMultiplayer = localStorage.getItem('LSinMultiplayer');
+  /*
+  * The variable multiplayerColorPack is used to hold the colors that represent each player in the the multiplayer set up mode.
+  * For more information refer to Issue 386.
+  */
+  var multiplayerColorPack = ["#87ceee","#e6bb00","#cc6578","#127731","#c97b08","#302485"];
+  var totalCost = getTotalCost(tempResult, year);
+   var dataset = [{
+      label: 'Conventional Corn',
+      count: (tempResult[0].count*(Math.round(Totals.landUseResults[year].conventionalCornLandUse * 100) / 100)),
+      number: ((tempResult[0].count*(Math.round(Totals.landUseResults[year].conventionalCornLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conservation Corn',
+      count: (tempResult[1].count*(Math.round(Totals.landUseResults[year].conservationCornLandUse * 100) / 100)),
+      number: ((tempResult[1].count*(Math.round(Totals.landUseResults[year].conservationCornLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conventional Soybean',
+      count: (tempResult[2].count*(Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 100) / 100)),
+      number: ((tempResult[2].count*(Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conservation Soybean',
+      count: (tempResult[3].count*(Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 100) / 100)),
+      number: ((tempResult[3].count*(Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Mixed Fruits/Vegetables',
+      count: (tempResult[14].count*(Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse * 100) / 100)),
+      number: ((tempResult[14].count*(Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Permanent Pasture',
+      count: (tempResult[5].count*(Math.round(Totals.landUseResults[year].permanentPastureLandUse * 100) / 100)),
+      number: ((tempResult[5].count*(Math.round(Totals.landUseResults[year].permanentPastureLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Rotational Grazing',
+      count: (tempResult[6].count*(Math.round(Totals.landUseResults[year].rotationalGrazingLandUse * 100) / 100)),
+      number: ((tempResult[6].count*(Math.round(Totals.landUseResults[year].rotationalGrazingLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Grass Hay',
+      count: (tempResult[7].count*(Math.round(Totals.landUseResults[year].grassHayLandUse * 100) / 100)),
+      number: ((tempResult[7].count*(Math.round(Totals.landUseResults[year].grassHayLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Switchgrass',
+      count: (tempResult[11].count*(Math.round(Totals.landUseResults[year].switchgrassLandUse * 100) / 100)),
+      number: ((tempResult[11].count*(Math.round(Totals.landUseResults[year].switchgrassLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Prairie',
+      count: (tempResult[8].count*(Math.round(Totals.landUseResults[year].prairieLandUse * 100) / 100)),
+      number: ((tempResult[8].count*(Math.round(Totals.landUseResults[year].prairieLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Wetland',
+      count: (tempResult[13].count*(Math.round(Totals.landUseResults[year].wetlandLandUse * 100) / 100)),
+      number: ((tempResult[13].count*(Math.round(Totals.landUseResults[year].wetlandLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Alfalfa',
+      count: (tempResult[4].count*(Math.round(Totals.landUseResults[year].alfalfaLandUse * 100) / 100)),
+      number: ((tempResult[4].count*(Math.round(Totals.landUseResults[year].alfalfaLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conventional Forest',
+      count: (tempResult[10].count*(Math.round(Totals.landUseResults[year].conventionalForestLandUse * 100) / 100)),
+      number: ((tempResult[10].count*(Math.round(Totals.landUseResults[year].conventionalForestLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conservation Forest',
+      count: (tempResult[9].count*(Math.round(Totals.landUseResults[year].conservationForestLandUse * 100) / 100)),
+      number: ((tempResult[9].count*(Math.round(Totals.landUseResults[year].conservationForestLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Short Rotation Woody Bioenergy',
+      count: (tempResult[12].count*(Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 100) / 100)),
+      number: ((tempResult[12].count*(Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 100) / 100))/totalCost)
+    }];
+   //variables for the display of the chart on the page
+  // be careful about changing these values since they are tied closely to
+  // css styling on results page
+  // var width = 360;
+  // var height = 360;
+  // var radius = Math.min(width, height) / 2;
+  var w = Math.round(window.innerWidth * 0.38);
+  var h = Math.round(window.innerHeight * 0.382);
+
+   // if the pie chart is being drawn to be printed on a pdf then set the fixed size
+  if (printMode) {
+    w = h = 200;
+  }
+
+   var pieChart_length = Math.min(w, h);
+  var legendW = Math.round(pieChart_length * 1.06);
+
+   var radius = pieChart_length / 2;
+
+   //colors are assigned from one of the default scaling options
+  //if in multiplayer mode the color options will change else it will use default d3 schemeCategory20 colors
+  if(localStorage.getItem('LSinMultiplayer')==="true"){
+    var color = d3.scaleOrdinal(multiplayerColorPack);
+  }
+  else{
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+  }
+
+   //set up an object and array for referring back and forth to elements
+  var nameArray = [];
+  var colorLinker = {};
+
+   //document.getElementById('resultsFrame').contentWindow.document.getElementById('chart').innerHTML = "" ;
+  var chart = document.getElementById('resultsFrame').contentWindow.document.getElementById('econRevPieChart');
+
+   //d3 stuff here, I won't comment this section too heavily as it is mostly typical graphics
+  var svg = d3.select(chart)
+    .append('svg')
+    .attr("class", "graph-svg-component")
+    .attr("id", "pieSVGE")
+    // .attr('width', width + legendW) //leave room for legend so add 280
+    // .attr('height', height)
+    .attr('width', pieChart_length + legendW) //leave room for legend so add 280
+    .attr('height', pieChart_length)
+    .append('g')
+    .attr('transform', 'translate(' + (pieChart_length / 2) + ',' + (pieChart_length / 2) + ')');
+
+   var arc = d3.arc()
+    .outerRadius(radius)
+    .innerRadius(radius * 0.55)
+    .padAngle(0.01);
+
+   var pie = d3.pie()
+    .value(function(d) {
+      return d.count;
+    })
+    .sort(null);
+
+   //animation for the pie graph
+  function tweenPie(b) {
+    b.innerRadius = 0;
+    var i = d3.interpolate({
+      startAngle: 0,
+      endAngle: 0
+    }, b);
+    return function(t) {
+      return arc(i(t));
+    };
+  }
+
+   //create the elements for hover over information
+  var mouseoverInfo = d3.select(chart)
+    .append('g')
+    .attr('class', 'mouseoverInfo');
+
+   mouseoverInfo.append('div')
+    .attr('class', 'label');
+
+   mouseoverInfo.append('div')
+    .attr('class', 'count');
+
+   mouseoverInfo.append('div')
+    .attr('class', 'percent');
+
+   //let's add the arcs to the pie graph now
+  var path = svg.selectAll('path')
+    .data(pie(dataset))
+    .enter()
+    .append('path')
+    .attr('class', 'dataArc')
+    .attr('d', arc)
+    .attr('count', function(d) {
+      return d.data.number;
+    })
+    .attr('percent', function(d) {
+      return d.data.count;
+    })
+    .attr('fill', function(d, i) {
+      var hue = color(d.data.label);
+      //use these structures to keep track of what actually has a count
+      // for the legend
+      if (d.data.count != 0) {
+        nameArray.push(d.data.label);
+        colorLinker[d.data.label] = hue;
+      }
+      return hue;
+    })
+    .attr("id", function(d) {
+      return d.data.label;
+    })
+    .on('mouseover', function(d) {
+      //update the mouseover box
+      mouseoverInfo.select('.label').html(d.data.label);
+      mouseoverInfo.select('.count').html(("$"+(Math.round(d.data.count*10)/10)));
+      mouseoverInfo.select('.percent').html((Math.round(d.data.number*100)) + '%');
+      mouseoverInfo.style('border-color', color(d.data.label));
+      mouseoverInfo.style('opacity', 1);
+      mouseoverInfo.style('display', 'block');
+
+       //highlight the pie slice
+      d3.select(this).classed("arc", false);
+      d3.select(this).classed("arcHighlight", true);
+    })
+    .on('mouseout', function() {
+      //hide mouseover box
+      mouseoverInfo.style('display', 'none');
+
+       //unhighlight the pie slice
+      d3.select(this).classed("arcHighlight", false);
+      d3.select(this).classed("arc", true);
+    })
+    .transition()
+    .duration(900)
+    .attrTween("d", tweenPie);
+
+   //that's it for the pie chart, now we just need to add its legend information
+
+   //sizing for the colored squares and spaces
+  // var legendRectSize = 18;
+  // var legendSpacing = 4;
+  var legendRectSize = Math.round(0.05 * pieChart_length);
+  var legendSpacing = Math.round(0.22 * legendRectSize);
+
+   //add all the elements that have a nonzero count
+  var legend = svg.selectAll('.legend')
+    .data(nameArray)
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .on('mouseover', function(d) {
+      var current = getData(d);
+      //highlight text
+      d3.select(this).style("fill", "steelblue");
+
+       //highlight arc
+      var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
+      d3.select(slice).classed("arc", false)
+        .classed("arcHighlight", true);
+
+       //show appropriate mouseover info
+      mouseoverInfo.select('.label').html(d);
+      mouseoverInfo.select('.count').html(("$"+(Math.round(current.count*10)/10)));
+      mouseoverInfo.select('.percent').html((Math.round(current.number*100)) + '%');
+      mouseoverInfo.style('border-color', color(d));
+      mouseoverInfo.style('opacity', 1);
+      mouseoverInfo.style('display', 'block');
+
+     })
+    .on('mouseout', function(d) {
+
+       //set text back to black
+      d3.select(this).style("fill", "black");
+
+       //unhighlight the arc
+      var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
+      d3.select(slice).classed("arcHighlight", false);
+      d3.select(slice).classed("arc", true);
+
+       //undisplay the mouseover information box
+      mouseoverInfo.style('display', 'none');
+    })
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset = height * nameArray.length / 2;
+      var horz = pieChart_length / 2 + 20;
+      var vert = i * height - offset;
+      // var horz = width / 2 + 20;
+      return 'translate(' + horz + ',' + vert + ')';
+    });
+
+   //add legend color squares
+  legend.append('rect')
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', function(d) {
+      tempLegendColors.push(colorLinker[d]); // adds the legend color to array (for print function)
+      return colorLinker[d];
+    })
+    .style('stroke', function(d) {
+      return colorLinker[d];
+    });
+
+   //add legend text info
+  legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d) {
+      tempLegendItems.push(d); // adds the legend element to the array (for print function)
+      return d;
+    });
+
+   //lastly, now add the chart title in the center
+  // main chart title
+  svg.append("text")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text("Econ Numbers");
+  //also add the year below that
+  svg.append("text")
+    .attr("x", 0)
+    .attr("y", 25)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text(year);
+
+   function getData(data) {
+    for(var i = 0; i < dataset.length; ++i){
+      if(data === dataset[i].label){
+        return dataset[i];
+      }
+    }
+    return "none";
+  }
+
+//  console.log(dataset[0].count);
+
+   multiplayerResults();
+} //end drawD3EconRevPieChart()
 
 function getTotalCost(data, givenYear) {
   var cost = 0;
