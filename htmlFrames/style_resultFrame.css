@@ -304,6 +304,12 @@ tr:hover {
   padding-left: 25%;
 }
 
+#graphContainerRev {
+  height: 100%;
+  left: 25%;
+  padding-left: 25%;
+}
+
 #contentsG {
   height: 100%;
   left: 25%;
@@ -347,6 +353,7 @@ tr:hover {
 #accordionContainer {
   display: inline-block;
   width: 75%;
+  padding-bottom: 100px;
 
 }
 
@@ -561,6 +568,29 @@ text {
   * changed left value from 35 to 29 , font-size from 20 to 30 10:35 am 5/22 Issue 474
   */
   left: 29%;
+  font-size: 30px;
+  font-weight: bold;
+  position: relative;
+}
+
+#landUseTitleEconCost{
+  /*
+  * The value for "left" was changed to have the title more centered in the mupltiplayer results page,left was previously "64%"
+  * For more information refer to Issue 386.
+  * changed left value from 35 to 29 , font-size from 20 to 30 10:35 am 5/22 Issue 474
+  */
+  left: 23%;
+  font-size: 30px;
+  font-weight: bold;
+  position: relative;
+}
+#landUseTitleEconRev{
+  /*
+  * The value for "left" was changed to have the title more centered in the mupltiplayer results page,left was previously "64%"
+  * For more information refer to Issue 386.
+  * changed left value from 35 to 29 , font-size from 20 to 30 10:35 am 5/22 Issue 474
+  */
+  left: 22%;
   font-size: 30px;
   font-weight: bold;
   position: relative;
@@ -821,26 +851,18 @@ ul table{
  .leftE {
   width: 250px;
   left: 25%;
-  padding-right: 15%;
-  padding-bottom: 450px;
+  padding-bottom: 550px;
   display: inline-block;
   vertical-align: top;
 }
 
  .rightE {
-  /*height: 100%;*/
   height: 400px;
   width: 445px;
   display: inline-block;
   vertical-align: top;
-
-
 }
 
- .holder {
-  width: 100px;
-  height: 100px;
-}
 
  /* #yearUpEcon {
   left: 25%
