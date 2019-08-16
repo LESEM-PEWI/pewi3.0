@@ -4104,6 +4104,10 @@ d3.selection.prototype.moveToBack = function() {
 //--------------------End of Render function
 }
 
+function addCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 function createMockDataGraphic1(){
   var econData = economics.data;
   var dataEcon1 = econData.map
@@ -4145,7 +4149,7 @@ function EconomicsGraphic1() {
   var fullData = createMockDataGraphic1();
 
 
-  var margin = {top: 40, right: 20, bottom: 50, left: 60};
+  var margin = {top: 40, right: 20, bottom: 50, left: 100};
   var screenWidth = window.innerWidth;
   var width = screenWidth*.8 - margin.left - margin.right;
   var height = screenWidth*.40 - margin.top - margin.bottom; //give or take the golden ratio
@@ -4231,7 +4235,7 @@ function EconomicsGraphic1() {
 
     let formatMoney = (d) => { //This is to put the negative sign in front of the dollar sign
       var isNegative = d < 0 ? '-' : '';
-      return isNegative + '$' + Math.abs(d);
+      return isNegative + '$' + addCommas(Math.abs(d).toFixed(2));
     }
     //draws the bars as well as adding listeners for hover
     var rect = layer.selectAll("rect")
@@ -4481,7 +4485,7 @@ function EconomicsGraphic3() {
     top: 40,
     right: 20,
     bottom: 50,
-    left: 60
+    left: 80
   };
   var screenWidth = window.innerWidth;
   var width = screenWidth * .8 - margin.left - margin.right;
@@ -4537,10 +4541,6 @@ function EconomicsGraphic3() {
 
     let tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph3tt"));
 
-    function addCommas(x) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
     svg.selectAll("*").remove();
 
     svg.selectAll("g")
@@ -4581,7 +4581,7 @@ function EconomicsGraphic3() {
       .style("text-anchor", "end")
 
     var yAxis = d3.axisLeft(y)
-      .tickFormat(d => '$' + d)
+      .tickFormat(d => '$' + addCommas(d))
       .tickSize(-width)
       .tickSizeOuter(0);
     svg.append("g")
@@ -4875,6 +4875,7 @@ function EconomicsGraphic4() {
         var xAxis = d3.axisBottom()
         	.scale(xScale);
         var yAxis = d3.axisLeft(yScale)
+          .tickFormat(d => '$' + addCommas(d))
         	.tickSize(-width)
           .tickSizeOuter(0);
 
@@ -5276,7 +5277,8 @@ function EconomicsGraphic5(){
         //x and y axis
        var xAxis = d3.axisBottom()
          .scale(x0);
-       var yAxisLeft = d3.axisLeft(yleft);
+       var yAxisLeft = d3.axisLeft(yleft)
+        .tickFormat(d => '$' + addCommas(d))
        var yAxisRight=d3.axisRight(yright);
          //cost name and scale x axis
           svg.append('g')
@@ -5522,7 +5524,7 @@ function EconomicsGraphic2(){
   var year = currentYear;
   var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph2tt"));
 
-  var margin = {top: 40, right: 10, bottom: 60, left: 55};
+  var margin = {top: 40, right: 10, bottom: 60, left: 80};
   var screenWidth = window.innerWidth;
   var width = screenWidth*.8 - margin.left - margin.right;
   var height = screenWidth*.40 - margin.top - margin.bottom; //give or take the golden ratio
@@ -5703,7 +5705,7 @@ function EconomicsGraphic2(){
         .style("text-anchor", "end")
 
     var yAxis = d3.axisLeft(y)
-      .tickFormat(d => formatMoney(d))
+      .tickFormat(d => '$' + addCommas(d))
       .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
       .tickSizeOuter(0)
     svg.append("g")
