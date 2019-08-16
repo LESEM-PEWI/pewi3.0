@@ -3201,7 +3201,7 @@ function getHighlightedInfo(tileId) {
         //
         // values multipilied by 14.8697 are being converted to bushels per acre, wood multiplied by 423.766 to convert to board-ft per acre
       case 10:
-        highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857 * 14.8697).toFixed(1) + " bu/ac/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857 * 14.8697).toFixed(2) + " bu/ac/yr" + "<br>";
         break;
         //create string for soybean yield
       case 11:
@@ -3213,7 +3213,7 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for cattle yield
       case 13:
-        highlightString = Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(1) + " animals/acre/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(2) + " animals/acre/yr" + "<br>";
         break;
         //create string for alfalfa yield
       case 14:
