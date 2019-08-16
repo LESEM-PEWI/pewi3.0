@@ -245,7 +245,7 @@ var RadarChart = {
 
           mouseoverInfo.select('.label').html(d.label);
           mouseoverInfo.select('.count').html(d.raw);
-          mouseoverInfo.select('.score').html(Math.round(d.value * 1000) / 10 + "/100");
+          mouseoverInfo.select('.score').html((Math.round(d.value * 1000) / 10).toFixed(1) + "/100");
           mouseoverInfo.style('border-color', d3.select(this).style("fill"));
           mouseoverInfo.style('display', 'block');
 
@@ -1115,43 +1115,43 @@ function drawEcosystemRadar(yearArray) {
       label: "Nitrate Concentration",
       axis: "Nitrate",
       value: Totals.nitrateConcentrationScore[y] / 100,
-      raw: (Math.round(Totals.nitrateConcentration[y] * 10) / 10) + " ppm"
+      raw: (Math.round(Totals.nitrateConcentration[y] * 10) / 10).toFixed(1) + " ppm"
     }, {
       label: "Total Sum Yields",
       axis: "Total Yields",
 
-      value: Math.min((Totals.cornGrainYieldScore[y]  + Totals.soybeanYieldScore[y]  + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y]  + Totals.grassHayYieldScore[y]  +
-      Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y]) / 100, 100),
+      value: (Math.min((Totals.cornGrainYieldScore[y]  + Totals.soybeanYieldScore[y]  + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y]  + Totals.grassHayYieldScore[y]  +
+      Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y]) / 100, 100)).toFixed(1),
     }, {
       label: "Phosphorus Load",
       axis: "Phosphorus",
       value: Totals.phosphorusLoadScore[y] / 100,
-      raw: (Math.round(Totals.phosphorusLoad[y] * 10) / 10) + " tons"
+      raw: (Math.round(Totals.phosphorusLoad[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Sediment Delivery",
       axis: "Sediment",
       value: Totals.sedimentDeliveryScore[y] / 100,
-      raw: (Math.round(Totals.sedimentDelivery[y] * 10) / 10) + " tons"
+      raw: (Math.round(Totals.sedimentDelivery[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Carbon Sequestration",
       axis: "Carbon",
       value: Totals.carbonSequestrationScore[y] / 100,
-      raw: (Math.round(Totals.carbonSequestration[y] * 10) / 10) + " tons"
+      raw: (Math.round(Totals.carbonSequestration[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Gross Erosion",
       axis: "Erosion",
       value: Totals.grossErosionScore[y] / 100,
-      raw: (Math.round(Totals.grossErosion[y] * 10) / 10) + " tons"
+      raw: (Math.round(Totals.grossErosion[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Game Wildlife",
       axis: "Wildlife",
       value: Totals.gameWildlifePointsScore[y] / 100,
-      raw: (Math.round(Totals.gameWildlifePoints[y] * 10) / 10) + " pts"
+      raw: (Math.round(Totals.gameWildlifePoints[y] * 10) / 10).toFixed(1) + " pts"
     }, {
       label: "Biodiversity",
       axis: "Biodiversity",
       value: Totals.biodiversityPointsScore[y] / 100,
-      raw: (Math.round(Totals.biodiversityPoints[y] * 10) / 10) + " pts"
+      raw: (Math.round(Totals.biodiversityPoints[y] * 10) / 10).toFixed(1) + " pts"
     }];
 
     dataset.push(obj);
