@@ -652,13 +652,8 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
       //update the mouseover box
       var percent = d.data.count;
       mouseoverInfo.select('.label').html(d.data.label);
-<<<<<<< HEAD
-      mouseoverInfo.select('.count').html(addCommas((d.data.number).toFixed(1)) + " acres");
-      mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100) + '%');
-=======
       mouseoverInfo.select('.count').html((d.data.number).toFixed(1) + " acres");
       mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100).toFixed(1) + '%');
->>>>>>> development
       mouseoverInfo.style('border-color', color(d.data.label));
       mouseoverInfo.style('opacity', 1);
       mouseoverInfo.style('display', 'block');
@@ -2809,11 +2804,7 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
-<<<<<<< HEAD
-        htmlTableString += addCommas(Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10) / 10) + "<br>";
-=======
         htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -2825,11 +2816,7 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
-<<<<<<< HEAD
-        htmlTableString += addCommas(Math.round(Totals.landUseResults[y][tempString] * 10) / 10) + "<br>";
-=======
         htmlTableString += (Math.round(Totals.landUseResults[y][tempString] * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -2841,11 +2828,7 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
-<<<<<<< HEAD
-        htmlTableString += addCommas(Math.round(Totals.landUseResults[y][tempString] / toMetricFactorArea * 10) / 10) + "<br>";
-=======
         htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / toMetricFactorArea * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
         htmlTableString += "</td>";
 
@@ -2924,11 +2907,7 @@ function generateResultsTable() {
 
               var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y])/2;
 
-<<<<<<< HEAD
-              htmlTableString += addCommas(Math.round(totalScore * 10) / 10) + "<br>";
-=======
               htmlTableString += (Math.round(totalScore * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
               htmlTableString += "<b></td>";
             }
@@ -2954,11 +2933,7 @@ function generateResultsTable() {
 
             var totalScore = (Totals.carbonSequestrationScore[y]+Totals.grossErosionScore[y])/2;
 
-<<<<<<< HEAD
-            htmlTableString += addCommas(Math.round(totalScore * 10) / 10) + "<br>";
-=======
             htmlTableString += (Math.round(totalScore * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
             htmlTableString += "<b></td>";
           }
@@ -2983,11 +2958,7 @@ function generateResultsTable() {
 
             var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y])/3;
 
-<<<<<<< HEAD
-            htmlTableString += addCommas(Math.round(totalScore * 10) / 10) + "<br>";
-=======
             htmlTableString += (Math.round(totalScore * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
             htmlTableString += "<b></td>";
           }
@@ -3012,11 +2983,7 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "Score";
-<<<<<<< HEAD
-        htmlTableString += addCommas(Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
-=======
         htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -3034,11 +3001,7 @@ function generateResultsTable() {
         //   Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
         // }
 
-<<<<<<< HEAD
-        htmlTableString += addCommas(Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
-=======
         htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -3053,11 +3016,7 @@ function generateResultsTable() {
         htmlTableString += "<td  class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
-<<<<<<< HEAD
-        htmlTableString += addCommas(Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10) + "<br>";
-=======
         htmlTableString += (Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
         htmlTableString += "</td>";
 
@@ -3105,11 +3064,7 @@ function generateResultsTable() {
               Totals.soybeanYieldScore[y] + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] +
               Totals.grassHayYieldScore[y] + Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y], 100);
 
-<<<<<<< HEAD
-              htmlTableString += addCommas(Math.round(totalScore * 10) / 10) + "<br>";
-=======
               htmlTableString += (Math.round(totalScore * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
               htmlTableString += "<b></td>";
             }
@@ -3134,11 +3089,7 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "Score";
-<<<<<<< HEAD
-        htmlTableString += addCommas(Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
-=======
         htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -3149,11 +3100,7 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
-<<<<<<< HEAD
-        htmlTableString += addCommas(Math.round(Totals.yieldResults[y][tempString] * 10) / 10) + "<br>";
-=======
         htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -3170,11 +3117,7 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
-<<<<<<< HEAD
-        htmlTableString += addCommas(Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10) + "<br>";
-=======
         htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10).toFixed(1) + "<br>";
->>>>>>> development
 
         htmlTableString += "</td>";
 
