@@ -1114,7 +1114,7 @@ function drawEcosystemRadar(yearArray) {
     var obj = [{
       label: "Nitrate Concentration",
       axis: "Nitrate",
-      value: Totals.nitrateConcentrationScore[y] / 100,
+      value: (Totals.nitrateConcentrationScore[y] / 100).toFixed(1),
       raw: (Math.round(Totals.nitrateConcentration[y] * 10) / 10) + " ppm"
     }, {
       label: "Total Sum Yields",
@@ -1125,33 +1125,33 @@ function drawEcosystemRadar(yearArray) {
     }, {
       label: "Phosphorus Load",
       axis: "Phosphorus",
-      value: Totals.phosphorusLoadScore[y] / 100,
-      raw: (Math.round(Totals.phosphorusLoad[y] * 10) / 10) + " tons"
+      value: (Totals.phosphorusLoadScore[y] / 100).toFixed(1),
+      raw: (Math.round(Totals.phosphorusLoad[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Sediment Delivery",
       axis: "Sediment",
-      value: Totals.sedimentDeliveryScore[y] / 100,
-      raw: (Math.round(Totals.sedimentDelivery[y] * 10) / 10) + " tons"
+      value: (Totals.sedimentDeliveryScore[y] / 100).toFixed(1),
+      raw: (Math.round(Totals.sedimentDelivery[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Carbon Sequestration",
       axis: "Carbon",
-      value: Totals.carbonSequestrationScore[y] / 100,
-      raw: (Math.round(Totals.carbonSequestration[y] * 10) / 10) + " tons"
+      value: (Totals.carbonSequestrationScore[y] / 100).toFixed(1),
+      raw: (Math.round(Totals.carbonSequestration[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Gross Erosion",
       axis: "Erosion",
-      value: Totals.grossErosionScore[y] / 100,
-      raw: (Math.round(Totals.grossErosion[y] * 10) / 10) + " tons"
+      value: (Totals.grossErosionScore[y] / 100).toFixed(1),
+      raw: (Math.round(Totals.grossErosion[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Game Wildlife",
       axis: "Wildlife",
-      value: Totals.gameWildlifePointsScore[y] / 100,
-      raw: (Math.round(Totals.gameWildlifePoints[y] * 10) / 10) + " pts"
+      value: (Totals.gameWildlifePointsScore[y] / 100).toFixed(1),
+      raw: (Math.round(Totals.gameWildlifePoints[y] * 10) / 10).toFixed(1) + " pts"
     }, {
       label: "Biodiversity",
       axis: "Biodiversity",
-      value: Totals.biodiversityPointsScore[y] / 100,
-      raw: (Math.round(Totals.biodiversityPoints[y] * 10) / 10) + " pts"
+      value: (Totals.biodiversityPointsScore[y] / 100).toFixed(1),
+      raw: (Math.round(Totals.biodiversityPoints[y] * 10) / 10).toFixed(1) + " pts"
     }];
 
     dataset.push(obj);
