@@ -1,3 +1,10 @@
+/**
+ * Used to add commas for formatting.
+ */
+function addCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 //RadarChart Object,
 // Code modified, animation tweens, mouseover interaction, and some logic
 //     interfacing are original to us
@@ -645,7 +652,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
       //update the mouseover box
       var percent = d.data.count;
       mouseoverInfo.select('.label').html(d.data.label);
-      mouseoverInfo.select('.count').html(d.data.number + " acres");
+      mouseoverInfo.select('.count').html(addCommas(d.data.number) + " acres");
       mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100) + '%');
       mouseoverInfo.style('border-color', color(d.data.label));
       mouseoverInfo.style('opacity', 1);
@@ -954,7 +961,7 @@ function drawD3EconPieChart(year, isTheChartInCategoryMode) {
     .on('mouseover', function(d) {
       //update the mouseover box
       mouseoverInfo.select('.label').html(d.data.label);
-      mouseoverInfo.select('.count').html(("$"+(Math.round(d.data.count*10)/10)));
+      mouseoverInfo.select('.count').html(("$"+addCommas(Math.round(d.data.count*10)/10)));
       mouseoverInfo.select('.percent').html((Math.round(d.data.number*100)) + '%');
       mouseoverInfo.style('border-color', color(d.data.label));
       mouseoverInfo.style('opacity', 1);
@@ -5380,10 +5387,6 @@ function EconomicsGraphic3() {
       .rangeRound([height - margin.bottom, margin.top]);
 
     let tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph3tt"));
-
-    function addCommas(x) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
 
     svg.selectAll("*").remove();
 
