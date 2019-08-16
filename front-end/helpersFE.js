@@ -256,9 +256,9 @@ function toggleScoreDetails(factor) {
         var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
         // console.log(childNodes);
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10 + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10).toFixed(1) + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Totals.gameWildlifePoints[currentYear] + ' pts / yr';
+        childNodes[7].innerHTML = (Totals.gameWildlifePoints[currentYear]).toFixed(1) + ' pts / yr';
         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
 
       }
@@ -272,10 +272,10 @@ function toggleScoreDetails(factor) {
       else {
         var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
-        (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.carbonSequestration[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+        (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
         document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
 
       }
@@ -288,9 +288,9 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10  + '/100';;
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10).toFixed(1)  + '/100';;
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10 + ' pts / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10).toFixed(1) + ' pts / yr';
         document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'block';
 
       }
@@ -303,10 +303,10 @@ function toggleScoreDetails(factor) {
       else {
         var childNodes = document.getElementsByClassName('erosionScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grossErosionScore[currentYear] * 10) / 10  + '/100';;
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.grossErosionScore[currentYear] * 10) / 10).toFixed(1)  + '/100';;
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.grossErosion[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
-          (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.grossErosion[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
 
       }
@@ -319,10 +319,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('nitrateScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' ppm / yr' + '<br>' +
-          Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' mg/L / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1) + ' ppm / yr' + '<br>' +
+          (Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1) + ' mg/L / yr';
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
 
       }
@@ -335,9 +335,9 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('phoshorusScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
+        childNodes[7].innerHTML = (Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
           Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg / yr';
         document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'block';
 
@@ -350,10 +350,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('sedimentScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10  + '/100';;
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10).toFixed(1)  + '/100';;
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.sedimentDelivery[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.sedimentDelivery[currentYear] * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.sedimentDelivery[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.sedimentDelivery[currentYear] * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
         document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'block';
       }
     break;
@@ -369,7 +369,7 @@ function toggleScoreDetails(factor) {
           Totals.grassHayYieldScore[currentYear] + Totals.switchgrassYieldScore[currentYear] + Totals.cattleYieldScore[currentYear] + Totals.woodYieldScore[currentYear] + Totals.shortRotationWoodyBiomassYieldScore[currentYear], 100);
 
 
-        childNodes[5].innerHTML = 'Current: ' + Math.round(totalScore * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(totalScore * 10) / 10).toFixed(1)  + '/100';
 
         document.getElementsByClassName('totalScoreDetails')[0].style.display = 'block';
       }
@@ -381,10 +381,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('cornGrainScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].cornGrainYield * 10) / 10 + ' bu / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].cornGrainYield * 0.0254 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].cornGrainYield * 10) / 10).toFixed(1) + ' bu / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].cornGrainYield * 0.0254 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'block';
       }
@@ -396,10 +396,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('soybeansScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].soybeanYield * 10) / 10 + ' bu / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].soybeanYield * 0.0272 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].soybeanYield * 10) / 10).toFixed(1) + ' bu / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].soybeanYield * 0.0272 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'block';
       }
@@ -411,10 +411,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.mixedFruitsAndVegetablesYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.mixedFruitsAndVegetablesYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display = 'block';
       }
@@ -426,9 +426,9 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('cattleScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.cattleYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.cattleYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].cattleYield * 10) / 10 + ' animals / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].cattleYield * 10) / 10).toFixed(1) + ' animals / yr';
 
         document.getElementsByClassName('cattleScoreDetails')[0].style.display = 'block';
       }
@@ -440,10 +440,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('alfalfaHayScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.alfalfaHayYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.alfalfaHayYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display = 'block';
       }
@@ -455,10 +455,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('grassHayScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grassHayYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.grassHayYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].grassHayYield * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].grassHayYield * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].grassHayYield * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].grassHayYield * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('grassHayScoreDetails')[0].style.display = 'block';
       }
@@ -470,10 +470,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.switchgrassYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.switchgrassYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].switchgrassYield * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].switchgrassYield * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].switchgrassYield * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].switchgrassYield * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display = 'block';
       }
@@ -485,10 +485,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('woodScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.woodYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.woodYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].woodYield * 10) / 10 + ' board-ft / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].woodYield * 0.002359737 * 10) / 10 + ' M^3 / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].woodYield * 10) / 10).toFixed(1) + ' board-ft / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].woodYield * 0.002359737 * 10) / 10).toFixed(1) + ' M^3 / yr';
 
         document.getElementsByClassName('woodScoreDetails')[0].style.display = 'block';
       }
@@ -500,10 +500,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('woodyBiomassScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.shortRotationWoodyBiomassYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.shortRotationWoodyBiomassYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display = 'block';
       }
@@ -922,12 +922,10 @@ if (tToggle) {
       if(checkbox.checked && overlayTemp == true){
         tileMaterial2.opacity = 0.4;
         tileMaterial2.map = grayTextureArray[tile.landType[currentYear]];
-        console.log(overlayTemp);
       }
       else{
         tileMaterial2.opacity = 1.0;
         tileMaterial2.map = textureArray[tile.landType[currentYear]];
-        console.log(overlayTemp);
       }
 
     } else {
@@ -1330,7 +1328,8 @@ function calculateResults(tileId, y) {
 } //end calculateResults
 
 //changeLandTypeTile changes the landType of a selected tile
-function changeLandTypeTile(tileId) {
+function changeLandTypeTile(tileId, inYear) {
+  let year = inYear || currentYear
   //console.log(boardData[currentBoard].map[tileId]);
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //Add tile to the undoArr
@@ -1338,7 +1337,7 @@ function changeLandTypeTile(tileId) {
       addChange(tileId);
     }
     //if land type of tile is nonzero
-    if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
+    if (boardData[currentBoard].map[tileId].landType[year] != 0) {
       //change the materials of the faces in the meshMaterials array and update the boardData
       if (!multiplayerAssigningModeOn) {
         // textureArray is a global array that links to each landType image, it was load in loader.js
@@ -1366,11 +1365,11 @@ function changeLandTypeTile(tileId) {
 
             }
             // record the data changes in boardData
-            boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+            boardData[currentBoard].map[tileId].landType[year] = painter;
             // update boardData figures
-            boardData[currentBoard].map[tileId].update(currentYear);
+            boardData[currentBoard].map[tileId].update(year);
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
-            calculateResults(tileId, currentYear);
+            calculateResults(tileId, year);
             //console.log(boardData[currentBoard].map[tileId]);
           }
         }
@@ -2360,6 +2359,11 @@ function executePrintOptions(isDownload) {
   // initialize jspdfprinter as a global object
   jspdfprinter = new Printer();
 
+  var checkbox = window.top.document.getElementById("toggleOverlay");
+  bool = checkbox.checked;
+  checkbox.checked = false;
+  switchOverlayTemp();refreshBoard();redrawOverlay();
+
   // process chosen print options
   var strRawContents = document.getElementById('print-option-parameters').innerHTML;
   //split based on escape chars
@@ -2425,6 +2429,7 @@ function executePrintOptions(isDownload) {
     jspdfprinter.processing(isDownload);
     jspdfprinter = {}; // clean object
   }, 100);
+  checkbox.checked = bool;
 
 } //end executePrintOptions
 
@@ -5178,13 +5183,17 @@ function saveAndRandomize() {
     outer: for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
-          painter = newDefaultLandUse;
           meshMaterials[j].map = grayTextureArray[painter];
           meshOverlay[j].map = grayTextureArray[painter];
+          activeLandUses = randomPainterTile;
+          var checkbox = window.top.document.getElementById("toggleOverlay");
+          bool = checkbox.checked;
+          checkbox.checked = false;
+          switchOverlayTemp();refreshBoard();redrawOverlay();
 
-          boardData[currentBoard].map[j].landType[i] = painter;
-          boardData[currentBoard].map[j].update(i);
-          forNitrateCalc[i][j] = 1;
+          toggleReplacementFrame(randomPainterTile);
+          checkbox.checked = bool;
+          break outer;
         }
       }
     }
@@ -5915,7 +5924,7 @@ function toggleEscapeFrame() {
 function toggleReplacementFrame(options) {
   var modal = document.getElementById('modalReplacement');
   innermodal = modal.contentDocument || modal.contentWindow.document;
-  if(modal.style.visibility === 'visible'){
+  if(modal.style.display === 'block'){
     modal.style.display = 'none';
     modalUp = false;
   }
@@ -5927,6 +5936,7 @@ function toggleReplacementFrame(options) {
       select.removeChild(select.firstChild);
     }
     options.forEach(function(option){
+      if(option === 14) return;
       var opt = document.createElement('option');
       opt.innerHTML = LandUseType.getPrintFriendlyType(option);
       opt.value = option;
@@ -5937,18 +5947,22 @@ function toggleReplacementFrame(options) {
 }
 
 function fillDeactivatedLands(){
-  var modal = document.getElementById('modalReplacement');
-  innermodal = modal.contentDocument || modal.contentWindow.document;
-  select = innermodal.getElementById('replacementSelect');
+  let modal = document.getElementById('modalReplacement');
+  let innermodal = modal.contentDocument || modal.contentWindow.document;
+  let select = innermodal.getElementById('replacementSelect');
+  temp = painter; //Since changeLandTypeTile requires the global variable painter to paint we want to save it's state and change it back.
+  painter = parseInt(select.value);
   for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
     for (var j = 0; j < boardData[currentBoard].map.length; j++) {
       if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !activeLandUses.includes(boardData[currentBoard].map[j].landType[i])) {
-        boardData[currentBoard].map[j].landType[i] = parseInt(select.value);
+        changeLandTypeTile(j, i);
       }
     }
   }
   toggleReplacementFrame();
   refreshBoard();
+  painter = temp;
+  refreshProgressBar(currentYear);
 }
 
 //toggleGlossary displays and hides the codex
@@ -6658,7 +6672,7 @@ function uploadJSON(reader) {
  * There are certain differences in the files of the above two versions -
  * - Current development of 2019 has 3 new columns added at indices 25, 26, 30 of the pewi-v3 csv file.
  * - The pewi-v3 csv has 2 empty columns at the end of its 'header' row, and 1 empty column at the end of all other rows.
- *   The empty cols are removed here to make as little modification as possible to the existing code. 
+ *   The empty cols are removed here to make as little modification as possible to the existing code.
  *
  * @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
  */

@@ -279,12 +279,18 @@ var RadarChart = {
   }
 }; //End Radar Object
 
+var tempResult;
+
 //displayResults writes the html for the results iframe with updates results from Totals
 function displayResults() {
   economics.mapChange();
 
   //Create results table and append it to the proper tab of the results frame
   var numericalTableString = generateResultsTable();
+
+  generateEconomicsTables();
+
+
   document.getElementById('resultsFrame').contentWindow.document.getElementById('contentsN').innerHTML = numericalTableString;
 
   //refresh frame properties
@@ -292,6 +298,10 @@ function displayResults() {
 
   //create land Pie Chart
   drawD3LandPieChart(currentYear, false);
+
+  //create econ Pie Chart
+  drawD3EconPieChart(currentYear, false);
+
   //clearing scoreChart div tag, or else it will duplicate the scoreChart graph every time results is clicked on
   document.getElementById('resultsFrame').contentWindow.document.getElementById('scoreChart').innerHTML = ' ';
   //creating the scoreChart graph by calling the number of years that are currently
@@ -330,6 +340,17 @@ function displayResults() {
 
   //toggle the arrows on the results page
   document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0);
+  document.getElementById('resultsFrame').contentWindow.toggleYearForEconPlotBy(0);
+
+
+  for(var i = 1; i <=3; i++){
+    if(i > boardData[currentBoard].calculatedToYear){
+      document.getElementById('resultsFrame').contentWindow.document.getElementById("yearSelect").options[i - 1].style.display = 'none';
+    }
+    else{
+      document.getElementById('resultsFrame').contentWindow.document.getElementById("yearSelect").options[i - 1].style.display = 'block';
+    }
+  }
 
   //=======DEPRECATED
   //document.getElementById('resultsFrame').contentWindow.toggleYearForESIAsterBy(0);
@@ -742,6 +763,382 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
   multiplayerResults();
 } //end drawD3LandPieChart()
 
+function drawD3EconPieChart(year, isTheChartInCategoryMode) {
+  // RESETTING THE TEMPORARY COLOR AND LEGEND ELEMENT nameArray
+  tempLegendItems = [];
+  tempLegendColors = [];
+  //remove the html that's already there, ie clear the chart
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('econPieChart').innerHTML = " ";
+  //pass data to the page that it needs, we do this by putting it in hidden divs
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('landYear').innerHTML = year;
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('upTo').innerHTML = boardData[currentBoard].calculatedToYear;
+
+   var inMultiplayer = localStorage.getItem('LSinMultiplayer');
+  /*
+  * The variable multiplayerColorPack is used to hold the colors that represent each player in the the multiplayer set up mode.
+  * For more information refer to Issue 386.
+  */
+  var multiplayerColorPack = ["#87ceee","#e6bb00","#cc6578","#127731","#c97b08","#302485"];
+  var totalCost = getTotalCost(tempResult, year);
+   var dataset = [{
+      label: 'Conventional Corn',
+      count: (tempResult[0].count*(Math.round(Totals.landUseResults[year].conventionalCornLandUse * 100) / 100)),
+      number: ((tempResult[0].count*(Math.round(Totals.landUseResults[year].conventionalCornLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conservation Corn',
+      count: (tempResult[1].count*(Math.round(Totals.landUseResults[year].conservationCornLandUse * 100) / 100)),
+      number: ((tempResult[1].count*(Math.round(Totals.landUseResults[year].conservationCornLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conventional Soybean',
+      count: (tempResult[2].count*(Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 100) / 100)),
+      number: ((tempResult[2].count*(Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conservation Soybean',
+      count: (tempResult[3].count*(Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 100) / 100)),
+      number: ((tempResult[3].count*(Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Mixed Fruits/Vegetables',
+      count: (tempResult[14].count*(Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse * 100) / 100)),
+      number: ((tempResult[14].count*(Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Permanent Pasture',
+      count: (tempResult[5].count*(Math.round(Totals.landUseResults[year].permanentPastureLandUse * 100) / 100)),
+      number: ((tempResult[5].count*(Math.round(Totals.landUseResults[year].permanentPastureLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Rotational Grazing',
+      count: (tempResult[6].count*(Math.round(Totals.landUseResults[year].rotationalGrazingLandUse * 100) / 100)),
+      number: ((tempResult[6].count*(Math.round(Totals.landUseResults[year].rotationalGrazingLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Grass Hay',
+      count: (tempResult[7].count*(Math.round(Totals.landUseResults[year].grassHayLandUse * 100) / 100)),
+      number: ((tempResult[7].count*(Math.round(Totals.landUseResults[year].grassHayLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Switchgrass',
+      count: (tempResult[11].count*(Math.round(Totals.landUseResults[year].switchgrassLandUse * 100) / 100)),
+      number: ((tempResult[11].count*(Math.round(Totals.landUseResults[year].switchgrassLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Prairie',
+      count: (tempResult[8].count*(Math.round(Totals.landUseResults[year].prairieLandUse * 100) / 100)),
+      number: ((tempResult[8].count*(Math.round(Totals.landUseResults[year].prairieLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Wetland',
+      count: (tempResult[13].count*(Math.round(Totals.landUseResults[year].wetlandLandUse * 100) / 100)),
+      number: ((tempResult[13].count*(Math.round(Totals.landUseResults[year].wetlandLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Alfalfa',
+      count: (tempResult[4].count*(Math.round(Totals.landUseResults[year].alfalfaLandUse * 100) / 100)),
+      number: ((tempResult[4].count*(Math.round(Totals.landUseResults[year].alfalfaLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conventional Forest',
+      count: (tempResult[10].count*(Math.round(Totals.landUseResults[year].conventionalForestLandUse * 100) / 100)),
+      number: ((tempResult[10].count*(Math.round(Totals.landUseResults[year].conventionalForestLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Conservation Forest',
+      count: (tempResult[9].count*(Math.round(Totals.landUseResults[year].conservationForestLandUse * 100) / 100)),
+      number: ((tempResult[9].count*(Math.round(Totals.landUseResults[year].conservationForestLandUse * 100) / 100))/totalCost)
+    }, {
+      label: 'Short Rotation Woody Bioenergy',
+      count: (tempResult[12].count*(Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 100) / 100)),
+      number: ((tempResult[12].count*(Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 100) / 100))/totalCost)
+    }];
+   //variables for the display of the chart on the page
+  // be careful about changing these values since they are tied closely to
+  // css styling on results page
+  // var width = 360;
+  // var height = 360;
+  // var radius = Math.min(width, height) / 2;
+  var w = Math.round(window.innerWidth * 0.38);
+  var h = Math.round(window.innerHeight * 0.382);
+
+   // if the pie chart is being drawn to be printed on a pdf then set the fixed size
+  if (printMode) {
+    w = h = 200;
+  }
+
+   var pieChart_length = Math.min(w, h);
+  var legendW = Math.round(pieChart_length * 1.06);
+
+   var radius = pieChart_length / 2;
+
+   //colors are assigned from one of the default scaling options
+  //if in multiplayer mode the color options will change else it will use default d3 schemeCategory20 colors
+  if(localStorage.getItem('LSinMultiplayer')==="true"){
+    var color = d3.scaleOrdinal(multiplayerColorPack);
+  }
+  else{
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+  }
+
+   //set up an object and array for referring back and forth to elements
+  var nameArray = [];
+  var colorLinker = {};
+
+   //document.getElementById('resultsFrame').contentWindow.document.getElementById('chart').innerHTML = "" ;
+  var chart = document.getElementById('resultsFrame').contentWindow.document.getElementById('econPieChart');
+
+   //d3 stuff here, I won't comment this section too heavily as it is mostly typical graphics
+  var svg = d3.select(chart)
+    .append('svg')
+    .attr("class", "graph-svg-component")
+    .attr("id", "pieSVGE")
+    // .attr('width', width + legendW) //leave room for legend so add 280
+    // .attr('height', height)
+    .attr('width', pieChart_length + legendW) //leave room for legend so add 280
+    .attr('height', pieChart_length)
+    .append('g')
+    .attr('transform', 'translate(' + (pieChart_length / 2) + ',' + (pieChart_length / 2) + ')');
+
+   var arc = d3.arc()
+    .outerRadius(radius)
+    .innerRadius(radius * 0.55)
+    .padAngle(0.01);
+
+   var pie = d3.pie()
+    .value(function(d) {
+      return d.count;
+    })
+    .sort(null);
+
+   //animation for the pie graph
+  function tweenPie(b) {
+    b.innerRadius = 0;
+    var i = d3.interpolate({
+      startAngle: 0,
+      endAngle: 0
+    }, b);
+    return function(t) {
+      return arc(i(t));
+    };
+  }
+
+   //create the elements for hover over information
+  var mouseoverInfo = d3.select(chart)
+    .append('g')
+    .attr('class', 'mouseoverInfo');
+
+   mouseoverInfo.append('div')
+    .attr('class', 'label');
+
+   mouseoverInfo.append('div')
+    .attr('class', 'count');
+
+   mouseoverInfo.append('div')
+    .attr('class', 'percent');
+
+   //let's add the arcs to the pie graph now
+  var path = svg.selectAll('path')
+    .data(pie(dataset))
+    .enter()
+    .append('path')
+    .attr('class', 'dataArc')
+    .attr('d', arc)
+    .attr('count', function(d) {
+      return d.data.number;
+    })
+    .attr('percent', function(d) {
+      return d.data.count;
+    })
+    .attr('fill', function(d, i) {
+      var hue = color(d.data.label);
+      //use these structures to keep track of what actually has a count
+      // for the legend
+      if (d.data.count != 0) {
+        nameArray.push(d.data.label);
+        colorLinker[d.data.label] = hue;
+      }
+      return hue;
+    })
+    .attr("id", function(d) {
+      return d.data.label;
+    })
+    .on('mouseover', function(d) {
+      //update the mouseover box
+      mouseoverInfo.select('.label').html(d.data.label);
+      mouseoverInfo.select('.count').html(("$"+(Math.round(d.data.count*10)/10)));
+      mouseoverInfo.select('.percent').html((Math.round(d.data.number*100)) + '%');
+      mouseoverInfo.style('border-color', color(d.data.label));
+      mouseoverInfo.style('opacity', 1);
+      mouseoverInfo.style('display', 'block');
+
+       //highlight the pie slice
+      d3.select(this).classed("arc", false);
+      d3.select(this).classed("arcHighlight", true);
+    })
+    .on('mouseout', function() {
+      //hide mouseover box
+      mouseoverInfo.style('display', 'none');
+
+       //unhighlight the pie slice
+      d3.select(this).classed("arcHighlight", false);
+      d3.select(this).classed("arc", true);
+    })
+    .transition()
+    .duration(900)
+    .attrTween("d", tweenPie);
+
+   //that's it for the pie chart, now we just need to add its legend information
+
+   //sizing for the colored squares and spaces
+  // var legendRectSize = 18;
+  // var legendSpacing = 4;
+  var legendRectSize = Math.round(0.05 * pieChart_length);
+  var legendSpacing = Math.round(0.22 * legendRectSize);
+
+   //add all the elements that have a nonzero count
+  var legend = svg.selectAll('.legend')
+    .data(nameArray)
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .on('mouseover', function(d) {
+      var current = getData(d);
+      //highlight text
+      d3.select(this).style("fill", "steelblue");
+
+       //highlight arc
+      var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
+      d3.select(slice).classed("arc", false)
+        .classed("arcHighlight", true);
+
+       //show appropriate mouseover info
+      mouseoverInfo.select('.label').html(d);
+      mouseoverInfo.select('.count').html(("$"+(Math.round(current.count*10)/10)));
+      mouseoverInfo.select('.percent').html((Math.round(current.number*100)) + '%');
+      mouseoverInfo.style('border-color', color(d));
+      mouseoverInfo.style('opacity', 1);
+      mouseoverInfo.style('display', 'block');
+
+     })
+    .on('mouseout', function(d) {
+
+       //set text back to black
+      d3.select(this).style("fill", "black");
+
+       //unhighlight the arc
+      var slice = document.getElementById('resultsFrame').contentWindow.document.getElementById(d);
+      d3.select(slice).classed("arcHighlight", false);
+      d3.select(slice).classed("arc", true);
+
+       //undisplay the mouseover information box
+      mouseoverInfo.style('display', 'none');
+    })
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset = height * nameArray.length / 2;
+      var horz = pieChart_length / 2 + 20;
+      var vert = i * height - offset;
+      // var horz = width / 2 + 20;
+      return 'translate(' + horz + ',' + vert + ')';
+    });
+
+   //add legend color squares
+  legend.append('rect')
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', function(d) {
+      tempLegendColors.push(colorLinker[d]); // adds the legend color to array (for print function)
+      return colorLinker[d];
+    })
+    .style('stroke', function(d) {
+      return colorLinker[d];
+    });
+
+   //add legend text info
+  legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d) {
+      tempLegendItems.push(d); // adds the legend element to the array (for print function)
+      return d;
+    });
+
+   //lastly, now add the chart title in the center
+  // main chart title
+  svg.append("text")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text("Econ Numbers");
+  //also add the year below that
+  svg.append("text")
+    .attr("x", 0)
+    .attr("y", 25)
+    .attr("text-anchor", "middle")
+    .style("font-size", "1.8vw")
+    .style("font-weight", "bold")
+    .text(year);
+
+   function getData(data) {
+    for(var i = 0; i < dataset.length; ++i){
+      if(data === dataset[i].label){
+        return dataset[i];
+      }
+    }
+    return "none";
+  }
+
+//  console.log(dataset[0].count);
+
+   multiplayerResults();
+} //end drawD3EconPieChart()
+
+function getTotalCost(data, givenYear) {
+  var cost = 0;
+  for(var i = 0; i < data.length; ++i){
+    switch (data[i].label) {
+      case "Conventional Corn":
+        cost += Totals.landUseResults[givenYear].conventionalCornLandUse*data[i].count;
+      break;
+      case "Conservation Corn":
+        cost += Totals.landUseResults[givenYear].conservationCornLandUse*data[i].count;
+      break;
+      case "Conventional Soybean":
+        cost += Totals.landUseResults[givenYear].conventionalSoybeanLandUse*data[i].count;
+      break;
+      case "Conservation Soybean":
+        cost += Totals.landUseResults[givenYear].conservationSoybeanLandUse*data[i].count;
+      break;
+      case "Alfalfa":
+        cost += Totals.landUseResults[givenYear].alfalfaLandUse*data[i].count;
+      break;
+      case "Permanent Pasture":
+        cost += Totals.landUseResults[givenYear].permanentPastureLandUse*data[i].count;
+      break;
+      case "Rotational Grazing":
+        cost += Totals.landUseResults[givenYear].rotationalGrazingLandUse*data[i].count;
+      break;
+      case "Grass Hay":
+        cost += Totals.landUseResults[givenYear].grassHayLandUse*data[i].count;
+      break;
+      case "Prairie":
+        cost += Totals.landUseResults[givenYear].prairieLandUse*data[i].count;
+      break;
+      case "Conservation Forest":
+        cost += Totals.landUseResults[givenYear].conservationForestLandUse*data[i].count;
+      break;
+      case "Conventional Forest":
+        cost += Totals.landUseResults[givenYear].conventionalForestLandUse*data[i].count;
+      break;
+      case "Switchgrass":
+        cost += Totals.landUseResults[givenYear].switchgrassLandUse*data[i].count;
+      break;
+      case "Short-rotation Woody Bioenergy":
+        cost += Totals.landUseResults[givenYear].shortRotationWoodyBioenergyLandUse*data[i].count;
+      break;
+      case "Wetland":
+        cost += Totals.landUseResults[givenYear].wetlandLandUse*data[i].count;
+      break;
+      case "Mixed Fruits & Vegetables":
+        cost += Totals.landUseResults[givenYear].mixedFruitsVegetablesLandUse*data[i].count;
+      break;
+    }
+  }
+
+   return cost;
+}
+
 //this funtion creates and animates the Ecoscores aster plot
 // it also creates the quality indicator gradients to the plot's right
 //======= it's use is currently deprecated
@@ -1114,8 +1511,13 @@ function drawEcosystemRadar(yearArray) {
     var obj = [{
       label: "Nitrate Concentration",
       axis: "Nitrate",
+<<<<<<< HEAD
       value: Totals.nitrateConcentrationScore[y] / 100,
       raw: (Math.round(Totals.nitrateConcentration[y] * 10) / 10).toFixed(1) + " ppm"
+=======
+      value: (Totals.nitrateConcentrationScore[y] / 100).toFixed(1),
+      raw: (Math.round(Totals.nitrateConcentration[y] * 10) / 10) + " ppm"
+>>>>>>> development
     }, {
       label: "Total Sum Yields",
       axis: "Total Yields",
@@ -1125,32 +1527,56 @@ function drawEcosystemRadar(yearArray) {
     }, {
       label: "Phosphorus Load",
       axis: "Phosphorus",
+<<<<<<< HEAD
       value: Totals.phosphorusLoadScore[y] / 100,
+=======
+      value: (Totals.phosphorusLoadScore[y] / 100).toFixed(1),
+>>>>>>> development
       raw: (Math.round(Totals.phosphorusLoad[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Sediment Delivery",
       axis: "Sediment",
+<<<<<<< HEAD
       value: Totals.sedimentDeliveryScore[y] / 100,
+=======
+      value: (Totals.sedimentDeliveryScore[y] / 100).toFixed(1),
+>>>>>>> development
       raw: (Math.round(Totals.sedimentDelivery[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Carbon Sequestration",
       axis: "Carbon",
+<<<<<<< HEAD
       value: Totals.carbonSequestrationScore[y] / 100,
+=======
+      value: (Totals.carbonSequestrationScore[y] / 100).toFixed(1),
+>>>>>>> development
       raw: (Math.round(Totals.carbonSequestration[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Gross Erosion",
       axis: "Erosion",
+<<<<<<< HEAD
       value: Totals.grossErosionScore[y] / 100,
+=======
+      value: (Totals.grossErosionScore[y] / 100).toFixed(1),
+>>>>>>> development
       raw: (Math.round(Totals.grossErosion[y] * 10) / 10).toFixed(1) + " tons"
     }, {
       label: "Game Wildlife",
       axis: "Wildlife",
+<<<<<<< HEAD
       value: Totals.gameWildlifePointsScore[y] / 100,
+=======
+      value: (Totals.gameWildlifePointsScore[y] / 100).toFixed(1),
+>>>>>>> development
       raw: (Math.round(Totals.gameWildlifePoints[y] * 10) / 10).toFixed(1) + " pts"
     }, {
       label: "Biodiversity",
       axis: "Biodiversity",
+<<<<<<< HEAD
       value: Totals.biodiversityPointsScore[y] / 100,
+=======
+      value: (Totals.biodiversityPointsScore[y] / 100).toFixed(1),
+>>>>>>> development
       raw: (Math.round(Totals.biodiversityPoints[y] * 10) / 10).toFixed(1) + " pts"
     }];
 
@@ -1786,11 +2212,304 @@ function drawPrecipitationInformationChart() {
 //     .attr('checked', "")
 //     .attr('type', 'checkbox');
 // } //end drawYieldRadar()
+function tableSort(column){
+  let values = generateEconTableData();
+  values.sort(function(a,b){
+    if(a[column] < b[column]) return -1;
+    else if(a[column] > b[column]) return 1;
+    else return 0;
+  });
+  this.parent.updateTables(values, this.parent);
+}
+
+function numSort(column){
+  let values = generateEconTableData();
+  values.sort(function(a,b){
+    return Number.parseFloat(b[column]) - Number.parseFloat(a[column]);
+  });
+  this.parent.updateTables(values, this.parent);
+}
+function generateEconTableData(){
+  let results = []
+  econ = economics.rawData || this.parent.economics.rawData;
+  let res = econ;
+  for(var i = 0; i < res.length; ++i){
+    var tempObj = getObj(res[i]);
+    results.push(tempObj);
+  }
+  results.splice(0,1);
+  return results;
+}
+
+function numFormatting(num){
+  return Number.parseFloat(num).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function generateEconomicsTables() {
+  var econtables = {'convCorn': {landuse: "Conventional Corn", subCrop:"Corn after Soybean"},
+  'convCorn2': {landuse: "Conventional Corn", subCrop: "Corn after Corn"},
+  'consCorn' : {landuse: "Conservation Corn", subCrop: "Corn after Soybean"},
+  'consCorn2': {landuse: "Conservation Corn", subCrop: "Corn after Corn"},
+  'convSoy': {landuse: "Conventional Soybean"},
+  'consSoy': {landuse: "Conservation Soybean"},
+  'alf': {landuse: "Alfalfa"},
+  'permPas': {landuse: "Permanent Pasture"},
+  'rotGraz': {landuse: "Rotational Grazing"},
+  'grassHay': {landuse: "Grass Hay"},
+  'prairie': {landuse: "Prairie"},
+  'consFor': {landuse: "Conservation Forest"},
+  'convFor': {landuse: "Conventional Forest"},
+  'switchG': {landuse: "Switchgrass"},
+  'shortRWB': {landuse: "Short-rotation Woody Bioenergy"},
+  'wetland': {landuse: "Wetland"},
+  'mixedFruitsVGrapes': {landuse: "Mixed Fruits & Vegetables", subCrop:"Grapes (Conventional)"},
+  'mixedFruitsVGreenB': {landuse: "Mixed Fruits & Vegetables", subCrop:"Green Beans"},
+  'mixedFruitsVSquash': {landuse: "Mixed Fruits & Vegetables", subCrop:"Winter Squash"},
+  'mixedFruitsVStrawberries': {landuse: "Mixed Fruits & Vegetables", subCrop:"Strawberries"}}
+
+  document.getElementById('resultsFrame').contentWindow.document.getElementById('yearSelect').selectedIndex = currentYear - 1;
+
+
+   //results array that holds data objects
+   let results = generateEconTableData();
+
+//  var source = "../htmlFrames/imgs/text.png"
+   //getting total for each land use and grand total by calling getEconomicsData
+  // clearTableVars();
+
+  this.clearTableVars = () => {
+    Object.keys(econtables).forEach(key =>{
+      econtables[key].table = '<table><tr><th onclick="tableSort(\'costName\')">Cost Name</th><th onclick="tableSort(\'time\')">Time</th><th onclick="tableSort(\'action\')">Action</th><th onclick="numSort(\'value\')">Value</th><th>Frequency</th><th>Description</th></tr>'
+    })
+  }
+
+  this.updateTables = (values, scope) =>{
+    this.clearTableVars();
+    console.log(values);
+
+    for(var i = 0; i < values.length; ++i){
+      curLandUse = values[i].landUse;
+      Object.keys(econtables).forEach(key =>{
+        if(curLandUse == econtables[key].landuse){
+          if(!values[i].subCrop || values[i].subCrop == econtables[key].subCrop){
+            econtables[key].table += "<tr><td>"+values[i].costName+"</td><td>"+values[i].time+"</td><td>"+values[i].action+'</td><td style="text-align:right">'+"$"+numFormatting(values[i].value)+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+          }
+        }
+      });
+    }
+
+    Object.keys(econtables).forEach(key =>{
+      econtables[key].table += "</table>";
+    });
+
+    placeTotalsOnBars(document.getElementById('resultsFrame').contentWindow.document.getElementById("yearSelect").value, document.getElementById('resultsFrame').contentWindow);
+    this.setTables();
+  }
+
+ getEconomicsData(results);
+
+  //updates the tables by calling updateTables
+
+  this.setTables = (timeOrAction) => {
+    Object.keys(econtables).forEach(key =>{
+      document.getElementById('resultsFrame').contentWindow.document.getElementById(key).innerHTML = econtables[key].table
+    });
+  }
+  this.updateTables(results, this);
+
+
+   //parsing the entire file and putting each cell into an the array res
+  /*$.ajax({
+    async: false,
+    type: "GET",
+    url: file,
+    dataType: "text",
+    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+    success: function(data) {
+      res = data.split(/\n/);
+      res = res.split(/\r/);
+    },
+    error: function(data) {
+      console.log(JSON.stringify(data));
+    }
+  });*/
+
+   //iterating through all the cells and creating TIME objects out of data then data into results array
+
+
+}//end generateEconomicsTables()
+
+ function getEconomicsData(data) {
+  data.splice(-1,1);
+  tempResult = data;
+  var tempData = [];
+  var convCorn = 0;
+  var consCorn = 0;
+  var convSoy = 0;
+  var consSoy = 0;
+  var alf = 0;
+  var permPas = 0;
+  var rotGraz = 0;
+  var grassHay = 0;
+  var prairie = 0;
+  var consFor = 0;
+  var convFor = 0;
+  var switchG = 0;
+  var shortRWB = 0;
+  var wetland = 0;
+  var mixedFruitsV = 0;
+  var total = 0;
+  var names = ["Conventional Corn","Conservation Corn", "Conventional Soybean", "Conservation Soybean", "Alfalfa",
+              "Permanent Pasture", "Rotational Grazing", "Grass Hay", "Prairie", "Conservation Forest", "Conventional Forest",
+              "Switchgrass", "Short-rotation Woody Bioenergy", "Wetland", "Mixed Fruits & Vegetables"];
+
+  for(var i = 0; i < data.length; ++i){
+    switch (data[i].landUse) {
+      case "Conventional Corn":
+      var temp = getValue(data[i].value);
+      convCorn += temp;
+      total += temp;
+      break;
+      case "Conservation Corn":
+      var temp = getValue(data[i].value);
+      consCorn += temp;
+      total += temp;
+      break;
+      case "Conventional Soybean":
+      var temp = getValue(data[i].value);
+      convSoy += temp;
+      total += temp;
+      break;
+      case "Conservation Soybean":
+      var temp = getValue(data[i].value);
+      consSoy += temp;
+      total += temp;
+      break;
+      case "Alfalfa":
+      var temp = getValue(data[i].value);
+      alf += temp;
+      total += temp;
+      break;
+      case "Permanent Pasture":
+      var temp = getValue(data[i].value);
+      permPas += temp;
+      total += temp;
+      break;
+      case "Rotational Grazing":
+      var temp = getValue(data[i].value);
+      rotGraz += temp;
+      total += temp;
+      break;
+      case "Grass Hay":
+      var temp = getValue(data[i].value);
+      grassHay += temp;
+      total += temp;
+      break;
+      case "Prairie":
+      var temp = getValue(data[i].value);
+      prairie += temp;
+      total += temp;
+      break;
+      case "Conservation Forest":
+      var temp = getValue(data[i].value);
+      consFor += temp;
+      total += temp;
+      break;
+      case "Conventional Forest":
+      var temp = getValue(data[i].value);
+      convFor += temp;
+      total += temp;
+      break;
+      case "Switchgrass":
+      var temp = getValue(data[i].value);
+      switchG += temp;
+      total += temp;
+      break;
+      case "Short-rotation Woody Bioenergy":
+      var temp = getValue(data[i].value);
+      shortRWB += temp;
+      total += temp;
+      break;
+      case "Wetland":
+      var temp = getValue(data[i].value);
+      wetland += temp;
+      total += temp;
+      break;
+      case "Mixed Fruits & Vegetables":
+      var temp = getValue(data[i].value);
+      mixedFruitsV += temp;
+      total += temp;
+      break;
+    }
+  }
+
+  var totals = [convCorn, consCorn, convSoy, consSoy, alf, permPas, rotGraz, grassHay, prairie, consFor, convFor, switchG, shortRWB, wetland, mixedFruitsV];
+
+  localStorage.setItem("convCorn", convCorn.toFixed(2));
+  localStorage.setItem("consCorn", consCorn.toFixed(2));
+  localStorage.setItem("convSoy", convSoy.toFixed(2));
+  localStorage.setItem("consSoy", consSoy.toFixed(2));
+  localStorage.setItem("alf", alf.toFixed(2));
+  localStorage.setItem("permPas", permPas.toFixed(2));
+  localStorage.setItem("rotGraz", rotGraz.toFixed(2));
+  localStorage.setItem("grassHay", grassHay.toFixed(2));
+  localStorage.setItem("prairie", prairie.toFixed(2));
+  localStorage.setItem("consFor", consFor.toFixed(2));
+  localStorage.setItem("convFor", convFor.toFixed(2));
+  localStorage.setItem("switchG", switchG.toFixed(2));
+  localStorage.setItem("shortRWB", shortRWB.toFixed(2));
+  localStorage.setItem("wetland", wetland.toFixed(2));
+  localStorage.setItem("mixedFruitsV", mixedFruitsV.toFixed(2));
+
+
+
+  for(var i = 0; i < names.length; ++i){
+    var tempObj = {label: names[i], count: totals[i], number: (totals[i]/total)};
+    tempData.push(tempObj);
+  }
+  tempResult = tempData;
+}
+
+function getValue(val) {
+  if(val.charAt(0) === '$'){
+    var temp = val.replace(/[^0-9\.-]+/g,"");
+    return parseFloat(temp);
+  }
+  else if(val.charAt(0) === '('){
+    var temp = val.substr(1);
+    temp = temp.substr(1);
+    temp = temp.substring(0, temp.length - 1);
+    temp = (-1 * temp);
+    return parseFloat(temp);
+  }
+  else {
+    return parseFloat(val);
+  }
+}
+
+/*function getObj(data, tOrA){
+  if(tOrA === "T"){
+    var obj = {landUse: data["Land-Use"], costName: data["Cost Name"], name: "Time", TorA: data["Time - Cost Type"], value: data["Value"], timeOfYear: data["Frequency"], description: data["Description"], subCrop: data["Sub Crop"]};
+  }
+  else if(tOrA === "A"){
+    var obj = {landUse: data["Land-Use"], costName: data["Cost Name"], name: "Action", TorA: data["Action - Cost Type"], value: data["Value"], timeOfYear: data["Frequency"], description: data["Description"], subCrop: data["Sub Crop"]};
+  }
+
+   return obj;
+}*/
+
+function getObj(data){
+  var obj = {landUse: data["Land-Use"], costName: data["Cost Name"], nameT: "Time", time: data["Time - Cost Type"], nameA: "Action", action: data["Action - Cost Type"], value: data["Value"], timeOfYear: data["Frequency"], description: data["Description"], subCrop: data["Sub Crop"]};
+
+  return obj;
+}
 
 //generateResultsTable creates the string of html with all the numerical results
 // the code here is a little dense, but entirely straightforward
 // where possible, loops are created for years
 function generateResultsTable() {
+
+  // Tables 1 and 3 include classes verticalLine, centerText, rightText, and leftText. These are used to format the table by putting lines between different sections and aligning the text to look the best.
 
   var toMetricFactorArea = 2.471;
   var upToYear = boardData[currentBoard].calculatedToYear;
@@ -1851,7 +2570,6 @@ function generateResultsTable() {
   //The following coditional statement is to modify the results table depending on the mode.
   //If the condition is true then it means that the results will be modified to the multiplayer mode, else it will be the same results table per every other mode.
   if(localStorage.getItem('LSinMultiplayer')==="true"){
-    console.log(boardData[currentBoard]);
 
     //add header
     //Players section of table START
@@ -2028,69 +2746,84 @@ function generateResultsTable() {
     //===========================END OF RESTULTS TABLE (if version)
   }//end of if
   else {
-    htmlTableString += "<tr class='tableHeading'> <th width='28%'> Land Use Category </th>";
+    htmlTableString += "<tr class='tableHeading'> <th width='28%' class='leftText'> Land Use Category </th>";
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Percentage</th>";
+    htmlTableString += "<th width='11%' class='centerText'>Percentage</th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Units (English) </th>";
+    htmlTableString += "<th width='11%' class='centerText'>Units (English) </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Units (Metric) </th>";
+    htmlTableString += "<th width='11%' class='centerText'>Units (Metric) </th>";
 
     htmlTableString += "</tr>";
 
     //Add Data Rows
+
+    //this string will add empty tags to help format the lines on the table, these initial three are to cover the coumns percentage, units(english), and units(metric)
+    var format = "";
+    if(upToYear == 1){
+      format = "<td></td><td class='verticalLine'></td><td></td><td class='verticalLine'></td>";
+    }
+    else if(upToYear == 2){
+      format = "<td></td><td></td><td class='verticalLine'></td><td></td><td></td><td class='verticalLine'></td>";
+    }
+    else if(upToYear == 3){
+      format = "<td></td><td></td><td></td><td class='verticalLine'></td><td></td><td></td><td></td><td class='verticalLine'></td>";
+    }
+
+
+
 
     for (var l = 0; l < backendDataIdentifiers.length; l++) {
 
       //check for the cases where a header needs to be added
       switch (l) {
         case 0:
-          htmlTableString += "<tr class='tableHeading'><td><b>Annual Grain</b></td></tr>";
+          htmlTableString += "<tr class='tableHeading'><td class='verticalLine'><b>Annual Grain</b></td>" + format + "</tr>";
           break;
         case 2:
-          htmlTableString += "<tr class='tableHeading'><td><b>Annual Legume</b></td></tr>";
+          htmlTableString += "<tr class='tableHeading'><td class='verticalLine'><b>Annual Legume</b></td>" + format + "</tr>";
           break;
         case 4:
-          htmlTableString += "<tr class='tableHeading'><td><b>Mixed Fruits and Vegetables</b></td></tr>";
+          htmlTableString += "<tr class='tableHeading'><td class='verticalLine'><b>Mixed Fruits and Vegetables</b></td>" + format + "</tr>";
           break;
         case 5:
-          htmlTableString += "<tr class='tableHeading'><td><b>Pasture</b></td></tr>";
+          htmlTableString += "<tr class='tableHeading'><td class='verticalLine'><b>Pasture</b></td>" + format + "</tr>";
           break;
         case 7:
-          htmlTableString += "<tr class='tableHeading'><td><b>Perennial Herbaceous (non-pasture)</b></td></tr>";
+          htmlTableString += "<tr class='tableHeading'><td class='verticalLine'><b>Perennial Herbaceous (non-pasture)</b></td>" + format + "</tr>";
           break;
         case 11:
-          htmlTableString += "<tr class='tableHeading'><td><b>Perennial Legume</b></td></tr>";
+          htmlTableString += "<tr class='tableHeading'><td class='verticalLine'><b>Perennial Legume</b></td>" + format + "</tr>";
           break;
         case 12:
-          htmlTableString += "<tr class='tableHeading'><td><b>Perennial Wooded</b></td></tr>";
+          htmlTableString += "<tr class='tableHeading'><td class='verticalLine'><b>Perennial Wooded</b></td>" + format + "</tr>";
           break;
 
       } //end switch
 
       htmlTableString += "<tr>";
 
-      htmlTableString += "<td>" + frontendNames[l] + "</td>";
+      htmlTableString += "<td class='verticalLine'>" + frontendNames[l] + "</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
         htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10) / 10) + "<br>";
@@ -2099,10 +2832,10 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td>percent</td>";
+      htmlTableString += "<td class='verticalLine centerText'>percent</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
         htmlTableString += (Math.round(Totals.landUseResults[y][tempString] * 10) / 10) + "<br>";
@@ -2111,10 +2844,10 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td>acres</td>";
+      htmlTableString += "<td class='verticalLine centerText'>acres</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
         htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / toMetricFactorArea * 10) / 10) + "<br>";
@@ -2124,7 +2857,7 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td>hectares</td></tr>";
+      htmlTableString += "<td class='centerText'>hectares</td></tr>";
     }
 
     htmlTableString += "</table><br>";
@@ -2151,31 +2884,31 @@ function generateResultsTable() {
 
     //add header row
 
-    htmlTableString += "<tr class='tableHeading'> <th width='28%''> Ecosystem Service Indicator <br> / Measurement </th>";
+    htmlTableString += "<tr class='tableHeading'> <th width='28%' class='leftText'> Ecosystem Service Indicator <br> / Measurement </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Score</th>";
+    htmlTableString += "<th width='11%' class='centerText'>Score</th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Units (English) </th>";
+    htmlTableString += "<th width='11%' class='centerText'>Units (English) </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th width=" + yearWidth + ">";
+      htmlTableString += "<th width=" + yearWidth + " class='rightText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
 
-    htmlTableString += "<th width='11%'>Units (Metric) </th>";
+    htmlTableString += "<th width='11%' class='centerText'>Units (Metric) </th>";
 
     htmlTableString += "</tr>";
 
@@ -2189,10 +2922,10 @@ function generateResultsTable() {
           //htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
           //  //put Habitat header, in bold
             htmlTableString += "<tr>";
-            htmlTableString += "<td><b>" + "Habitat" + "<b></td>";
+            htmlTableString += "<td class='verticalLine'><b>" + "Habitat" + "<b></td>";
             //calculate total score for each year and place next to Habitat header
             for(var y = 1; y <= upToYear; y++){
-              htmlTableString += "<td><b>";
+              htmlTableString += "<td class='rightText'><b>";
 
               var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y])/2;
 
@@ -2200,20 +2933,25 @@ function generateResultsTable() {
 
               htmlTableString += "<b></td>";
             }
-            htmlTableString += "<td><b>(out of 100)<b></td>";
+            htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
             //add extra spaces to fill out bar across screen
             for(var y = 1; y <= (2*upToYear)+2; y++){
-              htmlTableString += "<td></td>";
+              if(y == ((2*upToYear) + 2) / 2){
+                htmlTableString += "<td  class='verticalLine centerText'></td>";
+              }
+              else{
+                htmlTableString += "<td></td>";
+              }
             }
             break;
           break;
         case 2:
           //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
           htmlTableString += "<tr>";
-          htmlTableString += "<td><b>" + "Soil Quality" + "<b></td>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Soil Quality" + "<b></td>";
           //calculate total score for each year and place next to Habitat header
           for(var y = 1; y <= upToYear; y++){
-            htmlTableString += "<td><b>";
+            htmlTableString += "<td class='rightText'><b>";
 
             var totalScore = (Totals.carbonSequestrationScore[y]+Totals.grossErosionScore[y])/2;
 
@@ -2221,19 +2959,24 @@ function generateResultsTable() {
 
             htmlTableString += "<b></td>";
           }
-          htmlTableString += "<td><b>(out of 100)<b></td>";
+          htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
           //add extra spaces to fill out bar across screen
           for(var y = 1; y <= (2*upToYear)+2; y++){
-            htmlTableString += "<td></td>";
+            if(y == ((2*upToYear) + 2) / 2){
+              htmlTableString += "<td  class='verticalLine centerText'></td>";
+            }
+            else{
+              htmlTableString += "<td></td>";
+            }
           }
           break;
         case 4:
           //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
           htmlTableString += "<tr>";
-          htmlTableString += "<td><b>" + "Water Quality" + "<b></td>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Water Quality" + "<b></td>";
           //calculate total score for each year and place next to Habitat header
           for(var y = 1; y <= upToYear; y++){
-            htmlTableString += "<td><b>";
+            htmlTableString += "<td class='rightText'><b>";
 
             var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y])/3;
 
@@ -2241,20 +2984,25 @@ function generateResultsTable() {
 
             htmlTableString += "<b></td>";
           }
-          htmlTableString += "<td><b>(out of 100)<b></td>";
+          htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
           //add extra spaces to fill out bar across screen
           for(var y = 1; y <= (2*upToYear)+2; y++){
-            htmlTableString += "<td></td>";
+            if(y == ((2*upToYear) + 2) / 2){
+              htmlTableString += "<td  class='verticalLine'></td>";
+            }
+            else{
+              htmlTableString += "<td></td>";
+            }
           }
           break;
       } //end switch
 
       htmlTableString += "<tr>";
 
-      htmlTableString += "<td>" + frontendNames[l] + "</td>";
+      htmlTableString += "<td  class='verticalLine'>" + frontendNames[l] + "</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "Score";
         htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
@@ -2263,10 +3011,10 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td>(out of 100)</td>";
+      htmlTableString += "<td class='verticalLine centerText'>(out of 100)</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
         //Correction for Carbon Sequestrations
@@ -2281,13 +3029,13 @@ function generateResultsTable() {
       } //for each year
 
       //units cell, keep track which type of units we'll need
-      if (l < 2) htmlTableString += "<td>pts</td>";
-      if (2 <= l && l < 4) htmlTableString += "<td>tons</td>";
-      if (4 <= l && l < 5) htmlTableString += "<td>ppm</td>";
-      if (5 <= l && l < 8) htmlTableString += "<td>tons</td>";
+      if (l < 2) htmlTableString += "<td class='verticalLine centerText'>pts</td>";
+      if (2 <= l && l < 4) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
+      if (4 <= l && l < 5) htmlTableString += "<td class='verticalLine centerText'>ppm</td>";
+      if (5 <= l && l < 8) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td  class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
         htmlTableString += (Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10) + "<br>";
@@ -2297,10 +3045,10 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      if (l < 2) htmlTableString += "<td>pts</td>";
-      if (2 <= l && l < 4) htmlTableString += "<td>Mg</td>";
-      if (4 <= l && l < 5) htmlTableString += "<td>mg/L</td>";
-      if (5 <= l && l < 8) htmlTableString += "<td>Mg</td>";
+      if (l < 2) htmlTableString += "<td class='centerText'>pts</td>";
+      if (2 <= l && l < 4) htmlTableString += "<td class='centerText'>Mg</td>";
+      if (4 <= l && l < 5) htmlTableString += "<td class='centerText'>mg/L</td>";
+      if (5 <= l && l < 8) htmlTableString += "<td class='centerText'>Mg</td>";
     }
 
     //========================================
@@ -2328,11 +3076,11 @@ function generateResultsTable() {
           //htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
             //put Yield header, in bold
             htmlTableString += "<tr>";
-            htmlTableString += "<td><b>" + "Yield" + "<b></td>";
+            htmlTableString += "<td class='verticalLine'><b>" + "Yield" + "<b></td>";
 
             //calculate total score for each year and place next to Yield header
             for(var y = 1; y <= upToYear; y++){
-              htmlTableString += "<td><b>";
+              htmlTableString += "<td class='rightText'><b>";
 
               var totalScore = Math.min(Totals.cornGrainYieldScore[y] +
               Totals.soybeanYieldScore[y] + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] +
@@ -2342,20 +3090,25 @@ function generateResultsTable() {
 
               htmlTableString += "<b></td>";
             }
-            htmlTableString += "<td><b>(out of 100)<b></td>";
+            htmlTableString += "<td  class='verticalLine centerText'><b>(out of 100)<b></td>";
             //add extra spaces to fill out bar across screen
             for(var y = 1; y <= (2*upToYear)+2; y++){
-              htmlTableString += "<td></td>";
+              if(y == ((2*upToYear) + 2) / 2){
+                htmlTableString += "<td  class='verticalLine'></td>";
+              }
+              else{
+                htmlTableString += "<td></td>";
+              }
             }
             break;
       } //end switch
 
       htmlTableString += "<tr>";
 
-      htmlTableString += "<td>" + frontendNames[l] + "</td>";
+      htmlTableString += "<td class='verticalLine'>" + frontendNames[l] + "</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "Score";
         htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
@@ -2363,10 +3116,10 @@ function generateResultsTable() {
         htmlTableString += "</td>";
       } //for each year
       //units cell
-      htmlTableString += "<td>(out of 100)</td>";
+      htmlTableString += "<td class='verticalLine centerText'>(out of 100)</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
         htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * 10) / 10) + "<br>";
@@ -2375,15 +3128,15 @@ function generateResultsTable() {
       } //for each year
 
       //units cell, lots of different ones to keep track of here
-      if (l < 2) htmlTableString += "<td>bu</td>";
-      if (l == 2) htmlTableString += "<td>tons</td>";
-      if (l == 3) htmlTableString += "<td>animals</td>"; //what an odd unit
-      if (4 <= l && l < 7) htmlTableString += "<td>tons</td>";
-      if (l == 7) htmlTableString += "<td>board-ft</td>";
-      if (l == 8) htmlTableString += "<td>tons</td>";
+      if (l < 2) htmlTableString += "<td class='verticalLine centerText'>bu</td>";
+      if (l == 2) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
+      if (l == 3) htmlTableString += "<td class='verticalLine centerText'>animals</td>"; //what an odd unit
+      if (4 <= l && l < 7) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
+      if (l == 7) htmlTableString += "<td class='verticalLine centerText'>board-ft</td>";
+      if (l == 8) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
 
       for (var y = 1; y <= upToYear; y++) {
-        htmlTableString += "<td>";
+        htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
         htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10) + "<br>";
@@ -2394,12 +3147,12 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      if (l < 2) htmlTableString += "<td>Mg</td>";
-      if (l == 2) htmlTableString += "<td>Mg</td>";
-      if (l == 3) htmlTableString += "<td>animals</td>";
-      if (4 <= l && l < 7) htmlTableString += "<td>Mg</td>";
-      if (l == 7) htmlTableString += "<td>m^3</td>";
-      if (l == 8) htmlTableString += "<td>Mg</td>";
+      if (l < 2) htmlTableString += "<td class='centerText'>Mg</td>";
+      if (l == 2) htmlTableString += "<td class='centerText'>Mg</td>";
+      if (l == 3) htmlTableString += "<td class='centerText'>animals</td>";
+      if (4 <= l && l < 7) htmlTableString += "<td class='centerText'>Mg</td>";
+      if (l == 7) htmlTableString += "<td class='centerText'>m^3</td>";
+      if (l == 8) htmlTableString += "<td class='centerText'>Mg</td>";
     }
 
     htmlTableString += "</table><br>";
@@ -2412,10 +3165,10 @@ function generateResultsTable() {
     //add header row
 
 
-    htmlTableString += "<tr class='tableHeading'> <th style='width:220px;'> Other Parameters </th>";
+    htmlTableString += "<tr class='tableHeading leftText'> <th style='width:220px;'> Other Parameters </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th class='leftText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
@@ -2423,7 +3176,7 @@ function generateResultsTable() {
     htmlTableString += "<th> </th>";
 
     for (var y = 1; y <= upToYear; y++) {
-      htmlTableString += "<th>";
+      htmlTableString += "<th class='leftText'>";
       htmlTableString += "Y" + y;
       htmlTableString += "</th>";
     }
@@ -2567,6 +3320,124 @@ function strategicWetlandFinder(playerNumber) {
     }
   }
   return strategicWetlandCount;
+}
+
+function findBar(givenString, scope){
+  var aTags = scope.document.getElementsByTagName("a");
+  var found;
+
+   for (var i = 0; i < aTags.length; i++) {
+    if (aTags[i].textContent.includes(givenString)) {
+      found = aTags[i];
+      return found;
+    }
+  }
+  return 0;
+}
+
+function placeTotalsOnBars(year, scope){
+  var accordion = scope.document.getElementById("accordionContainer");
+  if(accordion.style.display === "none"){
+    return;
+  }
+
+
+  var convCorn = findBar('Conventional Corn', scope);
+  var consCorn = findBar('Conservation Corn', scope);
+  var convSoy = findBar('Conventional Soybean', scope);
+  var consSoy = findBar('Conservation Soybean', scope);
+  var alfalfa = findBar('Alfalfa', scope);
+  var permPas = findBar('Permanent Pasture', scope);
+  var rotGraz = findBar('Rotational Grazing', scope);
+  var grassHay = findBar('Grass Hay', scope);
+  var prairie = findBar('Prairie', scope);
+  var consFor = findBar('Conservation Forest', scope);
+  var convFor = findBar('Conventional Forest', scope);
+  var switchgrass = findBar('Switchgrass', scope);
+  var shortRWB = findBar('Short-Rotation Woody Bioenergy', scope);
+  var wetland = findBar('Wetland', scope);
+  var mixedFaV = findBar('Mixed Fruits & Vegetables', scope);
+
+  var convCornASoy = findBar('Conventional Corn after Soybean', scope);
+  var convCornACorn = findBar('Conventional Corn after Corn', scope);
+  var consCornASoy = findBar('Conservation Corn after Soybean', scope);
+  var consCornACorn = findBar('Conservation Corn after Corn', scope);
+
+  var grapes = findBar('Grapes', scope);
+  var greenBeans = findBar('Green Beans', scope);
+  var squash = findBar('Squash', scope);
+  var strawberries = findBar('Strawberries', scope);
+
+  convCorn.firstChild.nodeValue = ("Conventional Corn Total: $" + numFormatting(scope.parent.economics.data[year][1]['Action - Cost Type'].total));
+  consCorn.firstChild.nodeValue = ("Conservation Corn Total: $" + numFormatting(scope.parent.economics.data[year][2]['Action - Cost Type'].total));
+  convSoy.firstChild.nodeValue = ("Conventional Soybean Total: $" + numFormatting(scope.parent.economics.data[year][3]['Action - Cost Type'].total));
+  consSoy.firstChild.nodeValue = ("Conservation Soybean Total: $" + numFormatting(scope.parent.economics.data[year][4]['Action - Cost Type'].total));
+  alfalfa.firstChild.nodeValue = ("Alfalfa Total: $" + numFormatting(scope.parent.economics.data[year][5]['Action - Cost Type'].total));
+  permPas.firstChild.nodeValue = ("Permanent Pasture Total: $" + numFormatting(scope.parent.economics.data[year][6]['Action - Cost Type'].total));
+  rotGraz.firstChild.nodeValue = ("Rotational Grazing Total: $" + numFormatting(scope.parent.economics.data[year][7]['Action - Cost Type'].total));
+  grassHay.firstChild.nodeValue = ("Grass Hay Total: $" + numFormatting(scope.parent.economics.data[year][8]['Action - Cost Type'].total));
+  /*prairie.firstChild.nodeValue = ("Prairie Total: $" + numFormatting(scope.parent.economics.data[9]['Action - Cost Type'].total));
+  consFor.firstChild.nodeValue = ("Conservation Forest Total: $" + numFormatting(scope.parent.economics.data[10]['Action - Cost Type'].total));
+  convFor.firstChild.nodeValue = ("Conventional Forest Total: $" + numFormatting(scope.parent.economics.data[11]['Action - Cost Type'].total));*/
+  switchgrass.firstChild.nodeValue = ("Switchgrass Total: $" + numFormatting(scope.parent.economics.data[year][12]['Action - Cost Type'].total));
+  shortRWB.firstChild.nodeValue = ("Short-Rotation Woody Bioenergy Total: $" + numFormatting(scope.parent.economics.data[year][13]['Action - Cost Type'].total));
+  wetland.firstChild.nodeValue = ("Wetland Total: $" + numFormatting(scope.parent.economics.data[year][14]['Action - Cost Type'].total));
+  mixedFaV.firstChild.nodeValue = ("Mixed Fruits & Vegetables Total: $" + numFormatting(scope.parent.economics.data[year][15]['Action - Cost Type'].total));
+
+  convCornASoy.firstChild.nodeValue = ("Conventional Corn after Soybean Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conventional Corn']['Corn after Soybean']));
+  convCornACorn.firstChild.nodeValue = ("Conventional Corn after Corn Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conventional Corn']['Corn after Corn']));
+  consCornASoy.firstChild.nodeValue = ("Conservation Corn after Soybean Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conservation Corn']['Corn after Soybean']));
+  consCornACorn.firstChild.nodeValue = ("Conservation Corn after Corn Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conservation Corn']['Corn after Corn']));
+  grapes.firstChild.nodeValue = ("Grapes Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Grapes (Conventional)']));
+  greenBeans.firstChild.nodeValue = ("Green Beans Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Green Beans']));
+  squash.firstChild.nodeValue = ("Squash Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Winter Squash']));
+  strawberries.firstChild.nodeValue = ("Strawberries Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Strawberries']));
+
+  /*convCorn.firstChild.nodeValue += (" Total: $" + localStorage.getItem('convCorn'));
+  consCorn.firstChild.nodeValue += (" Total: $" + localStorage.getItem('consCorn'));
+  convSoy.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('convSoy'));
+  consSoy.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('consSoy'));
+  alfalfa.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('alf'));
+  permPas.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('permPas'));
+  rotGraz.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('rotGraz'));
+  grassHay.firstChild.nodeValue += (" Total: $" + localStorage.getItem('grassHay'));
+  prairie.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('prairie'));
+  consFor.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('consFor'));
+  convFor.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('convFor'));
+  switchgrass.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('switchG'));
+  shortRWB.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('shortRWB'));
+  wetland.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('wetland'));
+  mixedFaV.firstChild.nodeValue += ("  Total: $" + localStorage.getItem('mixedFruitsV'));*/
+}
+
+
+
+function changeYear(){
+  var yearVal = document.getElementById("yearSelect").value;
+
+  placeTotalsOnBars(yearVal, this);
+}
+
+
+function enterpriseBudgets(){
+  var accordion = document.getElementById("accordionContainer");
+  var enterpriseTable = document.getElementById("accordionContainer2");
+  var graph = document.getElementById("graphContainer");
+  //var enterpriseButton = document.getElementById("enterpriseBudgetsButton");
+  if(accordion.style.display === "none"){
+    enterpriseTable.style.display = "none";
+
+     accordion.style.display = "inline-block";
+    graph.style.display = "block";
+    //enterpriseButton.innerHTML = "View Enterprise Budgets";
+  }
+  else{
+    enterpriseTable.style.display = "inline-block";
+
+     accordion.style.display = "none";
+    graph.style.display = "none";
+    //enterpriseButton.innerHTML = "Return to Econ Module";
+  }
 }
 
 /*
@@ -4132,6 +5003,7 @@ function createMockDataGraphic1(){
   return dataEcon1;
 }
 function EconomicsGraphic1() {
+  //console.log(this);
   options = [];
   this.render = () => {
     svg.selectAll("*").remove();
@@ -4163,7 +5035,7 @@ function EconomicsGraphic1() {
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var formatData = () => { //options are deciding what not to draw. Hiding the elements isnt sufficient since it leaves empty gaps of whitespace.
-    console.log(this);
+    //console.log(this);
     tempData = JSON.parse(JSON.stringify(fullData)); //deepcopy to make changes to
     data1 = tempData.filter(el => {
       if(options.indexOf(el.landUse.replace(/\s/g,'')) > -1) return false;
@@ -4413,6 +5285,7 @@ function EconomicsGraphic1() {
     }
     if(!skip) rerender();
   }
+
   var rerender = () => { //We dont want to rebuild the options when we need to render again
     svg.selectAll("*").remove();
     drawBars();
