@@ -177,7 +177,7 @@ var Economics = function () {
           value = parseFloat(dataPoint['Revenue/acre/year']);
         }
         else {
-          value = parseFloat(dataPoint['Revenue/acre/year']) *=
+          value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][dataPoint['LU_ID']];
         }
         this.scaledRev[i][dataPoint['LU_ID']] = this.scaledRev[i][dataPoint['LU_ID']] || 0;
         this.scaledRev[i][dataPoint['LU_ID']] += value;
