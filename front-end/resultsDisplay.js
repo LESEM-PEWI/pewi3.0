@@ -2774,20 +2774,21 @@ function generateEconomicsTables() {
 }
 
 function getValue(val) {
-  if(val.charAt(0) === '$'){
-    var temp = val.replace(/[^0-9\.-]+/g,"");
-    return parseFloat(temp);
-  }
-  else if(val.charAt(0) === '('){
-    var temp = val.substr(1);
-    temp = temp.substr(1);
-    temp = temp.substring(0, temp.length - 1);
-    temp = (-1 * temp);
-    return parseFloat(temp);
-  }
-  else {
-    return parseFloat(val);
-  }
+  return val;
+  // if(val.charAt(0) === '$'){
+  //   var temp = val.replace(/[^0-9\.-]+/g,"");
+  //   return parseFloat(temp);
+  // }
+  // else if(val.charAt(0) === '('){
+  //   var temp = val.substr(1);
+  //   temp = temp.substr(1);
+  //   temp = temp.substring(0, temp.length - 1);
+  //   temp = (-1 * temp);
+  //   return parseFloat(temp);
+  // }
+  // else {
+  //   return parseFloat(val);
+  // }
 }
 
 /*function getObj(data, tOrA){
