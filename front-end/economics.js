@@ -1,13 +1,18 @@
 var Economics = function () {
   this.rawData;
-  this.rawData2;
   this.mapData = [];
   this.data = [];
   this.data4 = [];
   this.data3 = [];
   this.data3ByLU = [];
   this.data5=[];
+  this.rawRev=[];
+  this.scaledRev=[];
+
   yearCosts = [-1,1,1,1,1,4,1,1,4,1,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}]
+  d3.csv('./revenue.csv', (data) => {
+    this.rawRev = data;
+  })
 
   this.divideByCategory = function (listofCats){
     for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
@@ -68,8 +73,8 @@ var Economics = function () {
       console.log(this.data5);
     }
     d3.csv('./budgets.csv', (data) => {
-      this.rawData2=data;
-      this.rawData2.forEach(dataPoint => {
+      this.rawData=data;
+      this.rawData.forEach(dataPoint => {
         let id = Number.parseInt(dataPoint['LU_ID'])
         divisionForLU = (typeof yearCosts[id] === 'number') ? yearCosts[id]:  yearCosts[id][dataPoint['Sub Crop']];
         dataPoint["Value"] /= divisionForLU;
@@ -98,7 +103,6 @@ var Economics = function () {
         }
       });
     }
-    this.data4
     console.log(this.data4);
 
   }
@@ -160,28 +164,39 @@ var Economics = function () {
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       landUses[i] = [];
       this.mapData[i] = [];
+      this.scaledRev[i] = [];
       let keys = Object.keys(Totals.landUseResults[0]);
       for(let j = 0; j < keys.length; j++){
         let key = keys[j];
         //this substring is to link different keys from different objects together... again less than ideal
         landUses[i][LandUseType[key.substring(0, key.length - 7)]] = Totals.landUseResults[i][key]
       }
-      this.rawData2.forEach(dataPoint => {
+      this.rawRev.forEach(dataPoint => {
+        let copy = JSON.parse(JSON.stringify(dataPoint));
+        if(dataPoint['Units'] === '$/acre'){
+          value = parseFloat(dataPoint['Revenue/acre/year']);
+        }
+        else {
+          value = parseFloat(dataPoint['Revenue/acre/year']) *=
+        }
+        this.scaledRev[i][dataPoint['LU_ID']] = this.scaledRev[i][dataPoint['LU_ID']] || 0;
+        this.scaledRev[i][dataPoint['LU_ID']] += value;
+
+      });
+
+      this.rawData.forEach(dataPoint => {
         let copy = JSON.parse(JSON.stringify(dataPoint));
         copy["Value"] *= landUses[i][copy['LU_ID']];
         copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
         this.mapData[i].push(copy)
       })
     }
-
     this.chart3Data();
     this.chart3DataByLU();
     this.graphic5information();
-
-
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
-
+    console.log(this.scaledRev);
   }
 }
 var economics = new Economics();
