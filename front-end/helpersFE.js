@@ -306,7 +306,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.grossErosionScore[currentYear] * 10) / 10).toFixed(1)  + '/100';;
         // convert English unit to Metric unit
         childNodes[7].innerHTML = (Math.round(Totals.grossErosion[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
-          (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
+          (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
 
       }
@@ -322,7 +322,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = (Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1) + ' ppm / yr' + '<br>' +
-          Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' mg/L / yr';
+          (Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1) + ' mg/L / yr';
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
 
       }
