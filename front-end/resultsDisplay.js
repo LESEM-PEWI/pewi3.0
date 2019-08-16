@@ -252,7 +252,7 @@ var RadarChart = {
 
           mouseoverInfo.select('.label').html(d.label);
           mouseoverInfo.select('.count').html(d.raw);
-          mouseoverInfo.select('.score').html(Math.round(d.value * 1000) / 10 + "/100");
+          mouseoverInfo.select('.score').html((Math.round(d.value * 1000) / 10).toFixed(1) + "/100");
           mouseoverInfo.style('border-color', d3.select(this).style("fill"));
           mouseoverInfo.style('display', 'block');
 
@@ -652,8 +652,13 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
       //update the mouseover box
       var percent = d.data.count;
       mouseoverInfo.select('.label').html(d.data.label);
+<<<<<<< HEAD
       mouseoverInfo.select('.count').html(addCommas((d.data.number).toFixed(1)) + " acres");
       mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100) + '%');
+=======
+      mouseoverInfo.select('.count').html((d.data.number).toFixed(1) + " acres");
+      mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100).toFixed(1) + '%');
+>>>>>>> development
       mouseoverInfo.style('border-color', color(d.data.label));
       mouseoverInfo.style('opacity', 1);
       mouseoverInfo.style('display', 'block');
@@ -1519,13 +1524,13 @@ function drawEcosystemRadar(yearArray) {
       label: "Nitrate Concentration",
       axis: "Nitrate",
       value: (Totals.nitrateConcentrationScore[y] / 100).toFixed(1),
-      raw: (Math.round(Totals.nitrateConcentration[y] * 10) / 10) + " ppm"
+      raw: (Math.round(Totals.nitrateConcentration[y] * 10) / 10).toFixed(1) + " ppm"
     }, {
       label: "Total Sum Yields",
       axis: "Total Yields",
 
-      value: Math.min((Totals.cornGrainYieldScore[y]  + Totals.soybeanYieldScore[y]  + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y]  + Totals.grassHayYieldScore[y]  +
-      Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y]) / 100, 100),
+      value: (Math.min((Totals.cornGrainYieldScore[y]  + Totals.soybeanYieldScore[y]  + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y]  + Totals.grassHayYieldScore[y]  +
+      Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y]) / 100, 100)).toFixed(1),
     }, {
       label: "Phosphorus Load",
       axis: "Phosphorus",
@@ -2804,7 +2809,11 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
+<<<<<<< HEAD
         htmlTableString += addCommas(Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10) / 10) + "<br>";
+=======
+        htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / Totals.totalArea * 100 * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -2816,7 +2825,11 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
+<<<<<<< HEAD
         htmlTableString += addCommas(Math.round(Totals.landUseResults[y][tempString] * 10) / 10) + "<br>";
+=======
+        htmlTableString += (Math.round(Totals.landUseResults[y][tempString] * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -2828,7 +2841,11 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "LandUse";
+<<<<<<< HEAD
         htmlTableString += addCommas(Math.round(Totals.landUseResults[y][tempString] / toMetricFactorArea * 10) / 10) + "<br>";
+=======
+        htmlTableString += (Math.round(Totals.landUseResults[y][tempString] / toMetricFactorArea * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
         htmlTableString += "</td>";
 
@@ -2907,7 +2924,11 @@ function generateResultsTable() {
 
               var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y])/2;
 
+<<<<<<< HEAD
               htmlTableString += addCommas(Math.round(totalScore * 10) / 10) + "<br>";
+=======
+              htmlTableString += (Math.round(totalScore * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
               htmlTableString += "<b></td>";
             }
@@ -2933,7 +2954,11 @@ function generateResultsTable() {
 
             var totalScore = (Totals.carbonSequestrationScore[y]+Totals.grossErosionScore[y])/2;
 
+<<<<<<< HEAD
             htmlTableString += addCommas(Math.round(totalScore * 10) / 10) + "<br>";
+=======
+            htmlTableString += (Math.round(totalScore * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
             htmlTableString += "<b></td>";
           }
@@ -2958,7 +2983,11 @@ function generateResultsTable() {
 
             var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y])/3;
 
+<<<<<<< HEAD
             htmlTableString += addCommas(Math.round(totalScore * 10) / 10) + "<br>";
+=======
+            htmlTableString += (Math.round(totalScore * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
             htmlTableString += "<b></td>";
           }
@@ -2983,7 +3012,11 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "Score";
+<<<<<<< HEAD
         htmlTableString += addCommas(Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
+=======
+        htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -3001,7 +3034,11 @@ function generateResultsTable() {
         //   Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
         // }
 
+<<<<<<< HEAD
         htmlTableString += addCommas(Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
+=======
+        htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -3016,7 +3053,11 @@ function generateResultsTable() {
         htmlTableString += "<td  class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
+<<<<<<< HEAD
         htmlTableString += addCommas(Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10) + "<br>";
+=======
+        htmlTableString += (Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
         htmlTableString += "</td>";
 
@@ -3064,7 +3105,11 @@ function generateResultsTable() {
               Totals.soybeanYieldScore[y] + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] +
               Totals.grassHayYieldScore[y] + Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y], 100);
 
+<<<<<<< HEAD
               htmlTableString += addCommas(Math.round(totalScore * 10) / 10) + "<br>";
+=======
+              htmlTableString += (Math.round(totalScore * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
               htmlTableString += "<b></td>";
             }
@@ -3089,7 +3134,11 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "Score";
+<<<<<<< HEAD
         htmlTableString += addCommas(Math.round(Totals[tempString][y] * 10) / 10) + "<br>";
+=======
+        htmlTableString += (Math.round(Totals[tempString][y] * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -3100,7 +3149,11 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
+<<<<<<< HEAD
         htmlTableString += addCommas(Math.round(Totals.yieldResults[y][tempString] * 10) / 10) + "<br>";
+=======
+        htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
         htmlTableString += "</td>";
       } //for each year
@@ -3117,7 +3170,11 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
+<<<<<<< HEAD
         htmlTableString += addCommas(Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10) + "<br>";
+=======
+        htmlTableString += (Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10).toFixed(1) + "<br>";
+>>>>>>> development
 
         htmlTableString += "</td>";
 
@@ -3167,7 +3224,7 @@ function generateResultsTable() {
 
     for (var y = 1; y <= upToYear; y++) {
       htmlTableString += "<td>";
-      htmlTableString += boardData[currentBoard].precipitation[y];
+      htmlTableString += boardData[currentBoard].precipitation[y].toFixed(1);
       htmlTableString += "</td>";
     }
 
@@ -3175,7 +3232,7 @@ function generateResultsTable() {
 
     for (var y = 1; y <= upToYear; y++) {
       htmlTableString += "<td>";
-      htmlTableString += Math.round(boardData[currentBoard].precipitation[y] * 2.54 * 10) / 10;
+      htmlTableString += (Math.round(boardData[currentBoard].precipitation[y] * 2.54 * 10) / 10).toFixed(1);
       htmlTableString += "</td>";
     }
 
@@ -3187,7 +3244,7 @@ function generateResultsTable() {
 
     for (var y = 1; y <= upToYear; y++) {
       htmlTableString += "<td>";
-      htmlTableString += Totals.strategicWetlandPercent[y];
+      htmlTableString += Totals.strategicWetlandPercent[y].toFixed(1);
       htmlTableString += "</td>";
     }
 
@@ -3195,7 +3252,7 @@ function generateResultsTable() {
 
     for (var y = 1; y <= upToYear; y++) {
       htmlTableString += "<td>";
-      htmlTableString += Totals.strategicWetlandCells[y];
+      htmlTableString += Totals.strategicWetlandCells[y].toFixed(1);
       htmlTableString += "</td>";
     }
 
@@ -4247,7 +4304,7 @@ function render(years){
   * This function was created for Issue 357. For more information refer to Issue 357.
   */
   function getText(thisElement){
-    var tempText = getInfo(thisElement.id, 0, "landName")+": "+getScoreOfLandType(thisElement.id);
+    var tempText = getInfo(thisElement.id, 0, "landName")+": "+getScoreOfLandType(thisElement.id).toFixed(1);
     return tempText;
   }
 
@@ -4953,6 +5010,10 @@ d3.selection.prototype.moveToBack = function() {
 //--------------------End of Render function
 }
 
+function addCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 function createMockDataGraphic1(){
   var econData = economics.data;
   var dataEcon1 = econData.map
@@ -4995,7 +5056,7 @@ function EconomicsGraphic1() {
   var fullData = createMockDataGraphic1();
 
 
-  var margin = {top: 40, right: 20, bottom: 50, left: 60};
+  var margin = {top: 40, right: 20, bottom: 50, left: 80};
   var screenWidth = window.innerWidth;
   var width = screenWidth*.8 - margin.left - margin.right;
   var height = screenWidth*.40 - margin.top - margin.bottom; //give or take the golden ratio
@@ -5081,7 +5142,7 @@ function EconomicsGraphic1() {
 
     let formatMoney = (d) => { //This is to put the negative sign in front of the dollar sign
       var isNegative = d < 0 ? '-' : '';
-      return isNegative + '$' + Math.abs(d);
+      return isNegative + '$' + addCommas(Math.abs(d).toFixed(2));
     }
     //draws the bars as well as adding listeners for hover
     var rect = layer.selectAll("rect")
@@ -5149,7 +5210,7 @@ function EconomicsGraphic1() {
 
     //following code adds yAxis to graph
     var yAxis = d3.axisLeft(y)
-    .tickFormat(d => formatMoney(d))
+    .tickFormat(d => '$' + addCommas(d))
     .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
     .tickSizeOuter(0)
     svg.append("g")
@@ -5332,7 +5393,7 @@ function EconomicsGraphic3() {
     top: 40,
     right: 20,
     bottom: 50,
-    left: 60
+    left: 80
   };
   var screenWidth = window.innerWidth;
   var width = screenWidth * .8 - margin.left - margin.right;
@@ -5428,7 +5489,7 @@ function EconomicsGraphic3() {
       .style("text-anchor", "end")
 
     var yAxis = d3.axisLeft(y)
-      .tickFormat(d => '$' + d)
+      .tickFormat(d => '$' + addCommas(d))
       .tickSize(-width)
       .tickSizeOuter(0);
     svg.append("g")
@@ -5706,7 +5767,7 @@ function EconomicsGraphic4() {
           .on("mouseover",function(d){
             tooltip.style("visibility","visible");
             tooltip.select("#econGraphic4CostName").text(d.costname);
-            tooltip.select('#econGraphic4Value').text("$"+d.value.toFixed(2));
+            tooltip.select('#econGraphic4Value').text("$"+addCommas(d.value.toFixed(2)));
           })
           .on("mouseout",function(){
             tooltip.style("visibility","hidden");
@@ -5722,6 +5783,7 @@ function EconomicsGraphic4() {
         var xAxis = d3.axisBottom()
         	.scale(xScale);
         var yAxis = d3.axisLeft(yScale)
+          .tickFormat(d => '$' + addCommas(d))
         	.tickSize(-width)
           .tickSizeOuter(0);
 
@@ -6089,7 +6151,7 @@ function EconomicsGraphic5(){
           .on("mouseover",function(d){
             tooltip.style('visibility','visible');
             tooltip.select("#econGraphic5Name").text(d.key);
-            tooltip.select("#econGraphic5Value").text(d.value.toFixed(2));
+            tooltip.select("#econGraphic5Value").text('$' + addCommas(d.value.toFixed(2)));
           })
           .on("mouseout",function () {
               tooltip.style('visibility','hidden');
@@ -6123,7 +6185,8 @@ function EconomicsGraphic5(){
         //x and y axis
        var xAxis = d3.axisBottom()
          .scale(x0);
-       var yAxisLeft = d3.axisLeft(yleft);
+       var yAxisLeft = d3.axisLeft(yleft)
+        .tickFormat(d => '$' + addCommas(d))
        var yAxisRight=d3.axisRight(yright);
          //cost name and scale x axis
           svg.append('g')
@@ -6369,7 +6432,7 @@ function EconomicsGraphic2(){
   var year = currentYear;
   var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph2tt"));
 
-  var margin = {top: 40, right: 10, bottom: 60, left: 55};
+  var margin = {top: 40, right: 10, bottom: 60, left: 80};
   var screenWidth = window.innerWidth;
   var width = screenWidth*.8 - margin.left - margin.right;
   var height = screenWidth*.40 - margin.top - margin.bottom; //give or take the golden ratio
@@ -6488,7 +6551,7 @@ function EconomicsGraphic2(){
           tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
           tooltip.select("#econGraphic2LU").text("Land Use: " + d.landUse)
           // let econType = this.parentNode.getAttribute("layernum")
-          tooltip.select("#econGraphic2Value").text(d.type + " Cost: " + formatMoney(d.value))
+          tooltip.select("#econGraphic2Value").text(d.type + " Cost: $" + addCommas((d.value).toFixed(2)))
           outlineRect.attr("transform", "translate(" + x0(d.landUse) + ",0)")
           outlineRect.style("visibility", "visible")
           outlineRect.attr("x", this.getAttribute("x"))
@@ -6550,7 +6613,7 @@ function EconomicsGraphic2(){
         .style("text-anchor", "end")
 
     var yAxis = d3.axisLeft(y)
-      .tickFormat(d => formatMoney(d))
+      .tickFormat(d => '$' + addCommas(d))
       .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
       .tickSizeOuter(0)
     svg.append("g")
