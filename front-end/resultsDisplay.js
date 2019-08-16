@@ -624,8 +624,8 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
       //update the mouseover box
       var percent = d.data.count;
       mouseoverInfo.select('.label').html(d.data.label);
-      mouseoverInfo.select('.count').html(d.data.number + " acres");
-      mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100) + '%');
+      mouseoverInfo.select('.count').html((d.data.number).toFixed(1) + " acres");
+      mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100).toFixed(1) + '%');
       mouseoverInfo.style('border-color', color(d.data.label));
       mouseoverInfo.style('opacity', 1);
       mouseoverInfo.style('display', 'block');
