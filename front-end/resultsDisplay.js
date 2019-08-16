@@ -4149,7 +4149,7 @@ function EconomicsGraphic1() {
   var fullData = createMockDataGraphic1();
 
 
-  var margin = {top: 40, right: 20, bottom: 50, left: 100};
+  var margin = {top: 40, right: 20, bottom: 50, left: 80};
   var screenWidth = window.innerWidth;
   var width = screenWidth*.8 - margin.left - margin.right;
   var height = screenWidth*.40 - margin.top - margin.bottom; //give or take the golden ratio
@@ -4303,7 +4303,7 @@ function EconomicsGraphic1() {
 
     //following code adds yAxis to graph
     var yAxis = d3.axisLeft(y)
-    .tickFormat(d => formatMoney(d))
+    .tickFormat(d => '$' + addCommas(d))
     .tickSize(-width)  //These lines are for horizontal guidelines it makes the ticks the whole width wide
     .tickSizeOuter(0)
     svg.append("g")
@@ -4859,7 +4859,7 @@ function EconomicsGraphic4() {
           .on("mouseover",function(d){
             tooltip.style("visibility","visible");
             tooltip.select("#econGraphic4CostName").text(d.costname);
-            tooltip.select('#econGraphic4Value').text("$"+d.value.toFixed(2));
+            tooltip.select('#econGraphic4Value').text("$"+addCommas(d.value.toFixed(2)));
           })
           .on("mouseout",function(){
             tooltip.style("visibility","hidden");
@@ -5243,7 +5243,7 @@ function EconomicsGraphic5(){
           .on("mouseover",function(d){
             tooltip.style('visibility','visible');
             tooltip.select("#econGraphic5Name").text(d.key);
-            tooltip.select("#econGraphic5Value").text(d.value.toFixed(2));
+            tooltip.select("#econGraphic5Value").text('$' + addCommas(d.value.toFixed(2)));
           })
           .on("mouseout",function () {
               tooltip.style('visibility','hidden');
@@ -5643,7 +5643,7 @@ function EconomicsGraphic2(){
           tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
           tooltip.select("#econGraphic2LU").text("Land Use: " + d.landUse)
           // let econType = this.parentNode.getAttribute("layernum")
-          tooltip.select("#econGraphic2Value").text(d.type + " Cost: " + formatMoney(d.value))
+          tooltip.select("#econGraphic2Value").text(d.type + " Cost: $" + addCommas((d.value).toFixed(2)))
           outlineRect.attr("transform", "translate(" + x0(d.landUse) + ",0)")
           outlineRect.style("visibility", "visible")
           outlineRect.attr("x", this.getAttribute("x"))
