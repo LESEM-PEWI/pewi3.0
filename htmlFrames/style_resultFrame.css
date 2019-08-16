@@ -36,13 +36,11 @@ body {
 td {
   border-bottom: 0px solid #ddd;
   padding: 5px;
-  text-align: left;
 }
 
 th {
   border-bottom: 2px solid #ddd;
   padding: 5px;
-  text-align: left;
 }
 
 .tableHeading {
@@ -51,6 +49,22 @@ th {
 
 .tableHeading:hover {
   background: rgba(256, 256, 256, 0);
+}
+
+.verticalLine {
+  border-right: 1px solid black;
+}
+
+.leftText{
+    text-align: left;
+}
+
+.rightText{
+  text-align: right;
+}
+
+.centerText{
+  text-align: center;
 }
 
 tr:hover {
