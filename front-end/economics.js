@@ -9,11 +9,8 @@ var Economics = function () {
   this.data3 = [];
   this.data3ByLU = [];
   this.data5=[];
-  
-  d3.csv('./budgets_2.csv', data => { //after parsing the CSV file
+  yearCosts = [-1,1,1,1,1,4,1,1,4,40,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}]
 
-    this.rawData = data;
-  })
   this.divideByCategory = function (listofCats){
     for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.data[i] = [];
@@ -72,8 +69,14 @@ var Economics = function () {
     }
       console.log(this.data5);
     }
-    d3.csv('./budgets_2.csv', (data) => {
+    d3.csv('./budgets.csv', (data) => {
       this.rawData2=data;
+      this.rawData2.forEach(dataPoint => {
+        let id = Number.parseInt(dataPoint['LU_ID'])
+        divisionForLU = (typeof yearCosts[id] === 'number') ? yearCosts[id]:  yearCosts[id][dataPoint['Sub Crop']];
+        dataPoint["Value"] /= divisionForLU;
+        dataPoint["# Labor Hours"] /= divisionForLU;
+      })
     })
   //graphic 4 extract data from raw data
   this.chart4Information = function(lists) {
