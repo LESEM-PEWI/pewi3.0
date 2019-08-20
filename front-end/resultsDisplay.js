@@ -655,7 +655,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
       var percent = d.data.count;
       mouseoverInfo.select('.label').html(d.data.label);
       mouseoverInfo.select('.count').html(addCommas((d.data.number).toFixed(1)) + " acres");
-      mouseoverInfo.select('.percent').html((Math.round(percent * 100) / 100).toFixed(1) + '%');
+      mouseoverInfo.select('.percent').html(percent.toFixed(1) + '%');
       mouseoverInfo.style('border-color', color(d.data.label));
       mouseoverInfo.style('opacity', 1);
       mouseoverInfo.style('display', 'block');
@@ -701,8 +701,8 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 
       //show appropriate mouseover info
       mouseoverInfo.select('.label').html(d);
-      mouseoverInfo.select('.count').html(d3.select(slice).attr("count") + " acres");
-      mouseoverInfo.select('.percent').html((Math.round(d3.select(slice).attr("percent") * 100) / 100) + '%');
+      mouseoverInfo.select('.count').html(numFormatting(d3.select(slice).attr("count")) + " acres");
+      mouseoverInfo.select('.percent').html(parseFloat(d3.select(slice).attr("percent")).toFixed(1) + '%');
       mouseoverInfo.style('border-color', color(d));
       mouseoverInfo.style('opacity', 1);
       mouseoverInfo.style('display', 'block');
@@ -964,7 +964,7 @@ function drawD3EconPieChart(year, isTheChartInCategoryMode) {
       //update the mouseover box
       mouseoverInfo.select('.label').html(d.data.label);
       mouseoverInfo.select('.count').html("$"+addCommas((Math.round(d.data.count*10)/10).toFixed(2)));
-      mouseoverInfo.select('.percent').html((Math.round(d.data.number*100)) + '%');
+      mouseoverInfo.select('.percent').html((d.data.number*100).toFixed(1) + '%');
       mouseoverInfo.style('border-color', color(d.data.label));
       mouseoverInfo.style('opacity', 1);
       mouseoverInfo.style('display', 'block');
@@ -1011,8 +1011,8 @@ function drawD3EconPieChart(year, isTheChartInCategoryMode) {
 
        //show appropriate mouseover info
       mouseoverInfo.select('.label').html(d);
-      mouseoverInfo.select('.count').html(("$"+(Math.round(current.count*10)/10)));
-      mouseoverInfo.select('.percent').html((Math.round(current.number*100)) + '%');
+      mouseoverInfo.select('.count').html("$"+numFormatting(current.count));
+      mouseoverInfo.select('.percent').html((current.number*100).toFixed(1) + '%');
       mouseoverInfo.style('border-color', color(d));
       mouseoverInfo.style('opacity', 1);
       mouseoverInfo.style('display', 'block');
@@ -1289,8 +1289,8 @@ function drawD3EconRevPieChart(year, isTheChartInCategoryMode) {
     .on('mouseover', function(d) {
       //update the mouseover box
       mouseoverInfo.select('.label').html(d.data.label);
-      mouseoverInfo.select('.count').html(("$"+(Math.round(d.data.count*10)/10)));
-      mouseoverInfo.select('.percent').html((Math.round(d.data.number*100)) + '%');
+      mouseoverInfo.select('.count').html('$' + numFormatting(d.data.count));
+      mouseoverInfo.select('.percent').html((d.data.number*100).toFixed(1) + '%');
       mouseoverInfo.style('border-color', color(d.data.label));
       mouseoverInfo.style('opacity', 1);
       mouseoverInfo.style('display', 'block');
@@ -1338,7 +1338,7 @@ function drawD3EconRevPieChart(year, isTheChartInCategoryMode) {
        //show appropriate mouseover info
       mouseoverInfo.select('.label').html(d);
       mouseoverInfo.select('.count').html(("$"+(Math.round(current.count*10)/10)));
-      mouseoverInfo.select('.percent').html((Math.round(current.number*100)) + '%');
+      mouseoverInfo.select('.percent').html((current.number*100).toFixed(1) + '%');
       mouseoverInfo.style('border-color', color(d));
       mouseoverInfo.style('opacity', 1);
       mouseoverInfo.style('display', 'block');
@@ -2535,12 +2535,12 @@ function numSort(column){
   });
   this.parent.updateTables(values, this.parent);
 }
-function generateEconTableData(){
+function generateEconTableData(year){
   let results = []
-  econ = economics.rawData || this.parent.economics.rawData;
-  let res = econ;
-  for(var i = 0; i < res.length; ++i){
-    var tempObj = getObj(res[i]);
+  let econ = economics.mapData[year] || this.parent.economics.mapData[year];
+  console.log(econ);
+  for(let i = 0; i < econ.length; ++i){
+    var tempObj = getObj(econ[i]);
     results.push(tempObj);
   }
   results.splice(0,1);
@@ -2556,8 +2556,8 @@ function generateEconomicsTables() {
   'convCorn2': {landuse: "Conventional Corn", subCrop: "Corn after Corn"},
   'consCorn' : {landuse: "Conservation Corn", subCrop: "Corn after Soybean"},
   'consCorn2': {landuse: "Conservation Corn", subCrop: "Corn after Corn"},
-  'convSoy': {landuse: "Conventional Soybean"},
-  'consSoy': {landuse: "Conservation Soybean"},
+  'convSoy': {landuse: "Conventional Soybean", subCrop: "Soybean after Corn"},
+  'consSoy': {landuse: "Conservation Soybean", subCrop: "Soybean after Corn"},
   'alf': {landuse: "Alfalfa"},
   'permPas': {landuse: "Permanent Pasture"},
   'rotGraz': {landuse: "Rotational Grazing"},
@@ -2577,11 +2577,7 @@ function generateEconomicsTables() {
 
 
    //results array that holds data objects
-   let results = generateEconTableData();
-
-//  var source = "../htmlFrames/imgs/text.png"
-   //getting total for each land use and grand total by calling getEconomicsData
-  // clearTableVars();
+   let results = generateEconTableData(document.getElementById('resultsFrame').contentWindow.document.getElementById("yearSelect").value);
 
   this.clearTableVars = () => {
     Object.keys(econtables).forEach(key =>{
@@ -2589,7 +2585,7 @@ function generateEconomicsTables() {
     })
   }
 
-  this.updateTables = (values, scope) =>{
+  this.updateTables = (values) =>{
     this.clearTableVars();
     console.log(values);
 
@@ -2608,7 +2604,7 @@ function generateEconomicsTables() {
       econtables[key].table += "</table>";
     });
 
-    placeTotalsOnBars(document.getElementById('resultsFrame').contentWindow.document.getElementById("yearSelect").value, document.getElementById('resultsFrame').contentWindow);
+    placeTotalsOnBars(document.getElementById('resultsFrame').contentWindow.document.getElementById("yearSelect").value);
     this.setTables();
   }
 
@@ -2621,27 +2617,7 @@ function generateEconomicsTables() {
       document.getElementById('resultsFrame').contentWindow.document.getElementById(key).innerHTML = econtables[key].table
     });
   }
-  this.updateTables(results, this);
-
-
-   //parsing the entire file and putting each cell into an the array res
-  /*$.ajax({
-    async: false,
-    type: "GET",
-    url: file,
-    dataType: "text",
-    contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-    success: function(data) {
-      res = data.split(/\n/);
-      res = res.split(/\r/);
-    },
-    error: function(data) {
-      console.log(JSON.stringify(data));
-    }
-  });*/
-
-   //iterating through all the cells and creating TIME objects out of data then data into results array
-
+  this.updateTables(results);
 
 }//end generateEconomicsTables()
 
@@ -3629,8 +3605,8 @@ function strategicWetlandFinder(playerNumber) {
   return strategicWetlandCount;
 }
 
-function findBar(givenString, scope){
-  var aTags = scope.document.getElementsByTagName("a");
+function findBar(givenString){
+  var aTags =  document.getElementById('resultsFrame').contentWindow.document.getElementsByTagName("a");
   var found;
 
    for (var i = 0; i < aTags.length; i++) {
@@ -3642,63 +3618,63 @@ function findBar(givenString, scope){
   return 0;
 }
 
-function placeTotalsOnBars(year, scope){
-  var accordion = scope.document.getElementById("accordionContainer");
+function placeTotalsOnBars(year){
+  var accordion =  document.getElementById('resultsFrame').contentWindow.document.getElementById("accordionContainer");
   if(accordion.style.display === "none"){
     return;
   }
 
 
-  var convCorn = findBar('Conventional Corn', scope);
-  var consCorn = findBar('Conservation Corn', scope);
-  var convSoy = findBar('Conventional Soybean', scope);
-  var consSoy = findBar('Conservation Soybean', scope);
-  var alfalfa = findBar('Alfalfa', scope);
-  var permPas = findBar('Permanent Pasture', scope);
-  var rotGraz = findBar('Rotational Grazing', scope);
-  var grassHay = findBar('Grass Hay', scope);
-  var prairie = findBar('Prairie', scope);
-  var consFor = findBar('Conservation Forest', scope);
-  var convFor = findBar('Conventional Forest', scope);
-  var switchgrass = findBar('Switchgrass', scope);
-  var shortRWB = findBar('Short-Rotation Woody Bioenergy', scope);
-  var wetland = findBar('Wetland', scope);
-  var mixedFaV = findBar('Mixed Fruits & Vegetables', scope);
+  var convCorn = findBar('Conventional Corn');
+  var consCorn = findBar('Conservation Corn');
+  var convSoy = findBar('Conventional Soybean');
+  var consSoy = findBar('Conservation Soybean');
+  var alfalfa = findBar('Alfalfa');
+  var permPas = findBar('Permanent Pasture');
+  var rotGraz = findBar('Rotational Grazing');
+  var grassHay = findBar('Grass Hay');
+  var prairie = findBar('Prairie');
+  var consFor = findBar('Conservation Forest');
+  var convFor = findBar('Conventional Forest');
+  var switchgrass = findBar('Switchgrass');
+  var shortRWB = findBar('Short-Rotation Woody Bioenergy');
+  var wetland = findBar('Wetland');
+  var mixedFaV = findBar('Mixed Fruits & Vegetables');
 
-  var convCornASoy = findBar('Conventional Corn after Soybean', scope);
-  var convCornACorn = findBar('Conventional Corn after Corn', scope);
-  var consCornASoy = findBar('Conservation Corn after Soybean', scope);
-  var consCornACorn = findBar('Conservation Corn after Corn', scope);
+  var convCornASoy = findBar('Conventional Corn after Soybean');
+  var convCornACorn = findBar('Conventional Corn after Corn');
+  var consCornASoy = findBar('Conservation Corn after Soybean');
+  var consCornACorn = findBar('Conservation Corn after Corn');
 
-  var grapes = findBar('Grapes', scope);
-  var greenBeans = findBar('Green Beans', scope);
-  var squash = findBar('Squash', scope);
-  var strawberries = findBar('Strawberries', scope);
+  var grapes = findBar('Grapes');
+  var greenBeans = findBar('Green Beans');
+  var squash = findBar('Squash');
+  var strawberries = findBar('Strawberries');
 
-  convCorn.firstChild.nodeValue = ("Conventional Corn Total: $" + numFormatting(scope.parent.economics.data[year][1]['Action - Cost Type'].total));
-  consCorn.firstChild.nodeValue = ("Conservation Corn Total: $" + numFormatting(scope.parent.economics.data[year][2]['Action - Cost Type'].total));
-  convSoy.firstChild.nodeValue = ("Conventional Soybean Total: $" + numFormatting(scope.parent.economics.data[year][3]['Action - Cost Type'].total));
-  consSoy.firstChild.nodeValue = ("Conservation Soybean Total: $" + numFormatting(scope.parent.economics.data[year][4]['Action - Cost Type'].total));
-  alfalfa.firstChild.nodeValue = ("Alfalfa Total: $" + numFormatting(scope.parent.economics.data[year][5]['Action - Cost Type'].total));
-  permPas.firstChild.nodeValue = ("Permanent Pasture Total: $" + numFormatting(scope.parent.economics.data[year][6]['Action - Cost Type'].total));
-  rotGraz.firstChild.nodeValue = ("Rotational Grazing Total: $" + numFormatting(scope.parent.economics.data[year][7]['Action - Cost Type'].total));
-  grassHay.firstChild.nodeValue = ("Grass Hay Total: $" + numFormatting(scope.parent.economics.data[year][8]['Action - Cost Type'].total));
-  /*prairie.firstChild.nodeValue = ("Prairie Total: $" + numFormatting(scope.parent.economics.data[9]['Action - Cost Type'].total));
-  consFor.firstChild.nodeValue = ("Conservation Forest Total: $" + numFormatting(scope.parent.economics.data[10]['Action - Cost Type'].total));
-  convFor.firstChild.nodeValue = ("Conventional Forest Total: $" + numFormatting(scope.parent.economics.data[11]['Action - Cost Type'].total));*/
-  switchgrass.firstChild.nodeValue = ("Switchgrass Total: $" + numFormatting(scope.parent.economics.data[year][12]['Action - Cost Type'].total));
-  shortRWB.firstChild.nodeValue = ("Short-Rotation Woody Bioenergy Total: $" + numFormatting(scope.parent.economics.data[year][13]['Action - Cost Type'].total));
-  wetland.firstChild.nodeValue = ("Wetland Total: $" + numFormatting(scope.parent.economics.data[year][14]['Action - Cost Type'].total));
-  mixedFaV.firstChild.nodeValue = ("Mixed Fruits & Vegetables Total: $" + numFormatting(scope.parent.economics.data[year][15]['Action - Cost Type'].total));
+  convCorn.firstChild.nodeValue = ("Conventional Corn Total: $" + numFormatting(economics.data[year][1]['Action - Cost Type'].total));
+  consCorn.firstChild.nodeValue = ("Conservation Corn Total: $" + numFormatting(economics.data[year][2]['Action - Cost Type'].total));
+  convSoy.firstChild.nodeValue = ("Conventional Soybean Total: $" + numFormatting(economics.data[year][3]['Action - Cost Type'].total));
+  consSoy.firstChild.nodeValue = ("Conservation Soybean Total: $" + numFormatting(economics.data[year][4]['Action - Cost Type'].total));
+  alfalfa.firstChild.nodeValue = ("Alfalfa Total: $" + numFormatting(economics.data[year][5]['Action - Cost Type'].total));
+  permPas.firstChild.nodeValue = ("Permanent Pasture Total: $" + numFormatting(economics.data[year][6]['Action - Cost Type'].total));
+  rotGraz.firstChild.nodeValue = ("Rotational Grazing Total: $" + numFormatting(economics.data[year][7]['Action - Cost Type'].total));
+  grassHay.firstChild.nodeValue = ("Grass Hay Total: $" + numFormatting(economics.data[year][8]['Action - Cost Type'].total));
+  prairie.firstChild.nodeValue = ("Prairie Total: $" + numFormatting(economics.data[year][9]['Action - Cost Type'].total));
+  consFor.firstChild.nodeValue = ("Conservation Forest Total: $" + numFormatting(economics.data[year][10]['Action - Cost Type'].total));
+  convFor.firstChild.nodeValue = ("Conventional Forest Total: $" + numFormatting(economics.data[year][11]['Action - Cost Type'].total));
+  switchgrass.firstChild.nodeValue = ("Switchgrass Total: $" + numFormatting(economics.data[year][12]['Action - Cost Type'].total));
+  shortRWB.firstChild.nodeValue = ("Short-Rotation Woody Bioenergy Total: $" + numFormatting(economics.data[year][13]['Action - Cost Type'].total));
+  wetland.firstChild.nodeValue = ("Wetland Total: $" + numFormatting(economics.data[year][14]['Action - Cost Type'].total));
+  mixedFaV.firstChild.nodeValue = ("Mixed Fruits & Vegetables Total: $" + numFormatting(economics.data[year][15]['Action - Cost Type'].total));
 
-  convCornASoy.firstChild.nodeValue = ("Conventional Corn after Soybean Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conventional Corn']['Corn after Soybean']));
-  convCornACorn.firstChild.nodeValue = ("Conventional Corn after Corn Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conventional Corn']['Corn after Corn']));
-  consCornASoy.firstChild.nodeValue = ("Conservation Corn after Soybean Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conservation Corn']['Corn after Soybean']));
-  consCornACorn.firstChild.nodeValue = ("Conservation Corn after Corn Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Conservation Corn']['Corn after Corn']));
-  grapes.firstChild.nodeValue = ("Grapes Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Grapes (Conventional)']));
-  greenBeans.firstChild.nodeValue = ("Green Beans Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Green Beans']));
-  squash.firstChild.nodeValue = ("Squash Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Winter Squash']));
-  strawberries.firstChild.nodeValue = ("Strawberries Total: $" + numFormatting(scope.parent.economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Strawberries']));
+  convCornASoy.firstChild.nodeValue = ("Conventional Corn after Soybean Total: $" + numFormatting(economics.dataSubcrop[year]['Conventional Corn']['Corn after Soybean']));
+  convCornACorn.firstChild.nodeValue = ("Conventional Corn after Corn Total: $" + numFormatting(economics.dataSubcrop[year]['Conventional Corn']['Corn after Corn']));
+  consCornASoy.firstChild.nodeValue = ("Conservation Corn after Soybean Total: $" + numFormatting(economics.dataSubcrop[year]['Conservation Corn']['Corn after Soybean']));
+  consCornACorn.firstChild.nodeValue = ("Conservation Corn after Corn Total: $" + numFormatting(economics.dataSubcrop[year]['Conservation Corn']['Corn after Corn']));
+  grapes.firstChild.nodeValue = ("Grapes Total: $" + numFormatting(economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Grapes (Conventional)']));
+  greenBeans.firstChild.nodeValue = ("Green Beans Total: $" + numFormatting(economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Green Beans']));
+  squash.firstChild.nodeValue = ("Squash Total: $" + numFormatting(economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Winter Squash']));
+  strawberries.firstChild.nodeValue = ("Strawberries Total: $" + numFormatting(economics.dataSubcrop[year]['Mixed Fruits & Vegetables']['Strawberries']));
 
   /*convCorn.firstChild.nodeValue += (" Total: $" + localStorage.getItem('convCorn'));
   consCorn.firstChild.nodeValue += (" Total: $" + localStorage.getItem('consCorn'));
@@ -3720,9 +3696,10 @@ function placeTotalsOnBars(year, scope){
 
 
 function changeYear(){
-  var yearVal = document.getElementById("yearSelect").value;
+  var yearVal =  document.getElementById('resultsFrame').contentWindow.document.getElementById("yearSelect").value;
 
-  placeTotalsOnBars(yearVal, this);
+  placeTotalsOnBars(yearVal);
+  this.parent.updateTables(generateEconTableData(yearVal));
 }
 
 

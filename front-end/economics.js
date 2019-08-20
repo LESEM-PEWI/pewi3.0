@@ -129,7 +129,6 @@ var Economics = function () {
     }
   }
 
-
   this.chart3DataByLU = () => {
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.data3ByLU[i] = {};
@@ -152,6 +151,9 @@ var Economics = function () {
         this.data3ByLU[i][dataPoint['Land-Use']].toggleVal = -1;
       })
     }
+  }
+  this.reOrderLandUses = function (data) {
+
   }
 
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
