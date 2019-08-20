@@ -3023,6 +3023,11 @@ this.tileNitrate = Array(4);
     this.sumCarbonSequestration[y]=0;
     this.watershedPercent[y]=[];
     this.yieldByLandUse[y] = [];
+    for(let i = 1; i<=15; i++){
+      this.yieldByLandUse[y][i] = 0;
+    }
+    this.yieldByLandUse[y][10] = {};
+    this.yieldByLandUse[y][11] = {};
 
       var wetlandMultiplier = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
       var subWatershedNitrate = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -3043,7 +3048,7 @@ this.tileNitrate = Array(4);
         this.tileYieldResults[y][i] = board.map[i].results[y].calculatedYieldTile * board.map[i].area;
         this.tileLandType[y][i] = LandUseType.getType(board.map[i].landType[y]);
 
-        sumYieldHelper(this,LandUseType.getType(board.map[i].landType[y]),y,yieldValueToStore);
+        sumYieldHelper(this,LandUseType.getType(board.map[i].landType[y]),y,yieldValueToStore,board.map[i].soilType);
 
 
         subWatershedNitrate[board.map[i].subwatershed] += board.map[i].results[y].cropMultiplier;
@@ -3441,9 +3446,9 @@ this.tileNitrate = Array(4);
    * @param  {[int]} y       year
    * @param  {[int]} score   yield value score
    */
-  function sumYieldHelper(totals,type,y,score){
+  function sumYieldHelper(totals,type,y,score,soilType){
     results = totals.yieldResults;
-    resultsByLandUse = totals.yieldByLandUse[y];
+    resultsByLandUse = Totals.yieldByLandUse[y];
     switch (type) {
 
             case "none":
@@ -3486,11 +3491,13 @@ this.tileNitrate = Array(4);
               break;
             case "conservationForest":
               results[y].woodYield += score;
-              resultsByLandUse[10] += score;
+              resultsByLandUse[10][soilType] = resultsByLandUse[10][soilType] || 0;
+              resultsByLandUse[10][soilType] += score;
               break;
             case "conventionalForest":
               results[y].woodYield += score;
-              resultsByLandUse[11] += score;
+              resultsByLandUse[11][soilType] = resultsByLandUse[11][soilType] || 0;
+              resultsByLandUse[11][soilType] += score;
               break;
             case "switchgrass":
               results[y].switchgrassYield += score;
@@ -3517,7 +3524,7 @@ this.tileNitrate = Array(4);
   this.sumYieldsAndsumlandUse = function(tileId, year) {
       var prevLandType = this.tileLandType[year][tileId];
       var yieldValueToStore = board.map[tileId].results[year].calculatedYieldTile * board.map[tileId].area;
-      sumYieldHelper(this.yieldResults,LandUseType.getType(board.map[tileId].landType[year]),year,yieldValueToStore);
+      sumYieldHelper(this,LandUseType.getType(board.map[tileId].landType[year]),year,yieldValueToStore,board.map[tileId].soilType);
       sumLandUseHelper(this.landUseResults,LandUseType.getType(board.map[tileId].landType[year]),year,board.map[tileId].area);
       sumLandUseHelperSubstraction(this.landUseResults,prevLandType,year,this.tileLandArea[year][tileId]);
       switch (prevLandType){
@@ -3560,11 +3567,11 @@ this.tileNitrate = Array(4);
           //Do nothing - does not report yield
           break;
         case "conservationForest":
-          this.yieldByLandUse[year][10] -= this.tileYieldResults[year][tileId];
+          this.yieldByLandUse[year][10][board.map[tileId].soilType] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].woodYield -= this.tileYieldResults[year][tileId];
           break;
         case "conventionalForest":
-          this.yieldByLandUse[year][11] -= this.tileYieldResults[year][tileId];
+          this.yieldByLandUse[year][11][board.map[tileId].soilType] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].woodYield -= this.tileYieldResults[year][tileId];
           break;
         case "switchgrass":

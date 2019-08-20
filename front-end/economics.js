@@ -9,6 +9,7 @@ var Economics = function () {
   this.rawRev=[];
   this.scaledRev=[];
 
+//the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
   yearCosts = [-1,1,1,1,1,4,1,1,4,1,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}]
   d3.csv('./revenue.csv', (data) => {
     this.rawRev = data;
@@ -152,7 +153,6 @@ var Economics = function () {
         this.data3ByLU[i][dataPoint['Land-Use']].toggleVal = -1;
       })
     }
-
     console.log(this.data3ByLU)
   }
 
@@ -172,16 +172,25 @@ var Economics = function () {
         landUses[i][LandUseType[key.substring(0, key.length - 7)]] = Totals.landUseResults[i][key]
       }
       this.rawRev.forEach(dataPoint => {
-        let copy = JSON.parse(JSON.stringify(dataPoint));
         if(dataPoint['Units'] === '$/acre'){
-          value = parseFloat(dataPoint['Revenue/acre/year']);
+          if(dataPoint['LU_ID'] == 15){
+            value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']] / 4;
+          }
+          else {
+            value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']];
+          }
         }
-        else {
+        //woodlands can't be treated the same since they are the only land use where the soil type changes the value of the wood not just the amount of wood.
+        //Where the rest of the revenue above can multiply the output by a certain price: we need to actually find the soil that all the woodlands are on.
+        else if(dataPoint['LU_ID'] == 10 || dataPoint['LU_ID'] == 11){
+          value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][parseInt(dataPoint['LU_ID'])][dataPoint['SoilType']] || 0;
+        }
+        else{
+          console.log(dataPoint['LU_ID']);
           value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][dataPoint['LU_ID']];
         }
         this.scaledRev[i][dataPoint['LU_ID']] = this.scaledRev[i][dataPoint['LU_ID']] || 0;
         this.scaledRev[i][dataPoint['LU_ID']] += value;
-
       });
 
       this.rawData.forEach(dataPoint => {
@@ -190,13 +199,13 @@ var Economics = function () {
         copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
         this.mapData[i].push(copy)
       })
+      console.log(this.scaledRev);
     }
     this.chart3Data();
     this.chart3DataByLU();
     this.graphic5information();
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
-    console.log(this.scaledRev);
   }
 }
 var economics = new Economics();

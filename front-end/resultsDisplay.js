@@ -4113,12 +4113,12 @@ function createMockDataGraphic1(){
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
   });
     console.log(econData[i])
-    tempData[i].forEach((el) => {
+    tempData[i].forEach((el, j) => {
       d = {}
       d.year = i;
       d.landUse = el.landUse;
       d.Cost = el.cost;
-      d.Revenue = el.cost * (Math.random()*-2);
+      d.Revenue = economics.scaledRev[i][j];
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
       d.Loss = Math.min(d.Revenue + d.Cost, 0);
       dataEcon1.push(d);
