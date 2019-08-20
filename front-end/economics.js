@@ -152,9 +152,6 @@ var Economics = function () {
       })
     }
   }
-  this.reOrderLandUses = function (data) {
-
-  }
 
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
     let landUses = [];
@@ -209,6 +206,7 @@ var Economics = function () {
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
     this.calcSubcrops();
   }
+
   this.calcSubcrops = function(){
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.dataSubcrop[i] = {};
