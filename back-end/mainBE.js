@@ -162,15 +162,18 @@ var hasPrecipConclict = false; // indicates whether there's a precipitation leve
 //overlayBoard takes two GameBoard objects, and merges tiles that exist in overlay
 // into board. The first argument is passed by reference, so nothing need be returned
 function overlayBoard(board) {
-  // for each data entry
-  // console.log("initData.length " + initData.length);
-  // console.log(initData);
-  // console.log(board);
 
   var utilityWindow = document.getElementById("startUpFrame").contentWindow.document.getElementById("startupDialogueOverlay").contentWindow;
   if(!hasPrecipConclict) {
     for(var y = 0; y < board.calculatedToYear; y++) {
-      var precipIndex = convertPrecipToIndex(parseFloat(initData[1][29+y]));
+
+      /* ** CHANGE COLUMN VALUES HERE - If Adding new columns to data.csv file (the core file from which PEWI loads in default case) **
+            (Since the column values are hard coded in the current system, you'll need to do this if you add new columns anywhere before the last column in data.csv )
+            NOTE: MUST DO THE SAME IN TWO OTHER PLACES -
+            1. function propogateBoard() in mainBE.js
+            2. function Tile() in helperObjects.js
+      */
+      var precipIndex = convertPrecipToIndex(parseFloat(initData[1][31+y]));
       if(precipIndex !== board.precipitationIndex[y]) {
         hasPrecipConclict = true;
       }
@@ -232,7 +235,13 @@ function propogateBoard(board) {
   //Loop through the years and assign precipitation levels
   for (var y = 0; y < 4; y++) {
     //var precipIndex = setPrecipitation();
-	var precipIndex = convertPrecipToIndex(parseFloat(initData[1][29+y]));
+    /* ** CHANGE COLUMN VALUES HERE - If Adding new columns to data.csv file (the core file from which PEWI loads in default case) **
+          (Since the column values are hard coded in the current system, you'll need to do this if you add new columns anywhere before the last column in data.csv )
+          NOTE: MUST DO THE SAME IN TWO OTHER PLACES -
+          1. function Tile() in helperObjects.js
+          2. function overlayBoard() in mainBE.js
+    */
+  	var precipIndex = convertPrecipToIndex(parseFloat(initData[1][31+y]));
     board.precipitation[y] = precip[precipIndex];
     board.precipitationIndex[y] = precipIndex; //store precip indices
   }

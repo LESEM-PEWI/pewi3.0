@@ -3,6 +3,8 @@ var Economics = function () {
   this.mapData = [];
   this.data = [];
   this.data4 = [];
+
+  this.dataSubcrop = {};
   this.data3 = [];
   this.data3ByLU = [];
   this.data5=[];
@@ -10,7 +12,7 @@ var Economics = function () {
   this.scaledRev=[];
 
 //the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
-  yearCosts = [-1,1,1,1,1,4,1,1,4,1,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}]
+  yearCosts = [-1,1,1,1,1,4,1,1,4,40,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}]
   d3.csv('./revenue.csv', (data) => {
     this.rawRev = data;
   })
@@ -82,6 +84,7 @@ var Economics = function () {
         dataPoint["# Labor Hours"] /= divisionForLU;
       })
     })
+  //graph
   //graphic 4 extract data from raw data
   this.chart4Information = function(lists) {
     for(var i=1;i<=boardData[currentBoard].calculatedToYear;i++){
@@ -206,6 +209,26 @@ var Economics = function () {
     this.graphic5information();
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
+    this.calcSubcrops();
+  }
+  this.calcSubcrops = function(){
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      this.dataSubcrop[i] = {};
+      this.mapData[i].forEach(dataPoint => {
+        if(dataPoint['Sub Crop']){
+          if(!this.dataSubcrop[i][dataPoint['Land-Use']]){
+            this.dataSubcrop[i][dataPoint['Land-Use']] = {};
+          }
+          if(!this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']]){
+            this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] = 0;
+          }
+          this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] =
+          Math.round(1000*this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] + 1000*Number.parseFloat(dataPoint['Value']))/1000
+        }
+      })
+    }
+
+
   }
 }
 var economics = new Economics();

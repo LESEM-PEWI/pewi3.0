@@ -335,3 +335,13 @@ body {
 #englishUnit {
   right: 2vw;
 }
+
+.blockContainer {
+  width:100%;
+  display: inline;
+  height:20px;
+  left:50px;
+  font-size:25px;
+  color:#fff;
+  position:relative;
+}

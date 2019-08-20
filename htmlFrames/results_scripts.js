@@ -34,6 +34,20 @@
     }
   } //end changeLandPieBy()
 
+  //changeLandPieBy toggles the year and then calls the pie graph function
+  function changeEconPieBy(numberOfYears) {
+    //parent is index.html
+    //resultsDisplay.js
+    parent.drawD3EconPieChart(toggleYearForEconPlotBy(numberOfYears), isLandPlotOnCategories);
+  }
+
+  function changeEconRevPieBy(numberOfYears) {
+    //parent is index.html
+    //resultsDisplay.js
+    parent.drawD3EconRevPieChart(toggleYearForEconRevPlotBy(numberOfYears), isLandPlotOnCategories);
+  } 
+
+
   /*
   * The function inMultiplayer() is used to switch the value of inMultiplayerMode.
   * For more information refer to Issue 386.
@@ -86,10 +100,12 @@
     //reset all elements to original styling
     document.getElementById('graphics').style.display = "none";
     document.getElementById('numbers').style.display = "none";
+    document.getElementById('econ').style.display = "none";
     document.getElementById('economics').style.display = "none";
     document.getElementById('tab1').className = "tab";
     document.getElementById('tab2').className = "tab";
     document.getElementById('tab3').className = "tab";
+    document.getElementById('tab4').className = "tab";
     //then update the selected tab appropriately
     if (tabNumber == 1) {
       document.getElementById('graphics').style.display = "block";
@@ -106,8 +122,14 @@
     } else if (tabNumber == 3) {
       document.getElementById('economics').style.display = "block";
       document.getElementById('tab3').className = "tabSelected";
-    }
+    }else if (tabNumber == 4) {
+   document.getElementById('econ').style.display = "block";
+   document.getElementById('tab4').className = "tabSelected";
+   if(parent.getTracking()) {
+     parent.pushClick(0,parent.getStamp(),60,0,null);
+   }
   } //end toggleToTab
+}
 
   //toggleYearForLandPlotBy(), examines the current year and the limits
   // up and down arrow are turned off if one or both present the opportunity
@@ -142,6 +164,73 @@
 
     return year;
   } //end toggleYearForLandPlotBy()
+
+
+  //toggleYearForLandPlotBy(), examines the current year and the limits
+  // up and down arrow are turned off if one or both present the opportunity
+  // for surpassing an upper or lower limit.
+  function toggleYearForEconPlotBy(yearsToChange) {
+    //grab info from div, since passing data between frames is difficult
+    var upTo = Number(document.getElementById('upTo').innerHTML);
+    var year = Number(document.getElementById('landYear').innerHTML);
+
+     year = year + yearsToChange;
+
+     //reset functionality
+    document.getElementById('yearUpEcon').className = "upArrow";
+    document.getElementById('yearUpEcon').onclick = function() {
+      changeEconPieBy(1);
+    };
+    document.getElementById('yearDownEcon').className = "downArrow";
+    document.getElementById('yearDownEcon').onclick = function() {
+      changeEconPieBy(-1);
+    };
+
+     //then if one of the limits have been reached, turn off that toggle
+    if (year == upTo) {
+      document.getElementById('yearUpEcon').className = "upArrowDisabled";
+      document.getElementById('yearUpEcon').onclick = function() {};
+    }
+    //cannot be an else if, in the case where upTo == 1
+    if (year == 1) {
+      document.getElementById('yearDownEcon').className = "downArrowDisabled";
+      document.getElementById('yearDownEcon').onclick = function() {};
+    }
+
+     return year;
+  } //end toggleYearForEconPlotBy()
+
+
+  function toggleYearForEconRevPlotBy(yearsToChange) {
+    //grab info from div, since passing data between frames is difficult
+    var upTo = Number(document.getElementById('upTo').innerHTML);
+    var year = Number(document.getElementById('landYear').innerHTML);
+
+     year = year + yearsToChange;
+
+     //reset functionality
+    document.getElementById('yearUpEcon2').className = "upArrow";
+    document.getElementById('yearUpEcon2').onclick = function() {
+      changeEconRevPieBy(1);
+    };
+    document.getElementById('yearDownEcon2').className = "downArrow";
+    document.getElementById('yearDownEcon2').onclick = function() {
+      changeEconRevPieBy(-1);
+    };
+
+     //then if one of the limits have been reached, turn off that toggle
+    if (year == upTo) {
+      document.getElementById('yearUpEcon2').className = "upArrowDisabled";
+      document.getElementById('yearUpEcon2').onclick = function() {};
+    }
+    //cannot be an else if, in the case where upTo == 1
+    if (year == 1) {
+      document.getElementById('yearDownEcon2').className = "downArrowDisabled";
+      document.getElementById('yearDownEcon2').onclick = function() {};
+    }
+
+     return year;
+  } //end toggleYearForEconPlotBy()
 
 /*  function toggleCategoriesSpider(toggleNumber)
   {
@@ -260,7 +349,7 @@
       {
         parent.pushClick(0, parent.getStamp(), 64, 0, null);
       }
-    } 
+    }
 
   } //end radarPlotYearToggle()
 

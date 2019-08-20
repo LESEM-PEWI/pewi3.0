@@ -256,9 +256,9 @@ function toggleScoreDetails(factor) {
         var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
         // console.log(childNodes);
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10 + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10).toFixed(1) + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Totals.gameWildlifePoints[currentYear] + ' pts / yr';
+        childNodes[7].innerHTML = (Totals.gameWildlifePoints[currentYear]).toFixed(1) + ' pts / yr';
         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
 
       }
@@ -272,10 +272,10 @@ function toggleScoreDetails(factor) {
       else {
         var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.carbonSequestration[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
-        (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.carbonSequestration[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+        (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
         document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
 
       }
@@ -288,9 +288,9 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10  + '/100';;
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10).toFixed(1)  + '/100';;
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10 + ' pts / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10).toFixed(1) + ' pts / yr';
         document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'block';
 
       }
@@ -303,10 +303,10 @@ function toggleScoreDetails(factor) {
       else {
         var childNodes = document.getElementsByClassName('erosionScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grossErosionScore[currentYear] * 10) / 10  + '/100';;
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.grossErosionScore[currentYear] * 10) / 10).toFixed(1)  + '/100';;
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.grossErosion[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
-          (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10) + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.grossErosion[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
 
       }
@@ -319,10 +319,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('nitrateScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' ppm / yr' + '<br>' +
-          Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10 + ' mg/L / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1) + ' ppm / yr' + '<br>' +
+          (Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1) + ' mg/L / yr';
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
 
       }
@@ -335,9 +335,9 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('phoshorusScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
+        childNodes[7].innerHTML = (Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
           Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg / yr';
         document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'block';
 
@@ -350,10 +350,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('sedimentScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10  + '/100';;
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10).toFixed(1)  + '/100';;
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.sedimentDelivery[currentYear] * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.sedimentDelivery[currentYear] * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.sedimentDelivery[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.sedimentDelivery[currentYear] * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
         document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'block';
       }
     break;
@@ -369,7 +369,7 @@ function toggleScoreDetails(factor) {
           Totals.grassHayYieldScore[currentYear] + Totals.switchgrassYieldScore[currentYear] + Totals.cattleYieldScore[currentYear] + Totals.woodYieldScore[currentYear] + Totals.shortRotationWoodyBiomassYieldScore[currentYear], 100);
 
 
-        childNodes[5].innerHTML = 'Current: ' + Math.round(totalScore * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(totalScore * 10) / 10).toFixed(1)  + '/100';
 
         document.getElementsByClassName('totalScoreDetails')[0].style.display = 'block';
       }
@@ -381,10 +381,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('cornGrainScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].cornGrainYield * 10) / 10 + ' bu / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].cornGrainYield * 0.0254 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].cornGrainYield * 10) / 10).toFixed(1) + ' bu / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].cornGrainYield * 0.0254 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'block';
       }
@@ -396,10 +396,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('soybeansScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].soybeanYield * 10) / 10 + ' bu / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].soybeanYield * 0.0272 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].soybeanYield * 10) / 10).toFixed(1) + ' bu / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].soybeanYield * 0.0272 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'block';
       }
@@ -411,10 +411,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.mixedFruitsAndVegetablesYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.mixedFruitsAndVegetablesYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].mixedFruitsAndVegetablesYield * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('fruitsAndVegetablesScoreDetails')[0].style.display = 'block';
       }
@@ -426,9 +426,9 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('cattleScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.cattleYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.cattleYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].cattleYield * 10) / 10 + ' animals / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].cattleYield * 10) / 10).toFixed(1) + ' animals / yr';
 
         document.getElementsByClassName('cattleScoreDetails')[0].style.display = 'block';
       }
@@ -440,10 +440,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('alfalfaHayScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.alfalfaHayYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.alfalfaHayYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].alfalfaHayYield * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('alfalfaHayScoreDetails')[0].style.display = 'block';
       }
@@ -455,10 +455,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('grassHayScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.grassHayYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.grassHayYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].grassHayYield * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].grassHayYield * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].grassHayYield * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].grassHayYield * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('grassHayScoreDetails')[0].style.display = 'block';
       }
@@ -470,10 +470,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.switchgrassYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.switchgrassYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].switchgrassYield * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].switchgrassYield * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].switchgrassYield * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].switchgrassYield * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('switchgrassBiomassScoreDetails')[0].style.display = 'block';
       }
@@ -485,10 +485,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('woodScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.woodYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.woodYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].woodYield * 10) / 10 + ' board-ft / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].woodYield * 0.002359737 * 10) / 10 + ' M^3 / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].woodYield * 10) / 10).toFixed(1) + ' board-ft / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].woodYield * 0.002359737 * 10) / 10).toFixed(1) + ' M^3 / yr';
 
         document.getElementsByClassName('woodScoreDetails')[0].style.display = 'block';
       }
@@ -500,10 +500,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('woodyBiomassScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + Math.round(Totals.shortRotationWoodyBiomassYieldScore[currentYear] * 10) / 10  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.shortRotationWoodyBiomassYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 10) / 10 + ' tons / yr' + '<br>' +
-          Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
+          (Math.round(Totals.yieldResults[currentYear].shortRotationWoodyBiomassYield * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
 
         document.getElementsByClassName('woodyBiomassScoreDetails')[0].style.display = 'block';
       }
@@ -922,12 +922,10 @@ if (tToggle) {
       if(checkbox.checked && overlayTemp == true){
         tileMaterial2.opacity = 0.4;
         tileMaterial2.map = grayTextureArray[tile.landType[currentYear]];
-        console.log(overlayTemp);
       }
       else{
         tileMaterial2.opacity = 1.0;
         tileMaterial2.map = textureArray[tile.landType[currentYear]];
-        console.log(overlayTemp);
       }
 
     } else {
@@ -1330,7 +1328,8 @@ function calculateResults(tileId, y) {
 } //end calculateResults
 
 //changeLandTypeTile changes the landType of a selected tile
-function changeLandTypeTile(tileId) {
+function changeLandTypeTile(tileId, inYear) {
+  let year = inYear || currentYear
   //console.log(boardData[currentBoard].map[tileId]);
   if (document.getElementById("overlayContainer").style.visibility != "visible" && document.getElementById("combineButton").innerHTML != "Merge") {
     //Add tile to the undoArr
@@ -1338,7 +1337,7 @@ function changeLandTypeTile(tileId) {
       addChange(tileId);
     }
     //if land type of tile is nonzero
-    if (boardData[currentBoard].map[tileId].landType[currentYear] != 0) {
+    if (boardData[currentBoard].map[tileId].landType[year] != 0) {
       //change the materials of the faces in the meshMaterials array and update the boardData
       if (!multiplayerAssigningModeOn) {
         // textureArray is a global array that links to each landType image, it was load in loader.js
@@ -1366,11 +1365,11 @@ function changeLandTypeTile(tileId) {
 
             }
             // record the data changes in boardData
-            boardData[currentBoard].map[tileId].landType[currentYear] = painter;
+            boardData[currentBoard].map[tileId].landType[year] = painter;
             // update boardData figures
-            boardData[currentBoard].map[tileId].update(currentYear);
+            boardData[currentBoard].map[tileId].update(year);
             // Whenever land type of the tile is changed, recalculate the results in order to update the progress bars
-            calculateResults(tileId, currentYear);
+            calculateResults(tileId, year);
             //console.log(boardData[currentBoard].map[tileId]);
           }
         }
@@ -2295,7 +2294,7 @@ function redrawOverlay(highlightType){
   }
 
 }
-
+// For drawing overlay map
 function drawOverlayOntoBoard(selectionHighlightNumber, highlightType) {
 
   //change global highlighting setting to set
@@ -2359,6 +2358,11 @@ function endSimPrompt() {
 function executePrintOptions(isDownload) {
   // initialize jspdfprinter as a global object
   jspdfprinter = new Printer();
+
+  var checkbox = window.top.document.getElementById("toggleOverlay");
+  bool = checkbox.checked;
+  checkbox.checked = false;
+  switchOverlayTemp();refreshBoard();redrawOverlay();
 
   // process chosen print options
   var strRawContents = document.getElementById('print-option-parameters').innerHTML;
@@ -2425,6 +2429,7 @@ function executePrintOptions(isDownload) {
     jspdfprinter.processing(isDownload);
     jspdfprinter = {}; // clean object
   }, 100);
+  checkbox.checked = bool;
 
 } //end executePrintOptions
 
@@ -3196,7 +3201,7 @@ function getHighlightedInfo(tileId) {
         //
         // values multipilied by 14.8697 are being converted to bushels per acre, wood multiplied by 423.766 to convert to board-ft per acre
       case 10:
-        highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857 * 14.8697).toFixed(1) + " bu/ac/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getCornGrainYield() / 15.92857142857 * 14.8697).toFixed(2) + " bu/ac/yr" + "<br>";
         break;
         //create string for soybean yield
       case 11:
@@ -3208,7 +3213,7 @@ function getHighlightedInfo(tileId) {
         break;
         //create string for cattle yield
       case 13:
-        highlightString = Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(1) + " animals/acre/yr" + "<br>";
+        highlightString = Number(boardData[currentBoard].map[tileId].getCattleSupported(-1)).toFixed(2) + " animals/acre/yr" + "<br>";
         break;
         //create string for alfalfa yield
       case 14:
@@ -3430,7 +3435,6 @@ function getFloodFrequencyName(floodFrequencyNum){
 }
 //highlightTile updates the tile that should be highlighted.
 function highlightTile(tileId) {
-
   if (curTracking) {
     pushClick(0, getStamp(), 123, 0, tileId);
   }
@@ -4751,10 +4755,9 @@ function resetPresets() {
   if (document.getElementById('tabButtons').className != "tabButtons") {
     roll(1);
   }
+
   //Resets glossary function
-  //if (document.getElementById('index').style.display == "block") {
   if (document.getElementById('glossary').style.display == "block") {
-    //document.getElementById('index').style.display = "none";
     document.getElementById('glossary').style.display = "none";
   }
   //Resets the undoArr
@@ -5180,13 +5183,17 @@ function saveAndRandomize() {
     outer: for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
         if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !randomPainterTile.includes(boardData[currentBoard].map[j].landType[i])) {
-          painter = newDefaultLandUse;
           meshMaterials[j].map = grayTextureArray[painter];
           meshOverlay[j].map = grayTextureArray[painter];
+          activeLandUses = randomPainterTile;
+          var checkbox = window.top.document.getElementById("toggleOverlay");
+          bool = checkbox.checked;
+          checkbox.checked = false;
+          switchOverlayTemp();refreshBoard();redrawOverlay();
 
-          boardData[currentBoard].map[j].landType[i] = painter;
-          boardData[currentBoard].map[j].update(i);
-          forNitrateCalc[i][j] = 1;
+          toggleReplacementFrame(randomPainterTile);
+          checkbox.checked = bool;
+          break outer;
         }
       }
     }
@@ -5411,6 +5418,7 @@ function showLevelDetails(value) {
       document.getElementById('switchGrassClass').className = "yieldSelectorIcon iconSelected";
       document.getElementById('switchgrassDetailsList').className = "DetailsList yieldDetailsList";
       updateGlossaryPopup('To learn more about <span style="color:orange;">Switchgrass Yield</span>, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+
       break;
     case 17:
       //show wood class legend
@@ -5715,7 +5723,6 @@ function switchConsoleTab(value) {
       }
       document.getElementById('checkheader').style.display = "block";
       updateGlossaryPopup('This is the <span style="color:orange;">Levels Tab,</span> where you can learn about <span style="color:yellow;">Soil Quality and Water Quality</span>.');
-
       break;
       // Physical features tab selected
     case 4:
@@ -5735,7 +5742,6 @@ function switchConsoleTab(value) {
       }
       document.getElementById('checkheader').style.display = "block";
       updateGlossaryPopup('This is the <span style="color:orange;">Physical Features Tab</span>, where you will find information on topography, soil properties, subwatershed boundaries, and strategic wetland areas.');
-
       break;
     // ** No description given of what this case does **
     case 5:
@@ -5789,7 +5795,6 @@ function switchConsoleTab(value) {
       }
       document.getElementById('checkheader').style.display = "block";
       updateGlossaryPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
-
       break;
   } // END switch
 
@@ -5913,10 +5918,13 @@ function toggleEscapeFrame() {
 } //end toggleEscapeFrame
 
 
+
+
+
 function toggleReplacementFrame(options) {
   var modal = document.getElementById('modalReplacement');
   innermodal = modal.contentDocument || modal.contentWindow.document;
-  if(modal.style.visibility === 'visible'){
+  if(modal.style.display === 'block'){
     modal.style.display = 'none';
     modalUp = false;
   }
@@ -5928,6 +5936,7 @@ function toggleReplacementFrame(options) {
       select.removeChild(select.firstChild);
     }
     options.forEach(function(option){
+      if(option === 14) return;
       var opt = document.createElement('option');
       opt.innerHTML = LandUseType.getPrintFriendlyType(option);
       opt.value = option;
@@ -5938,25 +5947,28 @@ function toggleReplacementFrame(options) {
 }
 
 function fillDeactivatedLands(){
-  var modal = document.getElementById('modalReplacement');
-  innermodal = modal.contentDocument || modal.contentWindow.document;
-  select = innermodal.getElementById('replacementSelect');
+  let modal = document.getElementById('modalReplacement');
+  let innermodal = modal.contentDocument || modal.contentWindow.document;
+  let select = innermodal.getElementById('replacementSelect');
+  temp = painter; //Since changeLandTypeTile requires the global variable painter to paint we want to save it's state and change it back.
+  painter = parseInt(select.value);
   for (var i = 1; i < boardData[currentBoard].calculatedToYear + 1; i++) {
     for (var j = 0; j < boardData[currentBoard].map.length; j++) {
       if ((boardData[currentBoard].map[j].landType[i] != LandUseType.none) && !activeLandUses.includes(boardData[currentBoard].map[j].landType[i])) {
-        boardData[currentBoard].map[j].landType[i] = parseInt(select.value);
+        changeLandTypeTile(j, i);
       }
     }
   }
   toggleReplacementFrame();
   refreshBoard();
+  painter = temp;
+  refreshProgressBar(currentYear);
 }
 
 //toggleGlossary displays and hides the codex
 function toggleGlossary() {
-
-  //if (document.getElementById('index').style.display != "block" && !modalUp) {
   if (document.getElementById('glossary').style.display != "block" && !modalUp) {
+
     closeCreditFrame();
     closeEmailFrame();
     closeUploadDownloadFrame();
@@ -6653,7 +6665,14 @@ function uploadJSON(reader) {
 } // uploadJSON()
 
 /**
+ * Reads a user selected .csv file and loads pewi map from the file.
+ * This is called when the 'Upload' button on pewi screen is pressed and a file is selected.
  *
+ * This function has been modified to be compatible with pewi-v3 and current development in 2019.
+ * There are certain differences in the files of the above two versions -
+ * - Current development of 2019 has 3 new columns added at indices 25, 26, 30 of the pewi-v3 csv file.
+ * - The pewi-v3 csv has 2 empty columns at the end of its 'header' row, and 1 empty column at the end of all other rows.
+ *   The empty cols are removed here to make as little modification as possible to the existing code.
  *
  * @param reader is a FileReader object, here it already read in uploaded file content. onload function can process the content.
  */
@@ -6661,7 +6680,6 @@ function uploadCSV(reader) {
   //initData = [];
   reader.onload = function(e) {
     resetYearDisplay();
-    setupBoardFromUpload(reader.result);
     //Code to check if data multiple years are present in the file
     var allText = reader.result;
     //converting the csv into an array
@@ -6670,40 +6688,96 @@ function uploadCSV(reader) {
     var lines = [];
     var data;
     var yearsOwned = 1;
-    // console.log('reader.result = ', reader.result);
+    // Flag that is raised when columns 'contour area', 'buffer area' are not present in the csv file
+    var noContBuffArrCol = 0;
+    // Flag that is raised when column 'YearsOwned' is not present in the csv file.
+    var noYearsOwnedCol = 0;
+
+    /* If columns are missing, insert their headers here. Skip this step if csv file already contains them.
+      This is for compatibility with older pewi versions.
+    */
+    if (headers.indexOf("ContourArea") == -1) {
+      headers.splice(25, 0, "ContourArea", "BufferArea");
+      noContBuffArrCol = 1;
+
+      // If column header YearsOwned is missing, add here. This happens with files downloaded from pewi-v3
+      if (headers.indexOf("YearsOwned") == -1) {
+        headers.splice(30, 0, "YearsOwned");
+        noYearsOwnedCol = 1;
+
+        // pewi-v3 files have two empty cols at the end of header, removing them here.
+        headers.splice(35,2);
+      }
+    }
+
     for (var i = 1; i < allTextLines.length; i++) {
       // If download the file by openWith option, and then upload the file into PEWI, you can noticed that there is one additional line, and errors occur
       // because of this addition line. Since we know that there should be 829 lines in total, thus we deal with only the first 829 lines.
       if(i > 828) continue;
 
-      console.log("allTextLines.length = ",allTextLines.length);
+      // Array of all elements contained in row i  of the csv
       data = allTextLines[i].split(',');
+
+      // Value of contour area for this row
+      var topo = data[21];
+      var contArr;
+      if (topo == 2) {
+        contArr = 0.0546;
+      }
+      else if (topo == 3) {
+        contArr = 0.0658;
+      }
+      else if (topo == 4) {
+        contArr = 0.082;
+      }
+      else if (topo == 5) {
+        contArr = 0.0938;
+      }
+      else {
+        contArr = 0;
+      }
+
+      // Value of buffer area for this row
+      var streamNetwork = data[18];
+      var buffArr;
+      if (streamNetwork == 0) {
+        buffArr = 0;
+      }
+      else if (streamNetwork == 1) {
+        buffArr = 0.525;
+      }
+      else {
+        buffArr = "NA";
+      }
+
+      /** If values of columns 'contour area', 'buffer area' are not present in this row, then add them.
+        * If 'Years owned' column is absent, add it here.
+         Skip this step if csv file already contains the columns.
+      **/
+      if (noContBuffArrCol == 1) {
+        data.splice(25, 0, contArr, buffArr);
+
+        if (noYearsOwnedCol == 1) {
+          data.splice(30, 0, 3);
+
+          // pewi-v3 files have one empty col at the end of each row (excluding header row), removing it here.
+          data.splice(35,1);
+        }
+      }
+
       var headlength = headers.length;
       if (data.length == headlength) {
         var tarr = [];
         for (var j = 0; j < headers.length; j++) {
           tarr.push(data[j]);
-          if (j == 28) {
+
+          if (j == 30) {
             yearsOwned = data[j];
           }
         }
         lines.push(tarr);
       } // end if
     } // end for
-    //XXX lines is empty
-    // window.top.document.getElementById('parameters').innerHTML;
-    // var yearsOwned = 1;
-    // This for loop iterates through the uploaded csv data file
-    // for (var i = 0; i < lines.length; i++) {
-    //
-    //     if (lines[i][26] != 1 && lines[i][26] != 0)
-    //       yearsOwned = 2;
-    //     if (lines[i][27] != 1 && lines[i][27] != 0){
-    //       yearsOwned = 3;
-    //       break;
-    //     }
-
-    // }
 
     if (yearsOwned == 2) {
       addingYearFromFile = true;
@@ -6720,30 +6794,34 @@ function uploadCSV(reader) {
       addingYearFromFile = false;
     }
 
+    initData = lines;
+    setupBoardFromUpload(lines);
+
     //Clears data so the river isnt redrawn when new files are uploaded
     initData = [];
 
     //updating the precip levels from the values in the uploaded file
-    boardData[currentBoard].precipitation[0] = data[29];
-    boardData[currentBoard].precipitation[1] = data[30];
-    boardData[currentBoard].precipitation[2] = data[31];
-    boardData[currentBoard].precipitation[3] = data[32];
+    boardData[currentBoard].precipitation[0] = data[31];
+    boardData[currentBoard].precipitation[1] = data[32];
+    boardData[currentBoard].precipitation[2] = data[33];
+    boardData[currentBoard].precipitation[3] = data[34];
 
-    boardData[currentBoard].precipitationIndex[0] = getPrecipOptionsValue(data[29]);
-    boardData[currentBoard].precipitationIndex[1] = getPrecipOptionsValue(data[30]);
-    boardData[currentBoard].precipitationIndex[2] = getPrecipOptionsValue(data[31]);
-    boardData[currentBoard].precipitationIndex[3] = getPrecipOptionsValue(data[32]);
+    boardData[currentBoard].precipitationIndex[0] = getPrecipOptionsValue(data[31]);
+    boardData[currentBoard].precipitationIndex[1] = getPrecipOptionsValue(data[32]);
+    boardData[currentBoard].precipitationIndex[2] = getPrecipOptionsValue(data[33]);
+    boardData[currentBoard].precipitationIndex[3] = getPrecipOptionsValue(data[34]);
 
     //load options from the csv
     //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes
     //the options page and shows the page is refreshed on the screen
-    if (headers.length == 33) {
+    // CHANGE COLUMN HEADER LENGTH HERE - If adding new columns
+    if (headers.length == 35) {
       resetOptionsPage();
       toggleVisibility();
     }
     //else if the file has options, then it takes the options and places it in the parameter div of the html and reloads it.
     else {
-      var xys = data[33].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
+      var xys = data[35].replace(/~/g, "\n"); // since \n was replaced by '~' replace it back
       window.top.document.getElementById('parameters').innerHTML = xys; // load the options string in the inner html of parameters
       //make sure the locked land uses aren't seen on the side tool tab or on the map
       saveAndRandomize(); //This makes sure that the land use selected is one that isn't disabled.
@@ -6775,7 +6853,7 @@ function writeFileToDownloadString(mapPlayerNumber) {
     //To save options in the file, changing the options string so that it doesn't have \n because csv file will read it differntly
     var tempOptions = document.getElementById('parameters').innerHTML.replace(/\n/g, "~"); //replaceing the \n in options string to be '~'
     optionsString = tempOptions;
-    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
+    string = "ID,Row,Column,Area,BaseLandUseType,CarbonMax,CarbonMin,Cattle,CornYield,DrainageClass,Erosion,FloodFrequency,Group,NitratesPPM,PIndex,Sediment,SoilType,SoybeanYield,StreamNetwork,Subwatershed,Timber,Topography,WatershedNitrogenContribution,StrategicWetland,riverStreams,ContourArea,BufferArea,LandTypeYear1,LandTypeYear2,LandTypeYear3,YearsOwned,PrecipYear0,PrecipYear1,PrecipYear2,PrecipYear3"; //+window.top.document.getElementById('parameters').innerHTML/*This one is to store options*/;
     if (optionsString !== "") {
       string += ",OptionsSelected";
     }
@@ -6846,6 +6924,36 @@ function writeFileToDownloadString(mapPlayerNumber) {
           boardData[currentBoard].map[i].strategicWetland + "," +
           boardData[currentBoard].map[i].riverStreams + ",";
       }
+
+      // Filling the Contour Area column
+      var topo = boardData[currentBoard].map[i].topography;
+      if (topo == 2) {
+        string += 0.0546 + ",";
+      }
+      else if (topo == 3) {
+        string += 0.0658 + ",";
+      }
+      else if (topo == 4) {
+        string += 0.082 + ",";
+      }
+      else if (topo == 5) {
+        string += 0.0938 + ",";
+      }
+      else {
+        string += 0 + ",";
+      }
+
+      // Filling the Buffer Area column
+      if (boardData[currentBoard].map[i].streamNetwork == 0) {
+        string += 0 + ",";
+      }
+      else if (boardData[currentBoard].map[i].streamNetwork == 1) {
+        string += 0.525 + ",";
+      }
+      else {
+        string += "NA" + ",";
+      }
+
 
       if (mapPlayerNumber > 0) {
         string += ((boardData[currentBoard].map[i].landType[1] == mapPlayerNumber) ? "1," : "0,") + //year1

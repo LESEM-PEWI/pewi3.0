@@ -30,18 +30,17 @@ body {
   border-bottom: 4px ridge #ddd;
   margin: 10px;
   width: 100%;
+  table-layout: fixed;
 }
 
 td {
   border-bottom: 0px solid #ddd;
   padding: 5px;
-  text-align: left;
 }
 
 th {
   border-bottom: 2px solid #ddd;
   padding: 5px;
-  text-align: left;
 }
 
 .tableHeading {
@@ -50,6 +49,22 @@ th {
 
 .tableHeading:hover {
   background: rgba(256, 256, 256, 0);
+}
+
+.verticalLine {
+  border-right: 1px solid black;
+}
+
+.leftText{
+    text-align: left;
+}
+
+.rightText{
+  text-align: right;
+}
+
+.centerText{
+  text-align: center;
 }
 
 tr:hover {
@@ -140,6 +155,21 @@ tr:hover {
   right: 90%;
 }
 
+/* When selected and hovered*/
+
+ #tab3 .tab3text {
+  visibility: hidden;
+  font-size: small;
+  width: 60px;
+  color: #000;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: 70%;
+  right: 90%;
+}
+
+
 
 /*Graphics
 */
@@ -157,6 +187,17 @@ tr:hover {
 */
 
 #tab2:hover .tab2text {
+  visibility: visible;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  position: static;
+  top: 19%;
+  left: 23.5%;
+}
+
+/*Economics
+*/
+
+ #tab3:hover .tab3text {
   visibility: visible;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   position: static;
@@ -256,6 +297,19 @@ tr:hover {
   margin: 1%;
 }
 
+
+#graphContainer {
+  height: 100%;
+  left: 25%;
+  padding-left: 25%;
+}
+
+#graphContainerRev {
+  height: 100%;
+  left: 25%;
+  padding-left: 25%;
+}
+
 #contentsG {
   height: 100%;
   left: 25%;
@@ -276,7 +330,32 @@ tr:hover {
                               not supported by any browser */
 }
 
-#landUseTypeContainer {}
+
+#econ {
+  height: 100%;
+  display: inline-block;
+  /*width: 800px;*/
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                              not supported by any browser */
+}
+
+#accordionContainer {
+  display: inline-block;
+  width: 75%;
+  padding-bottom: 100px;
+
+}
 
 #yearHolder {
   /*border: 3px solid #fdc72f;*/
@@ -300,7 +379,6 @@ tr:hover {
   height: 0;
   position: relative;
   width: 0;
-  left: 53%;
 }
 
 .upArrow, .upArrowDisabled {
@@ -316,6 +394,7 @@ tr:hover {
 
 .upArrow:hover {
   opacity: 0.6;
+  cursor: pointer;
 }
 
 .upArrowDisabled {
@@ -331,6 +410,15 @@ tr:hover {
   border-color: #c9c9d1 transparent transparent transparent;
 }
 
+.upArrowDisabledEcon {
+  border-color: #c9c9d1 transparent transparent transparent;
+}
+
+.downArrowDisabledEcon {
+  border-color: #c9c9d1 transparent transparent transparent;
+}
+
+
 .downArrow {
   border-color: #000000 transparent transparent transparent;
   opacity: 1;
@@ -339,6 +427,7 @@ tr:hover {
 
 .downArrow:hover {
   opacity: 0.6;
+  cursor: pointer;
 }
 
 .barData {
@@ -484,6 +573,29 @@ text {
   position: relative;
 }
 
+#landUseTitleEconCost{
+  /*
+  * The value for "left" was changed to have the title more centered in the mupltiplayer results page,left was previously "64%"
+  * For more information refer to Issue 386.
+  * changed left value from 35 to 29 , font-size from 20 to 30 10:35 am 5/22 Issue 474
+  */
+  left: 23%;
+  font-size: 30px;
+  font-weight: bold;
+  position: relative;
+}
+#landUseTitleEconRev{
+  /*
+  * The value for "left" was changed to have the title more centered in the mupltiplayer results page,left was previously "64%"
+  * For more information refer to Issue 386.
+  * changed left value from 35 to 29 , font-size from 20 to 30 10:35 am 5/22 Issue 474
+  */
+  left: 22%;
+  font-size: 30px;
+  font-weight: bold;
+  position: relative;
+}
+
 #landUseTitleMulti{
   /*
   * The title in results page for Land-Use for multi player mode
@@ -608,6 +720,7 @@ text {
 }
 
 .graphic4landuse, .graphic5Year, .graphic5LineSelection{
+
   font-size: 25px;
   background-color: skyblue;
   border-radius: 4px;
@@ -649,17 +762,23 @@ text {
   flex: 3;
   border: 3px solid #d64078;
 }
-*/
+
 
 #results-header {
   position: static;
 }
 
 #yearArrows {
-  display: block;
-  position: relative;
   top: 25%;
 }
+
+#timeActionArrows {
+  width: auto;
+  height: auto;
+  float: left;
+  top: 50%;
+}
+
 
 @media screen and (max-width: 768px) {
   /*<= 768px */
@@ -671,4 +790,92 @@ text {
 
 @media screen and (min-width: 1200px) {
   /* >= 1200px */
+}
+
+* {
+  text-decoration: none;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  }
+
+ ul {
+  list-style: none;
+  padding: 0;
+}
+
+ ul .inner {
+  width: 95%;
+  padding-left: 1em;
+  overflow: hidden;
+  display: none;
+}
+ul table{
+  table-layout: fixed;
+  width: 85%;
+}
+
+ ul li {
+  margin: .5em 0;
+}
+
+ ul li a.toggle {
+  width: 85%;
+  display: block;
+  /* background: rgba(0,0,0,0.78); */
+  background: #969696;
+  color: #fefefe;
+  padding: .75em;
+  border-radius: 0.15em;
+  transition: .3s ease;
+}
+
+ ul li a.toggle:hover {
+  background: rgba(0, 0, 0, 0.78);
+}
+
+ #plus:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: black;
+    float: right;
+    margin-left: 5px;
+}
+
+ #minus:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+    font-size: 13px;
+    color: black;
+    float: right;
+    margin-left: 5px;
+}
+
+ .leftE {
+  width: 250px;
+  left: 25%;
+  padding-bottom: 550px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+ .rightE {
+  height: 400px;
+  width: 445px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+
+ /* #yearUpEcon {
+  left: 25%
+}
+ #yearDownEcon {
+  left: 25%
+} */
+
+ #yearTextEcon {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+ #accordionContainer2 {
+  width: 600px;
 }
