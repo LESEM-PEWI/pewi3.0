@@ -267,6 +267,7 @@ tr:hover {
   -moz-border-radius: 5px;
   -webkit-box-shadow: 2px 2px 10px 5px #616161;
   -moz-box-shadow: 2px 2px 10px 5px #616161;
+  z-index: 100;
 }
 
 .mouseoverInfoRadarRight {
@@ -299,13 +300,13 @@ tr:hover {
 
 
 #graphContainer {
-  height: 100%;
+  padding-bottom: 50px;
   left: 25%;
   padding-left: 25%;
 }
 
 #graphContainerRev {
-  height: 100%;
+  padding-bottom: 5%;
   left: 25%;
   padding-left: 25%;
 }
@@ -851,9 +852,8 @@ ul table{
  .leftE {
   width: 250px;
   left: 25%;
-  padding-bottom: 550px;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: bottom;
 }
 
  .rightE {

@@ -1,0 +1,54 @@
+LU_ID,Land-Use,,Years Applicable,Frequency,SoilType,Revenue/acre/year,Units,Calculations,Notes,
+5,Alfalfa,,1,,all,125, $/ton ,,,
+15,Mixed Fruits & Vegetables,Green Beans,1,,all,25200,$/acre,"Green beans - 120 lbs/bed * 70 beds/acre = 8400 lbs/acre @ $3/lb
+Strawberries - yields y1 = 4000, y2 = 3000, y3 = 2000 qts/acre
+                             avg yield = 3000 qts/acre * $2.50/qt
+                             1 qt = 2.0 lbs strawberries; $1.25/lb, avg 6000 lbs/acre
+Winter Squash - 450 boxes/acre @ $12/box; 1 box = 50 lbs
+                                 22,500 lbs/acre @ $0.24/lb
+Grapes - NEEDED!!!",,
+15,Mixed Fruits & Vegetables,Strawberry,,Average Annual,,7300,$/acre,4000 qts/acre * $2.25/qt,Why does $/qt change year to year?,
+15,Mixed Fruits & Vegetables,Winter Squash,,Annual,,5400,$/acre,450 boxes/acre * $12/box,"50 lbs/box
+double check with Iowa expert",
+15,Mixed Fruits & Vegetables,Grapes,,,,12000,$/acre,"FILLER/FAKE, REDO",,
+6,Permanent Pasture,Heifer Calves,,Annual,,89.57, $/animal ,$1.75/lbs * 500lbs/head * .26 head/pair    / 2.5 acre/head,,https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf
+6,Permanent Pasture,Steer Calves,,Annual,,185.2, $/animal ,$1.85/lbs * 550lbs/head * .46 head/pair    / 2.5 acre/head,,https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf
+6,Permanent Pasture,Cull Cows,,Annual,,36.94, $/animal ,$0.38/lbs * 500lbs/head * .18 head/pair    / 2.5 acre/head,,https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf
+7,Rotational Grazing,Heifer Calves,,Annual,,140.76, $/animal ,$1.75/lbs * 500lbs/head * .26 head/pair    / 2.5 acre/head * 55/35 (ratio for rotation:permanent grazing systems),"Same as Permanent Pasture, except adjusted for pasture utilization ratio (55/35)",
+7,Rotational Grazing,Steer Calves,,Annual,,291.02, $/animal ,$1.85/lbs * 550lbs/head * .46 head/pair    / 2.5 acre/head * 55/35 (ratio for rotation:permanent grazing systems),"Same as Permanent Pasture, except adjusted for pasture utilization ratio (55/35)",
+7,Rotational Grazing,Cull Cows,,Annual,,58.04, $/animal ,$0.38/lbs * 500lbs/head * .18 head/pair    / 2.5 acre/head * 55/35 (ratio for rotation:permanent grazing systems),"Same as Permanent Pasture, except adjusted for pasture utilization ratio (55/35)",
+1,Conventional Corn,Regular Commodity Corn,,Annual,,3.75, $/bu ,$3.75/bu,"Accessed on March 20, 2018",http://markets.businessinsider.com/commodities/corn-price
+2,Conservation Corn,Regular Commodity Corn,,Annual,,3.75, $/bu ,$3.75/bu,"Accessed on March 20, 2018",http://markets.businessinsider.com/commodities/corn-price
+3,Conventional Soybean,Regular Commodity Soybean,,Annual,,10.49, $/bu ,$10.4875/bu,"Accessed on March 20, 2019",http://www.macrotrends.net/2531/soybean-prices-historical-chart-data
+4,Conservation Soybean,Regular Commodity Soybean,,Annual,,10.49, $/bu ,$10.4875/bu,"Accessed on March 20, 2020",http://www.macrotrends.net/2531/soybean-prices-historical-chart-data
+13,Short-rotation Woody Bioenergy,Triticale Biomass,,Average Annual,,752.43,$/acre,1.66 dry US ton/acre @ $72.60/dry US ton,Tie this to an adjustable variable. Use $72.60/dry US ton as default,
+9,Prairie,none,,Annual,,0,$/acre,,"Assuming none. Government programs exist, but we are ignoring them for now.",
+14,Wetland,none,,Annual,,0,$/acre,,"Assuming none. Government programs exist, but we are ignoring them for now.",
+11,Conventional Forest,Wood,1,Annual,A,0.15,$/boardfoot,PER boardfoot; for soil type A,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,D,0.15,$/boardfoot,PER boardfoot; for soil type D,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,G,0.15,$/boardfoot,PER boardfoot; for soil type G,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,M,0.15,$/boardfoot,PER boardfoot; for soil type M,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,Q,0.15,$/boardfoot,PER boardfoot; for soil type Q,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,Y,0.15,$/boardfoot,PER boardfoot; for soil type Y,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,C,0.06,$/boardfoot,PER boardfoot; for soil type C,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,L,0.06,$/boardfoot,PER boardfoot; for soil type L,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,O,0.06,$/boardfoot,PER boardfoot; for soil type O,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,N,0.3,$/boardfoot,PER boardfoot; for soil type N,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,K,0.3,$/boardfoot,PER boardfoot; for soil type K,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,T,0.3,$/boardfoot,PER boardfoot; for soil type T,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,B,0.14,$/boardfoot,PER boardfoot; for soil type B,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,A,0.15,$/boardfoot,PER boardfoot; for soil type A,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,D,0.15,$/boardfoot,PER boardfoot; for soil type D,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,G,0.15,$/boardfoot,PER boardfoot; for soil type G,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,M,0.15,$/boardfoot,PER boardfoot; for soil type M,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,Q,0.15,$/boardfoot,PER boardfoot; for soil type Q,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,Y,0.15,$/boardfoot,PER boardfoot; for soil type Y,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,C,0.06,$/boardfoot,PER boardfoot; for soil type C,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,L,0.06,$/boardfoot,PER boardfoot; for soil type L,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,O,0.06,$/boardfoot,PER boardfoot; for soil type O,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,N,0.3,$/boardfoot,PER boardfoot; for soil type N,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,K,0.3,$/boardfoot,PER boardfoot; for soil type K,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,T,0.3,$/boardfoot,PER boardfoot; for soil type T,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,B,0.14,$/boardfoot,PER boardfoot; for soil type B,,"Multiple source, refer to Forest_Comp_Research Excel file"
+8,Grass Hay,,,,,50,$/ton,"FILLER/FAKE, REDO",,
+12,Switchgrass,,,,,100,$/ton,"FILLER/FAKE, REDO",,

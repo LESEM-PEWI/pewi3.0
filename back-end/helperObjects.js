@@ -2959,6 +2959,7 @@ this.tileNitrate = Array(4);
    shortRotationWoodyBiomassYield: 0,
    mixedFruitsAndVegetablesYield: 0
  };
+ this.yieldByLandUse = [];
  this.tileYieldResults = Array(4);
  this.tileLandType = Array(4);
  for(var i = 1; i < 4; i++){
@@ -3022,6 +3023,12 @@ this.tileNitrate = Array(4);
     this.sedimentDelivery[y]=0;
     this.sumCarbonSequestration[y]=0;
     this.watershedPercent[y]=[];
+    this.yieldByLandUse[y] = [];
+    for(let i = 1; i<=15; i++){
+      this.yieldByLandUse[y][i] = 0;
+    }
+    this.yieldByLandUse[y][10] = {};
+    this.yieldByLandUse[y][11] = {};
 
       var wetlandMultiplier = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
       var subWatershedNitrate = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -3042,7 +3049,7 @@ this.tileNitrate = Array(4);
         this.tileYieldResults[y][i] = board.map[i].results[y].calculatedYieldTile * board.map[i].area;
         this.tileLandType[y][i] = LandUseType.getType(board.map[i].landType[y]);
 
-        sumYieldHelper(this.yieldResults,LandUseType.getType(board.map[i].landType[y]),y,yieldValueToStore);
+        sumYieldHelper(this,LandUseType.getType(board.map[i].landType[y]),y,yieldValueToStore,board.map[i].soilType);
 
 
         subWatershedNitrate[board.map[i].subwatershed] += board.map[i].results[y].cropMultiplier;
@@ -3440,7 +3447,9 @@ this.tileNitrate = Array(4);
    * @param  {[int]} y       year
    * @param  {[int]} score   yield value score
    */
-  function sumYieldHelper(results,type,y,score){
+  function sumYieldHelper(totals,type,y,score,soilType){
+    results = totals.yieldResults;
+    resultsByLandUse = Totals.yieldByLandUse[y];
     switch (type) {
 
             case "none":
@@ -3448,26 +3457,34 @@ this.tileNitrate = Array(4);
               break;
             case "conventionalCorn":
               results[y].cornGrainYield += score;
+              resultsByLandUse[1] += score;
               break;
             case "conservationCorn":
               results[y].cornGrainYield += score;
+              resultsByLandUse[2] += score;
               break;
             case "conventionalSoybean":
               results[y].soybeanYield += score;
+              resultsByLandUse[3] += score;
               break;
             case "conservationSoybean":
               results[y].soybeanYield += score;
+              resultsByLandUse[4] += score;
               break;
             case "alfalfa":
               results[y].alfalfaHayYield += score;
+              resultsByLandUse[5] += score;
               break;
             case "permanentPasture":
               results[y].cattleYield += score;
+              resultsByLandUse[6] += score;
               break;
             case "rotationalGrazing":
+              resultsByLandUse[7] += score;
               results[y].cattleYield += score;
               break;
             case "grassHay":
+              resultsByLandUse[8] += score;
               results[y].grassHayYield += score;
               break;
             case "prairie":
@@ -3475,21 +3492,28 @@ this.tileNitrate = Array(4);
               break;
             case "conservationForest":
               results[y].woodYield += score;
+              resultsByLandUse[10][soilType] = resultsByLandUse[10][soilType] || 0;
+              resultsByLandUse[10][soilType] += score;
               break;
             case "conventionalForest":
               results[y].woodYield += score;
+              resultsByLandUse[11][soilType] = resultsByLandUse[11][soilType] || 0;
+              resultsByLandUse[11][soilType] += score;
               break;
             case "switchgrass":
               results[y].switchgrassYield += score;
+              resultsByLandUse[12] += score;
               break;
             case "shortRotationWoodyBioenergy":
               results[y].shortRotationWoodyBiomassYield += score;
+              resultsByLandUse[13] += score;
               break;
             case "wetland":
               //Do nothing - does not report yield
               break;
             case "mixedFruitsVegetables":
               results[y].mixedFruitsAndVegetablesYield += score;
+              resultsByLandUse[15] += score;
               break;
           }
   }
@@ -3501,7 +3525,7 @@ this.tileNitrate = Array(4);
   this.sumYieldsAndsumlandUse = function(tileId, year) {
       var prevLandType = this.tileLandType[year][tileId];
       var yieldValueToStore = board.map[tileId].results[year].calculatedYieldTile * board.map[tileId].area;
-      sumYieldHelper(this.yieldResults,LandUseType.getType(board.map[tileId].landType[year]),year,yieldValueToStore);
+      sumYieldHelper(this,LandUseType.getType(board.map[tileId].landType[year]),year,yieldValueToStore,board.map[tileId].soilType);
       sumLandUseHelper(this.landUseResults,LandUseType.getType(board.map[tileId].landType[year]),year,board.map[tileId].area);
       sumLandUseHelperSubstraction(this.landUseResults,prevLandType,year,this.tileLandArea[year][tileId]);
       switch (prevLandType){
@@ -3509,48 +3533,61 @@ this.tileNitrate = Array(4);
           //Do Nothing
           break;
         case "conventionalCorn":
+          this.yieldByLandUse[year][1] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].cornGrainYield -= this.tileYieldResults[year][tileId];
           break;
         case "conservationCorn":
+          this.yieldByLandUse[year][2] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].cornGrainYield -= this.tileYieldResults[year][tileId];
           break;
         case "conventionalSoybean":
+          this.yieldByLandUse[year][3] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].soybeanYield -= this.tileYieldResults[year][tileId];
           break;
         case "conservationSoybean":
+          this.yieldByLandUse[year][4] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].soybeanYield -= this.tileYieldResults[year][tileId];
           break;
         case "alfalfa":
+          this.yieldByLandUse[year][5] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].alfalfaHayYield -= this.tileYieldResults[year][tileId];
           break;
         case "permanentPasture":
+          this.yieldByLandUse[year][6] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].cattleYield -= this.tileYieldResults[year][tileId];
           break;
         case "rotationalGrazing":
+          this.yieldByLandUse[year][7] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].cattleYield -= this.tileYieldResults[year][tileId];
           break;
         case "grassHay":
+          this.yieldByLandUse[year][8] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].grassHayYield -= this.tileYieldResults[year][tileId];
           break;
         case "prairie":
           //Do nothing - does not report yield
           break;
         case "conservationForest":
+          this.yieldByLandUse[year][10][board.map[tileId].soilType] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].woodYield -= this.tileYieldResults[year][tileId];
           break;
         case "conventionalForest":
+          this.yieldByLandUse[year][11][board.map[tileId].soilType] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].woodYield -= this.tileYieldResults[year][tileId];
           break;
         case "switchgrass":
+          this.yieldByLandUse[year][12] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].switchgrassYield -= this.tileYieldResults[year][tileId];
           break;
         case "shortRotationWoodyBioenergy":
+          this.yieldByLandUse[year][13] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].shortRotationWoodyBiomassYield -= this.tileYieldResults[year][tileId];
           break;
         case "wetland":
           //Do nothing - does not report yield
           break;
         case "mixedFruitsVegetables":
+          this.yieldByLandUse[year][15] -= this.tileYieldResults[year][tileId];
           this.yieldResults[year].mixedFruitsAndVegetablesYield -= this.tileYieldResults[year][tileId];
           break;
       }

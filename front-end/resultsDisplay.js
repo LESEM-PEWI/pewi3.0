@@ -349,7 +349,6 @@ function displayResults() {
 
   //toggle the arrows on the results page
   document.getElementById('resultsFrame').contentWindow.toggleYearForLandPlotBy(0);
-  document.getElementById('resultsFrame').contentWindow.toggleYearForEconRevPlotBy(0);
   document.getElementById('resultsFrame').contentWindow.toggleYearForEconPlotBy(0);
 
 
@@ -1111,67 +1110,71 @@ function drawD3EconRevPieChart(year, isTheChartInCategoryMode) {
   * For more information refer to Issue 386.
   */
   var multiplayerColorPack = ["#87ceee","#e6bb00","#cc6578","#127731","#c97b08","#302485"];
-  var totalCost = getTotalCost(tempResult, year);
+  let totalRev = 0;
+  economics.scaledRev[year].forEach(value => {
+    totalRev += value;
+  })
+  console.log(totalRev)
    var dataset = [{
       label: 'Conventional Corn',
-      count: (tempResult[0].count*(Math.round(Totals.landUseResults[year].conventionalCornLandUse * 100) / 100)),
-      number: ((tempResult[0].count*(Math.round(Totals.landUseResults[year].conventionalCornLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][1].toFixed(2)),
+      number: ((economics.scaledRev[year][1].toFixed(2))/totalRev)
     }, {
       label: 'Conservation Corn',
-      count: (tempResult[1].count*(Math.round(Totals.landUseResults[year].conservationCornLandUse * 100) / 100)),
-      number: ((tempResult[1].count*(Math.round(Totals.landUseResults[year].conservationCornLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][2].toFixed(2)),
+      number: ((economics.scaledRev[year][2].toFixed(2))/totalRev)
     }, {
       label: 'Conventional Soybean',
-      count: (tempResult[2].count*(Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 100) / 100)),
-      number: ((tempResult[2].count*(Math.round(Totals.landUseResults[year].conventionalSoybeanLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][3].toFixed(2)),
+      number: ((economics.scaledRev[year][3].toFixed(2))/totalRev)
     }, {
       label: 'Conservation Soybean',
-      count: (tempResult[3].count*(Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 100) / 100)),
-      number: ((tempResult[3].count*(Math.round(Totals.landUseResults[year].conservationSoybeanLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][4].toFixed(2)),
+      number: ((economics.scaledRev[year][4].toFixed(2))/totalRev)
     }, {
       label: 'Mixed Fruits/Vegetables',
-      count: (tempResult[14].count*(Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse * 100) / 100)),
-      number: ((tempResult[14].count*(Math.round(Totals.landUseResults[year].mixedFruitsVegetablesLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][15].toFixed(2)),
+      number: ((economics.scaledRev[year][15].toFixed(2))/totalRev)
     }, {
       label: 'Permanent Pasture',
-      count: (tempResult[5].count*(Math.round(Totals.landUseResults[year].permanentPastureLandUse * 100) / 100)),
-      number: ((tempResult[5].count*(Math.round(Totals.landUseResults[year].permanentPastureLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][6].toFixed(2)),
+      number: ((economics.scaledRev[year][6].toFixed(2))/totalRev)
     }, {
       label: 'Rotational Grazing',
-      count: (tempResult[6].count*(Math.round(Totals.landUseResults[year].rotationalGrazingLandUse * 100) / 100)),
-      number: ((tempResult[6].count*(Math.round(Totals.landUseResults[year].rotationalGrazingLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][7].toFixed(2)),
+      number: ((economics.scaledRev[year][7].toFixed(2))/totalRev)
     }, {
       label: 'Grass Hay',
-      count: (tempResult[7].count*(Math.round(Totals.landUseResults[year].grassHayLandUse * 100) / 100)),
-      number: ((tempResult[7].count*(Math.round(Totals.landUseResults[year].grassHayLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][8].toFixed(2)),
+      number: ((economics.scaledRev[year][8].toFixed(2))/totalRev)
     }, {
       label: 'Switchgrass',
-      count: (tempResult[11].count*(Math.round(Totals.landUseResults[year].switchgrassLandUse * 100) / 100)),
-      number: ((tempResult[11].count*(Math.round(Totals.landUseResults[year].switchgrassLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][12].toFixed(2)),
+      number: ((economics.scaledRev[year][12].toFixed(2))/totalRev)
     }, {
       label: 'Prairie',
-      count: (tempResult[8].count*(Math.round(Totals.landUseResults[year].prairieLandUse * 100) / 100)),
-      number: ((tempResult[8].count*(Math.round(Totals.landUseResults[year].prairieLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][9].toFixed(2)),
+      number: ((economics.scaledRev[year][9].toFixed(2))/totalRev)
     }, {
       label: 'Wetland',
-      count: (tempResult[13].count*(Math.round(Totals.landUseResults[year].wetlandLandUse * 100) / 100)),
-      number: ((tempResult[13].count*(Math.round(Totals.landUseResults[year].wetlandLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][14].toFixed(2)),
+      number: ((economics.scaledRev[year][14].toFixed(2))/totalRev)
     }, {
       label: 'Alfalfa',
-      count: (tempResult[4].count*(Math.round(Totals.landUseResults[year].alfalfaLandUse * 100) / 100)),
-      number: ((tempResult[4].count*(Math.round(Totals.landUseResults[year].alfalfaLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][5].toFixed(2)),
+      number: ((economics.scaledRev[year][5].toFixed(2))/totalRev)
     }, {
       label: 'Conventional Forest',
-      count: (tempResult[10].count*(Math.round(Totals.landUseResults[year].conventionalForestLandUse * 100) / 100)),
-      number: ((tempResult[10].count*(Math.round(Totals.landUseResults[year].conventionalForestLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][11].toFixed(2)),
+      number: ((economics.scaledRev[year][11].toFixed(2))/totalRev)
     }, {
       label: 'Conservation Forest',
-      count: (tempResult[9].count*(Math.round(Totals.landUseResults[year].conservationForestLandUse * 100) / 100)),
-      number: ((tempResult[9].count*(Math.round(Totals.landUseResults[year].conservationForestLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][10].toFixed(2)),
+      number: ((economics.scaledRev[year][10].toFixed(2))/totalRev)
     }, {
       label: 'Short Rotation Woody Bioenergy',
-      count: (tempResult[12].count*(Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 100) / 100)),
-      number: ((tempResult[12].count*(Math.round(Totals.landUseResults[year].shortRotationWoodyBioenergyLandUse * 100) / 100))/totalCost)
+      count: (economics.scaledRev[year][13].toFixed(2)),
+      number: ((economics.scaledRev[year][13].toFixed(2))/totalRev)
     }];
    //variables for the display of the chart on the page
   // be careful about changing these values since they are tied closely to
@@ -5293,12 +5296,12 @@ function createMockDataGraphic1(){
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
   });
     console.log(econData[i])
-    tempData[i].forEach((el) => {
+    tempData[i].forEach((el, j) => {
       d = {}
       d.year = i;
       d.landUse = el.landUse;
       d.Cost = el.cost;
-      d.Revenue = el.cost * (Math.random()*-2);
+      d.Revenue = economics.scaledRev[i][j];
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
       d.Loss = Math.min(d.Revenue + d.Cost, 0);
       dataEcon1.push(d);

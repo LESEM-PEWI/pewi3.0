@@ -38,15 +38,10 @@
   function changeEconPieBy(numberOfYears) {
     //parent is index.html
     //resultsDisplay.js
-    parent.drawD3EconPieChart(toggleYearForEconPlotBy(numberOfYears), isLandPlotOnCategories);
+    year = toggleYearForEconPlotBy(numberOfYears);
+    parent.drawD3EconPieChart(year, isLandPlotOnCategories);
+    parent.drawD3EconRevPieChart(year, isLandPlotOnCategories);
   }
-
-  function changeEconRevPieBy(numberOfYears) {
-    //parent is index.html
-    //resultsDisplay.js
-    parent.drawD3EconRevPieChart(toggleYearForEconRevPlotBy(numberOfYears), isLandPlotOnCategories);
-  } 
-
 
   /*
   * The function inMultiplayer() is used to switch the value of inMultiplayerMode.
@@ -200,37 +195,6 @@
      return year;
   } //end toggleYearForEconPlotBy()
 
-
-  function toggleYearForEconRevPlotBy(yearsToChange) {
-    //grab info from div, since passing data between frames is difficult
-    var upTo = Number(document.getElementById('upTo').innerHTML);
-    var year = Number(document.getElementById('landYear').innerHTML);
-
-     year = year + yearsToChange;
-
-     //reset functionality
-    document.getElementById('yearUpEcon2').className = "upArrow";
-    document.getElementById('yearUpEcon2').onclick = function() {
-      changeEconRevPieBy(1);
-    };
-    document.getElementById('yearDownEcon2').className = "downArrow";
-    document.getElementById('yearDownEcon2').onclick = function() {
-      changeEconRevPieBy(-1);
-    };
-
-     //then if one of the limits have been reached, turn off that toggle
-    if (year == upTo) {
-      document.getElementById('yearUpEcon2').className = "upArrowDisabled";
-      document.getElementById('yearUpEcon2').onclick = function() {};
-    }
-    //cannot be an else if, in the case where upTo == 1
-    if (year == 1) {
-      document.getElementById('yearDownEcon2').className = "downArrowDisabled";
-      document.getElementById('yearDownEcon2').onclick = function() {};
-    }
-
-     return year;
-  } //end toggleYearForEconPlotBy()
 
 /*  function toggleCategoriesSpider(toggleNumber)
   {

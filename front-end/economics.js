@@ -8,8 +8,15 @@ var Economics = function () {
   this.data3 = [];
   this.data3ByLU = [];
   this.data5=[];
+  this.rawRev=[];
+  this.scaledRev=[];
 
-  yearCosts = [-1,1,1,1,1,4,1,1,4,40,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}];
+//the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
+  yearCosts = [-1,1,1,1,1,4,1,1,4,40,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}]
+  d3.csv('./revenue.csv', (data) => {
+    this.rawRev = data;
+  })
+
   this.divideByCategory = function (listofCats){
     for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.data[i] = [];
@@ -66,7 +73,6 @@ var Economics = function () {
           }
         })
     }
-      console.log(this.data5);
     }
     d3.csv('./budgets.csv', (data) => {
       this.rawData=data;
@@ -100,8 +106,6 @@ var Economics = function () {
         }
       });
     }
-    this.data4
-    console.log(this.data4);
 
   }
 
@@ -123,12 +127,10 @@ var Economics = function () {
         }
       })
     }
-    console.log(this.data3);
   }
 
 
   this.chart3DataByLU = () => {
-    console.log(this.mapData)
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.data3ByLU[i] = {};
       this.mapData[i].forEach( dataPoint => {
@@ -150,8 +152,6 @@ var Economics = function () {
         this.data3ByLU[i][dataPoint['Land-Use']].toggleVal = -1;
       })
     }
-
-    console.log(this.data3ByLU)
   }
 
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
@@ -162,12 +162,37 @@ var Economics = function () {
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       landUses[i] = [];
       this.mapData[i] = [];
+      this.scaledRev[i] = [];
       let keys = Object.keys(Totals.landUseResults[0]);
       for(let j = 0; j < keys.length; j++){
         let key = keys[j];
         //this substring is to link different keys from different objects together... again less than ideal
         landUses[i][LandUseType[key.substring(0, key.length - 7)]] = Totals.landUseResults[i][key]
       }
+      this.rawRev.forEach(dataPoint => {
+        if(dataPoint['Units'] === '$/acre'){
+          if(dataPoint['LU_ID'] == 15){
+            let fruitsPrecipMultiplier = 1; //since the csv now accounts for acres instead of the actual yield for revenue purposes we have to use the yield precip multiplier
+            if(boardData[currentBoard].precipitation[i] === 45.1) fruitsPrecipMultiplier = .75;
+            if(boardData[currentBoard].precipitation[i] === 36.5) fruitsPrecipMultiplier = .9;
+            value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']] * fruitsPrecipMultiplier / 4;
+          }
+          else {
+            value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']];
+          }
+        }
+        //woodlands can't be treated the same since they are the only land use where the soil type changes the value of the wood not just the amount of wood.
+        //Where the rest of the revenue above can multiply the output by a certain price: we need to actually find the soil that all the woodlands are on.
+        else if(dataPoint['LU_ID'] == 10 || dataPoint['LU_ID'] == 11){
+          value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][parseInt(dataPoint['LU_ID'])][dataPoint['SoilType']] || 0;
+        }
+        else{
+          value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][dataPoint['LU_ID']];
+        }
+        this.scaledRev[i][dataPoint['LU_ID']] = this.scaledRev[i][dataPoint['LU_ID']] || 0;
+        this.scaledRev[i][dataPoint['LU_ID']] += value;
+      });
+
       this.rawData.forEach(dataPoint => {
         let copy = JSON.parse(JSON.stringify(dataPoint));
         copy["Value"] *= landUses[i][copy['LU_ID']];
@@ -175,12 +200,9 @@ var Economics = function () {
         this.mapData[i].push(copy)
       })
     }
-
     this.chart3Data();
     this.chart3DataByLU();
     this.graphic5information();
-
-
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
     this.calcSubcrops();
