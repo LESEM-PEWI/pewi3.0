@@ -2359,7 +2359,7 @@ function Printer() {
 
     switch (type.slice(0, 4)) {
       case 'year':
-        // Create precipitation info as legend box for LandUse Map
+        // Create precipitation info as legend box for Land Use Map
         // first get text and color
         text = "Precipitation: " + boardData[currentBoard].precipitation[type.substr(-1)] + "  in.";
         color = "rgb(29, 187, 245)";
@@ -2445,7 +2445,7 @@ function Printer() {
         // put the componemt
         updateY(padding+lineHeight);
         // place text and image
-        addText(1, "Year " + type.substr(type.length - 1) + " LandUse Map", x, y, font.header2_font);
+        addText(1, "Year " + type.substr(type.length - 1) + " Land Use Map", x, y, font.header2_font);
         previousY = y; // save previousY for legend
         addImage(imageSrc[type], 'JPEG', x, y, mapWidth, mapHeight);
         // place legend
