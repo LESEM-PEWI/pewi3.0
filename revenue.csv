@@ -50,5 +50,5 @@ double check with Iowa expert",
 10,Conservation Forest,Wood,1,Annual,K,0.3,$/boardfoot,PER boardfoot; for soil type K,,"Multiple source, refer to Forest_Comp_Research Excel file"
 10,Conservation Forest,Wood,1,Annual,T,0.3,$/boardfoot,PER boardfoot; for soil type T,,"Multiple source, refer to Forest_Comp_Research Excel file"
 10,Conservation Forest,Wood,1,Annual,B,0.14,$/boardfoot,PER boardfoot; for soil type B,,"Multiple source, refer to Forest_Comp_Research Excel file"
-8,Grass Hay,,,,,500,$/acre,"FILLER/FAKE, REDO",,
-12,Switchgrass,,,,,1200,$/acre,"FILLER/FAKE, REDO",,
+8,Grass Hay,,,,,50,$/ton,"FILLER/FAKE, REDO",,
+12,Switchgrass,,,,,100,$/ton,"FILLER/FAKE, REDO",,

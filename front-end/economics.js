@@ -73,7 +73,6 @@ var Economics = function () {
           }
         })
     }
-      console.log(this.data5);
     }
     d3.csv('./budgets.csv', (data) => {
       this.rawData=data;
@@ -107,7 +106,6 @@ var Economics = function () {
         }
       });
     }
-    console.log(this.data4);
 
   }
 
@@ -129,12 +127,10 @@ var Economics = function () {
         }
       })
     }
-    console.log(this.data3);
   }
 
 
   this.chart3DataByLU = () => {
-    console.log(this.mapData)
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.data3ByLU[i] = {};
       this.mapData[i].forEach( dataPoint => {
@@ -156,7 +152,6 @@ var Economics = function () {
         this.data3ByLU[i][dataPoint['Land-Use']].toggleVal = -1;
       })
     }
-    console.log(this.data3ByLU)
   }
 
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
@@ -177,7 +172,10 @@ var Economics = function () {
       this.rawRev.forEach(dataPoint => {
         if(dataPoint['Units'] === '$/acre'){
           if(dataPoint['LU_ID'] == 15){
-            value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']] / 4;
+            let fruitsPrecipMultiplier = 1; //since the csv now accounts for acres instead of the actual yield for revenue purposes we have to use the yield precip multiplier
+            if(boardData[currentBoard].precipitation[i] === 45.1) fruitsPrecipMultiplier = .75;
+            if(boardData[currentBoard].precipitation[i] === 36.5) fruitsPrecipMultiplier = .9;
+            value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']] * fruitsPrecipMultiplier / 4;
           }
           else {
             value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']];
@@ -189,7 +187,6 @@ var Economics = function () {
           value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][parseInt(dataPoint['LU_ID'])][dataPoint['SoilType']] || 0;
         }
         else{
-          console.log(dataPoint['LU_ID']);
           value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][dataPoint['LU_ID']];
         }
         this.scaledRev[i][dataPoint['LU_ID']] = this.scaledRev[i][dataPoint['LU_ID']] || 0;
@@ -202,7 +199,6 @@ var Economics = function () {
         copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
         this.mapData[i].push(copy)
       })
-      console.log(this.scaledRev);
     }
     this.chart3Data();
     this.chart3DataByLU();
