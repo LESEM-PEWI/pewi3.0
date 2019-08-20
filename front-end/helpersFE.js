@@ -1455,7 +1455,7 @@ function changeSelectedPaintTo(newPaintValue) {
         updateGlossaryPopup('To learn more about <span style="color:orange">Grass Hay</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
         break;
       case 'paint9':
-        updateGlossaryPopup('To learn more about <span style="color:orange">Prarie</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
+        updateGlossaryPopup('To learn more about <span style="color:orange">Prairie</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
         break;
       case 'paint10':
         updateGlossaryPopup('To learn more about <span style="color:orange">Conservation Forest</span>, go to the <span style="color:yellow">Glossary</span> and select <span style="color:yellow">"Land Use"</span>.');
@@ -7105,11 +7105,11 @@ function getTileGameWildlifeScore(tileId){
   var streamBuff = boardData[currentBoard].map[tileId].streamNetwork;
   var multiplier = boardData[currentBoard].map[tileId].area / 10;
 
-  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing or Wetland, add 4 points
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prairie, Rotational Grazing or Wetland, add 4 points
   if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14){
     score+=4;
   }
-  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prairie, Rotational Grazing, Wetland, Conservational Soybean,
   //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
   if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
     score+=1.5;
@@ -7118,7 +7118,7 @@ function getTileGameWildlifeScore(tileId){
   if(currLandType == 10){
     score+=1;
   }
-  //If land use is Prarie, Rotational Grazing, or Switchgrass, add 1 point
+  //If land use is Prairie, Rotational Grazing, or Switchgrass, add 1 point
   if(currLandType == 9 || currLandType == 7 || currLandType == 12){
     score+=1;
   }
@@ -7126,7 +7126,7 @@ function getTileGameWildlifeScore(tileId){
   if(currLandType == 14){
     score+=1;
   }
-  //If land is stream buffer and land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //If land is stream buffer and land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prairie, Rotational Grazing, Wetland, Conservational Soybean,
   //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
   if(streamBuff==1){
     if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
@@ -7151,15 +7151,15 @@ function getTileBiodiversityScore(tileId){
   var streamBuff = boardData[currentBoard].map[tileId].streamNetwork;
   var multiplier = boardData[currentBoard].map[tileId].area / 10;
 
-  //If land use is Conservational Forest, Prarie, or Wetland, add 4 points
+  //If land use is Conservational Forest, Prairie, or Wetland, add 4 points
   if(currLandType == 10  || currLandType == 9 || currLandType == 14){
     score+=4;
   }
-  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, or Wetland
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prairie, Rotational Grazing, or Wetland
   if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14){
     score+=1.5;
   }
-  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //If land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prairie, Rotational Grazing, Wetland, Conservational Soybean,
   //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
   if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
     score+=1.5;
@@ -7171,7 +7171,7 @@ function getTileBiodiversityScore(tileId){
       score+=1;
     }
   }
-  //If land is stream buffer and land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prarie, Rotational Grazing, Wetland, Conservational Soybean,
+  //If land is stream buffer and land use is Conservational Forest, Conventional Forest, Mixed Fruits and Vegetables, Prairie, Rotational Grazing, Wetland, Conservational Soybean,
   //Conservational Corn, Grass Hay, Short Rotation Woody Bio Engergy, or Switchgrass, add 1.5 points
   if(streamBuff==1){
     if(currLandType == 10 || currLandType == 11 || currLandType == 15 || currLandType == 9 || currLandType == 7 || currLandType == 14 || currLandType == 4 || currLandType == 2 || currLandType == 8 || currLandType == 13 || currLandType == 12){
