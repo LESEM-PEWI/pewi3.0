@@ -773,6 +773,7 @@ function drawD3LandPieChart(year, isTheChartInCategoryMode) {
 } //end drawD3LandPieChart()
 
 function drawD3EconPieChart(year, isTheChartInCategoryMode) {
+
   // RESETTING THE TEMPORARY COLOR AND LEGEND ELEMENT nameArray
   tempLegendItems = [];
   tempLegendColors = [];
@@ -2537,8 +2538,7 @@ function numSort(column){
 }
 function generateEconTableData(year){
   let results = []
-  let econ = economics.mapData[year] || this.parent.economics.mapData[year];
-  console.log(econ);
+  let econ = economics.mapData[year];
   for(let i = 0; i < econ.length; ++i){
     var tempObj = getObj(econ[i]);
     results.push(tempObj);
