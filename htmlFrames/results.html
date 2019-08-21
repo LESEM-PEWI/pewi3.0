@@ -35,7 +35,6 @@ Cleaned and Prepared - August 2016
   <script src="../lib/d3.min.js"></script>
   <!-- external js -->
   <script src="results_scripts.js"></script>
-  <script src="../front-end/resultsDisplay.js"></script>
   <script src="../lib/jquery-3.2.1.min.js"></script>
   <!-- <script src="resultsPDF.js"></script> -->
 
@@ -141,7 +140,7 @@ Cleaned and Prepared - August 2016
 
         <div id="yearCopyButton">
           <h4>Year Select:</h4>
-          <select id="yearSelect" onChange="changeYear();">
+          <select id="yearSelect" onChange="parent.changeYear();">
               <option value=1>Year 1</option>
               <option value=2>Year 2</option>
               <option value=3>Year 3</option>
@@ -199,6 +198,35 @@ Cleaned and Prepared - August 2016
            </ul>
          </li>
 
+         <li>
+           <a class="toggle" href="javascript:void(0);" id="plus">Mixed Fruits & Vegetables</a>
+           <ul class="inner">
+             <li>
+               <a href="#" class="toggle" id="plus">Grapes</a>
+               <ul class = "inner" id="mixedFruitsVGrapes">
+               </ul>
+             </li>
+
+
+             <li>
+               <a href="#" class="toggle" id="plus">Green Beans</a>
+               <ul class = "inner" id="mixedFruitsVGreenB">
+
+               </ul>
+             </li>
+
+             <li>
+               <a href="#" class="toggle" id="plus">Squash</a>
+               <ul class = "inner" id="mixedFruitsVSquash">
+               </ul>
+             </li>
+             <li>
+               <a href="#" class="toggle" id="plus">Strawberries</a>
+               <ul class = "inner" id="mixedFruitsVStrawberries">
+               </ul>
+             </li>
+           </ul>
+         </li>
 
           <li>
            <a class="toggle" href="javascript:void(0);" id="plus">Alfalfa</a>
@@ -266,35 +294,6 @@ Cleaned and Prepared - August 2016
          </li>
 
 
-          <li>
-           <a class="toggle" href="javascript:void(0);" id="plus">Mixed Fruits & Vegetables</a>
-           <ul class="inner">
-               <li>
-                 <a href="#" class="toggle" id="plus">Grapes</a>
-                 <ul class = "inner" id="mixedFruitsVGrapes">
-             </ul>
-             </li>
-
-
-             <li>
-               <a href="#" class="toggle" id="plus">Green Beans</a>
-               <ul class = "inner" id="mixedFruitsVGreenB">
-
-               </ul>
-             </li>
-
-           <li>
-             <a href="#" class="toggle" id="plus">Squash</a>
-             <ul class = "inner" id="mixedFruitsVSquash">
-             </ul>
-           </li>
-         <li>
-           <a href="#" class="toggle" id="plus">Strawberries</a>
-           <ul class = "inner" id="mixedFruitsVStrawberries">
-           </ul>
-         </li>
-       </ul>
-      </li>
       </div>
 
     <div id="graphContainerRev">

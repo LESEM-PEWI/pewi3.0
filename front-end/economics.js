@@ -10,6 +10,7 @@ var Economics = function () {
   this.data5=[];
   this.rawRev=[];
   this.scaledRev=[];
+  this.cornAfters=[]
 
 //the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
   yearCosts = [-1,1,1,1,1,4,1,1,4,40,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}]
@@ -129,7 +130,6 @@ var Economics = function () {
     }
   }
 
-
   this.chart3DataByLU = () => {
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.data3ByLU[i] = {};
@@ -155,6 +155,7 @@ var Economics = function () {
   }
 
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
+    calculateCornAfters();
     let landUses = [];
     this.mapData = [];
     //Less than ideal coding, but given how Totals is structured the easiest way
@@ -195,8 +196,16 @@ var Economics = function () {
 
       this.rawData.forEach(dataPoint => {
         let copy = JSON.parse(JSON.stringify(dataPoint));
-        copy["Value"] *= landUses[i][copy['LU_ID']];
-        copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
+        let luID = parseInt(copy['LU_ID']);
+        if(copy['LU_ID'] == 1 || copy['LU_ID'] == 2){//corn needs to be treated specially
+          console.log(luID)
+          copy["Value"] *= this.cornAfters[i][luID][copy['Sub Crop']];
+          copy["# Labor Hours"] *= this.cornAfters[i][luID][copy['Sub Crop']];
+        }
+        else {
+          copy["Value"] *= landUses[i][copy['LU_ID']];
+          copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
+        }
         this.mapData[i].push(copy)
       })
     }
@@ -207,6 +216,27 @@ var Economics = function () {
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
     this.calcSubcrops();
   }
+
+  //this is unoptimized for finding the amount of corn after corn and corn after soybeans
+  //If any sort of progress bar requires the economics module it is recomended to alter the method in which data is updated
+  calculateCornAfters = () =>{
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      this.cornAfters[i] = [,{'Corn after Soybean':0, 'Corn after Corn':0},{'Corn after Soybean':0, 'Corn after Corn':0}]
+      for (var j = 0; j < boardData[currentBoard].map.length; j++) {
+        if(boardData[currentBoard].map[j].landType[i] == 1 || boardData[currentBoard].map[j].landType[i] == 2){ //if there it is corn
+          if(boardData[currentBoard].map[j].landType[i-1] == 3 || boardData[currentBoard].map[j].landType[i-1] == 4){ //if the corn is after soybean
+            console.log(i);
+            this.cornAfters[i][boardData[currentBoard].map[j].landType[i]]['Corn after Soybean'] += boardData[currentBoard].map[j].area;
+          }
+          else {
+            this.cornAfters[i][boardData[currentBoard].map[j].landType[i]]['Corn after Corn'] += boardData[currentBoard].map[j].area
+          }
+        }
+      }
+    }
+    console.log(this.cornAfters);
+  }
+
   this.calcSubcrops = function(){
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.dataSubcrop[i] = {};
