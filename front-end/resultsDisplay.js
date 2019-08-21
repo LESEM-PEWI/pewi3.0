@@ -789,67 +789,68 @@ function drawD3EconPieChart(year, isTheChartInCategoryMode) {
   * For more information refer to Issue 386.
   */
   var multiplayerColorPack = ["#87ceee","#e6bb00","#cc6578","#127731","#c97b08","#302485"];
-  var totalCost = getTotalCost(tempResult, year);
+  let data = economics.data;
+  var totalCost = getTotalCost(economics.mapData, year);
    var dataset = [{
       label: 'Conventional Corn',
-      count: tempResult[0].count,
-      number: tempResult[0].count/totalCost
+      count: data[year][1]["Fixed/Variable"].total,
+      number: data[year][1]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Conservation Corn',
-      count: tempResult[1].count,
-      number: tempResult[1].count/totalCost
+      count: data[year][2]["Fixed/Variable"].total,
+      number: data[year][2]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Conventional Soybean',
-      count: tempResult[2].count,
-      number: tempResult[2].count/totalCost
+      count: data[year][3]["Fixed/Variable"].total,
+      number: data[year][3]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Conservation Soybean',
-      count: tempResult[3].count,
-      number: tempResult[3].count/totalCost
+      count: data[year][4]["Fixed/Variable"].total,
+      number: data[year][4]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Mixed Fruits/Vegetables',
-      count: tempResult[14].count,
-      number: tempResult[14].count/totalCost
+      count: data[year][15]["Fixed/Variable"].total,
+      number: data[year][15]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Permanent Pasture',
-      count: tempResult[5].count,
-      number: tempResult[5].count/totalCost
+      count: data[year][6]["Fixed/Variable"].total,
+      number: data[year][6]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Rotational Grazing',
-      count: tempResult[6].count,
-      number: tempResult[6].count/totalCost
+      count: data[year][7]["Fixed/Variable"].total,
+      number: data[year][7]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Grass Hay',
-      count: tempResult[7].count,
-      number: tempResult[7].count/totalCost
+      count: data[year][8]["Fixed/Variable"].total,
+      number: data[year][8]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Switchgrass',
-      count: tempResult[11].count,
-      number: tempResult[11].count/totalCost
+      count: data[year][12]["Fixed/Variable"].total,
+      number: data[year][12]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Prairie',
-      count: tempResult[8].count,
-      number: tempResult[8].count/totalCost
+      count: data[year][9]["Fixed/Variable"].total,
+      number: data[year][9]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Wetland',
-      count: tempResult[13].count,
-      number: tempResult[13].count/totalCost
+      count: data[year][14]["Fixed/Variable"].total,
+      number: data[year][14]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Alfalfa',
-      count: tempResult[4].count,
-      number: tempResult[4].count/totalCost
+      count: data[year][5]["Fixed/Variable"].total,
+      number: data[year][5]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Conventional Forest',
-      count: tempResult[10].count,
-      number: tempResult[10].count/totalCost
+      count: data[year][11]["Fixed/Variable"].total,
+      number: data[year][11]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Conservation Forest',
-      count: tempResult[9].count,
-      number: tempResult[9].count/totalCost
+      count: data[year][10]["Fixed/Variable"].total,
+      number: data[year][10]["Fixed/Variable"].total/totalCost
     }, {
       label: 'Short Rotation Woody Bioenergy',
-      count: tempResult[12].count,
-      number: tempResult[12].count/totalCost
+      count: data[year][13]["Fixed/Variable"].total,
+      number: data[year][13]["Fixed/Variable"].total/totalCost
     }];
    //variables for the display of the chart on the page
   // be careful about changing these values since they are tied closely to
@@ -1422,57 +1423,11 @@ function drawD3EconRevPieChart(year, isTheChartInCategoryMode) {
 
 function getTotalCost(data, givenYear) {
   var cost = 0;
-  for(var i = 0; i < data.length; ++i){
-    switch (data[i].label) {
-      case "Conventional Corn":
-        cost += Totals.landUseResults[givenYear].conventionalCornLandUse;
-      break;
-      case "Conservation Corn":
-        cost += Totals.landUseResults[givenYear].conservationCornLandUse;
-      break;
-      case "Conventional Soybean":
-        cost += Totals.landUseResults[givenYear].conventionalSoybeanLandUse;
-      break;
-      case "Conservation Soybean":
-        cost += Totals.landUseResults[givenYear].conservationSoybeanLandUse;
-      break;
-      case "Alfalfa":
-        cost += Totals.landUseResults[givenYear].alfalfaLandUse;
-      break;
-      case "Permanent Pasture":
-        cost += Totals.landUseResults[givenYear].permanentPastureLandUse;
-      break;
-      case "Rotational Grazing":
-        cost += Totals.landUseResults[givenYear].rotationalGrazingLandUse;
-      break;
-      case "Grass Hay":
-        cost += Totals.landUseResults[givenYear].grassHayLandUse;
-      break;
-      case "Prairie":
-        cost += Totals.landUseResults[givenYear].prairieLandUse;
-      break;
-      case "Conservation Forest":
-        cost += Totals.landUseResults[givenYear].conservationForestLandUse;
-      break;
-      case "Conventional Forest":
-        cost += Totals.landUseResults[givenYear].conventionalForestLandUse;
-      break;
-      case "Switchgrass":
-        cost += Totals.landUseResults[givenYear].switchgrassLandUse;
-      break;
-      case "Short-rotation Woody Bioenergy":
-        cost += Totals.landUseResults[givenYear].shortRotationWoodyBioenergyLandUse;
-      break;
-      case "Wetland":
-        cost += Totals.landUseResults[givenYear].wetlandLandUse;
-      break;
-      case "Mixed Fruits & Vegetables":
-        cost += Totals.landUseResults[givenYear].mixedFruitsVegetablesLandUse;
-      break;
-    }
+    console.log(data[givenYear])
+  for(let i = 0; i < data[givenYear].length; ++i){
+    cost += data[givenYear][i].Value;
   }
-
-   return cost;
+  return cost;
 }
 
 //this funtion creates and animates the Ecoscores aster plot
