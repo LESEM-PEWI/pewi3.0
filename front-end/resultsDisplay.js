@@ -1071,7 +1071,7 @@ function drawD3EconPieChart(year, isTheChartInCategoryMode) {
     .attr("text-anchor", "middle")
     .style("font-size", "1.8vw")
     .style("font-weight", "bold")
-    .text("Econ Numbers");
+    .text("Year");
   //also add the year below that
   svg.append("text")
     .attr("x", 0)
@@ -1397,7 +1397,7 @@ function drawD3EconRevPieChart(year, isTheChartInCategoryMode) {
     .attr("text-anchor", "middle")
     .style("font-size", "1.8vw")
     .style("font-weight", "bold")
-    .text("Econ Numbers");
+    .text("Year");
   //also add the year below that
   svg.append("text")
     .attr("x", 0)
