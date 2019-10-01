@@ -1943,7 +1943,7 @@ function displayLevels(overlayHighlightType) {
       break;
     case 'topo':
       selectionHighlightNumber = 9;
-      updateGlossaryPopup('This map shows the <span style="color:orange;">topography</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Index</span> and select <span style="color:yellow;">"Physical Features"</span>.');
+      updateGlossaryPopup('This map shows the <span style="color:orange;">topography</span> for each grid cell. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Physical Features"</span>.');
       if (curTracking) {
         pushClick(0, getStamp(), 50, 0, null);
       }
