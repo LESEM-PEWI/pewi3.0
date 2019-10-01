@@ -6424,7 +6424,7 @@ function EconomicsGraphic5(){
               .style("text-anchor", "left")
               .style("font-weight", "bold")
               .attr("font-size","1.1vmax")
-              .text("Time");
+              .text("Time (Half-Month Increments");
           svg.append("text")
             .attr("transform",
               "translate(" + (width/2-50) + " ," +
