@@ -6019,7 +6019,7 @@ function EconomicsGraphic4() {
              .style("text-anchor", "left")
              .style("font-weight", "bold")
              .style("font-size", "1.5vmax")
-             .text("Cost($) vs Line Items/Individual Costs");
+             .text("Cost($) vs Line Items/Individual Cost Names");
 
         //display cost name title on bottom
            svg.append("text")
