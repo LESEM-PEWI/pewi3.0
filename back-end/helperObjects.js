@@ -3415,11 +3415,11 @@ this.tileNitrate = Array(4);
       }
 
       //wetland points (wholly distinct from Game Wildlife Calcs)
-      if (this.wetlandPercent[y] > 5 && this.strategicWetlandPercent == 100) {
+      if (this.wetlandPercent[y] > 5 || this.strategicWetlandPercent == 100) {
         tempScore += 1.5;
-      } else if (this.wetlandPercent[y] > 5 && this.strategicWetlandPercent > 75) {
+      } else if (this.wetlandPercent[y] > 5 || this.strategicWetlandPercent > 75) {
         tempScore += 1;
-      } else if (this.wetlandPercent[y] > 5 && this.strategicWetlandPercent > 50) {
+      } else if (this.wetlandPercent[y] > 5 || this.strategicWetlandPercent > 50) {
         tempScore += 0.5;
       } else {
         tempScore += 0;
