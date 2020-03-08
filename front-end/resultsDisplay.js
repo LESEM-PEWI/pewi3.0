@@ -5438,7 +5438,7 @@ function EconomicsGraphic1() {
 
   var drawLegend = () => {
     legend = svg.append("g")
-    .attr("transform", "translate(" + width +",0)")
+    .attr("transform", "translate(" + (width + 40) +",0)") //TODO
     .attr("text-anchor", "end")
     .attr("font-family", "sans-serif")
     .attr("font-size", 15)
@@ -6796,7 +6796,7 @@ function EconomicsGraphic2(){
 
   var addLegend = () =>{
     legend = svg.append("g")
-      .attr("transform", "translate(" + width +",0)")
+      .attr("transform", "translate(" + (width + 60) +",0)") //TODO
       .attr("text-anchor", "end")
       .attr("font-family", "sans-serif")
       .attr("font-size", 15)
