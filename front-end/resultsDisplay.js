@@ -5476,11 +5476,17 @@ function EconomicsGraphic1() {
       row.parentNode.removeChild(row);
     });
 
-    container = doc.getElementById('econGraphic1LandUses')
+
+      container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1LandUses');
+      container.innerHTML="";
+      cell=document.createElement('div');
+      cell.innerHTML='Land Uses';
+      cell.className='graphicLegendContainer';
+      container.append(cell);
     economics.data[1].map(d => d.landUse).forEach(d => {
       cell = document.createElement('div');
       cell.innerHTML = d;
-      cell.classList.add("optionsRow")
+      cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       checkBox.type = 'checkbox';
       checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
@@ -5490,11 +5496,17 @@ function EconomicsGraphic1() {
       container.appendChild(cell);
     })
 
-    container = doc.getElementById('econGraphic1Years')
+
+      container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years');
+      container.innerHTML="";
+      cell=document.createElement('div');
+      cell.innerHTML='Years';
+      cell.className='graphicLegendContainer';
+      container.append(cell);
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       cell = document.createElement('div');
       cell.innerHTML = 'Year ' + i;
-      cell.classList.add("optionsRow")
+      cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       checkBox.type = 'checkbox';
       checkBox.onclick = event => alterOptions(i);
@@ -5504,19 +5516,25 @@ function EconomicsGraphic1() {
       container.appendChild(cell);
     }
 
-    container = doc.getElementById('econGraphic1Economics')
-    stackTypes.forEach(type => {
-      cell = document.createElement('div');
-      cell.innerHTML = type;
-      cell.classList.add("optionsRow")
-      checkBox = document.createElement('input');
-      checkBox.type = 'checkbox';
-      checkBox.onclick = event => alterOptions(type);
-      checkBox.style.float = 'right';
-      checkBox.checked = true;
-      cell.appendChild(checkBox);
-      container.appendChild(cell);
-    });
+      container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Economics');
+      container.innerHTML="";
+      cell=document.createElement('div');
+      cell.innerHTML='Economics';
+      cell.className='graphicLegendContainer';
+      container.append(cell);
+      stackTypes.forEach(type => {
+          cell = document.createElement('div');
+          cell.innerHTML = type;
+          cell.className="graphicSelectOption";
+          checkBox = document.createElement('input');
+          checkBox.type = 'checkbox';
+          checkBox.onclick = event => alterOptions(type);
+          checkBox.style.float = 'right';
+          checkBox.checked = true;
+          cell.appendChild(checkBox);
+          container.appendChild(cell);
+      });
+
   }
 
   var alterOptions = (option, skip) => { //This changes the options array to contain up to date options
@@ -5783,11 +5801,16 @@ function EconomicsGraphic3() {
       row.parentNode.removeChild(row);
     });
 
-    container = doc.getElementById('econGraphic3LandUses')
+      container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3LandUses');
+      container.innerHTML="";
+      cell=document.createElement('div');
+      cell.innerHTML='Land Uses';
+      cell.className='graphicLegendContainer';
+      container.append(cell);
     economics.data[1].map(d => d.landUse).forEach(d => {
       cell = document.createElement('div');
       cell.innerHTML = d;
-      cell.classList.add("optionsRowGraphic3")
+      cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       checkBox.type = 'checkbox';
       checkBox.style.float = 'right';
@@ -5800,13 +5823,19 @@ function EconomicsGraphic3() {
       checkBox.style.float = 'right';
       cell.appendChild(checkBox);
       container.appendChild(cell);
-    })
+    });
 
-    container = doc.getElementById('econGraphic3Years')
+
+      container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3Years');
+      container.innerHTML="";
+      cell=document.createElement('div');
+      cell.innerHTML='Years';
+      cell.className='graphicLegendContainer';
+      container.append(cell);
     for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
       cell = document.createElement('div');
       cell.innerHTML = 'Year ' + i;
-      cell.classList.add("optionsRowGraphic3")
+      cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       checkBox.type = 'checkbox';
       checkBox.onclick = event => alterOption(i);
@@ -5833,10 +5862,17 @@ function EconomicsGraphic3() {
       rerender();
     }
 
-    container = doc.getElementById('econGraphic3CostType')
+
+    container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3CostType');
+    container.innerHTML="";
+    cell=document.createElement('div');
+    cell.innerHTML='Cost Type';
+    cell.className='graphicLegendContainer';
+    container.append(cell);
+
     cell = document.createElement('div');
     cell.id = 'actionCheckBox';
-    cell.classList.add("optionsRowGraphic3")
+    cell.className="graphicSelectOption";
     cell.innerHTML = 'Action';
     checkBox = document.createElement('input');
     checkBox.type = 'radio';
@@ -5849,7 +5885,7 @@ function EconomicsGraphic3() {
 
     cell = document.createElement('div');
     cell.id = "timeCheckBox"
-    cell.classList.add("optionsRowGraphic3")
+    cell.className="graphicSelectOption";
     cell.innerHTML = 'Time';
     checkBox = document.createElement('input');
     checkBox.type = 'radio';
@@ -6121,7 +6157,6 @@ function EconomicsGraphic4() {
     //create Action, time cost type list
     function createCostOption(){
       costContainer=doc.getElementById('econGraphic4CostOption');
-
       var costTypeList=econdata[year].filter(function(item){
         return item.landUse==options[0];
       });
@@ -6877,15 +6912,21 @@ function EconomicsGraphic2(){
 
   var addOptions = () => {
     let doc = document.getElementById('resultsFrame').contentWindow.document;
-    container = doc.getElementById('econGraphic2LandUses')
+      container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2LandUses');
+      container.innerHTML="";
+      cell=document.createElement('div');
+      cell.innerHTML='Land Uses';
+      cell.className='graphicLegendContainer';
+      container.append(cell);
     container.querySelectorAll(".optionsRow").forEach(row =>{
       row.parentNode.removeChild(row);
-    })
+    });
+
 
     economics.data[1].map(d => d.landUse).forEach(d => {
       cell = document.createElement('div');
       cell.innerHTML = d;
-      cell.classList.add("optionsRow")
+      cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       checkBox.type = 'checkbox';
       checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
@@ -6894,7 +6935,13 @@ function EconomicsGraphic2(){
       cell.appendChild(checkBox);
       container.appendChild(cell);
     })
-    container = doc.getElementById('econGraphic2Cats')
+      container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2Cats');
+      container.innerHTML="";
+      cell=document.createElement('div');
+      cell.innerHTML='Cost Type and Years';
+      cell.className='graphicLegendContainer';
+      container.append(cell);
+
     container.querySelectorAll(".optionsRow").forEach(row =>{
       row.parentNode.removeChild(row);
     })
@@ -6904,7 +6951,7 @@ function EconomicsGraphic2(){
     costCategories.forEach(d => {
       cell = document.createElement('div');
       cell.innerHTML = d;
-      cell.classList.add("optionsRow")
+      cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       if(d === currentSelection) checkBox.checked = true;
       checkBox.type = 'radio';
@@ -6921,7 +6968,7 @@ function EconomicsGraphic2(){
       for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
         cell = document.createElement('div');
         cell.innerHTML = 'Year ' + i;
-        cell.classList.add("optionsRow")
+        cell.className="graphicSelectOption";
         checkBox = document.createElement('input');
         checkBox.type = 'radio';
         checkBox.name = 'econGraph2Year';
@@ -6936,7 +6983,13 @@ function EconomicsGraphic2(){
         container.appendChild(cell);
       }
     }
-    container = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2Types')
+
+      container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2Types');
+      container.innerHTML="";
+      cell=document.createElement('div');
+      cell.innerHTML='Cost Categories';
+      cell.className='graphicLegendContainer';
+      container.append(cell);
     container.querySelectorAll(".optionsRow").forEach(row => {
       row.parentNode.removeChild(row);
     });
@@ -6944,7 +6997,7 @@ function EconomicsGraphic2(){
     keys.forEach(d => {
       cell = document.createElement('div');
       cell.innerHTML = d;
-      cell.classList.add("optionsRow")
+      cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       checkBox.type = 'checkbox';
       checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
