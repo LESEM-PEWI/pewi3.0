@@ -6148,7 +6148,7 @@ function EconomicsGraphic4() {
       container=doc.getElementById('econGraphic4Year');
       container.innerHTML="";
       cell=document.createElement('div');
-      cell.innerHTML="Year";
+      cell.innerHTML="Years";
       cell.className="graphic4landuse";
       container.appendChild(cell);
       for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
@@ -6530,7 +6530,7 @@ function EconomicsGraphic5(){
        container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Year');
        container.innerHTML="";
        cell=document.createElement('div');
-       cell.innerHTML='Year';
+       cell.innerHTML='Years';
        cell.className='graphic5Year';
        container.append(cell);
        for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
