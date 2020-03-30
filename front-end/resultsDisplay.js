@@ -5391,16 +5391,17 @@ function EconomicsGraphic1() {
     .call(d3.axisBottom(x0))
     svg.selectAll("g.tick")
     .selectAll("text")
-    .attr("fill", "purple")
     // .attr("y", y(y.domain()[0])-y(0))
     .attr("transform", "translate(0," + (y(y.domain()[0])-y(0) - 12) +") rotate(-35)")
-    .style("text-anchor", "end")
+    .style("text-anchor", "end");
 
     svg.append("text")
     .attr("transform",
     "translate(" + (width/2) + " ," +
     (height + 50) + ")")
     .style("text-anchor", "left")
+    .style("font-size", "1.1vmax")
+    .attr("font-weight","bold")
     .text("Land Uses");
 
     svg.append("text")
@@ -5430,12 +5431,14 @@ function EconomicsGraphic1() {
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
+    .style("font-size", "1.1vmax")
+    .attr("font-weight","bold")
     .text("Value");
   }
 
   var drawLegend = () => {
     legend = svg.append("g")
-    .attr("transform", "translate(" + width +",0)")
+    .attr("transform", "translate(" + (width + 40) +",0)") //TODO
     .attr("text-anchor", "end")
     .attr("font-family", "sans-serif")
     .attr("font-size", 15)
@@ -5687,10 +5690,18 @@ function EconomicsGraphic3() {
 
     svg.selectAll("g.tick")
       .selectAll("text")
-      .attr("fill", "purple")
       .attr("y", y(y.domain()[0] / 1.1) - y(0) + 7)
       .attr("transform", "rotate(-35)")
-      .style("text-anchor", "end")
+      .style("text-anchor", "end");
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font-size", "1.1vmax")
+        .attr("font-weight","bold")
+        .text("Cost ($)");
 
     var yAxis = d3.axisLeft(y)
       .tickFormat(d => '$' + addCommas(d))
@@ -5713,7 +5724,10 @@ function EconomicsGraphic3() {
       .text("Time/Action Total Cost");
 
     svg.append("text")
-      .attr("transform", "translate(" + (width / 2) + " ," + (height + margin.bottom + 20) + ")")
+      //.attr("transform", "translate(" + (width / 2) + " ," + (height + margin.bottom + 20) + ")")
+      .attr("transform",
+            "translate(" + (width/2) + " ," +
+            (height) + ")")
       .style("text-anchor", "left")
       .text("Cost Type")
       .attr("font-size", "1.1vmax")
@@ -5997,7 +6011,6 @@ function EconomicsGraphic4() {
           	.call(xAxis);
         svg.selectAll('g.tick')
             .selectAll('text')
-            .attr('fill','purple')
             .attr('font-weight','bold')
             .attr('font-size','10px')
             .attr("transform", function(d) {
@@ -6023,9 +6036,12 @@ function EconomicsGraphic4() {
 
         //display cost name title on bottom
            svg.append("text")
+               // .attr("transform",
+               //   "translate(" + (width/2) + " ," +
+               //   (height+margin.bottom+20) + ")")
                .attr("transform",
-                 "translate(" + (width/2) + " ," +
-                 (height+margin.bottom+20) + ")")
+                   "translate(" + (width/2) + " ," +
+                   (height) + ")")
                .style("text-anchor", "left")
                .text("Line Items/Individual Costs")
                .attr("font-size","1.1vmax")
@@ -6130,7 +6146,7 @@ function EconomicsGraphic4() {
       container=doc.getElementById('econGraphic4Year');
       container.innerHTML="";
       cell=document.createElement('div');
-      cell.innerHTML="Year";
+      cell.innerHTML="Years";
       cell.className="graphic4landuse";
       container.appendChild(cell);
       for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
@@ -6398,7 +6414,6 @@ function EconomicsGraphic5(){
             	.call(xAxis);
           svg.selectAll('g.tick')
               .selectAll('text')
-              .attr('fill','purple')
               .attr('font-weight','bold')
               .attr('font-size','10px')
               .attr("transform", function(d) {
@@ -6513,7 +6528,7 @@ function EconomicsGraphic5(){
        container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic5Year');
        container.innerHTML="";
        cell=document.createElement('div');
-       cell.innerHTML='Year';
+       cell.innerHTML='Years';
        cell.className='graphic5Year';
        container.append(cell);
        for(let i=1;i<=boardData[currentBoard].calculatedToYear;i++){
@@ -6781,7 +6796,7 @@ function EconomicsGraphic2(){
 
   var addLegend = () =>{
     legend = svg.append("g")
-      .attr("transform", "translate(" + width +",0)")
+      .attr("transform", "translate(" + (width + 60) +",0)") //TODO
       .attr("text-anchor", "end")
       .attr("font-family", "sans-serif")
       .attr("font-size", 15)
@@ -6811,10 +6826,18 @@ function EconomicsGraphic2(){
       .call(d3.axisBottom(x0))
     svg.selectAll("g.tick")
       .selectAll("text")
-        .attr("fill", "purple")
-        .attr("y", y(y.domain()[0]/1.1)-y(0) + 7)
-        .attr("transform", "rotate(-35)")
-        .style("text-anchor", "end")
+      .attr("y", y(y.domain()[0]/1.1)-y(0) + 7)
+      .attr("transform", "rotate(-35)")
+      .style("text-anchor", "end");
+    svg.append("text")
+        .attr("transform",
+            "translate(" + (width/2) + " ," +
+            (height + 50) + ")")
+        .style("text-anchor", "left")
+        .style("font-size", "1.1vmax")
+        .attr("font-weight","bold")
+        .text("Cost Type(By Land Uses)");
+
 
     var yAxis = d3.axisLeft(y)
       .tickFormat(d => '$' + addCommas(d))
@@ -6824,9 +6847,19 @@ function EconomicsGraphic2(){
       .attr("transform", "translate(" + margin.left + ", 0)")
       .call(yAxis);
 
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font-size", "1.1vmax")
+        .attr("font-weight","bold")
+        .text("Cost($)");
+
     svg.selectAll("g.tick")
       .style("stroke-dasharray", ("3,3"))
-  }
+  };
 
   var addTitle = () => {
     svg.append("text")
