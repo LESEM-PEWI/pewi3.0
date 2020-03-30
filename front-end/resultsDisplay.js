@@ -5388,6 +5388,7 @@ function EconomicsGraphic1() {
     var xAxis = svg.append("g")
     .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
     .style("font-weight", "bold")
+    .style("font-size", "0.9vmax")
     .call(d3.axisBottom(x0))
     svg.selectAll("g.tick")
     .selectAll("text")
@@ -5400,7 +5401,7 @@ function EconomicsGraphic1() {
     "translate(" + (width/2) + " ," +
     (height + 50) + ")")
     .style("text-anchor", "left")
-    .style("font-size", "1.1vmax")
+    .style("font-size", "1.2vmax")
     .attr("font-weight","bold")
     .text("Land Uses");
 
@@ -5431,14 +5432,14 @@ function EconomicsGraphic1() {
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
-    .style("font-size", "1.1vmax")
+    .style("font-size", "1.2vmax")
     .attr("font-weight","bold")
-    .text("Value");
+    .text("Value ($)");
   }
 
   var drawLegend = () => {
     legend = svg.append("g")
-    .attr("transform", "translate(" + (width + 40) +",0)") //TODO
+    .attr("transform", "translate(" + (width + 40) +",0)")
     .attr("text-anchor", "end")
     .attr("font-family", "sans-serif")
     .attr("font-size", 15)
@@ -5686,6 +5687,7 @@ function EconomicsGraphic3() {
     var xAxis = svg.append('g')
       .attr("transform", "translate(0," + y(0) + ")")
       .style("font-weight", "bold")
+      .style("font-size", "0.9vmax")
       .call(d3.axisBottom(x0))
 
     svg.selectAll("g.tick")
@@ -5699,7 +5701,7 @@ function EconomicsGraphic3() {
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .style("font-size", "1.1vmax")
+        .style("font-size", "1.2vmax")
         .attr("font-weight","bold")
         .text("Cost ($)");
 
@@ -5730,7 +5732,7 @@ function EconomicsGraphic3() {
             (height) + ")")
       .style("text-anchor", "left")
       .text("Cost Type")
-      .attr("font-size", "1.1vmax")
+      .attr("font-size", "1.2vmax")
       .attr("font-weight", "bold");
   }
 
@@ -6012,7 +6014,7 @@ function EconomicsGraphic4() {
         svg.selectAll('g.tick')
             .selectAll('text')
             .attr('font-weight','bold')
-            .attr('font-size','10px')
+            .attr('font-size','0.9vmax')
             .attr("transform", function(d) {
                 return "rotate(-35) "
             })
@@ -6041,10 +6043,10 @@ function EconomicsGraphic4() {
                //   (height+margin.bottom+20) + ")")
                .attr("transform",
                    "translate(" + (width/2) + " ," +
-                   (height) + ")")
+                   (height + margin.top + 5) + ")")
                .style("text-anchor", "left")
                .text("Line Items/Individual Costs")
-               .attr("font-size","1.1vmax")
+               .attr("font-size","1.2vmax")
                .attr("font-weight","bold");
 
         //display value title on y axis
@@ -6055,7 +6057,7 @@ function EconomicsGraphic4() {
                .attr("dy", "1em")
                .style("text-anchor", "middle")
                .text("Cost ($)")
-               .attr("font-size","1.1vmax")
+               .attr("font-size","1.2vmax")
                .attr("font-weight","bold");
         }
 
@@ -6415,7 +6417,7 @@ function EconomicsGraphic5(){
           svg.selectAll('g.tick')
               .selectAll('text')
               .attr('font-weight','bold')
-              .attr('font-size','10px')
+              .attr('font-size','0.9vmax')
               .attr("transform", function(d) {
                 return "rotate(-35) "
             })
@@ -6454,7 +6456,7 @@ function EconomicsGraphic5(){
              .attr("x", 0 - (height / 2))
              .attr("dy", "1em")
              .style("text-anchor", "middle")
-             .attr("font-size","1.1vmax")
+             .attr("font-size","1.2vmax")
              .attr("font-weight","bold")
              .text("Cost ($)");
            svg.append("text")
@@ -6796,7 +6798,7 @@ function EconomicsGraphic2(){
 
   var addLegend = () =>{
     legend = svg.append("g")
-      .attr("transform", "translate(" + (width + 60) +",0)") //TODO
+      .attr("transform", "translate(" + (width + 60) +",0)")
       .attr("text-anchor", "end")
       .attr("font-family", "sans-serif")
       .attr("font-size", 15)
@@ -6823,6 +6825,7 @@ function EconomicsGraphic2(){
     var xAxis = svg.append("g")
       .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
       .style("font-weight", "bold")
+       .style("font-size", "0.9vmax")
       .call(d3.axisBottom(x0))
     svg.selectAll("g.tick")
       .selectAll("text")
@@ -6834,9 +6837,9 @@ function EconomicsGraphic2(){
             "translate(" + (width/2) + " ," +
             (height + 50) + ")")
         .style("text-anchor", "left")
-        .style("font-size", "1.1vmax")
+        .style("font-size", "1.2vmax")
         .attr("font-weight","bold")
-        .text("Cost Type(By Land Uses)");
+        .text("Cost Type (By Land Uses)");
 
 
     var yAxis = d3.axisLeft(y)
@@ -6853,9 +6856,9 @@ function EconomicsGraphic2(){
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .style("font-size", "1.1vmax")
+        .style("font-size", "1.2vmax")
         .attr("font-weight","bold")
-        .text("Cost($)");
+        .text("Cost ($)");
 
     svg.selectAll("g.tick")
       .style("stroke-dasharray", ("3,3"))
