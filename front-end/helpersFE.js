@@ -219,6 +219,12 @@ if(dir == 1){
 }
 }
 
+
+function formatNumber(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
 /* Show tab titles when hovered over, hide when not hovering
    Here 'factor' is the span id of the tooltip (or hover text and its container) that needs to be made visible.
 */
@@ -256,7 +262,7 @@ function toggleScoreDetails(factor) {
         var childNodes = document.getElementsByClassName('gameWildlifeScoreDetails')[0].childNodes;
         // console.log(childNodes);
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10).toFixed(1) + '/100';
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.gameWildlifePointsScore[currentYear] * 10) / 10).toFixed(1)) + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = (Totals.gameWildlifePoints[currentYear]).toFixed(1) + ' pts / yr';
         document.getElementsByClassName('gameWildlifeScoreDetails')[0].style.display = 'block';
@@ -272,10 +278,10 @@ function toggleScoreDetails(factor) {
       else {
         var childNodes = document.getElementsByClassName('carbonScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.carbonSequestrationScore[currentYear] * 10) / 10).toFixed(1))  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = (Math.round(Totals.carbonSequestration[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
-        (Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
+        childNodes[7].innerHTML = formatNumber((Math.round(Totals.carbonSequestration[currentYear] * 10) / 10).toFixed(1)) + ' tons / yr' + '<br>' +
+        formatNumber((Math.round(Totals.carbonSequestration[currentYear] * 0.90718474 * 10) / 10).toFixed(1)) + ' Mg / yr';
         document.getElementsByClassName('carbonScoreDetails')[0].style.display = 'block';
 
       }
@@ -288,9 +294,9 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('biodiversityScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10).toFixed(1)  + '/100';;
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.biodiversityPointsScore[currentYear] * 10) / 10).toFixed(1))  + '/100';;
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = (Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10).toFixed(1) + ' pts / yr';
+        childNodes[7].innerHTML = formatNumber((Math.round(Totals.biodiversityPoints[currentYear] * 10) / 10).toFixed(1)) + ' pts / yr';
         document.getElementsByClassName('biodiversityScoreDetails')[0].style.display = 'block';
 
       }
@@ -303,10 +309,10 @@ function toggleScoreDetails(factor) {
       else {
         var childNodes = document.getElementsByClassName('erosionScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.grossErosionScore[currentYear] * 10) / 10).toFixed(1)  + '/100';;
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.grossErosionScore[currentYear] * 10) / 10).toFixed(1))  + '/100';;
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = (Math.round(Totals.grossErosion[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
-          (Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
+        childNodes[7].innerHTML = formatNumber((Math.round(Totals.grossErosion[currentYear] * 10) / 10).toFixed(1)) + ' tons / yr' + '<br>' +
+          formatNumber((Math.round(Totals.grossErosion[currentYear] * 0.90718474 * 10) / 10).toFixed(1)) + ' Mg / yr';
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'block';
 
       }
@@ -319,10 +325,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('nitrateScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10).toFixed(1))  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = (Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1) + ' ppm / yr' + '<br>' +
-          (Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1) + ' mg/L / yr';
+        childNodes[7].innerHTML = formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' ppm / yr' + '<br>' +
+          formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' mg/L / yr';
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
 
       }
@@ -335,10 +341,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('phoshorusScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.phosphorusLoadScore[currentYear] * 10) / 10).toFixed(1))  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = (Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
-          Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 + ' Mg / yr';
+        childNodes[7].innerHTML = formatNumber((Math.round(Totals.phosphorusLoad[currentYear] * 10) / 10).toFixed(1)) + ' tons / yr' + '<br>' +
+          formatNumber(Math.round(Totals.phosphorusLoad[currentYear] * 0.90718474 * 10) / 10 )+ ' Mg / yr';
         document.getElementsByClassName('phoshorusScoreDetails')[0].style.display = 'block';
 
       }
@@ -350,10 +356,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('sedimentScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10).toFixed(1)  + '/100';;
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.sedimentDeliveryScore[currentYear] * 10) / 10).toFixed(1))  + '/100';;
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = (Math.round(Totals.sedimentDelivery[currentYear] * 10) / 10).toFixed(1) + ' tons / yr' + '<br>' +
-          (Math.round(Totals.sedimentDelivery[currentYear] * 0.90718474 * 10) / 10).toFixed(1) + ' Mg / yr';
+        childNodes[7].innerHTML = formatNumber((Math.round(Totals.sedimentDelivery[currentYear] * 10) / 10).toFixed(1)) + ' tons / yr' + '<br>' +
+          formatNumber((Math.round(Totals.sedimentDelivery[currentYear] * 0.90718474 * 10) / 10).toFixed(1)) + ' Mg / yr';
         document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'block';
       }
     break;
@@ -369,7 +375,7 @@ function toggleScoreDetails(factor) {
           Totals.grassHayYieldScore[currentYear] + Totals.switchgrassYieldScore[currentYear] + Totals.cattleYieldScore[currentYear] + Totals.woodYieldScore[currentYear] + Totals.shortRotationWoodyBiomassYieldScore[currentYear], 100);
 
 
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(totalScore * 10) / 10).toFixed(1)  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(totalScore * 10) / 10).toFixed(1))  + '/100';
 
         document.getElementsByClassName('totalScoreDetails')[0].style.display = 'block';
       }
