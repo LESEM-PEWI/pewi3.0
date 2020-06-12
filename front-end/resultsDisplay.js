@@ -2598,7 +2598,7 @@ function generateEconomicsTables() {
   var total = 0;
   var names = ["Conventional Corn","Conservation Corn", "Conventional Soybean", "Conservation Soybean", "Alfalfa",
               "Permanent Pasture", "Rotational Grazing", "Grass Hay", "Prairie", "Conservation Forest", "Conventional Forest",
-              "Switchgrass", "Short-rotation Woody Bioenergy", "Wetland", "Mixed Fruits & Vegetables"];
+              "Switchgrass", "Short Rotation Woody Bioenergy", "Wetland", "Mixed Fruits & Vegetables"];
 
   for(var i = 0; i < data.length; ++i){
     switch (data[i].landUse) {
@@ -3293,7 +3293,7 @@ function generateResultsTable() {
     //THIRD TABLE, YIELD RESULTS
 
     frontendNames = ["Corn Grain", "Soybeans", "Mixed Fruits and Vegetables", "Cattle", "Alfalfa Hay", "Grass Hay",
-      "Switchgrass Biomass", "Wood", "Short Rotation Woody Biomass"
+      "Switchgrass Biomass", "Wood", "Short Rotation Woody Bioenergy"
     ];
 
     backendDataIdentifiers = ["cornGrainYield", "soybeanYield", "mixedFruitsAndVegetablesYield", "cattleYield",
@@ -3618,7 +3618,7 @@ function placeTotalsOnBars(year){
   consFor.firstChild.nodeValue = ("Conservation Forest Total: $" + numFormatting(economics.data[year][10]['Action - Cost Type'].total));
   convFor.firstChild.nodeValue = ("Conventional Forest Total: $" + numFormatting(economics.data[year][11]['Action - Cost Type'].total));
   switchgrass.firstChild.nodeValue = ("Switchgrass Total: $" + numFormatting(economics.data[year][12]['Action - Cost Type'].total));
-  shortRWB.firstChild.nodeValue = ("Short-Rotation Woody Bioenergy Total: $" + numFormatting(economics.data[year][13]['Action - Cost Type'].total));
+  shortRWB.firstChild.nodeValue = ("Short Rotation Woody Bioenergy Total: $" + numFormatting(economics.data[year][13]['Action - Cost Type'].total));
   wetland.firstChild.nodeValue = ("Wetland Total: $" + numFormatting(economics.data[year][14]['Action - Cost Type'].total));
   mixedFaV.firstChild.nodeValue = ("Mixed Fruits & Vegetables Total: $" + numFormatting(economics.data[year][15]['Action - Cost Type'].total));
 
@@ -4290,7 +4290,7 @@ function render(years){
         return "t14";
       }
       else if(type === "landName"){
-        return "Short-Rotation Woody Biomass";
+        return "Short Rotation Woody Bioenergy"; //TODO
       }
       else if(type === "boxY"){
         return 435;
@@ -4420,7 +4420,7 @@ function render(years){
         return "Mixed Fruits and Vegetables";
       break;
       case 14: case 30: case 46:
-        return "Short-rotation Woody Biomass";
+        return "Short Rotation Woody Bioenergy"; //TODO
       break;
       case 15: case 31: case 47:
         return "Soybeans";

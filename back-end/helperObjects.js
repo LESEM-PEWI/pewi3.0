@@ -2690,7 +2690,7 @@ function Printer() {
       case 'grasshay': return 'Grass Hay Yield';
       case 'switchgrass': return 'Switchgrass Yield';
       case 'wood': return 'Wood Yield';
-      case 'short': return 'Short-Rotation Woody Biomass Yield';
+      case 'short': return 'Short Rotation Woody Bioenergy Yield';
       default: return 'error type for title:'+text;
     } // switch
   } // end titleText
