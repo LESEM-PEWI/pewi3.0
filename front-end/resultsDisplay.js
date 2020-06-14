@@ -5227,11 +5227,10 @@ function createMockDataGraphic1(){
   tempData[i] = econData[i].map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
   });
-    console.log(econData[i])
     tempData[i].forEach((el, j) => {
       d = {}
       d.year = i;
-      d.landUse = el.landUse;
+      d.landUse = el.landUse === 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : el.landUse;
       d.Cost = el.cost;
       d.Revenue = economics.scaledRev[i][j];
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
@@ -5484,6 +5483,7 @@ function EconomicsGraphic1() {
       cell.className='graphicLegendContainer';
       container.append(cell);
     economics.data[1].map(d => d.landUse).forEach(d => {
+      if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
@@ -5494,7 +5494,7 @@ function EconomicsGraphic1() {
       if(!options.includes(d.replace(/\s/g,''))) checkBox.checked = true;
       cell.appendChild(checkBox);
       container.appendChild(cell);
-    })
+    });
 
 
       container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years');
@@ -5808,6 +5808,7 @@ function EconomicsGraphic3() {
       cell.className='graphicLegendContainer';
       container.append(cell);
     economics.data[1].map(d => d.landUse).forEach(d => {
+      if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy'; //TODO
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
@@ -5816,7 +5817,8 @@ function EconomicsGraphic3() {
       checkBox.style.float = 'right';
       checkBox.checked = true;
       checkBox.onclick = event => {
-        alterOption(d.replace(/\s/g, ''));
+        if(d === 'Short Rotation Woody Bioenergy') d = 'Short-rotation Woody Bioenergy'; //TODO
+        alterOption(d === d.replace(/\s/g, ''));
         //toggles this landuse from the total
         toggleLandUseFromTotal(d);
       }
@@ -6139,6 +6141,7 @@ function EconomicsGraphic4() {
       cell.className='graphic4landuse';
       container.append(cell);
       econdata[year].map(d=>d.landUse).forEach((d)=>{
+        if( d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
         cell=document.createElement('div');
         cell.innerHTML=d;
         cell.className="graphic4option";
@@ -6149,7 +6152,7 @@ function EconomicsGraphic4() {
         }
         inputbox.type='radio';
         inputbox.style.float='right';
-        inputbox.onclick=function(event){optionCLick(d,0);createCostOption()};
+        inputbox.onclick=function(event){optionCLick(d === 'Short Rotation Woody Bioenergy' ? 'Short-rotation Woody Bioenergy' : d,0);createCostOption()}; //TODO
         cell.appendChild(inputbox);
         container.append(cell);
       });
@@ -6746,7 +6749,7 @@ function EconomicsGraphic2(){
         arr.splice(0,1)
         arr.forEach(type => {
           d = {};
-          d.landUse = lu.landUse;
+          d.landUse = lu.landUse === 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : lu.landUse;
           d.type = type;
           d.value = lu[currentSelection][type];
           fullData.push(d)
@@ -6924,6 +6927,7 @@ function EconomicsGraphic2(){
 
 
     economics.data[1].map(d => d.landUse).forEach(d => {
+      if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
