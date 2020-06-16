@@ -5362,6 +5362,7 @@ function EconomicsGraphic1() {
     //   return bar(x(d.data.year),y(0), x.bandwidth(),y(d[0])- y(d[1]), 10, d[1] > 0);
     // })
     .on("mouseover", function(d) {tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
+      tooltip.select("#econGraphic1Year").text("Year #" + d.data.year)
       tooltip.select("#econGraphic1LU").text("Land Use: " + d.data.landUse)
       let econType = this.parentNode.getAttribute("layernum")
       tooltip.select("#econGraphic1Value").text(econType +": " + formatMoney(d.data[econType]));
@@ -5690,6 +5691,7 @@ function EconomicsGraphic3() {
       .on("mouseover", function(d) {
         tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
         let displayNum = addCommas(d.value.toFixed(2));
+        tooltip.select("#econGraphic3Year").text("Year #" + d.year);
         tooltip.select("#econGraphic3Value").text("Cost: $" + displayNum);
         tooltip.select("#econGraphic3Category").text(d.costType)
       })
@@ -6022,6 +6024,7 @@ function EconomicsGraphic4() {
             return colors[i]})
           .on("mouseover",function(d){
             tooltip.style("visibility","visible");
+            tooltip.select("#econGraphic4YearNum").text("Year #" + year);
             tooltip.select("#econGraphic4CostName").text(d.costname);
             tooltip.select('#econGraphic4Value').text("$"+addCommas(d.value.toFixed(2)));
           })
@@ -6407,6 +6410,7 @@ function EconomicsGraphic5(){
           .attr('fill',d=>colors(d.key))
           .on("mouseover",function(d){
             tooltip.style('visibility','visible');
+            tooltip.select("#econGraphic5YearNum").text("Year #" + selectOption);
             tooltip.select("#econGraphic5Name").text(d.key);
             tooltip.select("#econGraphic5Value").text('$' + addCommas(d.value.toFixed(2)));
           })
@@ -6805,6 +6809,7 @@ function EconomicsGraphic2(){
         .attr("fill", d => colors[keys.indexOf(d.type)])
         .on("mouseover", function(d) {
           tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
+          tooltip.select("#econGraphic2Year").text("Year #" + year)
           tooltip.select("#econGraphic2LU").text("Land Use: " + d.landUse)
           // let econType = this.parentNode.getAttribute("layernum")
           tooltip.select("#econGraphic2Value").text(d.type + " Cost: $" + addCommas((d.value).toFixed(2)))
