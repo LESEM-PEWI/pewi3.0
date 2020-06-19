@@ -5430,7 +5430,7 @@ function showLevelDetails(value) {
       //show short class legend
       document.getElementById('shortClass').className = "yieldSelectorIcon iconSelected";
       document.getElementById('shortDetailsList').className = "DetailsList yieldDetailsList";
-      updateGlossaryPopup('<span style="color:orange;">Short-Rotation Woody Biomass</span> produces the same output, no matter the soil type. To learn more, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
+      updateGlossaryPopup('<span style="color:orange;">Short Rotation Woody Biomass</span> produces the same output, no matter the soil type. To learn more, go to the <span style="color:yellow">Glossary</span>, select <span style="color:yellow">"Modules"</span>, and then <span style="color:yellow">"Yield"</span>.');
       break;
     case 19:
       //show sediment legend

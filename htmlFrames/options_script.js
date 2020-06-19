@@ -4,7 +4,7 @@
   var maxYear = 3; //for settings, defines the number of year buttons specified
   var progressbarDescrip = ["Game Wildlife","Biodiversity","Carbon Sequestration","Gross Erosion","Nitrate Concentration","Phoshorus Load","Sediment Delivery",
                             "Corn Grain","Soybeans","Mixed Fruits and Vegetables","Cattle","Alfalfa Hay","Grass Hay","Switchgrass Biomass","Wood",
-                            "Short Rotation Woody Biomass","Total Sum Yields"];
+                            "Short Rotation Woody Bioenergy","Total Sum Yields"];
   var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
                         "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
                         "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
