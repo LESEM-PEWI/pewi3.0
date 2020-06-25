@@ -2598,7 +2598,7 @@ function generateEconomicsTables() {
   var total = 0;
   var names = ["Conventional Corn","Conservation Corn", "Conventional Soybean", "Conservation Soybean", "Alfalfa",
               "Permanent Pasture", "Rotational Grazing", "Grass Hay", "Prairie", "Conservation Forest", "Conventional Forest",
-              "Switchgrass", "Short-rotation Woody Bioenergy", "Wetland", "Mixed Fruits & Vegetables"];
+              "Switchgrass", "Short Rotation Woody Bioenergy", "Wetland", "Mixed Fruits & Vegetables"];
 
   for(var i = 0; i < data.length; ++i){
     switch (data[i].landUse) {
@@ -3293,7 +3293,7 @@ function generateResultsTable() {
     //THIRD TABLE, YIELD RESULTS
 
     frontendNames = ["Corn Grain", "Soybeans", "Mixed Fruits and Vegetables", "Cattle", "Alfalfa Hay", "Grass Hay",
-      "Switchgrass Biomass", "Wood", "Short Rotation Woody Biomass"
+      "Switchgrass Biomass", "Wood", "Short Rotation Woody Bioenergy"
     ];
 
     backendDataIdentifiers = ["cornGrainYield", "soybeanYield", "mixedFruitsAndVegetablesYield", "cattleYield",
@@ -3618,7 +3618,7 @@ function placeTotalsOnBars(year){
   consFor.firstChild.nodeValue = ("Conservation Forest Total: $" + numFormatting(economics.data[year][10]['Action - Cost Type'].total));
   convFor.firstChild.nodeValue = ("Conventional Forest Total: $" + numFormatting(economics.data[year][11]['Action - Cost Type'].total));
   switchgrass.firstChild.nodeValue = ("Switchgrass Total: $" + numFormatting(economics.data[year][12]['Action - Cost Type'].total));
-  shortRWB.firstChild.nodeValue = ("Short-Rotation Woody Bioenergy Total: $" + numFormatting(economics.data[year][13]['Action - Cost Type'].total));
+  shortRWB.firstChild.nodeValue = ("Short Rotation Woody Bioenergy Total: $" + numFormatting(economics.data[year][13]['Action - Cost Type'].total));
   wetland.firstChild.nodeValue = ("Wetland Total: $" + numFormatting(economics.data[year][14]['Action - Cost Type'].total));
   mixedFaV.firstChild.nodeValue = ("Mixed Fruits & Vegetables Total: $" + numFormatting(economics.data[year][15]['Action - Cost Type'].total));
 
@@ -4290,7 +4290,7 @@ function render(years){
         return "t14";
       }
       else if(type === "landName"){
-        return "Short-Rotation Woody Biomass";
+        return "Short Rotation Woody Bioenergy"; //TODO
       }
       else if(type === "boxY"){
         return 435;
@@ -4420,7 +4420,7 @@ function render(years){
         return "Mixed Fruits and Vegetables";
       break;
       case 14: case 30: case 46:
-        return "Short-rotation Woody Biomass";
+        return "Short Rotation Woody Bioenergy"; //TODO
       break;
       case 15: case 31: case 47:
         return "Soybeans";
@@ -5227,11 +5227,10 @@ function createMockDataGraphic1(){
   tempData[i] = econData[i].map((d, i) => {
     return {cost: d['Action - Cost Type']['total']*-1, landUse: d.landUse}
   });
-    console.log(econData[i])
     tempData[i].forEach((el, j) => {
       d = {}
       d.year = i;
-      d.landUse = el.landUse;
+      d.landUse = el.landUse === 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : el.landUse;
       d.Cost = el.cost;
       d.Revenue = economics.scaledRev[i][j];
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
@@ -5362,6 +5361,7 @@ function EconomicsGraphic1() {
     //   return bar(x(d.data.year),y(0), x.bandwidth(),y(d[0])- y(d[1]), 10, d[1] > 0);
     // })
     .on("mouseover", function(d) {tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
+      tooltip.select("#econGraphic1Year").text("Year #" + d.data.year)
       tooltip.select("#econGraphic1LU").text("Land Use: " + d.data.landUse)
       let econType = this.parentNode.getAttribute("layernum")
       tooltip.select("#econGraphic1Value").text(econType +": " + formatMoney(d.data[econType]));
@@ -5484,6 +5484,7 @@ function EconomicsGraphic1() {
       cell.className='graphicLegendContainer';
       container.append(cell);
     economics.data[1].map(d => d.landUse).forEach(d => {
+      if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
@@ -5494,7 +5495,7 @@ function EconomicsGraphic1() {
       if(!options.includes(d.replace(/\s/g,''))) checkBox.checked = true;
       cell.appendChild(checkBox);
       container.appendChild(cell);
-    })
+    });
 
 
       container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years');
@@ -5690,6 +5691,7 @@ function EconomicsGraphic3() {
       .on("mouseover", function(d) {
         tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
         let displayNum = addCommas(d.value.toFixed(2));
+        tooltip.select("#econGraphic3Year").text("Year #" + d.year);
         tooltip.select("#econGraphic3Value").text("Cost: $" + displayNum);
         tooltip.select("#econGraphic3Category").text(d.costType)
       })
@@ -5808,6 +5810,7 @@ function EconomicsGraphic3() {
       cell.className='graphicLegendContainer';
       container.append(cell);
     economics.data[1].map(d => d.landUse).forEach(d => {
+      if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy'; //TODO
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
@@ -5816,7 +5819,8 @@ function EconomicsGraphic3() {
       checkBox.style.float = 'right';
       checkBox.checked = true;
       checkBox.onclick = event => {
-        alterOption(d.replace(/\s/g, ''));
+        if(d === 'Short Rotation Woody Bioenergy') d = 'Short-rotation Woody Bioenergy'; //TODO
+        alterOption(d === d.replace(/\s/g, ''));
         //toggles this landuse from the total
         toggleLandUseFromTotal(d);
       }
@@ -6022,6 +6026,7 @@ function EconomicsGraphic4() {
             return colors[i]})
           .on("mouseover",function(d){
             tooltip.style("visibility","visible");
+            tooltip.select("#econGraphic4YearNum").text("Year #" + year);
             tooltip.select("#econGraphic4CostName").text(d.costname);
             tooltip.select('#econGraphic4Value').text("$"+addCommas(d.value.toFixed(2)));
           })
@@ -6139,6 +6144,7 @@ function EconomicsGraphic4() {
       cell.className='graphic4landuse';
       container.append(cell);
       econdata[year].map(d=>d.landUse).forEach((d)=>{
+        if( d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
         cell=document.createElement('div');
         cell.innerHTML=d;
         cell.className="graphic4option";
@@ -6149,7 +6155,7 @@ function EconomicsGraphic4() {
         }
         inputbox.type='radio';
         inputbox.style.float='right';
-        inputbox.onclick=function(event){optionCLick(d,0);createCostOption()};
+        inputbox.onclick=function(event){optionCLick(d === 'Short Rotation Woody Bioenergy' ? 'Short-rotation Woody Bioenergy' : d,0);createCostOption()}; //TODO
         cell.appendChild(inputbox);
         container.append(cell);
       });
@@ -6407,6 +6413,7 @@ function EconomicsGraphic5(){
           .attr('fill',d=>colors(d.key))
           .on("mouseover",function(d){
             tooltip.style('visibility','visible');
+            tooltip.select("#econGraphic5YearNum").text("Year #" + selectOption);
             tooltip.select("#econGraphic5Name").text(d.key);
             tooltip.select("#econGraphic5Value").text('$' + addCommas(d.value.toFixed(2)));
           })
@@ -6746,7 +6753,7 @@ function EconomicsGraphic2(){
         arr.splice(0,1)
         arr.forEach(type => {
           d = {};
-          d.landUse = lu.landUse;
+          d.landUse = lu.landUse === 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : lu.landUse;
           d.type = type;
           d.value = lu[currentSelection][type];
           fullData.push(d)
@@ -6805,6 +6812,7 @@ function EconomicsGraphic2(){
         .attr("fill", d => colors[keys.indexOf(d.type)])
         .on("mouseover", function(d) {
           tooltip.style("visibility", "visible") //using arrow operator doesn't give right context
+          tooltip.select("#econGraphic2Year").text("Year #" + year)
           tooltip.select("#econGraphic2LU").text("Land Use: " + d.landUse)
           // let econType = this.parentNode.getAttribute("layernum")
           tooltip.select("#econGraphic2Value").text(d.type + " Cost: $" + addCommas((d.value).toFixed(2)))
@@ -6924,6 +6932,7 @@ function EconomicsGraphic2(){
 
 
     economics.data[1].map(d => d.landUse).forEach(d => {
+      if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
