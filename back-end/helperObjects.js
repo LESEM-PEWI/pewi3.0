@@ -1658,7 +1658,7 @@ function GameBoard() {
       cattleMax += this.map[i].getCattleSupported(5) * this.map[i].area;
       switchgrassMax += this.map[i].getSwitchgrassYield() * this.map[i].area;
       shortWoodyMax += 60.8608 * this.map[i].area;
-      mixedMax += 7.34 * this.map[i].area * this.map[i].getMixedFruitsVegetablesYield();
+      mixedMax += 7.58 * this.map[i].area * this.map[i].getMixedFruitsVegetablesYield();
 
 
       //Calculate Quality Indicator Values
@@ -5070,7 +5070,7 @@ function Tile(tileArray, board) {
       case "wetland":
         return 0;
       case "mixedFruitsVegetables":
-        return 7.34 * this.getMixedFruitsVegetablesYield();
+        return 7.58 * this.getMixedFruitsVegetablesYield();
     } //end switch
 
   }; //end this.directYieldCalculation
@@ -5188,6 +5188,7 @@ function Tile(tileArray, board) {
 
 };
 //end construction of Tile
+
 
 //######################################################################################
 //######################################################################################

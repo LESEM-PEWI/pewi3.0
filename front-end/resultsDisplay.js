@@ -1116,7 +1116,7 @@ function drawD3EconRevPieChart(year, isTheChartInCategoryMode) {
   economics.scaledRev[year].forEach(value => {
     totalRev += value;
   })
-  console.log(totalRev)
+
    var dataset = [{
       label: 'Conventional Corn',
       count: (economics.scaledRev[year][1].toFixed(2)),
@@ -1423,9 +1423,9 @@ function drawD3EconRevPieChart(year, isTheChartInCategoryMode) {
 
 function getTotalCost(data, givenYear) {
   var cost = 0;
-    console.log(data[givenYear])
+
   for(let i = 0; i < data[givenYear].length; ++i){
-    cost += data[givenYear][i].Value;
+    cost += data[givenYear][i].EAA;
   }
   return cost;
 }
@@ -2498,7 +2498,7 @@ function generateEconTableData(year){
     var tempObj = getObj(econ[i]);
     results.push(tempObj);
   }
-  results.splice(0,1);
+  // results.splice(0,1);
   return results;
 }
 
@@ -2518,8 +2518,8 @@ function generateEconomicsTables() {
   'rotGraz': {landuse: "Rotational Grazing"},
   'grassHay': {landuse: "Grass Hay"},
   'prairie': {landuse: "Prairie"},
-  'consFor': {landuse: "Conservation Forest"},
-  'convFor': {landuse: "Conventional Forest"},
+  'consFor': {landuse: "Conservation Forest", subCrop: "Twentyfive", subCrop2: "Sixty", subCrop3: "Seventy"},
+  'convFor': {landuse: "Conventional Forest", subCrop: "Twentyfive", subCrop2: "Sixty", subCrop3: "Seventy"},
   'switchG': {landuse: "Switchgrass"},
   'shortRWB': {landuse: "Short-rotation Woody Bioenergy"},
   'wetland': {landuse: "Wetland"},
@@ -2536,20 +2536,19 @@ function generateEconomicsTables() {
 
   this.clearTableVars = () => {
     Object.keys(econtables).forEach(key =>{
-      econtables[key].table = '<table><tr><th onclick="tableSort(\'costName\')">Cost Name</th><th onclick="tableSort(\'time\')">Time</th><th onclick="tableSort(\'action\')">Action</th><th onclick="numSort(\'value\')">Value</th><th>Frequency</th><th>Description</th></tr>'
+      econtables[key].table = '<table><tr><th onclick="tableSort(\'costName\')">Cost Name</th><th onclick="tableSort(\'time\')">Time</th><th onclick="tableSort(\'action\')">Action</th><th onclick="numSort(\'value\')">Value</th><th>Frequency</th>'
     })
   }
 
   this.updateTables = (values) =>{
     this.clearTableVars();
-    console.log(values);
 
     for(var i = 0; i < values.length; ++i){
       curLandUse = values[i].landUse;
       Object.keys(econtables).forEach(key =>{
-        if(curLandUse == econtables[key].landuse){
-          if(!values[i].subCrop || values[i].subCrop == econtables[key].subCrop){
-            econtables[key].table += "<tr><td>"+values[i].costName+"</td><td>"+values[i].time+"</td><td>"+values[i].action+'</td><td style="text-align:right">'+"$"+numFormatting(values[i].value)+"</td><td>"+values[i].timeOfYear+"</td><td>"+values[i].description+"</td></tr>";
+        if(curLandUse === econtables[key].landuse){
+          if(!values[i].subCrop || values[i].subCrop === econtables[key].subCrop || values[i].subCrop === econtables[key].subCrop2 || values[i].subCrop === econtables[key].subCrop3){
+            econtables[key].table += "<tr><td>"+values[i].costName+"</td><td>"+values[i].time+"</td><td>"+values[i].action+'</td><td style="text-align:right">'+"$"+numFormatting(values[i].value)+"</td><td>"+values[i].timeOfYear+"</td></tr>";
           }
         }
       });
@@ -2737,7 +2736,7 @@ function getValue(val) {
 }*/
 
 function getObj(data){
-  var obj = {landUse: data["Land-Use"], costName: data["Cost Name"], nameT: "Time", time: data["Time - Cost Type"], nameA: "Action", action: data["Action - Cost Type"], value: data["Value"], timeOfYear: data["Frequency"], description: data["Description"], subCrop: data["Sub Crop"]};
+  var obj = {landUse: data["Land-Use"], costName: data["Cost Name"], nameT: "Time", time: data["Time - Cost Type"], nameA: "Action", action: data["Action - Cost Type"], value: data["EAA"], timeOfYear: data["Frequency"], description: data["Description"], subCrop: data["Sub Crop"]};
 
   return obj;
 }
@@ -3592,7 +3591,7 @@ function placeTotalsOnBars(year){
   var consFor = findBar('Conservation Forest');
   var convFor = findBar('Conventional Forest');
   var switchgrass = findBar('Switchgrass');
-  var shortRWB = findBar('Short-Rotation Woody Bioenergy');
+  var shortRWB = findBar('Short Rotation Woody Bioenergy');
   var wetland = findBar('Wetland');
   var mixedFaV = findBar('Mixed Fruits & Vegetables');
 
@@ -5652,7 +5651,6 @@ function EconomicsGraphic3() {
 
   var drawBars = () => {
     var dataToUse = formatData(actionOrTimeCost);
-    console.log(dataToUse);
 
     let x0 = d3.scaleBand()
       .domain(dataToUse.map(function(d) {
@@ -5796,7 +5794,6 @@ function EconomicsGraphic3() {
   }
 
   var addOptions = () => { //This adds the toggle effects to the screen
-    console.log(economics.data);
     let doc = document.getElementById('resultsFrame').contentWindow.document;
     let box = doc.getElementById('econGraphic3Options');
     doc.querySelectorAll(".optionsRowGraphic3").forEach(row => {
@@ -5949,9 +5946,9 @@ function econGraphic4DisplayData(landUse,costType,cost,year){
   for (var i = 0; i < econdata.length; i++) {
     if(data4.some(e=>e.costname===econdata[i]['Cost Name'])){
       objIndex = data4.findIndex((obj => obj.costname ===econdata[i]['Cost Name']));
-      data4[objIndex].value+=parseFloat(econdata[i].Value);
+      data4[objIndex].value+=parseFloat(econdata[i].EAA);
     }else{
-      data4.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].Value)});
+      data4.push({costname:econdata[i]['Cost Name'], value:parseFloat(econdata[i].EAA)});
     }
   }
 return data4;
@@ -6290,16 +6287,16 @@ function graphic5DisplayInfo(econdata){
           data[i][objIndex]["Total Labor Hours"]+=parseFloat(d['# Labor Hours']);
         }
         if(d['Action - Cost Type']=='Custom'){
-          data[i][objIndex]["Total Custom Hire Cost"]+=parseFloat(d['Value']);
+          data[i][objIndex]["Total Custom Hire Cost"]+=parseFloat(d['EAA']);
         }
-        data[i][objIndex]["Total Labor Cost"]+=parseFloat(d['Value']);
+        data[i][objIndex]["Total Labor Cost"]+=parseFloat(d['EAA']);
       }else{
         var totalCustomHireCost=0;
         if(d['Action - Cost Type']=='Custom'){
-          totalCustomHireCost=parseFloat(d['Value']);
+          totalCustomHireCost=parseFloat(d['EAA']);
         }
         data[i].push({time_of_year:d['Time of Year'],twiceAMonth:twiceAMonth[month++],
-        "Total Labor Hours":parseFloat(d['# Labor Hours']),"Total Labor Cost":parseFloat(d['Value']),"Total Custom Hire Cost":totalCustomHireCost})
+        "Total Labor Hours":parseFloat(d['# Labor Hours']),"Total Labor Cost":parseFloat(d['EAA']),"Total Custom Hire Cost":totalCustomHireCost})
       }
     })
   });
@@ -6864,7 +6861,7 @@ function EconomicsGraphic2(){
   }
 
   var addAxes = () =>{
-    console.log("here");
+
     var xAxis = svg.append("g")
       .attr("transform", "translate(0," + y(0) + ")")//y(0) will be the height x axis
       .style("font-weight", "bold")
