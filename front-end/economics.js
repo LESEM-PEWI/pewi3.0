@@ -10,10 +10,12 @@ var Economics = function () {
   this.data5=[];
   this.rawRev=[];
   this.scaledRev=[];
-  this.cornAfters=[]
+  this.cornAfters=[];
+  this.getCropYields=[];
+  this.getForrestYields=[];
 
 //the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
-  yearCosts = [-1,1,1,1,1,4,1,1,4,40,40,40,11,7,50,{'Grapes (Conventional)': 22 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 3 *4}]
+  yearCosts = [-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,{'Grapes (Conventional)': 1 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 1 *4}]
   d3.csv('./revenue.csv', (data) => {
     this.rawRev = data;
   })
@@ -30,7 +32,7 @@ var Economics = function () {
             this.data[i][dataPoint['LU_ID']][cat] = {total: 0}; //Further path making
           }
           if(!this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]]){ //if this is the first value we need to read
-            this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]] = Math.round(1000*Number.parseFloat(dataPoint['Value']))/1000;
+            this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]] = Math.round(1000*Number.parseFloat(dataPoint['EAA']))/1000;
             if(!this.data[i][cat]){
               this.data[i][cat] = [];
             }
@@ -41,11 +43,13 @@ var Economics = function () {
           else {//The value already exists so just add to it.
             this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]] = //trying to prevent floating point calculation errors so rounding to tenth of a cent
             //ideally this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]] + Number.parseFloat(dataPoint['Value'])
-            Math.round(1000*(this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]] + Number.parseFloat(dataPoint['Value'])))/1000
+            Math.round(1000*(this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]] + Number.parseFloat(dataPoint['EAA'])))/1000
             this.data[i][dataPoint['LU_ID']][cat][dataPoint[cat]]
+
+            // console.log("DATA POINT: ", this.data[i])
           }
           this.data[i][dataPoint['LU_ID']][cat].total = //either way add it to the total
-          Math.round(1000*this.data[i][dataPoint['LU_ID']][cat].total + 1000*Number.parseFloat(dataPoint['Value']))/1000
+          Math.round(1000*this.data[i][dataPoint['LU_ID']][cat].total + 1000*Number.parseFloat(dataPoint['EAA']))/1000
         });
       });
     }
@@ -75,12 +79,12 @@ var Economics = function () {
         })
     }
     }
-    d3.csv('./budgets.csv', (data) => {
+    d3.csv('./Budget2020.csv', (data) => {
       this.rawData=data;
       this.rawData.forEach(dataPoint => {
         let id = Number.parseInt(dataPoint['LU_ID'])
         divisionForLU = (typeof yearCosts[id] === 'number') ? yearCosts[id]:  yearCosts[id][dataPoint['Sub Crop']];
-        dataPoint["Value"] /= divisionForLU;
+        dataPoint["EAA"] /= divisionForLU;
         dataPoint["# Labor Hours"] /= divisionForLU;
       })
     })
@@ -90,7 +94,7 @@ var Economics = function () {
     for(var i=1;i<=boardData[currentBoard].calculatedToYear;i++){
       this.data4[i]=[];
       this.mapData[i].forEach(dataPoint => {
-        if(dataPoint['Value']!=0){
+        if(dataPoint['EAA']!=0){
           var landuseNum=dataPoint['LU_ID'];
           if (!this.data4[i][landuseNum]) {
             this.data4[i][landuseNum] = {'landUse': dataPoint['Land-Use'],'array':[]}
@@ -115,16 +119,16 @@ var Economics = function () {
       this.data3[i] = {time: {}, action: {}};
       this.mapData[i].forEach( dataPoint => {
         if(this.data3[i].time[dataPoint['Time - Cost Type']]){
-          this.data3[i].time[dataPoint['Time - Cost Type']] += Number.parseFloat(dataPoint['Value']);
+          this.data3[i].time[dataPoint['Time - Cost Type']] += Number.parseFloat(dataPoint['EAA']);
         }
         else {
-          this.data3[i].time[dataPoint['Time - Cost Type']] = Number.parseFloat(dataPoint['Value']);
+          this.data3[i].time[dataPoint['Time - Cost Type']] = Number.parseFloat(dataPoint['EAA']);
         }
         if(this.data3[i].action[dataPoint['Action - Cost Type']]){
-          this.data3[i].action[dataPoint['Action - Cost Type']] += Number.parseFloat(dataPoint['Value']);
+          this.data3[i].action[dataPoint['Action - Cost Type']] += Number.parseFloat(dataPoint['EAA']);
         }
         else {
-          this.data3[i].action[dataPoint['Action - Cost Type']] = Number.parseFloat(dataPoint['Value']);
+          this.data3[i].action[dataPoint['Action - Cost Type']] = Number.parseFloat(dataPoint['EAA']);
         }
       })
     }
@@ -146,8 +150,8 @@ var Economics = function () {
           this.data3ByLU[i][dataPoint['Land-Use']].action[dataPoint['Action - Cost Type']] = 0;
         }
 
-        this.data3ByLU[i][dataPoint['Land-Use']].time[dataPoint['Time - Cost Type']] += dataPoint.Value;
-        this.data3ByLU[i][dataPoint['Land-Use']].action[dataPoint['Action - Cost Type']] += dataPoint.Value;
+        this.data3ByLU[i][dataPoint['Land-Use']].time[dataPoint['Time - Cost Type']] += dataPoint.EAA;
+        this.data3ByLU[i][dataPoint['Land-Use']].action[dataPoint['Action - Cost Type']] += dataPoint.EAA;
 
         this.data3ByLU[i][dataPoint['Land-Use']].toggleVal = -1;
       })
@@ -156,6 +160,8 @@ var Economics = function () {
 
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
     calculateCornAfters();
+    calculatePerYieldCrops();
+    calculateForrestYields();
     let landUses = [];
     this.mapData = [];
     //Less than ideal coding, but given how Totals is structured the easiest way
@@ -192,21 +198,142 @@ var Economics = function () {
         }
         this.scaledRev[i][dataPoint['LU_ID']] = this.scaledRev[i][dataPoint['LU_ID']] || 0;
         this.scaledRev[i][dataPoint['LU_ID']] += value;
+
       });
 
+      /**
+       * 2020 Budget File separates out each land yield.
+       * Conventional and Conservation Corn are broken up by yield and also based on if it is Corn after Soybean or Corn after Corn. Look at @calculateCornAfters function.
+       * Conventional and Conservation Forests are broken down based on 25/60/70 year budgets. Look at @calculateForrestYield function.
+       * There is also a 'per yield' check on each land use. If the PerAcreOrPerYield variable is 'per yield' then it is calulated based on the yield for each line item.
+       * Look at the @calculatePerYieldCrops.
+       */
       this.rawData.forEach(dataPoint => {
         let copy = JSON.parse(JSON.stringify(dataPoint));
         let luID = parseInt(copy['LU_ID']);
-        if(copy['LU_ID'] == 1 || copy['LU_ID'] == 2){//corn needs to be treated specially
-          console.log(luID)
-          copy["Value"] *= this.cornAfters[i][luID][copy['Sub Crop']];
-          copy["# Labor Hours"] *= this.cornAfters[i][luID][copy['Sub Crop']];
+
+        /*
+          START CORN CHECKS. Corn is separated out into Conv and Cons Corn. Then we check for Per Acre or Per Yield Conditions.
+         */
+
+        //TODO Leaving a todo.
+        if(copy['LU_ID'] === "1"){//corn needs to be treated specially
+          if(copy['PerAcreORPerYield'] === ""){
+            if(copy['Sub Crop'] === 'Corn after Soybean') {
+              copy["EAA"] *= this.cornAfters[i][1].ConvCornAfterSoybean;
+              copy["# Labor Hours"] *= this.cornAfters[i][1].ConvCornAfterSoybean;
+            }
+            else {
+              copy["EAA"] *= this.cornAfters[i][1].ConvCornAfterCorn;
+              copy["# Labor Hours"] *= this.cornAfters[i][1].ConvCornAfterCorn;
+            }
+          }
+          if(copy['PerAcreORPerYield'] === 'per yield'){
+              if(copy['Sub Crop'] === 'Corn after Corn') {
+                copy['EAA'] *= this.cornAfters[i][1].ConvCornAfterCornYield
+              }
+              else {
+                copy['EAA'] *= this.cornAfters[i][1].ConvCornAfterSoybeanYield
+              }
+          }
         }
+
+        else if(copy['LU_ID'] === "2"){//corn needs to be treated specially
+          if(copy['PerAcreORPerYield'] ===""){
+            if(copy['Sub Crop'] === 'Corn after Soybean') {
+              copy["EAA"] *= this.cornAfters[i][1].ConsCornAfterSoybean;
+              copy["# Labor Hours"] *= this.cornAfters[i][1].ConsCornAfterSoybean;
+            }
+            else {
+              copy["EAA"] *= this.cornAfters[i][1].ConsCornAfterCorn;
+              copy["# Labor Hours"] *= this.cornAfters[i][1].ConsCornAfterCorn;
+            }
+          }
+          if(copy['PerAcreORPerYield'] === 'per yield'){
+            if(copy['Sub Crop'] === 'Corn after Corn') {
+              copy['EAA'] *= this.cornAfters[i][1].ConsCornAfterCornYield
+            }
+            else {
+              copy['EAA'] *= this.cornAfters[i][1].ConsCornAfterSoybeanYield
+            }
+          }
+        }
+
+
+
+        /*
+          START FORREST CHECKS. Broken down by 25/60/70 Year Budgets.
+         */
+        else if(copy['LU_ID'] === "10"){
+          if(copy['Sub Crop'] === "Twentyfive"){
+            copy['EAA'] *= this.getForrestYields[i][1].twentyFiveAreaCons
+          }
+          if(copy['Sub Crop'] === "Sixty"){
+            copy['EAA'] *= this.getForrestYields[i][1].sixtyAreaCons
+          }
+          if(copy['Sub Crop'] === "Seventy"){
+            copy['EAA'] *= this.getForrestYields[i][1].seventyAreaCons
+          }
+        }
+
+
+        else if(copy['LU_ID'] === "11"){
+          if(copy['Sub Crop'] === "Twentyfive"){
+            copy['EAA'] *= this.getForrestYields[i][1].twentyFiveAreaConv
+          }
+          if(copy['Sub Crop'] === "Sixty"){
+            copy['EAA'] *= this.getForrestYields[i][1].sixtyAreaConv
+          }
+          if(copy['Sub Crop'] === "Seventy"){
+            copy['EAA'] *= this.getForrestYields[i][1].seventyAreaConv
+          }
+        }
+
+        /*
+         START PER YIELD Check on - Cons and Conv Soybean, Alfalfa, Grasshay, Switchgrass, Mixed Fruits and Vegetables (MF&V broken up into subcrops).
+         */
+        else if (copy['PerAcreORPerYield'] === 'per yield'){
+            if(copy['LU_ID'] === "3" ){
+              copy['EAA'] *= this.getCropYields[i][1].convSoybeanYield
+            }
+            else if(copy['LU_ID'] === "4"){
+              copy['EAA'] *= this.getCropYields[i][1].consSoybeanYield
+            }
+            else if(copy['LU_ID'] === "5"){
+              copy['EAA'] *= this.getCropYields[i][1].alfalfaYield
+            }
+            else if(copy['LU_ID'] === "8"){
+              copy['EAA'] *= this.getCropYields[i][1].grasshayYield
+            }
+            else if(copy['LU_ID'] === "12"){
+              copy['EAA'] *= this.getCropYields[i][1].switchgrassYield
+            }
+            else if(copy['LU_ID'] === "15"){
+              //multiplied by 4 to negate previous division; was needed per acre, not per yield
+              if(copy['Sub Crop'] === 'Green Beans') {
+                copy['EAA'] *= 4 * this.getCropYields[i][1].mixedFVYield * (4.2/30.326)
+              }
+              else if(copy['Sub Crop'] === 'Winter Squash') {
+                copy['EAA'] *= 4 * this.getCropYields[i][1].mixedFVYield * (11.25/30.326)
+              }
+              else if(copy['Sub Crop'] === 'Grapes (Conventional)') {
+                copy['EAA'] *= 4 * this.getCropYields[i][1].mixedFVYield * (13.376/30.326)
+              }
+            }
+          }
+
+        /*
+        If land use is not per yield then add here.
+         */
         else {
-          copy["Value"] *= landUses[i][copy['LU_ID']];
-          copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
+          if(["1" , "2" , "3" , "4" , "5" , "8" , "12" , "15" , "10" , "11"].indexOf(copy['LU_ID'] !==- 1)) {
+            copy["EAA"] *= landUses[i][copy['LU_ID']];
+            copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
+          }
         }
+
         this.mapData[i].push(copy)
+
       })
     }
     this.chart3Data();
@@ -217,25 +344,122 @@ var Economics = function () {
     this.calcSubcrops();
   }
 
+
   //this is unoptimized for finding the amount of corn after corn and corn after soybeans
   //If any sort of progress bar requires the economics module it is recomended to alter the method in which data is updated
+  /**
+   * This function breaks down Conv and Cons Corn into Corn after Corn and Corn after Soybean and calculates the yield for each.
+   */
   calculateCornAfters = () =>{
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
-      this.cornAfters[i] = [,{'Corn after Soybean':0, 'Corn after Corn':0},{'Corn after Soybean':0, 'Corn after Corn':0}]
+      this.cornAfters[i] = [,
+        { ConvCornAfterSoybean:0, ConvCornAfterCorn:0,
+          ConvCornAfterSoybeanYield: 0, ConvCornAfterCornYield: 0,
+          ConsCornAfterSoybean:0, ConsCornAfterCorn:0,
+          ConsCornAfterSoybeanYield: 0, ConsCornAfterCornYield: 0,
+        }
+        ];
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
-        if(boardData[currentBoard].map[j].landType[i] == 1 || boardData[currentBoard].map[j].landType[i] == 2){ //if there it is corn
-          if(boardData[currentBoard].map[j].landType[i-1] == 3 || boardData[currentBoard].map[j].landType[i-1] == 4){ //if the corn is after soybean
-            console.log(i);
-            this.cornAfters[i][boardData[currentBoard].map[j].landType[i]]['Corn after Soybean'] += boardData[currentBoard].map[j].area;
+        if(boardData[currentBoard].map[j].landType[i] === 1){ //if there it is corn
+          if(boardData[currentBoard].map[j].landType[i-1] === 3 || boardData[currentBoard].map[j].landType[i-1] === 4){ //if the corn is after soybean
+            this.cornAfters[i][1].ConvCornAfterSoybean += boardData[currentBoard].map[j].area;
+            this.cornAfters[i][1].ConvCornAfterSoybeanYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
           }
           else {
-            this.cornAfters[i][boardData[currentBoard].map[j].landType[i]]['Corn after Corn'] += boardData[currentBoard].map[j].area
+            this.cornAfters[i][1].ConvCornAfterCorn += boardData[currentBoard].map[j].area
+            this.cornAfters[i][1].ConvCornAfterCornYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
+          }
+        }
+
+        if(boardData[currentBoard].map[j].landType[i] === 2){ //if there it is corn
+          if(boardData[currentBoard].map[j].landType[i-1] === 3 || boardData[currentBoard].map[j].landType[i-1] === 4){ //if the corn is after soybean
+            this.cornAfters[i][1].ConsCornAfterSoybean += boardData[currentBoard].map[j].area;
+            this.cornAfters[i][1].ConsCornAfterSoybeanYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
+          }
+          else {
+            this.cornAfters[i][1].ConsCornAfterCorn += boardData[currentBoard].map[j].area
+            this.cornAfters[i][1].ConsCornAfterCornYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
           }
         }
       }
     }
-    console.log(this.cornAfters);
   }
+
+  /**
+   * This functions calculates the yield for: Cons and Conv Soybean, Alfalfa, Grasshay, Switchgrass and Mixed Fruits and Vegetables.
+   * The function  iterates over the whole map and check for each land use by LU_ID (for example: 3 for Conv Soybean).
+   * It then gets the yield for each cell (828 cells on map) and check adds to the total yield variable for that land use.
+   */
+  calculatePerYieldCrops = () =>{
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+
+      this.getCropYields[i] = [,
+        {convSoybeanYield : 0, consSoybeanYield: 0, alfalfaYield: 0, switchgrassYield: 0,  grasshayYield: 0, mixedFVYield: 0},
+      ];
+
+      for (let j = 0; j < boardData[currentBoard].map.length; j++){
+          if(boardData[currentBoard].map[j].landType[i] === 3){
+            this.getCropYields[i][1].convSoybeanYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
+          }
+          if(boardData[currentBoard].map[j].landType[i] === 4){
+            this.getCropYields[i][1].consSoybeanYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
+          }
+          if(boardData[currentBoard].map[j].landType[i] === 5){
+            this.getCropYields[i][1].alfalfaYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
+          }
+          if(boardData[currentBoard].map[j].landType[i] === 8){
+            this.getCropYields[i][1].grasshayYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
+          }
+          if(boardData[currentBoard].map[j].landType[i] === 12){
+            this.getCropYields[i][1].switchgrassYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
+          }
+          if(boardData[currentBoard].map[j].landType[i] === 15){
+            this.getCropYields[i][1].mixedFVYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
+          }
+      }
+    }
+  };
+
+  /**
+   * This function is used to separate out the area for each soil type to use for Cons and Conv Forests which are now separated by 25/60/75 year budgets.
+   * We iterate through the map and check each cell for soilType. Each soilType goes into either 25 or 60 or 70 year area variable.
+   * twentyFiveArea, sixtyAre, seventyArea variable store the sum of area based on soil types.
+   * For example: If Soil Type for cell is C/L/O it would be added to twentyFiveArea for conv or cons forest.
+   * TODO
+   */
+  calculateForrestYields = () => {
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      this.getForrestYields[i] = [,
+        {twentyFiveAreaConv: 0, sixtyAreaConv:0, seventyAreaConv:0, twentyFiveAreaCons:0, sixtyAreaCons: 0, seventyAreaCons:0}
+      ]
+      for (let j = 0; j < boardData[currentBoard].map.length; j++) {
+        if (boardData[currentBoard].map[j].landType[i] === 10){
+          if(["C", "L", "O"].indexOf(boardData[currentBoard].map[j]['soilType']) !==- 1){
+            this.getForrestYields[i][1].twentyFiveAreaCons += boardData[currentBoard].map[j].area;
+          }
+          if(["N", "K", "T", "B"].indexOf(boardData[currentBoard].map[j]['soilType']) !==- 1){
+            this.getForrestYields[i][1].sixtyAreaCons += boardData[currentBoard].map[j].area;
+          }
+          if(["A", "D", "G", "M", "Q", "Y"].indexOf(boardData[currentBoard].map[j]['soilType']) !==- 1){
+            this.getForrestYields[i][1].seventyAreaCons += boardData[currentBoard].map[j].area;
+          }
+        }
+        if(boardData[currentBoard].map[j].landType[i] === 11){
+          if(["C", "L", "O"].indexOf(boardData[currentBoard].map[j]['soilType']) !==- 1){
+            this.getForrestYields[i][1].twentyFiveAreaConv += boardData[currentBoard].map[j].area;
+          }
+          if(["N", "K", "T", "B"].indexOf(boardData[currentBoard].map[j]['soilType']) !==- 1){
+            this.getForrestYields[i][1].sixtyAreaConv += boardData[currentBoard].map[j].area;
+          }
+          if(["A", "D", "G", "M", "Q", "Y"].indexOf(boardData[currentBoard].map[j]['soilType']) !==- 1){
+            this.getForrestYields[i][1].seventyAreaConv += boardData[currentBoard].map[j].area;
+          }
+        }
+      }
+    }
+  };
+
+
 
   this.calcSubcrops = function(){
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
@@ -249,13 +473,13 @@ var Economics = function () {
             this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] = 0;
           }
           this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] =
-          Math.round(1000*this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] + 1000*Number.parseFloat(dataPoint['Value']))/1000
+          Math.round(1000*this.dataSubcrop[i][dataPoint['Land-Use']][dataPoint['Sub Crop']] + 1000*Number.parseFloat(dataPoint['EAA']))/1000
         }
       })
     }
-
-
   }
+
+
 }
 var economics = new Economics();
 //kind of a precalc? Not really but its calculated before its needed.
