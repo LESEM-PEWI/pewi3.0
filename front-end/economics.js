@@ -1,6 +1,5 @@
 var Economics = function () {
   this.rawData;
-  this.rawBMPData;
   this.mapData = [];
   this.data = [];
   this.data4 = [];
@@ -262,29 +261,37 @@ var Economics = function () {
           if(copy['PerAcreORPerYield'] === 'per yield'){
             if(copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] !== 'GrassedWaterways' && copy['BMP'] !== 'Terraces' && copy['BMP'] !== 'Buffers') {
               copy['EAA'] *= this.getBMPAreas[i][2].bmpArea;
+              copy['# Labor Hours'] *= this.getBMPAreas[i][2].bmpArea;
             }
             if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] !== 'GrassedWaterways' && copy['BMP'] !== 'Terraces' && copy['BMP'] !== 'Buffers') {
               copy['EAA'] *= this.getBMPAreas[i][3].bmpArea;
+              copy['# Labor Hours'] *= this.getBMPAreas[i][3].bmpArea;
             }
           }
           if (copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] === 'GrassedWaterways') {
             copy['EAA'] *= Math.round( 1000 *this.getBMPAreas[i][2].grassedWaterwaysAreaTotal)/1000
+            copy['# Labor Hours'] *= Math.round( 1000 *this.getBMPAreas[i][2].grassedWaterwaysAreaTotal)/1000
           }
           else if (copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] === 'Terraces') {
             copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][2].terraceAreaTotal)/1000
+            copy['# Labor Hours'] *= Math.round(1000*this.getBMPAreas[i][2].terraceAreaTotal)/1000
           }
           else if (copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] === 'Buffers') {
             copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][2].bufferAreaTotal)/1000
+            copy['# Labor Hours'] *= Math.round(1000*this.getBMPAreas[i][2].bufferAreaTotal)/1000
           }
 
           if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] === 'GrassedWaterways') {
             copy['EAA'] *= Math.round( 1000 *this.getBMPAreas[i][3].grassedWaterwaysAreaTotal)/1000
+            copy['# Labor Hours'] *= Math.round( 1000 *this.getBMPAreas[i][3].grassedWaterwaysAreaTotal)/1000
           }
           else if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] === 'Terraces') {
             copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][3].terraceAreaTotal)/1000
+            copy['# Labor Hours'] *= Math.round(1000*this.getBMPAreas[i][3].terraceAreaTotal)/1000
           }
           else if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] === 'Buffers') {
             copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][3].bufferAreaTotal)/1000
+            copy['# Labor Hours'] *= Math.round(1000*this.getBMPAreas[i][3].bufferAreaTotal)/1000
           }
 
         }
@@ -297,19 +304,23 @@ var Economics = function () {
         else if(copy['LU_ID'] === "4"){
             if(copy['PerAcreORPerYield'] ==="" && copy['BMP'] !== 'GrassedWaterways' && copy['BMP'] !== 'Terraces' && copy['BMP'] !== 'Buffers'){
               copy["EAA"] *= this.getBMPAreas[i][1].bmpArea;
-              // console.log("CORE COSTS: ", copy["EAA"]);
+              copy["# Labor Hours"] *= this.getBMPAreas[i][1].bmpArea;
             }
             if(copy['PerAcreORPerYield'] === 'per yield') {
               copy['EAA'] *= this.getBMPAreas[i][1].landUseYield
+              copy['# Labor Hours'] *= this.getBMPAreas[i][1].landUseYield
             }
             if (copy['BMP'] === 'GrassedWaterways') {
               copy['EAA'] *= Math.round( 1000 *this.getBMPAreas[i][1].grassedWaterwaysAreaTotal)/1000
+              copy['# Labor Hours'] *= Math.round( 1000 *this.getBMPAreas[i][1].grassedWaterwaysAreaTotal)/1000
             }
             else if (copy['BMP'] === 'Terraces') {
               copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][1].terraceAreaTotal)/1000
+              copy['# Labor Hours'] *= Math.round(1000*this.getBMPAreas[i][1].terraceAreaTotal)/1000
             }
             else if (copy['BMP'] === 'Buffers') {
               copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][1].bufferAreaTotal)/1000
+              copy['# Labor Hours'] *= Math.round(1000*this.getBMPAreas[i][1].bufferAreaTotal)/1000
             }
         }
 
@@ -320,12 +331,15 @@ var Economics = function () {
         else if(copy['LU_ID'] === "10"){
           if(copy['Sub Crop'] === "Twentyfive"){
             copy['EAA'] *= this.getForrestYields[i][1].twentyFiveAreaCons
+            copy['# Labor Hours'] *= this.getForrestYields[i][1].twentyFiveAreaCons
           }
           if(copy['Sub Crop'] === "Sixty"){
             copy['EAA'] *= this.getForrestYields[i][1].sixtyAreaCons
+            copy['# Labor Hours'] *= this.getForrestYields[i][1].sixtyAreaCons
           }
           if(copy['Sub Crop'] === "Seventy"){
             copy['EAA'] *= this.getForrestYields[i][1].seventyAreaCons
+            copy['# Labor Hours'] *= this.getForrestYields[i][1].seventyAreaCons
           }
         }
 
@@ -333,12 +347,15 @@ var Economics = function () {
         else if(copy['LU_ID'] === "11"){
           if(copy['Sub Crop'] === "Twentyfive"){
             copy['EAA'] *= this.getForrestYields[i][1].twentyFiveAreaConv
+            copy['# Labor Hours'] *= this.getForrestYields[i][1].twentyFiveAreaConv
           }
           if(copy['Sub Crop'] === "Sixty"){
             copy['EAA'] *= this.getForrestYields[i][1].sixtyAreaConv
+            copy['# Labor Hours'] *= this.getForrestYields[i][1].sixtyAreaConv
           }
           if(copy['Sub Crop'] === "Seventy"){
             copy['EAA'] *= this.getForrestYields[i][1].seventyAreaConv
+            copy['# Labor Hours'] *= this.getForrestYields[i][1].seventyAreaConv
           }
         }
 
@@ -348,26 +365,33 @@ var Economics = function () {
         else if (copy['PerAcreORPerYield'] === 'per yield'){
             if(copy['LU_ID'] === "3" ){
               copy['EAA'] *= this.getCropYields[i][1].convSoybeanYield
+              copy['# Labor Hours'] *= this.getCropYields[i][1].convSoybeanYield
             }
             else if(copy['LU_ID'] === "5"){
               copy['EAA'] *= this.getCropYields[i][1].alfalfaYield
+              copy['# Labor Hours'] *= this.getCropYields[i][1].alfalfaYield
             }
             else if(copy['LU_ID'] === "8"){
               copy['EAA'] *= this.getCropYields[i][1].grasshayYield
+              copy['# Labor Hours'] *= this.getCropYields[i][1].grasshayYield
             }
             else if(copy['LU_ID'] === "12"){
               copy['EAA'] *= this.getCropYields[i][1].switchgrassYield
+              copy['# Labor Hours'] *= this.getCropYields[i][1].switchgrassYield
             }
             else if(copy['LU_ID'] === "15"){
               //multiplied by 4 to negate previous division; was needed per acre, not per yield
               if(copy['Sub Crop'] === 'Green Beans') {
                 copy['EAA'] *= 4 * this.getCropYields[i][1].mixedFVYield * (4.2/30.326)
+                copy['# Labor Hours'] *= 4 * this.getCropYields[i][1].mixedFVYield * (4.2/30.326)
               }
               else if(copy['Sub Crop'] === 'Winter Squash') {
                 copy['EAA'] *= 4 * this.getCropYields[i][1].mixedFVYield * (11.25/30.326)
+                copy['# Labor Hours'] *= 4 * this.getCropYields[i][1].mixedFVYield * (11.25/30.326)
               }
               else if(copy['Sub Crop'] === 'Grapes (Conventional)') {
                 copy['EAA'] *= 4 * this.getCropYields[i][1].mixedFVYield * (13.376/30.326)
+                copy['# Labor Hours'] *= 4 * this.getCropYields[i][1].mixedFVYield * (13.376/30.326)
               }
             }
           }
