@@ -1,5 +1,6 @@
 var Economics = function () {
   this.rawData;
+  this.rawBMPData;
   this.mapData = [];
   this.data = [];
   this.data4 = [];
@@ -13,6 +14,7 @@ var Economics = function () {
   this.cornAfters=[];
   this.getCropYields=[];
   this.getForrestYields=[];
+  this.getBMPAreas=[];
 
 //the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
   yearCosts = [-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,{'Grapes (Conventional)': 1 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 1 *4}]
@@ -87,7 +89,8 @@ var Economics = function () {
         dataPoint["EAA"] /= divisionForLU;
         dataPoint["# Labor Hours"] /= divisionForLU;
       })
-    })
+    });
+
   //graph
   //graphic 4 extract data from raw data
   this.chart4Information = function(lists) {
@@ -162,6 +165,8 @@ var Economics = function () {
     calculateCornAfters();
     calculatePerYieldCrops();
     calculateForrestYields();
+    calulateBMPBudgets();
+
     let landUses = [];
     this.mapData = [];
     //Less than ideal coding, but given how Totals is structured the easiest way
@@ -238,27 +243,75 @@ var Economics = function () {
           }
         }
 
-        else if(copy['LU_ID'] === "2"){//corn needs to be treated specially
-          if(copy['PerAcreORPerYield'] ===""){
-            if(copy['Sub Crop'] === 'Corn after Soybean') {
-              copy["EAA"] *= this.cornAfters[i][1].ConsCornAfterSoybean;
-              copy["# Labor Hours"] *= this.cornAfters[i][1].ConsCornAfterSoybean;
+        //Conservation Corn values are calculated separately due to BMP budgets.
+        //Specially made verbose to reduce confusion.
+        //Check calculateBMPBugets function.
+        //Conservation Corn after Soybean is numLandUse 2 and Conservation Corn after Corn is numLandUse 3. DO NOT CONFUSE THIS WITH LU_ID.
+        //numLandUse values are only used for calculateBMPBudgets function.
+        else if(copy['LU_ID'] === "2"){
+          if(copy['PerAcreORPerYield'] === ""){
+            if(copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] !== 'GrassedWaterways' && copy['BMP'] !== 'Terraces' && copy['BMP'] !== 'Buffers') {
+              copy["EAA"] *= this.getBMPAreas[i][2].bmpArea;
+              copy["# Labor Hours"] *= this.getBMPAreas[i][2].bmpArea;
             }
-            else {
-              copy["EAA"] *= this.cornAfters[i][1].ConsCornAfterCorn;
-              copy["# Labor Hours"] *= this.cornAfters[i][1].ConsCornAfterCorn;
+            if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] !== 'GrassedWaterways' && copy['BMP'] !== 'Terraces' && copy['BMP'] !== 'Buffers') {
+              copy["EAA"] *= this.getBMPAreas[i][3].bmpArea;
+              copy["# Labor Hours"] *= this.getBMPAreas[i][3].bmpArea;
             }
           }
           if(copy['PerAcreORPerYield'] === 'per yield'){
-            if(copy['Sub Crop'] === 'Corn after Corn') {
-              copy['EAA'] *= this.cornAfters[i][1].ConsCornAfterCornYield
+            if(copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] !== 'GrassedWaterways' && copy['BMP'] !== 'Terraces' && copy['BMP'] !== 'Buffers') {
+              copy['EAA'] *= this.getBMPAreas[i][2].bmpArea;
             }
-            else {
-              copy['EAA'] *= this.cornAfters[i][1].ConsCornAfterSoybeanYield
+            if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] !== 'GrassedWaterways' && copy['BMP'] !== 'Terraces' && copy['BMP'] !== 'Buffers') {
+              copy['EAA'] *= this.getBMPAreas[i][3].bmpArea;
             }
           }
+          if (copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] === 'GrassedWaterways') {
+            copy['EAA'] *= Math.round( 1000 *this.getBMPAreas[i][2].grassedWaterwaysAreaTotal)/1000
+          }
+          else if (copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] === 'Terraces') {
+            copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][2].terraceAreaTotal)/1000
+          }
+          else if (copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] === 'Buffers') {
+            copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][2].bufferAreaTotal)/1000
+          }
+
+          if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] === 'GrassedWaterways') {
+            copy['EAA'] *= Math.round( 1000 *this.getBMPAreas[i][3].grassedWaterwaysAreaTotal)/1000
+          }
+          else if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] === 'Terraces') {
+            copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][3].terraceAreaTotal)/1000
+          }
+          else if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] === 'Buffers') {
+            copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][3].bufferAreaTotal)/1000
+          }
+
         }
 
+        //Conservation Soybean values are calculated separately due to BMP budgets.
+        //Specially made verbose to reduce confusion.
+        //Check calculateBMPBugets function.
+        //Conservation Soybean is numLandUse 1. DO NOT CONFUSE THIS WITH LU_ID.
+        //numLandUse values are only used for calculateBMPBudgets function.
+        else if(copy['LU_ID'] === "4"){
+            if(copy['PerAcreORPerYield'] ==="" && copy['BMP'] !== 'GrassedWaterways' && copy['BMP'] !== 'Terraces' && copy['BMP'] !== 'Buffers'){
+              copy["EAA"] *= this.getBMPAreas[i][1].bmpArea;
+              // console.log("CORE COSTS: ", copy["EAA"]);
+            }
+            if(copy['PerAcreORPerYield'] === 'per yield') {
+              copy['EAA'] *= this.getBMPAreas[i][1].landUseYield
+            }
+            if (copy['BMP'] === 'GrassedWaterways') {
+              copy['EAA'] *= Math.round( 1000 *this.getBMPAreas[i][1].grassedWaterwaysAreaTotal)/1000
+            }
+            else if (copy['BMP'] === 'Terraces') {
+              copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][1].terraceAreaTotal)/1000
+            }
+            else if (copy['BMP'] === 'Buffers') {
+              copy['EAA'] *= Math.round(1000*this.getBMPAreas[i][1].bufferAreaTotal)/1000
+            }
+        }
 
 
         /*
@@ -296,9 +349,6 @@ var Economics = function () {
             if(copy['LU_ID'] === "3" ){
               copy['EAA'] *= this.getCropYields[i][1].convSoybeanYield
             }
-            else if(copy['LU_ID'] === "4"){
-              copy['EAA'] *= this.getCropYields[i][1].consSoybeanYield
-            }
             else if(copy['LU_ID'] === "5"){
               copy['EAA'] *= this.getCropYields[i][1].alfalfaYield
             }
@@ -326,10 +376,8 @@ var Economics = function () {
         If land use is not per yield then add here.
          */
         else {
-          if(["1" , "2" , "3" , "4" , "5" , "8" , "12" , "15" , "10" , "11"].indexOf(copy['LU_ID'] !==- 1)) {
-            copy["EAA"] *= landUses[i][copy['LU_ID']];
-            copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
-          }
+          copy["EAA"] *= landUses[i][copy['LU_ID']];
+          copy["# Labor Hours"] *= landUses[i][copy['LU_ID']];
         }
 
         this.mapData[i].push(copy)
@@ -349,14 +397,13 @@ var Economics = function () {
   //If any sort of progress bar requires the economics module it is recomended to alter the method in which data is updated
   /**
    * This function breaks down Conv and Cons Corn into Corn after Corn and Corn after Soybean and calculates the yield for each.
+   * NOTE: CONSERVATION CORN values are retrieved from BMP budgets function below.
    */
   calculateCornAfters = () =>{
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.cornAfters[i] = [,
         { ConvCornAfterSoybean:0, ConvCornAfterCorn:0,
           ConvCornAfterSoybeanYield: 0, ConvCornAfterCornYield: 0,
-          ConsCornAfterSoybean:0, ConsCornAfterCorn:0,
-          ConsCornAfterSoybeanYield: 0, ConsCornAfterCornYield: 0,
         }
         ];
       for (var j = 0; j < boardData[currentBoard].map.length; j++) {
@@ -371,16 +418,6 @@ var Economics = function () {
           }
         }
 
-        if(boardData[currentBoard].map[j].landType[i] === 2){ //if there it is corn
-          if(boardData[currentBoard].map[j].landType[i-1] === 3 || boardData[currentBoard].map[j].landType[i-1] === 4){ //if the corn is after soybean
-            this.cornAfters[i][1].ConsCornAfterSoybean += boardData[currentBoard].map[j].area;
-            this.cornAfters[i][1].ConsCornAfterSoybeanYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
-          }
-          else {
-            this.cornAfters[i][1].ConsCornAfterCorn += boardData[currentBoard].map[j].area
-            this.cornAfters[i][1].ConsCornAfterCornYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
-          }
-        }
       }
     }
   }
@@ -400,9 +437,6 @@ var Economics = function () {
       for (let j = 0; j < boardData[currentBoard].map.length; j++){
           if(boardData[currentBoard].map[j].landType[i] === 3){
             this.getCropYields[i][1].convSoybeanYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
-          }
-          if(boardData[currentBoard].map[j].landType[i] === 4){
-            this.getCropYields[i][1].consSoybeanYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
           }
           if(boardData[currentBoard].map[j].landType[i] === 5){
             this.getCropYields[i][1].alfalfaYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * boardData[currentBoard].map[j].area
@@ -431,7 +465,7 @@ var Economics = function () {
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.getForrestYields[i] = [,
         {twentyFiveAreaConv: 0, sixtyAreaConv:0, seventyAreaConv:0, twentyFiveAreaCons:0, sixtyAreaCons: 0, seventyAreaCons:0}
-      ]
+      ];
       for (let j = 0; j < boardData[currentBoard].map.length; j++) {
         if (boardData[currentBoard].map[j].landType[i] === 10){
           if(["C", "L", "O"].indexOf(boardData[currentBoard].map[j]['soilType']) !==- 1){
@@ -459,6 +493,101 @@ var Economics = function () {
     }
   };
 
+  //Conservation Corn After Soybean set to Land Use 1
+  //Conservation Corn After Corn set to Land Use 2
+  //Conservation Soybean set to Land Use 3
+  /**
+   * This function is used to calculate BMP Budget values for Conservation CORN and Conservation SOYBEAN ONLY.
+   * Implemented based on Issue 727. Function laid out in the exact order.
+   * First we check for Buffers based on StreamNetwork value. Next check topography value to implement Terraces and lastly implement Grassed Waterways.
+   * this.getBMPAreas object array has 4 objects. The first one is a dummy object to avoid undefined errors. (Not the best approach but we needed to store
+   * values for cells that are not conservation corn or soybean)
+   * numLandUse values are hard coded to 1 = Cons Soybean; 2 = Cons Corn after Soybean; 3 = Cons Corn after Corn. DO NOT CONFUSE THIS WITH LU_ID.
+   */
+  calulateBMPBudgets = () => {
+    let fixedBufferArea = 0.52486;
+    let numLandUse = 0;
+
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
+      this.getBMPAreas[i] = [
+        {bmpArea: 0, bufferAreaTotal: 0, grassedWaterwaysAreaTotal: 0, terraceAreaTotal: 0, landUseYield: 0},
+        {bmpArea: 0, bufferAreaTotal: 0, grassedWaterwaysAreaTotal: 0, terraceAreaTotal: 0, landUseYield: 0},
+        {bmpArea: 0, bufferAreaTotal: 0, grassedWaterwaysAreaTotal: 0, terraceAreaTotal: 0, landUseYield: 0},
+        {bmpArea: 0, bufferAreaTotal: 0, grassedWaterwaysAreaTotal: 0, terraceAreaTotal: 0, landUseYield: 0},
+      ];
+
+
+      for (let j = 0; j < boardData[currentBoard].map.length; j++) {
+        let cellArea = boardData[currentBoard].map[j].area;
+
+        if(boardData[currentBoard].map[j].landType[i] === 4) {
+            numLandUse = 1; //SOYBEAN
+        }
+        else if(boardData[currentBoard].map[j].landType[i] === 2){
+          if(boardData[currentBoard].map[j].landType[i-1] === 3 || boardData[currentBoard].map[j].landType[i-1] === 4) { //if the corn is after soybean
+            numLandUse = 2; //CORN AFTER SOYBEAN
+          }
+          else {
+            numLandUse = 3; //CORN AFTER CORN
+          }
+        }
+
+        if (boardData[currentBoard].map[j].streamNetwork === "1") {
+          cellArea = (cellArea - fixedBufferArea) * 0.90;
+          this.getBMPAreas[i][numLandUse].bufferAreaTotal += fixedBufferArea;
+        }
+        else {
+          cellArea = 0.90 * cellArea;
+        }
+
+        //Implement Terraces
+        if(boardData[currentBoard].map[j].topography >= 2){
+
+          if(boardData[currentBoard].map[j].topography === 2){
+            this.getBMPAreas[i][numLandUse].terraceAreaTotal += boardData[currentBoard].map[j].area * 0.0546;
+          }
+          else if(boardData[currentBoard].map[j].topography === 3){
+            this.getBMPAreas[i][numLandUse].terraceAreaTotal +=  boardData[currentBoard].map[j].area * 0.0658;
+          }
+          else if(boardData[currentBoard].map[j].topography === 4){
+            this.getBMPAreas[i][numLandUse].terraceAreaTotal +=  boardData[currentBoard].map[j].area * 0.0820;
+          }
+          else if(boardData[currentBoard].map[j].topography === 5){
+            this.getBMPAreas[i][numLandUse].terraceAreaTotal +=  boardData[currentBoard].map[j].area * 0.0938;
+          }
+
+        }
+
+        //Implement Grasses Waterways
+        if(boardData[currentBoard].map[j].streamNetwork !== "1" && boardData[currentBoard].map[j].topography < 2){
+          this.getBMPAreas[i][numLandUse].grassedWaterwaysAreaTotal += 0.10 * boardData[currentBoard].map[j].area;
+        }
+
+        else if (boardData[currentBoard].map[j].streamNetwork === "1" && boardData[currentBoard].map[j].topography < 2){
+          this.getBMPAreas[i][numLandUse].grassedWaterwaysAreaTotal += 0.10 * (boardData[currentBoard].map[j].area - fixedBufferArea);
+        }
+
+        else {
+          if(boardData[currentBoard].map[j].topography === 2){
+            this.getBMPAreas[i][numLandUse].grassedWaterwaysAreaTotal += boardData[currentBoard].map[j].area * 0.0454;
+          }
+          else if(boardData[currentBoard].map[j].topography === 3){
+            this.getBMPAreas[i][numLandUse].grassedWaterwaysAreaTotal += boardData[currentBoard].map[j].area * 0.0342;
+          }
+          else if(boardData[currentBoard].map[j].topography === 4){
+            this.getBMPAreas[i][numLandUse].grassedWaterwaysAreaTotal += boardData[currentBoard].map[j].area * 0.0180;
+          }
+          else if(boardData[currentBoard].map[j].topography === 5){
+            this.getBMPAreas[i][numLandUse].grassedWaterwaysAreaTotal += boardData[currentBoard].map[j].area * 0.0062;
+          }
+        }
+        this.getBMPAreas[i][numLandUse].bmpArea += cellArea;
+
+        this.getBMPAreas[i][numLandUse].landUseYield += boardData[currentBoard].map[j].results[i]['calculatedYieldTile'] * cellArea;
+        }
+      }
+
+  };
 
 
   this.calcSubcrops = function(){
