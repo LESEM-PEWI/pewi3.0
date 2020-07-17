@@ -1,0 +1,256 @@
+﻿BMP_ID,Land-Use,Sub Crop,PerAcreORPerYield,TopographySlopes,StreamBorder,Year,Time of Year,Frequency,Time - Cost Type ,Action - Cost Type,Fixed/Variable,Cost Name,# Labor Hours,  Value  , PV , EAA ,Description
+1,GrassedWaterways,,,,,1,,Annual,Establishment,Input,Fixed,Seed cost - Legume (alfalfa),,77.31,77.31,5.029126446,Assume reseed every 30 years 18 lbs alfalfa seed. 77.31
+1,GrassedWaterways,,,,,1,,Annual,Establishment,Input,Fixed,Seed cost - Grass mix,,56.61,56.61,3.68256174,"Assume reseed every 30 years. 56.61
+Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
+1,GrassedWaterways,,,,,1,,Annual,Establishment,Input,Fixed,Seed cost - oats,,16.96,16.96,1.103272339,Assume reseed every 30 years.  2 lbs oats per acre.   16.96
+1,GrassedWaterways,,,,,1,,Annual,Establishment,Input,Fixed,Equipment - Drilling,,15.42,15.42,1.003093129,Assume reseed every 30 years.  15.42
+1,GrassedWaterways,,,,,1,9,Annual,Establishment,Labor,Fixed,Seed Labor,1,14.25,14.25,0.92698295,Same as alfalfa
+1,GrassedWaterways,,,,,1,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,12.132,0.78920401,Based on prairie budget
+1,GrassedWaterways,,,,,2,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,11.5254,0.74974381,Based on prairie budget
+1,GrassedWaterways,,,,,3,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,10.94913,0.712256619,Based on prairie budget
+1,GrassedWaterways,,,,,4,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,10.4016735,0.676643788,Based on prairie budget
+1,GrassedWaterways,,,,,5,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,9.881589825,0.642811599,Based on prairie budget
+1,GrassedWaterways,,,,,6,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,9.387510334,0.610671019,Based on prairie budget
+1,GrassedWaterways,,,,,7,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,8.918134817,0.580137468,Based on prairie budget
+1,GrassedWaterways,,,,,8,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,8.472228076,0.551130595,Based on prairie budget
+1,GrassedWaterways,,,,,9,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,8.048616672,0.523574065,Based on prairie budget
+1,GrassedWaterways,,,,,10,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,7.646185839,0.497395362,Based on prairie budget
+1,GrassedWaterways,,,,,11,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,7.263876547,0.472525594,Based on prairie budget
+1,GrassedWaterways,,,,,12,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,6.900682719,0.448899314,Based on prairie budget
+1,GrassedWaterways,,,,,13,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,6.555648584,0.426454348,Based on prairie budget
+1,GrassedWaterways,,,,,14,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,6.227866154,0.405131631,Based on prairie budget
+1,GrassedWaterways,,,,,15,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,5.916472847,0.384875049,Based on prairie budget
+1,GrassedWaterways,,,,,16,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,5.620649204,0.365631297,Based on prairie budget
+1,GrassedWaterways,,,,,17,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,5.339616744,0.347349732,Based on prairie budget
+1,GrassedWaterways,,,,,18,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,5.072635907,0.329982245,Based on prairie budget
+1,GrassedWaterways,,,,,19,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,4.819004112,0.313483133,Based on prairie budget
+1,GrassedWaterways,,,,,20,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,4.578053906,0.297808976,Based on prairie budget
+1,GrassedWaterways,,,,,21,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,4.349151211,0.282918528,Based on prairie budget
+1,GrassedWaterways,,,,,22,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,4.13169365,0.268772601,Based on prairie budget
+1,GrassedWaterways,,,,,23,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,3.925108968,0.255333971,Based on prairie budget
+1,GrassedWaterways,,,,,24,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,3.728853519,0.242567273,Based on prairie budget
+1,GrassedWaterways,,,,,25,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,3.542410843,0.230438909,Based on prairie budget
+1,GrassedWaterways,,,,,26,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,3.365290301,0.218916964,Based on prairie budget
+1,GrassedWaterways,,,,,27,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,3.197025786,0.207971115,Based on prairie budget
+1,GrassedWaterways,,,,,28,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,3.037174497,0.19757256,Based on prairie budget
+1,GrassedWaterways,,,,,29,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,2.885315772,0.187693932,Based on prairie budget
+1,GrassedWaterways,,,,,30,11,Annual,Preharvest,Custom,Fixed,Mowing custom labor,,12.132,2.741049983,0.178309235,Based on prairie budget
+2,Terraces,,,,,1,21,,Establishment,Custom,Variable,Surveying,,29.12,29.12,1.89429779,
+2,Terraces,,,,,1,21,,Establishment,Custom,Variable,Earth Moving - Grassed back,,280.699,280.699,18.25987278,112.2796 ft/acre * $2.5/ft
+2,Terraces,,,,,1,21,,Establishment,Custom,Variable,Earth Moving - Narrow base,,241.40114,241.40114,15.70349059,112.2796 ft/acre * $2.15/ft
+2,Terraces,,,,,1,20,,Establishment,Custom,Variable,Equipment - Drilling,,15.35,15.35,0.998539528,
+2,Terraces,,,,,1,,,Establishment,Input,Variable,Seed Cost - Grass Mix,,43.77,43.77,2.847301313,
+2,Terraces,,,,,1,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,1.14,0.074158636,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,1,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,1.14,0.074158636,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,2,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,1.083,0.070450704,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,2,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,1.083,0.070450704,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,3,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,1.02885,0.066928169,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,3,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,1.02885,0.066928169,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,4,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.9774075,0.063581761,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,4,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.9774075,0.063581761,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,5,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.928537125,0.060402673,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,5,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.928537125,0.060402673,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,6,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.882110269,0.057382539,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,6,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.882110269,0.057382539,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,7,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.838004755,0.054513412,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,7,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.838004755,0.054513412,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,8,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.796104518,0.051787741,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,8,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.796104518,0.051787741,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,9,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.756299292,0.049198354,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,9,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.756299292,0.049198354,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,10,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.718484327,0.046738437,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,10,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.718484327,0.046738437,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,11,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.682560111,0.044401515,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,11,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.682560111,0.044401515,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,12,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.648432105,0.042181439,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,12,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.648432105,0.042181439,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,13,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.6160105,0.040072367,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,13,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.6160105,0.040072367,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,14,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.585209975,0.038068749,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,14,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.585209975,0.038068749,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,15,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.555949476,0.036165311,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,15,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.555949476,0.036165311,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,16,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.528152002,0.034357046,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,16,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.528152002,0.034357046,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,17,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.501744402,0.032639193,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,17,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.501744402,0.032639193,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,18,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.476657182,0.031007234,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,18,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.476657182,0.031007234,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,19,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.452824323,0.029456872,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,19,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.452824323,0.029456872,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,20,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.430183107,0.027984028,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,20,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.430183107,0.027984028,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,21,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.408673952,0.026584827,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,21,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.408673952,0.026584827,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,22,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.388240254,0.025255586,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,22,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.388240254,0.025255586,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,23,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.368828241,0.023992806,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,23,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.368828241,0.023992806,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,24,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.350386829,0.022793166,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,24,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.350386829,0.022793166,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,25,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.332867488,0.021653508,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,25,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.332867488,0.021653508,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,26,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.316224113,0.020570832,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,26,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.316224113,0.020570832,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,27,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.300412908,0.019542291,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,27,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.300412908,0.019542291,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,28,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.285392262,0.018565176,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,28,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.285392262,0.018565176,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,29,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.271122649,0.017636917,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,29,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.271122649,0.017636917,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,30,7,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.257566517,0.016755072,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+2,Terraces,,,,,30,22,,Preharvest,Labor,Variable,Maintenance & Inspections,0.08,1.14,0.257566517,0.016755072,"Assume 2 4-hour inspections and improvements (debree removal, light earthwork with plow) per year per 50 acres. Inspections and maintenance tasks outlined by source."
+3,Buffers,,,,,1,,Annual,Establishment,Input,Variable,Seed cost - grass mix,,56.55,56.55,3.097624392,$56.55/acre. Assume NO FERTILIZER in Iowa
+3,Buffers,,,,,1,20,Annual,Establishment,Custom,Variable,Equipment - drilling,,15.35,15.35,0.84082289,$15.35/acre
+3,Buffers,,,,,1,,Annual,Establishment,Input,Variable,Trees/shrubs - dogwood,,172.175,172.175,9.431184432,($12.50 per 100ft) * 1377.4 ft
+3,Buffers,,,,,1,,Annual,Establishment,Input,Variable,Trees/shrubs - bur oak/maple,,344.35,344.35,18.86236886,$25.00/100ft * 1377.4 ft
+3,Buffers,,,,,1,,Annual,Other,Other,Variable,Occasional repairs,,2.5,2.5,0.136941839,Per acre annual repair budget estimate
+3,Buffers,,,,,1,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,2.109,0.115524135,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,1,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,10.1,0.553245028,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,2,,Annual,Other,Other,Variable,Occasional repairs,,2.5,2.375,0.130094747,Per acre annual repair budget estimate
+3,Buffers,,,,,2,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,2.00355,0.109747928,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,2,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,9.595,0.525582777,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,3,,Annual,Other,Other,Variable,Occasional repairs,,2.5,2.25625,0.123590009,Per acre annual repair budget estimate
+3,Buffers,,,,,3,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.9033725,0.104260532,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,3,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,9.11525,0.499303638,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,4,,Annual,Other,Other,Variable,Occasional repairs,,2.5,2.1434375,0.117410509,Per acre annual repair budget estimate
+3,Buffers,,,,,4,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.808203875,0.099047505,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,4,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,8.6594875,0.474338456,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,5,,Annual,Other,Other,Variable,Occasional repairs,,2.5,2.036265625,0.111539984,Per acre annual repair budget estimate
+3,Buffers,,,,,5,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.717793681,0.09409513,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,5,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,8.226513125,0.450621533,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,6,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.934452344,0.105962984,Per acre annual repair budget estimate
+3,Buffers,,,,,6,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.631903997,0.089390374,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,6,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,7.815187469,0.428090457,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,7,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.837729727,0.100664835,Per acre annual repair budget estimate
+3,Buffers,,,,,7,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.550308797,0.084920855,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,7,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,7.424428095,0.406685934,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,8,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.74584324,0.095631593,Per acre annual repair budget estimate
+3,Buffers,,,,,8,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.472793357,0.080674812,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,8,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,7.053206691,0.386351637,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,9,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.658551078,0.090850014,Per acre annual repair budget estimate
+3,Buffers,,,,,9,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.39915369,0.076641072,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,9,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,6.700546356,0.367034055,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,10,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.575623524,0.086307513,Per acre annual repair budget estimate
+3,Buffers,,,,,10,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.329196005,0.072809018,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,10,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,6.365519038,0.348682353,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,11,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.496842348,0.081992137,Per acre annual repair budget estimate
+3,Buffers,,,,,11,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.262736205,0.069168567,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,11,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,6.047243086,0.331248235,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,12,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.422000231,0.07789253,Per acre annual repair budget estimate
+3,Buffers,,,,,12,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.199599395,0.065710139,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,12,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,5.744880932,0.314685823,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,13,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.350900219,0.073997904,Per acre annual repair budget estimate
+3,Buffers,,,,,13,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.139619425,0.062424632,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,13,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,5.457636885,0.298951532,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,14,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.283355208,0.070298009,Per acre annual repair budget estimate
+3,Buffers,,,,,14,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.082638454,0.0593034,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,14,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,5.184755041,0.284003955,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,15,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.219187448,0.066783108,Per acre annual repair budget estimate
+3,Buffers,,,,,15,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,1.028506531,0.05633823,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,15,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,4.925517289,0.269803758,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,16,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.158228075,0.063443953,Per acre annual repair budget estimate
+3,Buffers,,,,,16,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.977081204,0.053521319,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,16,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,4.679241425,0.25631357,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,17,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.100316672,0.060271755,Per acre annual repair budget estimate
+3,Buffers,,,,,17,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.928227144,0.050845253,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,17,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,4.445279353,0.243497891,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,18,,Annual,Other,Other,Variable,Occasional repairs,,2.5,1.045300838,0.057258168,Per acre annual repair budget estimate
+3,Buffers,,,,,18,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.881815787,0.04830299,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,18,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,4.223015386,0.231322997,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,19,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.993035796,0.054395259,Per acre annual repair budget estimate
+3,Buffers,,,,,19,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.837724998,0.045887841,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,19,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,4.011864616,0.219756847,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,20,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.943384006,0.051675496,Per acre annual repair budget estimate
+3,Buffers,,,,,20,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.795838748,0.043593449,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,20,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,3.811271386,0.208769005,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,21,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.896214806,0.049091721,Per acre annual repair budget estimate
+3,Buffers,,,,,21,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.75604681,0.041413776,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,21,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,3.620707816,0.198330554,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,22,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.851404066,0.046637135,Per acre annual repair budget estimate
+3,Buffers,,,,,22,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.71824447,0.039343087,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,22,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,3.439672426,0.188414027,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,23,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.808833862,0.044305279,Per acre annual repair budget estimate
+3,Buffers,,,,,23,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.682332246,0.037375933,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,23,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,3.267688804,0.178993325,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,24,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.768392169,0.042090015,Per acre annual repair budget estimate
+3,Buffers,,,,,24,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.648215634,0.035507136,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,24,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,3.104304364,0.170043659,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,25,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.729972561,0.039985514,Per acre annual repair budget estimate
+3,Buffers,,,,,25,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.615804852,0.03373178,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,25,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,2.949089146,0.161541476,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,26,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.693473933,0.037986238,Per acre annual repair budget estimate
+3,Buffers,,,,,26,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.58501461,0.032045191,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,26,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,2.801634689,0.153464402,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,27,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.658800236,0.036086926,Per acre annual repair budget estimate
+3,Buffers,,,,,27,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.555763879,0.030442931,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,27,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,2.661552954,0.145791182,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,28,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.625860224,0.03428258,Per acre annual repair budget estimate
+3,Buffers,,,,,28,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.527975685,0.028920784,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,28,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,2.528475306,0.138501623,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,29,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.594567213,0.032568451,Per acre annual repair budget estimate
+3,Buffers,,,,,29,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.501576901,0.027474745,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,29,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,2.402051541,0.131576542,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,30,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.564838852,0.030940028,Per acre annual repair budget estimate
+3,Buffers,,,,,30,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.476498056,0.026101008,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,30,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,2.281948964,0.124997715,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,31,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.53659691,0.029393027,Per acre annual repair budget estimate
+3,Buffers,,,,,31,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.452673153,0.024795958,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,31,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,2.167851516,0.118747829,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,32,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.509767064,0.027923376,Per acre annual repair budget estimate
+3,Buffers,,,,,32,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.430039495,0.02355616,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,32,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,2.05945894,0.112810438,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,33,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.484278711,0.026527207,Per acre annual repair budget estimate
+3,Buffers,,,,,33,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.408537521,0.022378352,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,33,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.956485993,0.107169916,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,34,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.460064776,0.025200847,Per acre annual repair budget estimate
+3,Buffers,,,,,34,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.388110645,0.021259434,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,34,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.858661693,0.10181142,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,35,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.437061537,0.023940804,Per acre annual repair budget estimate
+3,Buffers,,,,,35,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.368705112,0.020196462,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,35,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.765728609,0.096720849,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,36,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.41520846,0.022743764,Per acre annual repair budget estimate
+3,Buffers,,,,,36,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.350269857,0.019186639,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,36,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.677442178,0.091884806,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,37,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.394448037,0.021606576,Per acre annual repair budget estimate
+3,Buffers,,,,,37,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.332756364,0.018227307,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,37,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.593570069,0.087290566,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,38,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.374725635,0.020526247,Per acre annual repair budget estimate
+3,Buffers,,,,,38,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.316118546,0.017315942,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,38,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.513891566,0.082926038,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,39,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.355989353,0.019499935,Per acre annual repair budget estimate
+3,Buffers,,,,,39,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.300312618,0.016450145,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,39,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.438196988,0.078779736,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,40,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.338189886,0.018524938,Per acre annual repair budget estimate
+3,Buffers,,,,,40,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.285296988,0.015627638,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,40,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.366287138,0.074840749,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,41,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.321280391,0.017598691,Per acre annual repair budget estimate
+3,Buffers,,,,,41,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.271032138,0.014846256,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,41,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.297972781,0.071098712,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,42,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.305216372,0.016718756,Per acre annual repair budget estimate
+3,Buffers,,,,,42,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.257480531,0.014103943,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,42,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.233074142,0.067543776,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,43,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.289955553,0.015882819,Per acre annual repair budget estimate
+3,Buffers,,,,,43,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.244606505,0.013398746,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,43,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.171420435,0.064166587,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,44,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.275457776,0.015088678,Per acre annual repair budget estimate
+3,Buffers,,,,,44,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.232376179,0.012728809,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,44,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.112849413,0.060958258,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,45,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.261684887,0.014334244,Per acre annual repair budget estimate
+3,Buffers,,,,,45,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.220757371,0.012092368,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,45,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.057206943,0.057910345,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,46,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.248600642,0.013617532,Per acre annual repair budget estimate
+3,Buffers,,,,,46,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.209719502,0.01148775,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,46,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,1.004346596,0.055014828,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,47,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.23617061,0.012936655,Per acre annual repair budget estimate
+3,Buffers,,,,,47,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.199233527,0.010913362,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,47,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,0.954129266,0.052264086,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,48,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.22436208,0.012289822,Per acre annual repair budget estimate
+3,Buffers,,,,,48,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.189271851,0.010367694,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,48,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,0.906422803,0.049650882,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,49,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.213143976,0.011675331,Per acre annual repair budget estimate
+3,Buffers,,,,,49,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.179808258,0.009849309,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,49,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,0.861101662,0.047168338,Based on mower-conditioner  - equipment component only x1 cut
+3,Buffers,,,,,50,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.202486777,0.011091565,Per acre annual repair budget estimate
+3,Buffers,,,,,50,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.170817845,0.009356844,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
+3,Buffers,,,,,50,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,0.818046579,0.044809921,Based on mower-conditioner  - equipment component only x1 cut

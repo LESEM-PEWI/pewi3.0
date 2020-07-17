@@ -2509,10 +2509,10 @@ function numFormatting(num){
 function generateEconomicsTables() {
   var econtables = {'convCorn': {landuse: "Conventional Corn", subCrop:"Corn after Soybean"},
   'convCorn2': {landuse: "Conventional Corn", subCrop: "Corn after Corn"},
-  'consCorn' : {landuse: "Conservation Corn", subCrop: "Corn after Soybean"},
-  'consCorn2': {landuse: "Conservation Corn", subCrop: "Corn after Corn"},
+  'consCorn' : {landuse: "Conservation Corn", subCrop: "Corn after Soybean", subCrop2: "GrassedWaterways", subCrop3: "Terraces", subCrop4: "Buffers"},
+  'consCorn2': {landuse: "Conservation Corn", subCrop: "Corn after Corn", subCrop2: "GrassedWaterways", subCrop3: "Terraces", subCrop4: "Buffers"},
   'convSoy': {landuse: "Conventional Soybean", subCrop: "Soybean after Corn"},
-  'consSoy': {landuse: "Conservation Soybean", subCrop: "Soybean after Corn"},
+  'consSoy': {landuse: "Conservation Soybean", subCrop: "GrassedWaterways", subCrop2: "Terraces", subCrop3: "Buffers"},
   'alf': {landuse: "Alfalfa"},
   'permPas': {landuse: "Permanent Pasture"},
   'rotGraz': {landuse: "Rotational Grazing"},
@@ -2547,7 +2547,7 @@ function generateEconomicsTables() {
       curLandUse = values[i].landUse;
       Object.keys(econtables).forEach(key =>{
         if(curLandUse === econtables[key].landuse){
-          if(!values[i].subCrop || values[i].subCrop === econtables[key].subCrop || values[i].subCrop === econtables[key].subCrop2 || values[i].subCrop === econtables[key].subCrop3){
+          if(!values[i].subCrop || values[i].subCrop === econtables[key].subCrop || values[i].subCrop === econtables[key].subCrop2 || values[i].subCrop === econtables[key].subCrop3 || values[i].subCrop === econtables[key].subCrop3){
             econtables[key].table += "<tr><td>"+values[i].costName+"</td><td>"+values[i].time+"</td><td>"+values[i].action+'</td><td style="text-align:right">'+"$"+numFormatting(values[i].value)+"</td><td>"+values[i].timeOfYear+"</td></tr>";
           }
         }
