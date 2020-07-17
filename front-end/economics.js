@@ -14,10 +14,11 @@ var Economics = function () {
   this.getCropYields=[];
   this.getForrestYields=[];
   this.getBMPAreas=[];
+  this.getSoilArea=[];
 
 //the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
   yearCosts = [-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,{'Grapes (Conventional)': 1 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 1 *4}]
-  d3.csv('./revenue.csv', (data) => {
+  d3.csv('./revenue2020.csv', (data) => {
     this.rawRev = data;
   })
 
@@ -165,6 +166,7 @@ var Economics = function () {
     calculatePerYieldCrops();
     calculateForrestYields();
     calulateBMPBudgets();
+    calculateForestAreaBySoil();
 
     let landUses = [];
     this.mapData = [];
@@ -181,21 +183,37 @@ var Economics = function () {
         landUses[i][LandUseType[key.substring(0, key.length - 7)]] = Totals.landUseResults[i][key]
       }
       this.rawRev.forEach(dataPoint => {
-        if(dataPoint['Units'] === '$/acre'){
+        if(dataPoint['Units'] === '$/ton'){
           if(dataPoint['LU_ID'] == 15){
             let fruitsPrecipMultiplier = 1; //since the csv now accounts for acres instead of the actual yield for revenue purposes we have to use the yield precip multiplier
             if(boardData[currentBoard].precipitation[i] === 45.1) fruitsPrecipMultiplier = .75;
             if(boardData[currentBoard].precipitation[i] === 36.5) fruitsPrecipMultiplier = .9;
-            value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']] * fruitsPrecipMultiplier / 4;
+            // value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']] * fruitsPrecipMultiplier / 4;
+            console.log(this.getCropYields[i][1].mixedFVYield);
+            value = parseFloat(dataPoint['Revenue/acre/year']) * this.getCropYields[i][1].mixedFVYield;
           }
           else {
             value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']];
           }
         }
+        else if (dataPoint['LU_ID'] === "2"){
+          if(dataPoint['Sub Crop'] === 'Corn after Soybean'){
+            value = parseFloat(dataPoint['Revenue/acre/year']) * this.getBMPAreas[i][2].landUseYield || 0;  //2 = Cons Corn after Soybean
+          }
+          else {
+            value = parseFloat(dataPoint['Revenue/acre/year']) * this.getBMPAreas[i][3].landUseYield || 0; //3 = Cons Corn after Corn
+          }
+        }
+        else if (dataPoint['LU_ID'] === "4"){
+          value = parseFloat(dataPoint['Revenue/acre/year']) *  this.getBMPAreas[i][1].landUseYield; //1 = Cons Soybean
+        }
         //woodlands can't be treated the same since they are the only land use where the soil type changes the value of the wood not just the amount of wood.
         //Where the rest of the revenue above can multiply the output by a certain price: we need to actually find the soil that all the woodlands are on.
-        else if(dataPoint['LU_ID'] == 10 || dataPoint['LU_ID'] == 11){
-          value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][parseInt(dataPoint['LU_ID'])][dataPoint['SoilType']] || 0;
+        else if(dataPoint['LU_ID'] === "10"){
+          value = parseFloat(dataPoint['Revenue/acre/year']) * this.getSoilArea[i][1][dataPoint['SoilType']]  || 0;
+        }
+        else if(dataPoint['LU_ID'] === "11"){
+          value = parseFloat(dataPoint['Revenue/acre/year']) * this.getSoilArea[i][2][dataPoint['SoilType']]  || 0;
         }
         else{
           value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][dataPoint['LU_ID']];
@@ -611,6 +629,74 @@ var Economics = function () {
         }
       }
 
+  };
+
+
+  calculateForestAreaBySoil = () => {
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      this.getSoilArea[i] = [
+        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0,  "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0,  "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0,  "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+      ];
+
+      for (let j = 0; j < boardData[currentBoard].map.length; j++) {
+        let numLandUse = 0;
+        if (boardData[currentBoard].map[j].landType[i] === 10 ){
+          numLandUse = 1;
+        }
+        if(boardData[currentBoard].map[j].landType[i] === 11){
+          numLandUse = 2;
+        }
+
+        let soilType = boardData[currentBoard].map[j]['soilType'];
+
+        switch (soilType){
+          case "A":
+            this.getSoilArea[i][numLandUse]["A"] += boardData[currentBoard].map[j].area;
+            break;
+          case "B":
+            this.getSoilArea[i][numLandUse]["B"] += boardData[currentBoard].map[j].area;
+            break;
+          case "C":
+            this.getSoilArea[i][numLandUse]["C"] += boardData[currentBoard].map[j].area;
+            break;
+          case "D":
+            this.getSoilArea[i][numLandUse]["D"] += boardData[currentBoard].map[j].area;
+            break;
+          case "G":
+            this.getSoilArea[i][numLandUse]["G"] += boardData[currentBoard].map[j].area;
+            break;
+          case "K":
+            this.getSoilArea[i][numLandUse]["K"] += boardData[currentBoard].map[j].area;
+            break;
+          case "L":
+            this.getSoilArea[i][numLandUse]["L"] += boardData[currentBoard].map[j].area;
+            break;
+          case "M":
+            this.getSoilArea[i][numLandUse]["M"] += boardData[currentBoard].map[j].area;
+            break;
+          case "N":
+            this.getSoilArea[i][numLandUse]["N"] += boardData[currentBoard].map[j].area;
+            break;
+          case "O":
+            this.getSoilArea[i][numLandUse]["O"] += boardData[currentBoard].map[j].area;
+            break;
+          case "Q":
+            this.getSoilArea[i][numLandUse]["Q"] += boardData[currentBoard].map[j].area;
+            break;
+          case "T":
+            this.getSoilArea[i][numLandUse]["T"] += boardData[currentBoard].map[j].area;
+            break;
+          case "Y":
+            this.getSoilArea[i][numLandUse]["Y"] += boardData[currentBoard].map[j].area;
+            break;
+          default:
+            break;
+
+        }
+      }
+    }
   };
 
 

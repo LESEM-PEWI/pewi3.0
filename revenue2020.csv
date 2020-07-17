@@ -1,0 +1,51 @@
+LU_ID,Land-Use,Sub Crop,Years Applicable,Frequency,SoilType,Revenue/acre/year,Units,Calculations,Notes,
+5,Alfalfa,,1,,all,144.8823222, $/ton ,,,
+15,Mixed Fruits & Vegetables,Green Beans,1,,all,830.97,$/ton,"Green beans - 120 lbs/bed * 70 beds/acre = 8400 lbs/acre @ $3/lb
+Strawberries - yields y1 = 4000, y2 = 3000, y3 = 2000 qts/acre
+                             avg yield = 3000 qts/acre * $2.50/qt
+                             1 qt = 2.0 lbs strawberries; $1.25/lb, avg 6000 lbs/acre
+Winter Squash - 450 boxes/acre @ $12/box; 1 box = 50 lbs
+                                 22,500 lbs/acre @ $0.24/lb
+Grapes - NEEDED!!!",,
+15,Mixed Fruits & Vegetables,Strawberry,,Average Annual,,157.2,$/ton,4000 qts/acre * $2.25/qt,Why does $/qt change year to year?,
+15,Mixed Fruits & Vegetables,Winter Squash,,Annual,,160.26,$/ton,450 boxes/acre * $12/box,"50 lbs/box
+double check with Iowa expert",
+15,Mixed Fruits & Vegetables,Grapes,,,,752.22,$/ton,"FILLER/FAKE, REDO",,
+6,Permanent Pasture,Cattle,,Annual,,787.89, $/animal ,,,https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf
+7,Rotational Grazing,Cattle,,Annual,,787.89, $/animal ,,,https://www.extension.iastate.edu/AGDM/livestock/pdf/b1-21.pdf
+1,Conventional Corn,Regular Commodity Corn,,Annual,,3.8, $/bu ,,,
+2,Conservation Corn,Regular Commodity Corn,,Annual,,3.8, $/bu ,,,
+2,Conservation Corn,Corn after Soybean,,Annual,,3.8, $/bu ,,,
+3,Conventional Soybean,Regular Commodity Soybean,,Annual,,8.65, $/bu ,,,
+4,Conservation Soybean,Regular Commodity Soybean,,Annual,,8.65, $/bu ,,,
+13,Short-rotation Woody Bioenergy,Woody Biomass,,Average Annual,,72.72,$/ton,,,
+9,Prairie,none,,Annual,,0,$/acre,,"Assuming none. Government programs exist, but we are ignoring them for now.",
+14,Wetland,none,,Annual,,0,$/acre,,"Assuming none. Government programs exist, but we are ignoring them for now.",
+11,Conventional Forest,Wood,1,Annual,A,20.95,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,D,20.95,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,G,20.95,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,M,20.95,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,Q,20.95,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,Y,20.95,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,C,5.99,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,L,5.99,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,O,5.99,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,N,22.99,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,K,22.99,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,T,22.99,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+11,Conventional Forest,Wood,1,Annual,B,12.97,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,A,14.665,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,D,14.665,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,G,14.665,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,M,14.665,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,Q,14.665,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,Y,14.665,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,C,4.193,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,L,4.193,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,O,4.193,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,N,16.093,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,K,16.093,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,T,16.093,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+10,Conservation Forest,Wood,1,Annual,B,9.079,$/acre,,,"Multiple source, refer to Forest_Comp_Research Excel file"
+8,Grass Hay,,,,,108.7266019,$/ton,,,
+12,Switchgrass,,,,,60.57774931,$/ton,,,
