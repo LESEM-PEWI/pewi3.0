@@ -183,19 +183,15 @@ var Economics = function () {
         landUses[i][LandUseType[key.substring(0, key.length - 7)]] = Totals.landUseResults[i][key]
       }
       this.rawRev.forEach(dataPoint => {
-        if(dataPoint['Units'] === '$/ton'){
-          if(dataPoint['LU_ID'] == 15){
+
+        if(dataPoint['LU_ID'] === 15){
             let fruitsPrecipMultiplier = 1; //since the csv now accounts for acres instead of the actual yield for revenue purposes we have to use the yield precip multiplier
             if(boardData[currentBoard].precipitation[i] === 45.1) fruitsPrecipMultiplier = .75;
             if(boardData[currentBoard].precipitation[i] === 36.5) fruitsPrecipMultiplier = .9;
             // value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']] * fruitsPrecipMultiplier / 4;
-            console.log(this.getCropYields[i][1].mixedFVYield);
             value = parseFloat(dataPoint['Revenue/acre/year']) * this.getCropYields[i][1].mixedFVYield;
-          }
-          else {
-            value = parseFloat(dataPoint['Revenue/acre/year']) * landUses[i][dataPoint['LU_ID']];
-          }
         }
+
         else if (dataPoint['LU_ID'] === "2"){
           if(dataPoint['Sub Crop'] === 'Corn after Soybean'){
             value = parseFloat(dataPoint['Revenue/acre/year']) * this.getBMPAreas[i][2].landUseYield || 0;  //2 = Cons Corn after Soybean
@@ -210,17 +206,16 @@ var Economics = function () {
         //woodlands can't be treated the same since they are the only land use where the soil type changes the value of the wood not just the amount of wood.
         //Where the rest of the revenue above can multiply the output by a certain price: we need to actually find the soil that all the woodlands are on.
         else if(dataPoint['LU_ID'] === "10"){
-          value = parseFloat(dataPoint['Revenue/acre/year']) * this.getSoilArea[i][1][dataPoint['SoilType']]  || 0;
+          value = parseFloat(dataPoint['Revenue/acre/year']) * this.getSoilArea[i][1][dataPoint['SoilType']]  || 0; //1=Cons Forest
         }
         else if(dataPoint['LU_ID'] === "11"){
-          value = parseFloat(dataPoint['Revenue/acre/year']) * this.getSoilArea[i][2][dataPoint['SoilType']]  || 0;
+          value = parseFloat(dataPoint['Revenue/acre/year']) * this.getSoilArea[i][2][dataPoint['SoilType']]  || 0; //2=Conv Forrest
         }
         else{
           value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][dataPoint['LU_ID']];
         }
         this.scaledRev[i][dataPoint['LU_ID']] = this.scaledRev[i][dataPoint['LU_ID']] || 0;
         this.scaledRev[i][dataPoint['LU_ID']] += value;
-
       });
 
       /**
@@ -631,7 +626,11 @@ var Economics = function () {
 
   };
 
-
+  /**
+   * This function is used to calculate acreage of each soil type if the land use if Cons Forest (LU_ID = 10) or Conv Forest (LU_ID =11)
+   * this.getSoilArea object array has 4 objects. The first one is a dummy object to avoid undefined errors. (Not the best approach but we needed to store
+   * values for cells that are not conservation forest or conventional forest)
+   */
   calculateForestAreaBySoil = () => {
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.getSoilArea[i] = [
