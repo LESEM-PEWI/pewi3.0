@@ -1,4 +1,4 @@
-﻿LU_ID,Land-Use,Sub Crop,PerAcreORPerYield,BMP,TopographySlopes,StreamBorder,Year,Time of Year,Frequency,Time - Cost Type,Action - Cost Type,Fixed/Variable,Cost Name,# Labor Hours,Value,NPV,EAA,Description
+LU_ID,Land-Use,Sub Crop,PerAcreORPerYield,BMP,TopographySlopes,StreamBorder,Year,Time of Year,Frequency,Time - Cost Type,Action - Cost Type,Fixed/Variable,Cost Name,# Labor Hours,Value,NPV,EAA,Description
 1,Conventional Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Equipment,Fixed,Chisel plow ,,3.6,3.6,3.6,
 1,Conventional Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Equipment,Variable,Chisel plow ,,3.9,3.9,3.9,
 1,Conventional Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Equipment,Fixed,Tandem disk ,,4.6,4.6,4.6,
@@ -54,6 +54,7 @@
 1,Conventional Corn,Corn after Corn,,,,,1,22,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,0.221052632,3.15,3.15,3.15,2.8 hrs/acre * $14.25/hr * 3/38
 1,Conventional Corn,Corn after Corn,,,,,1,23,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,1.05,1.05,1.05,2.8 hrs/acre * $14.25/hr * 1/38
 1,Conventional Corn,Corn after Corn,,,,,1,24,Annual,Other,Labor,Variable,Labor - Operator,0.073684211,1.05,1.05,1.05,2.8 hrs/acre * $14.25/hr * 1/38
+1,Conventional Corn,Corn after Corn,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 1,Conventional Corn,Corn after Soybean,,,,,1,,Annual,Preharvest,Equipment,Fixed,Tandem disk ,,4.6,4.6,4.6,
 1,Conventional Corn,Corn after Soybean,,,,,1,,Annual,Preharvest,Equipment,Variable,Tandem disk ,,3.4,3.4,3.4,
 1,Conventional Corn,Corn after Soybean,,,,,1,,Annual,Preharvest,Equipment,Fixed,Apply nitrogen ,,4.3,4.3,4.3,
@@ -106,6 +107,7 @@
 1,Conventional Corn,Corn after Soybean,,,,,1,22,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,0.201315789,2.86875,2.86875,2.86875,2.55 hrs/acre * $14.25/hr * 3/38
 1,Conventional Corn,Corn after Soybean,,,,,1,23,Annual,Constant,Labor,Variable,Labor - Operator,0.067105263,0.95625,0.95625,0.95625,2.55 hrs/acre * $14.25/hr * 1/38
 1,Conventional Corn,Corn after Soybean,,,,,1,24,Annual,Constant,Labor,Variable,Labor - Operator,0.067105263,0.95625,0.95625,0.95625,2.55 hrs/acre * $14.25/hr * 1/38
+1,Conventional Corn,Corn after Soybean,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Equipment,Fixed,Chisel plow ,,3.6,3.6,3.6,
 2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Equipment,Variable,Chisel plow ,,3.9,3.9,3.9,
 2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Equipment,Fixed,Tandem disk ,,4.6,4.6,4.6,
@@ -507,6 +509,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 2,Conservation Corn,Corn after Soybean,,Buffers,,,50,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.202486777,0.011091565,Per acre annual repair budget estimate
 2,Conservation Corn,Corn after Soybean,,Buffers,,,50,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.170817845,0.009356844,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
 2,Conservation Corn,Corn after Soybean,,Buffers,,,50,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,0.818046579,0.044809921,Based on mower-conditioner  - equipment component only x1 cut
+2,Conservation Corn,Corn after Soybean,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 2,Conservation Corn,Corn after Corn,,GrassedWaterways,,,1,,Annual,Establishment,Input,Fixed,Seed cost - Legume (alfalfa),,77.31,77.31,5.029126446,Assume reseed every 30 years 18 lbs alfalfa seed. 77.31
 2,Conservation Corn,Corn after Corn,,GrassedWaterways,,,1,,Annual,Establishment,Input,Fixed,Seed cost - Grass mix,,56.61,56.61,3.68256174,"Assume reseed every 30 years. 56.61
 Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
@@ -762,6 +765,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 2,Conservation Corn,Corn after Corn,,Buffers,,,50,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.202486777,0.011091565,Per acre annual repair budget estimate
 2,Conservation Corn,Corn after Corn,,Buffers,,,50,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.170817845,0.009356844,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
 2,Conservation Corn,Corn after Corn,,Buffers,,,50,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,0.818046579,0.044809921,Based on mower-conditioner  - equipment component only x1 cut
+2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 3,Conventional Soybean,,,,,,1,,Annual,Preharvest,Equipment,Fixed,Chisel plow ,,3.6,3.6,3.6,
 3,Conventional Soybean,,,,,,1,,Annual,Preharvest,Equipment,Variable,Chisel plow ,,3.9,3.9,3.9,
 3,Conventional Soybean,,,,,,1,,Annual,Preharvest,Equipment,Fixed,Tandem disk ,,4.6,4.6,4.6,
@@ -812,6 +816,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 3,Conventional Soybean,,,,,,1,22,Annual,Constant,Labor,Variable,Labor - Operator,0.051162791,0.729069767,0.729069767,0.729069767,$14.25/hr * 2.2 hrs/acre * .023255814
 3,Conventional Soybean,,,,,,1,23,Annual,Constant,Labor,Variable,Labor - Operator,0.051162791,0.729069767,0.729069767,0.729069767,$14.25/hr * 2.2 hrs/acre * .023255814
 3,Conventional Soybean,,,,,,1,24,Annual,Constant,Labor,Variable,Labor - Operator,0.051162791,0.729069767,0.729069767,0.729069767,$14.25/hr * 2.2 hrs/acre * .023255814
+3,Conventional Soybean,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 4,Conservation Soybean,,,,,,1,,Annual,Preharvest,Equipment,Fixed,Chisel plow ,,3.6,3.6,3.6,
 4,Conservation Soybean,,,,,,1,,Annual,Preharvest,Equipment,Variable,Chisel plow ,,3.9,3.9,3.9,
 4,Conservation Soybean,,,,,,1,,Annual,Preharvest,Equipment,Fixed,Tandem disk ,,4.6,4.6,4.6,
@@ -1134,6 +1139,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 4,Conservation Soybean,,,Buffers,,,50,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.202486777,0.011091565,Per acre annual repair budget estimate
 4,Conservation Soybean,,,Buffers,,,50,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.170817845,0.009356844,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
 4,Conservation Soybean,,,Buffers,,,50,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,0.818046579,0.044809921,Based on mower-conditioner  - equipment component only x1 cut
+4,Conservation Soybean,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Establishment,Equipment,Fixed,Spray Herbicide ,,2.2,2.2,0.620426032,
 5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Establishment,Equipment,Variable,Spray Herbicide ,,2,2,0.564023665,
 5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Establishment,Equipment,Fixed,Tandem disk,,9.2,9.2,2.59450886,2 times - Ag Decision Maker
@@ -1149,17 +1155,17 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Establishment,Input,Variable,Fertilizer - Potash,,38.7125,38.7125,10.91738307, 125 lbs @ $0.31/lb
 5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Establishment,Input,Variable,Herbicide,,18.2,18.2,5.132615353,
 5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Establishment,Input,Variable,Lime,,20,20,5.640236652,
-5,Alfalfa,,,,,,1,10,"Year 1, Every 4 years",Preharvest,Labor,Variable,Labor - Pre-harvest,1,14.25,14.25,4.018668615,1.0 hours @ $14.25/hour   
+5,Alfalfa,,,,,,1,10,"Year 1, Every 4 years",Preharvest,Labor,Variable,Labor - Pre-harvest,1,14.25,14.25,4.018668615,1.0 hours @ $14.25/hour
 5,Alfalfa,,,,,,1,13,"Year 1, Every 4 years",Harvest,Labor,Variable,Labor - harvest - cutting,1.5,21.375,21.375,6.028002922,1.5 hours @ $14.25/hour. Cut 1
 5,Alfalfa,,,,,,1,16,"Year 1, Every 4 years",Harvest,Labor,Variable,Labor - harvest - cutting,1.5,21.375,21.375,6.028002922,1.5 hours @ $14.25/hour. Cut 2
-5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,11,11,3.102130159, $5.50 PER CUT Assumes 2 cut Establishment Year 
-5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,8.6,8.6,2.42530176, $4.30 PER CUT Assumes 2 cut Establishment Year 
-5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Fixed,Harvesting - Rake ,,6.2,6.2,1.748473362, $3.10 PER CUT Assumes 2 cut Establishment Year 
-5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Variable,Harvesting - Rake ,,4,4,1.12804733, $2.00 PER CUT Assumes 2 cut Establishment Year 
-5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Fixed,Harvesting - Baling ,,16.4,16.4,4.624994055, $8.20 PER CUT Assumes 2 cuts Establishment Year 
-5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Variable,Harvesting - Baling ,,10.4,10.4,2.932923059, $5.20 PER CUT Assumes 2 cuts Establishment Year 
-5,Alfalfa,,per yield,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.87,0.527362127, $1.87 per ton @ 2.5 tons/cutting * 2 cuttings 
-5,Alfalfa,,per yield,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.87,0.80937396, $2.87 per ton @ 2.5 tons/cutting * 2 cuttings 
+5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,11,11,3.102130159, $5.50 PER CUT Assumes 2 cut Establishment Year
+5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,8.6,8.6,2.42530176, $4.30 PER CUT Assumes 2 cut Establishment Year
+5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Fixed,Harvesting - Rake ,,6.2,6.2,1.748473362, $3.10 PER CUT Assumes 2 cut Establishment Year
+5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Variable,Harvesting - Rake ,,4,4,1.12804733, $2.00 PER CUT Assumes 2 cut Establishment Year
+5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Fixed,Harvesting - Baling ,,16.4,16.4,4.624994055, $8.20 PER CUT Assumes 2 cuts Establishment Year
+5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Variable,Harvesting - Baling ,,10.4,10.4,2.932923059, $5.20 PER CUT Assumes 2 cuts Establishment Year
+5,Alfalfa,,per yield,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.87,0.527362127, $1.87 per ton @ 2.5 tons/cutting * 2 cuttings
+5,Alfalfa,,per yield,,,,1,,"Year 1, Every 4 years",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.87,0.80937396, $2.87 per ton @ 2.5 tons/cutting * 2 cuttings
 5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Preharvest,Equipment,Fixed,Fertilizer Spreader ,,2,1.9,0.535822482,$2.00 FIXED
 5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Preharvest,Equipment,Fixed,Fertilizer Spreader ,,2,1.805,0.509031358,$2.00 FIXED
 5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Preharvest,Equipment,Fixed,Fertilizer Spreader ,,2,1.71475,0.48357979,$2.00 FIXED
@@ -1175,9 +1181,9 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Constant,Other,Fixed,Crop Insurance,,1.9,1.805,0.509031358,$1.9/acre crop insurance premium
 5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Constant,Other,Fixed,Crop Insurance,,1.9,1.71475,0.48357979,$1.9/acre crop insurance premium
 5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Constant,Other,Fixed,Crop Insurance,,1.9,1.6290125,0.4594008,$1.9/acre crop insurance premium
-5,Alfalfa,,,,,,2,10,"Years 2, 3, 4",Preharvest,Labor,Variable,Labor - Pre-harvest,1,14.25,13.5375,3.817735184,1.0 hours @ $14.25/hour   
-5,Alfalfa,,,,,,3,10,"Years 2, 3, 4",Preharvest,Labor,Variable,Labor - Pre-harvest,1,14.25,12.860625,3.626848425,1.0 hours @ $14.25/hour   
-5,Alfalfa,,,,,,4,10,"Years 2, 3, 4",Preharvest,Labor,Variable,Labor - Pre-harvest,1,14.25,12.21759375,3.445506003,1.0 hours @ $14.25/hour   
+5,Alfalfa,,,,,,2,10,"Years 2, 3, 4",Preharvest,Labor,Variable,Labor - Pre-harvest,1,14.25,13.5375,3.817735184,1.0 hours @ $14.25/hour
+5,Alfalfa,,,,,,3,10,"Years 2, 3, 4",Preharvest,Labor,Variable,Labor - Pre-harvest,1,14.25,12.860625,3.626848425,1.0 hours @ $14.25/hour
+5,Alfalfa,,,,,,4,10,"Years 2, 3, 4",Preharvest,Labor,Variable,Labor - Pre-harvest,1,14.25,12.21759375,3.445506003,1.0 hours @ $14.25/hour
 5,Alfalfa,,,,,,2,10,"Years 2, 3, 4",Harvest,Labor,Variable,Labor - harvest - cutting,1.3333,18.999525,18.04954875,5.090186321,1.33 hours @ $14.25/hour Cut 1
 5,Alfalfa,,,,,,3,10,"Years 2, 3, 4",Harvest,Labor,Variable,Labor - harvest - cutting,1.3333,18.999525,17.14707131,4.835677005,1.33 hours @ $14.25/hour Cut 2
 5,Alfalfa,,,,,,4,10,"Years 2, 3, 4",Harvest,Labor,Variable,Labor - harvest - cutting,1.3333,18.999525,16.28971775,4.593893154,1.33 hours @ $14.25/hour Cut 3
@@ -1187,30 +1193,31 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 5,Alfalfa,,,,,,2,16,"Years 2, 3, 4",Harvest,Labor,Variable,Labor - harvest - cutting,1.3333,18.999525,18.04954875,5.090186321,1.33 hours @ $14.25/hour Cut 1
 5,Alfalfa,,,,,,3,16,"Years 2, 3, 4",Harvest,Labor,Variable,Labor - harvest - cutting,1.3333,18.999525,17.14707131,4.835677005,1.33 hours @ $14.25/hour Cut 2
 5,Alfalfa,,,,,,4,16,"Years 2, 3, 4",Harvest,Labor,Variable,Labor - harvest - cutting,1.3333,18.999525,16.28971775,4.593893154,1.33 hours @ $14.25/hour Cut 3
-5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,15.675,4.420535476, $5.50 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,14.89125,4.199508702, $5.50 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,14.1466875,3.989533267, $5.50 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,12.255,3.456055009, $4.30 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,11.64225,3.283252258, $4.30 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,11.0601375,3.119089645, $4.30 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,8.835,2.491574541, $3.10 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,8.39325,2.366995814, $3.10 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,7.9735875,2.248646023, $3.10 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.7,1.607467446, $2.00 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.415,1.527094074, $2.00 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.14425,1.45073937, $2.00 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,23.37,6.590616528, $8.20 PER CUTAssumes 3 cuts per Year 
-5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,22.2015,6.261085702, $8.20 PER CUTAssumes 3 cuts per Year 
-5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,21.091425,5.948031416, $8.20 PER CUTAssumes 3 cuts per Year 
-5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,14.82,4.179415359, $5.20 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,14.079,3.970444591, $5.20 PER CUT Assumes 3 cuts per Year 
-5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,13.37505,3.771922362, $5.20 PER CUT Assumes 3 cuts per Year 
+5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,15.675,4.420535476, $5.50 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,14.89125,4.199508702, $5.50 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,14.1466875,3.989533267, $5.50 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,12.255,3.456055009, $4.30 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,11.64225,3.283252258, $4.30 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,11.0601375,3.119089645, $4.30 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,8.835,2.491574541, $3.10 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,8.39325,2.366995814, $3.10 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,7.9735875,2.248646023, $3.10 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.7,1.607467446, $2.00 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.415,1.527094074, $2.00 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.14425,1.45073937, $2.00 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,23.37,6.590616528, $8.20 PER CUTAssumes 3 cuts per Year
+5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,22.2015,6.261085702, $8.20 PER CUTAssumes 3 cuts per Year
+5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,21.091425,5.948031416, $8.20 PER CUTAssumes 3 cuts per Year
+5,Alfalfa,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,14.82,4.179415359, $5.20 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,14.079,3.970444591, $5.20 PER CUT Assumes 3 cuts per Year
+5,Alfalfa,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,13.37505,3.771922362, $5.20 PER CUT Assumes 3 cuts per Year
 5,Alfalfa,,per yield,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.7765,0.500994021, $1.87 per ton @ 4 tons/acre/year * 3 cuttings
 5,Alfalfa,,per yield,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.687675,0.47594432, $1.87 per ton @ 4 tons/acre/year * 3 cuttings
 5,Alfalfa,,per yield,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.60329125,0.452147104, $1.87 per ton @ 4 tons/acre/year * 3 cuttings
 5,Alfalfa,,per yield,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.7265,0.768905262, $2.87 per ton @ 4 tons/acre/year * 3 cuttings
 5,Alfalfa,,per yield,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.590175,0.730459999, $2.87 per ton @ 4 tons/acre/year * 3 cuttings
 5,Alfalfa,,per yield,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.46066625,0.693936999, $2.87 per ton @ 4 tons/acre/year * 3 cuttings
+5,Alfalfa,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,164,164,164,
 6,Permanent Pasture,,,,,,1,,Annual,Preharvest,Input,Variable,Preharvest - Feed - Pasture Fertilizer & Miscellaneous ,,20,20,20,"Assumed pasture fertilizer, miscellaneous"
 6,Permanent Pasture,,,,,,1,,Annual,Preharvest,Input,Variable,Preharvest - Feed - Corn ,,5.44,5.44,5.44,4 bu @ $ 3.40/bu     / 2.5 acres (bring it down to per acre amount)
 6,Permanent Pasture,,,,,,1,,Annual,Preharvest,Input,Variable,Preharvest - Feed - Salt & Minerals ,,2.16,2.16,2.16,60 bu @ $ 0.09/bu     / 2.5 acres (bring it down to per acre amount)
@@ -1237,6 +1244,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 6,Permanent Pasture,,,,,,1,,Annual,Preharvest,Equipment,Fixed,"Machinery, Equipment, Housing, & Fences ",,26.04,26.04,26.04,65.10 / 2.5 acres (bring down to per acre)
 6,Permanent Pasture,,,,,,1,,Annual,Preharvest,Other,Fixed,Interest & Insurance on Breeding Herd,,43.28,43.28,43.28,108.20 / 2.5 acres (bring down to 1 acre)
 6,Permanent Pasture,,,,,,1,,Annual,Preharvest,Other,Fixed,Bull Depreciation/Replacement,,4.8,4.8,4.8,12/ 2.5 acres (bring down to 1 acre)
+6,Permanent Pasture,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,77,77,77,
 7,Rotational Grazing,,,,,,1,,Annual,Preharvest,Input,Variable,Preharvest - Feed - Pasture Fertilizer & Miscellaneous ,,31.42857143,31.42857143,31.42857143,"Assumed, modified (55/35) for changed stocking density"
 7,Rotational Grazing,,,,,,1,,Annual,Preharvest,Input,Variable,Preharvest - Feed - Corn ,,8.548571429,8.548571429,8.548571429,4 bu @ $ 3.40/bu     / 2.5 acres (bring it down to per acre amount) Modified (55/35) for increased stocking density
 7,Rotational Grazing,,,,,,1,,Annual,Preharvest,Input,Variable,Preharvest - Feed - Salt & Minerals ,,3.394285714,3.394285714,3.394285714,60 bu @ $ 0.09/bu     / 2.5 acres (bring it down to per acre amount) Modified (55/35) for increased stocking density
@@ -1249,6 +1257,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 7,Rotational Grazing,,,,,,1,,Annual,Preharvest,Equipment,Fixed,"Machinery, Equipment, Housing, & Fences ",,61.38,61.38,61.38,Assumed / 2.5 acres (bring down to 1 acre) Scale for Extra Fencing Costs
 7,Rotational Grazing,,,,,,1,,Annual,Preharvest,Other,Fixed,Interest & Insurance on Breeding Herd,,68.01142857,68.01142857,68.01142857,Assumed / 2.5 acres (bring down to 1 acre) Modified (55/35) for increased stocking density
 7,Rotational Grazing,,,,,,1,,Annual,Preharvest,Other,Fixed,Bull Depreciation/Replacement,,7.542857143,7.542857143,7.542857143,Assumed / 2.5 acres (bring down to 1 acre) Modified (55/35) for increased stocking density
+7,Rotational Grazing,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,77,77,77,
 8,Grass Hay,,,,,,1,,Every 4 years,Establishment,Equipment,Fixed,Spray Herbicide ,,2.2,2.2,0.620426032,
 8,Grass Hay,,,,,,1,,Every 4 years,Establishment,Equipment,Variable,Spray Herbicide ,,2,2,0.564023665,
 8,Grass Hay,,,,,,1,,Every 4 years,Establishment,Equipment,Fixed,Tandem disk  ,,9.2,9.2,2.59450886,2 times - Ag Decision Maker
@@ -1267,14 +1276,14 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 8,Grass Hay,,,,,,1,10,Every 4 years,Preharvest,Labor,Variable,Labor - Pre-harvest,0.75,10.6875,10.6875,3.014001461,1.0 hours @ $14.25/hour (1-0.25) OSU adjustment
 8,Grass Hay,,,,,,1,13,Every 4 years,Preharvest,Labor,Variable,Labor - harvest - cutting,1.5,16.03125,16.03125,4.521002191,1.5 hours @ $14.25/hour Cut 1*(1-0.25) OSU adjustment
 8,Grass Hay,,,,,,1,16,Every 4 years,Harvest,Labor,Variable,Labor - harvest - cutting,1.5,16.03125,16.03125,4.521002191,1.5 hours @ $14.25/hour Cut 2*(1-0.25) OSU adjustment
-8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,11,11,3.102130159, $5.50.PER CUT Assumes 2 cut Establishment Year 
-8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,8.6,8.6,2.42530176, $4.30.PER CUT Assumes 2 cut Establishment Year 
-8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Fixed,Harvesting - Rake ,,6.2,6.2,1.748473362, $3.10.PER CUT Assumes 2 cut Establishment Year 
-8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Variable,Harvesting - Rake ,,4,4,1.12804733, $2.00.PER CUT Assumes 2 cut Establishment Year 
-8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Fixed,Harvesting - Baling ,,16.4,16.4,4.624994055, $8.2.PER CUT Assumes 2 cuts Establishment Year 
-8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Variable,Harvesting - Baling ,,10.4,10.4,2.932923059, $5.20.PER CUT Assumes 2 cuts Establishment Year 
-8,Grass Hay,,per yield,,,,1,,Every 4 years,Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.87,0.527362127, $1.87 per ton @ 2.5 tons/cutting * 2 cuttings/acre/year 
-8,Grass Hay,,per yield,,,,1,,Every 4 years,Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.87,0.80937396, $2.87 per ton @ 2.5 tons/acre/year * 2 cuttings/acre/year 
+8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,11,11,3.102130159, $5.50.PER CUT Assumes 2 cut Establishment Year
+8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,8.6,8.6,2.42530176, $4.30.PER CUT Assumes 2 cut Establishment Year
+8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Fixed,Harvesting - Rake ,,6.2,6.2,1.748473362, $3.10.PER CUT Assumes 2 cut Establishment Year
+8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Variable,Harvesting - Rake ,,4,4,1.12804733, $2.00.PER CUT Assumes 2 cut Establishment Year
+8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Fixed,Harvesting - Baling ,,16.4,16.4,4.624994055, $8.2.PER CUT Assumes 2 cuts Establishment Year
+8,Grass Hay,,,,,,1,,Every 4 years,Harvest,Equipment,Variable,Harvesting - Baling ,,10.4,10.4,2.932923059, $5.20.PER CUT Assumes 2 cuts Establishment Year
+8,Grass Hay,,per yield,,,,1,,Every 4 years,Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.87,0.527362127, $1.87 per ton @ 2.5 tons/cutting * 2 cuttings/acre/year
+8,Grass Hay,,per yield,,,,1,,Every 4 years,Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.87,0.80937396, $2.87 per ton @ 2.5 tons/acre/year * 2 cuttings/acre/year
 8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Preharvest,Equipment,Fixed,Fertilizer Spreader ,,2,1.9,0.535822482,$2.00 FIXED
 8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Preharvest,Equipment,Fixed,Fertilizer Spreader ,,2,1.805,0.509031358,$2.00 FIXED
 8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Preharvest,Equipment,Fixed,Fertilizer Spreader ,,2,1.71475,0.48357979,$2.00 FIXED
@@ -1302,30 +1311,31 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 8,Grass Hay,,,,,,2,16,"Years 2, 3, 4",Harvest,Labor,Variable,Labor - harvest - cutting,1.3333,14.24964375,13.53716156,3.81763974,1.33 hours @ $14.25/hour Cut 1 (1-0.25) OSU adjustment
 8,Grass Hay,,,,,,3,16,"Years 2, 3, 4",Harvest,Labor,Variable,Labor - harvest - cutting,1.3333,14.24964375,12.86030348,3.626757753,1.33 hours @ $14.25/hour Cut 2 (1-0.25) OSU adjustment
 8,Grass Hay,,,,,,4,16,"Years 2, 3, 4",Harvest,Labor,Variable,Labor - harvest - cutting,1.3333,14.24964375,12.21728831,3.445419866,1.33 hours @ $14.25/hour Cut 3 * (1-0.25) OSU adjustment
-8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,15.675,4.420535476, $5.50.PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,14.89125,4.199508702, $5.50.PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,14.1466875,3.989533267, $5.50.PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,12.255,3.456055009, $4.30.PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,11.64225,3.283252258, $4.30.PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,11.0601375,3.119089645, $4.30.PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,8.835,2.491574541, $3.10PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,8.39325,2.366995814, $3.10PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,7.9735875,2.248646023, $3.10PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.7,1.607467446, $2.00PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.415,1.527094074, $2.00PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.14425,1.45073937, $2.00PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,23.37,6.590616528, $8.20 PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,22.2015,6.261085702, $8.20 PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,21.091425,5.948031416, $8.20 PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,14.82,4.179415359, $5.20PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,14.079,3.970444591, $5.20PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,13.37505,3.771922362, $5.20PER CUT Assumes 3 cuts per Year 
-8,Grass Hay,,per yield,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.7765,0.500994021, $1.87 per ton @ 4 tons/cutting * 3 cuttings/year 
-8,Grass Hay,,per yield,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.687675,0.47594432, $1.87 per ton @ 4 tons/cutting * 3 cuttings/year 
-8,Grass Hay,,per yield,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.60329125,0.452147104, $1.87 per ton @ 4 tons/cutting * 3 cuttings/year 
-8,Grass Hay,,per yield,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.7265,0.768905262, $2.87 per ton @ 4 tons/cutting * 3 cuttings/year 
-8,Grass Hay,,per yield,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.590175,0.730459999, $2.87 per ton @ 4 tons/cutting * 3 cuttings/year 
-8,Grass Hay,,per yield,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.46066625,0.693936999, $2.87 per ton @ 4 tons/cutting * 3 cuttings/year 
+8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,15.675,4.420535476, $5.50.PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,14.89125,4.199508702, $5.50.PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Mower-Conditioner ,,16.5,14.1466875,3.989533267, $5.50.PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,12.255,3.456055009, $4.30.PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,11.64225,3.283252258, $4.30.PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Mower-Conditioner ,,12.9,11.0601375,3.119089645, $4.30.PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,8.835,2.491574541, $3.10PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,8.39325,2.366995814, $3.10PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Rake ,,9.3,7.9735875,2.248646023, $3.10PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.7,1.607467446, $2.00PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.415,1.527094074, $2.00PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Rake ,,6,5.14425,1.45073937, $2.00PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,23.37,6.590616528, $8.20 PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,22.2015,6.261085702, $8.20 PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Baling ,,24.6,21.091425,5.948031416, $8.20 PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,14.82,4.179415359, $5.20PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,14.079,3.970444591, $5.20PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Baling ,,15.6,13.37505,3.771922362, $5.20PER CUT Assumes 3 cuts per Year
+8,Grass Hay,,per yield,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.7765,0.500994021, $1.87 per ton @ 4 tons/cutting * 3 cuttings/year
+8,Grass Hay,,per yield,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.687675,0.47594432, $1.87 per ton @ 4 tons/cutting * 3 cuttings/year
+8,Grass Hay,,per yield,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Fixed,Harvesting - Hauling ,,1.87,1.60329125,0.452147104, $1.87 per ton @ 4 tons/cutting * 3 cuttings/year
+8,Grass Hay,,per yield,,,,2,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.7265,0.768905262, $2.87 per ton @ 4 tons/cutting * 3 cuttings/year
+8,Grass Hay,,per yield,,,,3,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.590175,0.730459999, $2.87 per ton @ 4 tons/cutting * 3 cuttings/year
+8,Grass Hay,,per yield,,,,4,,"Years 2, 3, 4",Harvest,Equipment,Variable,Harvesting - Hauling ,,2.87,2.46066625,0.693936999, $2.87 per ton @ 4 tons/cutting * 3 cuttings/year
+8,Grass Hay,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,125,125,125,
 9,Prairie,,,,,,1,,year 1,Establishment,Other,Fixed,Tillagee,,18,18,0.985981239,
 9,Prairie,,,,,,1,,year 1,Establishment,Input,Fixed,Herbicide,,15,15,0.821651032,
 9,Prairie,,,,,,1,8,year 1,Establishment,Labor,Fixed,Herbicide application,3.719298246,53,53,2.903166981,
@@ -1411,6 +1421,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 9,Prairie,,,,,,46,10,even years,Preharvest,Custom,Fixed,Burning,,36,3.579849252,0.196092456,
 9,Prairie,,,,,,48,10,even years,Preharvest,Custom,Fixed,Burning,,36,3.23081395,0.176973441,
 9,Prairie,,,,,,50,10,even years,Preharvest,Custom,Fixed,Burning,,36,2.915809589,0.159718531,
+9,Prairie,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 10,Conservation Forest,Twentyfive,,,,,1,,,Constant,Other,Fixed,Insurance - NONE,,0,0,0,"Assume self-insured, as most Iowa woodlands are ""let it grow/wild"" back acreage and not a significant part of farms' businesses."
 10,Conservation Forest,Twentyfive,,,,,1,0,,Establishment,Custom,Fixed,Consultant Forester Management Plan Fee,,80,80,5.676196584,"Assumes $4,000 for a 50 acre plan"
 10,Conservation Forest,Twentyfive,,,,,15,0,,Preharvest,Custom,Fixed,Consultant Checkup/Inspection Fee,,40,19.50699916,1.384069525,"Assumes half of management plan fee: $4,000/2 for a 50 acre plan"
@@ -1585,6 +1596,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 10,Conservation Forest,Seventy,,,,,68,0,,Preharvest,Labor,Fixed,Owner Labor,0.0625,0.890625,0.028653418,0.001481357,Assumed at 1 hr/acre/year @ $14.25/hr
 10,Conservation Forest,Seventy,,,,,69,0,,Preharvest,Labor,Fixed,Owner Labor,0.0625,0.890625,0.027220747,0.00140729,Assumed at 1 hr/acre/year @ $14.25/hr
 10,Conservation Forest,Seventy,,,,,70,0,,Harvest,Labor,Fixed,Owner Labor,0.25,3.5625,0.103438839,0.0053477,Assumed at 0.25 hr/acre/year @ $14.25/hr
+10,Conservation Forest,Seventy,,,,,1,,Annual,Constant,Other,Fixed,Rent,,0,0,0,
 11,Conventional Forest,Twentyfive,,,,,1,,,Constant,Other,Fixed,Insurance - NONE,,0,0,0,"Assume self-insured, as most Iowa woodlands are ""let it grow/wild"" back acreage and not a significant part of farms' businesses."
 11,Conventional Forest,Twentyfive,,,,,1,0,,Establishment,Custom,Fixed,Consultant Forester Management Plan Fee,,80,80,5.676196584,"Assumes $4,000 for a 50 acre plan"
 11,Conventional Forest,Twentyfive,,,,,15,0,,Preharvest,Custom,Fixed,Consultant Checkup/Inspection Fee,,40,19.50699916,1.384069525,"Assumes half of management plan fee: $4,000/2 for a 50 acre plan"
@@ -1759,6 +1771,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 11,Conventional Forest,Seventy,,,,,68,0,,Preharvest,Labor,Fixed,Owner Labor,0.0625,0.890625,0.028653418,0.001481357,Assumed at 1 hr/acre/year @ $14.25/hr
 11,Conventional Forest,Seventy,,,,,69,0,,Preharvest,Labor,Fixed,Owner Labor,0.0625,0.890625,0.027220747,0.00140729,Assumed at 1 hr/acre/year @ $14.25/hr
 11,Conventional Forest,Seventy,,,,,70,0,,Harvest,Labor,Fixed,Owner Labor,0.25,3.5625,0.103438839,0.0053477,Assumed at 0.25 hr/acre/year @ $14.25/hr
+11,Conventional Forest,Seventy,,,,,1,,Annual,Constant,Other,Fixed,Rent,,0,0,0,
 12,Switchgrass,,,,,,1,6,Every 11 years,Establishment,Custom,Fixed,Custom - Preharvest - Disk,,4.725,4.725,0.568837512,"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey no repeat if reseeding"
 12,Switchgrass,,,,,,1,7,Every 11 years,Establishment,Custom,Fixed,Custom - Preharvest - Disk,,4.725,4.725,0.568837512,"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey no repeat if reseeding"
 12,Switchgrass,,,,,,1,6,Every 11 years,Establishment,Custom,Fixed,Custom - Preharvest - Harrow,,3.125,3.125,0.376215286,"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Surveyno repeat if reseeding"
@@ -2092,6 +2105,7 @@ $14.25/hr*0.5hrs /2"
 $20/hr*0.5hrs"
 12,Switchgrass,,,,,,11,,Annual after yr1,Harvest,Input,Variable,"Loader Labor, Storage to plant - Input",,2.695,1.613596051,0.19425904,"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey Loader costs
 $10.78/hr*0.5hrs"
+12,Switchgrass,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 13,Short-rotation Woody Bioenergy,,,,,,1,,Every 7 years,Establishment,Input,Variable,Aspen bare root stock (seedlings),,133.2629,133.2629,23.03047018,890 seedlings/hectare => 360.17 seedlings/acre $0.37/seedling
 13,Short-rotation Woody Bioenergy,,,,,,1,16,Every 7 years,Establishment,Custom,Variable,Tree planting,,48.75,48.75,8.424966149,$481.85/hectare => $195.00/acre /4
 13,Short-rotation Woody Bioenergy,,,,,,1,17,Every 7 years,Establishment,Custom,Variable,Tree planting,,48.75,48.75,8.424966149,$481.85/hectare => $195.00/acre /4
@@ -2114,13 +2128,13 @@ $10.78/hr*0.5hrs"
 13,Short-rotation Woody Bioenergy,,,,,,5,,Annual,Preharvest,Equipment,Variable,Bulk fertilizer spreader - N - Machinery Only,,3.5,2.850771875,0.492669878,1 application @  $8.65/hectare  =>  $3.5/acre
 13,Short-rotation Woody Bioenergy,,,,,,6,,Annual,Preharvest,Equipment,Variable,Bulk fertilizer spreader - N - Machinery Only,,3.5,2.708233281,0.468036384,1 application @  $8.65/hectare  =>  $3.5/acre
 13,Short-rotation Woody Bioenergy,,,,,,7,,Annual,Preharvest,Equipment,Variable,Bulk fertilizer spreader - N - Machinery Only,,3.5,2.572821617,0.444634565,1 application @  $8.65/hectare  =>  $3.5/acre
-13,Short-rotation Woody Bioenergy,,,,,,1,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.870650289,0.150465625,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,2,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.827117775,0.142942344,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,3,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.785761886,0.135795226,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,4,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.746473792,0.129005465,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,5,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.709150102,0.122555192,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,6,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.673692597,0.116427432,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,7,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.640007967,0.110606061,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
+13,Short-rotation Woody Bioenergy,,,,,,1,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.870650289,0.150465625,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,2,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.827117775,0.142942344,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,3,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.785761886,0.135795226,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,4,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.746473792,0.129005465,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,5,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.709150102,0.122555192,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,6,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.673692597,0.116427432,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,7,9,Annual,Preharvest,Labor,Variable,Bulk fertilizer spreader - N - Labor Only,0.061098266,0.870650289,0.640007967,0.110606061,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
 13,Short-rotation Woody Bioenergy,,,,,,2,,Annual years 2-7,Preharvest,Input,Variable,Fertilizer - Phosphorus,,31.4974,29.92253,5.171206202,56kg/hectare => 22.66kg/acre    @ $1.39/kg
 13,Short-rotation Woody Bioenergy,,,,,,3,,Annual years 2-7,Preharvest,Input,Variable,Fertilizer - Phosphorus,,31.4974,28.4264035,4.912645892,56kg/hectare => 22.66kg/acre    @ $1.39/kg
 13,Short-rotation Woody Bioenergy,,,,,,4,,Annual years 2-7,Preharvest,Input,Variable,Fertilizer - Phosphorus,,31.4974,27.00508333,4.667013597,56kg/hectare => 22.66kg/acre    @ $1.39/kg
@@ -2139,30 +2153,31 @@ $10.78/hr*0.5hrs"
 13,Short-rotation Woody Bioenergy,,,,,,5,,Annual years 2-7,Preharvest,Equipment,Variable,Bulk fertilizer spreader - Phosphorus - Machinery Only,,3.5,2.850771875,0.492669878,1 application @           $8.65/hectare  =>  $3.5/acre
 13,Short-rotation Woody Bioenergy,,,,,,6,,Annual years 2-7,Preharvest,Equipment,Variable,Bulk fertilizer spreader - Phosphorus - Machinery Only,,3.5,2.708233281,0.468036384,1 application @           $8.65/hectare  =>  $3.5/acre
 13,Short-rotation Woody Bioenergy,,,,,,7,,Annual years 2-7,Preharvest,Equipment,Variable,Bulk fertilizer spreader - Phosphorus - Machinery Only,,3.5,2.572821617,0.444634565,1 application @           $8.65/hectare  =>  $3.5/acre
-13,Short-rotation Woody Bioenergy,,,,,,2,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.827117775,0.142942344,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,3,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.785761886,0.135795226,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,4,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.746473792,0.129005465,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,5,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.709150102,0.122555192,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,6,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.673692597,0.116427432,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,7,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.640007967,0.110606061,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
+13,Short-rotation Woody Bioenergy,,,,,,2,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.827117775,0.142942344,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,3,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.785761886,0.135795226,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,4,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.746473792,0.129005465,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,5,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.709150102,0.122555192,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,6,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.673692597,0.116427432,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,7,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Phosphorus - Labor Only,0.061098266,0.870650289,0.640007967,0.110606061,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
 13,Short-rotation Woody Bioenergy,,,,,,2,,Annual years 2-7,Preharvest,Equipment,Variable,Bulk fertilizer spreader - Potassium - Machinery Only,,3.5,3.325,0.574625896,1 application @           $8.65/hectare  =>  $3.5/acre
 13,Short-rotation Woody Bioenergy,,,,,,3,,Annual years 2-7,Preharvest,Equipment,Variable,Bulk fertilizer spreader - Potassium - Machinery Only,,3.5,3.15875,0.545894602,1 application @           $8.65/hectare  =>  $3.5/acre
 13,Short-rotation Woody Bioenergy,,,,,,4,,Annual years 2-7,Preharvest,Equipment,Variable,Bulk fertilizer spreader - Potassium - Machinery Only,,3.5,3.0008125,0.518599871,1 application @           $8.65/hectare  =>  $3.5/acre
 13,Short-rotation Woody Bioenergy,,,,,,5,,Annual years 2-7,Preharvest,Equipment,Variable,Bulk fertilizer spreader - Potassium - Machinery Only,,3.5,2.850771875,0.492669878,1 application @           $8.65/hectare  =>  $3.5/acre
 13,Short-rotation Woody Bioenergy,,,,,,6,,Annual years 2-7,Preharvest,Equipment,Variable,Bulk fertilizer spreader - Potassium - Machinery Only,,3.5,2.708233281,0.468036384,1 application @           $8.65/hectare  =>  $3.5/acre
 13,Short-rotation Woody Bioenergy,,,,,,7,,Annual years 2-7,Preharvest,Equipment,Variable,Bulk fertilizer spreader - Potassium - Machinery Only,,3.5,2.572821617,0.444634565,1 application @           $8.65/hectare  =>  $3.5/acre
-13,Short-rotation Woody Bioenergy,,,,,,2,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.827117775,0.142942344,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,3,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.785761886,0.135795226,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,4,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.746473792,0.129005465,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,5,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.709150102,0.122555192,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,6,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.673692597,0.116427432,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
-13,Short-rotation Woody Bioenergy,,,,,,7,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.640007967,0.110606061,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr 
+13,Short-rotation Woody Bioenergy,,,,,,2,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.827117775,0.142942344,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,3,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.785761886,0.135795226,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,4,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.746473792,0.129005465,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,5,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.709150102,0.122555192,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,6,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.673692597,0.116427432,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
+13,Short-rotation Woody Bioenergy,,,,,,7,9,Annual years 2-7,Preharvest,Labor,Variable,Bulk fertilizer spreader - Potassium - Labor Only,0.061098266,0.870650289,0.640007967,0.110606061,1 application @           0.151 hr/hectare  =>  0.0611 hr/acre @  $14.25/hr
 13,Short-rotation Woody Bioenergy,,,,,,7,13,Every 7 years,Harvest,Custom,Variable,Feller buncher/forwarder,,259.7502,190.9402656,32.99826204,$28.67/Mg @ 9.06 Mg/acre
 13,Short-rotation Woody Bioenergy,,,,,,7,16,Every 7 years,Harvest,Custom,Variable,Staging (gathering biomass for transport),,60.8832,44.7547466,7.734507181,$6.72/Mg @ 9.06 Mg/acre
 13,Short-rotation Woody Bioenergy,,,,,,7,17,Every 7 years,Harvest,Custom,Variable,Wood chipping,,119.8638,88.11090736,15.22731101,$13.23/Mg @ 9.06 Mg/acre
+13,Short-rotation Woody Bioenergy,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 14,Wetland,,,,,,1,0,Every 50 years,Establishment,Custom,Fixed,Design cost,,648.0473493,648.0473493,35.49791823,
 14,Wetland,,,,,,1,0,Every 50 years,Establishment,Custom,Fixed,Contract fees,,313.5066775,313.5066775,17.17287234,
-14,Wetland,,,,,,1,6,Every 50 years,Establishment,Custom,Variable,Seeding buffer,,7.19344395,7.19344395,0.394033376,$22.61/hectare   =>   $9.15/acre     $19.15per acre to seed 
+14,Wetland,,,,,,1,6,Every 50 years,Establishment,Custom,Variable,Seeding buffer,,7.19344395,7.19344395,0.394033376,$22.61/hectare   =>   $9.15/acre     $19.15per acre to seed
 14,Wetland,,,,,,1,,Every 50 years,Establishment,Input,Variable,Seed cost,,468.0746661,468.0746661,25.63960217,"medium cost, per range cited in source"
 14,Wetland,,,,,,1,,Every 50 years,Establishment,Equipment,Fixed,Weir plate,,600,600,32.86604129,$30/sqft for 40ft x 5ft sheet pile plate Assumes 1 per 10 acre wetland/grass buffer block
 14,Wetland,,,,,,1,,Every 50 years,Establishment,Equipment,Fixed,Control structure,,212.75,212.75,11.65375047,"medium cost, per range cited in source"
@@ -2220,6 +2235,7 @@ $10.78/hr*0.5hrs"
 14,Wetland,,,,,,40,6,Every 40 years,Establishment,Custom,Fixed,Install weir and control structures replacements,,159,21.50887673,1.178186051,16 hours earthwork @ $198.75/hr / per ten acres
 14,Wetland,,,,,,40,,Every 40 years,Establishment,Equipment,Fixed,Weir plate,,600,81.16557257,4.445985099,$30/sqft for 40ft x 5ft sheet pile plate Assumes 1 per 10 acre wetland/grass buffer block
 14,Wetland,,,,,,40,,Every 40 years,Establishment,Equipment,Fixed,Control structure,,212.75,28.77995927,1.576472216,"medium cost, per range cited in source"
+14,Wetland,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 15,Mixed Fruits & Vegetables,Green Beans,,,,,1,,Annual,Establishment,Other,Fixed,Green Beans - Assumptions,,0,0,0,"Ag Decision Maker, Specialty Green Beans 4' rows, 100' beds ==== assume 70 beds/acre"
 15,Mixed Fruits & Vegetables,Green Beans,,,,,1,,Annual,Establishment,Input,Variable,Seed - Cover Crops ,,31.5,31.5,31.5,0.6 lbs seed/bed * $0.75/lb seed * 70 beds
 15,Mixed Fruits & Vegetables,Green Beans,,,,,1,,Annual,Establishment,Input,Variable,Seed ,,2171.4,2171.4,2171.4,2 lbs seed/bed * $15.51/lb seed * 70 beds
@@ -2238,6 +2254,7 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Green Beans,,,,,1,15,Annual,Harvest,Labor,Variable,Packaging ,35,498.75,498.75,498.75,0.50 hrs/bed * @14.25/hr * 70 beds
 15,Mixed Fruits & Vegetables,Green Beans,,,,,1,,Annual,Constant,Equipment,Fixed,Ownership Costs - Irrigation System ,,79.8,79.8,79.8,$1.14/bed * 70 beds
 15,Mixed Fruits & Vegetables,Green Beans,,,,,1,,Annual,Constant,Equipment,Fixed,Ownership Costs - Machinery ,,499.8,499.8,499.8,$7.14/bed * 70 beds
+15,Mixed Fruits & Vegetables,Green Beans,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 15,Mixed Fruits & Vegetables,Strawberries,,,,,0,,Every 3 Years,Establishment,Input,Variable,Seed-cover crop,,45,45,16.52438541,75 lbs/acre * $0.60/lb
 15,Mixed Fruits & Vegetables,Strawberries,,,,,0,,Every 3 Years,Establishment,Input,Variable,Plants,,700,700,257.0459952,5000 plants * ($100/1000 plants)
 15,Mixed Fruits & Vegetables,Strawberries,,,,,0,,Every 3 Years,Establishment,Input,Variable,Fertilization,,78,78,28.64226804,300 lbs/acre * $0.15/lb
@@ -2327,6 +2344,7 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Strawberries,,,,,1,,Annual,Constant,Equipment,Fixed,Ownership Costs - Machinery ,,500,500,183.6042823,$500/acre
 15,Mixed Fruits & Vegetables,Strawberries,,,,,2,,Annual,Constant,Equipment,Fixed,Ownership Costs - Machinery ,,500,475,174.4240682,$500/acre
 15,Mixed Fruits & Vegetables,Strawberries,,,,,3,,Annual,Constant,Equipment,Fixed,Ownership Costs - Machinery ,,500,451.25,165.7028648,$500/acre
+15,Mixed Fruits & Vegetables,Strawberries,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 15,Mixed Fruits & Vegetables,Winter Squash,,,,,1,,Annual,Preharvest,Input,Variable,N Fertilizer: Urea,,40,40,40,100lbs @ $0.40/lb
 15,Mixed Fruits & Vegetables,Winter Squash,,,,,1,,Annual,Preharvest,Input,Variable,K Fertilizer: Potash (0-0-60),,24,24,24,80lbs @ $0.30/lb
 15,Mixed Fruits & Vegetables,Winter Squash,,,,,1,,Annual,Preharvest,Input,Variable,N Fertilizer: Fertigation (Calcium Nitrate),,69.3,69.3,69.3,154lbs @ $0.45/lb
@@ -2361,6 +2379,7 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Winter Squash,,,,,1,20,Annual,Preharvest,Labor,Variable,Marketing - Operator and Unpaid Family Labor,0.75,10.6875,10.6875,10.6875,15 hrs/acre * $14.25/hr *.25/5
 15,Mixed Fruits & Vegetables,Winter Squash,,,,,1,21,Annual,Preharvest,Labor,Variable,Marketing - Operator and Unpaid Family Labor,0.75,10.6875,10.6875,10.6875,15 hrs/acre * $14.25/hr *.25/5
 15,Mixed Fruits & Vegetables,Winter Squash,,,,,1,22,Annual,Preharvest,Labor,Variable,Marketing - Operator and Unpaid Family Labor,0.75,10.6875,10.6875,10.6875,15 hrs/acre * $14.25/hr *.25/5
+15,Mixed Fruits & Vegetables,Winter Squash,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,6,,Establishment,Custom,Variable,Drainage Tile Installation ,,2180,2180,154.6763569,
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,7,,Establishment,Custom,Variable,Drainage Tile Installation ,,2180,2180,154.6763569,
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,19,,Establishment,Input,Variable,Lime ,,90,90,6.385721157,
@@ -2500,7 +2519,7 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,10,,Preharvest,Labor,Variable,Spray ,0.4,8,7.6,0.539238675,0.4 hours * $20/hour * 4 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,11,,Preharvest,Labor,Variable,Spray ,0.4,8,7.6,0.539238675,0.4 hours * $20/hour * 4 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,12,,Preharvest,Labor,Variable,Spray ,0.4,8,7.6,0.539238675,0.4 hours * $20/hour * 4 sprays
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,,,Preharvest,Equipment,Variable,Spray ,,33.52,31.844,2.25941005,$8.38 * 4 sprays 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,,,Preharvest,Equipment,Variable,Spray ,,33.52,31.844,2.25941005,$8.38 * 4 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,9,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,8.799375,0.624337279,$14.25/hr * 0.65hr *4 Mowings /4
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,11,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,8.799375,0.624337279,$14.25/hr * 0.65hr *4 Mowings /4
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,14,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,8.799375,0.624337279,$14.25/hr * 0.65hr *4 Mowings /4
@@ -2570,13 +2589,13 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Input,Variable,Spray - Spreader,,1.25,1.128125,0.080043241,Spreader 4 oz./acre * $20/gal * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,8,,Preharvest,Labor,Variable,Spray ,0.6,12,10.83,0.768415113,0.6 hours * $20/hour * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,10,,Preharvest,Labor,Variable,Spray ,0.6,12,10.83,0.768415113,0.6 hours * $20/hour * 2 sprays
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Equipment,Variable,Spray ,,27.94,25.21585,1.78912652, $13.97 * 2 sprays 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Equipment,Variable,Spray ,,27.94,25.21585,1.78912652, $13.97 * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Input,Variable,Spray - Revus Top,,32.76,29.5659,2.097773257,Revus Top 7 oz/acre * $2.34/oz * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Input,Variable,Spray - Sulfur,,4,3.61,0.256138371,Sulfur 4 lbs/acre * $0.50/lb * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Input,Variable,Spray - Spreader,,1.25,1.128125,0.080043241,Spreader 4 oz./acre * $20/gal * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,12,,Preharvest,Labor,Variable,Spray ,0.6,12,10.83,0.768415113,0.6 hours * $20/hour * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,14,,Preharvest,Labor,Variable,Spray ,0.6,12,10.83,0.768415113,0.6 hours * $20/hour * 2 sprays
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Equipment,Variable,Spray ,,27.94,25.21585,1.78912652, $13.97 * 2 sprays 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Equipment,Variable,Spray ,,27.94,25.21585,1.78912652, $13.97 * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Input,Variable,Spray - Captan 80 WP,,66,59.565,4.226283119,Captan 80WP 2.5 lbs/acre * $6.60/lb * 4 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Input,Variable,Spray - Sulfur,,10,9.025,0.640345927,Sulfur 5 lbs/acre * $0.50/lb * 4 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Input,Variable,Spray - Spreader,,2.5,2.25625,0.160086482,Spreader 4 oz./acre * $20/gal * 4 sprays
@@ -2584,7 +2603,7 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,16,,Preharvest,Labor,Variable,Spray ,0.6,12,10.83,0.768415113,0.6 hours * $20/hour * 4 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,17,,Preharvest,Labor,Variable,Spray ,0.6,12,10.83,0.768415113,0.6 hours * $20/hour * 4 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,18,,Preharvest,Labor,Variable,Spray ,0.6,12,10.83,0.768415113,0.6 hours * $20/hour * 4 sprays
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Equipment,Variable,Spray ,,55.88,50.4317,3.578253041, $13.97 * 4 sprays 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,,,Preharvest,Equipment,Variable,Spray ,,55.88,50.4317,3.578253041, $13.97 * 4 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,9,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,8.35940625,0.593120415,$14.25/hr * 0.65hr *4 Mowings /4
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,11,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,8.35940625,0.593120415,$14.25/hr * 0.65hr *4 Mowings /4
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,14,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,8.35940625,0.593120415,$14.25/hr * 0.65hr *4 Mowings /4
@@ -3937,28 +3956,28 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,10,,Preharvest,Labor,Variable,Spray ,0.6,12,3.88240254,0.275466,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,10,,Preharvest,Labor,Variable,Spray ,0.6,12,3.688282413,0.2616927,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,10,,Preharvest,Labor,Variable,Spray ,0.6,12,3.503868292,0.248608065,0.6 hours * $20/hour * 1 spray
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Input,Variable,Spray - Revus Top,,16.38,14.0438025,0.996442297,Revus Top 7 oz/acre * $2.34/oz * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Input,Variable,Spray - Revus Top,,16.38,13.34161238,0.946620182,Revus Top 7 oz/acre * $2.34/oz * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Input,Variable,Spray - Revus Top,,16.38,12.67453176,0.899289173,Revus Top 7 oz/acre * $2.34/oz * 1 spray
@@ -4047,28 +4066,28 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,11,,Preharvest,Labor,Variable,Spray ,0.6,12,3.88240254,0.275466,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,11,,Preharvest,Labor,Variable,Spray ,0.6,12,3.688282413,0.2616927,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,11,,Preharvest,Labor,Variable,Spray ,0.6,12,3.503868292,0.248608065,0.6 hours * $20/hour * 1 spray
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Input,Variable,Spray - Vivando,,18.8,16.11865,1.143657826,Vivando 10 oz/acre * $1.88/oz * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Input,Variable,Spray - Vivando,,18.8,15.3127175,1.086474935,Vivando 10 oz/acre * $1.88/oz * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Input,Variable,Spray - Vivando,,18.8,14.54708163,1.032151188,Vivando 10 oz/acre * $1.88/oz * 1 spray
@@ -4135,28 +4154,28 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,12,,Preharvest,Labor,Variable,Spray ,0.6,12,3.88240254,0.275466,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,12,,Preharvest,Labor,Variable,Spray ,0.6,12,3.688282413,0.2616927,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,12,,Preharvest,Labor,Variable,Spray ,0.6,12,3.503868292,0.248608065,0.6 hours * $20/hour * 1 spray
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Input,Variable,Spray - Pristine 38WG,,32.5,27.8646875,1.97706805,Pristine 38WG 10 oz/acre * $3.25/oz * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Input,Variable,Spray - Pristine 38WG,,32.5,26.47145313,1.878214648,Pristine 38WG 10 oz/acre * $3.25/oz * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Input,Variable,Spray - Pristine 38WG,,32.5,25.14788047,1.784303915,Pristine 38WG 10 oz/acre * $3.25/oz * 1 spray
@@ -4223,28 +4242,28 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,13,,Preharvest,Labor,Variable,Spray ,0.6,12,3.88240254,0.275466,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,13,,Preharvest,Labor,Variable,Spray ,0.6,12,3.688282413,0.2616927,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,13,,Preharvest,Labor,Variable,Spray ,0.6,12,3.503868292,0.248608065,0.6 hours * $20/hour * 1 spray
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Input,Variable,Spray - Revus Top,,16.38,14.0438025,0.996442297,Revus Top 7 oz/acre * $2.34/oz * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Input,Variable,Spray - Revus Top,,16.38,13.34161238,0.946620182,Revus Top 7 oz/acre * $2.34/oz * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Input,Variable,Spray - Revus Top,,16.38,12.67453176,0.899289173,Revus Top 7 oz/acre * $2.34/oz * 1 spray
@@ -4333,28 +4352,28 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,14,,Preharvest,Labor,Variable,Spray ,0.6,12,3.88240254,0.275466,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,14,,Preharvest,Labor,Variable,Spray ,0.6,12,3.688282413,0.2616927,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,14,,Preharvest,Labor,Variable,Spray ,0.6,12,3.503868292,0.248608065,0.6 hours * $20/hour * 1 spray
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Input,Variable,Spray - Pristine 38WG,,40.625,34.83085938,2.471335063,Pristine 38WG 12.5 oz/acre * $3.25/oz * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Input,Variable,Spray - Pristine 38WG,,40.625,33.08931641,2.347768309,Pristine 38WG 12.5 oz/acre * $3.25/oz * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Input,Variable,Spray - Pristine 38WG,,40.625,31.43485059,2.230379894,Pristine 38WG 12.5 oz/acre * $3.25/oz * 1 spray
@@ -4443,28 +4462,28 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,15,,Preharvest,Labor,Variable,Spray ,0.6,12,3.88240254,0.275466,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,15,,Preharvest,Labor,Variable,Spray ,0.6,12,3.688282413,0.2616927,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,15,,Preharvest,Labor,Variable,Spray ,0.6,12,3.503868292,0.248608065,0.6 hours * $20/hour * 1 spray
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919, $13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223, $13.97 * 1 spray 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919, $13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223, $13.97 * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Input,Variable,Spray - Sulfur,,8,6.859,0.486662905,Sulfur 8 lbs/acre * $0.50/lb * 2 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Input,Variable,Spray - Sulfur,,8,6.51605,0.462329759,Sulfur 8 lbs/acre * $0.50/lb * 2 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Input,Variable,Spray - Sulfur,,8,6.1902475,0.439213271,Sulfur 8 lbs/acre * $0.50/lb * 2 spray
@@ -4553,28 +4572,28 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,16,,Preharvest,Labor,Variable,Spray ,1.2,24,7.764805079,0.550932001,0.6 hours * $20/hour * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,16,,Preharvest,Labor,Variable,Spray ,1.2,24,7.376564825,0.523385401,0.6 hours * $20/hour * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,16,,Preharvest,Labor,Variable,Spray ,1.2,24,7.007736584,0.497216131,0.6 hours * $20/hour * 2 sprays
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,27.94,23.9550575,1.699670194,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,27.94,22.75730463,1.614686685,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,27.94,21.61943939,1.53395235,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,27.94,20.53846742,1.457254733,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,27.94,19.51154405,1.384391996,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,27.94,18.53596685,1.315172396,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,27.94,17.60916851,1.249413777,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,27.94,16.72871008,1.186943088,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,27.94,15.89227458,1.127595933,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,27.94,15.09766085,1.071216137,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,27.94,14.34277781,1.01765533,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,27.94,13.62563892,0.966772563,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,27.94,12.94435697,0.918433935,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,27.94,12.29713912,0.872512238,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,27.94,11.68228217,0.828886627,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,27.94,11.09816806,0.787442295,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,27.94,10.54325965,0.74807018,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,27.94,10.01609667,0.710666671,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,27.94,9.515291838,0.675133338,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,27.94,9.039527247,0.641376671,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,27.94,8.587550884,0.609307837,$13.97 * 2 sprays 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,27.94,8.15817334,0.578842446,$13.97 * 2 sprays 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,27.94,23.9550575,1.699670194,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,27.94,22.75730463,1.614686685,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,27.94,21.61943939,1.53395235,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,27.94,20.53846742,1.457254733,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,27.94,19.51154405,1.384391996,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,27.94,18.53596685,1.315172396,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,27.94,17.60916851,1.249413777,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,27.94,16.72871008,1.186943088,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,27.94,15.89227458,1.127595933,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,27.94,15.09766085,1.071216137,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,27.94,14.34277781,1.01765533,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,27.94,13.62563892,0.966772563,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,27.94,12.94435697,0.918433935,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,27.94,12.29713912,0.872512238,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,27.94,11.68228217,0.828886627,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,27.94,11.09816806,0.787442295,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,27.94,10.54325965,0.74807018,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,27.94,10.01609667,0.710666671,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,27.94,9.515291838,0.675133338,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,27.94,9.039527247,0.641376671,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,27.94,8.587550884,0.609307837,$13.97 * 2 sprays
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,27.94,8.15817334,0.578842446,$13.97 * 2 sprays
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Input,Variable,Spray - Captan 80 WP,,16.5,14.1466875,1.003742241,Captan 80WP 2.5 lbs/acre * $6.60/lb * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Input,Variable,Spray - Captan 80 WP,,16.5,13.43935313,0.953555129,Captan 80WP 2.5 lbs/acre * $6.60/lb * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Input,Variable,Spray - Captan 80 WP,,16.5,12.76738547,0.905877372,Captan 80WP 2.5 lbs/acre * $6.60/lb * 1 spray
@@ -4685,28 +4704,28 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,17,,Preharvest,Labor,Variable,Spray ,0.6,12,3.88240254,0.275466,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,17,,Preharvest,Labor,Variable,Spray ,0.6,12,3.688282413,0.2616927,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,17,,Preharvest,Labor,Variable,Spray ,0.6,12,3.503868292,0.248608065,0.6 hours * $20/hour * 1 spray
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Input,Variable,Spray - Captan 80 WP,,16.5,14.1466875,1.003742241,Captan 80WP 2.5 lbs/acre * $6.60/lb * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Input,Variable,Spray - Captan 80 WP,,16.5,13.43935313,0.953555129,Captan 80WP 2.5 lbs/acre * $6.60/lb * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Input,Variable,Spray - Captan 80 WP,,16.5,12.76738547,0.905877372,Captan 80WP 2.5 lbs/acre * $6.60/lb * 1 spray
@@ -4817,28 +4836,28 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,18,,Preharvest,Labor,Variable,Spray ,0.6,12,3.88240254,0.275466,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,18,,Preharvest,Labor,Variable,Spray ,0.6,12,3.688282413,0.2616927,0.6 hours * $20/hour * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,18,,Preharvest,Labor,Variable,Spray ,0.6,12,3.503868292,0.248608065,0.6 hours * $20/hour * 1 spray
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray 
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray 
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.97752875,0.849835097,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,,,Preharvest,Equipment,Variable,Spray ,,13.97,11.37865231,0.807343342,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.8097197,0.766976175,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,7,,,Preharvest,Equipment,Variable,Spray ,,13.97,10.26923371,0.728627366,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,8,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.755772026,0.692195998,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,9,,,Preharvest,Equipment,Variable,Spray ,,13.97,9.267983425,0.657586198,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,10,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.804584254,0.624706888,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,11,,,Preharvest,Equipment,Variable,Spray ,,13.97,8.364355041,0.593471544,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,12,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.946137289,0.563797967,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,13,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.548830425,0.535608068,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,14,,,Preharvest,Equipment,Variable,Spray ,,13.97,7.171388903,0.508827665,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,15,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.812819458,0.483386282,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,16,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.472178485,0.459216968,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,17,,,Preharvest,Equipment,Variable,Spray ,,13.97,6.148569561,0.436256119,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,18,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.841141083,0.414443313,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,19,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.549084029,0.393721148,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,20,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.271629827,0.37403509,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,21,,,Preharvest,Equipment,Variable,Spray ,,13.97,5.008048336,0.355333336,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,22,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.757645919,0.337566669,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.519763623,0.320688335,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.293775442,0.304653919,$13.97 * 1 spray
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Preharvest,Equipment,Variable,Spray ,,13.97,4.07908667,0.289421223,$13.97 * 1 spray
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,4,9,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,7.941435938,0.563464394,$14.25hr * 0.65hr * 4 Mowings/4
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,5,9,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,7.544364141,0.535291175,$14.25hr * 0.65hr * 4 Mowings/4
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,6,9,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,7.167145934,0.508526616,$14.25hr * 0.65hr * 4 Mowings/4
@@ -6129,4 +6148,4 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,23,,,Harvest,Other,Variable,Assessment & Inspection Fee,,351,113.5602743,8.057380512,"$351 per acre, tied to harvests"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Harvest,Other,Variable,Assessment & Inspection Fee,,351,107.8822606,7.654511487,"$351 per acre, tied to harvests"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Harvest,Other,Variable,Assessment & Inspection Fee,,351,102.4881475,7.271785912,"$351 per acre, tied to harvests"
-,,,,,,,,,,,,,,,,,17.18645177,
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
