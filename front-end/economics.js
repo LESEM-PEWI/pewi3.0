@@ -16,6 +16,8 @@ var Economics = function () {
   this.getBMPAreas=[];
   this.getSoilArea=[];
   this.getRent=[];
+  this.totalWatershedCost=[];
+  this.totalWatershedRevenue=[];
 
 //the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
   yearCosts = [-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,{'Grapes (Conventional)': 1 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 1 *4}]
@@ -172,12 +174,16 @@ var Economics = function () {
 
     let landUses = [];
     this.mapData = [];
+
     //Less than ideal coding, but given how Totals is structured the easiest way
     //I found to map Land Use IDS to total LandUse without recalculation
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       landUses[i] = [];
       this.mapData[i] = [];
       this.scaledRev[i] = [];
+
+      this.totalWatershedCost[i] = [{cost: 0}];  //TESTING
+
       let keys = Object.keys(Totals.landUseResults[0]);
       for(let j = 0; j < keys.length; j++){
         let key = keys[j];
@@ -218,6 +224,8 @@ var Economics = function () {
         }
         this.scaledRev[i][dataPoint['LU_ID']] = this.scaledRev[i][dataPoint['LU_ID']] || 0;
         this.scaledRev[i][dataPoint['LU_ID']] += value;
+
+        // this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][dataPoint['LU_ID']]) ? this.scaledRev[i][dataPoint['LU_ID']] : 0
       });
 
       /**
@@ -459,7 +467,7 @@ var Economics = function () {
         }
 
         this.mapData[i].push(copy)
-
+        this.totalWatershedCost[i][0].cost +=  !isNaN(copy['EAA']) ? copy['EAA'] : 0
       })
     }
     this.chart3Data();
@@ -468,7 +476,26 @@ var Economics = function () {
     this.divideByCategory(['Action - Cost Type', 'Time - Cost Type', 'Fixed/Variable']);
     this.chart4Information(['Action - Cost Type', 'Time - Cost Type']);
     this.calcSubcrops();
-  }
+
+    //TESTING ONLY
+    for(let k = 1; k <= boardData[currentBoard].calculatedToYear; k++) {
+      console.log("TOTAL WATERSHED COST FOR YEAR: ",k, "=",this.totalWatershedCost[k][0].cost);
+    }
+    watershedTotals();
+
+
+  };
+
+  // TESTING WATERSHED TOTALS
+  watershedTotals = () => {
+    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      this.totalWatershedRevenue[i]= [{revenue: 0}];
+      for(let j = 0; j < 16; j ++){
+        this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][j]) ? this.scaledRev[i][j] : 0
+      }
+      console.log("TOTAL WATERSHED REVENUE FOR YEAR: ", i , "=",this.totalWatershedRevenue[i][0].revenue);
+    }
+  };
 
 
   //this is unoptimized for finding the amount of corn after corn and corn after soybeans
@@ -531,6 +558,7 @@ var Economics = function () {
       }
     }
   };
+
 
   /**
    * This function is used to separate out the area for each soil type to use for Cons and Conv Forests which are now separated by 25/60/75 year budgets.
