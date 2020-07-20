@@ -6149,3 +6149,4 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,24,,,Harvest,Other,Variable,Assessment & Inspection Fee,,351,107.8822606,7.654511487,"$351 per acre, tied to harvests"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Harvest,Other,Variable,Assessment & Inspection Fee,,351,102.4881475,7.271785912,"$351 per acre, tied to harvests"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,25,,,Harvest,Other,Variable,Assessment & Inspection Fee,,351,102.4881475,0,"$351 per acre, tied to harvests"
