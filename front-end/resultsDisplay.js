@@ -6691,6 +6691,8 @@ function EconomicsGraphic2(){
   var currentSelection = "Action - Cost Type"
   var year = currentYear;
   var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph2tt"));
+  var defaultActionTypeOrder = ["Labor", "Custom", "Input", "Equipment", "Other"];
+  var defaultTimeTypeOrder = ["Establishment", "Preharvest", "Harvest", "Constant", "Other"];
 
   var margin = {top: 40, right: 10, bottom: 60, left: 80};
   var screenWidth = window.innerWidth;
@@ -6755,8 +6757,12 @@ function EconomicsGraphic2(){
           d.value = lu[currentSelection][type];
           fullData.push(d)
         })
-      })
-    keys = economics.data[1][currentSelection];
+      });
+      //console.log("ECON G2 FULL DATA: ", fullData);
+      fullData.sort(function (a, b) {
+        return defaultActionTypeOrder.indexOf(a.type) - defaultActionTypeOrder.indexOf(b.type);
+      });
+      keys = economics.data[1][currentSelection];
   }
 
   applyOptions = () => {
@@ -6766,7 +6772,17 @@ function EconomicsGraphic2(){
       if(options.indexOf(el.type.replace(/\s/g,'')) > -1) return false;
       return true;
     });
-  }
+    if(currentSelection === 'Action - Cost Type') {
+      data.sort(function (a, b) {
+        return defaultActionTypeOrder.indexOf(a.type) - defaultActionTypeOrder.indexOf(b.type);
+      });
+    }
+    else {
+      data.sort(function (a, b) {
+        return defaultTimeTypeOrder.indexOf(a.type) - defaultTimeTypeOrder.indexOf(b.type);
+      });
+    }
+  };
 
   svg = d3.select(econBody);
 
@@ -6929,7 +6945,7 @@ function EconomicsGraphic2(){
 
 
     economics.data[1].map(d => d.landUse).forEach(d => {
-      if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
+      if(d === 'Short-rotation Woody Bioenergy') {d = 'Short Rotation Woody Bioenergy'};
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
