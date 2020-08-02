@@ -5229,7 +5229,8 @@ function createMockDataGraphic1(){
     tempData[i].forEach((el, j) => {
       d = {}
       d.year = i;
-      d.landUse = el.landUse === 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : el.landUse;
+      d.landUse = el.landUse
+      //=== 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : el.landUse;
       d.Cost = el.cost;
       d.Revenue = economics.scaledRev[i][j];
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
@@ -5483,7 +5484,7 @@ function EconomicsGraphic1() {
       cell.className='graphicLegendContainer';
       container.append(cell);
     economics.data[1].map(d => d.landUse).forEach(d => {
-      if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
+      //if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
@@ -5614,6 +5615,8 @@ function EconomicsGraphic3() {
     '#191970', '#FF4500', '#6B8E23', '#CD853F', '#00FA9A', '#A52A2A', '#D2B48C'
   ];
   var stackTypes = ['Cost', 'Revenue', 'Profit', 'Loss'];
+  var defaultActionTypeOrder = ["Labor", "Custom", "Input", "Equipment", "Other"];
+  var defaultTimeTypeOrder = ["Establishment", "Preharvest", "Harvest", "Constant", "Other"];
 
   var margin = {
     top: 40,
@@ -5628,6 +5631,15 @@ function EconomicsGraphic3() {
   // this is the data that is put on the screen
   var fullData = formatDataGraphic3();
   var econData = economics.data3;
+
+  //Sort data by default order
+   fullData[0].sort(function (a, b) {
+    return defaultActionTypeOrder.indexOf(a.costType) - defaultActionTypeOrder.indexOf(b.costType);
+   });
+
+    fullData[1].sort(function (a, b) {
+        return defaultTimeTypeOrder.indexOf(a.costType) - defaultTimeTypeOrder.indexOf(b.costType);
+    });
 
   // keys to be displayed, action by default, but is changed in toggleCostType function
   var keys = Object.keys(econData[1].action);
@@ -5644,7 +5656,6 @@ function EconomicsGraphic3() {
       if (this.options.indexOf(el.year) > -1) return false;
       return el != null;
     });
-
     return newData;
 
   }
@@ -6752,7 +6763,8 @@ function EconomicsGraphic2(){
         arr.splice(0,1)
         arr.forEach(type => {
           d = {};
-          d.landUse = lu.landUse === 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : lu.landUse;
+          d.landUse = lu.landUse
+          //=== 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : lu.landUse;
           d.type = type;
           d.value = lu[currentSelection][type];
           fullData.push(d)
@@ -6945,7 +6957,7 @@ function EconomicsGraphic2(){
 
 
     economics.data[1].map(d => d.landUse).forEach(d => {
-      if(d === 'Short-rotation Woody Bioenergy') {d = 'Short Rotation Woody Bioenergy'};
+      //if(d === 'Short-rotation Woody Bioenergy') {d = 'Short Rotation Woody Bioenergy'};
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
