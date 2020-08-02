@@ -7016,6 +7016,20 @@ function EconomicsGraphic2(){
       row.parentNode.removeChild(row);
     });
 
+
+    //Sort keys according to default order
+    if(currentSelection === 'Action - Cost Type') {
+          keys.sort(function (a, b) {
+              return defaultActionTypeOrder.indexOf(a) - defaultActionTypeOrder.indexOf(b);
+          });
+    }
+    else {
+          keys.sort(function (a, b) {
+              return defaultTimeTypeOrder.indexOf(a) - defaultTimeTypeOrder.indexOf(b);
+          });
+    }
+    //console.log("KEYS : ", keys);
+
     keys.forEach(d => {
       cell = document.createElement('div');
       cell.innerHTML = d;
