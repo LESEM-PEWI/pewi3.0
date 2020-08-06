@@ -6278,31 +6278,76 @@ function graphic5DisplayInfo(econdata){
                   "Early Nov.","Late Nov.","Early Dec.","Late Dec."];
   for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
   var month=0;
+
   data[i]=[];
-  econdata[i].forEach(landuse=>{
+    econdata[i].forEach(landuse=>{
     landuse['array'].forEach(d=>{
-      if(data[i].some(e=>e.time_of_year===d['Time of Year'])){
-        objIndex = data[i].findIndex((obj => obj.time_of_year ===d['Time of Year']));
-        if(d['# Labor Hours']!=""){
-          data[i][objIndex]["Total Labor Hours"]+=parseFloat(d['# Labor Hours']);
+
+
+      //Checking Rotational Grazing Separately -
+      // If we don't add this here this e=>e.time_of_year===d['Time of Year'] is never true and it is never accounted for.
+      //Dividing by 24 because values are distributed evenly for Time of Year code 0.
+        if(d['LU_ID'] === '7'){
+          if (d['# Labor Hours'] !== "") {
+            for(let monthIndex =0; monthIndex < 24; monthIndex++) {
+              data[i][monthIndex]["Total Labor Hours"] += parseFloat(d['# Labor Hours'])/ 24;
+            }
+          }
+          if (d['Action - Cost Type'] === 'Custom') {
+            for(let monthIndex=0; monthIndex < 24; monthIndex++) {
+              data[i][monthIndex]["Total Custom Hire Cost"] += parseFloat(d['EAA'])/24;
+            }
+          }
+          for(let monthIndex=0; monthIndex < 24; monthIndex++) {
+            data[i][monthIndex]["Total Labor Cost"] += parseFloat(d['EAA'])/24;
+          }
         }
-        if(d['Action - Cost Type']=='Custom'){
-          data[i][objIndex]["Total Custom Hire Cost"]+=parseFloat(d['EAA']);
-        }
-        data[i][objIndex]["Total Labor Cost"]+=parseFloat(d['EAA']);
-      }else{
-        var totalCustomHireCost=0;
-        if(d['Action - Cost Type']=='Custom'){
-          totalCustomHireCost=parseFloat(d['EAA']);
-        }
-        data[i].push({time_of_year:d['Time of Year'],twiceAMonth:twiceAMonth[month++],
-        "Total Labor Hours":parseFloat(d['# Labor Hours']),"Total Labor Cost":parseFloat(d['EAA']),"Total Custom Hire Cost":totalCustomHireCost})
+
+        if((data[i].some(e=>e.time_of_year===d['Time of Year']))){
+          if (d['Time of Year'] !== '0') {
+            objIndex = data[i].findIndex((obj => obj.time_of_year === d['Time of Year']));
+            if (d['# Labor Hours'] !== "") {
+              data[i][objIndex]["Total Labor Hours"] += parseFloat(d['# Labor Hours']);
+            }
+            if (d['Action - Cost Type'] === 'Custom') {
+              data[i][objIndex]["Total Custom Hire Cost"] += parseFloat(d['EAA']);
+            }
+            data[i][objIndex]["Total Labor Cost"] += parseFloat(d['EAA']);
+          }
+
+          //TODO
+          //Adding values separately; not the best approach so leaving a TO-DO.
+          //Dividing by 24 because values are distributed evenly for Time of Year code 0.
+          if (d['Time of Year'] === '0') {
+            if (d['# Labor Hours'] !== "") {
+              for(let monthIndex=0; monthIndex < 24; monthIndex++) {
+                data[i][monthIndex]["Total Labor Hours"] += parseFloat(d['# Labor Hours'])/24;
+              }
+            }
+            if (d['Action - Cost Type'] === 'Custom') {
+              for(let monthIndex=0; monthIndex < 24; monthIndex++) {
+                data[i][monthIndex]["Total Custom Hire Cost"] += parseFloat(d['EAA'])/24;
+              }
+            }
+            for(let monthIndex=0; monthIndex < 24; monthIndex++) {
+              data[i][monthIndex]["Total Labor Cost"] += parseFloat(d['EAA'])/24;
+            }
+          }
       }
+      else {
+          if (d['LU_ID'] !== '7') { //Removing Rotational Grazing because it clashed with earlier logic.
+            data[i].push({
+              time_of_year: d['Time of Year'],
+              twiceAMonth: twiceAMonth[month++],
+              "Total Labor Hours": parseFloat(d['# Labor Hours']),
+              "Total Labor Cost": parseFloat(d['EAA']),
+              "Total Custom Hire Cost": parseFloat(d['EAA'])
+            })
+          }
+        }
     })
   });
-  data[i]=data[i].filter(function(d){
-    return d.time_of_year>0;
-  });
+
 }
   return data;
 }
@@ -6412,7 +6457,7 @@ function EconomicsGraphic5(){
             tooltip.style('visibility','visible');
             tooltip.select("#econGraphic5YearNum").text("Year #" + selectOption);
             tooltip.select("#econGraphic5Name").text(d.key);
-            tooltip.select("#econGraphic5Value").text('$' + addCommas(d.value.toFixed(2)));
+            tooltip.select("#econGraphic5Value").text(d.key === 'Total Labor Hours' ? addCommas(d.value.toFixed(2)) : '$' + addCommas(d.value.toFixed(2)));
           })
           .on("mouseout",function () {
               tooltip.style('visibility','hidden');

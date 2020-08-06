@@ -175,7 +175,30 @@ LU_ID,Land-Use,Sub Crop,PerAcreORPerYield,BMP,TopographySlopes,StreamBorder,Year
 //Kentucky comparison budgets show 10.00% reduction in phosphate costs for no-till"
 2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Input,Variable,Herbicide ,,32.241612,32.241612,32.241612,//Kentucky comparison budgets show 66.67% increase for chemical inputs costs for no-till
 2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Input,Variable,Insecticide,,10.100505,10.100505,10.100505,Increased usage. //Kentucky comparison budgets show 66.67% increase in chemical input costs for no-till
-2,Conservation Corn,Corn after Corn,,,,,1,8,Annual,Constant,Labor,Fixed,Labor - Operator,-0.36372,-5.18301,-5.18301,-5.18301,2.8 hrs/acre * $14.25/hr *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Corn,,,,,1,1,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,2,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,3,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,4,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,5,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,6,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,7,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,8,Annual,Preharvest,Labor,Variable,Labor - Operator - Planting,-0.028714737,-0.409185,-0.409185,-0.409185,2.8 hrs/acre * $14.25/hr * .078947368
+2,Conservation Corn,Corn after Corn,,,,,1,9,Annual,Preharvest,Labor,Variable,Labor - Operator - Application,-0.028714737,-0.409185,-0.409185,-0.409185,2.8 hrs/acre * $14.25/hr * .078947368
+2,Conservation Corn,Corn after Corn,,,,,1,10,Annual,Preharvest,Labor,Variable,Labor - Operator - Application,-0.028714737,-0.409185,-0.409185,-0.409185,2.8 hrs/acre * $14.25/hr * .078947368
+2,Conservation Corn,Corn after Corn,,,,,1,11,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,12,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,13,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,14,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,15,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,16,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,17,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,18,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,19,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.028714737,-0.409185,-0.409185,-0.409185,2.8 hrs/acre * $14.25/hr * .078947368
+2,Conservation Corn,Corn after Corn,,,,,1,20,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.028714737,-0.409185,-0.409185,-0.409185,2.8 hrs/acre * $14.25/hr * .078947368
+2,Conservation Corn,Corn after Corn,,,,,1,21,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.028714737,-0.409185,-0.409185,-0.409185,2.8 hrs/acre * $14.25/hr * .078947368
+2,Conservation Corn,Corn after Corn,,,,,1,22,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.028714737,-0.409185,-0.409185,-0.409185,2.8 hrs/acre * $14.25/hr * .078947368
+2,Conservation Corn,Corn after Corn,,,,,1,23,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
+2,Conservation Corn,Corn after Corn,,,,,1,24,Annual,Other,Labor,Variable,Labor - Operator,-0.009571579,-0.136395,-0.136395,-0.136395,2.8 hrs/acre * $14.25/hr * .026315789
 2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Input,Variable,Seed - Rye,,11,11,11,$11/acre
 2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Equipment,Variable,Seed or Drilling variable costs,,5,5,5,
 2,Conservation Corn,Corn after Corn,,,,,1,20,Annual,Preharvest,Labor,Variable,Operator labor for seeding or drilling,0.428571429,6.107142857,6.107142857,6.107142857,"6 hours per 14 acres, $14.25/hr"
@@ -183,6 +206,7 @@ LU_ID,Land-Use,Sub Crop,PerAcreORPerYield,BMP,TopographySlopes,StreamBorder,Year
 2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Preharvest,Equipment,Variable,Applying herbicide to rye cover crop - VARIABLE COST to operator,,7,7,7,
 2,Conservation Corn,Corn after Corn,,,,,1,7,Annual,Preharvest,Labor,Variable,Operator labor - applying herbicide,0.142857143,2.035714286,2.035714286,2.035714286,2 hours per 14 acres * $14.25/hr
 2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Other,Other,Variable,Miscellanous other costs,,5,5,5,$3 miscellaneous costs for cover crops per acre
+2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 2,Conservation Corn,Corn after Soybean,,,,,1,,Annual,Preharvest,Equipment,Fixed,Tandem disk ,,4.6,4.6,4.6,
 2,Conservation Corn,Corn after Soybean,,,,,1,,Annual,Preharvest,Equipment,Variable,Tandem disk ,,3.4,3.4,3.4,
 2,Conservation Corn,Corn after Soybean,,,,,1,,Annual,Preharvest,Equipment,Fixed,Apply nitrogen ,,4.3,4.3,4.3,
@@ -253,10 +277,31 @@ LU_ID,Land-Use,Sub Crop,PerAcreORPerYield,BMP,TopographySlopes,StreamBorder,Year
 2,Conservation Corn,Corn after Soybean,,,,,1,,Annual,Preharvest,Input,Variable,Phosphate ,,-3.108,-3.108,-3.108,"$0.39/lb * 68 lbs/acre
 //Kentucky comparison budgets show 10.00% reduction in phosphate costs for no-till"
 2,Conservation Corn,Corn after Soybean,,,,,1,,Annual,Preharvest,Input,Variable,Herbicide ,,32.241612,32.241612,32.241612,//Kentucky comparison budgets show 66.67% increase for chemical inputs costs for no-till
-2,Conservation Corn,Corn after Soybean,,,,,1,8,Annual,Constant,Labor,Fixed,Labor - Operator,-0.331245,-4.72024125,-4.72024125,-4.72024125,2.55 hrs/acre * $14.25/hr *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
-2,Conservation Corn,Corn after Soybean,,GrassedWaterways,,,1,,Annual,Establishment,Input,Fixed,Seed cost - Legume (alfalfa),,77.31,77.31,5.029126446,Assume reseed every 30 years 18 lbs alfalfa seed. 77.31
-2,Conservation Corn,Corn after Soybean,,GrassedWaterways,,,1,,Annual,Establishment,Input,Fixed,Seed cost - Grass mix,,56.61,56.61,3.68256174,"Assume reseed every 30 years. 56.61
-Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
+2,Conservation Corn,Corn after Soybean,,,,,1,1,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,2,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,3,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,4,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,5,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,6,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,7,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,8,Annual,Preharvest,Labor,Variable,Labor - Operator - Planting,-0.026150921,-0.372650625,-0.372650625,-0.372650625,2.55 hrs/acre * $14.25/hr * .078947368 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,9,Annual,Preharvest,Labor,Variable,Labor - Operator - Application,-0.026150921,-0.372650625,-0.372650625,-0.372650625,2.55 hrs/acre * $14.25/hr * .078947368 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,10,Annual,Preharvest,Labor,Variable,Labor - Operator - Application,-0.026150921,-0.372650625,-0.372650625,-0.372650625,2.55 hrs/acre * $14.25/hr * .078947368 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,11,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,12,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,13,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,14,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,15,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,16,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,17,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,18,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,19,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.026150921,-0.372650625,-0.372650625,-0.372650625,2.55 hrs/acre * $14.25/hr * .078947368 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,20,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.026150921,-0.372650625,-0.372650625,-0.372650625,2.55 hrs/acre * $14.25/hr * .078947368 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,21,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.026150921,-0.372650625,-0.372650625,-0.372650625,2.55 hrs/acre * $14.25/hr * .078947368 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,22,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.026150921,-0.372650625,-0.372650625,-0.372650625,2.55 hrs/acre * $14.25/hr * .078947368 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,23,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,24,Annual,Constant,Labor,Variable,Labor - Operator,-0.008716974,-0.124216875,-0.124216875,-0.124216875,2.55 hrs/acre * $14.25/hr * .026315789 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+2,Conservation Corn,Corn after Soybean,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 2,Conservation Corn,Corn after Soybean,,GrassedWaterways,,,1,,Annual,Establishment,Input,Fixed,Seed cost - oats,,16.96,16.96,1.103272339,Assume reseed every 30 years.  2 lbs oats per acre.   16.96
 2,Conservation Corn,Corn after Soybean,,GrassedWaterways,,,1,,Annual,Establishment,Input,Fixed,Equipment - Drilling,,15.42,15.42,1.003093129,Assume reseed every 30 years.  15.42
 2,Conservation Corn,Corn after Soybean,,GrassedWaterways,,,1,9,Annual,Establishment,Labor,Fixed,Seed Labor,1,14.25,14.25,0.92698295,Same as alfalfa
@@ -509,7 +554,6 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 2,Conservation Corn,Corn after Soybean,,Buffers,,,50,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.202486777,0.011091565,Per acre annual repair budget estimate
 2,Conservation Corn,Corn after Soybean,,Buffers,,,50,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.170817845,0.009356844,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
 2,Conservation Corn,Corn after Soybean,,Buffers,,,50,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,0.818046579,0.044809921,Based on mower-conditioner  - equipment component only x1 cut
-2,Conservation Corn,Corn after Soybean,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 2,Conservation Corn,Corn after Corn,,GrassedWaterways,,,1,,Annual,Establishment,Input,Fixed,Seed cost - Legume (alfalfa),,77.31,77.31,5.029126446,Assume reseed every 30 years 18 lbs alfalfa seed. 77.31
 2,Conservation Corn,Corn after Corn,,GrassedWaterways,,,1,,Annual,Establishment,Input,Fixed,Seed cost - Grass mix,,56.61,56.61,3.68256174,"Assume reseed every 30 years. 56.61
 Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
@@ -765,7 +809,6 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 2,Conservation Corn,Corn after Corn,,Buffers,,,50,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.202486777,0.011091565,Per acre annual repair budget estimate
 2,Conservation Corn,Corn after Corn,,Buffers,,,50,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.170817845,0.009356844,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
 2,Conservation Corn,Corn after Corn,,Buffers,,,50,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,0.818046579,0.044809921,Based on mower-conditioner  - equipment component only x1 cut
-2,Conservation Corn,Corn after Corn,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 3,Conventional Soybean,,,,,,1,,Annual,Preharvest,Equipment,Fixed,Chisel plow ,,3.6,3.6,3.6,
 3,Conventional Soybean,,,,,,1,,Annual,Preharvest,Equipment,Variable,Chisel plow ,,3.9,3.9,3.9,
 3,Conventional Soybean,,,,,,1,,Annual,Preharvest,Equipment,Fixed,Tandem disk ,,4.6,4.6,4.6,
@@ -876,7 +919,31 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 4,Conservation Soybean,,,,,,1,,Annual,Preharvest,Input,Variable,Phosphate ,,-1.89,-1.89,-1.89,"$0.39/lb * 68 lbs/acre
 //Kentucky comparison budgets show 10.00% reduction in phosphorus related costs for no-till"
 4,Conservation Soybean,,,,,,1,,Annual,Preharvest,Input,Variable,Herbicide ,,37.048519,37.048519,37.048519,//Kentucky comparison budgets show 66.67% increase for chemical inputs costs for no-till
-4,Conservation Soybean,,,,,,1,8,Annual,Constant,Labor,Variable,Labor - Operator,-0.28578,-4.072365,-4.072365,-4.072365,2.2 hrs/acre * $14.25/hr *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,1,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,2,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,3,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,4,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,5,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,6,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,7,Annual,Preharvest,Labor,Variable,Labor - Operator - Application,-0.01993814,-0.284118488,-0.284118488,-0.284118488,$14.25/hr * 2.2 hrs/acre * .069767442 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,8,Annual,Constant,Labor,Variable,Labor - Operator - Planting,-0.01993814,-0.284118488,-0.284118488,-0.284118488,$14.25/hr * 2.2 hrs/acre * .069767442 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,9,Annual,Constant,Labor,Variable,Labor - Operator - Planting,-0.01993814,-0.284118488,-0.284118488,-0.284118488,$14.25/hr * 2.2 hrs/acre * .069767442 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,9,Annual,Constant,Labor,Variable,Labor - Operator - Application,-0.01993814,-0.284118488,-0.284118488,-0.284118488,$14.25/hr * 2.2 hrs/acre * .069767442 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,10,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,11,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,12,Annual,Constant,Labor,Variable,Labor - Operator - Application,-0.01993814,-0.284118488,-0.284118488,-0.284118488,$14.25/hr * 2.2 hrs/acre * .069767442 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,13,Annual,Constant,Labor,Variable,Labor - Operator - Application,-0.01993814,-0.284118488,-0.284118488,-0.284118488,$14.25/hr * 2.2 hrs/acre * .069767442 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,14,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,15,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,16,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,17,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,18,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.01993814,-0.284118488,-0.284118488,-0.284118488,$14.25/hr * 2.2 hrs/acre * .069767442 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,19,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.01993814,-0.284118488,-0.284118488,-0.284118488,$14.25/hr * 2.2 hrs/acre * .069767442 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,20,Annual,Harvest,Labor,Variable,Labor - Operator - Harvest,-0.01993814,-0.284118488,-0.284118488,-0.284118488,$14.25/hr * 2.2 hrs/acre * .069767442 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,21,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,22,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,23,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
+4,Conservation Soybean,,,,,,1,24,Annual,Constant,Labor,Variable,Labor - Operator,-0.006646047,-0.094706163,-0.094706163,-0.094706163,$14.25/hr * 2.2 hrs/acre * .023255814 *  12.99% savings   //Kentucky comparison budgets show 12.99% reduction in operator labor for no-till
 4,Conservation Soybean,,,,,,1,,Annual,Preharvest,Input,Variable,Seed - Rye,,11,11,11,$11/acre
 4,Conservation Soybean,,,,,,1,,Annual,Preharvest,Equipment,Variable,Seed or Drilling variable costs,,5,5,5,
 4,Conservation Soybean,,,,,,1,20,Annual,Preharvest,Labor,Variable,Operator labor for seeding or drilling,0.428571429,6.107142857,6.107142857,6.107142857,"6 hours per 14 acres, $14.25/hr"
@@ -884,6 +951,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 4,Conservation Soybean,,,,,,1,,Annual,Preharvest,Equipment,Variable,Applying herbicide to rye cover crop - VARIABLE COST to operator,,7,7,7,
 4,Conservation Soybean,,,,,,1,7,Annual,Preharvest,Labor,Variable,Operator labor - applying herbicide,0.142857143,2.035714286,2.035714286,2.035714286,2 hours per 14 acres * $14.25/hr
 4,Conservation Soybean,,,,,,1,,Annual,Other,Other,Variable,Miscellanous other costs,,5,5,5,$3 miscellaneous costs for cover crops per acre
+4,Conservation Soybean,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 4,Conservation Soybean,,,GrassedWaterways,,,1,,Annual,Establishment,Input,Fixed,Seed cost - Legume (alfalfa),,77.31,77.31,5.029126446,Assume reseed every 30 years 18 lbs alfalfa seed. 77.31
 4,Conservation Soybean,,,GrassedWaterways,,,1,,Annual,Establishment,Input,Fixed,Seed cost - Grass mix,,56.61,56.61,3.68256174,"Assume reseed every 30 years. 56.61
 Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
@@ -1139,7 +1207,6 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 4,Conservation Soybean,,,Buffers,,,50,,Annual,Other,Other,Variable,Occasional repairs,,2.5,0.202486777,0.011091565,Per acre annual repair budget estimate
 4,Conservation Soybean,,,Buffers,,,50,18,Annual,Preharvest,Labor,Variable,Mowing,0.148,2.109,0.170817845,0.009356844,"Based on mower-conditioner  - consider reevaluting for Iowa custom rates $14.25/hr, 0.148 hrs/acre, 1 cuts"
 4,Conservation Soybean,,,Buffers,,,50,,Annual,Preharvest,Equipment,Variable,Mowing,,10.1,0.818046579,0.044809921,Based on mower-conditioner  - equipment component only x1 cut
-4,Conservation Soybean,,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Establishment,Equipment,Fixed,Spray Herbicide ,,2.2,2.2,0.620426032,
 5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Establishment,Equipment,Variable,Spray Herbicide ,,2,2,0.564023665,
 5,Alfalfa,,,,,,1,,"Year 1, Every 4 years",Establishment,Equipment,Fixed,Tandem disk,,9.2,9.2,2.59450886,2 times - Ag Decision Maker
