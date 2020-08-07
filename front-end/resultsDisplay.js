@@ -6278,7 +6278,7 @@ function graphic5DisplayInfo(econdata){
                   "Early Nov.","Late Nov.","Early Dec.","Late Dec."];
   for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
   var month=0;
-
+  console.log(econdata);
   data[i]=[];
     econdata[i].forEach(landuse=>{
     landuse['array'].forEach(d=>{
@@ -6287,23 +6287,7 @@ function graphic5DisplayInfo(econdata){
       //Checking Rotational Grazing Separately -
       // If we don't add this here this e=>e.time_of_year===d['Time of Year'] is never true and it is never accounted for.
       //Dividing by 24 because values are distributed evenly for Time of Year code 0.
-        if(d['LU_ID'] === '7'){
-          if (d['# Labor Hours'] !== "") {
-            for(let monthIndex =0; monthIndex < 24; monthIndex++) {
-              data[i][monthIndex]["Total Labor Hours"] += parseFloat(d['# Labor Hours'])/ 24;
-            }
-          }
-          if (d['Action - Cost Type'] === 'Custom') {
-            for(let monthIndex=0; monthIndex < 24; monthIndex++) {
-              data[i][monthIndex]["Total Custom Hire Cost"] += parseFloat(d['EAA'])/24;
-            }
-          }
-          for(let monthIndex=0; monthIndex < 24; monthIndex++) {
-            data[i][monthIndex]["Total Labor Cost"] += parseFloat(d['EAA'])/24;
-          }
-        }
-
-        if((data[i].some(e=>e.time_of_year===d['Time of Year']))){
+        if((data[i].some(e=>e.time_of_year===d['Time of Year'])) || d['LU_ID'] === '7'){
           if (d['Time of Year'] !== '0') {
             objIndex = data[i].findIndex((obj => obj.time_of_year === d['Time of Year']));
             if (d['# Labor Hours'] !== "") {
@@ -6336,12 +6320,16 @@ function graphic5DisplayInfo(econdata){
       }
       else {
           if (d['LU_ID'] !== '7') { //Removing Rotational Grazing because it clashed with earlier logic.
+            let totalCustomHireCost = 0;
+            if (d['Action - Cost Type'] === 'Custom') {
+              totalCustomHireCost = parseFloat(d['EAA']);
+            }
             data[i].push({
               time_of_year: d['Time of Year'],
               twiceAMonth: twiceAMonth[month++],
               "Total Labor Hours": parseFloat(d['# Labor Hours']),
               "Total Labor Cost": parseFloat(d['EAA']),
-              "Total Custom Hire Cost": parseFloat(d['EAA'])
+              "Total Custom Hire Cost": totalCustomHireCost
             })
           }
         }
