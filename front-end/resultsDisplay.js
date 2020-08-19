@@ -6287,7 +6287,7 @@ function graphic5DisplayInfo(econdata){
       //Checking Rotational Grazing Separately -
       // If we don't add this here this e=>e.time_of_year===d['Time of Year'] is never true and it is never accounted for.
       //Dividing by 24 because values are distributed evenly for Time of Year code 0.
-        if((data[i].some(e=>e.time_of_year===d['Time of Year'])) || d['LU_ID'] === '7'){
+        if((data[i].some(e=>e.time_of_year===d['Time of Year'])) || d['LU_ID'] === '7' || d['LU_ID'] === '10' || d['LU_ID'] === '11'){
           if (d['Time of Year'] !== '0') {
             objIndex = data[i].findIndex((obj => obj.time_of_year === d['Time of Year']));
             if (d['# Labor Hours'] !== "") {

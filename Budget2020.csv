@@ -1847,7 +1847,7 @@ Mix of 10 lbs alfalfa, 8 lbs brome, 3 lbs orchardgrass per acre"
 12,Switchgrass,,,,,,1,7,Every 11 years,Establishment,Custom,Fixed,Custom - Preharvest - Airflow spreader (seed and fertilizers),,3.85,3.85,0.463497232,"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Surveyrepeat if reseeding (25% chance)"
 12,Switchgrass,,,,,,1,6,Every 11 years,Establishment,Custom,Fixed,Custom - Spraying chemicals,,2.575,2.575,0.310001396,"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey"
 12,Switchgrass,,,,,,1,7,Every 11 years,Establishment,Custom,Fixed,Custom - Spraying chemicals,,2.575,2.575,0.310001396,"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey"
-12,Switchgrass,,,,,,1,8,Every 11 years,Establishment,Input,Fixed,Seed,,56.25,56.25,6.771875146,repeat if reseeding (25% chance)
+12,Switchgrass,,,,,,1,,Every 11 years,Establishment,Input,Fixed,Seed,,56.25,56.25,6.771875146,repeat if reseeding (25% chance)
 12,Switchgrass,,,,,,1,,Every 11 years,Establishment,Input,Variable,Fertilizer - P,,11.1,11.1,1.336316696,"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey 30lb @ $0.37/lb repeat if reseeding (25% chance)"
 12,Switchgrass,,,,,,1,,Every 11 years,Establishment,Input,Variable,Fertilizer - K,,9.2,9.2,1.107577802,"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey 40lb @ $0.23/lb repeat if reseeding (25% chance)"
 12,Switchgrass,,,,,,1,,Every 11 years,Establishment,Input,Variable,Lime,,63,63,7.584500164,"Ag Decision Maker, based on 2007 Iowa Farm Custom Rate Survey no repeat if reseeding 3 tons @ $21/ton"
@@ -2449,7 +2449,7 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Winter Squash,,,,,1,,Annual,Constant,Other,Fixed,Rent,,-1,-1,-1,Calculated
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,6,,Establishment,Custom,Variable,Drainage Tile Installation ,,2180,2180,154.6763569,
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,7,,Establishment,Custom,Variable,Drainage Tile Installation ,,2180,2180,154.6763569,
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,19,,Establishment,Input,Variable,Lime ,,90,90,6.385721157,
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,,,Establishment,Input,Variable,Lime ,,90,90,6.385721157,
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,19,,Establishment,Custom,Variable,Lime ,,10,10,0.709524573,
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,,,Establishment,Equipment,Variable,Herbicide application ,,10.5,10.5,0.745000802,
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,1,,,Establishment,Input,Variable,Herbicide application ,,30.24,30.24,2.145602309,
@@ -2592,8 +2592,8 @@ $10.78/hr*0.5hrs"
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,14,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,8.799375,0.624337279,$14.25/hr * 0.65hr *4 Mowings /4
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,17,,Preharvest,Labor,Variable,Mowing ,0.65,9.2625,8.799375,0.624337279,$14.25/hr * 0.65hr *4 Mowings /4
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,,,Preharvest,Equipment,Variable,Mowing ,,42.28,40.166,2.8498764,
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,13,,Preharvest,Other,Variable,Rogueing,,7.125,6.76875,0.480259445,$14.25/hr * 1.00hr /2
-15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,14,,Preharvest,Other,Variable,Rogueing,,7.125,6.76875,0.480259445,$14.25/hr * 1.00hr /2
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,,,Preharvest,Other,Variable,Rogueing,,7.125,6.76875,0.480259445,$14.25/hr * 1.00hr /2
+15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,,,Preharvest,Other,Variable,Rogueing,,7.125,6.76875,0.480259445,$14.25/hr * 1.00hr /2
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,2,,,Preharvest,Equipment,Variable,Pickup truck ,,75.03,71.2785,5.057384728,
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,3,,Preharvest,Custom,Variable,Pruning & brush removal ,,60.5,54.60125,3.874092859,
 15,Mixed Fruits & Vegetables,Grapes (Conventional),,,,,3,4,,Preharvest,Custom,Variable,Pruning & brush removal ,,60.5,54.60125,3.874092859,
