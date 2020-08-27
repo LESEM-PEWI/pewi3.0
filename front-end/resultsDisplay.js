@@ -5229,7 +5229,8 @@ function createMockDataGraphic1(){
     tempData[i].forEach((el, j) => {
       d = {}
       d.year = i;
-      d.landUse = el.landUse === 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : el.landUse;
+      d.landUse = el.landUse
+      //=== 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : el.landUse;
       d.Cost = el.cost;
       d.Revenue = economics.scaledRev[i][j];
       d.Profit = Math.max(d.Revenue + d.Cost, 0);
@@ -5483,7 +5484,7 @@ function EconomicsGraphic1() {
       cell.className='graphicLegendContainer';
       container.append(cell);
     economics.data[1].map(d => d.landUse).forEach(d => {
-      if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
+      //if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
@@ -5614,6 +5615,8 @@ function EconomicsGraphic3() {
     '#191970', '#FF4500', '#6B8E23', '#CD853F', '#00FA9A', '#A52A2A', '#D2B48C'
   ];
   var stackTypes = ['Cost', 'Revenue', 'Profit', 'Loss'];
+  var defaultActionTypeOrder = ["Labor", "Custom", "Input", "Equipment", "Other"];
+  var defaultTimeTypeOrder = ["Establishment", "Preharvest", "Harvest", "Constant", "Other"];
 
   var margin = {
     top: 40,
@@ -5628,6 +5631,15 @@ function EconomicsGraphic3() {
   // this is the data that is put on the screen
   var fullData = formatDataGraphic3();
   var econData = economics.data3;
+
+  //Sort data by default order
+   fullData[0].sort(function (a, b) {
+    return defaultActionTypeOrder.indexOf(a.costType) - defaultActionTypeOrder.indexOf(b.costType);
+   });
+
+    fullData[1].sort(function (a, b) {
+        return defaultTimeTypeOrder.indexOf(a.costType) - defaultTimeTypeOrder.indexOf(b.costType);
+    });
 
   // keys to be displayed, action by default, but is changed in toggleCostType function
   var keys = Object.keys(econData[1].action);
@@ -5644,7 +5656,6 @@ function EconomicsGraphic3() {
       if (this.options.indexOf(el.year) > -1) return false;
       return el != null;
     });
-
     return newData;
 
   }
@@ -6724,6 +6735,8 @@ function EconomicsGraphic2(){
   var currentSelection = "Action - Cost Type"
   var year = currentYear;
   var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph2tt"));
+  var defaultActionTypeOrder = ["Labor", "Custom", "Input", "Equipment", "Other"];
+  var defaultTimeTypeOrder = ["Establishment", "Preharvest", "Harvest", "Constant", "Other"];
 
   var margin = {top: 40, right: 10, bottom: 60, left: 80};
   var screenWidth = window.innerWidth;
@@ -6783,13 +6796,18 @@ function EconomicsGraphic2(){
         arr.splice(0,1)
         arr.forEach(type => {
           d = {};
-          d.landUse = lu.landUse === 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : lu.landUse;
+          d.landUse = lu.landUse
+          //=== 'Short-rotation Woody Bioenergy' ? 'Short Rotation Woody Bioenergy' : lu.landUse;
           d.type = type;
           d.value = lu[currentSelection][type];
           fullData.push(d)
         })
-      })
-    keys = economics.data[1][currentSelection];
+      });
+      //console.log("ECON G2 FULL DATA: ", fullData);
+      fullData.sort(function (a, b) {
+        return defaultActionTypeOrder.indexOf(a.type) - defaultActionTypeOrder.indexOf(b.type);
+      });
+      keys = economics.data[1][currentSelection];
   }
 
   applyOptions = () => {
@@ -6799,7 +6817,17 @@ function EconomicsGraphic2(){
       if(options.indexOf(el.type.replace(/\s/g,'')) > -1) return false;
       return true;
     });
-  }
+    if(currentSelection === 'Action - Cost Type') {
+      data.sort(function (a, b) {
+        return defaultActionTypeOrder.indexOf(a.type) - defaultActionTypeOrder.indexOf(b.type);
+      });
+    }
+    else {
+      data.sort(function (a, b) {
+        return defaultTimeTypeOrder.indexOf(a.type) - defaultTimeTypeOrder.indexOf(b.type);
+      });
+    }
+  };
 
   svg = d3.select(econBody);
 
@@ -6962,7 +6990,7 @@ function EconomicsGraphic2(){
 
 
     economics.data[1].map(d => d.landUse).forEach(d => {
-      if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
+      //if(d === 'Short-rotation Woody Bioenergy') {d = 'Short Rotation Woody Bioenergy'};
       cell = document.createElement('div');
       cell.innerHTML = d;
       cell.className="graphicSelectOption";
@@ -7032,6 +7060,20 @@ function EconomicsGraphic2(){
     container.querySelectorAll(".optionsRow").forEach(row => {
       row.parentNode.removeChild(row);
     });
+
+
+    //Sort keys according to default order
+    if(currentSelection === 'Action - Cost Type') {
+          keys.sort(function (a, b) {
+              return defaultActionTypeOrder.indexOf(a) - defaultActionTypeOrder.indexOf(b);
+          });
+    }
+    else {
+          keys.sort(function (a, b) {
+              return defaultTimeTypeOrder.indexOf(a) - defaultTimeTypeOrder.indexOf(b);
+          });
+    }
+    //console.log("KEYS : ", keys);
 
     keys.forEach(d => {
       cell = document.createElement('div');
