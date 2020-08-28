@@ -1,5 +1,6 @@
 var Economics = function () {
   this.rawData;
+  this.rawBMPData;
   this.mapData = [];
   this.data = [];
   this.data4 = [];
@@ -20,7 +21,7 @@ var Economics = function () {
   this.totalWatershedRevenue=[];
 
 //the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
-  yearCosts = [-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,{'Grapes (Conventional)': 1 * 4,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 1 *4}]
+  yearCosts = [-1,1,1,1,1,4,1,1,4,50,1,1,11,7,50,{'Grapes (Conventional)': 4 * 25,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 4 * 3}];
   d3.csv('./revenue2020.csv', (data) => {
     this.rawRev = data;
   })
@@ -89,10 +90,17 @@ var Economics = function () {
       this.rawData.forEach(dataPoint => {
         let id = Number.parseInt(dataPoint['LU_ID'])
         divisionForLU = (typeof yearCosts[id] === 'number') ? yearCosts[id]:  yearCosts[id][dataPoint['Sub Crop']];
-        dataPoint["EAA"] /= divisionForLU;
+        if(dataPoint['LU_ID'] === "15"){
+          dataPoint["EAA"] /= 4; //Only for MFV
+        }
         dataPoint["# Labor Hours"] /= divisionForLU;
       })
     });
+
+  //READ IN BMP FILE
+  d3.csv('./BMPBudgets2020.csv', (data) => {
+    this.rawBMPData=data;
+  });
 
   //graph
   //graphic 4 extract data from raw data
@@ -343,24 +351,24 @@ var Economics = function () {
             }
             if (copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] === 'GrassedWaterways') {
               copy['EAA'] *= Math.round(1000 * this.getBMPAreas[i][2].grassedWaterwaysAreaTotal) / 1000;
-              copy['# Labor Hours'] *= Math.round(1000 * this.getBMPAreas[i][2].grassedWaterwaysAreaTotal) / 1000
+              copy['# Labor Hours'] *= (Math.round(1000 * this.getBMPAreas[i][2].grassedWaterwaysAreaTotal) / 1000) /30
             } else if (copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] === 'Terraces') {
               copy['EAA'] *= Math.round(1000 * this.getBMPAreas[i][2].terraceAreaTotal) / 1000;
-              copy['# Labor Hours'] *= Math.round(1000 * this.getBMPAreas[i][2].terraceAreaTotal) / 1000
+              copy['# Labor Hours'] *= (Math.round(1000 * this.getBMPAreas[i][2].terraceAreaTotal) / 1000) / 30
             } else if (copy['Sub Crop'] === 'Corn after Soybean' && copy['BMP'] === 'Buffers') {
               copy['EAA'] *= Math.round(1000 * this.getBMPAreas[i][2].bufferAreaTotal) / 1000;
-              copy['# Labor Hours'] *= Math.round(1000 * this.getBMPAreas[i][2].bufferAreaTotal) / 1000
+              copy['# Labor Hours'] *= (Math.round(1000 * this.getBMPAreas[i][2].bufferAreaTotal) / 1000) /50
             }
 
             if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] === 'GrassedWaterways') {
               copy['EAA'] *= Math.round(1000 * this.getBMPAreas[i][3].grassedWaterwaysAreaTotal) / 1000;
-              copy['# Labor Hours'] *= Math.round(1000 * this.getBMPAreas[i][3].grassedWaterwaysAreaTotal) / 1000
+              copy['# Labor Hours'] *= (Math.round(1000 * this.getBMPAreas[i][3].grassedWaterwaysAreaTotal) / 1000) / 30
             } else if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] === 'Terraces') {
               copy['EAA'] *= Math.round(1000 * this.getBMPAreas[i][3].terraceAreaTotal) / 1000;
-              copy['# Labor Hours'] *= Math.round(1000 * this.getBMPAreas[i][3].terraceAreaTotal) / 1000
+              copy['# Labor Hours'] *= (Math.round(1000 * this.getBMPAreas[i][3].terraceAreaTotal) / 1000)/30;
             } else if (copy['Sub Crop'] === 'Corn after Corn' && copy['BMP'] === 'Buffers') {
               copy['EAA'] *= Math.round(1000 * this.getBMPAreas[i][3].bufferAreaTotal) / 1000;
-              copy['# Labor Hours'] *= Math.round(1000 * this.getBMPAreas[i][3].bufferAreaTotal) / 1000
+              copy['# Labor Hours'] *= (Math.round(1000 * this.getBMPAreas[i][3].bufferAreaTotal) / 1000)/50;
             }
 
           }
@@ -381,13 +389,13 @@ var Economics = function () {
             }
             if (copy['BMP'] === 'GrassedWaterways') {
               copy['EAA'] *= Math.round(1000 * this.getBMPAreas[i][1].grassedWaterwaysAreaTotal) / 1000
-              copy['# Labor Hours'] *= Math.round(1000 * this.getBMPAreas[i][1].grassedWaterwaysAreaTotal) / 1000
+              copy['# Labor Hours'] *= (Math.round(1000 * this.getBMPAreas[i][1].grassedWaterwaysAreaTotal) / 1000) / 30
             } else if (copy['BMP'] === 'Terraces') {
               copy['EAA'] *= Math.round(1000 * this.getBMPAreas[i][1].terraceAreaTotal) / 1000
-              copy['# Labor Hours'] *= Math.round(1000 * this.getBMPAreas[i][1].terraceAreaTotal) / 1000
+              copy['# Labor Hours'] *= (Math.round(1000 * this.getBMPAreas[i][1].terraceAreaTotal) / 1000)/ 30
             } else if (copy['BMP'] === 'Buffers') {
               copy['EAA'] *= Math.round(1000 * this.getBMPAreas[i][1].bufferAreaTotal) / 1000
-              copy['# Labor Hours'] *= Math.round(1000 * this.getBMPAreas[i][1].bufferAreaTotal) / 1000
+              copy['# Labor Hours'] *= (Math.round(1000 * this.getBMPAreas[i][1].bufferAreaTotal) / 1000) / 50
             }
           }
 
@@ -397,29 +405,29 @@ var Economics = function () {
            */
           else if (copy['LU_ID'] === "10") {
             if (copy['Sub Crop'] === "Twentyfive") {
-              copy['EAA'] *= this.getForrestYields[i][1].twentyFiveAreaCons
-              copy['# Labor Hours'] *= this.getForrestYields[i][1].twentyFiveAreaCons
+              copy['EAA'] *= this.getForrestYields[i][1].twentyFiveAreaCons;
+              copy['# Labor Hours'] *= this.getForrestYields[i][1].twentyFiveAreaCons / 25
             }
             if (copy['Sub Crop'] === "Sixty") {
-              copy['EAA'] *= this.getForrestYields[i][1].sixtyAreaCons
-              copy['# Labor Hours'] *= this.getForrestYields[i][1].sixtyAreaCons
+              copy['EAA'] *= this.getForrestYields[i][1].sixtyAreaCons;
+              copy['# Labor Hours'] *= this.getForrestYields[i][1].sixtyAreaCons / 60
             }
             if (copy['Sub Crop'] === "Seventy") {
-              copy['EAA'] *= this.getForrestYields[i][1].seventyAreaCons
-              copy['# Labor Hours'] *= this.getForrestYields[i][1].seventyAreaCons
+              copy['EAA'] *= this.getForrestYields[i][1].seventyAreaCons;
+              copy['# Labor Hours'] *= this.getForrestYields[i][1].seventyAreaCons / 70
             }
           } else if (copy['LU_ID'] === "11") {
             if (copy['Sub Crop'] === "Twentyfive") {
-              copy['EAA'] *= this.getForrestYields[i][1].twentyFiveAreaConv
-              copy['# Labor Hours'] *= this.getForrestYields[i][1].twentyFiveAreaConv
+              copy['EAA'] *= this.getForrestYields[i][1].twentyFiveAreaConv;
+              copy['# Labor Hours'] *= this.getForrestYields[i][1].twentyFiveAreaConv / 25
             }
             if (copy['Sub Crop'] === "Sixty") {
-              copy['EAA'] *= this.getForrestYields[i][1].sixtyAreaConv
-              copy['# Labor Hours'] *= this.getForrestYields[i][1].sixtyAreaConv
+              copy['EAA'] *= this.getForrestYields[i][1].sixtyAreaConv;
+              copy['# Labor Hours'] *= this.getForrestYields[i][1].sixtyAreaConv / 60
             }
             if (copy['Sub Crop'] === "Seventy") {
-              copy['EAA'] *= this.getForrestYields[i][1].seventyAreaConv
-              copy['# Labor Hours'] *= this.getForrestYields[i][1].seventyAreaConv
+              copy['EAA'] *= this.getForrestYields[i][1].seventyAreaConv;
+              copy['# Labor Hours'] *= this.getForrestYields[i][1].seventyAreaConv / 70
             }
           }
 
