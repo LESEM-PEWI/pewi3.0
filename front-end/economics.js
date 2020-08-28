@@ -645,6 +645,9 @@ var Economics = function () {
             numLandUse = 3; //CORN AFTER CORN
           }
         }
+        else {
+          numLandUse = 0;
+        }
 
         if (boardData[currentBoard].map[j].streamNetwork === "1") {
           cellArea = (cellArea - fixedBufferArea) * 0.90;
