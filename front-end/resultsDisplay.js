@@ -6019,6 +6019,8 @@ function EconomicsGraphic4() {
         	.range([height - margin.bottom, margin.top]);
         var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph4tt"));
 
+        //Start Color Cycle at index
+        let startAt = 0;
           // bars
         var rect = svg.selectAll('rect')
         	.data(displaydata)
@@ -6031,7 +6033,15 @@ function EconomicsGraphic4() {
         	.attr('height', function(d){
             return height - margin.bottom - yScale(d.value)})
     			.attr('fill', function(d,i){
-            return colors[i]})
+                  if(i === colors.length - 1){
+                    console.log("I'm RESET AT: ", i);
+                    startAt = 0;
+                  }
+                  else {
+                    startAt++;
+                  }
+                  return colors[startAt];
+    			})
           .on("mouseover",function(d){
             tooltip.style("visibility","visible");
             tooltip.select("#econGraphic4YearNum").text("Year #" + year);
