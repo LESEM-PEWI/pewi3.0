@@ -6037,6 +6037,9 @@ function EconomicsGraphic4() {
                     console.log("I'm RESET AT: ", i);
                     startAt = 0;
                   }
+                  else if(i === (colors.length - 1) * 2){
+                    startAt = 0;
+                  }
                   else {
                     startAt++;
                   }
