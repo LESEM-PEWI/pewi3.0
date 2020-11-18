@@ -91,6 +91,21 @@ function getFileForExercise(exercise) {
 
 } //end getFileForExercise
 
+//Format Numbers
+function addCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+//Refresh Econ Totals
+function refreshEconTotals(yearToLoad){
+  let totalCost = economics.totalWatershedCost[yearToLoad][0].cost;
+  let totalRevenue = economics.totalWatershedRevenue[yearToLoad][0].revenue;
+  console.log("PRINTING FROM RESULTS FILE: ", totalCost, totalRevenue);
+
+  document.getElementById('totalCost').innerHTML = '$' + addCommas(Math.round(totalCost));
+  document.getElementById('totalRevenue').innerHTML = '$' + addCommas(Math.round(totalRevenue));
+}
+
 //loadLevel is triggered by clicking a level button on the html page
 function loadLevel(level) {
 
@@ -134,6 +149,11 @@ function loadLevel(level) {
       calculateResults();
       // Show the progress bars
       document.getElementById('progressBarContainer').style.display = 'block';
+
+      $(document).ready(function() {
+        refreshEconTotals(1);
+      });
+
       $(document).ready(function() {
         refreshProgressBar(1);
       });
@@ -166,6 +186,11 @@ function loadLevel(level) {
       calculateResults();
       // Show the progress bars
       document.getElementById('progressBarContainer').style.display = 'block';
+
+      $(document).ready(function() {
+        refreshEconTotals(1);
+      });
+
       $(document).ready(function() {
         refreshProgressBar(1);
       });
