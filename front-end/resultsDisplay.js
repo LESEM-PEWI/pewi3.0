@@ -5254,7 +5254,7 @@ function EconomicsGraphic1() {
   };
   var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1svg');
   var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1');
-  var colors = ["#ffde2a", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
+  var colors = ["#fde344", '#4848f3','#6acd6a','#f84d4d'] //Cost, revenue, profit, loss
   var stackTypes = ['Cost','Revenue','Profit','Loss'];
   var fullData = createMockDataGraphic1();
 
@@ -5611,9 +5611,12 @@ function EconomicsGraphic3() {
 
   var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3svg');
   var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3');
-  var colors = ["#ffff4d", '#0000ff', '#33cc33', '#ff0000', '#00BFFF', '#8A2BE2', '#FF69B4', '#9ACD32', '#FF7F50', '#778899', '#A52A2A', '#ADFF2F',
-    '#191970', '#FF4500', '#6B8E23', '#CD853F', '#00FA9A', '#A52A2A', '#D2B48C'
-  ];
+  var colors =
+      ['#fde344', '#4848f3','#6acd6a','#f84d4d',
+    '#00BFFF', '#8A2BE2', '#FF69B4', '#9ACD32', '#FF7F50',
+    '#778899', '#A52A2A', '#ADFF2F', '#191970',
+    '#FF4500', '#6B8E23', '#CD853F', '#00FA9A',
+    '#A52A2A', '#D2B48C'];
   var stackTypes = ['Cost', 'Revenue', 'Profit', 'Loss'];
   var defaultActionTypeOrder = ["Labor", "Custom", "Input", "Equipment", "Other"];
   var defaultTimeTypeOrder = ["Establishment", "Preharvest", "Harvest", "Constant", "Other"];
@@ -5984,8 +5987,12 @@ function EconomicsGraphic4() {
     var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
     window = document.getElementById('resultsFrame');
     let  doc =document.getElementById('resultsFrame').contentWindow.document;
-    var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
-    '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
+    var colors =
+        ['#fde344', '#4848f3','#6acd6a','#f84d4d',
+          '#00BFFF', '#8A2BE2','#FF69B4','#9ACD32',
+          '#FF7F50','#778899','#A52A2A','#ADFF2F',
+          '#191970','#FF4500','#6B8E23','#CD853F',
+          '#00FA9A','#A52A2A','#D2B48C'];
 
     // scales
     var margin = {top: 40, right: 10, bottom: 60, left: 80};
@@ -6729,8 +6736,12 @@ createMockDataGraphic2 = (year, currentSelection) =>{
 function EconomicsGraphic2(){
   var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2svg');
   var econGraphic2 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2');
-  var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
-  '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
+  var colors =
+    ['#fde344', '#4848f3','#6acd6a','#f84d4d',
+    '#00BFFF','#8A2BE2','#FF69B4','#9ACD32',
+    '#FF7F50','#778899','#A52A2A','#ADFF2F',
+    '#191970','#FF4500','#6B8E23','#CD853F',
+    '#00FA9A','#A52A2A','#D2B48C'];
   var costCategories = ["Action - Cost Type", "Time - Cost Type"];
   var currentSelection = "Action - Cost Type"
   var year = currentYear;
