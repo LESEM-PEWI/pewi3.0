@@ -6238,6 +6238,7 @@ function EconomicsGraphic4() {
       console.log(i);
       console.log(options);
       landuseOption();
+      rerender();
     }
     //option selection
     var optionCLick=function(d,i){
