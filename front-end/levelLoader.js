@@ -98,10 +98,13 @@ function addCommas(x) {
 
 //Refresh Econ Totals
 function refreshEconTotals(yearToLoad){
+  //calling map change here so the total is updated with every change; if we don't call it here then it will only be
+  //updated when results are explicitly called.
+  economics.mapChange();
+
   let totalCost = economics.totalWatershedCost[yearToLoad][0].cost;
   let totalRevenue = economics.totalWatershedRevenue[yearToLoad][0].revenue;
-  console.log("PRINTING FROM RESULTS FILE: ", totalCost, totalRevenue);
-
+  // console.log("PRINTING FROM RESULTS FILE: ", totalCost, totalRevenue);
   document.getElementById('totalCost').innerHTML = '$' + addCommas(Math.round(totalCost));
   document.getElementById('totalRevenue').innerHTML = '$' + addCommas(Math.round(totalRevenue));
 }

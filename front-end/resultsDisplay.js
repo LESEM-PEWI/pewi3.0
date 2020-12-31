@@ -6289,7 +6289,7 @@ function graphic5DisplayInfo(econdata){
                   "Early Nov.","Late Nov.","Early Dec.","Late Dec."];
   for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
   var month=0;
-  console.log(econdata);
+  //console.log(econdata);
   data[i]=[];
     econdata[i].forEach(landuse=>{
     landuse['array'].forEach(d=>{
