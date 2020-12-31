@@ -3159,7 +3159,7 @@ function generateResultsTable() {
           //htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
           //  //put Habitat header, in bold
             htmlTableString += "<tr>";
-            htmlTableString += "<td class='verticalLine'><b>" + "Habitat" + "<b></td>";
+            htmlTableString += "<td class='verticalLine'><b>" + "Wildlife" + "<b></td>";
             //calculate total score for each year and place next to Habitat header
             for(var y = 1; y <= upToYear; y++){
               htmlTableString += "<td class='rightText'><b>";
@@ -3185,7 +3185,7 @@ function generateResultsTable() {
         case 2:
           //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
           htmlTableString += "<tr>";
-          htmlTableString += "<td class='verticalLine'><b>" + "Soil Quality" + "<b></td>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Soil" + "<b></td>";
           //calculate total score for each year and place next to Habitat header
           for(var y = 1; y <= upToYear; y++){
             htmlTableString += "<td class='rightText'><b>";
@@ -3210,7 +3210,7 @@ function generateResultsTable() {
         case 4:
           //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
           htmlTableString += "<tr>";
-          htmlTableString += "<td class='verticalLine'><b>" + "Water Quality" + "<b></td>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Water" + "<b></td>";
           //calculate total score for each year and place next to Habitat header
           for(var y = 1; y <= upToYear; y++){
             htmlTableString += "<td class='rightText'><b>";
