@@ -104,9 +104,11 @@ function refreshEconTotals(yearToLoad){
 
   let totalCost = economics.totalWatershedCost[yearToLoad][0].cost;
   let totalRevenue = economics.totalWatershedRevenue[yearToLoad][0].revenue;
+  let totalProfit = totalRevenue - totalCost;
   // console.log("PRINTING FROM RESULTS FILE: ", totalCost, totalRevenue);
   document.getElementById('totalCost').innerHTML = '$' + addCommas(Math.round(totalCost));
   document.getElementById('totalRevenue').innerHTML = '$' + addCommas(Math.round(totalRevenue));
+  document.getElementById('totalProfit').innerHTML = totalProfit > 0 ? '$' + addCommas(Math.round(totalProfit)) : '(-) $' + addCommas(Math.abs(Math.round(totalProfit)));
 }
 
 //loadLevel is triggered by clicking a level button on the html page
