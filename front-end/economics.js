@@ -173,6 +173,7 @@ var Economics = function () {
   }
 
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
+
     calculateCornAfters();
     calculatePerYieldCrops();
     calculateForrestYields();
@@ -478,6 +479,7 @@ var Economics = function () {
         this.totalWatershedCost[i][0].cost +=  !isNaN(copy['EAA']) ? copy['EAA'] : 0
       })
     }
+    this.watershedTotals();
     this.chart3Data();
     this.chart3DataByLU();
     this.graphic5information();
@@ -487,21 +489,22 @@ var Economics = function () {
 
     //TESTING ONLY
     for(let k = 1; k <= boardData[currentBoard].calculatedToYear; k++) {
-      console.log("TOTAL WATERSHED COST FOR YEAR: ",k, "=",this.totalWatershedCost[k][0].cost);
+      //console.log("TOTAL WATERSHED COST FOR YEAR: ",k, "=",this.totalWatershedCost[k][0].cost);
     }
-    watershedTotals();
+
 
 
   };
 
   // TESTING WATERSHED TOTALS
-  watershedTotals = () => {
+  this.watershedTotals = () => {
+
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.totalWatershedRevenue[i]= [{revenue: 0}];
       for(let j = 0; j < 16; j ++){
         this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][j]) ? this.scaledRev[i][j] : 0
       }
-      console.log("TOTAL WATERSHED REVENUE FOR YEAR: ", i , "=",this.totalWatershedRevenue[i][0].revenue);
+      //console.log("TOTAL WATERSHED REVENUE FOR YEAR: ", i , "=",this.totalWatershedRevenue[i][0].revenue);
     }
   };
 

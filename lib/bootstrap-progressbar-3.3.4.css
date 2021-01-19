@@ -75,6 +75,16 @@
   align-self: right;
 }
 
+
+.progressBarWatershedTotals {
+  display: inline-block;
+  font-family: 'Amatic SC';
+  font-size: 1.8vw;
+  color: white;
+  align-self: right;
+  margin-left: 10px;
+}
+
 #gameWildlifeProgressBar, #biodiversityProgressBar, #carbonProgressBar,#erosionProgressBar,
 #phoshorusProgressBar, #sedimentProgressBar, #nitrateProgressBar,#totalYieldsProgressBar,
 #cornGrainProgressBar, #soybeansProgressBar, #fruitsAndVegetablesProgressBar, #cattleProgressBar,
