@@ -247,6 +247,15 @@ function toggleTabTitleHovers(factor) {
 
 // Show score details when hover over progress bar
 function toggleScoreDetails(factor) {
+  //Calculated Separately to Update Values based on BMP Budgets
+  let cornYield = Math.round(economics.cornAfters[currentYear][1].ConvCornAfterSoybeanYield +
+      economics.cornAfters[currentYear][1].ConvCornAfterCornYield +
+      economics.getBMPAreas[currentYear][2].landUseYield +
+      economics.getBMPAreas[currentYear][3].landUseYield).toFixed(1);
+
+  let soybeanYield = Math.round(economics.getCropYields[currentYear][1].convSoybeanYield +
+      economics.getBMPAreas[currentYear][1].landUseYield).toFixed(1)
+
   // To include hover effects on progressbars in cur tracking mode
   if (curTracking)
   {
@@ -387,10 +396,13 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('cornGrainScoreDetails')[0].childNodes;
         // 0 - 100 value
+
         childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].cornGrainYield * 10) / 10).toFixed(1) + ' bu / yr' + '<br>' +
-          (Math.round(Totals.yieldResults[currentYear].cornGrainYield * 0.0254 * 10) / 10).toFixed(1) + ' Mg / yr';
+        //TODO
+        childNodes[7].innerHTML = formatNumber((Math.round(cornYield * 10) / 10).toFixed(1)) + ' bu / yr' + '<br>' +
+          formatNumber((Math.round(cornYield * 0.0254 * 10) / 10).toFixed(1)) + ' Mg / yr';
 
         document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'block';
       }
@@ -404,8 +416,9 @@ function toggleScoreDetails(factor) {
         // 0 - 100 value
         childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].soybeanYield * 10) / 10).toFixed(1) + ' bu / yr' + '<br>' +
-          (Math.round(Totals.yieldResults[currentYear].soybeanYield * 0.0272 * 10) / 10).toFixed(1) + ' Mg / yr';
+        //TODO
+        childNodes[7].innerHTML = formatNumber((Math.round(soybeanYield * 10) / 10).toFixed(1)) + ' bu / yr' + '<br>' +
+          formatNumber((Math.round(soybeanYield * 0.0272 * 10) / 10).toFixed(1)) + ' Mg / yr';
 
         document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'block';
       }

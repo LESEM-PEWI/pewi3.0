@@ -46,6 +46,8 @@ function init() {
 
 // get ecosystem scores and load them to the corresponding progress bars based on which year user want to load.
 function refreshProgressBar(yearToLoad) {
+  economics.mapChange(); // Load Map change to update values for BMP Budgets - is this good to do here? May need performance optimization.
+
   $('.progress .progress-bar-gameWildlife').attr('data-transitiongoal', Math.round(Totals.gameWildlifePointsScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-biodiversity').attr('data-transitiongoal', Math.round(Totals.biodiversityPointsScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-carbon').attr('data-transitiongoal', Math.round(Totals.carbonSequestrationScore[yearToLoad] * 10) / 10);
