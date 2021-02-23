@@ -245,6 +245,8 @@ function toggleTabTitleHovers(factor) {
   }
 }
 
+
+
 // Show score details when hover over progress bar
 function toggleScoreDetails(factor) {
   //Calculated Separately to Update Values based on BMP Budgets
@@ -255,6 +257,12 @@ function toggleScoreDetails(factor) {
 
   let soybeanYield = Math.round(economics.getCropYields[currentYear][1].convSoybeanYield +
       economics.getBMPAreas[currentYear][1].landUseYield).toFixed(1)
+
+  let cornYieldMax = boardData[currentBoard].maximums.cornMax;
+  let soyYieldMax = boardData[currentBoard].maximums.soybeanMax;
+
+  let cornYieldAdjScore = (cornYield / cornYieldMax) * 100;
+  let soyYieldAdjScore = (soybeanYield / soyYieldMax) * 100;
 
   // To include hover effects on progressbars in cur tracking mode
   if (curTracking)
@@ -397,7 +405,8 @@ function toggleScoreDetails(factor) {
         var childNodes = document.getElementsByClassName('cornGrainScoreDetails')[0].childNodes;
         // 0 - 100 value
 
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+        //childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(cornYieldAdjScore).toFixed(1))  + '/100';
 
         // convert English unit to Metric unit
         //TODO
@@ -414,7 +423,9 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('soybeansScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+        //childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(soyYieldAdjScore).toFixed(1))  + '/100';
+
         // convert English unit to Metric unit
         //TODO
         childNodes[7].innerHTML = formatNumber((Math.round(soybeanYield * 10) / 10).toFixed(1)) + ' bu / yr' + '<br>' +

@@ -3770,8 +3770,23 @@ this.tileNitrate = Array(4);
  *
  */
   this.updateScores = function(year) {
-
       for (var y = 1; y <= board.calculatedToYear; y++) {
+        //TODO
+        //Calculated Separately to Update Values based on BMP Budgets
+        let cornYield = Math.round(economics.cornAfters[y][1].ConvCornAfterSoybeanYield +
+            economics.cornAfters[y][1].ConvCornAfterCornYield +
+            economics.getBMPAreas[y][2].landUseYield +
+            economics.getBMPAreas[y][3].landUseYield).toFixed(1);
+
+        let soybeanYield = Math.round(economics.getCropYields[y][1].convSoybeanYield +
+            economics.getBMPAreas[y][1].landUseYield).toFixed(1)
+
+        let cornYieldMax = boardData[currentBoard].maximums.cornMax;
+        let soyYieldMax = boardData[currentBoard].maximums.soybeanMax;
+
+        let cornYieldAdjScore = (cornYield / cornYieldMax) * 100;
+        let soyYieldAdjScore = (soybeanYield / soyYieldMax) * 100;
+
         this.gameWildlifePointsScore[y] = this.gameWildlifePoints[y] * 10;
         this.biodiversityPointsScore[y] = this.biodiversityPoints[y] * 10;
         this.carbonSequestrationScore[y] = 100 * ((this.carbonSequestration[y] - board.minimums.carbonMin) / (board.maximums.carbonMax - board.minimums.carbonMin));
@@ -3781,8 +3796,10 @@ this.tileNitrate = Array(4);
         this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin));
         this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin));
 
-        this.cornGrainYieldScore[y] = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax;
+        this.cornGrainYieldScore[y] = cornYieldAdjScore;
+
         this.soybeanYieldScore[y] = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax;
+
         this.alfalfaHayYieldScore[y] = 100 * this.yieldResults[y].alfalfaHayYield / board.maximums.alfalfaMax;
         this.grassHayYieldScore[y] = 100 * this.yieldResults[y].grassHayYield / board.maximums.grassHayMax;
         this.woodYieldScore[y] = 100 * this.yieldResults[y].woodYield / board.maximums.woodMax;
