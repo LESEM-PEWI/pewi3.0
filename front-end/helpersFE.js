@@ -1112,6 +1112,7 @@ function addYearAndTransition() {
   //switch to next year
   // refresh the progress bar
   calculateResults();
+  refreshEconTotals(currentYear);
   refreshProgressBar(currentYear);
 } //end addYearAndTransition
 
@@ -1255,6 +1256,7 @@ function deleteYearAndTransition()
     }
     // refresh the progress bar
     // calculateResults();
+    refreshEconTotals(currentYear);
     refreshProgressBar(currentYear);
 }// end deleteYearAndTransition
 
@@ -1412,6 +1414,7 @@ function changeLandTypeTileNitrate(tileId){
         }
     }
 
+    refreshEconTotals(currentYear);
     refreshProgressBar(currentYear);
   } // end outter if
 } //end changeLandTypeTile
@@ -4357,6 +4360,7 @@ function pasteYear()
     refreshBoard();
     calculateResults(undefined,yearToPasteIn);
 
+    refreshEconTotals(currentYear);
     refreshProgressBar(currentYear);
     //if (!isSimRunning()) {
       snackBar.innerHTML = ("Year " + yearCopyPaste + " is now pasted in year " +yearToPasteIn +"!");
@@ -5835,6 +5839,7 @@ function switchYearTab(yearNumberToChangeTo) {
   //then toggle on the selected year
   var yearIdString = "year" + yearNumberToChangeTo + "Image";
   document.getElementById(yearIdString).className = "icon yearSelected";
+  refreshEconTotals(currentYear);
   refreshProgressBar(currentYear);
   setupStaticBackground();
   // store last users action ( print function )
@@ -5968,6 +5973,7 @@ function fillDeactivatedLands(){
   toggleReplacementFrame();
   refreshBoard();
   painter = temp;
+  refreshEconTotals(currentYear);
   refreshProgressBar(currentYear);
 }
 
@@ -6411,6 +6417,7 @@ function updatePrecip(year) {
   //   calculateResults(i,year);
   // }
   calculateResults(undefined,year);
+  refreshEconTotals(currentYear);
   refreshProgressBar(currentYear);
 } //updatePrecip
 
@@ -6841,6 +6848,7 @@ function uploadCSV(reader) {
     //generateResultsTable();
     // fresh progress bars
     calculateResults();
+    refreshEconTotals(currentYear);
     refreshProgressBar(currentYear);
     //clear initData
     initData = [];

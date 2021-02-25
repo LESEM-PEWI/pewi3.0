@@ -3159,7 +3159,7 @@ function generateResultsTable() {
           //htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
           //  //put Habitat header, in bold
             htmlTableString += "<tr>";
-            htmlTableString += "<td class='verticalLine'><b>" + "Habitat" + "<b></td>";
+            htmlTableString += "<td class='verticalLine'><b>" + "Wildlife" + "<b></td>";
             //calculate total score for each year and place next to Habitat header
             for(var y = 1; y <= upToYear; y++){
               htmlTableString += "<td class='rightText'><b>";
@@ -3185,7 +3185,7 @@ function generateResultsTable() {
         case 2:
           //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
           htmlTableString += "<tr>";
-          htmlTableString += "<td class='verticalLine'><b>" + "Soil Quality" + "<b></td>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Soil" + "<b></td>";
           //calculate total score for each year and place next to Habitat header
           for(var y = 1; y <= upToYear; y++){
             htmlTableString += "<td class='rightText'><b>";
@@ -3210,7 +3210,7 @@ function generateResultsTable() {
         case 4:
           //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
           htmlTableString += "<tr>";
-          htmlTableString += "<td class='verticalLine'><b>" + "Water Quality" + "<b></td>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Water" + "<b></td>";
           //calculate total score for each year and place next to Habitat header
           for(var y = 1; y <= upToYear; y++){
             htmlTableString += "<td class='rightText'><b>";
@@ -5254,7 +5254,7 @@ function EconomicsGraphic1() {
   };
   var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1svg');
   var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1');
-  var colors = ["#ffde2a", '#0000ff','#33cc33','#ff0000'] //Cost, revenue, profit, loss
+  var colors = ["#fde344", '#4848f3','#6acd6a','#f84d4d'] //Cost, revenue, profit, loss
   var stackTypes = ['Cost','Revenue','Profit','Loss'];
   var fullData = createMockDataGraphic1();
 
@@ -5611,9 +5611,12 @@ function EconomicsGraphic3() {
 
   var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3svg');
   var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic3');
-  var colors = ["#ffff4d", '#0000ff', '#33cc33', '#ff0000', '#00BFFF', '#8A2BE2', '#FF69B4', '#9ACD32', '#FF7F50', '#778899', '#A52A2A', '#ADFF2F',
-    '#191970', '#FF4500', '#6B8E23', '#CD853F', '#00FA9A', '#A52A2A', '#D2B48C'
-  ];
+  var colors =
+      ['#fde344', '#4848f3','#6acd6a','#f84d4d',
+    '#00BFFF', '#8A2BE2', '#FF69B4', '#9ACD32', '#FF7F50',
+    '#778899', '#A52A2A', '#ADFF2F', '#191970',
+    '#FF4500', '#6B8E23', '#CD853F', '#00FA9A',
+    '#A52A2A', '#D2B48C'];
   var stackTypes = ['Cost', 'Revenue', 'Profit', 'Loss'];
   var defaultActionTypeOrder = ["Labor", "Custom", "Input", "Equipment", "Other"];
   var defaultTimeTypeOrder = ["Establishment", "Preharvest", "Harvest", "Constant", "Other"];
@@ -5984,8 +5987,12 @@ function EconomicsGraphic4() {
     var econGraphic1 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic4');
     window = document.getElementById('resultsFrame');
     let  doc =document.getElementById('resultsFrame').contentWindow.document;
-    var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
-    '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
+    var colors =
+        ['#fde344', '#4848f3','#6acd6a','#f84d4d',
+          '#00BFFF', '#8A2BE2','#FF69B4','#9ACD32',
+          '#FF7F50','#778899','#A52A2A','#ADFF2F',
+          '#191970','#FF4500','#6B8E23','#CD853F',
+          '#00FA9A','#A52A2A','#D2B48C'];
 
     // scales
     var margin = {top: 40, right: 10, bottom: 60, left: 80};
@@ -6019,6 +6026,8 @@ function EconomicsGraphic4() {
         	.range([height - margin.bottom, margin.top]);
         var tooltip = d3.select(document.getElementById('resultsFrame').contentWindow.document.getElementById("graph4tt"));
 
+        //Start Color Cycle at index
+        let startAt = 0;
           // bars
         var rect = svg.selectAll('rect')
         	.data(displaydata)
@@ -6031,7 +6040,18 @@ function EconomicsGraphic4() {
         	.attr('height', function(d){
             return height - margin.bottom - yScale(d.value)})
     			.attr('fill', function(d,i){
-            return colors[i]})
+                  if(i === colors.length - 1){
+                    console.log("I'm RESET AT: ", i);
+                    startAt = 0;
+                  }
+                  else if(i === (colors.length - 1) * 2){
+                    startAt = 0;
+                  }
+                  else {
+                    startAt++;
+                  }
+                  return colors[startAt];
+    			})
           .on("mouseover",function(d){
             tooltip.style("visibility","visible");
             tooltip.select("#econGraphic4YearNum").text("Year #" + year);
@@ -6238,6 +6258,7 @@ function EconomicsGraphic4() {
       console.log(i);
       console.log(options);
       landuseOption();
+      rerender();
     }
     //option selection
     var optionCLick=function(d,i){
@@ -6289,7 +6310,7 @@ function graphic5DisplayInfo(econdata){
                   "Early Nov.","Late Nov.","Early Dec.","Late Dec."];
   for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
   var month=0;
-  console.log(econdata);
+  //console.log(econdata);
   data[i]=[];
     econdata[i].forEach(landuse=>{
     landuse['array'].forEach(d=>{
@@ -6729,8 +6750,12 @@ createMockDataGraphic2 = (year, currentSelection) =>{
 function EconomicsGraphic2(){
   var econBody = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2svg');
   var econGraphic2 = document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2');
-  var colors = ["#ffff4d", '#0000ff','#33cc33','#ff0000','#00BFFF','#8A2BE2','#FF69B4','#9ACD32','#FF7F50','#778899','#A52A2A','#ADFF2F',
-  '#191970','#FF4500','#6B8E23','#CD853F','#00FA9A','#A52A2A','#D2B48C'];
+  var colors =
+    ['#fde344', '#4848f3','#6acd6a','#f84d4d',
+    '#00BFFF','#8A2BE2','#FF69B4','#9ACD32',
+    '#FF7F50','#778899','#A52A2A','#ADFF2F',
+    '#191970','#FF4500','#6B8E23','#CD853F',
+    '#00FA9A','#A52A2A','#D2B48C'];
   var costCategories = ["Action - Cost Type", "Time - Cost Type"];
   var currentSelection = "Action - Cost Type"
   var year = currentYear;
