@@ -628,6 +628,8 @@
           minInput.setAttribute("onfocusout","setPlaceholderValue('min" + i + "',this.value)");
           minInput.setAttribute("size","5");
           minInput.setAttribute("height","5");
+          //TODO - adding Tab Index values to fix Min value bug.
+          minInput.setAttribute("tabIndex", "1");
 
         var unitElement = document.createElement("span");
           unitElement.className = "minUnit";
@@ -652,6 +654,8 @@
           maxInput.setAttribute("onfocusout","setPlaceholderValue('max" + i + "',this.value)");
           maxInput.setAttribute("size","5");
           maxInput.setAttribute("height","5");
+        //TODO
+        maxInput.setAttribute("tabIndex", "2");
 
         unitElement = document.createElement("span");
           unitElement.className = "maxUnit";
@@ -671,6 +675,8 @@
           actualMinInput.setAttribute("onfocusout","setPlaceholderValue('actualMin" + i + "',this.value)");
           actualMinInput.setAttribute("size","5");
           actualMinInput.setAttribute("height","5");
+        //TODO
+        actualMinInput.setAttribute("tabIndex", "3");
 
         unitElement = document.createElement("span");
           unitElement.id = "actualMin" + i + "Unit";
@@ -693,6 +699,8 @@
           actualMaxInput.setAttribute("onfocusout","setPlaceholderValue('actualMax" + i + "',this.value)");
           actualMaxInput.setAttribute("size","5");
           actualMaxInput.setAttribute("height","5");
+        //TODO
+        actualMaxInput.setAttribute("tabIndex", "4");
           actualMaxInput.innerHTML = "tons";
         var unitElement1 = document.createElement("span");
           unitElement1.id = "actualMax" + i + "Unit";

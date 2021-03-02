@@ -740,9 +740,9 @@ function setProgressbarMinMaxValues(id, option, value) {
   // if value < 0, we set it to be -10, if value > 100, then set it to be 110. Error protection.
   // if(value < 0) value = -10;
   // if(value > 100) value = 110;
-
+  //console.log("SET VALUE:" , value)
   var children = document.getElementById(id).childNodes[3].childNodes;
-  // console.log(children);
+   //console.log(children[5].style.left);
   if(option == 'min'){
     if(value < parseFloat(children[5].style.left)){
       children[3].style.left = value + "%";
