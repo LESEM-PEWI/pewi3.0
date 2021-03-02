@@ -79,8 +79,8 @@ function refreshProgressBar(yearToLoad) {
 
   $('.progress .progress-bar-totalYields').attr('data-transitiongoal', Math.min(Math.round(tempTotal * 10) / 10, 100));
 
-  $('.progress .progress-bar-cornGrain').attr('data-transitiongoal', Math.round(cornYieldAdjScore));
-  $('.progress .progress-bar-soybeans').attr('data-transitiongoal', Math.round(soyYieldAdjScore));
+  $('.progress .progress-bar-cornGrain').attr('data-transitiongoal', Math.round(cornYieldAdjScore * 10)/10);
+  $('.progress .progress-bar-soybeans').attr('data-transitiongoal', Math.round(soyYieldAdjScore * 10)/10);
   $('.progress .progress-bar-fruitsAndVegetables').attr('data-transitiongoal', Math.round(Totals.mixedFruitsAndVegetablesYieldScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-cattle').attr('data-transitiongoal', Math.round(Totals.cattleYieldScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-alfalfaHay').attr('data-transitiongoal', Math.round(Totals.alfalfaHayYieldScore[yearToLoad] * 10) / 10);

@@ -3358,7 +3358,7 @@ function generateResultsTable() {
                 soyYieldAdjScore + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] +
                 Totals.grassHayYieldScore[y] + Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y], 100);
 
-            htmlTableString += addCommas((Math.round(totalScore)).toFixed(1)) + "<br>";
+            htmlTableString += addCommas((Math.round(totalScore * 10)/10).toFixed(1)) + "<br>";
 
             htmlTableString += "<b></td>";
           }
@@ -3405,10 +3405,10 @@ function generateResultsTable() {
 
         //TODO
         if(tempString === 'cornGrainYieldScore') {
-          htmlTableString += addCommas((Math.round(cornYieldAdjScore).toFixed(1))) + "<br>";
+          htmlTableString += addCommas((Math.round(cornYieldAdjScore * 10)/10).toFixed(1)) + "<br>";
         }
         else if (tempString === 'soybeanYieldScore'){
-          htmlTableString += addCommas((Math.round(soyYieldAdjScore).toFixed(1))) + "<br>";
+          htmlTableString += addCommas((Math.round(soyYieldAdjScore * 10)/10).toFixed(1)) + "<br>";
         }
         else {
           htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";

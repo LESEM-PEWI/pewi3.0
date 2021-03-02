@@ -391,7 +391,7 @@ function toggleScoreDetails(factor) {
           Totals.grassHayYieldScore[currentYear] + Totals.switchgrassYieldScore[currentYear] + Totals.cattleYieldScore[currentYear] + Totals.woodYieldScore[currentYear] + Totals.shortRotationWoodyBiomassYieldScore[currentYear], 100);
 
 
-        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(totalScore)).toFixed(1))  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(totalScore * 10) / 10).toFixed(1))  + '/100';
 
         document.getElementsByClassName('totalScoreDetails')[0].style.display = 'block';
       }
@@ -405,7 +405,7 @@ function toggleScoreDetails(factor) {
         // 0 - 100 value
 
         //childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(cornYieldAdjScore).toFixed(1))  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(cornYieldAdjScore * 10)/10).toFixed(1)  + '/100';
 
         // convert English unit to Metric unit
         //TODO
@@ -423,7 +423,7 @@ function toggleScoreDetails(factor) {
         var childNodes = document.getElementsByClassName('soybeansScoreDetails')[0].childNodes;
         // 0 - 100 value
         //childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(soyYieldAdjScore).toFixed(1))  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(soyYieldAdjScore * 10)/10).toFixed(1)  + '/100';
 
         // convert English unit to Metric unit
         //TODO
