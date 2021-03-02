@@ -3358,7 +3358,7 @@ function generateResultsTable() {
                 soyYieldAdjScore + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] +
                 Totals.grassHayYieldScore[y] + Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y], 100);
 
-            htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
+            htmlTableString += addCommas((Math.round(totalScore)).toFixed(1)) + "<br>";
 
             htmlTableString += "<b></td>";
           }

@@ -387,12 +387,11 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('totalScoreDetails')[0].childNodes;
         // 0 - 100 value
-        var totalScore = Math.min(Totals.cornGrainYieldScore[currentYear] +
-          Totals.soybeanYieldScore[currentYear] + Totals.mixedFruitsAndVegetablesYieldScore[currentYear] + Totals.alfalfaHayYieldScore[currentYear] +
+        var totalScore = Math.min(cornYieldAdjScore + soyYieldAdjScore + Totals.mixedFruitsAndVegetablesYieldScore[currentYear] + Totals.alfalfaHayYieldScore[currentYear] +
           Totals.grassHayYieldScore[currentYear] + Totals.switchgrassYieldScore[currentYear] + Totals.cattleYieldScore[currentYear] + Totals.woodYieldScore[currentYear] + Totals.shortRotationWoodyBiomassYieldScore[currentYear], 100);
 
 
-        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(totalScore * 10) / 10).toFixed(1))  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(totalScore)).toFixed(1))  + '/100';
 
         document.getElementsByClassName('totalScoreDetails')[0].style.display = 'block';
       }
