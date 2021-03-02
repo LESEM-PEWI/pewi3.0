@@ -1797,7 +1797,20 @@ function drawEcosystemRadar(yearArray) {
 
   //assign the dataset for each year
   for (var i = 0; i < yearArray.length; i++) {
+    // //Calculated Separately to Update Values based on BMP Budgets
+    let cornYield = Math.round(economics.cornAfters[currentYear][1].ConvCornAfterSoybeanYield +
+        economics.cornAfters[currentYear][1].ConvCornAfterCornYield +
+        economics.getBMPAreas[currentYear][2].landUseYield +
+        economics.getBMPAreas[currentYear][3].landUseYield).toFixed(1);
 
+    let soybeanYield = Math.round(economics.getCropYields[currentYear][1].convSoybeanYield +
+        economics.getBMPAreas[currentYear][1].landUseYield).toFixed(1)
+
+    let cornYieldMax = boardData[currentBoard].maximums.cornMax;
+    let soyYieldMax = boardData[currentBoard].maximums.soybeanMax;
+
+    let cornYieldAdjScore = (cornYield / cornYieldMax) * 100;
+    let soyYieldAdjScore = (soybeanYield / soyYieldMax) * 100;
     var y = yearArray[i];
     var obj = [{
       label: "Nitrate Concentration",
@@ -1808,7 +1821,7 @@ function drawEcosystemRadar(yearArray) {
       label: "Total Sum Yields",
       axis: "Total Yields",
 
-      value: (Math.min((Totals.cornGrainYieldScore[y]  + Totals.soybeanYieldScore[y]  + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y]  + Totals.grassHayYieldScore[y]  +
+      value: (Math.min((cornYieldAdjScore  + soyYieldAdjScore  + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y]  + Totals.grassHayYieldScore[y]  +
       Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y]) / 100, 100)).toFixed(1),
     }, {
       label: "Phosphorus Load",
@@ -3311,33 +3324,55 @@ function generateResultsTable() {
       switch (l) {
         case 0:
           //htmlTableString += "<tr class='tableHeading'><td><b>Yield</b></td></tr>";
-            //put Yield header, in bold
-            htmlTableString += "<tr>";
-            htmlTableString += "<td class='verticalLine'><b>" + "Yield" + "<b></td>";
+          //put Yield header, in bold
+          htmlTableString += "<tr>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Yield" + "<b></td>";
 
-            //calculate total score for each year and place next to Yield header
-            for(var y = 1; y <= upToYear; y++){
-              htmlTableString += "<td class='rightText'><b>";
-
-              var totalScore = Math.min(Totals.cornGrainYieldScore[y] +
-              Totals.soybeanYieldScore[y] + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] +
-              Totals.grassHayYieldScore[y] + Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y], 100);
-
-              htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
-
-              htmlTableString += "<b></td>";
+          //GET DATA FROM ECONOMICS UPDATES i.e., YIELDS FOR SPECIAL CASE - CONS/CONV CORN & CONS/CONV SOYBEAN (based on BMP Budget changes)
+          let bmpBudgetYields = [];
+          for(let i = 1; i <= upToYear; i++){
+            bmpBudgetYields[i] = {
+              soybeanYield:
+                  Math.round(economics.getCropYields[i][1].convSoybeanYield +
+                      economics.getBMPAreas[i][1].landUseYield).toFixed(1),
+              cornYield:
+                  Math.round(economics.cornAfters[i][1].ConvCornAfterSoybeanYield +
+                      economics.cornAfters[i][1].ConvCornAfterCornYield +
+                      economics.getBMPAreas[i][2].landUseYield +
+                      economics.getBMPAreas[i][3].landUseYield).toFixed(1),
             }
-            htmlTableString += "<td  class='verticalLine centerText'><b>(out of 100)<b></td>";
-            //add extra spaces to fill out bar across screen
-            for(var y = 1; y <= (2*upToYear)+2; y++){
-              if(y == ((2*upToYear) + 2) / 2){
-                htmlTableString += "<td  class='verticalLine'></td>";
-              }
-              else{
-                htmlTableString += "<td></td>";
-              }
+          }
+
+
+          //calculate total score for each year and place next to Yield header
+          for(var y = 1; y <= upToYear; y++){
+            let cornYieldMax = boardData[currentBoard].maximums.cornMax;
+            let soyYieldMax = boardData[currentBoard].maximums.soybeanMax;
+
+            let cornYieldAdjScore = (bmpBudgetYields[y].cornYield / cornYieldMax) * 100;
+            let soyYieldAdjScore = (bmpBudgetYields[y].soybeanYield / soyYieldMax) * 100;
+
+            htmlTableString += "<td class='rightText'><b>";
+
+            var totalScore = Math.min(cornYieldAdjScore +
+                soyYieldAdjScore + Totals.mixedFruitsAndVegetablesYieldScore[y] + Totals.alfalfaHayYieldScore[y] +
+                Totals.grassHayYieldScore[y] + Totals.switchgrassYieldScore[y] + Totals.cattleYieldScore[y] + Totals.woodYieldScore[y] + Totals.shortRotationWoodyBiomassYieldScore[y], 100);
+
+            htmlTableString += addCommas((Math.round(totalScore * 10)/10).toFixed(1)) + "<br>";
+
+            htmlTableString += "<b></td>";
+          }
+          htmlTableString += "<td  class='verticalLine centerText'><b>(out of 100)<b></td>";
+          //add extra spaces to fill out bar across screen
+          for(var y = 1; y <= (2*upToYear)+2; y++){
+            if(y == ((2*upToYear) + 2) / 2){
+              htmlTableString += "<td  class='verticalLine'></td>";
             }
-            break;
+            else{
+              htmlTableString += "<td></td>";
+            }
+          }
+          break;
       } //end switch
 
       htmlTableString += "<tr>";
@@ -3345,21 +3380,72 @@ function generateResultsTable() {
       htmlTableString += "<td class='verticalLine'>" + frontendNames[l] + "</td>";
 
       for (var y = 1; y <= upToYear; y++) {
+        let bmpBudgetYields = [];
+        for(let i = 1; i <= upToYear; i++){
+          bmpBudgetYields[i] = {
+            soybeanYield:
+                Math.round(economics.getCropYields[i][1].convSoybeanYield +
+                    economics.getBMPAreas[i][1].landUseYield).toFixed(1),
+            cornYield:
+                Math.round(economics.cornAfters[i][1].ConvCornAfterSoybeanYield +
+                    economics.cornAfters[i][1].ConvCornAfterCornYield +
+                    economics.getBMPAreas[i][2].landUseYield +
+                    economics.getBMPAreas[i][3].landUseYield).toFixed(1),
+          }
+        }
+        let cornYieldMax = boardData[currentBoard].maximums.cornMax;
+        let soyYieldMax = boardData[currentBoard].maximums.soybeanMax;
+
+        let cornYieldAdjScore = (bmpBudgetYields[y].cornYield / cornYieldMax) * 100;
+        let soyYieldAdjScore = (bmpBudgetYields[y].soybeanYield / soyYieldMax) * 100;
+
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "Score";
-        htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
 
+        //TODO
+        if(tempString === 'cornGrainYieldScore') {
+          htmlTableString += addCommas((Math.round(cornYieldAdjScore * 10)/10).toFixed(1)) + "<br>";
+        }
+        else if (tempString === 'soybeanYieldScore'){
+          htmlTableString += addCommas((Math.round(soyYieldAdjScore * 10)/10).toFixed(1)) + "<br>";
+        }
+        else {
+          htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
+        }
         htmlTableString += "</td>";
       } //for each year
       //units cell
       htmlTableString += "<td class='verticalLine centerText'>(out of 100)</td>";
 
-      for (var y = 1; y <= upToYear; y++) {
+
+      //GET DATA FROM ECONOMICS UPDATES i.e., YIELDS FOR SPECIAL CASE - CONS/CONV CORN & CONS/CONV SOYBEAN (based on BMP Budget changes)
+      let bmpBudgetYields = [];
+      for(let i = 1; i <= upToYear; i++){
+        bmpBudgetYields[i] = {
+          soybeanYield:
+              Math.round(economics.getCropYields[i][1].convSoybeanYield +
+                  economics.getBMPAreas[i][1].landUseYield).toFixed(1),
+          cornYield:
+              Math.round(economics.cornAfters[i][1].ConvCornAfterSoybeanYield +
+                  economics.cornAfters[i][1].ConvCornAfterCornYield +
+                  economics.getBMPAreas[i][2].landUseYield +
+                  economics.getBMPAreas[i][3].landUseYield).toFixed(1),
+        }
+      }
+
+
+      for (let y = 1; y <= upToYear; y++) {
+
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
-        htmlTableString += addCommas((Math.round(Totals.yieldResults[y][tempString] * 10) / 10).toFixed(1)) + "<br>";
+
+        let valueString  = tempString === 'cornGrainYield' ? addCommas(bmpBudgetYields[y].cornYield)
+            : tempString === 'soybeanYield' ? addCommas(bmpBudgetYields[y].soybeanYield)
+                : addCommas((Math.round(Totals.yieldResults[y][tempString] * 10) / 10).toFixed(1));
+
+        htmlTableString +=  valueString + "<br>";
 
         htmlTableString += "</td>";
       } //for each year
@@ -3376,7 +3462,12 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
-        htmlTableString += addCommas((Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10).toFixed(1)) + "<br>";
+
+        let valueString  = tempString === 'cornGrainYield' ? addCommas(Math.round(bmpBudgetYields[y].cornYield * conversionArray[l] * 10)/10)
+            : tempString === 'soybeanYield' ? addCommas(Math.round(bmpBudgetYields[y].soybeanYield * conversionArray[l] * 10)/10)
+                : addCommas((Math.round(Totals.yieldResults[y][tempString] * conversionArray[l] * 10) / 10).toFixed(1));
+
+        htmlTableString += valueString + "<br>";
 
         htmlTableString += "</td>";
 
@@ -3391,6 +3482,7 @@ function generateResultsTable() {
       if (l == 7) htmlTableString += "<td class='centerText'>m^3</td>";
       if (l == 8) htmlTableString += "<td class='centerText'>Mg</td>";
     }
+
 
     htmlTableString += "</table><br>";
 

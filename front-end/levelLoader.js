@@ -46,6 +46,23 @@ function init() {
 
 // get ecosystem scores and load them to the corresponding progress bars based on which year user want to load.
 function refreshProgressBar(yearToLoad) {
+  economics.mapChange(); // Load Map change to update values for BMP Budgets - is this good to do here? May need performance optimization.
+  //TODO
+  //Calculated Separately to Update Values based on BMP Budgets
+  let cornYield = Math.round(economics.cornAfters[yearToLoad][1].ConvCornAfterSoybeanYield +
+      economics.cornAfters[yearToLoad][1].ConvCornAfterCornYield +
+      economics.getBMPAreas[yearToLoad][2].landUseYield +
+      economics.getBMPAreas[yearToLoad][3].landUseYield).toFixed(1);
+
+  let soybeanYield = Math.round(economics.getCropYields[yearToLoad][1].convSoybeanYield +
+      economics.getBMPAreas[yearToLoad][1].landUseYield).toFixed(1)
+
+  let cornYieldMax = boardData[currentBoard].maximums.cornMax;
+  let soyYieldMax = boardData[currentBoard].maximums.soybeanMax;
+
+  let cornYieldAdjScore = (cornYield / cornYieldMax) * 100;
+  let soyYieldAdjScore = (soybeanYield / soyYieldMax) * 100;
+
   $('.progress .progress-bar-gameWildlife').attr('data-transitiongoal', Math.round(Totals.gameWildlifePointsScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-biodiversity').attr('data-transitiongoal', Math.round(Totals.biodiversityPointsScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-carbon').attr('data-transitiongoal', Math.round(Totals.carbonSequestrationScore[yearToLoad] * 10) / 10);
@@ -54,13 +71,16 @@ function refreshProgressBar(yearToLoad) {
   $('.progress .progress-bar-phoshorus').attr('data-transitiongoal', Math.round(Totals.phosphorusLoadScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-sediment').attr('data-transitiongoal', Math.round(Totals.sedimentDeliveryScore[yearToLoad] * 10) / 10);
 
-  var tempTotal = Totals.cornGrainYieldScore[yearToLoad] + Totals.soybeanYieldScore[yearToLoad] + Totals.mixedFruitsAndVegetablesYieldScore[yearToLoad] + Totals.alfalfaHayYieldScore[yearToLoad] + Totals.grassHayYieldScore[yearToLoad] +
-                    Totals.switchgrassYieldScore[yearToLoad] + Totals.cattleYieldScore[yearToLoad] + Totals.woodYieldScore[yearToLoad] + Totals.shortRotationWoodyBiomassYieldScore[yearToLoad];
+  //var tempTotal = Totals.cornGrainYieldScore[yearToLoad] + Totals.soybeanYieldScore[yearToLoad] + Totals.mixedFruitsAndVegetablesYieldScore[yearToLoad] + Totals.alfalfaHayYieldScore[yearToLoad] + Totals.grassHayYieldScore[yearToLoad] +
+                  //  Totals.switchgrassYieldScore[yearToLoad] + Totals.cattleYieldScore[yearToLoad] + Totals.woodYieldScore[yearToLoad] + Totals.shortRotationWoodyBiomassYieldScore[yearToLoad];
+
+  var tempTotal = cornYieldAdjScore + soyYieldAdjScore + Totals.mixedFruitsAndVegetablesYieldScore[yearToLoad] + Totals.alfalfaHayYieldScore[yearToLoad] + Totals.grassHayYieldScore[yearToLoad] +
+      Totals.switchgrassYieldScore[yearToLoad] + Totals.cattleYieldScore[yearToLoad] + Totals.woodYieldScore[yearToLoad] + Totals.shortRotationWoodyBiomassYieldScore[yearToLoad];
 
   $('.progress .progress-bar-totalYields').attr('data-transitiongoal', Math.min(Math.round(tempTotal * 10) / 10, 100));
 
-  $('.progress .progress-bar-cornGrain').attr('data-transitiongoal', Math.round(Totals.cornGrainYieldScore[yearToLoad] * 10) / 10);
-  $('.progress .progress-bar-soybeans').attr('data-transitiongoal', Math.round(Totals.soybeanYieldScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-cornGrain').attr('data-transitiongoal', Math.round(cornYieldAdjScore * 10)/10);
+  $('.progress .progress-bar-soybeans').attr('data-transitiongoal', Math.round(soyYieldAdjScore * 10)/10);
   $('.progress .progress-bar-fruitsAndVegetables').attr('data-transitiongoal', Math.round(Totals.mixedFruitsAndVegetablesYieldScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-cattle').attr('data-transitiongoal', Math.round(Totals.cattleYieldScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-alfalfaHay').attr('data-transitiongoal', Math.round(Totals.alfalfaHayYieldScore[yearToLoad] * 10) / 10);
