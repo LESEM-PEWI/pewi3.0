@@ -245,8 +245,25 @@ function toggleTabTitleHovers(factor) {
   }
 }
 
+
+
 // Show score details when hover over progress bar
 function toggleScoreDetails(factor) {
+  //Calculated Separately to Update Values based on BMP Budgets
+  let cornYield = Math.round(economics.cornAfters[currentYear][1].ConvCornAfterSoybeanYield +
+      economics.cornAfters[currentYear][1].ConvCornAfterCornYield +
+      economics.getBMPAreas[currentYear][2].landUseYield +
+      economics.getBMPAreas[currentYear][3].landUseYield).toFixed(1);
+
+  let soybeanYield = Math.round(economics.getCropYields[currentYear][1].convSoybeanYield +
+      economics.getBMPAreas[currentYear][1].landUseYield).toFixed(1)
+
+  let cornYieldMax = boardData[currentBoard].maximums.cornMax;
+  let soyYieldMax = boardData[currentBoard].maximums.soybeanMax;
+
+  let cornYieldAdjScore = (cornYield / cornYieldMax) * 100;
+  let soyYieldAdjScore = (soybeanYield / soyYieldMax) * 100;
+
   // To include hover effects on progressbars in cur tracking mode
   if (curTracking)
   {
@@ -370,8 +387,7 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('totalScoreDetails')[0].childNodes;
         // 0 - 100 value
-        var totalScore = Math.min(Totals.cornGrainYieldScore[currentYear] +
-          Totals.soybeanYieldScore[currentYear] + Totals.mixedFruitsAndVegetablesYieldScore[currentYear] + Totals.alfalfaHayYieldScore[currentYear] +
+        var totalScore = Math.min(cornYieldAdjScore + soyYieldAdjScore + Totals.mixedFruitsAndVegetablesYieldScore[currentYear] + Totals.alfalfaHayYieldScore[currentYear] +
           Totals.grassHayYieldScore[currentYear] + Totals.switchgrassYieldScore[currentYear] + Totals.cattleYieldScore[currentYear] + Totals.woodYieldScore[currentYear] + Totals.shortRotationWoodyBiomassYieldScore[currentYear], 100);
 
 
@@ -387,10 +403,14 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('cornGrainScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+
+        //childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.cornGrainYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(cornYieldAdjScore * 10)/10).toFixed(1)  + '/100';
+
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].cornGrainYield * 10) / 10).toFixed(1) + ' bu / yr' + '<br>' +
-          (Math.round(Totals.yieldResults[currentYear].cornGrainYield * 0.0254 * 10) / 10).toFixed(1) + ' Mg / yr';
+        //TODO
+        childNodes[7].innerHTML = formatNumber((Math.round(cornYield * 10) / 10).toFixed(1)) + ' bu / yr' + '<br>' +
+          formatNumber((Math.round(cornYield * 0.0254 * 10) / 10).toFixed(1)) + ' Mg / yr';
 
         document.getElementsByClassName('cornGrainScoreDetails')[0].style.display = 'block';
       }
@@ -402,10 +422,13 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('soybeansScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+        //childNodes[5].innerHTML = 'Current: ' + (Math.round(Totals.soybeanYieldScore[currentYear] * 10) / 10).toFixed(1)  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + (Math.round(soyYieldAdjScore * 10)/10).toFixed(1)  + '/100';
+
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = (Math.round(Totals.yieldResults[currentYear].soybeanYield * 10) / 10).toFixed(1) + ' bu / yr' + '<br>' +
-          (Math.round(Totals.yieldResults[currentYear].soybeanYield * 0.0272 * 10) / 10).toFixed(1) + ' Mg / yr';
+        //TODO
+        childNodes[7].innerHTML = formatNumber((Math.round(soybeanYield * 10) / 10).toFixed(1)) + ' bu / yr' + '<br>' +
+          formatNumber((Math.round(soybeanYield * 0.0272 * 10) / 10).toFixed(1)) + ' Mg / yr';
 
         document.getElementsByClassName('soybeansScoreDetails')[0].style.display = 'block';
       }
@@ -740,9 +763,9 @@ function setProgressbarMinMaxValues(id, option, value) {
   // if value < 0, we set it to be -10, if value > 100, then set it to be 110. Error protection.
   // if(value < 0) value = -10;
   // if(value > 100) value = 110;
-
+  //console.log("SET VALUE:" , value)
   var children = document.getElementById(id).childNodes[3].childNodes;
-  // console.log(children);
+   //console.log(children[5].style.left);
   if(option == 'min'){
     if(value < parseFloat(children[5].style.left)){
       children[3].style.left = value + "%";
