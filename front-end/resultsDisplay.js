@@ -5469,6 +5469,36 @@ function EconomicsGraphic1() {
     .text("Economic Data by Land Use");
   }
 
+  let selectAll = (checkType) => {
+    let items=document.getElementsByName('landUseCheck');
+    console.log('INSIDE SELECT ALL!', items.length);
+    switch (checkType) {
+      case 'landUseG1':
+        economics.data[1].map(d => d.landUse).forEach(d => {
+          alterOptions(d.replace(/\s/g,''));
+        });
+        break;
+      case 'yearG1':
+        for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+          alterOptions(i);
+        }
+        break;
+      case 'econCheckG1':
+        stackTypes.forEach(type => {
+          alterOptions(type);
+        });
+        break;
+    }
+
+    for(var i=0; i<items.length; i++){
+      console.log('ITEMS',items[i]);
+      if(items[i].type === 'checkbox'){
+        items[i].checked=false;
+      }
+    }
+  }
+
+
   var addOptions = () => { //This adds the toggle effects to the screen
     let doc = document.getElementById('resultsFrame').contentWindow.document;
     let box = doc.getElementById('econGraphic1Options');
@@ -5483,6 +5513,17 @@ function EconomicsGraphic1() {
       cell.innerHTML='Land Uses';
       cell.className='graphicLegendContainer';
       container.append(cell);
+
+    //ADDING SELECT ALL CHECKBOX FOR ALL OPTIONS
+      selectCell = document.createElement('div');
+      selectCell.innerHTML = "Select/Deselect All";
+      selectCell.className="graphicSelectOption";
+      selectButton = document.createElement('input');
+      selectButton.type = 'checkbox';
+      selectButton.onclick = event => selectAll('landUseG1');
+      selectButton.style.float = 'right';
+      selectCell.appendChild(selectButton);
+      container.appendChild(selectCell);
     economics.data[1].map(d => d.landUse).forEach(d => {
       //if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
       cell = document.createElement('div');
@@ -5490,6 +5531,7 @@ function EconomicsGraphic1() {
       cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       checkBox.type = 'checkbox';
+      checkBox.name = 'landUseCheck';
       checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
       checkBox.style.float = 'right';
       if(!options.includes(d.replace(/\s/g,''))) checkBox.checked = true;
@@ -5497,13 +5539,23 @@ function EconomicsGraphic1() {
       container.appendChild(cell);
     });
 
-
       container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Years');
       container.innerHTML="";
       cell=document.createElement('div');
       cell.innerHTML='Years';
       cell.className='graphicLegendContainer';
       container.append(cell);
+    //ADDING SELECT ALL CHECKBOX FOR ALL OPTIONS
+      selectYearCell = document.createElement('div');
+      selectYearCell.innerHTML = "Select/Deselect All Years";
+      selectYearCell.className="graphicSelectOption";
+      selectButton = document.createElement('input');
+      selectButton.type = 'checkbox';
+      selectButton.onclick = event => selectAll('yearG1');
+      selectButton.style.float = 'right';
+      selectYearCell.appendChild(selectButton);
+      container.appendChild(selectYearCell);
+
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       cell = document.createElement('div');
       cell.innerHTML = 'Year ' + i;
@@ -5517,12 +5569,23 @@ function EconomicsGraphic1() {
       container.appendChild(cell);
     }
 
+
       container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic1Economics');
       container.innerHTML="";
       cell=document.createElement('div');
       cell.innerHTML='Economics';
       cell.className='graphicLegendContainer';
       container.append(cell);
+    //ADDING SELECT ALL CHECKBOX FOR ALL OPTIONS
+      selectEconCell = document.createElement('div');
+      selectEconCell.innerHTML = "Select/Deselect All";
+      selectEconCell.className="graphicSelectOption";
+      selectButton = document.createElement('input');
+      selectButton.type = 'checkbox';
+      selectButton.onclick = event => selectAll('econCheckG1');
+      selectButton.style.float = 'right';
+      selectEconCell.appendChild(selectButton);
+      container.appendChild(selectEconCell);
       stackTypes.forEach(type => {
           cell = document.createElement('div');
           cell.innerHTML = type;
@@ -5535,8 +5598,8 @@ function EconomicsGraphic1() {
           cell.appendChild(checkBox);
           container.appendChild(cell);
       });
-
   }
+
 
   var alterOptions = (option, skip) => { //This changes the options array to contain up to date options
     if (options.includes(option)){
@@ -5807,6 +5870,23 @@ function EconomicsGraphic3() {
     rerender();
   }
 
+  let selectAll = (checkType) => {
+    let items=document.getElementsByName('landUseCheck');
+    console.log('INSIDE SELECT ALL!', items.length);
+    switch (checkType) {
+      case 'landUseG3':
+        economics.data[1].map(d => d.landUse).forEach(d => {
+          alterOption(d === d.replace(/\s/g, ''));
+        });
+        break;
+      case 'yearG3':
+        for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+          alterOption(i);
+        }
+        break;
+    }
+  }
+
   var addOptions = () => { //This adds the toggle effects to the screen
     let doc = document.getElementById('resultsFrame').contentWindow.document;
     let box = doc.getElementById('econGraphic3Options');
@@ -5820,6 +5900,18 @@ function EconomicsGraphic3() {
       cell.innerHTML='Land Uses';
       cell.className='graphicLegendContainer';
       container.append(cell);
+
+      //ADDING SELECT ALL CHECKBOX FOR ALL OPTIONS
+      selectLUCell = document.createElement('div');
+    selectLUCell.innerHTML = "Select/Deselect All";
+    selectLUCell.className="graphicSelectOption";
+      selectLUButton = document.createElement('input');
+    selectLUButton.type = 'checkbox';
+    selectLUButton.onclick = event => selectAll('landUseG3');
+    selectLUButton.style.float = 'right';
+    selectLUCell.appendChild(selectLUButton);
+      container.appendChild(selectLUCell);
+
     economics.data[1].map(d => d.landUse).forEach(d => {
       if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy'; //TODO
       cell = document.createElement('div');
@@ -5847,6 +5939,18 @@ function EconomicsGraphic3() {
       cell.innerHTML='Years';
       cell.className='graphicLegendContainer';
       container.append(cell);
+
+    //ADDING SELECT ALL CHECKBOX FOR ALL OPTIONS
+      selectYCell = document.createElement('div');
+      selectYCell.innerHTML = "Select/Deselect All";
+      selectYCell.className="graphicSelectOption";
+      selectYButton = document.createElement('input');
+      selectYButton.type = 'checkbox';
+      selectYButton.onclick = event => selectAll('yearG3');
+      selectYButton.style.float = 'right';
+      selectYCell.appendChild(selectYButton);
+      container.appendChild(selectYCell);
+
     for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
       cell = document.createElement('div');
       cell.innerHTML = 'Year ' + i;
@@ -6625,6 +6729,29 @@ function EconomicsGraphic5(){
             .text(d=>d+" Line");
 
      }
+
+    var selectAll = (checkType) => {
+      let items=document.getElementsByName('landUseCheck');
+      console.log('INSIDE SELECT ALL 5 !', items.length);
+      switch (checkType) {
+        case 'lineG5':
+          // keys.forEach(type => {
+          //   lineSelection(type);
+          // });
+          lineSelection(0);
+          lineSelection(1);
+          lineSelection(2);
+          break;
+        case 'barG5':
+          // keys.forEach(type => {
+          //   barSelection(type);
+          // });
+          barSelection(0);
+          barSelection(1);
+          barSelection(2);
+          break;
+      }
+    }
      /**
       * option year and line selection
       */
@@ -6659,6 +6786,18 @@ function EconomicsGraphic5(){
        cell.innerHTML='Line Selection';
        cell.className='graphic5LineSelection';
        container.append(cell);
+
+       //ADDING SELECT ALL CHECKBOX FOR ALL OPTIONS
+       selectLineCell = document.createElement('div');
+       selectLineCell.innerHTML = "Select/Deselect All";
+       selectLineCell.className="graphicSelectOption";
+       selectLineButton = document.createElement('input');
+       selectButton.type = 'checkbox';
+       selectButton.onclick = event => selectAll('lineG5');
+       selectButton.style.float = 'right';
+       selectLineCell.appendChild(selectButton);
+       container.appendChild(selectLineCell);
+
        keys.map((k,i)=>{
          cell=document.createElement('div');
          cell.innerHTML=k+" Line";
@@ -6679,6 +6818,18 @@ function EconomicsGraphic5(){
         cell.innerHTML='Bar Selection';
         cell.className='graphic5LineSelection';
         container.append(cell);
+
+       //ADDING SELECT ALL CHECKBOX FOR ALL OPTIONS
+       selectBarCell = document.createElement('div');
+       selectBarCell.innerHTML = "Select/Deselect All";
+       selectBarCell.className="graphicSelectOption";
+       selectButton = document.createElement('input');
+       selectButton.type = 'checkbox';
+       selectButton.onclick = event => selectAll('barG5');
+       selectButton.style.float = 'right';
+       selectBarCell.appendChild(selectButton);
+       container.appendChild(selectBarCell);
+
         keys.map((k,i)=>{
           cell=document.createElement('div');
           cell.innerHTML=k+" Bar";
@@ -7001,6 +7152,23 @@ function EconomicsGraphic2(){
       .text("Cost by " + currentSelection);
   }
 
+  let selectAll = (checkType) => {
+    let items=document.getElementsByName('landUseCheck');
+    console.log('INSIDE SELECT ALL 2 !', items.length);
+    switch (checkType) {
+      case 'landUseG2':
+        economics.data[1].map(d => d.landUse).forEach(d => {
+          alterOptions(d.replace(/\s/g,''));
+        });
+        break;
+      case 'costCatG2':
+        keys.forEach(type => {
+          alterOptions(type);
+        });
+        break;
+    }
+  }
+
   var addOptions = () => {
     let doc = document.getElementById('resultsFrame').contentWindow.document;
       container= document.getElementById('resultsFrame').contentWindow.document.getElementById('econGraphic2LandUses');
@@ -7013,6 +7181,16 @@ function EconomicsGraphic2(){
       row.parentNode.removeChild(row);
     });
 
+    //ADDING SELECT ALL CHECKBOX FOR ALL OPTIONS
+    selectCell = document.createElement('div');
+    selectCell.innerHTML = "Select/Deselect All";
+    selectCell.className="graphicSelectOption";
+    selectButton = document.createElement('input');
+    selectButton.type = 'checkbox';
+    selectButton.onclick = event => selectAll('landUseG2');
+    selectButton.style.float = 'right';
+    selectCell.appendChild(selectButton);
+    container.appendChild(selectCell);
 
     economics.data[1].map(d => d.landUse).forEach(d => {
       //if(d === 'Short-rotation Woody Bioenergy') {d = 'Short Rotation Woody Bioenergy'};
@@ -7086,6 +7264,16 @@ function EconomicsGraphic2(){
       row.parentNode.removeChild(row);
     });
 
+    //ADDING SELECT ALL CHECKBOX FOR ALL OPTIONS
+    selectCostCell = document.createElement('div');
+    selectCostCell.innerHTML = "Select/Deselect All Categories";
+    selectCostCell.className="graphicSelectOption";
+    selectButton = document.createElement('input');
+    selectButton.type = 'checkbox';
+    selectButton.onclick = event => selectAll('costCatG2');
+    selectButton.style.float = 'right';
+    selectCostCell.appendChild(selectButton);
+    container.appendChild(selectCostCell);
 
     //Sort keys according to default order
     if(currentSelection === 'Action - Cost Type') {
