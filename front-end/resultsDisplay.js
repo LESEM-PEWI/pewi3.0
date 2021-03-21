@@ -5470,7 +5470,8 @@ function EconomicsGraphic1() {
   }
 
   let selectAll = (checkType) => {
-    let items=document.getElementsByName('landUseCheck');
+    let doc = document.getElementById('resultsFrame').contentWindow.document;
+    let items=doc.getElementsByName("landUseCheck");
     console.log('INSIDE SELECT ALL!', items.length);
     switch (checkType) {
       case 'landUseG1':
@@ -5491,9 +5492,14 @@ function EconomicsGraphic1() {
     }
 
     for(var i=0; i<items.length; i++){
-      console.log('ITEMS',items[i]);
+      //console.log('ITEMS',items[i]);
       if(items[i].type === 'checkbox'){
-        items[i].checked=false;
+        if(items[i].checked === true){
+          items[i].checked = false;
+        }
+        else {
+          items[i].checked = true;
+        }
       }
     }
   }
@@ -5515,15 +5521,15 @@ function EconomicsGraphic1() {
       container.append(cell);
 
     //ADDING SELECT ALL CHECKBOX FOR ALL OPTIONS
-      selectCell = document.createElement('div');
-      selectCell.innerHTML = "Select/Deselect All";
-      selectCell.className="graphicSelectOption";
-      selectButton = document.createElement('input');
-      selectButton.type = 'checkbox';
-      selectButton.onclick = event => selectAll('landUseG1');
-      selectButton.style.float = 'right';
-      selectCell.appendChild(selectButton);
-      container.appendChild(selectCell);
+      selectCellG1 = document.createElement('div');
+      selectCellG1.innerHTML = "Select/Deselect All";
+      selectCellG1.className="graphicSelectOption";
+      selectButtonG1 = document.createElement('input');
+      selectButtonG1.type = 'checkbox';
+      selectButtonG1.onclick = event => selectAll('landUseG1');
+      selectButtonG1.style.float = 'right';
+      selectCellG1.appendChild(selectButtonG1);
+      container.appendChild(selectCellG1);
     economics.data[1].map(d => d.landUse).forEach(d => {
       //if(d === 'Short-rotation Woody Bioenergy') d = 'Short Rotation Woody Bioenergy';
       cell = document.createElement('div');
@@ -5549,11 +5555,11 @@ function EconomicsGraphic1() {
       selectYearCell = document.createElement('div');
       selectYearCell.innerHTML = "Select/Deselect All Years";
       selectYearCell.className="graphicSelectOption";
-      selectButton = document.createElement('input');
-      selectButton.type = 'checkbox';
-      selectButton.onclick = event => selectAll('yearG1');
-      selectButton.style.float = 'right';
-      selectYearCell.appendChild(selectButton);
+      selectYearButtonG1 = document.createElement('input');
+      selectYearButtonG1.type = 'checkbox';
+      selectYearButtonG1.onclick = event => selectAll('yearG1');
+      selectYearButtonG1.style.float = 'right';
+      selectYearCell.appendChild(selectYearButtonG1);
       container.appendChild(selectYearCell);
 
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
@@ -5580,11 +5586,11 @@ function EconomicsGraphic1() {
       selectEconCell = document.createElement('div');
       selectEconCell.innerHTML = "Select/Deselect All";
       selectEconCell.className="graphicSelectOption";
-      selectButton = document.createElement('input');
-      selectButton.type = 'checkbox';
-      selectButton.onclick = event => selectAll('econCheckG1');
-      selectButton.style.float = 'right';
-      selectEconCell.appendChild(selectButton);
+      selectEconButtonG1 = document.createElement('input');
+      selectEconButtonG1.type = 'checkbox';
+      selectEconButtonG1.onclick = event => selectAll('econCheckG1');
+      selectEconButtonG1.style.float = 'right';
+      selectEconCell.appendChild(selectEconButtonG1);
       container.appendChild(selectEconCell);
       stackTypes.forEach(type => {
           cell = document.createElement('div');
@@ -6792,10 +6798,10 @@ function EconomicsGraphic5(){
        selectLineCell.innerHTML = "Select/Deselect All";
        selectLineCell.className="graphicSelectOption";
        selectLineButton = document.createElement('input');
-       selectButton.type = 'checkbox';
-       selectButton.onclick = event => selectAll('lineG5');
-       selectButton.style.float = 'right';
-       selectLineCell.appendChild(selectButton);
+       selectLineButton.type = 'checkbox';
+       selectLineButton.onclick = event => selectAll('lineG5');
+       selectLineButton.style.float = 'right';
+       selectLineCell.appendChild(selectLineButton);
        container.appendChild(selectLineCell);
 
        keys.map((k,i)=>{

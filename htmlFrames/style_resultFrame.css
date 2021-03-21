@@ -729,7 +729,7 @@ text {
   background    : black;
   color         : white;
   pointer-events: none;
-  opacity:      : .7;
+  opacity      : .7;
 }
 
 .button{
@@ -814,9 +814,9 @@ text {
 }
 
 
-@media screen and (max-width: 768px) {
-  /*<= 768px */
-}
+/*@media screen and (max-width: 768px) {*/
+/*  !*<= 768px *!*/
+/*}*/
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
   /* 768px ~ 992px */
