@@ -5469,38 +5469,129 @@ function EconomicsGraphic1() {
     .text("Economic Data by Land Use");
   }
 
-  let selectAll = (checkType) => {
+  let mapLandUse = (n) => {
+    let mappedLandUse = '';
+    switch (n) {
+      case 0:
+        mappedLandUse = 'ConventionalCorn';
+        return mappedLandUse;
+      case 1:
+        mappedLandUse = 'ConservationCorn';
+        return mappedLandUse;
+      case 2:
+        mappedLandUse = 'ConventionalSoybean';
+        return mappedLandUse;
+      case 3:
+        mappedLandUse = 'ConservationSoybean';
+        return mappedLandUse;
+      case 4:
+        mappedLandUse = 'Alfalfa';
+        return mappedLandUse;
+      case 5:
+        mappedLandUse = 'PermanentPasture';
+        return mappedLandUse;
+      case 6:
+        mappedLandUse = 'RotationalGrazing';
+        return mappedLandUse;
+      case 7:
+        mappedLandUse = 'GrassHay';
+        return mappedLandUse;
+      case 8:
+        mappedLandUse = 'Prairie';
+        return mappedLandUse;
+      case 9:
+        mappedLandUse = 'ConservationForest';
+        return mappedLandUse;
+      case 10:
+        mappedLandUse = 'ConventionalForest';
+        return mappedLandUse;
+      case 11:
+        mappedLandUse = 'Switchgrass';
+        return mappedLandUse;
+      case 12:
+        mappedLandUse = 'Short-rotationWoodyBioenergy';
+        return mappedLandUse;
+      case 13:
+        mappedLandUse = 'Wetland';
+        return mappedLandUse;
+      case 14:
+        mappedLandUse = 'MixedFruits&Vegetables';
+        return mappedLandUse;
+
+    }
+  }
+
+  let selectAll = (checkType, e) => {
     let doc = document.getElementById('resultsFrame').contentWindow.document;
     let items=doc.getElementsByName("landUseCheck");
-    console.log('INSIDE SELECT ALL!', items.length);
+    let yearItems = doc.getElementsByName("yearOptions");
+    let econItems = doc.getElementsByName("econOptions");
     switch (checkType) {
       case 'landUseG1':
-        economics.data[1].map(d => d.landUse).forEach(d => {
-          alterOptions(d.replace(/\s/g,''));
-        });
+        if (!e) {
+          for (let i = 0; i < items.length; i++) {
+            items[i].checked = false;
+            if (!options.includes(mapLandUse(i))) {
+              options.push(mapLandUse(i));
+              rerender();
+            }
+          }
+        } else {
+            for(let i =0; i < items.length; i++){
+              items[i].checked = true;
+              if (options.includes(mapLandUse(i))){
+                options.splice(options.indexOf(mapLandUse(i)),1);
+                rerender();
+              }
+            }
+        }
         break;
       case 'yearG1':
-        for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
-          alterOptions(i);
+        if (!e) {
+          for (let i = 0; i < yearItems.length; i++) {
+            yearItems[i].checked = false;
+            for(let j = 1; j <= boardData[currentBoard].calculatedToYear; j++){
+              if (!options.includes(i)) {
+                options.push(i);
+                rerender();
+              }
+            }
+          }
+        } else {
+          for(let i =0; i < yearItems.length; i++){
+            yearItems[i].checked = true;
+            for(let j = 1; j <= boardData[currentBoard].calculatedToYear; j++){
+              if (options.includes(i)){
+                options.splice(options.indexOf(i),1);
+                rerender();
+              }
+            }
+          }
         }
         break;
       case 'econCheckG1':
-        stackTypes.forEach(type => {
-          alterOptions(type);
-        });
+        if (!e) {
+          for (let i = 0; i < econItems.length; i++) {
+            econItems[i].checked = false;
+            stackTypes.forEach(type => {
+              if (!options.includes(type)) {
+                options.push(type);
+                rerender();
+              }
+            });
+          }
+        } else {
+          for(let i =0; i < econItems.length; i++){
+            econItems[i].checked = true;
+            stackTypes.forEach(type => {
+              if (options.includes(type)){
+                options.splice(options.indexOf(type),1);
+                rerender();
+              }
+            });
+          }
+        }
         break;
-    }
-
-    for(var i=0; i<items.length; i++){
-      //console.log('ITEMS',items[i]);
-      if(items[i].type === 'checkbox'){
-        if(items[i].checked === true){
-          items[i].checked = false;
-        }
-        else {
-          items[i].checked = true;
-        }
-      }
     }
   }
 
@@ -5526,7 +5617,7 @@ function EconomicsGraphic1() {
       selectCellG1.className="graphicSelectOption";
       selectButtonG1 = document.createElement('input');
       selectButtonG1.type = 'checkbox';
-      selectButtonG1.onclick = event => selectAll('landUseG1');
+      selectButtonG1.onclick = event => selectAll('landUseG1', selectButtonG1.checked);
       selectButtonG1.style.float = 'right';
       selectCellG1.appendChild(selectButtonG1);
       container.appendChild(selectCellG1);
@@ -5557,7 +5648,7 @@ function EconomicsGraphic1() {
       selectYearCell.className="graphicSelectOption";
       selectYearButtonG1 = document.createElement('input');
       selectYearButtonG1.type = 'checkbox';
-      selectYearButtonG1.onclick = event => selectAll('yearG1');
+      selectYearButtonG1.onclick = event => selectAll('yearG1', selectYearButtonG1.checked);
       selectYearButtonG1.style.float = 'right';
       selectYearCell.appendChild(selectYearButtonG1);
       container.appendChild(selectYearCell);
@@ -5568,6 +5659,7 @@ function EconomicsGraphic1() {
       cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       checkBox.type = 'checkbox';
+      checkBox.name = 'yearOptions';
       checkBox.onclick = event => alterOptions(i);
       checkBox.style.float = 'right';
       checkBox.checked = true;
@@ -5588,7 +5680,7 @@ function EconomicsGraphic1() {
       selectEconCell.className="graphicSelectOption";
       selectEconButtonG1 = document.createElement('input');
       selectEconButtonG1.type = 'checkbox';
-      selectEconButtonG1.onclick = event => selectAll('econCheckG1');
+      selectEconButtonG1.onclick = event => selectAll('econCheckG1', selectEconButtonG1.checked);
       selectEconButtonG1.style.float = 'right';
       selectEconCell.appendChild(selectEconButtonG1);
       container.appendChild(selectEconCell);
@@ -5598,6 +5690,7 @@ function EconomicsGraphic1() {
           cell.className="graphicSelectOption";
           checkBox = document.createElement('input');
           checkBox.type = 'checkbox';
+          checkBox.name = 'econOptions';
           checkBox.onclick = event => alterOptions(type);
           checkBox.style.float = 'right';
           checkBox.checked = true;
