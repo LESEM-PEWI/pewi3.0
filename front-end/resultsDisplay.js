@@ -7360,19 +7360,121 @@ function EconomicsGraphic2(){
       .text("Cost by " + currentSelection);
   }
 
-  let selectAll = (checkType) => {
-    let items=document.getElementsByName('landUseCheck');
-    console.log('INSIDE SELECT ALL 2 !', items.length);
+  let mapLandUse = (n) => {
+    let mappedLandUse = '';
+    switch (n) {
+      case 0:
+        mappedLandUse = 'ConventionalCorn';
+        return mappedLandUse;
+      case 1:
+        mappedLandUse = 'ConservationCorn';
+        return mappedLandUse;
+      case 2:
+        mappedLandUse = 'ConventionalSoybean';
+        return mappedLandUse;
+      case 3:
+        mappedLandUse = 'ConservationSoybean';
+        return mappedLandUse;
+      case 4:
+        mappedLandUse = 'Alfalfa';
+        return mappedLandUse;
+      case 5:
+        mappedLandUse = 'PermanentPasture';
+        return mappedLandUse;
+      case 6:
+        mappedLandUse = 'RotationalGrazing';
+        return mappedLandUse;
+      case 7:
+        mappedLandUse = 'GrassHay';
+        return mappedLandUse;
+      case 8:
+        mappedLandUse = 'Prairie';
+        return mappedLandUse;
+      case 9:
+        mappedLandUse = 'ConservationForest';
+        return mappedLandUse;
+      case 10:
+        mappedLandUse = 'ConventionalForest';
+        return mappedLandUse;
+      case 11:
+        mappedLandUse = 'Switchgrass';
+        return mappedLandUse;
+      case 12:
+        mappedLandUse = 'Short-rotationWoodyBioenergy';
+        return mappedLandUse;
+      case 13:
+        mappedLandUse = 'Wetland';
+        return mappedLandUse;
+      case 14:
+        mappedLandUse = 'MixedFruits&Vegetables';
+        return mappedLandUse;
+
+    }
+  }
+
+  let mapCategory = (n) => {
+    let mappedCat = '';
+    switch (n) {
+      case 0:
+        mappedCat = 'Labor';
+        return mappedCat;
+      case 1:
+        mappedCat = 'Custom';
+        return mappedCat;
+      case 2:
+        mappedCat = 'Input';
+        return mappedCat;
+      case 3:
+        mappedCat = 'Equipment';
+        return mappedCat;
+      case 4:
+        mappedCat = 'Other';
+        return mappedCat;
+    }
+  }
+
+  let selectAll = (checkType, e) => {
+    let doc = document.getElementById('resultsFrame').contentWindow.document;
+    let items=doc.getElementsByName("landUseCheckG2");
+    let catItems = doc.getElementsByName("catOptionsG2");
     switch (checkType) {
       case 'landUseG2':
-        economics.data[1].map(d => d.landUse).forEach(d => {
-          alterOptions(d.replace(/\s/g,''));
-        });
+        if (!e) {
+          for (let i = 0; i < items.length; i++) {
+            items[i].checked = false;
+            if (!options.includes(mapLandUse(i))) {
+              options.push(mapLandUse(i));
+              this.rerender();
+            }
+          }
+        } else {
+          for(let i =0; i < items.length; i++){
+            items[i].checked = true;
+            if (options.includes(mapLandUse(i))){
+              options.splice(options.indexOf(mapLandUse(i)),1);
+              this.rerender();
+            }
+          }
+        }
         break;
-      case 'costCatG2':
-        keys.forEach(type => {
-          alterOptions(type);
-        });
+      case 'catG2':
+        if (!e) {
+          for (let i = 0; i < catItems.length; i++) {
+            catItems[i].checked = false;
+            if (!options.includes(mapCategory(i))) {
+              options.push(mapCategory(i));
+              this.rerender();
+            }
+          }
+        } else {
+          for(let i =0; i < catItems.length; i++){
+            catItems[i].checked = true;
+            if (options.includes(mapCategory(i))){
+              options.splice(options.indexOf(mapCategory(i)),1);
+              this.rerender();
+            }
+          }
+        }
         break;
     }
   }
@@ -7393,11 +7495,11 @@ function EconomicsGraphic2(){
     selectCell = document.createElement('div');
     selectCell.innerHTML = "Select/Deselect All";
     selectCell.className="graphicSelectOption";
-    selectButton = document.createElement('input');
-    selectButton.type = 'checkbox';
-    selectButton.onclick = event => selectAll('landUseG2');
-    selectButton.style.float = 'right';
-    selectCell.appendChild(selectButton);
+    selectLUButtonG2 = document.createElement('input');
+    selectLUButtonG2.type = 'checkbox';
+    selectLUButtonG2.onclick = event => selectAll('landUseG2', selectLUButtonG2.checked);
+    selectLUButtonG2.style.float = 'right';
+    selectCell.appendChild(selectLUButtonG2);
     container.appendChild(selectCell);
 
     economics.data[1].map(d => d.landUse).forEach(d => {
@@ -7407,6 +7509,7 @@ function EconomicsGraphic2(){
       cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       checkBox.type = 'checkbox';
+      checkBox.name = 'landUseCheckG2'
       checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
       checkBox.style.float = 'right';
       if(!options.includes(d.replace(/\s/g,''))) checkBox.checked = true;
@@ -7476,11 +7579,11 @@ function EconomicsGraphic2(){
     selectCostCell = document.createElement('div');
     selectCostCell.innerHTML = "Select/Deselect All Categories";
     selectCostCell.className="graphicSelectOption";
-    selectButton = document.createElement('input');
-    selectButton.type = 'checkbox';
-    selectButton.onclick = event => selectAll('costCatG2');
-    selectButton.style.float = 'right';
-    selectCostCell.appendChild(selectButton);
+    selectCatButton = document.createElement('input');
+    selectCatButton.type = 'checkbox';
+    selectCatButton.onclick = event => selectAll('catG2', selectCatButton.checked);
+    selectCatButton.style.float = 'right';
+    selectCostCell.appendChild(selectCatButton);
     container.appendChild(selectCostCell);
 
     //Sort keys according to default order
@@ -7502,6 +7605,7 @@ function EconomicsGraphic2(){
       cell.className="graphicSelectOption";
       checkBox = document.createElement('input');
       checkBox.type = 'checkbox';
+      checkBox.name = 'catOptionsG2';
       checkBox.onclick = event => alterOptions(d.replace(/\s/g,''));
       checkBox.style.float = 'right';
       if(!options.includes(d)) checkBox.checked = true;
