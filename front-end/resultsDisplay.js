@@ -5618,6 +5618,7 @@ function EconomicsGraphic1() {
       selectButtonG1 = document.createElement('input');
       selectButtonG1.type = 'checkbox';
       selectButtonG1.onclick = event => selectAll('landUseG1', selectButtonG1.checked);
+      selectButtonG1.checked = true;
       selectButtonG1.style.float = 'right';
       selectCellG1.appendChild(selectButtonG1);
       container.appendChild(selectCellG1);
@@ -5649,6 +5650,7 @@ function EconomicsGraphic1() {
       selectYearButtonG1 = document.createElement('input');
       selectYearButtonG1.type = 'checkbox';
       selectYearButtonG1.onclick = event => selectAll('yearG1', selectYearButtonG1.checked);
+      selectYearButtonG1.checked = true;
       selectYearButtonG1.style.float = 'right';
       selectYearCell.appendChild(selectYearButtonG1);
       container.appendChild(selectYearCell);
@@ -5681,6 +5683,7 @@ function EconomicsGraphic1() {
       selectEconButtonG1 = document.createElement('input');
       selectEconButtonG1.type = 'checkbox';
       selectEconButtonG1.onclick = event => selectAll('econCheckG1', selectEconButtonG1.checked);
+      selectEconButtonG1.checked = true;
       selectEconButtonG1.style.float = 'right';
       selectEconCell.appendChild(selectEconButtonG1);
       container.appendChild(selectEconCell);
@@ -6114,6 +6117,7 @@ function EconomicsGraphic3() {
       selectLUButton = document.createElement('input');
       selectLUButton.type = 'checkbox';
       selectLUButton.onclick = event => selectAll('landUseG3', selectLUButton.checked);
+      selectLUButton.checked = true;
       selectLUButton.style.float = 'right';
       selectLUCell.appendChild(selectLUButton);
       container.appendChild(selectLUCell);
@@ -6154,6 +6158,7 @@ function EconomicsGraphic3() {
       selectYButton = document.createElement('input');
       selectYButton.type = 'checkbox';
       selectYButton.onclick = event => selectAll('yearG3', selectYButton.checked);
+      selectYButton.checked = true;
       selectYButton.style.float = 'right';
       selectYCell.appendChild(selectYButton);
       container.appendChild(selectYCell);
@@ -6938,25 +6943,52 @@ function EconomicsGraphic5(){
 
      }
 
-    var selectAll = (checkType) => {
-      let items=document.getElementsByName('landUseCheck');
-      console.log('INSIDE SELECT ALL 5 !', items.length);
+
+    var selectAll = (checkType, e) => {
+      let doc = document.getElementById('resultsFrame').contentWindow.document;
+      let lineItems=doc.getElementsByName('line5');
+      let barItems =doc.getElementsByName('bar5');
+
       switch (checkType) {
         case 'lineG5':
-          // keys.forEach(type => {
-          //   lineSelection(type);
-          // });
-          lineSelection(0);
-          lineSelection(1);
-          lineSelection(2);
+          if (!e) {
+            for (let i = 0; i < lineItems.length; i++) {
+              lineItems[i].checked = false;
+              lineSelectionCheckbox[i]=false;
+              rerender();
+            }
+          } else {
+            for(let i =0; i < lineItems.length; i++){
+              lineItems[i].checked = true;
+              lineSelectionCheckbox[i]=true;
+              rerender();
+            }
+          }
           break;
         case 'barG5':
-          // keys.forEach(type => {
-          //   barSelection(type);
-          // });
-          barSelection(0);
-          barSelection(1);
-          barSelection(2);
+          if (!e) {
+            for (let i = 0; i < barItems.length; i++) {
+              barItems[i].checked = false;
+              barSelectionCheckbox[i] = false;
+              if( !barSelectionCheckbox[i]){
+                displaykey[i]=""
+              }else{
+                displaykey[i]=keys[i];
+              }
+              rerender();
+            }
+          } else {
+            for(let i =0; i < barItems.length; i++){
+              barItems[i].checked = true;
+              barSelectionCheckbox[i] = true;
+              if( !barSelectionCheckbox[i]){
+                displaykey[i]=""
+              }else{
+                displaykey[i]=keys[i];
+              }
+              rerender();
+            }
+          }
           break;
       }
     }
@@ -7001,7 +7033,8 @@ function EconomicsGraphic5(){
        selectLineCell.className="graphicSelectOption";
        selectLineButton = document.createElement('input');
        selectLineButton.type = 'checkbox';
-       selectLineButton.onclick = event => selectAll('lineG5');
+       selectLineButton.onclick = event => selectAll('lineG5', selectLineButton.checked);
+       selectLineButton.checked = true;
        selectLineButton.style.float = 'right';
        selectLineCell.appendChild(selectLineButton);
        container.appendChild(selectLineCell);
@@ -7012,6 +7045,7 @@ function EconomicsGraphic5(){
          cell.className="graphic5lineOption";
          checkBox=document.createElement('input');
          checkBox.type='checkbox';
+         checkBox.name = 'line5';
          checkBox.style.float='right';
          checkBox.onclick= event=> lineSelection(i);
          checkBox.checked=true;
@@ -7031,11 +7065,12 @@ function EconomicsGraphic5(){
        selectBarCell = document.createElement('div');
        selectBarCell.innerHTML = "Select/Deselect All";
        selectBarCell.className="graphicSelectOption";
-       selectButton = document.createElement('input');
-       selectButton.type = 'checkbox';
-       selectButton.onclick = event => selectAll('barG5');
-       selectButton.style.float = 'right';
-       selectBarCell.appendChild(selectButton);
+       selectBarButton = document.createElement('input');
+       selectBarButton.type = 'checkbox';
+       selectBarButton.onclick = event => selectAll('barG5', selectBarButton.checked);
+       selectBarButton.checked = true;
+       selectBarButton.style.float = 'right';
+       selectBarCell.appendChild(selectBarButton);
        container.appendChild(selectBarCell);
 
         keys.map((k,i)=>{
@@ -7044,6 +7079,7 @@ function EconomicsGraphic5(){
           cell.className="graphic5lineOption"
           checkBox=document.createElement('input');
           checkBox.type='checkbox';
+          checkBox.name = 'bar5';
           checkBox.style.float='right';
           checkBox.checked=true;
           checkBox.onclick= event=> barSelection(i);
@@ -7498,6 +7534,7 @@ function EconomicsGraphic2(){
     selectLUButtonG2 = document.createElement('input');
     selectLUButtonG2.type = 'checkbox';
     selectLUButtonG2.onclick = event => selectAll('landUseG2', selectLUButtonG2.checked);
+    selectLUButtonG2.checked = true;
     selectLUButtonG2.style.float = 'right';
     selectCell.appendChild(selectLUButtonG2);
     container.appendChild(selectCell);
@@ -7582,6 +7619,7 @@ function EconomicsGraphic2(){
     selectCatButton = document.createElement('input');
     selectCatButton.type = 'checkbox';
     selectCatButton.onclick = event => selectAll('catG2', selectCatButton.checked);
+    selectCatButton.checked = true;
     selectCatButton.style.float = 'right';
     selectCostCell.appendChild(selectCatButton);
     container.appendChild(selectCostCell);
