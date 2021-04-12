@@ -5933,9 +5933,11 @@ function EconomicsGraphic3() {
       .attr("font-weight", "bold");
   }
 
+
 /**
  * [toggleLandUseFromTotal description]
  * @param  {[type]} landuse [The landuse that is being toggled]
+ * //CHECK TOGGLE VAL FOR CORRECT TOGGLE VALUE
  */
   function toggleLandUseFromTotal(landuse) {
     //console.log("LANDUSE FROM TOGGLE: ",landuse);
@@ -5952,6 +5954,7 @@ function EconomicsGraphic3() {
     // full data is altered here, full data is what is used to display the information on screen
     for (var j = 0; j < fullData[0].length; j++) {
       //check to see if this cost type exists in yearData, some just dont have certain costs
+      //IF TOGGLE VAL IS -1 THEN VALUE IS SUBTRACTED FROM TOTAL
       if (yearData[fullData[0][j].year - 1]['action'][fullData[0][j].costType]) {
         fullData[0][j].value += yearData[fullData[0][j].year - 1]['toggleVal'] * yearData[fullData[0][j].year - 1]['action'][fullData[0][j].costType];
 
@@ -6042,7 +6045,11 @@ function EconomicsGraphic3() {
   }
 
 
-
+  /**
+   *
+   * @param checkType used to check if Landuses or Years are being selected or deselected
+   * @param e: is the value of the select/deselect button. e is true if selected or false if not selected.
+   */
   let selectAll = (checkType, e) => {
     let doc = document.getElementById('resultsFrame').contentWindow.document;
     let items=doc.getElementsByName("landUseCheckG3");
@@ -6052,21 +6059,25 @@ function EconomicsGraphic3() {
       case 'landUseG3':
         if (!e) {
           for (let i = 0; i < items.length; i++) {
-            items[i].checked = false;
-            if (!options.includes(mapLandUse(i)[0])) {
+            if (!options.includes(mapLandUse(i)[0]) && items[i].checked === true) {
               options.push(mapLandUse(i)[0]);
               toggleLandUseFromTotal(mapLandUse(i)[1]);
-              rerender();
             }
+            else if (!options.includes(mapLandUse(i)[0]) && items[i].checked === false){
+              options.push(mapLandUse(i)[0]);
+            }
+            items[i].checked = false;
           }
         } else {
           for(let i =0; i < items.length; i++){
-            items[i].checked = true;
-            if (options.includes(mapLandUse(i)[0])){
+            if (options.includes(mapLandUse(i)[0]) && items[i].checked === false){
               options.splice(options.indexOf(mapLandUse(i)[0]),1);
               toggleLandUseFromTotal(mapLandUse(i)[1]);
-              rerender();
             }
+            else if (options.includes(mapLandUse(i)[0]) && items[i].checked === true){
+              options.splice(options.indexOf(mapLandUse(i)[0]),1);
+            }
+            items[i].checked = true;
           }
         }
         break;
@@ -6131,7 +6142,8 @@ function EconomicsGraphic3() {
       checkBox.type = 'checkbox';
       checkBox.name = 'landUseCheckG3'
       checkBox.style.float = 'right';
-      checkBox.checked = true;
+      if(d === 'Short Rotation Woody Bioenergy') d = 'Short-rotation Woody Bioenergy'; //TODO
+      if(!options.includes(d.replace(/\s/g,''))) checkBox.checked = true;
       checkBox.onclick = event => {
         if(d === 'Short Rotation Woody Bioenergy') d = 'Short-rotation Woody Bioenergy'; //TODO
         alterOption(d === d.replace(/\s/g, ''));
@@ -6227,6 +6239,7 @@ function EconomicsGraphic3() {
     cell.appendChild(checkBox);
     container.appendChild(cell);
   }
+
 
   var alterOption = (option) => { //This changes the options array to contain up to date options
     if (this.options.includes(option)) {
