@@ -3518,7 +3518,7 @@ function generateResultsTable() {
 
     for (var y = 1; y <= upToYear; y++) {
       htmlTableString += "<td>";
-      htmlTableString += boardData[currentBoard].precipitation[y].toFixed(1);
+      htmlTableString += (boardData[currentBoard].precipitation[y]); //TODO WHY IS THIS NOT FIXING MULTI YEAR?!
       htmlTableString += "</td>";
     }
 
