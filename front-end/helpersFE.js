@@ -6847,6 +6847,7 @@ function uploadCSV(reader) {
     boardData[currentBoard].precipitationIndex[2] = getPrecipOptionsValue(data[33]);
     boardData[currentBoard].precipitationIndex[3] = getPrecipOptionsValue(data[34]);
 
+
     //load options from the csv
     //This checks if the file being uploaded has options saved into and if it doesnt, then it just refreshes
     //the options page and shows the page is refreshed on the screen
@@ -6864,17 +6865,20 @@ function uploadCSV(reader) {
       toggleVisibility();
     }
 
-    transitionToYear(1); //transition to year one
-    switchYearTab(1);
-    //  boardData[currentBoard].updateBoard();
-    //calculateResults();
-    //generateResultsTable();
+      // transitionToYear(1); //transition to year one
+      // switchYearTab(1);
+      // boardData[currentBoard].updateBoard();
+      // calculateResults();
+      // generateResultsTable();
     // fresh progress bars
     calculateResults();
     refreshEconTotals(currentYear);
     refreshProgressBar(currentYear);
     //clear initData
     initData = [];
+    transitionToYear(1); //transition to year one
+    switchYearTab(1);
+
   }; //end onload
 } // uploadCSV()
 
