@@ -3117,12 +3117,12 @@ function generateResultsTable() {
     //SECOND TABLE, ECOSYSTEM INDICATORS
 
 
-    frontendNames = ["Game Wildlife", "Biodiversity", "Carbon Sequestration", "Erosion Control / Gross Erosion",
+    frontendNames = ["Game Wildlife", " Land Biodiversity", "Stream Biodiversity",  "Carbon Sequestration", "Erosion Control / Gross Erosion",
       "Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading",
-      "Sediment Control <br> / In-Stream Delivery"
+      "Sediment Control <br> / In-Stream Delivery", "Aquatic Health"
     ];
-    backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "carbonSequestration", "grossErosion", "nitrateConcentration",
-      "phosphorusLoad", "sedimentDelivery"
+    backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "streamBiodiversity", "carbonSequestration", "grossErosion", "nitrateConcentration",
+      "phosphorusLoad", "sedimentDelivery", "aquaticHealth"
     ];
 
     //variables for english to metric
@@ -3195,7 +3195,7 @@ function generateResultsTable() {
             }
             break;
           break;
-        case 2:
+        case 3:
           //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
           htmlTableString += "<tr>";
           htmlTableString += "<td class='verticalLine'><b>" + "Soil" + "<b></td>";
@@ -3220,7 +3220,7 @@ function generateResultsTable() {
             }
           }
           break;
-        case 4:
+        case 5:
           //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
           htmlTableString += "<tr>";
           htmlTableString += "<td class='verticalLine'><b>" + "Water" + "<b></td>";
@@ -3255,8 +3255,15 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l] + "Score";
-        htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
-
+        if(backendDataIdentifiers[l] === "streamBiodiversity") {
+          htmlTableString += 50 + "<br>";
+        }
+        else if (backendDataIdentifiers[l] === "aquaticHealth"){
+          htmlTableString += 50 + "<br>";
+        }
+        else {
+          htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
+        }
         htmlTableString += "</td>";
       } //for each year
 
@@ -3272,8 +3279,15 @@ function generateResultsTable() {
         // if (l == 2) {
         //   Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
         // }
-
-        htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
+        if(backendDataIdentifiers[l] === "streamBiodiversity") {
+          htmlTableString += 50 + "<br>";
+        }
+        else if (backendDataIdentifiers[l] === "aquaticHealth"){
+          htmlTableString += 50 + "<br>";
+        }
+        else {
+          htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
+        }
 
         htmlTableString += "</td>";
       } //for each year
@@ -3282,14 +3296,21 @@ function generateResultsTable() {
       if (l < 2) htmlTableString += "<td class='verticalLine centerText'>pts</td>";
       if (2 <= l && l < 4) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
       if (4 <= l && l < 5) htmlTableString += "<td class='verticalLine centerText'>ppm</td>";
-      if (5 <= l && l < 8) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
+      if (5 <= l && l < 9) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
 
       for (var y = 1; y <= upToYear; y++) {
         htmlTableString += "<td  class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
-        htmlTableString += addCommas((Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10).toFixed(1)) + "<br>";
-
+        if(backendDataIdentifiers[l] === "streamBiodiversity") {
+          htmlTableString += 50 + "<br>";
+        }
+        else if (backendDataIdentifiers[l] === "aquaticHealth"){
+          htmlTableString += 50 + "<br>";
+        }
+        else {
+          htmlTableString += addCommas((Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10).toFixed(1)) + "<br>";
+        }
         htmlTableString += "</td>";
 
       } //for each year
@@ -3298,7 +3319,7 @@ function generateResultsTable() {
       if (l < 2) htmlTableString += "<td class='centerText'>pts</td>";
       if (2 <= l && l < 4) htmlTableString += "<td class='centerText'>Mg</td>";
       if (4 <= l && l < 5) htmlTableString += "<td class='centerText'>mg/L</td>";
-      if (5 <= l && l < 8) htmlTableString += "<td class='centerText'>Mg</td>";
+      if (5 <= l && l < 9) htmlTableString += "<td class='centerText'>Mg</td>";
     }
 
     //========================================
