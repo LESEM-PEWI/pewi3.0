@@ -65,12 +65,13 @@ function refreshProgressBar(yearToLoad) {
 
   $('.progress .progress-bar-gameWildlife').attr('data-transitiongoal', Math.round(Totals.gameWildlifePointsScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-biodiversity').attr('data-transitiongoal', Math.round(Totals.biodiversityPointsScore[yearToLoad] * 10) / 10);
+  $('.progress .progress-bar-stream-biodiversity').attr('data-transitiongoal', 50);
   $('.progress .progress-bar-carbon').attr('data-transitiongoal', Math.round(Totals.carbonSequestrationScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-erosion').attr('data-transitiongoal', Math.round(Totals.grossErosionScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-nitrate').attr('data-transitiongoal', Math.round(Totals.nitrateConcentrationScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-phoshorus').attr('data-transitiongoal', Math.round(Totals.phosphorusLoadScore[yearToLoad] * 10) / 10);
   $('.progress .progress-bar-sediment').attr('data-transitiongoal', Math.round(Totals.sedimentDeliveryScore[yearToLoad] * 10) / 10);
-
+  $('.progress .progress-bar-aquatic').attr('data-transitiongoal', 50);
   //var tempTotal = Totals.cornGrainYieldScore[yearToLoad] + Totals.soybeanYieldScore[yearToLoad] + Totals.mixedFruitsAndVegetablesYieldScore[yearToLoad] + Totals.alfalfaHayYieldScore[yearToLoad] + Totals.grassHayYieldScore[yearToLoad] +
                   //  Totals.switchgrassYieldScore[yearToLoad] + Totals.cattleYieldScore[yearToLoad] + Totals.woodYieldScore[yearToLoad] + Totals.shortRotationWoodyBiomassYieldScore[yearToLoad];
 

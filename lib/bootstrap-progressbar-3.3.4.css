@@ -85,8 +85,8 @@
   margin-left: 10px;
 }
 
-#gameWildlifeProgressBar, #biodiversityProgressBar, #carbonProgressBar,#erosionProgressBar,
-#phoshorusProgressBar, #sedimentProgressBar, #nitrateProgressBar,#totalYieldsProgressBar,
+#gameWildlifeProgressBar, #biodiversityProgressBar, #streamBiodiversityProgressBar, #carbonProgressBar,#erosionProgressBar,
+#phoshorusProgressBar, #sedimentProgressBar, #aquaticProgressBar, #nitrateProgressBar,#totalYieldsProgressBar,
 #cornGrainProgressBar, #soybeansProgressBar, #fruitsAndVegetablesProgressBar, #cattleProgressBar,
 #alfalfaHayProgressBar, #grassHayProgressBar, #switchgrassBiomassProgressBar,
 #woodProgressBar, #woodyBiomassProgressBar {
@@ -113,6 +113,10 @@
   background-color: #5bc0de;
 }
 
+.progress-bar-stream-biodiversity {
+  background-color: #5bc0de;
+}
+
 .progress-bar-carbon {
   background-color: #f0ad4e;
 }
@@ -128,6 +132,9 @@
   background-color: #0099DC;
 }
 .progress-bar-sediment {
+  background-color: #A53300;
+}
+.progress-bar-aquatic {
   background-color: #A53300;
 }
 .progress-bar-totalYields {
@@ -192,7 +199,7 @@
 }
 
 .gameWildlifeScoreDetails, .carbonScoreDetails, .erosionScoreDetails,.nitrateScoreDetails,
-.phoshorusScoreDetails, .sedimentScoreDetails,.totalScoreDetails, .biodiversityScoreDetails,
+.phoshorusScoreDetails, .sedimentScoreDetails, .aquaticScoreDetails, .totalScoreDetails, .biodiversityScoreDetails,.streamBiodiversityScoreDetails,
 .cornGrainScoreDetails,.soybeansScoreDetails, .fruitsAndVegetablesScoreDetails, .cattleScoreDetails,
 .alfalfaHayScoreDetails, .grassHayScoreDetails, .switchgrassBiomassScoreDetails, .woodScoreDetails,
 .woodyBiomassScoreDetails {
