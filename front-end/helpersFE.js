@@ -328,7 +328,7 @@ function toggleScoreDetails(factor) {
         // 0 - 100 value
         childNodes[5].innerHTML = 'Current: ' + 50  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = 50 + ' pts / yr';
+        childNodes[7].innerHTML = 50 + ' pts / yr' + "<br>" + "Mussel Population: High";
         document.getElementsByClassName('streamBiodiversityScoreDetails')[0].style.display = 'block';
 
       }
@@ -360,7 +360,9 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10).toFixed(1))  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' ppm / yr' + '<br>' +
-          formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' mg/L / yr';
+          formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' mg/L / yr'
+            + "<br>" + "Mussel Services: XX ppm/mg/L";
+        ;
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
 
       }
