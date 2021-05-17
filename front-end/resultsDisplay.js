@@ -3117,11 +3117,11 @@ function generateResultsTable() {
     //SECOND TABLE, ECOSYSTEM INDICATORS
 
 
-    frontendNames = ["Game Wildlife", " Land Biodiversity", "Stream Biodiversity",  "Carbon Sequestration", "Erosion Control / Gross Erosion", "Aquatic Health",
+    frontendNames = ["Game Wildlife", " Land Biodiversity", "Stream Biodiversity", "Mussel Population", "Carbon Sequestration", "Erosion Control / Gross Erosion", "Aquatic Health",
       "Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading",
       "Sediment Control <br> / In-Stream Delivery"
     ];
-    backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "streamBiodiversity", "carbonSequestration", "grossErosion", "aquaticHealth", "nitrateConcentration",
+    backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "streamBiodiversity", "musselPopulation" ,"carbonSequestration", "grossErosion", "aquaticHealth", "nitrateConcentration",
       "phosphorusLoad", "sedimentDelivery"
     ];
 
@@ -3195,7 +3195,7 @@ function generateResultsTable() {
             }
             break;
           break;
-        case 3:
+        case 4:
           //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
           htmlTableString += "<tr>";
           htmlTableString += "<td class='verticalLine'><b>" + "Soil" + "<b></td>";
@@ -3220,7 +3220,7 @@ function generateResultsTable() {
             }
           }
           break;
-        case 5:
+        case 6:
           //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
           htmlTableString += "<tr>";
           htmlTableString += "<td class='verticalLine'><b>" + "Water" + "<b></td>";
@@ -3261,6 +3261,9 @@ function generateResultsTable() {
         else if (backendDataIdentifiers[l] === "aquaticHealth"){
           htmlTableString += 50 + "<br>";
         }
+        else if (backendDataIdentifiers[l] === "musselPopulation"){
+          htmlTableString += "High" + "<br>";
+        }
         else {
           htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
         }
@@ -3268,7 +3271,12 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      htmlTableString += "<td class='verticalLine centerText'>(out of 100)</td>";
+      if (backendDataIdentifiers[l] === "musselPopulation") {
+        htmlTableString += "<td class='verticalLine centerText'></td>";
+      }
+      else {
+        htmlTableString += "<td class='verticalLine centerText'>(out of 100)</td>";
+      }
 
       for (var y = 1; y <= upToYear; y++) {
         htmlTableString += "<td class='rightText'>";
@@ -3285,6 +3293,9 @@ function generateResultsTable() {
         else if (backendDataIdentifiers[l] === "aquaticHealth"){
           htmlTableString += 50 + "<br>";
         }
+        else if (backendDataIdentifiers[l] === "musselPopulation"){
+
+        }
         else {
           htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
         }
@@ -3293,10 +3304,13 @@ function generateResultsTable() {
       } //for each year
 
       //units cell, keep track which type of units we'll need
-      if (l < 2) htmlTableString += "<td class='verticalLine centerText'>pts</td>";
-      if (2 <= l && l < 4) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
-      if (4 <= l && l < 5) htmlTableString += "<td class='verticalLine centerText'>ppm</td>";
-      if (5 <= l && l < 9) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
+      if (backendDataIdentifiers[l] === "musselPopulation") {
+        htmlTableString += "<td class='verticalLine centerText'></td>";
+      }
+      else if (l < 2) htmlTableString += "<td class='verticalLine centerText'>pts</td>";
+      else if (2 <= l && l < 4) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
+      else if (4 <= l && l < 5) htmlTableString += "<td class='verticalLine centerText'>ppm</td>";
+      else if (5 <= l && l < 10) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
 
       for (var y = 1; y <= upToYear; y++) {
         htmlTableString += "<td  class='rightText'>";
@@ -3308,6 +3322,9 @@ function generateResultsTable() {
         else if (backendDataIdentifiers[l] === "aquaticHealth"){
           htmlTableString += 50 + "<br>";
         }
+        else if (backendDataIdentifiers[l] === "musselPopulation"){
+
+        }
         else {
           htmlTableString += addCommas((Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10).toFixed(1)) + "<br>";
         }
@@ -3316,10 +3333,13 @@ function generateResultsTable() {
       } //for each year
 
       //units cell
-      if (l < 2) htmlTableString += "<td class='centerText'>pts</td>";
-      if (2 <= l && l < 4) htmlTableString += "<td class='centerText'>Mg</td>";
-      if (4 <= l && l < 5) htmlTableString += "<td class='centerText'>mg/L</td>";
-      if (5 <= l && l < 9) htmlTableString += "<td class='centerText'>Mg</td>";
+      if (backendDataIdentifiers[l] === "musselPopulation") {
+        htmlTableString += "<td class='verticalLine centerText'></td>";
+      }
+      else if (l < 2) htmlTableString += "<td class='centerText'>pts</td>";
+      else if (2 <= l && l < 4) htmlTableString += "<td class='centerText'>Mg</td>";
+      else if (4 <= l && l < 5) htmlTableString += "<td class='centerText'>mg/L</td>";
+      else if (5 <= l && l < 10) htmlTableString += "<td class='centerText'>Mg</td>";
     }
 
     //========================================
