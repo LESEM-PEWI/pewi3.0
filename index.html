@@ -1562,6 +1562,26 @@
         </div>
         <div class="min-max-details"></div>
       </div>
+    <!--    TODO-->
+    <div id="aquaticProgressBar">
+      <div class="progressBarTitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AH:</div>
+      <div class="progress" onmouseover="toggleScoreDetails('aquatic');" onmouseout="toggleScoreDetails('aquatic');">
+        <div class="progress-bar progress-bar-aquatic" role="progressbar" ></div>
+        <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('Min',6);" onmouseout="toggleMinMax('Min',6);">
+        <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('Max',6);" onmouseout="toggleMinMax('Max',6);">
+
+      </div>
+      <div class="aquaticScoreDetails">
+        <div class="title">Aquatic Health</div>
+        <!-- <div class="min-max">
+          <div class="min"> Total min: 0</div>
+          <div class="max"> Total max: 100</div>
+        </div> -->
+        <div class="ecoScore"></div>
+        <div class="rawValue"></div>
+      </div>
+      <div class="min-max-details"></div>
+    </div>
       <div id="nitrateProgressBar">
         <div class="progressBarTitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N:</div>
         <div class="progress" onmouseover="toggleScoreDetails('nitrate');" onmouseout="toggleScoreDetails('nitrate');">
@@ -1619,26 +1639,7 @@
         </div>
         <div class="min-max-details"></div>
       </div>
-      <!--    TODO-->
-    <div id="aquaticProgressBar">
-      <div class="progressBarTitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AH:</div>
-      <div class="progress" onmouseover="toggleScoreDetails('aquatic');" onmouseout="toggleScoreDetails('aquatic');">
-        <div class="progress-bar progress-bar-aquatic" role="progressbar" ></div>
-        <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('Min',6);" onmouseout="toggleMinMax('Min',6);">
-        <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('Max',6);" onmouseout="toggleMinMax('Max',6);">
 
-      </div>
-      <div class="aquaticScoreDetails">
-        <div class="title">Aquatic Health</div>
-        <!-- <div class="min-max">
-          <div class="min"> Total min: 0</div>
-          <div class="max"> Total max: 100</div>
-        </div> -->
-        <div class="ecoScore"></div>
-        <div class="rawValue"></div>
-      </div>
-      <div class="min-max-details"></div>
-    </div>
 
     <div id="yieldsProgressBars" >
       <div id="cornGrainProgressBar" style="display:none;">

@@ -3117,12 +3117,12 @@ function generateResultsTable() {
     //SECOND TABLE, ECOSYSTEM INDICATORS
 
 
-    frontendNames = ["Game Wildlife", " Land Biodiversity", "Stream Biodiversity",  "Carbon Sequestration", "Erosion Control / Gross Erosion",
+    frontendNames = ["Game Wildlife", " Land Biodiversity", "Stream Biodiversity",  "Carbon Sequestration", "Erosion Control / Gross Erosion", "Aquatic Health",
       "Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading",
-      "Sediment Control <br> / In-Stream Delivery", "Aquatic Health"
+      "Sediment Control <br> / In-Stream Delivery"
     ];
-    backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "streamBiodiversity", "carbonSequestration", "grossErosion", "nitrateConcentration",
-      "phosphorusLoad", "sedimentDelivery", "aquaticHealth"
+    backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "streamBiodiversity", "carbonSequestration", "grossErosion", "aquaticHealth", "nitrateConcentration",
+      "phosphorusLoad", "sedimentDelivery"
     ];
 
     //variables for english to metric
