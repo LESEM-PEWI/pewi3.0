@@ -3288,10 +3288,10 @@ function generateResultsTable() {
         //   Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
         // }
         if(backendDataIdentifiers[l] === "streamBiodiversity") {
-          htmlTableString += 50 + "<br>";
+          htmlTableString += 5 + "<br>";
         }
         else if (backendDataIdentifiers[l] === "aquaticHealth"){
-          htmlTableString += 50 + "<br>";
+          htmlTableString += 5 + "<br>";
         }
         else if (backendDataIdentifiers[l] === "musselPopulation"){
 
@@ -3307,6 +3307,12 @@ function generateResultsTable() {
       if (backendDataIdentifiers[l] === "musselPopulation") {
         htmlTableString += "<td class='verticalLine centerText'></td>";
       }
+      else if (backendDataIdentifiers[l] === "streamBiodiversity") {
+        htmlTableString += "<td class='verticalLine centerText'>pts</td>";
+      }
+      else if (backendDataIdentifiers[l] === "aquaticHealth") {
+        htmlTableString += "<td class='verticalLine centerText'>pts</td>";
+      }
       else if (l < 2) htmlTableString += "<td class='verticalLine centerText'>pts</td>";
       else if (2 <= l && l < 4) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
       else if (4 <= l && l < 5) htmlTableString += "<td class='verticalLine centerText'>ppm</td>";
@@ -3317,10 +3323,10 @@ function generateResultsTable() {
 
         var tempString = backendDataIdentifiers[l];
         if(backendDataIdentifiers[l] === "streamBiodiversity") {
-          htmlTableString += 50 + "<br>";
+          htmlTableString += 5 + "<br>";
         }
         else if (backendDataIdentifiers[l] === "aquaticHealth"){
-          htmlTableString += 50 + "<br>";
+          htmlTableString += 5 + "<br>";
         }
         else if (backendDataIdentifiers[l] === "musselPopulation"){
 
@@ -3335,6 +3341,12 @@ function generateResultsTable() {
       //units cell
       if (backendDataIdentifiers[l] === "musselPopulation") {
         htmlTableString += "<td class='verticalLine centerText'></td>";
+      }
+      else if (backendDataIdentifiers[l] === "streamBiodiversity") {
+        htmlTableString += "<td class='verticalLine centerText'>pts</td>";
+      }
+      else if (backendDataIdentifiers[l] === "aquaticHealth") {
+        htmlTableString += "<td class='verticalLine centerText'>pts</td>";
       }
       else if (l < 2) htmlTableString += "<td class='centerText'>pts</td>";
       else if (2 <= l && l < 4) htmlTableString += "<td class='centerText'>Mg</td>";
