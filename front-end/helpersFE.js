@@ -406,8 +406,7 @@ function toggleScoreDetails(factor) {
         // 0 - 100 value
         childNodes[5].innerHTML = 'Current: ' + 50  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = 50 + ' tons / yr' + '<br>' +
-            50 + ' Mg / yr';
+        childNodes[7].innerHTML = 50 + ' pts / yr' + '<br>';
         document.getElementsByClassName('aquaticScoreDetails')[0].style.display = 'block';
       }
       break;

@@ -1849,11 +1849,24 @@ function drawEcosystemRadar(yearArray) {
       value: (Totals.gameWildlifePointsScore[y] / 100),
       raw: (Math.round(Totals.gameWildlifePoints[y] * 10) / 10).toFixed(1) + " pts"
     }, {
-      label: "Biodiversity",
-      axis: "Biodiversity",
+      label: "Land Biodiversity",
+      axis: "Land Biodiversity",
       value: (Totals.biodiversityPointsScore[y] / 100),
       raw: (Math.round(Totals.biodiversityPoints[y] * 10) / 10).toFixed(1) + " pts"
-    }];
+    },
+   {
+    label: "Stream Biodiversity",
+    axis: "Stream Biodiversity",
+    value: (50 / 100),
+    raw: 5 + " pts"
+    },
+    {
+    label: "Aquatic Health",
+    axis: "Aquatic Health",
+    value: (50 / 100),
+    raw: 5 + " pts"
+    }
+    ];
 
     dataset.push(obj);
     legendOptions.push("Year " + y);
