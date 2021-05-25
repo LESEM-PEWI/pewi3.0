@@ -3835,7 +3835,7 @@ function render(years){
   var width = 850;
 
   //the variable width is used to assign the height of the svg container
-  var height = 550;
+  var height = 650;
 
   //the variable width is used to assign the starting location value "x" of the svg container
   var svgx = 200;
@@ -3888,22 +3888,22 @@ function render(years){
     var tempdata = [];
     if(numYears === 3){
       var tempSum = 0;
-      for(var i = 0; i < 16; ++i){
-        tempSum = dataPoints[i].count+dataPoints[i+16].count+dataPoints[i+32].count;
+      for(var i = 0; i < 18; ++i){
+        tempSum = dataPoints[i].count+dataPoints[i+18].count+dataPoints[i+36].count;
         tempSum = tempSum / numYears;
         tempdata.push(tempSum);
       }
     }
     else if(numYears === 2){
       var tempSum = 0;
-      for(var i = 0; i < 16; ++i){
-        tempSum = dataPoints[i].count+dataPoints[i+16].count;
+      for(var i = 0; i < 18; ++i){
+        tempSum = dataPoints[i].count+dataPoints[i+18].count;
         tempSum = tempSum / numYears;
         tempdata.push(tempSum);
       }
     }
     else{
-      for(var i = 0; i < 16; ++i){
+      for(var i = 0; i < 18; ++i){
         tempdata.push(dataPoints[i].count);
       }
     }
@@ -3915,7 +3915,7 @@ function render(years){
   * This function was created for Issue 357. For more information refer to Issue 357.
   */
   function deteleText() {
-    for(var i = 0; i < 16; ++i){
+    for(var i = 0; i < 18; ++i){
       var tempID = "#t"+(i+1);
       var tempSmallID = "#smallrect"+(i+1);
       var tempBigID = "#bigrect"+(i+1);
@@ -3932,7 +3932,7 @@ function render(years){
   */
   function fillData(yearsToFill) {
     var tempData = [];
-    var totalNumberDataPoints = yearsToFill*16; //16 because there are 16 different data points we fill per year
+    var totalNumberDataPoints = yearsToFill*18; //16 because there are 16 different data points we fill per year
     var tempID = 0;
     for(var i = 1; i <= totalNumberDataPoints; ++i){
       tempID++;
@@ -3971,15 +3971,15 @@ function render(years){
   function getInfo(givenID, y, type) {
     var selectID = [];
     switch (givenID) {
-    case "c1": case "c17": case "c33": case "t1": case "bigrect1": case "checkbox1":
+    case "c1": case "c19": case "c37": case "t1": case "bigrect1": case "checkbox1":
       if(type === "color"){
         return "#f0ad4e";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c1", "c17", "c33"];
+          selectID = ["c1", "c19", "c37"];
         }else if(y > 1){
-          selectID = ["c1", "c17"];
+          selectID = ["c1", "c19"];
         }else{
           selectID = ["c1"];
         }
@@ -4005,15 +4005,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c2": case "c18": case "c34": case "t2": case "bigrect2": case "checkbox2":
+    case "c2": case "c20": case "c38": case "t2": case "bigrect2": case "checkbox2":
       if(type === "color"){
         return "#5bc0de";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c2", "c18", "c34"];
+          selectID = ["c2", "c20", "c38"];
         }else if(y > 1){
-          selectID = ["c2", "c18"];
+          selectID = ["c2", "c20"];
         }else{
           selectID = ["c2"];
         }
@@ -4026,7 +4026,7 @@ function render(years){
         return "t2";
       }
       else if(type === "landName"){
-        return "Biodiversity";
+        return "Land Biodiversity";
       }
       else if(type === "boxY"){
         return 75;
@@ -4039,15 +4039,16 @@ function render(years){
         return selectID;
       }
       break;
-    case "c3": case "c19": case "c35": case "t3": case "bigrect3": case "checkbox3":
+      //TODO STREAM BIODIVERISTY
+    case "c3": case "c21": case "c39": case "t3": case "bigrect3": case "checkbox3":
       if(type === "color"){
-        return "#5cb85c";
+        return "#5bc0de";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c3", "c19", "c35"];
+          selectID = ["c3", "c21", "c39"];
         }else if(y > 1){
-          selectID = ["c3", "c19"];
+          selectID = ["c3", "c21"];
         }else{
           selectID = ["c3"];
         }
@@ -4060,7 +4061,7 @@ function render(years){
         return "t3";
       }
       else if(type === "landName"){
-        return "Game Wildlife";
+        return "Stream Biodiversity";
       }
       else if(type === "boxY"){
         return 105;
@@ -4073,15 +4074,16 @@ function render(years){
         return selectID;
       }
       break;
-    case "c4": case "c20": case "c36": case "t4": case "bigrect4": case "checkbox4":
+    //TODO AQUATIC HEALTH
+    case "c4": case "c22": case "c40": case "t4": case "bigrect4": case "checkbox4":
       if(type === "color"){
-        return "#d9534f";
+        return "#5bc0de";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c4", "c20", "c36"];
+          selectID = ["c4", "c22", "c40"];
         }else if(y > 1){
-          selectID = ["c4", "c20"];
+          selectID = ["c4", "c22"];
         }else{
           selectID = ["c4"];
         }
@@ -4094,7 +4096,7 @@ function render(years){
         return "t4";
       }
       else if(type === "landName"){
-        return "Erosion Control";
+        return "Aquatic Health";
       }
       else if(type === "boxY"){
         return 135;
@@ -4107,15 +4109,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c5": case "c21": case "c37": case "t5": case "bigrect5": case "checkbox5":
+    case "c5": case "c23": case "c41": case "t5": case "bigrect5": case "checkbox5":
       if(type === "color"){
-        return "#9ACD32";
+        return "#5cb85c";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c5", "c21", "c37"];
+          selectID = ["c5", "c23", "c41"];
         }else if(y > 1){
-          selectID = ["c5", "c21"];
+          selectID = ["c5", "c23"];
         }else{
           selectID = ["c5"];
         }
@@ -4128,7 +4130,7 @@ function render(years){
         return "t5";
       }
       else if(type === "landName"){
-        return "Nitrate Pollution Control";
+        return "Game Wildlife";
       }
       else if(type === "boxY"){
         return 165;
@@ -4141,15 +4143,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c6": case "c22": case "c38": case "t6": case "bigrect6": case "checkbox6":
+    case "c6": case "c24": case "c42": case "t6": case "bigrect6": case "checkbox6":
       if(type === "color"){
-        return "#0099DC";
+        return "#d9534f";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c6", "c22", "c38"];
+          selectID = ["c6", "c24", "c42"];
         }else if(y > 1){
-          selectID = ["c6", "c22"];
+          selectID = ["c6", "c24"];
         }else{
           selectID = ["c6"];
         }
@@ -4162,7 +4164,7 @@ function render(years){
         return "t6";
       }
       else if(type === "landName"){
-        return "Phosphorus Pollution Control";
+        return "Erosion Control";
       }
       else if(type === "boxY"){
         return 195;
@@ -4175,15 +4177,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c7": case "c23": case "c39": case "t7": case "bigrect7": case "checkbox7":
+    case "c7": case "c25": case "c43": case "t7": case "bigrect7": case "checkbox7":
       if(type === "color"){
-        return "#A53300";
+        return "#9ACD32";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c7", "c23", "c39"];
+          selectID = ["c7", "c25", "c43"];
         }else if(y > 1){
-          selectID = ["c7", "c23"];
+          selectID = ["c7", "c25"];
         }else{
           selectID = ["c7"];
         }
@@ -4196,7 +4198,7 @@ function render(years){
         return "t7";
       }
       else if(type === "landName"){
-        return "Sediment Control";
+        return "Nitrate Pollution Control";
       }
       else if(type === "boxY"){
         return 225;
@@ -4209,15 +4211,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c8": case "c24": case "c40": case "t8": case "bigrect8": case "checkbox8":
+    case "c8": case "c26": case "c44": case "t8": case "bigrect8": case "checkbox8":
       if(type === "color"){
-        return "#1aafb8";
+        return "#0099DC";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c8", "c24", "c40"];
+          selectID = ["c8", "c26", "c44"];
         }else if(y > 1){
-          selectID = ["c8", "c24"];
+          selectID = ["c8", "c26"];
         }else{
           selectID = ["c8"];
         }
@@ -4230,7 +4232,7 @@ function render(years){
         return "t8";
       }
       else if(type === "landName"){
-        return "Alfalfa Hay";
+        return "Phosphorus Pollution Control";
       }
       else if(type === "boxY"){
         return 255;
@@ -4243,15 +4245,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c9": case "c25": case "c41": case "t9": case "bigrect9": case "checkbox9":
+    case "c9": case "c27": case "c45": case "t9": case "bigrect9": case "checkbox9":
       if(type === "color"){
-        return "#beef00";
+        return "#A53300";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c9", "c25", "c41"];
+          selectID = ["c9", "c27", "c46"];
         }else if(y > 1){
-          selectID = ["c9", "c25"];
+          selectID = ["c9", "c27"];
         }else{
           selectID = ["c9"];
         }
@@ -4264,7 +4266,7 @@ function render(years){
         return "t9";
       }
       else if(type === "landName"){
-        return "Cattle";
+        return "Sediment Control";
       }
       else if(type === "boxY"){
         return 285;
@@ -4277,15 +4279,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c10": case "c26": case "c42": case "t10": case "bigrect10": case "checkbox10":
+    case "c10": case "c28": case "c46": case "t10": case "bigrect10": case "checkbox10":
       if(type === "color"){
-        return "#A0522D";
+        return "#1aafb8";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c10", "c26", "c42"];
+          selectID = ["c10", "c28", "c46"];
         }else if(y > 1){
-          selectID = ["c10", "c26"];
+          selectID = ["c10", "c28"];
         }else{
           selectID = ["c10"];
         }
@@ -4298,7 +4300,7 @@ function render(years){
         return "t10";
       }
       else if(type === "landName"){
-        return "Corn Grain";
+        return "Alfalfa Hay";
       }
       else if(type === "boxY"){
         return 315;
@@ -4311,15 +4313,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c11": case "c27": case "c43": case "t11": case "bigrect11": case "checkbox11":
+    case "c11": case "c29": case "c47": case "t11": case "bigrect11": case "checkbox11":
       if(type === "color"){
-        return "#D2691E";
+        return "#beef00";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c11", "c27", "c43"];
+          selectID = ["c11", "c29", "c47"];
         }else if(y > 1){
-          selectID = ["c11", "c27"];
+          selectID = ["c11", "c29"];
         }else{
           selectID = ["c11"];
         }
@@ -4332,7 +4334,7 @@ function render(years){
         return "t11";
       }
       else if(type === "landName"){
-        return "Grass Hay";
+        return "Cattle";
       }
       else if(type === "boxY"){
         return 345;
@@ -4345,15 +4347,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c12": case "c28": case "c44": case "t12": case "bigrect12": case "checkbox12":
+    case "c12": case "c30": case "c48": case "t12": case "bigrect12": case "checkbox12":
       if(type === "color"){
-        return "#ffde2a";
+        return "#A0522D";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c12", "c28", "c44"];
+          selectID = ["c12", "c30", "c48"];
         }else if(y > 1){
-          selectID = ["c12", "c28"];
+          selectID = ["c12", "c30"];
         }else{
           selectID = ["c12"];
         }
@@ -4366,7 +4368,7 @@ function render(years){
         return "t12";
       }
       else if(type === "landName"){
-        return "Switchgrass Biomass";
+        return "Corn Grain";
       }
       else if(type === "boxY"){
         return 375;
@@ -4379,15 +4381,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c13": case "c29": case "c45": case "t13": case "bigrect13": case "checkbox13":
+    case "c13": case "c31": case "c49": case "t13": case "bigrect13": case "checkbox13":
       if(type === "color"){
-        return "#16a085";
+        return "#D2691E";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c13", "c29", "c45"];
+          selectID = ["c13", "c31", "c49"];
         }else if(y > 1){
-          selectID = ["c13", "c29"];
+          selectID = ["c13", "c31"];
         }else{
           selectID = ["c13"];
         }
@@ -4400,7 +4402,7 @@ function render(years){
         return "t13";
       }
       else if(type === "landName"){
-        return "Mixed Fruits and Vegetables";
+        return "Grass Hay";
       }
       else if(type === "boxY"){
         return 405;
@@ -4413,15 +4415,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c14": case "c30": case "c46": case "t14": case "bigrect14": case "checkbox14":
+    case "c14": case "c32": case "c50": case "t14": case "bigrect14": case "checkbox14":
       if(type === "color"){
-        return "#FF8C00";
+        return "#ffde2a";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c14", "c30", "c46"];
+          selectID = ["c14", "c32", "c50"];
         }else if(y > 1){
-          selectID = ["c14", "c30"];
+          selectID = ["c14", "c32"];
         }else{
           selectID = ["c14"];
         }
@@ -4434,7 +4436,7 @@ function render(years){
         return "t14";
       }
       else if(type === "landName"){
-        return "Short Rotation Woody Bioenergy"; //TODO
+        return "Switchgrass Biomass";
       }
       else if(type === "boxY"){
         return 435;
@@ -4447,15 +4449,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c15": case "c31": case "c47": case "t15": case "bigrect15": case "checkbox15":
+    case "c15": case "c33": case "c51": case "t15": case "bigrect15": case "checkbox15":
       if(type === "color"){
-        return "#4169E1";
+        return "#16a085";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c15", "c31", "c47"];
+          selectID = ["c15", "c33", "c51"];
         }else if(y > 1){
-          selectID = ["c15", "c31"];
+          selectID = ["c15", "c33"];
         }else{
           selectID = ["c15"];
         }
@@ -4468,7 +4470,7 @@ function render(years){
         return "t15";
       }
       else if(type === "landName"){
-        return "Soybeans";
+        return "Mixed Fruits and Vegetables";
       }
       else if(type === "boxY"){
         return 465;
@@ -4481,15 +4483,15 @@ function render(years){
         return selectID;
       }
       break;
-    case "c16": case "c32": case "c48": case "t16": case "bigrect16": case "checkbox16":
+    case "c16": case "c34": case "c52": case "t16": case "bigrect16": case "checkbox16":
       if(type === "color"){
-        return "#228B22";
+        return "#FF8C00";
       }
       else if(type === "data"){
         if(y > 2){
-          selectID = ["c16", "c32", "c48"];
+          selectID = ["c16", "c34", "c52"];
         }else if(y > 1){
-          selectID = ["c16", "c32"];
+          selectID = ["c16", "c34"];
         }else{
           selectID = ["c16"];
         }
@@ -4502,7 +4504,7 @@ function render(years){
         return "t16";
       }
       else if(type === "landName"){
-        return "Wood";
+        return "Short Rotation Woody Bioenergy"; //TODO
       }
       else if(type === "boxY"){
         return 495;
@@ -4515,6 +4517,74 @@ function render(years){
         return selectID;
       }
       break;
+    case "c17": case "c35": case "c53": case "t17": case "bigrect17": case "checkbox17":
+      if(type === "color"){
+        return "#4169E1";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c17", "c35", "c53"];
+        }else if(y > 1){
+          selectID = ["c17", "c35"];
+        }else{
+          selectID = ["c17"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "17";
+      }
+      else if(type === "textRep"){
+        return "t17";
+      }
+      else if(type === "landName"){
+        return "Soybeans";
+      }
+      else if(type === "boxY"){
+        return 525;
+      }
+      else if(type === "boxID"){
+        return "b17";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect17", "#bigrect17"];
+        return selectID;
+      }
+      break;
+    case "c18": case "c36": case "c54": case "t18": case "bigrect18": case "checkbox18":
+      if(type === "color"){
+        return "#228B22";
+      }
+      else if(type === "data"){
+        if(y > 2){
+          selectID = ["c18", "c36", "c54"];
+        }else if(y > 1){
+          selectID = ["c18", "c36"];
+        }else{
+          selectID = ["c18"];
+        }
+        return selectID;
+      }
+      else if(type === "barRep"){
+        return "18";
+      }
+      else if(type === "textRep"){
+        return "t18";
+      }
+      else if(type === "landName"){
+        return "Wood";
+      }
+      else if(type === "boxY"){
+        return 555;
+      }
+      else if(type === "boxID"){
+        return "b18";
+      }
+      else if(type === "progressBars"){
+        selectID = ["#smallrect18", "#bigrect18"];
+        return selectID;
+      }
+      break;
     }
   }
 
@@ -4524,52 +4594,60 @@ function render(years){
   */
   function getLabel(id) {
     switch (id) {
-      case 1: case 17: case 33:
+      case 1: case 19: case 37:
         return "Carbon Sequestration";
       break;
-      case 2: case 18: case 34:
-        return "Biodiversity";
+      case 2: case 20: case 38:
+        return "Land Biodiversity";
       break;
-      case 3: case 19: case 35:
+      //TODO STREAM BIODIVERSITY
+      case 3: case 21: case 39:
+        return "Stream Biodiversity";
+        break;
+      //TODO AQUATIC HEALTH
+      case 4: case 22: case 40:
+        return "Aquatic Health";
+        break;
+      case 5: case 23: case 41:
         return "Game Wildlife";
       break;
-      case 4: case 20: case 36:
+      case 6: case 24: case 42:
         return "Erosion Control";
       break;
-      case 5: case 21: case 37:
+      case 7: case 25: case 43:
         return "Nitrate Pollution Control";
       break;
-      case 6: case 22: case 38:
+      case 8: case 26: case 44:
         return "Phosphorus Pollution Control";
       break;
-      case 7: case 23: case 39:
+      case 9: case 27: case 45:
         return "Sediment Control";
       break;
-      case 8: case 24: case 40:
+      case 10: case 28: case 46:
         return "Alfalfa Hay";
       break;
-      case 9: case 25: case 41:
+      case 11: case 29: case 47:
         return "Cattle";
       break;
-      case 10: case 26: case 42:
+      case 12: case 30: case 48:
         return "Corn Grain";
       break;
-      case 11: case 27: case 43:
+      case 13: case 31: case 49:
         return "Grass Hay";
       break;
-      case 12: case 28: case 44:
+      case 14: case 32: case 50:
         return "Switchgrass Biomass";
       break;
-      case 13: case 29: case 45:
+      case 15: case 33: case 51:
         return "Mixed Fruits and Vegetables";
       break;
-      case 14: case 30: case 46:
+      case 16: case 34: case 52:
         return "Short Rotation Woody Bioenergy"; //TODO
       break;
-      case 15: case 31: case 47:
+      case 17: case 35: case 53:
         return "Soybeans";
       break;
-      case 16: case 32: case 48:
+      case 18: case 36: case 54:
         return "Wood";
       break;
     }
@@ -4582,52 +4660,60 @@ function render(years){
   */
   function getScore(id) {
     switch (id) {
-      case 1: case 17: case 33:
+      case 1: case 19: case 37:
         return Totals.carbonSequestrationScore[getYearForScore(id)];
       break;
-      case 2: case 18: case 34:
+      case 2: case 20: case 38:
         return Totals.biodiversityPointsScore[getYearForScore(id)];
       break;
-      case 3: case 19: case 35:
+      //TODO STREAM BIODIVERSITY
+      case 3: case 21: case 39:
+        return 50;
+        break;
+      //TODO AQUATIC HEALTH
+      case 4: case 22: case 40:
+        return 50;
+        break;
+      case 5: case 23: case 41:
         return Totals.gameWildlifePointsScore[getYearForScore(id)];
       break;
-      case 4: case 20: case 36:
+      case 6: case 24: case 42:
         return Totals.grossErosionScore[getYearForScore(id)];
       break;
-      case 5: case 21: case 37:
+      case 7: case 25: case 43:
         return Totals.nitrateConcentrationScore[getYearForScore(id)];
       break;
-      case 6: case 22: case 38:
+      case 8: case 26: case 44:
         return Totals.phosphorusLoadScore[getYearForScore(id)];
       break;
-      case 7: case 23: case 39:
+      case 9: case 27: case 45:
         return Totals.sedimentDeliveryScore[getYearForScore(id)];
       break;
-      case 8: case 24: case 40:
+      case 10: case 28: case 46:
         return Totals.alfalfaHayYieldScore[getYearForScore(id)];
       break;
-      case 9: case 25: case 41:
+      case 11: case 29: case 47:
         return Totals.cattleYieldScore[getYearForScore(id)];
       break;
-      case 10: case 26: case 42:
+      case 12: case 30: case 48:
         return Totals.cornGrainYieldScore[getYearForScore(id)];
       break;
-      case 11: case 27: case 43:
+      case 13: case 31: case 49:
         return Totals.grassHayYieldScore[getYearForScore(id)];
       break;
-      case 12: case 28: case 44:
+      case 14: case 32: case 50:
         return Totals.switchgrassYieldScore[getYearForScore(id)];
       break;
-      case 13: case 29: case 45:
+      case 15: case 33: case 51:
         return Totals.mixedFruitsAndVegetablesYieldScore[getYearForScore(id)];
       break;
-      case 14: case 30: case 46:
+      case 16: case 34: case 52:
         return Totals.shortRotationWoodyBiomassYieldScore[getYearForScore(id)];
       break;
-      case 15: case 31: case 47:
+      case 17: case 35: case 53:
         return Totals.soybeanYieldScore[getYearForScore(id)];
       break;
-      case 16: case 32: case 48:
+      case 18: case 36: case 54:
         return Totals.woodYieldScore[getYearForScore(id)];
       break;
     }
@@ -4662,9 +4748,9 @@ function render(years){
   * This function was created for Issue 357. For more information refer to Issue 357.
   */
   function getYearForScore(tempID){
-    if (tempID > 0 && tempID < 17){
+    if (tempID > 0 && tempID < 19){
       return 1;
-    }else if(tempID > 16 && tempID < 33){
+    }else if(tempID > 18 && tempID < 35){
       return 2;
     }else{
       return 3;
@@ -4722,8 +4808,8 @@ function render(years){
 
     //the variable lineData is the points that are used to create the svg-path arrow
     var lineData = [{'x':25, 'y':50}, {'x':40, 'y': 75},
-                   {'x':30, 'y':75}, {'x':30, 'y': 500},
-                   {'x':20, 'y':500}, {'x':20, 'y': 75},
+                   {'x':30, 'y':75}, {'x':30, 'y': 600},
+                   {'x':20, 'y':600}, {'x':20, 'y': 75},
                    {'x':10, 'y':75}, {'x':25, 'y': 50}];
 
     //The lineFunction is a variable that uses functions to return x and y of each lineData, this is used to create the arrow path
@@ -4747,7 +4833,7 @@ function render(years){
                           .attr("x", (i*100)+50)
                           .attr("y", 50)
                           .attr("width", 100)
-                          .attr("height", 450)
+                          .attr("height", 550)
                           .attr("rx", 15)
                           .style("fill", "none")
                           .style("stroke", "black")
@@ -4758,7 +4844,7 @@ function render(years){
       //This is going to add all the names of categories that are in the dataset.
       svg.append("text")
           .attr("x", (100+(i*100)))
-          .attr("y", 525)
+          .attr("y", 575)
           .text(("Year "+(i+1)))
           .style("fill", "#000000")
           .attr("text-anchor", "middle")
@@ -4814,7 +4900,7 @@ function render(years){
         .style("font-size", "1.0em");
 
     //adding the checkboxes
-    for(var i = 1; i < 17; ++i){
+    for(var i = 1; i < 19; ++i){
       svg.append("rect")
         .attr("width", 15)
         .attr("height", 15)
@@ -4853,7 +4939,7 @@ function render(years){
 
 
     //this for loop adds the texts of data types
-    for(var i = 0; i < 16; ++i){
+    for(var i = 0; i < 18; ++i){
       svg.append("text")
           .attr("x", (525 - textXPosChange))
           .attr("y", (65+i*30))
@@ -4957,13 +5043,13 @@ function render(years){
       .style("fill", "gray")
       .style("opacity", 0.3)
       .attr("cx", function (){
-        var tempCX = Math.ceil(i/16);
+        var tempCX = Math.ceil(i/18);
         i++;
         return tempCX*100;
       })
       .attr("cy", function (d){
-        var tempCY = 450 * (d.count/100);
-        return (500-tempCY);
+        var tempCY = 550 * (d.count/100);
+        return (600-tempCY);
       })
       .attr("id",  function (d){ var id = d.id; i++; return id; })
       .attr("class", "info")
