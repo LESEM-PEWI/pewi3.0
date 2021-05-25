@@ -318,6 +318,21 @@ function toggleScoreDetails(factor) {
 
       }
     break;
+    case 'stream-biodiversity':
+      if(document.getElementsByClassName('streamBiodiversityScoreDetails')[0].style.display == 'block') {
+        document.getElementsByClassName('streamBiodiversityScoreDetails')[0].style.display = 'none';
+
+      }
+      else{
+        var childNodes = document.getElementsByClassName('streamBiodiversityScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + 50  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = 50 + ' pts / yr' + "<br>" + "Mussel Population: High";
+        document.getElementsByClassName('streamBiodiversityScoreDetails')[0].style.display = 'block';
+
+      }
+      break;
     case 'erosion':
       if(document.getElementsByClassName('erosionScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('erosionScoreDetails')[0].style.display = 'none';
@@ -345,7 +360,9 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.nitrateConcentrationScore[currentYear] * 10) / 10).toFixed(1))  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' ppm / yr' + '<br>' +
-          formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' mg/L / yr';
+          formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' mg/L / yr'
+            + "<br>" + "Mussel Services: XX ppm/mg/L";
+        ;
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
 
       }
@@ -380,6 +397,19 @@ function toggleScoreDetails(factor) {
         document.getElementsByClassName('sedimentScoreDetails')[0].style.display = 'block';
       }
     break;
+    case 'aquatic':
+      if(document.getElementsByClassName('aquaticScoreDetails')[0].style.display == 'block') {
+        document.getElementsByClassName('aquaticScoreDetails')[0].style.display = 'none';
+      }
+      else{
+        var childNodes = document.getElementsByClassName('aquaticScoreDetails')[0].childNodes;
+        // 0 - 100 value
+        childNodes[5].innerHTML = 'Current: ' + 50  + '/100';
+        // convert English unit to Metric unit
+        childNodes[7].innerHTML = 50 + ' pts / yr' + '<br>';
+        document.getElementsByClassName('aquaticScoreDetails')[0].style.display = 'block';
+      }
+      break;
     case 'total':
       if(document.getElementsByClassName('totalScoreDetails')[0].style.display == 'block') {
         document.getElementsByClassName('totalScoreDetails')[0].style.display = 'none';
@@ -6104,8 +6134,8 @@ function toggleVisibility() {
   //document.getElementById('playerAddButton').style.display = "none";
   //currentPlayer=1;
 
-  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar","carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
-                        "sedimentProgressBar","cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
+  var progressbarIds = ["gameWildlifeProgressBar","biodiversityProgressBar", "streamBiodiversityProgressBar"  , "carbonProgressBar","erosionProgressBar","nitrateProgressBar","phoshorusProgressBar",
+                        "sedimentProgressBar", "aquaticProgressBar", "cornGrainProgressBar","soybeansProgressBar","fruitsAndVegetablesProgressBar","cattleProgressBar","alfalfaHayProgressBar",
                         "grassHayProgressBar","switchgrassBiomassProgressBar","woodProgressBar","woodyBiomassProgressBar","totalYieldsProgressBar"];
 
   //reset default on items
