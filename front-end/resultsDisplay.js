@@ -1797,21 +1797,21 @@ function drawEcosystemRadar(yearArray) {
 
   //assign the dataset for each year
   for (var i = 0; i < yearArray.length; i++) {
+    var y = yearArray[i];
     // //Calculated Separately to Update Values based on BMP Budgets
-    let cornYield = Math.round(economics.cornAfters[currentYear][1].ConvCornAfterSoybeanYield +
-        economics.cornAfters[currentYear][1].ConvCornAfterCornYield +
-        economics.getBMPAreas[currentYear][2].landUseYield +
-        economics.getBMPAreas[currentYear][3].landUseYield).toFixed(1);
+    let cornYield = Math.round(economics.cornAfters[y][1].ConvCornAfterSoybeanYield +
+        economics.cornAfters[y][1].ConvCornAfterCornYield +
+        economics.getBMPAreas[y][2].landUseYield +
+        economics.getBMPAreas[y][3].landUseYield).toFixed(1);
 
-    let soybeanYield = Math.round(economics.getCropYields[currentYear][1].convSoybeanYield +
-        economics.getBMPAreas[currentYear][1].landUseYield).toFixed(1)
+    let soybeanYield = Math.round(economics.getCropYields[y][1].convSoybeanYield +
+        economics.getBMPAreas[y][1].landUseYield).toFixed(1)
 
     let cornYieldMax = boardData[currentBoard].maximums.cornMax;
     let soyYieldMax = boardData[currentBoard].maximums.soybeanMax;
 
     let cornYieldAdjScore = (cornYield / cornYieldMax) * 100;
     let soyYieldAdjScore = (soybeanYield / soyYieldMax) * 100;
-    var y = yearArray[i];
     var obj = [{
       label: "Nitrate Concentration",
       axis: "Nitrate",
