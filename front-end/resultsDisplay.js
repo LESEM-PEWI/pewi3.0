@@ -1857,14 +1857,14 @@ function drawEcosystemRadar(yearArray) {
    {
     label: "Stream Biodiversity",
     axis: "Stream Biodiversity",
-    value: (50 / 100),
-    raw: 5 + " pts"
+    value: (Totals.streamBiodiversityScore[y] / 100),
+    raw: (Math.round(Totals.streamBiodiversityPoints[y] * 10) / 10).toFixed(1)  + " pts"
     },
     {
     label: "Aquatic Health",
     axis: "Aquatic Health",
-    value: (50 / 100),
-    raw: 5 + " pts"
+    value: (Totals.aquaticHealthIndexScore[y] / 100),
+    raw: (Math.round(Totals.aquaticHealthIndex[y] * 10) / 10).toFixed(1) + " ppm"
     }
     ];
 
@@ -3190,7 +3190,7 @@ function generateResultsTable() {
             for(var y = 1; y <= upToYear; y++){
               htmlTableString += "<td class='rightText'><b>";
 
-              var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y])/2;
+              var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y]+Totals.streamBiodiversityScore[y])/3;
 
               htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
 
@@ -3241,7 +3241,7 @@ function generateResultsTable() {
           for(var y = 1; y <= upToYear; y++){
             htmlTableString += "<td class='rightText'><b>";
 
-            var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y])/3;
+            var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y]+Totals.aquaticHealthIndexScore[y])/4;
 
             htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
 
@@ -4680,11 +4680,11 @@ function render(years){
       break;
       //TODO STREAM BIODIVERSITY
       case 3: case 21: case 39:
-        return 50;
+        return Totals.streamBiodiversityScore[getYearForScore(id)];
         break;
       //TODO AQUATIC HEALTH
       case 4: case 22: case 40:
-        return 50;
+        return Totals.aquaticHealthIndexScore[getYearForScore(id)];
         break;
       case 5: case 23: case 41:
         return Totals.gameWildlifePointsScore[getYearForScore(id)];
