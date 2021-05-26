@@ -2731,6 +2731,10 @@ function Results(board) {
   this.acre = null;
   this.gameWildlifePoints = [0, 0, 0, 0];
   this.biodiversityPoints = [0, 0, 0, 0];
+  this.streamBiodiversityPoints = [0, 0, 0, 0];
+  this.aquaticHealthIndex = [0, 0, 0, 0];
+  this.musselServices = [0, 0, 0, 0];
+  this.musselNitrateReduction = [0, 0, 0, 0];
   this.yieldResults = [0, 0, 0, 0];
   this.landUseResults = [0, 0, 0, 0];
 
@@ -2742,6 +2746,7 @@ function Results(board) {
   this.grasslandPercent = Array(4);
   this.wetlandPercent = Array(4);
   this.streamBufferPercent = Array(4);
+  this.streamWoodyBufferPercent = Array(4);
   this.strategicWetlandPercent = Array(4); //percent of stategic cells actually occupied by wetland
   this.subwatershedArea = Array(22);
   this.wetlandMultiplier = Array(4);
@@ -2776,6 +2781,9 @@ function Results(board) {
   this.nitrateConcentrationScore = [0, 0, 0, 0];
   this.phosphorusLoadScore = [0, 0, 0, 0];
   this.sedimentDeliveryScore = [0, 0, 0, 0];
+  this.streamBiodiversityScore = [0, 0, 0, 0];
+  this.aquaticHealthIndexScore = [0, 0, 0, 0];
+  this.musselServicesScore = ["", "", "", ""];
 
   this.cornGrainYieldScore = [0, 0, 0, 0];
   this.soybeanYieldScore = [0, 0, 0, 0];
@@ -3249,6 +3257,7 @@ this.tileNitrate = Array(4);
       var tempAreaGrassland = 0;
       var tempAreaWetland = 0;
       var tempCellsStreamBuffer = 0;
+      var tempCellsWoodyStreamBuffer = 0;
       var tempCellsWetlandOnStrategic = 0;
 
       //for all tiles
@@ -3282,6 +3291,10 @@ this.tileNitrate = Array(4);
           tempCellsStreamBuffer += 1;
         }
 
+        if (board.map[i].results[y].streamWoodyBufferFlag) {
+          tempCellsWoodyStreamBuffer += 1;
+        }
+
         if ((board.map[i].landType[y] == LandUseType.wetland) && board.map[i].strategicWetland == 1) {
           tempCellsWetlandOnStrategic += 1;
         }
@@ -3296,6 +3309,7 @@ this.tileNitrate = Array(4);
       this.grasslandPercent[y] = (tempAreaGrassland / this.totalArea) * 100;
       this.wetlandPercent[y] = (tempAreaWetland / this.totalArea) * 100;
       this.streamBufferPercent[y] = (tempCellsStreamBuffer / this.totalStreamCells) * 100;
+      this.streamWoodyBufferPercent[y] = (tempCellsWoodyStreamBuffer / this.totalStreamCells) * 100;
       this.strategicWetlandPercent[y] = (tempCellsWetlandOnStrategic / this.totalStrategicWetlandCells) * 100;
 
       //for results hud
@@ -3371,6 +3385,113 @@ this.tileNitrate = Array(4);
 
 
   }; //end calculations of game and wildlife points
+
+
+  /**
+     * calculate stream biodiversity score based on the sum flag percentage function
+     * @param  {[type]} y year
+     */
+     //4 subcategories total, each with equal 25% weighting
+    this.calculateStreamBiodiversityPoints = function(y) {
+
+      this.sumFlagPercentages(y);
+
+        var tempScore = 0;
+
+        //Stream buffer points
+        //Percent of stream buffer in perennial cover = 75% of subscore
+        tempScore += this.streamBufferPercent[y] * (3/4) / 4;
+
+        //Percent of stream buffer in woody perennial cover = 25% of subscore
+        tempScore += this.streamWoodyBufferPercent[y] * (1/4) / 4;
+
+        //25% Nitrate Points
+        tempScore += this.nitrateConcentrationScore[y] / 4;
+
+        //25% Phosphorus Points
+        tempScore += this.phosphorusLoadScore[y] / 4;
+
+
+        //25% sediment delivery Points
+        tempScore += this.sedimentDeliveryScore[y] / 4;
+
+        //Percent of stream buffer in woody perennial cover = 25% of subscore
+  //FINISH This
+        this.streamBiodiversityPoints[y] = tempScore / 10;
+    }; //end calculations of stream biodiversity points
+
+
+
+    /**
+     * calculate stream biodiversity score based on the sum flag percentage function
+     * @param  {[type]} y year
+     */
+     //4 subcategories total, each with equal 25% weighting
+    this.calculateAquaticHealthIndex = function(y) { //calculates in ppm / mg/L
+
+      var tempScore = 0;
+      var streamflow = 0; // ft3/s
+
+      console.log("Precip = " + board.precipitation[y]);
+
+      switch (board.precipitation[y]) {
+
+        case 24.58:
+          streamflow = 3.65;
+          break;
+        case 28.18:
+          streamflow = 4.12;
+          break;
+        case 30.39:
+          streamflow = 4.42;
+          break;
+        case 32.16:
+          streamflow = 6.44;
+          break;
+        case 34.34:
+          streamflow = 6.85;
+          break;
+        case 36.47:
+          streamflow = 7.25;
+          break;
+        case 45.10:
+          streamflow = 11.53;
+          break;
+      }
+
+      tempScore = (0.90718474 * this.sedimentDelivery[y]/365) / (streamflow * 0.0027);
+
+      this.aquaticHealthIndex[y] = tempScore; //sediment ppm
+      console.log("Aquatic Health Index = " + this.aquaticHealthIndex[y] + " ppm");
+
+
+
+    }; //end calculations of stream biodiversity points
+
+
+    this.calculateMusselServices = function(y) { //calculates in ppm / mg/L
+
+      if (this.aquaticHealthIndex[y] < 20) { //Sediment under 20ppm, high mussel pop
+        this.musselServices[y] = 10; // 10 mussels / ft2
+        this.musselServicesScore[y] = "HIGH";
+        this.musselNitrateReduction[y] = .12 * this.nitrateConcentration[y];
+      }
+      else if (this.aquaticHealthIndex[y] < 40) {
+        this.musselServices[y] = 1; // 1 mussel / ft2
+        this.musselServicesScore[y] = "LOW";
+        this.musselNitrateReduction[y] = .02 * this.nitrateConcentration[y];
+      }
+      else {
+        this.musselServices[y] = 0; // 0  mussels / ft2
+        this.musselServicesScore[y] = "NONE";
+        this.musselNitrateReduction[y] = 0;
+      }
+      console.log("Mussels at " + this.musselServices[y] + " / ft2.");
+      console.log("Score: " + this.musselServicesScore[y]);
+      console.log("Nitrate Reduction: " + this.musselNitrateReduction[y]);
+    }
+
+
 
   /**
    * calculations for the scoreing of biodiversity (done at board level)
@@ -3796,6 +3917,10 @@ this.tileNitrate = Array(4);
         this.phosphorusLoadScore[y] = 100 * ((board.maximums.phosphorusMax - this.phosphorusLoad[y]) / (board.maximums.phosphorusMax - board.minimums.phosphorusMin));
         this.sedimentDeliveryScore[y] = 100 * ((board.maximums.sedimentMax - this.sedimentDelivery[y]) / (board.maximums.sedimentMax - board.minimums.sedimentMin));
 
+        this.streamBiodiversityScore[y] = 10 * this.streamBiodiversityPoints[y];
+        this.aquaticHealthIndexScore[y] = 100 * ((2085.74098179255 - this.aquaticHealthIndex[y]) / 2085.74098179255);
+        console.log("Aquatic Health Index Score = " + this.aquaticHealthIndexScore[y]);
+
         //this.cornGrainYieldScore[y] = cornYieldAdjScore;
         this.cornGrainYieldScore[y] = 100 * this.yieldResults[y].cornGrainYield / board.maximums.cornMax;
         this.soybeanYieldScore[y] = 100 * this.yieldResults[y].soybeanYield / board.maximums.soybeanMax;
@@ -3852,6 +3977,9 @@ this.tileNitrate = Array(4);
     this.mapIt(year);
     this.calculateGameWildLifePoints(year);
     this.calculateBiodiversityPoints(year); //Game Wildlife must come first as it alone calls sumFlagPercentages()
+    this.calculateStreamBiodiversityPoints(year);
+    this.calculateAquaticHealthIndex(year);
+    this.calculateMusselServices(year);
     this.updateScores(year);
 
   }; //end this.update()
@@ -4062,6 +4190,13 @@ function Tile(tileArray, board) {
         this.results[year].streamBufferFlag = 1;
       } else {
         this.results[year].streamBufferFlag = 0;
+      }
+      if (this.landType[year] == LandUseType.conservationForest || this.landType[year] == LandUseType.conventionalForest ||
+        this.landType[year] == LandUseType.shortRotationWoodyBioenergy) {
+        this.results[year].streamWoodyBufferFlag = 1;
+      }
+      else {
+        this.results[year].streamWoodyBufferFlag = 0;
       }
     } else {
       this.results[year].streamBufferFlag = 0;
