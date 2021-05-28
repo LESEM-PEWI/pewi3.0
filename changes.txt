@@ -19,7 +19,6 @@ function transitionToYear(year) {
     {
       boardData[currentBoard].map[i].landType[year] = boardData[currentBoard].map[i].landType[year+0];
     }
-Hi Richard, I'll have to delete this so code doesn't break!
   }
 
   if(addingYearFromFile==true) {
