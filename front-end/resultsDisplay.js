@@ -1857,14 +1857,14 @@ function drawEcosystemRadar(yearArray) {
    {
     label: "Stream Biodiversity",
     axis: "Stream Biodiversity",
-    value: (50 / 100),
-    raw: 5 + " pts"
+    value: (Totals.streamBiodiversityScore[y] / 100),
+    raw: (Math.round(Totals.streamBiodiversityPoints[y] * 10) / 10).toFixed(1)  + " pts"
     },
     {
     label: "Aquatic Health",
     axis: "Aquatic Health",
-    value: (50 / 100),
-    raw: 5 + " pts"
+    value: (Totals.aquaticHealthIndexScore[y] / 100),
+    raw: (Math.round(Totals.aquaticHealthIndex[y] * 10) / 10).toFixed(1) + " ppm"
     }
     ];
 
@@ -3190,7 +3190,7 @@ function generateResultsTable() {
             for(var y = 1; y <= upToYear; y++){
               htmlTableString += "<td class='rightText'><b>";
 
-              var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y])/2;
+              var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y]+Totals.streamBiodiversityScore[y])/3;
 
               htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
 
@@ -3241,7 +3241,7 @@ function generateResultsTable() {
           for(var y = 1; y <= upToYear; y++){
             htmlTableString += "<td class='rightText'><b>";
 
-            var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y])/3;
+            var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y]+Totals.aquaticHealthIndexScore[y])/4;
 
             htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
 
@@ -3266,16 +3266,15 @@ function generateResultsTable() {
 
       for (var y = 1; y <= upToYear; y++) {
         htmlTableString += "<td class='rightText'>";
-
         var tempString = backendDataIdentifiers[l] + "Score";
         if(backendDataIdentifiers[l] === "streamBiodiversity") {
-          htmlTableString += 50 + "<br>";
+          htmlTableString += addCommas((Math.round(Totals.streamBiodiversityScore[y] * 10) /10).toFixed(1)) + "<br>";
         }
         else if (backendDataIdentifiers[l] === "aquaticHealth"){
-          htmlTableString += 50 + "<br>";
+          htmlTableString += addCommas((Math.round(Totals.aquaticHealthIndexScore[y] * 10) /10).toFixed(1)) + "<br>";
         }
         else if (backendDataIdentifiers[l] === "musselPopulation"){
-          htmlTableString += "High" + "<br>";
+          htmlTableString += Totals.musselServicesScore[y] + "<br>";
         }
         else {
           htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
@@ -3301,10 +3300,10 @@ function generateResultsTable() {
         //   Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
         // }
         if(backendDataIdentifiers[l] === "streamBiodiversity") {
-          htmlTableString += 5 + "<br>";
+          htmlTableString += Math.round(Totals.streamBiodiversityPoints[y]).toFixed(1) + "<br>";
         }
         else if (backendDataIdentifiers[l] === "aquaticHealth"){
-          htmlTableString += 5 + "<br>";
+          htmlTableString += addCommas((Math.round(Totals.aquaticHealthIndex[y] * 10) /10).toFixed(1)) + "<br>";
         }
         else if (backendDataIdentifiers[l] === "musselPopulation"){
 
@@ -3324,7 +3323,7 @@ function generateResultsTable() {
         htmlTableString += "<td class='verticalLine centerText'>pts</td>";
       }
       else if (backendDataIdentifiers[l] === "aquaticHealth") {
-        htmlTableString += "<td class='verticalLine centerText'>pts</td>";
+        htmlTableString += "<td class='verticalLine centerText'>ppm</td>";
       }
       else if (l < 2) htmlTableString += "<td class='verticalLine centerText'>pts</td>";
       else if (2 <= l && l < 4) htmlTableString += "<td class='verticalLine centerText'>tons</td>";
@@ -3336,10 +3335,10 @@ function generateResultsTable() {
 
         var tempString = backendDataIdentifiers[l];
         if(backendDataIdentifiers[l] === "streamBiodiversity") {
-          htmlTableString += 5 + "<br>";
+          htmlTableString += Math.round(Totals.streamBiodiversityPoints[y]).toFixed(1) + "<br>";
         }
         else if (backendDataIdentifiers[l] === "aquaticHealth"){
-          htmlTableString += 5 + "<br>";
+          htmlTableString += addCommas((Math.round(Totals.aquaticHealthIndex[y] * 10) /10).toFixed(1)) + "<br>";
         }
         else if (backendDataIdentifiers[l] === "musselPopulation"){
 
@@ -3359,7 +3358,7 @@ function generateResultsTable() {
         htmlTableString += "<td class='verticalLine centerText'>pts</td>";
       }
       else if (backendDataIdentifiers[l] === "aquaticHealth") {
-        htmlTableString += "<td class='verticalLine centerText'>pts</td>";
+        htmlTableString += "<td class='verticalLine centerText'>mg/L</td>";
       }
       else if (l < 2) htmlTableString += "<td class='centerText'>pts</td>";
       else if (2 <= l && l < 4) htmlTableString += "<td class='centerText'>Mg</td>";
@@ -4681,11 +4680,11 @@ function render(years){
       break;
       //TODO STREAM BIODIVERSITY
       case 3: case 21: case 39:
-        return 50;
+        return Totals.streamBiodiversityScore[getYearForScore(id)];
         break;
       //TODO AQUATIC HEALTH
       case 4: case 22: case 40:
-        return 50;
+        return Totals.aquaticHealthIndexScore[getYearForScore(id)];
         break;
       case 5: case 23: case 41:
         return Totals.gameWildlifePointsScore[getYearForScore(id)];

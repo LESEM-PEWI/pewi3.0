@@ -326,9 +326,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('streamBiodiversityScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + 50  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.streamBiodiversityScore[currentYear] * 10) / 10).toFixed(1))  + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = 50 + ' pts / yr' + "<br>" + "Mussel Population: High";
+        childNodes[7].innerHTML = formatNumber((Math.round(Totals.streamBiodiversityPoints[currentYear] * 10) / 10).toFixed(1)) + ' pts / yr' + "<br>" +
+            "Mussel Population: " + Totals.musselServicesScore[currentYear];
         document.getElementsByClassName('streamBiodiversityScoreDetails')[0].style.display = 'block';
 
       }
@@ -361,7 +362,7 @@ function toggleScoreDetails(factor) {
         // convert English unit to Metric unit
         childNodes[7].innerHTML = formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' ppm / yr' + '<br>' +
           formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' mg/L / yr'
-            + "<br>" + "Mussel Services: XX ppm/mg/L";
+            + "<br>" + "Mussel Services: " + (Math.round(Totals.musselNitrateReduction[currentYear] * 10) / 10).toFixed(1) +" ppm/mg/L";
         ;
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
 
@@ -404,9 +405,10 @@ function toggleScoreDetails(factor) {
       else{
         var childNodes = document.getElementsByClassName('aquaticScoreDetails')[0].childNodes;
         // 0 - 100 value
-        childNodes[5].innerHTML = 'Current: ' + 50  + '/100';
+        childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.aquaticHealthIndexScore[currentYear] * 10) / 10).toFixed(1))   + '/100';
         // convert English unit to Metric unit
-        childNodes[7].innerHTML = 50 + ' pts / yr' + '<br>';
+        childNodes[7].innerHTML =  formatNumber((Math.round(Totals.aquaticHealthIndex[currentYear] * 10) / 10).toFixed(1)) + ' ppm / yr' + '<br>' +
+            formatNumber((Math.round(Totals.aquaticHealthIndex[currentYear] * 10) / 10).toFixed(1)) + ' mg/L /yr';
         document.getElementsByClassName('aquaticScoreDetails')[0].style.display = 'block';
       }
       break;
