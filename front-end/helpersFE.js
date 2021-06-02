@@ -329,8 +329,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.streamBiodiversityScore[currentYear] * 10) / 10).toFixed(1))  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = formatNumber((Math.round(Totals.streamBiodiversityPoints[currentYear] * 10) / 10).toFixed(1)) + ' pts / yr' + "<br>" +
-            "Mussel Population: " + Totals.musselServicesScore[currentYear] + "<br>" + "Nitrate Reduction: <br>" + Totals.musselNitrateReduction[currentYear] + " ppm / yr" +
-            "<br>" + Totals.musselNitrateReduction[currentYear] + " mg/L / yr";
+            "Mussel Population: " + Totals.musselServicesScore[currentYear] + "<br>" + formatNumber((Math.round(Totals.musselServices[currentYear] * 10) / 10).toFixed(1)) + " mussels/m^2";
         document.getElementsByClassName('streamBiodiversityScoreDetails')[0].style.display = 'block';
 
       }
