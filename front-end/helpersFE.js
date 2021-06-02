@@ -362,7 +362,7 @@ function toggleScoreDetails(factor) {
         // convert English unit to Metric unit
         childNodes[7].innerHTML = formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' ppm / yr' + '<br>' +
           formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' mg/L / yr'
-            + "<br>" + "Mussel Services: " + (Math.round(Totals.musselNitrateReduction[currentYear] * 10) / 10).toFixed(1) +" ppm/mg/L";
+            + "<br>" + "Mussel Services:  <br>" + (Math.round(Totals.musselNitrateReduction[currentYear] * 10) / 10).toFixed(1) +" ppm/mg/L";
         ;
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
 
