@@ -329,7 +329,7 @@ function toggleScoreDetails(factor) {
         childNodes[5].innerHTML = 'Current: ' + formatNumber((Math.round(Totals.streamBiodiversityScore[currentYear] * 10) / 10).toFixed(1))  + '/100';
         // convert English unit to Metric unit
         childNodes[7].innerHTML = formatNumber((Math.round(Totals.streamBiodiversityPoints[currentYear] * 10) / 10).toFixed(1)) + ' pts / yr' + "<br>" +
-            "Mussel Population: " + Totals.musselServicesScore[currentYear];
+            "Mussel Population: " + Totals.musselServicesScore[currentYear] + "<br>" + formatNumber((Math.round(Totals.musselServices[currentYear] * 10) / 10).toFixed(1)) + " mussels/m^2";
         document.getElementsByClassName('streamBiodiversityScoreDetails')[0].style.display = 'block';
 
       }
@@ -362,7 +362,7 @@ function toggleScoreDetails(factor) {
         // convert English unit to Metric unit
         childNodes[7].innerHTML = formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' ppm / yr' + '<br>' +
           formatNumber((Math.round(Totals.nitrateConcentration[currentYear] * 10) / 10).toFixed(1)) + ' mg/L / yr'
-            + "<br>" + "Mussel Services: " + (Math.round(Totals.musselNitrateReduction[currentYear] * 10) / 10).toFixed(1) +" ppm/mg/L";
+            + "<br>" + "Mussel Services:  <br>" + (Math.round(Totals.musselNitrateReduction[currentYear] * 10) / 10).toFixed(1) +" ppm/mg/L";
         ;
         document.getElementsByClassName('nitrateScoreDetails')[0].style.display = 'block';
 

@@ -3471,21 +3471,39 @@ this.tileNitrate = Array(4);
 
     this.calculateMusselServices = function(y) { //calculates in ppm / mg/L
 
-      if (this.aquaticHealthIndex[y] < 20) { //Sediment under 20ppm, high mussel pop
-        this.musselServices[y] = 10; // 10 mussels / ft2
+      if (this.aquaticHealthIndex[y] < 10) { //Sediment under 10 ppm
+        this.musselServices[y] = 14; // 10 mussels / ft2
         this.musselServicesScore[y] = "HIGH";
-        this.musselNitrateReduction[y] = .12 * this.nitrateConcentration[y];
+      }
+      else if (this.aquaticHealthIndex[y] < 20) { //Sediment under 20ppm, high mussel pop
+        this.musselServices[y] = (13/120)*(this.aquaticHealthIndex[y]^2) -
+            (91/20)*this.aquaticHealthIndex[y] + 146/3; //
+        this.musselServicesScore[y] = "MODERATE";
       }
       else if (this.aquaticHealthIndex[y] < 40) {
         this.musselServices[y] = 1; // 1 mussel / ft2
         this.musselServicesScore[y] = "LOW";
-        this.musselNitrateReduction[y] = .02 * this.nitrateConcentration[y];
       }
       else {
         this.musselServices[y] = 0; // 0  mussels / ft2
         this.musselServicesScore[y] = "NONE";
         this.musselNitrateReduction[y] = 0;
       }
+
+      if (this.musselServices[y] >= 14) {
+        this.musselNitrateReduction[y] = .127 * this.nitrateConcentration[y];
+      }
+      else if (this.musselServices[y] >= 10) {
+        this.musselNitrateReduction[y] = 2.625 * this.musselServices[y] - 24.05;
+      }
+      else if (this.musselServices[y] >= 0) {
+        this.musselNitrateReduction[y] = 0.220879 * this.musselServices[y] - 0.00989011;
+        if (this.musselNitrateReduction[y] < 0) {
+          this.musselNitrateReduction[y] = 0;
+        }
+      }
+
+      
       console.log("Mussels at " + this.musselServices[y] + " / ft2.");
       console.log("Score: " + this.musselServicesScore[y]);
       console.log("Nitrate Reduction: " + this.musselNitrateReduction[y]);
