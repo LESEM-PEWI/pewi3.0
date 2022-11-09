@@ -3476,7 +3476,7 @@ this.tileNitrate = Array(4);
         this.musselServicesScore[y] = "HIGH";
       }
       else if (this.aquaticHealthIndex[y] < 20) { //Sediment under 20ppm, high mussel pop
-        this.musselServices[y] = (13/120)*(this.aquaticHealthIndex[y]^2) -
+        this.musselServices[y] = (13/120)*(this.aquaticHealthIndex[y])*(this.aquaticHealthIndex[y]) -
             (91/20)*this.aquaticHealthIndex[y] + 146/3; //
         this.musselServicesScore[y] = "MODERATE";
       }
