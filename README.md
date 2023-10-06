@@ -1,7 +1,7 @@
-# pewi3.0
-People in Ecosystems Watershed Integration v3
+# pewi4.0
+People in Ecosystems Watershed Integration v4
 
-three.js WebGL implementation of pewi v2.0
+three.js and four. js WebGL implementation of pewi v2.0
 
 improvements: 
   object oriented implementation, 
