@@ -5,6 +5,9 @@
           isShiftDown, modalUp, precip,
           painter, Totals, river,
           Results, initData, hoveredOver, currentPlayer*/
+//const THREE = require('d3');
+//const scene = new THREE.Scene();
+
 
 var globalLegend = false;
 var addingYearFromFile = false; //Boolean used to keep a track of whether or not you're adding a year from file
@@ -24,8 +27,8 @@ var lastSelectedPainter = 1;
 var leftToolConsoleWasOpen;
 var mesh = null; // mesh store the whole view on the scene
 var mesh2= null;
-var meshGeometry = new THREE.Geometry();
-var meshGeometry2 = new THREE.Geometry();
+var meshGeometry = new THREE.BufferGeometry();
+var meshGeometry2 = new THREE.BufferGeometry();
 var optionsString = ""; //string that stores toggeled off options
 var overlayedToggled = false;
 var paintSwitch = false;
