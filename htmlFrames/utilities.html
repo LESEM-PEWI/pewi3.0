@@ -20,6 +20,7 @@ Cleaned and Prepared - August 2016
 
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Workspace - Utilities</title>
 
   <!-- INCLUDES -->
@@ -28,10 +29,18 @@ Cleaned and Prepared - August 2016
   <!--javascript-->
   <script src=".././lib/jquery-3.2.1.min.js"></script>
   <script src=".././lib/filesaver.min.js"></script>
-  <script src="./results_scripts.js"></script>
-  <!-- <script src=".././back-end/helperMethods.js"></script> -->
+  <script src="../htmlFrames/results_scripts.js"></script>
+  <script src="../htmlFrames/options_script.js" ></script>
+  <!--  <script src="../front-end/helpersFE.js"></script>-->
+
+  <script src="../lib/three.min.js"></script>
+  <!--   <script src=".././back-end/helperMethods.js"></script>-->
   <!--external fonts-->
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+  <!--  <script src="../front-end/mainFE.js"></script>-->
+  <!--  <script src="../back-end/helperObjects.js"></script>-->
+  <!--  <script src="../front-end/helpersFE.js" info></script>-->
+
 
   <!-- /INCLUDES -->
 
@@ -39,447 +48,462 @@ Cleaned and Prepared - August 2016
 
 <body>
 
-  <img onclick="parent.reset()" id="backButton" src="./imgs/back.png" alt="Go Back <--">
 
-  <div id="utilitiesContentsHolder">
+<img onclick="parent.reset()" id="backButton" src="./imgs/back.png" alt="Go Back <--">
+<!--  <iframe id="options" class="fullPageIframe" src="../htmlFrames/options.html"></iframe>-->
 
-    <!---buttons for utilities, add new buttons here -->
-    
-    <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup(); inMultiplayer(true);">Set-Up Multiplayer</div>
-    <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
 
-    <!--container for Aggregate Tool, slides up and down by height changes-->
-    <div id="utilitiesAggregateTools">
-      <div class="uploadFile">
 
-        <label for="file-upload">
-          <!--Technically not allowed, but seems to work across browsers-->
-          <!-- in future, div may need to be moved outside the label, cleverly-->
-          <div id="addFile" class="mainButton">Add Player Files</div>
-        </label>
-        <input id="file-upload" type="file" multiple="" onchange="uploadAggregateMultiMap();" />
+<div id="utilitiesContentsHolder">
 
-      </div>
-      <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
-      <div id="aggregateInfo" class="infoBar">
-        Ready. Upload csv map files.
-      </div>
 
-    </div>
 
+  <!---buttons for utilities, add new buttons here -->
+  <!--    let's first remove the toggleEscapeFrame();startOptions()-->
+  <!--    Initially a toggleEscapeFrame function was on the customize button, but got removed after removing the button from the home page -->
+  <div id="customizeButton" class="mainButton" onclick=" startOptions();">Customize PEWI here </div>
+
+  <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup(); inMultiplayer(true);">Set-Up Multiplayer</div>
+
+  <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
+
+
+  <!--container for Aggregate Tool, slides up and down by height changes-->
+  <div id="utilitiesAggregateTools">
     <div class="uploadFile">
 
-      <label for="file-upload2">
+      <label for="file-upload">
         <!--Technically not allowed, but seems to work across browsers-->
         <!-- in future, div may need to be moved outside the label, cleverly-->
-        <div id="simulationButton" class="mainButton">Run User Simulation</div>
+        <div id="addFile" class="mainButton">Add Player Files</div>
       </label>
-      <input id="file-upload2" type="file" />
+      <input id="file-upload" type="file" multiple="" onchange="uploadAggregateMultiMap();" />
+
     </div>
-
-    <!-- Adding a Play (aka levels button inside Utility frame) -->
-    <div id="levelsButton" class="mainButton" onclick="parent.startPlay();">Levels</div>
-
-    <div id="levelDesignerButton" class="mainButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
-
-
-    <!--<div id="goalOptimizationButton" class="mainButton" onClick="window.open('./optimizationDesigner.html')">Optimize PEWI Goals</div>-->
-
-    <div id="div-fileList">
-      <ul id="fileList"></ul>
+    <div id="downloadFile" class="mainButton" onclick="downloadAggregateMap();">Download Aggregate</div>
+    <div id="aggregateInfo" class="infoBar">
+      Ready. Upload csv map files.
     </div>
-
-    <div id="topoMapButton" class="mainButton" onclick="parent.parent.confirmTopoMapGenerate();"/>Create Topographic Map</div>
 
   </div>
 
-  <div id="modalConflictFrame">
-    <div id="conflictPopupBox">
-      <div id="conflictText">There's a conflict between uploaded maps.<br><br></div>
-      <div id="cancelButton" class="conflictButton" onclick="cancelUploadFiles();">Cancel</div>
-      <div id="setPriorityButton" class="conflictButton" onclick="toggleOptionsBox();">Set priority map</div>
+  <div class="uploadFile">
 
-    </div>
-    <div id="optionsBox">
-      <div id="mergedMapButton" class="conflictButton" onclick="setPriority('merged');">Merged map</div>
-      <div id="currentMapButton" class="conflictButton" onclick="setPriority('current');">Current map</div>
-    </div>
+    <label for="file-upload2">
+      <!--Technically not allowed, but seems to work across browsers-->
+      <!-- in future, div may need to be moved outside the label, cleverly-->
+      <div id="simulationButton" class="mainButton">Run User Simulation</div>
+    </label>
+    <input id="file-upload2" type="file" />
   </div>
 
-  <div id="modalPrecipConflictFrame">
-    <div id="conflictPopupBox">
-      <div id="conflictPrecipText">There's a precipitation level conflict between uploaded maps.<br><br></div>
-      <div id="selectButton" class="conflictButton" onclick="generateMapList();" style="display:block;">Select one map to use precip from</div>
-      <div id="mapList"></div>
-      <div id="customButton" class="conflictButton" onclick="generatePrecipList();" style="display:block;">Customize precip levels</div>
-      <div id="precipList"></div>
-      <div id="okButton" class="conflictButton" onclick="confirmPrecipSelection();">OK</div>
-      <div id="cancelPrecipButton" class="conflictButton" onclick="cancelPrecip();">Cancel</div>
-    </div>
+  <!-- Adding a Play (aka levels button inside Utility frame) -->
+  <div id="levelsButton" class="mainButton" onclick="parent.startPlay();">Levels</div>
+
+  <div id="levelDesignerButton" class="mainButton" onClick="window.open('./levelDesigner.html')">Design a Level</div>
+
+
+  <!--<div id="goalOptimizationButton" class="mainButton" onClick="window.open('./optimizationDesigner.html')">Optimize PEWI Goals</div>-->
+
+  <div id="div-fileList">
+    <ul id="fileList"></ul>
   </div>
 
-  <script>
-    // var input = document.getElementById("file-upload");
-    var ul = document.getElementById("fileList");
+  <div id="topoMapButton" class="mainButton" onclick="parent.parent.confirmTopoMapGenerate();"/>Create Topographic Map</div>
 
-    bindSimulationFileListener();
 
-    // toggleOptionsBox will show/hide the "Merged Map" and "Current Map" button
-    function toggleOptionsBox() {
-      if(document.getElementById("optionsBox").style.height != "18vw"){
-        document.getElementById("optionsBox").style.height = "18vw";
-        document.getElementById("cancelButton").style.opacity = "0";
-        document.getElementById("cancelButton").style.cursor = "default";
-        document.getElementById("cancelButton").onclick = function() {};
-        document.getElementById('setPriorityButton').style.backgroundColor = "#003d4d";
-      }
-      else {
-        document.getElementById("optionsBox").style.height = "0vw";
-        document.getElementById("cancelButton").style.opacity = "1";
-        document.getElementById("cancelButton").style.cursor = "pointer";
-        document.getElementById("cancelButton").onclick = function() {cancelUploadFiles();};
-        document.getElementById('setPriorityButton').style.backgroundColor = "#40a4df";
-      }
+
+<div id="modalConflictFrame">
+  <div id="conflictPopupBox">
+    <div id="conflictText">There's a conflict between uploaded maps.<br><br></div>
+    <div id="cancelButton" class="conflictButton" onclick="cancelUploadFiles();">Cancel</div>
+    <div id="setPriorityButton" class="conflictButton" onclick="toggleOptionsBox();">Set priority map</div>
+
+  </div>
+  <div id="optionsBox">
+    <div id="mergedMapButton" class="conflictButton" onclick="setPriority('merged');">Merged map</div>
+    <div id="currentMapButton" class="conflictButton" onclick="setPriority('current');">Current map</div>
+  </div>
+</div>
+
+<div id="modalPrecipConflictFrame">
+  <div id="conflictPopupBox">
+    <div id="conflictPrecipText">There's a precipitation level conflict between uploaded maps.<br><br></div>
+    <div id="selectButton" class="conflictButton" onclick="generateMapList();" style="display:block;">Select one map to use precip from</div>
+    <div id="mapList"></div>
+    <div id="customButton" class="conflictButton" onclick="generatePrecipList();" style="display:block;">Customize precip levels</div>
+    <div id="precipList"></div>
+    <div id="okButton" class="conflictButton" onclick="confirmPrecipSelection();">OK</div>
+    <div id="cancelPrecipButton" class="conflictButton" onclick="cancelPrecip();">Cancel</div>
+  </div>
+</div>
+
+<script>
+  // var input = document.getElementById("file-upload");
+  var ul = document.getElementById("fileList");
+
+  bindSimulationFileListener();
+
+  // toggleOptionsBox will show/hide the "Merged Map" and "Current Map" button
+  function toggleOptionsBox() {
+    if(document.getElementById("optionsBox").style.height != "18vw"){
+      document.getElementById("optionsBox").style.height = "18vw";
+      document.getElementById("cancelButton").style.opacity = "0";
+      document.getElementById("cancelButton").style.cursor = "default";
+      document.getElementById("cancelButton").onclick = function() {};
+      document.getElementById('setPriorityButton').style.backgroundColor = "#003d4d";
     }
-
-    // cancelUploadFiles will clear all the data that loaded from the upload files
-    function cancelUploadFiles() {
-      document.getElementById("modalConflictFrame").style.display = "none";
-      document.getElementById("conflictText").innerHTML = "There's a conflict between uploaded maps.<br><br>";
-      emptyFileList();
-      // remove the file handler
-      window.top.cleanCurrentBoardData();
-      window.top.isAggregateConflictDetected = false;
-      window.top.isAggregateChoiceMade = false;
-      window.top.nextFileIndex = 0;
-      window.top.filesUploaded = null;
-      window.top.hasPrecipConclict = false;
-
-      updateInfo("Ready. Upload csv map files.");
+    else {
+      document.getElementById("optionsBox").style.height = "0vw";
+      document.getElementById("cancelButton").style.opacity = "1";
+      document.getElementById("cancelButton").style.cursor = "pointer";
+      document.getElementById("cancelButton").onclick = function() {cancelUploadFiles();};
+      document.getElementById('setPriorityButton').style.backgroundColor = "#40a4df";
     }
+  }
 
-    // setPriority sets map priority when merging conflict is detected,
-    // the parameter 'option' has two possible values, which are 'merged' and 'current',
-    function setPriority(option) {
-      window.top.aggregateChoice = option;
-      window.top.isAggregateConflictDetected = false;
-      document.getElementById("conflictText").innerHTML = "There's a conflict between uploaded maps.<br><br>";
-      document.getElementById("modalConflictFrame").style.display = "none";
-      toggleOptionsBox();
-      window.top.multiplayerAggregateOverlayMapping(window.top.filesUploaded[window.top.nextFileIndex]);
+  // cancelUploadFiles will clear all the data that loaded from the upload files
+  function cancelUploadFiles() {
+    document.getElementById("modalConflictFrame").style.display = "none";
+    document.getElementById("conflictText").innerHTML = "There's a conflict between uploaded maps.<br><br>";
+    emptyFileList();
+    // remove the file handler
+    window.top.cleanCurrentBoardData();
+    window.top.isAggregateConflictDetected = false;
+    window.top.isAggregateChoiceMade = false;
+    window.top.nextFileIndex = 0;
+    window.top.filesUploaded = null;
+    window.top.hasPrecipConclict = false;
 
-    }
+    updateInfo("Ready. Upload csv map files.");
+  }
 
-    //  generatePrecipList will generate a drop down box which ables user to select one map to set precip levels
-    function generateMapList() {
-      if(document.getElementById("mapList").style.display != 'block'){
-        // dynamically generate a drop down box which contains names of all the file uploaded
-        if(document.getElementById("mapList").innerHTML === ""){
-          var selectEle = document.createElement("select");
-          selectEle.id = "precipMapSelectBox";
-          selectEle.className = "precipSelectBox";
+  // setPriority sets map priority when merging conflict is detected,
+  // the parameter 'option' has two possible values, which are 'merged' and 'current',
+  function setPriority(option) {
+    window.top.aggregateChoice = option;
+    window.top.isAggregateConflictDetected = false;
+    document.getElementById("conflictText").innerHTML = "There's a conflict between uploaded maps.<br><br>";
+    document.getElementById("modalConflictFrame").style.display = "none";
+    toggleOptionsBox();
+    window.top.multiplayerAggregateOverlayMapping(window.top.filesUploaded[window.top.nextFileIndex]);
 
-          for(var i = 0; i < window.top.filesUploaded.length; i++) {
-            var optionEle = document.createElement("option");
-            optionEle.value = i;
-            optionEle.innerHTML = window.top.filesUploaded[i].name;
-            selectEle.appendChild(optionEle);
-          }
-          document.getElementById("mapList").appendChild(selectEle);
+  }
+
+  //  generatePrecipList will generate a drop down box which ables user to select one map to set precip levels
+  function generateMapList() {
+    if(document.getElementById("mapList").style.display != 'block'){
+      // dynamically generate a drop down box which contains names of all the file uploaded
+      if(document.getElementById("mapList").innerHTML === ""){
+        var selectEle = document.createElement("select");
+        selectEle.id = "precipMapSelectBox";
+        selectEle.className = "precipSelectBox";
+
+        for(var i = 0; i < window.top.filesUploaded.length; i++) {
+          var optionEle = document.createElement("option");
+          optionEle.value = i;
+          optionEle.innerHTML = window.top.filesUploaded[i].name;
+          selectEle.appendChild(optionEle);
         }
-        // document.getElementById("selectButton").style.backgroundColor = "#003d4d";
-        document.getElementById("mapList").style.display = 'block';
-        document.getElementById("customButton").style.display = 'none';
-        document.getElementById("okButton").style.display = 'inline-block';
-        document.getElementById("cancelPrecipButton").style.display = 'inline-block';
+        document.getElementById("mapList").appendChild(selectEle);
       }
-      else {
-        // document.getElementById("selectButton").style.backgroundColor = "#40a4df";
-        document.getElementById("mapList").style.display = 'none';
-        document.getElementById("customButton").style.display = 'block';
-        document.getElementById("okButton").style.display = 'none';
-        document.getElementById("cancelPrecipButton").style.display = 'none';
-      }
+      // document.getElementById("selectButton").style.backgroundColor = "#003d4d";
+      document.getElementById("mapList").style.display = 'block';
+      document.getElementById("customButton").style.display = 'none';
+      document.getElementById("okButton").style.display = 'inline-block';
+      document.getElementById("cancelPrecipButton").style.display = 'inline-block';
     }
-
-    //  generatePrecipList will generate a drop down box which ables user to select precip data to set precip levels
-    function generatePrecipList() {
-      if(document.getElementById("precipList").style.display != 'block'){
-
-        if(document.getElementById("precipList").innerHTML === ""){
-          // dynamically generate drop down boxs which contains precip data, calculatedToYear value decides the number of drop down boxs
-          for(var y = 0; y <= window.top.boardData[window.top.currentBoard].calculatedToYear; y++) {
-            var precipYear = document.createElement("div");
-            precipYear.id = "year" + y + "Precip";
-            precipYear.className = "yearPrecipContainer";
-            precipYear.innerHTML = "Year " + y + ":&nbsp;";
-            var selectEle = document.createElement("select");
-            selectEle.id = "year" + y + "PrecipSelectBox";
-            selectEle.className = "precipSelectBox";
-            for(var i = 0; i < window.top.precip.length; i++){
-              var optionEle = document.createElement("option");
-              optionEle.value = i;
-              optionEle.innerHTML = window.top.precip[i];
-              selectEle.appendChild(optionEle);
-            }
-            precipYear.appendChild(selectEle);
-            document.getElementById("precipList").appendChild(precipYear);
-          }
-
-        }
-        // document.getElementById("selectButton").style.backgroundColor = "#003d4d";
-        document.getElementById("precipList").style.display = 'block';
-        document.getElementById("selectButton").style.display = 'none';
-        document.getElementById("okButton").style.display = 'inline-block';
-        document.getElementById("cancelPrecipButton").style.display = 'inline-block';
-      }
-      else {
-        // document.getElementById("selectButton").style.backgroundColor = "#40a4df";
-        document.getElementById("precipList").style.display = 'none';
-        document.getElementById("selectButton").style.display = 'block';
-        document.getElementById("okButton").style.display = 'none';
-        document.getElementById("cancelPrecipButton").style.display = 'none';
-      }
-    }
-
-    // cancelPrecip will return to previous options page which users would be able to choose which option to deal with precip conflict
-    function cancelPrecip() {
-      if(document.getElementById("selectButton").style.display === "block"){
-        generateMapList();
-      }
-      else {
-        generatePrecipList();
-      }
-    }
-
-    // When OK button is clicked, confirmPrecipSelection will get the data from the drop down box, and set the corresponding precip levels according
-    // to the option user seleteced
-    function confirmPrecipSelection() {
-      if(document.getElementById("selectButton").style.display === "block") {
-        //get the file index and read the file again
-        var fileIndex = Number(document.getElementById("precipMapSelectBox").value);
-        var reader = new FileReader();
-        reader.readAsText(window.top.filesUploaded[fileIndex]);
-        reader.onload = function(e) {
-          //setup data from reader (file) into intiData global
-          if (window.top.parseInitial(reader.result)) {
-            for(var y = 0; y <= window.top.boardData[window.top.currentBoard].calculatedToYear; y++) {
-              // console.log("File: Year " + y, Number(window.top.initData[1][29 + y]));
-              // Here, all we need to do is just update the value of window.top.boardData[window.top.currentBoard].precipitation[y].
-              window.top.boardData[window.top.currentBoard].precipitation[y] = Number(window.top.initData[1][29 + y]);
-            }
-            window.top.boardData[window.top.currentBoard].updateBoard();
-            // clear the initData, otherwise, the map data might be corrupted.
-            window.top.initData = [];
-          }
-        }
-      }
-      else {
-        for(var y = 0; y <= window.top.boardData[window.top.currentBoard].calculatedToYear; y++) {
-          var precipIndex = Number(document.getElementById("year" + y + "PrecipSelectBox").value);
-          window.top.boardData[window.top.currentBoard].precipitation[y] = window.top.precip[precipIndex];
-        }
-        window.top.boardData[window.top.currentBoard].updateBoard();
-      }
-      // once decision is made, we should hide the modalPrecipConflictFrame window.
-      document.getElementById("modalPrecipConflictFrame").style.display = "none";
-    }
-
-    //attach the file upload event to our functions for simulating
-    function bindSimulationFileListener() {
-      //jquery attachment
-      $('#file-upload2').bind('propertychange change', function(e) {
-        //Load the simulation into the helper method
-        window.top.loadSimulation(e);
-      });
-      //small issue: if file selected is same name as previous
-      //property change is not triggered, even if file has changed.
-    };
-
-    //assist in downloading the currently aggregated map
-    //uses filesaver.js for compatibility purposes
-    function downloadAggregateMap() {
-      // emptyFileList();
-      // // remove the file handler
-      // window.top.filesUploaded = null;
-
-      //data from function in helpersFE.js
-      var data = window.top.writeFileToDownloadString();
-      if (data.length != 0) {
-        var downloadBlob = new Blob([data], {
-          type: "text/csv;charset=utf-8"
-        });
-        //filesaver.min.js
-        saveAs(downloadBlob, "aggregatePewiMap.csv");
-        updateInfo("Downloaded. Return to Sandbox to load.");
-      } else {
-        updateInfo("No data to download.");
-      }
-    } //end downloadAggregateMap
-
-    // clean the file list
-    function emptyFileList() {
-      // delete all the nodes under fileList
-      while (ul.hasChildNodes()) {
-        ul.removeChild(ul.firstChild);
-      }
-      // remove div-fileList
-      document.getElementById("div-fileList").style.display = 'none';
-    } // end emptyFileList()
-
-    //launch essentially sandbox with multiplayer tools
-    function launchMultiplayerSetup() {
-      window.top.loadLevel(-1);
-
-    } //end launchMultiplayerSetup
-
-    // list all the files selected
-    function makeFileList() {
-      // append filename entries
-      if (window.top.filesUploaded.length > 0) {
-        for (var i = 0; i < window.top.filesUploaded.length; i++) {
-          var li = document.createElement("li");
-          li.innerHTML = window.top.filesUploaded[i].name;
-          ul.appendChild(li);
-        }
-        document.getElementById("div-fileList").style.display = 'block';
-      } // end if
-    } // end makeFileList()
-
-    //expand or collapse the div holding tools for mashing together separate maps
-    function toggleAggregateOptions() {
-      //if the div is not expanded, then expand
-      //else if expanded, then collapse it (preferable using %, it relates to its layout)
-      // document.getElementById('utilitiesAggregateTools').style.display =
-      //   (document.getElementById('utilitiesAggregateTools').style.display == "none") ? "inline-block" : "none";
-      document.getElementById('utilitiesAggregateTools').style.height =
-        (document.getElementById('utilitiesAggregateTools').style.height == "0px" || document.getElementById('utilitiesAggregateTools').style.height == "" ) ? "18vw" : "0px";
-      document.getElementById('simulationButton').style.marginTop =
-        (document.getElementById('simulationButton').style.marginTop == "2.5%" || document.getElementById('simulationButton').style.marginTop == "") ? "15px" : "2.5%";
-
-      if(document.getElementById('utilitiesAggregateTools').style.height == "18vw" && document.getElementById('fileList').innerHTML != ""){
-        document.getElementById('div-fileList').style.display = "block";
-      }
-      else {
-        document.getElementById('div-fileList').style.display = "none";
-      }
-      // document.getElementById('utilitiesAggregateTools').style.height =
-      //     (document.getElementById('utilitiesAggregateTools').style.height != "300px") ?
-      //     document.getElementById('utilitiesAggregateTools').style.height = "300px" :
-      //     document.getElementById('utilitiesAggregateTools').style.height = "0px";
-    } //end toggleAggregateOptions
-
-    //updates the text information in the infoBar for the user
-    function updateInfo(content) {
-      if (isNaN(content)) {
-        // string information
-        document.getElementById('aggregateInfo').innerHTML = content;
-      } else {
-        // number of files
-        document.getElementById('aggregateInfo').innerHTML = content + " file(s) uploaded successfully!";
-      }
-    } //end updateInfo
-
-    // trigger the file upload process for aggregating maps`
-    function uploadAggregateMultiMap() {
-      // clean the files list
-      emptyFileList();
-      // clear the boardData
-      boardData = [];
-      // initialize all related variables
-      window.top.isAggregateConflictDetected = false;
-      window.top.isAggregateChoice = void 0;
-      window.top.nextFileIndex = 0;
-      window.top.filesUploaded = null;
-      window.top.hasPrecipConclict = false;
-      window.top.mergedFiles = [];
-      document.getElementById("selectButton").style.display = "block";
-      document.getElementById("customButton").style.display = "block";
-      document.getElementById("mapList").innerHTML = "";
-      document.getElementById("precipList").innerHTML = "";
-      document.getElementById("mapList").style.display = "none";
-      document.getElementById("precipList").style.display = "none";
+    else {
+      // document.getElementById("selectButton").style.backgroundColor = "#40a4df";
+      document.getElementById("mapList").style.display = 'none';
+      document.getElementById("customButton").style.display = 'block';
       document.getElementById("okButton").style.display = 'none';
       document.getElementById("cancelPrecipButton").style.display = 'none';
+    }
+  }
 
-      window.top.filesUploaded = document.getElementById("file-upload").files;
-      // check files number
-      if (window.top.filesUploaded.length > 6) {
+  //  generatePrecipList will generate a drop down box which ables user to select precip data to set precip levels
+  function generatePrecipList() {
+    if(document.getElementById("precipList").style.display != 'block'){
+
+      if(document.getElementById("precipList").innerHTML === ""){
+        // dynamically generate drop down boxs which contains precip data, calculatedToYear value decides the number of drop down boxs
+        for(var y = 0; y <= window.top.boardData[window.top.currentBoard].calculatedToYear; y++) {
+          var precipYear = document.createElement("div");
+          precipYear.id = "year" + y + "Precip";
+          precipYear.className = "yearPrecipContainer";
+          precipYear.innerHTML = "Year " + y + ":&nbsp;";
+          var selectEle = document.createElement("select");
+          selectEle.id = "year" + y + "PrecipSelectBox";
+          selectEle.className = "precipSelectBox";
+          for(var i = 0; i < window.top.precip.length; i++){
+            var optionEle = document.createElement("option");
+            optionEle.value = i;
+            optionEle.innerHTML = window.top.precip[i];
+            selectEle.appendChild(optionEle);
+          }
+          precipYear.appendChild(selectEle);
+          document.getElementById("precipList").appendChild(precipYear);
+        }
+
+      }
+      // document.getElementById("selectButton").style.backgroundColor = "#003d4d";
+      document.getElementById("precipList").style.display = 'block';
+      document.getElementById("selectButton").style.display = 'none';
+      document.getElementById("okButton").style.display = 'inline-block';
+      document.getElementById("cancelPrecipButton").style.display = 'inline-block';
+    }
+    else {
+      // document.getElementById("selectButton").style.backgroundColor = "#40a4df";
+      document.getElementById("precipList").style.display = 'none';
+      document.getElementById("selectButton").style.display = 'block';
+      document.getElementById("okButton").style.display = 'none';
+      document.getElementById("cancelPrecipButton").style.display = 'none';
+    }
+  }
+
+  // cancelPrecip will return to previous options page which users would be able to choose which option to deal with precip conflict
+  function cancelPrecip() {
+    if(document.getElementById("selectButton").style.display === "block"){
+      generateMapList();
+    }
+    else {
+      generatePrecipList();
+    }
+  }
+
+  // When OK button is clicked, confirmPrecipSelection will get the data from the drop down box, and set the corresponding precip levels according
+  // to the option user seleteced
+  function confirmPrecipSelection() {
+    if(document.getElementById("selectButton").style.display === "block") {
+      //get the file index and read the file again
+      var fileIndex = Number(document.getElementById("precipMapSelectBox").value);
+      var reader = new FileReader();
+      reader.readAsText(window.top.filesUploaded[fileIndex]);
+      reader.onload = function(e) {
+        //setup data from reader (file) into intiData global
+        if (window.top.parseInitial(reader.result)) {
+          for(var y = 0; y <= window.top.boardData[window.top.currentBoard].calculatedToYear; y++) {
+            // console.log("File: Year " + y, Number(window.top.initData[1][29 + y]));
+            // Here, all we need to do is just update the value of window.top.boardData[window.top.currentBoard].precipitation[y].
+            window.top.boardData[window.top.currentBoard].precipitation[y] = Number(window.top.initData[1][29 + y]);
+          }
+          window.top.boardData[window.top.currentBoard].updateBoard();
+          // clear the initData, otherwise, the map data might be corrupted.
+          window.top.initData = [];
+        }
+      }
+    }
+    else {
+      for(var y = 0; y <= window.top.boardData[window.top.currentBoard].calculatedToYear; y++) {
+        var precipIndex = Number(document.getElementById("year" + y + "PrecipSelectBox").value);
+        window.top.boardData[window.top.currentBoard].precipitation[y] = window.top.precip[precipIndex];
+      }
+      window.top.boardData[window.top.currentBoard].updateBoard();
+    }
+    // once decision is made, we should hide the modalPrecipConflictFrame window.
+    document.getElementById("modalPrecipConflictFrame").style.display = "none";
+  }
+
+  //attach the file upload event to our functions for simulating
+  function bindSimulationFileListener() {
+    //jquery attachment
+    $('#file-upload2').bind('propertychange change', function(e) {
+      //Load the simulation into the helper method
+      window.top.loadSimulation(e);
+    });
+    //small issue: if file selected is same name as previous
+    //property change is not triggered, even if file has changed.
+  };
+
+  //assist in downloading the currently aggregated map
+  //uses filesaver.js for compatibility purposes
+  function downloadAggregateMap() {
+    // emptyFileList();
+    // // remove the file handler
+    // window.top.filesUploaded = null;
+
+    //data from function in helpersFE.js
+    var data = window.top.writeFileToDownloadString();
+    if (data.length != 0) {
+      var downloadBlob = new Blob([data], {
+        type: "text/csv;charset=utf-8"
+      });
+      //filesaver.min.js
+      saveAs(downloadBlob, "aggregatePewiMap.csv");
+      updateInfo("Downloaded. Return to Sandbox to load.");
+    } else {
+      updateInfo("No data to download.");
+    }
+  } //end downloadAggregateMap
+
+  // clean the file list
+  function emptyFileList() {
+    // delete all the nodes under fileList
+    while (ul.hasChildNodes()) {
+      ul.removeChild(ul.firstChild);
+    }
+    // remove div-fileList
+    document.getElementById("div-fileList").style.display = 'none';
+  } // end emptyFileList()
+
+  //launch essentially sandbox with multiplayer tools
+  function launchMultiplayerSetup() {
+    window.top.loadLevel(-1);
+
+  } //end launchMultiplayerSetup
+
+  // list all the files selected
+  function makeFileList() {
+    // append filename entries
+    if (window.top.filesUploaded.length > 0) {
+      for (var i = 0; i < window.top.filesUploaded.length; i++) {
+        var li = document.createElement("li");
+        li.innerHTML = window.top.filesUploaded[i].name;
+        ul.appendChild(li);
+      }
+      document.getElementById("div-fileList").style.display = 'block';
+    } // end if
+  } // end makeFileList()
+
+  //expand or collapse the div holding tools for mashing together separate maps
+  function toggleAggregateOptions() {
+    //if the div is not expanded, then expand
+    //else if expanded, then collapse it (preferable using %, it relates to its layout)
+    // document.getElementById('utilitiesAggregateTools').style.display =
+    //   (document.getElementById('utilitiesAggregateTools').style.display == "none") ? "inline-block" : "none";
+    document.getElementById('utilitiesAggregateTools').style.height =
+            (document.getElementById('utilitiesAggregateTools').style.height == "0px" || document.getElementById('utilitiesAggregateTools').style.height == "" ) ? "18vw" : "0px";
+    document.getElementById('simulationButton').style.marginTop =
+            (document.getElementById('simulationButton').style.marginTop == "2.5%" || document.getElementById('simulationButton').style.marginTop == "") ? "15px" : "2.5%";
+
+    if(document.getElementById('utilitiesAggregateTools').style.height == "18vw" && document.getElementById('fileList').innerHTML != ""){
+      document.getElementById('div-fileList').style.display = "block";
+    }
+    else {
+      document.getElementById('div-fileList').style.display = "none";
+    }
+    // document.getElementById('utilitiesAggregateTools').style.height =
+    //     (document.getElementById('utilitiesAggregateTools').style.height != "300px") ?
+    //     document.getElementById('utilitiesAggregateTools').style.height = "300px" :
+    //     document.getElementById('utilitiesAggregateTools').style.height = "0px";
+  } //end toggleAggregateOptions
+
+  //updates the text information in the infoBar for the user
+  function updateInfo(content) {
+    if (isNaN(content)) {
+      // string information
+      document.getElementById('aggregateInfo').innerHTML = content;
+    } else {
+      // number of files
+      document.getElementById('aggregateInfo').innerHTML = content + " file(s) uploaded successfully!";
+    }
+  } //end updateInfo
+
+  // trigger the file upload process for aggregating maps`
+  function uploadAggregateMultiMap() {
+    // clean the files list
+    emptyFileList();
+    // clear the boardData
+    boardData = [];
+    // initialize all related variables
+    window.top.isAggregateConflictDetected = false;
+    window.top.isAggregateChoice = void 0;
+    window.top.nextFileIndex = 0;
+    window.top.filesUploaded = null;
+    window.top.hasPrecipConclict = false;
+    window.top.mergedFiles = [];
+    document.getElementById("selectButton").style.display = "block";
+    document.getElementById("customButton").style.display = "block";
+    document.getElementById("mapList").innerHTML = "";
+    document.getElementById("precipList").innerHTML = "";
+    document.getElementById("mapList").style.display = "none";
+    document.getElementById("precipList").style.display = "none";
+    document.getElementById("okButton").style.display = 'none';
+    document.getElementById("cancelPrecipButton").style.display = 'none';
+
+    window.top.filesUploaded = document.getElementById("file-upload").files;
+    // check files number
+    if (window.top.filesUploaded.length > 6) {
+      // remove the file handler
+      window.top.filesUploaded = null;
+      // clean the data to prevent from downloading something
+      window.top.cleanCurrentBoardData();
+      alert("ERROR: Cannot upload more than 6 files!");
+      updateInfo("Ready. Upload csv map files.");
+      return;
+    }
+
+    // check file type here
+    for (var i = 0; i < window.top.filesUploaded.length; i++) {
+      // check if the file is .csv file
+      if(window.top.filesUploaded[i].name.substr(-4).toLowerCase() !== ".csv"){
+        // if (!window.top.filesUploaded[i].name.match(/\.csv/)) {
         // remove the file handler
         window.top.filesUploaded = null;
         // clean the data to prevent from downloading something
         window.top.cleanCurrentBoardData();
-        alert("ERROR: Cannot upload more than 6 files!");
+        alert("ERROR: Incorrect file(s) detected! Please upload .csv files");
         updateInfo("Ready. Upload csv map files.");
         return;
       }
+    }
 
-      // check file type here
-      for (var i = 0; i < window.top.filesUploaded.length; i++) {
-        // check if the file is .csv file
-        if(window.top.filesUploaded[i].name.substr(-4).toLowerCase() !== ".csv"){
-        // if (!window.top.filesUploaded[i].name.match(/\.csv/)) {
+    // testing for execution time
+    // var d = new Date();
+    // var n = d.getTime();
+    // var n1;
+
+    var hasCorrupt = false;
+    updateInfo("Verifying...");
+
+    // check the correctness of the files
+    for (var i = 0; i < window.top.filesUploaded.length; i++) {
+
+      // asynchronous callback function to get parse data result
+      window.top.checkFileCorrectness(window.top.filesUploaded[i], function(result) {
+        if (result == false) {
+          hasCorrupt = true;
           // remove the file handler
           window.top.filesUploaded = null;
           // clean the data to prevent from downloading something
           window.top.cleanCurrentBoardData();
-          alert("ERROR: Incorrect file(s) detected! Please upload .csv files");
-          updateInfo("Ready. Upload csv map files.");
-          return;
+          alert("ERROR: Corrupted file(s) detected!");
         }
-      }
+        // testing for execution time
+        // d = new Date();
+        // n1 = d.getTime();
+        // console.log("callback function: Waited for "+ (n1-n) + " milliseconds.");
+      });
+    }
 
-      // testing for execution time
-      // var d = new Date();
-      // var n = d.getTime();
-      // var n1;
+    if (hasCorrupt == false) {
+      // do uploading and process the files
+      window.top.multiplayerFileUpload();
+    }
 
-      var hasCorrupt = false;
-      updateInfo("Verifying...");
-
-      // check the correctness of the files
-      for (var i = 0; i < window.top.filesUploaded.length; i++) {
-
-        // asynchronous callback function to get parse data result
-        window.top.checkFileCorrectness(window.top.filesUploaded[i], function(result) {
-          if (result == false) {
-            hasCorrupt = true;
-            // remove the file handler
-            window.top.filesUploaded = null;
-            // clean the data to prevent from downloading something
-            window.top.cleanCurrentBoardData();
-            alert("ERROR: Corrupted file(s) detected!");
-          }
-          // testing for execution time
-          // d = new Date();
-          // n1 = d.getTime();
-          // console.log("callback function: Waited for "+ (n1-n) + " milliseconds.");
-        });
-      }
+    // set delay time 2.5 seconds to wait for files uploading
+    setTimeout(function() {
 
       if (hasCorrupt == false) {
+        // list all the files selected
+        makeFileList();
         // do uploading and process the files
-        window.top.multiplayerFileUpload();
+        // window.top.multiplayerFileUpload();
+        //change what is displayed in the info bar
+        updateInfo(window.top.filesUploaded.length);
+      } else {
+        updateInfo("Please try again with valid .csv map file(s).");
       }
+    }, 3000);
 
-      // set delay time 2.5 seconds to wait for files uploading
-      setTimeout(function() {
+  } // end bindAggregateFunctionToFileUpload()
+  // Adding an event listener to the customizeButton to trigger startOptions
+  //document.getElementById('customizeButton').addEventListener('click', startOptions2);
 
-        if (hasCorrupt == false) {
-          // list all the files selected
-          makeFileList();
-          // do uploading and process the files
-          // window.top.multiplayerFileUpload();
-          //change what is displayed in the info bar
-          updateInfo(window.top.filesUploaded.length);
-        } else {
-          updateInfo("Please try again with valid .csv map file(s).");
-        }
-      }, 3000);
 
-    } // end bindAggregateFunctionToFileUpload()
-  </script>
-
+</script>
+<script src="../front-end/helpersFE.js"></script>
 </body>
 
 </html>

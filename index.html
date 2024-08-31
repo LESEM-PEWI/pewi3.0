@@ -50,6 +50,7 @@
   <script src="./lib/jszip.min.js"></script>
   <script src="./htmlFrames/results_scripts.js"></script>
 
+
   <!-- import jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
   <!-- import autotable plug-in for jsPDF -->
@@ -70,7 +71,7 @@
   <script src="./front-end/resultsDisplay.js"></script>
   <script src="./front-end/gameLogic.js"></script>
   <script src="./front-end/mainFE.js"></script>
-  <script src="./front-end/helpersFE.js" info></script>
+  <script src="./front-end/helpersFE.js"></script>
   <script src="./front-end/levelLoader.js"></script>
   <script src="./front-end/paper-full.js"></script>
   <script src="./front-end/contourMap.js"></script>
@@ -1970,13 +1971,13 @@
     <div id="modalResultsFrame"><iframe id="resultsFrame" class="resultsFrame" src="./htmlFrames/results.html"></iframe></div>
     <img id="closeResults" class="closeButton" style="opacity:0; visibility:hidden; right:9%;" src="./imgs/close_black.png" onclick="resultsEnd() ;">
     <iframe id="multiplayer" class="fullPageIframe" src="./htmlFrames/multiDownload.html"></iframe>
-    <iframe id="options" class="fullPageIframe" src="./htmlFrames/options.html"></iframe>
+<!--    <iframe id="options" class="fullPageIframe" src="./htmlFrames/options.html"></iframe>-->
     <iframe id="printOptions" class="fullPageIframe" src="./htmlFrames/printOptions.html"></iframe>
     <iframe id="modalReplacement" class="fullPageIframe" src="./htmlFrames/replacementFrame.html"></iframe>
 
-
+    <iframe id="options" class="fullPageIframe" src="./htmlFrames/options.html"></iframe>
   </div>
-  <!-- End of page div, this is all of the meaningful content for in-game -->
+  <!-- End of page div, this is all the meaningful content for in-game -->
 
   <!-- the modal frame covers the page with semi-opaque layer, and escape options -->
 
@@ -1985,11 +1986,11 @@
     <div id="closeDiv"><img id="escapeButton" onclick="toggleEscapeFrame();" src="./imgs/close_black.png"></div>
     <div id="escapeMenu">
       <!--Commented out Glossary button, which is div below. Reference Issue 363 on explanation for removal.-->
-      <!--<div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleGlossary() ;">Glossary</div>-->
-<!--      <div class="mainEscapeButton" id="optionsButton" onclick="toggleEscapeFrame(); startOptions();">Customize</div>-->
+      <div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleGlossary() ;">Glossary</div>
+<!--       <div class="mainEscapeButton" id="optionsButton" onclick="toggleEscapeFrame(); startOptions();">Customize</div>-->
       <!--The hover options feature is currently in the Options menu, but can be changed -->
-      <!--<div class="mainEscapeButton" id="userSettingsButton" onclick="toggleEscapeFrame(); startOptions();">User Settings</div>-->
-      <div class="mainEscapeButton" id="exitToMenuButton" onclick="confirmEscape();">Main Menu</div>
+      <div class="mainEscapeButton" id="userSettingsButton" onclick="toggleEscapeFrame(); startOptions();">User Settings</div>
+<!--      <div class="mainEscapeButton" id="exitToMenuButton" onclick="confirmEscape();">Main Menu</div>-->
       <div id="confirmEscape">
         Are you sure you want to exit? All your progress will be lost.
         <div class="mainEscapeButton" id="yesConfirmEscape" onclick="showMainMenu(); toggleEscapeFrame(); inMultiplayer(false);">Yes</div>
@@ -2057,6 +2058,13 @@
   <div id="startupSequence" style="position:absolute; width:100%; height:100%;">
     <iframe id="startUpFrame" src="./htmlFrames/startup.html" style="width:100%; height:100%;"></iframe>
   </div>
+
+
+
+
+
+
+
 </body>
 
 </html>

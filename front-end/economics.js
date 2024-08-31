@@ -1,3 +1,8 @@
+// Define the function
+function multiplyArray(arr, factor) {
+
+  return arr.map(item => item * factor);
+}
 var Economics = function () {
   this.rawData;
   this.rawBMPData;
@@ -16,9 +21,11 @@ var Economics = function () {
   this.getForrestYields=[];
   this.getBMPAreas=[];
   this.getSoilArea=[];
-  this.getRent=[];
+  this.getRent = [];
+  this.getRent = multiplyArray(this.getRent, 1.23);
   this.totalWatershedCost=[];
   this.totalWatershedRevenue=[];
+  this.totalWatershedRevenue = multiplyArray(this.totalWatershedRevenue, 1.23);
 
 //the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
   yearCosts = [-1,1,1,1,1,4,1,1,4,50,1,1,11,7,50,{'Grapes (Conventional)': 4 * 25,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 4 * 3}];
@@ -502,10 +509,12 @@ var Economics = function () {
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.totalWatershedRevenue[i]= [{revenue: 0}];
       for(let j = 0; j < 16; j ++){
-        this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][j]) ? this.scaledRev[i][j] : 0
+        this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][j]*1.23) ? this.scaledRev[i][j] : 0
+
       }
       //console.log("TOTAL WATERSHED REVENUE FOR YEAR: ", i , "=",this.totalWatershedRevenue[i][0].revenue);
     }
+
   };
 
 
@@ -622,6 +631,7 @@ var Economics = function () {
    * numLandUse values are hard coded to 1 = Cons Soybean; 2 = Cons Corn after Soybean; 3 = Cons Corn after Corn. DO NOT CONFUSE THIS WITH LU_ID.
    */
   calulateBMPBudgets = () => {
+    // TODO pass an inflation factor here
     let fixedBufferArea = 0.52486;
     let numLandUse = 0;
 
@@ -813,6 +823,7 @@ var Economics = function () {
               return yieldBaseRates[8];
 
           case 'O':
+
               return yieldBaseRates[9];
 
           case 'Q':
@@ -835,6 +846,7 @@ var Economics = function () {
 
 
   calculateRent = () => {
+    // ToDO pass an inflation adjustment factor here
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.getRent[i] = [{
         consCornSoybeanRent: 0, consCornCornRent: 0, convCornSoybeanRent: 0, convCornCornRent: 0,
@@ -863,6 +875,7 @@ var Economics = function () {
             case 1:
               if(boardData[currentBoard].map[j].landType[i-1] === 3 || boardData[currentBoard].map[j].landType[i-1] === 4){
                 this.getRent[i][0].convCornSoybeanRent += rent * tileArea;
+                console.log(rent  * tileArea, '78')
               }
               else{
                 this.getRent[i][0].convCornCornRent += rent  * tileArea;

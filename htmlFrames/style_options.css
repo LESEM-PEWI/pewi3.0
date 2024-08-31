@@ -151,9 +151,7 @@ body {
     cursor: pointer;
     display: inline-block;
     font-size: 1.2vw;
-    font-size: var(--font-size);
     height: 1vw;
-    height: var(--button-height);
     margin: 1vw;
     padding: 15px 30px 15px 30px;
     position: relative;
@@ -162,7 +160,6 @@ body {
     user-select: none;
     white-space: nowrap;
     width: 12vw;
-    width: var(--button-width);
     /*font-size: 20px;*/
     /*margin: 20px;*/
   }
@@ -181,8 +178,6 @@ body {
     user-select: none;
     white-space: nowrap;
     width: 100px;
-    display: inline-block;
-
   }
 
   button:hover {
@@ -201,18 +196,35 @@ body {
     background-color: #003d4d;
   }
 
-  #metricButton {
-    position: absolute;
-    right: 60px;
-    border-radius: 0 12px 0 0;
-    border: 5px 5px 0 0 solid white;
-  }
+#metricButton {
+  position: absolute;
+  right: 60px;
+  top: 0; /* Added to position the button relative to the top */
+  border-radius: 0 12px 0 0; /* Correct border-radius order for a top-right rounded corner */
+  background-color: #333; /* Added background color for visibility */
+  padding: 10px 20px; /* Added padding for better button size and click area */
+  color: white; /* Set text color to white for contrast */
+  cursor: pointer; /* Added pointer cursor to indicate it's clickable */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for depth */
+}
 
-  #englishButton {
-    left: 492px;
-    border-radius: 12px 0 0 0;
-    border: 5px 0 0 5px solid white;
-  }
+
+#englishButton {
+  position: absolute;            /* Ensures button is positioned relative to the nearest positioned ancestor */
+  left: 50%;                     /* Position button halfway across the parent element */
+  transform: translateX(-50%);   /* Offset the button's left edge by half of its width, to fully center it */
+  border-radius: 12px;           /* Rounded corners */
+  border: 2px solid white;       /* White border */
+  padding: 10px 20px;            /* Padding inside the button */
+  background-color: #333;        /* Dark gray background */
+  color: white;                  /* White text */
+  cursor: pointer;               /* Pointer cursor to indicate it's clickable */
+  text-align: center;            /* Center the text inside the button */
+  font-size: 16px;               /* Set a font size for better readability */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+}
+
 
   label:hover,
   input:focus+label {

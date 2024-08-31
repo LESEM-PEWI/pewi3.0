@@ -278,14 +278,14 @@
  **/
 
 
-#levelDesignerButton, #levelsButton, #setupButton, #aggregateButton, #addFile, #downloadFile, #simulationButton, #goalOptimizationButton,#topoMapButton {
+#levelDesignerButton, #levelsButton, #setupButton, #aggregateButton, #addFile, #downloadFile, #simulationButton, #goalOptimizationButton,#topoMapButton, #customizeButton {
   display: inline-block;
   margin-top: 7%;
   position: relative;
 }
 
 
-#levelDesignerButton, #levelsButton, #setupButton, #aggregateButton, #simulationButton, #goalOptimizationButton, #topoMapButton {
+#levelDesignerButton, #levelsButton, #setupButton, #aggregateButton, #simulationButton, #goalOptimizationButton, #topoMapButton, #customizeButton {
 
   width: 96.2%;
   /*width: 400px;*/
@@ -505,7 +505,7 @@
   left: 0px;
 }
 
- #conflictPopupBox, #optionsBox {
+#conflictPopupBox, #optionsBox {
   border-radius: 6px;
   display: inline-block;
   color: #FFFFFF;
@@ -531,64 +531,64 @@
   font-family: 'Amatic SC', cursive;
 }
 
- #conflictPopupBox {
-   width: 50vw;
-   top: 10vw;
-   left: 25%;
- }
+#conflictPopupBox {
+  width: 50vw;
+  top: 10vw;
+  left: 25%;
+}
 
- #optionsBox {
-   /* display: none; */
-   width: 50vw;
-   top: 10vw;
-   left: 25.2%;
-   height: 0vw;
- }
+#optionsBox {
+  /* display: none; */
+  width: 50vw;
+  top: 10vw;
+  left: 25.2%;
+  height: 0vw;
+}
 
- #mapList {
-   display: none;
-   margin-top: 0.5vw;
- }
+#mapList {
+  display: none;
+  margin-top: 0.5vw;
+}
 
- #precipMapSelectBox {
-   width: 13vw;
-   height: 2.3vw;
-   margin-bottom: 1vw;
- }
+#precipMapSelectBox {
+  width: 13vw;
+  height: 2.3vw;
+  margin-bottom: 1vw;
+}
 
 .precipSelectBox {
-   width: 6vw;
-   font-size: 1.2vw;
- }
+  width: 6vw;
+  font-size: 1.2vw;
+}
 
- #customButton {
-   margin-top: 2vw;
- }
+#customButton {
+  margin-top: 2vw;
+}
 
- .yearPrecipContainer {
-   font-size: 1.8vw;
- }
+.yearPrecipContainer {
+  font-size: 1.8vw;
+}
 
- #precipList {
-   display: none;
-   margin-top: 1vw;
- }
+#precipList {
+  display: none;
+  margin-top: 1vw;
+}
 
- #okButton, #cancelPrecipButton {
-   display: none;
-   width: 5vw;
-   height: 2vw;
-   font-size: 2vw;
-   line-height: 1.9vw;
- }
+#okButton, #cancelPrecipButton {
+  display: none;
+  width: 5vw;
+  height: 2vw;
+  font-size: 2vw;
+  line-height: 1.9vw;
+}
 
- #okButton {
-   left: 0vw;
- }
+#okButton {
+  left: 0vw;
+}
 
- #cancelPrecipButton {
-   left: 0vw;
- }
+#cancelPrecipButton {
+  left: 0vw;
+}
 
 .conflictButton {
   position: relative;

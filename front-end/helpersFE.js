@@ -8,7 +8,6 @@
 //const THREE = require('d3');
 //const scene = new THREE.Scene();
 
-
 var globalLegend = false;
 var addingYearFromFile = false; //Boolean used to keep a track of whether or not you're adding a year from file
 var click;
@@ -27,9 +26,9 @@ var lastSelectedPainter = 1;
 var leftToolConsoleWasOpen;
 var mesh = null; // mesh store the whole view on the scene
 var mesh2= null;
-var meshGeometry = new THREE.BufferGeometry();
-var meshGeometry2 = new THREE.BufferGeometry();
-var optionsString = ""; //string that stores toggeled off options
+var meshGeometry = new THREE.Geometry();
+var meshGeometry2 = new THREE.Geometry();
+var optionsString = ""; //string that stores toggled off options
 var overlayedToggled = false;
 var paintSwitch = false;
 var paused = false;
@@ -5625,38 +5624,47 @@ function sortPlayers() {
   }
 } //end sortPlayers()
 
-// startOptions displays the options page
-function startOptions() {
 
+var modalUp = false;
+// StartOptions displays the options page
+
+function startOptions() {
   if (curTracking) {
     pushClick(0, getStamp(), 107, 0, null);
   }
-  selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
-  selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
-  document.getElementById('options').contentWindow.recordCurrentOptions();
 
-  //if nothing else has precedence
-  if (!modalUp) { //commented for debugging
+  // Clear the arrays that hold the options to be set to true or false
+  selectedOptionsTrue = [];
+  selectedOptionsFalse = [];
+
+  // Access the iframe and its contentWindow correctly
+  parent.top.document.getElementById('options').contentWindow.recordCurrentOptions();
+
+
+
+
+  // If nothing else has precedence
+  if (!modalUp) { // commented for debugging
     modalUp = true;
-    document.getElementById('options').style.visibility = "visible";
-    //setup options page with the current parameter selection
-    document.getElementById('options').contentWindow.getCurrentOptionsState();
-    // add Esc key event listener
+    parent.top.document.getElementById('options').style.visibility = "visible";
+
+    // Setup options page with the current parameter selection
+    parent.top.document.getElementById('options').contentWindow.getCurrentOptionsState();
+
+    // Add Esc key event listener
     document.addEventListener('keyup', optionsEsc);
     window.frames[6].document.addEventListener('keyup', optionsEsc);
-    // addEvent(document, 'keyup', optionsEsc);
-    // addEvent(window.frames[4].document, 'keyup', optionsEsc);
 
-    // hide the hotkey table when we click on 'Options' button
+    // Hide the hotkey table when we click on 'Options' button
     var tableInOption = window.frames[6].document.getElementById('hotkeyAggregateTool');
-    if(tableInOption != null && tableInOption.style.display != 'none'){
+    if (tableInOption != null && tableInOption.style.display != 'none') {
       tableInOption.style.display = 'none';
       window.frames[6].document.getElementById('hotkeySets').innerHTML = '';
     }
 
-    // hide the progressbar min/max setup table when we click on 'Options' button
+    // Hide the progress bar min/max setup table when we click on 'Options' button
     tableInOption = window.frames[6].document.getElementById('progressBarAggregateTool');
-    if(tableInOption != null && tableInOption.style.display != 'none'){
+    if (tableInOption != null && tableInOption.style.display != 'none') {
       tableInOption.style.display = 'none';
       window.frames[6].document.getElementById('progressBarSets').innerHTML = '';
     }
@@ -5664,6 +5672,7 @@ function startOptions() {
 } // end startOptions
 
 // startPrintOptions displays the printOptions page
+
 function startPrintOptions() {
 
     if(curTracking) {
@@ -5702,7 +5711,7 @@ function storeCurrentCameraSession(actionCode, value) {
       session.displayLevels = value;
       break;
     case 2:
-      // save last consle tab
+      // save last console tab
       session.switchConsoleTab = value;
       break;
     case 3:
