@@ -5,11 +5,10 @@ README
 PEWI is an innovative digital game-based learning (DGBL) tool designed and developed at Iowa State University. This platform offers a unique and engaging way to learn about complex ecosystems and watershed management challenges.
 
 For detailed information and publications related to PEWI, please visit the project website: https://www.nrem.iastate.edu/pewi/publications
+
 Additionally, you can access the PEWI home page and game interface here: https://www.nrem.iastate.edu/pewi/
 
-People in Ecosystems Watershed Integration v3
-
-three.js WebGL implementation of pewi v2.0
+Issue adjusting costs and revenue
 
 # Improvements: 
 
