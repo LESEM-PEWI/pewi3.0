@@ -1,16 +1,27 @@
-# pewi3.0
+README
+
+# Welcome to the development code base for the People in Ecosystem and Watershed Integration (PEWI) project!
+
+PEWI is an innovative digital game-based learning (DGBL) tool designed and developed at Iowa State University. This platform offers a unique and engaging way to learn about complex ecosystems and watershed management challenges.
+
+For detailed information and publications related to PEWI, please visit the project website: https://www.nrem.iastate.edu/pewi/publications
+Additionally, you can access the PEWI home page and game interface here: https://www.nrem.iastate.edu/pewi/
+
 People in Ecosystems Watershed Integration v3
 
 three.js WebGL implementation of pewi v2.0
 
-improvements: 
-  object oriented implementation, 
-  improved calculation efficiency, 
-  3D graphics, 
-  level-based educational tools, 
-  codex (scientific information) library, 
+# Improvements: 
 
-page design outline:
+  Cost adustment based on the current inflationary rate
+
+  Changes to corn and soybean
+
+  More object oriented implimnetation
+  
+  User-determined commodity prices for economic calculation
+
+# page design outline:
      
      ./index.html
      draws the pewi workspace div but renders the loadingContainer and 
@@ -92,12 +103,12 @@ page design outline:
      in the workspace after assigning areas to players in the mutliplayer mode
      
 
-notes:
+# notes:
 
     tileID starts at 1 but boardData[currentBoard].map is an array, so tileID 1
     is stored at index 0 in boardData[currentBoard].map
     
-add a stage/level to PEWI:
+# add a stage/level to PEWI:
 
     Use the level designer in the utilities page to create a new level
     specifications file. Submit the form to download the file. Follow these steps

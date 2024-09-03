@@ -1,9 +1,10 @@
 // Define the function
 function multiplyArray(arr, factor) {
-
   return arr.map(item => item * factor);
 }
 var Economics = function () {
+  //This is the inflation adjustment factor
+  const adjustmentFactor = 1.23
   this.rawData;
   this.rawBMPData;
   this.mapData = [];
@@ -22,14 +23,14 @@ var Economics = function () {
   this.getBMPAreas=[];
   this.getSoilArea=[];
   this.getRent = [];
-  this.getRent = multiplyArray(this.getRent, 1.23);
   this.totalWatershedCost=[];
   this.totalWatershedRevenue=[];
-  this.totalWatershedRevenue = multiplyArray(this.totalWatershedRevenue, 1.23);
+
 
 //the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
   yearCosts = [-1,1,1,1,1,4,1,1,4,50,1,1,11,7,50,{'Grapes (Conventional)': 4 * 25,'Green Beans': 1 * 4,'Winter Squash': 1 * 4,'Strawberries': 4 * 3}];
   d3.csv('./revenue2020.csv', (data) => {
+
     this.rawRev = data;
   })
 
@@ -93,10 +94,12 @@ var Economics = function () {
     }
     }
     d3.csv('./Budget2020.csv', (data) => {
-      this.rawData=data;
+      // ToDO pass 1.23, the default to the functions above
+      this.rawData=costAdjuster(data, "EAA", 1.23);
       this.rawData.forEach(dataPoint => {
         let id = Number.parseInt(dataPoint['LU_ID'])
         divisionForLU = (typeof yearCosts[id] === 'number') ? yearCosts[id]:  yearCosts[id][dataPoint['Sub Crop']];
+        dataPoint['EAA'] = dataPoint['EAA'];
         if(dataPoint['LU_ID'] === "15"){
           dataPoint["EAA"] /= 4; //Only for MFV
         }
@@ -106,7 +109,9 @@ var Economics = function () {
 
   //READ IN BMP FILE
   d3.csv('./BMPBudgets2020.csv', (data) => {
-    this.rawBMPData=data;
+
+    this.rawBMPData=costAdjuster(data, 'EAA', 1.23);
+
   });
 
   //graph
@@ -190,14 +195,20 @@ var Economics = function () {
 
     let landUses = [];
     this.mapData = [];
-
+    const revenueData = {
+      '1': 4,
+      '2': 4,
+     '3': 12,
+      '4': 12
+    };
     //Less than ideal coding, but given how Totals is structured the easiest way
     //I found to map Land Use IDS to total LandUse without recalculation
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+      console.log(i);
       landUses[i] = [];
       this.mapData[i] = [];
       this.scaledRev[i] = [];
-
+      var adf = 1.23
       this.totalWatershedCost[i] = [{cost: 0}];  //TESTING
 
       let keys = Object.keys(Totals.landUseResults[0]);
@@ -218,14 +229,15 @@ var Economics = function () {
 
         else if (dataPoint['LU_ID'] === "2"){
           if(dataPoint['Sub Crop'] === 'Corn after Soybean'){
-            value = parseFloat(dataPoint['Revenue/acre/year']) * this.getBMPAreas[i][2].landUseYield || 0;  //2 = Cons Corn after Soybean
+            value = parseFloat(revenueData[dataPoint['LU_ID']]) * this.getBMPAreas[i][2].landUseYield || 0;  //2 = Cons Corn after Soybean
           }
           else {
             value = parseFloat(dataPoint['Revenue/acre/year']) * this.getBMPAreas[i][3].landUseYield || 0; //3 = Cons Corn after Corn
           }
         }
         else if (dataPoint['LU_ID'] === "4"){
-          value = parseFloat(dataPoint['Revenue/acre/year']) *  this.getBMPAreas[i][1].landUseYield; //1 = Cons Soybean
+         // value = parseFloat(dataPoint['Revenue/acre/year']) *  this.getBMPAreas[i][1].landUseYield; //1 = Cons Soybean
+          value = parseFloat(revenueData[dataPoint['LU_ID']]) *  this.getBMPAreas[i][1].landUseYield;
         }
         //woodlands can't be treated the same since they are the only land use where the soil type changes the value of the wood not just the amount of wood.
         //Where the rest of the revenue above can multiply the output by a certain price: we need to actually find the soil that all the woodlands are on.
@@ -442,10 +454,12 @@ var Economics = function () {
           /*
            START PER YIELD Check on - Cons and Conv Soybean, Alfalfa, Grasshay, Switchgrass, Mixed Fruits and Vegetables (MF&V broken up into subcrops).
            */
+
           else if (copy['PerAcreORPerYield'] === 'per yield') {
             if (copy['LU_ID'] === "3") {
               copy['EAA'] *= this.getCropYields[i][1].convSoybeanYield
               copy['# Labor Hours'] *= this.getCropYields[i][1].convSoybeanYield
+
             } else if (copy['LU_ID'] === "5") {
               copy['EAA'] *= this.getCropYields[i][1].alfalfaYield
               copy['# Labor Hours'] *= this.getCropYields[i][1].alfalfaYield
@@ -483,10 +497,13 @@ var Economics = function () {
         }
 
         this.mapData[i].push(copy)
-        this.totalWatershedCost[i][0].cost +=  !isNaN(copy['EAA']) ? copy['EAA'] : 0
+        this.totalWatershedCost[i][0].cost +=  !isNaN(copy['EAA']) ? copy['EAA'] * adjustmentFactor : 0
       })
+
     }
-    this.watershedTotals();
+    // TODO this will be replaced with the one fetched from the user
+
+    this.watershedTotals(adjustmentFactor);
     this.chart3Data();
     this.chart3DataByLU();
     this.graphic5information();
@@ -504,12 +521,12 @@ var Economics = function () {
   };
 
   // TESTING WATERSHED TOTALS
-  this.watershedTotals = () => {
+  this.watershedTotals = (inflationAdjustFactor) => {
 
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.totalWatershedRevenue[i]= [{revenue: 0}];
       for(let j = 0; j < 16; j ++){
-        this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][j]*1.23) ? this.scaledRev[i][j] : 0
+        this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][j]) ? this.scaledRev[i][j] *inflationAdjustFactor : 0
 
       }
       //console.log("TOTAL WATERSHED REVENUE FOR YEAR: ", i , "=",this.totalWatershedRevenue[i][0].revenue);
@@ -846,6 +863,7 @@ var Economics = function () {
 
 
   calculateRent = () => {
+
     // ToDO pass an inflation adjustment factor here
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.getRent[i] = [{
@@ -872,10 +890,11 @@ var Economics = function () {
           }
           // console.log("CELL: ", j, "YIELD RATE: ", calculateCornYieldRate(boardData[currentBoard].map[j].soilType))
           switch(landUse){
+
             case 1:
               if(boardData[currentBoard].map[j].landType[i-1] === 3 || boardData[currentBoard].map[j].landType[i-1] === 4){
                 this.getRent[i][0].convCornSoybeanRent += rent * tileArea;
-                console.log(rent  * tileArea, '78')
+
               }
               else{
                 this.getRent[i][0].convCornCornRent += rent  * tileArea;
