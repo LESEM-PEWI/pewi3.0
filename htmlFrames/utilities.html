@@ -20,6 +20,7 @@ Cleaned and Prepared - August 2016
 
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Workspace - Utilities</title>
 
   <!-- INCLUDES -->
@@ -28,24 +29,53 @@ Cleaned and Prepared - August 2016
   <!--javascript-->
   <script src=".././lib/jquery-3.2.1.min.js"></script>
   <script src=".././lib/filesaver.min.js"></script>
-  <script src="./results_scripts.js"></script>
-  <!-- <script src=".././back-end/helperMethods.js"></script> -->
+  <script src="../htmlFrames/results_scripts.js"></script>
+  <script src="../htmlFrames/options_script.js" ></script>
+<!--  <script src="../front-end/helpersFE.js"></script>-->
+
+  <script src="../lib/three.min.js"></script>
+<!--   <script src=".././back-end/helperMethods.js"></script>-->
   <!--external fonts-->
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+<!--  <script src="../front-end/mainFE.js"></script>-->
+<!--  <script src="../back-end/helperObjects.js"></script>-->
+<!--  <script src="../front-end/helpersFE.js" info></script>-->
+  <script type="text/javascript">
+    function handlingBackButton(){
+      console.log("--------------")
+
+
+
+        window.document.getElementById("utilitiesContainer").style.width="0%";
+        window.document.getElementById("utilitiesContainer").style.height="0%";
+
+    }
+  </script>
 
   <!-- /INCLUDES -->
-
 </head>
 
 <body>
 
-  <img onclick="parent.reset()" id="backButton" src="./imgs/back.png" alt="Go Back <--">
+
+  <img onclick="parent.reset();handlingBackButton()"  id="backButton"  src="./imgs/back.png" alt="Go Back <--">
+<!--  <iframe id="options" class="fullPageIframe" src="../htmlFrames/options.html"></iframe>-->
+
+
 
   <div id="utilitiesContentsHolder">
 
+
+
     <!---buttons for utilities, add new buttons here -->
+    <!--    let's first remove the toggleEscapeFrame();startOptions()-->
+    <!--    Initially a toggleEscapeFrame function was on the customize button, but got removed after removing the button from the home page -->
+    <div id="customizeButton" class="mainButton" onclick=" startOptions();">Customize PEWI here </div>
+
     <div id="setupButton" class="mainButton" onclick="launchMultiplayerSetup(); inMultiplayer(true);">Set-Up Multiplayer</div>
+
     <div id="aggregateButton" class="mainButton" onclick="toggleAggregateOptions();">Aggregate Multi-Maps</div>
+
 
     <!--container for Aggregate Tool, slides up and down by height changes-->
     <div id="utilitiesAggregateTools">
@@ -90,7 +120,7 @@ Cleaned and Prepared - August 2016
 
     <div id="topoMapButton" class="mainButton" onclick="parent.parent.confirmTopoMapGenerate();"/>Create Topographic Map</div>
 
-  </div>
+
 
   <div id="modalConflictFrame">
     <div id="conflictPopupBox">
@@ -477,8 +507,12 @@ Cleaned and Prepared - August 2016
       }, 3000);
 
     } // end bindAggregateFunctionToFileUpload()
-  </script>
+    // Adding an event listener to the customizeButton to trigger startOptions
+    //document.getElementById('customizeButton').addEventListener('click', startOptions2);
 
+
+  </script>
+  <script src="../front-end/helpersFE.js"></script>
 </body>
 
 </html>

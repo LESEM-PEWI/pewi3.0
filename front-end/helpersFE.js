@@ -5,6 +5,8 @@
           isShiftDown, modalUp, precip,
           painter, Totals, river,
           Results, initData, hoveredOver, currentPlayer*/
+//const THREE = require('d3');
+//const scene = new THREE.Scene();
 
 var globalLegend = false;
 var addingYearFromFile = false; //Boolean used to keep a track of whether or not you're adding a year from file
@@ -26,7 +28,7 @@ var mesh = null; // mesh store the whole view on the scene
 var mesh2= null;
 var meshGeometry = new THREE.Geometry();
 var meshGeometry2 = new THREE.Geometry();
-var optionsString = ""; //string that stores toggeled off options
+var optionsString = ""; //string that stores toggled off options
 var overlayedToggled = false;
 var paintSwitch = false;
 var paused = false;
@@ -5622,38 +5624,47 @@ function sortPlayers() {
   }
 } //end sortPlayers()
 
-// startOptions displays the options page
-function startOptions() {
 
+var modalUp = false;
+// StartOptions displays the options page
+
+function startOptions() {
   if (curTracking) {
     pushClick(0, getStamp(), 107, 0, null);
   }
-  selectedOptionsTrue = []; //The aray to hold all elements to be set to true is cleared.
-  selectedOptionsFalse = []; //The aray to hold all elements to be set to false is cleared.
-  document.getElementById('options').contentWindow.recordCurrentOptions();
 
-  //if nothing else has precedence
-  if (!modalUp) { //commented for debugging
+  // Clear the arrays that hold the options to be set to true or false
+  selectedOptionsTrue = [];
+  selectedOptionsFalse = [];
+
+  // Access the iframe and its contentWindow correctly
+  parent.top.document.getElementById('options').contentWindow.recordCurrentOptions();
+
+
+// remove top tags
+
+  // If nothing else has precedence
+  if (!modalUp) { // commented for debugging
     modalUp = true;
-    document.getElementById('options').style.visibility = "visible";
-    //setup options page with the current parameter selection
-    document.getElementById('options').contentWindow.getCurrentOptionsState();
-    // add Esc key event listener
+    parent.top.document.getElementById('options').style.visibility = "visible";
+
+    // Setup options page with the current parameter selection
+    parent.top.document.getElementById('options').contentWindow.getCurrentOptionsState();
+
+    // Add Esc key event listener
     document.addEventListener('keyup', optionsEsc);
     window.frames[6].document.addEventListener('keyup', optionsEsc);
-    // addEvent(document, 'keyup', optionsEsc);
-    // addEvent(window.frames[4].document, 'keyup', optionsEsc);
 
-    // hide the hotkey table when we click on 'Options' button
+    // Hide the hotkey table when we click on 'Options' button
     var tableInOption = window.frames[6].document.getElementById('hotkeyAggregateTool');
-    if(tableInOption != null && tableInOption.style.display != 'none'){
+    if (tableInOption != null && tableInOption.style.display != 'none') {
       tableInOption.style.display = 'none';
       window.frames[6].document.getElementById('hotkeySets').innerHTML = '';
     }
 
-    // hide the progressbar min/max setup table when we click on 'Options' button
+    // Hide the progress bar min/max setup table when we click on 'Options' button
     tableInOption = window.frames[6].document.getElementById('progressBarAggregateTool');
-    if(tableInOption != null && tableInOption.style.display != 'none'){
+    if (tableInOption != null && tableInOption.style.display != 'none') {
       tableInOption.style.display = 'none';
       window.frames[6].document.getElementById('progressBarSets').innerHTML = '';
     }
@@ -5661,6 +5672,7 @@ function startOptions() {
 } // end startOptions
 
 // startPrintOptions displays the printOptions page
+
 function startPrintOptions() {
 
     if(curTracking) {
@@ -5699,7 +5711,7 @@ function storeCurrentCameraSession(actionCode, value) {
       session.displayLevels = value;
       break;
     case 2:
-      // save last consle tab
+      // save last console tab
       session.switchConsoleTab = value;
       break;
     case 3:
@@ -5861,7 +5873,28 @@ function switchConsoleTab(value) {
       document.getElementById('checkheader').style.display = "block";
       updateGlossaryPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
       break;
+
+  // Inflation adjustment factor
+    case 8:
+  inDispLevels = true;
+  resultsMappedHover=false;
+  if (curTracking) {
+    pushClick(0, getStamp(), 8, 0, null);
+  }
+  document.getElementById('inflationImg').className = "imgSelected";
+  document.getElementById('inflationTab').style.display = "block";
+
+  var overlay = document.getElementsByClassName('checkOverlay');
+  //show overlay toggle switch
+
+  for(var i = 0; i < overlay.length; i++){
+    overlay[i].style.display = "block";
+  }
+  document.getElementById('checkheader').style.display = "block";
+  // updateGlossaryPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
+    break;
   } // END switch
+
 
   //check if the map needs the levels legend displayed
   if (mapIsHighlighted && value == 1) {
@@ -5874,6 +5907,18 @@ function switchConsoleTab(value) {
     storeCurrentCameraSession(2, value);
   } // END if
 } //end switchConsoleTab
+
+// Submitting inflation form
+function submitInflationForm() {
+  const inflationFactor = document.getElementById('inflationFactor').value;
+  const cornPrices = document.getElementById('cornPrices').value;
+  const soybeanPrices = document.getElementById('soybeanPrices').value;
+  console.log('Inflation Factor Adjustment:', inflationFactor);
+  console.log('Corn Prices:', cornPrices);
+  console.log('Soybean Prices:', soybeanPrices);
+
+  alert('Form submitted successfully!');
+}
 
 function switchCurrentPlayer(playerNumber) {
   currentPlayer = playerNumber;
@@ -5932,17 +5977,17 @@ function toggleEscapeFrame() {
   /* This condition is selected when 'Yes' option under 'Menu Menu'-button is clicked in the Modal escape frame
       Check file index.html <div class="mainEscapeButton" id="yesConfirmEscape" ...>
   */
-  if (document.getElementById('confirmEscape').style.height == "20vw") {
-    confirmEscape();
+  if (document.getElementById('confirmEscape')) {
+    if (document.getElementById('confirmEscape').style.height == "20vw"){
+      confirmEscape();
+    }
   }
-  console.log(modalUp);
-
   /* This condition is selected when home button is clicked or Esc-key is pressed
       Check file index.html <img id="homebutton" ..>
   */
   if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
     document.getElementById('modalEscapeFrame').style.display = "block";
-    document.getElementById('exitToMenuButton').style.visibility = "visible";
+    // document.getElementById('exitToMenuButton').style.visibility = "visible";
     document.getElementById('optionsButton').style.visibility = "visible";
     document.getElementById('escapeButton').style.visibility = "visible";
     if (curTracking) {
@@ -5960,7 +6005,7 @@ function toggleEscapeFrame() {
   else if (document.getElementById('modalEscapeFrame').style.display == "block" && modalUp)
   {
     document.getElementById('modalEscapeFrame').style.display = "none";
-    document.getElementById('exitToMenuButton').style.visibility = "hidden";
+    // document.getElementById('exitToMenuButton').style.visibility = "hidden";
     document.getElementById('optionsButton').style.visibility = "hidden";
     document.getElementById('escapeButton').style.visibility = "hidden";
     if (curTracking) {
@@ -5975,11 +6020,11 @@ function toggleEscapeFrame() {
   //land uses IE toggling them on will show up on the multiplayer screen. The options in multiplayer screen are all
   //locked.
   // XXX WHAT'S THE DIFFERENCE FOR THIS IF/ELSE?
-  if (multiplayerAssigningModeOn) {
-    document.getElementById('optionsButton').className = "mainEscapeButton";
-  } else {
-    document.getElementById('optionsButton').className = "mainEscapeButton";
-  }
+  // if (multiplayerAssigningModeOn) {
+  //   document.getElementById('optionsButton').className = "mainEscapeButton";
+  // } else {
+  //   document.getElementById('optionsButton').className = "mainEscapeButton";
+  // }
 
 } //end toggleEscapeFrame
 

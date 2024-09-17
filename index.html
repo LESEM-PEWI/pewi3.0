@@ -50,6 +50,7 @@
   <script src="./lib/jszip.min.js"></script>
   <script src="./htmlFrames/results_scripts.js"></script>
 
+
   <!-- import jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
   <!-- import autotable plug-in for jsPDF -->
@@ -70,11 +71,138 @@
   <script src="./front-end/resultsDisplay.js"></script>
   <script src="./front-end/gameLogic.js"></script>
   <script src="./front-end/mainFE.js"></script>
-  <script src="./front-end/helpersFE.js" info></script>
   <script src="./front-end/levelLoader.js"></script>
   <script src="./front-end/paper-full.js"></script>
   <script src="./front-end/contourMap.js"></script>
   <script src="./front-end/economics.js"></script>
+  <script type="text/javascript">
+    function highlightButtonAndShowInfo(value, on) {
+    var string = "startupButton" + value;
+    if (on) {
+      document.getElementById(string).style.backgroundColor = "#7cc1e9";
+      var message = "";
+      switch (value) {
+        case 1:
+          message = "explore the watershed";
+          break;
+        case 2:
+          message = "exercises and interaction";
+          break;
+        case 3:
+          message = "extend the application";
+          break;
+      }
+      document.getElementById('startupInformationText').innerHTML = message;
+      document.getElementById('startupInformationText').style.backgroundColor = "#fff"
+      document.getElementById('startupInformationText').style.width ="50%";
+      document.getElementById('startupInformationText').style.display ="flex";
+      document.getElementById('startupInformationText').style.justifyContent ="center";
+      document.getElementById('startupInformationText').style.alignItems ="center";
+      document.getElementById('startupInformationText').style.marginTop ="10px";
+      document.getElementById('startupInformationText').style.marginBottom ="10px";
+    } else {
+      document.getElementById('startupInformationText').innerHTML = "";
+      document.getElementById(string).style.backgroundColor = "#40A4DF";
+    }
+  }
+    function startUtilities() {
+      //Event Listener for utilities escape. Go back when escape is pressed
+      document.addEventListener('keyup', backUp);
+      // addEvent(document, 'keyup', backUp);
+
+      //Update Buttons appropriately
+      // document.getElementById('startupButton1').style.display = "none";
+      //document.getElementById('startupButton2').style.display = "none";
+      ///document.getElementById('newPewiLogo').style.display = "none";
+      document.getElementById('startupButton3').style.left = "25%";
+      document.getElementById('startupButton3').style.backgroundColor = "#003d4d";
+      //prevent pewiTitle from pressing against the top of the screen
+      // document.getElementById('pewiTitle').style.marginTop = "10%";
+      //open up background curtain (entirely transparent here)
+      document.getElementById('modalEscapeFrame').style.marginTop = "0px";
+      document.getElementById('modalEscapeFrame').style.top = "0%";
+      document.getElementById('modalEscapeFrame').style.height = "100%";
+      document.getElementById('modalEscapeFrame').style.backgroundColor = "rgba(0,0,0,0)";
+      //clear informational text
+      document.getElementById('modalEscapeFrame').innerHTML = "";
+      //change random tolerance ("U" for utilities)
+      // // We need to show the print button in case of the button was hidden in multi-player mode.
+      // parent.document.getElementById('printButton').style.display = 'block';
+      randomAllowed("U");
+      //Display utilities frame over the page, then with
+      // the background elements hidden, rearrange them in preparation for the user
+      // clicking back
+      setTimeout(function() {
+        hideBackgroundStartupElements();
+        setTimeout(function() {
+          document.getElementById('startupDialogueOverlay').src = "./htmlFrames/utilities.html";
+          document.getElementById('startupDialogueOverlay').style.width = "100%";
+          document.getElementById('startupDialogueOverlay').style.height = "100%";
+          document.getElementById('startupDialogueOverlay').style.visibility = "visible";
+
+          document.getElementById('utilitiesContainer').style.width = "100%";
+          document.getElementById('utilitiesContainer').style.height = "100%";
+          document.getElementById('utilitiesContainer').style.background = "rgba(0,0,0, 0.8)";
+        }, 400);
+        setTimeout(function() {
+          resetElements();
+        }, 500);
+        // A touch at the main page, for fixing key events for IE,
+        // since at the start of the app, IE couldn't sense any keyevent before a click
+        parent.document.getElementById("leftConsole").focus();
+      }, 400);
+      //Update the background information box
+      updateGlossaryPopup('This is the background information box! Here, you will find information on different features on the map. Check them out!');
+    } //end startUtilities
+    function backUp(e) {
+      if (e.keyCode == 27) {
+        reset();
+        document.removeEventListener('keyup', backUp);
+        // removeEvent(document, 'keyup', backUp);
+      }}
+    function hideBackgroundStartupElements() {
+      //document.getElementById('startupButton2').style.visibility = "hidden";
+      // document.getElementById('startupButton3').style.visibility = "hidden";
+      ///document.getElementById('newPewiLogo').style.visibility = "hidden";
+    } //end function
+    //resetElements moves the elements around on the page and resets the colors of elements
+    //  in preparation for returning to the page
+    function resetElements() {
+      // document.getElementById('startupButton1').style.display = "block";
+      //document.getElementById('startupButton2').style.display = "block";
+      // document.getElementById('startupButton3').style.display = "block";
+      ///document.getElementById('newPewiLogo').style.display = "block";
+      // document.getElementById('startupButton1').style.backgroundColor = "#40A4DF";
+      //document.getElementById('startupButton2').style.backgroundColor = "#40A4DF";
+      // document.getElementById('startupButton3').style.backgroundColor = "#40A4DF";
+      // document.getElementById('startupButton1').style.left = "15%";
+      //document.getElementById('startupButton2').style.left = "25%";
+      // document.getElementById('startupButton3').style.left = "35%";
+      // document.getElementById('pewiTitle').style.marginTop = "0px";
+      ///document.getElementById('newPewiLogo').style.marginTop = "0px";
+    } //end resetElements
+
+    // reset makes the changes necessary for displaying the main page again
+    // this is necessary to be separated so that the elements can be moved prior to being
+    // redisplayed in avoidance of carry over transitions
+    function reset() {
+      document.activeElement.blur();
+      document.getElementById('startupDialogueOverlay').src = "";
+      document.getElementById('startupDialogueOverlay').style.visibility = "hidden";
+      if (document.getElementById('startupContentsHolder')){
+      document.getElementById('startupContentsHolder').style.marginTop = "-250px";
+      document.getElementById('startupContentsHolder').style.top = "50%";
+      document.getElementById('startupContentsHolder').style.height = "500px";
+      document.getElementById('startupContentsHolder').style.backgroundColor = "rgba(0,0,0,0)";
+      // document.getElementById('startupButton1').style.visibility = "visible";
+      //document.getElementById('startupButton2').style.visibility = "visible";
+      // document.getElementById('startupButton3').style.visibility = "visible";
+      // document.getElementById('pewiTitle').style.visibility = "visible";
+      ///document.getElementById('newPewiLogo').style.visibility = "visible";
+    } }//end reset
+
+  </script>
+
 
 
   <!-- import bootstrap-progressbar library -->
@@ -118,9 +246,9 @@
     <!-- print-option-parameters div stores the toggled options in printOptions.html -->
     <div id="print-option-parameters"></div>
   </div>
-
   <!-- Main webpage element containing pewi -->
   <div id="page">
+
     <!-- General overlay banner -->
     <div id="genOverlay" style="visibility: hidden;"></div>
 
@@ -301,6 +429,11 @@
       <div id="levelsButton" class="consoleButton" onclick="switchConsoleTab(3)">
         <img id="levelsImg" class="imgNotSelected" src="./imgs/levelsIcon.png" onmouseover="toggleTabTitle('levelsTabTitle', 0);" onmouseout="toggleTabTitle('levelsTabTitle', 1);">
         <div id="levelsTabTitle" style="display:none;"></div>
+      </div>
+      <!--inflation button-->
+      <div id="inflationButton" class="consoleButton" onclick="switchConsoleTab(8)">
+        <img id="inflationImg" class="imgNotSelected" src="./imgs/dollar-button.png">
+        <div id="inflationTabTitle" style="display:none;"></div>
       </div>
 
 
@@ -489,8 +622,34 @@
             </div>
           </div>
         </form>
-
       </div>
+      <div id="inflationTab" class="consoleTab" style="display:none;">
+        <div id="inflationContainer">
+          <div>
+            <span>Financial Information:</span>
+          </div><form id="adjustmentForm" method="post" action="">
+          <div>
+            <label for="inflationFactor">Inflation Factor Adjustment:</label>
+            <input type="number" id="inflationFactor" name="inflationFactor">
+          </div>
+          <div>
+            <label for="cornPrices">Corn Prices:</label>
+            <input type="number" id="cornPrices" name="cornPrices">
+          </div>
+          <div>
+            <label for="soybeanPrices">Soybean Prices:</label>
+            <input type="number" id="soybeanPrices" name="soybeanPrices">
+          </div>
+          <div>
+            <button id="submitInflationButton" type="button" onclick="submitInflationForm()">Submit</button>
+          </div>
+        </form>
+          <div>
+
+          </div>
+        </div>
+      </div>
+
 
       <!-- year display -->
       <div id="yearsTab" class="consoleTab" style="display:none;">
@@ -1973,29 +2132,43 @@
     <iframe id="options" class="fullPageIframe" src="./htmlFrames/options.html"></iframe>
     <iframe id="printOptions" class="fullPageIframe" src="./htmlFrames/printOptions.html"></iframe>
     <iframe id="modalReplacement" class="fullPageIframe" src="./htmlFrames/replacementFrame.html"></iframe>
-
-
   </div>
-  <!-- End of page div, this is all of the meaningful content for in-game -->
+  <!-- End of page div, this is all the meaningful content for in-game -->
 
   <!-- the modal frame covers the page with semi-opaque layer, and escape options -->
-
   <div id="modalEscapeFrame">
     <!--Line below was added to add exit button on top right of Home options page. Reference Issue 361 for details.-->
     <div id="closeDiv"><img id="escapeButton" onclick="toggleEscapeFrame();" src="./imgs/close_black.png"></div>
     <div id="escapeMenu">
       <!--Commented out Glossary button, which is div below. Reference Issue 363 on explanation for removal.-->
-      <!--<div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleGlossary() ;">Glossary</div>-->
-      <div class="mainEscapeButton" id="optionsButton" onclick="toggleEscapeFrame(); startOptions();">Customize</div>
+      <div class="mainEscapeButton" id="directoryButton" onclick="toggleEscapeFrame(); toggleGlossary() ;">Glossary</div>
+<!--  <div class="mainEscapeButton" id="optionsButton" onclick="toggleEscapeFrame(); startOptions();">Customize</div>-->
+       <div id="optionsButton"></div>
+
+      <div id="startupButton3" onmouseover="highlightButtonAndShowInfo(3,1);" onmouseout="highlightButtonAndShowInfo(3,0);" class="mainEscapeButton" onclick="startUtilities();">Utilities</div>
+      <div id="infoHolder">
+        <div id="startupInformationText"></div>
+      </div>
+
       <!--The hover options feature is currently in the Options menu, but can be changed -->
-      <!--<div class="mainEscapeButton" id="userSettingsButton" onclick="toggleEscapeFrame(); startOptions();">User Settings</div>-->
-      <div class="mainEscapeButton" id="exitToMenuButton" onclick="confirmEscape();">Main Menu</div>
+      <div class="mainEscapeButton" id="userSettingsButton" onclick="toggleEscapeFrame(); startOptions();">User Settings</div>
+<!--      <div class="mainEscapeButton" id="exitToMenuButton" onclick="confirmEscape();">Main Menu</div>-->
+
       <div id="confirmEscape">
         Are you sure you want to exit? All your progress will be lost.
         <div class="mainEscapeButton" id="yesConfirmEscape" onclick="showMainMenu(); toggleEscapeFrame(); inMultiplayer(false);">Yes</div>
         <div class="mainEscapeButton" id="noConfirmEscape" onclick="toggleEscapeFrame();">No</div>
       </div>
+
+      <div>
+        <span style="color: white">Are you sure you want to leave the play page?</span>
+        <div style="margin-top: 25px" class="mainEscapeButton" id="yesConfirmEscapePage" onclick="startUtilities(); toggleEscapeFrame(); inMultiplayer(false);">Yes</div>
+        <div class="mainEscapeButton" id="noConfirmEscapePage" onclick="toggleEscapeFrame();">No</div>
+      </div>
     </div>
+  </div>
+  <div id="utilitiesContainer" style="position: absolute;width:0px;height:0px;">
+    <iframe id="startupDialogueOverlay" style="visibility: hidden"></iframe>
   </div>
 
 
@@ -2057,6 +2230,16 @@
   <div id="startupSequence" style="position:absolute; width:100%; height:100%;">
     <iframe id="startUpFrame" src="./htmlFrames/startup.html" style="width:100%; height:100%;"></iframe>
   </div>
+
+
+
+<!--try to define the helper script here after everything has loaded-->
+<!--all the scripts -->
+<!-- also define those utilities through the main page-->
+
+  <script src="./front-end/helpersFE.js"></script>
+
+
 </body>
 
 </html>

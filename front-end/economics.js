@@ -1,3 +1,6 @@
+// Start out with a general overview of the module
+/// Author name and email
+// date created
 var Economics = function () {
   this.rawData;
   this.rawBMPData;
@@ -100,6 +103,7 @@ var Economics = function () {
   //READ IN BMP FILE
   d3.csv('./BMPBudgets2020.csv', (data) => {
     this.rawBMPData=data;
+
   });
 
   //graph

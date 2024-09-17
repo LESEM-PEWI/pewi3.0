@@ -163,7 +163,7 @@
   /* No 'left' attribute before removing startupButton2.
   Adding this attribute now to push startupButton1 and startupButton3 closer
   Check Issue562 for more details*/
-  left: 15%;
+  left: 25%;
   -webkit-transition-duration: 1.5s;
   transition-duration: 1.5s;
 }
@@ -278,14 +278,14 @@
  **/
 
 
-#levelDesignerButton, #levelsButton, #setupButton, #aggregateButton, #addFile, #downloadFile, #simulationButton, #goalOptimizationButton,#topoMapButton {
+#levelDesignerButton, #levelsButton, #setupButton, #aggregateButton, #addFile, #downloadFile, #simulationButton, #goalOptimizationButton,#topoMapButton, #customizeButton, #inflationButton {
   display: inline-block;
   margin-top: 7%;
   position: relative;
 }
 
 
-#levelDesignerButton, #levelsButton, #setupButton, #aggregateButton, #simulationButton, #goalOptimizationButton, #topoMapButton {
+#levelDesignerButton, #levelsButton, #setupButton, #aggregateButton, #simulationButton, #goalOptimizationButton, #topoMapButton, #customizeButton, #inflationButton {
 
   width: 96.2%;
   /*width: 400px;*/
