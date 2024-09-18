@@ -114,8 +114,8 @@
       // document.getElementById('startupButton1').style.display = "none";
       //document.getElementById('startupButton2').style.display = "none";
       ///document.getElementById('newPewiLogo').style.display = "none";
-      document.getElementById('startupButton3').style.left = "25%";
-      document.getElementById('startupButton3').style.backgroundColor = "#003d4d";
+      // document.getElementById('startupButton3').style.left = "25%";
+      // document.getElementById('startupButton3').style.backgroundColor = "#003d4d";
       //prevent pewiTitle from pressing against the top of the screen
       // document.getElementById('pewiTitle').style.marginTop = "10%";
       //open up background curtain (entirely transparent here)
@@ -432,7 +432,7 @@
       </div>
       <!--inflation button-->
       <div id="inflationButton" class="consoleButton" onclick="switchConsoleTab(8)">
-        <img id="inflationImg" class="imgNotSelected" src="./imgs/dollar-button.png">
+        <img id="inflationImg" class="imgNotSelected" src="./imgs/dollar_sign.png">
         <div id="inflationTabTitle" style="display:none;"></div>
       </div>
 
@@ -2145,14 +2145,14 @@
 <!--  <div class="mainEscapeButton" id="optionsButton" onclick="toggleEscapeFrame(); startOptions();">Customize</div>-->
        <div id="optionsButton"></div>
 
-      <div id="startupButton3" onmouseover="highlightButtonAndShowInfo(3,1);" onmouseout="highlightButtonAndShowInfo(3,0);" class="mainEscapeButton" onclick="startUtilities();">Utilities</div>
-      <div id="infoHolder">
-        <div id="startupInformationText"></div>
-      </div>
+<!--      <div id="startupButton3" onmouseover="highlightButtonAndShowInfo(3,1);" onmouseout="highlightButtonAndShowInfo(3,0);" class="mainEscapeButton" onclick="startUtilities();">Utilities</div>-->
+<!--      <div id="infoHolder">-->
+<!--        <div id="startupInformationText"></div>-->
+<!--      </div>-->
 
-      <!--The hover options feature is currently in the Options menu, but can be changed -->
-      <div class="mainEscapeButton" id="userSettingsButton" onclick="toggleEscapeFrame(); startOptions();">User Settings</div>
-<!--      <div class="mainEscapeButton" id="exitToMenuButton" onclick="confirmEscape();">Main Menu</div>-->
+<!--      &lt;!&ndash;The hover options feature is currently in the Options menu, but can be changed &ndash;&gt;-->
+<!--      <div class="mainEscapeButton" id="userSettingsButton" onclick="toggleEscapeFrame(); startOptions();">User Settings</div>-->
+<!--&lt;!&ndash;      <div class="mainEscapeButton" id="exitToMenuButton" onclick="confirmEscape();">Main Menu</div>&ndash;&gt;-->
 
       <div id="confirmEscape">
         Are you sure you want to exit? All your progress will be lost.
@@ -2160,11 +2160,24 @@
         <div class="mainEscapeButton" id="noConfirmEscape" onclick="toggleEscapeFrame();">No</div>
       </div>
 
+<!--      <div>-->
+<!--        <span style="color: white">Are you sure you want to leave the play page?</span>-->
+<!--        <div style="margin-top: 25px" class="mainEscapeButton" id="yesConfirmEscapePage" onclick="startUtilities(); toggleEscapeFrame(); inMultiplayer(false);">Yes</div>-->
+<!--        <div class="mainEscapeButton" id="noConfirmEscapePage" onclick="toggleEscapeFrame();">No</div>-->
+<!--      </div>-->
+      <!-- Removed the 'Utilities' button -->
+      <!-- <div id="startupButton3" onmouseover="highlightButtonAndShowInfo(3,1);" onmouseout="highlightButtonAndShowInfo(3,0);" class="mainEscapeButton" onclick="startUtilities();">Utilities</div> -->
+
+      <div id="infoHolder">
+        <div id="startupInformationText"></div>
+      </div>
+
       <div>
         <span style="color: white">Are you sure you want to leave the play page?</span>
         <div style="margin-top: 25px" class="mainEscapeButton" id="yesConfirmEscapePage" onclick="startUtilities(); toggleEscapeFrame(); inMultiplayer(false);">Yes</div>
         <div class="mainEscapeButton" id="noConfirmEscapePage" onclick="toggleEscapeFrame();">No</div>
       </div>
+
     </div>
   </div>
   <div id="utilitiesContainer" style="position: absolute;width:0px;height:0px;">

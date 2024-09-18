@@ -152,12 +152,15 @@
 }
 
 /*#startupButton1, #startupButton2, #startupButton3 {*/
-#startupButton1, #startupButton3 {
+#startupButton1 {
   margin-top: -25px;
   padding: 0;
   top: 50%;
   width: 15%;
 }
+#infoHolder ,#startupButton3{
+  display: none;
+ }
 
 #startupButton1 {
   /* No 'left' attribute before removing startupButton2.
