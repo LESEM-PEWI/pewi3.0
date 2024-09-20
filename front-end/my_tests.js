@@ -10,7 +10,6 @@ console.log(dictionary)
 
 
 
-
 const landUseData = [
     {
         LU_ID: 5,
