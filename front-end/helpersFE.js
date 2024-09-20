@@ -4719,6 +4719,7 @@ function resetOptions() {
 
   //close frame
   modalUp = false;
+  console.log("resetOptions");
   document.getElementById('options').style.visibility = "hidden";
   //make sure the frame is no longer accepting input such as keyboard or mouse events
   document.activeElement.blur();
@@ -5630,8 +5631,10 @@ var modalUp = false;
 
 function startOptions() {
   if (curTracking) {
+    console.log("asdfghgfdsadfghjgfd");
     pushClick(0, getStamp(), 107, 0, null);
   }
+console.log("modalUp",modalUp);
 
   // Clear the arrays that hold the options to be set to true or false
   selectedOptionsTrue = [];
@@ -5645,7 +5648,7 @@ function startOptions() {
 
   // If nothing else has precedence
   if (!modalUp) { // commented for debugging
-    modalUp = true;
+    // modalUp = true;
     parent.top.document.getElementById('options').style.visibility = "visible";
 
     // Setup options page with the current parameter selection
@@ -5988,7 +5991,7 @@ function toggleEscapeFrame() {
   if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
     document.getElementById('modalEscapeFrame').style.display = "block";
     // document.getElementById('exitToMenuButton').style.visibility = "visible";
-    document.getElementById('optionsButton').style.visibility = "visible";
+    // document.getElementById('optionsButton').style.visibility = "visible";
     document.getElementById('escapeButton').style.visibility = "visible";
     if (curTracking) {
       pushClick(0, getStamp(), 106, 0, null);
