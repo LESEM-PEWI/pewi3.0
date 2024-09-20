@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{jspdf, jspdf-autotable, stackblur-canvas}" />
+    <file url="PROJECT" libraries="{canvg, d3.v4, jspdf, jspdf-autotable, stackblur-canvas, xlsx.full}" />
   </component>
 </project>

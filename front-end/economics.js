@@ -1,14 +1,10 @@
 // Define the function
-function multiplyArray(arr, factor) {
-  return arr.map(item => item * factor);
-}
 var Economics = function () {
   //This is the inflation adjustment factor
   const adjustmentFactor = 1.23
   this.rawData;
   this.rawBMPData;
-  this.mapData = [];
-  this.data = [];
+  this.mapData = [];  this.data = [];
   this.data4 = [];
 
   this.dataSubcrop = {};
@@ -963,5 +959,6 @@ var Economics = function () {
 
 
 }
+// TODO investigate the impact of pre-loading this module
 var economics = new Economics();
-//kind of a precalc? Not really but its calculated before its needed.
+//kind of a precalc? Not really but it's calculated before its needed.

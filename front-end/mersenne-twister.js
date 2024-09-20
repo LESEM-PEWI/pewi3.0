@@ -1,7 +1,7 @@
 /*
   I've wrapped Makoto Matsumoto and Takuji Nishimura's code in a namespace
   so it's better encapsulated. Now you can have multiple random number generators
-  and they won't stomp all over eachother's state.
+  and they won't stomp all over each other's state.
 
   If you want to use this as a substitute for Math.random(), use the random()
   method like so:

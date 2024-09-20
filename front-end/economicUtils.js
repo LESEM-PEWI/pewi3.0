@@ -1,5 +1,14 @@
-// This module provide support tools to the economic module, adjusting the cost to the inflation rate
-function costAdjuster(data, column, factor = 1.23) {
+/* This module provide support tools to the economic module, adjusting the cost to the inflation rate
+
+Constructed in June 2016 as an object focused approach to calculation methods based on
+  code from pewi v2.0.
+
+C. Labuzzetta
+N. Hagen
+
+
+ */
+const costAdjuster = function(data, column, factor = 1.23) {
     // Ensure data is an array
     if (!Array.isArray(data)) {
         throw new Error("Data must be an array.");

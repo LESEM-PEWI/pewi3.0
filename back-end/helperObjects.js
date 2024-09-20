@@ -37,123 +37,78 @@ var LandUseType = {
   mixedFruitsVegetables: 15,
 
   getType: function(type) {
+  // Changed this to a look-up object for performance
+    const typeLookup = {
+      0: "none",
+      1: "conventionalCorn",
+      2: "conservationCorn",
+      3: "conventionalSoybean",
+      4: "conservationSoybean",
+      5: "alfalfa",
+      6: "permanentPasture",
+      7: "rotationalGrazing",
+      8: "grassHay",
+      9: "prairie",
+      10: "conservationForest",
+      11: "conventionalForest",
+      12: "switchgrass",
+      13: "shortRotationWoodyBioenergy",
+      14: "wetland",
+      15: "mixedFruitsVegetables"
+    };
 
-    switch (type) {
-      case 0:
-        return "none";
-      case 1:
-        return "conventionalCorn";
-      case 2:
-        return "conservationCorn";
-      case 3:
-        return "conventionalSoybean";
-      case 4:
-        return "conservationSoybean";
-      case 5:
-        return "alfalfa";
-      case 6:
-        return "permanentPasture";
-      case 7:
-        return "rotationalGrazing";
-      case 8:
-        return "grassHay";
-      case 9:
-        return "prairie";
-      case 10:
-        return "conservationForest";
-      case 11:
-        return "conventionalForest";
-      case 12:
-        return "switchgrass";
-      case 13:
-        return "shortRotationWoodyBioenergy";
-      case 14:
-        return "wetland";
-      case 15:
-        return "mixedFruitsVegetables";
-      default:
-        return "NOT FOUND";
-    } //end switch
+    return typeLookup[type] || "Land use code selected NOT FOUND"; // Return value from lookup table or "NOT FOUND" if not in the table
   }, //end getType
 
   getPrintFriendlyType: function(type) {
-    switch (type) {
-      case 0:
-        return "None";
-      case 1:
-        return "Conventional Corn";
-      case 2:
-        return "Conservation Corn";
-      case 3:
-        return "Conventional Soybean";
-      case 4:
-        return "Conservation Soybean";
-      case 5:
-        return "Alfalfa";
-      case 6:
-        return "Permanent Pasture";
-      case 7:
-        return "Rotational Grazing";
-      case 8:
-        return "Grass Hay";
-      case 9:
-        return "Prairie";
-      case 10:
-        return "Conservation Forest";
-      case 11:
-        return "Conventional Forest";
-      case 12:
-        return "Switchgrass";
-      case 13:
-        return "Short Rotation Woody Bioenergy";
-      case 14:
-        return "Wetland";
-      case 15:
-        return "Mixed Fruits and Vegetables";
-      default:
-        return "NOT FOUND";
-    } //end switch
+    // changed this to a look-up object for readability and performance
+    const typeLookup = {
+      0: "None",
+      1: "Conventional Corn",
+      2: "Conservation Corn",
+      3: "Conventional Soybean",
+      4: "Conservation Soybean",
+      5: "Alfalfa",
+      6: "Permanent Pasture",
+      7: "Rotational Grazing",
+      8: "Grass Hay",
+      9: "Prairie",
+      10: "Conservation Forest",
+      11: "Conventional Forest",
+      12: "Switchgrass",
+      13: "Short Rotation Woody Bioenergy",
+      14: "Wetland",
+      15: "Mixed Fruits and Vegetables"
+    };
+
+    return typeLookup[type] || "NOT FOUND"; // Return the matching value or "NOT FOUND"
+    //end getPrintFriendlyType
 
   },
 
   getNumericalType: function(type)
+      // changed this to a look-up object for readability and performance
   {
-      switch (type) {
-        case "None":
-          return 0;
-        case "Conventional Corn":
-          return 1;
-        case "Conservation Corn":
-          return 2;
-        case "Conventional Soybean":
-          return 3;
-        case "Conservation Soybean":
-          return 4;
-        case "Alfalfa":
-          return 5;
-        case "Permanent Pasture":
-          return 6;
-        case "Rotational Grazing":
-          return 7;
-        case "Grass Hay":
-          return 8;
-        case "Prairie":
-          return 9;
-        case "Conservation Forest":
-          return 10;
-        case "Convential Forest":
-          return 11;
-        case "Switchgrass":
-          return 12;
-        case "Short Rotation Woody Bioenergy":
-          return 13;
-        case "Wetland":
-          return 14;
-        case "Mixed Fruits and Vegetables":
-          return 15;
-        default:
-          return "NOT FOUND";
-    }
+    const typeLookup = {
+      "None": 0,
+      "Conventional Corn": 1,
+      "Conservation Corn": 2,
+      "Conventional Soybean": 3,
+      "Conservation Soybean": 4,
+      "Alfalfa": 5,
+      "Permanent Pasture": 6,
+      "Rotational Grazing": 7,
+      "Grass Hay": 8,
+      "Prairie": 9,
+      "Conservation Forest": 10,
+      "Conventional Forest": 11,
+      "Switchgrass": 12,
+      "Short Rotation Woody Bioenergy": 13,
+      "Wetland": 14,
+      "Mixed Fruits and Vegetables": 15
+    };
+
+    return typeLookup[type] !== undefined ? typeLookup[type] : "NOT FOUND";  // Return corresponding value or "NOT FOUND"
   }
 
 
@@ -173,7 +128,7 @@ var LandUseType = {
 // #1.) Click ID [Provides a tag for each click, a unique identifier of sorts]
 // #2.) Time Stamp [The amount of time that passes after the click-tracking system has been toggled]
 // #3.) Function Clicked [Provides what function was toggled when the click was preformed]
-// #4.) Time Gap until next click [Providees the time it takes until the next click occurs (or when the click-tracking system has been toggled again)]
+// #4.) Time Gap until next click [Provides the time it takes until the next click occurs (or when the click-tracking system has been toggled again)]
 //
 // A click could also have a tileID, meaning the user clicked a tile for modifying it's land type. If the click is not performed on a tile, the value will
 // be null [Note: To save on code length, precip values (when user changes them) are now stored under the TileID property. If so desired,
@@ -240,7 +195,7 @@ function Click(c1, c2, c3, c4, c5) {
           return "Precipitation tab was clicked";
           break;
         }
-        //When the user clicks the calender icon
+        //When the user clicks the calendar icon
       case 6:
         if (action) {
           return switchConsoleTab(6);

@@ -65,7 +65,8 @@
   <script src="./back-end/helperMethods.js"></script>
   <script src="./back-end/helperObjects.js"></script>
   <script src="./back-end/mainBE.js"></script>
-
+<!--  lOAd xlsx LIBRARY -->
+  <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <!-- front-end javascript functions for updates with webpage -->
   <script src="./front-end/loader.js"></script>
   <script src="./front-end/resultsDisplay.js"></script>
@@ -111,6 +112,7 @@
     var img2 = new Image();
     img2.src = "./imgs/meadowlarkanimation.gif";
   </script>
+  <!-- use xlsx.full.min.js from version 0.20.3 -->
 
   <!-- Create hidden div to contain settings/options for in-game updates -->
   <div id="settingsHolder">
@@ -2059,7 +2061,6 @@
   <div id="startupSequence" style="position:absolute; width:100%; height:100%;">
     <iframe id="startUpFrame" src="./htmlFrames/startup.html" style="width:100%; height:100%;"></iframe>
   </div>
-
 
 
 

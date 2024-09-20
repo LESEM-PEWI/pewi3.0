@@ -1,0 +1,1 @@
+# Nitrogen fertilizer and plant density affect maize residue quantity and quality more than previous crop and genotype.
