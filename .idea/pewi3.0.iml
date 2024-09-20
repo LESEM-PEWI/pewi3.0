@@ -9,14 +9,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jspdf" level="application" />
-    <orderEntry type="library" name="jspdf-autotable" level="application" />
-    <orderEntry type="library" name="stackblur-canvas" level="application" />
-    <orderEntry type="library" name="stackblur-canvas" level="application" />
-    <orderEntry type="library" name="canvg" level="application" />
-    <orderEntry type="library" name="jspdf-autotable" level="application" />
-    <orderEntry type="library" name="jspdf" level="application" />
-    <orderEntry type="library" name="d3.v4" level="application" />
     <orderEntry type="library" name="xlsx.full" level="application" />
+    <orderEntry type="library" name="canvg" level="application" />
+    <orderEntry type="library" name="jspdf" level="application" />
+    <orderEntry type="library" name="jspdf-autotable" level="application" />
+    <orderEntry type="library" name="d3.v4" level="application" />
+    <orderEntry type="library" name="stackblur-canvas" level="application" />
   </component>
 </module>
