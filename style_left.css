@@ -19,7 +19,7 @@
 }
 
 /* Styling for popup tab titles*/
-#toolsTabTitle, #terrainTabTitle, #precipTabTitle, #yearTabTitle, #levelsTabTitle, #featuresTabTitle, #yieldTabTitle {
+#toolsTabTitle, #terrainTabTitle, #precipTabTitle, #yearTabTitle, #levelsTabTitle, #featuresTabTitle, #yieldTabTitle,#inflationTabTitle {
     top: 0vw;
     left: 3vw;
     width: 300%;
@@ -330,7 +330,11 @@
   top: 23.9vw;
   top: calc(var(--first-consoleButton-top) + 5*var(--consoleButton-height));
 }
-
+/* left consoleButton, inflationButton */
+#inflationButton {
+  top: 18.28vw;
+  top: calc(var(--first-consoleButton-top) + 6 * var(--consoleButton-height));
+}
 
 /**left console content container**/
 #leftConsole {
@@ -893,6 +897,9 @@ table {
   #levelsButton {
     top: 146px;
   }
+  #inflationButton {
+    top: 160px;
+  }
   #featuresButton {
     top: 164px;
   }
@@ -955,4 +962,22 @@ table {
 }
 .header h1{
   margin: 0;
+}
+#inflationContainer {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 30px;
+  input {
+    width: 100px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  #submitInflationButton{
+    width: 100px;
+  }
 }

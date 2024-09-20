@@ -154,6 +154,7 @@
     } //end if
     //hide the options frame from the top frame (index.html)
     parent.resetOptions();
+    parent.loadLevel(0);
     //scroll page to top, so that next time options is loaded it starts there
     window.scrollTo(0, 0);
 
@@ -401,6 +402,7 @@
   * For more information refer to Issue 362.
   */
   function recordCurrentOptions(){
+    console.log("yess")
     // var currentSelection = document.getElementsByClassName('toggle');
     // We should get all the 'checkbox' elements instead of 'toogle' elements.
     var currentSelection = $(':checkbox');

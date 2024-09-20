@@ -4719,6 +4719,7 @@ function resetOptions() {
 
   //close frame
   modalUp = false;
+  console.log("resetOptions");
   document.getElementById('options').style.visibility = "hidden";
   //make sure the frame is no longer accepting input such as keyboard or mouse events
   document.activeElement.blur();
@@ -5630,8 +5631,10 @@ var modalUp = false;
 
 function startOptions() {
   if (curTracking) {
+    console.log("asdfghgfdsadfghjgfd");
     pushClick(0, getStamp(), 107, 0, null);
   }
+console.log("modalUp",modalUp);
 
   // Clear the arrays that hold the options to be set to true or false
   selectedOptionsTrue = [];
@@ -5641,11 +5644,11 @@ function startOptions() {
   parent.top.document.getElementById('options').contentWindow.recordCurrentOptions();
 
 
-
+// remove top tags
 
   // If nothing else has precedence
   if (!modalUp) { // commented for debugging
-    modalUp = true;
+    // modalUp = true;
     parent.top.document.getElementById('options').style.visibility = "visible";
 
     // Setup options page with the current parameter selection
@@ -5873,7 +5876,28 @@ function switchConsoleTab(value) {
       document.getElementById('checkheader').style.display = "block";
       updateGlossaryPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
       break;
+
+  // Inflation adjustment factor
+    case 8:
+  inDispLevels = true;
+  resultsMappedHover=false;
+  if (curTracking) {
+    pushClick(0, getStamp(), 8, 0, null);
+  }
+  document.getElementById('inflationImg').className = "imgSelected";
+  document.getElementById('inflationTab').style.display = "block";
+
+  var overlay = document.getElementsByClassName('checkOverlay');
+  //show overlay toggle switch
+
+  for(var i = 0; i < overlay.length; i++){
+    overlay[i].style.display = "block";
+  }
+  document.getElementById('checkheader').style.display = "block";
+  // updateGlossaryPopup('The <span style="color:orange;">Yield Tab</span> allows you to see different yield base rates based on soil type for different landuse types.');
+    break;
   } // END switch
+
 
   //check if the map needs the levels legend displayed
   if (mapIsHighlighted && value == 1) {
@@ -5886,6 +5910,18 @@ function switchConsoleTab(value) {
     storeCurrentCameraSession(2, value);
   } // END if
 } //end switchConsoleTab
+
+// Submitting inflation form
+function submitInflationForm() {
+  const inflationFactor = document.getElementById('inflationFactor').value;
+  const cornPrices = document.getElementById('cornPrices').value;
+  const soybeanPrices = document.getElementById('soybeanPrices').value;
+  console.log('Inflation Factor Adjustment:', inflationFactor);
+  console.log('Corn Prices:', cornPrices);
+  console.log('Soybean Prices:', soybeanPrices);
+
+  alert('Form submitted successfully!');
+}
 
 function switchCurrentPlayer(playerNumber) {
   currentPlayer = playerNumber;
@@ -5944,18 +5980,18 @@ function toggleEscapeFrame() {
   /* This condition is selected when 'Yes' option under 'Menu Menu'-button is clicked in the Modal escape frame
       Check file index.html <div class="mainEscapeButton" id="yesConfirmEscape" ...>
   */
-  if (document.getElementById('confirmEscape').style.height == "20vw") {
-    confirmEscape();
+  if (document.getElementById('confirmEscape')) {
+    if (document.getElementById('confirmEscape').style.height == "20vw"){
+      confirmEscape();
+    }
   }
-  console.log(modalUp);
-
   /* This condition is selected when home button is clicked or Esc-key is pressed
       Check file index.html <img id="homebutton" ..>
   */
   if (document.getElementById('modalEscapeFrame').style.display != "block" && !modalUp) {
     document.getElementById('modalEscapeFrame').style.display = "block";
-    document.getElementById('exitToMenuButton').style.visibility = "visible";
-    document.getElementById('optionsButton').style.visibility = "visible";
+    // document.getElementById('exitToMenuButton').style.visibility = "visible";
+    // document.getElementById('optionsButton').style.visibility = "visible";
     document.getElementById('escapeButton').style.visibility = "visible";
     if (curTracking) {
       pushClick(0, getStamp(), 106, 0, null);
@@ -5972,7 +6008,7 @@ function toggleEscapeFrame() {
   else if (document.getElementById('modalEscapeFrame').style.display == "block" && modalUp)
   {
     document.getElementById('modalEscapeFrame').style.display = "none";
-    document.getElementById('exitToMenuButton').style.visibility = "hidden";
+    // document.getElementById('exitToMenuButton').style.visibility = "hidden";
     document.getElementById('optionsButton').style.visibility = "hidden";
     document.getElementById('escapeButton').style.visibility = "hidden";
     if (curTracking) {
@@ -5987,11 +6023,11 @@ function toggleEscapeFrame() {
   //land uses IE toggling them on will show up on the multiplayer screen. The options in multiplayer screen are all
   //locked.
   // XXX WHAT'S THE DIFFERENCE FOR THIS IF/ELSE?
-  if (multiplayerAssigningModeOn) {
-    document.getElementById('optionsButton').className = "mainEscapeButton";
-  } else {
-    document.getElementById('optionsButton').className = "mainEscapeButton";
-  }
+  // if (multiplayerAssigningModeOn) {
+  //   document.getElementById('optionsButton').className = "mainEscapeButton";
+  // } else {
+  //   document.getElementById('optionsButton').className = "mainEscapeButton";
+  // }
 
 } //end toggleEscapeFrame
 
