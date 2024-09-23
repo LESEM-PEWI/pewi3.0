@@ -1,10 +1,14 @@
 // Define the function
+function multiplyArray(arr, factor) {
+  return arr.map(item => item * factor);
+}
 var Economics = function () {
   //This is the inflation adjustment factor
   const adjustmentFactor = 1.23
   this.rawData;
   this.rawBMPData;
-  this.mapData = [];  this.data = [];
+  this.mapData = [];
+  this.data = [];
   this.data4 = [];
 
   this.dataSubcrop = {};
@@ -626,6 +630,7 @@ var Economics = function () {
           }
           if(["A", "D", "G", "M", "Q", "Y"].indexOf(boardData[currentBoard].map[j]['soilType']) !==- 1){
             this.getForrestYields[i][1].seventyAreaConv += boardData[currentBoard].map[j].area;
+            //console.log(this.getForrestYields[i][1].seventyAreaConv += boardData[currentBoard].map[j].area);
           }
         }
       }
@@ -738,67 +743,32 @@ var Economics = function () {
    * values for cells that are not conservation forest or conventional forest)
    */
   calculateForestAreaBySoil = () => {
-    for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
+    // Yes, I rewrite this code the switch is unnecessary, and complicates readability
+    for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
+      // Initialize getSoilArea for year 'i'
       this.getSoilArea[i] = [
-        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0,  "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
-        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0,  "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
-        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0,  "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
       ];
 
       for (let j = 0; j < boardData[currentBoard].map.length; j++) {
         let numLandUse = 0;
-        if (boardData[currentBoard].map[j].landType[i] === 10 ){
+        if (boardData[currentBoard].map[j].landType[i] === 10) {
           numLandUse = 1;
         }
-        if(boardData[currentBoard].map[j].landType[i] === 11){
+        if (boardData[currentBoard].map[j].landType[i] === 11) {
           numLandUse = 2;
         }
 
+        // Get the soil type and area directly
         let soilType = boardData[currentBoard].map[j]['soilType'];
+        let area = boardData[currentBoard].map[j].area;
 
-        switch (soilType){
-          case "A":
-            this.getSoilArea[i][numLandUse]["A"] += boardData[currentBoard].map[j].area;
-            break;
-          case "B":
-            this.getSoilArea[i][numLandUse]["B"] += boardData[currentBoard].map[j].area;
-            break;
-          case "C":
-            this.getSoilArea[i][numLandUse]["C"] += boardData[currentBoard].map[j].area;
-            break;
-          case "D":
-            this.getSoilArea[i][numLandUse]["D"] += boardData[currentBoard].map[j].area;
-            break;
-          case "G":
-            this.getSoilArea[i][numLandUse]["G"] += boardData[currentBoard].map[j].area;
-            break;
-          case "K":
-            this.getSoilArea[i][numLandUse]["K"] += boardData[currentBoard].map[j].area;
-            break;
-          case "L":
-            this.getSoilArea[i][numLandUse]["L"] += boardData[currentBoard].map[j].area;
-            break;
-          case "M":
-            this.getSoilArea[i][numLandUse]["M"] += boardData[currentBoard].map[j].area;
-            break;
-          case "N":
-            this.getSoilArea[i][numLandUse]["N"] += boardData[currentBoard].map[j].area;
-            break;
-          case "O":
-            this.getSoilArea[i][numLandUse]["O"] += boardData[currentBoard].map[j].area;
-            break;
-          case "Q":
-            this.getSoilArea[i][numLandUse]["Q"] += boardData[currentBoard].map[j].area;
-            break;
-          case "T":
-            this.getSoilArea[i][numLandUse]["T"] += boardData[currentBoard].map[j].area;
-            break;
-          case "Y":
-            this.getSoilArea[i][numLandUse]["Y"] += boardData[currentBoard].map[j].area;
-            break;
-          default:
-            break;
-
+        // Increment the area for the appropriate soil type and land use without using a switch
+        // perfect we have just reduced this code by about 15 lines
+        if (this.getSoilArea[i][numLandUse].hasOwnProperty(soilType)) {
+          this.getSoilArea[i][numLandUse][soilType] += area;
         }
       }
     }
@@ -959,6 +929,5 @@ var Economics = function () {
 
 
 }
-// TODO investigate the impact of pre-loading this module
 var economics = new Economics();
-//kind of a precalc? Not really but it's calculated before its needed.
+//kind of a precalc? Not really but its calculated before its needed.
