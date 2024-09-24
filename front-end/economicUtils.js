@@ -37,4 +37,32 @@ const costAdjuster = function(data, column, factor = 1.23) {
     return data;
 }
 
+function flattenNestedObject(arr){
+    for(var key in arr){
+        if(arr[key] instanceof Object){
+            recursive_for(arr[key]);
+        }else{
+            console.log(arr[key]);
+            console.log(key)
+        }
+    }
+}
 
+fetchDataBySoilType = (data, soilType, columnName = 'soilType') => {
+    // Check if data is loaded
+    if (!data || data.length === 0) {
+        console.error("Data not loaded yet or is empty.");
+        return [];
+    }
+
+    // Use the filter method to return rows with the specified soil type
+    let filterData = data.filter(row => row[columnName] === soilType);
+
+    // Check if filterData is empty
+    if (filterData.length === 0) {
+        console.warn(`No data found for soil type: ${soilType}`);
+        return [];
+    }
+
+    return filterData;
+};
