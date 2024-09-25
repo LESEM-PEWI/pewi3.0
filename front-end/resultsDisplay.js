@@ -1461,7 +1461,7 @@ function drawEcosystemIndicatorsDisplay(year) {
     backColor: "navy",
     raw: (Math.round(Totals.sedimentDelivery[year] * 10) / 10) + " tons"
   }, {
-    name: "Carbon Sequestration",
+    name: "Soil Organic Carbon",
     score: (Math.round(Totals.carbonSequestrationScore[year] * 10) / 10),
     color: "#d62728",
     backColor: "maroon",
@@ -1834,7 +1834,7 @@ function drawEcosystemRadar(yearArray) {
       value: (Totals.sedimentDeliveryScore[y] / 100),
       raw: (Math.round(Totals.sedimentDelivery[y] * 10) / 10).toFixed(1) + " tons"
     }, {
-      label: "Carbon Sequestration",
+      label: "Soil Organic Carbon",
       axis: "Carbon",
       value: (Totals.carbonSequestrationScore[y] / 100),
       raw: (Math.round(Totals.carbonSequestration[y] * 10) / 10).toFixed(1) + " tons"
@@ -3130,9 +3130,9 @@ function generateResultsTable() {
     //SECOND TABLE, ECOSYSTEM INDICATORS
 
 
-    frontendNames = ["Game Wildlife", " Land Biodiversity", "Stream Biodiversity", "Mussel Population", "Carbon Sequestration", "Erosion Control / Gross Erosion", "Aquatic Health",
+    frontendNames = ["Carbondioxide","Methane","Nitrous Oxide","Soil Organic Carbon", "Erosion Control / Gross Erosion","Aquatic Health",
       "Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading",
-      "Sediment Control <br> / In-Stream Delivery"
+      "Sediment Control <br> / In-Stream Delivery","Game Wildlife", " Land Biodiversity", "Stream Biodiversity", "Mussel Population",
     ];
     backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "streamBiodiversity", "musselPopulation" ,"carbonSequestration", "grossErosion", "aquaticHealth", "nitrateConcentration",
       "phosphorusLoad", "sedimentDelivery"
@@ -3181,7 +3181,85 @@ function generateResultsTable() {
 
       //keep track if we need to add the appropriate subheading lines
       switch (l) {
+
         case 0:
+          //htmlTableString += "<tr class='tableHeading'><td><b>Climate Quality</b></td></tr>";
+          htmlTableString += "<tr>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Climate" + "<b></td>";
+          //calculate total score for each year and place next to Habitat header
+          for(var y = 1; y <= upToYear; y++){
+            htmlTableString += "<td class='rightText'><b>";
+
+            var totalScore = (Totals.carbonSequestrationScore[y]+Totals.grossErosionScore[y])/2;
+
+            htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
+
+            htmlTableString += "<b></td>";
+          }
+          htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
+          //add extra spaces to fill out bar across screen
+          for(var y = 1; y <= (2*upToYear)+2; y++){
+            if(y == ((2*upToYear) + 2) / 2){
+              htmlTableString += "<td  class='verticalLine centerText'></td>";
+            }
+            else{
+              htmlTableString += "<td></td>";
+            }
+          }
+          break;
+        case 1:
+          //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
+          htmlTableString += "<tr>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Soil" + "<b></td>";
+          //calculate total score for each year and place next to Habitat header
+          for(var y = 1; y <= upToYear; y++){
+            htmlTableString += "<td class='rightText'><b>";
+
+            var totalScore = (Totals.carbonSequestrationScore[y]+Totals.grossErosionScore[y])/2;
+
+            htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
+
+            htmlTableString += "<b></td>";
+          }
+          htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
+          //add extra spaces to fill out bar across screen
+          for(var y = 1; y <= (2*upToYear)+2; y++){
+            if(y == ((2*upToYear) + 2) / 2){
+              console.log()
+              htmlTableString += "<td  class='verticalLine centerText'></td>";
+            }
+            else{
+              htmlTableString += "<td></td>";
+            }
+          }
+          break;
+
+        case 2:
+          //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
+          htmlTableString += "<tr>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Water" + "<b></td>";
+          //calculate total score for each year and place next to Habitat header
+          for(var y = 1; y <= upToYear; y++){
+            htmlTableString += "<td class='rightText'><b>";
+
+            var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y]+Totals.aquaticHealthIndexScore[y])/4;
+
+            htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
+
+            htmlTableString += "<b></td>";
+          }
+          htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
+          //add extra spaces to fill out bar across screen
+          for(var y = 1; y <= (2*upToYear)+2; y++){
+            if(y == ((2*upToYear) + 2) / 2){
+              htmlTableString += "<td  class='verticalLine'></td>";
+            }
+            else{
+              htmlTableString += "<td></td>";
+            }
+          }
+          break;
+        case 3:
           //htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
           //  //put Habitat header, in bold
             htmlTableString += "<tr>";
@@ -3208,56 +3286,8 @@ function generateResultsTable() {
             }
             break;
           break;
-        case 4:
-          //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
-          htmlTableString += "<tr>";
-          htmlTableString += "<td class='verticalLine'><b>" + "Soil" + "<b></td>";
-          //calculate total score for each year and place next to Habitat header
-          for(var y = 1; y <= upToYear; y++){
-            htmlTableString += "<td class='rightText'><b>";
 
-            var totalScore = (Totals.carbonSequestrationScore[y]+Totals.grossErosionScore[y])/2;
 
-            htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
-
-            htmlTableString += "<b></td>";
-          }
-          htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
-          //add extra spaces to fill out bar across screen
-          for(var y = 1; y <= (2*upToYear)+2; y++){
-            if(y == ((2*upToYear) + 2) / 2){
-              htmlTableString += "<td  class='verticalLine centerText'></td>";
-            }
-            else{
-              htmlTableString += "<td></td>";
-            }
-          }
-          break;
-        case 6:
-          //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
-          htmlTableString += "<tr>";
-          htmlTableString += "<td class='verticalLine'><b>" + "Water" + "<b></td>";
-          //calculate total score for each year and place next to Habitat header
-          for(var y = 1; y <= upToYear; y++){
-            htmlTableString += "<td class='rightText'><b>";
-
-            var totalScore = (Totals.nitrateConcentrationScore[y]+Totals.phosphorusLoadScore[y]+Totals.sedimentDeliveryScore[y]+Totals.aquaticHealthIndexScore[y])/4;
-
-            htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
-
-            htmlTableString += "<b></td>";
-          }
-          htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
-          //add extra spaces to fill out bar across screen
-          for(var y = 1; y <= (2*upToYear)+2; y++){
-            if(y == ((2*upToYear) + 2) / 2){
-              htmlTableString += "<td  class='verticalLine'></td>";
-            }
-            else{
-              htmlTableString += "<td></td>";
-            }
-          }
-          break;
       } //end switch
 
       htmlTableString += "<tr>";
@@ -3294,7 +3324,7 @@ function generateResultsTable() {
         htmlTableString += "<td class='rightText'>";
 
         var tempString = backendDataIdentifiers[l];
-        //Correction for Carbon Sequestrations
+        //Correction for Soil Organic Carbon
 
         // if (l == 2) {
         //   Totals[tempString][y] = Totals[tempString][y] * (1 / conversionArray[l]);
@@ -4004,7 +4034,7 @@ function render(years){
         return "t1";
       }
       else if(type === "landName"){
-        return "Carbon Sequestration";
+        return "Soil Organic Carbon";
       }
       else if(type === "boxY"){
         return 45;
@@ -4607,7 +4637,7 @@ function render(years){
   function getLabel(id) {
     switch (id) {
       case 1: case 19: case 37:
-        return "Carbon Sequestration";
+        return "Soil Organic Carbon";
       break;
       case 2: case 20: case 38:
         return "Land Biodiversity";

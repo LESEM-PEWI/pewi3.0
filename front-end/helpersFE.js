@@ -5916,12 +5916,31 @@ function submitInflationForm() {
   const inflationFactor = document.getElementById('inflationFactor').value;
   const cornPrices = document.getElementById('cornPrices').value;
   const soybeanPrices = document.getElementById('soybeanPrices').value;
-  console.log('Inflation Factor Adjustment:', inflationFactor);
-  console.log('Corn Prices:', cornPrices);
-  console.log('Soybean Prices:', soybeanPrices);
+  const carbonPrices = document.getElementById('carbonPrices').value;
+  // Function to check if a value is a number
+  function isNumber(value) {
+    return !isNaN(value);
+  }
+  // Check if any field is empty
+  if (inflationFactor === '' || cornPrices === '' || soybeanPrices === '' || carbonPrices === '') {
+    alert("Please fill in all fields.");
+    return; // Stop form submission if any field is empty
+  }
+  // Validate the inputs
+  if (!isNumber(inflationFactor) || !isNumber(cornPrices) || !isNumber(soybeanPrices) || !isNumber(carbonPrices)) {
+    alert("Please enter valid numbers in all fields.");
+    return; // Stop form submission if validation fails
+  }
 
-  alert('Form submitted successfully!');
-}
+  const inflationValues={
+    inflationFactor:inflationFactor,
+    cornPrices:cornPrices,
+    soybeanPrices:soybeanPrices,
+    carbonPrices:carbonPrices
+  }
+  console.log("inflationValues",inflationValues)
+  // alert('Form submitted successfully!');
+} //end of submitInflationForm
 
 function switchCurrentPlayer(playerNumber) {
   currentPlayer = playerNumber;

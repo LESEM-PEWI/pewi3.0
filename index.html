@@ -629,19 +629,22 @@
       <div id="inflationTab" class="consoleTab" style="display:none;">
         <div id="inflationContainer">
           <div>
-            <span>Financial Information:</span>
           </div><form id="adjustmentForm" method="post" action="">
           <div>
             <label for="inflationFactor">Inflation Factor Adjustment:</label>
-            <input type="number" id="inflationFactor" name="inflationFactor">
+            <input type="number" id="inflationFactor" name="inflationFactor" value="1.23">
           </div>
           <div>
             <label for="cornPrices">Corn Prices:</label>
-            <input type="number" id="cornPrices" name="cornPrices">
+            <input type="number" id="cornPrices" name="cornPrices" value="4.4">
           </div>
           <div>
             <label for="soybeanPrices">Soybean Prices:</label>
-            <input type="number" id="soybeanPrices" name="soybeanPrices">
+            <input type="number" id="soybeanPrices" name="soybeanPrices" value="12">
+          </div>
+          <div>
+            <label for="carbonPrices">Carbon Prices:</label>
+            <input type="number" id="carbonPrices" name="carbonPrices" value="25">
           </div>
           <div>
             <button id="submitInflationButton" type="button" onclick="submitInflationForm()">Submit</button>
