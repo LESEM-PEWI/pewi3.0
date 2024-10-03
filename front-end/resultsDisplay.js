@@ -1466,7 +1466,14 @@ function drawEcosystemIndicatorsDisplay(year) {
     color: "#d62728",
     backColor: "maroon",
     raw: (Math.round(Totals.carbonSequestration[year] * 10) / 10) + " tons"
-  }, {
+  },
+    {
+      name: "Green House Gases",
+      score: (Math.round(Totals.ghgScore[year] * 10) / 10),
+      color: "#d62728",
+      backColor: "pink",
+      raw: (Math.round(Totals.ghg[year] * 10) / 10) + " tons"
+}, {
     name: "Gross Erosion",
     score: (Math.round(Totals.grossErosionScore[year] * 10) / 10),
     color: "#9467bd",
@@ -1833,12 +1840,13 @@ function drawEcosystemRadar(yearArray) {
       axis: "Sediment",
       value: (Totals.sedimentDeliveryScore[y] / 100),
       raw: (Math.round(Totals.sedimentDelivery[y] * 10) / 10).toFixed(1) + " tons"
-    }, {
-      label: "Soil Organic Carbon",
-      axis: "Carbon",
-      value: (Totals.carbonSequestrationScore[y] / 100),
-      raw: (Math.round(Totals.carbonSequestration[y] * 10) / 10).toFixed(1) + " tons"
-    }, {
+    },
+      {
+        label: "Green House Gases",
+        axis: "ghg",
+        value: (Totals.ghgScore[y] / 100),
+        raw: (Math.round(Totals.ghg[y] * 10) / 10).toFixed(1) + " tons"
+      }, {
       label: "Gross Erosion",
       axis: "Erosion",
       value: (Totals.grossErosionScore[y] / 100),
@@ -1864,8 +1872,13 @@ function drawEcosystemRadar(yearArray) {
     label: "Aquatic Health",
     axis: "Aquatic Health",
     value: (Totals.aquaticHealthIndexScore[y] / 100),
-    raw: (Math.round(Totals.aquaticHealthIndex[y] * 10) / 10).toFixed(1) + " ppm"
-    }
+    raw: (Math.round(Totals.aquaticHealthIndex[y] * 10) / 10).toFixed(1) + " ppm"},
+    // },{
+    //    label: "GHG",
+    //     axis: "GHG",
+    //     value: (Totals.gameWildlifePointsScore[y] / 100),
+    //     raw: (Math.round(Totals.gameWildlifePoints[y] * 10) / 10).toFixed(1) + " pts"
+    //   }
     ];
 
     dataset.push(obj);
@@ -3130,7 +3143,7 @@ function generateResultsTable() {
     //SECOND TABLE, ECOSYSTEM INDICATORS
 
 
-    frontendNames = ["Carbondioxide","Methane","Nitrous Oxide","Soil Organic Carbon", "Erosion Control / Gross Erosion","Aquatic Health",
+    frontendNames = ["Green House Gases","Carbondioxide","Methane","Nitrous Oxide","Soil Organic Carbon", "Erosion Control / Gross Erosion","Aquatic Health",
       "Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading",
       "Sediment Control <br> / In-Stream Delivery","Game Wildlife", " Land Biodiversity", "Stream Biodiversity", "Mussel Population",
     ];
@@ -4047,41 +4060,75 @@ function render(years){
         return selectID;
       }
       break;
-    case "c2": case "c20": case "c38": case "t2": case "bigrect2": case "checkbox2":
-      if(type === "color"){
-        return "#5bc0de";
-      }
-      else if(type === "data"){
-        if(y > 2){
-          selectID = ["c2", "c20", "c38"];
-        }else if(y > 1){
-          selectID = ["c2", "c20"];
-        }else{
-          selectID = ["c2"];
+      case "c2": case "c20": case "c38": case "t2": case "bigrect2": case "checkbox2":
+        if(type === "color"){
+          return "#f0ad4e";
         }
-        return selectID;
-      }
-      else if(type === "barRep"){
-        return "2";
-      }
-      else if(type === "textRep"){
-        return "t2";
-      }
-      else if(type === "landName"){
-        return "Land Biodiversity";
-      }
-      else if(type === "boxY"){
-        return 75;
-      }
-      else if(type === "boxID"){
-        return "b2";
-      }
-      else if(type === "progressBars"){
-        selectID = ["#smallrect2", "#bigrect2"];
-        return selectID;
-      }
-      break;
-      //TODO STREAM BIODIVERISTY
+        else if(type === "data"){
+          if(y > 2){
+            selectID = ["c2", "c20", "c38"];
+          }else if(y > 1){
+            selectID = ["c2", "c20"];
+          }else{
+            selectID = ["c2"];
+          }
+          return selectID;
+        }
+        else if(type === "barRep"){
+          return "2";
+        }
+        else if(type === "textRep"){
+          return "t2";
+        }
+        else if(type === "landName"){
+          return "Green House Gases";
+        }
+        else if(type === "boxY"){
+          return 45;
+        }
+        else if(type === "boxID"){
+          return "b2";
+        }
+        else if(type === "progressBars"){
+          selectID = ["#smallrect2", "#bigrect2"];
+          return selectID;
+        }
+        break;
+    // case "c2": case "c20": case "c38": case "t2": case "bigrect2": case "checkbox2":
+    //   if(type === "color"){
+    //     return "#5bc0de";
+    //   }
+    //   else if(type === "data"){
+    //     if(y > 2){
+    //       selectID = ["c2", "c20", "c38"];
+    //     }else if(y > 1){
+    //       selectID = ["c2", "c20"];
+    //     }else{
+    //       selectID = ["c2"];
+    //     }
+    //     return selectID;
+    //   }
+    //   else if(type === "barRep"){
+    //     return "2";
+    //   }
+    //   else if(type === "textRep"){
+    //     return "t2";
+    //   }
+    //   else if(type === "landName"){
+    //     return "Land Biodiversity";
+    //   }
+    //   else if(type === "boxY"){
+    //     return 75;
+    //   }
+    //   else if(type === "boxID"){
+    //     return "b2";
+    //   }
+    //   else if(type === "progressBars"){
+    //     selectID = ["#smallrect2", "#bigrect2"];
+    //     return selectID;
+    //   }
+    //   break;
+    //   //TODO STREAM BIODIVERISTY
     case "c3": case "c21": case "c39": case "t3": case "bigrect3": case "checkbox3":
       if(type === "color"){
         return "#5bc0de";
@@ -4640,8 +4687,11 @@ function render(years){
         return "Soil Organic Carbon";
       break;
       case 2: case 20: case 38:
-        return "Land Biodiversity";
-      break;
+        return "Green House Gases";
+        break;
+      // case 2: case 20: case 38:
+      //   return "Land Biodiversity";
+      // break;
       //TODO STREAM BIODIVERSITY
       case 3: case 21: case 39:
         return "Stream Biodiversity";

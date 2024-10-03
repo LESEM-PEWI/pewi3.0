@@ -95,7 +95,7 @@ var Economics = function () {
     }
     d3.csv('./Budget2020.csv', (data) => {
       // ToDO pass 1.23, the default to the functions above
-      this.rawData=costAdjuster(data, "EAA", 1.23);
+      this.rawData=costAdjuster(data, "EAA",  parseFloat(document.getElementById('inflationFactor').value));
       this.rawData.forEach(dataPoint => {
         let id = Number.parseInt(dataPoint['LU_ID'])
         divisionForLU = (typeof yearCosts[id] === 'number') ? yearCosts[id]:  yearCosts[id][dataPoint['Sub Crop']];
@@ -110,7 +110,7 @@ var Economics = function () {
   //READ IN BMP FILE
   d3.csv('./BMPBudgets2020.csv', (data) => {
 
-    this.rawBMPData=costAdjuster(data, 'EAA', 1.23);
+    this.rawBMPData=costAdjuster(data, 'EAA',  parseFloat(document.getElementById('inflationFactor').value));
 
   });
 
@@ -195,8 +195,9 @@ var Economics = function () {
 
     let landUses = [];
     this.mapData = [];
+
     const revenueData = {
-      '1': 4,
+      '1': 2,// parseFloat(infValue['cornPrices']),
       '2': 4,
      '3': 12,
       '4': 12

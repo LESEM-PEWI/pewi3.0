@@ -2683,6 +2683,7 @@ function Results(board) {
   this.grossErosion = [0, 0, 0, 0];
   this.nitrateConcentration = [0, 0, 0, 0];
   this.carbonSequestration = [0, 0, 0, 0];
+  this.ghg = [0, 0, 0, 0];
   this.acre = null;
   this.gameWildlifePoints = [0, 0, 0, 0];
   this.biodiversityPoints = [0, 0, 0, 0];
@@ -2732,6 +2733,7 @@ function Results(board) {
   this.gameWildlifePointsScore = [0, 0, 0, 0];
   this.biodiversityPointsScore = [0, 0, 0, 0];
   this.carbonSequestrationScore = [0, 0, 0, 0];
+  this.ghgScore=[0, 0, 0, 0];
   this.grossErosionScore = [0, 0, 0, 0];
   this.nitrateConcentrationScore = [0, 0, 0, 0];
   this.phosphorusLoadScore = [0, 0, 0, 0];

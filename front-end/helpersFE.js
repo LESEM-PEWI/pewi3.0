@@ -1951,6 +1951,12 @@ function displayLevels(overlayHighlightType) {
   overlayedToggled = true;
   //record new highlighting selection
   switch (overlayHighlightType) {
+    case 'ghg':
+      selectionHighlightNumber = 24;
+      updateGlossaryPopup('This map shows the locations for each <span style="color:lightpink;">strategic wetland</span>. To learn more, go to the <span style="color:yellow;">Glossary</span> and select <span style="color:yellow;">"Green House Gases"</span>.');
+      if (curTracking) {
+        pushClick(0, getStamp(), 46, 0, null);
+      }
     case 'nitrate':
       selectionHighlightNumber = 1;
       updateGlossaryPopup('To learn more about <span style="color:orange;">Nitrate</span>, go to the <span style="color:yellow;">Glossary</span>, select "Modules" and then <span style="color:yellow;">"Water Quality"</span>.');
@@ -5931,16 +5937,17 @@ function submitInflationForm() {
     alert("Please enter valid numbers in all fields.");
     return; // Stop form submission if validation fails
   }
-
   const inflationValues={
-    inflationFactor:inflationFactor,
-    cornPrices:cornPrices,
-    soybeanPrices:soybeanPrices,
-    carbonPrices:carbonPrices
+    'inflationFactor':inflationFactor,
+    'cornPrices':cornPrices,
+    'soybeanPrices':soybeanPrices,
+    'carbonPrices':carbonPrices
   }
-  console.log("inflationValues",inflationValues)
-  // alert('Form submitted successfully!');
+  Economics();
+   alert('Form submitted successfully!');
+  //return inflationValues
 } //end of submitInflationForm
+
 
 function switchCurrentPlayer(playerNumber) {
   currentPlayer = playerNumber;
