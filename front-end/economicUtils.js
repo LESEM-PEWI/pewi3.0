@@ -33,7 +33,6 @@ const costAdjuster = function(data, column, factor = 1.23) {
             row[column] = parseFloat(row[column]) * factor;
         }
     }
-
     return data;
 }
 
@@ -48,7 +47,7 @@ function flattenNestedObject(arr){
     }
 }
 
-fetchDataBySoilType = (data, soilType, columnName = 'soilType') => {
+filterByValue = (data, soilType, columnName = 'soilType') => {
     // Check if data is loaded
     if (!data || data.length === 0) {
         console.error("Data not loaded yet or is empty.");
@@ -66,3 +65,134 @@ fetchDataBySoilType = (data, soilType, columnName = 'soilType') => {
 
     return filterData;
 };
+
+
+calculateGHGbySoilTypes = () => {
+    // Yes, I rewrite this code the switch is unnecessary, and complicates readability
+    for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
+        // Initialize getSoilArea for year 'i'
+        this.cellArea[i] = [
+            {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+            {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+            {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+        ];
+
+        for (let j = 0; j < boardData[currentBoard].map.length; j++) {
+
+            let numberLandUse  = boardData[currentBoard].map[j].landType[i]
+
+            // Get the soil type and area directly
+            let soilType = boardData[currentBoard].map[j]['soilType'];
+            let area = boardData[currentBoard].map[j].area;
+            let prepitiationData = boardData[currentBoard].precipitation[i] * 25.4
+
+            // Increment the area for the appropriate soil type and land use without using a switch
+            // perfect we have just reduced this code by about 15 lines
+            if (this.cellArea[i][numLandUse].hasOwnProperty(soilType)) {
+                // get the soils by soil types
+                let gHGSoilType = filterByValue(this.ghg, soilType, columnName= 'soilType')
+                this.cellArea[i][numLandUse][soilType] += area;
+            }
+        }
+    }
+};
+
+filterByLandUseAndSoilType = (data, landUseTypes, soilTypes) => {
+    // Check if data is loaded
+    if (!data || data.length === 0) {
+        console.error("Data not loaded yet or is empty.");
+        return [];
+    }
+
+    // Ensure landUseTypes and soilTypes are arrays
+    if (!Array.isArray(landUseTypes)) {
+        landUseTypes = [landUseTypes];
+    }
+    if (!Array.isArray(soilTypes)) {
+        soilTypes = [soilTypes];
+    }
+
+    // Filter data based on both landUseType and soilType
+    let filteredData = data.filter(row => {
+        return landUseTypes.includes(row['code']) && soilTypes.includes(row['soilType']);
+    });
+
+    // Check if filteredData is empty
+    if (filteredData.length === 0) {
+        console.warn(`No data found for the specified land use types: ${landUseTypes.join(', ')} and soil types: ${soilTypes.join(', ')}`);
+        return [];
+    }
+    console.log(filteredData)
+    return filteredData;
+};
+
+// Example data structure
+let myData = [
+    { landUseType: '10', soilType: 'C', area: 100 },
+    { landUseType: '11', soilType: 'L', area: 200 },
+    { landUseType: '10', soilType: 'O', area: 300 },
+    { landUseType: '12', soilType: 'C', area: 150 }
+];
+
+
+var calsGHGs = function() {
+    this.extractSoils = [];
+    this.extractLandUses = [];
+    this.GHGData = [];
+    d3.csv('./ghg.csv', (_data) => {
+
+        this.GHGData = _data;
+        console.log(this.GHGData)
+    })
+    // Yes, I rewrite this code the switch is unnecessary, and complicates readability
+    const mineer = () => {
+        for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
+            // Initialize extractSoils for year 'i'
+            this.extractSoils[i] = Array(3).fill().map(() => ({
+                "A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0,  "Q": 0, "T": 0, "Y": 0
+            }));
+
+            // Initialize extractLandUses
+            this.extractLandUses[i] = Array(3).fill().map(() => ({
+                0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0
+            }));
+
+            for (let j = 0; j < boardData[currentBoard].map.length; j++) {
+                let _PrecipitationData = boardData[currentBoard].precipitation[i] * 25.4;
+                console.log(_PrecipitationData);
+
+                // Determine numericalLandUse based on the landType
+                let numericalLandUse = 0;
+                numericalLandUse = boardData[currentBoard].map[j].landType[i]
+                // Extract soil type and area for calculations
+                const extractSoilType = boardData[currentBoard].map[j]['soilType'];
+                const extractArea = boardData[currentBoard].map[j].area;
+
+                // Update extractSoils and extractLandUses arrays
+                if (this.extractSoils[i][numericalLandUse].hasOwnProperty(extractSoilType)) {
+                    this.extractSoils[i][numericalLandUse][extractSoilType] += extractArea;
+                    this.extractLandUses[i][numericalLandUse] += extractArea;
+
+                    console.log(this.extractLandUses[i][numericalLandUse]);
+                }
+            }
+        }
+    };
+
+
+}
+
+// This will fill the three objects for the three years
+const soilTypeHolderArray = Array(3).fill().map(() => ({
+    "A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0
+}));
+// This will fill three objects for the three years
+const landUseHolderArray = Array(3).fill().map(() =>(
+{0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0}
+));
+// log them and see the length
+console.log(soilTypeHolderArray.length)
+console.log(landUseHolderArray.length)
+
+
+

@@ -5919,8 +5919,9 @@ function submitInflationForm() {
   console.log('Inflation Factor Adjustment:', inflationFactor);
   console.log('Corn Prices:', cornPrices);
   console.log('Soybean Prices:', soybeanPrices);
-
-  alert('Form submitted successfully!');
+  alert('Form submitted successfully click ok to continue, then select leave page to reload the changes!');
+  // due to the fact that methods in the economics module are in different places, we have to tell the user to reload whole page
+  location.reload()
 }
 
 function switchCurrentPlayer(playerNumber) {
@@ -8003,3 +8004,4 @@ finds a usable type
 
     return toReturn;
   }
+

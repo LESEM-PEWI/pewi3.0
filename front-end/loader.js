@@ -40,7 +40,7 @@ function loadResources() {
     var textureWetland = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Wetland.png');//14
     var textureMixedFruitsVegetables = textureLoader.load('./imgs/cell_images_bitmaps/LandUse_Mixed_Fruits_and_Vegetables.png');//15
 
-    //load grayscale land type tectures
+    //load grayscale land type textures
     var grayConventionalCorn = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Conventional_Corn.png'); //1
     var grayConservationCorn = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Conservation_Corn.png'); //2
     var grayConventionalSoybean = textureLoader.load('./imgs/Grayscale_Imgs/Gray_Conventional_Soybean.png');//3

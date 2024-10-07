@@ -1,7 +1,4 @@
 // Define the function
-function multiplyArray(arr, factor) {
-  return arr.map(item => item * factor);
-}
 var Economics = function () {
   //This is the inflation adjustment factor
   const adjustmentFactor = 1.23
@@ -10,7 +7,11 @@ var Economics = function () {
   this.mapData = [];
   this.data = [];
   this.data4 = [];
-
+  // GHG variables
+  this.ghg =[];
+  this.extractSoils = [];
+  this.extractLandUses = [];
+  cellArea = [];
   this.dataSubcrop = {};
   this.data3 = [];
   this.data3ByLU = [];
@@ -25,6 +26,7 @@ var Economics = function () {
   this.getRent = [];
   this.totalWatershedCost=[];
   this.totalWatershedRevenue=[];
+  this.landUseAreas =[];
 
 
 //the number of years in the cycle so that we can divide to get the yearly cost; The -1 accounts for the 'none' land use.
@@ -95,7 +97,8 @@ var Economics = function () {
     }
     d3.csv('./Budget2020.csv', (data) => {
       // ToDO pass 1.23, the default to the functions above
-      this.rawData=costAdjuster(data, "EAA", 1.23);
+      // TODO i have inflationFactor = infAdjust variable_name
+      this.rawData=costAdjuster(data, "EAA", infAdjust);
       this.rawData.forEach(dataPoint => {
         let id = Number.parseInt(dataPoint['LU_ID'])
         divisionForLU = (typeof yearCosts[id] === 'number') ? yearCosts[id]:  yearCosts[id][dataPoint['Sub Crop']];
@@ -110,9 +113,55 @@ var Economics = function () {
   //READ IN BMP FILE
   d3.csv('./BMPBudgets2020.csv', (data) => {
 
-    this.rawBMPData=costAdjuster(data, 'EAA', 1.23);
+    this.rawBMPData=costAdjuster(data, 'EAA', infAdjust);
 
   });
+
+  d3.csv('./ghg.csv', (data) => {
+    this.ghg = data;
+
+    // Now you can access DATA since it has been loaded
+    console.log(this.ghg[90]['code']);
+  })
+
+  this.ghgFunction = function(){
+
+  console.log(this.ghg[100]);
+    for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
+      // Initialize extractSoils for year 'i'
+      this.extractSoils[i] = Array(3).fill().map(() => ({
+        "A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0,  "Q": 0, "T": 0, "Y": 0
+      }));
+
+      // Initialize extractLandUses
+      this.extractLandUses[i] = Array(3).fill().map(() => ({
+        0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0
+      }));
+
+      for (let j = 0; j < boardData[currentBoard].map.length; j++) {
+        const _PrecipitationData = boardData[currentBoard].precipitation[i] * 25.4;
+        console.log(i)
+        if (i===2) {
+          console.log(_PrecipitationData);
+        }
+        // Determine numericalLandUse based on the landType
+        let numericalLandUse = 0;
+        numericalLandUse = boardData[currentBoard].map[j].landType[i]
+        // Extract soil type and area for calculations
+        const extractSoilType = boardData[currentBoard].map[j]['soilType'];
+        const extractArea = boardData[currentBoard].map[j].area;
+        let cellLandArea  =  boardData[currentBoard].map[j].area;
+       console.log(cellLandArea)
+        // Update extractSoils and extractLandUses arrays
+        if (this.extractSoils[i][numericalLandUse].hasOwnProperty(extractSoilType)) {
+          this.extractSoils[i][numericalLandUse][extractSoilType] += extractArea;
+          this.extractLandUses[i][numericalLandUse] += cellLandArea;
+          //console.log(this.extractLandUses[i][1]);
+        }
+      }
+    }
+    console.log(this.extractLandUses[1][1])
+  }
 
   //graph
   //graphic 4 extract data from raw data
@@ -130,6 +179,7 @@ var Economics = function () {
             if(!this.data4[i][landuseNum][cat]){
               this.data4[i][landuseNum][cat]=[];
             }
+            //console(this.ghg[150]['code']);
             if(!this.data4[i][landuseNum][cat].includes(dataPoint[cat])){
               this.data4[i][landuseNum][cat].push(dataPoint[cat]);
             }
@@ -185,7 +235,7 @@ var Economics = function () {
   }
 
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
-
+    this.ghgFunction()
     calculateCornAfters();
     calculatePerYieldCrops();
     calculateForrestYields();
@@ -196,15 +246,15 @@ var Economics = function () {
     let landUses = [];
     this.mapData = [];
     const revenueData = {
-      '1': 4,
-      '2': 4,
-     '3': 12,
-      '4': 12
+      '1': 4, // conventional corn
+      '2': 4, // conservation corn
+     '3': 12, // conventional soybean
+      '4': 12 // conservation soybean
     };
     //Less than ideal coding, but given how Totals is structured the easiest way
     //I found to map Land Use IDS to total LandUse without recalculation
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
-      console.log(i);
+
       landUses[i] = [];
       this.mapData[i] = [];
       this.scaledRev[i] = [];
@@ -513,7 +563,7 @@ var Economics = function () {
 
     //TESTING ONLY
     for(let k = 1; k <= boardData[currentBoard].calculatedToYear; k++) {
-      //console.log("TOTAL WATERSHED COST FOR YEAR: ",k, "=",this.totalWatershedCost[k][0].cost);
+      console.log("TOTAL WATERSHED COST FOR YEAR: ",k, "====",this.totalWatershedCost[k][0].cost);
     }
 
 
@@ -526,7 +576,7 @@ var Economics = function () {
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.totalWatershedRevenue[i]= [{revenue: 0}];
       for(let j = 0; j < 16; j ++){
-        this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][j]) ? this.scaledRev[i][j] *inflationAdjustFactor : 0
+        this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][j]) ? this.scaledRev[i][j]: 0
 
       }
       //console.log("TOTAL WATERSHED REVENUE FOR YEAR: ", i , "=",this.totalWatershedRevenue[i][0].revenue);
@@ -746,12 +796,16 @@ var Economics = function () {
     // Yes, I rewrite this code the switch is unnecessary, and complicates readability
     for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
       // Initialize getSoilArea for year 'i'
-      this.getSoilArea[i] = [
-        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
-        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
-        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+      this.getSoilArea[i] = soilTypeHolderArray; //[
+      //   {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+      //   {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+      //   {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+      // ];
+      this.landUseAreas = [
+        {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0},
+        {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0},
+        {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0}
       ];
-
       for (let j = 0; j < boardData[currentBoard].map.length; j++) {
         let numLandUse = 0;
         if (boardData[currentBoard].map[j].landType[i] === 10) {
@@ -931,3 +985,5 @@ var Economics = function () {
 }
 var economics = new Economics();
 //kind of a precalc? Not really but its calculated before its needed.
+
+console.log("0000000000000000000000000000000000000000000000000000000000000000000")

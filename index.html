@@ -74,8 +74,8 @@
   <script src="./front-end/levelLoader.js"></script>
   <script src="./front-end/paper-full.js"></script>
   <script src="./front-end/contourMap.js"></script>
-  <script src="./front-end/economics.js"></script>
-  <script src="./front-end/economicUtils.js"></script>
+
+
   <script src="./front-end/ghgModule.js"></script>
 
   <script type="text/javascript">
@@ -633,15 +633,15 @@
           </div><form id="adjustmentForm" method="post" action="">
           <div>
             <label for="inflationFactor">Inflation Factor Adjustment:</label>
-            <input type="number" id="inflationFactor" name="inflationFactor">
+            <input type="number" id="inflationFactor" name="inflationFactor" value = 1.56>
           </div>
           <div>
             <label for="cornPrices">Corn Prices:</label>
-            <input type="number" id="cornPrices" name="cornPrices">
+            <input type="number" id="cornPrices" name="cornPrices" value = 4 >
           </div>
           <div>
             <label for="soybeanPrices">Soybean Prices:</label>
-            <input type="number" id="soybeanPrices" name="soybeanPrices">
+            <input type="number" id="soybeanPrices" name="soybeanPrices" value =12>
           </div>
           <div>
             <button id="submitInflationButton" type="button" onclick="submitInflationForm()">Submit</button>
@@ -2256,6 +2256,14 @@
   <script src="./front-end/helpersFE.js"></script>
 
   <script src="./front-end/ghgModule.js"></script>
+  <script>
+    const infAdjust = parseFloat(document.getElementById('inflationFactor').value)
+
+    console.log(infAdjust, 89)
+  </script>
+  <!--  Define scripts in the order they are calling each other-->
+  <script src="./front-end/economicUtils.js"></script>
+  <script src="./front-end/economics.js"></script>
 </body>
 
 </html>
