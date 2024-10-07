@@ -5931,22 +5931,16 @@ function submitInflationForm() {
   if (inflationFactor === '' || cornPrices === '' || soybeanPrices === '' || carbonPrices === '') {
     alert("Please fill in all fields.");
     return; // Stop form submission if any field is empty
+
   }
   // Validate the inputs
   if (!isNumber(inflationFactor) || !isNumber(cornPrices) || !isNumber(soybeanPrices) || !isNumber(carbonPrices)) {
     alert("Please enter valid numbers in all fields.");
     return; // Stop form submission if validation fails
   }
-  const inflationValues={
-    'inflationFactor':inflationFactor,
-    'cornPrices':cornPrices,
-    'soybeanPrices':soybeanPrices,
-    'carbonPrices':carbonPrices
-  }
-  Economics();
    alert('Form submitted successfully!');
-  //return inflationValues
-} //end of submitInflationForm
+
+}
 
 
 function switchCurrentPlayer(playerNumber) {

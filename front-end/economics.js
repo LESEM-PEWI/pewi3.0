@@ -1,7 +1,5 @@
 // Define the function
-function multiplyArray(arr, factor) {
-  return arr.map(item => item * factor);
-}
+
 var Economics = function () {
   //This is the inflation adjustment factor
   const adjustmentFactor = 1.23
@@ -195,12 +193,15 @@ var Economics = function () {
 
     let landUses = [];
     this.mapData = [];
-
+    /* this revenueData object was created to allow the user to make changes to the prices of corn and soybean
+      Only four big land use categories are adjusted, i.e., cons conv corn and soybeans
+      created by richard magala
+    */
     const revenueData = {
-      '1': 2,// parseFloat(infValue['cornPrices']),
-      '2': 4,
-     '3': 12,
-      '4': 12
+      '1': parseFloat(document.getElementById('cornPrices').value),
+      '2': parseFloat(document.getElementById('cornPrices').value),
+     '3': parseFloat(document.getElementById('soybeanPrices').value),
+      '4': parseFloat(document.getElementById('soybeanPrices').value),
     };
     //Less than ideal coding, but given how Totals is structured the easiest way
     //I found to map Land Use IDS to total LandUse without recalculation
@@ -248,6 +249,13 @@ var Economics = function () {
         else if(dataPoint['LU_ID'] === "11"){
           value = parseFloat(dataPoint['Revenue/acre/year']) * this.getSoilArea[i][2][dataPoint['SoilType']]  || 0; //2=Conv Forrest
         }
+        else if(dataPoint['LU_ID'] === "1"){
+          value = parseFloat(revenueData[dataPoint['LU_ID']]) * Totals.yieldByLandUse[i][dataPoint['LU_ID']];
+        }
+        else if(dataPoint['LU_ID'] === "3"){
+          value = parseFloat(revenueData[dataPoint['LU_ID']]) * Totals.yieldByLandUse[i][dataPoint['LU_ID']];
+        }
+
         else{
           value = parseFloat(dataPoint['Revenue/acre/year']) * Totals.yieldByLandUse[i][dataPoint['LU_ID']];
         }
