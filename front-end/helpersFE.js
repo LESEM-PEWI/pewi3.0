@@ -5942,6 +5942,11 @@ function submitInflationForm() {
 
 }
 
+function reloadForEconUpdates(){
+     alert('Form submitted successfully please click yes to continue');
+     location.reload();
+}
+
 
 function switchCurrentPlayer(playerNumber) {
   currentPlayer = playerNumber;
