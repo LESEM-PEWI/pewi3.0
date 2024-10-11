@@ -123,9 +123,12 @@ function refreshEconTotals(yearToLoad){
   //updated when results are explicitly called.
  // economics.rawBMPData=costAdjuster(economics.rawBMPData, 'EAA',  parseFloat(document.getElementById('inflationFactor').value))
   economics.mapChange();
-  const collectInflationAdjustment = parseFloat(document.getElementById('inflationFactor').value)
+
+  const collectInflationAdjustment = parseFloat(document.getElementById('inflationFactor').value);
+  economics.rawBMPData=costAdjuster(economics.rawBMPData, 'EAA',  collectInflationAdjustment);
+  economics.rawData=costAdjuster(economics.rawData, "EAA",  collectInflationAdjustment);
   /// this works on the econ total at the play but also we are apply a similar factor while downloading the cost data
-  var totalCost = economics.totalWatershedCost[yearToLoad][0].cost * collectInflationAdjustment;
+  let totalCost = economics.totalWatershedCost[yearToLoad][0].cost; // * collectInflationAdjustment;
   let totalRevenue = economics.totalWatershedRevenue[yearToLoad][0].revenue;
   let totalProfit = totalRevenue - totalCost;
   // console.log("PRINTING FROM RESULTS FILE: ", totalCost, totalRevenue);

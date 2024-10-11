@@ -1,8 +1,6 @@
 // Define the function
 
 var Economics = function () {
-  //This is the inflation adjustment factor
-  const adjustmentFactor = 1.23;
   this.rawData;
   this.rawBMPData;
   this.mapData = [];
@@ -93,7 +91,8 @@ var Economics = function () {
     }
     d3.csv('./Budget2020.csv', (data) => {
       // ToDO pass 1.23, the default to the functions above
-      this.rawData=costAdjuster(data, "EAA",  parseFloat(document.getElementById('inflationFactor').value));
+      // keep the default to 1
+      this.rawData=costAdjuster(data, "EAA", 1 );
       this.rawData.forEach(dataPoint => {
         let id = Number.parseInt(dataPoint['LU_ID'])
         divisionForLU = (typeof yearCosts[id] === 'number') ? yearCosts[id]:  yearCosts[id][dataPoint['Sub Crop']];
