@@ -2,7 +2,7 @@
 
 var Economics = function () {
   //This is the inflation adjustment factor
-  const adjustmentFactor = 1.23
+  const adjustmentFactor = 1.23;
   this.rawData;
   this.rawBMPData;
   this.mapData = [];
@@ -506,13 +506,13 @@ var Economics = function () {
         }
 
         this.mapData[i].push(copy)
-        this.totalWatershedCost[i][0].cost +=  !isNaN(copy['EAA']) ? copy['EAA'] * adjustmentFactor : 0
+        this.totalWatershedCost[i][0].cost +=  !isNaN(copy['EAA']) ? copy['EAA'] : 0
       })
 
     }
     // TODO this will be replaced with the one fetched from the user
 
-    this.watershedTotals(adjustmentFactor);
+    this.watershedTotals();
     this.chart3Data();
     this.chart3DataByLU();
     this.graphic5information();
@@ -530,12 +530,12 @@ var Economics = function () {
   };
 
   // TESTING WATERSHED TOTALS
-  this.watershedTotals = (inflationAdjustFactor) => {
+  this.watershedTotals = () => {
 
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.totalWatershedRevenue[i]= [{revenue: 0}];
       for(let j = 0; j < 16; j ++){
-        this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][j]) ? this.scaledRev[i][j] *inflationAdjustFactor : 0
+        this.totalWatershedRevenue[i][0].revenue += !isNaN(this.scaledRev[i][j]) ? this.scaledRev[i][j]: 0
 
       }
       //console.log("TOTAL WATERSHED REVENUE FOR YEAR: ", i , "=",this.totalWatershedRevenue[i][0].revenue);

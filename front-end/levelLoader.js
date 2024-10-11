@@ -121,9 +121,11 @@ function addCommas(x) {
 function refreshEconTotals(yearToLoad){
   //calling map change here so the total is updated with every change; if we don't call it here then it will only be
   //updated when results are explicitly called.
+ // economics.rawBMPData=costAdjuster(economics.rawBMPData, 'EAA',  parseFloat(document.getElementById('inflationFactor').value))
   economics.mapChange();
-
-  let totalCost = economics.totalWatershedCost[yearToLoad][0].cost;
+  const collectInflationAdjustment = parseFloat(document.getElementById('inflationFactor').value)
+  /// this works on the econ total at the play but also we are apply a similar factor while downloading the cost data
+  var totalCost = economics.totalWatershedCost[yearToLoad][0].cost * collectInflationAdjustment;
   let totalRevenue = economics.totalWatershedRevenue[yearToLoad][0].revenue;
   let totalProfit = totalRevenue - totalCost;
   // console.log("PRINTING FROM RESULTS FILE: ", totalCost, totalRevenue);

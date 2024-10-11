@@ -5943,8 +5943,12 @@ function submitInflationForm() {
 }
 
 function reloadForEconUpdates(){
-     alert('Form submitted successfully please click yes to continue');
-     location.reload();
+  const inputDataValue = document.getElementById("inflationFactor")
+  inputDataValue.addEventListener('change', () => {
+    refreshEconTotals(currentYear)
+    alert('Button was clicked!');
+  });
+
 }
 
 
@@ -6548,7 +6552,7 @@ function updatePrecip(year) {
   refreshEconTotals(currentYear);
   refreshProgressBar(currentYear);
 } //updatePrecip
-
+// TODO we need to create a function that calls all these three methods at once for
 //updatePopup appends text to the popup dialogue
 function updatePopup(string) {
   document.getElementById("popupText").innerHTML = string + "<br>___________________________<br>" + document.getElementById("popupText").innerHTML;

@@ -636,7 +636,7 @@
           </div>
           <div>
             <label for="cornPrices">Corn Prices:</label>
-            <input type="number" id="cornPrices" name="cornPrices" value="4.4">
+            <input type="number" id="cornPrices" name="cornPrices" value="4.4", >
           </div>
           <div>
             <label for="soybeanPrices">Soybean Prices:</label>
@@ -647,7 +647,7 @@
             <input type="number" id="carbonPrices" name="carbonPrices" value="25">
           </div>
           <div>
-            <button id="submitInflationButton" type="button" onclick="submitInflationForm(); reloadForEconUpdates()">Submit</button>
+            <button id="submitInflationButton" type="button" onclick="refreshEconTotals(currentYear);">Submit</button>
           </div>
         </form>
           <div>
@@ -656,7 +656,14 @@
         </div>
       </div>
 
-
+      <script>
+        const inflationInput = document.getElementById("inflationFactor")
+        inflationInput.addEventListener('click', () => {
+          // Call refreshEconTotals with the input value
+          //refreshEconTotals(currentYear);
+        });
+        inflationInput.addEventListener('click', refreshProgressBar)
+      </script>
       <!-- year display -->
       <div id="yearsTab" class="consoleTab" style="display:none;">
         <!-- Create year buttons -->
