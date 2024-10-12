@@ -5,7 +5,7 @@ Constructed in June 2016 as an object focused approach to calculation methods ba
 
 C. Labuzzetta
 N. Hagen
-
+const d3 = require('d3');
 
  */
 const costAdjuster = function(data, column, factor = 1.23) {
@@ -195,4 +195,24 @@ console.log(soilTypeHolderArray.length)
 console.log(landUseHolderArray.length)
 
 
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
 
+    // Instance method
+    describe() {
+        return `${this.name} is ${this.age} years old.`;
+    }
+
+    // Static method
+    static species() {
+        return 'Homo sapiens';
+    }
+}
+
+// Access static method using the class name
+console.log(Person.species());  // Output: Homo sapiens
+
+//const { Economics } = require('./economics.js');
