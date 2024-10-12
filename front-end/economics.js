@@ -92,7 +92,8 @@ var Economics = function () {
     d3.csv('./Budget2020.csv', (data) => {
       // ToDO pass 1.23, the default to the functions above
       // keep the default to 1
-      this.rawData=costAdjuster(data, "EAA", 1 );
+
+      this.rawData=costAdjuster(data, "EAA", 1);
       this.rawData.forEach(dataPoint => {
         let id = Number.parseInt(dataPoint['LU_ID'])
         divisionForLU = (typeof yearCosts[id] === 'number') ? yearCosts[id]:  yearCosts[id][dataPoint['Sub Crop']];
@@ -107,7 +108,7 @@ var Economics = function () {
   //READ IN BMP FILE
   d3.csv('./BMPBudgets2020.csv', (data) => {
 
-    this.rawBMPData=costAdjuster(data, 'EAA',  parseFloat(document.getElementById('inflationFactor').value));
+    this.rawBMPData=costAdjuster(data, 'EAA',  1);
 
   });
 
@@ -939,3 +940,4 @@ var Economics = function () {
 }
 var economics = new Economics();
 //kind of a precalc? Not really but its calculated before its needed.
+// I still think this is a bad idea but time and debugging will tell

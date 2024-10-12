@@ -117,18 +117,25 @@ function addCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-//Refresh Econ Totals
+// I think we need to call this everytime we refresh
+var economics = new Economics();
 function refreshEconTotals(yearToLoad){
+
+
+  //var economics = Economics()
   //calling map change here so the total is updated with every change; if we don't call it here then it will only be
   //updated when results are explicitly called.
  // economics.rawBMPData=costAdjuster(economics.rawBMPData, 'EAA',  parseFloat(document.getElementById('inflationFactor').value))
   economics.mapChange();
 
   const collectInflationAdjustment = parseFloat(document.getElementById('inflationFactor').value);
-  economics.rawBMPData=costAdjuster(economics.rawBMPData, 'EAA',  collectInflationAdjustment);
-  economics.rawData=costAdjuster(economics.rawData, "EAA",  collectInflationAdjustment);
+  //economics.rawBMPData=costAdjuster(econRawBMP, 'EAA',  collectInflationAdjustment);
+ // economics.rawData=costAdjuster(econRawData, "EAA",  collectInflationAdjustment);
   /// this works on the econ total at the play but also we are apply a similar factor while downloading the cost data
-  let totalCost = economics.totalWatershedCost[yearToLoad][0].cost; // * collectInflationAdjustment;
+
+  let totalCost = economics.totalWatershedCost[yearToLoad][0].cost * collectInflationAdjustment;
+  // we need to update the costs
+  economics.totalWatershedCost[yearToLoad][0].cost = totalCost;
   let totalRevenue = economics.totalWatershedRevenue[yearToLoad][0].revenue;
   let totalProfit = totalRevenue - totalCost;
   // console.log("PRINTING FROM RESULTS FILE: ", totalCost, totalRevenue);
