@@ -510,7 +510,7 @@ var Economics = function () {
       })
 
     }
-    // TODO this will be replaced with the one fetched from the user
+
 
     this.watershedTotals();
     this.chart3Data();
