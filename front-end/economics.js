@@ -98,7 +98,7 @@ var Economics = function () {
     d3.csv('./Budget2020.csv', (data) => {
       // ToDO pass 1.23, the default to the functions above
       // TODO i have inflationFactor = infAdjust variable_name
-      this.rawData=costAdjuster(data, "EAA", infAdjust);
+      this.rawData=costAdjuster(data, "EAA", 1.23);
       this.rawData.forEach(dataPoint => {
         let id = Number.parseInt(dataPoint['LU_ID'])
         divisionForLU = (typeof yearCosts[id] === 'number') ? yearCosts[id]:  yearCosts[id][dataPoint['Sub Crop']];
@@ -113,7 +113,7 @@ var Economics = function () {
   //READ IN BMP FILE
   d3.csv('./BMPBudgets2020.csv', (data) => {
 
-    this.rawBMPData=costAdjuster(data, 'EAA', infAdjust);
+    this.rawBMPData=costAdjuster(data, 'EAA', 1.23);
 
   });
 
@@ -884,7 +884,6 @@ var Economics = function () {
 
   calculateRent = () => {
 
-    // ToDO pass an inflation adjustment factor here
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.getRent[i] = [{
         consCornSoybeanRent: 0, consCornCornRent: 0, convCornSoybeanRent: 0, convCornCornRent: 0,
