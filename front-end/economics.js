@@ -160,7 +160,7 @@ var Economics = function () {
         }
       }
     }
-    console.log(this.extractLandUses[1][1])
+   // console.log(this.extractLandUses[1][1])
   }
 
   //graph
@@ -235,7 +235,7 @@ var Economics = function () {
   }
 
   this.mapChange = function (){ //called when the map changes in order to edit the intermediate step.
-    this.ghgFunction()
+   this.ghgFunction()
     calculateCornAfters();
     calculatePerYieldCrops();
     calculateForrestYields();
