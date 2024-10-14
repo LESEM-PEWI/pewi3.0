@@ -8,7 +8,7 @@ var Economics = function () {
   this.data4 = [];
   this.loadedGHGData = [];
   this.calculatedGHG =[];
-  this.extractSoilsArea = []
+  this.landUseArea = []
   this.dataSubcrop = {};
   this.data3 = [];
   this.data3ByLU = [];
@@ -798,32 +798,27 @@ var Economics = function () {
     for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
       // Initialize getSoilArea for year 'i'
       const _PrecipitationData = PrecipitationLevels[boardData[currentBoard].precipitation[i]];
-      this.extractSoilsArea[i] = [
-        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
-        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
-        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
-      ];
+      // This is to display greenhouse gases by land use types
+      this.landUseArea[i] =
+          {
+            1: 0, 2: 0, 3: 0, 4: 0, 5: 0,
+            6: 0, 7: 0, 8: 0, 9: 0, 10: 0,
+            11: 0, 12: 0, 13: 0, 14: 0, 15: 0
+          }
+
       for (let j = 0; j < boardData[currentBoard].map.length; j++) {
-        let numLandUse = 1;
-        if (boardData[currentBoard].map[j].landType[i] === 10) {
-          numLandUse = 1;
-        }
-        if (boardData[currentBoard].map[j].landType[i] === 11) {
-          numLandUse = 2;
-        }
-
-
         // Get the soil type and area directly
         let getSoilType = boardData[currentBoard].map[j]['soilType'];
-        let landUseTileID = boardData[currentBoard].map[j]['landType'][1];
+        let landUseTileID= 0;
+        landUseTileID = boardData[currentBoard].map[j]['landType'][1];
         let areaHere = boardData[currentBoard].map[j].area;
         const extractSoilType = boardData[currentBoard].map[j]['soilType'];
         const cellLandArea  =  boardData[currentBoard].map[j].area;
 
         // Increment the area for the appropriate soil type and land use without using a switch
         // perfect we have just reduced this code by about 15 lines
-        if (this.extractSoilsArea[i][numLandUse].hasOwnProperty(getSoilType)) {
-          this.extractSoilsArea[i][numLandUse][getSoilType] += areaHere;
+        if (this.landUseArea[i].hasOwnProperty(landUseTileID)) {
+          this.landUseArea[i][getSoilType] += areaHere;
 
           if (landUseTileID >0) {
             console.log("%%%%%55555");
@@ -833,11 +828,11 @@ var Economics = function () {
             /**
              * Apparently, the column for landUseType, soilType, precipitation levels in the kpi.csv data are named as follows:
              * [code, SoilType, precipitation_level]  if these columns are changed in that file, this method won't work if not updated from the source file for filterByLandUseAndSoilType
-
+             According to our data, the  'filterByLandUseAndSoilType' will always return one entity or row because duplicates are removed
              */
             let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, ludID, getSoilType, _PrecipitationData);
             console.log('length of filtered data:', gasesData.length);
-            // ToDO select only column needed
+
             this.calculatedGHG.push(gasesData[0])
             console.log(this.calculatedGHG[0]['precipitation_level'])
             console.log(this.calculatedGHG[0]['code'])
@@ -848,7 +843,7 @@ var Economics = function () {
         }
       }
     }
-  console.log('final length:', this.calculatedGHG,':', this.extractSoilsArea.length)
+  console.log('final length:', this.calculatedGHG,':', this.landUseArea.length)
   }
 
       calculateCornYieldRate = (soilType) => {
