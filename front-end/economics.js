@@ -818,7 +818,7 @@ var Economics = function () {
         // Increment the area for the appropriate soil type and land use without using a switch
         // perfect we have just reduced this code by about 15 lines
         if (this.landUseArea[i].hasOwnProperty(landUseTileID)) {
-          this.landUseArea[i][getSoilType] += areaHere;
+          this.landUseArea[i][landUseTileID] += areaHere;
 
           if (landUseTileID >0) {
             console.log("%%%%%55555");
@@ -844,6 +844,7 @@ var Economics = function () {
       }
     }
   console.log('final length:', this.calculatedGHG,':', this.landUseArea.length)
+    console.log(this.landUseArea);
   }
 
       calculateCornYieldRate = (soilType) => {
