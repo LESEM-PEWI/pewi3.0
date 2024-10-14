@@ -41,6 +41,7 @@ const loadCSVData = function(localDataPath) {
     /**
      * reads a /csv file as an array.
      * @param {localDataPath} string - string path reference to the pre-simulated ghg
+     * this function is for backend only
      */
     try {
         const fileContent = fs.readFileSync(localDataPath, 'utf8'); // Read the file content

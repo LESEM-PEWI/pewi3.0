@@ -31,11 +31,11 @@ var Economics = function () {
 
     this.rawRev = data;
   })
-  d3.csv('./ghg.csv', (data) => {
+  d3.csv('./kpi.csv', (data) => {
     this.loadedGHGData = data;
   })
   console.log("this is the loaded GHG data, **")
-  console.log(this.loadedGHGData)
+  console.log(this.loadedGHGData.length)
   this.divideByCategory = function (listofCats){
     for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.data[i] = [];
@@ -804,21 +804,18 @@ var Economics = function () {
         {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
       ];
       for (let j = 0; j < boardData[currentBoard].map.length; j++) {
-        let numLandUse = 1
-        let landUseTileID = boardData[currentBoard].map[i].landType[i]
-        landUseTileID = landUseTileID.toString();
+        let numLandUse = 1;
         if (boardData[currentBoard].map[j].landType[i] === 10) {
           numLandUse = 1;
         }
         if (boardData[currentBoard].map[j].landType[i] === 11) {
           numLandUse = 2;
         }
-        if (boardData[currentBoard].map[j].landType[i] === 11) {
-          numLandUse = 2;
-        }
+
 
         // Get the soil type and area directly
         let getSoilType = boardData[currentBoard].map[j]['soilType'];
+        let landUseTileID = boardData[currentBoard].map[j]['landType'][1];
         let areaHere = boardData[currentBoard].map[j].area;
         const extractSoilType = boardData[currentBoard].map[j]['soilType'];
         const cellLandArea  =  boardData[currentBoard].map[j].area;
@@ -827,24 +824,27 @@ var Economics = function () {
         // perfect we have just reduced this code by about 15 lines
         if (this.extractSoilsArea[i][numLandUse].hasOwnProperty(getSoilType)) {
           this.extractSoilsArea[i][numLandUse][getSoilType] += areaHere;
-          if (!numLandUse ===0) {
-            let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, landUseTileID, 'M', _PrecipitationData);
+
+          if (landUseTileID >0) {
+            console.log("%%%%%55555");
+            console.log(this.getSoilArea[1]);
+            console.log(areaHere);
+            let ludID = landUseTileID.toString();
+            /**
+             * Apparently, the column for landUseType, soilType, precipitation levels in the kpi.csv data are named as follows:
+             * [code, SoilType, precipitation_level]  if these columns are changed in that file, this method won't work if not updated from the source file for filterByLandUseAndSoilType
+
+             */
+            let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, ludID, getSoilType, _PrecipitationData);
             console.log('length of filtered data:', gasesData.length);
-            // ToDO select only columsn needed
+            // ToDO select only column needed
             this.calculatedGHG.push(gasesData[0])
             console.log(this.calculatedGHG[0]['precipitation_level'])
             console.log(this.calculatedGHG[0]['code'])
             console.log(_PrecipitationData)
 
           }
-          //let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, '15', 'M', '872.0');
 
-          //console.log(typeof this.loadedGHGData[100]['code']);
-         // console.log(typeof this.loadedGHGData[100]['SoilType'])
-         // console.log(typeof this.loadedGHGData[100]['precipitation_level']);
-          console.log("___")
-
-          console.log("==")
         }
       }
     }
