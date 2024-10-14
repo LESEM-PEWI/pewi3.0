@@ -10,8 +10,10 @@ const d3 = require('d3');
  */
 
 //import * as d3 from 'd3';
-var print = function(print){
-    console.log(print);
+
+
+const printText = function(printdata){
+    console.log(printdata);
 }
 //const fs = require('fs');
 //const fastcsv = require('fast-csv');
@@ -180,10 +182,10 @@ const filterByLandUseAndSoilType = (data, landUseTypes, soilTypes, precipitation
     // Filter data based on land use types, soil types, and precipitation levels
     const filteredData = data.filter(row =>
         landUseSet.has(row['code']) &&
-        soilSet.has(row['soilType']) &&
+        soilSet.has(row['SoilType']) &&
         precipitationSet.has(row['precipitation_level'])
     );
-
+    console.log(filteredData.length)
     // Check if filteredData is empty
     if (filteredData.length === 0) {
         console.warn(`No data found for the specified land use types: ${landUseTypes.join(', ')}, 
@@ -193,57 +195,10 @@ const filterByLandUseAndSoilType = (data, landUseTypes, soilTypes, precipitation
     }
 
     // we don't want any duplicates as this is for each soil tileID
+    console.log('perfect++++++++++++============================\n============')
     return removeDuplicates(filteredData);
 };
 
-
-
-var calsGHGs = function() {
-    this.extractSoils = [];
-    this.extractLandUses = [];
-    this.GHGData = [];
-    d3.csv('./ghg.csv', (_data) => {
-
-        this.GHGData = _data;
-        console.log(this.GHGData)
-    })
-    // Yes, I rewrite this code the switch is unnecessary, and complicates readability
-    const mineer = () => {
-        for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
-            // Initialize extractSoils for year 'i'
-            this.extractSoils[i] = Array(3).fill().map(() => ({
-                "A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0,  "Q": 0, "T": 0, "Y": 0
-            }));
-
-            // Initialize extractLandUses
-            this.extractLandUses[i] = Array(3).fill().map(() => ({
-                0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0
-            }));
-
-            for (let j = 0; j < boardData[currentBoard].map.length; j++) {
-                let _PrecipitationData = boardData[currentBoard].precipitation[i] * 25.4;
-                console.log(_PrecipitationData);
-
-                // Determine numericalLandUse based on the landType
-                let numericalLandUse = 0;
-                numericalLandUse = boardData[currentBoard].map[j].landType[i]
-                // Extract soil type and area for calculations
-                const extractSoilType = boardData[currentBoard].map[j]['soilType'];
-                const extractArea = boardData[currentBoard].map[j].area;
-
-                // Update extractSoils and extractLandUses arrays
-                if (this.extractSoils[i][numericalLandUse].hasOwnProperty(extractSoilType)) {
-                    this.extractSoils[i][numericalLandUse][extractSoilType] += extractArea;
-                    this.extractLandUses[i][numericalLandUse] += extractArea;
-
-                    console.log(this.extractLandUses[i][numericalLandUse]);
-                }
-            }
-        }
-    };
-
-
-}
 
 // This will fill the three objects for the three years
 const soilTypeHolderArray = Array(3).fill().map(() => ({
@@ -258,55 +213,8 @@ console.log(soilTypeHolderArray.length)
 console.log(landUseHolderArray.length)
 
 
-class GreenHouseGases {
 
-    constructor(localDataPath) {
-        /**
-         * class handling greenhouse gases calculations.
-         * @param {localDataPath} string - string path reference to the pre-simulated ghg
-         */
-        this.localDataPath = localDataPath;
-        this.loadedData = loadCSVData(localDataPath); // To store loaded data
-
-    }
-    get filterData(){
-        /**
-         @param data {array} array to filter
-         @param soilType {str}
-         @param landUseType {str}
-         @param precipipitationLevel {str}
-         */
-        return filterByLandUseAndSoilType
-    }
-
-
-}
 const tesT = null;
 
-class ghX extends GreenHouseGases {
-    constructor(localDataPath) {
-        // Call the parent class constructor
-        super(localDataPath);
-
-    }
-}
-if (tesT){
-// Example Usage
-    const gm = new GreenHouseGases('./ghg.csv');
-    xp = gm.loadedData
-    print(xp[10]['precipitation_level'])
-    const filterD = filterByLandUseAndSoilType(xp, '4', "Q", '1146.0')
-    print(filterD.length)
-
-    print("+++++++++++++===")
-    array = filterD
-
-
-    uniqueArray = removeDuplicates(filterD);
-//console.log(uniqueArray);
-    print(filterD);
-    print(gm.filterData(loadCSVData('./ghg.csv'), '1', 'Q', '1146.0'))
-
-}
 
 

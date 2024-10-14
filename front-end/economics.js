@@ -6,7 +6,9 @@ var Economics = function () {
   this.mapData = [];
   this.data = [];
   this.data4 = [];
-
+  this.loadedGHGData = [];
+  this.calculatedGHG =[];
+  this.extractSoilsArea = []
   this.dataSubcrop = {};
   this.data3 = [];
   this.data3ByLU = [];
@@ -29,7 +31,11 @@ var Economics = function () {
 
     this.rawRev = data;
   })
-
+  d3.csv('./ghg.csv', (data) => {
+    this.loadedGHGData = data;
+  })
+  console.log("this is the loaded GHG data, **")
+  console.log(this.loadedGHGData)
   this.divideByCategory = function (listofCats){
     for(var i =1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.data[i] = [];
@@ -189,6 +195,7 @@ var Economics = function () {
     calculateForrestYields();
     calulateBMPBudgets();
     calculateForestAreaBySoil();
+    collectGHGData()
     calculateRent();
 
     let landUses = [];
@@ -752,6 +759,7 @@ var Economics = function () {
    * values for cells that are not conservation forest or conventional forest)
    */
   calculateForestAreaBySoil = () => {
+    let gasesData =[]
     // Yes, I rewrite this code the switch is unnecessary, and complicates readability
     for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
       // Initialize getSoilArea for year 'i'
@@ -778,12 +786,70 @@ var Economics = function () {
         // perfect we have just reduced this code by about 15 lines
         if (this.getSoilArea[i][numLandUse].hasOwnProperty(soilType)) {
           this.getSoilArea[i][numLandUse][soilType] += area;
+
         }
       }
     }
   };
+  collectGHGData = () => {
+    let gasesData = []
+    const PrecipitationLevels  = {30.39: '772.0', 24.58:'624', 28.18:'716.0'}
+    // Yes, I rewrite this code the switch is unnecessary, and complicates readability
+    for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
+      // Initialize getSoilArea for year 'i'
+      const _PrecipitationData = PrecipitationLevels[boardData[currentBoard].precipitation[i]];
+      this.extractSoilsArea[i] = [
+        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+        {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
+      ];
+      for (let j = 0; j < boardData[currentBoard].map.length; j++) {
+        let numLandUse = 1
+        let landUseTileID = boardData[currentBoard].map[i].landType[i]
+        if (boardData[currentBoard].map[j].landType[i] === 10) {
+          numLandUse = 1;
+        }
+        if (boardData[currentBoard].map[j].landType[i] === 11) {
+          numLandUse = 2;
+        }
+        if (boardData[currentBoard].map[j].landType[i] === 11) {
+          numLandUse = 2;
+        }
 
-  calculateCornYieldRate = (soilType) => {
+        // Get the soil type and area directly
+        let getSoilType = boardData[currentBoard].map[j]['soilType'];
+        let areaHere = boardData[currentBoard].map[j].area;
+        const extractSoilType = boardData[currentBoard].map[j]['soilType'];
+        const cellLandArea  =  boardData[currentBoard].map[j].area;
+
+        // Increment the area for the appropriate soil type and land use without using a switch
+        // perfect we have just reduced this code by about 15 lines
+        if (this.extractSoilsArea[i][numLandUse].hasOwnProperty(getSoilType)) {
+          this.extractSoilsArea[i][numLandUse][getSoilType] += areaHere;
+            let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, '1', 'M', _PrecipitationData);
+            console.log('length of filtered data:', gasesData.length);
+            // ToDO select only columsn needed
+            this.calculatedGHG.push(gasesData[0])
+          console.log(this.calculatedGHG[0]['precipitation_level'])
+          console.log(this.calculatedGHG[0]['code'])
+          console.log(_PrecipitationData)
+
+
+          //let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, '15', 'M', '872.0');
+
+          //console.log(typeof this.loadedGHGData[100]['code']);
+         // console.log(typeof this.loadedGHGData[100]['SoilType'])
+         // console.log(typeof this.loadedGHGData[100]['precipitation_level']);
+          console.log("___")
+
+          console.log("==")
+        }
+      }
+    }
+  console.log('final length:', this.calculatedGHG,':', this.extractSoilsArea.length)
+  }
+
+      calculateCornYieldRate = (soilType) => {
       var yieldBaseRates = [223, 0, 214, 206, 0, 200, 210, 221, 228, 179, 235, 240, 209, 0];
 
       switch (soilType) {
@@ -938,6 +1004,17 @@ var Economics = function () {
 
 
 }
+
+
+
+//greenGh.collectBoardData(boardData, currentBoard)
 var economics = new Economics();
+//const greenGh = new GreenHouseGases('./ghg.csv');
 //kind of a precalc? Not really but its calculated before its needed.
-// I still think this is a bad idea but time and debugging will tell
+// I still think this has cost to incur but time and debugging will tell
+
+
+//const ghg = collectBoardData()
+console.log('++++++++++++++++++++++++++++++++++++++++\n' +
+    '===========================================')
+console.log(boardData)
