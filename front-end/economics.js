@@ -806,6 +806,7 @@ var Economics = function () {
       for (let j = 0; j < boardData[currentBoard].map.length; j++) {
         let numLandUse = 1
         let landUseTileID = boardData[currentBoard].map[i].landType[i]
+        landUseTileID = landUseTileID.toString();
         if (boardData[currentBoard].map[j].landType[i] === 10) {
           numLandUse = 1;
         }
@@ -826,15 +827,16 @@ var Economics = function () {
         // perfect we have just reduced this code by about 15 lines
         if (this.extractSoilsArea[i][numLandUse].hasOwnProperty(getSoilType)) {
           this.extractSoilsArea[i][numLandUse][getSoilType] += areaHere;
-            let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, '1', 'M', _PrecipitationData);
+          if (!numLandUse ===0) {
+            let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, landUseTileID, 'M', _PrecipitationData);
             console.log('length of filtered data:', gasesData.length);
             // ToDO select only columsn needed
             this.calculatedGHG.push(gasesData[0])
-          console.log(this.calculatedGHG[0]['precipitation_level'])
-          console.log(this.calculatedGHG[0]['code'])
-          console.log(_PrecipitationData)
+            console.log(this.calculatedGHG[0]['precipitation_level'])
+            console.log(this.calculatedGHG[0]['code'])
+            console.log(_PrecipitationData)
 
-
+          }
           //let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, '15', 'M', '872.0');
 
           //console.log(typeof this.loadedGHGData[100]['code']);
