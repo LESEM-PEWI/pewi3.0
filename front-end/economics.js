@@ -10,6 +10,7 @@ var Economics = function () {
   this.calculatedGHG =[];
   this.landUseArea = []
   this.GHGs = [];
+  this.GHGsBylandUse = []
   this.dataSubcrop = {};
   this.data3 = [];
   this.data3ByLU = [];
@@ -822,9 +823,34 @@ var Economics = function () {
   };
 
   collectGHGData = () => {
-    let gasesData = []
-    const PrecipitationLevels  = {30.39: '772.0', 24.58:'624', 28.18:'716.0'}
-    // Yes, I rewrite this code the switch is unnecessary, and complicates readability
+    /**
+     * Collects and aggregates greenhouse gas (GHG) data based on land use and soil type
+     * over a specified range of years for the current board configuration.
+     *
+     * This function iterates through each year up to the 'calculatedToYear' specified in
+     * the board data. For each year, it initializes arrays to hold data for greenhouse gases,
+     * land use areas, and GHGs by land use type. The function then processes the data for each
+     * land use tile, updating the relevant GHG values and land use areas based on soil type
+     * and precipitation data.
+     *
+     * Specifically, the function performs the following actions:
+     * - Initializes GHG data structures for each year.
+     * - Iterates through each land use tile in the current board.
+     * - Retrieves and processes soil type, land use type, and area data.
+     * - Aggregates GHG values (SOC, N2O, and CO2 equivalent) based on the filtered data
+     *   from the loaded greenhouse gas dataset.
+     * - Converts land area from acres to hectares during calculations.
+     *
+     * The data is stored in the following structures:
+     * - `this.landUseArea[i]`: An array holding the total area for each land use type per year.
+     * - `this.GHGs[i]`: An array of objects holding total GHG emissions (CH4, CO2-e, N2O, SOC) for each year.
+     * - `this.GHGsBylandUse[i]`: An array of objects categorizing GHG emissions by land use type.
+     *
+     * Logs the resulting GHG data and aggregated results to the console for verification.
+     *
+     * @returns {void} This function does not return any value; it updates instance variables directly.
+     */
+
     for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
       // Initialize getSoilArea for year 'i'
       let _PrecipitationData = boardData[currentBoard].precipitation[i];
@@ -837,6 +863,11 @@ var Economics = function () {
             6: 0, 7: 0, 8: 0, 9: 0, 10: 0,
             11: 0, 12: 0, 13: 0, 14: 0, 15: 0
           }]
+      // Repeats by four the object inside
+      this.GHGsBylandUse[i] = Array(4).fill().map(() =>(
+          {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0}
+      ));
+
       this.GHGs[i] = [{'CH4':0, 'C02-e':0, 'N2O':0, 'SOC':0}]
       this.ghgTypes[i] = [{'ch4': 0, 'n2o': 0, 'co2':0}]
 
@@ -854,9 +885,6 @@ var Economics = function () {
           this.landUseArea[i][0][landUseTileID] +=  cellLandArea ;
 
           if (landUseTileID >0) {
-            console.log("%%%%%55555");
-            console.log(this.getSoilArea[1]);
-            console.log(cellLandArea);
             let ludID = landUseTileID.toString();
             /**
              * Apparently, the column for landUseType, soilType, precipitation levels in the kpi.csv data are named as follows:
@@ -871,20 +899,24 @@ var Economics = function () {
             let soc= parseFloat(gasesData[0]['to_carb'])/ 35 * soilArea;
             let n20 = parseFloat(gasesData[0]['TopN2O']) * soilArea;
             let kpi = parseFloat(gasesData[0]['kpi']) * soilArea
-            console.log(typeof soc);
-            console.log(soc);
+            numLandUseCode  = Number(ludID);
             this.GHGs[i][0]['SOC'] += soc;
             this.GHGs[i][0]['N2O'] += n20;
             this.GHGs[i][0]['C02-e'] +=kpi;
-            console.log(_PrecipitationData)
+            // zero because the object is inside 0= kpi, 1 = carbon, 2= methane, 3 = nitrous oxide
+            this.GHGsBylandUse[i][0][numLandUseCode] += kpi;
+            this.GHGsBylandUse[i][1][numLandUseCode] += soc;
+            this.GHGsBylandUse[i][2][numLandUseCode] += soc;
+            this.GHGsBylandUse[i][3][numLandUseCode] += n20;
 
           }
 
         }
       }
     }
-  console.log('final length:', this.calculatedGHG,':', this.landUseArea.length)
+
     console.log(this.GHGs);
+    console.log(this.GHGsBylandUse);
   };
 
       calculateCornYieldRate = (soilType) => {
@@ -942,8 +974,6 @@ var Economics = function () {
 
 
   calculateRent = () => {
-
-    // ToDO pass an inflation adjustment factor here
     for(let i = 1; i <= boardData[currentBoard].calculatedToYear; i++){
       this.getRent[i] = [{
         consCornSoybeanRent: 0, consCornCornRent: 0, convCornSoybeanRent: 0, convCornCornRent: 0,
@@ -1043,16 +1073,9 @@ var Economics = function () {
 
 }
 
-
-
-//greenGh.collectBoardData(boardData, currentBoard)
 var economics = new Economics();
-//const greenGh = new GreenHouseGases('./ghg.csv');
+
 //kind of a precalc? Not really but its calculated before its needed.
 // I still think this has cost to incur but time and debugging will tell
 
 
-//const ghg = collectBoardData()
-console.log('++++++++++++++++++++++++++++++++++++++++\n' +
-    '===========================================')
-console.log(boardData)
