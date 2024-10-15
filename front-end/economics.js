@@ -827,7 +827,8 @@ var Economics = function () {
     // Yes, I rewrite this code the switch is unnecessary, and complicates readability
     for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
       // Initialize getSoilArea for year 'i'
-      const _PrecipitationData = PrecipitationLevels[boardData[currentBoard].precipitation[i]];
+      let _PrecipitationData = boardData[currentBoard].precipitation[i];
+      _PrecipitationData  = _PrecipitationData.toString();
       // This is to display greenhouse gases by land use types
       this.ghgTypes = [];
       this.landUseArea[i] =
