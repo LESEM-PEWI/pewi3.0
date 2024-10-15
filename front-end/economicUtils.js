@@ -215,7 +215,9 @@ console.log(landUseHolderArray.length)
 
 
 
-const tesT = null;
+const filterArray  = function(arrayData, landUseType, soilType, precipLevel) {
+    return arrayData.filter(v => v.SoilType === soilType && v.code ===landUseType && v.precipitation_level === precipLevel)
+}
 
 
 

@@ -9,6 +9,7 @@ var Economics = function () {
   this.loadedGHGData = [];
   this.calculatedGHG =[];
   this.landUseArea = []
+  this.GHGs = [];
   this.dataSubcrop = {};
   this.data3 = [];
   this.data3ByLU = [];
@@ -791,6 +792,35 @@ var Economics = function () {
       }
     }
   };
+  const dropDuplicates = function (array, isEqual) {
+    /**
+     * Removes duplicates from a multidimensional array.
+     * @param {Array} array - The multidimensional array to process.
+     * @param {Function} [isEqual] - Optional function to define how to compare rows.
+     *                               If not provided, compares the first two elements.
+     * @returns {Array} - A new array with duplicates removed.
+     */
+    return array.reduce((accumulator, currentRow) => {
+      const isDuplicate = accumulator.some(row => {
+        return isEqual ? isEqual(row, currentRow) : row[0] === currentRow[0] && row[1] === currentRow[1];
+      });
+
+      if (!isDuplicate) {
+        accumulator.push(currentRow);
+      }
+      return accumulator;
+    }, []);
+  }
+  const filteredArray = function(arrayData, landUseType, soilType, precipLevel) {
+    let filterRows = arrayData.filter(row =>
+        row.soil_type === soilType &&
+        row.land_use_code === landUseType &&
+        row.precipitation_level === precipLevel
+
+    );
+    return dropDuplicates(filterRows)
+  };
+
   collectGHGData = () => {
     let gasesData = []
     const PrecipitationLevels  = {30.39: '772.0', 24.58:'624', 28.18:'716.0'}
@@ -799,43 +829,50 @@ var Economics = function () {
       // Initialize getSoilArea for year 'i'
       const _PrecipitationData = PrecipitationLevels[boardData[currentBoard].precipitation[i]];
       // This is to display greenhouse gases by land use types
+      this.ghgTypes = [];
       this.landUseArea[i] =
-          {
+          [{
             1: 0, 2: 0, 3: 0, 4: 0, 5: 0,
             6: 0, 7: 0, 8: 0, 9: 0, 10: 0,
             11: 0, 12: 0, 13: 0, 14: 0, 15: 0
-          }
+          }]
+      this.GHGs[i] = [{'CH4':0, 'C02-e':0, 'N2O':0, 'SOC':0}]
+      this.ghgTypes[i] = [{'ch4': 0, 'n2o': 0, 'co2':0}]
 
       for (let j = 0; j < boardData[currentBoard].map.length; j++) {
         // Get the soil type and area directly
         let getSoilType = boardData[currentBoard].map[j]['soilType'];
         let landUseTileID= 0;
         landUseTileID = boardData[currentBoard].map[j]['landType'][1];
-        let areaHere = boardData[currentBoard].map[j].area;
-        const extractSoilType = boardData[currentBoard].map[j]['soilType'];
-        const cellLandArea  =  boardData[currentBoard].map[j].area;
+        let  cellLandArea  = boardData[currentBoard].map[j].area;
+
 
         // Increment the area for the appropriate soil type and land use without using a switch
         // perfect we have just reduced this code by about 15 lines
-        if (this.landUseArea[i].hasOwnProperty(landUseTileID)) {
-          this.landUseArea[i][landUseTileID] += areaHere;
+        if (this.landUseArea[i][0].hasOwnProperty(landUseTileID)) {
+          this.landUseArea[i][0][landUseTileID] +=  cellLandArea ;
 
           if (landUseTileID >0) {
             console.log("%%%%%55555");
             console.log(this.getSoilArea[1]);
-            console.log(areaHere);
+            console.log(cellLandArea);
             let ludID = landUseTileID.toString();
             /**
              * Apparently, the column for landUseType, soilType, precipitation levels in the kpi.csv data are named as follows:
              * [code, SoilType, precipitation_level]  if these columns are changed in that file, this method won't work if not updated from the source file for filterByLandUseAndSoilType
              According to our data, the  'filterByLandUseAndSoilType' will always return one entity or row because duplicates are removed
              */
-            let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, ludID, getSoilType, _PrecipitationData);
+           // let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, ludID, getSoilType, _PrecipitationData);
+            let gasesData = filteredArray(this.loadedGHGData, ludID, getSoilType, _PrecipitationData);
             console.log('length of filtered data:', gasesData.length);
-
-            this.calculatedGHG.push(gasesData[0])
-            console.log(this.calculatedGHG[0]['precipitation_level'])
-            console.log(this.calculatedGHG[0]['code'])
+            let soc= parseFloat(gasesData[0]['to_carb']);
+            let n20 = parseFloat(gasesData[0]['TopN2O'])
+            let kpi = parseFloat(gasesData[0]['kpi'])
+            console.log(typeof soc);
+            console.log(soc);
+            this.GHGs[i][0]['SOC'] += soc;
+            this.GHGs[i][0]['N2O'] += n20;
+            this.GHGs[i][0]['C02-e'] +=kpi;
             console.log(_PrecipitationData)
 
           }
@@ -844,7 +881,7 @@ var Economics = function () {
       }
     }
   console.log('final length:', this.calculatedGHG,':', this.landUseArea.length)
-    console.log(this.landUseArea);
+    console.log(this.GHGs);
   }
 
       calculateCornYieldRate = (soilType) => {
