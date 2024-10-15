@@ -133,35 +133,6 @@ filterByValue = (data, soilType, columnName = 'soilType') => {
 };
 
 
-calculateGHGbySoilTypes = () => {
-    // Yes, I rewrite this code the switch is unnecessary, and complicates readability
-    for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
-        // Initialize getSoilArea for year 'i'
-        this.cellArea[i] = [
-            {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
-            {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
-            {"A": 0, "B": 0, "C": 0, "D": 0, "G": 0, "K": 0, "L": 0, "M": 0, "N": 0, "O": 0, "Q": 0, "T": 0, "Y": 0},
-        ];
-
-        for (let j = 0; j < boardData[currentBoard].map.length; j++) {
-
-            let numberLandUse  = boardData[currentBoard].map[j].landType[i]
-
-            // Get the soil type and area directly
-            let soilType = boardData[currentBoard].map[j]['soilType'];
-            let area = boardData[currentBoard].map[j].area;
-            let prepitiationData = boardData[currentBoard].precipitation[i] * 25.4
-
-            // Increment the area for the appropriate soil type and land use without using a switch
-            // perfect we have just reduced this code by about 15 lines
-            if (this.cellArea[i][numLandUse].hasOwnProperty(soilType)) {
-                // get the soils by soil types
-                let gHGSoilType = filterByValue(this.ghg, soilType, columnName= 'soilType')
-                this.cellArea[i][numLandUse][soilType] += area;
-            }
-        }
-    }
-};
 
 const filterByLandUseAndSoilType = (data, landUseTypes, soilTypes, precipitationLevel) => {
     // Check if data is loaded

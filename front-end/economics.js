@@ -866,9 +866,11 @@ var Economics = function () {
            // let gasesData = filterByLandUseAndSoilType(this.loadedGHGData, ludID, getSoilType, _PrecipitationData);
             let gasesData = filteredArray(this.loadedGHGData, ludID, getSoilType, _PrecipitationData);
             console.log('length of filtered data:', gasesData.length);
-            let soc= parseFloat(gasesData[0]['to_carb']);
-            let n20 = parseFloat(gasesData[0]['TopN2O'])
-            let kpi = parseFloat(gasesData[0]['kpi'])
+            // Convert to hectares
+            let soilArea = cellLandArea * 0.404685642
+            let soc= parseFloat(gasesData[0]['to_carb'])/ 35 * soilArea;
+            let n20 = parseFloat(gasesData[0]['TopN2O']) * soilArea;
+            let kpi = parseFloat(gasesData[0]['kpi']) * soilArea
             console.log(typeof soc);
             console.log(soc);
             this.GHGs[i][0]['SOC'] += soc;
@@ -883,7 +885,7 @@ var Economics = function () {
     }
   console.log('final length:', this.calculatedGHG,':', this.landUseArea.length)
     console.log(this.GHGs);
-  }
+  };
 
       calculateCornYieldRate = (soilType) => {
       var yieldBaseRates = [223, 0, 214, 206, 0, 200, 210, 221, 228, 179, 235, 240, 209, 0];
