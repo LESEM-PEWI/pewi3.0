@@ -197,7 +197,7 @@ var Economics = function () {
     calculateForrestYields();
     calulateBMPBudgets();
     calculateForestAreaBySoil();
-    collectGHGData()
+    collectTotalWatershedGHGData()
     calculateRent();
 
     let landUses = [];
@@ -822,7 +822,7 @@ var Economics = function () {
     return dropDuplicates(filterRows)
   };
 
-  collectGHGData = () => {
+  collectTotalWatershedGHGData = () => {
     /**
      * Collects and aggregates greenhouse gas (GHG) data based on land use and soil type
      * over a specified range of years for the current board configuration.
@@ -847,7 +847,7 @@ var Economics = function () {
      * - `this.GHGsBylandUse[i]`: An array of objects categorizing GHG emissions by land use type.
      *
      * Logs the resulting GHG data and aggregated results to the console for verification.
-     *
+     * the data base for this function is loaded by d3 library at the top of this module. the .csv name is kpi.csv in front-end and in the root folder
      * @returns {void} This function does not return any value; it updates instance variables directly.
      */
 
@@ -863,7 +863,7 @@ var Economics = function () {
             6: 0, 7: 0, 8: 0, 9: 0, 10: 0,
             11: 0, 12: 0, 13: 0, 14: 0, 15: 0
           }]
-      // Repeats by four the object inside
+      // Repeats by four the object inside, for storing kpi, carbon methane and nitrous oxide
       this.GHGsBylandUse[i] = Array(4).fill().map(() =>(
           {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0}
       ));
@@ -895,7 +895,8 @@ var Economics = function () {
             let gasesData = filteredArray(this.loadedGHGData, ludID, getSoilType, _PrecipitationData);
             console.log('length of filtered data:', gasesData.length);
             // Convert to hectares
-            let soilArea = cellLandArea * 0.404685642
+            let soilArea = cellLandArea * 0.404685642;
+            // This will need to be converted to carbon dioxide equivalents
             let soc= parseFloat(gasesData[0]['to_carb'])/ 35 * soilArea;
             let n20 = parseFloat(gasesData[0]['TopN2O']) * soilArea;
             let kpi = parseFloat(gasesData[0]['kpi']) * soilArea
