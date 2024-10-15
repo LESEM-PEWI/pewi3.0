@@ -219,7 +219,6 @@ var Economics = function () {
       landUses[i] = [];
       this.mapData[i] = [];
       this.scaledRev[i] = [];
-      var adf = 1.23
       this.totalWatershedCost[i] = [{cost: 0}];  //TESTING
 
       let keys = Object.keys(Totals.landUseResults[0]);
@@ -283,8 +282,6 @@ var Economics = function () {
        */
       this.rawData.forEach(dataPoint => {
         let copy = JSON.parse(JSON.stringify(dataPoint));
-        let luID = parseInt(copy['LU_ID']);
-
 
         //Calculate Rents First
         if(copy['Cost Name'] === 'Rent' && copy['LU_ID'] !== "5" && copy['LU_ID'] !== "6" && copy['LU_ID'] !== "7" && copy['LU_ID'] !== "8"){
@@ -761,7 +758,6 @@ var Economics = function () {
    * values for cells that are not conservation forest or conventional forest)
    */
   calculateForestAreaBySoil = () => {
-    let gasesData =[]
     // Yes, I rewrite this code the switch is unnecessary, and complicates readability
     for (let i = 1; i <= boardData[currentBoard].calculatedToYear; i++) {
       // Initialize getSoilArea for year 'i'
