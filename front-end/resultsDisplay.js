@@ -1843,12 +1843,12 @@ function drawEcosystemRadar(yearArray) {
     },
       {
         label: "Green House Gases",
-        axis: "ghg",
+        axis: "GHG",
         value: (Totals.ghgScore[y] / 100),
         raw: (Math.round(Totals.ghg[y] * 10) / 10).toFixed(1) + " tons"
       }, {
       label: "Gross Erosion",
-      axis: "Erosion",
+      axis: "Erosion Control",
       value: (Totals.grossErosionScore[y] / 100),
       raw: (Math.round(Totals.grossErosion[y] * 10) / 10).toFixed(1) + " tons"
     }, {
@@ -3143,13 +3143,13 @@ function generateResultsTable() {
     //SECOND TABLE, ECOSYSTEM INDICATORS
 
 
-    frontendNames = ["Green House Gases","Carbondioxide","Methane","Nitrous Oxide","Soil Organic Carbon", "Erosion Control / Gross Erosion","Aquatic Health",
-      "Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading",
-      "Sediment Control <br> / In-Stream Delivery","Game Wildlife", " Land Biodiversity", "Stream Biodiversity", "Mussel Population",
+    frontendNames = ["Green House Gases", "Carbondioxide", "Methane", "Nitrous Oxide",
+      "Soil Organic Carbon", "Erosion Control / Gross Erosion",
+      "Aquatic Health","Nitrate Pollution Control <br> / In-Stream Concentration", "Phosphorus Pollution Control <br> / In-Stream Loading","Sediment Control <br> / In-Stream Delivery",
+      "Game Wildlife", " Land Biodiversity", "Stream Biodiversity", "Mussel Population",
     ];
     backendDataIdentifiers = ["gameWildlifePoints", "biodiversityPoints", "streamBiodiversity", "musselPopulation" ,"carbonSequestration", "grossErosion", "aquaticHealth", "nitrateConcentration",
-      "phosphorusLoad", "sedimentDelivery"
-    ];
+      "phosphorusLoad", "sedimentDelivery","","","",""];
 
     //variables for english to metric
     // results are generally in english units as the original thesis
@@ -3220,7 +3220,7 @@ function generateResultsTable() {
             }
           }
           break;
-        case 1:
+        case 4:
           //htmlTableString += "<tr class='tableHeading'><td><b>Soil Quality</b></td></tr>";
           htmlTableString += "<tr>";
           htmlTableString += "<td class='verticalLine'><b>" + "Soil" + "<b></td>";
@@ -3247,7 +3247,7 @@ function generateResultsTable() {
           }
           break;
 
-        case 2:
+        case 6:
           //htmlTableString += "<tr class='tableHeading'><td><b>Water Quality</b></td></tr>";
           htmlTableString += "<tr>";
           htmlTableString += "<td class='verticalLine'><b>" + "Water" + "<b></td>";
@@ -3272,32 +3272,32 @@ function generateResultsTable() {
             }
           }
           break;
-        case 3:
+        case 10:
           //htmlTableString += "<tr class='tableHeading'><td><b>Habitat</b></td></tr>";
           //  //put Habitat header, in bold
-            htmlTableString += "<tr>";
-            htmlTableString += "<td class='verticalLine'><b>" + "Wildlife" + "<b></td>";
-            //calculate total score for each year and place next to Habitat header
-            for(var y = 1; y <= upToYear; y++){
-              htmlTableString += "<td class='rightText'><b>";
+          htmlTableString += "<tr>";
+          htmlTableString += "<td class='verticalLine'><b>" + "Wildlife" + "<b></td>";
+          //calculate total score for each year and place next to Habitat header
+          for(var y = 1; y <= upToYear; y++){
+            htmlTableString += "<td class='rightText'><b>";
 
-              var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y]+Totals.streamBiodiversityScore[y])/3;
+            var totalScore = (Totals.gameWildlifePointsScore[y]+Totals.biodiversityPointsScore[y]+Totals.streamBiodiversityScore[y])/3;
 
-              htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
+            htmlTableString += addCommas((Math.round(totalScore * 10) / 10).toFixed(1)) + "<br>";
 
-              htmlTableString += "<b></td>";
+            htmlTableString += "<b></td>";
+          }
+          htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
+          //add extra spaces to fill out bar across screen
+          for(var y = 1; y <= (2*upToYear)+2; y++){
+            if(y == ((2*upToYear) + 2) / 2){
+              htmlTableString += "<td  class='verticalLine centerText'></td>";
             }
-            htmlTableString += "<td class='verticalLine centerText'><b>(out of 100)<b></td>";
-            //add extra spaces to fill out bar across screen
-            for(var y = 1; y <= (2*upToYear)+2; y++){
-              if(y == ((2*upToYear) + 2) / 2){
-                htmlTableString += "<td  class='verticalLine centerText'></td>";
-              }
-              else{
-                htmlTableString += "<td></td>";
-              }
+            else{
+              htmlTableString += "<td></td>";
             }
-            break;
+          }
+          break;
           break;
 
 
@@ -3320,7 +3320,7 @@ function generateResultsTable() {
           htmlTableString += Totals.musselServicesScore[y] + "<br>";
         }
         else {
-          htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
+          // htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
         }
         htmlTableString += "</td>";
       } //for each year
@@ -3352,7 +3352,7 @@ function generateResultsTable() {
 
         }
         else {
-          htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
+          // htmlTableString += addCommas((Math.round(Totals[tempString][y] * 10) / 10).toFixed(1)) + "<br>";
         }
 
         htmlTableString += "</td>";
@@ -3387,11 +3387,15 @@ function generateResultsTable() {
 
         }
         else {
-          htmlTableString += addCommas((Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10).toFixed(1)) + "<br>";
+          // htmlTableString += addCommas((Math.round(Totals[tempString][y] * conversionArray[l] * 10) / 10).toFixed(1)) + "<br>";
         }
         htmlTableString += "</td>";
 
       } //for each year
+
+
+
+
 
       //units cell
       if (backendDataIdentifiers[l] === "musselPopulation") {

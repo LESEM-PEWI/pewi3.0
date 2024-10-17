@@ -1713,14 +1713,14 @@
         <div class="min-max-details"></div>
       </div>
       <div id="carbonProgressBar">
-        <div class="progressBarTitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C:</div>
+        <div class="progressBarTitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SOC:</div>
         <div class="progress" onmouseover="toggleScoreDetails('carbon');" onmouseout="toggleScoreDetails('carbon');">
           <div class="progress-bar progress-bar-carbon" role="progressbar" ></div>
           <img id="minIndicator" src="./imgs/white-bar.png" style="left: -10%;" onmouseover="toggleMinMax('Min',2);" onmouseout="toggleMinMax('Min',2);">
           <img id="maxIndicator" src="./imgs/white-bar.png" style="left: 110%;" onmouseover="toggleMinMax('Max',2);" onmouseout="toggleMinMax('Max',2);">
         </div>
         <div class="carbonScoreDetails">
-          <div class="title">Carbon Sequestration</div>
+          <div class="title">Soil Organic Carbon</div>
           <!-- <div class="min-max">
             <div class="min"> Total min: 0</div>
             <div class="max"> Total max: 100</div>
@@ -2040,18 +2040,69 @@
 
     <!-- Create dialogue popup box (message box) -->
     <!-- "Bubble, speech icon" by http://www.iconsolid.com/ with free commercial usage / Inverted from original and resized -->
-    <div id="bookMarkButton" class="bookMarkButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/indexIcon.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>
-    <div id="popup" class="popupHidden" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">
-      <div id="nextLevelButton" class="moveButtonHidden" onclick="loadLevel(levelGlobal + 1);">Next Level</div>
-      <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>
-      <p id="popupText"></p>
+<!--    <div id="bookMarkButton" class="bookMarkButtonRolled" onclick="togglePopupDisplay();"><img src="./imgs/indexIcon.png" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();"></div>-->
+<!--    <div id="popup" class="popupHidden" onmouseover="toggleChangeLandType();" onmouseout="toggleChangeLandType();">-->
+<!--      <div id="nextLevelButton" class="moveButtonHidden" onclick="loadLevel(levelGlobal + 1);">Next Level</div>-->
+<!--      <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>-->
+<!--      <p id="popupText"></p>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash;Chat box for Glossary information &ndash;&gt;-->
+<!--    <div id="backgroundInfoButton" class="backgroundInfoButton" onclick="toggleBackgroundInfoDisplay();"><img src="./imgs/questionIcon.png"></div>-->
+<!--    <div id="backgroundInfoBox" class="backgroundInfoBox">-->
+<!--      <p id="glossaryPopupText" class="glossaryPopupText"></p>-->
+<!--    </div>-->
+
+    <!-- Bookmark button -->
+    <div id="bookMarkButton" class="bookMarkButtonRolled" onclick="togglePopupDisplay();">
+      <img src="./imgs/indexIcon.png">
     </div>
 
-    <!--Chat box for Glossary information -->
-    <div id="backgroundInfoButton" class="backgroundInfoButton" onclick="toggleBackgroundInfoDisplay();"><img src="./imgs/questionIcon.png"></div>
-    <div id="backgroundInfoBox" class="backgroundInfoBox">
-      <p id="glossaryPopupText" class="glossaryPopupText"></p>
+    <!-- Popup that is hidden by default and only appears when clicked -->
+    <div id="popup" class="popupHidden">
+      <div id="nextLevelButton" class="moveButtonHidden" onclick="loadLevel(levelGlobal + 1);">Next Level</div>
+      <div id="mainMenuButton" class="moveButtonHidden" onclick="showMainMenu();">Main Menu</div>
+      <p id="popupText">This is popup content</p>
     </div>
+
+    <!-- Background Info button -->
+    <div id="backgroundInfoButton" class="backgroundInfoButtonRolled" onclick="toggleBackgroundInfoDisplay();">
+      <img src="./imgs/questionIcon.png">
+    </div>
+
+    <!-- Background Info Box that is hidden by default and only appears when clicked -->
+    <div id="backgroundInfoBox" class="backgroundInfoHidden backgroundInfoBox">
+      <p id="glossaryPopupText" class="glossaryPopupText">This is background info content</p>
+    </div>
+
+    <script>
+      // Function to toggle the display of the popup (for the bookmark button)
+      function togglePopupDisplay() {
+        const popup = document.getElementById("popup");
+        // Toggle between showing and hiding the popup
+        if (popup.classList.contains("popupHidden")) {
+          popup.classList.remove("popupHidden");
+          popup.classList.add("popupVisible");
+        } else {
+          popup.classList.remove("popupVisible");
+          popup.classList.add("popupHidden");
+        }
+      }
+
+      // Function to toggle the display of the background info box
+      function toggleBackgroundInfoDisplay() {
+        const backgroundInfoBox = document.getElementById("backgroundInfoBox");
+        // Toggle between showing and hiding the background info box
+        if (backgroundInfoBox.classList.contains("backgroundInfoHidden")) {
+          backgroundInfoBox.classList.remove("backgroundInfoHidden");
+          backgroundInfoBox.classList.add("backgroundInfoVisible");
+        } else {
+          backgroundInfoBox.classList.remove("backgroundInfoVisible");
+          backgroundInfoBox.classList.add("backgroundInfoHidden");
+        }
+      }
+    </script>
+
 
     <!-- **END Right Side Component** -->
 

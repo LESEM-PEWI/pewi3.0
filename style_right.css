@@ -246,6 +246,28 @@
   margin: 0.25vw;
 }
 
+   /* Ensure the popup is hidden permanently until clicked */
+ .popupHidden {
+   display: none; /* Hidden by default, always hidden until toggle */
+ }
+
+/* Visible when the class changes after button click */
+.popupVisible {
+  display: block; /* Only becomes visible after being toggled */
+}
+
+/* Style for the buttons and layout */
+/* Additional styles for buttons and popup can be added here */
+
+   /* Ensure the background info box is hidden permanently until clicked */
+ .backgroundInfoHidden {
+   display: none; /* Hidden by default, always hidden until toggle */
+ }
+
+/* Visible when the class changes after button click */
+.backgroundInfoVisible {
+  display: block; /* Only becomes visible after being toggled */
+}
 .backgroundInfoButton, .backgroundInfoButtonRolled {
   background-image: url('./imgs/consoleTexture.png');
   cursor: pointer;
